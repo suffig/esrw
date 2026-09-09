@@ -207,6 +207,17 @@ def test_ics():
     text = E.baue_ics([markiert], "Test", cfg, jetzt)
     pruefe("⚠" in text and "Geändert" in text, "Aenderung wird markiert")
 
+    # Ohne inhaltliche Aenderung muss die Datei Byte fuer Byte gleich bleiben,
+    # sonst committet der Workflow alle 30 Minuten saemtliche Feeds.
+    fest = dict(neu)
+    fest["stempel"] = datetime(2026, 9, 1, 12, 0, tzinfo=timezone.utc)
+    spaeter = jetzt + timedelta(hours=5)
+    pruefe(E.baue_ics([fest], "Test", cfg, jetzt)
+           == E.baue_ics([fest], "Test", cfg, spaeter),
+           "gleicher Inhalt ergibt gleiche Datei, egal wann gebaut wird")
+    pruefe("DTSTAMP:20260901T120000Z" in E.baue_ics([fest], "Test", cfg, jetzt),
+           "DTSTAMP kommt vom letzten Wechsel, nicht vom Lauf")
+
 
 # ------------------------------------------------------------------ Sonstiges
 

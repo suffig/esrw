@@ -258,12 +258,18 @@ def baue_ics(termine, kalendername, cfg, stand):
         if t.get("aenderung"):
             beschreibung = "Geändert: %s\n\n%s" % (t["aenderung"], beschreibung)
 
+        # Zeitstempel des letzten *inhaltlichen* Wechsels, nicht des Laufs.
+        # Sonst waeren alle Feeds nach jedem Lauf "geaendert" und der Workflow
+        # wuerde alle 30 Minuten 60 Dateien committen, ohne dass sich etwas
+        # getan hat.
+        stempel = t.get("stempel") or stand
+
         zeilen += [
             "BEGIN:VEVENT",
             "UID:" + t["uid"],
             "SEQUENCE:%d" % t.get("sequence", 0),
-            "DTSTAMP:" + utc(stand),
-            "LAST-MODIFIED:" + utc(stand),
+            "DTSTAMP:" + utc(stempel),
+            "LAST-MODIFIED:" + utc(stempel),
             "DTSTART:" + utc(t["treffpunkt"]),
             "DTEND:" + utc(t["ende"]),
             "SUMMARY:" + escape(titel),
@@ -488,6 +494,7 @@ def verarbeite_aenderungen(personen, alt, stand, eigene_slugs):
             ).hexdigest()
             vorher = alt.get(t["uid"])
             geaendert_am = None
+            t["stempel"] = stand
 
             if vorher is None:
                 t["sequence"] = 0
@@ -502,6 +509,12 @@ def verarbeite_aenderungen(personen, alt, stand, eigene_slugs):
             else:
                 t["sequence"] = vorher.get("sequence", 0)
                 geaendert_am = vorher.get("geaendert_am")
+                # Unveraendert: alten Zeitstempel behalten, damit die Datei
+                # Byte fuer Byte gleich bleibt.
+                try:
+                    t["stempel"] = datetime.fromisoformat(vorher["stempel"])
+                except (KeyError, TypeError, ValueError):
+                    pass
                 # Aenderung eine Woche lang sichtbar lassen
                 if geaendert_am:
                     try:
@@ -523,6 +536,7 @@ def verarbeite_aenderungen(personen, alt, stand, eigene_slugs):
                 "beginn": t["anstoss"].isoformat(),
                 "geaendert_am": geaendert_am,
                 "aenderung": t.get("aenderung"),
+                "stempel": t["stempel"].isoformat(),
             }
 
     # Was aus den Daten verschwunden ist und noch in der Zukunft lag, ist eine
@@ -674,7 +688,6 @@ def main():
         }
 
     daten = {
-        "stand": stand.isoformat(),
         "titel": cfg.get("titel", "Einteilungen"),
         "quelle": cfg["quelle"],
         "vorlauf_minuten": cfg["vorlauf_minuten"],
@@ -703,6 +716,14 @@ def main():
     }
     with open(os.path.join(ziel, "daten.json"), "w", encoding="utf-8") as f:
         json.dump(daten, f, ensure_ascii=False, indent=1)
+
+    # Der Zeitpunkt des Laufs steht bewusst in einer eigenen, winzigen Datei.
+    # Sonst gaebe es allein deswegen bei jedem Lauf eine Aenderung an der
+    # grossen daten.json - und damit alle 30 Minuten einen Commit.
+    with open(os.path.join(ziel, "stand.json"), "w", encoding="utf-8") as f:
+        json.dump({"stand": stand.isoformat(), "personen": len(personen),
+                   "spiele": len(gesehen), "archiv": len(historie)},
+                  f, ensure_ascii=False)
 
     schreibe("historie.json", historie)
     schreibe("state.json", neu_state)

@@ -14,6 +14,7 @@ const GRUNDGERUEST = [
   "./",
   "./index.html",
   "./daten.json",
+  "./stand.json",
   "./manifest.webmanifest",
   "./icon-192.png",
   "./icon-512.png",

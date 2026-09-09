@@ -458,23 +458,35 @@
   });
   window.addEventListener("hashchange", ausHash);
 
-  fetch("daten.json?" + Date.now())
-    .then(function (r) { if (!r.ok) throw 0; return r.json(); })
-    .then(function (d) {
+  // Zwei Dateien: die grosse mit den Inhalten, die winzige nur mit dem
+  // Zeitpunkt des letzten Laufs. Getrennt, damit die grosse unveraendert
+  // bleibt, solange sich inhaltlich nichts tut.
+  var hole = function (name) {
+    return fetch(name + "?" + Date.now())
+      .then(function (r) { if (!r.ok) throw 0; return r.json(); });
+  };
+
+  Promise.all([hole("daten.json"), hole("stand.json").catch(function () { return null; })])
+    .then(function (beides) {
+      var d = beides[0], lauf = beides[1];
       daten = d;
       document.title = d.titel;
       el("titel").textContent = d.titel;
       el("quelle").href = d.quelle;
 
-      var stand = new Date(d.stand);
-      var alter = (Date.now() - stand.getTime()) / 3600000;
       var s = el("stand");
-      s.textContent = "Stand: " + stand.toLocaleString("de-DE",
-        { dateStyle: "medium", timeStyle: "short" }) + " Uhr · " +
-        d.personen.length + " Schiedsrichter · " + d.spiele_gesamt + " Spiele";
-      if (alter > 6) {
-        s.className = "stand alt";
-        s.textContent += " – seit " + Math.round(alter) + " Std. nicht aktualisiert";
+      s.textContent = (lauf ? d.personen.length + " Schiedsrichter · " +
+        d.spiele_gesamt + " Spiele" : "");
+      if (lauf && lauf.stand) {
+        var stand = new Date(lauf.stand);
+        var alter = (Date.now() - stand.getTime()) / 3600000;
+        s.textContent = "Stand: " + stand.toLocaleString("de-DE",
+          { dateStyle: "medium", timeStyle: "short" }) + " Uhr · " +
+          d.personen.length + " Schiedsrichter · " + d.spiele_gesamt + " Spiele";
+        if (alter > 6) {
+          s.className = "stand alt";
+          s.textContent += " – seit " + Math.round(alter) + " Std. nicht aktualisiert";
+        }
       }
 
       el("fuss").textContent = "Termine beginnen " + d.vorlauf_minuten +

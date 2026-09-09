@@ -6,6 +6,11 @@ on:
     # GitHub rechnet in UTC.
     - cron: "*/30 5-22 * * *"
   workflow_dispatch:      # Knopf zum manuellen Ausloesen
+    inputs:
+      fehler_testen:
+        description: "Absichtlich scheitern, um die Fehler-Benachrichtigung zu pruefen"
+        type: boolean
+        default: false
   push:
     branches: [main]
     paths:
@@ -30,6 +35,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
+      # Nur zum Ausprobieren der Alarmkette: ueber "Run workflow" mit gesetztem
+      # Haken laeuft dieser Schritt auf einen Fehler, alle folgenden Schritte
+      # werden uebersprungen und die Benachrichtigung geht raus. Es wird dabei
+      # nichts veroeffentlicht, die bestehenden Feeds bleiben unberuehrt.
+      - name: Testfehler ausloesen
+        if: github.event_name == 'workflow_dispatch' && inputs.fehler_testen
+        run: |
+          echo "Absichtlich ausgeloester Testfehler - kein echtes Problem."
+          exit 1
 
       # Laeuft ohne Netz gegen die eingefrorene Beispielseite. Schlaegt an,
       # wenn eine Aenderung am Skript das Auslesen kaputt gemacht hat.
@@ -61,14 +76,22 @@ jobs:
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
           LAUF: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          TESTLAUF: ${{ inputs.fehler_testen }}
         run: |
           if [ -z "$NTFY_TOPIC" ]; then
             echo "Kein NTFY_TOPIC hinterlegt - keine Benachrichtigung moeglich."
             exit 0
           fi
-          curl -sS \
-            -H "Title: Einteilungen: Automatik steht" \
+          if [ "$TESTLAUF" = "true" ]; then
+            TITEL="Einteilungen: Test der Fehlermeldung"
+            TEXT="Das war ein absichtlicher Testfehler. Wenn du das liest, funktioniert die Alarmkette. Lauf: $LAUF"
+          else
+            TITEL="Einteilungen: Automatik steht"
+            TEXT="Der Lauf ist fehlgeschlagen, die Kalender werden nicht mehr aktualisiert. Details: $LAUF"
+          fi
+          curl -sS --fail-with-body \
+            -H "Title: $TITEL" \
             -H "Priority: high" \
             -H "Tags: warning" \
-            -d "Der Lauf ist fehlgeschlagen, die Kalender werden nicht mehr aktualisiert. Details: $LAUF" \
+            -d "$TEXT" \
             "https://ntfy.sh/$NTFY_TOPIC"

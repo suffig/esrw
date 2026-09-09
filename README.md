@@ -35,6 +35,7 @@ GitHub Actions, liest die Seite und schreibt einen Ordner mit fertigen Dateien:
 docs/
   index.html            Webseite: Namen suchen, Kalender abonnieren, Statistik
   daten.json            alle Personen und Spiele, für die Webseite
+  stand.json            nur der Zeitpunkt des letzten Laufs
   manifest.webmanifest  macht die Seite als App installierbar
   sw.js                 Service Worker, damit sie offline funktioniert
   feeds/
@@ -44,6 +45,13 @@ docs/
 historie.json           dauerhaftes Archiv aller je gesehenen Spiele
 state.json              letzter Stand, um Änderungen zu erkennen
 ```
+
+Feeds und `daten.json` sind **byte-stabil**: ändert sich inhaltlich nichts, sind
+sie nach dem nächsten Lauf identisch. Dafür trägt jeder Termin als `DTSTAMP` den
+Zeitpunkt seiner letzten echten Änderung, nicht den des Laufs. Sonst würde der
+Workflow alle 30 Minuten alle 61 Feeds neu committen. Der Lauf-Zeitpunkt steht
+deshalb allein in `stand.json` (rund 90 Byte) – das ist gleichzeitig der
+Herzschlag, an dem man in der Commit-Historie sieht, dass die Automatik läuft.
 
 Den Ordner `docs/` liefert GitHub Pages kostenlos aus. Das Handy abonniert eine
 feste Adresse und holt sich selbst die Aktualisierungen.

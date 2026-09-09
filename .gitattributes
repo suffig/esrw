@@ -1,0 +1,11 @@
+# Normale Textdateien im Repository mit LF speichern.
+* text=auto
+
+# Kalenderdateien NICHT anfassen: iCalendar schreibt laut RFC 5545 CRLF vor.
+# Unter Windows wuerde Git die Zeilenenden sonst beim Commit auf LF
+# normalisieren - GitHub Pages liefert dann Feeds aus, die nicht der Norm
+# entsprechen. Als "nicht Text" markiert bleiben die Bytes exakt erhalten.
+*.ics -text
+
+# Symbole sind Binaerdateien.
+*.png binary
