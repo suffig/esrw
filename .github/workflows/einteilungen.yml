@@ -2,9 +2,15 @@ name: Einteilungen aktualisieren
 
 on:
   schedule:
-    # Alle 30 Minuten zwischen ca. 07:00 und 00:30 deutscher Zeit.
+    # Alle 30 Minuten zwischen ca. 07:00 und 00:40 deutscher Zeit.
     # GitHub rechnet in UTC.
-    - cron: "*/30 5-22 * * *"
+    #
+    # Bewusst :07 und :37 statt :00 und :30. Geplante Laeufe kommen bei GitHub
+    # in eine Warteschlange und werden bei Last verworfen - zur vollen und
+    # halben Stunde starten weltweit die meisten Zeitplaene, entsprechend
+    # gross ist dort der Andrang. Ein paar Minuten versetzt laeuft es
+    # zuverlaessiger.
+    - cron: "7,37 5-22 * * *"
   workflow_dispatch:      # Knopf zum manuellen Ausloesen
     inputs:
       fehler_testen:
