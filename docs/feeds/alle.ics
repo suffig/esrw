@@ -578,14 +578,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
  reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U13 RLB · EV Duisburg – Düsseldorfer EG
-  1b
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U13 RLB · EV Duisburg – Düsseldorfer EG 1b
+DESCRIPTION:In einer Stunde an der Halle - U13 RLB · EV Duisburg – Düss
+ eldorfer EG 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -610,13 +605,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
  alle am Seilersee":geo:51.384598,7.713829
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U17 I · Iserlohner EC – Düsseldorfer EG
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U17 I · Iserlohner EC – Düsseldorfer EG
+DESCRIPTION:In einer Stunde an der Halle - U17 I · Iserlohner EC – Düss
+ eldorfer EG
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -642,13 +633,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
  reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U15 RLB · EV Duisburg – Iserlohner EC 1b
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U15 RLB · EV Duisburg – Iserlohner EC 1b
+DESCRIPTION:In einer Stunde an der Halle - U15 RLB · EV Duisburg – Iserl
+ ohner EC 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -674,13 +661,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West,
  n-West":geo:51.454179,6.976731
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - RL FS · Ratinger Ice Aliens – Herner EV
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - RL FS · Ratinger Ice Aliens – Herner EV
+DESCRIPTION:In einer Stunde an der Halle - RL FS · Ratinger Ice Aliens –
+  Herner EV
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -706,13 +689,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Emscher-Lippe-Halle Gelsen
  E="Emscher-Lippe-Halle Gelsenkirchen":geo:51.553483,7.073102
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - BL FS · Herner EV 1b – EHC Essen Ruhr
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - BL FS · Herner EV 1b – EHC Essen Ruhr
+DESCRIPTION:In einer Stunde an der Halle - BL FS · Herner EV 1b – EHC Es
+ sen Ruhr
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -737,14 +716,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
  isdorf":geo:50.811945,7.109233
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U20 FS · EHC Troisdorf – Eisadler Dortmu
- nd
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U20 FS · EHC Troisdorf – Eisadler Dortmund
+DESCRIPTION:In einer Stunde an der Halle - U20 FS · EHC Troisdorf – Eisa
+ dler Dortmund
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -769,15 +743,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
  inslaken":geo:51.574578,6.735361
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U20 FS · Dinslakener Kobras – Ratinger I
- ce Aliens
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U20 FS · Dinslakener Kobras – Ratinger Ice Alien
- s
+DESCRIPTION:In einer Stunde an der Halle - U20 FS · Dinslakener Kobras –
+  Ratinger Ice Aliens
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -802,13 +770,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
  rum Westfalen":geo:51.49525,7.458288
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - DA FS · NEV – BW/Hessen
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - DA FS · NEV – BW/Hessen
+DESCRIPTION:In einer Stunde an der Halle - DA FS · NEV – BW/Hessen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -833,15 +796,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
  Kleinen Felde":geo:52.114893,8.652028
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U17 RL · Herforder EV – Lippe Hockey Ham
- m Herford
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U17 RL · Herforder EV – Lippe Hockey Hamm Herfor
- d
+DESCRIPTION:In einer Stunde an der Halle - U17 RL · Herforder EV – Lippe
+  Hockey Hamm Herford
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -866,13 +823,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
  rum Westfalen":geo:51.49525,7.458288
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - DA FS · NRW – Sachsen/Berlin
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - DA FS · NRW – Sachsen/Berlin
+DESCRIPTION:In einer Stunde an der Halle - DA FS · NRW – Sachsen/Berlin
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -897,13 +849,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
  isdorf":geo:50.811945,7.109233
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U15 RLB · EHC Troisdorf – EJ Kassel
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U15 RLB · EHC Troisdorf – EJ Kassel
+DESCRIPTION:In einer Stunde an der Halle - U15 RLB · EHC Troisdorf – EJ 
+ Kassel
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -928,13 +876,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
  inslaken":geo:51.574578,6.735361
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U13 FS · Dinslakener Kobras – TuS Wiehl
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U13 FS · Dinslakener Kobras – TuS Wiehl
+DESCRIPTION:In einer Stunde an der Halle - U13 FS · Dinslakener Kobras –
+  TuS Wiehl
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -959,14 +903,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
  Kleinen Felde":geo:52.114893,8.652028
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U13 RLB · Herforder EV – Kölner Junghai
- e 1b
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U13 RLB · Herforder EV – Kölner Junghaie 1b
+DESCRIPTION:In einer Stunde an der Halle - U13 RLB · Herforder EV – Köl
+ ner Junghaie 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -991,13 +930,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
  rum Westfalen":geo:51.49525,7.458288
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - DA FS · NEV – BW/NRW
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - DA FS · NEV – BW/NRW
+DESCRIPTION:In einer Stunde an der Halle - DA FS · NEV – BW/NRW
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1022,14 +956,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
  .937979,6.98935
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U17 I · Kölner Junghaie – ES Weißwasse
- r
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U17 I · Kölner Junghaie – ES Weißwasser
+DESCRIPTION:In einer Stunde an der Halle - U17 I · Kölner Junghaie – ES
+  Weißwasser
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1054,14 +983,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
  le Krefeld":geo:51.339877,6.540168
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U13 FS · Krefelder EV 1b – Löwen Frankf
- urt 1b
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U13 FS · Krefelder EV 1b – Löwen Frankfurt 1b
+DESCRIPTION:In einer Stunde an der Halle - U13 FS · Krefelder EV 1b – L
+ öwen Frankfurt 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1086,13 +1010,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
  rum Westfalen":geo:51.49525,7.458288
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - DA FS · Hessen – Sachsen/Berlin
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - DA FS · Hessen – Sachsen/Berlin
+DESCRIPTION:In einer Stunde an der Halle - DA FS · Hessen – Sachsen/Berl
+ in
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1117,15 +1037,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
  .937979,6.98935
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - Frauen BZL · KEC "Die Haie" 1c – Herford
- er EV Kölnarena 2
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - Frauen BZL · KEC "Die Haie" 1c – Herforder EV K
- ölnarena 2
+DESCRIPTION:In einer Stunde an der Halle - Frauen BZL · KEC "Die Haie" 1c 
+ – Herforder EV Kölnarena 2
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1150,13 +1064,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
  isdorf":geo:50.811945,7.109233
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - LL FS · EHC Troisdorf – TuS Wiehl
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - LL FS · EHC Troisdorf – TuS Wiehl
+DESCRIPTION:In einer Stunde an der Halle - LL FS · EHC Troisdorf – TuS W
+ iehl
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1181,13 +1091,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
  le Krefeld":geo:51.339877,6.540168
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U13 FS · Krefelder EV – Löwen Frankfurt
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U13 FS · Krefelder EV – Löwen Frankfurt
+DESCRIPTION:In einer Stunde an der Halle - U13 FS · Krefelder EV – Löwe
+ n Frankfurt
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1213,13 +1119,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
  reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U17 II · EV Duisburg – SCC Adler Berlin
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U17 II · EV Duisburg – SCC Adler Berlin
+DESCRIPTION:In einer Stunde an der Halle - U17 II · EV Duisburg – SCC Ad
+ ler Berlin
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1244,13 +1146,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
  alle am Seilersee":geo:51.384598,7.713829
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U9 RL · Iserlohner EC – Iserlohn
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U9 RL · Iserlohner EC – Iserlohn
+DESCRIPTION:In einer Stunde an der Halle - U9 RL · Iserlohner EC – Iserl
+ ohn
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1275,13 +1173,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
  hmstraße":geo:51.242557,6.802144
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U9 RL · Düsseldorfer EG – Brehmstraße
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U9 RL · Düsseldorfer EG – Brehmstraße
+DESCRIPTION:In einer Stunde an der Halle - U9 RL · Düsseldorfer EG – Br
+ ehmstraße
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1301,13 +1195,9 @@ CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - DA FS · NEV/BW – Sachsen/Berlin
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - DA FS · NEV/BW – Sachsen/Berlin
+DESCRIPTION:In einer Stunde an der Halle - DA FS · NEV/BW – Sachsen/Berl
+ in
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1332,13 +1222,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West,
  n-West":geo:51.454179,6.976731
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U11 LL Gelb · EHC Essen Ruhr – Essen
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U11 LL Gelb · EHC Essen Ruhr – Essen
+DESCRIPTION:In einer Stunde an der Halle - U11 LL Gelb · EHC Essen Ruhr 
+ – Essen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1363,14 +1249,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
  le Krefeld":geo:51.339877,6.540168
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U13 FS · Krefelder EV 1b – Löwen Frankf
- urt 1b
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U13 FS · Krefelder EV 1b – Löwen Frankfurt 1b
+DESCRIPTION:In einer Stunde an der Halle - U13 FS · Krefelder EV 1b – L
+ öwen Frankfurt 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1396,13 +1277,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
  reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U17 II · EV Duisburg – SCC Adler Berlin
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U17 II · EV Duisburg – SCC Adler Berlin
+DESCRIPTION:In einer Stunde an der Halle - U17 II · EV Duisburg – SCC Ad
+ ler Berlin
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1427,14 +1304,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
  Kleinen Felde":geo:52.114893,8.652028
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U13 RLB · Herforder EV – Iserlohner EC 1
- b
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U13 RLB · Herforder EV – Iserlohner EC 1b
+DESCRIPTION:In einer Stunde an der Halle - U13 RLB · Herforder EV – Iser
+ lohner EC 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1459,13 +1331,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
  rum Westfalen":geo:51.49525,7.458288
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - DA FS · NRW – Hessen
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - DA FS · NRW – Hessen
+DESCRIPTION:In einer Stunde an der Halle - DA FS · NRW – Hessen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1490,14 +1357,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
  .937979,6.98935
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U17 I · Kölner Junghaie – ES Weißwasse
- r
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U17 I · Kölner Junghaie – ES Weißwasser
+DESCRIPTION:In einer Stunde an der Halle - U17 I · Kölner Junghaie – ES
+  Weißwasser
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1522,15 +1384,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
  inslaken":geo:51.574578,6.735361
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U17 FS · Dinslakener Kobras – Düsseldor
- fer EG U15
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U17 FS · Dinslakener Kobras – Düsseldorfer EG U
- 15
+DESCRIPTION:In einer Stunde an der Halle - U17 FS · Dinslakener Kobras –
+  Düsseldorfer EG U15
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1555,15 +1411,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
  Kleinen Felde":geo:52.114893,8.652028
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U15 LL · Herforder EV – Eisadler Dortmun
- d Herford
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U15 LL · Herforder EV – Eisadler Dortmund Herfor
- d
+DESCRIPTION:In einer Stunde an der Halle - U15 LL · Herforder EV – Eisad
+ ler Dortmund Herford
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1588,13 +1438,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
  rum Westfalen":geo:51.49525,7.458288
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - DA FS · Spiel um Platz 3 -
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - DA FS · Spiel um Platz 3 -
+DESCRIPTION:In einer Stunde an der Halle - DA FS · Spiel um Platz 3 -
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1619,13 +1464,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
  hmstraße":geo:51.242557,6.802144
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U17 I · Düsseldorfer EG – Iserlohner EC
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U17 I · Düsseldorfer EG – Iserlohner EC
+DESCRIPTION:In einer Stunde an der Halle - U17 I · Düsseldorfer EG – Is
+ erlohner EC
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1650,13 +1491,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
  .937979,6.98935
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U11 RL · Kölner Junghaie – Kölnarena 2
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U11 RL · Kölner Junghaie – Kölnarena 2
+DESCRIPTION:In einer Stunde an der Halle - U11 RL · Kölner Junghaie – K
+ ölnarena 2
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1681,15 +1518,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
  isdorf":geo:50.811945,7.109233
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U13 LL · EHC Troisdorf 1b – Mädchen W.I
- .N. 1 Troisdorf
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U13 LL · EHC Troisdorf 1b – Mädchen W.I.N. 1 Tr
- oisdorf
+DESCRIPTION:In einer Stunde an der Halle - U13 LL · EHC Troisdorf 1b – M
+ ädchen W.I.N. 1 Troisdorf
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1714,13 +1545,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
  rum Westfalen":geo:51.49525,7.458288
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - DA FS · Finale -
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - DA FS · Finale -
+DESCRIPTION:In einer Stunde an der Halle - DA FS · Finale -
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1745,13 +1571,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
  le Krefeld":geo:51.339877,6.540168
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U13 FS · Krefelder EV – Löwen Frankfurt
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U13 FS · Krefelder EV – Löwen Frankfurt
+DESCRIPTION:In einer Stunde an der Halle - U13 FS · Krefelder EV – Löwe
+ n Frankfurt
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1776,14 +1598,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
  .937979,6.98935
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U15 RLB · Kölner Junghaie 1b – Iserlohn
- er EC 1b
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U15 RLB · Kölner Junghaie 1b – Iserlohner EC 1b
+DESCRIPTION:In einer Stunde an der Halle - U15 RLB · Kölner Junghaie 1b 
+ – Iserlohner EC 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1808,14 +1625,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
  isdorf":geo:50.811945,7.109233
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U17 FS · EHC Troisdorf – Eisadler Dortmu
- nd
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U17 FS · EHC Troisdorf – Eisadler Dortmund
+DESCRIPTION:In einer Stunde an der Halle - U17 FS · EHC Troisdorf – Eisa
+ dler Dortmund
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1840,14 +1652,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
   Eissportarena Hamm":geo:51.686934,7.886138
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U17 RL · Lippe Hockey Hamm – Herforder E
- V Hamm
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U17 RL · Lippe Hockey Hamm – Herforder EV Hamm
+DESCRIPTION:In einer Stunde an der Halle - U17 RL · Lippe Hockey Hamm – 
+ Herforder EV Hamm
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1872,14 +1679,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
  inslaken":geo:51.574578,6.735361
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - LL FS · Dinslakener Kobras 1b – EHC Esse
- n Ruhr
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - LL FS · Dinslakener Kobras 1b – EHC Essen Ruhr
+DESCRIPTION:In einer Stunde an der Halle - LL FS · Dinslakener Kobras 1b 
+ – EHC Essen Ruhr
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1904,13 +1706,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
  alle am Seilersee":geo:51.384598,7.713829
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - U15 RLA · Iserlohner EC – Krefelder EV
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - U15 RLA · Iserlohner EC – Krefelder EV
+DESCRIPTION:In einer Stunde an der Halle - U15 RLA · Iserlohner EC – Kre
+ felder EV
 END:VALARM
 END:VEVENT
 END:VCALENDAR

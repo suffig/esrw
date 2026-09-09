@@ -103,6 +103,15 @@ def spiel_id(beginn_iso, begegnung):
     return hashlib.sha1(("%s|%s" % (beginn_iso, begegnung)).encode("utf-8")).hexdigest()
 
 
+WOCHENTAGE = ("Mo", "Di", "Mi", "Do", "Fr", "Sa", "So")
+
+
+def kurz_datum(zeitpunkt):
+    """'Mi 16.09. 19:30' - strftime wuerde je nach Locale 'Wed' liefern."""
+    return "%s %s" % (WOCHENTAGE[zeitpunkt.weekday()],
+                      zeitpunkt.strftime("%d.%m. %H:%M"))
+
+
 def saison_von(zeitpunkt):
     """Eishockey-Saison laeuft ueber den Jahreswechsel."""
     j = zeitpunkt.year
@@ -573,6 +582,25 @@ def melde(text, titel):
         print("Hinweis: ntfy-Benachrichtigung fehlgeschlagen: %s" % e, file=sys.stderr)
 
 
+def meldung_ablegen(titel, text):
+    """Schreibt die Meldung in eine Datei, aus der der Workflow ein
+    GitHub-Issue macht. Das ist der Meldeweg, der ohne zusaetzliche App
+    auskommt - GitHub verschickt fuer ein neues Issue von sich aus eine
+    E-Mail. Nur aktiv, wenn MELDUNG_DATEI gesetzt ist."""
+    pfad = os.environ.get("MELDUNG_DATEI", "").strip()
+    if not pfad:
+        return
+    voll = os.path.join(BASIS, pfad)
+    if titel is None:
+        # Nichts zu melden - eine alte Datei darf nicht stehenbleiben,
+        # sonst legt der Workflow beim naechsten Lauf dasselbe Issue nochmal an.
+        if os.path.exists(voll):
+            os.remove(voll)
+        return
+    with open(voll, "w", encoding="utf-8") as f:
+        f.write("%s\n%s\n" % (titel, text))
+
+
 def main():
     ap = argparse.ArgumentParser(description="ESRW-Einteilungen als iCalendar-Feeds")
     ap.add_argument("--wer", action="store_true", help="gefundene Personen auflisten")
@@ -736,21 +764,31 @@ def main():
     if neue or geaendert or entfallen:
         zeilen = []
         for t in neue:
-            zeilen.append("Neu: %s %s Uhr – %s (Halle %s Uhr)" % (
-                t["anstoss"].strftime("%a %d.%m."), t["anstoss"].strftime("%H:%M"),
-                t["titel"], t["treffpunkt"].strftime("%H:%M")))
+            zeilen.append("Neu: %s Uhr – %s (Halle %s Uhr)" % (
+                kurz_datum(t["anstoss"]), t["titel"],
+                t["treffpunkt"].strftime("%H:%M")))
         for t in geaendert:
-            zeilen.append("Geändert (%s): %s %s Uhr – %s" % (
-                t.get("aenderung", "?"), t["anstoss"].strftime("%a %d.%m."),
-                t["anstoss"].strftime("%H:%M"), t["titel"]))
+            zeilen.append("Geändert (%s): %s Uhr – %s" % (
+                t.get("aenderung", "?"), kurz_datum(t["anstoss"]), t["titel"]))
         for e in entfallen:
-            zeilen.append("Abgesetzt: %s – %s" % (
-                datetime.fromisoformat(e["beginn"]).strftime("%a %d.%m. %H:%M"),
-                e.get("titel", "")))
-        melde("\n".join(zeilen), "Einteilung: %d neu, %d geändert, %d abgesetzt"
-              % (len(neue), len(geaendert), len(entfallen)))
-        print("Benachrichtigung: %d neu, %d geaendert, %d abgesetzt."
-              % (len(neue), len(geaendert), len(entfallen)))
+            zeilen.append("Abgesetzt: %s Uhr – %s" % (
+                kurz_datum(datetime.fromisoformat(e["beginn"])), e.get("titel", "")))
+
+        teile = []
+        if neue:
+            teile.append("%d neu" % len(neue))
+        if geaendert:
+            teile.append("%d geändert" % len(geaendert))
+        if entfallen:
+            teile.append("%d abgesetzt" % len(entfallen))
+        titel = "Einteilung: " + ", ".join(teile)
+        text = "\n".join(zeilen)
+
+        melde(text, titel)
+        meldung_ablegen(titel, text)
+        print("Benachrichtigung: %s." % ", ".join(teile))
+    else:
+        meldung_ablegen(None, None)
 
 
 if __name__ == "__main__":

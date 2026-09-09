@@ -30,15 +30,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
  reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · U13 RLB · EV Duisburg – Düssel
- dorfer EG 1b
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · U13 RLB · EV Duisburg – Düsseldorfer E
- G 1b
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U13 RLB · EV Duisburg 
+ – Düsseldorfer EG 1b
 END:VALARM
 END:VEVENT
 END:VCALENDAR

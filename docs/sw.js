@@ -5,7 +5,7 @@
  * Parkhaus, Zug - kommt die zuletzt gespeicherte Fassung zum Zug.
  */
 
-const VERSION = "v3";
+const VERSION = "v4";
 const CACHE = "einteilungen-" + VERSION;
 
 // Wird beim ersten Besuch gespeichert, damit die App auch dann startet,
@@ -38,6 +38,22 @@ self.addEventListener("activate", (e) => {
         namen.filter((n) => n.startsWith("einteilungen-") && n !== CACHE)
              .map((n) => caches.delete(n))))
       .then(() => self.clients.claim())
+  );
+});
+
+// Tippt jemand auf die Mitteilung, soll die App nach vorn kommen statt
+// ein zweites Fenster zu oeffnen.
+self.addEventListener("notificationclick", (e) => {
+  e.notification.close();
+  const ziel = new URL("./", self.location).href;
+  e.waitUntil(
+    self.clients.matchAll({ type: "window", includeUncontrolled: true })
+      .then((fenster) => {
+        for (const f of fenster) {
+          if (f.url.startsWith(ziel) && "focus" in f) return f.focus();
+        }
+        return self.clients.openWindow(ziel);
+      })
   );
 });
 

@@ -113,15 +113,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
  isdorf":geo:50.811945,7.109233
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · U20 FS · EHC Troisdorf – Eisadl
- er Dortmund
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · U20 FS · EHC Troisdorf – Eisadler Dortm
- und
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U20 FS · EHC Troisdorf
+  – Eisadler Dortmund
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -146,15 +140,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
  .937979,6.98935
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · U17 I · Kölner Junghaie – ES W
- eißwasser
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · U17 I · Kölner Junghaie – ES Weißwass
- er
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 I · Kölner Jungha
+ ie – ES Weißwasser
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -180,15 +168,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
  .937979,6.98935
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · Frauen BZL · KEC "Die Haie" 1c 
- – Herforder EV Kölnarena 2
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · Frauen BZL · KEC "Die Haie" 1c – Herfor
- der EV Kölnarena 2
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · Frauen BZL · KEC "Die 
+ Haie" 1c – Herforder EV Kölnarena 2
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -214,14 +196,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
  reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · U17 II · EV Duisburg – SCC Adle
- r Berlin
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · U17 II · EV Duisburg – SCC Adler Berlin
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 II · EV Duisburg 
+ – SCC Adler Berlin
 END:VALARM
 END:VEVENT
 END:VCALENDAR

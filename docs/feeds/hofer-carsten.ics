@@ -50,15 +50,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
  le Krefeld":geo:51.339877,6.540168
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · U13 FS · Krefelder EV 1b – Löw
- en Frankfurt 1b
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · U13 FS · Krefelder EV 1b – Löwen Frank
- furt 1b
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U13 FS · Krefelder EV 
+ 1b – Löwen Frankfurt 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -83,15 +77,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
  isdorf":geo:50.811945,7.109233
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · U13 LL · EHC Troisdorf 1b – Mä
- dchen W.I.N. 1 Troisdorf
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · U13 LL · EHC Troisdorf 1b – Mädchen W.
- I.N. 1 Troisdorf
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U13 LL · EHC Troisdorf
+  1b – Mädchen W.I.N. 1 Troisdorf
 END:VALARM
 END:VEVENT
 END:VCALENDAR

@@ -50,15 +50,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
  inslaken":geo:51.574578,6.735361
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · U20 FS · Dinslakener Kobras – R
- atinger Ice Aliens
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · U20 FS · Dinslakener Kobras – Ratinger 
- Ice Aliens
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U20 FS · Dinslakener K
+ obras – Ratinger Ice Aliens
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -83,14 +77,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
  hmstraße":geo:51.242557,6.802144
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · U9 RL · Düsseldorfer EG – Breh
- mstraße
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · U9 RL · Düsseldorfer EG – Brehmstraße
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U9 RL · Düsseldorfer 
+ EG – Brehmstraße
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -115,15 +104,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
   Eissportarena Hamm":geo:51.686934,7.886138
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · U17 RL · Lippe Hockey Hamm – He
- rforder EV Hamm
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · U17 RL · Lippe Hockey Hamm – Herforder 
- EV Hamm
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 RL · Lippe Hockey 
+ Hamm – Herforder EV Hamm
 END:VALARM
 END:VEVENT
 END:VCALENDAR

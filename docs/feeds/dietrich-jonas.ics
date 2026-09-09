@@ -30,14 +30,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West,
  n-West":geo:51.454179,6.976731
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · RL FS · Ratinger Ice Aliens – H
- erner EV
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · RL FS · Ratinger Ice Aliens – Herner EV
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · RL FS · Ratinger Ice A
+ liens – Herner EV
 END:VALARM
 END:VEVENT
 END:VCALENDAR

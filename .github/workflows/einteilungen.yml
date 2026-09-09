@@ -21,6 +21,7 @@ on:
 
 permissions:
   contents: write
+  issues: write          # fuer die Meldung bei neuer Einteilung
 
 concurrency:
   group: einteilungen
@@ -30,9 +31,9 @@ jobs:
   aktualisieren:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
@@ -55,7 +56,24 @@ jobs:
         env:
           # Optional: Repository -> Settings -> Secrets -> Actions -> NTFY_TOPIC
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          # Legt bei Aenderungen eine Meldung fuer den naechsten Schritt ab
+          MELDUNG_DATEI: meldung.txt
         run: python esrw_ical.py
+
+      # Zweiter Meldeweg, der ohne zusaetzliche App auskommt: GitHub schickt
+      # fuer ein neues Issue von sich aus eine E-Mail an den Repository-
+      # Eigentuemer, und die GitHub-App auf dem Handy meldet sich per Push.
+      - name: Bei neuer Einteilung ein Issue anlegen
+        if: hashFiles('meldung.txt') != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TITEL=$(head -n 1 meldung.txt)
+          tail -n +2 meldung.txt > rumpf.txt
+          echo "" >> rumpf.txt
+          echo "Quelle: https://www.esrw.de/einteilungen.html" >> rumpf.txt
+          gh issue create --title "$TITEL" --body-file rumpf.txt --label einteilung \
+            || gh issue create --title "$TITEL" --body-file rumpf.txt
 
       - name: Aenderungen veroeffentlichen
         run: |

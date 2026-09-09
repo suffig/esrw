@@ -50,15 +50,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
  .937979,6.98935
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · U15 RLB · Kölner Junghaie 1b –
-  Iserlohner EC 1b
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · U15 RLB · Kölner Junghaie 1b – Iserloh
- ner EC 1b
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U15 RLB · Kölner Jung
+ haie 1b – Iserlohner EC 1b
 END:VALARM
 END:VEVENT
 END:VCALENDAR

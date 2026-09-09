@@ -92,15 +92,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
  alle am Seilersee":geo:51.384598,7.713829
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · U17 I · Iserlohner EC – Düssel
- dorfer EG
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · U17 I · Iserlohner EC – Düsseldorfer E
- G
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 I · Iserlohner EC 
+ – Düsseldorfer EG
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -125,14 +119,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
  alle am Seilersee":geo:51.384598,7.713829
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · U9 RL · Iserlohner EC – Iserloh
- n
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · U9 RL · Iserlohner EC – Iserlohn
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U9 RL · Iserlohner EC 
+ – Iserlohn
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -157,15 +146,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
   Eissportarena Hamm":geo:51.686934,7.886138
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · U17 RL · Lippe Hockey Hamm – He
- rforder EV Hamm
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · U17 RL · Lippe Hockey Hamm – Herforder 
- EV Hamm
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 RL · Lippe Hockey 
+ Hamm – Herforder EV Hamm
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -190,14 +173,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
  alle am Seilersee":geo:51.384598,7.713829
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · U15 RLA · Iserlohner EC – Krefe
- lder EV
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · U15 RLA · Iserlohner EC – Krefelder EV
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U15 RLA · Iserlohner E
+ C – Krefelder EV
 END:VALARM
 END:VEVENT
 END:VCALENDAR

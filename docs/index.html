@@ -16,12 +16,14 @@
   :root {
     --bg:#f6f6f4; --karte:#fff; --text:#1b1b19; --dim:#6d6d67; --linie:#e4e4df;
     --akzent:#15599e; --akzent-text:#fff; --warn:#9a4a15; --warn-bg:#fdf3e7;
+    --gut:#1d6b3f; --gut-bg:#eaf5ee;
     --schatten:0 1px 2px rgba(0,0,0,.05);
   }
   @media (prefers-color-scheme: dark) {
     :root {
       --bg:#141417; --karte:#1e1e23; --text:#ececeb; --dim:#9c9c96; --linie:#31313a;
       --akzent:#4b93de; --akzent-text:#0b1a2a; --warn:#e0a670; --warn-bg:#2c2318;
+      --gut:#7ec79b; --gut-bg:#17261d;
       --schatten:none;
     }
   }
@@ -43,6 +45,7 @@
     -webkit-appearance:none; appearance:none;
   }
   input[type=search]:focus { outline:2px solid var(--akzent); outline-offset:-1px; }
+  .frage { font-weight:650; margin:0 0 10px; }
 
   .namen { list-style:none; margin:14px 0 0; padding:0;
            border:1px solid var(--linie); border-radius:11px; overflow:hidden;
@@ -57,9 +60,14 @@
   .anzahl { color:var(--dim); font-size:.85rem; white-space:nowrap; }
   .leer { color:var(--dim); padding:24px 4px; text-align:center; }
 
-  .zurueck { background:none; border:0; color:var(--akzent); font:inherit;
-             padding:0; cursor:pointer; margin:0 0 14px; }
-  h2 { font-size:1.3rem; margin:0 0 16px; }
+  .profilzeile { display:flex; justify-content:space-between; align-items:center;
+                 gap:12px; background:var(--karte); border:1px solid var(--linie);
+                 border-radius:11px; padding:11px 15px; margin-bottom:12px;
+                 box-shadow:var(--schatten); }
+  .profilzeile b { font-size:1.05rem; }
+  .profilzeile small { display:block; color:var(--dim); font-size:.78rem; }
+  .textknopf { background:none; border:0; color:var(--akzent); font:inherit;
+               padding:0; cursor:pointer; white-space:nowrap; }
 
   .abo { display:block; background:var(--akzent); color:var(--akzent-text);
          text-decoration:none; padding:15px 18px; border-radius:12px;
@@ -69,6 +77,19 @@
                   background:var(--karte); color:var(--text);
                   border:1px solid var(--linie); border-radius:10px; }
   .zweit button:hover { border-color:var(--akzent); }
+
+  .melde { background:var(--karte); border:1px solid var(--linie);
+           border-radius:11px; padding:13px 15px; margin-top:12px;
+           box-shadow:var(--schatten); }
+  .melde h4 { margin:0 0 5px; font-size:.95rem; }
+  .melde p { margin:0 0 10px; color:var(--dim); font-size:.87rem; }
+  .melde button { width:100%; padding:11px; font:inherit; cursor:pointer;
+                  background:var(--akzent); color:var(--akzent-text);
+                  border:0; border-radius:10px; font-weight:600; }
+  .melde .status { display:inline-block; font-size:.8rem; font-weight:600;
+                   padding:2px 9px; border-radius:99px; }
+  .melde .an  { background:var(--gut-bg); color:var(--gut); }
+  .melde .aus { background:var(--warn-bg); color:var(--warn); }
 
   details { margin-top:14px; background:var(--karte); border:1px solid var(--linie);
             border-radius:11px; padding:0 15px; }
@@ -84,6 +105,7 @@
   .spiel { background:var(--karte); border:1px solid var(--linie); border-radius:11px;
            padding:13px 15px; margin-bottom:9px; box-shadow:var(--schatten); }
   .spiel.war { opacity:.62; }
+  .spiel.neu { border-color:var(--warn); }
   .kopf { display:flex; justify-content:space-between; gap:10px; align-items:baseline; }
   .datum { font-weight:640; }
   .rolle { font-size:.72rem; font-weight:650; background:var(--akzent);
@@ -96,7 +118,6 @@
              padding:6px 9px; border-radius:7px; margin-top:7px; }
   .geaendert { color:var(--warn); background:var(--warn-bg); font-size:.85rem;
                font-weight:600; padding:6px 9px; border-radius:7px; margin:8px 0 0; }
-  .spiel.neu { border-color:var(--warn); }
 
   .zahlen { display:grid; grid-template-columns:repeat(3,1fr); gap:9px;
             margin-bottom:10px; }
@@ -115,6 +136,7 @@
   .reihe i { display:block; height:5px; border-radius:3px; background:var(--akzent);
              font-style:normal; margin-top:3px; }
   .reihe em { font-style:normal; color:var(--dim); font-size:.85rem; }
+
   footer { margin-top:34px; padding-top:16px; border-top:1px solid var(--linie);
            color:var(--dim); font-size:.83rem; }
   footer a { color:var(--akzent); }
@@ -128,24 +150,36 @@
     <p class="stand" id="stand">wird geladen …</p>
   </header>
 
-  <!-- Auswahl -->
+  <!-- Namensauswahl -->
   <section id="auswahl">
+    <p class="frage" id="frage">Wer bist du?</p>
     <label for="suche" class="versteckt">Name suchen</label>
     <input type="search" id="suche" placeholder="Eigenen Namen suchen …"
            autocomplete="off" autocorrect="off" spellcheck="false">
     <ul class="namen" id="namen"></ul>
     <p class="leer versteckt" id="nichts">Kein Name gefunden.</p>
+    <p class="leer versteckt" id="abbrechen-zeile">
+      <button class="textknopf" id="abbrechen">Abbrechen</button>
+    </p>
   </section>
 
-  <!-- Detail -->
+  <!-- Persönliche Ansicht -->
   <section id="detail" class="versteckt">
-    <button class="zurueck" id="zurueck">← Anderer Name</button>
-    <h2 id="person"></h2>
+    <div class="profilzeile">
+      <span><b id="person"></b><small id="profil-hinweis">dein Profil</small></span>
+      <button class="textknopf" id="wechseln">Wechseln</button>
+    </div>
 
     <a class="abo" id="abo" href="#">Im Kalender abonnieren</a>
     <div class="zweit">
       <button id="kopieren">Link kopieren</button>
       <button id="laden">Einmalig laden</button>
+    </div>
+
+    <div class="melde versteckt" id="melde">
+      <h4>Benachrichtigungen <span class="status" id="melde-status"></span></h4>
+      <p id="melde-text"></p>
+      <button id="melde-knopf" class="versteckt"></button>
     </div>
 
     <details id="anleitung">
@@ -189,45 +223,65 @@
 (function () {
   "use strict";
 
-  var basis = location.href.split("#")[0].replace(/index\.html$/, "").replace(/\/?$/, "/");
-  var daten = null, aktuell = null;
+  var basis = location.href.split("#")[0].split("?")[0]
+                .replace(/index\.html$/, "").replace(/\/?$/, "/");
+  var daten = null, aktuell = null, profil = null;
   var el = function (id) { return document.getElementById(id); };
   var wochentag = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
 
-  function merke(schluessel, wert) {
-    try { wert === null ? localStorage.removeItem(schluessel)
-                        : localStorage.setItem(schluessel, wert); } catch (e) {}
-  }
-  function gemerkt(schluessel) {
+  // ------------------------------------------------------------- Speicher
+
+  function lesen(schluessel) {
     try { return localStorage.getItem(schluessel); } catch (e) { return null; }
   }
+  function schreiben(schluessel, wert) {
+    try {
+      if (wert === null) localStorage.removeItem(schluessel);
+      else localStorage.setItem(schluessel, wert);
+    } catch (e) {}
+  }
+  function profilLesen() {
+    try {
+      var roh = lesen("profil");
+      if (roh) return JSON.parse(roh);
+    } catch (e) {}
+    // Aus der Zeit vor den Profilen: da stand nur der Name im Speicher.
+    var alt = lesen("person");
+    return alt ? { slug: alt, gesehen: {} } : null;
+  }
+  function profilSchreiben() {
+    if (profil) schreiben("profil", JSON.stringify(profil));
+  }
 
-  // Suche soll bei Sonderzeichen nachsichtig sein: "muller", "mueller" und
-  // "Müller" muessen alle "Müller" finden, "rene" auch "René".
-  function ohneZeichen(s) {          // ü -> u, é -> e
+  // --------------------------------------------------------------- Suche
+
+  // Nachsichtig bei Sonderzeichen: "muller", "mueller" und "Müller" sollen
+  // alle "Müller" finden, "rene" auch "René".
+  function ohneZeichen(s) {                       // ü -> u, é -> e
     return (s || "").toLowerCase().normalize("NFD")
       .replace(/[̀-ͯ]/g, "").replace(/ß/g, "ss")
       .replace(/[^a-z0-9]+/g, " ").trim();
   }
-  function ausgeschrieben(s) {       // ü -> ue
+  function ausgeschrieben(s) {                    // ü -> ue
     return (s || "").toLowerCase()
       .replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue")
       .replace(/ß/g, "ss").normalize("NFD").replace(/[̀-ͯ]/g, "")
       .replace(/[^a-z0-9]+/g, " ").trim();
   }
-  // Beide Schreibweisen in den Suchtext, dann findet jede Eingabe eine davon
   function suchtextVon(s) { return ohneZeichen(s) + " " + ausgeschrieben(s); }
 
   function uhr(d) {
     return d.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
   }
-
   function feedUrl(slug, protokoll) {
-    var pfad = basis.replace(/^https?:\/\//, "") + "feeds/" + slug + ".ics";
-    return protokoll + "//" + pfad;
+    return protokoll + "//" + basis.replace(/^https?:\/\//, "") +
+           "feeds/" + slug + ".ics";
+  }
+  function personMit(slug) {
+    return daten.personen.filter(function (p) { return p.slug === slug; })[0];
   }
 
-  // ------------------------------------------------------------- Namensliste
+  // --------------------------------------------------------- Namensliste
 
   function zeigeListe(filter) {
     var liste = el("namen"), treffer = 0;
@@ -237,7 +291,6 @@
     daten.personen.forEach(function (p) {
       var suchtext = suchtextVon(p.name + " " + (p.varianten || []).join(" "));
       if (f && suchtext.indexOf(f) === -1) {
-        // auch einzelne Wortanfaenge zulassen ("lars" findet "Müller, Lars")
         var teile = suchtext.split(" ");
         if (!teile.some(function (t) { return t.indexOf(f) === 0; })) return;
       }
@@ -252,7 +305,7 @@
       anzahl.className = "anzahl";
       anzahl.textContent = n === 0 ? "–" : n + (n === 1 ? " Spiel" : " Spiele");
       b.appendChild(name); b.appendChild(anzahl);
-      b.addEventListener("click", function () { location.hash = p.slug; });
+      b.addEventListener("click", function () { profilSetzen(p); });
       li.appendChild(b);
       liste.appendChild(li);
     });
@@ -260,7 +313,141 @@
     el("nichts").classList.toggle("versteckt", treffer > 0);
   }
 
-  // ----------------------------------------------------------------- Detail
+  function profilSetzen(p) {
+    var vorher = profil && profil.slug;
+    profil = profil || {};
+    if (profil.slug !== p.slug) {
+      // Anderer Mensch: Gesehen-Merker gehören nicht zu ihm.
+      profil = { slug: p.slug, gesehen: {}, begonnen: false };
+    }
+    profil.slug = p.slug;
+    profil.name = p.name;
+    profilSchreiben();
+    if (vorher !== p.slug) schreiben("person", null);
+    location.hash = p.slug;
+    zeigePerson(p);
+  }
+
+  // -------------------------------------------------- Benachrichtigungen
+
+  function schluesselVon(s) {
+    return s.beginn + "|" + s.paarung + "|" + s.rolle + "|" + (s.aenderung || "");
+  }
+
+  function badgeSetzen(anzahl) {
+    try {
+      if (anzahl > 0 && navigator.setAppBadge) navigator.setAppBadge(anzahl);
+      else if (navigator.clearAppBadge) navigator.clearAppBadge();
+    } catch (e) {}
+  }
+
+  function alsApp() {
+    return window.matchMedia("(display-mode: standalone)").matches ||
+           navigator.standalone === true;
+  }
+
+  function meldeLage() {
+    if (!("Notification" in window)) {
+      return alsApp() ? "geht-nicht" : "erst-installieren";
+    }
+    if (Notification.permission === "granted") return "an";
+    if (Notification.permission === "denied") return "abgelehnt";
+    return "fragen";
+  }
+
+  function zeigeMeldeKarte() {
+    var karte = el("melde"), status = el("melde-status"),
+        text = el("melde-text"), knopf = el("melde-knopf");
+    karte.classList.remove("versteckt");
+    knopf.classList.add("versteckt");
+
+    var lage = meldeLage();
+    if (lage === "an") {
+      status.className = "status an";
+      status.textContent = "an";
+      text.textContent = "Beim Öffnen der App bekommst du eine Mitteilung, " +
+        "wenn eine Einteilung dazugekommen ist oder sich geändert hat. " +
+        "Das Symbol auf dem Home-Bildschirm zeigt die Anzahl.";
+    } else if (lage === "fragen") {
+      status.className = "status aus";
+      status.textContent = "aus";
+      text.textContent = "Die App meldet sich dann, wenn eine Einteilung " +
+        "dazukommt oder sich ändert.";
+      knopf.textContent = "Benachrichtigungen einschalten";
+      knopf.classList.remove("versteckt");
+    } else if (lage === "abgelehnt") {
+      status.className = "status aus";
+      status.textContent = "abgelehnt";
+      text.textContent = "Du hast Mitteilungen abgelehnt. Wieder erlauben in " +
+        "Einstellungen → Apps → Einteilungen → Mitteilungen.";
+    } else if (lage === "erst-installieren") {
+      status.className = "status aus";
+      status.textContent = "aus";
+      text.textContent = "Dafür muss die Seite auf dem Home-Bildschirm liegen: " +
+        "in Safari auf Teilen → Zum Home-Bildschirm. Danach hier nochmal " +
+        "hereinschauen.";
+    } else {
+      status.className = "status aus";
+      status.textContent = "nicht möglich";
+      text.textContent = "Dieser Browser kennt keine Mitteilungen. Der " +
+        "Kalender oben funktioniert trotzdem.";
+    }
+  }
+
+  function meldeAnfragen() {
+    if (!("Notification" in window)) return;
+    // Muss aus einem Klick heraus passieren, sonst blockt iOS es stillschweigend.
+    Notification.requestPermission().then(function () {
+      zeigeMeldeKarte();
+      if (Notification.permission === "granted") pruefeNeue(aktuell, true);
+    });
+  }
+
+  function melden(titel, rumpf) {
+    if (!("Notification" in window) || Notification.permission !== "granted") return;
+    if (!navigator.serviceWorker) return;
+    navigator.serviceWorker.ready.then(function (reg) {
+      reg.showNotification(titel, {
+        body: rumpf,
+        icon: "icon-192.png",
+        badge: "icon-192.png",
+        tag: "einteilung",
+        renotify: true,
+        data: { slug: profil && profil.slug }
+      });
+    }).catch(function () {});
+  }
+
+  function pruefeNeue(person, stumm) {
+    if (!person || !profil) return;
+    var kommend = person.spiele.filter(function (s) { return !s.vergangen; });
+    var vorher = profil.gesehen || {};
+    var neu = kommend.filter(function (s) { return !vorher[schluesselVon(s)]; });
+
+    // Merker neu aufbauen, damit er nicht endlos wächst
+    var jetzt = {};
+    kommend.forEach(function (s) { jetzt[schluesselVon(s)] = 1; });
+    var ersterBesuch = !profil.begonnen;
+    profil.gesehen = jetzt;
+    profil.begonnen = true;
+    profilSchreiben();
+
+    // Beim ersten Mal wäre alles "neu" - das wäre eine sinnlose Sammelmeldung.
+    if (ersterBesuch || !neu.length) { badgeSetzen(0); return; }
+
+    badgeSetzen(neu.length);
+    if (stumm) return;
+
+    var erstes = neu[0];
+    var d = new Date(erstes.beginn);
+    var zeile = wochentag[d.getDay()] + ". " +
+      d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }) +
+      ", " + uhr(d) + " Uhr – " + erstes.paarung;
+    melden(neu.length === 1 ? "Neue Einteilung" : neu.length + " neue Einteilungen",
+           neu.length === 1 ? zeile : zeile + " und " + (neu.length - 1) + " weitere");
+  }
+
+  // -------------------------------------------------------------- Karten
 
   function karte(s) {
     var beginn = new Date(s.beginn), treff = new Date(s.treffpunkt);
@@ -322,7 +509,7 @@
     return d;
   }
 
-  // ------------------------------------------------------------- Statistik
+  // ----------------------------------------------------------- Statistik
 
   function balken(titel, eintraege) {
     if (!eintraege || !eintraege.length) return null;
@@ -355,7 +542,7 @@
     if (!s) return;
 
     var h = document.createElement("h3");
-    h.textContent = "Statistik";
+    h.textContent = "Deine Statistik";
     ziel.appendChild(h);
 
     var zahlen = document.createElement("div");
@@ -386,12 +573,15 @@
     ziel.appendChild(fuss);
   }
 
+  // ------------------------------------------------------------ Ansichten
+
   function zeigePerson(p) {
     aktuell = p;
-    merke("person", p.slug);
     el("auswahl").classList.add("versteckt");
     el("detail").classList.remove("versteckt");
     el("person").textContent = p.name;
+    el("profil-hinweis").textContent =
+      (profil && profil.slug === p.slug) ? "dein Profil" : "fremdes Profil";
     el("abo").href = feedUrl(p.slug, "webcal:");
     el("laden").onclick = function () { location.href = feedUrl(p.slug, location.protocol); };
 
@@ -418,32 +608,49 @@
       ziel.appendChild(h2);
       gewesen.forEach(function (s) { ziel.appendChild(karte(s)); });
     }
+
     zeigeStatistik(p);
+    zeigeMeldeKarte();
+    if (profil && profil.slug === p.slug) pruefeNeue(p, false);
     window.scrollTo(0, 0);
   }
 
-  function zeigeAuswahl() {
+  function zeigeAuswahl(wechsel) {
     aktuell = null;
     el("detail").classList.add("versteckt");
     el("auswahl").classList.remove("versteckt");
     el("statistik").innerHTML = "";
+    el("frage").textContent = wechsel ? "Auf wen soll umgestellt werden?" : "Wer bist du?";
+    el("abbrechen-zeile").classList.toggle("versteckt", !wechsel || !profil);
   }
 
   function ausHash() {
     var slug = location.hash.replace(/^#/, "");
-    if (!slug) { zeigeAuswahl(); return; }
-    var p = daten.personen.filter(function (x) { return x.slug === slug; })[0];
-    p ? zeigePerson(p) : zeigeAuswahl();
+    if (slug) {
+      var p = personMit(slug);
+      if (p) { zeigePerson(p); return; }
+    }
+    if (profil && profil.slug && personMit(profil.slug)) {
+      zeigePerson(personMit(profil.slug));
+      return;
+    }
+    zeigeAuswahl(false);
   }
 
-  // ------------------------------------------------------------------ Start
+  // --------------------------------------------------------------- Start
 
-  el("zurueck").addEventListener("click", function () {
-    merke("person", null);
-    location.hash = "";
+  el("wechseln").addEventListener("click", function () {
+    el("suche").value = "";
+    zeigeListe("");
+    zeigeAuswahl(true);
+  });
+  el("abbrechen").addEventListener("click", function () {
+    if (profil && personMit(profil.slug)) zeigePerson(personMit(profil.slug));
   });
   el("suche").addEventListener("input", function (e) { zeigeListe(e.target.value); });
+  el("melde-knopf").addEventListener("click", meldeAnfragen);
   el("kopieren").addEventListener("click", function () {
+    if (!aktuell) return;
     var url = feedUrl(aktuell.slug, location.protocol);
     var knopf = el("kopieren");
     var fertig = function () {
@@ -458,50 +665,66 @@
   });
   window.addEventListener("hashchange", ausHash);
 
-  // Zwei Dateien: die grosse mit den Inhalten, die winzige nur mit dem
-  // Zeitpunkt des letzten Laufs. Getrennt, damit die grosse unveraendert
-  // bleibt, solange sich inhaltlich nichts tut.
-  var hole = function (name) {
+  // Beim Zurückkehren zur App erneut prüfen - dann meldet sie sich auch,
+  // wenn sie nur aus dem Hintergrund geholt wird.
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible" && daten) neuLaden();
+  });
+
+  function hole(name) {
     return fetch(name + "?" + Date.now())
       .then(function (r) { if (!r.ok) throw 0; return r.json(); });
-  };
+  }
+
+  function standAnzeigen(d, lauf) {
+    var s = el("stand");
+    s.className = "stand";
+    s.textContent = d.personen.length + " Schiedsrichter · " + d.spiele_gesamt + " Spiele";
+    if (lauf && lauf.stand) {
+      var stand = new Date(lauf.stand);
+      var alter = (Date.now() - stand.getTime()) / 3600000;
+      s.textContent = "Stand: " + stand.toLocaleString("de-DE",
+        { dateStyle: "medium", timeStyle: "short" }) + " Uhr · " + s.textContent;
+      if (alter > 6) {
+        s.className = "stand alt";
+        s.textContent += " – seit " + Math.round(alter) + " Std. nicht aktualisiert";
+      }
+    }
+  }
+
+  function neuLaden() {
+    return Promise.all([hole("daten.json"),
+                        hole("stand.json").catch(function () { return null; })])
+      .then(function (beides) {
+        daten = beides[0];
+        standAnzeigen(daten, beides[1]);
+        if (aktuell) {
+          var frisch = personMit(aktuell.slug);
+          if (frisch) zeigePerson(frisch);
+        }
+      })
+      .catch(function () {});
+  }
 
   Promise.all([hole("daten.json"), hole("stand.json").catch(function () { return null; })])
     .then(function (beides) {
-      var d = beides[0], lauf = beides[1];
-      daten = d;
-      document.title = d.titel;
-      el("titel").textContent = d.titel;
-      el("quelle").href = d.quelle;
-
-      var s = el("stand");
-      s.textContent = (lauf ? d.personen.length + " Schiedsrichter · " +
-        d.spiele_gesamt + " Spiele" : "");
-      if (lauf && lauf.stand) {
-        var stand = new Date(lauf.stand);
-        var alter = (Date.now() - stand.getTime()) / 3600000;
-        s.textContent = "Stand: " + stand.toLocaleString("de-DE",
-          { dateStyle: "medium", timeStyle: "short" }) + " Uhr · " +
-          d.personen.length + " Schiedsrichter · " + d.spiele_gesamt + " Spiele";
-        if (alter > 6) {
-          s.className = "stand alt";
-          s.textContent += " – seit " + Math.round(alter) + " Std. nicht aktualisiert";
-        }
-      }
-
-      el("fuss").textContent = "Termine beginnen " + d.vorlauf_minuten +
+      daten = beides[0];
+      profil = profilLesen();
+      document.title = daten.titel;
+      el("titel").textContent = daten.titel;
+      el("quelle").href = daten.quelle;
+      standAnzeigen(daten, beides[1]);
+      el("fuss").textContent = "Termine beginnen " + daten.vorlauf_minuten +
         " Minuten vor Spielbeginn, damit du rechtzeitig an der Halle bist.";
-
       zeigeListe("");
-      if (!location.hash && gemerkt("person")) location.hash = gemerkt("person");
-      else ausHash();
+      ausHash();
     })
     .catch(function () {
       el("stand").className = "stand alt";
       el("stand").textContent = "Daten konnten nicht geladen werden.";
     });
 
-  // Offlinefaehig machen und aufs Handy installierbar. Braucht https oder
+  // Offlinefähig machen und aufs Handy installierbar. Braucht https oder
   // localhost - beim Öffnen als Datei passiert einfach nichts.
   if ("serviceWorker" in navigator && location.protocol !== "file:") {
     window.addEventListener("load", function () {

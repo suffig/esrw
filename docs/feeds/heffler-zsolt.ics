@@ -29,15 +29,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
  le Krefeld":geo:51.339877,6.540168
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · U13 FS · Krefelder EV – Löwen 
- Frankfurt
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · U13 FS · Krefelder EV – Löwen Frankfur
- t
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U13 FS · Krefelder EV 
+ – Löwen Frankfurt
 END:VALARM
 END:VEVENT
 END:VCALENDAR

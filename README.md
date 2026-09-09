@@ -14,11 +14,14 @@ Pro Einteilung ein Termin mit:
 
 * **Beginn = Treffpunkt**, also eine Stunde vor Spielbeginn — der Termin fängt
   um 17:00 Uhr an, wenn das Spiel um 18:00 Uhr ist
-* **Hallenadresse und Koordinaten**. Durch die Koordinaten erkennt iOS die
-  Halle als echten Ort und rechnet „Zeit zum Losfahren" verkehrsabhängig aus –
-  Iserlohn am Freitagabend ist etwas anderes als Duisburg am Sonntagmorgen
+* **Hallenadresse und Koordinaten** im Ortsfeld – antippbar, Karten navigiert
+  direkt hin. Die Koordinaten sind zugleich die Voraussetzung dafür, dass iOS
+  eine Abfahrtszeit rechnen kann
 * **Rolle** (HSR / (L)SR), Liga, echter Spielbeginn und das restliche Gespann
-* **zwei Erinnerungen**: am Vortag und eine Stunde vor Treffpunkt
+* **Erinnerung** eine Stunde vor dem Termin, also zwei Stunden vor Spielbeginn.
+  Den Abfahrtszeitpunkt rechnet iOS selbst verkehrsabhängig aus, sobald
+  „Mit aktueller Wegzeit" eingeschaltet ist – dafür sind die Koordinaten da
+  (siehe ANLEITUNG.md, Schritt 5)
 * **Änderungshinweis**: ändert sich Zeit oder Halle, bekommt der Termin eine
   Woche lang ein ⚠ im Titel und eine Zeile, was vorher galt
 
@@ -75,6 +78,34 @@ die zuletzt geladenen Einteilungen auch ohne Empfang. Kalenderdateien werden
 bewusst **nie** zwischengespeichert – veraltete Termine wären schlimmer als gar
 keine Antwort.
 
+## Profil
+
+Beim ersten Öffnen fragt die App „Wer bist du?". Nach der Auswahl startet sie
+immer direkt mit den eigenen Spielen und der eigenen Statistik. Die Auswahl
+liegt nur im Browser des jeweiligen Handys (`localStorage`) – es gibt keine
+Anmeldung, kein Konto und keinen Server, der irgendetwas darüber weiß.
+
+Über **Wechseln** lässt sich das Profil ändern. Ein geteilter Link wie
+`…/#garbsch-rene` zeigt die Spiele dieser Person an, **ohne** das eigene Profil
+zu überschreiben – erkennbar an „fremdes Profil" in der Kopfzeile.
+
+## Benachrichtigungen in der App
+
+Liegt die App auf dem Home-Bildschirm (iOS 16.4+ oder Android), kann sie
+Mitteilungen anzeigen, wenn eine Einteilung dazugekommen ist oder sich geändert
+hat. Zusätzlich zeigt das Symbol auf dem Home-Bildschirm die Anzahl als Zähler,
+und der bleibt dort stehen, auch wenn die App geschlossen ist.
+
+**Was das nicht kann:** von selbst im Hintergrund melden. Dafür bräuchte es
+echtes Web Push, und das verlangt einen Absender mit geheimem Schlüssel sowie
+eine Ablage der Push-Adressen aller Nutzer. In einem **öffentlichen**
+Repository wäre diese Ablage für jeden lesbar – deshalb ist sie hier bewusst
+nicht gebaut. Die App meldet sich also, wenn du sie öffnest oder aus dem
+Hintergrund holst.
+
+Wer eine echte Hintergrund-Benachrichtigung will, nimmt ntfy oder die
+GitHub-Meldung aus dem nächsten Abschnitt.
+
 ## Archiv und Statistik
 
 esrw.de zeigt nur wenige Tage rückwärts. Jeder Lauf trägt neu gesehene Spiele in
@@ -86,6 +117,18 @@ Das Archiv beginnt erst mit dem ersten Lauf zu sammeln – rückwirkend lässt s
 nichts holen. **`historie.json` gehört ins Repository**, sonst fängt die Zählung
 bei jedem Lauf von vorn an.
 
+## Meldungen bei neuer Einteilung
+
+Ändert sich etwas an *deinen* Einteilungen (neu, verschoben, abgesetzt), gehen
+zwei voneinander unabhängige Meldungen raus:
+
+* **GitHub-Issue** – der Workflow legt eines an, GitHub schickt dir dafür eine
+  E-Mail. Braucht keine Einrichtung und keine zusätzliche App.
+* **ntfy-Push** – nur wenn das Secret `NTFY_TOPIC` hinterlegt ist.
+
+Wer gemeint ist, steht in `config.json` unter `eigene_namen`. Kollegen bekommen
+nichts davon; bei ihnen taucht die Einteilung einfach im Kalender auf.
+
 ## Einstellungen
 
 Alles in [config.json](config.json):
@@ -95,8 +138,8 @@ Alles in [config.json](config.json):
 | `vorlauf_minuten` | Wie lange vor Spielbeginn man an der Halle sein soll (Standard 60) |
 | `spieldauer_minuten` | Wie lang der Termin insgesamt läuft (Standard 150) |
 | `vergangene_tage` | Wie viel Vergangenheit im Kalender bleibt, `0` schaltet es ab |
-| `erinnerungen` | Alarme, relativ zum **Treffpunkt**. `-P1D` = ein Tag, `-PT1H` = eine Stunde vorher |
-| `eigene_namen` | Nur für die ntfy-Push-Nachricht — für die Kalender selbst muss niemand eingetragen werden |
+| `erinnerungen` | Alarme, relativ zum Terminbeginn (= Treffpunkt). `-PT1H` = eine Stunde, `-PT45M` = 45 Minuten, `-P1D` = ein Tag vorher |
+| `eigene_namen` | Nur für die Meldungen an dich (GitHub-Issue und ntfy) — für die Kalender selbst muss niemand eingetragen werden |
 
 Die Einstellungen gelten für alle Feeds gemeinsam. Wer eine andere Vorlaufzeit
 möchte, verschiebt sich den Termin im eigenen Kalender oder betreibt eine eigene
@@ -159,7 +202,7 @@ Drei Sicherungen sind eingebaut:
 * Findet das Skript **null** Spiele, bricht es ab und schreibt nichts. Leere
   Kalender würden allen Abonnenten die Termine vom Handy löschen.
 * Bei Netzproblemen wird dreimal wiederholt, bevor aufgegeben wird.
-* Schlägt der Workflow fehl, geht eine Push-Nachricht raus (falls `NTFY_TOPIC`
+* Schlägt der Workflow fehl, geht eine Nachricht raus (falls `NTFY_TOPIC`
   hinterlegt ist). Sonst würden die Feeds still einfrieren und niemand merkt es.
 
 Der Regressionstest läuft ohne Netz gegen `tests/beispielseite.html`, einen

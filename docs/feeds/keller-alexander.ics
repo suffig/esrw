@@ -29,15 +29,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
  Kleinen Felde":geo:52.114893,8.652028
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · U17 RL · Herforder EV – Lippe H
- ockey Hamm Herford
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · U17 RL · Herforder EV – Lippe Hockey Ha
- mm Herford
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 RL · Herforder EV 
+ – Lippe Hockey Hamm Herford
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -62,15 +56,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
  Kleinen Felde":geo:52.114893,8.652028
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · U13 RLB · Herforder EV – Kölne
- r Junghaie 1b
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · U13 RLB · Herforder EV – Kölner Jungha
- ie 1b
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U13 RLB · Herforder EV
+  – Kölner Junghaie 1b
 END:VALARM
 END:VEVENT
 END:VCALENDAR

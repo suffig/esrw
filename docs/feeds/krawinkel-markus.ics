@@ -29,14 +29,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
  isdorf":geo:50.811945,7.109233
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · LL FS · EHC Troisdorf – TuS Wie
- hl
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · LL FS · EHC Troisdorf – TuS Wiehl
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · LL FS · EHC Troisdorf 
+ – TuS Wiehl
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -61,14 +56,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
  hmstraße":geo:51.242557,6.802144
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · U9 RL · Düsseldorfer EG – Breh
- mstraße
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · U9 RL · Düsseldorfer EG – Brehmstraße
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U9 RL · Düsseldorfer 
+ EG – Brehmstraße
 END:VALARM
 END:VEVENT
 END:VCALENDAR

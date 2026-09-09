@@ -50,15 +50,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
  le Krefeld":geo:51.339877,6.540168
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · U13 FS · Krefelder EV – Löwen 
- Frankfurt
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · U13 FS · Krefelder EV – Löwen Frankfur
- t
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U13 FS · Krefelder EV 
+ – Löwen Frankfurt
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -83,15 +77,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
  inslaken":geo:51.574578,6.735361
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · U17 FS · Dinslakener Kobras – D
- üsseldorfer EG U15
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · U17 FS · Dinslakener Kobras – Düsseldo
- rfer EG U15
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 FS · Dinslakener K
+ obras – Düsseldorfer EG U15
 END:VALARM
 END:VEVENT
 END:VCALENDAR

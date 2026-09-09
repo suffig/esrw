@@ -50,13 +50,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
  rum Westfalen":geo:51.49525,7.458288
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · DA FS · NEV – BW/Hessen
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · DA FS · NEV – BW/Hessen
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · DA FS · NEV – BW/Hes
+ sen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -81,13 +77,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
  rum Westfalen":geo:51.49525,7.458288
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · DA FS · NRW – Sachsen/Berlin
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · DA FS · NRW – Sachsen/Berlin
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · DA FS · NRW – Sachse
+ n/Berlin
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -112,15 +104,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
  Kleinen Felde":geo:52.114893,8.652028
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · U13 RLB · Herforder EV – Iserlo
- hner EC 1b
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · U13 RLB · Herforder EV – Iserlohner EC 
- 1b
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U13 RLB · Herforder EV
+  – Iserlohner EC 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -145,15 +131,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
  Kleinen Felde":geo:52.114893,8.652028
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · U15 LL · Herforder EV – Eisadle
- r Dortmund Herford
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · U15 LL · Herforder EV – Eisadler Dortmu
- nd Herford
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U15 LL · Herforder EV 
+ – Eisadler Dortmund Herford
 END:VALARM
 END:VEVENT
 END:VCALENDAR

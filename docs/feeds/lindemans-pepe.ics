@@ -29,15 +29,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
  inslaken":geo:51.574578,6.735361
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · LL FS · Dinslakener Kobras 1b –
-  EHC Essen Ruhr
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · LL FS · Dinslakener Kobras 1b – EHC Ess
- en Ruhr
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · LL FS · Dinslakener Ko
+ bras 1b – EHC Essen Ruhr
 END:VALARM
 END:VEVENT
 END:VCALENDAR

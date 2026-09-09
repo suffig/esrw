@@ -200,10 +200,79 @@ Der Kalender ist nur lesend. Änderungen macht immer der ESRW, du bekommst sie
 automatisch nach. Ändert sich Zeit oder Halle, steht eine Woche lang ein ⚠ im
 Termintitel und in der Beschreibung, was vorher galt.
 
-**Noch als App auf den Startbildschirm:** in Safari auf *Teilen* → *Zum
-Home-Bildschirm*. Dann hat die Seite ein eigenes Symbol, startet ohne
-Browserleiste und zeigt die Einteilungen auch dann, wenn du in der Halle keinen
-Empfang hast.
+### Die zwei Wecker
+
+**Termin selbst** beginnt zum Treffpunkt, also eine Stunde vor Spielbeginn.
+
+**Eingebauter Alert:** eine Stunde vor dem Termin – bei Spielbeginn 18:00 Uhr
+also um 16:00 Uhr. Änderbar in `config.json` unter `erinnerungen`.
+
+**Abfahrtszeitpunkt** rechnet iOS selbst aus, verkehrsabhängig vom aktuellen
+Standort. Dafür einmal einschalten:
+
+**Einstellungen → Apps → Kalender → Standardwarnzeiten → „Mit aktueller
+Wegzeit"** (je nach iOS-Version auch „Zeit zum Aufbrechen" oder „Zeit zum
+Losfahren").
+
+Zusätzlich braucht der Kalender den Standort:
+**Einstellungen → Datenschutz & Sicherheit → Ortungsdienste → Kalender →
+Beim Verwenden der App**.
+
+Die Termine bringen Adresse **und** Koordinaten mit, damit iOS die Halle
+sicher findet – ohne das kann es keine Fahrzeit rechnen.
+
+> **Ehrliche Einschränkung:** Ich kann von hier aus nicht prüfen, ob iOS diese
+> Funktion auch bei *abonnierten* Kalendern anbietet – abonnierte Termine sind
+> schreibgeschützt, und die Funktion ist laut Nutzerberichten ohnehin
+> wechselhaft (schaltet sich nach Updates gelegentlich selbst ab). Prüf beim
+> nächsten Spiel, ob die Meldung kommt.
+>
+> Kommt sie nicht, trag stattdessen einen festen Wecker in `config.json` ein –
+> eine Zeile genügt:
+>
+> ```json
+> "erinnerungen": [
+>   { "wann": "-PT1H",  "text": "In einer Stunde an der Halle" },
+>   { "wann": "-PT45M", "text": "Losfahren" }
+> ]
+> ```
+>
+> `-PT45M` heißt 45 Minuten vor dem Treffpunkt. Das gilt dann für alle
+> Kollegen gleich, weil alle denselben Feed-Bauplan benutzen.
+
+### Als App auf den Startbildschirm
+
+In Safari auf *Teilen* → *Zum Home-Bildschirm*. Dann hat die Seite ein eigenes
+Symbol, startet ohne Browserleiste und zeigt die Einteilungen auch dann, wenn du
+in der Halle keinen Empfang hast.
+
+**Das lohnt sich auch aus einem zweiten Grund:** Mitteilungen funktionieren auf
+dem iPhone ausschließlich, wenn die App auf dem Home-Bildschirm liegt. In einem
+normalen Safari-Tab gibt es sie nicht.
+
+### Profil und Mitteilungen in der App
+
+Beim ersten Öffnen fragt die App **„Wer bist du?"**. Nach der Auswahl startet sie
+immer direkt mit deinen Spielen und deiner Statistik. Über **Wechseln** in der
+Kopfzeile lässt sich das ändern.
+
+Die Auswahl liegt nur in deinem Handy – keine Anmeldung, kein Konto. Schickst du
+jemandem den Link mit deinem Namen dran (`…/#garbsch-rene`), sieht er deine
+Spiele, ohne dass sein eigenes Profil überschrieben wird.
+
+Darunter steht die Karte **Benachrichtigungen**. Ein Tipp auf *Einschalten*, iOS
+fragt nach, fertig. Danach meldet sich die App, wenn eine Einteilung dazukommt
+oder sich ändert, und das Symbol auf dem Home-Bildschirm zeigt die Anzahl.
+
+> **Wichtige Einschränkung, ehrlich gesagt:** Die App meldet sich, **wenn du sie
+> öffnest** oder aus dem Hintergrund holst – nicht von selbst im Hintergrund.
+> Für echtes Hintergrund-Push bräuchte es einen Absender mit geheimem Schlüssel
+> und eine Liste aller Push-Adressen. In einem öffentlichen Repository wäre die
+> für jeden lesbar, deshalb ist sie bewusst nicht gebaut.
+>
+> Der Zähler am Symbol bleibt aber stehen, auch wenn die App zu ist – du siehst
+> also beim Blick aufs Handy, dass etwas dazugekommen ist. Willst du eine echte
+> Meldung ohne Öffnen, nimm zusätzlich Schritt 7.
 
 ---
 
@@ -226,38 +295,69 @@ Adresszeile, sobald du jemanden angetippt hast.
 
 ---
 
-## Schritt 7 (optional) – Push-Nachricht bei neuer Einteilung
+## Schritt 7 – Meldung bei neuer Einteilung
 
-Das Kalender-Abo aktualisiert still im Hintergrund. Wenn du zusätzlich aktiv
-Bescheid bekommen willst:
+Das Kalender-Abo aktualisiert still im Hintergrund. Damit du aktiv Bescheid
+bekommst, wenn eine Einteilung dazukommt, sich ändert oder **du herausgenommen
+wirst**, gibt es zwei Wege. Sie schließen sich nicht aus.
 
-1. App **ntfy** installieren (iOS und Android, kostenlos, kein Konto nötig).
-2. In der App ein Thema abonnieren, z.B. `esrw-philip-k7t2x9`.
-   **Wer das Thema kennt, liest mit** – also nichts Erratbares nehmen.
-3. In `config.json` unter `eigene_namen` deine Schreibweise eintragen:
+Beide melden nur *deine* Einteilungen. Dafür muss in `config.json` deine
+Schreibweise stehen – genau so, wie sie auf esrw.de steht
+(`python esrw_ical.py --wer` listet alle auf):
 
 ```json
 "eigene_namen": ["Melchert, Philip"]
 ```
 
+### Weg A – GitHub-Issue (ohne zusätzliche App)
+
+Braucht **keine Einrichtung**. Sobald sich bei dir etwas ändert, legt der
+Workflow im Repository ein Issue an. GitHub verschickt dafür von sich aus eine
+E-Mail an dich als Eigentümer.
+
+Falls keine E-Mail kommt, prüfe:
+
+* <https://github.com/suffig/esrw> oben rechts **Watch** → **All Activity**
+  (oder mindestens *Participating and @mentions* plus **Issues**)
+* <https://github.com/settings/notifications> → **Watching** → **Email**
+  angehakt
+
+Wer die **GitHub-App** auf dem iPhone hat, bekommt dazu eine echte
+Push-Nachricht – das ist der schnellste Weg ohne weitere Installation.
+
+### Weg B – ntfy (echter Push, eigene App)
+
+1. App **ntfy** installieren (iOS und Android, kostenlos, kein Konto nötig).
+2. App öffnen und die Nachfrage nach Mitteilungen **erlauben**. Wurde sie
+   abgelehnt, nachträglich: **Einstellungen → ntfy → Mitteilungen →
+   Mitteilungen erlauben**. Ohne das bleibt es still, obwohl der Server
+   die Nachricht annimmt.
+3. In der App ein Thema abonnieren, z.B. `esrw-philip-k7t2x9`.
+   **Wer das Thema kennt, liest mit** – also nichts Erratbares nehmen.
 4. Das Thema als Secret hinterlegen:
    <https://github.com/suffig/esrw/settings/secrets/actions>
    * Knopf **New repository secret**
    * **Name**: `NTFY_TOPIC` (genau so, Großbuchstaben)
-   * **Secret**: dein Thema, z.B. `esrw-philip-k7t2x9` — nur der Name des
-     Themas, **nicht** die volle Adresse `https://ntfy.sh/…`
+   * **Secret**: nur der Themenname, **nicht** die volle Adresse
+     `https://ntfy.sh/…`
    * **Add secret**
 
 Danach steht es in der Liste unter **Repository secrets**. Ansehen kannst du es
 nicht mehr, nur überschreiben (**Update**) oder löschen.
 
-Ab dann bekommst du eine Nachricht, sobald bei dir eine Einteilung dazukommt,
-sich ändert oder **du aus einem Spiel herausgenommen wirst** – letzteres würde
-sonst kommentarlos vom Handy verschwinden. Außerdem meldet sich der Workflow,
-wenn er selbst scheitert; ohne das würden die Kalender still einfrieren.
+Ob der Weg steht, prüfst du am schnellsten ohne GitHub:
 
-Das gilt nur für dich – für die Kollegen bleibt es beim Kalender-Abo, weil jeder
-sein eigenes Thema bräuchte.
+```bash
+curl -H "Title: Test" -d "Kommt das an?" https://ntfy.sh/DEIN-THEMA
+```
+
+Kommt hier nichts, liegt es am Handy (Punkt 2), nicht am Workflow.
+
+### Was die Kollegen bekommen
+
+Nichts davon – für sie bleibt es beim Kalender-Abo, weil jeder ein eigenes
+Thema und einen eigenen GitHub-Zugang bräuchte. Neue Einteilungen tauchen bei
+ihnen trotzdem automatisch im Kalender auf.
 
 ---
 
@@ -320,9 +420,18 @@ Erwartetes Ergebnis:
   Text, dass es ein absichtlicher Testfehler war, plus Link zum Lauf
 * Kurz darauf zusätzlich die GitHub-E-Mail (siehe 4.4)
 
-Kommt die Push-Nachricht nicht, aber 8.1 hat funktioniert, dann stimmt das
-Secret nicht. Im Log des Schritts steht dann
-`Kein NTFY_TOPIC hinterlegt - keine Benachrichtigung moeglich.`
+**Kommt keine Nachricht, obwohl der Lauf rot ist?** Der Schritt *Bei Fehler
+benachrichtigen* zeigt in seinem Log, woran es lag. Auf den Lauf klicken, dann
+auf den Schritt, dann die Ausgabe aufklappen:
+
+| Im Log steht | Bedeutung |
+|---|---|
+| `Kein NTFY_TOPIC hinterlegt - keine Benachrichtigung moeglich.` | Das Secret fehlt → Schritt 7, Weg B, Punkt 4 |
+| nur eine JSON-Zeile mit `"topic": …` | ntfy hat die Nachricht **angenommen** – dann hängt es am Handy, nicht am Workflow. Mitteilungen für ntfy erlauben (Schritt 7, Weg B, Punkt 2) |
+| `curl: (…)` | ntfy.sh war nicht erreichbar |
+
+Die E-Mail von GitHub kommt unabhängig davon (siehe 4.4) – wenn die da ist,
+funktioniert die Überwachung grundsätzlich, und es fehlt nur der Push-Kanal.
 
 Danach einmal normal durchlaufen lassen (**Run workflow** ohne Haken), damit der
 letzte Lauf wieder grün ist.

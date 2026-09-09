@@ -9,9 +9,10 @@
   "vorlauf_minuten": 60,
   "spieldauer_minuten": 150,
 
+  "_erinnerungen": "Relativ zum Terminbeginn, und der ist der Treffpunkt (eine Stunde vor Spielbeginn). '-PT1H' meldet sich also eine Stunde vor dem Treffpunkt. Den Abfahrtszeitpunkt rechnet iOS selbst aus, siehe ANLEITUNG.md Schritt 5. Falls das bei dir nicht greift, hier eine feste Zeile ergaenzen, z.B. { \"wann\": \"-PT45M\", \"text\": \"Losfahren\" }.",
+
   "erinnerungen": [
-    { "wann": "-P1D",  "text": "Morgen Einteilung" },
-    { "wann": "-PT1H", "text": "Losfahren" }
+    { "wann": "-PT1H", "text": "In einer Stunde an der Halle" }
   ],
 
   "kalender_name_muster": "Einteilungen – {name}",

@@ -50,15 +50,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
  alle am Seilersee":geo:51.384598,7.713829
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · U17 I · Iserlohner EC – Düssel
- dorfer EG
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · U17 I · Iserlohner EC – Düsseldorfer E
- G
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 I · Iserlohner EC 
+ – Düsseldorfer EG
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -83,15 +77,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
  Kleinen Felde":geo:52.114893,8.652028
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · U13 RLB · Herforder EV – Iserlo
- hner EC 1b
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · U13 RLB · Herforder EV – Iserlohner EC 
- 1b
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U13 RLB · Herforder EV
+  – Iserlohner EC 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -116,15 +104,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
  Kleinen Felde":geo:52.114893,8.652028
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · U15 LL · Herforder EV – Eisadle
- r Dortmund Herford
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · U15 LL · Herforder EV – Eisadler Dortmu
- nd Herford
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U15 LL · Herforder EV 
+ – Eisadler Dortmund Herford
 END:VALARM
 END:VEVENT
 END:VCALENDAR

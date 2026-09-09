@@ -52,14 +52,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
  reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
 BEGIN:VALARM
 ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Einteilung - (L)SR · U17 II · EV Duisburg – SCC Adle
- r Berlin
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:Losfahren - (L)SR · U17 II · EV Duisburg – SCC Adler Berlin
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 II · EV Duisburg 
+ – SCC Adler Berlin
 END:VALARM
 END:VEVENT
 END:VCALENDAR
