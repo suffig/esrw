@@ -1,0 +1,64 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//esrw-ical//Schiedsrichter-Einteilungen//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Einteilungen – Pluschkell\, Julian
+X-WR-TIMEZONE:Europe/Berlin
+REFRESH-INTERVAL;VALUE=DURATION:PT1H
+X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:34715b84b99dc55cfac07d648e31222c720d697b@esrw.de
+SEQUENCE:0
+DTSTAMP:20260909T163652Z
+LAST-MODIFIED:20260909T163652Z
+DTSTART:20260904T164500Z
+DTEND:20260904T201500Z
+SUMMARY:(L)SR · U20 FS · Herner EV – Eisadler Dortmund
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:45 Uhr\nTreffpunk
+ t: 18:45 Uhr (60 Min vor Spielbeginn)\nLiga: U20 FS\nHalle: Gysenberghalle
+  Herne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Schlüter\, Thom
+ as\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Gysenberghalle Herne\, Am Revierpark 22\, 44627 Herne
+GEO:51.532602;7.254372
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
+ evierpark 22, 44627 Herne";X-APPLE-RADIUS=100;X-TITLE="Gysenberghalle Hern
+ e":geo:51.532602,7.254372
+END:VEVENT
+BEGIN:VEVENT
+UID:64ec43b417f183c9857fe8e47d36152ff2969539@esrw.de
+SEQUENCE:0
+DTSTAMP:20260909T163652Z
+LAST-MODIFIED:20260909T163652Z
+DTSTART:20260913T070000Z
+DTEND:20260913T103000Z
+SUMMARY:(L)SR · U13 FS · Krefelder EV 1b – Löwen Frankfurt 1b
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 10:00 Uhr\nTreffpunk
+ t: 09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 FS\nHalle: Rheinlandhalle
+  Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Reuter\, 
+ Rick\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
+GEO:51.339877;6.540168
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
+ stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
+ le Krefeld":geo:51.339877,6.540168
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-P1D
+DESCRIPTION:Morgen Einteilung - (L)SR · U13 FS · Krefelder EV 1b – Löw
+ en Frankfurt 1b
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:Losfahren - (L)SR · U13 FS · Krefelder EV 1b – Löwen Frank
+ furt 1b
+END:VALARM
+END:VEVENT
+END:VCALENDAR

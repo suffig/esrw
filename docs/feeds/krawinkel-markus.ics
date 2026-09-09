@@ -1,0 +1,74 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//esrw-ical//Schiedsrichter-Einteilungen//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Einteilungen – Krawinkel\, Markus
+X-WR-TIMEZONE:Europe/Berlin
+REFRESH-INTERVAL;VALUE=DURATION:PT1H
+X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:c815d83ce48204182ff27de7cb964af501cf7e04@esrw.de
+SEQUENCE:0
+DTSTAMP:20260909T163652Z
+LAST-MODIFIED:20260909T163652Z
+DTSTART:20260912T163000Z
+DTEND:20260912T200000Z
+SUMMARY:(L)SR · LL FS · EHC Troisdorf – TuS Wiehl
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:30 Uhr\nTreffpunk
+ t: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga: LL FS\nHalle: ICEDOME Troisdo
+ rf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Engler\, 
+ Gerhard\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
+GEO:50.811945;7.109233
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
+ rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
+ isdorf":geo:50.811945,7.109233
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-P1D
+DESCRIPTION:Morgen Einteilung - (L)SR · LL FS · EHC Troisdorf – TuS Wie
+ hl
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:Losfahren - (L)SR · LL FS · EHC Troisdorf – TuS Wiehl
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:ce557fae9c6496c443ec68774a2e44948df32338@esrw.de
+SEQUENCE:0
+DTSTAMP:20260909T163652Z
+LAST-MODIFIED:20260909T163652Z
+DTSTART:20260913T050000Z
+DTEND:20260913T083000Z
+SUMMARY:(L)SR · U9 RL · Düsseldorfer EG – Brehmstraße
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 08:00 Uhr\nTreffpunk
+ t: 07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: Eishalle Brehms
+ traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Schlüter\
+ , Thomas\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-P1D
+DESCRIPTION:Morgen Einteilung - (L)SR · U9 RL · Düsseldorfer EG – Breh
+ mstraße
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:Losfahren - (L)SR · U9 RL · Düsseldorfer EG – Brehmstraße
+END:VALARM
+END:VEVENT
+END:VCALENDAR

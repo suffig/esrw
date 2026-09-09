@@ -1,0 +1,130 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//esrw-ical//Schiedsrichter-Einteilungen//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Einteilungen – Heffler\, Philipp
+X-WR-TIMEZONE:Europe/Berlin
+REFRESH-INTERVAL;VALUE=DURATION:PT1H
+X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:db7d335507e573e09fb21a7ac5a8fbf69640fea1@esrw.de
+SEQUENCE:0
+DTSTAMP:20260909T163652Z
+LAST-MODIFIED:20260909T163652Z
+DTSTART:20260906T080000Z
+DTEND:20260906T113000Z
+SUMMARY:(L)SR · U17 I · Düsseldorfer EG – Eisbären Juniors Berlin
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 11:00 Uhr\nTreffpunk
+ t: 10:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eishalle Brehms
+ traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Steven\, P
+ atrick\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+END:VEVENT
+BEGIN:VEVENT
+UID:88254a1dcb582ee517b51b73bfaa1dd94f01345e@esrw.de
+SEQUENCE:0
+DTSTAMP:20260909T163652Z
+LAST-MODIFIED:20260909T163652Z
+DTSTART:20260912T170000Z
+DTEND:20260912T203000Z
+SUMMARY:(L)SR · U17 II · EV Duisburg – SCC Adler Berlin
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 20:00 Uhr\nTreffpunk
+ t: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 II\nHalle: PreZero Rheinl
+ andhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann
+ : Stocker\, Quirin\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-P1D
+DESCRIPTION:Morgen Einteilung - (L)SR · U17 II · EV Duisburg – SCC Adle
+ r Berlin
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:Losfahren - (L)SR · U17 II · EV Duisburg – SCC Adler Berlin
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fd250d128f8550a4d71741f7a350cd4e98554542@esrw.de
+SEQUENCE:0
+DTSTAMP:20260909T163652Z
+LAST-MODIFIED:20260909T163652Z
+DTSTART:20260913T090000Z
+DTEND:20260913T123000Z
+SUMMARY:(L)SR · U17 I · Kölner Junghaie – ES Weißwasser
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 12:00 Uhr\nTreffpunk
+ t: 11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Kölnarena 2\nA
+ dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Giesen\, Tom\n\nQu
+ elle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-P1D
+DESCRIPTION:Morgen Einteilung - (L)SR · U17 I · Kölner Junghaie – ES W
+ eißwasser
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:Losfahren - (L)SR · U17 I · Kölner Junghaie – ES Weißwass
+ er
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:3ae6999df3d588717d3a596a251b12e6a209e970@esrw.de
+SEQUENCE:0
+DTSTAMP:20260909T163652Z
+LAST-MODIFIED:20260909T163652Z
+DTSTART:20260913T114500Z
+DTEND:20260913T151500Z
+SUMMARY:(L)SR · U11 RL · Kölner Junghaie – Kölnarena 2
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 14:45 Uhr\nTreffpunk
+ t: 13:45 Uhr (60 Min vor Spielbeginn)\nLiga: U11 RL\nHalle: Kölnarena 2\n
+ Adresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Hoffmann\, Jan\n\
+ nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-P1D
+DESCRIPTION:Morgen Einteilung - (L)SR · U11 RL · Kölner Junghaie – Kö
+ lnarena 2
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:Losfahren - (L)SR · U11 RL · Kölner Junghaie – Kölnarena 
+ 2
+END:VALARM
+END:VEVENT
+END:VCALENDAR

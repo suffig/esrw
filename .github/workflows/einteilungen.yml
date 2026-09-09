@@ -1,0 +1,74 @@
+name: Einteilungen aktualisieren
+
+on:
+  schedule:
+    # Alle 30 Minuten zwischen ca. 07:00 und 00:30 deutscher Zeit.
+    # GitHub rechnet in UTC.
+    - cron: "*/30 5-22 * * *"
+  workflow_dispatch:      # Knopf zum manuellen Ausloesen
+  push:
+    branches: [main]
+    paths:
+      - "esrw_ical.py"
+      - "venues.json"
+      - "config.json"
+      - "tests/**"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: einteilungen
+  cancel-in-progress: false
+
+jobs:
+  aktualisieren:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Laeuft ohne Netz gegen die eingefrorene Beispielseite. Schlaegt an,
+      # wenn eine Aenderung am Skript das Auslesen kaputt gemacht hat.
+      - name: Regressionstest
+        run: python tests/test_esrw.py
+
+      - name: Feed bauen
+        env:
+          # Optional: Repository -> Settings -> Secrets -> Actions -> NTFY_TOPIC
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: python esrw_ical.py
+
+      - name: Aenderungen veroeffentlichen
+        run: |
+          git config user.name  "esrw-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A docs state.json historie.json
+          if git diff --staged --quiet; then
+            echo "Keine Aenderungen."
+          else
+            git commit -m "Einteilungen aktualisiert ($(TZ=Europe/Berlin date +'%d.%m.%Y %H:%M'))"
+            git push
+          fi
+
+      # Ohne diesen Schritt wuerde ein Ausfall unbemerkt bleiben: die Feeds
+      # frieren dann einfach ein, ohne dass jemand etwas merkt.
+      - name: Bei Fehler benachrichtigen
+        if: failure()
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          LAUF: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [ -z "$NTFY_TOPIC" ]; then
+            echo "Kein NTFY_TOPIC hinterlegt - keine Benachrichtigung moeglich."
+            exit 0
+          fi
+          curl -sS \
+            -H "Title: Einteilungen: Automatik steht" \
+            -H "Priority: high" \
+            -H "Tags: warning" \
+            -d "Der Lauf ist fehlgeschlagen, die Kalender werden nicht mehr aktualisiert. Details: $LAUF" \
+            "https://ntfy.sh/$NTFY_TOPIC"

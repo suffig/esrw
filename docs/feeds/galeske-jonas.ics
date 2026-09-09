@@ -1,0 +1,88 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//esrw-ical//Schiedsrichter-Einteilungen//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Einteilungen – Galeske\, Jonas
+X-WR-TIMEZONE:Europe/Berlin
+REFRESH-INTERVAL;VALUE=DURATION:PT1H
+X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:7832ce433d7c1d09fade3245ee89db561a06a401@esrw.de
+SEQUENCE:0
+DTSTAMP:20260909T163652Z
+LAST-MODIFIED:20260909T163652Z
+DTSTART:20260904T163000Z
+DTEND:20260904T200000Z
+SUMMARY:(L)SR · U15 RLB · Iserlohner EC 1b – Düsseldorfer EG 1b
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:30 Uhr\nTreffpunk
+ t: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Eissporthalle
+  am Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Steeg
+ \, Cedric\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
+GEO:51.384598;7.713829
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
+ , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
+ alle am Seilersee":geo:51.384598,7.713829
+END:VEVENT
+BEGIN:VEVENT
+UID:7c88324a811113ba31375b5a38731396ed89197e@esrw.de
+SEQUENCE:0
+DTSTAMP:20260909T163652Z
+LAST-MODIFIED:20260909T163652Z
+DTSTART:20260913T061500Z
+DTEND:20260913T094500Z
+SUMMARY:(L)SR · DA FS · NEV/BW – Sachsen/Berlin
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 09:15 Uhr\nTreffpunk
+ t: 08:15 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\n!! Halle nicht automat
+ isch erkannt - bitte selbst pruefen !!\nGespann: Heu\, Alexander\n\nQuelle
+ : https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-P1D
+DESCRIPTION:Morgen Einteilung - (L)SR · DA FS · NEV/BW – Sachsen/Berlin
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:Losfahren - (L)SR · DA FS · NEV/BW – Sachsen/Berlin
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:7e2d7c6c7b660c9c068f3456e9edf41640adfa54@esrw.de
+SEQUENCE:0
+DTSTAMP:20260909T163652Z
+LAST-MODIFIED:20260909T163652Z
+DTSTART:20260913T080000Z
+DTEND:20260913T113000Z
+SUMMARY:(L)SR · DA FS · NRW – Hessen
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 11:00 Uhr\nTreffpunk
+ t: 10:00 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissportzentrum
+  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Heu\, Alex
+ ander\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-P1D
+DESCRIPTION:Morgen Einteilung - (L)SR · DA FS · NRW – Hessen
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:Losfahren - (L)SR · DA FS · NRW – Hessen
+END:VALARM
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,23 @@
+{
+  "_hinweis": "Einstellungen fuer alle erzeugten Feeds. 'eigene_namen' wird nur fuer die ntfy-Push-Nachricht gebraucht - fuer die Kalender selbst muss hier niemand eingetragen werden, es bekommt jeder auf der Seite genannte Schiedsrichter automatisch einen Feed.",
+
+  "titel": "Einteilungen ESRW",
+  "quelle": "https://www.esrw.de/einteilungen.html",
+  "quelle_vergangene": "https://www.esrw.de/vergangene-einteilungen.html",
+  "vergangene_tage": 30,
+
+  "vorlauf_minuten": 60,
+  "spieldauer_minuten": 150,
+
+  "erinnerungen": [
+    { "wann": "-P1D",  "text": "Morgen Einteilung" },
+    { "wann": "-PT1H", "text": "Losfahren" }
+  ],
+
+  "kalender_name_muster": "Einteilungen – {name}",
+  "ausgabe_verzeichnis": "docs",
+
+  "eigene_namen": [
+    "Melchert, Philip"
+  ]
+}

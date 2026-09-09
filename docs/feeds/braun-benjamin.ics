@@ -1,0 +1,43 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//esrw-ical//Schiedsrichter-Einteilungen//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Einteilungen – Braun\, Benjamin
+X-WR-TIMEZONE:Europe/Berlin
+REFRESH-INTERVAL;VALUE=DURATION:PT1H
+X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:2fc4c8416ba26048b20dda908df633ba31372a82@esrw.de
+SEQUENCE:0
+DTSTAMP:20260909T163652Z
+LAST-MODIFIED:20260909T163652Z
+DTSTART:20260913T150000Z
+DTEND:20260913T183000Z
+SUMMARY:(L)SR · U17 FS · EHC Troisdorf – Eisadler Dortmund
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 18:00 Uhr\nTreffpunk
+ t: 17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 FS\nHalle: ICEDOME Troisd
+ orf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Rieneck\
+ , Maximilian\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
+GEO:50.811945;7.109233
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
+ rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
+ isdorf":geo:50.811945,7.109233
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-P1D
+DESCRIPTION:Morgen Einteilung - (L)SR · U17 FS · EHC Troisdorf – Eisadl
+ er Dortmund
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:Losfahren - (L)SR · U17 FS · EHC Troisdorf – Eisadler Dortm
+ und
+END:VALARM
+END:VEVENT
+END:VCALENDAR

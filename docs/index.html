@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Einteilungen im Kalender</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png" type="image/png">
+<meta name="theme-color" content="#15599e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Einteilungen">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="description" content="Schiedsrichter-Einteilungen mit Hallenadresse und Treffpunkt, als Kalender zum Abonnieren.">
+<style>
+  :root {
+    --bg:#f6f6f4; --karte:#fff; --text:#1b1b19; --dim:#6d6d67; --linie:#e4e4df;
+    --akzent:#15599e; --akzent-text:#fff; --warn:#9a4a15; --warn-bg:#fdf3e7;
+    --schatten:0 1px 2px rgba(0,0,0,.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#141417; --karte:#1e1e23; --text:#ececeb; --dim:#9c9c96; --linie:#31313a;
+      --akzent:#4b93de; --akzent-text:#0b1a2a; --warn:#e0a670; --warn-bg:#2c2318;
+      --schatten:none;
+    }
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; padding:0 16px 56px; background:var(--bg); color:var(--text);
+    font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-text-size-adjust:100%;
+  }
+  main { max-width:620px; margin:0 auto; }
+  header { padding:28px 0 18px; }
+  h1 { font-size:1.45rem; margin:0 0 4px; letter-spacing:-.01em; }
+  .stand { color:var(--dim); font-size:.85rem; }
+  .alt { color:var(--warn); }
+
+  input[type=search] {
+    width:100%; padding:13px 14px; font-size:1rem; color:var(--text);
+    background:var(--karte); border:1px solid var(--linie); border-radius:11px;
+    -webkit-appearance:none; appearance:none;
+  }
+  input[type=search]:focus { outline:2px solid var(--akzent); outline-offset:-1px; }
+
+  .namen { list-style:none; margin:14px 0 0; padding:0;
+           border:1px solid var(--linie); border-radius:11px; overflow:hidden;
+           background:var(--karte); box-shadow:var(--schatten); }
+  .namen li + li { border-top:1px solid var(--linie); }
+  .namen button {
+    display:flex; justify-content:space-between; align-items:center; gap:12px;
+    width:100%; padding:13px 15px; background:none; border:0; cursor:pointer;
+    font:inherit; color:inherit; text-align:left;
+  }
+  .namen button:hover { background:var(--bg); }
+  .anzahl { color:var(--dim); font-size:.85rem; white-space:nowrap; }
+  .leer { color:var(--dim); padding:24px 4px; text-align:center; }
+
+  .zurueck { background:none; border:0; color:var(--akzent); font:inherit;
+             padding:0; cursor:pointer; margin:0 0 14px; }
+  h2 { font-size:1.3rem; margin:0 0 16px; }
+
+  .abo { display:block; background:var(--akzent); color:var(--akzent-text);
+         text-decoration:none; padding:15px 18px; border-radius:12px;
+         font-weight:650; text-align:center; }
+  .zweit { display:flex; gap:8px; margin-top:8px; }
+  .zweit button { flex:1; padding:11px; font:inherit; cursor:pointer;
+                  background:var(--karte); color:var(--text);
+                  border:1px solid var(--linie); border-radius:10px; }
+  .zweit button:hover { border-color:var(--akzent); }
+
+  details { margin-top:14px; background:var(--karte); border:1px solid var(--linie);
+            border-radius:11px; padding:0 15px; }
+  summary { cursor:pointer; padding:13px 0; font-weight:600; font-size:.95rem; }
+  details ol { margin:0 0 14px; padding-left:20px; }
+  details li { margin-bottom:7px; }
+  details p { margin:0 0 12px; color:var(--dim); font-size:.9rem; }
+  mark { background:#ffe9a8; color:#3a2c00; padding:0 3px; border-radius:3px; }
+  @media (prefers-color-scheme: dark) { mark { background:#5c4a13; color:#ffeab4; } }
+
+  h3 { font-size:.8rem; text-transform:uppercase; letter-spacing:.06em;
+       color:var(--dim); margin:26px 0 10px; font-weight:650; }
+  .spiel { background:var(--karte); border:1px solid var(--linie); border-radius:11px;
+           padding:13px 15px; margin-bottom:9px; box-shadow:var(--schatten); }
+  .spiel.war { opacity:.62; }
+  .kopf { display:flex; justify-content:space-between; gap:10px; align-items:baseline; }
+  .datum { font-weight:640; }
+  .rolle { font-size:.72rem; font-weight:650; background:var(--akzent);
+           color:var(--akzent-text); padding:2px 8px; border-radius:99px;
+           white-space:nowrap; }
+  .paarung { margin:5px 0 3px; }
+  .meta { color:var(--dim); font-size:.87rem; }
+  .meta a { color:var(--akzent); }
+  .achtung { color:var(--warn); background:var(--warn-bg); font-size:.85rem;
+             padding:6px 9px; border-radius:7px; margin-top:7px; }
+  .geaendert { color:var(--warn); background:var(--warn-bg); font-size:.85rem;
+               font-weight:600; padding:6px 9px; border-radius:7px; margin:8px 0 0; }
+  .spiel.neu { border-color:var(--warn); }
+
+  .zahlen { display:grid; grid-template-columns:repeat(3,1fr); gap:9px;
+            margin-bottom:10px; }
+  .zahl { background:var(--karte); border:1px solid var(--linie); border-radius:11px;
+          padding:11px 8px; text-align:center; box-shadow:var(--schatten); }
+  .zahl b { display:block; font-size:1.4rem; line-height:1.15; }
+  .zahl span { color:var(--dim); font-size:.74rem; }
+  .balken { background:var(--karte); border:1px solid var(--linie);
+            border-radius:11px; padding:12px 15px; box-shadow:var(--schatten); }
+  .balken + .balken { margin-top:9px; }
+  .balken h4 { margin:0 0 9px; font-size:.78rem; text-transform:uppercase;
+               letter-spacing:.05em; color:var(--dim); font-weight:650; }
+  .reihe { display:grid; grid-template-columns:1fr auto; gap:8px;
+           align-items:center; margin-bottom:7px; font-size:.9rem; }
+  .reihe:last-child { margin-bottom:0; }
+  .reihe i { display:block; height:5px; border-radius:3px; background:var(--akzent);
+             font-style:normal; margin-top:3px; }
+  .reihe em { font-style:normal; color:var(--dim); font-size:.85rem; }
+  footer { margin-top:34px; padding-top:16px; border-top:1px solid var(--linie);
+           color:var(--dim); font-size:.83rem; }
+  footer a { color:var(--akzent); }
+  .versteckt { display:none; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1 id="titel">Einteilungen im Kalender</h1>
+    <p class="stand" id="stand">wird geladen …</p>
+  </header>
+
+  <!-- Auswahl -->
+  <section id="auswahl">
+    <label for="suche" class="versteckt">Name suchen</label>
+    <input type="search" id="suche" placeholder="Eigenen Namen suchen …"
+           autocomplete="off" autocorrect="off" spellcheck="false">
+    <ul class="namen" id="namen"></ul>
+    <p class="leer versteckt" id="nichts">Kein Name gefunden.</p>
+  </section>
+
+  <!-- Detail -->
+  <section id="detail" class="versteckt">
+    <button class="zurueck" id="zurueck">← Anderer Name</button>
+    <h2 id="person"></h2>
+
+    <a class="abo" id="abo" href="#">Im Kalender abonnieren</a>
+    <div class="zweit">
+      <button id="kopieren">Link kopieren</button>
+      <button id="laden">Einmalig laden</button>
+    </div>
+
+    <details id="anleitung">
+      <summary>Wie abonniere ich das?</summary>
+      <p><strong>iPhone / iPad</strong></p>
+      <ol>
+        <li>Oben auf <em>Im Kalender abonnieren</em> tippen.</li>
+        <li>iOS fragt nach – mit <em>Abonnieren</em> bestätigen.</li>
+        <li>Bei <mark>„Alarme entfernen“ auf AUS</mark> stellen, sonst kommen
+            keine Erinnerungen.</li>
+        <li>Unter <em>Aktualisieren</em> „Alle 15 Minuten“ oder „Stündlich“ wählen.</li>
+      </ol>
+      <p>Falls nichts passiert: Einstellungen → Apps → Kalender → Accounts →
+         Account hinzufügen → Andere → Kalenderabo hinzufügen, dort den
+         kopierten Link einsetzen.</p>
+      <p><strong>Android / Google Kalender</strong></p>
+      <ol>
+        <li><em>Link kopieren</em> antippen.</li>
+        <li>Am Rechner auf <a href="https://calendar.google.com/calendar/u/0/r/settings/addbyurl"
+            target="_blank" rel="noopener">calendar.google.com</a> →
+            „Per URL hinzufügen“ – der Link muss mit <code>https</code> anfangen.</li>
+        <li>Nach ein paar Minuten steht der Kalender auch im Handy.</li>
+      </ol>
+      <p>Der Kalender ist nur lesend. Neue Einteilungen, Absetzungen und
+         Zeitänderungen kommen von allein nach.</p>
+    </details>
+
+    <div id="spiele"></div>
+    <div id="statistik"></div>
+  </section>
+
+  <footer>
+    <p id="fuss"></p>
+    <p>Alle Spiele als Kalender: <a id="alle" href="feeds/alle.ics">alle.ics</a><br>
+       Daten von <a id="quelle" href="https://www.esrw.de/einteilungen.html"
+       target="_blank" rel="noopener">esrw.de</a> – dort steht, was gilt.</p>
+  </footer>
+</main>
+
+<script>
+(function () {
+  "use strict";
+
+  var basis = location.href.split("#")[0].replace(/index\.html$/, "").replace(/\/?$/, "/");
+  var daten = null, aktuell = null;
+  var el = function (id) { return document.getElementById(id); };
+  var wochentag = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+
+  function merke(schluessel, wert) {
+    try { wert === null ? localStorage.removeItem(schluessel)
+                        : localStorage.setItem(schluessel, wert); } catch (e) {}
+  }
+  function gemerkt(schluessel) {
+    try { return localStorage.getItem(schluessel); } catch (e) { return null; }
+  }
+
+  // Suche soll bei Sonderzeichen nachsichtig sein: "muller", "mueller" und
+  // "Müller" muessen alle "Müller" finden, "rene" auch "René".
+  function ohneZeichen(s) {          // ü -> u, é -> e
+    return (s || "").toLowerCase().normalize("NFD")
+      .replace(/[̀-ͯ]/g, "").replace(/ß/g, "ss")
+      .replace(/[^a-z0-9]+/g, " ").trim();
+  }
+  function ausgeschrieben(s) {       // ü -> ue
+    return (s || "").toLowerCase()
+      .replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue")
+      .replace(/ß/g, "ss").normalize("NFD").replace(/[̀-ͯ]/g, "")
+      .replace(/[^a-z0-9]+/g, " ").trim();
+  }
+  // Beide Schreibweisen in den Suchtext, dann findet jede Eingabe eine davon
+  function suchtextVon(s) { return ohneZeichen(s) + " " + ausgeschrieben(s); }
+
+  function uhr(d) {
+    return d.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
+  }
+
+  function feedUrl(slug, protokoll) {
+    var pfad = basis.replace(/^https?:\/\//, "") + "feeds/" + slug + ".ics";
+    return protokoll + "//" + pfad;
+  }
+
+  // ------------------------------------------------------------- Namensliste
+
+  function zeigeListe(filter) {
+    var liste = el("namen"), treffer = 0;
+    liste.innerHTML = "";
+    var f = ohneZeichen(filter);
+
+    daten.personen.forEach(function (p) {
+      var suchtext = suchtextVon(p.name + " " + (p.varianten || []).join(" "));
+      if (f && suchtext.indexOf(f) === -1) {
+        // auch einzelne Wortanfaenge zulassen ("lars" findet "Müller, Lars")
+        var teile = suchtext.split(" ");
+        if (!teile.some(function (t) { return t.indexOf(f) === 0; })) return;
+      }
+      treffer++;
+      var li = document.createElement("li");
+      var b = document.createElement("button");
+      b.type = "button";
+      var name = document.createElement("span");
+      name.textContent = p.name;
+      var n = p.spiele.filter(function (s) { return !s.vergangen; }).length;
+      var anzahl = document.createElement("span");
+      anzahl.className = "anzahl";
+      anzahl.textContent = n === 0 ? "–" : n + (n === 1 ? " Spiel" : " Spiele");
+      b.appendChild(name); b.appendChild(anzahl);
+      b.addEventListener("click", function () { location.hash = p.slug; });
+      li.appendChild(b);
+      liste.appendChild(li);
+    });
+
+    el("nichts").classList.toggle("versteckt", treffer > 0);
+  }
+
+  // ----------------------------------------------------------------- Detail
+
+  function karte(s) {
+    var beginn = new Date(s.beginn), treff = new Date(s.treffpunkt);
+    var d = document.createElement("div");
+    d.className = "spiel" + (s.vergangen ? " war" : "") + (s.aenderung ? " neu" : "");
+
+    var kopf = document.createElement("div");
+    kopf.className = "kopf";
+    var datum = document.createElement("span");
+    datum.className = "datum";
+    datum.textContent = wochentag[beginn.getDay()] + ". " +
+      beginn.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }) +
+      " · " + uhr(beginn) + " Uhr";
+    var rolle = document.createElement("span");
+    rolle.className = "rolle";
+    rolle.textContent = s.rolle;
+    kopf.appendChild(datum); kopf.appendChild(rolle);
+    d.appendChild(kopf);
+
+    var paarung = document.createElement("div");
+    paarung.className = "paarung";
+    paarung.textContent = s.paarung;
+    d.appendChild(paarung);
+
+    var meta = document.createElement("div");
+    meta.className = "meta";
+    meta.textContent = "An der Halle: " + uhr(treff) + " Uhr" + (s.liga ? " · " + s.liga : "");
+    d.appendChild(meta);
+
+    if (s.ort) {
+      var ort = document.createElement("div");
+      ort.className = "meta";
+      var a = document.createElement("a");
+      a.href = "https://maps.apple.com/?q=" + encodeURIComponent(s.ort);
+      a.target = "_blank"; a.rel = "noopener";
+      a.textContent = s.ort;
+      ort.appendChild(a);
+      d.appendChild(ort);
+    } else {
+      var w = document.createElement("div");
+      w.className = "achtung";
+      w.textContent = "Halle nicht automatisch erkannt – bitte selbst prüfen.";
+      d.appendChild(w);
+    }
+
+    if (s.gespann && s.gespann.length) {
+      var g = document.createElement("div");
+      g.className = "meta";
+      g.textContent = "Gespann: " + s.gespann.join(" / ");
+      d.appendChild(g);
+    }
+
+    if (s.aenderung) {
+      var ae = document.createElement("div");
+      ae.className = "geaendert";
+      ae.textContent = "⚠ Geändert: " + s.aenderung;
+      d.appendChild(ae);
+    }
+    return d;
+  }
+
+  // ------------------------------------------------------------- Statistik
+
+  function balken(titel, eintraege) {
+    if (!eintraege || !eintraege.length) return null;
+    var hoechste = eintraege[0][1] || 1;
+    var box = document.createElement("div");
+    box.className = "balken";
+    var h = document.createElement("h4");
+    h.textContent = titel;
+    box.appendChild(h);
+    eintraege.forEach(function (paar) {
+      var reihe = document.createElement("div");
+      reihe.className = "reihe";
+      var links = document.createElement("div");
+      links.textContent = paar[0];
+      var strich = document.createElement("i");
+      strich.style.width = Math.max(6, Math.round(paar[1] / hoechste * 100)) + "%";
+      links.appendChild(strich);
+      var rechts = document.createElement("em");
+      rechts.textContent = paar[1] + "×";
+      reihe.appendChild(links); reihe.appendChild(rechts);
+      box.appendChild(reihe);
+    });
+    return box;
+  }
+
+  function zeigeStatistik(p) {
+    var ziel = el("statistik");
+    ziel.innerHTML = "";
+    var s = p.statistik;
+    if (!s) return;
+
+    var h = document.createElement("h3");
+    h.textContent = "Statistik";
+    ziel.appendChild(h);
+
+    var zahlen = document.createElement("div");
+    zahlen.className = "zahlen";
+    [["Saison " + (daten.saison || ""), s.saison],
+     ["Insgesamt", s.gesamt],
+     ["als HSR", (s.rollen && s.rollen["HSR"]) || 0]
+    ].forEach(function (paar) {
+      var k = document.createElement("div");
+      k.className = "zahl";
+      var b = document.createElement("b");
+      b.textContent = paar[1];
+      var t = document.createElement("span");
+      t.textContent = paar[0];
+      k.appendChild(b); k.appendChild(t);
+      zahlen.appendChild(k);
+    });
+    ziel.appendChild(zahlen);
+
+    [balken("Meiste Ligen", s.ligen), balken("Meiste Hallen", s.hallen)]
+      .forEach(function (b) { if (b) ziel.appendChild(b); });
+
+    var fuss = document.createElement("p");
+    fuss.className = "meta";
+    fuss.style.marginTop = "10px";
+    fuss.textContent = "Gezählt seit " + (s.erste || "?").split("-").reverse().join(".") +
+      ". Das Archiv wächst mit jedem Lauf – esrw.de selbst zeigt nur wenige Tage.";
+    ziel.appendChild(fuss);
+  }
+
+  function zeigePerson(p) {
+    aktuell = p;
+    merke("person", p.slug);
+    el("auswahl").classList.add("versteckt");
+    el("detail").classList.remove("versteckt");
+    el("person").textContent = p.name;
+    el("abo").href = feedUrl(p.slug, "webcal:");
+    el("laden").onclick = function () { location.href = feedUrl(p.slug, location.protocol); };
+
+    var ziel = el("spiele");
+    ziel.innerHTML = "";
+    var kommend = p.spiele.filter(function (s) { return !s.vergangen; });
+    var gewesen = p.spiele.filter(function (s) { return s.vergangen; }).reverse();
+
+    var h = document.createElement("h3");
+    h.textContent = "Kommende Einteilungen";
+    ziel.appendChild(h);
+    if (!kommend.length) {
+      var leer = document.createElement("p");
+      leer.className = "leer";
+      leer.textContent = "Zurzeit keine Einteilung. Der Kalender füllt sich von allein.";
+      ziel.appendChild(leer);
+    } else {
+      kommend.forEach(function (s) { ziel.appendChild(karte(s)); });
+    }
+
+    if (gewesen.length) {
+      var h2 = document.createElement("h3");
+      h2.textContent = "Zuletzt";
+      ziel.appendChild(h2);
+      gewesen.forEach(function (s) { ziel.appendChild(karte(s)); });
+    }
+    zeigeStatistik(p);
+    window.scrollTo(0, 0);
+  }
+
+  function zeigeAuswahl() {
+    aktuell = null;
+    el("detail").classList.add("versteckt");
+    el("auswahl").classList.remove("versteckt");
+    el("statistik").innerHTML = "";
+  }
+
+  function ausHash() {
+    var slug = location.hash.replace(/^#/, "");
+    if (!slug) { zeigeAuswahl(); return; }
+    var p = daten.personen.filter(function (x) { return x.slug === slug; })[0];
+    p ? zeigePerson(p) : zeigeAuswahl();
+  }
+
+  // ------------------------------------------------------------------ Start
+
+  el("zurueck").addEventListener("click", function () {
+    merke("person", null);
+    location.hash = "";
+  });
+  el("suche").addEventListener("input", function (e) { zeigeListe(e.target.value); });
+  el("kopieren").addEventListener("click", function () {
+    var url = feedUrl(aktuell.slug, location.protocol);
+    var knopf = el("kopieren");
+    var fertig = function () {
+      knopf.textContent = "Kopiert ✓";
+      setTimeout(function () { knopf.textContent = "Link kopieren"; }, 2000);
+    };
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(fertig, function () { prompt("Link:", url); });
+    } else {
+      prompt("Link:", url);
+    }
+  });
+  window.addEventListener("hashchange", ausHash);
+
+  fetch("daten.json?" + Date.now())
+    .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+    .then(function (d) {
+      daten = d;
+      document.title = d.titel;
+      el("titel").textContent = d.titel;
+      el("quelle").href = d.quelle;
+
+      var stand = new Date(d.stand);
+      var alter = (Date.now() - stand.getTime()) / 3600000;
+      var s = el("stand");
+      s.textContent = "Stand: " + stand.toLocaleString("de-DE",
+        { dateStyle: "medium", timeStyle: "short" }) + " Uhr · " +
+        d.personen.length + " Schiedsrichter · " + d.spiele_gesamt + " Spiele";
+      if (alter > 6) {
+        s.className = "stand alt";
+        s.textContent += " – seit " + Math.round(alter) + " Std. nicht aktualisiert";
+      }
+
+      el("fuss").textContent = "Termine beginnen " + d.vorlauf_minuten +
+        " Minuten vor Spielbeginn, damit du rechtzeitig an der Halle bist.";
+
+      zeigeListe("");
+      if (!location.hash && gemerkt("person")) location.hash = gemerkt("person");
+      else ausHash();
+    })
+    .catch(function () {
+      el("stand").className = "stand alt";
+      el("stand").textContent = "Daten konnten nicht geladen werden.";
+    });
+
+  // Offlinefaehig machen und aufs Handy installierbar. Braucht https oder
+  // localhost - beim Öffnen als Datei passiert einfach nichts.
+  if ("serviceWorker" in navigator && location.protocol !== "file:") {
+    window.addEventListener("load", function () {
+      navigator.serviceWorker.register("sw.js").catch(function () {});
+    });
+  }
+})();
+</script>
+</body>
+</html>

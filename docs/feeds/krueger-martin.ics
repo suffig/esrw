@@ -1,0 +1,31 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//esrw-ical//Schiedsrichter-Einteilungen//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Einteilungen – Krüger\, Martin
+X-WR-TIMEZONE:Europe/Berlin
+REFRESH-INTERVAL;VALUE=DURATION:PT1H
+X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:c6a354bafb52794db9d0ceadc7c5b95b4e8e7b09@esrw.de
+SEQUENCE:0
+DTSTAMP:20260909T163652Z
+LAST-MODIFIED:20260909T163652Z
+DTSTART:20260906T140000Z
+DTEND:20260906T173000Z
+SUMMARY:(L)SR · U15 FS · Krefelder EV 1b – Iserlohner EC 1b
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 17:00 Uhr\nTreffpunk
+ t: 16:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 FS\nHalle: Rheinlandhalle
+  Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Reuter\, 
+ Fynn\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
+GEO:51.339877;6.540168
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
+ stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
+ le Krefeld":geo:51.339877,6.540168
+END:VEVENT
+END:VCALENDAR
