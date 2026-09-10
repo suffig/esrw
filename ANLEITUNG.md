@@ -457,6 +457,102 @@ git checkout config.json
 
 ---
 
+## Schritt 9 (optional) – Verlässliche Taktung von außen
+
+Nur nötig, wenn dir GitHubs Zeitplan zu unregelmäßig ist. Gemessen an diesem
+Repository legt GitHub für die meisten Slots gar keinen Lauf an; Abstände von
+zwei bis sechs Stunden sind normal. Der manuelle Auslöser und `push` laufen
+dagegen immer sofort – also stößt man den Workflow von außen als *Ereignis* an
+statt ihn drinnen zu *planen*.
+
+### 9.1 Warum cron-job.org und nicht cronjob.de
+
+Die GitHub-API braucht drei Dinge: die Methode **POST**, einen eigenen
+**Authorization-Header** und einen **JSON-Body**. Bei cronjob.de ist zu keinem
+davon etwas dokumentiert, auch nicht in den bezahlten Tarifen.
+[cron-job.org](https://cron-job.org) nennt „custom HTTP requests" mit frei
+wählbarer Methode, Headern und Body ausdrücklich, ist kostenlos (bis 60 Aufrufe
+pro Stunde) und quelloffen unter GPL.
+
+### 9.2 Zugangstoken anlegen
+
+<https://github.com/settings/personal-access-tokens> → **Generate new token**
+
+* **Token name**: `cron-job.org – Einteilungen`
+* **Expiration**: z.B. 1 Jahr. **Merk dir das Datum** – danach hört die
+  Automatik ohne Vorwarnung auf
+* **Repository access**: `Only select repositories` → **suffig/esrw**
+* **Permissions → Repository permissions → Actions**: `Read and write`
+  (nur dieses eine Recht, sonst nichts)
+* **Generate token**
+
+Der Token wird **einmal** angezeigt. Kopieren, gleich im nächsten Schritt
+einsetzen, nirgends sonst speichern.
+
+> **Was jemand damit anfangen könnte, der ihn in die Hände bekommt:** in diesem
+> einen Repository Workflows starten und abbrechen. Sonst nichts – kein Zugriff
+> auf dein Konto, keine anderen Repositories, kein Recht, Code zu ändern.
+> Verloren gegangen? Auf derselben Seite **Revoke**, neu anlegen, im Cron-Dienst
+> austauschen.
+
+### 9.3 Cronjob einrichten
+
+Konto auf <https://cron-job.org> anlegen, dann **Create cronjob**:
+
+| Feld | Wert |
+|---|---|
+| Title | `Einteilungen aktualisieren` |
+| URL | `https://api.github.com/repos/suffig/esrw/actions/workflows/einteilungen.yml/dispatches` |
+| Schedule | *Every 30 minutes* (oder stündlich) |
+
+Dann auf **Advanced** umschalten:
+
+* **Request method**: `POST`
+* **Headers** – vier Zeilen:
+
+```
+Authorization: Bearer DEIN_TOKEN
+Accept: application/vnd.github+json
+X-GitHub-Api-Version: 2022-11-28
+Content-Type: application/json
+```
+
+* **Request body**:
+
+```json
+{"ref":"main"}
+```
+
+Speichern.
+
+### 9.4 Prüfen
+
+Im Cronjob auf **Test run**. Erwartet wird **HTTP 204** – GitHub antwortet bei
+Erfolg ohne Inhalt, das ist kein Fehler.
+
+| Antwort | Bedeutung |
+|---|---|
+| `204` | passt, der Lauf wurde ausgelöst |
+| `401` | Token falsch oder abgelaufen |
+| `403` | Token hat kein `Actions: Read and write` |
+| `404` | Repository- oder Dateiname stimmt nicht, oder Token sieht das Repository nicht |
+| `422` | Branch `main` stimmt nicht |
+
+Danach unter <https://github.com/suffig/esrw/actions> nachsehen: dort muss ein
+Lauf mit dem Auslöser **workflow_dispatch** stehen.
+
+Zum Schluss in cron-job.org die Benachrichtigung bei Fehlern einschalten – dann
+merkst du es, wenn der Token abläuft.
+
+### 9.5 Was mit dem GitHub-Zeitplan passiert
+
+Der bleibt drin und kostet nichts. Er läuft weiter, wann immer GitHub Lust hat,
+und ist damit die Rückfallebene, falls der externe Dienst ausfällt. Doppelte
+Läufe schaden nicht: ändert sich nichts, sind die Feeds byte-gleich und es wird
+nicht einmal ein Commit erzeugt.
+
+---
+
 ## Wenn mal etwas nicht stimmt
 
 | Symptom | Ursache und Abhilfe |

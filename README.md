@@ -76,11 +76,11 @@ Wer es sofort braucht: Actions → *Einteilungen aktualisieren* → **Run
 workflow**. Der manuelle Auslöser war nie betroffen.
 
 Wer eine wirklich verlässliche Taktung braucht, stößt den Workflow von außen
-an – ein kostenloser Cron-Dienst ruft stündlich die GitHub-API auf
-(`POST /repos/suffig/esrw/actions/workflows/einteilungen.yml/dispatches`).
-Das kostet allerdings ein Zugangstoken, das außerhalb von GitHub liegt; es
-sollte fein granuliert sein und ausschließlich `actions: write` auf dieses eine
-Repository dürfen.
+an: ein kostenloser Cron-Dienst ruft im gewünschten Takt
+`POST /repos/suffig/esrw/actions/workflows/einteilungen.yml/dispatches` auf.
+Schritt für Schritt steht das in [ANLEITUNG.md](ANLEITUNG.md), Schritt 9.
+Der Preis dafür ist ein Zugangstoken, das außerhalb von GitHub liegt – fein
+granuliert, nur `Actions: Read and write` auf dieses eine Repository.
 
 Braucht Python 3.8+, keine Pakete.
 
