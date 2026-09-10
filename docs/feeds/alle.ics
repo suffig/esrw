@@ -1685,6 +1685,33 @@ DESCRIPTION:In einer Stunde an der Halle - LL FS · Dinslakener Kobras 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:2ac243f3019748859fca30dd98440766b72403b7@esrw.de
+SEQUENCE:0
+DTSTAMP:20260910T122148Z
+LAST-MODIFIED:20260910T122148Z
+DTSTART:20260914T151500Z
+DTEND:20260914T184500Z
+SUMMARY:U14 NRW · NRW U14 – Kölner Junghaie U15
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 18:15 Uhr\nTreffpunk
+ t: 17:15 Uhr (60 Min vor Spielbeginn)\nLiga: U14 NRW\nHalle: Kölnarena 2\
+ nAdresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Hoffmann\, Jan\n
+ \nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - U14 NRW · NRW U14 – Kölner J
+ unghaie U15
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:0be5edd926de70b13b34b54eec5019582ab51934@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z

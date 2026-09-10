@@ -2,9 +2,9 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 69,
+ "spiele_gesamt": 70,
  "saison": "2026/27",
- "archiv_spiele": 69,
+ "archiv_spiele": 70,
  "personen": [
   {
    "slug": "beckford-emanuel",
@@ -1124,10 +1124,10 @@
     "Hauerwaas, Gabriel"
    ],
    "statistik": {
-    "gesamt": 3,
-    "saison": 3,
+    "gesamt": 4,
+    "saison": 4,
     "rollen": {
-     "(L)SR": 3
+     "(L)SR": 4
     },
     "ligen": [
      [
@@ -1141,6 +1141,10 @@
      [
       "U17 II",
       1
+     ],
+     [
+      "U14 NRW",
+      1
      ]
     ],
     "hallen": [
@@ -1151,10 +1155,14 @@
      [
       "PreZero Rheinlandhalle Duisburg",
       1
+     ],
+     [
+      "Kölnarena 2",
+      1
      ]
     ],
     "erste": "2026-09-04",
-    "letzte": "2026-09-05"
+    "letzte": "2026-09-14"
    },
    "spiele": [
     {
@@ -1209,6 +1217,24 @@
      ],
      "halle_erkannt": true,
      "vergangen": true,
+     "aenderung": null
+    },
+    {
+     "beginn": "2026-09-14T18:15:00+02:00",
+     "treffpunkt": "2026-09-14T17:15:00+02:00",
+     "rolle": "(L)SR",
+     "liga": "U14 NRW",
+     "paarung": "NRW U14 – Kölner Junghaie U15",
+     "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
+     "koordinaten": [
+      50.937979,
+      6.98935
+     ],
+     "gespann": [
+      "Hoffmann, Jan"
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
      "aenderung": null
     }
    ]
@@ -1711,10 +1737,10 @@
     "Hoffmann, Jan"
    ],
    "statistik": {
-    "gesamt": 2,
-    "saison": 2,
+    "gesamt": 3,
+    "saison": 3,
     "rollen": {
-     "(L)SR": 2
+     "(L)SR": 3
     },
     "ligen": [
      [
@@ -1724,16 +1750,20 @@
      [
       "U15 RLB",
       1
+     ],
+     [
+      "U14 NRW",
+      1
      ]
     ],
     "hallen": [
      [
       "Kölnarena 2",
-      2
+      3
      ]
     ],
     "erste": "2026-09-13",
-    "letzte": "2026-09-13"
+    "letzte": "2026-09-14"
    },
    "spiele": [
     {
@@ -1767,6 +1797,24 @@
      ],
      "gespann": [
       "Starke, Matthias"
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null
+    },
+    {
+     "beginn": "2026-09-14T18:15:00+02:00",
+     "treffpunkt": "2026-09-14T17:15:00+02:00",
+     "rolle": "(L)SR",
+     "liga": "U14 NRW",
+     "paarung": "NRW U14 – Kölner Junghaie U15",
+     "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
+     "koordinaten": [
+      50.937979,
+      6.98935
+     ],
+     "gespann": [
+      "Hauerwaas, Gabriel"
      ],
      "halle_erkannt": true,
      "vergangen": false,
