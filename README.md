@@ -31,8 +31,8 @@ Spesenabrechnung.
 
 ## Wie es funktioniert
 
-Es gibt keinen Server und keine Anmeldung. Ein Skript läuft alle 30 Minuten bei
-GitHub Actions, liest die Seite und schreibt einen Ordner mit fertigen Dateien:
+Es gibt keinen Server und keine Anmeldung. Ein Skript läuft bei GitHub Actions,
+liest die Seite und schreibt einen Ordner mit fertigen Dateien:
 
 ```
 docs/
@@ -52,12 +52,35 @@ state.json              letzter Stand, um Änderungen zu erkennen
 Feeds und `daten.json` sind **byte-stabil**: ändert sich inhaltlich nichts, sind
 sie nach dem nächsten Lauf identisch. Dafür trägt jeder Termin als `DTSTAMP` den
 Zeitpunkt seiner letzten echten Änderung, nicht den des Laufs. Sonst würde der
-Workflow alle 30 Minuten alle 61 Feeds neu committen. Der Lauf-Zeitpunkt steht
+Workflow bei jedem Lauf alle 61 Feeds neu committen. Der Lauf-Zeitpunkt steht
 deshalb allein in `stand.json` (rund 90 Byte) – das ist gleichzeitig der
 Herzschlag, an dem man in der Commit-Historie sieht, dass die Automatik läuft.
 
 Den Ordner `docs/` liefert GitHub Pages kostenlos aus. Das Handy abonniert eine
 feste Adresse und holt sich selbst die Aktualisierungen.
+
+## Wie oft es wirklich läuft
+
+Der Zeitplan bittet um einen Lauf pro Stunde. **GitHub hält sich nicht daran.**
+Gemessen in diesem Repository: von 36 vorgesehenen Slots eines Tages kamen
+drei, im Abstand von zwei bis drei Stunden. Die Läufe, die kommen, starten
+sofort (Wartezeit null) – GitHub legt für die übrigen Slots also gar keinen
+Lauf erst an, statt sie zu verzögern. Bei kostenlosen öffentlichen Repositories
+ist das bekannt und nicht abstellbar.
+
+Rechne also mit **alle zwei bis drei Stunden**, nicht mit stündlich. Für
+Schiedsrichter-Einteilungen, die Tage im Voraus veröffentlicht werden, reicht
+das; für den Kalender kommt die Trägheit von iOS ohnehin obendrauf.
+
+Wer es sofort braucht: Actions → *Einteilungen aktualisieren* → **Run
+workflow**. Der manuelle Auslöser war nie betroffen.
+
+Wer eine wirklich verlässliche Taktung braucht, stößt den Workflow von außen
+an – ein kostenloser Cron-Dienst ruft stündlich die GitHub-API auf
+(`POST /repos/suffig/esrw/actions/workflows/einteilungen.yml/dispatches`).
+Das kostet allerdings ein Zugangstoken, das außerhalb von GitHub liegt; es
+sollte fein granuliert sein und ausschließlich `actions: write` auf dieses eine
+Repository dürfen.
 
 Braucht Python 3.8+, keine Pakete.
 

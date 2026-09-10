@@ -2,15 +2,19 @@ name: Einteilungen aktualisieren
 
 on:
   schedule:
-    # Alle 30 Minuten zwischen ca. 07:00 und 00:40 deutscher Zeit.
-    # GitHub rechnet in UTC.
+    # Stuendlich, rund um die Uhr. GitHub rechnet in UTC.
     #
-    # Bewusst :07 und :37 statt :00 und :30. Geplante Laeufe kommen bei GitHub
-    # in eine Warteschlange und werden bei Last verworfen - zur vollen und
-    # halben Stunde starten weltweit die meisten Zeitplaene, entsprechend
-    # gross ist dort der Andrang. Ein paar Minuten versetzt laeuft es
-    # zuverlaessiger.
-    - cron: "7,37 5-22 * * *"
+    # Erwarte nicht, dass daraus 24 Laeufe am Tag werden. Gemessen an diesem
+    # Repository legt GitHub fuer die meisten Slots gar keinen Lauf an: von
+    # 36 vorgesehenen Slots kamen an einem Tag drei, im Abstand von zwei bis
+    # drei Stunden. Die Laeufe, die kommen, starten sofort - es ist also kein
+    # Rueckstau, sondern ein stilles Auslassen. Bei kostenlosen oeffentlichen
+    # Repositories ist das normal.
+    #
+    # Der Zeitplan ist deshalb bewusst anspruchslos formuliert und deckt auch
+    # die Nacht ab, damit morgens etwas Frisches dasteht. Wer eine verlaessliche
+    # Taktung braucht, stoesst den Workflow von aussen an (siehe README).
+    - cron: "17 * * * *"
   workflow_dispatch:      # Knopf zum manuellen Ausloesen
     inputs:
       fehler_testen:

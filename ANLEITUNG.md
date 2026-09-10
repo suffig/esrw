@@ -134,7 +134,7 @@ Nach ein paar Sekunden erscheint der Lauf in der Liste. Draufklicken →
 **aktualisieren** → dort siehst du die einzelnen Schritte. Alle mit grünem Haken
 heißt: es läuft.
 
-Ab jetzt startet er alle 30 Minuten von selbst.
+Ab jetzt startet er von selbst – wie oft, entscheidet GitHub (siehe unten).
 
 ### 4.3 Was die Überwachung genau tut
 
@@ -172,7 +172,7 @@ Fehlermeldung steht ganz unten in der Ausgabe.
 | `Permission to … denied to github-actions[bot]` oder `403` beim `git push` | Schreibrechte fehlen → 4.1, **Workflow permissions** |
 | `FEHLER: keine Spiele gefunden` | esrw.de wurde umgebaut → `parse_seite()` in `esrw_ical.py` anpassen |
 | `Pruefung(en) fehlgeschlagen` im Regressionstest | Eine Änderung am Skript hat etwas kaputt gemacht; die Liste darunter sagt was |
-| `FEHLER: … nicht erreichbar` | esrw.de war kurz weg. Passiert; der nächste Lauf in 30 Minuten holt es nach |
+| `FEHLER: … nicht erreichbar` | esrw.de war kurz weg. Passiert; der nächste Lauf holt es nach |
 | `alle Hallen haben Koordinaten` | Neue Halle in `venues.json` ohne Koordinaten → `python geo_holen.py` |
 
 > **Nach 60 Tagen ohne Aktivität** schaltet GitHub geplante Workflows ab und
