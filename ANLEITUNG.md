@@ -503,7 +503,7 @@ Konto auf <https://cron-job.org> anlegen, dann **Create cronjob**:
 |---|---|
 | Title | `Einteilungen aktualisieren` |
 | URL | `https://api.github.com/repos/suffig/esrw/actions/workflows/einteilungen.yml/dispatches` |
-| Schedule | *Every 30 minutes* (oder stündlich) |
+| Schedule | *Every 30 minutes* |
 
 Dann auf **Advanced** umschalten:
 
@@ -523,7 +523,13 @@ Content-Type: application/json
 {"ref":"main"}
 ```
 
-Speichern.
+Bei **Notify me when…** den Punkt *execution of the cronjob fails* einschalten,
+und **Save responses in job history** ebenfalls – beides hilft beim Suchen,
+falls etwas klemmt. Dann speichern.
+
+> Kürzer als 30 Minuten würde ich nicht gehen. Jeder Lauf holt zwei Seiten von
+> esrw.de; bei 15 Minuten sind das fast 200 Zugriffe am Tag auf die
+> Vereinsseite, ohne dass die Einteilungen dadurch früher feststünden.
 
 ### 9.4 Prüfen
 
@@ -533,10 +539,20 @@ Erfolg ohne Inhalt, das ist kein Fehler.
 | Antwort | Bedeutung |
 |---|---|
 | `204` | passt, der Lauf wurde ausgelöst |
-| `401` | Token falsch oder abgelaufen |
+| `401` mit `Requires authentication` | Der Header ist unbrauchbar – meist fehlt **`Bearer `** samt Leerzeichen vor dem Token |
+| `401` mit `Bad credentials` | Header stimmt, aber der Token ist falsch, abgelaufen oder widerrufen |
 | `403` | Token hat kein `Actions: Read and write` |
 | `404` | Repository- oder Dateiname stimmt nicht, oder Token sieht das Repository nicht |
 | `422` | Branch `main` stimmt nicht |
+
+Um die Meldung überhaupt zu sehen, muss oben **„Save responses in job history"**
+eingeschaltet sein – sonst zeigt cron-job.org nur die nackte Zahl.
+
+Zwei Stolperfallen beim Eintippen, beide schon passiert:
+
+* Der Wert von `Authorization` ist **`Bearer ` + Token**, nicht der Token allein.
+* `Content-Type` heißt `application/json` – ein verschlucktes erstes Zeichen
+  fällt in dem schmalen Feld kaum auf.
 
 Danach unter <https://github.com/suffig/esrw/actions> nachsehen: dort muss ein
 Lauf mit dem Auslöser **workflow_dispatch** stehen.
