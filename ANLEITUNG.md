@@ -548,6 +548,18 @@ Erfolg ohne Inhalt, das ist kein Fehler.
 Um die Meldung überhaupt zu sehen, muss oben **„Save responses in job history"**
 eingeschaltet sein – sonst zeigt cron-job.org nur die nackte Zahl.
 
+Bei Erfolg stehen in der Antwort zwei nützliche Zeilen:
+`x-accepted-github-permissions: actions=write` bestätigt, dass der Token genau
+das darf, was er soll, und `github-authentication-token-expiration` nennt das
+Ablaufdatum – das ist der Tag, an dem die Automatik ohne Vorwarnung aufhört.
+
+> **Zur API-Version:** `2022-11-28` funktioniert, ist aber seit dem 10.03.2026
+> als veraltet gekennzeichnet; abgeschaltet wird sie am 10.03.2028. Die
+> Nachfolgerin heißt `2026-03-10`. Ein Wechsel ändert an diesem Aufruf nichts
+> Messbares – GitHub meldet für den dispatches-Endpunkt weiterhin `2022-11-28`
+> als gewählte Version – schadet aber auch nicht. Spätestens Anfang 2028
+> umstellen.
+
 Zwei Stolperfallen beim Eintippen, beide schon passiert:
 
 * Der Wert von `Authorization` ist **`Bearer ` + Token**, nicht der Token allein.
