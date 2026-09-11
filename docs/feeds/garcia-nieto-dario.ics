@@ -104,4 +104,59 @@ DESCRIPTION:In einer Stunde an der Halle - (L)SR · U15 RLB · EHC Troisdor
  f – EJ Kassel
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:03e32f84a84666987901cc2818f3216b11e5eab2@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260918T170000Z
+DTEND:20260918T203000Z
+SUMMARY:(L)SR · RL FS · Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf
+  !!!
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 20:00 Uhr\nTreffpunk
+ t: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthalle R
+ atingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Steven\, Patri
+ ck / Dietrich\, Jonas\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
+GEO:51.295808;6.834624
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
+  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
+ tingen":geo:51.295808,6.834624
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · RL FS · Ratinger Ice A
+ liens – Chiefs Leuwen Düsseldorf !!!
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:94806f7efbc28e65067efe08c05fe73d2cc83221@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260920T110000Z
+DTEND:20260920T143000Z
+SUMMARY:(L)SR · U15 RLA · Düsseldorfer EG – Iserlohner EC
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 14:00 Uhr\nTreffpunk
+ t: 13:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eishalle Breh
+ mstraße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Leibfrie
+ d\, Raphael\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U15 RLA · Düsseldorfe
+ r EG – Iserlohner EC
+END:VALARM
+END:VEVENT
 END:VCALENDAR

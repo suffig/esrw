@@ -34,4 +34,58 @@ DESCRIPTION:In einer Stunde an der Halle - (L)SR · U13 FS · Krefelder EV
  – Löwen Frankfurt
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:8d9c106b7e975e78a5b2ad74c40e3881aae311fc@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260919T103000Z
+DTEND:20260919T140000Z
+SUMMARY:(L)SR · U20 FS · Eisadler Dortmund – EHC Troisdorf
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 13:30 Uhr\nTreffpunk
+ t: 12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 FS\nHalle: Eissportzentru
+ m Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Pacalaj\,
+  Erik\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U20 FS · Eisadler Dort
+ mund – EHC Troisdorf
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:d2549d7d92e13a922c836aee8159f91393aa2ca4@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260920T093000Z
+DTEND:20260920T130000Z
+SUMMARY:(L)SR · U13 LL · Dinslakener Kobras – EHC Troisdorf 1b
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 12:30 Uhr\nTreffpunk
+ t: 11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle 
+ Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Victor\, Tob
+ ias (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
+GEO:51.574578;6.735361
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
+ m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
+ inslaken":geo:51.574578,6.735361
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U13 LL · Dinslakener K
+ obras – EHC Troisdorf 1b
+END:VALARM
+END:VEVENT
 END:VCALENDAR

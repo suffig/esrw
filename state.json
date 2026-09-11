@@ -71,6 +71,18 @@
   "titel": "(L)SR · U13 FS · Krefelder EV – Löwen Frankfurt",
   "treffpunkt": "2026-09-12T18:30:00+02:00"
  },
+ "03e32f84a84666987901cc2818f3216b11e5eab2@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-18T20:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "ee66ca6e1d3e83569638ce74acaef34a9892663d",
+  "ort": "Eissporthalle Ratingen, Am Sandbach 12, 40878 Ratingen",
+  "sequence": 0,
+  "slug": "garcia-nieto-dario",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · RL FS · Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!",
+  "treffpunkt": "2026-09-18T19:00:00+02:00"
+ },
  "04ee007fa60b5d6fd8dcc33dbd5229af020afaec@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-05T10:30:00+02:00",
@@ -82,6 +94,18 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · U13 FS · Lippe Hockey Hamm – Soester EG",
   "treffpunkt": "2026-09-05T09:30:00+02:00"
+ },
+ "05bb298d6e4e19d20cfb8e64c4fb170753d832a3@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T16:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "4cf871b72787475ede51df570cc3608cd9e3e7fc",
+  "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+  "sequence": 0,
+  "slug": "heffler-philipp",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U17 I · Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld",
+  "treffpunkt": "2026-09-19T15:30:00+02:00"
  },
  "082ce4c5e8ab642a9acd1ea342d090a4fefe0bb6@esrw.de": {
   "aenderung": null,
@@ -131,6 +155,18 @@
   "titel": "(L)SR · DA FS · Hessen – Sachsen/Berlin",
   "treffpunkt": "2026-09-12T15:45:00+02:00"
  },
+ "0b322357c43ea201e8158adf4b1504f6fbd2274b@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T10:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "5dba77bc102edc7359c9be40520f58eb5201c8a5",
+  "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
+  "sequence": 0,
+  "slug": "berger-eugen",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U17 RL · Herforder EV – Eisadler Dortmund",
+  "treffpunkt": "2026-09-19T09:00:00+02:00"
+ },
  "0c3a76c5b9632bc611b76567379329bc462e51f0@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-05T16:30:00+02:00",
@@ -167,6 +203,18 @@
   "titel": "(L)SR · U20 FS · Herner EV – Eisadler Dortmund",
   "treffpunkt": "2026-09-04T18:45:00+02:00"
  },
+ "11f4b41e5991e0776d589b8ba7a9d21a222a92e3@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T12:15:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "7e5f24eec6d78dfb656fea8880ce77ac4eaf5b70",
+  "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
+  "sequence": 0,
+  "slug": "galeske-jonas",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U11 RL · Iserlohner EC -",
+  "treffpunkt": "2026-09-19T11:15:00+02:00"
+ },
  "13febb764d56242ca0d77a709af925de77137415@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-13T12:30:00+02:00",
@@ -191,6 +239,18 @@
   "titel": "(L)SR · DA FS · Finale -",
   "treffpunkt": "2026-09-13T14:00:00+02:00"
  },
+ "151a485b6d521ae4ee637c7d33ba3cebf18098ea@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T13:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "a284b25ef4f73d37059603e5d3d12c688a9e85c4",
+  "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+  "sequence": 0,
+  "slug": "marks-marcel",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U17 FS · Eisadler Dortmund – EHC Troisdorf",
+  "treffpunkt": "2026-09-20T12:30:00+02:00"
+ },
  "15f8ffd72c65c0b639fb9456adbe8ca18a8734c7@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-06T18:30:00+02:00",
@@ -202,6 +262,30 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · U15 LL FS · Lippe Hockey Hamm – TuS Wiehl",
   "treffpunkt": "2026-09-06T17:30:00+02:00"
+ },
+ "15fa6eb352fbd496dcad72d8e2e9bd3c350ca68d@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T10:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "cc2cc2527b2600ece7ccd41b55f24779c26b668b",
+  "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
+  "sequence": 0,
+  "slug": "krawinkel-markus",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "HSR · DNL III · EV Duisburg – SCC Adler Berlin",
+  "treffpunkt": "2026-09-20T09:00:00+02:00"
+ },
+ "18bba3cbe4df19156ac685dc7c72291fa498605e@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T17:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "653aeacc08eab2ff6dd811cc0a7664303ad3826d",
+  "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+  "sequence": 0,
+  "slug": "hofer-carsten",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U15 RLA · Krefelder EV – Kölner Junghaie",
+  "treffpunkt": "2026-09-20T16:00:00+02:00"
  },
  "18cf64b0fddb78956783b860799b1c45f8f0c3f3@esrw.de": {
   "aenderung": null,
@@ -227,6 +311,30 @@
   "titel": "(L)SR · U13 RLB · Herforder EV – Iserlohner EC 1b",
   "treffpunkt": "2026-09-13T09:00:00+02:00"
  },
+ "1a87cb0864d10c49c05502b7b429f88b7e799c08@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T08:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "b399eb1c5a42652f7f882e906aa7253cc332b81b",
+  "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
+  "sequence": 0,
+  "slug": "garbsch-rene",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U11 LL Rot · Iserlohner EC 1b -",
+  "treffpunkt": "2026-09-20T07:00:00+02:00"
+ },
+ "1ad65c29bc6e1cfc8cf86ffb2761d486f799e3d9@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T08:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "b399eb1c5a42652f7f882e906aa7253cc332b81b",
+  "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
+  "sequence": 0,
+  "slug": "vorgeitz-benny",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U11 LL Rot · Iserlohner EC 1b -",
+  "treffpunkt": "2026-09-20T07:00:00+02:00"
+ },
  "1b8b62bb3163bae28f7251efd13bb51038aa1750@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-13T10:00:00+02:00",
@@ -238,6 +346,18 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · U13 FS · Krefelder EV 1b – Löwen Frankfurt 1b",
   "treffpunkt": "2026-09-13T09:00:00+02:00"
+ },
+ "1c1f0f073cb243b06cbdf2f85ee4ffaccf191d0e@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T14:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "215edbfec35c1ceb6d018ed762458d862fbbb429",
+  "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+  "sequence": 0,
+  "slug": "leibfried-raphael",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U15 RLA · Düsseldorfer EG – Iserlohner EC",
+  "treffpunkt": "2026-09-20T13:00:00+02:00"
  },
  "1c541115ca97d0e93c9f178607048597508eb959@esrw.de": {
   "aenderung": null,
@@ -299,6 +419,18 @@
   "titel": "(L)SR · U17 I · Kölner Junghaie – ES Weißwasser",
   "treffpunkt": "2026-09-12T15:30:00+02:00"
  },
+ "2169a7282070733a5b10598e47f650539cbbb7ee@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T10:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "a45b0ef09d7c633f3ca77912c9ce9cddd3843e36",
+  "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
+  "sequence": 0,
+  "slug": "quint-sascha",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · DNL III · EV Duisburg – SCC Adler Berlin",
+  "treffpunkt": "2026-09-20T09:00:00+02:00"
+ },
  "2300b01c81573b1c2b91b68edde21df9933a22b0@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-13T10:00:00+02:00",
@@ -311,6 +443,30 @@
   "titel": "(L)SR · U11 LL Gelb · EHC Essen Ruhr – Essen",
   "treffpunkt": "2026-09-13T09:00:00+02:00"
  },
+ "24bc70868feb39f5b030e5051db7bb7fc6b60c4c@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T14:45:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "5b5cc8ea4cdc30054c2acb434db92aed0ab8e4f9",
+  "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
+  "sequence": 0,
+  "slug": "schoeche-gian-carlo",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U17 I · Kölner Junghaie – Düsseldorfer EG",
+  "treffpunkt": "2026-09-20T13:45:00+02:00"
+ },
+ "2554c6083b890f969cf081ac54444b0ccf378ce0@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T13:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "f1681dfb061ce1083f9e488f1a7f84157b5e35e7",
+  "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
+  "sequence": 0,
+  "slug": "berger-eugen",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U13 RLB · Herforder EV – EHC Troisdorf",
+  "treffpunkt": "2026-09-19T12:30:00+02:00"
+ },
  "27e5fbd97f31fda6590196bc79b417300486b33b@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-06T12:00:00+02:00",
@@ -322,6 +478,18 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · U17 I · Iserlohner EC – Krefelder EV",
   "treffpunkt": "2026-09-06T11:00:00+02:00"
+ },
+ "27f468207fc77cf30e66cb6db36c1fad1dbbdb04@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T19:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "80fa5a49d916b6da06ed1a2596aad5f57747b6a7",
+  "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+  "sequence": 0,
+  "slug": "quint-sascha",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · RL FS · Dinslakener Kobras – UNIS Flyers Heerenveen",
+  "treffpunkt": "2026-09-20T18:00:00+02:00"
  },
  "285037b432ea1fea3197c5ca0a38c39c70f2975e@esrw.de": {
   "aenderung": null,
@@ -346,6 +514,18 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · U20 FS · Dinslakener Kobras – Ratinger Ice Aliens",
   "treffpunkt": "2026-09-11T19:15:00+02:00"
+ },
+ "28bb97aab3f65eef4c17b0ad3d19a4dfadbdabcc@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T19:45:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "c12a973ea5dc5127a66b45a9bee50a39e35cbd46",
+  "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
+  "sequence": 0,
+  "slug": "leibfried-raphael",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U15 RLA · Kölner Junghaie – Düsseldorfer EG",
+  "treffpunkt": "2026-09-19T18:45:00+02:00"
  },
  "2918fe310296a070416eacffd17384571b705ace@esrw.de": {
   "aenderung": null,
@@ -407,6 +587,18 @@
   "titel": "(L)SR · U13 FS · Kölner Junghaie 1b – Iserlohner EC 1b",
   "treffpunkt": "2026-09-05T18:45:00+02:00"
  },
+ "2c50a24681b12c5f8d6d842116b7b7b2548fbbe4@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T10:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "5dba77bc102edc7359c9be40520f58eb5201c8a5",
+  "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
+  "sequence": 0,
+  "slug": "bruecker-tobias",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U17 RL · Herforder EV – Eisadler Dortmund",
+  "treffpunkt": "2026-09-19T09:00:00+02:00"
+ },
  "2c8ecce607e510bfe0af6d1484fdf3c28c94b86d@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-12T16:45:00+02:00",
@@ -431,6 +623,18 @@
   "titel": "(L)SR · U17 FS · EHC Troisdorf – Eisadler Dortmund",
   "treffpunkt": "2026-09-13T17:00:00+02:00"
  },
+ "334d2af3cfd3dabb11dc5ba20b9eb4e5ccdce0d8@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-18T20:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "ee66ca6e1d3e83569638ce74acaef34a9892663d",
+  "ort": "Eissporthalle Ratingen, Am Sandbach 12, 40878 Ratingen",
+  "sequence": 0,
+  "slug": "dietrich-jonas",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · RL FS · Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!",
+  "treffpunkt": "2026-09-18T19:00:00+02:00"
+ },
  "34715b84b99dc55cfac07d648e31222c720d697b@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-04T19:45:00+02:00",
@@ -442,6 +646,30 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · U20 FS · Herner EV – Eisadler Dortmund",
   "treffpunkt": "2026-09-04T18:45:00+02:00"
+ },
+ "34f1964e65b499c2878fa694c5d0e3ca7c764e2c@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T19:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "80fa5a49d916b6da06ed1a2596aad5f57747b6a7",
+  "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+  "sequence": 0,
+  "slug": "stockenschneider-lars",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · RL FS · Dinslakener Kobras – UNIS Flyers Heerenveen",
+  "treffpunkt": "2026-09-20T18:00:00+02:00"
+ },
+ "3503ef8a58f17a793f2ce0787061c0d1c6a6a7a4@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T13:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "f1681dfb061ce1083f9e488f1a7f84157b5e35e7",
+  "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
+  "sequence": 0,
+  "slug": "bruecker-tobias",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U13 RLB · Herforder EV – EHC Troisdorf",
+  "treffpunkt": "2026-09-19T12:30:00+02:00"
  },
  "363d195c2de6951f7868d6caf68a6f91ad102401@esrw.de": {
   "aenderung": null,
@@ -490,6 +718,18 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · U13 RLA · Kölner Junghaie – Krefelder EV",
   "treffpunkt": "2026-09-06T16:30:00+02:00"
+ },
+ "376d35f3f4abad629799391d8f28ad621995faf0@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T13:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "44e93f66315b77547069b89720e82fea0d0310bc",
+  "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+  "sequence": 0,
+  "slug": "schmidt-waldemar",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U15 RLB · Krefelder EV 1b – EV Duisburg YAYLA Krefeld",
+  "treffpunkt": "2026-09-19T12:30:00+02:00"
  },
  "3a0decfd2a13b48d779a743f7e91efcff8b5d2aa@esrw.de": {
   "aenderung": null,
@@ -587,6 +827,54 @@
   "titel": "(L)SR · U15 RLA · Krefelder EV – Düsseldorfer EG",
   "treffpunkt": "2026-09-06T13:00:00+02:00"
  },
+ "455497f16d61a2209d1a9db51a6d2031ea6bee84@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-18T20:15:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "9b72b98f41cc7c89f789222c172f13f204aba341",
+  "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
+  "sequence": 0,
+  "slug": "finke-gudrun",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U15 RLB · EHC Troisdorf – EV Duisburg",
+  "treffpunkt": "2026-09-18T19:15:00+02:00"
+ },
+ "45746b669ea93e3a0dbd70103565d7df1a921dd3@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T13:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "08ed0ae992a5cb2edb4495650da4af58d96871cd",
+  "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+  "sequence": 0,
+  "slug": "hartmann-marius",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · DEFL 2 FS · Düsseldorfer EG – NL U18",
+  "treffpunkt": "2026-09-19T12:30:00+02:00"
+ },
+ "463684baa8fddcd81aeaa2657b325d3a891e3914@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-18T20:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "6de6d41ca2de14f336fe77b06776168a2d9cc404",
+  "ort": "Eissporthalle Ratingen, Am Sandbach 12, 40878 Ratingen",
+  "sequence": 0,
+  "slug": "steven-patrick",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "HSR · RL FS · Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!",
+  "treffpunkt": "2026-09-18T19:00:00+02:00"
+ },
+ "463e9ace43bef9492dc616c6b15287d3f70b769e@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T17:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "653aeacc08eab2ff6dd811cc0a7664303ad3826d",
+  "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+  "sequence": 0,
+  "slug": "schlueter-thomas",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U15 RLA · Krefelder EV – Kölner Junghaie",
+  "treffpunkt": "2026-09-20T16:00:00+02:00"
+ },
  "47d36f2e63f94d2d7c224e85e983071386824f34@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-05T19:30:00+02:00",
@@ -598,6 +886,42 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · BL FS · EHC Troisdorf 1b – Herner EV 1b",
   "treffpunkt": "2026-09-05T18:30:00+02:00"
+ },
+ "48f265d5bfe7531b39ca6283adfb37ba0bdcb9ab@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T18:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "e3da821a8ece8eebf61a0834f2ac1f98e7d9063d",
+  "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
+  "sequence": 0,
+  "slug": "melchert-philip",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · BL FS · EHC Essen Ruhr – Soester EG",
+  "treffpunkt": "2026-09-20T17:30:00+02:00"
+ },
+ "4cf77781b3e48c350e46ffeccd2ca693b01d4a7d@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T19:45:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "c12a973ea5dc5127a66b45a9bee50a39e35cbd46",
+  "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
+  "sequence": 0,
+  "slug": "garbsch-rene",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U15 RLA · Kölner Junghaie – Düsseldorfer EG",
+  "treffpunkt": "2026-09-19T18:45:00+02:00"
+ },
+ "4dcc0939cc4f39366d05bd481b009386dfb9ecb7@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T16:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "4cf871b72787475ede51df570cc3608cd9e3e7fc",
+  "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+  "sequence": 0,
+  "slug": "schmidt-waldemar",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U17 I · Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld",
+  "treffpunkt": "2026-09-19T15:30:00+02:00"
  },
  "4e54cea7aa09089df179ce75197a97350c143d73@esrw.de": {
   "aenderung": null,
@@ -635,6 +959,18 @@
   "titel": "(L)SR · RL FS · Ratinger Ice Aliens – Herner EV",
   "treffpunkt": "2026-09-11T19:00:00+02:00"
  },
+ "5877c2a909f061eac40ef9f0d0f86698a1ad2e81@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T14:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "c58a6e5f192eefbbde141b1390738c6e8c955339",
+  "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+  "sequence": 0,
+  "slug": "schlueter-thomas",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U9 LL Rot · Krefelder EV 1b -",
+  "treffpunkt": "2026-09-20T13:00:00+02:00"
+ },
  "5bb8caff1a759453d28c2949b3f35de762b15396@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-06T12:30:00+02:00",
@@ -646,6 +982,18 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · U15 FS · Herforder EV – REV Bremerhaven",
   "treffpunkt": "2026-09-06T11:30:00+02:00"
+ },
+ "5c46c904582c429903121e6146395e26ee2885c3@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T16:15:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "7ba6a8982ba9c29dffd633e1a90b20c0e85aed99",
+  "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
+  "sequence": 0,
+  "slug": "zynda-jayden",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U15 LL · Herforder EV – Ratinger Ice Aliens",
+  "treffpunkt": "2026-09-19T15:15:00+02:00"
  },
  "5cf17af8aaae528f60e9664f791df35cc6fe375c@esrw.de": {
   "aenderung": null,
@@ -707,6 +1055,30 @@
   "titel": "(L)SR · DA FS · Spiel um Platz 3 -",
   "treffpunkt": "2026-09-13T12:00:00+02:00"
  },
+ "5f453ac78ac46bf6942c23d01ce1f89b826406a6@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T17:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "5ba8053ae5e2bf4d6296c033bd4381b228d9bcf9",
+  "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
+  "sequence": 0,
+  "slug": "schoeche-gian-carlo",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U13 RLB · Kölner Junghaie 1b – EV Duisburg",
+  "treffpunkt": "2026-09-20T16:30:00+02:00"
+ },
+ "605fd4800e815a40811623e85fd4949e240f2d40@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-18T20:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "1edbbffa91361b3eb32c0bb07cdda6a74fe3ea53",
+  "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+  "sequence": 0,
+  "slug": "malik-orlando",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · RL FS · Eisadler Dortmund – Bulldogs de Liege",
+  "treffpunkt": "2026-09-18T19:00:00+02:00"
+ },
  "60bcedaaed29509cdcd0e0d12b69ed779c4d6552@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-04T19:30:00+02:00",
@@ -755,6 +1127,18 @@
   "titel": "(L)SR · U20 FS · Dinslakener Kobras – Ratinger Ice Aliens",
   "treffpunkt": "2026-09-11T19:15:00+02:00"
  },
+ "6519729f3e35a22c2a34ea27698973d711ae793b@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-18T20:15:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "9b72b98f41cc7c89f789222c172f13f204aba341",
+  "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
+  "sequence": 0,
+  "slug": "starke-matthias",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U15 RLB · EHC Troisdorf – EV Duisburg",
+  "treffpunkt": "2026-09-18T19:15:00+02:00"
+ },
  "669490be8e2efec99389a5c87a6b6d2ee7e3c2a2@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-11T19:30:00+02:00",
@@ -767,6 +1151,30 @@
   "titel": "(L)SR · U17 I · Iserlohner EC – Düsseldorfer EG",
   "treffpunkt": "2026-09-11T18:30:00+02:00"
  },
+ "679392f44b4f8527f3ec4b83f3c2fa94aaab36ab@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T16:15:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "7ba6a8982ba9c29dffd633e1a90b20c0e85aed99",
+  "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
+  "sequence": 0,
+  "slug": "zynda-nick",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U15 LL · Herforder EV – Ratinger Ice Aliens",
+  "treffpunkt": "2026-09-19T15:15:00+02:00"
+ },
+ "67e88538bfb565882e43270d58af399553c0e6b2@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-18T20:15:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "b5727312ee87ca68298eb2ea4f1397a4e3e5876f",
+  "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+  "sequence": 0,
+  "slug": "hofer-carsten",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · RL FS · Dinslakener Kobras – Grefrather EG",
+  "treffpunkt": "2026-09-18T19:15:00+02:00"
+ },
  "67fbd46ab1c45c6d1732f7fd99a47d45ba6caef4@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-13T17:30:00+02:00",
@@ -778,6 +1186,18 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · U15 RLB · Kölner Junghaie 1b – Iserlohner EC 1b",
   "treffpunkt": "2026-09-13T16:30:00+02:00"
+ },
+ "680ff82cc446bb4e07ddff83ea89957bba24dc86@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T13:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "a284b25ef4f73d37059603e5d3d12c688a9e85c4",
+  "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+  "sequence": 0,
+  "slug": "galeske-jonas",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U17 FS · Eisadler Dortmund – EHC Troisdorf",
+  "treffpunkt": "2026-09-20T12:30:00+02:00"
  },
  "6825469fe9f2af61fda17b9489a2af533f9fe9b9@esrw.de": {
   "aenderung": null,
@@ -911,6 +1331,18 @@
   "titel": "(L)SR · U17 RL · Herforder EV – Lippe Hockey Hamm Herford",
   "treffpunkt": "2026-09-12T09:00:00+02:00"
  },
+ "76a046fc23436d660ffdb9358dedbab0bf337bae@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T16:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "952474a1a8cfac1aca62bffc4d025c27d965b12c",
+  "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
+  "sequence": 0,
+  "slug": "hellingrath-luca",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · DNL III · EV Duisburg – SCC Adler Berlin",
+  "treffpunkt": "2026-09-19T15:00:00+02:00"
+ },
  "77bd70bd93ff14ed8779ef0f767583f0c17eb7c5@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-13T18:30:00+02:00",
@@ -922,6 +1354,18 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · U17 RL · Lippe Hockey Hamm – Herforder EV Hamm",
   "treffpunkt": "2026-09-13T17:30:00+02:00"
+ },
+ "77be283a8882f14e10553410dc6851b18e0fe389@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-18T20:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "aa24de26ad1f124e71ec531393c0926a73b799cf",
+  "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
+  "sequence": 0,
+  "slug": "strube-julia",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · BL FS · EHC Essen Ruhr – Herner EV 1b",
+  "treffpunkt": "2026-09-18T19:00:00+02:00"
  },
  "7832ce433d7c1d09fade3245ee89db561a06a401@esrw.de": {
   "aenderung": null,
@@ -947,6 +1391,42 @@
   "titel": "(L)SR · DA FS · NRW – Hessen",
   "treffpunkt": "2026-09-13T10:00:00+02:00"
  },
+ "79a8515def553bb7fd9073fa7a9068c66b7a7530@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T12:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "463ca43330bfab1c5a642c35bb1afda23a9efe6b",
+  "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+  "sequence": 0,
+  "slug": "victor-tobias",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U13 LL · Dinslakener Kobras – EHC Troisdorf 1b",
+  "treffpunkt": "2026-09-20T11:30:00+02:00"
+ },
+ "7a62f6f78bfa7a691fea9f3107941920f9bf56a3@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T10:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "51101f8920115d5f5af64ab4d4e11f2723690295",
+  "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
+  "sequence": 0,
+  "slug": "bruecker-tobias",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · Frauen BZL · Herforder EV – KEC \"Die Haie\" 1c",
+  "treffpunkt": "2026-09-20T09:00:00+02:00"
+ },
+ "7aaadd8b299dcc1adc96761f8915acb30f0faf4a@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T10:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "f6f66c77fd8b6e4f8df650c8d0c970d07a070605",
+  "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
+  "sequence": 0,
+  "slug": "schlueter-thomas",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U9 RL · EHC Troisdorf -",
+  "treffpunkt": "2026-09-19T09:00:00+02:00"
+ },
  "7c6e7a04301a94db9bba945754fa0d8d62e73a0f@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-10T18:00:00+02:00",
@@ -970,6 +1450,30 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · DA FS · NRW – Sachsen/Berlin",
   "treffpunkt": "2026-09-12T10:00:00+02:00"
+ },
+ "7d2c16d54b121844b6b2f7a465503e7bea7155ab@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T16:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "1f33abc1c69f8ba6b382b42636fe30ff5cf35699",
+  "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+  "sequence": 0,
+  "slug": "reuter-fynn",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U17 I · Düsseldorfer EG – Kölner Junghaie",
+  "treffpunkt": "2026-09-19T15:30:00+02:00"
+ },
+ "7d2f9b166533add97a2a80684b196ed125292588@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T12:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "2585bc7637cdf26cc32558c1851fd4b93764bf25",
+  "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
+  "sequence": 0,
+  "slug": "garbsch-rene",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U17 I · Iserlohner EC – ES Weißwasser",
+  "treffpunkt": "2026-09-19T11:00:00+02:00"
  },
  "7e126e2e86e8e7ece698be616ad221b6f176e3cc@esrw.de": {
   "aenderung": null,
@@ -1079,6 +1583,18 @@
   "titel": "(L)SR · U17 II · EV Duisburg – SCC Adler Berlin",
   "treffpunkt": "2026-09-12T19:00:00+02:00"
  },
+ "8915fb3b86142d19446d2c789ca798949e1613f9@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-18T19:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "f79b6628be95cce3222b817c740782b82b23889d",
+  "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
+  "sequence": 0,
+  "slug": "marks-marcel",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U13 LL · EV Duisburg 1b – Ratinger Ice Aliens",
+  "treffpunkt": "2026-09-18T18:30:00+02:00"
+ },
  "89457eaf2f3ac8e33b84a5e8cffef5dea30fd42f@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-12T13:30:00+02:00",
@@ -1103,6 +1619,18 @@
   "titel": "(L)SR · U11 LL Gelb · EHC Essen Ruhr – Essen",
   "treffpunkt": "2026-09-13T09:00:00+02:00"
  },
+ "8ba5977d9f0eb7e98753e8ec4c03e33e2d76bb74@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T18:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "e3da821a8ece8eebf61a0834f2ac1f98e7d9063d",
+  "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
+  "sequence": 0,
+  "slug": "mueller-lars",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · BL FS · EHC Essen Ruhr – Soester EG",
+  "treffpunkt": "2026-09-20T17:30:00+02:00"
+ },
  "8c5a34ce1db1c3e6d4771b81bfb6ca634240962d@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-12T20:00:00+02:00",
@@ -1114,6 +1642,18 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · U17 II · EV Duisburg – SCC Adler Berlin",
   "treffpunkt": "2026-09-12T19:00:00+02:00"
+ },
+ "8d9c106b7e975e78a5b2ad74c40e3881aae311fc@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T13:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "cd41086fee253a31060375bc13ca75f2cad027df",
+  "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+  "sequence": 0,
+  "slug": "heffler-zsolt",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U20 FS · Eisadler Dortmund – EHC Troisdorf",
+  "treffpunkt": "2026-09-19T12:30:00+02:00"
  },
  "8da4cb2e04d0b5a142c260b306ae955d771df175@esrw.de": {
   "aenderung": null,
@@ -1127,6 +1667,18 @@
   "titel": "(L)SR · U17 II · EV Duisburg – ESV 03 Chemnitz",
   "treffpunkt": "2026-09-06T09:00:00+02:00"
  },
+ "8ecbcc1669d51bc374e14eeb37dbab97d3e29524@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T17:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "5ba8053ae5e2bf4d6296c033bd4381b228d9bcf9",
+  "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
+  "sequence": 0,
+  "slug": "starke-matthias",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U13 RLB · Kölner Junghaie 1b – EV Duisburg",
+  "treffpunkt": "2026-09-20T16:30:00+02:00"
+ },
  "8f4fd03ab64958d5eca3c2427904771cf59135b1@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-12T12:00:00+02:00",
@@ -1138,6 +1690,18 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · U15 RLB · EHC Troisdorf – EJ Kassel",
   "treffpunkt": "2026-09-12T11:00:00+02:00"
+ },
+ "9223233b256d46ead8aa97c04b18ac4658ba3575@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T16:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "b277022f6a4e3c1256917ccd225e8d2ad9e4002d",
+  "ort": "Gysenberghalle Herne, Am Revierpark 22, 44627 Herne",
+  "sequence": 0,
+  "slug": "strohmenger-svenja",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U13 RLB · Herner EV – Düsseldorfer EG 1b",
+  "treffpunkt": "2026-09-20T15:30:00+02:00"
  },
  "92564e89474335e944277d06227d2f37c5643191@esrw.de": {
   "aenderung": null,
@@ -1151,6 +1715,18 @@
   "titel": "(L)SR · U13 FS · Krefelder EV – Löwen Frankfurt",
   "treffpunkt": "2026-09-13T16:00:00+02:00"
  },
+ "92eaf65ffc39386439913635078a09fe4bd355f0@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T14:45:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "5b5cc8ea4cdc30054c2acb434db92aed0ab8e4f9",
+  "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
+  "sequence": 0,
+  "slug": "starke-matthias",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U17 I · Kölner Junghaie – Düsseldorfer EG",
+  "treffpunkt": "2026-09-20T13:45:00+02:00"
+ },
  "943c0d70fd354a1fda261d1ca1736af6e2949f4d@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-04T20:00:00+02:00",
@@ -1163,6 +1739,18 @@
   "titel": "HSR · RL FS · Ratinger Ice Aliens – Utrecht Dragons",
   "treffpunkt": "2026-09-04T19:00:00+02:00"
  },
+ "94806f7efbc28e65067efe08c05fe73d2cc83221@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T14:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "215edbfec35c1ceb6d018ed762458d862fbbb429",
+  "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+  "sequence": 0,
+  "slug": "garcia-nieto-dario",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U15 RLA · Düsseldorfer EG – Iserlohner EC",
+  "treffpunkt": "2026-09-20T13:00:00+02:00"
+ },
  "974f76dc8111e14bb4f12de380173a9df2942b0c@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-12T12:30:00+02:00",
@@ -1174,6 +1762,30 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · U13 FS · Dinslakener Kobras – TuS Wiehl",
   "treffpunkt": "2026-09-12T11:30:00+02:00"
+ },
+ "98b6076a433953b820482939edb2b220164c9f3a@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T19:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "6d04e58e4ccd7c33c7f39206c44844cb85ad537b",
+  "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
+  "sequence": 0,
+  "slug": "nieberle-christian",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U17 I · Iserlohner EC – ES Weißwasser",
+  "treffpunkt": "2026-09-19T18:30:00+02:00"
+ },
+ "9aa6a100761ee5ded5b280c5776ab4b999009cc8@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T16:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "80c4907c9f47818d883aeb63188d295383bb5c54",
+  "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
+  "sequence": 0,
+  "slug": "meissner-nils",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "HSR · DNL III · EV Duisburg – SCC Adler Berlin",
+  "treffpunkt": "2026-09-19T15:00:00+02:00"
  },
  "9ba370c06cf8ca9f7a0cf4cf5fcf4a2b0e407da3@esrw.de": {
   "aenderung": null,
@@ -1198,6 +1810,30 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · U13 FS · Dinslakener Kobras – TuS Wiehl",
   "treffpunkt": "2026-09-12T11:30:00+02:00"
+ },
+ "9d23bf52118f3e94f016673a42282fd362d6fd0e@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-18T20:15:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "c1f01640fd7143b550974b60bc33b717ccea4525",
+  "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+  "sequence": 0,
+  "slug": "caelers-fabian",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "HSR · RL FS · Dinslakener Kobras – Grefrather EG",
+  "treffpunkt": "2026-09-18T19:15:00+02:00"
+ },
+ "9d2fb846888125cbd16d0d6cbab76262a62b7ed3@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T09:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "b248840cf7952d4e1bb843a23a34986886a1f186",
+  "ort": "Gysenberghalle Herne, Am Revierpark 22, 44627 Herne",
+  "sequence": 0,
+  "slug": "hindley-david",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U15 RLB · Herner EV – EV Duisburg",
+  "treffpunkt": "2026-09-20T08:30:00+02:00"
  },
  "9d4b22767a94b0a1e756ab212e8d9a08cdf3b060@esrw.de": {
   "aenderung": null,
@@ -1246,6 +1882,18 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · U15 FS · Krefelder EV 1b – Iserlohner EC 1b",
   "treffpunkt": "2026-09-06T16:00:00+02:00"
+ },
+ "a0e9ed9e8e8182b80d9ebe66b10c3f2bb8725573@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T19:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "affd3f8e6c543f05b9c69effa1e648dcda865301",
+  "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+  "sequence": 0,
+  "slug": "priebsch-jan-philipp",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "HSR · RL FS · Dinslakener Kobras – UNIS Flyers Heerenveen",
+  "treffpunkt": "2026-09-20T18:00:00+02:00"
  },
  "a1929f3bff56f97e6ffecefd724b3c4bc9a46fdc@esrw.de": {
   "aenderung": null,
@@ -1331,6 +1979,30 @@
   "titel": "(L)SR · U15 RLA · Krefelder EV – Düsseldorfer EG",
   "treffpunkt": "2026-09-06T13:00:00+02:00"
  },
+ "a718edea24939b7203aa42c25c1d46ed72a739fb@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-18T20:15:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "b5727312ee87ca68298eb2ea4f1397a4e3e5876f",
+  "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+  "sequence": 0,
+  "slug": "lindemans-pepe",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · RL FS · Dinslakener Kobras – Grefrather EG",
+  "treffpunkt": "2026-09-18T19:15:00+02:00"
+ },
+ "a79e907a0974d145325851f73470a10515c73201@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T16:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "1f33abc1c69f8ba6b382b42636fe30ff5cf35699",
+  "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+  "sequence": 0,
+  "slug": "schmidt-eugen",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U17 I · Düsseldorfer EG – Kölner Junghaie",
+  "treffpunkt": "2026-09-19T15:30:00+02:00"
+ },
  "a7f2071c0364029006ad3e9b6bc1c22848faa9fa@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-13T14:45:00+02:00",
@@ -1342,6 +2014,42 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · U11 RL · Kölner Junghaie – Kölnarena 2",
   "treffpunkt": "2026-09-13T13:45:00+02:00"
+ },
+ "a8574aafd99561b4b7ab1b8aa02b5a9f6f71daf4@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T15:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "2c47a6e0b91e7a8be0988bdfcf7abc8512e68782",
+  "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
+  "sequence": 0,
+  "slug": "skalecki-martin",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U17 RL · Herforder EV – Ratinger Ice Aliens",
+  "treffpunkt": "2026-09-20T14:00:00+02:00"
+ },
+ "a8c8a8d341e29a8f989df83a1b7f2a202891d15a@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T17:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "e50afacc79457e72a408d1e16616a0a5adb68b16",
+  "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
+  "sequence": 0,
+  "slug": "malik-orlando",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · Senioren BZL · Herforder EV 1b – EHC Troisdorf 1b",
+  "treffpunkt": "2026-09-20T16:30:00+02:00"
+ },
+ "abff88e295a00b7ed7cb184d75a32b7b638562b7@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T12:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "8a754bf016b658b37f45b8d9186f49ff5764bd39",
+  "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
+  "sequence": 0,
+  "slug": "bruecker-tobias",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U15 LL · Herforder EV – Lippe Hockey Hamm",
+  "treffpunkt": "2026-09-20T11:30:00+02:00"
  },
  "ac37244e90b8a75c49cdca2ed1611038915aecfe@esrw.de": {
   "aenderung": null,
@@ -1367,6 +2075,66 @@
   "titel": "(L)SR · U15 RLB · EHC Troisdorf – Kölner Junghaie 1b",
   "treffpunkt": "2026-09-04T19:15:00+02:00"
  },
+ "b0cfda6ebaf3abdbbfedfc0baf5402c7b3f77fb9@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T10:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "a45b0ef09d7c633f3ca77912c9ce9cddd3843e36",
+  "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
+  "sequence": 0,
+  "slug": "pacalaj-erik",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · DNL III · EV Duisburg – SCC Adler Berlin",
+  "treffpunkt": "2026-09-20T09:00:00+02:00"
+ },
+ "b152e665448022023151e12cb972e451e5c37f01@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-18T19:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "f79b6628be95cce3222b817c740782b82b23889d",
+  "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
+  "sequence": 0,
+  "slug": "victor-tobias",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U13 LL · EV Duisburg 1b – Ratinger Ice Aliens",
+  "treffpunkt": "2026-09-18T18:30:00+02:00"
+ },
+ "b2cf7d5b0df78484e83631554a3985f0153d6c11@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T16:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "952474a1a8cfac1aca62bffc4d025c27d965b12c",
+  "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
+  "sequence": 0,
+  "slug": "schoeche-gian-carlo",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · DNL III · EV Duisburg – SCC Adler Berlin",
+  "treffpunkt": "2026-09-19T15:00:00+02:00"
+ },
+ "b33e6995f48701408080c4d9028c0d79ca69f9bb@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-18T20:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "86ec03df6283e1a815868be9d2fa5d3a47b8fa07",
+  "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+  "sequence": 0,
+  "slug": "mueller-lars",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "HSR · RL FS · Eisadler Dortmund – Bulldogs de Liege",
+  "treffpunkt": "2026-09-18T19:00:00+02:00"
+ },
+ "b6ed5b27362c979dc7fd9a35bcdcf3537bc7f2a4@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T13:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "cd41086fee253a31060375bc13ca75f2cad027df",
+  "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+  "sequence": 0,
+  "slug": "pacalaj-erik",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U20 FS · Eisadler Dortmund – EHC Troisdorf",
+  "treffpunkt": "2026-09-19T12:30:00+02:00"
+ },
  "ba4f01c3690c051578198c6c645bb25014689a31@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-05T19:30:00+02:00",
@@ -1391,6 +2159,30 @@
   "titel": "(L)SR · U20 FS · EHC Troisdorf – Eisadler Dortmund",
   "treffpunkt": "2026-09-11T19:15:00+02:00"
  },
+ "bd7522220a44281a5c2423e898970d0d5ea97faa@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T13:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "44e93f66315b77547069b89720e82fea0d0310bc",
+  "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+  "sequence": 0,
+  "slug": "heffler-philipp",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U15 RLB · Krefelder EV 1b – EV Duisburg YAYLA Krefeld",
+  "treffpunkt": "2026-09-19T12:30:00+02:00"
+ },
+ "c15beb415e3e0b2b6decbe60c2df905161c26662@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T10:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "c919dc45b53f00de1509400758cdf7740f59da96",
+  "ort": "HELINET Eissportarena Hamm, Karl-Koßmann-Straße 1, 59071 Hamm",
+  "sequence": 0,
+  "slug": "honselmann-tom",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U15 LL · Lippe Hockey Hamm – SpG Neusser EV / GSC Moers",
+  "treffpunkt": "2026-09-19T09:30:00+02:00"
+ },
  "c5f493bb6c55268dd6213346d98e20d4bff3b164@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-13T10:00:00+02:00",
@@ -1402,6 +2194,18 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · U17 II · EV Duisburg – SCC Adler Berlin",
   "treffpunkt": "2026-09-13T09:00:00+02:00"
+ },
+ "c67f48bcece2f21cd6dffcb3546d8be1ad4eee48@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T11:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "0f15c96d9f411136c262a8f4835439d06144a917",
+  "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+  "sequence": 0,
+  "slug": "caelers-fabian",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U17 I · Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld",
+  "treffpunkt": "2026-09-20T10:00:00+02:00"
  },
  "c6a354bafb52794db9d0ceadc7c5b95b4e8e7b09@esrw.de": {
   "aenderung": null,
@@ -1439,6 +2243,42 @@
   "titel": "(L)SR · LL FS · EHC Troisdorf – TuS Wiehl",
   "treffpunkt": "2026-09-12T18:30:00+02:00"
  },
+ "c85307ca315e7edbdbddb7b749eb0af1fb7fafe8@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T08:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "c236cd76792582fb1553fb499441e518c2506c2a",
+  "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+  "sequence": 0,
+  "slug": "klemm-julian",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U13 BZL Gr.A · Eisadler Dortmund 1b – Mädchen W.I.N. 2",
+  "treffpunkt": "2026-09-20T07:00:00+02:00"
+ },
+ "ca996faa7a3710f12a9922ca746177d409e59092@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T19:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "3e9ea7d4db07d9225d52768f80584a92b2887c8a",
+  "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+  "sequence": 0,
+  "slug": "caelers-fabian",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · LL FS · Eisadler Dortmund 1b – EHC Troisdorf",
+  "treffpunkt": "2026-09-20T18:00:00+02:00"
+ },
+ "cb1812902cc6122829efa0d1bcbde944c88e271c@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T14:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "c58a6e5f192eefbbde141b1390738c6e8c955339",
+  "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+  "sequence": 0,
+  "slug": "hofer-carsten",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U9 LL Rot · Krefelder EV 1b -",
+  "treffpunkt": "2026-09-20T13:00:00+02:00"
+ },
  "cc31c0e7d2bd3c2eba93be7c7c85d36e28838e77@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-06T14:45:00+02:00",
@@ -1462,6 +2302,42 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · U9 RL · Düsseldorfer EG – Brehmstraße",
   "treffpunkt": "2026-09-13T07:00:00+02:00"
+ },
+ "d006299a53eeae132b4ca95765690562c4e83805@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T10:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "c919dc45b53f00de1509400758cdf7740f59da96",
+  "ort": "HELINET Eissportarena Hamm, Karl-Koßmann-Straße 1, 59071 Hamm",
+  "sequence": 0,
+  "slug": "klemm-julian",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U15 LL · Lippe Hockey Hamm – SpG Neusser EV / GSC Moers",
+  "treffpunkt": "2026-09-19T09:30:00+02:00"
+ },
+ "d0fbc62dbfce215fd0c5d69f7bcccc105863ec3e@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T12:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "2585bc7637cdf26cc32558c1851fd4b93764bf25",
+  "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
+  "sequence": 0,
+  "slug": "vorgeitz-benny",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U17 I · Iserlohner EC – ES Weißwasser",
+  "treffpunkt": "2026-09-19T11:00:00+02:00"
+ },
+ "d2549d7d92e13a922c836aee8159f91393aa2ca4@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T12:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "463ca43330bfab1c5a642c35bb1afda23a9efe6b",
+  "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+  "sequence": 0,
+  "slug": "heffler-zsolt",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U13 LL · Dinslakener Kobras – EHC Troisdorf 1b",
+  "treffpunkt": "2026-09-20T11:30:00+02:00"
  },
  "d38d62cc941c90144a526ea4b95c1a0ab698cb7d@esrw.de": {
   "aenderung": null,
@@ -1498,6 +2374,30 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · U13 RLB · Herforder EV – Iserlohner EC 1b",
   "treffpunkt": "2026-09-13T09:00:00+02:00"
+ },
+ "d516df8df13368f44633597b83c3529383537b72@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-18T20:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "1edbbffa91361b3eb32c0bb07cdda6a74fe3ea53",
+  "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+  "sequence": 0,
+  "slug": "garbsch-rene",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · RL FS · Eisadler Dortmund – Bulldogs de Liege",
+  "treffpunkt": "2026-09-18T19:00:00+02:00"
+ },
+ "d6bba4f31d7a448f8dcc1b352ac726f5524a6475@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T16:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "b277022f6a4e3c1256917ccd225e8d2ad9e4002d",
+  "ort": "Gysenberghalle Herne, Am Revierpark 22, 44627 Herne",
+  "sequence": 0,
+  "slug": "meissner-nils",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U13 RLB · Herner EV – Düsseldorfer EG 1b",
+  "treffpunkt": "2026-09-20T15:30:00+02:00"
  },
  "db6a0fe6fc1590747c00bc8a0d796a02a5473a2b@esrw.de": {
   "aenderung": null,
@@ -1547,6 +2447,42 @@
   "titel": "(L)SR · U17 I · Düsseldorfer EG – Iserlohner EC",
   "treffpunkt": "2026-09-13T13:00:00+02:00"
  },
+ "df815118049cd019abeb4e3a22e1828fc1a72cc8@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T12:15:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "7e5f24eec6d78dfb656fea8880ce77ac4eaf5b70",
+  "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
+  "sequence": 0,
+  "slug": "malik-orlando",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U11 RL · Iserlohner EC -",
+  "treffpunkt": "2026-09-19T11:15:00+02:00"
+ },
+ "e07b56242d97f229670a09e27b75283706b2b9d4@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T10:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "f6f66c77fd8b6e4f8df650c8d0c970d07a070605",
+  "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
+  "sequence": 0,
+  "slug": "solbach-carsten",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U9 RL · EHC Troisdorf -",
+  "treffpunkt": "2026-09-19T09:00:00+02:00"
+ },
+ "e41da0291df59fdd71a48194444675c20fad6305@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T15:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "2c47a6e0b91e7a8be0988bdfcf7abc8512e68782",
+  "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
+  "sequence": 0,
+  "slug": "malik-orlando",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U17 RL · Herforder EV – Ratinger Ice Aliens",
+  "treffpunkt": "2026-09-20T14:00:00+02:00"
+ },
  "e482d3efe0a103ce6d9915b10801a135bf7036e1@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-12T09:15:00+02:00",
@@ -1558,6 +2494,42 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · DA FS · NEV – BW/Hessen",
   "treffpunkt": "2026-09-12T08:15:00+02:00"
+ },
+ "e6d19ee811d3365e5f9555cae39bb27cdcd32581@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T17:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "e50afacc79457e72a408d1e16616a0a5adb68b16",
+  "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
+  "sequence": 0,
+  "slug": "skalecki-martin",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · Senioren BZL · Herforder EV 1b – EHC Troisdorf 1b",
+  "treffpunkt": "2026-09-20T16:30:00+02:00"
+ },
+ "e79c662556133b839de49ec258caadc78eed6f3a@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T09:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "b248840cf7952d4e1bb843a23a34986886a1f186",
+  "ort": "Gysenberghalle Herne, Am Revierpark 22, 44627 Herne",
+  "sequence": 0,
+  "slug": "kiefer-dennis",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U15 RLB · Herner EV – EV Duisburg",
+  "treffpunkt": "2026-09-20T08:30:00+02:00"
+ },
+ "e87bd755e553b57b083f109415bd3df4c1711cd8@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-18T20:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "aa24de26ad1f124e71ec531393c0926a73b799cf",
+  "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
+  "sequence": 0,
+  "slug": "schlueter-thomas",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · BL FS · EHC Essen Ruhr – Herner EV 1b",
+  "treffpunkt": "2026-09-18T19:00:00+02:00"
  },
  "ea7ae2bb5c51ebaadbcd937f936eb4cade92536a@esrw.de": {
   "aenderung": null,
@@ -1619,6 +2591,30 @@
   "titel": "(L)SR · DA FS · NEV/BW – Sachsen/Berlin",
   "treffpunkt": "2026-09-13T08:15:00+02:00"
  },
+ "f69ebb233a85cdd43faba4bbd8bb90b84ba9d2d7@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T13:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "08ed0ae992a5cb2edb4495650da4af58d96871cd",
+  "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+  "sequence": 0,
+  "slug": "vorgeitz-benny",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · DEFL 2 FS · Düsseldorfer EG – NL U18",
+  "treffpunkt": "2026-09-19T12:30:00+02:00"
+ },
+ "f79abcb750020543d929782f6cef39e02a689edd@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-19T19:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "6d04e58e4ccd7c33c7f39206c44844cb85ad537b",
+  "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
+  "sequence": 0,
+  "slug": "van-himbeeck-frederic",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U17 I · Iserlohner EC – ES Weißwasser",
+  "treffpunkt": "2026-09-19T18:30:00+02:00"
+ },
  "f95ecf753a8cca2d859b41d200cbeedade481c28@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-12T16:30:00+02:00",
@@ -1679,6 +2675,18 @@
   "titel": "(L)SR · U17 II · EV Duisburg – ESV 03 Chemnitz",
   "treffpunkt": "2026-09-06T09:00:00+02:00"
  },
+ "fd6bd8b7dd8d6133d650a6a66b0185b4b300768a@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T19:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "3e9ea7d4db07d9225d52768f80584a92b2887c8a",
+  "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+  "sequence": 0,
+  "slug": "krueger-martin",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · LL FS · Eisadler Dortmund 1b – EHC Troisdorf",
+  "treffpunkt": "2026-09-20T18:00:00+02:00"
+ },
  "fe5825d6fb07398e114c90177e3c446ad8d9fb61@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-06T11:00:00+02:00",
@@ -1690,6 +2698,18 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · U17 I · Düsseldorfer EG – Eisbären Juniors Berlin",
   "treffpunkt": "2026-09-06T10:00:00+02:00"
+ },
+ "ff45c81ff24eda4dd408b8f5ebd299e0beea1851@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T11:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "0f15c96d9f411136c262a8f4835439d06144a917",
+  "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+  "sequence": 0,
+  "slug": "pluschkell-julian",
+  "stempel": "2026-09-11T15:00:47.546895+00:00",
+  "titel": "(L)SR · U17 I · Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld",
+  "treffpunkt": "2026-09-20T10:00:00+02:00"
  },
  "ff95ad08213ece2ef42d7a4c2eaf4a1f09e5b020@esrw.de": {
   "aenderung": null,

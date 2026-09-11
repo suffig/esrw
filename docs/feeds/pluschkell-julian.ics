@@ -55,4 +55,31 @@ DESCRIPTION:In einer Stunde an der Halle - (L)SR · U13 FS · Krefelder EV
  1b – Löwen Frankfurt 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:ff45c81ff24eda4dd408b8f5ebd299e0beea1851@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260920T080000Z
+DTEND:20260920T113000Z
+SUMMARY:(L)SR · U17 I · Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 11:00 Uhr\nTreffpunk
+ t: 10:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Rheinlandhalle 
+ Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Caelers\, 
+ Fabian\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
+GEO:51.339877;6.540168
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
+ stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
+ le Krefeld":geo:51.339877,6.540168
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 I · Krefelder EV 
+ – EHC GA Wolfsburg YAYLA Krefeld
+END:VALARM
+END:VEVENT
 END:VCALENDAR

@@ -28,4 +28,85 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
  stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
  le Krefeld":geo:51.339877,6.540168
 END:VEVENT
+BEGIN:VEVENT
+UID:9d23bf52118f3e94f016673a42282fd362d6fd0e@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260918T171500Z
+DTEND:20260918T204500Z
+SUMMARY:HSR · RL FS · Dinslakener Kobras – Grefrather EG
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:15 Uhr\nTreff
+ punkt: 19:15 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthal
+ le Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Hofer\, C
+ arsten / Lindemans\, Pepe\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
+GEO:51.574578;6.735361
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
+ m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
+ inslaken":geo:51.574578,6.735361
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · RL FS · Dinslakener Kobr
+ as – Grefrather EG
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:c67f48bcece2f21cd6dffcb3546d8be1ad4eee48@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260920T080000Z
+DTEND:20260920T113000Z
+SUMMARY:(L)SR · U17 I · Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 11:00 Uhr\nTreffpunk
+ t: 10:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Rheinlandhalle 
+ Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Pluschkell
+ \, Julian\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
+GEO:51.339877;6.540168
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
+ stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
+ le Krefeld":geo:51.339877,6.540168
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 I · Krefelder EV 
+ – EHC GA Wolfsburg YAYLA Krefeld
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:ca996faa7a3710f12a9922ca746177d409e59092@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260920T160000Z
+DTEND:20260920T193000Z
+SUMMARY:(L)SR · LL FS · Eisadler Dortmund 1b – EHC Troisdorf
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:00 Uhr\nTreffpunk
+ t: 18:00 Uhr (60 Min vor Spielbeginn)\nLiga: LL FS\nHalle: Eissportzentrum
+  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Krüger\, 
+ Martin\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · LL FS · Eisadler Dortm
+ und 1b – EHC Troisdorf
+END:VALARM
+END:VEVENT
 END:VCALENDAR

@@ -29,4 +29,61 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
  sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
  reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
 END:VEVENT
+BEGIN:VEVENT
+UID:2169a7282070733a5b10598e47f650539cbbb7ee@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260920T070000Z
+DTEND:20260920T103000Z
+SUMMARY:(L)SR · DNL III · EV Duisburg – SCC Adler Berlin
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 10:00 Uhr\nTreffpunk
+ t: 09:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero Rhein
+ landhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespan
+ n: Krawinkel\, Markus / Pacalaj\, Erik\n\nQuelle: https://www.esrw.de/eint
+ eilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · DNL III · EV Duisburg 
+ – SCC Adler Berlin
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:27f468207fc77cf30e66cb6db36c1fad1dbbdb04@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260920T160000Z
+DTEND:20260920T193000Z
+SUMMARY:(L)SR · RL FS · Dinslakener Kobras – UNIS Flyers Heerenveen
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:00 Uhr\nTreffpunk
+ t: 18:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthalle D
+ inslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Priebsch\, Ja
+ n Philipp / Stockenschneider\, Lars\n\nQuelle: https://www.esrw.de/einteil
+ ungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
+GEO:51.574578;6.735361
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
+ m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
+ inslaken":geo:51.574578,6.735361
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · RL FS · Dinslakener Ko
+ bras – UNIS Flyers Heerenveen
+END:VALARM
+END:VEVENT
 END:VCALENDAR

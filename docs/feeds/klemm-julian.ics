@@ -1,0 +1,64 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//esrw-ical//Schiedsrichter-Einteilungen//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Einteilungen – Klemm\, Julian
+X-WR-TIMEZONE:Europe/Berlin
+REFRESH-INTERVAL;VALUE=DURATION:PT1H
+X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:d006299a53eeae132b4ca95765690562c4e83805@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260919T073000Z
+DTEND:20260919T110000Z
+SUMMARY:(L)SR · U15 LL · Lippe Hockey Hamm – SpG Neusser EV / GSC Moers
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 10:30 Uhr\nTreffpunk
+ t: 09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: HELINET Eisspo
+ rtarena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Hons
+ elmann\, Tom (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:HELINET Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 Hamm
+GEO:51.686934;7.886138
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
+ , Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="HELINET
+  Eissportarena Hamm":geo:51.686934,7.886138
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U15 LL · Lippe Hockey 
+ Hamm – SpG Neusser EV / GSC Moers
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:c85307ca315e7edbdbddb7b749eb0af1fb7fafe8@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260920T050000Z
+DTEND:20260920T083000Z
+SUMMARY:(L)SR · U13 BZL Gr.A · Eisadler Dortmund 1b – Mädchen W.I.N. 2
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 08:00 Uhr\nTreffpunk
+ t: 07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\nHalle: Eissport
+ zentrum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\n\nQuelle: ht
+ tps://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U13 BZL Gr.A · Eisadle
+ r Dortmund 1b – Mädchen W.I.N. 2
+END:VALARM
+END:VEVENT
+END:VCALENDAR

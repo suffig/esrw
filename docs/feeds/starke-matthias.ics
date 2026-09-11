@@ -55,4 +55,85 @@ DESCRIPTION:In einer Stunde an der Halle - (L)SR · U15 RLB · Kölner Jung
  haie 1b – Iserlohner EC 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:6519729f3e35a22c2a34ea27698973d711ae793b@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260918T171500Z
+DTEND:20260918T204500Z
+SUMMARY:(L)SR · U15 RLB · EHC Troisdorf – EV Duisburg
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 20:15 Uhr\nTreffpunk
+ t: 19:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: ICEDOME Trois
+ dorf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Finke\,
+  Gudrun\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
+GEO:50.811945;7.109233
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
+ rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
+ isdorf":geo:50.811945,7.109233
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U15 RLB · EHC Troisdor
+ f – EV Duisburg
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:92eaf65ffc39386439913635078a09fe4bd355f0@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260920T114500Z
+DTEND:20260920T151500Z
+SUMMARY:(L)SR · U17 I · Kölner Junghaie – Düsseldorfer EG
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 14:45 Uhr\nTreffpunk
+ t: 13:45 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Kölnarena 2\nA
+ dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Schöche\, Gian-Ca
+ rlo\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 I · Kölner Jungha
+ ie – Düsseldorfer EG
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:8ecbcc1669d51bc374e14eeb37dbab97d3e29524@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260920T143000Z
+DTEND:20260920T180000Z
+SUMMARY:(L)SR · U13 RLB · Kölner Junghaie 1b – EV Duisburg
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 17:30 Uhr\nTreffpunk
+ t: 16:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Kölnarena 2\
+ nAdresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Schöche\, Gian-
+ Carlo\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U13 RLB · Kölner Jung
+ haie 1b – EV Duisburg
+END:VALARM
+END:VEVENT
 END:VCALENDAR

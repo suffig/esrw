@@ -84,4 +84,59 @@ DESCRIPTION:In einer Stunde an der Halle - (L)SR · U9 RL · Iserlohner EC
  – Iserlohn
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:8915fb3b86142d19446d2c789ca798949e1613f9@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260918T163000Z
+DTEND:20260918T200000Z
+SUMMARY:(L)SR · U13 LL · EV Duisburg 1b – Ratinger Ice Aliens
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:30 Uhr\nTreffpunk
+ t: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: PreZero Rheinl
+ andhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann
+ : Victor\, Tobias (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U13 LL · EV Duisburg 1
+ b – Ratinger Ice Aliens
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:151a485b6d521ae4ee637c7d33ba3cebf18098ea@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260920T103000Z
+DTEND:20260920T140000Z
+SUMMARY:(L)SR · U17 FS · Eisadler Dortmund – EHC Troisdorf
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 13:30 Uhr\nTreffpunk
+ t: 12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 FS\nHalle: Eissportzentru
+ m Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Galeske\,
+  Jonas\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 FS · Eisadler Dort
+ mund – EHC Troisdorf
+END:VALARM
+END:VEVENT
 END:VCALENDAR

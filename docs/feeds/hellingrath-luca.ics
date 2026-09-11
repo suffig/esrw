@@ -1,0 +1,39 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//esrw-ical//Schiedsrichter-Einteilungen//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Einteilungen – Hellingrath\, Luca
+X-WR-TIMEZONE:Europe/Berlin
+REFRESH-INTERVAL;VALUE=DURATION:PT1H
+X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:76a046fc23436d660ffdb9358dedbab0bf337bae@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260919T130000Z
+DTEND:20260919T163000Z
+SUMMARY:(L)SR · DNL III · EV Duisburg – SCC Adler Berlin
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 16:00 Uhr\nTreffpunk
+ t: 15:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero Rhein
+ landhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespan
+ n: Meißner\, Nils / Schöche\, Gian-Carlo\n\nQuelle: https://www.esrw.de/
+ einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · DNL III · EV Duisburg 
+ – SCC Adler Berlin
+END:VALARM
+END:VEVENT
+END:VCALENDAR

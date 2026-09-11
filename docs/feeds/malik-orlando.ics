@@ -34,4 +34,112 @@ DESCRIPTION:In einer Stunde an der Halle - (L)SR · U15 RLA · Iserlohner E
  C – Krefelder EV
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:605fd4800e815a40811623e85fd4949e240f2d40@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260918T170000Z
+DTEND:20260918T203000Z
+SUMMARY:(L)SR · RL FS · Eisadler Dortmund – Bulldogs de Liege
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 20:00 Uhr\nTreffpunk
+ t: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissportzentrum
+  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Müller\, 
+ Lars / Garbsch\, René\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · RL FS · Eisadler Dortm
+ und – Bulldogs de Liege
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:df815118049cd019abeb4e3a22e1828fc1a72cc8@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260919T091500Z
+DTEND:20260919T124500Z
+SUMMARY:(L)SR · U11 RL · Iserlohner EC -
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 12:15 Uhr\nTreffpunk
+ t: 11:15 Uhr (60 Min vor Spielbeginn)\nLiga: U11 RL\nHalle: Eissporthalle 
+ am Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Galesk
+ e\, Jonas\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
+GEO:51.384598;7.713829
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
+ , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
+ alle am Seilersee":geo:51.384598,7.713829
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U11 RL · Iserlohner EC
+  -
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:e41da0291df59fdd71a48194444675c20fad6305@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260920T120000Z
+DTEND:20260920T153000Z
+SUMMARY:(L)SR · U17 RL · Herforder EV – Ratinger Ice Aliens
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 15:00 Uhr\nTreffpunk
+ t: 14:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eishalle Im Kl
+ einen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Skalecki\
+ , Martin\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Im Kleinen Felde\, Im Kleinen Felde\, 32051 Herford
+GEO:52.114893;8.652028
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
+  Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
+ Kleinen Felde":geo:52.114893,8.652028
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 RL · Herforder EV 
+ – Ratinger Ice Aliens
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:a8c8a8d341e29a8f989df83a1b7f2a202891d15a@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260920T143000Z
+DTEND:20260920T180000Z
+SUMMARY:(L)SR · Senioren BZL · Herforder EV 1b – EHC Troisdorf 1b
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 17:30 Uhr\nTreffpunk
+ t: 16:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eishalle
+  Im Kleinen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Ska
+ lecki\, Martin\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Im Kleinen Felde\, Im Kleinen Felde\, 32051 Herford
+GEO:52.114893;8.652028
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
+  Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
+ Kleinen Felde":geo:52.114893,8.652028
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · Senioren BZL · Herford
+ er EV 1b – EHC Troisdorf 1b
+END:VALARM
+END:VEVENT
 END:VCALENDAR

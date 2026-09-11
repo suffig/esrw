@@ -61,4 +61,31 @@ DESCRIPTION:In einer Stunde an der Halle - (L)SR · U13 FS · Krefelder EV
  – Löwen Frankfurt
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:e79c662556133b839de49ec258caadc78eed6f3a@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260920T063000Z
+DTEND:20260920T100000Z
+SUMMARY:(L)SR · U15 RLB · Herner EV – EV Duisburg
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 09:30 Uhr\nTreffpunk
+ t: 08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Gysenberghall
+ e Herne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Hindley\, David
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Gysenberghalle Herne\, Am Revierpark 22\, 44627 Herne
+GEO:51.532602;7.254372
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
+ evierpark 22, 44627 Herne";X-APPLE-RADIUS=100;X-TITLE="Gysenberghalle Hern
+ e":geo:51.532602,7.254372
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U15 RLB · Herner EV 
+ – EV Duisburg
+END:VALARM
+END:VEVENT
 END:VCALENDAR

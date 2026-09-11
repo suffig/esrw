@@ -29,4 +29,31 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
  sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
  reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
 END:VEVENT
+BEGIN:VEVENT
+UID:45746b669ea93e3a0dbd70103565d7df1a921dd3@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260919T103000Z
+DTEND:20260919T140000Z
+SUMMARY:(L)SR · DEFL 2 FS · Düsseldorfer EG – NL U18
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 13:30 Uhr\nTreffpunk
+ t: 12:30 Uhr (60 Min vor Spielbeginn)\nLiga: DEFL 2 FS\nHalle: Eishalle Br
+ ehmstraße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Vorgei
+ tz\, Benny\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · DEFL 2 FS · Düsseldor
+ fer EG – NL U18
+END:VALARM
+END:VEVENT
 END:VCALENDAR

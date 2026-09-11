@@ -178,4 +178,112 @@ DESCRIPTION:In einer Stunde an der Halle - (L)SR · U15 RLA · Iserlohner E
  C – Krefelder EV
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:d516df8df13368f44633597b83c3529383537b72@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260918T170000Z
+DTEND:20260918T203000Z
+SUMMARY:(L)SR · RL FS · Eisadler Dortmund – Bulldogs de Liege
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 20:00 Uhr\nTreffpunk
+ t: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissportzentrum
+  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Müller\, 
+ Lars / Malik\, Orlando\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · RL FS · Eisadler Dortm
+ und – Bulldogs de Liege
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:7d2f9b166533add97a2a80684b196ed125292588@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260919T090000Z
+DTEND:20260919T123000Z
+SUMMARY:(L)SR · U17 I · Iserlohner EC – ES Weißwasser
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 12:00 Uhr\nTreffpunk
+ t: 11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eissporthalle a
+ m Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Vorgeit
+ z\, Benny\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
+GEO:51.384598;7.713829
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
+ , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
+ alle am Seilersee":geo:51.384598,7.713829
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 I · Iserlohner EC 
+ – ES Weißwasser
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:4cf77781b3e48c350e46ffeccd2ca693b01d4a7d@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260919T164500Z
+DTEND:20260919T201500Z
+SUMMARY:(L)SR · U15 RLA · Kölner Junghaie – Düsseldorfer EG
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:45 Uhr\nTreffpunk
+ t: 18:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Kölnarena 2\
+ nAdresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Leibfried\, Raph
+ ael\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U15 RLA · Kölner Jung
+ haie – Düsseldorfer EG
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:1a87cb0864d10c49c05502b7b429f88b7e799c08@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260920T050000Z
+DTEND:20260920T083000Z
+SUMMARY:(L)SR · U11 LL Rot · Iserlohner EC 1b -
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 08:00 Uhr\nTreffpunk
+ t: 07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Rot\nHalle: Eissportha
+ lle am Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Vo
+ rgeitz\, Benny\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
+GEO:51.384598;7.713829
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
+ , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
+ alle am Seilersee":geo:51.384598,7.713829
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U11 LL Rot · Iserlohne
+ r EC 1b -
+END:VALARM
+END:VEVENT
 END:VCALENDAR

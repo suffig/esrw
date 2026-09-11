@@ -136,4 +136,31 @@ DESCRIPTION:In einer Stunde an der Halle - (L)SR · U15 LL · Herforder EV
  – Eisadler Dortmund Herford
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:5c46c904582c429903121e6146395e26ee2885c3@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260919T131500Z
+DTEND:20260919T164500Z
+SUMMARY:(L)SR · U15 LL · Herforder EV – Ratinger Ice Aliens
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 16:15 Uhr\nTreffpunk
+ t: 15:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eishalle Im Kl
+ einen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Zynda\, N
+ ick\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Im Kleinen Felde\, Im Kleinen Felde\, 32051 Herford
+GEO:52.114893;8.652028
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
+  Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
+ Kleinen Felde":geo:52.114893,8.652028
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U15 LL · Herforder EV 
+ – Ratinger Ice Aliens
+END:VALARM
+END:VEVENT
 END:VCALENDAR

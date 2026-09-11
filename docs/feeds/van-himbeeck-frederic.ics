@@ -1,0 +1,37 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//esrw-ical//Schiedsrichter-Einteilungen//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Einteilungen – van Himbeeck\, Frederic
+X-WR-TIMEZONE:Europe/Berlin
+REFRESH-INTERVAL;VALUE=DURATION:PT1H
+X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:f79abcb750020543d929782f6cef39e02a689edd@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260919T163000Z
+DTEND:20260919T200000Z
+SUMMARY:(L)SR · U17 I · Iserlohner EC – ES Weißwasser
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:30 Uhr\nTreffpunk
+ t: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eissporthalle a
+ m Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Nieberl
+ e\, Christian\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
+GEO:51.384598;7.713829
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
+ , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
+ alle am Seilersee":geo:51.384598,7.713829
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 I · Iserlohner EC 
+ – ES Weißwasser
+END:VALARM
+END:VEVENT
+END:VCALENDAR

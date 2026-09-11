@@ -82,4 +82,85 @@ DESCRIPTION:In einer Stunde an der Halle - (L)SR · U13 LL · EHC Troisdorf
   1b – Mädchen W.I.N. 1 Troisdorf
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:67e88538bfb565882e43270d58af399553c0e6b2@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260918T171500Z
+DTEND:20260918T204500Z
+SUMMARY:(L)SR · RL FS · Dinslakener Kobras – Grefrather EG
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 20:15 Uhr\nTreffpunk
+ t: 19:15 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthalle D
+ inslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Caelers\, Fab
+ ian / Lindemans\, Pepe\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
+GEO:51.574578;6.735361
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
+ m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
+ inslaken":geo:51.574578,6.735361
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · RL FS · Dinslakener Ko
+ bras – Grefrather EG
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:cb1812902cc6122829efa0d1bcbde944c88e271c@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260920T110000Z
+DTEND:20260920T143000Z
+SUMMARY:(L)SR · U9 LL Rot · Krefelder EV 1b -
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 14:00 Uhr\nTreffpunk
+ t: 13:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Rot\nHalle: Rheinlandha
+ lle Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Schlü
+ ter\, Thomas\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
+GEO:51.339877;6.540168
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
+ stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
+ le Krefeld":geo:51.339877,6.540168
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U9 LL Rot · Krefelder 
+ EV 1b -
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:18bba3cbe4df19156ac685dc7c72291fa498605e@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260920T140000Z
+DTEND:20260920T173000Z
+SUMMARY:(L)SR · U15 RLA · Krefelder EV – Kölner Junghaie
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 17:00 Uhr\nTreffpunk
+ t: 16:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Rheinlandhall
+ e Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Schlüte
+ r\, Thomas\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
+GEO:51.339877;6.540168
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
+ stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
+ le Krefeld":geo:51.339877,6.540168
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U15 RLA · Krefelder EV
+  – Kölner Junghaie
+END:VALARM
+END:VEVENT
 END:VCALENDAR

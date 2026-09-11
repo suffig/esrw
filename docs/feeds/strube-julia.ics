@@ -57,4 +57,31 @@ DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 II · EV Duisburg
  – SCC Adler Berlin
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:77be283a8882f14e10553410dc6851b18e0fe389@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260918T170000Z
+DTEND:20260918T203000Z
+SUMMARY:(L)SR · BL FS · EHC Essen Ruhr – Herner EV 1b
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 20:00 Uhr\nTreffpunk
+ t: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: BL FS\nHalle: Eissporthalle E
+ ssen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Schlüter\, Thom
+ as\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Essen-West\, Curtiusstr. 2\, 45144 Essen
+GEO:51.454179;6.976731
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
+ Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
+ n-West":geo:51.454179,6.976731
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · BL FS · EHC Essen Ruhr
+  – Herner EV 1b
+END:VALARM
+END:VEVENT
 END:VCALENDAR

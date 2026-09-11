@@ -1,0 +1,64 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//esrw-ical//Schiedsrichter-Einteilungen//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Einteilungen – Leibfried\, Raphael
+X-WR-TIMEZONE:Europe/Berlin
+REFRESH-INTERVAL;VALUE=DURATION:PT1H
+X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:28bb97aab3f65eef4c17b0ad3d19a4dfadbdabcc@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260919T164500Z
+DTEND:20260919T201500Z
+SUMMARY:(L)SR · U15 RLA · Kölner Junghaie – Düsseldorfer EG
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:45 Uhr\nTreffpunk
+ t: 18:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Kölnarena 2\
+ nAdresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Garbsch\, René\
+ n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U15 RLA · Kölner Jung
+ haie – Düsseldorfer EG
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:1c1f0f073cb243b06cbdf2f85ee4ffaccf191d0e@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260920T110000Z
+DTEND:20260920T143000Z
+SUMMARY:(L)SR · U15 RLA · Düsseldorfer EG – Iserlohner EC
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 14:00 Uhr\nTreffpunk
+ t: 13:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eishalle Breh
+ mstraße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Garcia N
+ ieto\, Dario\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U15 RLA · Düsseldorfe
+ r EG – Iserlohner EC
+END:VALARM
+END:VEVENT
+END:VCALENDAR

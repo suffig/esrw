@@ -1,0 +1,37 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//esrw-ical//Schiedsrichter-Einteilungen//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Einteilungen – Solbach\, Carsten
+X-WR-TIMEZONE:Europe/Berlin
+REFRESH-INTERVAL;VALUE=DURATION:PT1H
+X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:e07b56242d97f229670a09e27b75283706b2b9d4@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260919T070000Z
+DTEND:20260919T103000Z
+SUMMARY:(L)SR · U9 RL · EHC Troisdorf -
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 10:00 Uhr\nTreffpunk
+ t: 09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: ICEDOME Troisdo
+ rf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Schlüter
+ \, Thomas\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
+GEO:50.811945;7.109233
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
+ rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
+ isdorf":geo:50.811945,7.109233
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U9 RL · EHC Troisdorf 
+ -
+END:VALARM
+END:VEVENT
+END:VCALENDAR

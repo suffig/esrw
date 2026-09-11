@@ -1,0 +1,37 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//esrw-ical//Schiedsrichter-Einteilungen//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Einteilungen – Finke\, Gudrun
+X-WR-TIMEZONE:Europe/Berlin
+REFRESH-INTERVAL;VALUE=DURATION:PT1H
+X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:455497f16d61a2209d1a9db51a6d2031ea6bee84@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260918T171500Z
+DTEND:20260918T204500Z
+SUMMARY:(L)SR · U15 RLB · EHC Troisdorf – EV Duisburg
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 20:15 Uhr\nTreffpunk
+ t: 19:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: ICEDOME Trois
+ dorf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Starke\
+ , Matthias\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
+GEO:50.811945;7.109233
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
+ rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
+ isdorf":geo:50.811945,7.109233
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U15 RLB · EHC Troisdor
+ f – EV Duisburg
+END:VALARM
+END:VEVENT
+END:VCALENDAR

@@ -34,4 +34,32 @@ DESCRIPTION:In einer Stunde an der Halle - (L)SR · U20 FS · Dinslakener K
  obras – Ratinger Ice Aliens
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:34f1964e65b499c2878fa694c5d0e3ca7c764e2c@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260920T160000Z
+DTEND:20260920T193000Z
+SUMMARY:(L)SR · RL FS · Dinslakener Kobras – UNIS Flyers Heerenveen
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:00 Uhr\nTreffpunk
+ t: 18:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthalle D
+ inslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Priebsch\, Ja
+ n Philipp / Quint\, Sascha\n\nQuelle: https://www.esrw.de/einteilungen.htm
+ l
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
+GEO:51.574578;6.735361
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
+ m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
+ inslaken":geo:51.574578,6.735361
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · RL FS · Dinslakener Ko
+ bras – UNIS Flyers Heerenveen
+END:VALARM
+END:VEVENT
 END:VCALENDAR

@@ -1,0 +1,65 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//esrw-ical//Schiedsrichter-Einteilungen//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Einteilungen – Victor\, Tobias (N)
+X-WR-TIMEZONE:Europe/Berlin
+REFRESH-INTERVAL;VALUE=DURATION:PT1H
+X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:b152e665448022023151e12cb972e451e5c37f01@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260918T163000Z
+DTEND:20260918T200000Z
+SUMMARY:(L)SR · U13 LL · EV Duisburg 1b – Ratinger Ice Aliens
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:30 Uhr\nTreffpunk
+ t: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: PreZero Rheinl
+ andhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann
+ : Marks\, Marcel\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U13 LL · EV Duisburg 1
+ b – Ratinger Ice Aliens
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:79a8515def553bb7fd9073fa7a9068c66b7a7530@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260920T093000Z
+DTEND:20260920T130000Z
+SUMMARY:(L)SR · U13 LL · Dinslakener Kobras – EHC Troisdorf 1b
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 12:30 Uhr\nTreffpunk
+ t: 11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle 
+ Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Heffler\, Zs
+ olt\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
+GEO:51.574578;6.735361
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
+ m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
+ inslaken":geo:51.574578,6.735361
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U13 LL · Dinslakener K
+ obras – EHC Troisdorf 1b
+END:VALARM
+END:VEVENT
+END:VCALENDAR

@@ -56,4 +56,59 @@ DESCRIPTION:In einer Stunde an der Halle - (L)SR · BL FS · Herner EV 1b
  – EHC Essen Ruhr
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:b33e6995f48701408080c4d9028c0d79ca69f9bb@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260918T170000Z
+DTEND:20260918T203000Z
+SUMMARY:HSR · RL FS · Eisadler Dortmund – Bulldogs de Liege
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:00 Uhr\nTreff
+ punkt: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissportzen
+ trum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Garbsc
+ h\, René / Malik\, Orlando\n\nQuelle: https://www.esrw.de/einteilungen.ht
+ ml
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · RL FS · Eisadler Dortmun
+ d – Bulldogs de Liege
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:8ba5977d9f0eb7e98753e8ec4c03e33e2d76bb74@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260920T153000Z
+DTEND:20260920T190000Z
+SUMMARY:(L)SR · BL FS · EHC Essen Ruhr – Soester EG
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 18:30 Uhr\nTreffpunk
+ t: 17:30 Uhr (60 Min vor Spielbeginn)\nLiga: BL FS\nHalle: Eissporthalle E
+ ssen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Melchert\, Phili
+ p\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Essen-West\, Curtiusstr. 2\, 45144 Essen
+GEO:51.454179;6.976731
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
+ Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
+ n-West":geo:51.454179,6.976731
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · BL FS · EHC Essen Ruhr
+  – Soester EG
+END:VALARM
+END:VEVENT
 END:VCALENDAR

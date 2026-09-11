@@ -61,4 +61,33 @@ DESCRIPTION:In einer Stunde an der Halle - (L)SR · U9 RL · Düsseldorfer
  EG – Brehmstraße
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:15fa6eb352fbd496dcad72d8e2e9bd3c350ca68d@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260920T070000Z
+DTEND:20260920T103000Z
+SUMMARY:HSR · DNL III · EV Duisburg – SCC Adler Berlin
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 10:00 Uhr\nTreff
+ punkt: 09:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero R
+ heinlandhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGe
+ spann: Quint\, Sascha / Pacalaj\, Erik\n\nQuelle: https://www.esrw.de/eint
+ eilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · DNL III · EV Duisburg 
+ – SCC Adler Berlin
+END:VALARM
+END:VEVENT
 END:VCALENDAR

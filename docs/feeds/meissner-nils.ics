@@ -87,4 +87,60 @@ DESCRIPTION:In einer Stunde an der Halle - (L)SR · U11 LL Gelb · EHC Esse
  n Ruhr – Essen
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:9aa6a100761ee5ded5b280c5776ab4b999009cc8@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260919T130000Z
+DTEND:20260919T163000Z
+SUMMARY:HSR · DNL III · EV Duisburg – SCC Adler Berlin
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 16:00 Uhr\nTreff
+ punkt: 15:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero R
+ heinlandhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGe
+ spann: Schöche\, Gian-Carlo / Hellingrath\, Luca\n\nQuelle: https://www.e
+ srw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · DNL III · EV Duisburg 
+ – SCC Adler Berlin
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:d6bba4f31d7a448f8dcc1b352ac726f5524a6475@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260920T133000Z
+DTEND:20260920T170000Z
+SUMMARY:(L)SR · U13 RLB · Herner EV – Düsseldorfer EG 1b
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 16:30 Uhr\nTreffpunk
+ t: 15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Gysenberghall
+ e Herne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Strohmenger\, S
+ venja\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Gysenberghalle Herne\, Am Revierpark 22\, 44627 Herne
+GEO:51.532602;7.254372
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
+ evierpark 22, 44627 Herne";X-APPLE-RADIUS=100;X-TITLE="Gysenberghalle Hern
+ e":geo:51.532602,7.254372
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U13 RLB · Herner EV 
+ – Düsseldorfer EG 1b
+END:VALARM
+END:VEVENT
 END:VCALENDAR

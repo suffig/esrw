@@ -28,4 +28,31 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
  stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
  le Krefeld":geo:51.339877,6.540168
 END:VEVENT
+BEGIN:VEVENT
+UID:7d2c16d54b121844b6b2f7a465503e7bea7155ab@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260919T133000Z
+DTEND:20260919T170000Z
+SUMMARY:(L)SR · U17 I · Düsseldorfer EG – Kölner Junghaie
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 16:30 Uhr\nTreffpunk
+ t: 15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eishalle Brehms
+ traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Schmidt\, 
+ Eugen\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 I · Düsseldorfer 
+ EG – Kölner Junghaie
+END:VALARM
+END:VEVENT
 END:VCALENDAR

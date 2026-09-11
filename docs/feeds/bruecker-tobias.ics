@@ -1,0 +1,118 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//esrw-ical//Schiedsrichter-Einteilungen//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Einteilungen – Brücker\, Tobias
+X-WR-TIMEZONE:Europe/Berlin
+REFRESH-INTERVAL;VALUE=DURATION:PT1H
+X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:2c50a24681b12c5f8d6d842116b7b7b2548fbbe4@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260919T070000Z
+DTEND:20260919T103000Z
+SUMMARY:(L)SR · U17 RL · Herforder EV – Eisadler Dortmund
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 10:00 Uhr\nTreffpunk
+ t: 09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eishalle Im Kl
+ einen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Berger\, 
+ Eugen\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Im Kleinen Felde\, Im Kleinen Felde\, 32051 Herford
+GEO:52.114893;8.652028
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
+  Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
+ Kleinen Felde":geo:52.114893,8.652028
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 RL · Herforder EV 
+ – Eisadler Dortmund
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:3503ef8a58f17a793f2ce0787061c0d1c6a6a7a4@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260919T103000Z
+DTEND:20260919T140000Z
+SUMMARY:(L)SR · U13 RLB · Herforder EV – EHC Troisdorf
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 13:30 Uhr\nTreffpunk
+ t: 12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Eishalle Im K
+ leinen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Berger\,
+  Eugen\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Im Kleinen Felde\, Im Kleinen Felde\, 32051 Herford
+GEO:52.114893;8.652028
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
+  Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
+ Kleinen Felde":geo:52.114893,8.652028
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U13 RLB · Herforder EV
+  – EHC Troisdorf
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:7a62f6f78bfa7a691fea9f3107941920f9bf56a3@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260920T070000Z
+DTEND:20260920T103000Z
+SUMMARY:(L)SR · Frauen BZL · Herforder EV – KEC "Die Haie" 1c
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 10:00 Uhr\nTreffpunk
+ t: 09:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Eishalle I
+ m Kleinen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\n\nQuelle: http
+ s://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Im Kleinen Felde\, Im Kleinen Felde\, 32051 Herford
+GEO:52.114893;8.652028
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
+  Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
+ Kleinen Felde":geo:52.114893,8.652028
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · Frauen BZL · Herforder
+  EV – KEC "Die Haie" 1c
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:abff88e295a00b7ed7cb184d75a32b7b638562b7@esrw.de
+SEQUENCE:0
+DTSTAMP:20260911T150047Z
+LAST-MODIFIED:20260911T150047Z
+DTSTART:20260920T093000Z
+DTEND:20260920T130000Z
+SUMMARY:(L)SR · U15 LL · Herforder EV – Lippe Hockey Hamm
+DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 12:30 Uhr\nTreffpunk
+ t: 11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eishalle Im Kl
+ einen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\n\nQuelle: https://
+ www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Im Kleinen Felde\, Im Kleinen Felde\, 32051 Herford
+GEO:52.114893;8.652028
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
+  Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
+ Kleinen Felde":geo:52.114893,8.652028
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - (L)SR · U15 LL · Herforder EV 
+ – Lippe Hockey Hamm
+END:VALARM
+END:VEVENT
+END:VCALENDAR
