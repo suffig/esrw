@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 111,
+ "spiele_gesamt": 110,
  "saison": "2026/27",
  "archiv_spiele": 113,
  "personen": [
@@ -913,24 +913,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-04T19:30:00+02:00",
-     "treffpunkt": "2026-09-04T18:30:00+02:00",
-     "rolle": "(L)SR",
-     "liga": "U15 RLB",
-     "paarung": "Iserlohner EC 1b – Düsseldorfer EG 1b",
-     "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
-     "koordinaten": [
-      51.384598,
-      7.713829
-     ],
-     "gespann": [
-      "Steeg, Cedric"
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null
-    },
-    {
      "beginn": "2026-09-13T09:15:00+02:00",
      "treffpunkt": "2026-09-13T08:15:00+02:00",
      "rolle": "(L)SR",
@@ -1125,7 +1107,7 @@
       "Steeg, Cedric"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {
@@ -3421,7 +3403,7 @@
       "Scholz, Arien"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {
@@ -5553,7 +5535,7 @@
       "Marks, Marcel"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     }
    ]
@@ -5897,24 +5879,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-04T19:30:00+02:00",
-     "treffpunkt": "2026-09-04T18:30:00+02:00",
-     "rolle": "(L)SR",
-     "liga": "U15 RLB",
-     "paarung": "Iserlohner EC 1b – Düsseldorfer EG 1b",
-     "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
-     "koordinaten": [
-      51.384598,
-      7.713829
-     ],
-     "gespann": [
-      "Galeske, Jonas"
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null
-    },
-    {
      "beginn": "2026-09-11T19:30:00+02:00",
      "treffpunkt": "2026-09-11T18:30:00+02:00",
      "rolle": "(L)SR",
@@ -5929,7 +5893,7 @@
       "Garbsch, René"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {

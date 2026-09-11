@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:60bcedaaed29509cdcd0e0d12b69ed779c4d6552@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260904T163000Z
-DTEND:20260904T200000Z
-SUMMARY:(L)SR · U15 RLB · Iserlohner EC 1b – Düsseldorfer EG 1b
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:30 Uhr\nTreffpunk
- t: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Eissporthalle
-  am Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Gales
- ke\, Jonas\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
-GEO:51.384598;7.713829
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
- , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
- alle am Seilersee":geo:51.384598,7.713829
-END:VEVENT
-BEGIN:VEVENT
 UID:669490be8e2efec99389a5c87a6b6d2ee7e3c2a2@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z
@@ -48,12 +27,6 @@ GEO:51.384598;7.713829
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
  , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
  alle am Seilersee":geo:51.384598,7.713829
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 I · Iserlohner EC 
- – Düsseldorfer EG
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:d48a4b806600aaa5233a48ca023f005a32523bb5@esrw.de

@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:4b6e8befed082e32730422da165661c0c55a03ce@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260904T163000Z
-DTEND:20260904T200000Z
-SUMMARY:U15 RLB · Iserlohner EC 1b – Düsseldorfer EG 1b
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:30 Uhr\nTreffpunk
- t: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Eissporthalle
-  am Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Steeg
- \, Cedric\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
-GEO:51.384598;7.713829
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
- , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
- alle am Seilersee":geo:51.384598,7.713829
-END:VEVENT
-BEGIN:VEVENT
 UID:903d8cdbe4d902f9884b8223887e74d22a1d464e@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z
@@ -597,12 +576,6 @@ GEO:51.384598;7.713829
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
  , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
  alle am Seilersee":geo:51.384598,7.713829
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U17 I · Iserlohner EC – Düss
- eldorfer EG
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:db7deaf51cd784a211129f8845220d2a3e65b9a0@esrw.de
@@ -625,12 +598,6 @@ GEO:51.405718;6.780082
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
  sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
  reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U15 RLB · EV Duisburg – Iserl
- ohner EC 1b
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:7b5ad745ac0792ae2d7a7563741873d6e1607189@esrw.de
