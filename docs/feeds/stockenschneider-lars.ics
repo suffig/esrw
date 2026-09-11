@@ -27,12 +27,6 @@ GEO:51.574578;6.735361
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
  m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
  inslaken":geo:51.574578,6.735361
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · U20 FS · Dinslakener K
- obras – Ratinger Ice Aliens
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:34f1964e65b499c2878fa694c5d0e3ca7c764e2c@esrw.de

@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 108,
+ "spiele_gesamt": 107,
  "saison": "2026/27",
  "archiv_spiele": 113,
  "personen": [
@@ -1636,24 +1636,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-04T20:15:00+02:00",
-     "treffpunkt": "2026-09-04T19:15:00+02:00",
-     "rolle": "(L)SR",
-     "liga": "U15 RLB",
-     "paarung": "EHC Troisdorf – Kölner Junghaie 1b",
-     "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-     "koordinaten": [
-      50.811945,
-      7.109233
-     ],
-     "gespann": [
-      "Schöche, Gian-Carlo"
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null
-    },
-    {
      "beginn": "2026-09-05T11:45:00+02:00",
      "treffpunkt": "2026-09-05T10:45:00+02:00",
      "rolle": "(L)SR",
@@ -2961,7 +2943,7 @@
       "Schöche, Gian-Carlo"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     }
    ]
@@ -4800,7 +4782,7 @@
       "Stockenschneider, Lars"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {
@@ -5154,24 +5136,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-04T20:15:00+02:00",
-     "treffpunkt": "2026-09-04T19:15:00+02:00",
-     "rolle": "(L)SR",
-     "liga": "U15 RLB",
-     "paarung": "EHC Troisdorf – Kölner Junghaie 1b",
-     "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-     "koordinaten": [
-      50.811945,
-      7.109233
-     ],
-     "gespann": [
-      "Hauerwaas, Gabriel"
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null
-    },
-    {
      "beginn": "2026-09-05T19:30:00+02:00",
      "treffpunkt": "2026-09-05T18:30:00+02:00",
      "rolle": "(L)SR",
@@ -5240,7 +5204,7 @@
       "Kremer, Igor"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {
@@ -5953,7 +5917,7 @@
       "Schlüter, Thomas"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {
