@@ -547,15 +547,15 @@
       1
      ],
      [
+      "LL FS",
+      1
+     ],
+     [
       "RL FS",
       1
      ],
      [
       "U17 I",
-      1
-     ],
-     [
-      "LL FS",
       1
      ]
     ],
@@ -565,11 +565,11 @@
       2
      ],
      [
-      "Eissporthalle Dinslaken",
+      "Eissportzentrum Westfalen",
       1
      ],
      [
-      "Eissportzentrum Westfalen",
+      "Eissporthalle Dinslaken",
       1
      ]
     ],
@@ -672,11 +672,11 @@
     ],
     "hallen": [
      [
-      "Eissporthalle Essen-West",
+      "Eissporthalle Ratingen",
       1
      ],
      [
-      "Eissporthalle Ratingen",
+      "Eissporthalle Essen-West",
       1
      ]
     ],
@@ -886,11 +886,11 @@
       3
      ],
      [
-      "U15 RLB",
+      "U11 RL",
       1
      ],
      [
-      "U11 RL",
+      "U15 RLB",
       1
      ],
      [
@@ -1026,11 +1026,11 @@
       2
      ],
      [
-      "U13 FS",
+      "RL FS",
       1
      ],
      [
-      "U9 RL",
+      "U13 FS",
       1
      ]
     ],
@@ -1275,15 +1275,15 @@
       2
      ],
      [
+      "U15 RLA",
+      1
+     ],
+     [
       "U15 RLB",
       1
      ],
      [
       "U13 LL",
-      1
-     ],
-     [
-      "U17 II",
       1
      ]
     ],
@@ -1293,15 +1293,15 @@
       2
      ],
      [
-      "PreZero Rheinlandhalle Duisburg",
-      1
-     ],
-     [
-      "Eissporthalle Essen-West",
-      1
-     ],
-     [
       "Eissporthalle Ratingen",
+      1
+     ],
+     [
+      "Eishalle Brehmstraße",
+      1
+     ],
+     [
+      "PreZero Rheinlandhalle Duisburg",
       1
      ]
     ],
@@ -1749,21 +1749,21 @@
       1
      ],
      [
-      "U11 RL",
+      "U15 RLB",
       1
      ],
      [
-      "U15 RLB",
+      "U11 RL",
       1
      ]
     ],
     "hallen": [
      [
-      "Kölnarena 2",
+      "Rheinlandhalle Krefeld",
       2
      ],
      [
-      "Rheinlandhalle Krefeld",
+      "Kölnarena 2",
       2
      ],
      [
@@ -1903,29 +1903,29 @@
     },
     "ligen": [
      [
-      "U13 FS",
-      1
-     ],
-     [
       "U20 FS",
       1
      ],
      [
       "U13 LL",
       1
+     ],
+     [
+      "U13 FS",
+      1
      ]
     ],
     "hallen": [
-     [
-      "Rheinlandhalle Krefeld",
-      1
-     ],
      [
       "Eissportzentrum Westfalen",
       1
      ],
      [
       "Eissporthalle Dinslaken",
+      1
+     ],
+     [
+      "Rheinlandhalle Krefeld",
       1
      ]
     ],
@@ -2314,15 +2314,15 @@
       2
      ],
      [
+      "U9 LL Rot",
+      1
+     ],
+     [
       "U13 LL",
       1
      ],
      [
       "U13 FS",
-      1
-     ],
-     [
-      "RL FS",
       1
      ]
     ],
@@ -2776,21 +2776,21 @@
     },
     "ligen": [
      [
-      "U15 LL",
+      "U13 BZL Gr.A",
       1
      ],
      [
-      "U13 BZL Gr.A",
+      "U15 LL",
       1
      ]
     ],
     "hallen": [
      [
-      "HELINET Eissportarena Hamm",
+      "Eissportzentrum Westfalen",
       1
      ],
      [
-      "Eissportzentrum Westfalen",
+      "HELINET Eissportarena Hamm",
       1
      ]
     ],
@@ -2853,11 +2853,11 @@
       1
      ],
      [
-      "LL FS",
+      "DNL III",
       1
      ],
      [
-      "DNL III",
+      "LL FS",
       1
      ]
     ],
@@ -2867,11 +2867,11 @@
       1
      ],
      [
-      "ICEDOME Troisdorf",
+      "PreZero Rheinlandhalle Duisburg",
       1
      ],
      [
-      "PreZero Rheinlandhalle Duisburg",
+      "ICEDOME Troisdorf",
       1
      ]
     ],
@@ -2998,21 +2998,21 @@
     },
     "ligen": [
      [
-      "U15 FS",
+      "LL FS",
       1
      ],
      [
-      "LL FS",
+      "U15 FS",
       1
      ]
     ],
     "hallen": [
      [
-      "Rheinlandhalle Krefeld",
+      "Eissportzentrum Westfalen",
       1
      ],
      [
-      "Eissportzentrum Westfalen",
+      "Rheinlandhalle Krefeld",
       1
      ]
     ],
@@ -3078,11 +3078,11 @@
     ],
     "hallen": [
      [
-      "Kölnarena 2",
+      "Eishalle Brehmstraße",
       1
      ],
      [
-      "Eishalle Brehmstraße",
+      "Kölnarena 2",
       1
      ]
     ],
@@ -3213,29 +3213,29 @@
     },
     "ligen": [
      [
-      "U15 RLA",
+      "RL FS",
       1
      ],
      [
-      "RL FS",
+      "Senioren BZL",
+      1
+     ],
+     [
+      "U15 RLA",
       1
      ],
      [
       "U11 RL",
       1
-     ],
-     [
-      "U17 RL",
-      1
      ]
     ],
     "hallen": [
      [
-      "Eissporthalle am Seilersee",
+      "Eishalle Im Kleinen Felde",
       2
      ],
      [
-      "Eishalle Im Kleinen Felde",
+      "Eissporthalle am Seilersee",
       2
      ],
      [
@@ -3366,7 +3366,7 @@
       1
      ],
      [
-      "U13 LL",
+      "U17 FS",
       1
      ]
     ],
@@ -3499,15 +3499,15 @@
       2
      ],
      [
-      "U11 LL Gelb",
-      1
-     ],
-     [
       "DNL III",
       1
      ],
      [
       "U13 RLB",
+      1
+     ],
+     [
+      "U11 LL Gelb",
       1
      ]
     ],
@@ -3517,15 +3517,15 @@
       2
      ],
      [
-      "Eissporthalle Essen-West",
-      1
-     ],
-     [
       "PreZero Rheinlandhalle Duisburg",
       1
      ],
      [
       "Gysenberghalle Herne",
+      1
+     ],
+     [
+      "Eissporthalle Essen-West",
       1
      ]
     ],
@@ -3828,8 +3828,8 @@
     "gesamt": 4,
     "saison": 4,
     "rollen": {
-     "(L)SR": 3,
-     "HSR": 1
+     "HSR": 1,
+     "(L)SR": 3
     },
     "ligen": [
      [
@@ -3837,29 +3837,29 @@
       2
      ],
      [
-      "U17 FS",
+      "RL FS",
       1
      ],
      [
-      "RL FS",
+      "U17 FS",
       1
      ]
     ],
     "hallen": [
      [
-      "Emscher-Lippe-Halle Gelsenkirchen",
-      1
-     ],
-     [
-      "Gysenberghalle Herne",
-      1
-     ],
-     [
       "Eissportzentrum Westfalen",
       1
      ],
      [
+      "Emscher-Lippe-Halle Gelsenkirchen",
+      1
+     ],
+     [
       "Eissporthalle Essen-West",
+      1
+     ],
+     [
+      "Gysenberghalle Herne",
       1
      ]
     ],
@@ -4052,19 +4052,19 @@
     },
     "ligen": [
      [
+      "U20 FS",
+      1
+     ],
+     [
       "U17 FS",
       1
      ],
      [
+      "DNL III",
+      1
+     ],
+     [
       "U13 RLA",
-      1
-     ],
-     [
-      "U13 FS",
-      1
-     ],
-     [
-      "U20 FS",
       1
      ]
     ],
@@ -4074,11 +4074,11 @@
       2
      ],
      [
-      "Eissporthalle Dinslaken",
+      "Eissportzentrum Westfalen",
       1
      ],
      [
-      "Eissportzentrum Westfalen",
+      "Eissporthalle Dinslaken",
       1
      ],
      [
@@ -4543,21 +4543,21 @@
     },
     "ligen": [
      [
-      "U15 FS",
+      "U17 I",
       1
      ],
      [
-      "U17 I",
+      "U15 FS",
       1
      ]
     ],
     "hallen": [
      [
-      "Rheinlandhalle Krefeld",
+      "Eishalle Brehmstraße",
       1
      ],
      [
-      "Eishalle Brehmstraße",
+      "Rheinlandhalle Krefeld",
       1
      ]
     ],
@@ -4840,11 +4840,11 @@
       2
      ],
      [
-      "U17 RL",
+      "U9 LL Rot",
       1
      ],
      [
-      "BL FS",
+      "U17 RL",
       1
      ]
     ],
@@ -4862,7 +4862,7 @@
       1
      ],
      [
-      "HELINET Eissportarena Hamm",
+      "ICEDOME Troisdorf",
       1
      ]
     ],
@@ -5086,11 +5086,11 @@
       1
      ],
      [
-      "U17 FS",
+      "U15 RLB",
       1
      ],
      [
-      "U15 RLB",
+      "U17 FS",
       1
      ]
     ],
@@ -5244,11 +5244,11 @@
       3
      ],
      [
-      "Eissporthalle am Seilersee",
+      "PreZero Rheinlandhalle Duisburg",
       2
      ],
      [
-      "PreZero Rheinlandhalle Duisburg",
+      "Eissporthalle am Seilersee",
       2
      ]
     ],
@@ -5576,21 +5576,21 @@
       2
      ],
      [
-      "U17 RL",
+      "Senioren BZL",
       1
      ],
      [
-      "Senioren BZL",
+      "U17 RL",
       1
      ]
     ],
     "hallen": [
      [
-      "Eissportzentrum Westfalen",
+      "Eishalle Im Kleinen Felde",
       2
      ],
      [
-      "Eishalle Im Kleinen Felde",
+      "Eissportzentrum Westfalen",
       2
      ]
     ],
@@ -5980,26 +5980,26 @@
     "gesamt": 2,
     "saison": 2,
     "rollen": {
-     "(L)SR": 1,
-     "HSR": 1
+     "HSR": 1,
+     "(L)SR": 1
     },
     "ligen": [
      [
-      "U17 I",
+      "RL FS",
       1
      ],
      [
-      "RL FS",
+      "U17 I",
       1
      ]
     ],
     "hallen": [
      [
-      "Eishalle Brehmstraße",
+      "Eissporthalle Ratingen",
       1
      ],
      [
-      "Eissporthalle Ratingen",
+      "Eishalle Brehmstraße",
       1
      ]
     ],
@@ -6060,11 +6060,11 @@
     },
     "ligen": [
      [
-      "U20 FS",
+      "RL FS",
       1
      ],
      [
-      "RL FS",
+      "U20 FS",
       1
      ]
     ],
@@ -6237,11 +6237,11 @@
       2
      ],
      [
-      "U11 LL Gelb",
+      "U13 RLB",
       1
      ],
      [
-      "U13 RLB",
+      "U11 LL Gelb",
       1
      ]
     ],
@@ -6251,11 +6251,11 @@
       2
      ],
      [
-      "Eissporthalle Essen-West",
+      "Gysenberghalle Herne",
       1
      ],
      [
-      "Gysenberghalle Herne",
+      "Eissporthalle Essen-West",
       1
      ]
     ],
@@ -6498,11 +6498,11 @@
     ],
     "hallen": [
      [
-      "PreZero Rheinlandhalle Duisburg",
+      "Eissporthalle Dinslaken",
       1
      ],
      [
-      "Eissporthalle Dinslaken",
+      "PreZero Rheinlandhalle Duisburg",
       1
      ]
     ],
@@ -6566,15 +6566,15 @@
       1
      ],
      [
-      "U17 I",
-      1
-     ],
-     [
       "DEFL 2 FS",
       1
      ],
      [
       "U11 LL Rot",
+      1
+     ],
+     [
+      "U17 I",
       1
      ]
     ],
