@@ -1173,20 +1173,25 @@ DESCRIPTION:In einer Stunde an der Halle - U9 RL · Düsseldorfer EG – Br
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:8841d7541b0f4d33079d3a802e9472d8065f2036@esrw.de
+UID:791faf44664d6be323c7951fc3f51591f921cf05@esrw.de
 SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
+DTSTAMP:20260911T055630Z
+LAST-MODIFIED:20260911T055630Z
 DTSTART:20260913T061500Z
 DTEND:20260913T094500Z
 SUMMARY:DA FS · NEV/BW – Sachsen/Berlin
 DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 09:15 Uhr\nTreffpunk
- t: 08:15 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\n!! Halle nicht automat
- isch erkannt - bitte selbst pruefen !!\nGespann: Heu\, Alexander\n\nQuelle
- : https://www.esrw.de/einteilungen.html
+ t: 08:15 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissportzentrum
+  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Heu\, Alex
+ ander\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H

@@ -83,18 +83,6 @@
   "titel": "(L)SR · U13 FS · Lippe Hockey Hamm – Soester EG",
   "treffpunkt": "2026-09-05T09:30:00+02:00"
  },
- "0570a374edd85ceeef182800564158163783d41f@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-13T09:15:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "993b4f91a3215cb36ebe0787c6c4c462407e331b",
-  "ort": "",
-  "sequence": 0,
-  "slug": "heu-alexander",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "(L)SR · DA FS · NEV/BW – Sachsen/Berlin",
-  "treffpunkt": "2026-09-13T08:15:00+02:00"
- },
  "082ce4c5e8ab642a9acd1ea342d090a4fefe0bb6@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-04T20:15:00+02:00",
@@ -971,18 +959,6 @@
   "titel": "(L)SR · U13 RLB · EV Duisburg – Düsseldorfer EG 1b",
   "treffpunkt": "2026-09-10T17:00:00+02:00"
  },
- "7c88324a811113ba31375b5a38731396ed89197e@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-13T09:15:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "993b4f91a3215cb36ebe0787c6c4c462407e331b",
-  "ort": "",
-  "sequence": 0,
-  "slug": "galeske-jonas",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "(L)SR · DA FS · NEV/BW – Sachsen/Berlin",
-  "treffpunkt": "2026-09-13T08:15:00+02:00"
- },
  "7caa961fcb654cf48c8913921eae2892766f4549@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-12T11:00:00+02:00",
@@ -1307,6 +1283,18 @@
   "titel": "(L)SR · U13 LL · EHC Troisdorf 1b – Neusser EV",
   "treffpunkt": "2026-09-05T10:45:00+02:00"
  },
+ "a4cf46cd5ad5acf94dcc54a77504450217e24700@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-13T09:15:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "ff7c16904d5037c953a7686017df2f7fb89c13dc",
+  "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+  "sequence": 0,
+  "slug": "heu-alexander",
+  "stempel": "2026-09-11T05:56:30.059077+00:00",
+  "titel": "(L)SR · DA FS · NEV/BW – Sachsen/Berlin",
+  "treffpunkt": "2026-09-13T08:15:00+02:00"
+ },
  "a55c082927808c877de3eaf7cb1f5f0617cd5665@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-13T13:00:00+02:00",
@@ -1618,6 +1606,18 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · U13 FS · Krefelder EV – Löwen Frankfurt",
   "treffpunkt": "2026-09-13T16:00:00+02:00"
+ },
+ "f5620e9b8dfc16ad2447ba655954740253969cd7@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-13T09:15:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "ff7c16904d5037c953a7686017df2f7fb89c13dc",
+  "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+  "sequence": 0,
+  "slug": "galeske-jonas",
+  "stempel": "2026-09-11T05:56:30.059077+00:00",
+  "titel": "(L)SR · DA FS · NEV/BW – Sachsen/Berlin",
+  "treffpunkt": "2026-09-13T08:15:00+02:00"
  },
  "f95ecf753a8cca2d859b41d200cbeedade481c28@esrw.de": {
   "aenderung": null,

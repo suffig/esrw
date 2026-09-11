@@ -4,7 +4,7 @@
  "vorlauf_minuten": 60,
  "spiele_gesamt": 70,
  "saison": "2026/27",
- "archiv_spiele": 70,
+ "archiv_spiele": 71,
  "personen": [
   {
    "slug": "beckford-emanuel",
@@ -582,15 +582,15 @@
     "Galeske, Jonas"
    ],
    "statistik": {
-    "gesamt": 3,
-    "saison": 3,
+    "gesamt": 4,
+    "saison": 4,
     "rollen": {
-     "(L)SR": 3
+     "(L)SR": 4
     },
     "ligen": [
      [
       "DA FS",
-      2
+      3
      ],
      [
       "U15 RLB",
@@ -600,7 +600,7 @@
     "hallen": [
      [
       "Eissportzentrum Westfalen",
-      1
+      2
      ],
      [
       "Eissporthalle am Seilersee",
@@ -635,12 +635,15 @@
      "rolle": "(L)SR",
      "liga": "DA FS",
      "paarung": "NEV/BW – Sachsen/Berlin",
-     "ort": "",
-     "koordinaten": null,
+     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+     "koordinaten": [
+      51.49525,
+      7.458288
+     ],
      "gespann": [
       "Heu, Alexander"
      ],
-     "halle_erkannt": false,
+     "halle_erkannt": true,
      "vergangen": false,
      "aenderung": null
     },
@@ -1412,15 +1415,15 @@
     "Heu, Alexander"
    ],
    "statistik": {
-    "gesamt": 3,
-    "saison": 3,
+    "gesamt": 4,
+    "saison": 4,
     "rollen": {
-     "(L)SR": 3
+     "(L)SR": 4
     },
     "ligen": [
      [
       "DA FS",
-      2
+      3
      ],
      [
       "U15 LL FS",
@@ -1429,11 +1432,11 @@
     ],
     "hallen": [
      [
-      "HELINET Eissportarena Hamm",
-      1
+      "Eissportzentrum Westfalen",
+      2
      ],
      [
-      "Eissportzentrum Westfalen",
+      "HELINET Eissportarena Hamm",
       1
      ]
     ],
@@ -1465,12 +1468,15 @@
      "rolle": "(L)SR",
      "liga": "DA FS",
      "paarung": "NEV/BW – Sachsen/Berlin",
-     "ort": "",
-     "koordinaten": null,
+     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+     "koordinaten": [
+      51.49525,
+      7.458288
+     ],
      "gespann": [
       "Galeske, Jonas"
      ],
-     "halle_erkannt": false,
+     "halle_erkannt": true,
      "vergangen": false,
      "aenderung": null
     },
