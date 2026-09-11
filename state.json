@@ -1,16 +1,4 @@
 {
- "0067b711c065718c4869b54abf2f74eecb4f9e99@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-04T20:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "8b12ab3e21ee4c9965df340611840b2507743f69",
-  "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
-  "sequence": 0,
-  "slug": "scholz-arien",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "(L)SR · RL FS · Ratinger Ice Aliens – Utrecht Dragons",
-  "treffpunkt": "2026-09-04T19:00:00+02:00"
- },
  "00f9b1d08b8504733664a7d83ebc21956832b3f8@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-12T19:15:00+02:00",
@@ -131,18 +119,6 @@
   "titel": "(L)SR · U15 RLA · Iserlohner EC – Krefelder EV",
   "treffpunkt": "2026-09-16T18:30:00+02:00"
  },
- "09a36ca5f1a84e43e2036c96cc94828d860108c8@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-04T20:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "8b12ab3e21ee4c9965df340611840b2507743f69",
-  "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
-  "sequence": 0,
-  "slug": "rieneck-julian",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "(L)SR · RL FS · Ratinger Ice Aliens – Utrecht Dragons",
-  "treffpunkt": "2026-09-04T19:00:00+02:00"
- },
  "0ab7d9bd5f1ff6b0b5abc3f61dc6f4dfc23c0721@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-12T16:45:00+02:00",
@@ -190,18 +166,6 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · DA FS · NEV – BW/NRW",
   "treffpunkt": "2026-09-12T14:00:00+02:00"
- },
- "104c4f679a8a7fd249acc960dcfcc70735fe4ef9@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-04T19:45:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "8e95d12478b45141adc1f090aa3e36c686d35f14",
-  "ort": "Gysenberghalle Herne, Am Revierpark 22, 44627 Herne",
-  "sequence": 0,
-  "slug": "schlueter-thomas",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "(L)SR · U20 FS · Herner EV – Eisadler Dortmund",
-  "treffpunkt": "2026-09-04T18:45:00+02:00"
  },
  "11f4b41e5991e0776d589b8ba7a9d21a222a92e3@esrw.de": {
   "aenderung": null,
@@ -634,18 +598,6 @@
   "stempel": "2026-09-11T15:00:47.546895+00:00",
   "titel": "(L)SR · RL FS · Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!",
   "treffpunkt": "2026-09-18T19:00:00+02:00"
- },
- "34715b84b99dc55cfac07d648e31222c720d697b@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-04T19:45:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "8e95d12478b45141adc1f090aa3e36c686d35f14",
-  "ort": "Gysenberghalle Herne, Am Revierpark 22, 44627 Herne",
-  "sequence": 0,
-  "slug": "pluschkell-julian",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "(L)SR · U20 FS · Herner EV – Eisadler Dortmund",
-  "treffpunkt": "2026-09-04T18:45:00+02:00"
  },
  "34f1964e65b499c2878fa694c5d0e3ca7c764e2c@esrw.de": {
   "aenderung": null,
@@ -1702,18 +1654,6 @@
   "stempel": "2026-09-11T15:00:47.546895+00:00",
   "titel": "(L)SR · U17 I · Kölner Junghaie – Düsseldorfer EG",
   "treffpunkt": "2026-09-20T13:45:00+02:00"
- },
- "943c0d70fd354a1fda261d1ca1736af6e2949f4d@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-04T20:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "c1c22a1145c16c9f6d0034bd16fbf15e072ce63f",
-  "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
-  "sequence": 0,
-  "slug": "stocker-quirin",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "HSR · RL FS · Ratinger Ice Aliens – Utrecht Dragons",
-  "treffpunkt": "2026-09-04T19:00:00+02:00"
  },
  "94806f7efbc28e65067efe08c05fe73d2cc83221@esrw.de": {
   "aenderung": null,

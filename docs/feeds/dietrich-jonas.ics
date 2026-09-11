@@ -28,12 +28,6 @@ GEO:51.454179;6.976731
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
  Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
  n-West":geo:51.454179,6.976731
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · RL FS · Ratinger Ice A
- liens – Herner EV
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:334d2af3cfd3dabb11dc5ba20b9eb4e5ccdce0d8@esrw.de

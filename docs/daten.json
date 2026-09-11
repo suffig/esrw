@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 110,
+ "spiele_gesamt": 108,
  "saison": "2026/27",
  "archiv_spiele": 113,
  "personen": [
@@ -700,7 +700,7 @@
       "Garcia Nieto, Dario"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {
@@ -1343,7 +1343,7 @@
       "Dietrich, Jonas"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {
@@ -3882,7 +3882,7 @@
       "Warnke, Christoph"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {
@@ -4236,7 +4236,7 @@
       "Garcia Nieto, Dario"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     }
    ]
@@ -4281,24 +4281,6 @@
     "letzte": "2026-09-20"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-04T19:45:00+02:00",
-     "treffpunkt": "2026-09-04T18:45:00+02:00",
-     "rolle": "(L)SR",
-     "liga": "U20 FS",
-     "paarung": "Herner EV – Eisadler Dortmund",
-     "ort": "Gysenberghalle Herne, Am Revierpark 22, 44627 Herne",
-     "koordinaten": [
-      51.532602,
-      7.254372
-     ],
-     "gespann": [
-      "Schlüter, Thomas"
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null
-    },
     {
      "beginn": "2026-09-13T10:00:00+02:00",
      "treffpunkt": "2026-09-13T09:00:00+02:00",
@@ -4656,55 +4638,6 @@
    ]
   },
   {
-   "slug": "rieneck-julian",
-   "name": "Rieneck, Julian",
-   "varianten": [
-    "Rieneck, Julian"
-   ],
-   "statistik": {
-    "gesamt": 1,
-    "saison": 1,
-    "rollen": {
-     "(L)SR": 1
-    },
-    "ligen": [
-     [
-      "RL FS",
-      1
-     ]
-    ],
-    "hallen": [
-     [
-      "Eissporthalle Essen-West",
-      1
-     ]
-    ],
-    "erste": "2026-09-04",
-    "letzte": "2026-09-04"
-   },
-   "spiele": [
-    {
-     "beginn": "2026-09-04T20:00:00+02:00",
-     "treffpunkt": "2026-09-04T19:00:00+02:00",
-     "rolle": "(L)SR",
-     "liga": "RL FS",
-     "paarung": "Ratinger Ice Aliens – Utrecht Dragons",
-     "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
-     "koordinaten": [
-      51.454179,
-      6.976731
-     ],
-     "gespann": [
-      "Stocker, Quirin",
-      "Scholz, Arien"
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null
-    }
-   ]
-  },
-  {
    "slug": "rieneck-maximilian",
    "name": "Rieneck, Maximilian",
    "varianten": [
@@ -4852,24 +4785,6 @@
     "letzte": "2026-09-20"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-04T19:45:00+02:00",
-     "treffpunkt": "2026-09-04T18:45:00+02:00",
-     "rolle": "(L)SR",
-     "liga": "U20 FS",
-     "paarung": "Herner EV – Eisadler Dortmund",
-     "ort": "Gysenberghalle Herne, Am Revierpark 22, 44627 Herne",
-     "koordinaten": [
-      51.532602,
-      7.254372
-     ],
-     "gespann": [
-      "Pluschkell, Julian"
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null
-    },
     {
      "beginn": "2026-09-11T20:15:00+02:00",
      "treffpunkt": "2026-09-11T19:15:00+02:00",
@@ -5483,25 +5398,6 @@
     "letzte": "2026-09-11"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-04T20:00:00+02:00",
-     "treffpunkt": "2026-09-04T19:00:00+02:00",
-     "rolle": "(L)SR",
-     "liga": "RL FS",
-     "paarung": "Ratinger Ice Aliens – Utrecht Dragons",
-     "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
-     "koordinaten": [
-      51.454179,
-      6.976731
-     ],
-     "gespann": [
-      "Stocker, Quirin",
-      "Rieneck, Julian"
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null
-    },
     {
      "beginn": "2026-09-05T10:30:00+02:00",
      "treffpunkt": "2026-09-05T09:30:00+02:00",
@@ -6127,25 +6023,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-04T20:00:00+02:00",
-     "treffpunkt": "2026-09-04T19:00:00+02:00",
-     "rolle": "HSR",
-     "liga": "RL FS",
-     "paarung": "Ratinger Ice Aliens – Utrecht Dragons",
-     "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
-     "koordinaten": [
-      51.454179,
-      6.976731
-     ],
-     "gespann": [
-      "Rieneck, Julian",
-      "Scholz, Arien"
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null
-    },
-    {
      "beginn": "2026-09-12T20:00:00+02:00",
      "treffpunkt": "2026-09-12T19:00:00+02:00",
      "rolle": "(L)SR",
@@ -6685,7 +6562,7 @@
       "Müller, Lars"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {
