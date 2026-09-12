@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 105,
+ "spiele_gesamt": 104,
  "saison": "2026/27",
  "archiv_spiele": 113,
  "personen": [
@@ -99,24 +99,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-05T13:30:00+02:00",
-     "treffpunkt": "2026-09-05T12:30:00+02:00",
-     "rolle": "(L)SR",
-     "liga": "U15 RLA",
-     "paarung": "Krefelder EV – Düsseldorfer EG",
-     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-     "koordinaten": [
-      51.339877,
-      6.540168
-     ],
-     "gespann": [
-      "Menzel, Joey-Max"
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null
-    },
-    {
      "beginn": "2026-09-06T12:30:00+02:00",
      "treffpunkt": "2026-09-06T11:30:00+02:00",
      "rolle": "(L)SR",
@@ -185,7 +167,7 @@
       "Keller Alexander"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {
@@ -2571,7 +2553,7 @@
       "Berger, Eugen"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     }
    ]
@@ -3580,54 +3562,6 @@
      ],
      "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null
-    }
-   ]
-  },
-  {
-   "slug": "menzel-joey-max",
-   "name": "Menzel, Joey-Max",
-   "varianten": [
-    "Menzel, Joey-Max"
-   ],
-   "statistik": {
-    "gesamt": 1,
-    "saison": 1,
-    "rollen": {
-     "(L)SR": 1
-    },
-    "ligen": [
-     [
-      "U15 RLA",
-      1
-     ]
-    ],
-    "hallen": [
-     [
-      "Rheinlandhalle Krefeld",
-      1
-     ]
-    ],
-    "erste": "2026-09-05",
-    "letzte": "2026-09-05"
-   },
-   "spiele": [
-    {
-     "beginn": "2026-09-05T13:30:00+02:00",
-     "treffpunkt": "2026-09-05T12:30:00+02:00",
-     "rolle": "(L)SR",
-     "liga": "U15 RLA",
-     "paarung": "Krefelder EV – Düsseldorfer EG",
-     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-     "koordinaten": [
-      51.339877,
-      6.540168
-     ],
-     "gespann": [
-      "Berger, Eugen"
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
      "aenderung": null
     }
    ]
