@@ -2631,7 +2631,7 @@
       "Schmidt, Waldemar"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {
@@ -4970,7 +4970,7 @@
       "Kiefer, Dennis"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {
