@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:ba4f01c3690c051578198c6c645bb25014689a31@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260905T163000Z
-DTEND:20260905T200000Z
-SUMMARY:(L)SR · BL FS · EHC Troisdorf 1b – Herner EV 1b
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:30 Uhr\nTreffpunk
- t: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga: BL FS\nHalle: ICEDOME Troisdo
- rf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Moritz\, 
- Alexander\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
-GEO:50.811945;7.109233
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
- rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
- isdorf":geo:50.811945,7.109233
-END:VEVENT
-BEGIN:VEVENT
 UID:82ccdbd163553e958163a7ace9f768b9095b56b6@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z
@@ -133,12 +112,6 @@ GEO:50.937979;6.98935
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
  r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
  .937979,6.98935
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · Frauen BZL · KEC "Die 
- Haie" 1c – Herforder EV Kölnarena 2
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:c5f493bb6c55268dd6213346d98e20d4bff3b164@esrw.de

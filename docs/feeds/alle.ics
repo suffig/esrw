@@ -8,48 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:fc7e76fc4acaace42d1d1bd735ddf58fd640a2cc@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260905T163000Z
-DTEND:20260905T200000Z
-SUMMARY:BL FS · EHC Troisdorf 1b – Herner EV 1b
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:30 Uhr\nTreffpunk
- t: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga: BL FS\nHalle: ICEDOME Troisdo
- rf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Schöche\
- , Gian-Carlo\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
-GEO:50.811945;7.109233
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
- rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
- isdorf":geo:50.811945,7.109233
-END:VEVENT
-BEGIN:VEVENT
-UID:cc61d3b8e482b61f2b599fae1ead69e41a611110@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260905T163000Z
-DTEND:20260905T200000Z
-SUMMARY:U13 RLA · Krefelder EV – Kölner Junghaie
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:30 Uhr\nTreffpunk
- t: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLA\nHalle: Rheinlandhall
- e Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Reuter\,
-  Rick\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
-GEO:51.339877;6.540168
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
- stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
- le Krefeld":geo:51.339877,6.540168
-END:VEVENT
-BEGIN:VEVENT
 UID:426bbf72be397adb33af083a8647590596403e39@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z
@@ -725,12 +683,6 @@ GEO:50.937979;6.98935
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
  r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
  .937979,6.98935
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - Frauen BZL · KEC "Die Haie" 1c 
- – Herforder EV Kölnarena 2
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:37d132bf7d0daa752031611b8ab903db337461be@esrw.de
@@ -752,12 +704,6 @@ GEO:50.811945;7.109233
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
  rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
  isdorf":geo:50.811945,7.109233
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LL FS · EHC Troisdorf – TuS W
- iehl
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:c6929d65ea3d520cf5fec8df1808001e434caa15@esrw.de
@@ -779,12 +725,6 @@ GEO:51.339877;6.540168
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
  stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
  le Krefeld":geo:51.339877,6.540168
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U13 FS · Krefelder EV – Löwe
- n Frankfurt
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:fa868416464da1b67ecbb9c46da08a70cbe3d449@esrw.de

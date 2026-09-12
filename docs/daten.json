@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 101,
+ "spiele_gesamt": 99,
  "saison": "2026/27",
  "archiv_spiele": 113,
  "personen": [
@@ -701,7 +701,7 @@
       "Krawinkel, Markus"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     }
    ]
@@ -1352,7 +1352,7 @@
       "Schöche, Gian-Carlo"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {
@@ -1738,7 +1738,7 @@
       "Pacalaj, Erik"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {
@@ -2684,7 +2684,7 @@
       "Engler, Gerhard"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {
@@ -3505,24 +3505,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-05T19:30:00+02:00",
-     "treffpunkt": "2026-09-05T18:30:00+02:00",
-     "rolle": "(L)SR",
-     "liga": "BL FS",
-     "paarung": "EHC Troisdorf 1b – Herner EV 1b",
-     "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-     "koordinaten": [
-      50.811945,
-      7.109233
-     ],
-     "gespann": [
-      "Schöche, Gian-Carlo"
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null
-    },
-    {
      "beginn": "2026-09-06T14:45:00+02:00",
      "treffpunkt": "2026-09-06T13:45:00+02:00",
      "rolle": "(L)SR",
@@ -3785,24 +3767,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-05T19:30:00+02:00",
-     "treffpunkt": "2026-09-05T18:30:00+02:00",
-     "rolle": "(L)SR",
-     "liga": "U13 RLA",
-     "paarung": "Krefelder EV – Kölner Junghaie",
-     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-     "koordinaten": [
-      51.339877,
-      6.540168
-     ],
-     "gespann": [
-      "Reuter, Rick"
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null
-    },
-    {
      "beginn": "2026-09-12T19:30:00+02:00",
      "treffpunkt": "2026-09-12T18:30:00+02:00",
      "rolle": "(L)SR",
@@ -3817,7 +3781,7 @@
       "Heffler, Zsolt"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {
@@ -4293,24 +4257,6 @@
     "letzte": "2026-09-13"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-05T19:30:00+02:00",
-     "treffpunkt": "2026-09-05T18:30:00+02:00",
-     "rolle": "(L)SR",
-     "liga": "U13 RLA",
-     "paarung": "Krefelder EV – Kölner Junghaie",
-     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-     "koordinaten": [
-      51.339877,
-      6.540168
-     ],
-     "gespann": [
-      "Pacalaj, Erik"
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null
-    },
     {
      "beginn": "2026-09-13T10:00:00+02:00",
      "treffpunkt": "2026-09-13T09:00:00+02:00",
@@ -4848,24 +4794,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-05T19:30:00+02:00",
-     "treffpunkt": "2026-09-05T18:30:00+02:00",
-     "rolle": "(L)SR",
-     "liga": "BL FS",
-     "paarung": "EHC Troisdorf 1b – Herner EV 1b",
-     "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-     "koordinaten": [
-      50.811945,
-      7.109233
-     ],
-     "gespann": [
-      "Moritz, Alexander"
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null
-    },
-    {
      "beginn": "2026-09-06T09:00:00+02:00",
      "treffpunkt": "2026-09-06T08:00:00+02:00",
      "rolle": "(L)SR",
@@ -4952,7 +4880,7 @@
       "Giesen, Tom"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {

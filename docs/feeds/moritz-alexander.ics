@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:47d36f2e63f94d2d7c224e85e983071386824f34@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260905T163000Z
-DTEND:20260905T200000Z
-SUMMARY:(L)SR · BL FS · EHC Troisdorf 1b – Herner EV 1b
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:30 Uhr\nTreffpunk
- t: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga: BL FS\nHalle: ICEDOME Troisdo
- rf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Schöche\
- , Gian-Carlo\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
-GEO:50.811945;7.109233
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
- rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
- isdorf":geo:50.811945,7.109233
-END:VEVENT
-BEGIN:VEVENT
 UID:cc31c0e7d2bd3c2eba93be7c7c85d36e28838e77@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z
