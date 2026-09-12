@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:db6a0fe6fc1590747c00bc8a0d796a02a5473a2b@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260905T073000Z
-DTEND:20260905T110000Z
-SUMMARY:(L)SR · U13 FS · Lippe Hockey Hamm – Soester EG
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 10:30 Uhr\nTreffpunk
- t: 09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 FS\nHalle: HELINET Eisspo
- rtarena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Scho
- lz\, Arien\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:HELINET Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 Hamm
-GEO:51.686934;7.886138
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
- , Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="HELINET
-  Eissportarena Hamm":geo:51.686934,7.886138
-END:VEVENT
-BEGIN:VEVENT
 UID:4250651f438d4c43b583649187efa626281af143@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z

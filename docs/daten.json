@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 107,
+ "spiele_gesamt": 106,
  "saison": "2026/27",
  "archiv_spiele": 113,
  "personen": [
@@ -1038,24 +1038,6 @@
     "letzte": "2026-09-20"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-05T10:30:00+02:00",
-     "treffpunkt": "2026-09-05T09:30:00+02:00",
-     "rolle": "(L)SR",
-     "liga": "U13 FS",
-     "paarung": "Lippe Hockey Hamm – Soester EG",
-     "ort": "HELINET Eissportarena Hamm, Karl-Koßmann-Straße 1, 59071 Hamm",
-     "koordinaten": [
-      51.686934,
-      7.886138
-     ],
-     "gespann": [
-      "Scholz, Arien"
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null
-    },
     {
      "beginn": "2026-09-06T09:00:00+02:00",
      "treffpunkt": "2026-09-06T08:00:00+02:00",
@@ -5362,24 +5344,6 @@
     "letzte": "2026-09-11"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-05T10:30:00+02:00",
-     "treffpunkt": "2026-09-05T09:30:00+02:00",
-     "rolle": "(L)SR",
-     "liga": "U13 FS",
-     "paarung": "Lippe Hockey Hamm – Soester EG",
-     "ort": "HELINET Eissportarena Hamm, Karl-Koßmann-Straße 1, 59071 Hamm",
-     "koordinaten": [
-      51.686934,
-      7.886138
-     ],
-     "gespann": [
-      "Garbsch, René"
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null
-    },
     {
      "beginn": "2026-09-11T19:30:00+02:00",
      "treffpunkt": "2026-09-11T18:30:00+02:00",
