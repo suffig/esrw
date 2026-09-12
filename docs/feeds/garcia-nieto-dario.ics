@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:6465a802c13f1e6a6a154890f6cd4bd4a36e877a@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260905T130000Z
-DTEND:20260905T163000Z
-SUMMARY:(L)SR · U17 II · EV Duisburg – ESV 03 Chemnitz
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 16:00 Uhr\nTreffpunk
- t: 15:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 II\nHalle: PreZero Rheinl
- andhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann
- : Hauerwaas\, Gabriel\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
- sburg
-GEO:51.405718;6.780082
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
- sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
- reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
-END:VEVENT
-BEGIN:VEVENT
 UID:0223f462e6f57a2019ef9b5d48a3bf3697da6b47@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z

@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 104,
+ "spiele_gesamt": 103,
  "saison": "2026/27",
  "archiv_spiele": 113,
  "personen": [
@@ -1256,24 +1256,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-05T16:00:00+02:00",
-     "treffpunkt": "2026-09-05T15:00:00+02:00",
-     "rolle": "(L)SR",
-     "liga": "U17 II",
-     "paarung": "EV Duisburg – ESV 03 Chemnitz",
-     "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
-     "koordinaten": [
-      51.405718,
-      6.780082
-     ],
-     "gespann": [
-      "Hauerwaas, Gabriel"
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null
-    },
-    {
      "beginn": "2026-09-11T20:00:00+02:00",
      "treffpunkt": "2026-09-11T19:00:00+02:00",
      "rolle": "(L)SR",
@@ -1581,24 +1563,6 @@
     "letzte": "2026-09-14"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-05T16:00:00+02:00",
-     "treffpunkt": "2026-09-05T15:00:00+02:00",
-     "rolle": "(L)SR",
-     "liga": "U17 II",
-     "paarung": "EV Duisburg – ESV 03 Chemnitz",
-     "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
-     "koordinaten": [
-      51.405718,
-      6.780082
-     ],
-     "gespann": [
-      "Garcia Nieto, Dario"
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null
-    },
     {
      "beginn": "2026-09-14T18:15:00+02:00",
      "treffpunkt": "2026-09-14T17:15:00+02:00",
