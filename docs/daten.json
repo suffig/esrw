@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 106,
+ "spiele_gesamt": 105,
  "saison": "2026/27",
  "archiv_spiele": 113,
  "personen": [
@@ -317,7 +317,7 @@
       "Garcia Nieto, Dario"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     }
    ]
@@ -1274,24 +1274,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-05T11:45:00+02:00",
-     "treffpunkt": "2026-09-05T10:45:00+02:00",
-     "rolle": "(L)SR",
-     "liga": "U13 LL",
-     "paarung": "EHC Troisdorf 1b – Neusser EV",
-     "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-     "koordinaten": [
-      50.811945,
-      7.109233
-     ],
-     "gespann": [
-      "Hauerwaas, Gabriel"
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null
-    },
-    {
      "beginn": "2026-09-05T16:00:00+02:00",
      "treffpunkt": "2026-09-05T15:00:00+02:00",
      "rolle": "(L)SR",
@@ -1343,7 +1325,7 @@
       "Bocklemünd, Cid"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {
@@ -1617,24 +1599,6 @@
     "letzte": "2026-09-14"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-05T11:45:00+02:00",
-     "treffpunkt": "2026-09-05T10:45:00+02:00",
-     "rolle": "(L)SR",
-     "liga": "U13 LL",
-     "paarung": "EHC Troisdorf 1b – Neusser EV",
-     "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-     "koordinaten": [
-      50.811945,
-      7.109233
-     ],
-     "gespann": [
-      "Garcia Nieto, Dario"
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null
-    },
     {
      "beginn": "2026-09-05T16:00:00+02:00",
      "treffpunkt": "2026-09-05T15:00:00+02:00",

@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:a298adb38603f5ed1cc1b2c7e29aaa1d0981af18@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260905T084500Z
-DTEND:20260905T121500Z
-SUMMARY:(L)SR · U13 LL · EHC Troisdorf 1b – Neusser EV
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 11:45 Uhr\nTreffpunk
- t: 10:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: ICEDOME Troisd
- orf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Garcia N
- ieto\, Dario\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
-GEO:50.811945;7.109233
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
- rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
- isdorf":geo:50.811945,7.109233
-END:VEVENT
-BEGIN:VEVENT
 UID:754dc734ffa7627fdc9bf289276fd801ed0b3909@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z
