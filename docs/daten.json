@@ -167,7 +167,7 @@
       "Keller, Alexander"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {
@@ -2607,7 +2607,7 @@
       "Berger, Eugen"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {
