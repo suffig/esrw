@@ -2201,7 +2201,7 @@
       "Zynda, Jayden"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {
@@ -6630,7 +6630,7 @@
       "Hindley, David"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {
