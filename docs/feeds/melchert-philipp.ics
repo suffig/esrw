@@ -3,43 +3,22 @@ VERSION:2.0
 PRODID:-//esrw-ical//Schiedsrichter-Einteilungen//DE
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
-X-WR-CALNAME:Einteilungen – Heu\, Alexander
+X-WR-CALNAME:Einteilungen – Melchert\, Philipp
 X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:6825469fe9f2af61fda17b9489a2af533f9fe9b9@esrw.de
+UID:1cf51d8715bf644706413ce663053a2d85b795a3@esrw.de
 SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260906T153000Z
-DTEND:20260906T190000Z
-SUMMARY:(L)SR · U15 LL FS · Lippe Hockey Hamm – TuS Wiehl
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 18:30 Uhr\nTreffpunk
- t: 17:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL FS\nHalle: HELINET Eis
- sportarena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Z
- ynda\, Jayden\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:HELINET Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 Hamm
-GEO:51.686934;7.886138
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
- , Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="HELINET
-  Eissportarena Hamm":geo:51.686934,7.886138
-END:VEVENT
-BEGIN:VEVENT
-UID:a4cf46cd5ad5acf94dcc54a77504450217e24700@esrw.de
-SEQUENCE:0
-DTSTAMP:20260911T055630Z
-LAST-MODIFIED:20260911T055630Z
+DTSTAMP:20260912T180047Z
+LAST-MODIFIED:20260912T180047Z
 DTSTART:20260913T061500Z
 DTEND:20260913T094500Z
 SUMMARY:(L)SR · DA FS · NEV/BW – Sachsen/Berlin
 DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 09:15 Uhr\nTreffpunk
  t: 08:15 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissportzentrum
-  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Melchert\,
-  Philipp\n\nQuelle: https://www.esrw.de/einteilungen.html
+  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Heu\, Alex
+ ander\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -56,17 +35,17 @@ DESCRIPTION:In einer Stunde an der Halle - (L)SR · DA FS · NEV/BW – Sac
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:79a36d739d20985d78f40c2a0c74aae7b71e4c20@esrw.de
+UID:014b1be265970a6c8b90796489bc659f1fae18ad@esrw.de
 SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
+DTSTAMP:20260912T180047Z
+LAST-MODIFIED:20260912T180047Z
 DTSTART:20260913T080000Z
 DTEND:20260913T113000Z
 SUMMARY:(L)SR · DA FS · NRW – Hessen
 DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 11:00 Uhr\nTreffpunk
  t: 10:00 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissportzentrum
-  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Melchert\,
-  Philipp\n\nQuelle: https://www.esrw.de/einteilungen.html
+  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Heu\, Alex
+ ander\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

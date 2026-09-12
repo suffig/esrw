@@ -11,6 +11,18 @@
   "titel": "(L)SR · Frauen BZL · KEC \"Die Haie\" 1c – Herforder EV Kölnarena 2",
   "treffpunkt": "2026-09-12T18:15:00+02:00"
  },
+ "014b1be265970a6c8b90796489bc659f1fae18ad@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-13T11:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "3ec24ea7405e15d02e84bf9567dd04d188192d09",
+  "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+  "sequence": 0,
+  "slug": "melchert-philipp",
+  "stempel": "2026-09-12T18:00:47.772556+00:00",
+  "titel": "(L)SR · DA FS · NRW – Hessen",
+  "treffpunkt": "2026-09-13T10:00:00+02:00"
+ },
  "0223f462e6f57a2019ef9b5d48a3bf3697da6b47@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-11T20:00:00+02:00",
@@ -299,6 +311,18 @@
   "titel": "(L)SR · DA FS · NEV – BW/NRW",
   "treffpunkt": "2026-09-12T14:00:00+02:00"
  },
+ "1cf51d8715bf644706413ce663053a2d85b795a3@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-13T09:15:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "ff7c16904d5037c953a7686017df2f7fb89c13dc",
+  "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+  "sequence": 0,
+  "slug": "melchert-philipp",
+  "stempel": "2026-09-12T18:00:47.772556+00:00",
+  "titel": "(L)SR · DA FS · NEV/BW – Sachsen/Berlin",
+  "treffpunkt": "2026-09-13T08:15:00+02:00"
+ },
  "1dfbc514661f7ce32774a621c490b145fbd3f759@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-13T08:00:00+02:00",
@@ -490,18 +514,6 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · U15 RLB · EV Duisburg – Iserlohner EC 1b",
   "treffpunkt": "2026-09-11T18:30:00+02:00"
- },
- "2c1836fa54e3d5d160f99592673b7a3eb08636fc@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-05T19:45:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "dff076aba2e99c42868a19a7e6be8166cbad6147",
-  "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
-  "sequence": 0,
-  "slug": "fenke-matthias",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "(L)SR · U13 FS · Kölner Junghaie 1b – Iserlohner EC 1b",
-  "treffpunkt": "2026-09-05T18:45:00+02:00"
  },
  "2c50a24681b12c5f8d6d842116b7b7b2548fbbe4@esrw.de": {
   "aenderung": null,
@@ -1115,18 +1127,6 @@
   "titel": "(L)SR · U20 FS · Herforder EV – Eisadler Dortmund",
   "treffpunkt": "2026-09-06T14:00:00+02:00"
  },
- "72b2059b2e125a9038e5d908722b19c591703b9e@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-05T19:45:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "dff076aba2e99c42868a19a7e6be8166cbad6147",
-  "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
-  "sequence": 0,
-  "slug": "bocklemuend-cid",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "(L)SR · U13 FS · Kölner Junghaie 1b – Iserlohner EC 1b",
-  "treffpunkt": "2026-09-05T18:45:00+02:00"
- },
  "75cc53519bee8aa9b2d7ec3b213c8b1a87266736@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-12T10:00:00+02:00",
@@ -1282,18 +1282,6 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · U20 FS · Herforder EV – Eisadler Dortmund",
   "treffpunkt": "2026-09-06T14:00:00+02:00"
- },
- "7e2d7c6c7b660c9c068f3456e9edf41640adfa54@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-13T11:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "3ec24ea7405e15d02e84bf9567dd04d188192d09",
-  "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-  "sequence": 0,
-  "slug": "galeske-jonas",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "(L)SR · DA FS · NRW – Hessen",
-  "treffpunkt": "2026-09-13T10:00:00+02:00"
  },
  "806715797025cedb7d8e104280d15f7a906038f2@esrw.de": {
   "aenderung": null,
@@ -2278,18 +2266,6 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "(L)SR · U13 FS · Krefelder EV – Löwen Frankfurt",
   "treffpunkt": "2026-09-13T16:00:00+02:00"
- },
- "f5620e9b8dfc16ad2447ba655954740253969cd7@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-13T09:15:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "ff7c16904d5037c953a7686017df2f7fb89c13dc",
-  "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-  "sequence": 0,
-  "slug": "galeske-jonas",
-  "stempel": "2026-09-11T05:56:30.059077+00:00",
-  "titel": "(L)SR · DA FS · NEV/BW – Sachsen/Berlin",
-  "treffpunkt": "2026-09-13T08:15:00+02:00"
  },
  "f69ebb233a85cdd43faba4bbd8bb90b84ba9d2d7@esrw.de": {
   "aenderung": null,

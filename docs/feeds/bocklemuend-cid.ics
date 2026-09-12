@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:72b2059b2e125a9038e5d908722b19c591703b9e@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260905T164500Z
-DTEND:20260905T201500Z
-SUMMARY:(L)SR · U13 FS · Kölner Junghaie 1b – Iserlohner EC 1b
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:45 Uhr\nTreffpunk
- t: 18:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 FS\nHalle: Kölnarena 2\n
- Adresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Fenke\, Matthias\
- n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
-GEO:50.937979;6.98935
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
- r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
- .937979,6.98935
-END:VEVENT
-BEGIN:VEVENT
 UID:9d4b22767a94b0a1e756ab212e8d9a08cdf3b060@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z

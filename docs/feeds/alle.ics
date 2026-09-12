@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:426bbf72be397adb33af083a8647590596403e39@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260905T164500Z
-DTEND:20260905T201500Z
-SUMMARY:U13 FS · Kölner Junghaie 1b – Iserlohner EC 1b
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:45 Uhr\nTreffpunk
- t: 18:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 FS\nHalle: Kölnarena 2\n
- Adresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Fenke\, Matthias\
- n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
-GEO:50.937979;6.98935
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
- r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
- .937979,6.98935
-END:VEVENT
-BEGIN:VEVENT
 UID:ee567f1452439ff4f13ed070a1ac0ab6461822a7@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z
@@ -747,12 +726,6 @@ GEO:51.405718;6.780082
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
  sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
  reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U17 II · EV Duisburg – SCC Ad
- ler Berlin
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:afe11f627e01c10449c199dcee5e85ecc1aa997a@esrw.de
@@ -818,8 +791,8 @@ DTEND:20260913T094500Z
 SUMMARY:DA FS · NEV/BW – Sachsen/Berlin
 DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 09:15 Uhr\nTreffpunk
  t: 08:15 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissportzentrum
-  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Heu\, Alex
- ander\n\nQuelle: https://www.esrw.de/einteilungen.html
+  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Melchert\,
+  Philipp\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -954,8 +927,8 @@ DTEND:20260913T113000Z
 SUMMARY:DA FS · NRW – Hessen
 DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 11:00 Uhr\nTreffpunk
  t: 10:00 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissportzentrum
-  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Heu\, Alex
- ander\n\nQuelle: https://www.esrw.de/einteilungen.html
+  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Melchert\,
+  Philipp\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

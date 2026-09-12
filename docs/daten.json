@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 99,
+ "spiele_gesamt": 98,
  "saison": "2026/27",
  "archiv_spiele": 113,
  "personen": [
@@ -248,24 +248,6 @@
     "letzte": "2026-09-12"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-05T19:45:00+02:00",
-     "treffpunkt": "2026-09-05T18:45:00+02:00",
-     "rolle": "(L)SR",
-     "liga": "U13 FS",
-     "paarung": "Kölner Junghaie 1b – Iserlohner EC 1b",
-     "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
-     "koordinaten": [
-      50.937979,
-      6.98935
-     ],
-     "gespann": [
-      "Fenke, Matthias"
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null
-    },
     {
      "beginn": "2026-09-06T15:00:00+02:00",
      "treffpunkt": "2026-09-06T14:00:00+02:00",
@@ -707,54 +689,6 @@
    ]
   },
   {
-   "slug": "fenke-matthias",
-   "name": "Fenke, Matthias",
-   "varianten": [
-    "Fenke, Matthias"
-   ],
-   "statistik": {
-    "gesamt": 1,
-    "saison": 1,
-    "rollen": {
-     "(L)SR": 1
-    },
-    "ligen": [
-     [
-      "U13 FS",
-      1
-     ]
-    ],
-    "hallen": [
-     [
-      "Kölnarena 2",
-      1
-     ]
-    ],
-    "erste": "2026-09-05",
-    "letzte": "2026-09-05"
-   },
-   "spiele": [
-    {
-     "beginn": "2026-09-05T19:45:00+02:00",
-     "treffpunkt": "2026-09-05T18:45:00+02:00",
-     "rolle": "(L)SR",
-     "liga": "U13 FS",
-     "paarung": "Kölner Junghaie 1b – Iserlohner EC 1b",
-     "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
-     "koordinaten": [
-      50.937979,
-      6.98935
-     ],
-     "gespann": [
-      "Bocklemünd, Cid"
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null
-    }
-   ]
-  },
-  {
    "slug": "finke-gudrun",
    "name": "Finke, Gudrun",
    "varianten": [
@@ -809,18 +743,18 @@
     "Galeske, Jonas"
    ],
    "statistik": {
-    "gesamt": 6,
-    "saison": 6,
+    "gesamt": 4,
+    "saison": 4,
     "rollen": {
-     "(L)SR": 6
+     "(L)SR": 4
     },
     "ligen": [
      [
-      "DA FS",
-      3
+      "U11 RL",
+      1
      ],
      [
-      "U11 RL",
+      "DA FS",
       1
      ],
      [
@@ -834,54 +768,18 @@
     ],
     "hallen": [
      [
-      "Eissportzentrum Westfalen",
-      3
-     ],
-     [
       "Eissporthalle am Seilersee",
       2
+     ],
+     [
+      "Eissportzentrum Westfalen",
+      1
      ]
     ],
     "erste": "2026-09-04",
     "letzte": "2026-09-20"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-13T09:15:00+02:00",
-     "treffpunkt": "2026-09-13T08:15:00+02:00",
-     "rolle": "(L)SR",
-     "liga": "DA FS",
-     "paarung": "NEV/BW – Sachsen/Berlin",
-     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-     "koordinaten": [
-      51.49525,
-      7.458288
-     ],
-     "gespann": [
-      "Heu, Alexander"
-     ],
-     "halle_erkannt": true,
-     "vergangen": false,
-     "aenderung": null
-    },
-    {
-     "beginn": "2026-09-13T11:00:00+02:00",
-     "treffpunkt": "2026-09-13T10:00:00+02:00",
-     "rolle": "(L)SR",
-     "liga": "DA FS",
-     "paarung": "NRW – Hessen",
-     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-     "koordinaten": [
-      51.49525,
-      7.458288
-     ],
-     "gespann": [
-      "Heu, Alexander"
-     ],
-     "halle_erkannt": true,
-     "vergangen": false,
-     "aenderung": null
-    },
     {
      "beginn": "2026-09-19T12:15:00+02:00",
      "treffpunkt": "2026-09-19T11:15:00+02:00",
@@ -1602,7 +1500,7 @@
       "Stocker, Quirin"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {
@@ -1894,7 +1792,7 @@
       7.458288
      ],
      "gespann": [
-      "Galeske, Jonas"
+      "Melchert, Philipp"
      ],
      "halle_erkannt": true,
      "vergangen": false,
@@ -1912,7 +1810,7 @@
       7.458288
      ],
      "gespann": [
-      "Galeske, Jonas"
+      "Melchert, Philipp"
      ],
      "halle_erkannt": true,
      "vergangen": false,
@@ -3457,6 +3355,72 @@
      ],
      "gespann": [
       "Müller, Lars"
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null
+    }
+   ]
+  },
+  {
+   "slug": "melchert-philipp",
+   "name": "Melchert, Philipp",
+   "varianten": [
+    "Melchert, Philipp"
+   ],
+   "statistik": {
+    "gesamt": 2,
+    "saison": 2,
+    "rollen": {
+     "(L)SR": 2
+    },
+    "ligen": [
+     [
+      "DA FS",
+      2
+     ]
+    ],
+    "hallen": [
+     [
+      "Eissportzentrum Westfalen",
+      2
+     ]
+    ],
+    "erste": "2026-09-13",
+    "letzte": "2026-09-13"
+   },
+   "spiele": [
+    {
+     "beginn": "2026-09-13T09:15:00+02:00",
+     "treffpunkt": "2026-09-13T08:15:00+02:00",
+     "rolle": "(L)SR",
+     "liga": "DA FS",
+     "paarung": "NEV/BW – Sachsen/Berlin",
+     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+     "koordinaten": [
+      51.49525,
+      7.458288
+     ],
+     "gespann": [
+      "Heu, Alexander"
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null
+    },
+    {
+     "beginn": "2026-09-13T11:00:00+02:00",
+     "treffpunkt": "2026-09-13T10:00:00+02:00",
+     "rolle": "(L)SR",
+     "liga": "DA FS",
+     "paarung": "NRW – Hessen",
+     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+     "koordinaten": [
+      51.49525,
+      7.458288
+     ],
+     "gespann": [
+      "Heu, Alexander"
      ],
      "halle_erkannt": true,
      "vergangen": false,
@@ -5623,7 +5587,7 @@
       "Heffler, Philipp"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {

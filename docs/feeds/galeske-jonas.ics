@@ -8,59 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:f5620e9b8dfc16ad2447ba655954740253969cd7@esrw.de
-SEQUENCE:0
-DTSTAMP:20260911T055630Z
-LAST-MODIFIED:20260911T055630Z
-DTSTART:20260913T061500Z
-DTEND:20260913T094500Z
-SUMMARY:(L)SR · DA FS · NEV/BW – Sachsen/Berlin
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 09:15 Uhr\nTreffpunk
- t: 08:15 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissportzentrum
-  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Heu\, Alex
- ander\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
-GEO:51.49525;7.458288
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
-  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
- rum Westfalen":geo:51.49525,7.458288
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · DA FS · NEV/BW – Sac
- hsen/Berlin
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
-UID:7e2d7c6c7b660c9c068f3456e9edf41640adfa54@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260913T080000Z
-DTEND:20260913T113000Z
-SUMMARY:(L)SR · DA FS · NRW – Hessen
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 11:00 Uhr\nTreffpunk
- t: 10:00 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissportzentrum
-  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Heu\, Alex
- ander\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
-GEO:51.49525;7.458288
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
-  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
- rum Westfalen":geo:51.49525,7.458288
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · DA FS · NRW – Hessen
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:11f4b41e5991e0776d589b8ba7a9d21a222a92e3@esrw.de
 SEQUENCE:0
 DTSTAMP:20260911T150047Z
