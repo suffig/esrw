@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:6f056ac7498fb7c9dbf72152214c01266e28b250@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260905T133000Z
-DTEND:20260905T170000Z
-SUMMARY:(L)SR · U17 I · Krefelder EV – Iserlohner EC
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 16:30 Uhr\nTreffpunk
- t: 15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Rheinlandhalle 
- Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Giesen\, T
- om\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
-GEO:51.339877;6.540168
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
- stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
- le Krefeld":geo:51.339877,6.540168
-END:VEVENT
-BEGIN:VEVENT
 UID:69c41eeb03c28baa0bac44e90d96db18f1659306@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z

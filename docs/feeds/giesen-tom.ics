@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:a0b22b1a8f98717a35d27accb31fcb8f27f27344@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260905T133000Z
-DTEND:20260905T170000Z
-SUMMARY:(L)SR · U17 I · Krefelder EV – Iserlohner EC
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 16:30 Uhr\nTreffpunk
- t: 15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Rheinlandhalle 
- Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Perlitz\, 
- Christian\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
-GEO:51.339877;6.540168
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
- stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
- le Krefeld":geo:51.339877,6.540168
-END:VEVENT
-BEGIN:VEVENT
 UID:2052a136d81d357641b6158589afa4402a2e5f82@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z
@@ -48,12 +27,6 @@ GEO:50.937979;6.98935
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
  r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
  .937979,6.98935
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 I · Kölner Jungha
- ie – ES Weißwasser
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:00f9b1d08b8504733664a7d83ebc21956832b3f8@esrw.de
