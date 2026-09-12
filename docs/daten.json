@@ -1963,7 +1963,7 @@
       "Hofer, Carsten"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     }
    ]
@@ -2167,7 +2167,7 @@
       "Heyer, Christoph (N)"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {
@@ -3356,7 +3356,7 @@
       "Strohmenger, Svenja"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {
@@ -5795,7 +5795,7 @@
       "Meißner, Nils"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {

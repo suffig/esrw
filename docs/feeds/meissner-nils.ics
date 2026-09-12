@@ -48,12 +48,6 @@ GEO:51.49525;7.458288
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
   Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
  rum Westfalen":geo:51.49525,7.458288
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · DA FS · Hessen – Sac
- hsen/Berlin
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:89ae15f1c8178da36a163ce001b5543e5413fad9@esrw.de
