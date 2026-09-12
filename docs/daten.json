@@ -3440,7 +3440,7 @@
       "Strohmenger, Svenja"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {
@@ -5945,7 +5945,7 @@
       "Meißner, Nils"
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null
     },
     {
