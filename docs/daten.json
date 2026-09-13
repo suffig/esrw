@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 86,
+ "spiele_gesamt": 85,
  "saison": "2026/27",
  "archiv_spiele": 113,
  "rollen": {
@@ -1019,7 +1019,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     },
@@ -1992,31 +1992,6 @@
     "letzte": "2026-09-13"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-06T18:30:00+02:00",
-     "treffpunkt": "2026-09-06T17:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U15 LL FS",
-     "paarung": "Lippe Hockey Hamm – TuS Wiehl",
-     "ort": "HELINET Eissportarena Hamm, Karl-Koßmann-Straße 1, 59071 Hamm",
-     "halle": "HELINET Eissportarena Hamm",
-     "koordinaten": [
-      51.686934,
-      7.886138
-     ],
-     "gespann": [
-      {
-       "name": "Zynda, Jayden",
-       "slug": "zynda-jayden",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null
-    },
     {
      "beginn": "2026-09-13T09:15:00+02:00",
      "treffpunkt": "2026-09-13T08:15:00+02:00",
@@ -4993,7 +4968,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     },
@@ -7012,31 +6987,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-06T18:30:00+02:00",
-     "treffpunkt": "2026-09-06T17:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U15 LL FS",
-     "paarung": "Lippe Hockey Hamm – TuS Wiehl",
-     "ort": "HELINET Eissportarena Hamm, Karl-Koßmann-Straße 1, 59071 Hamm",
-     "halle": "HELINET Eissportarena Hamm",
-     "koordinaten": [
-      51.686934,
-      7.886138
-     ],
-     "gespann": [
-      {
-       "name": "Heu, Alexander",
-       "slug": "heu-alexander",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null
-    },
-    {
      "beginn": "2026-09-12T09:15:00+02:00",
      "treffpunkt": "2026-09-12T08:15:00+02:00",
      "rolle": "SR",
@@ -7228,29 +7178,6 @@
   }
  ],
  "spiele": [
-  {
-   "beginn": "2026-09-06T18:30:00+02:00",
-   "treffpunkt": "2026-09-06T17:30:00+02:00",
-   "liga": "U15 LL FS",
-   "paarung": "Lippe Hockey Hamm – TuS Wiehl",
-   "halle": "HELINET Eissportarena Hamm",
-   "ort": "HELINET Eissportarena Hamm, Karl-Koßmann-Straße 1, 59071 Hamm",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Heu, Alexander",
-     "rolle": "SR",
-     "slug": "heu-alexander"
-    },
-    {
-     "name": "Zynda, Jayden",
-     "rolle": "SR",
-     "slug": "zynda-jayden"
-    }
-   ],
-   "vergangen": true
-  },
   {
    "beginn": "2026-09-10T18:00:00+02:00",
    "treffpunkt": "2026-09-10T17:00:00+02:00",
@@ -8197,7 +8124,7 @@
      "slug": "schlueter-thomas"
     }
    ],
-   "vergangen": false
+   "vergangen": true
   },
   {
    "beginn": "2026-09-13T19:00:00+02:00",

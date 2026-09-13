@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:eb19b90ff33072b2786dafef02792408e09fe626@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260906T153000Z
-DTEND:20260906T190000Z
-SUMMARY:U15 LL FS · Lippe Hockey Hamm – TuS Wiehl
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
-  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL FS\nHalle: HELINET Eissp
- ortarena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Zyn
- da\, Jayden\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:HELINET Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 Hamm
-GEO:51.686934;7.886138
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
- , Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="HELINET
-  Eissportarena Hamm":geo:51.686934,7.886138
-END:VEVENT
-BEGIN:VEVENT
 UID:7dc19947b9cae38804239789bd1c06388eebe0fe@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z
@@ -894,12 +873,6 @@ GEO:51.686934;7.886138
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
  , Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="HELINET
   Eissportarena Hamm":geo:51.686934,7.886138
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U17 RL · Lippe Hockey Hamm – 
- Herforder EV Hamm
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:e852316a6a1e98239db17f5d4b2bd73fa0c92c46@esrw.de
