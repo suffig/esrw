@@ -14,11 +14,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260910T150000Z
 DTEND:20260910T183000Z
-SUMMARY:(L)SR · U13 RLB · EV Duisburg – Düsseldorfer EG 1b
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 18:00 Uhr\nTreffpunk
- t: 17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: PreZero Rhein
- landhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespan
- n: Hartmann\, Marius\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U13 RLB · EV Duisburg – Düsseldorfer EG 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
+  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: PreZero Rheinla
+ ndhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann:
+  Hartmann\, Marius\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -36,11 +36,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260911T163000Z
 DTEND:20260911T200000Z
-SUMMARY:(L)SR · U15 RLB · EV Duisburg – Iserlohner EC 1b
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:30 Uhr\nTreffpunk
- t: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: PreZero Rhein
- landhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespan
- n: Scholz\, Arien\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U15 RLB · EV Duisburg – Iserlohner EC 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: PreZero Rheinla
+ ndhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann:
+  Scholz\, Arien\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -58,11 +58,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260913T050000Z
 DTEND:20260913T083000Z
-SUMMARY:(L)SR · U9 RL · Iserlohner EC – Iserlohn
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 08:00 Uhr\nTreffpunk
- t: 07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: Eissporthalle a
- m Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Garbsch
- \, René\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U9 RL · Iserlohner EC – Iserlohn
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: Eissporthalle am 
+ Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Garbsch\,
+  René\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -74,8 +74,63 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · U9 RL · Iserlohner EC 
- – Iserlohn
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 RL · Iserlohner EC –
+  Iserlohn
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:8915fb3b86142d19446d2c789ca798949e1613f9@esrw.de
+SEQUENCE:0
+DTSTAMP:20260913T052816Z
+LAST-MODIFIED:20260913T052816Z
+DTSTART:20260918T163000Z
+DTEND:20260918T200000Z
+SUMMARY:SR · U13 LL · EV Duisburg 1b – Ratinger Ice Aliens
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: PreZero Rheinlan
+ dhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: 
+ Victor\, Tobias (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL · EV Duisburg 1b 
+ – Ratinger Ice Aliens
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:151a485b6d521ae4ee637c7d33ba3cebf18098ea@esrw.de
+SEQUENCE:0
+DTSTAMP:20260913T052816Z
+LAST-MODIFIED:20260913T052816Z
+DTSTART:20260920T103000Z
+DTEND:20260920T140000Z
+SUMMARY:SR · U17 FS · Eisadler Dortmund – EHC Troisdorf
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
+  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 FS\nHalle: Eissportzentrum 
+ Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Galeske\, J
+ onas\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 FS · Eisadler Dortmun
+ d – EHC Troisdorf
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

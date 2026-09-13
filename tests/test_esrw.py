@@ -49,7 +49,7 @@ def test_parsen():
            "(%s)" % erstes["start"])
     pruefe("EV Duisburg" in erstes["begegnung"], "Begegnung gelesen")
     pruefe("Marks, Marcel" in erstes["besetzung"]["(L)SR"],
-           "Linienrichter gelesen", "(%s)" % erstes["besetzung"])
+           "Spalte (L)SR gelesen", "(%s)" % erstes["besetzung"])
     pruefe(all("<" not in n for s in spiele
                for liste in s["besetzung"].values() for n in liste),
            "keine HTML-Reste in den Namen")
@@ -163,7 +163,8 @@ def test_ics():
     venues = E.lade("venues.json")
     jetzt = datetime.now(timezone.utc)
     spiele = E.parse_seite(beispielseite())
-    personen = E.sammle_personen(spiele, cfg, venues, jetzt)
+    personen, uebersicht = E.sammle_personen(spiele, cfg, venues, jetzt)
+    pruefe(len(uebersicht) == len(spiele), "Gesamtuebersicht enthaelt jedes Spiel einmal")
     pruefe(len(personen) > 0, "Personen aus der Beispielseite gebildet")
 
     person = personen[0]
@@ -221,6 +222,84 @@ def test_ics():
 
 # ------------------------------------------------------------------ Sonstiges
 
+
+def test_rollen():
+    print("\nRollen bestimmen")
+    zwei = {"HSR": [], "(L)SR": ["A, B", "C, D"]}
+    drei = {"HSR": ["H, H"], "(L)SR": ["A, B", "C, D"]}
+    vier = {"HSR": ["H, H", "I, I"], "(L)SR": ["A, B", "C, D"]}
+    pruefe([r for _, r in E.rollen_fuer(zwei)] == ["SR", "SR"],
+           "Zwei-Mann-System: beide Schiedsrichter")
+    pruefe([r for _, r in E.rollen_fuer(drei)] == ["HSR", "LSR", "LSR"],
+           "Drei-Mann-System: Haupt- und Linienrichter")
+    pruefe([r for _, r in E.rollen_fuer(vier)] == ["HSR", "HSR", "LSR", "LSR"],
+           "Vier-Mann-System: zwei Haupt-, zwei Linienrichter")
+    pruefe(all(r in E.ROLLEN for r in ("SR", "HSR", "LSR")), "alle Rollen haben Klartext")
+
+
+def test_aliase():
+    print("\nGleiche Personen zusammenfuehren")
+    E.aliase_laden({"gleiche_personen": [["Melchert, Philip", "Melchert, Philipp"]]})
+    try:
+        pruefe(E.personen_schluessel("Melchert, Philipp") == E.personen_schluessel("Melchert, Philip"),
+               "Philip und Philipp sind eine Person")
+        pruefe(E.personen_schluessel("Melchert, Philipp") == E.personen_schluessel("Philip Melchert"),
+               "auch in anderer Reihenfolge")
+        pruefe(E.personen_schluessel("Heffler, Philipp") != E.personen_schluessel("Melchert, Philip"),
+               "andere Nachnamen bleiben getrennt")
+        gewaehlt = E.waehle_schreibweise({"Melchert, Philipp": 5, "Melchert, Philip": 1},
+                                         bevorzugt={"Melchert, Philip"})
+        pruefe(gewaehlt == "Melchert, Philip",
+               "die konfigurierte Schreibweise gewinnt, auch wenn sie seltener ist")
+    finally:
+        E.aliase_laden({})
+
+
+def test_konflikte():
+    print("\nKonflikte erkennen")
+    from datetime import datetime, timedelta, timezone
+    cfg = E.lade("config.json")
+    t0 = datetime(2026, 9, 20, 18, 0, tzinfo=timezone.utc)
+    dauer = timedelta(minutes=cfg["spieldauer_minuten"])
+    vorlauf = timedelta(minutes=cfg["vorlauf_minuten"])
+
+    def termin(anstoss, halle, paarung):
+        return {"anstoss": anstoss, "treffpunkt": anstoss - vorlauf, "ende": anstoss + dauer,
+                "halle_name": halle, "paarung": paarung}
+
+    # Zwei Spiele hintereinander in derselben Halle: normal, kein Hinweis
+    a, b = termin(t0, "Halle X", "A – B"), termin(t0 + timedelta(hours=2), "Halle X", "C – D")
+    E.pruefe_konflikte([a, b], cfg)
+    pruefe("hinweis" not in a and "hinweis" not in b, "gleiche Halle nacheinander: kein Hinweis")
+
+    # Zwei Spiele in verschiedenen Hallen, das zweite beginnt zu frueh
+    a, b = termin(t0, "Halle X", "A – B"), termin(t0 + timedelta(minutes=90), "Halle Y", "C – D")
+    E.pruefe_konflikte([a, b], cfg)
+    pruefe("hinweis" in a and "90 Min" in a["hinweis"], "andere Halle, zu knapp: Hinweis mit Minuten")
+
+    # Verschiedene Hallen mit genug Abstand
+    a, b = termin(t0, "Halle X", "A – B"), termin(t0 + timedelta(hours=5), "Halle Y", "C – D")
+    E.pruefe_konflikte([a, b], cfg)
+    pruefe("hinweis" not in a, "andere Halle, genug Zeit: kein Hinweis")
+
+    # Gleichzeitig
+    a, b = termin(t0, "Halle X", "A – B"), termin(t0, "Halle Y", "C – D")
+    E.pruefe_konflikte([a, b], cfg)
+    pruefe("Gleichzeitig" in a.get("hinweis", ""), "gleiche Anstosszeit: Hinweis")
+
+
+def test_hash_migration():
+    print("\nAenderungserkennung bei Umbenennung der Rollen")
+    alt = E.inhalt_hash("(L)SR · U13 · A – B", "Halle", "2026-09-20T17:00:00+02:00", "")
+    neu_ohne = E.inhalt_hash("SR · U13 · A – B", "Halle", "2026-09-20T17:00:00+02:00", "")
+    pruefe(alt == neu_ohne, "alte Bezeichnung (L)SR und neue SR ergeben denselben Fingerabdruck")
+    zeit = E.inhalt_hash("SR · U13 · A – B", "Halle", "2026-09-20T18:00:00+02:00", "SR")
+    basis = E.inhalt_hash("SR · U13 · A – B", "Halle", "2026-09-20T17:00:00+02:00", "SR")
+    pruefe(zeit != basis, "eine echte Zeitaenderung wird weiterhin erkannt")
+    rolle = E.inhalt_hash("HSR · U13 · A – B", "Halle", "2026-09-20T17:00:00+02:00", "HSR")
+    pruefe(rolle != basis, "ein echter Rollenwechsel SR -> HSR wird erkannt")
+
+
 def test_saison():
     print("\nSaison bestimmen")
     faelle = [(datetime(2026, 9, 10), "2026/27"), (datetime(2026, 12, 31), "2026/27"),
@@ -244,7 +323,8 @@ def test_aenderungstext():
 
 def main():
     print("Regressionstest esrw_ical")
-    for test in (test_parsen, test_hallen, test_namen, test_faltung,
+    for test in (test_parsen, test_hallen, test_namen, test_rollen, test_aliase,
+                 test_konflikte, test_hash_migration, test_faltung,
                  test_escape, test_ics, test_saison, test_aenderungstext):
         test()
     print("\n" + "-" * 58)

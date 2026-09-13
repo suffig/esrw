@@ -14,11 +14,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260906T093000Z
 DTEND:20260906T130000Z
-SUMMARY:(L)SR · U15 FS · Herforder EV – REV Bremerhaven
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 12:30 Uhr\nTreffpunk
- t: 11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 FS\nHalle: Eishalle Im Kl
- einen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Berger\, 
- Eugen\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U15 FS · Herforder EV – REV Bremerhaven
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
+  11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 FS\nHalle: Eishalle Im Klei
+ nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Berger\, Eu
+ gen\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -35,11 +35,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260906T120000Z
 DTEND:20260906T153000Z
-SUMMARY:(L)SR · U20 FS · Herforder EV – Eisadler Dortmund
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 15:00 Uhr\nTreffpunk
- t: 14:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 FS\nHalle: Eishalle Im Kl
- einen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Berger\, 
- Eugen\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U20 FS · Herforder EV – Eisadler Dortmund
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 15:00 Uhr\nTreffpunkt:
+  14:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 FS\nHalle: Eishalle Im Klei
+ nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Berger\, Eu
+ gen\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -52,6 +52,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:679392f44b4f8527f3ec4b83f3c2fa94aaab36ab@esrw.de
 SEQUENCE:0
+<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
 DTSTART:20260919T131500Z
@@ -61,6 +62,17 @@ DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 16:15 Uhr\nTreffpunk
  t: 15:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eishalle Im Kl
  einen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Zynda\, J
  ayden\n\nQuelle: https://www.esrw.de/einteilungen.html
+=======
+DTSTAMP:20260913T052816Z
+LAST-MODIFIED:20260913T052816Z
+DTSTART:20260919T131500Z
+DTEND:20260919T164500Z
+SUMMARY:SR · U15 LL · Herforder EV – Ratinger Ice Aliens
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:15 Uhr\nTreffpunkt:
+  15:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eishalle Im Klei
+ nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Zynda\, Jay
+ den\n\nQuelle: https://www.esrw.de/einteilungen.html
+>>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -72,8 +84,13 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
+<<<<<<< HEAD
 DESCRIPTION:In einer Stunde an der Halle - (L)SR · U15 LL · Herforder EV 
  – Ratinger Ice Aliens
+=======
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL · Herforder EV –
+  Ratinger Ice Aliens
+>>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 END:VALARM
 END:VEVENT
 END:VCALENDAR

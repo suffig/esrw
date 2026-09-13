@@ -10,6 +10,7 @@ X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
 UID:b152e665448022023151e12cb972e451e5c37f01@esrw.de
 SEQUENCE:0
+<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
 DTSTART:20260918T163000Z
@@ -19,6 +20,17 @@ DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:30 Uhr\nTreffpunk
  t: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: PreZero Rheinl
  andhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann
  : Marks\, Marcel\n\nQuelle: https://www.esrw.de/einteilungen.html
+=======
+DTSTAMP:20260913T052816Z
+LAST-MODIFIED:20260913T052816Z
+DTSTART:20260918T163000Z
+DTEND:20260918T200000Z
+SUMMARY:SR · U13 LL · EV Duisburg 1b – Ratinger Ice Aliens
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: PreZero Rheinlan
+ dhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: 
+ Marks\, Marcel\n\nQuelle: https://www.esrw.de/einteilungen.html
+>>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -31,13 +43,19 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
+<<<<<<< HEAD
 DESCRIPTION:In einer Stunde an der Halle - (L)SR · U13 LL · EV Duisburg 1
  b – Ratinger Ice Aliens
+=======
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL · EV Duisburg 1b 
+ – Ratinger Ice Aliens
+>>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:79a8515def553bb7fd9073fa7a9068c66b7a7530@esrw.de
 SEQUENCE:0
+<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
 DTSTART:20260920T093000Z
@@ -47,6 +65,17 @@ DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 12:30 Uhr\nTreffpunk
  t: 11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle 
  Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Heffler\, Zs
  olt\n\nQuelle: https://www.esrw.de/einteilungen.html
+=======
+DTSTAMP:20260913T052816Z
+LAST-MODIFIED:20260913T052816Z
+DTSTART:20260920T093000Z
+DTEND:20260920T130000Z
+SUMMARY:SR · U13 LL · Dinslakener Kobras – EHC Troisdorf 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
+  11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Di
+ nslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Heffler\, Zsol
+ t\n\nQuelle: https://www.esrw.de/einteilungen.html
+>>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -58,8 +87,13 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
+<<<<<<< HEAD
 DESCRIPTION:In einer Stunde an der Halle - (L)SR · U13 LL · Dinslakener K
  obras – EHC Troisdorf 1b
+=======
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL · Dinslakener Kobr
+ as – EHC Troisdorf 1b
+>>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 END:VALARM
 END:VEVENT
 END:VCALENDAR

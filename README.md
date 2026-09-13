@@ -17,7 +17,14 @@ Pro Einteilung ein Termin mit:
 * **Hallenadresse und Koordinaten** im Ortsfeld – antippbar, Karten navigiert
   direkt hin. Die Koordinaten sind zugleich die Voraussetzung dafür, dass iOS
   eine Abfahrtszeit rechnen kann
-* **Rolle** (HSR / (L)SR), Liga, echter Spielbeginn und das restliche Gespann
+* **Rolle**, Liga, echter Spielbeginn und das restliche Gespann. Im
+  Zwei-Mann-System sind beide gleichberechtigte **Schiedsrichter (SR)**; erst ab
+  drei Offiziellen gibt es **Hauptschiedsrichter (HSR)** und **Linienrichter
+  (LSR)** – so, wie es auf dem Eis auch ist
+* **Konflikt-Hinweis**, wenn zwei eigene Spiele sich nicht vereinbaren lassen:
+  gleiche Anstoßzeit, oder das zweite Spiel in einer anderen Halle beginnt,
+  bevor das erste vorbei sein kann. Zwei Spiele hintereinander in derselben
+  Halle sind normal und bekommen keinen Hinweis
 * **Erinnerung** eine Stunde vor dem Termin, also zwei Stunden vor Spielbeginn.
   Den Abfahrtszeitpunkt rechnet iOS selbst verkehrsabhängig aus, sobald
   „Mit aktueller Wegzeit" eingeschaltet ist – dafür sind die Koordinaten da
@@ -39,6 +46,7 @@ docs/
   index.html            Webseite: Namen suchen, Kalender abonnieren, Statistik
   daten.json            alle Personen und Spiele, für die Webseite
   stand.json            nur der Zeitpunkt des letzten Laufs
+  archiv.json           Saisonliste je Person aus dem Archiv
   manifest.webmanifest  macht die Seite als App installierbar
   sw.js                 Service Worker, damit sie offline funktioniert
   feeds/
@@ -110,7 +118,20 @@ Anmeldung, kein Konto und keinen Server, der irgendetwas darüber weiß.
 
 Über **Wechseln** lässt sich das Profil ändern. Ein geteilter Link wie
 `…/#garbsch-rene` zeigt die Spiele dieser Person an, **ohne** das eigene Profil
-zu überschreiben – erkennbar an „fremdes Profil" in der Kopfzeile.
+zu überschreiben – erkennbar an „fremdes Profil" in der Kopfzeile. Der Knopf
+**Teilen** öffnet dafür das System-Menü (nur auf Geräten, die das können).
+
+Das Gespann ist verlinkt: ein Tipp auf den Kollegen zeigt dessen Spiele. Unter
+der Statistik klappt **„Alle Spiele der Saison"** die vollständige Saisonliste
+aus dem Archiv auf – auch die Spiele, die auf esrw.de längst verschwunden sind.
+
+## Spielplan
+
+Der zweite Reiter zeigt **alle** Spiele nach Tag und Uhrzeit, mit Halle,
+Treffpunkt und Besetzung. Heute und morgen sind hervorgehoben. Das Suchfeld
+filtert nach Verein, Halle, Liga oder Name; vergangene Spiele lassen sich
+zuschalten. Jeder Name führt zum jeweiligen Profil. Der Reiter ist auch direkt
+erreichbar: `…/#plan`.
 
 ## Benachrichtigungen in der App
 
@@ -163,6 +184,7 @@ Alles in [config.json](config.json):
 | `vergangene_tage` | Wie viel Vergangenheit im Kalender bleibt, `0` schaltet es ab |
 | `erinnerungen` | Alarme, relativ zum Terminbeginn (= Treffpunkt). `-PT1H` = eine Stunde, `-PT45M` = 45 Minuten, `-P1D` = ein Tag vorher |
 | `eigene_namen` | Nur für die Meldungen an dich (GitHub-Issue und ntfy) — für die Kalender selbst muss niemand eingetragen werden |
+| `gleiche_personen` | Gruppen von Schreibweisen, die derselbe Mensch sind (siehe „Namen") |
 
 Die Einstellungen gelten für alle Feeds gemeinsam. Wer eine andere Vorlaufzeit
 möchte, verschiebt sich den Termin im eigenen Kalender oder betreibt eine eigene
@@ -176,9 +198,19 @@ genaue Schreibweise. `Keller, Alexander`, `Keller Alexander` und
 esrw.de kommen tatsächlich mehrere Schreibweisen nebeneinander vor. Zusätze in
 Klammern wie `(N)` werden ignoriert.
 
-Was das **nicht** kann: zwei verschiedene Leute mit identischem Namen
-auseinanderhalten, und Tippfehler im Namen selbst zusammenführen. Beides fällt
-in der Namensliste sofort auf.
+Was das **nicht** von allein kann: zwei verschiedene Leute mit identischem
+Namen auseinanderhalten, und echte Buchstabenunterschiede zusammenführen.
+Letzteres geht über `config.json`:
+
+```json
+"gleiche_personen": [
+  ["Melchert, Philip", "Melchert, Philipp"]
+]
+```
+
+Alle Schreibweisen einer Gruppe sind dann eine Person; die **erste** gilt als
+richtig und erscheint auf der Webseite und im Kalendernamen – auch wenn der
+Obmann die andere häufiger benutzt.
 
 Die Suche auf der Webseite ist bei Sonderzeichen nachsichtig — `muller`,
 `mueller` und `müller` finden alle „Müller", `rene` findet „René".

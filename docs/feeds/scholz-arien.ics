@@ -14,11 +14,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260911T163000Z
 DTEND:20260911T200000Z
-SUMMARY:(L)SR · U15 RLB · EV Duisburg – Iserlohner EC 1b
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:30 Uhr\nTreffpunk
- t: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: PreZero Rhein
- landhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespan
- n: Marks\, Marcel\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U15 RLB · EV Duisburg – Iserlohner EC 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: PreZero Rheinla
+ ndhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann:
+  Marks\, Marcel\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

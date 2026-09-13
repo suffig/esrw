@@ -14,11 +14,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260912T120000Z
 DTEND:20260912T153000Z
-SUMMARY:(L)SR · DA FS · NEV – BW/NRW
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 15:00 Uhr\nTreffpunk
- t: 14:00 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissportzentrum
-  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Meißner\,
-  Nils\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · DA FS · NEV – BW/NRW
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 15:00 Uhr\nTreffpunkt:
+  14:00 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissportzentrum W
+ estfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Meißner\, N
+ ils\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -35,11 +35,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260912T134500Z
 DTEND:20260912T171500Z
-SUMMARY:(L)SR · DA FS · Hessen – Sachsen/Berlin
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 16:45 Uhr\nTreffpunk
- t: 15:45 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissportzentrum
-  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Meißner\,
-  Nils\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · DA FS · Hessen – Sachsen/Berlin
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:45 Uhr\nTreffpunkt:
+  15:45 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissportzentrum W
+ estfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Meißner\, N
+ ils\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -56,11 +56,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260913T070000Z
 DTEND:20260913T103000Z
-SUMMARY:(L)SR · U11 LL Gelb · EHC Essen Ruhr – Essen
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 10:00 Uhr\nTreffpunk
- t: 09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Gelb\nHalle: Eissporth
- alle Essen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Meißner\,
-  Nils\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U11 LL Gelb · EHC Essen Ruhr – Essen
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Gelb\nHalle: Eissporthal
+ le Essen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Meißner\, N
+ ils\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -72,8 +72,35 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · U11 LL Gelb · EHC Esse
- n Ruhr – Essen
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Gelb · EHC Essen R
+ uhr – Essen
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:9223233b256d46ead8aa97c04b18ac4658ba3575@esrw.de
+SEQUENCE:0
+DTSTAMP:20260913T052816Z
+LAST-MODIFIED:20260913T052816Z
+DTSTART:20260920T133000Z
+DTEND:20260920T170000Z
+SUMMARY:SR · U13 RLB · Herner EV – Düsseldorfer EG 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
+  15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Gysenberghalle 
+ Herne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Meißner\, Nils\n
+ \nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Gysenberghalle Herne\, Am Revierpark 22\, 44627 Herne
+GEO:51.532602;7.254372
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
+ evierpark 22, 44627 Herne";X-APPLE-RADIUS=100;X-TITLE="Gysenberghalle Hern
+ e":geo:51.532602,7.254372
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB · Herner EV – D
+ üsseldorfer EG 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

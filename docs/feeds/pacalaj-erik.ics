@@ -14,11 +14,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260912T163000Z
 DTEND:20260912T200000Z
-SUMMARY:(L)SR · U13 FS · Krefelder EV – Löwen Frankfurt
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:30 Uhr\nTreffpunk
- t: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 FS\nHalle: Rheinlandhalle
-  Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Heffler\,
-  Zsolt\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U13 FS · Krefelder EV – Löwen Frankfurt
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 FS\nHalle: Rheinlandhalle K
+ refeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Heffler\, Z
+ solt\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -35,11 +35,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260913T093000Z
 DTEND:20260913T130000Z
-SUMMARY:(L)SR · U17 FS · Dinslakener Kobras – Düsseldorfer EG U15
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 12:30 Uhr\nTreffpunk
- t: 11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 FS\nHalle: Eissporthalle 
- Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Vorgeitz\, B
- enny\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U17 FS · Dinslakener Kobras – Düsseldorfer EG U15
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
+  11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 FS\nHalle: Eissporthalle Di
+ nslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Vorgeitz\, Ben
+ ny\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -51,8 +51,64 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 FS · Dinslakener K
- obras – Düsseldorfer EG U15
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 FS · Dinslakener Kobr
+ as – Düsseldorfer EG U15
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:b6ed5b27362c979dc7fd9a35bcdcf3537bc7f2a4@esrw.de
+SEQUENCE:0
+DTSTAMP:20260913T052816Z
+LAST-MODIFIED:20260913T052816Z
+DTSTART:20260919T103000Z
+DTEND:20260919T140000Z
+SUMMARY:SR · U20 FS · Eisadler Dortmund – EHC Troisdorf
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
+  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 FS\nHalle: Eissportzentrum 
+ Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Heffler\, Z
+ solt\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U20 FS · Eisadler Dortmun
+ d – EHC Troisdorf
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:b0cfda6ebaf3abdbbfedfc0baf5402c7b3f77fb9@esrw.de
+SEQUENCE:0
+DTSTAMP:20260913T052816Z
+LAST-MODIFIED:20260913T052816Z
+DTSTART:20260920T070000Z
+DTEND:20260920T103000Z
+SUMMARY:LSR · DNL III · EV Duisburg – SCC Adler Berlin
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero Rheinla
+ ndhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann:
+  Krawinkel\, Markus (HSR) / Quint\, Sascha (LSR)\n\nQuelle: https://www.es
+ rw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · DNL III · EV Duisburg 
+ – SCC Adler Berlin
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

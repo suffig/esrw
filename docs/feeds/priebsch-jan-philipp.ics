@@ -14,11 +14,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260913T110000Z
 DTEND:20260913T143000Z
-SUMMARY:(L)SR · U17 I · Düsseldorfer EG – Iserlohner EC
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 14:00 Uhr\nTreffpunk
- t: 13:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eishalle Brehms
- traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Stocker\, 
- Quirin\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U17 I · Düsseldorfer EG – Iserlohner EC
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:00 Uhr\nTreffpunkt:
+  13:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eishalle Brehmstr
+ aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Stocker\, Qu
+ irin\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -30,8 +30,36 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 I · Düsseldorfer 
- EG – Iserlohner EC
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I · Düsseldorfer EG 
+ – Iserlohner EC
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:a0e9ed9e8e8182b80d9ebe66b10c3f2bb8725573@esrw.de
+SEQUENCE:0
+DTSTAMP:20260913T052816Z
+LAST-MODIFIED:20260913T052816Z
+DTSTART:20260920T160000Z
+DTEND:20260920T193000Z
+SUMMARY:HSR · RL FS · Dinslakener Kobras – UNIS Flyers Heerenveen
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 19:00 Uhr\nTreff
+ punkt: 18:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthal
+ le Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Quint\, S
+ ascha (LSR) / Stockenschneider\, Lars (LSR)\n\nQuelle: https://www.esrw.de
+ /einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
+GEO:51.574578;6.735361
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
+ m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
+ inslaken":geo:51.574578,6.735361
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · RL FS · Dinslakener Kobr
+ as – UNIS Flyers Heerenveen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

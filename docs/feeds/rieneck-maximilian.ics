@@ -14,11 +14,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260906T114500Z
 DTEND:20260906T151500Z
-SUMMARY:(L)SR · U15 RLB · Kölner Junghaie 1b – EV Duisburg
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 14:45 Uhr\nTreffpunk
- t: 13:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Kölnarena 2\
- nAdresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Moritz\, Alexand
- er\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U15 RLB · Kölner Junghaie 1b – EV Duisburg
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:45 Uhr\nTreffpunkt:
+  13:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Kölnarena 2\nA
+ dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Moritz\, Alexander
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -35,11 +35,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260906T143000Z
 DTEND:20260906T180000Z
-SUMMARY:(L)SR · U13 RLA · Kölner Junghaie – Krefelder EV
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 17:30 Uhr\nTreffpunk
- t: 16:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLA\nHalle: Kölnarena 2\
- nAdresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Moritz\, Alexand
- er\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U13 RLA · Kölner Junghaie – Krefelder EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
+  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLA\nHalle: Kölnarena 2\nA
+ dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Moritz\, Alexander
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -56,11 +56,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260913T150000Z
 DTEND:20260913T183000Z
-SUMMARY:(L)SR · U17 FS · EHC Troisdorf – Eisadler Dortmund
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 18:00 Uhr\nTreffpunk
- t: 17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 FS\nHalle: ICEDOME Troisd
- orf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Braun\, 
- Benjamin\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U17 FS · EHC Troisdorf – Eisadler Dortmund
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
+  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 FS\nHalle: ICEDOME Troisdor
+ f\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Braun\, Be
+ njamin\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -72,8 +72,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 FS · EHC Troisdorf
-  – Eisadler Dortmund
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 FS · EHC Troisdorf 
+ – Eisadler Dortmund
 END:VALARM
 END:VEVENT
 END:VCALENDAR

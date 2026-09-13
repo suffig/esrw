@@ -14,11 +14,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260906T153000Z
 DTEND:20260906T190000Z
-SUMMARY:(L)SR · U15 LL FS · Lippe Hockey Hamm – TuS Wiehl
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 18:30 Uhr\nTreffpunk
- t: 17:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL FS\nHalle: HELINET Eis
- sportarena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Z
- ynda\, Jayden\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U15 LL FS · Lippe Hockey Hamm – TuS Wiehl
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
+  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL FS\nHalle: HELINET Eissp
+ ortarena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Zyn
+ da\, Jayden\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -31,6 +31,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:a4cf46cd5ad5acf94dcc54a77504450217e24700@esrw.de
 SEQUENCE:0
+<<<<<<< HEAD
 DTSTAMP:20260911T055630Z
 LAST-MODIFIED:20260911T055630Z
 DTSTART:20260913T061500Z
@@ -67,6 +68,17 @@ DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 11:00 Uhr\nTreffpunk
  t: 10:00 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissportzentrum
   Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Melchert\,
   Philipp\n\nQuelle: https://www.esrw.de/einteilungen.html
+=======
+DTSTAMP:20260913T052816Z
+LAST-MODIFIED:20260913T052816Z
+DTSTART:20260913T061500Z
+DTEND:20260913T094500Z
+SUMMARY:SR · DA FS · NEV/BW – Sachsen/Berlin
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:15 Uhr\nTreffpunkt:
+  08:15 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissportzentrum W
+ estfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Melchert\, P
+ hilipp\n\nQuelle: https://www.esrw.de/einteilungen.html
+>>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -78,7 +90,34 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · DA FS · NRW – Hessen
+DESCRIPTION:In einer Stunde an der Halle - SR · DA FS · NEV/BW – Sachse
+ n/Berlin
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:79a36d739d20985d78f40c2a0c74aae7b71e4c20@esrw.de
+SEQUENCE:0
+DTSTAMP:20260909T170129Z
+LAST-MODIFIED:20260909T170129Z
+DTSTART:20260913T080000Z
+DTEND:20260913T113000Z
+SUMMARY:SR · DA FS · NRW – Hessen
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:00 Uhr\nTreffpunkt:
+  10:00 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissportzentrum W
+ estfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Melchert\, P
+ hilipp\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · DA FS · NRW – Hessen
 END:VALARM
 END:VEVENT
 END:VCALENDAR

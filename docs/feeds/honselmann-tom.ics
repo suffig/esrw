@@ -10,6 +10,7 @@ X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
 UID:c15beb415e3e0b2b6decbe60c2df905161c26662@esrw.de
 SEQUENCE:0
+<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
 DTSTART:20260919T073000Z
@@ -19,6 +20,17 @@ DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 10:30 Uhr\nTreffpunk
  t: 09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: HELINET Eisspo
  rtarena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Klem
  m\, Julian\n\nQuelle: https://www.esrw.de/einteilungen.html
+=======
+DTSTAMP:20260913T052816Z
+LAST-MODIFIED:20260913T052816Z
+DTSTART:20260919T073000Z
+DTEND:20260919T110000Z
+SUMMARY:SR · U15 LL · Lippe Hockey Hamm – SpG Neusser EV / GSC Moers
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
+  09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: HELINET Eissport
+ arena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Klemm\
+ , Julian\n\nQuelle: https://www.esrw.de/einteilungen.html
+>>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -30,8 +42,13 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
+<<<<<<< HEAD
 DESCRIPTION:In einer Stunde an der Halle - (L)SR · U15 LL · Lippe Hockey 
  Hamm – SpG Neusser EV / GSC Moers
+=======
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL · Lippe Hockey Ham
+ m – SpG Neusser EV / GSC Moers
+>>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 END:VALARM
 END:VEVENT
 END:VCALENDAR

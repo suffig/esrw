@@ -20,5 +20,10 @@
 
   "eigene_namen": [
     "Melchert, Philip"
+  ],
+
+  "_gleiche_personen": "Schreibweisen, die derselbe Mensch sind - etwa weil der Obmann den Vornamen mal so, mal so schreibt. Die erste Schreibweise jeder Gruppe gilt als die richtige und erscheint auf der Webseite. Gross-/Kleinschreibung, Komma und Reihenfolge sind ohnehin egal, hier geht es um echte Buchstabenunterschiede.",
+  "gleiche_personen": [
+    ["Melchert, Philip", "Melchert, Philipp"]
   ]
 }

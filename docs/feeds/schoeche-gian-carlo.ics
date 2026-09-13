@@ -14,11 +14,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260906T060000Z
 DTEND:20260906T093000Z
-SUMMARY:(L)SR · U13 RLA · Iserlohner EC – Düsseldorfer EG
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 09:00 Uhr\nTreffpunk
- t: 08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLA\nHalle: Eissporthalle
-  am Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Garbs
- ch\, René\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U13 RLA · Iserlohner EC – Düsseldorfer EG
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
+  08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLA\nHalle: Eissporthalle a
+ m Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Garbsch
+ \, René\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -35,11 +35,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260906T090000Z
 DTEND:20260906T123000Z
-SUMMARY:(L)SR · U17 I · Iserlohner EC – Krefelder EV
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 12:00 Uhr\nTreffpunk
- t: 11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eissporthalle a
- m Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Garbsch
- \, René\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U17 I · Iserlohner EC – Krefelder EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
+  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eissporthalle am 
+ Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Garbsch\,
+  René\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -56,11 +56,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260911T171500Z
 DTEND:20260911T204500Z
-SUMMARY:(L)SR · U20 FS · EHC Troisdorf – Eisadler Dortmund
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 20:15 Uhr\nTreffpunk
- t: 19:15 Uhr (60 Min vor Spielbeginn)\nLiga: U20 FS\nHalle: ICEDOME Troisd
- orf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Kremer\,
-  Igor\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U20 FS · EHC Troisdorf – Eisadler Dortmund
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
+  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: U20 FS\nHalle: ICEDOME Troisdor
+ f\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Kremer\, I
+ gor\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -77,11 +77,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260912T133000Z
 DTEND:20260912T170000Z
-SUMMARY:(L)SR · U17 I · Kölner Junghaie – ES Weißwasser
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 16:30 Uhr\nTreffpunk
- t: 15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Kölnarena 2\nA
- dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Giesen\, Tom\n\nQu
- elle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U17 I · Kölner Junghaie – ES Weißwasser
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
+  15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Kölnarena 2\nAdr
+ esse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Giesen\, Tom\n\nQuel
+ le: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -98,12 +98,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260912T161500Z
 DTEND:20260912T194500Z
-SUMMARY:(L)SR · Frauen BZL · KEC "Die Haie" 1c – Herforder EV Kölnaren
- a 2
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:15 Uhr\nTreffpunk
- t: 18:15 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Kölnarena
-  2\nAdresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Giesen\, Tom\
- n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · Frauen BZL · KEC "Die Haie" 1c – Herforder EV Kölnarena 2
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:15 Uhr\nTreffpunkt:
+  18:15 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Kölnarena 2
+ \nAdresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Giesen\, Tom\n\
+ nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -120,11 +119,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260913T070000Z
 DTEND:20260913T103000Z
-SUMMARY:(L)SR · U17 II · EV Duisburg – SCC Adler Berlin
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 10:00 Uhr\nTreffpunk
- t: 09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 II\nHalle: PreZero Rheinl
- andhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann
- : Strube\, Julia\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U17 II · EV Duisburg – SCC Adler Berlin
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 II\nHalle: PreZero Rheinlan
+ dhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: 
+ Strube\, Julia\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -137,11 +136,41 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 II · EV Duisburg 
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 II · EV Duisburg – 
+ SCC Adler Berlin
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:b2cf7d5b0df78484e83631554a3985f0153d6c11@esrw.de
+SEQUENCE:0
+DTSTAMP:20260913T052816Z
+LAST-MODIFIED:20260913T052816Z
+DTSTART:20260919T130000Z
+DTEND:20260919T163000Z
+SUMMARY:LSR · DNL III · EV Duisburg – SCC Adler Berlin
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 16:00 Uhr\nTreffpunkt:
+  15:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero Rheinla
+ ndhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann:
+  Meißner\, Nils (HSR) / Hellingrath\, Luca (LSR)\n\nQuelle: https://www.e
+ srw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · DNL III · EV Duisburg 
  – SCC Adler Berlin
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+<<<<<<< HEAD
 UID:b2cf7d5b0df78484e83631554a3985f0153d6c11@esrw.de
 SEQUENCE:0
 DTSTAMP:20260911T150047Z
@@ -180,6 +209,44 @@ DTEND:20260920T151500Z
 SUMMARY:(L)SR · U17 I · Kölner Junghaie – Düsseldorfer EG
 DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 14:45 Uhr\nTreffpunk
  t: 13:45 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Kölnarena 2\nA
+=======
+UID:24bc70868feb39f5b030e5051db7bb7fc6b60c4c@esrw.de
+SEQUENCE:0
+DTSTAMP:20260913T052816Z
+LAST-MODIFIED:20260913T052816Z
+DTSTART:20260920T114500Z
+DTEND:20260920T151500Z
+SUMMARY:SR · U17 I · Kölner Junghaie – Düsseldorfer EG
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:45 Uhr\nTreffpunkt:
+  13:45 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Kölnarena 2\nAdr
+ esse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Starke\, Matthias\n\
+ nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I · Kölner Junghaie 
+ – Düsseldorfer EG
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:5f453ac78ac46bf6942c23d01ce1f89b826406a6@esrw.de
+SEQUENCE:0
+DTSTAMP:20260913T052816Z
+LAST-MODIFIED:20260913T052816Z
+DTSTART:20260920T143000Z
+DTEND:20260920T180000Z
+SUMMARY:SR · U13 RLB · Kölner Junghaie 1b – EV Duisburg
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
+  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Kölnarena 2\nA
+>>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
  dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Starke\, Matthias\
  n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
@@ -193,6 +260,7 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
+<<<<<<< HEAD
 DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 I · Kölner Jungha
  ie – Düsseldorfer EG
 END:VALARM
@@ -222,6 +290,10 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - (L)SR · U13 RLB · Kölner Jung
  haie 1b – EV Duisburg
+=======
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB · Kölner Junghai
+ e 1b – EV Duisburg
+>>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 END:VALARM
 END:VEVENT
 END:VCALENDAR

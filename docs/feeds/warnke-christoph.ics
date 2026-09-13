@@ -14,11 +14,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260911T170000Z
 DTEND:20260911T203000Z
-SUMMARY:(L)SR · BL FS · Herner EV 1b – EHC Essen Ruhr
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 20:00 Uhr\nTreffpunk
- t: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: BL FS\nHalle: Emscher-Lippe-H
- alle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\nGesp
- ann: Müller\, Lars\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · BL FS · Herner EV 1b – EHC Essen Ruhr
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: BL FS\nHalle: Emscher-Lippe-Hal
+ le Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\nGespan
+ n: Müller\, Lars\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -36,11 +36,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260913T100000Z
 DTEND:20260913T133000Z
-SUMMARY:(L)SR · DA FS · Spiel um Platz 3 -
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 13:00 Uhr\nTreffpunk
- t: 12:00 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissportzentrum
-  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Skalecki\,
-  Martin\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · DA FS · Spiel um Platz 3 -
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:00 Uhr\nTreffpunkt:
+  12:00 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissportzentrum W
+ estfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Skalecki\, M
+ artin\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -52,8 +52,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · DA FS · Spiel um Platz
-  3 -
+DESCRIPTION:In einer Stunde an der Halle - SR · DA FS · Spiel um Platz 3 
+ -
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -63,11 +63,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260913T120000Z
 DTEND:20260913T153000Z
-SUMMARY:(L)SR · DA FS · Finale -
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 15:00 Uhr\nTreffpunk
- t: 14:00 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissportzentrum
-  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Skalecki\,
-  Martin\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · DA FS · Finale -
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 15:00 Uhr\nTreffpunkt:
+  14:00 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissportzentrum W
+ estfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Skalecki\, M
+ artin\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -79,7 +79,7 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · DA FS · Finale -
+DESCRIPTION:In einer Stunde an der Halle - SR · DA FS · Finale -
 END:VALARM
 END:VEVENT
 END:VCALENDAR

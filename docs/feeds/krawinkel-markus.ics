@@ -14,11 +14,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260912T163000Z
 DTEND:20260912T200000Z
-SUMMARY:(L)SR · LL FS · EHC Troisdorf – TuS Wiehl
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:30 Uhr\nTreffpunk
- t: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga: LL FS\nHalle: ICEDOME Troisdo
- rf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Engler\, 
- Gerhard\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · LL FS · EHC Troisdorf – TuS Wiehl
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: LL FS\nHalle: ICEDOME Troisdorf
+ \nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Engler\, Ge
+ rhard\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -35,11 +35,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260913T050000Z
 DTEND:20260913T083000Z
-SUMMARY:(L)SR · U9 RL · Düsseldorfer EG – Brehmstraße
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 08:00 Uhr\nTreffpunk
- t: 07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: Eishalle Brehms
- traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Schlüter\
- , Thomas\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U9 RL · Düsseldorfer EG – Brehmstraße
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: Eishalle Brehmstr
+ aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Schlüter\, 
+ Thomas\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -51,8 +51,37 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · U9 RL · Düsseldorfer 
- EG – Brehmstraße
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 RL · Düsseldorfer EG 
+ – Brehmstraße
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:15fa6eb352fbd496dcad72d8e2e9bd3c350ca68d@esrw.de
+SEQUENCE:0
+DTSTAMP:20260913T052816Z
+LAST-MODIFIED:20260913T052816Z
+DTSTART:20260920T070000Z
+DTEND:20260920T103000Z
+SUMMARY:HSR · DNL III · EV Duisburg – SCC Adler Berlin
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 10:00 Uhr\nTreff
+ punkt: 09:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero R
+ heinlandhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGe
+ spann: Quint\, Sascha (LSR) / Pacalaj\, Erik (LSR)\n\nQuelle: https://www.
+ esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · DNL III · EV Duisburg 
+ – SCC Adler Berlin
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

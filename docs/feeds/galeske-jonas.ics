@@ -10,6 +10,7 @@ X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
 UID:11f4b41e5991e0776d589b8ba7a9d21a222a92e3@esrw.de
 SEQUENCE:0
+<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
 DTSTART:20260919T091500Z
@@ -19,6 +20,17 @@ DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 12:15 Uhr\nTreffpunk
  t: 11:15 Uhr (60 Min vor Spielbeginn)\nLiga: U11 RL\nHalle: Eissporthalle 
  am Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Malik\
  , Orlando\n\nQuelle: https://www.esrw.de/einteilungen.html
+=======
+DTSTAMP:20260913T052816Z
+LAST-MODIFIED:20260913T052816Z
+DTSTART:20260919T091500Z
+DTEND:20260919T124500Z
+SUMMARY:SR · U11 RL · Iserlohner EC -
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:15 Uhr\nTreffpunkt:
+  11:15 Uhr (60 Min vor Spielbeginn)\nLiga: U11 RL\nHalle: Eissporthalle am
+  Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Malik\, 
+ Orlando\n\nQuelle: https://www.esrw.de/einteilungen.html
+>>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -30,13 +42,18 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
+<<<<<<< HEAD
 DESCRIPTION:In einer Stunde an der Halle - (L)SR · U11 RL · Iserlohner EC
   -
+=======
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 RL · Iserlohner EC -
+>>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:680ff82cc446bb4e07ddff83ea89957bba24dc86@esrw.de
 SEQUENCE:0
+<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
 DTSTART:20260920T103000Z
@@ -46,6 +63,17 @@ DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 13:30 Uhr\nTreffpunk
  t: 12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 FS\nHalle: Eissportzentru
  m Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Marks\, M
  arcel\n\nQuelle: https://www.esrw.de/einteilungen.html
+=======
+DTSTAMP:20260913T052816Z
+LAST-MODIFIED:20260913T052816Z
+DTSTART:20260920T103000Z
+DTEND:20260920T140000Z
+SUMMARY:SR · U17 FS · Eisadler Dortmund – EHC Troisdorf
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
+  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 FS\nHalle: Eissportzentrum 
+ Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Marks\, Mar
+ cel\n\nQuelle: https://www.esrw.de/einteilungen.html
+>>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -57,8 +85,13 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
+<<<<<<< HEAD
 DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 FS · Eisadler Dort
  mund – EHC Troisdorf
+=======
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 FS · Eisadler Dortmun
+ d – EHC Troisdorf
+>>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 END:VALARM
 END:VEVENT
 END:VCALENDAR

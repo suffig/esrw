@@ -137,6 +137,37 @@
              font-style:normal; margin-top:3px; }
   .reihe em { font-style:normal; color:var(--dim); font-size:.85rem; }
 
+  .tabs { display:flex; gap:6px; background:var(--karte); border:1px solid var(--linie);
+          border-radius:12px; padding:4px; margin-bottom:16px; }
+  .tabs button { flex:1; padding:9px 10px; font:inherit; font-weight:600; cursor:pointer;
+                 background:none; border:0; border-radius:9px; color:var(--dim); }
+  .tabs button.aktiv { background:var(--akzent); color:var(--akzent-text); }
+
+  .schalter { display:block; color:var(--dim); font-size:.87rem; margin:10px 2px 0; }
+  .schalter input { vertical-align:-2px; margin-right:6px; }
+  .tag { font-size:.8rem; text-transform:uppercase; letter-spacing:.06em;
+         color:var(--dim); margin:22px 0 8px; font-weight:650;
+         display:flex; justify-content:space-between; }
+  .tag.heute { color:var(--akzent); }
+  .zeit { font-weight:640; min-width:5.2em; }
+  .liga { font-size:.72rem; font-weight:650; color:var(--dim); border:1px solid var(--linie);
+          padding:1px 7px; border-radius:99px; white-space:nowrap; }
+  .chips { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+  .chip { display:inline-flex; align-items:center; gap:5px; font-size:.85rem;
+          background:var(--bg); border:1px solid var(--linie); border-radius:99px;
+          padding:3px 9px 3px 10px; color:var(--text); text-decoration:none; }
+  a.chip:hover { border-color:var(--akzent); }
+  .chip b { font-size:.68rem; font-weight:700; background:var(--akzent);
+            color:var(--akzent-text); padding:1px 6px; border-radius:99px; }
+  .chip.ich { border-color:var(--akzent); }
+  .system { font-size:.72rem; color:var(--dim); }
+  #saison { margin-top:14px; }
+  .saisonzeile { display:grid; grid-template-columns:auto auto 1fr; gap:10px;
+                 font-size:.88rem; padding:7px 0; border-top:1px solid var(--linie); }
+  .saisonzeile:first-child { border-top:0; }
+  .saisonzeile .liga { align-self:center; }
+  .saisonzeile small { display:block; color:var(--dim); }
+
   footer { margin-top:34px; padding-top:16px; border-top:1px solid var(--linie);
            color:var(--dim); font-size:.83rem; }
   footer a { color:var(--akzent); }
@@ -149,6 +180,20 @@
     <h1 id="titel">Einteilungen im Kalender</h1>
     <p class="stand" id="stand">wird geladen …</p>
   </header>
+
+  <nav class="tabs" id="tabs">
+    <button type="button" id="tab-meine" class="aktiv">Meine Spiele</button>
+    <button type="button" id="tab-plan">Spielplan</button>
+  </nav>
+
+  <!-- Spielplan: alle Spiele nach Tag und Uhrzeit -->
+  <section id="plan" class="versteckt">
+    <label for="plan-filter" class="versteckt">Spielplan filtern</label>
+    <input type="search" id="plan-filter" placeholder="Verein, Halle, Liga oder Name …"
+           autocomplete="off" autocorrect="off" spellcheck="false">
+    <label class="schalter"><input type="checkbox" id="plan-vergangene"> auch vergangene Spiele</label>
+    <div id="plan-liste"></div>
+  </section>
 
   <!-- Namensauswahl -->
   <section id="auswahl">
@@ -174,6 +219,7 @@
     <div class="zweit">
       <button id="kopieren">Link kopieren</button>
       <button id="laden">Einmalig laden</button>
+      <button id="teilen" class="versteckt">Teilen</button>
     </div>
 
     <div class="melde versteckt" id="melde">
@@ -209,6 +255,10 @@
 
     <div id="spiele"></div>
     <div id="statistik"></div>
+    <details id="saison" class="versteckt">
+      <summary id="saison-titel">Alle Spiele der Saison</summary>
+      <div id="saison-liste"></div>
+    </details>
   </section>
 
   <footer>
@@ -495,9 +545,18 @@
 
     if (s.gespann && s.gespann.length) {
       var g = document.createElement("div");
-      g.className = "meta";
-      g.textContent = "Gespann: " + s.gespann.join(" / ");
+      g.className = "chips";
+      s.gespann.forEach(function (k) {
+        g.appendChild(chip(k, s.system >= 3));
+      });
       d.appendChild(g);
+    }
+
+    if (s.hinweis) {
+      var hw = document.createElement("div");
+      hw.className = "achtung";
+      hw.textContent = "⚠ " + s.hinweis;
+      d.appendChild(hw);
     }
 
     if (s.aenderung) {
@@ -507,6 +566,161 @@
       d.appendChild(ae);
     }
     return d;
+  }
+
+  // Namens-Chip mit Rolle. Im Zwei-Mann-System sind beide Schiedsrichter,
+  // da lohnt keine Rollenangabe; ab drei Offiziellen steht HSR / LSR dabei.
+  function chip(person, mitRolle) {
+    var el_ = document.createElement(person.slug ? "a" : "span");
+    el_.className = "chip" + (profil && person.slug === profil.slug ? " ich" : "");
+    if (person.slug) el_.href = "#" + person.slug;
+    el_.appendChild(document.createTextNode(person.name));
+    if (mitRolle && person.rolle) {
+      var b = document.createElement("b");
+      b.textContent = person.rolle;
+      b.title = (daten.rollen && daten.rollen[person.rolle]) || person.rolle;
+      el_.appendChild(b);
+    }
+    return el_;
+  }
+
+  // ----------------------------------------------------------- Spielplan
+
+  function tagTitel(d) {
+    var heute = new Date(); heute.setHours(0, 0, 0, 0);
+    var tag = new Date(d); tag.setHours(0, 0, 0, 0);
+    var diff = Math.round((tag - heute) / 86400000);
+    var datum = wochentag[d.getDay()] + ". " +
+      d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" });
+    if (diff === 0) return ["Heute", datum, true];
+    if (diff === 1) return ["Morgen", datum, false];
+    if (diff === -1) return ["Gestern", datum, false];
+    return [datum, "", false];
+  }
+
+  function zeigePlan() {
+    var ziel = el("plan-liste");
+    ziel.innerHTML = "";
+    var f = ohneZeichen(el("plan-filter").value);
+    var mitVergangenen = el("plan-vergangene").checked;
+    var letzterTag = null, treffer = 0;
+
+    daten.spiele.forEach(function (s) {
+      if (s.vergangen && !mitVergangenen) return;
+      if (f) {
+        var text = suchtextVon([s.paarung, s.liga, s.halle]
+          .concat(s.besetzung.map(function (b) { return b.name; })).join(" "));
+        if (text.indexOf(f) === -1) return;
+      }
+      treffer++;
+      var beginn = new Date(s.beginn);
+      var tagKey = beginn.toDateString();
+      if (tagKey !== letzterTag) {
+        letzterTag = tagKey;
+        var t = tagTitel(beginn);
+        var h = document.createElement("div");
+        h.className = "tag" + (t[2] ? " heute" : "");
+        var links = document.createElement("span");
+        links.textContent = t[0];
+        var rechts = document.createElement("span");
+        rechts.textContent = t[1];
+        h.appendChild(links); h.appendChild(rechts);
+        ziel.appendChild(h);
+      }
+
+      var d = document.createElement("div");
+      d.className = "spiel" + (s.vergangen ? " war" : "");
+      var kopf = document.createElement("div");
+      kopf.className = "kopf";
+      var zeit = document.createElement("span");
+      zeit.className = "zeit";
+      zeit.textContent = uhr(beginn) + " Uhr";
+      kopf.appendChild(zeit);
+      if (s.liga) {
+        var liga = document.createElement("span");
+        liga.className = "liga";
+        liga.textContent = s.liga;
+        kopf.appendChild(liga);
+      }
+      d.appendChild(kopf);
+
+      var paarung = document.createElement("div");
+      paarung.className = "paarung";
+      paarung.textContent = s.paarung;
+      d.appendChild(paarung);
+
+      var meta = document.createElement("div");
+      meta.className = "meta";
+      meta.textContent = (s.halle || "Halle unbekannt") +
+        " · Treffpunkt " + uhr(new Date(s.treffpunkt)) + " Uhr" +
+        (s.system >= 3 ? " · " + s.system + "er-System" : "");
+      d.appendChild(meta);
+
+      if (s.besetzung.length) {
+        var chips = document.createElement("div");
+        chips.className = "chips";
+        s.besetzung.forEach(function (b) { chips.appendChild(chip(b, s.system >= 3)); });
+        d.appendChild(chips);
+      }
+      ziel.appendChild(d);
+    });
+
+    if (!treffer) {
+      var leer = document.createElement("p");
+      leer.className = "leer";
+      leer.textContent = f ? "Nichts gefunden." : "Keine kommenden Spiele.";
+      ziel.appendChild(leer);
+    }
+  }
+
+  // ---------------------------------------------------------- Saisonliste
+
+  var archivDaten = null;
+
+  function zeigeSaison(p) {
+    var box = el("saison"), liste = el("saison-liste");
+    var s = p.statistik;
+    if (!s || !s.saison) { box.classList.add("versteckt"); return; }
+    box.classList.remove("versteckt");
+    box.open = false;
+    el("saison-titel").textContent = "Alle " + s.saison + " Spiele der Saison " + (daten.saison || "");
+    liste.innerHTML = "";
+
+    function rendern(eintraege) {
+      liste.innerHTML = "";
+      eintraege.forEach(function (e) {
+        var d = new Date(e.beginn);
+        var zeile = document.createElement("div");
+        zeile.className = "saisonzeile";
+        var datum = document.createElement("span");
+        datum.textContent = wochentag[d.getDay()] + ". " +
+          d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" });
+        var klein = document.createElement("small");
+        klein.textContent = uhr(d) + " Uhr";
+        datum.appendChild(klein);
+        var rolle = document.createElement("span");
+        rolle.className = "liga";
+        rolle.textContent = e.rolle;
+        var text = document.createElement("span");
+        text.textContent = e.paarung;
+        var halle = document.createElement("small");
+        halle.textContent = (e.liga ? e.liga + " · " : "") + (e.halle || "");
+        text.appendChild(halle);
+        zeile.appendChild(datum); zeile.appendChild(rolle); zeile.appendChild(text);
+        liste.appendChild(zeile);
+      });
+    }
+
+    box.addEventListener("toggle", function laden() {
+      if (!box.open) return;
+      box.removeEventListener("toggle", laden);
+      (archivDaten ? Promise.resolve(archivDaten) : hole("archiv.json"))
+        .then(function (a) {
+          archivDaten = a;
+          rendern((a.personen && a.personen[p.slug]) || []);
+        })
+        .catch(function () { liste.textContent = "Archiv konnte nicht geladen werden."; });
+    });
   }
 
   // ----------------------------------------------------------- Statistik
@@ -577,8 +791,7 @@
 
   function zeigePerson(p) {
     aktuell = p;
-    el("auswahl").classList.add("versteckt");
-    el("detail").classList.remove("versteckt");
+    ansicht("detail");
     el("person").textContent = p.name;
     el("profil-hinweis").textContent =
       (profil && profil.slug === p.slug) ? "dein Profil" : "fremdes Profil";
@@ -610,15 +823,24 @@
     }
 
     zeigeStatistik(p);
+    zeigeSaison(p);
     zeigeMeldeKarte();
     if (profil && profil.slug === p.slug) pruefeNeue(p, false);
     window.scrollTo(0, 0);
   }
 
+  function ansicht(name) {
+    // Genau eine der drei Ansichten ist sichtbar; die Tabs folgen.
+    el("auswahl").classList.toggle("versteckt", name !== "auswahl");
+    el("detail").classList.toggle("versteckt", name !== "detail");
+    el("plan").classList.toggle("versteckt", name !== "plan");
+    el("tab-meine").classList.toggle("aktiv", name !== "plan");
+    el("tab-plan").classList.toggle("aktiv", name === "plan");
+  }
+
   function zeigeAuswahl(wechsel) {
     aktuell = null;
-    el("detail").classList.add("versteckt");
-    el("auswahl").classList.remove("versteckt");
+    ansicht("auswahl");
     el("statistik").innerHTML = "";
     el("frage").textContent = wechsel ? "Auf wen soll umgestellt werden?" : "Wer bist du?";
     el("abbrechen-zeile").classList.toggle("versteckt", !wechsel || !profil);
@@ -626,6 +848,13 @@
 
   function ausHash() {
     var slug = location.hash.replace(/^#/, "");
+    if (slug === "plan") {
+      aktuell = null;
+      ansicht("plan");
+      zeigePlan();
+      window.scrollTo(0, 0);
+      return;
+    }
     if (slug) {
       var p = personMit(slug);
       if (p) { zeigePerson(p); return; }
@@ -664,6 +893,25 @@
     }
   });
   window.addEventListener("hashchange", ausHash);
+  el("tab-plan").addEventListener("click", function () { location.hash = "plan"; });
+  el("tab-meine").addEventListener("click", function () {
+    if (location.hash === "#plan" || location.hash === "") { location.hash = ""; ausHash(); }
+    else location.hash = "";
+  });
+  el("plan-filter").addEventListener("input", zeigePlan);
+  el("plan-vergangene").addEventListener("change", zeigePlan);
+
+  // Teilen ueber das System-Menue (iOS/Android), sonst bleibt der Knopf weg
+  if (navigator.share) {
+    el("teilen").classList.remove("versteckt");
+    el("teilen").addEventListener("click", function () {
+      if (!aktuell) return;
+      navigator.share({
+        title: "Einteilungen " + aktuell.name,
+        url: basis + "#" + aktuell.slug
+      }).catch(function () {});
+    });
+  }
 
   // Beim Zurückkehren zur App erneut prüfen - dann meldet sie sich auch,
   // wenn sie nur aus dem Hintergrund geholt wird.

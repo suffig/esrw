@@ -1,0 +1,1707 @@
+{
+ "saison": "2026/27",
+ "personen": {
+  "beckford-emanuel": [
+   {
+    "beginn": "2026-09-13T17:00:00+02:00",
+    "liga": "U13 FS",
+    "paarung": "Krefelder EV – Löwen Frankfurt",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   }
+  ],
+  "berger-eugen": [
+   {
+    "beginn": "2026-09-19T13:30:00+02:00",
+    "liga": "U13 RLB",
+    "paarung": "Herforder EV – EHC Troisdorf",
+    "halle": "Eishalle Im Kleinen Felde",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-19T10:00:00+02:00",
+    "liga": "U17 RL",
+    "paarung": "Herforder EV – Eisadler Dortmund",
+    "halle": "Eishalle Im Kleinen Felde",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-12T13:30:00+02:00",
+    "liga": "U13 RLB",
+    "paarung": "Herforder EV – Kölner Junghaie 1b",
+    "halle": "Eishalle Im Kleinen Felde",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-12T10:00:00+02:00",
+    "liga": "U17 RL",
+    "paarung": "Herforder EV – Lippe Hockey Hamm Herford",
+    "halle": "Eishalle Im Kleinen Felde",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-06T15:00:00+02:00",
+    "liga": "U20 FS",
+    "paarung": "Herforder EV – Eisadler Dortmund",
+    "halle": "Eishalle Im Kleinen Felde",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-06T12:30:00+02:00",
+    "liga": "U15 FS",
+    "paarung": "Herforder EV – REV Bremerhaven",
+    "halle": "Eishalle Im Kleinen Felde",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-05T13:30:00+02:00",
+    "liga": "U15 RLA",
+    "paarung": "Krefelder EV – Düsseldorfer EG",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   }
+  ],
+  "bocklemuend-cid": [
+   {
+    "beginn": "2026-09-12T12:00:00+02:00",
+    "liga": "U15 RLB",
+    "paarung": "EHC Troisdorf – EJ Kassel",
+    "halle": "ICEDOME Troisdorf",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-06T15:00:00+02:00",
+    "liga": "U13 RLB",
+    "paarung": "EHC Troisdorf – EV Duisburg",
+    "halle": "ICEDOME Troisdorf",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-05T19:45:00+02:00",
+    "liga": "U13 FS",
+    "paarung": "Kölner Junghaie 1b – Iserlohner EC 1b",
+    "halle": "Kölnarena 2",
+    "rolle": "SR"
+   }
+  ],
+  "braun-benjamin": [
+   {
+    "beginn": "2026-09-13T18:00:00+02:00",
+    "liga": "U17 FS",
+    "paarung": "EHC Troisdorf – Eisadler Dortmund",
+    "halle": "ICEDOME Troisdorf",
+    "rolle": "SR"
+   }
+  ],
+  "bruecker-tobias": [
+   {
+    "beginn": "2026-09-20T12:30:00+02:00",
+    "liga": "U15 LL",
+    "paarung": "Herforder EV – Lippe Hockey Hamm",
+    "halle": "Eishalle Im Kleinen Felde",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-20T10:00:00+02:00",
+    "liga": "Frauen BZL",
+    "paarung": "Herforder EV – KEC \"Die Haie\" 1c",
+    "halle": "Eishalle Im Kleinen Felde",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-19T13:30:00+02:00",
+    "liga": "U13 RLB",
+    "paarung": "Herforder EV – EHC Troisdorf",
+    "halle": "Eishalle Im Kleinen Felde",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-19T10:00:00+02:00",
+    "liga": "U17 RL",
+    "paarung": "Herforder EV – Eisadler Dortmund",
+    "halle": "Eishalle Im Kleinen Felde",
+    "rolle": "SR"
+   }
+  ],
+  "caelers-fabian": [
+   {
+    "beginn": "2026-09-20T19:00:00+02:00",
+    "liga": "LL FS",
+    "paarung": "Eisadler Dortmund 1b – EHC Troisdorf",
+    "halle": "Eissportzentrum Westfalen",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-20T11:00:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-18T20:15:00+02:00",
+    "liga": "RL FS",
+    "paarung": "Dinslakener Kobras – Grefrather EG",
+    "halle": "Eissporthalle Dinslaken",
+    "rolle": "HSR"
+   },
+   {
+    "beginn": "2026-09-06T14:00:00+02:00",
+    "liga": "U15 RLA",
+    "paarung": "Krefelder EV – Düsseldorfer EG",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   }
+  ],
+  "dietrich-jonas": [
+   {
+    "beginn": "2026-09-18T20:00:00+02:00",
+    "liga": "RL FS",
+    "paarung": "Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!",
+    "halle": "Eissporthalle Ratingen",
+    "rolle": "LSR"
+   },
+   {
+    "beginn": "2026-09-11T20:00:00+02:00",
+    "liga": "RL FS",
+    "paarung": "Ratinger Ice Aliens – Herner EV",
+    "halle": "Eissporthalle Essen-West",
+    "rolle": "LSR"
+   }
+  ],
+  "engler-gerhard": [
+   {
+    "beginn": "2026-09-12T19:30:00+02:00",
+    "liga": "LL FS",
+    "paarung": "EHC Troisdorf – TuS Wiehl",
+    "halle": "ICEDOME Troisdorf",
+    "rolle": "SR"
+   }
+  ],
+  "finke-gudrun": [
+   {
+    "beginn": "2026-09-18T20:15:00+02:00",
+    "liga": "U15 RLB",
+    "paarung": "EHC Troisdorf – EV Duisburg",
+    "halle": "ICEDOME Troisdorf",
+    "rolle": "SR"
+   }
+  ],
+  "galeske-jonas": [
+   {
+    "beginn": "2026-09-20T13:30:00+02:00",
+    "liga": "U17 FS",
+    "paarung": "Eisadler Dortmund – EHC Troisdorf",
+    "halle": "Eissportzentrum Westfalen",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-19T12:15:00+02:00",
+    "liga": "U11 RL",
+    "paarung": "Iserlohner EC -",
+    "halle": "Eissporthalle am Seilersee",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T09:15:00+02:00",
+    "liga": "DA FS",
+    "paarung": "NEV/BW – Sachsen/Berlin",
+    "halle": "",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-04T19:30:00+02:00",
+    "liga": "U15 RLB",
+    "paarung": "Iserlohner EC 1b – Düsseldorfer EG 1b",
+    "halle": "Eissporthalle am Seilersee",
+    "rolle": "SR"
+   }
+  ],
+  "garbsch-rene": [
+   {
+    "beginn": "2026-09-20T08:00:00+02:00",
+    "liga": "U11 LL Rot",
+    "paarung": "Iserlohner EC 1b -",
+    "halle": "Eissporthalle am Seilersee",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-19T19:45:00+02:00",
+    "liga": "U15 RLA",
+    "paarung": "Kölner Junghaie – Düsseldorfer EG",
+    "halle": "Kölnarena 2",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-19T12:00:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Iserlohner EC – ES Weißwasser",
+    "halle": "Eissporthalle am Seilersee",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-18T20:00:00+02:00",
+    "liga": "RL FS",
+    "paarung": "Eisadler Dortmund – Bulldogs de Liege",
+    "halle": "Eissportzentrum Westfalen",
+    "rolle": "LSR"
+   },
+   {
+    "beginn": "2026-09-16T19:30:00+02:00",
+    "liga": "U15 RLA",
+    "paarung": "Iserlohner EC – Krefelder EV",
+    "halle": "Eissporthalle am Seilersee",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T18:30:00+02:00",
+    "liga": "U17 RL",
+    "paarung": "Lippe Hockey Hamm – Herforder EV Hamm",
+    "halle": "HELINET Eissportarena Hamm",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T08:00:00+02:00",
+    "liga": "U9 RL",
+    "paarung": "Iserlohner EC – Iserlohn",
+    "halle": "Eissporthalle am Seilersee",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-11T19:30:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Iserlohner EC – Düsseldorfer EG",
+    "halle": "Eissporthalle am Seilersee",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-06T12:00:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Iserlohner EC – Krefelder EV",
+    "halle": "Eissporthalle am Seilersee",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-06T09:00:00+02:00",
+    "liga": "U13 RLA",
+    "paarung": "Iserlohner EC – Düsseldorfer EG",
+    "halle": "Eissporthalle am Seilersee",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-05T10:30:00+02:00",
+    "liga": "U13 FS",
+    "paarung": "Lippe Hockey Hamm – Soester EG",
+    "halle": "HELINET Eissportarena Hamm",
+    "rolle": "SR"
+   }
+  ],
+  "garcia-nieto-dario": [
+   {
+    "beginn": "2026-09-20T14:00:00+02:00",
+    "liga": "U15 RLA",
+    "paarung": "Düsseldorfer EG – Iserlohner EC",
+    "halle": "Eishalle Brehmstraße",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-18T20:00:00+02:00",
+    "liga": "RL FS",
+    "paarung": "Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!",
+    "halle": "Eissporthalle Ratingen",
+    "rolle": "LSR"
+   },
+   {
+    "beginn": "2026-09-12T12:00:00+02:00",
+    "liga": "U15 RLB",
+    "paarung": "EHC Troisdorf – EJ Kassel",
+    "halle": "ICEDOME Troisdorf",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-11T20:00:00+02:00",
+    "liga": "RL FS",
+    "paarung": "Ratinger Ice Aliens – Herner EV",
+    "halle": "Eissporthalle Essen-West",
+    "rolle": "LSR"
+   },
+   {
+    "beginn": "2026-09-05T16:00:00+02:00",
+    "liga": "U17 II",
+    "paarung": "EV Duisburg – ESV 03 Chemnitz",
+    "halle": "PreZero Rheinlandhalle Duisburg",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-05T11:45:00+02:00",
+    "liga": "U13 LL",
+    "paarung": "EHC Troisdorf 1b – Neusser EV",
+    "halle": "ICEDOME Troisdorf",
+    "rolle": "SR"
+   }
+  ],
+  "giesen-tom": [
+   {
+    "beginn": "2026-09-13T12:00:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Kölner Junghaie – ES Weißwasser",
+    "halle": "Kölnarena 2",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-12T19:15:00+02:00",
+    "liga": "Frauen BZL",
+    "paarung": "KEC \"Die Haie\" 1c – Herforder EV Kölnarena 2",
+    "halle": "Kölnarena 2",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-12T16:30:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Kölner Junghaie – ES Weißwasser",
+    "halle": "Kölnarena 2",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-05T16:30:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Krefelder EV – Iserlohner EC",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   }
+  ],
+  "hartmann-marius": [
+   {
+    "beginn": "2026-09-19T13:30:00+02:00",
+    "liga": "DEFL 2 FS",
+    "paarung": "Düsseldorfer EG – NL U18",
+    "halle": "Eishalle Brehmstraße",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-10T18:00:00+02:00",
+    "liga": "U13 RLB",
+    "paarung": "EV Duisburg – Düsseldorfer EG 1b",
+    "halle": "PreZero Rheinlandhalle Duisburg",
+    "rolle": "SR"
+   }
+  ],
+  "hauerwaas-gabriel": [
+   {
+    "beginn": "2026-09-14T18:15:00+02:00",
+    "liga": "U14 NRW",
+    "paarung": "NRW U14 – Kölner Junghaie U15",
+    "halle": "Kölnarena 2",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-05T16:00:00+02:00",
+    "liga": "U17 II",
+    "paarung": "EV Duisburg – ESV 03 Chemnitz",
+    "halle": "PreZero Rheinlandhalle Duisburg",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-05T11:45:00+02:00",
+    "liga": "U13 LL",
+    "paarung": "EHC Troisdorf 1b – Neusser EV",
+    "halle": "ICEDOME Troisdorf",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-04T20:15:00+02:00",
+    "liga": "U15 RLB",
+    "paarung": "EHC Troisdorf – Kölner Junghaie 1b",
+    "halle": "ICEDOME Troisdorf",
+    "rolle": "SR"
+   }
+  ],
+  "heffler-philipp": [
+   {
+    "beginn": "2026-09-19T16:30:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-19T13:30:00+02:00",
+    "liga": "U15 RLB",
+    "paarung": "Krefelder EV 1b – EV Duisburg YAYLA Krefeld",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T14:45:00+02:00",
+    "liga": "U11 RL",
+    "paarung": "Kölner Junghaie – Kölnarena 2",
+    "halle": "Kölnarena 2",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T12:00:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Kölner Junghaie – ES Weißwasser",
+    "halle": "Kölnarena 2",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-12T20:00:00+02:00",
+    "liga": "U17 II",
+    "paarung": "EV Duisburg – SCC Adler Berlin",
+    "halle": "PreZero Rheinlandhalle Duisburg",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-06T11:00:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Düsseldorfer EG – Eisbären Juniors Berlin",
+    "halle": "Eishalle Brehmstraße",
+    "rolle": "SR"
+   }
+  ],
+  "heffler-zsolt": [
+   {
+    "beginn": "2026-09-20T12:30:00+02:00",
+    "liga": "U13 LL",
+    "paarung": "Dinslakener Kobras – EHC Troisdorf 1b",
+    "halle": "Eissporthalle Dinslaken",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-19T13:30:00+02:00",
+    "liga": "U20 FS",
+    "paarung": "Eisadler Dortmund – EHC Troisdorf",
+    "halle": "Eissportzentrum Westfalen",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-12T19:30:00+02:00",
+    "liga": "U13 FS",
+    "paarung": "Krefelder EV – Löwen Frankfurt",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   }
+  ],
+  "hellingrath-luca": [
+   {
+    "beginn": "2026-09-19T16:00:00+02:00",
+    "liga": "DNL III",
+    "paarung": "EV Duisburg – SCC Adler Berlin",
+    "halle": "PreZero Rheinlandhalle Duisburg",
+    "rolle": "LSR"
+   }
+  ],
+  "heu-alexander": [
+   {
+    "beginn": "2026-09-13T11:00:00+02:00",
+    "liga": "DA FS",
+    "paarung": "NRW – Hessen",
+    "halle": "Eissportzentrum Westfalen",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T09:15:00+02:00",
+    "liga": "DA FS",
+    "paarung": "NEV/BW – Sachsen/Berlin",
+    "halle": "Eissportzentrum Westfalen",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T09:15:00+02:00",
+    "liga": "DA FS",
+    "paarung": "NEV/BW – Sachsen/Berlin",
+    "halle": "",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-06T18:30:00+02:00",
+    "liga": "U15 LL FS",
+    "paarung": "Lippe Hockey Hamm – TuS Wiehl",
+    "halle": "HELINET Eissportarena Hamm",
+    "rolle": "SR"
+   }
+  ],
+  "heyer-christoph": [
+   {
+    "beginn": "2026-09-12T16:45:00+02:00",
+    "liga": "U13 FS",
+    "paarung": "Krefelder EV 1b – Löwen Frankfurt 1b",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   }
+  ],
+  "hindley-david": [
+   {
+    "beginn": "2026-09-20T09:30:00+02:00",
+    "liga": "U15 RLB",
+    "paarung": "Herner EV – EV Duisburg",
+    "halle": "Gysenberghalle Herne",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T15:00:00+02:00",
+    "liga": "U13 LL",
+    "paarung": "EHC Troisdorf 1b – Mädchen W.I.N. 1 Troisdorf",
+    "halle": "ICEDOME Troisdorf",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-12T11:00:00+02:00",
+    "liga": "DA FS",
+    "paarung": "NRW – Sachsen/Berlin",
+    "halle": "Eissportzentrum Westfalen",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-12T09:15:00+02:00",
+    "liga": "DA FS",
+    "paarung": "NEV – BW/Hessen",
+    "halle": "Eissportzentrum Westfalen",
+    "rolle": "SR"
+   }
+  ],
+  "hofer-carsten": [
+   {
+    "beginn": "2026-09-20T17:00:00+02:00",
+    "liga": "U15 RLA",
+    "paarung": "Krefelder EV – Kölner Junghaie",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-20T14:00:00+02:00",
+    "liga": "U9 LL Rot",
+    "paarung": "Krefelder EV 1b -",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-18T20:15:00+02:00",
+    "liga": "RL FS",
+    "paarung": "Dinslakener Kobras – Grefrather EG",
+    "halle": "Eissporthalle Dinslaken",
+    "rolle": "LSR"
+   },
+   {
+    "beginn": "2026-09-13T15:00:00+02:00",
+    "liga": "U13 LL",
+    "paarung": "EHC Troisdorf 1b – Mädchen W.I.N. 1 Troisdorf",
+    "halle": "ICEDOME Troisdorf",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-12T16:45:00+02:00",
+    "liga": "U13 FS",
+    "paarung": "Krefelder EV 1b – Löwen Frankfurt 1b",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-06T14:00:00+02:00",
+    "liga": "U15 RLA",
+    "paarung": "Krefelder EV – Düsseldorfer EG",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   }
+  ],
+  "hoffmann-jan": [
+   {
+    "beginn": "2026-09-14T18:15:00+02:00",
+    "liga": "U14 NRW",
+    "paarung": "NRW U14 – Kölner Junghaie U15",
+    "halle": "Kölnarena 2",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T17:30:00+02:00",
+    "liga": "U15 RLB",
+    "paarung": "Kölner Junghaie 1b – Iserlohner EC 1b",
+    "halle": "Kölnarena 2",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T14:45:00+02:00",
+    "liga": "U11 RL",
+    "paarung": "Kölner Junghaie – Kölnarena 2",
+    "halle": "Kölnarena 2",
+    "rolle": "SR"
+   }
+  ],
+  "honselmann-tom": [
+   {
+    "beginn": "2026-09-19T10:30:00+02:00",
+    "liga": "U15 LL",
+    "paarung": "Lippe Hockey Hamm – SpG Neusser EV / GSC Moers",
+    "halle": "HELINET Eissportarena Hamm",
+    "rolle": "SR"
+   }
+  ],
+  "keller-alexander": [
+   {
+    "beginn": "2026-09-12T13:30:00+02:00",
+    "liga": "U13 RLB",
+    "paarung": "Herforder EV – Kölner Junghaie 1b",
+    "halle": "Eishalle Im Kleinen Felde",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-12T10:00:00+02:00",
+    "liga": "U17 RL",
+    "paarung": "Herforder EV – Lippe Hockey Hamm Herford",
+    "halle": "Eishalle Im Kleinen Felde",
+    "rolle": "SR"
+   }
+  ],
+  "kiefer-dennis": [
+   {
+    "beginn": "2026-09-20T09:30:00+02:00",
+    "liga": "U15 RLB",
+    "paarung": "Herner EV – EV Duisburg",
+    "halle": "Gysenberghalle Herne",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T17:00:00+02:00",
+    "liga": "U13 FS",
+    "paarung": "Krefelder EV – Löwen Frankfurt",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-12T12:30:00+02:00",
+    "liga": "U13 FS",
+    "paarung": "Dinslakener Kobras – TuS Wiehl",
+    "halle": "Eissporthalle Dinslaken",
+    "rolle": "SR"
+   }
+  ],
+  "klemm-julian": [
+   {
+    "beginn": "2026-09-20T08:00:00+02:00",
+    "liga": "U13 BZL Gr.A",
+    "paarung": "Eisadler Dortmund 1b – Mädchen W.I.N. 2",
+    "halle": "Eissportzentrum Westfalen",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-19T10:30:00+02:00",
+    "liga": "U15 LL",
+    "paarung": "Lippe Hockey Hamm – SpG Neusser EV / GSC Moers",
+    "halle": "HELINET Eissportarena Hamm",
+    "rolle": "SR"
+   }
+  ],
+  "krawinkel-markus": [
+   {
+    "beginn": "2026-09-20T10:00:00+02:00",
+    "liga": "DNL III",
+    "paarung": "EV Duisburg – SCC Adler Berlin",
+    "halle": "PreZero Rheinlandhalle Duisburg",
+    "rolle": "HSR"
+   },
+   {
+    "beginn": "2026-09-13T08:00:00+02:00",
+    "liga": "U9 RL",
+    "paarung": "Düsseldorfer EG – Brehmstraße",
+    "halle": "Eishalle Brehmstraße",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-12T19:30:00+02:00",
+    "liga": "LL FS",
+    "paarung": "EHC Troisdorf – TuS Wiehl",
+    "halle": "ICEDOME Troisdorf",
+    "rolle": "SR"
+   }
+  ],
+  "kremer-igor": [
+   {
+    "beginn": "2026-09-11T20:15:00+02:00",
+    "liga": "U20 FS",
+    "paarung": "EHC Troisdorf – Eisadler Dortmund",
+    "halle": "ICEDOME Troisdorf",
+    "rolle": "SR"
+   }
+  ],
+  "krueger-martin": [
+   {
+    "beginn": "2026-09-20T19:00:00+02:00",
+    "liga": "LL FS",
+    "paarung": "Eisadler Dortmund 1b – EHC Troisdorf",
+    "halle": "Eissportzentrum Westfalen",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-06T17:00:00+02:00",
+    "liga": "U15 FS",
+    "paarung": "Krefelder EV 1b – Iserlohner EC 1b",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   }
+  ],
+  "leibfried-raphael": [
+   {
+    "beginn": "2026-09-20T14:00:00+02:00",
+    "liga": "U15 RLA",
+    "paarung": "Düsseldorfer EG – Iserlohner EC",
+    "halle": "Eishalle Brehmstraße",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-19T19:45:00+02:00",
+    "liga": "U15 RLA",
+    "paarung": "Kölner Junghaie – Düsseldorfer EG",
+    "halle": "Kölnarena 2",
+    "rolle": "SR"
+   }
+  ],
+  "lindemans-pepe": [
+   {
+    "beginn": "2026-09-18T20:15:00+02:00",
+    "liga": "RL FS",
+    "paarung": "Dinslakener Kobras – Grefrather EG",
+    "halle": "Eissporthalle Dinslaken",
+    "rolle": "LSR"
+   },
+   {
+    "beginn": "2026-09-13T19:00:00+02:00",
+    "liga": "LL FS",
+    "paarung": "Dinslakener Kobras 1b – EHC Essen Ruhr",
+    "halle": "Eissporthalle Dinslaken",
+    "rolle": "SR"
+   }
+  ],
+  "malik-orlando": [
+   {
+    "beginn": "2026-09-20T17:30:00+02:00",
+    "liga": "Senioren BZL",
+    "paarung": "Herforder EV 1b – EHC Troisdorf 1b",
+    "halle": "Eishalle Im Kleinen Felde",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-20T15:00:00+02:00",
+    "liga": "U17 RL",
+    "paarung": "Herforder EV – Ratinger Ice Aliens",
+    "halle": "Eishalle Im Kleinen Felde",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-19T12:15:00+02:00",
+    "liga": "U11 RL",
+    "paarung": "Iserlohner EC -",
+    "halle": "Eissporthalle am Seilersee",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-18T20:00:00+02:00",
+    "liga": "RL FS",
+    "paarung": "Eisadler Dortmund – Bulldogs de Liege",
+    "halle": "Eissportzentrum Westfalen",
+    "rolle": "LSR"
+   },
+   {
+    "beginn": "2026-09-16T19:30:00+02:00",
+    "liga": "U15 RLA",
+    "paarung": "Iserlohner EC – Krefelder EV",
+    "halle": "Eissporthalle am Seilersee",
+    "rolle": "SR"
+   }
+  ],
+  "marks-marcel": [
+   {
+    "beginn": "2026-09-20T13:30:00+02:00",
+    "liga": "U17 FS",
+    "paarung": "Eisadler Dortmund – EHC Troisdorf",
+    "halle": "Eissportzentrum Westfalen",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-18T19:30:00+02:00",
+    "liga": "U13 LL",
+    "paarung": "EV Duisburg 1b – Ratinger Ice Aliens",
+    "halle": "PreZero Rheinlandhalle Duisburg",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T08:00:00+02:00",
+    "liga": "U9 RL",
+    "paarung": "Iserlohner EC – Iserlohn",
+    "halle": "Eissporthalle am Seilersee",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-11T19:30:00+02:00",
+    "liga": "U15 RLB",
+    "paarung": "EV Duisburg – Iserlohner EC 1b",
+    "halle": "PreZero Rheinlandhalle Duisburg",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-10T18:00:00+02:00",
+    "liga": "U13 RLB",
+    "paarung": "EV Duisburg – Düsseldorfer EG 1b",
+    "halle": "PreZero Rheinlandhalle Duisburg",
+    "rolle": "SR"
+   }
+  ],
+  "meissner-nils": [
+   {
+    "beginn": "2026-09-20T16:30:00+02:00",
+    "liga": "U13 RLB",
+    "paarung": "Herner EV – Düsseldorfer EG 1b",
+    "halle": "Gysenberghalle Herne",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-19T16:00:00+02:00",
+    "liga": "DNL III",
+    "paarung": "EV Duisburg – SCC Adler Berlin",
+    "halle": "PreZero Rheinlandhalle Duisburg",
+    "rolle": "HSR"
+   },
+   {
+    "beginn": "2026-09-13T10:00:00+02:00",
+    "liga": "U11 LL Gelb",
+    "paarung": "EHC Essen Ruhr – Essen",
+    "halle": "Eissporthalle Essen-West",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-12T16:45:00+02:00",
+    "liga": "DA FS",
+    "paarung": "Hessen – Sachsen/Berlin",
+    "halle": "Eissportzentrum Westfalen",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-12T15:00:00+02:00",
+    "liga": "DA FS",
+    "paarung": "NEV – BW/NRW",
+    "halle": "Eissportzentrum Westfalen",
+    "rolle": "SR"
+   }
+  ],
+  "melchert-philip": [
+   {
+    "beginn": "2026-09-20T18:30:00+02:00",
+    "liga": "BL FS",
+    "paarung": "EHC Essen Ruhr – Soester EG",
+    "halle": "Eissporthalle Essen-West",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T11:00:00+02:00",
+    "liga": "DA FS",
+    "paarung": "NRW – Hessen",
+    "halle": "Eissportzentrum Westfalen",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T09:15:00+02:00",
+    "liga": "DA FS",
+    "paarung": "NEV/BW – Sachsen/Berlin",
+    "halle": "Eissportzentrum Westfalen",
+    "rolle": "SR"
+   }
+  ],
+  "moritz-alexander": [
+   {
+    "beginn": "2026-09-06T17:30:00+02:00",
+    "liga": "U13 RLA",
+    "paarung": "Kölner Junghaie – Krefelder EV",
+    "halle": "Kölnarena 2",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-06T14:45:00+02:00",
+    "liga": "U15 RLB",
+    "paarung": "Kölner Junghaie 1b – EV Duisburg",
+    "halle": "Kölnarena 2",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-05T19:30:00+02:00",
+    "liga": "BL FS",
+    "paarung": "EHC Troisdorf 1b – Herner EV 1b",
+    "halle": "ICEDOME Troisdorf",
+    "rolle": "SR"
+   }
+  ],
+  "mueller-lars": [
+   {
+    "beginn": "2026-09-20T18:30:00+02:00",
+    "liga": "BL FS",
+    "paarung": "EHC Essen Ruhr – Soester EG",
+    "halle": "Eissporthalle Essen-West",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-18T20:00:00+02:00",
+    "liga": "RL FS",
+    "paarung": "Eisadler Dortmund – Bulldogs de Liege",
+    "halle": "Eissportzentrum Westfalen",
+    "rolle": "HSR"
+   },
+   {
+    "beginn": "2026-09-11T20:00:00+02:00",
+    "liga": "BL FS",
+    "paarung": "Herner EV 1b – EHC Essen Ruhr",
+    "halle": "Emscher-Lippe-Halle Gelsenkirchen",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-06T09:45:00+02:00",
+    "liga": "U17 FS",
+    "paarung": "Herner EV – Eisadler Dortmund",
+    "halle": "Gysenberghalle Herne",
+    "rolle": "SR"
+   }
+  ],
+  "nieberle-christian": [
+   {
+    "beginn": "2026-09-19T19:30:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Iserlohner EC – ES Weißwasser",
+    "halle": "Eissporthalle am Seilersee",
+    "rolle": "SR"
+   }
+  ],
+  "pacalaj-erik": [
+   {
+    "beginn": "2026-09-20T10:00:00+02:00",
+    "liga": "DNL III",
+    "paarung": "EV Duisburg – SCC Adler Berlin",
+    "halle": "PreZero Rheinlandhalle Duisburg",
+    "rolle": "LSR"
+   },
+   {
+    "beginn": "2026-09-19T13:30:00+02:00",
+    "liga": "U20 FS",
+    "paarung": "Eisadler Dortmund – EHC Troisdorf",
+    "halle": "Eissportzentrum Westfalen",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T12:30:00+02:00",
+    "liga": "U17 FS",
+    "paarung": "Dinslakener Kobras – Düsseldorfer EG U15",
+    "halle": "Eissporthalle Dinslaken",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-12T19:30:00+02:00",
+    "liga": "U13 FS",
+    "paarung": "Krefelder EV – Löwen Frankfurt",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-05T19:30:00+02:00",
+    "liga": "U13 RLA",
+    "paarung": "Krefelder EV – Kölner Junghaie",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   }
+  ],
+  "perlitz-christian": [
+   {
+    "beginn": "2026-09-11T20:00:00+02:00",
+    "liga": "RL FS",
+    "paarung": "Ratinger Ice Aliens – Herner EV",
+    "halle": "Eissporthalle Essen-West",
+    "rolle": "HSR"
+   },
+   {
+    "beginn": "2026-09-05T16:30:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Krefelder EV – Iserlohner EC",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   }
+  ],
+  "pluschkell-julian": [
+   {
+    "beginn": "2026-09-20T11:00:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T10:00:00+02:00",
+    "liga": "U13 FS",
+    "paarung": "Krefelder EV 1b – Löwen Frankfurt 1b",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-04T19:45:00+02:00",
+    "liga": "U20 FS",
+    "paarung": "Herner EV – Eisadler Dortmund",
+    "halle": "Gysenberghalle Herne",
+    "rolle": "SR"
+   }
+  ],
+  "priebsch-jan-philipp": [
+   {
+    "beginn": "2026-09-20T19:00:00+02:00",
+    "liga": "RL FS",
+    "paarung": "Dinslakener Kobras – UNIS Flyers Heerenveen",
+    "halle": "Eissporthalle Dinslaken",
+    "rolle": "HSR"
+   },
+   {
+    "beginn": "2026-09-13T14:00:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Düsseldorfer EG – Iserlohner EC",
+    "halle": "Eishalle Brehmstraße",
+    "rolle": "SR"
+   }
+  ],
+  "quint-sascha": [
+   {
+    "beginn": "2026-09-20T19:00:00+02:00",
+    "liga": "RL FS",
+    "paarung": "Dinslakener Kobras – UNIS Flyers Heerenveen",
+    "halle": "Eissporthalle Dinslaken",
+    "rolle": "LSR"
+   },
+   {
+    "beginn": "2026-09-20T10:00:00+02:00",
+    "liga": "DNL III",
+    "paarung": "EV Duisburg – SCC Adler Berlin",
+    "halle": "PreZero Rheinlandhalle Duisburg",
+    "rolle": "LSR"
+   },
+   {
+    "beginn": "2026-09-06T10:00:00+02:00",
+    "liga": "U17 II",
+    "paarung": "EV Duisburg – ESV 03 Chemnitz",
+    "halle": "PreZero Rheinlandhalle Duisburg",
+    "rolle": "SR"
+   }
+  ],
+  "reuter-fynn": [
+   {
+    "beginn": "2026-09-19T16:30:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Düsseldorfer EG – Kölner Junghaie",
+    "halle": "Eishalle Brehmstraße",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-06T17:00:00+02:00",
+    "liga": "U15 FS",
+    "paarung": "Krefelder EV 1b – Iserlohner EC 1b",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   }
+  ],
+  "reuter-rick": [
+   {
+    "beginn": "2026-09-13T10:00:00+02:00",
+    "liga": "U13 FS",
+    "paarung": "Krefelder EV 1b – Löwen Frankfurt 1b",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-05T19:30:00+02:00",
+    "liga": "U13 RLA",
+    "paarung": "Krefelder EV – Kölner Junghaie",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   }
+  ],
+  "rieneck-maximilian": [
+   {
+    "beginn": "2026-09-13T18:00:00+02:00",
+    "liga": "U17 FS",
+    "paarung": "EHC Troisdorf – Eisadler Dortmund",
+    "halle": "ICEDOME Troisdorf",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-06T17:30:00+02:00",
+    "liga": "U13 RLA",
+    "paarung": "Kölner Junghaie – Krefelder EV",
+    "halle": "Kölnarena 2",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-06T14:45:00+02:00",
+    "liga": "U15 RLB",
+    "paarung": "Kölner Junghaie 1b – EV Duisburg",
+    "halle": "Kölnarena 2",
+    "rolle": "SR"
+   }
+  ],
+  "schlueter-thomas": [
+   {
+    "beginn": "2026-09-20T17:00:00+02:00",
+    "liga": "U15 RLA",
+    "paarung": "Krefelder EV – Kölner Junghaie",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-20T14:00:00+02:00",
+    "liga": "U9 LL Rot",
+    "paarung": "Krefelder EV 1b -",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-19T10:00:00+02:00",
+    "liga": "U9 RL",
+    "paarung": "EHC Troisdorf -",
+    "halle": "ICEDOME Troisdorf",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-18T20:00:00+02:00",
+    "liga": "BL FS",
+    "paarung": "EHC Essen Ruhr – Herner EV 1b",
+    "halle": "Eissporthalle Essen-West",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T18:30:00+02:00",
+    "liga": "U17 RL",
+    "paarung": "Lippe Hockey Hamm – Herforder EV Hamm",
+    "halle": "HELINET Eissportarena Hamm",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T08:00:00+02:00",
+    "liga": "U9 RL",
+    "paarung": "Düsseldorfer EG – Brehmstraße",
+    "halle": "Eishalle Brehmstraße",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-11T20:15:00+02:00",
+    "liga": "U20 FS",
+    "paarung": "Dinslakener Kobras – Ratinger Ice Aliens",
+    "halle": "Eissporthalle Dinslaken",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-04T19:45:00+02:00",
+    "liga": "U20 FS",
+    "paarung": "Herner EV – Eisadler Dortmund",
+    "halle": "Gysenberghalle Herne",
+    "rolle": "SR"
+   }
+  ],
+  "schmidt-eugen": [
+   {
+    "beginn": "2026-09-19T16:30:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Düsseldorfer EG – Kölner Junghaie",
+    "halle": "Eishalle Brehmstraße",
+    "rolle": "SR"
+   }
+  ],
+  "schmidt-waldemar": [
+   {
+    "beginn": "2026-09-19T16:30:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-19T13:30:00+02:00",
+    "liga": "U15 RLB",
+    "paarung": "Krefelder EV 1b – EV Duisburg YAYLA Krefeld",
+    "halle": "Rheinlandhalle Krefeld",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T19:00:00+02:00",
+    "liga": "LL FS",
+    "paarung": "Dinslakener Kobras 1b – EHC Essen Ruhr",
+    "halle": "Eissporthalle Dinslaken",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-12T12:30:00+02:00",
+    "liga": "U13 FS",
+    "paarung": "Dinslakener Kobras – TuS Wiehl",
+    "halle": "Eissporthalle Dinslaken",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-06T09:45:00+02:00",
+    "liga": "U17 FS",
+    "paarung": "Herner EV – Eisadler Dortmund",
+    "halle": "Gysenberghalle Herne",
+    "rolle": "SR"
+   }
+  ],
+  "schoeche-gian-carlo": [
+   {
+    "beginn": "2026-09-20T17:30:00+02:00",
+    "liga": "U13 RLB",
+    "paarung": "Kölner Junghaie 1b – EV Duisburg",
+    "halle": "Kölnarena 2",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-20T14:45:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Kölner Junghaie – Düsseldorfer EG",
+    "halle": "Kölnarena 2",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-19T16:00:00+02:00",
+    "liga": "DNL III",
+    "paarung": "EV Duisburg – SCC Adler Berlin",
+    "halle": "PreZero Rheinlandhalle Duisburg",
+    "rolle": "LSR"
+   },
+   {
+    "beginn": "2026-09-13T10:00:00+02:00",
+    "liga": "U17 II",
+    "paarung": "EV Duisburg – SCC Adler Berlin",
+    "halle": "PreZero Rheinlandhalle Duisburg",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-12T19:15:00+02:00",
+    "liga": "Frauen BZL",
+    "paarung": "KEC \"Die Haie\" 1c – Herforder EV Kölnarena 2",
+    "halle": "Kölnarena 2",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-12T16:30:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Kölner Junghaie – ES Weißwasser",
+    "halle": "Kölnarena 2",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-11T20:15:00+02:00",
+    "liga": "U20 FS",
+    "paarung": "EHC Troisdorf – Eisadler Dortmund",
+    "halle": "ICEDOME Troisdorf",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-06T12:00:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Iserlohner EC – Krefelder EV",
+    "halle": "Eissporthalle am Seilersee",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-06T09:00:00+02:00",
+    "liga": "U13 RLA",
+    "paarung": "Iserlohner EC – Düsseldorfer EG",
+    "halle": "Eissporthalle am Seilersee",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-05T19:30:00+02:00",
+    "liga": "BL FS",
+    "paarung": "EHC Troisdorf 1b – Herner EV 1b",
+    "halle": "ICEDOME Troisdorf",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-04T20:15:00+02:00",
+    "liga": "U15 RLB",
+    "paarung": "EHC Troisdorf – Kölner Junghaie 1b",
+    "halle": "ICEDOME Troisdorf",
+    "rolle": "SR"
+   }
+  ],
+  "scholz-arien": [
+   {
+    "beginn": "2026-09-11T19:30:00+02:00",
+    "liga": "U15 RLB",
+    "paarung": "EV Duisburg – Iserlohner EC 1b",
+    "halle": "PreZero Rheinlandhalle Duisburg",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-05T10:30:00+02:00",
+    "liga": "U13 FS",
+    "paarung": "Lippe Hockey Hamm – Soester EG",
+    "halle": "HELINET Eissportarena Hamm",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-04T20:00:00+02:00",
+    "liga": "RL FS",
+    "paarung": "Ratinger Ice Aliens – Utrecht Dragons",
+    "halle": "Eissporthalle Essen-West",
+    "rolle": "LSR"
+   }
+  ],
+  "skalecki-martin": [
+   {
+    "beginn": "2026-09-20T17:30:00+02:00",
+    "liga": "Senioren BZL",
+    "paarung": "Herforder EV 1b – EHC Troisdorf 1b",
+    "halle": "Eishalle Im Kleinen Felde",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-20T15:00:00+02:00",
+    "liga": "U17 RL",
+    "paarung": "Herforder EV – Ratinger Ice Aliens",
+    "halle": "Eishalle Im Kleinen Felde",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T15:00:00+02:00",
+    "liga": "DA FS",
+    "paarung": "Finale -",
+    "halle": "Eissportzentrum Westfalen",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T13:00:00+02:00",
+    "liga": "DA FS",
+    "paarung": "Spiel um Platz 3 -",
+    "halle": "Eissportzentrum Westfalen",
+    "rolle": "SR"
+   }
+  ],
+  "solbach-carsten": [
+   {
+    "beginn": "2026-09-19T10:00:00+02:00",
+    "liga": "U9 RL",
+    "paarung": "EHC Troisdorf -",
+    "halle": "ICEDOME Troisdorf",
+    "rolle": "SR"
+   }
+  ],
+  "starke-matthias": [
+   {
+    "beginn": "2026-09-20T17:30:00+02:00",
+    "liga": "U13 RLB",
+    "paarung": "Kölner Junghaie 1b – EV Duisburg",
+    "halle": "Kölnarena 2",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-20T14:45:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Kölner Junghaie – Düsseldorfer EG",
+    "halle": "Kölnarena 2",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-18T20:15:00+02:00",
+    "liga": "U15 RLB",
+    "paarung": "EHC Troisdorf – EV Duisburg",
+    "halle": "ICEDOME Troisdorf",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T17:30:00+02:00",
+    "liga": "U15 RLB",
+    "paarung": "Kölner Junghaie 1b – Iserlohner EC 1b",
+    "halle": "Kölnarena 2",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-06T15:00:00+02:00",
+    "liga": "U13 RLB",
+    "paarung": "EHC Troisdorf – EV Duisburg",
+    "halle": "ICEDOME Troisdorf",
+    "rolle": "SR"
+   }
+  ],
+  "steeg-cedric": [
+   {
+    "beginn": "2026-09-13T12:30:00+02:00",
+    "liga": "U15 LL",
+    "paarung": "Herforder EV – Eisadler Dortmund Herford",
+    "halle": "Eishalle Im Kleinen Felde",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T10:00:00+02:00",
+    "liga": "U13 RLB",
+    "paarung": "Herforder EV – Iserlohner EC 1b",
+    "halle": "Eishalle Im Kleinen Felde",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-11T19:30:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Iserlohner EC – Düsseldorfer EG",
+    "halle": "Eissporthalle am Seilersee",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-04T19:30:00+02:00",
+    "liga": "U15 RLB",
+    "paarung": "Iserlohner EC 1b – Düsseldorfer EG 1b",
+    "halle": "Eissporthalle am Seilersee",
+    "rolle": "SR"
+   }
+  ],
+  "steven-patrick": [
+   {
+    "beginn": "2026-09-18T20:00:00+02:00",
+    "liga": "RL FS",
+    "paarung": "Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!",
+    "halle": "Eissporthalle Ratingen",
+    "rolle": "HSR"
+   },
+   {
+    "beginn": "2026-09-06T11:00:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Düsseldorfer EG – Eisbären Juniors Berlin",
+    "halle": "Eishalle Brehmstraße",
+    "rolle": "SR"
+   }
+  ],
+  "stockenschneider-lars": [
+   {
+    "beginn": "2026-09-20T19:00:00+02:00",
+    "liga": "RL FS",
+    "paarung": "Dinslakener Kobras – UNIS Flyers Heerenveen",
+    "halle": "Eissporthalle Dinslaken",
+    "rolle": "LSR"
+   },
+   {
+    "beginn": "2026-09-11T20:15:00+02:00",
+    "liga": "U20 FS",
+    "paarung": "Dinslakener Kobras – Ratinger Ice Aliens",
+    "halle": "Eissporthalle Dinslaken",
+    "rolle": "SR"
+   }
+  ],
+  "stocker-quirin": [
+   {
+    "beginn": "2026-09-13T14:00:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Düsseldorfer EG – Iserlohner EC",
+    "halle": "Eishalle Brehmstraße",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-12T20:00:00+02:00",
+    "liga": "U17 II",
+    "paarung": "EV Duisburg – SCC Adler Berlin",
+    "halle": "PreZero Rheinlandhalle Duisburg",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-04T20:00:00+02:00",
+    "liga": "RL FS",
+    "paarung": "Ratinger Ice Aliens – Utrecht Dragons",
+    "halle": "Eissporthalle Essen-West",
+    "rolle": "HSR"
+   }
+  ],
+  "strohmenger-svenja": [
+   {
+    "beginn": "2026-09-20T16:30:00+02:00",
+    "liga": "U13 RLB",
+    "paarung": "Herner EV – Düsseldorfer EG 1b",
+    "halle": "Gysenberghalle Herne",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T10:00:00+02:00",
+    "liga": "U11 LL Gelb",
+    "paarung": "EHC Essen Ruhr – Essen",
+    "halle": "Eissporthalle Essen-West",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-12T16:45:00+02:00",
+    "liga": "DA FS",
+    "paarung": "Hessen – Sachsen/Berlin",
+    "halle": "Eissportzentrum Westfalen",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-12T15:00:00+02:00",
+    "liga": "DA FS",
+    "paarung": "NEV – BW/NRW",
+    "halle": "Eissportzentrum Westfalen",
+    "rolle": "SR"
+   }
+  ],
+  "strube-julia": [
+   {
+    "beginn": "2026-09-18T20:00:00+02:00",
+    "liga": "BL FS",
+    "paarung": "EHC Essen Ruhr – Herner EV 1b",
+    "halle": "Eissporthalle Essen-West",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T10:00:00+02:00",
+    "liga": "U17 II",
+    "paarung": "EV Duisburg – SCC Adler Berlin",
+    "halle": "PreZero Rheinlandhalle Duisburg",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-06T10:00:00+02:00",
+    "liga": "U17 II",
+    "paarung": "EV Duisburg – ESV 03 Chemnitz",
+    "halle": "PreZero Rheinlandhalle Duisburg",
+    "rolle": "SR"
+   }
+  ],
+  "van-himbeeck-frederic": [
+   {
+    "beginn": "2026-09-19T19:30:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Iserlohner EC – ES Weißwasser",
+    "halle": "Eissporthalle am Seilersee",
+    "rolle": "SR"
+   }
+  ],
+  "victor-tobias": [
+   {
+    "beginn": "2026-09-20T12:30:00+02:00",
+    "liga": "U13 LL",
+    "paarung": "Dinslakener Kobras – EHC Troisdorf 1b",
+    "halle": "Eissporthalle Dinslaken",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-18T19:30:00+02:00",
+    "liga": "U13 LL",
+    "paarung": "EV Duisburg 1b – Ratinger Ice Aliens",
+    "halle": "PreZero Rheinlandhalle Duisburg",
+    "rolle": "SR"
+   }
+  ],
+  "vorgeitz-benny": [
+   {
+    "beginn": "2026-09-20T08:00:00+02:00",
+    "liga": "U11 LL Rot",
+    "paarung": "Iserlohner EC 1b -",
+    "halle": "Eissporthalle am Seilersee",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-19T13:30:00+02:00",
+    "liga": "DEFL 2 FS",
+    "paarung": "Düsseldorfer EG – NL U18",
+    "halle": "Eishalle Brehmstraße",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-19T12:00:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Iserlohner EC – ES Weißwasser",
+    "halle": "Eissporthalle am Seilersee",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T12:30:00+02:00",
+    "liga": "U17 FS",
+    "paarung": "Dinslakener Kobras – Düsseldorfer EG U15",
+    "halle": "Eissporthalle Dinslaken",
+    "rolle": "SR"
+   }
+  ],
+  "warnke-christoph": [
+   {
+    "beginn": "2026-09-13T15:00:00+02:00",
+    "liga": "DA FS",
+    "paarung": "Finale -",
+    "halle": "Eissportzentrum Westfalen",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T13:00:00+02:00",
+    "liga": "DA FS",
+    "paarung": "Spiel um Platz 3 -",
+    "halle": "Eissportzentrum Westfalen",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-11T20:00:00+02:00",
+    "liga": "BL FS",
+    "paarung": "Herner EV 1b – EHC Essen Ruhr",
+    "halle": "Emscher-Lippe-Halle Gelsenkirchen",
+    "rolle": "SR"
+   }
+  ],
+  "zynda-jayden": [
+   {
+    "beginn": "2026-09-19T16:15:00+02:00",
+    "liga": "U15 LL",
+    "paarung": "Herforder EV – Ratinger Ice Aliens",
+    "halle": "Eishalle Im Kleinen Felde",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T12:30:00+02:00",
+    "liga": "U15 LL",
+    "paarung": "Herforder EV – Eisadler Dortmund Herford",
+    "halle": "Eishalle Im Kleinen Felde",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-13T10:00:00+02:00",
+    "liga": "U13 RLB",
+    "paarung": "Herforder EV – Iserlohner EC 1b",
+    "halle": "Eishalle Im Kleinen Felde",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-12T11:00:00+02:00",
+    "liga": "DA FS",
+    "paarung": "NRW – Sachsen/Berlin",
+    "halle": "Eissportzentrum Westfalen",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-12T09:15:00+02:00",
+    "liga": "DA FS",
+    "paarung": "NEV – BW/Hessen",
+    "halle": "Eissportzentrum Westfalen",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-06T18:30:00+02:00",
+    "liga": "U15 LL FS",
+    "paarung": "Lippe Hockey Hamm – TuS Wiehl",
+    "halle": "HELINET Eissportarena Hamm",
+    "rolle": "SR"
+   }
+  ],
+  "zynda-nick": [
+   {
+    "beginn": "2026-09-19T16:15:00+02:00",
+    "liga": "U15 LL",
+    "paarung": "Herforder EV – Ratinger Ice Aliens",
+    "halle": "Eishalle Im Kleinen Felde",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-06T15:00:00+02:00",
+    "liga": "U20 FS",
+    "paarung": "Herforder EV – Eisadler Dortmund",
+    "halle": "Eishalle Im Kleinen Felde",
+    "rolle": "SR"
+   },
+   {
+    "beginn": "2026-09-06T12:30:00+02:00",
+    "liga": "U15 FS",
+    "paarung": "Herforder EV – REV Bremerhaven",
+    "halle": "Eishalle Im Kleinen Felde",
+    "rolle": "SR"
+   }
+  ]
+ }
+}

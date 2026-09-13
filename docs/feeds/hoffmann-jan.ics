@@ -14,11 +14,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260913T114500Z
 DTEND:20260913T151500Z
-SUMMARY:(L)SR · U11 RL · Kölner Junghaie – Kölnarena 2
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 14:45 Uhr\nTreffpunk
- t: 13:45 Uhr (60 Min vor Spielbeginn)\nLiga: U11 RL\nHalle: Kölnarena 2\n
- Adresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Heffler\, Philipp
- \n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U11 RL · Kölner Junghaie – Kölnarena 2
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:45 Uhr\nTreffpunkt:
+  13:45 Uhr (60 Min vor Spielbeginn)\nLiga: U11 RL\nHalle: Kölnarena 2\nAd
+ resse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Heffler\, Philipp\n
+ \nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -30,8 +30,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · U11 RL · Kölner Jungh
- aie – Kölnarena 2
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 RL · Kölner Junghaie
+  – Kölnarena 2
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -41,11 +41,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260913T143000Z
 DTEND:20260913T180000Z
-SUMMARY:(L)SR · U15 RLB · Kölner Junghaie 1b – Iserlohner EC 1b
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 17:30 Uhr\nTreffpunk
- t: 16:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Kölnarena 2\
- nAdresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Starke\, Matthia
- s\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U15 RLB · Kölner Junghaie 1b – Iserlohner EC 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
+  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Kölnarena 2\nA
+ dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Starke\, Matthias\
+ n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -57,8 +57,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · U15 RLB · Kölner Jung
- haie 1b – Iserlohner EC 1b
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB · Kölner Junghai
+ e 1b – Iserlohner EC 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -68,11 +68,11 @@ DTSTAMP:20260910T122148Z
 LAST-MODIFIED:20260910T122148Z
 DTSTART:20260914T151500Z
 DTEND:20260914T184500Z
-SUMMARY:(L)SR · U14 NRW · NRW U14 – Kölner Junghaie U15
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 18:15 Uhr\nTreffpunk
- t: 17:15 Uhr (60 Min vor Spielbeginn)\nLiga: U14 NRW\nHalle: Kölnarena 2\
- nAdresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Hauerwaas\, Gabr
- iel\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U14 NRW · NRW U14 – Kölner Junghaie U15
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:15 Uhr\nTreffpunkt:
+  17:15 Uhr (60 Min vor Spielbeginn)\nLiga: U14 NRW\nHalle: Kölnarena 2\nA
+ dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Hauerwaas\, Gabrie
+ l\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -84,8 +84,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · U14 NRW · NRW U14 – 
- Kölner Junghaie U15
+DESCRIPTION:In einer Stunde an der Halle - SR · U14 NRW · NRW U14 – Kö
+ lner Junghaie U15
 END:VALARM
 END:VEVENT
 END:VCALENDAR

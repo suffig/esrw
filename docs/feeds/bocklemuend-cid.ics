@@ -14,11 +14,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260906T120000Z
 DTEND:20260906T153000Z
-SUMMARY:(L)SR · U13 RLB · EHC Troisdorf – EV Duisburg
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 15:00 Uhr\nTreffpunk
- t: 14:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: ICEDOME Trois
- dorf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Starke\
- , Matthias\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U13 RLB · EHC Troisdorf – EV Duisburg
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 15:00 Uhr\nTreffpunkt:
+  14:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: ICEDOME Troisdo
+ rf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Starke\, 
+ Matthias\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -35,11 +35,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260912T090000Z
 DTEND:20260912T123000Z
-SUMMARY:(L)SR · U15 RLB · EHC Troisdorf – EJ Kassel
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 12:00 Uhr\nTreffpunk
- t: 11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: ICEDOME Trois
- dorf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Garcia 
- Nieto\, Dario\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U15 RLB · EHC Troisdorf – EJ Kassel
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
+  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: ICEDOME Troisdo
+ rf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Garcia Ni
+ eto\, Dario\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

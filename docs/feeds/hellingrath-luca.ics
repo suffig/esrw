@@ -10,6 +10,7 @@ X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
 UID:76a046fc23436d660ffdb9358dedbab0bf337bae@esrw.de
 SEQUENCE:0
+<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
 DTSTART:20260919T130000Z
@@ -20,6 +21,18 @@ DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 16:00 Uhr\nTreffpunk
  landhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespan
  n: Meißner\, Nils / Schöche\, Gian-Carlo\n\nQuelle: https://www.esrw.de/
  einteilungen.html
+=======
+DTSTAMP:20260913T052816Z
+LAST-MODIFIED:20260913T052816Z
+DTSTART:20260919T130000Z
+DTEND:20260919T163000Z
+SUMMARY:LSR · DNL III · EV Duisburg – SCC Adler Berlin
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 16:00 Uhr\nTreffpunkt:
+  15:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero Rheinla
+ ndhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann:
+  Meißner\, Nils (HSR) / Schöche\, Gian-Carlo (LSR)\n\nQuelle: https://ww
+ w.esrw.de/einteilungen.html
+>>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -32,7 +45,11 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
+<<<<<<< HEAD
 DESCRIPTION:In einer Stunde an der Halle - (L)SR · DNL III · EV Duisburg 
+=======
+DESCRIPTION:In einer Stunde an der Halle - LSR · DNL III · EV Duisburg 
+>>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
  – SCC Adler Berlin
 END:VALARM
 END:VEVENT

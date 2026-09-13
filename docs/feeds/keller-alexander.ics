@@ -14,11 +14,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260912T070000Z
 DTEND:20260912T103000Z
-SUMMARY:(L)SR · U17 RL · Herforder EV – Lippe Hockey Hamm Herford
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 10:00 Uhr\nTreffpunk
- t: 09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eishalle Im Kl
- einen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Berger\, 
- Eugen\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U17 RL · Herforder EV – Lippe Hockey Hamm Herford
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eishalle Im Klei
+ nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Berger\, Eu
+ gen\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -35,11 +35,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260912T103000Z
 DTEND:20260912T140000Z
-SUMMARY:(L)SR · U13 RLB · Herforder EV – Kölner Junghaie 1b
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 13:30 Uhr\nTreffpunk
- t: 12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Eishalle Im K
- leinen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Berger\,
-  Eugen\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U13 RLB · Herforder EV – Kölner Junghaie 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
+  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Eishalle Im Kle
+ inen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Berger\, E
+ ugen\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

@@ -14,11 +14,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260906T070000Z
 DTEND:20260906T103000Z
-SUMMARY:(L)SR · U17 II · EV Duisburg – ESV 03 Chemnitz
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 10:00 Uhr\nTreffpunk
- t: 09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 II\nHalle: PreZero Rheinl
- andhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann
- : Strube Julia\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U17 II · EV Duisburg – ESV 03 Chemnitz
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 II\nHalle: PreZero Rheinlan
+ dhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: 
+ Strube Julia\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -32,6 +32,7 @@ END:VEVENT
 BEGIN:VEVENT
 UID:2169a7282070733a5b10598e47f650539cbbb7ee@esrw.de
 SEQUENCE:0
+<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
 DTSTART:20260920T070000Z
@@ -42,6 +43,18 @@ DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 10:00 Uhr\nTreffpunk
  landhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespan
  n: Krawinkel\, Markus / Pacalaj\, Erik\n\nQuelle: https://www.esrw.de/eint
  eilungen.html
+=======
+DTSTAMP:20260913T052816Z
+LAST-MODIFIED:20260913T052816Z
+DTSTART:20260920T070000Z
+DTEND:20260920T103000Z
+SUMMARY:LSR · DNL III · EV Duisburg – SCC Adler Berlin
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero Rheinla
+ ndhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann:
+  Krawinkel\, Markus (HSR) / Pacalaj\, Erik (LSR)\n\nQuelle: https://www.es
+ rw.de/einteilungen.html
+>>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -54,13 +67,18 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
+<<<<<<< HEAD
 DESCRIPTION:In einer Stunde an der Halle - (L)SR · DNL III · EV Duisburg 
+=======
+DESCRIPTION:In einer Stunde an der Halle - LSR · DNL III · EV Duisburg 
+>>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
  – SCC Adler Berlin
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:27f468207fc77cf30e66cb6db36c1fad1dbbdb04@esrw.de
 SEQUENCE:0
+<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
 DTSTART:20260920T160000Z
@@ -71,6 +89,18 @@ DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:00 Uhr\nTreffpunk
  inslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Priebsch\, Ja
  n Philipp / Stockenschneider\, Lars\n\nQuelle: https://www.esrw.de/einteil
  ungen.html
+=======
+DTSTAMP:20260913T052816Z
+LAST-MODIFIED:20260913T052816Z
+DTSTART:20260920T160000Z
+DTEND:20260920T193000Z
+SUMMARY:LSR · RL FS · Dinslakener Kobras – UNIS Flyers Heerenveen
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
+  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthalle Din
+ slaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Priebsch\, Jan 
+ Philipp (HSR) / Stockenschneider\, Lars (LSR)\n\nQuelle: https://www.esrw.
+ de/einteilungen.html
+>>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -82,8 +112,13 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
+<<<<<<< HEAD
 DESCRIPTION:In einer Stunde an der Halle - (L)SR · RL FS · Dinslakener Ko
  bras – UNIS Flyers Heerenveen
+=======
+DESCRIPTION:In einer Stunde an der Halle - LSR · RL FS · Dinslakener Kobr
+ as – UNIS Flyers Heerenveen
+>>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 END:VALARM
 END:VEVENT
 END:VCALENDAR

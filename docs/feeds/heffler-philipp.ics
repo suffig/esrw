@@ -14,11 +14,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260906T080000Z
 DTEND:20260906T113000Z
-SUMMARY:(L)SR · U17 I · Düsseldorfer EG – Eisbären Juniors Berlin
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 11:00 Uhr\nTreffpunk
- t: 10:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eishalle Brehms
- traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Steven\, P
- atrick\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U17 I · Düsseldorfer EG – Eisbären Juniors Berlin
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:00 Uhr\nTreffpunkt:
+  10:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eishalle Brehmstr
+ aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Steven\, Pat
+ rick\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -35,11 +35,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260912T170000Z
 DTEND:20260912T203000Z
-SUMMARY:(L)SR · U17 II · EV Duisburg – SCC Adler Berlin
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 20:00 Uhr\nTreffpunk
- t: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 II\nHalle: PreZero Rheinl
- andhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann
- : Stocker\, Quirin\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U17 II · EV Duisburg – SCC Adler Berlin
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 II\nHalle: PreZero Rheinlan
+ dhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: 
+ Stocker\, Quirin\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -57,11 +57,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260913T090000Z
 DTEND:20260913T123000Z
-SUMMARY:(L)SR · U17 I · Kölner Junghaie – ES Weißwasser
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 12:00 Uhr\nTreffpunk
- t: 11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Kölnarena 2\nA
- dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Giesen\, Tom\n\nQu
- elle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U17 I · Kölner Junghaie – ES Weißwasser
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
+  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Kölnarena 2\nAdr
+ esse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Giesen\, Tom\n\nQuel
+ le: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -73,8 +73,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 I · Kölner Jungha
- ie – ES Weißwasser
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I · Kölner Junghaie 
+ – ES Weißwasser
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -84,11 +84,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260913T114500Z
 DTEND:20260913T151500Z
-SUMMARY:(L)SR · U11 RL · Kölner Junghaie – Kölnarena 2
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 14:45 Uhr\nTreffpunk
- t: 13:45 Uhr (60 Min vor Spielbeginn)\nLiga: U11 RL\nHalle: Kölnarena 2\n
- Adresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Hoffmann\, Jan\n\
- nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U11 RL · Kölner Junghaie – Kölnarena 2
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:45 Uhr\nTreffpunkt:
+  13:45 Uhr (60 Min vor Spielbeginn)\nLiga: U11 RL\nHalle: Kölnarena 2\nAd
+ resse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Hoffmann\, Jan\n\nQ
+ uelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -100,8 +100,62 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · U11 RL · Kölner Jungh
- aie – Kölnarena 2
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 RL · Kölner Junghaie
+  – Kölnarena 2
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:bd7522220a44281a5c2423e898970d0d5ea97faa@esrw.de
+SEQUENCE:0
+DTSTAMP:20260913T052816Z
+LAST-MODIFIED:20260913T052816Z
+DTSTART:20260919T103000Z
+DTEND:20260919T140000Z
+SUMMARY:SR · U15 RLB · Krefelder EV 1b – EV Duisburg YAYLA Krefeld
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
+  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Rheinlandhalle 
+ Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Schmidt\, 
+ Waldemar\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
+GEO:51.339877;6.540168
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
+ stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
+ le Krefeld":geo:51.339877,6.540168
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB · Krefelder EV 1b
+  – EV Duisburg YAYLA Krefeld
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:05bb298d6e4e19d20cfb8e64c4fb170753d832a3@esrw.de
+SEQUENCE:0
+DTSTAMP:20260913T052816Z
+LAST-MODIFIED:20260913T052816Z
+DTSTART:20260919T133000Z
+DTEND:20260919T170000Z
+SUMMARY:SR · U17 I · Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
+  15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Rheinlandhalle Kr
+ efeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Schmidt\, Wa
+ ldemar\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
+GEO:51.339877;6.540168
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
+ stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
+ le Krefeld":geo:51.339877,6.540168
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I · Krefelder EV – 
+ EHC GA Wolfsburg YAYLA Krefeld
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

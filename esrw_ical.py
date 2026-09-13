@@ -34,7 +34,13 @@ from datetime import datetime, timedelta, timezone
 BASIS = os.path.dirname(os.path.abspath(__file__))
 UA = "Mozilla/5.0 (kompatibel; esrw-ical/2.1; privater Kalender-Export)"
 
-ROLLEN = {"HSR": "Hauptschiedsrichter", "(L)SR": "Linienrichter"}
+ROLLEN = {"SR": "Schiedsrichter", "HSR": "Hauptschiedsrichter", "LSR": "Linienrichter"}
+# Ab so vielen Offiziellen gibt es die Aufteilung in Haupt- und Linienrichter;
+# darunter sind alle gleichberechtigte Schiedsrichter.
+DREIER_SYSTEM_AB = 3
+# Schreibweisen, die zur selben Person gehoeren (aus config.json, siehe
+# aliase_laden). Schluessel und Werte sind normalisierte Namensmengen.
+ALIASE = {}
 # Mannschafts-Zusaetze, die nicht zum Vereinsnamen gehoeren
 SUFFIXE = re.compile(r"^(1b|1c|1d|2|3|ii|iii|u\d+|damen|frauen)$", re.I)
 # So lange bleibt eine Aenderung im Termin sichtbar markiert
@@ -83,11 +89,46 @@ def nkey(text):
     return " ".join(t.split())
 
 
+def _roh_schluessel(name):
+    return frozenset(nkey(re.sub(r"\([^)]*\)", " ", name)).split())
+
+
 def personen_schluessel(name):
     """Personen-Vergleich ueber die Wortmenge, damit 'Keller, Alexander',
     'Keller Alexander' und 'Alexander Keller' dieselbe Person sind.
-    Zusaetze in Klammern wie '(N)' fallen weg."""
-    return frozenset(nkey(re.sub(r"\([^)]*\)", " ", name)).split())
+    Zusaetze in Klammern wie '(N)' fallen weg. Schreibweisen, die laut
+    config.json zusammengehoeren ('Philip' / 'Philipp'), werden auf eine
+    gemeinsame Kennung abgebildet."""
+    k = _roh_schluessel(name)
+    return ALIASE.get(k, k)
+
+
+def aliase_laden(cfg):
+    """Liest 'gleiche_personen' aus der Konfiguration: Listen von
+    Schreibweisen, die derselbe Mensch sind. Die erste Schreibweise jeder
+    Gruppe gilt als die richtige."""
+    ALIASE.clear()
+    for gruppe in cfg.get("gleiche_personen", []):
+        if not gruppe:
+            continue
+        ziel = _roh_schluessel(gruppe[0])
+        for name in gruppe:
+            ALIASE[_roh_schluessel(name)] = ziel
+    return {gruppe[0] for gruppe in cfg.get("gleiche_personen", []) if gruppe}
+
+
+def rollen_fuer(besetzung):
+    """Ordnet jedem Namen eines Spiels seine Rolle zu.
+
+    esrw.de fuehrt zwei Spalten, 'HSR' und '(L)SR'. Im Zwei-Mann-System
+    stehen beide in der zweiten Spalte und sind gleichberechtigte
+    Schiedsrichter. Erst ab drei Offiziellen gibt es einen
+    Hauptschiedsrichter und Linienrichter."""
+    hsr = besetzung.get("HSR", [])
+    lsr = besetzung.get("(L)SR", [])
+    if len(hsr) + len(lsr) < DREIER_SYSTEM_AB:
+        return [(n, "SR") for n in hsr + lsr]
+    return [(n, "HSR") for n in hsr] + [(n, "LSR") for n in lsr]
 
 
 def text_aus(fragment):
@@ -355,46 +396,77 @@ def statistik_aus_historie(historie, stand):
         except (ValueError, KeyError):
             continue
         saison = saison_von(beginn)
-        for rolle, namen in (eintrag.get("besetzung") or {}).items():
-            for name in namen:
-                schluessel = personen_schluessel(name)
-                if not schluessel:
-                    continue
-                s = werte.setdefault(schluessel, {
-                    "gesamt": 0, "saison": 0, "rollen": Counter(),
-                    "ligen": Counter(), "hallen": Counter(),
-                    "erste": None, "letzte": None})
-                s["gesamt"] += 1
-                if saison == jetzt_saison:
-                    s["saison"] += 1
-                s["rollen"][rolle] += 1
-                if eintrag.get("liga"):
-                    s["ligen"][eintrag["liga"]] += 1
-                if eintrag.get("halle"):
-                    s["hallen"][eintrag["halle"]] += 1
-                tag = beginn.date().isoformat()
-                if s["erste"] is None or tag < s["erste"]:
-                    s["erste"] = tag
-                if s["letzte"] is None or tag > s["letzte"]:
-                    s["letzte"] = tag
+        for name, rolle in rollen_fuer(eintrag.get("besetzung") or {}):
+            schluessel = personen_schluessel(name)
+            if not schluessel:
+                continue
+            s = werte.setdefault(schluessel, {
+                "gesamt": 0, "saison": 0, "rollen": Counter(),
+                "ligen": Counter(), "hallen": Counter(),
+                "erste": None, "letzte": None, "spiele_saison": []})
+            s["gesamt"] += 1
+            if saison == jetzt_saison:
+                s["saison"] += 1
+                # Fuer die Saisonliste auf der Webseite - esrw.de zeigt
+                # nur wenige Tage zurueck, das Archiv die ganze Saison.
+                s["spiele_saison"].append({
+                    "beginn": eintrag["beginn"],
+                    "liga": eintrag.get("liga", ""),
+                    "paarung": eintrag.get("paarung", ""),
+                    "halle": eintrag.get("halle", ""),
+                    "rolle": rolle,
+                })
+            s["rollen"][rolle] += 1
+            if eintrag.get("liga"):
+                s["ligen"][eintrag["liga"]] += 1
+            if eintrag.get("halle"):
+                s["hallen"][eintrag["halle"]] += 1
+            tag = beginn.date().isoformat()
+            if s["erste"] is None or tag < s["erste"]:
+                s["erste"] = tag
+            if s["letzte"] is None or tag > s["letzte"]:
+                s["letzte"] = tag
     return werte, jetzt_saison
 
 
 # ------------------------------------------------------------ Personen bilden
 
-def waehle_schreibweise(kandidaten):
+def waehle_schreibweise(kandidaten, bevorzugt=frozenset()):
     """Aus mehreren Schreibweisen derselben Person die beste aussuchen:
-    ohne Klammerzusatz, mit Komma, sonst die haeufigste."""
+    eine in der Konfiguration als richtig markierte, sonst ohne
+    Klammerzusatz, mit Komma, sonst die haeufigste."""
     def rang(paar):
         name, anzahl = paar
-        return ("(" in name, "," not in name, -anzahl, name)
+        return (name not in bevorzugt, "(" in name, "," not in name, -anzahl, name)
     return sorted(kandidaten.items(), key=rang)[0][0]
 
 
-def sammle_personen(spiele, cfg, venues, jetzt):
+def pruefe_konflikte(termine, cfg):
+    """Markiert Termine derselben Person, die sich nicht vereinbaren lassen:
+    zwei Spiele zur gleichen Zeit, oder zwei Spiele in verschiedenen Hallen,
+    bei denen das zweite anfaengt, bevor das erste vorbei sein kann.
+    Zwei Spiele hintereinander in derselben Halle sind normal und bekommen
+    keinen Hinweis."""
+    termine = sorted(termine, key=lambda t: t["anstoss"])
+    for a, b in zip(termine, termine[1:]):
+        gleiche_halle = a["halle_name"] and a["halle_name"] == b["halle_name"]
+        if b["anstoss"] == a["anstoss"]:
+            text = "Gleichzeitig angesetzt: %s" % b["paarung"]
+            a["hinweis"] = text
+            b["hinweis"] = "Gleichzeitig angesetzt: %s" % a["paarung"]
+        elif not gleiche_halle and b["treffpunkt"] < a["ende"]:
+            luecke = int((b["anstoss"] - a["anstoss"]).total_seconds() // 60)
+            a["hinweis"] = ("Danach %s in %s – nur %d Min bis zum nächsten Anstoß"
+                            % (b["paarung"], b["halle_name"] or "anderer Halle", luecke))
+            b["hinweis"] = ("Davor %s in %s – nur %d Min nach dem vorigen Anstoß"
+                            % (a["paarung"], a["halle_name"] or "anderer Halle", luecke))
+
+
+def sammle_personen(spiele, cfg, venues, jetzt, bevorzugt=frozenset()):
     vorlauf = timedelta(minutes=cfg["vorlauf_minuten"])
     dauer = timedelta(minutes=cfg["spieldauer_minuten"])
     personen = {}
+    uebersicht = []
 
     for spiel in spiele:
         halle, heim, gast, sicher = finde_halle(spiel["begegnung"], venues)
@@ -402,77 +474,138 @@ def sammle_personen(spiele, cfg, venues, jetzt):
         anstoss = spiel["start"]
         treffpunkt = anstoss - vorlauf
         paarung = "%s – %s" % (heim, gast) if gast else heim
-        alle_namen = [n for liste in spiel["besetzung"].values() for n in liste]
+        besetzung = rollen_fuer(spiel["besetzung"])
+        kennung = spiel_id(anstoss.isoformat(), spiel["begegnung"])
 
-        for rolle, namen in spiel["besetzung"].items():
-            for name in namen:
-                schluessel = personen_schluessel(name)
-                if not schluessel:
-                    continue
-                eintrag = personen.setdefault(schluessel, {
-                    "schreibweisen": Counter(), "termine": [], "schluessel": schluessel})
-                eintrag["schreibweisen"][name] += 1
+        uebersicht.append({
+            "kennung": kennung,
+            "anstoss": anstoss,
+            "treffpunkt": treffpunkt,
+            "liga": liga,
+            "paarung": paarung,
+            "halle_name": halle["name"] if halle else "",
+            "ort": "%s, %s" % (halle["name"], halle["adresse"]) if halle else "",
+            "halle_erkannt": sicher,
+            "system": len(besetzung),
+            "besetzung": [{"name": n, "rolle": r, "schluessel": personen_schluessel(n)}
+                          for n, r in besetzung],
+            "vergangen": anstoss < jetzt,
+        })
 
-                kollegen = [n for n in alle_namen if personen_schluessel(n) != schluessel]
-                zeilen = [
-                    "Rolle: %s (%s)" % (ROLLEN.get(rolle, rolle), rolle),
-                    "Spielbeginn: %s Uhr" % anstoss.strftime("%H:%M"),
-                    "Treffpunkt: %s Uhr (%d Min vor Spielbeginn)" % (
-                        treffpunkt.strftime("%H:%M"), cfg["vorlauf_minuten"]),
-                ]
-                if liga:
-                    zeilen.append("Liga: %s" % liga)
-                if halle:
-                    zeilen += ["Halle: %s" % halle["name"],
-                               "Adresse: %s" % halle["adresse"]]
-                else:
-                    zeilen.append("!! Halle nicht automatisch erkannt "
-                                  "- bitte selbst pruefen !!")
-                if kollegen:
-                    zeilen.append("Gespann: %s" % " / ".join(kollegen))
-                zeilen += ["", "Quelle: %s" % cfg["quelle"]]
+        for name, rolle in besetzung:
+            schluessel = personen_schluessel(name)
+            if not schluessel:
+                continue
+            eintrag = personen.setdefault(schluessel, {
+                "schreibweisen": Counter(), "termine": [], "schluessel": schluessel})
+            eintrag["schreibweisen"][name] += 1
 
-                titel = "%s · %s · %s" % (rolle, liga, paarung) if liga \
-                    else "%s · %s" % (rolle, paarung)
+            kollegen = [(n, r, personen_schluessel(n)) for n, r in besetzung
+                        if personen_schluessel(n) != schluessel]
+            zeilen = [
+                "Rolle: %s (%s)" % (ROLLEN.get(rolle, rolle), rolle),
+                "Spielbeginn: %s Uhr" % anstoss.strftime("%H:%M"),
+                "Treffpunkt: %s Uhr (%d Min vor Spielbeginn)" % (
+                    treffpunkt.strftime("%H:%M"), cfg["vorlauf_minuten"]),
+            ]
+            if liga:
+                zeilen.append("Liga: %s" % liga)
+            if halle:
+                zeilen += ["Halle: %s" % halle["name"],
+                           "Adresse: %s" % halle["adresse"]]
+            else:
+                zeilen.append("!! Halle nicht automatisch erkannt "
+                              "- bitte selbst pruefen !!")
+            if kollegen:
+                zeilen.append("Gespann: %s" % " / ".join(
+                    "%s (%s)" % (n, r) if len(besetzung) >= DREIER_SYSTEM_AB else n
+                    for n, r, _ in kollegen))
+            zeilen += ["", "Quelle: %s" % cfg["quelle"]]
 
-                eintrag["termine"].append({
-                    "kennung": spiel_id(anstoss.isoformat(), spiel["begegnung"]),
-                    "titel": titel,
-                    "beschreibung": "\n".join(zeilen),
-                    "ort": "%s, %s" % (halle["name"], halle["adresse"]) if halle else "",
-                    "halle_name": halle["name"] if halle else "",
-                    "koordinaten": halle.get("koordinaten") if halle else None,
-                    "treffpunkt": treffpunkt,
-                    "anstoss": anstoss,
-                    "ende": anstoss + dauer,
-                    "rolle": rolle,
-                    "liga": liga,
-                    "paarung": paarung,
-                    "halle_erkannt": sicher,
-                    "gespann": kollegen,
-                    "vergangen": anstoss < jetzt,
-                })
+            titel = "%s · %s · %s" % (rolle, liga, paarung) if liga \
+                else "%s · %s" % (rolle, paarung)
+
+            eintrag["termine"].append({
+                "kennung": kennung,
+                "titel": titel,
+                "beschreibung": "\n".join(zeilen),
+                "ort": "%s, %s" % (halle["name"], halle["adresse"]) if halle else "",
+                "halle_name": halle["name"] if halle else "",
+                "koordinaten": halle.get("koordinaten") if halle else None,
+                "treffpunkt": treffpunkt,
+                "anstoss": anstoss,
+                "ende": anstoss + dauer,
+                "rolle": rolle,
+                "system": len(besetzung),
+                "liga": liga,
+                "paarung": paarung,
+                "halle_erkannt": sicher,
+                "gespann_roh": kollegen,
+                "vergangen": anstoss < jetzt,
+            })
+
+    # Schreibweise, Slug und Kennung je Person festlegen
+    slug_von = {}
+    for schluessel, eintrag in personen.items():
+        eintrag["name"] = waehle_schreibweise(eintrag["schreibweisen"], bevorzugt)
+        eintrag["slug"] = slug_aus(eintrag["name"])
+        slug_von[schluessel] = (eintrag["name"], eintrag["slug"])
 
     fertig = []
     for eintrag in personen.values():
-        name = waehle_schreibweise(eintrag["schreibweisen"])
         eintrag["termine"].sort(key=lambda t: t["treffpunkt"])
+        pruefe_konflikte(eintrag["termine"], cfg)
         for t in eintrag["termine"]:
             t["uid"] = hashlib.sha1(
-                ("%s|%s" % (t["kennung"], slug_aus(name))).encode("utf-8")
+                ("%s|%s" % (t["kennung"], eintrag["slug"])).encode("utf-8")
             ).hexdigest() + "@esrw.de"
+            # Gespann mit der endgueltigen Schreibweise und dem Slug des
+            # Kollegen, damit die Webseite darauf verlinken kann
+            t["gespann"] = [
+                {"name": slug_von.get(k, (n, None))[0], "slug": slug_von.get(k, (n, None))[1],
+                 "rolle": r}
+                for n, r, k in t.pop("gespann_roh")]
+            if t.get("hinweis"):
+                t["beschreibung"] = "!! %s !!\n\n%s" % (t["hinweis"], t["beschreibung"])
         fertig.append({
-            "slug": slug_aus(name),
-            "name": name,
+            "slug": eintrag["slug"],
+            "name": eintrag["name"],
             "schluessel": eintrag["schluessel"],
             "varianten": sorted(eintrag["schreibweisen"]),
             "termine": eintrag["termine"],
         })
     fertig.sort(key=lambda p: nkey(p["name"]))
-    return fertig
+
+    # Gesamtuebersicht mit aufgeloesten Namen
+    for s in uebersicht:
+        for b in s["besetzung"]:
+            name, slug = slug_von.get(b.pop("schluessel"), (b["name"], None))
+            b["name"], b["slug"] = name, slug
+    uebersicht.sort(key=lambda s: s["anstoss"])
+    return fertig, uebersicht
 
 
 # ---------------------------------------------------------- Aenderungen
+
+def _ohne_rolle(titel):
+    """'SR · U13 · A – B' -> 'U13 · A – B'. Die Rolle steht immer vorn."""
+    return titel.split(" · ", 1)[1] if " · " in titel else titel
+
+
+def _rolle_aus(titel):
+    return titel.split(" · ", 1)[0] if " · " in titel else ""
+
+
+def inhalt_hash(titel, ort, treffpunkt_iso, rolle):
+    """Fingerabdruck fuer die Aenderungserkennung. Die Rollenbezeichnung
+    geht bewusst *nicht* ueber den Titel ein, sondern separat und nur, wenn
+    sie eine der heutigen Kennungen ist. Sonst haette die Umstellung von
+    '(L)SR' auf 'SR' jedem Kollegen an jeden Termin ein Warnzeichen
+    gehaengt, obwohl der ESRW nichts geaendert hat."""
+    rolle = rolle if rolle in ROLLEN else ""
+    return hashlib.sha1(("%s|%s|%s|%s" % (
+        _ohne_rolle(titel), ort, treffpunkt_iso, rolle)).encode("utf-8")).hexdigest()
+
 
 def beschreibe_aenderung(vorher, jetzt):
     """Kurztext, was sich seit dem letzten Lauf geaendert hat."""
@@ -484,7 +617,11 @@ def beschreibe_aenderung(vorher, jetzt):
     if vorher.get("ort") and vorher["ort"] != jetzt["ort"]:
         alte_halle = vorher["ort"].split(",")[0]
         teile.append("Halle (vorher %s)" % alte_halle)
-    if vorher.get("titel") and vorher["titel"] != jetzt["titel"]:
+    alte_rolle = _rolle_aus(vorher.get("titel", ""))
+    neue_rolle = jetzt.get("rolle") or _rolle_aus(jetzt.get("titel", ""))
+    if alte_rolle in ROLLEN and neue_rolle in ROLLEN and alte_rolle != neue_rolle:
+        teile.append("Rolle (vorher %s)" % alte_rolle)
+    if vorher.get("titel") and _ohne_rolle(vorher["titel"]) != _ohne_rolle(jetzt["titel"]):
         teile.append("Ansetzung")
     return ", ".join(teile) or "Angaben angepasst"
 
@@ -498,18 +635,32 @@ def verarbeite_aenderungen(personen, alt, stand, eigene_slugs):
     for p in personen:
         ist_eigen = p["slug"] in eigene_slugs
         for t in p["termine"]:
-            inhalt = hashlib.sha1(("%s|%s|%s" % (
-                t["titel"], t["ort"], t["treffpunkt"].isoformat())).encode("utf-8")
-            ).hexdigest()
+            inhalt = inhalt_hash(t["titel"], t["ort"], t["treffpunkt"].isoformat(), t["rolle"])
             vorher = alt.get(t["uid"])
             geaendert_am = None
             t["stempel"] = stand
+
+            # Den alten Fingerabdruck aus den gespeicherten Feldern neu rechnen
+            # statt den gespeicherten Wert zu nehmen - so ueberlebt eine
+            # Aenderung an der Hash-Formel, ohne dass alles als geaendert gilt.
+            # Die Rolle zaehlt nur mit, wenn sie auf beiden Seiten eine der
+            # heutigen Kennungen ist; alte Eintraege mit '(L)SR' vergleichen
+            # sich sonst nie gleich.
+            vorher_inhalt, vergleich = None, inhalt
+            if vorher is not None:
+                alte_rolle = _rolle_aus(vorher.get("titel", ""))
+                if alte_rolle not in ROLLEN:
+                    alte_rolle = ""
+                    vergleich = inhalt_hash(t["titel"], t["ort"],
+                                            t["treffpunkt"].isoformat(), "")
+                vorher_inhalt = inhalt_hash(vorher.get("titel", ""), vorher.get("ort", ""),
+                                            vorher.get("treffpunkt", ""), alte_rolle)
 
             if vorher is None:
                 t["sequence"] = 0
                 if ist_eigen and not t["vergangen"] and alt:
                     neue.append(t)
-            elif vorher.get("inhalt") != inhalt:
+            elif vorher_inhalt != vergleich:
                 t["sequence"] = vorher.get("sequence", 0) + 1
                 geaendert_am = heute.isoformat()
                 t["aenderung"] = beschreibe_aenderung(vorher, t)
@@ -629,13 +780,18 @@ def main():
     print("%d Spiele gefunden (%d aktuell, %d aus den letzten %d Tagen)."
           % (len(spiele), aktuell, len(spiele) - aktuell, tage))
 
-    personen = sammle_personen(spiele, cfg, venues, stand)
+    bevorzugt = aliase_laden(cfg)
+    personen, uebersicht = sammle_personen(spiele, cfg, venues, stand, bevorzugt)
     print("%d Personen." % len(personen))
 
     unklar = sorted({t["paarung"] for p in personen for t in p["termine"]
                      if not t["halle_erkannt"]})
     for u in unklar:
         print("  ! Halle nicht erkannt: %s" % u, file=sys.stderr)
+    konflikte = [(p["name"], t["hinweis"]) for p in personen for t in p["termine"]
+                 if t.get("hinweis") and not t["vergangen"]]
+    for name, hinweis in konflikte:
+        print("  ! %s: %s" % (name, hinweis), file=sys.stderr)
 
     if args.wer:
         print()
@@ -722,6 +878,7 @@ def main():
         "spiele_gesamt": len(gesehen),
         "saison": saison,
         "archiv_spiele": len(historie),
+        "rollen": ROLLEN,
         "personen": [{
             "slug": p["slug"],
             "name": p["name"],
@@ -731,19 +888,46 @@ def main():
                 "beginn": t["anstoss"].isoformat(),
                 "treffpunkt": t["treffpunkt"].isoformat(),
                 "rolle": t["rolle"],
+                "system": t["system"],
                 "liga": t["liga"],
                 "paarung": t["paarung"],
                 "ort": t["ort"],
+                "halle": t["halle_name"],
                 "koordinaten": t["koordinaten"],
                 "gespann": t["gespann"],
                 "halle_erkannt": t["halle_erkannt"],
                 "vergangen": t["vergangen"],
                 "aenderung": t.get("aenderung"),
+                "hinweis": t.get("hinweis"),
             } for t in p["termine"]],
         } for p in personen],
+        # Gesamtuebersicht: jedes Spiel einmal, fuer den Spielplan nach Tagen
+        "spiele": [{
+            "beginn": s["anstoss"].isoformat(),
+            "treffpunkt": s["treffpunkt"].isoformat(),
+            "liga": s["liga"],
+            "paarung": s["paarung"],
+            "halle": s["halle_name"],
+            "ort": s["ort"],
+            "halle_erkannt": s["halle_erkannt"],
+            "system": s["system"],
+            "besetzung": s["besetzung"],
+            "vergangen": s["vergangen"],
+        } for s in uebersicht],
     }
     with open(os.path.join(ziel, "daten.json"), "w", encoding="utf-8") as f:
         json.dump(daten, f, ensure_ascii=False, indent=1)
+
+    # Saisonliste je Person aus dem Archiv - getrennt von daten.json, weil sie
+    # ueber die Saison waechst und nur beim Aufklappen gebraucht wird.
+    archiv = {}
+    for p in personen:
+        s = stats.get(p["schluessel"])
+        if s and s["spiele_saison"]:
+            archiv[p["slug"]] = sorted(s["spiele_saison"],
+                                       key=lambda x: x["beginn"], reverse=True)
+    with open(os.path.join(ziel, "archiv.json"), "w", encoding="utf-8") as f:
+        json.dump({"saison": saison, "personen": archiv}, f, ensure_ascii=False, indent=1)
 
     # Der Zeitpunkt des Laufs steht bewusst in einer eigenen, winzigen Datei.
     # Sonst gaebe es allein deswegen bei jedem Lauf eine Aenderung an der

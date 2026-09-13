@@ -14,11 +14,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260912T093000Z
 DTEND:20260912T130000Z
-SUMMARY:(L)SR · U13 FS · Dinslakener Kobras – TuS Wiehl
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 12:30 Uhr\nTreffpunk
- t: 11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 FS\nHalle: Eissporthalle 
- Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Schmidt\, Wa
- ldemar\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U13 FS · Dinslakener Kobras – TuS Wiehl
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
+  11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 FS\nHalle: Eissporthalle Di
+ nslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Schmidt\, Wald
+ emar\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -35,11 +35,11 @@ DTSTAMP:20260909T170129Z
 LAST-MODIFIED:20260909T170129Z
 DTSTART:20260913T140000Z
 DTEND:20260913T173000Z
-SUMMARY:(L)SR · U13 FS · Krefelder EV – Löwen Frankfurt
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 17:00 Uhr\nTreffpunk
- t: 16:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 FS\nHalle: Rheinlandhalle
-  Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Beckford\
- , Emanuel\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U13 FS · Krefelder EV – Löwen Frankfurt
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:00 Uhr\nTreffpunkt:
+  16:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 FS\nHalle: Rheinlandhalle K
+ refeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Beckford\, 
+ Emanuel\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -51,8 +51,35 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · U13 FS · Krefelder EV 
- – Löwen Frankfurt
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 FS · Krefelder EV –
+  Löwen Frankfurt
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:e79c662556133b839de49ec258caadc78eed6f3a@esrw.de
+SEQUENCE:0
+DTSTAMP:20260913T052816Z
+LAST-MODIFIED:20260913T052816Z
+DTSTART:20260920T063000Z
+DTEND:20260920T100000Z
+SUMMARY:SR · U15 RLB · Herner EV – EV Duisburg
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
+  08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Gysenberghalle 
+ Herne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Hindley\, David\n
+ \nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Gysenberghalle Herne\, Am Revierpark 22\, 44627 Herne
+GEO:51.532602;7.254372
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
+ evierpark 22, 44627 Herne";X-APPLE-RADIUS=100;X-TITLE="Gysenberghalle Hern
+ e":geo:51.532602,7.254372
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB · Herner EV – E
+ V Duisburg
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
