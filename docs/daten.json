@@ -328,7 +328,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     }
@@ -4864,7 +4864,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     }
@@ -8174,7 +8174,7 @@
      "slug": "rieneck-maximilian"
     }
    ],
-   "vergangen": false
+   "vergangen": true
   },
   {
    "beginn": "2026-09-13T18:30:00+02:00",
