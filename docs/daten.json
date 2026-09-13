@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 98,
+ "spiele_gesamt": 97,
  "saison": "2026/27",
  "archiv_spiele": 113,
  "rollen": {
@@ -1048,31 +1048,6 @@
     "letzte": "2026-09-20"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-06T09:00:00+02:00",
-     "treffpunkt": "2026-09-06T08:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U13 RLA",
-     "paarung": "Iserlohner EC – Düsseldorfer EG",
-     "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
-     "halle": "Eissporthalle am Seilersee",
-     "koordinaten": [
-      51.384598,
-      7.713829
-     ],
-     "gespann": [
-      {
-       "name": "Schöche, Gian-Carlo",
-       "slug": "schoeche-gian-carlo",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null
-    },
     {
      "beginn": "2026-09-06T12:00:00+02:00",
      "treffpunkt": "2026-09-06T11:00:00+02:00",
@@ -5825,31 +5800,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-06T09:00:00+02:00",
-     "treffpunkt": "2026-09-06T08:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U13 RLA",
-     "paarung": "Iserlohner EC – Düsseldorfer EG",
-     "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
-     "halle": "Eissporthalle am Seilersee",
-     "koordinaten": [
-      51.384598,
-      7.713829
-     ],
-     "gespann": [
-      {
-       "name": "Garbsch, René",
-       "slug": "garbsch-rene",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null
-    },
-    {
      "beginn": "2026-09-06T12:00:00+02:00",
      "treffpunkt": "2026-09-06T11:00:00+02:00",
      "rolle": "SR",
@@ -7871,29 +7821,6 @@
   }
  ],
  "spiele": [
-  {
-   "beginn": "2026-09-06T09:00:00+02:00",
-   "treffpunkt": "2026-09-06T08:00:00+02:00",
-   "liga": "U13 RLA",
-   "paarung": "Iserlohner EC – Düsseldorfer EG",
-   "halle": "Eissporthalle am Seilersee",
-   "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Garbsch, René",
-     "rolle": "SR",
-     "slug": "garbsch-rene"
-    },
-    {
-     "name": "Schöche, Gian-Carlo",
-     "rolle": "SR",
-     "slug": "schoeche-gian-carlo"
-    }
-   ],
-   "vergangen": true
-  },
   {
    "beginn": "2026-09-06T09:45:00+02:00",
    "treffpunkt": "2026-09-06T08:45:00+02:00",

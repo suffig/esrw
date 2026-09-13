@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:ee567f1452439ff4f13ed070a1ac0ab6461822a7@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260906T060000Z
-DTEND:20260906T093000Z
-SUMMARY:U13 RLA · Iserlohner EC – Düsseldorfer EG
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
-  08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLA\nHalle: Eissporthalle a
- m Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Schöch
- e\, Gian-Carlo\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
-GEO:51.384598;7.713829
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
- , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
- alle am Seilersee":geo:51.384598,7.713829
-END:VEVENT
-BEGIN:VEVENT
 UID:8d0ca869437ea068acb1e4b1766042c6df1a4ea7@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z
