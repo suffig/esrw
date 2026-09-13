@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 93,
+ "spiele_gesamt": 92,
  "saison": "2026/27",
  "archiv_spiele": 113,
  "rollen": {
@@ -110,31 +110,6 @@
     "letzte": "2026-09-19"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-06T12:30:00+02:00",
-     "treffpunkt": "2026-09-06T11:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U15 FS",
-     "paarung": "Herforder EV – REV Bremerhaven",
-     "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-     "halle": "Eishalle Im Kleinen Felde",
-     "koordinaten": [
-      52.114893,
-      8.652028
-     ],
-     "gespann": [
-      {
-       "name": "Zynda, Nick",
-       "slug": "zynda-nick",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null
-    },
     {
      "beginn": "2026-09-06T15:00:00+02:00",
      "treffpunkt": "2026-09-06T14:00:00+02:00",
@@ -4504,7 +4479,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     },
@@ -6407,7 +6382,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     }
@@ -7111,7 +7086,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     },
@@ -7474,7 +7449,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     },
@@ -7542,31 +7517,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-06T12:30:00+02:00",
-     "treffpunkt": "2026-09-06T11:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U15 FS",
-     "paarung": "Herforder EV – REV Bremerhaven",
-     "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-     "halle": "Eishalle Im Kleinen Felde",
-     "koordinaten": [
-      52.114893,
-      8.652028
-     ],
-     "gespann": [
-      {
-       "name": "Berger, Eugen",
-       "slug": "berger-eugen",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null
-    },
-    {
      "beginn": "2026-09-06T15:00:00+02:00",
      "treffpunkt": "2026-09-06T14:00:00+02:00",
      "rolle": "SR",
@@ -7620,29 +7570,6 @@
   }
  ],
  "spiele": [
-  {
-   "beginn": "2026-09-06T12:30:00+02:00",
-   "treffpunkt": "2026-09-06T11:30:00+02:00",
-   "liga": "U15 FS",
-   "paarung": "Herforder EV – REV Bremerhaven",
-   "halle": "Eishalle Im Kleinen Felde",
-   "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Berger, Eugen",
-     "rolle": "SR",
-     "slug": "berger-eugen"
-    },
-    {
-     "name": "Zynda, Nick",
-     "rolle": "SR",
-     "slug": "zynda-nick"
-    }
-   ],
-   "vergangen": true
-  },
   {
    "beginn": "2026-09-06T14:00:00+02:00",
    "treffpunkt": "2026-09-06T13:00:00+02:00",
@@ -8520,7 +8447,7 @@
      "slug": "vorgeitz-benny"
     }
    ],
-   "vergangen": false
+   "vergangen": true
   },
   {
    "beginn": "2026-09-13T12:30:00+02:00",
@@ -8543,7 +8470,7 @@
      "slug": "zynda-jayden"
     }
    ],
-   "vergangen": false
+   "vergangen": true
   },
   {
    "beginn": "2026-09-13T13:00:00+02:00",
