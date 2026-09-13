@@ -8,69 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:75c4836ddd26cbe4ef6b22c6360854e72eddbe26@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260906T114500Z
-DTEND:20260906T151500Z
-SUMMARY:U15 RLB · Kölner Junghaie 1b – EV Duisburg
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:45 Uhr\nTreffpunkt:
-  13:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Kölnarena 2\nA
- dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Rieneck\, Maximili
- an\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
-GEO:50.937979;6.98935
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
- r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
- .937979,6.98935
-END:VEVENT
-BEGIN:VEVENT
-UID:c25a3957b0fecd860e48f5551729317c8f261864@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260906T120000Z
-DTEND:20260906T153000Z
-SUMMARY:U20 FS · Herforder EV – Eisadler Dortmund
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 15:00 Uhr\nTreffpunkt:
-  14:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 FS\nHalle: Eishalle Im Klei
- nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Zynda\, Nic
- k\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eishalle Im Kleinen Felde\, Im Kleinen Felde\, 32051 Herford
-GEO:52.114893;8.652028
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
-  Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
- Kleinen Felde":geo:52.114893,8.652028
-END:VEVENT
-BEGIN:VEVENT
-UID:3282bf62e9e06557f24bed41c7b6efa4c7033ac3@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260906T120000Z
-DTEND:20260906T153000Z
-SUMMARY:U13 RLB · EHC Troisdorf – EV Duisburg
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 15:00 Uhr\nTreffpunkt:
-  14:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: ICEDOME Troisdo
- rf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Starke\, 
- Matthias\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
-GEO:50.811945;7.109233
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
- rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
- isdorf":geo:50.811945,7.109233
-END:VEVENT
-BEGIN:VEVENT
 UID:1e0a5c8300d5ddad3dd5dbcbc264e37df6fcbd6b@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z
@@ -873,12 +810,6 @@ GEO:50.937979;6.98935
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
  r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
  .937979,6.98935
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U11 RL · Kölner Junghaie – K
- ölnarena 2
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:cc8b7e55f5091d37a5666f2c1807a988018a3227@esrw.de
@@ -900,12 +831,6 @@ GEO:50.811945;7.109233
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
  rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
  isdorf":geo:50.811945,7.109233
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U13 LL · EHC Troisdorf 1b – M
- ädchen W.I.N. 1 Troisdorf
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:d0d75a99dc58ea9aa9c50038cee7d255ef022fa6@esrw.de
@@ -927,11 +852,6 @@ GEO:51.49525;7.458288
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
   Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
  rum Westfalen":geo:51.49525,7.458288
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - DA FS · Finale -
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:8dccb4f99c125c537667d4b03c6dfe15e9148a11@esrw.de

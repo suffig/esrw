@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 91,
+ "spiele_gesamt": 88,
  "saison": "2026/27",
  "archiv_spiele": 113,
  "rollen": {
@@ -110,31 +110,6 @@
     "letzte": "2026-09-19"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-06T15:00:00+02:00",
-     "treffpunkt": "2026-09-06T14:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U20 FS",
-     "paarung": "Herforder EV – Eisadler Dortmund",
-     "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-     "halle": "Eishalle Im Kleinen Felde",
-     "koordinaten": [
-      52.114893,
-      8.652028
-     ],
-     "gespann": [
-      {
-       "name": "Zynda, Nick",
-       "slug": "zynda-nick",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null
-    },
     {
      "beginn": "2026-09-12T10:00:00+02:00",
      "treffpunkt": "2026-09-12T09:00:00+02:00",
@@ -277,31 +252,6 @@
     "letzte": "2026-09-12"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-06T15:00:00+02:00",
-     "treffpunkt": "2026-09-06T14:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U13 RLB",
-     "paarung": "EHC Troisdorf – EV Duisburg",
-     "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-     "halle": "ICEDOME Troisdorf",
-     "koordinaten": [
-      50.811945,
-      7.109233
-     ],
-     "gespann": [
-      {
-       "name": "Starke, Matthias",
-       "slug": "starke-matthias",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null
-    },
     {
      "beginn": "2026-09-12T12:00:00+02:00",
      "treffpunkt": "2026-09-12T11:00:00+02:00",
@@ -1769,7 +1719,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     },
@@ -2289,7 +2239,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     },
@@ -2415,7 +2365,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     },
@@ -2558,7 +2508,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     },
@@ -4093,31 +4043,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-06T14:45:00+02:00",
-     "treffpunkt": "2026-09-06T13:45:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U15 RLB",
-     "paarung": "Kölner Junghaie 1b – EV Duisburg",
-     "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
-     "halle": "Kölnarena 2",
-     "koordinaten": [
-      50.937979,
-      6.98935
-     ],
-     "gespann": [
-      {
-       "name": "Rieneck, Maximilian",
-       "slug": "rieneck-maximilian",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null
-    },
-    {
      "beginn": "2026-09-06T17:30:00+02:00",
      "treffpunkt": "2026-09-06T16:30:00+02:00",
      "rolle": "SR",
@@ -5036,31 +4961,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-06T14:45:00+02:00",
-     "treffpunkt": "2026-09-06T13:45:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U15 RLB",
-     "paarung": "Kölner Junghaie 1b – EV Duisburg",
-     "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
-     "halle": "Kölnarena 2",
-     "koordinaten": [
-      50.937979,
-      6.98935
-     ],
-     "gespann": [
-      {
-       "name": "Moritz, Alexander",
-       "slug": "moritz-alexander",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null
-    },
-    {
      "beginn": "2026-09-06T17:30:00+02:00",
      "treffpunkt": "2026-09-06T16:30:00+02:00",
      "rolle": "SR",
@@ -5939,7 +5839,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     },
@@ -6090,31 +5990,6 @@
     "letzte": "2026-09-20"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-06T15:00:00+02:00",
-     "treffpunkt": "2026-09-06T14:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U13 RLB",
-     "paarung": "EHC Troisdorf – EV Duisburg",
-     "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-     "halle": "ICEDOME Troisdorf",
-     "koordinaten": [
-      50.811945,
-      7.109233
-     ],
-     "gespann": [
-      {
-       "name": "Bocklemünd, Cid",
-       "slug": "bocklemuend-cid",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null
-    },
     {
      "beginn": "2026-09-13T17:30:00+02:00",
      "treffpunkt": "2026-09-13T16:30:00+02:00",
@@ -7224,7 +7099,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     }
@@ -7467,31 +7342,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-06T15:00:00+02:00",
-     "treffpunkt": "2026-09-06T14:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U20 FS",
-     "paarung": "Herforder EV – Eisadler Dortmund",
-     "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-     "halle": "Eishalle Im Kleinen Felde",
-     "koordinaten": [
-      52.114893,
-      8.652028
-     ],
-     "gespann": [
-      {
-       "name": "Berger, Eugen",
-       "slug": "berger-eugen",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null
-    },
-    {
      "beginn": "2026-09-19T16:15:00+02:00",
      "treffpunkt": "2026-09-19T15:15:00+02:00",
      "rolle": "SR",
@@ -7520,75 +7370,6 @@
   }
  ],
  "spiele": [
-  {
-   "beginn": "2026-09-06T14:45:00+02:00",
-   "treffpunkt": "2026-09-06T13:45:00+02:00",
-   "liga": "U15 RLB",
-   "paarung": "Kölner Junghaie 1b – EV Duisburg",
-   "halle": "Kölnarena 2",
-   "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Rieneck, Maximilian",
-     "rolle": "SR",
-     "slug": "rieneck-maximilian"
-    },
-    {
-     "name": "Moritz, Alexander",
-     "rolle": "SR",
-     "slug": "moritz-alexander"
-    }
-   ],
-   "vergangen": true
-  },
-  {
-   "beginn": "2026-09-06T15:00:00+02:00",
-   "treffpunkt": "2026-09-06T14:00:00+02:00",
-   "liga": "U13 RLB",
-   "paarung": "EHC Troisdorf – EV Duisburg",
-   "halle": "ICEDOME Troisdorf",
-   "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Bocklemünd, Cid",
-     "rolle": "SR",
-     "slug": "bocklemuend-cid"
-    },
-    {
-     "name": "Starke, Matthias",
-     "rolle": "SR",
-     "slug": "starke-matthias"
-    }
-   ],
-   "vergangen": true
-  },
-  {
-   "beginn": "2026-09-06T15:00:00+02:00",
-   "treffpunkt": "2026-09-06T14:00:00+02:00",
-   "liga": "U20 FS",
-   "paarung": "Herforder EV – Eisadler Dortmund",
-   "halle": "Eishalle Im Kleinen Felde",
-   "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Berger, Eugen",
-     "rolle": "SR",
-     "slug": "berger-eugen"
-    },
-    {
-     "name": "Zynda, Nick",
-     "rolle": "SR",
-     "slug": "zynda-nick"
-    }
-   ],
-   "vergangen": true
-  },
   {
    "beginn": "2026-09-06T17:00:00+02:00",
    "treffpunkt": "2026-09-06T16:00:00+02:00",
@@ -8466,7 +8247,7 @@
      "slug": "hoffmann-jan"
     }
    ],
-   "vergangen": false
+   "vergangen": true
   },
   {
    "beginn": "2026-09-13T15:00:00+02:00",
@@ -8489,7 +8270,7 @@
      "slug": "warnke-christoph"
     }
    ],
-   "vergangen": false
+   "vergangen": true
   },
   {
    "beginn": "2026-09-13T15:00:00+02:00",
@@ -8512,7 +8293,7 @@
      "slug": "hofer-carsten"
     }
    ],
-   "vergangen": false
+   "vergangen": true
   },
   {
    "beginn": "2026-09-13T17:00:00+02:00",

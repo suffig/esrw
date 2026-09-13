@@ -431,18 +431,6 @@
   "titel": "SR · U17 I · Düsseldorfer EG – Iserlohner EC",
   "treffpunkt": "2026-09-13T13:00:00+02:00"
  },
- "29f050c0c2ce8803efa3ad74c6b58bc6a5437489@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-06T15:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "1af7b03eaffd45bb42b5426d6a82765bd9fb5ba1",
-  "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-  "sequence": 0,
-  "slug": "starke-matthias",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U13 RLB · EHC Troisdorf – EV Duisburg",
-  "treffpunkt": "2026-09-06T14:00:00+02:00"
- },
  "2aa89c863fcc48407a537fc70699d29f0cd716ce@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-12T12:00:00+02:00",
@@ -971,18 +959,6 @@
   "titel": "HSR · RL FS · Ratinger Ice Aliens – Herner EV",
   "treffpunkt": "2026-09-11T19:00:00+02:00"
  },
- "6a0c6184f736a1ede541089f2d599fa5555f1a50@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-06T14:45:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "b9917bef1b88b2909304fa89750de0e7cb511dfa",
-  "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
-  "sequence": 0,
-  "slug": "rieneck-maximilian",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U15 RLB · Kölner Junghaie 1b – EV Duisburg",
-  "treffpunkt": "2026-09-06T13:45:00+02:00"
- },
  "6a2bc7f5b43de114dcf76ac2dde902cf41d3c7f1@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-12T11:00:00+02:00",
@@ -1006,18 +982,6 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "SR · U17 FS · Dinslakener Kobras – Düsseldorfer EG U15",
   "treffpunkt": "2026-09-13T11:30:00+02:00"
- },
- "702921862236a0eedca4327c6deef04376bc62f2@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-06T15:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "546b0be90149978b7abb95b1f2b5bd937c01db77",
-  "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-  "sequence": 0,
-  "slug": "berger-eugen",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U20 FS · Herforder EV – Eisadler Dortmund",
-  "treffpunkt": "2026-09-06T14:00:00+02:00"
  },
  "75cc53519bee8aa9b2d7ec3b213c8b1a87266736@esrw.de": {
   "aenderung": null,
@@ -1162,18 +1126,6 @@
   "stempel": "2026-09-11T15:00:47.546895+00:00",
   "titel": "SR · U17 I · Iserlohner EC – ES Weißwasser",
   "treffpunkt": "2026-09-19T11:00:00+02:00"
- },
- "7e126e2e86e8e7ece698be616ad221b6f176e3cc@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-06T15:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "546b0be90149978b7abb95b1f2b5bd937c01db77",
-  "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-  "sequence": 0,
-  "slug": "zynda-nick",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U20 FS · Herforder EV – Eisadler Dortmund",
-  "treffpunkt": "2026-09-06T14:00:00+02:00"
  },
  "806715797025cedb7d8e104280d15f7a906038f2@esrw.de": {
   "aenderung": null,
@@ -1474,18 +1426,6 @@
   "stempel": "2026-09-11T15:00:47.546895+00:00",
   "titel": "SR · U15 RLB · Herner EV – EV Duisburg",
   "treffpunkt": "2026-09-20T08:30:00+02:00"
- },
- "9d4b22767a94b0a1e756ab212e8d9a08cdf3b060@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-06T15:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "1af7b03eaffd45bb42b5426d6a82765bd9fb5ba1",
-  "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-  "sequence": 0,
-  "slug": "bocklemuend-cid",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U13 RLB · EHC Troisdorf – EV Duisburg",
-  "treffpunkt": "2026-09-06T14:00:00+02:00"
  },
  "a0c72d02216923a43889b1a67f005c4651688e81@esrw.de": {
   "aenderung": null,
@@ -1858,18 +1798,6 @@
   "stempel": "2026-09-11T15:00:47.546895+00:00",
   "titel": "SR · U9 LL Rot · Krefelder EV 1b -",
   "treffpunkt": "2026-09-20T13:00:00+02:00"
- },
- "cc31c0e7d2bd3c2eba93be7c7c85d36e28838e77@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-06T14:45:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "b9917bef1b88b2909304fa89750de0e7cb511dfa",
-  "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
-  "sequence": 0,
-  "slug": "moritz-alexander",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U15 RLB · Kölner Junghaie 1b – EV Duisburg",
-  "treffpunkt": "2026-09-06T13:45:00+02:00"
  },
  "ce557fae9c6496c443ec68774a2e44948df32338@esrw.de": {
   "aenderung": null,
