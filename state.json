@@ -371,18 +371,6 @@
   "titel": "SR · U13 RLB · Herforder EV – EHC Troisdorf",
   "treffpunkt": "2026-09-19T12:30:00+02:00"
  },
- "27e5fbd97f31fda6590196bc79b417300486b33b@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-06T12:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "415ca709a58b62b0ac16e3b10693476a4bfb9597",
-  "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
-  "sequence": 0,
-  "slug": "schoeche-gian-carlo",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U17 I · Iserlohner EC – Krefelder EV",
-  "treffpunkt": "2026-09-06T11:00:00+02:00"
- },
  "27f468207fc77cf30e66cb6db36c1fad1dbbdb04@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-20T19:00:00+02:00",
@@ -574,18 +562,6 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "SR · LL FS · EHC Troisdorf – TuS Wiehl",
   "treffpunkt": "2026-09-12T18:30:00+02:00"
- },
- "372ff3b3d3092d944ee00cc6e45942a1e5e1d4b1@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-06T12:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "415ca709a58b62b0ac16e3b10693476a4bfb9597",
-  "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
-  "sequence": 0,
-  "slug": "garbsch-rene",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U17 I · Iserlohner EC – Krefelder EV",
-  "treffpunkt": "2026-09-06T11:00:00+02:00"
  },
  "373149eda9694e40a62202da450f2bfe94d983e1@esrw.de": {
   "aenderung": null,
@@ -2051,18 +2027,6 @@
   "titel": "SR · U13 RLB · Herner EV – Düsseldorfer EG 1b",
   "treffpunkt": "2026-09-20T15:30:00+02:00"
  },
- "db7d335507e573e09fb21a7ac5a8fbf69640fea1@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-06T11:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "dd27f45734fcb3de51f2f8fb7c1866f6b084d10e",
-  "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
-  "sequence": 0,
-  "slug": "heffler-philipp",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U17 I · Düsseldorfer EG – Eisbären Juniors Berlin",
-  "treffpunkt": "2026-09-06T10:00:00+02:00"
- },
  "dbeb5417849cd8a4c25f6fad4127c89b8be54876@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-13T10:00:00+02:00",
@@ -2290,18 +2254,6 @@
   "stempel": "2026-09-11T15:00:47.546895+00:00",
   "titel": "SR · LL FS · Eisadler Dortmund 1b – EHC Troisdorf",
   "treffpunkt": "2026-09-20T18:00:00+02:00"
- },
- "fe5825d6fb07398e114c90177e3c446ad8d9fb61@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-06T11:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "dd27f45734fcb3de51f2f8fb7c1866f6b084d10e",
-  "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
-  "sequence": 0,
-  "slug": "steven-patrick",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U17 I · Düsseldorfer EG – Eisbären Juniors Berlin",
-  "treffpunkt": "2026-09-06T10:00:00+02:00"
  },
  "ff45c81ff24eda4dd408b8f5ebd299e0beea1851@esrw.de": {
   "aenderung": null,
