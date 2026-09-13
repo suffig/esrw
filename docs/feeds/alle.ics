@@ -784,19 +784,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:791faf44664d6be323c7951fc3f51591f921cf05@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T055630Z
 LAST-MODIFIED:20260911T055630Z
-DTSTART:20260913T061500Z
-DTEND:20260913T094500Z
-SUMMARY:DA FS · NEV/BW – Sachsen/Berlin
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 09:15 Uhr\nTreffpunk
- t: 08:15 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissportzentrum
-  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Melchert\,
-  Philipp\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260913T061500Z
 DTEND:20260913T094500Z
 SUMMARY:DA FS · NEV/BW – Sachsen/Berlin
@@ -804,7 +793,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:15 Uhr\nTreffpunkt:
   08:15 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissportzentrum W
  estfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Melchert\, P
  hilipp\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -937,17 +925,10 @@ LAST-MODIFIED:20260909T170129Z
 DTSTART:20260913T080000Z
 DTEND:20260913T113000Z
 SUMMARY:DA FS · NRW – Hessen
-<<<<<<< HEAD
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 11:00 Uhr\nTreffpunk
- t: 10:00 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissportzentrum
-  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Melchert\,
-  Philipp\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:00 Uhr\nTreffpunkt:
   10:00 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissportzentrum W
  estfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Melchert\, P
  hilipp\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1368,19 +1349,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:6ece8d060cebd889c918ea4ae5b0ddd1b7795dee@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260918T163000Z
-DTEND:20260918T200000Z
-SUMMARY:U13 LL · EV Duisburg 1b – Ratinger Ice Aliens
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:30 Uhr\nTreffpunk
- t: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: PreZero Rheinl
- andhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann
- : Victor\, Tobias (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260918T163000Z
 DTEND:20260918T200000Z
 SUMMARY:U13 LL · EV Duisburg 1b – Ratinger Ice Aliens
@@ -1388,7 +1358,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
   18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: PreZero Rheinlan
  dhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: 
  Victor\, Tobias (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1408,19 +1377,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:2b9b4dc19ec1dfa6aebfb4528cdb8ae7e0016d06@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260918T170000Z
-DTEND:20260918T203000Z
-SUMMARY:RL FS · Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 20:00 Uhr\nTreffpunk
- t: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthalle R
- atingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Steven\, Patri
- ck / Garcia Nieto\, Dario\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260918T170000Z
 DTEND:20260918T203000Z
 SUMMARY:RL FS · Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!
@@ -1429,7 +1387,6 @@ DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
  ingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Steven\, Patrick
   (HSR) / Garcia Nieto\, Dario (LSR)\n\nQuelle: https://www.esrw.de/einteil
  ungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1448,19 +1405,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:845e551c0e9616a339155acb5be34801cf87119d@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260918T170000Z
-DTEND:20260918T203000Z
-SUMMARY:RL FS · Eisadler Dortmund – Bulldogs de Liege
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 20:00 Uhr\nTreffpunk
- t: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissportzentrum
-  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Müller\, 
- Lars / Malik\, Orlando\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260918T170000Z
 DTEND:20260918T203000Z
 SUMMARY:RL FS · Eisadler Dortmund – Bulldogs de Liege
@@ -1469,7 +1415,6 @@ DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
  estfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Müller\, La
  rs (HSR) / Malik\, Orlando (LSR)\n\nQuelle: https://www.esrw.de/einteilung
  en.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1488,19 +1433,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:5002f1725fb4160c812f27a03230c1050d58c30a@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260918T170000Z
-DTEND:20260918T203000Z
-SUMMARY:BL FS · EHC Essen Ruhr – Herner EV 1b
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 20:00 Uhr\nTreffpunk
- t: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: BL FS\nHalle: Eissporthalle E
- ssen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Strube\, Julia\n
- \nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260918T170000Z
 DTEND:20260918T203000Z
 SUMMARY:BL FS · EHC Essen Ruhr – Herner EV 1b
@@ -1508,7 +1442,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
   19:00 Uhr (60 Min vor Spielbeginn)\nLiga: BL FS\nHalle: Eissporthalle Ess
  en-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Strube\, Julia\n\n
  Quelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1527,25 +1460,16 @@ END:VEVENT
 BEGIN:VEVENT
 UID:fed849658b955c9a67801ff0720319e05b27feef@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 DTSTART:20260918T171500Z
 DTEND:20260918T204500Z
 SUMMARY:RL FS · Dinslakener Kobras – Grefrather EG
 DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:15 Uhr\nTreff
  punkt: 19:15 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthal
  le Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Hofer\, C
-<<<<<<< HEAD
- arsten / Lindemans\, Pepe\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
  arsten (LSR) / Lindemans\, Pepe (LSR)\n\nQuelle: https://www.esrw.de/einte
  ilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1564,19 +1488,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:1aa32a29b68fe89493f639d4e88a05d0265558dc@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260918T171500Z
-DTEND:20260918T204500Z
-SUMMARY:U15 RLB · EHC Troisdorf – EV Duisburg
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 20:15 Uhr\nTreffpunk
- t: 19:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: ICEDOME Trois
- dorf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Starke\
- , Matthias\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260918T171500Z
 DTEND:20260918T204500Z
 SUMMARY:U15 RLB · EHC Troisdorf – EV Duisburg
@@ -1584,7 +1497,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
   19:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: ICEDOME Troisdo
  rf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Starke\, 
  Matthias\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1603,19 +1515,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:b08f4d58f637b32c3248e76d4c538ba7a43dce0d@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260919T070000Z
-DTEND:20260919T103000Z
-SUMMARY:U17 RL · Herforder EV – Eisadler Dortmund
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 10:00 Uhr\nTreffpunk
- t: 09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eishalle Im Kl
- einen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Brücker\
- , Tobias\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260919T070000Z
 DTEND:20260919T103000Z
 SUMMARY:U17 RL · Herforder EV – Eisadler Dortmund
@@ -1623,7 +1524,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
   09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eishalle Im Klei
  nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Brücker\, 
  Tobias\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1642,19 +1542,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:3a0ffe6c4a708885347935d73c37cbef4a54d7ac@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260919T070000Z
-DTEND:20260919T103000Z
-SUMMARY:U9 RL · EHC Troisdorf -
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 10:00 Uhr\nTreffpunk
- t: 09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: ICEDOME Troisdo
- rf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Solbach\,
-  Carsten\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260919T070000Z
 DTEND:20260919T103000Z
 SUMMARY:U9 RL · EHC Troisdorf -
@@ -1662,7 +1551,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
   09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: ICEDOME Troisdorf
  \nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Solbach\, C
  arsten\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1680,19 +1568,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:72f7299cddef2b69a78a8134d9c370aad80e22d0@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260919T073000Z
-DTEND:20260919T110000Z
-SUMMARY:U15 LL · Lippe Hockey Hamm – SpG Neusser EV / GSC Moers
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 10:30 Uhr\nTreffpunk
- t: 09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: HELINET Eisspo
- rtarena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Klem
- m\, Julian\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260919T073000Z
 DTEND:20260919T110000Z
 SUMMARY:U15 LL · Lippe Hockey Hamm – SpG Neusser EV / GSC Moers
@@ -1700,7 +1577,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
   09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: HELINET Eissport
  arena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Klemm\
  , Julian\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1719,19 +1595,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:76d8385d94554db85a799d78aefeaf9ea5693257@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260919T090000Z
-DTEND:20260919T123000Z
-SUMMARY:U17 I · Iserlohner EC – ES Weißwasser
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 12:00 Uhr\nTreffpunk
- t: 11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eissporthalle a
- m Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Vorgeit
- z\, Benny\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260919T090000Z
 DTEND:20260919T123000Z
 SUMMARY:U17 I · Iserlohner EC – ES Weißwasser
@@ -1739,7 +1604,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
   11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eissporthalle am 
  Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Vorgeitz\
  , Benny\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1758,19 +1622,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:3b7978b6b96906d5a39f1e5af73da947ce3f61e0@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260919T091500Z
-DTEND:20260919T124500Z
-SUMMARY:U11 RL · Iserlohner EC -
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 12:15 Uhr\nTreffpunk
- t: 11:15 Uhr (60 Min vor Spielbeginn)\nLiga: U11 RL\nHalle: Eissporthalle 
- am Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Malik\
- , Orlando\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260919T091500Z
 DTEND:20260919T124500Z
 SUMMARY:U11 RL · Iserlohner EC -
@@ -1778,7 +1631,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:15 Uhr\nTreffpunkt:
   11:15 Uhr (60 Min vor Spielbeginn)\nLiga: U11 RL\nHalle: Eissporthalle am
   Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Malik\, 
  Orlando\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1796,19 +1648,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:7770f4f59cd902a275b331ed4b03cc35e4defbda@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260919T103000Z
-DTEND:20260919T140000Z
-SUMMARY:U13 RLB · Herforder EV – EHC Troisdorf
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 13:30 Uhr\nTreffpunk
- t: 12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Eishalle Im K
- leinen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Brücker
- \, Tobias\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260919T103000Z
 DTEND:20260919T140000Z
 SUMMARY:U13 RLB · Herforder EV – EHC Troisdorf
@@ -1816,7 +1657,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
   12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Eishalle Im Kle
  inen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Brücker\,
   Tobias\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1835,19 +1675,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:a8f0f9dac2cca5ca9be16b7b85de138b50ab00cf@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260919T103000Z
-DTEND:20260919T140000Z
-SUMMARY:DEFL 2 FS · Düsseldorfer EG – NL U18
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 13:30 Uhr\nTreffpunk
- t: 12:30 Uhr (60 Min vor Spielbeginn)\nLiga: DEFL 2 FS\nHalle: Eishalle Br
- ehmstraße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Vorgei
- tz\, Benny\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260919T103000Z
 DTEND:20260919T140000Z
 SUMMARY:DEFL 2 FS · Düsseldorfer EG – NL U18
@@ -1855,7 +1684,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
   12:30 Uhr (60 Min vor Spielbeginn)\nLiga: DEFL 2 FS\nHalle: Eishalle Breh
  mstraße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Vorgeitz
  \, Benny\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1874,19 +1702,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:be67eb76e3f4b07857dd99a99e7561304e744bbe@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260919T103000Z
-DTEND:20260919T140000Z
-SUMMARY:U15 RLB · Krefelder EV 1b – EV Duisburg YAYLA Krefeld
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 13:30 Uhr\nTreffpunk
- t: 12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Rheinlandhall
- e Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Schmidt\
- , Waldemar\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260919T103000Z
 DTEND:20260919T140000Z
 SUMMARY:U15 RLB · Krefelder EV 1b – EV Duisburg YAYLA Krefeld
@@ -1894,7 +1711,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
   12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Rheinlandhalle 
  Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Schmidt\, 
  Waldemar\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1913,19 +1729,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:012c3fb9855bfe72e894a67991408baf264fe4ba@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260919T103000Z
-DTEND:20260919T140000Z
-SUMMARY:U20 FS · Eisadler Dortmund – EHC Troisdorf
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 13:30 Uhr\nTreffpunk
- t: 12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 FS\nHalle: Eissportzentru
- m Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Pacalaj\,
-  Erik\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260919T103000Z
 DTEND:20260919T140000Z
 SUMMARY:U20 FS · Eisadler Dortmund – EHC Troisdorf
@@ -1933,7 +1738,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
   12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 FS\nHalle: Eissportzentrum 
  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Pacalaj\, E
  rik\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1952,20 +1756,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:d17598a86c434fba1e857d31cef0b58cbdd6a4af@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260919T130000Z
-DTEND:20260919T163000Z
-SUMMARY:DNL III · EV Duisburg – SCC Adler Berlin
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 16:00 Uhr\nTreffpunk
- t: 15:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero Rhein
- landhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespan
- n: Meißner\, Nils / Schöche\, Gian-Carlo\n\nQuelle: https://www.esrw.de/
- einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260919T130000Z
 DTEND:20260919T163000Z
 SUMMARY:DNL III · EV Duisburg – SCC Adler Berlin
@@ -1974,7 +1766,6 @@ DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 16:00 Uhr\nTreffpunkt:
  ndhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann:
   Meißner\, Nils (HSR) / Schöche\, Gian-Carlo (LSR)\n\nQuelle: https://ww
  w.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1994,19 +1785,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:ea6a2214ffd0f8547c191c7fe6f297149d10fde3@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260919T131500Z
-DTEND:20260919T164500Z
-SUMMARY:U15 LL · Herforder EV – Ratinger Ice Aliens
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 16:15 Uhr\nTreffpunk
- t: 15:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eishalle Im Kl
- einen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Zynda\, N
- ick\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260919T131500Z
 DTEND:20260919T164500Z
 SUMMARY:U15 LL · Herforder EV – Ratinger Ice Aliens
@@ -2014,7 +1794,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:15 Uhr\nTreffpunkt:
   15:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eishalle Im Klei
  nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Zynda\, Nic
  k\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2033,19 +1812,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:a5f5f69752aa7f94c8bafa611b25347029108bed@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260919T133000Z
-DTEND:20260919T170000Z
-SUMMARY:U17 I · Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 16:30 Uhr\nTreffpunk
- t: 15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Rheinlandhalle 
- Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Schmidt\, 
- Waldemar\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260919T133000Z
 DTEND:20260919T170000Z
 SUMMARY:U17 I · Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld
@@ -2053,7 +1821,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
   15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Rheinlandhalle Kr
  efeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Schmidt\, Wa
  ldemar\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2072,19 +1839,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:d0ac9d6f6a74d86fdf614b3a88e8f3429b293e59@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260919T133000Z
-DTEND:20260919T170000Z
-SUMMARY:U17 I · Düsseldorfer EG – Kölner Junghaie
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 16:30 Uhr\nTreffpunk
- t: 15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eishalle Brehms
- traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Schmidt\, 
- Eugen\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260919T133000Z
 DTEND:20260919T170000Z
 SUMMARY:U17 I · Düsseldorfer EG – Kölner Junghaie
@@ -2092,7 +1848,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
   15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eishalle Brehmstr
  aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Schmidt\, Eu
  gen\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2111,19 +1866,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:cf9af34cde3faae2c30c36b468ca3d1e8f8087ec@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260919T163000Z
-DTEND:20260919T200000Z
-SUMMARY:U17 I · Iserlohner EC – ES Weißwasser
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:30 Uhr\nTreffpunk
- t: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eissporthalle a
- m Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: van Him
- beeck\, Frederic\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260919T163000Z
 DTEND:20260919T200000Z
 SUMMARY:U17 I · Iserlohner EC – ES Weißwasser
@@ -2131,7 +1875,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
   18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eissporthalle am 
  Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: van Himbe
  eck\, Frederic\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2150,19 +1893,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:10f366469bd4642adff7d42b21bee9ca1f88fc02@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260919T164500Z
-DTEND:20260919T201500Z
-SUMMARY:U15 RLA · Kölner Junghaie – Düsseldorfer EG
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:45 Uhr\nTreffpunk
- t: 18:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Kölnarena 2\
- nAdresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Leibfried\, Raph
- ael\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260919T164500Z
 DTEND:20260919T201500Z
 SUMMARY:U15 RLA · Kölner Junghaie – Düsseldorfer EG
@@ -2170,7 +1902,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:45 Uhr\nTreffpunkt:
   18:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Kölnarena 2\nA
  dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Leibfried\, Raphae
  l\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2189,19 +1920,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:1dd57a39c14c140e138e8a1649309ba4c5b34764@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260920T050000Z
-DTEND:20260920T083000Z
-SUMMARY:U11 LL Rot · Iserlohner EC 1b -
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 08:00 Uhr\nTreffpunk
- t: 07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Rot\nHalle: Eissportha
- lle am Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Vo
- rgeitz\, Benny\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260920T050000Z
 DTEND:20260920T083000Z
 SUMMARY:U11 LL Rot · Iserlohner EC 1b -
@@ -2209,7 +1929,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
   07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Rot\nHalle: Eissporthall
  e am Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Vorg
  eitz\, Benny\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2227,19 +1946,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:06774cae081f635b338327273d1ebc68505d382a@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260920T050000Z
-DTEND:20260920T083000Z
-SUMMARY:U13 BZL Gr.A · Eisadler Dortmund 1b – Mädchen W.I.N. 2
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 08:00 Uhr\nTreffpunk
- t: 07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\nHalle: Eissport
- zentrum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\n\nQuelle: ht
- tps://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260920T050000Z
 DTEND:20260920T083000Z
 SUMMARY:U13 BZL Gr.A · Eisadler Dortmund 1b – Mädchen W.I.N. 2
@@ -2247,7 +1955,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
   07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\nHalle: Eissportze
  ntrum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\n\nQuelle: http
  s://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2266,19 +1973,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:25f274c12f0a8b545f87ce843d19c79ad1c9fc0a@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260920T063000Z
-DTEND:20260920T100000Z
-SUMMARY:U15 RLB · Herner EV – EV Duisburg
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 09:30 Uhr\nTreffpunk
- t: 08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Gysenberghall
- e Herne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Kiefer\, Dennis
- \n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260920T063000Z
 DTEND:20260920T100000Z
 SUMMARY:U15 RLB · Herner EV – EV Duisburg
@@ -2286,7 +1982,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
   08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Gysenberghalle 
  Herne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Kiefer\, Dennis\n
  \nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2305,19 +2000,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:e0e9054db5637a4e665c8ba6454c980c9046e79e@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260920T070000Z
-DTEND:20260920T103000Z
-SUMMARY:Frauen BZL · Herforder EV – KEC "Die Haie" 1c
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 10:00 Uhr\nTreffpunk
- t: 09:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Eishalle I
- m Kleinen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\n\nQuelle: http
- s://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260920T070000Z
 DTEND:20260920T103000Z
 SUMMARY:Frauen BZL · Herforder EV – KEC "Die Haie" 1c
@@ -2325,7 +2009,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
   09:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Eishalle Im 
  Kleinen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\n\nQuelle: https:
  //www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2344,26 +2027,16 @@ END:VEVENT
 BEGIN:VEVENT
 UID:771c6781ec69a11e71b204837260646c8de9cb4c@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 DTSTART:20260920T070000Z
 DTEND:20260920T103000Z
 SUMMARY:DNL III · EV Duisburg – SCC Adler Berlin
 DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 10:00 Uhr\nTreff
  punkt: 09:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero R
  heinlandhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGe
-<<<<<<< HEAD
- spann: Quint\, Sascha / Pacalaj\, Erik\n\nQuelle: https://www.esrw.de/eint
- eilungen.html
-=======
  spann: Quint\, Sascha (LSR) / Pacalaj\, Erik (LSR)\n\nQuelle: https://www.
  esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2383,19 +2056,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:c1ca0a23d6b8db9dbcd0d542727bb10bfb3e1149@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260920T080000Z
-DTEND:20260920T113000Z
-SUMMARY:U17 I · Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 11:00 Uhr\nTreffpunk
- t: 10:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Rheinlandhalle 
- Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Pluschkell
- \, Julian\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260920T080000Z
 DTEND:20260920T113000Z
 SUMMARY:U17 I · Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld
@@ -2403,7 +2065,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:00 Uhr\nTreffpunkt:
   10:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Rheinlandhalle Kr
  efeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Pluschkell\,
   Julian\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2422,19 +2083,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:ffbe458d01895ed75ac38e74eae7d03e4a0bb09e@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260920T093000Z
-DTEND:20260920T130000Z
-SUMMARY:U15 LL · Herforder EV – Lippe Hockey Hamm
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 12:30 Uhr\nTreffpunk
- t: 11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eishalle Im Kl
- einen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\n\nQuelle: https://
- www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260920T093000Z
 DTEND:20260920T130000Z
 SUMMARY:U15 LL · Herforder EV – Lippe Hockey Hamm
@@ -2442,7 +2092,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
   11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eishalle Im Klei
  nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\n\nQuelle: https://ww
  w.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2461,19 +2110,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:9a191bd3362a684b7df04377d60b7328affdfe23@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260920T093000Z
-DTEND:20260920T130000Z
-SUMMARY:U13 LL · Dinslakener Kobras – EHC Troisdorf 1b
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 12:30 Uhr\nTreffpunk
- t: 11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle 
- Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Victor\, Tob
- ias (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260920T093000Z
 DTEND:20260920T130000Z
 SUMMARY:U13 LL · Dinslakener Kobras – EHC Troisdorf 1b
@@ -2481,7 +2119,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
   11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Di
  nslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Victor\, Tobia
  s (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2500,19 +2137,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:16abde8f331240b509a88e49a2ec6e393e0e9ea6@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260920T103000Z
-DTEND:20260920T140000Z
-SUMMARY:U17 FS · Eisadler Dortmund – EHC Troisdorf
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 13:30 Uhr\nTreffpunk
- t: 12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 FS\nHalle: Eissportzentru
- m Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Marks\, M
- arcel\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260920T103000Z
 DTEND:20260920T140000Z
 SUMMARY:U17 FS · Eisadler Dortmund – EHC Troisdorf
@@ -2520,7 +2146,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
   12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 FS\nHalle: Eissportzentrum 
  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Marks\, Mar
  cel\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2539,19 +2164,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:77ff00f6257cdd39f90360a4f55eafd04385a8a8@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260920T110000Z
-DTEND:20260920T143000Z
-SUMMARY:U15 RLA · Düsseldorfer EG – Iserlohner EC
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 14:00 Uhr\nTreffpunk
- t: 13:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eishalle Breh
- mstraße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Leibfrie
- d\, Raphael\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260920T110000Z
 DTEND:20260920T143000Z
 SUMMARY:U15 RLA · Düsseldorfer EG – Iserlohner EC
@@ -2559,7 +2173,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:00 Uhr\nTreffpunkt:
   13:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eishalle Brehms
  traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Leibfried\
  , Raphael\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2578,19 +2191,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:212d17380fc73e06ec5884aff1d1debe5855dadc@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260920T110000Z
-DTEND:20260920T143000Z
-SUMMARY:U9 LL Rot · Krefelder EV 1b -
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 14:00 Uhr\nTreffpunk
- t: 13:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Rot\nHalle: Rheinlandha
- lle Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Schlü
- ter\, Thomas\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260920T110000Z
 DTEND:20260920T143000Z
 SUMMARY:U9 LL Rot · Krefelder EV 1b -
@@ -2598,7 +2200,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:00 Uhr\nTreffpunkt:
   13:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Rot\nHalle: Rheinlandhall
  e Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Schlüte
  r\, Thomas\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2616,19 +2217,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:0671f11ad8719b8542349dff06d4f0ffbcb12bc1@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260920T114500Z
-DTEND:20260920T151500Z
-SUMMARY:U17 I · Kölner Junghaie – Düsseldorfer EG
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 14:45 Uhr\nTreffpunk
- t: 13:45 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Kölnarena 2\nA
- dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Starke\, Matthias\
- n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260920T114500Z
 DTEND:20260920T151500Z
 SUMMARY:U17 I · Kölner Junghaie – Düsseldorfer EG
@@ -2636,7 +2226,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:45 Uhr\nTreffpunkt:
   13:45 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Kölnarena 2\nAdr
  esse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Starke\, Matthias\n\
  nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2655,19 +2244,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:49ce8beb7be66e5dfe72365cf0786c69f5e2a2c9@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260920T120000Z
-DTEND:20260920T153000Z
-SUMMARY:U17 RL · Herforder EV – Ratinger Ice Aliens
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 15:00 Uhr\nTreffpunk
- t: 14:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eishalle Im Kl
- einen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Skalecki\
- , Martin\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260920T120000Z
 DTEND:20260920T153000Z
 SUMMARY:U17 RL · Herforder EV – Ratinger Ice Aliens
@@ -2675,7 +2253,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 15:00 Uhr\nTreffpunkt:
   14:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eishalle Im Klei
  nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Skalecki\, 
  Martin\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2694,19 +2271,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:68c43b4da3f4bcaa98fed341a21e235a6412e5ba@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260920T133000Z
-DTEND:20260920T170000Z
-SUMMARY:U13 RLB · Herner EV – Düsseldorfer EG 1b
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 16:30 Uhr\nTreffpunk
- t: 15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Gysenberghall
- e Herne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Strohmenger\, S
- venja\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260920T133000Z
 DTEND:20260920T170000Z
 SUMMARY:U13 RLB · Herner EV – Düsseldorfer EG 1b
@@ -2714,7 +2280,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
   15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Gysenberghalle 
  Herne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Strohmenger\, Sve
  nja\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2733,19 +2298,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:8a696a3e5c8aeedcddeaac7b8c4fe45ba09b9406@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260920T140000Z
-DTEND:20260920T173000Z
-SUMMARY:U15 RLA · Krefelder EV – Kölner Junghaie
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 17:00 Uhr\nTreffpunk
- t: 16:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Rheinlandhall
- e Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Schlüte
- r\, Thomas\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260920T140000Z
 DTEND:20260920T173000Z
 SUMMARY:U15 RLA · Krefelder EV – Kölner Junghaie
@@ -2753,7 +2307,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:00 Uhr\nTreffpunkt:
   16:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Rheinlandhalle 
  Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Schlüter\
  , Thomas\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2772,19 +2325,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:461d623ed918873da500ab04c7677c16ab64e6cf@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260920T143000Z
-DTEND:20260920T180000Z
-SUMMARY:Senioren BZL · Herforder EV 1b – EHC Troisdorf 1b
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 17:30 Uhr\nTreffpunk
- t: 16:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eishalle
-  Im Kleinen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Ska
- lecki\, Martin\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260920T143000Z
 DTEND:20260920T180000Z
 SUMMARY:Senioren BZL · Herforder EV 1b – EHC Troisdorf 1b
@@ -2792,7 +2334,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
   16:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eishalle I
  m Kleinen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Skale
  cki\, Martin\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2811,19 +2352,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:d9891636bbf04101aa2002f48550a9c8462c4273@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260920T143000Z
-DTEND:20260920T180000Z
-SUMMARY:U13 RLB · Kölner Junghaie 1b – EV Duisburg
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 17:30 Uhr\nTreffpunk
- t: 16:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Kölnarena 2\
- nAdresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Starke\, Matthia
- s\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260920T143000Z
 DTEND:20260920T180000Z
 SUMMARY:U13 RLB · Kölner Junghaie 1b – EV Duisburg
@@ -2831,7 +2361,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
   16:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Kölnarena 2\nA
  dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Starke\, Matthias\
  n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2850,19 +2379,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:da3b207daed19a7779f536c266d4caafad8df29b@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260920T153000Z
-DTEND:20260920T190000Z
-SUMMARY:BL FS · EHC Essen Ruhr – Soester EG
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 18:30 Uhr\nTreffpunk
- t: 17:30 Uhr (60 Min vor Spielbeginn)\nLiga: BL FS\nHalle: Eissporthalle E
- ssen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Müller\, Lars\n
- \nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260920T153000Z
 DTEND:20260920T190000Z
 SUMMARY:BL FS · EHC Essen Ruhr – Soester EG
@@ -2870,7 +2388,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
   17:30 Uhr (60 Min vor Spielbeginn)\nLiga: BL FS\nHalle: Eissporthalle Ess
  en-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Müller\, Lars\n\n
  Quelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2889,19 +2406,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:81acf4e44705e8a37a92bf1f46b0f1cdf7336d44@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260920T160000Z
-DTEND:20260920T193000Z
-SUMMARY:LL FS · Eisadler Dortmund 1b – EHC Troisdorf
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:00 Uhr\nTreffpunk
- t: 18:00 Uhr (60 Min vor Spielbeginn)\nLiga: LL FS\nHalle: Eissportzentrum
-  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Krüger\, 
- Martin\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260920T160000Z
 DTEND:20260920T193000Z
 SUMMARY:LL FS · Eisadler Dortmund 1b – EHC Troisdorf
@@ -2909,7 +2415,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
   18:00 Uhr (60 Min vor Spielbeginn)\nLiga: LL FS\nHalle: Eissportzentrum W
  estfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Krüger\, Ma
  rtin\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2928,26 +2433,16 @@ END:VEVENT
 BEGIN:VEVENT
 UID:30ce28dca8f5bcc9a5e1bfc1e3e4070305a14715@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 DTSTART:20260920T160000Z
 DTEND:20260920T193000Z
 SUMMARY:RL FS · Dinslakener Kobras – UNIS Flyers Heerenveen
 DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 19:00 Uhr\nTreff
  punkt: 18:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthal
  le Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Quint\, S
-<<<<<<< HEAD
- ascha / Stockenschneider\, Lars\n\nQuelle: https://www.esrw.de/einteilunge
- n.html
-=======
  ascha (LSR) / Stockenschneider\, Lars (LSR)\n\nQuelle: https://www.esrw.de
  /einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

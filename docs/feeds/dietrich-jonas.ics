@@ -32,20 +32,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:334d2af3cfd3dabb11dc5ba20b9eb4e5ccdce0d8@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260918T170000Z
-DTEND:20260918T203000Z
-SUMMARY:(L)SR · RL FS · Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf
-  !!!
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 20:00 Uhr\nTreffpunk
- t: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthalle R
- atingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Steven\, Patri
- ck / Garcia Nieto\, Dario\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260918T170000Z
 DTEND:20260918T203000Z
 SUMMARY:LSR · RL FS · Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !
@@ -55,7 +43,6 @@ DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
  ingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Steven\, Patrick
   (HSR) / Garcia Nieto\, Dario (LSR)\n\nQuelle: https://www.esrw.de/einteil
  ungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -67,13 +54,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-<<<<<<< HEAD
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · RL FS · Ratinger Ice A
- liens – Chiefs Leuwen Düsseldorf !!!
-=======
 DESCRIPTION:In einer Stunde an der Halle - LSR · RL FS · Ratinger Ice Ali
  ens – Chiefs Leuwen Düsseldorf !!!
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 END:VALARM
 END:VEVENT
 END:VCALENDAR

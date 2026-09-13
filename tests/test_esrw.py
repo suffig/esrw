@@ -321,10 +321,36 @@ def test_aenderungstext():
     pruefe("Halle" in E.beschreibe_aenderung(vorher2, jetzt), "Hallenwechsel erkannt")
 
 
+
+def test_ausgaben():
+    print("\nAusgelieferte Dateien")
+    import glob, json
+    wurzel = os.path.dirname(HIER)
+    marker = ("<<<<<<< ", "=======", ">>>>>>> ")
+    dateien = (glob.glob(os.path.join(wurzel, "docs", "*.json"))
+               + glob.glob(os.path.join(wurzel, "docs", "feeds", "*.ics"))
+               + [os.path.join(wurzel, n) for n in ("state.json", "historie.json")
+                  if os.path.exists(os.path.join(wurzel, n))])
+    kaputt = []
+    for pfad in dateien:
+        with open(pfad, encoding="utf-8", newline="") as f:
+            inhalt = f.read()
+        if any(zeile.startswith(marker) for zeile in inhalt.split(chr(10))):
+            kaputt.append(os.path.relpath(pfad, wurzel) + " (Konfliktmarker)")
+            continue
+        if pfad.endswith(".json"):
+            try:
+                json.loads(inhalt)
+            except ValueError as e:
+                kaputt.append("%s (%s)" % (os.path.relpath(pfad, wurzel), e))
+    pruefe(len(dateien) > 0, "Ausgaben vorhanden (%d Dateien)" % len(dateien))
+    pruefe(not kaputt, "keine Konfliktmarker, alle JSON-Dateien gueltig",
+           str(kaputt[:3]))
+
 def main():
     print("Regressionstest esrw_ical")
     for test in (test_parsen, test_hallen, test_namen, test_rollen, test_aliase,
-                 test_konflikte, test_hash_migration, test_faltung,
+                 test_konflikte, test_hash_migration, test_ausgaben, test_faltung,
                  test_escape, test_ics, test_saison, test_aenderungstext):
         test()
     print("\n" + "-" * 58)

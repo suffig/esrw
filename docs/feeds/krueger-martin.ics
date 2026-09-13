@@ -31,19 +31,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:fd6bd8b7dd8d6133d650a6a66b0185b4b300768a@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260920T160000Z
-DTEND:20260920T193000Z
-SUMMARY:(L)SR · LL FS · Eisadler Dortmund 1b – EHC Troisdorf
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:00 Uhr\nTreffpunk
- t: 18:00 Uhr (60 Min vor Spielbeginn)\nLiga: LL FS\nHalle: Eissportzentrum
-  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Caelers\, 
- Fabian\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260920T160000Z
 DTEND:20260920T193000Z
 SUMMARY:SR · LL FS · Eisadler Dortmund 1b – EHC Troisdorf
@@ -51,7 +40,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
   18:00 Uhr (60 Min vor Spielbeginn)\nLiga: LL FS\nHalle: Eissportzentrum W
  estfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Caelers\, Fa
  bian\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -63,13 +51,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-<<<<<<< HEAD
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · LL FS · Eisadler Dortm
- und 1b – EHC Troisdorf
-=======
 DESCRIPTION:In einer Stunde an der Halle - SR · LL FS · Eisadler Dortmund
   1b – EHC Troisdorf
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 END:VALARM
 END:VEVENT
 END:VCALENDAR

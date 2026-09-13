@@ -32,19 +32,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:45746b669ea93e3a0dbd70103565d7df1a921dd3@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260919T103000Z
-DTEND:20260919T140000Z
-SUMMARY:(L)SR · DEFL 2 FS · Düsseldorfer EG – NL U18
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 13:30 Uhr\nTreffpunk
- t: 12:30 Uhr (60 Min vor Spielbeginn)\nLiga: DEFL 2 FS\nHalle: Eishalle Br
- ehmstraße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Vorgei
- tz\, Benny\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260919T103000Z
 DTEND:20260919T140000Z
 SUMMARY:SR · DEFL 2 FS · Düsseldorfer EG – NL U18
@@ -52,7 +41,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
   12:30 Uhr (60 Min vor Spielbeginn)\nLiga: DEFL 2 FS\nHalle: Eishalle Breh
  mstraße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Vorgeitz
  \, Benny\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -64,13 +52,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-<<<<<<< HEAD
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · DEFL 2 FS · Düsseldor
- fer EG – NL U18
-=======
 DESCRIPTION:In einer Stunde an der Halle - SR · DEFL 2 FS · Düsseldorfer
   EG – NL U18
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 END:VALARM
 END:VEVENT
 END:VCALENDAR

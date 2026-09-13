@@ -52,19 +52,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:679392f44b4f8527f3ec4b83f3c2fa94aaab36ab@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260919T131500Z
-DTEND:20260919T164500Z
-SUMMARY:(L)SR · U15 LL · Herforder EV – Ratinger Ice Aliens
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 16:15 Uhr\nTreffpunk
- t: 15:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eishalle Im Kl
- einen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Zynda\, J
- ayden\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260919T131500Z
 DTEND:20260919T164500Z
 SUMMARY:SR · U15 LL · Herforder EV – Ratinger Ice Aliens
@@ -72,7 +61,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:15 Uhr\nTreffpunkt:
   15:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eishalle Im Klei
  nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Zynda\, Jay
  den\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -84,13 +72,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-<<<<<<< HEAD
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · U15 LL · Herforder EV 
- – Ratinger Ice Aliens
-=======
 DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL · Herforder EV –
   Ratinger Ice Aliens
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 END:VALARM
 END:VEVENT
 END:VCALENDAR

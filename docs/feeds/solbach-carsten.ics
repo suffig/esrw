@@ -10,19 +10,8 @@ X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
 UID:e07b56242d97f229670a09e27b75283706b2b9d4@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260919T070000Z
-DTEND:20260919T103000Z
-SUMMARY:(L)SR · U9 RL · EHC Troisdorf -
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 10:00 Uhr\nTreffpunk
- t: 09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: ICEDOME Troisdo
- rf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Schlüter
- \, Thomas\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260919T070000Z
 DTEND:20260919T103000Z
 SUMMARY:SR · U9 RL · EHC Troisdorf -
@@ -30,7 +19,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
   09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: ICEDOME Troisdorf
  \nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Schlüter\,
   Thomas\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -42,12 +30,7 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-<<<<<<< HEAD
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · U9 RL · EHC Troisdorf 
- -
-=======
 DESCRIPTION:In einer Stunde an der Halle - SR · U9 RL · EHC Troisdorf -
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 END:VALARM
 END:VEVENT
 END:VCALENDAR

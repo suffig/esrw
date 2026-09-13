@@ -10,19 +10,8 @@ X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
 UID:98b6076a433953b820482939edb2b220164c9f3a@esrw.de
 SEQUENCE:0
-<<<<<<< HEAD
 DTSTAMP:20260911T150047Z
 LAST-MODIFIED:20260911T150047Z
-DTSTART:20260919T163000Z
-DTEND:20260919T200000Z
-SUMMARY:(L)SR · U17 I · Iserlohner EC – ES Weißwasser
-DESCRIPTION:Rolle: Linienrichter ((L)SR)\nSpielbeginn: 19:30 Uhr\nTreffpunk
- t: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eissporthalle a
- m Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: van Him
- beeck\, Frederic\n\nQuelle: https://www.esrw.de/einteilungen.html
-=======
-DTSTAMP:20260913T052816Z
-LAST-MODIFIED:20260913T052816Z
 DTSTART:20260919T163000Z
 DTEND:20260919T200000Z
 SUMMARY:SR · U17 I · Iserlohner EC – ES Weißwasser
@@ -30,7 +19,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
   18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eissporthalle am 
  Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: van Himbe
  eck\, Frederic\n\nQuelle: https://www.esrw.de/einteilungen.html
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -42,13 +30,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-<<<<<<< HEAD
-DESCRIPTION:In einer Stunde an der Halle - (L)SR · U17 I · Iserlohner EC 
- – ES Weißwasser
-=======
 DESCRIPTION:In einer Stunde an der Halle - SR · U17 I · Iserlohner EC –
   ES Weißwasser
->>>>>>> 2c75266 (Spielplan, Rollen nach System, gleiche Personen, Konflikte, Saisonliste)
 END:VALARM
 END:VEVENT
 END:VCALENDAR
