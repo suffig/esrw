@@ -143,8 +143,19 @@
                  background:none; border:0; border-radius:9px; color:var(--dim); }
   .tabs button.aktiv { background:var(--akzent); color:var(--akzent-text); }
 
-  .schalter { display:block; color:var(--dim); font-size:.87rem; margin:10px 2px 0; }
+  .schalterzeile { display:flex; flex-wrap:wrap; gap:4px 16px; align-items:center;
+                   margin:10px 2px 0; }
+  .schalter { color:var(--dim); font-size:.87rem; }
   .schalter input { vertical-align:-2px; margin-right:6px; }
+  #plan-zaehler { margin-left:auto; }
+  .zeile { display:grid; grid-template-columns:3.4em 1fr; gap:2px 10px;
+           padding:8px 4px; border-top:1px solid var(--linie); font-size:.92rem; }
+  .zeile:first-of-type, .tag + .zeile { border-top:0; }
+  .zeile.war { opacity:.62; }
+  .zeile small { display:block; color:var(--dim); font-size:.8rem; }
+  .zeile-wer { grid-column:2; display:flex; flex-wrap:wrap; gap:4px; }
+  .zeile-wer .chip { font-size:.78rem; padding:1px 7px 1px 8px; }
+  .chip.offen { border-style:dashed; color:var(--warn); }
   .tag { font-size:.8rem; text-transform:uppercase; letter-spacing:.06em;
          color:var(--dim); margin:22px 0 8px; font-weight:650;
          display:flex; justify-content:space-between; }
@@ -191,7 +202,11 @@
     <label for="plan-filter" class="versteckt">Spielplan filtern</label>
     <input type="search" id="plan-filter" placeholder="Verein, Halle, Liga oder Name …"
            autocomplete="off" autocorrect="off" spellcheck="false">
-    <label class="schalter"><input type="checkbox" id="plan-vergangene"> auch vergangene Spiele</label>
+    <div class="schalterzeile">
+      <label class="schalter"><input type="checkbox" id="plan-vergangene"> auch vergangene</label>
+      <label class="schalter"><input type="checkbox" id="plan-kompakt"> als Liste</label>
+      <span class="schalter" id="plan-zaehler"></span>
+    </div>
     <div id="plan-liste"></div>
   </section>
 
@@ -380,8 +395,15 @@
 
   // -------------------------------------------------- Benachrichtigungen
 
+  // Merker-Format. Wird es geaendert, die Nummer hochzaehlen: alte Merker
+  // werden dann still neu aufgebaut, statt alles als "neu" zu melden.
+  var GESEHEN_VERSION = 2;
+
   function schluesselVon(s) {
-    return s.beginn + "|" + s.paarung + "|" + s.rolle + "|" + (s.aenderung || "");
+    // Rolle bewusst nicht dabei - ein Rollenwechsel kommt ohnehin als
+    // "aenderung" mit, und eine blosse Umbenennung der Rollen soll nicht
+    // jedem Kollegen "4 neue Einteilungen" melden.
+    return s.beginn + "|" + s.paarung + "|" + (s.aenderung || "");
   }
 
   function badgeSetzen(anzahl) {
@@ -477,8 +499,10 @@
     // Merker neu aufbauen, damit er nicht endlos wächst
     var jetzt = {};
     kommend.forEach(function (s) { jetzt[schluesselVon(s)] = 1; });
-    var ersterBesuch = !profil.begonnen;
+    // Erster Besuch oder altes Merker-Format: still uebernehmen, nicht melden
+    var ersterBesuch = !profil.begonnen || profil.gesehenVersion !== GESEHEN_VERSION;
     profil.gesehen = jetzt;
+    profil.gesehenVersion = GESEHEN_VERSION;
     profil.begonnen = true;
     profilSchreiben();
 
@@ -598,15 +622,24 @@
     return [datum, "", false];
   }
 
+  function planKompakt() {
+    return lesen("plan-kompakt") === "1";
+  }
+
   function zeigePlan() {
     var ziel = el("plan-liste");
     ziel.innerHTML = "";
     var f = ohneZeichen(el("plan-filter").value);
     var mitVergangenen = el("plan-vergangene").checked;
-    var letzterTag = null, treffer = 0;
+    var kompakt = planKompakt();
+    el("plan-kompakt").checked = kompakt;
+    var letzterTag = null, treffer = 0, gesamt = 0;
+    // Alte, noch vom Service Worker gespeicherte daten.json ohne Spielplan
+    var spiele = daten.spiele || [];
 
-    daten.spiele.forEach(function (s) {
+    spiele.forEach(function (s) {
       if (s.vergangen && !mitVergangenen) return;
+      gesamt++;
       if (f) {
         var text = suchtextVon([s.paarung, s.liga, s.halle]
           .concat(s.besetzung.map(function (b) { return b.name; })).join(" "));
@@ -627,43 +660,12 @@
         h.appendChild(links); h.appendChild(rechts);
         ziel.appendChild(h);
       }
-
-      var d = document.createElement("div");
-      d.className = "spiel" + (s.vergangen ? " war" : "");
-      var kopf = document.createElement("div");
-      kopf.className = "kopf";
-      var zeit = document.createElement("span");
-      zeit.className = "zeit";
-      zeit.textContent = uhr(beginn) + " Uhr";
-      kopf.appendChild(zeit);
-      if (s.liga) {
-        var liga = document.createElement("span");
-        liga.className = "liga";
-        liga.textContent = s.liga;
-        kopf.appendChild(liga);
-      }
-      d.appendChild(kopf);
-
-      var paarung = document.createElement("div");
-      paarung.className = "paarung";
-      paarung.textContent = s.paarung;
-      d.appendChild(paarung);
-
-      var meta = document.createElement("div");
-      meta.className = "meta";
-      meta.textContent = (s.halle || "Halle unbekannt") +
-        " · Treffpunkt " + uhr(new Date(s.treffpunkt)) + " Uhr" +
-        (s.system >= 3 ? " · " + s.system + "er-System" : "");
-      d.appendChild(meta);
-
-      if (s.besetzung.length) {
-        var chips = document.createElement("div");
-        chips.className = "chips";
-        s.besetzung.forEach(function (b) { chips.appendChild(chip(b, s.system >= 3)); });
-        d.appendChild(chips);
-      }
-      ziel.appendChild(d);
+      ziel.appendChild(kompakt ? planZeile(s, beginn) : planKarte(s, beginn));
     });
+
+    el("plan-zaehler").textContent = f
+      ? treffer + " von " + gesamt + " Spielen"
+      : gesamt + (gesamt === 1 ? " Spiel" : " Spiele");
 
     if (!treffer) {
       var leer = document.createElement("p");
@@ -671,6 +673,73 @@
       leer.textContent = f ? "Nichts gefunden." : "Keine kommenden Spiele.";
       ziel.appendChild(leer);
     }
+  }
+
+  function besetzungOder(s, ziel) {
+    if (s.besetzung.length) {
+      s.besetzung.forEach(function (b) { ziel.appendChild(chip(b, s.system >= 3)); });
+    } else {
+      var offen = document.createElement("span");
+      offen.className = "chip offen";
+      offen.textContent = "noch nicht besetzt";
+      ziel.appendChild(offen);
+    }
+  }
+
+  function planKarte(s, beginn) {
+    var d = document.createElement("div");
+    d.className = "spiel" + (s.vergangen ? " war" : "");
+    var kopf = document.createElement("div");
+    kopf.className = "kopf";
+    var zeit = document.createElement("span");
+    zeit.className = "zeit";
+    zeit.textContent = uhr(beginn) + " Uhr";
+    kopf.appendChild(zeit);
+    if (s.liga) {
+      var liga = document.createElement("span");
+      liga.className = "liga";
+      liga.textContent = s.liga;
+      kopf.appendChild(liga);
+    }
+    d.appendChild(kopf);
+
+    var paarung = document.createElement("div");
+    paarung.className = "paarung";
+    paarung.textContent = s.paarung;
+    d.appendChild(paarung);
+
+    var meta = document.createElement("div");
+    meta.className = "meta";
+    meta.textContent = (s.halle || "Halle unbekannt") +
+      " · Treffpunkt " + uhr(new Date(s.treffpunkt)) + " Uhr" +
+      (s.system >= 3 ? " · " + s.system + "er-System" : "");
+    d.appendChild(meta);
+
+    var chips = document.createElement("div");
+    chips.className = "chips";
+    besetzungOder(s, chips);
+    d.appendChild(chips);
+    return d;
+  }
+
+  // Eine Zeile je Spiel, wie die Tabelle auf esrw.de
+  function planZeile(s, beginn) {
+    var z = document.createElement("div");
+    z.className = "zeile" + (s.vergangen ? " war" : "");
+    var zeit = document.createElement("span");
+    zeit.className = "zeit";
+    zeit.textContent = uhr(beginn);
+    var mitte = document.createElement("span");
+    var titel = document.createElement("span");
+    titel.textContent = (s.liga ? s.liga + ": " : "") + s.paarung;
+    var klein = document.createElement("small");
+    klein.textContent = s.halle || "Halle unbekannt";
+    mitte.appendChild(titel); mitte.appendChild(klein);
+    var wer = document.createElement("span");
+    wer.className = "zeile-wer";
+    besetzungOder(s, wer);
+    z.appendChild(zeit); z.appendChild(mitte); z.appendChild(wer);
+    return z;
   }
 
   // ---------------------------------------------------------- Saisonliste
@@ -711,16 +780,19 @@
       });
     }
 
-    box.addEventListener("toggle", function laden() {
+    if (box._laden) box.removeEventListener("toggle", box._laden);
+    box._laden = function laden() {
       if (!box.open) return;
       box.removeEventListener("toggle", laden);
+      box._laden = null;
       (archivDaten ? Promise.resolve(archivDaten) : hole("archiv.json"))
         .then(function (a) {
           archivDaten = a;
           rendern((a.personen && a.personen[p.slug]) || []);
         })
         .catch(function () { liste.textContent = "Archiv konnte nicht geladen werden."; });
-    });
+    };
+    box.addEventListener("toggle", box._laden);
   }
 
   // ----------------------------------------------------------- Statistik
@@ -789,7 +861,7 @@
 
   // ------------------------------------------------------------ Ansichten
 
-  function zeigePerson(p) {
+  function zeigePerson(p, stillesNachladen) {
     aktuell = p;
     ansicht("detail");
     el("person").textContent = p.name;
@@ -826,7 +898,7 @@
     zeigeSaison(p);
     zeigeMeldeKarte();
     if (profil && profil.slug === p.slug) pruefeNeue(p, false);
-    window.scrollTo(0, 0);
+    if (!stillesNachladen) window.scrollTo(0, 0);
   }
 
   function ansicht(name) {
@@ -895,8 +967,13 @@
   window.addEventListener("hashchange", ausHash);
   el("tab-plan").addEventListener("click", function () { location.hash = "plan"; });
   el("tab-meine").addEventListener("click", function () {
-    if (location.hash === "#plan" || location.hash === "") { location.hash = ""; ausHash(); }
+    // Ist der Hash schon leer, feuert kein hashchange - dann selbst rendern
+    if (location.hash === "" || location.hash === "#") ausHash();
     else location.hash = "";
+  });
+  el("plan-kompakt").addEventListener("change", function (e) {
+    schreiben("plan-kompakt", e.target.checked ? "1" : null);
+    zeigePlan();
   });
   el("plan-filter").addEventListener("input", zeigePlan);
   el("plan-vergangene").addEventListener("change", zeigePlan);
@@ -948,7 +1025,9 @@
         standAnzeigen(daten, beides[1]);
         if (aktuell) {
           var frisch = personMit(aktuell.slug);
-          if (frisch) zeigePerson(frisch);
+          if (frisch) zeigePerson(frisch, true);
+        } else if (!el("plan").classList.contains("versteckt")) {
+          zeigePlan();
         }
       })
       .catch(function () {});

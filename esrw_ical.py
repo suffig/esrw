@@ -449,12 +449,14 @@ def pruefe_konflikte(termine, cfg):
     keinen Hinweis."""
     termine = sorted(termine, key=lambda t: t["anstoss"])
     for a, b in zip(termine, termine[1:]):
-        gleiche_halle = a["halle_name"] and a["halle_name"] == b["halle_name"]
+        beide_bekannt = bool(a["halle_name"]) and bool(b["halle_name"])
+        gleiche_halle = beide_bekannt and a["halle_name"] == b["halle_name"]
         if b["anstoss"] == a["anstoss"]:
-            text = "Gleichzeitig angesetzt: %s" % b["paarung"]
-            a["hinweis"] = text
+            a["hinweis"] = "Gleichzeitig angesetzt: %s" % b["paarung"]
             b["hinweis"] = "Gleichzeitig angesetzt: %s" % a["paarung"]
-        elif not gleiche_halle and b["treffpunkt"] < a["ende"]:
+        # Ist eine der Hallen unbekannt, laesst sich nicht sagen, ob die
+        # Anschlusszeit reicht - lieber schweigen als falsch warnen.
+        elif beide_bekannt and not gleiche_halle and b["treffpunkt"] < a["ende"]:
             luecke = int((b["anstoss"] - a["anstoss"]).total_seconds() // 60)
             a["hinweis"] = ("Danach %s in %s – nur %d Min bis zum nächsten Anstoß"
                             % (b["paarung"], b["halle_name"] or "anderer Halle", luecke))

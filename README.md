@@ -127,11 +127,14 @@ aus dem Archiv auf – auch die Spiele, die auf esrw.de längst verschwunden sin
 
 ## Spielplan
 
-Der zweite Reiter zeigt **alle** Spiele nach Tag und Uhrzeit, mit Halle,
-Treffpunkt und Besetzung. Heute und morgen sind hervorgehoben. Das Suchfeld
-filtert nach Verein, Halle, Liga oder Name; vergangene Spiele lassen sich
-zuschalten. Jeder Name führt zum jeweiligen Profil. Der Reiter ist auch direkt
-erreichbar: `…/#plan`.
+Der zweite Reiter zeigt **alle auf esrw.de veröffentlichten Spiele** nach Tag
+und Uhrzeit, mit Halle, Treffpunkt und Besetzung – auch die, für die noch
+niemand eingeteilt ist (gekennzeichnet als *noch nicht besetzt*). Heute und
+morgen sind hervorgehoben. Das Suchfeld filtert nach Verein, Halle, Liga oder
+Name; vergangene Spiele lassen sich zuschalten. Mit **als Liste** wird es eine
+Zeile je Spiel, wie die Tabelle auf esrw.de; die Wahl bleibt gespeichert. Jeder
+Name führt zum jeweiligen Profil. Der Reiter ist auch direkt erreichbar:
+`…/#plan`.
 
 ## Benachrichtigungen in der App
 
