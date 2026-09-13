@@ -1196,33 +1196,6 @@ DESCRIPTION:In einer Stunde an der Halle - U15 LL · Lippe Hockey Hamm –
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:76d8385d94554db85a799d78aefeaf9ea5693257@esrw.de
-SEQUENCE:0
-DTSTAMP:20260911T150047Z
-LAST-MODIFIED:20260911T150047Z
-DTSTART:20260919T090000Z
-DTEND:20260919T123000Z
-SUMMARY:U17 I · Iserlohner EC – ES Weißwasser
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
-  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eissporthalle am 
- Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Vorgeitz\
- , Benny\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
-GEO:51.384598;7.713829
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
- , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
- alle am Seilersee":geo:51.384598,7.713829
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U17 I · Iserlohner EC – ES We
- ißwasser
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:3b7978b6b96906d5a39f1e5af73da947ce3f61e0@esrw.de
 SEQUENCE:0
 DTSTAMP:20260911T150047Z
@@ -1681,6 +1654,33 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - U17 I · Krefelder EV – EHC GA
   Wolfsburg YAYLA Krefeld
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:f812c4077f7f66de247582d615f1803a17de0c65@esrw.de
+SEQUENCE:0
+DTSTAMP:20260913T181045Z
+LAST-MODIFIED:20260913T181045Z
+DTSTART:20260920T090000Z
+DTEND:20260920T123000Z
+SUMMARY:U17 I · Iserlohner EC – ES Weißwasser
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
+  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eissporthalle am 
+ Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Vorgeitz\
+ , Benny\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
+GEO:51.384598;7.713829
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
+ , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
+ alle am Seilersee":geo:51.384598,7.713829
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - U17 I · Iserlohner EC – ES We
+ ißwasser
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

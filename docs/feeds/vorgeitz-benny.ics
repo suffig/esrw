@@ -29,35 +29,6 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
  inslaken":geo:51.574578,6.735361
 END:VEVENT
 BEGIN:VEVENT
-UID:d0fbc62dbfce215fd0c5d69f7bcccc105863ec3e@esrw.de
-SEQUENCE:0
-DTSTAMP:20260911T150047Z
-LAST-MODIFIED:20260911T150047Z
-DTSTART:20260919T090000Z
-DTEND:20260919T123000Z
-SUMMARY:SR · U17 I · Iserlohner EC – ES Weißwasser
-DESCRIPTION:!! Danach Düsseldorfer EG – NL U18 in Eishalle Brehmstraße 
- – nur 90 Min bis zum nächsten Anstoß !!\n\nRolle: Schiedsrichter (SR)\
- nSpielbeginn: 12:00 Uhr\nTreffpunkt: 11:00 Uhr (60 Min vor Spielbeginn)\nL
- iga: U17 I\nHalle: Eissporthalle am Seilersee\nAdresse: Seeuferstraße 25\
- , 58636 Iserlohn\nGespann: Garbsch\, René\n\nQuelle: https://www.esrw.de/
- einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
-GEO:51.384598;7.713829
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
- , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
- alle am Seilersee":geo:51.384598,7.713829
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 I · Iserlohner EC –
-  ES Weißwasser
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:f69ebb233a85cdd43faba4bbd8bb90b84ba9d2d7@esrw.de
 SEQUENCE:0
 DTSTAMP:20260911T150047Z
@@ -65,12 +36,10 @@ LAST-MODIFIED:20260911T150047Z
 DTSTART:20260919T103000Z
 DTEND:20260919T140000Z
 SUMMARY:SR · DEFL 2 FS · Düsseldorfer EG – NL U18
-DESCRIPTION:!! Davor Iserlohner EC – ES Weißwasser in Eissporthalle am S
- eilersee – nur 90 Min nach dem vorigen Anstoß !!\n\nRolle: Schiedsricht
- er (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt: 12:30 Uhr (60 Min vor Spielbe
- ginn)\nLiga: DEFL 2 FS\nHalle: Eishalle Brehmstraße\nAdresse: Brehmstraß
- e 27a\, 40239 Düsseldorf\nGespann: Hartmann\, Marius\n\nQuelle: https://w
- ww.esrw.de/einteilungen.html
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
+  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: DEFL 2 FS\nHalle: Eishalle Breh
+ mstraße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Hartmann
+ \, Marius\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -111,6 +80,33 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Rot · Iserlohner E
  C 1b -
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:061b2ae9190ba171ec361087489bb5673f33fbc4@esrw.de
+SEQUENCE:0
+DTSTAMP:20260913T181045Z
+LAST-MODIFIED:20260913T181045Z
+DTSTART:20260920T090000Z
+DTEND:20260920T123000Z
+SUMMARY:SR · U17 I · Iserlohner EC – ES Weißwasser
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
+  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eissporthalle am 
+ Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Garbsch\,
+  René\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
+GEO:51.384598;7.713829
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
+ , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
+ alle am Seilersee":geo:51.384598,7.713829
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I · Iserlohner EC –
+  ES Weißwasser
 END:VALARM
 END:VEVENT
 END:VCALENDAR

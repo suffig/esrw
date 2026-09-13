@@ -83,6 +83,18 @@
   "titel": "SR · U17 I · Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld",
   "treffpunkt": "2026-09-19T15:30:00+02:00"
  },
+ "061b2ae9190ba171ec361087489bb5673f33fbc4@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T12:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "ecaabceb82f1b037ea4a72547e6d24fd93e74265",
+  "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
+  "sequence": 0,
+  "slug": "vorgeitz-benny",
+  "stempel": "2026-09-13T18:10:45.738044+00:00",
+  "titel": "SR · U17 I · Iserlohner EC – ES Weißwasser",
+  "treffpunkt": "2026-09-20T11:00:00+02:00"
+ },
  "095c9ac23c159486daf9ce4ceb10e78deb7bbb39@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-16T19:30:00+02:00",
@@ -1079,18 +1091,6 @@
   "titel": "SR · U17 I · Düsseldorfer EG – Kölner Junghaie",
   "treffpunkt": "2026-09-19T15:30:00+02:00"
  },
- "7d2f9b166533add97a2a80684b196ed125292588@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-19T12:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "80ffff88cc07d6e182d6229370761b91c3df7df6",
-  "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
-  "sequence": 0,
-  "slug": "garbsch-rene",
-  "stempel": "2026-09-11T15:00:47.546895+00:00",
-  "titel": "SR · U17 I · Iserlohner EC – ES Weißwasser",
-  "treffpunkt": "2026-09-19T11:00:00+02:00"
- },
  "806715797025cedb7d8e104280d15f7a906038f2@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-13T17:30:00+02:00",
@@ -1583,6 +1583,18 @@
   "titel": "HSR · RL FS · Eisadler Dortmund – Bulldogs de Liege",
   "treffpunkt": "2026-09-18T19:00:00+02:00"
  },
+ "b347a21fc155716af14c12f938b6c5a90c17a6d5@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T12:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "ecaabceb82f1b037ea4a72547e6d24fd93e74265",
+  "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
+  "sequence": 0,
+  "slug": "garbsch-rene",
+  "stempel": "2026-09-13T18:10:45.738044+00:00",
+  "titel": "SR · U17 I · Iserlohner EC – ES Weißwasser",
+  "treffpunkt": "2026-09-20T11:00:00+02:00"
+ },
  "b5d97cfe55566b486513b93af310facdd90b4e6c@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-13T11:00:00+02:00",
@@ -1750,18 +1762,6 @@
   "stempel": "2026-09-11T15:00:47.546895+00:00",
   "titel": "SR · U15 LL · Lippe Hockey Hamm – SpG Neusser EV / GSC Moers",
   "treffpunkt": "2026-09-19T09:30:00+02:00"
- },
- "d0fbc62dbfce215fd0c5d69f7bcccc105863ec3e@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-19T12:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "80ffff88cc07d6e182d6229370761b91c3df7df6",
-  "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
-  "sequence": 0,
-  "slug": "vorgeitz-benny",
-  "stempel": "2026-09-11T15:00:47.546895+00:00",
-  "titel": "SR · U17 I · Iserlohner EC – ES Weißwasser",
-  "treffpunkt": "2026-09-19T11:00:00+02:00"
  },
  "d2549d7d92e13a922c836aee8159f91393aa2ca4@esrw.de": {
   "aenderung": null,
