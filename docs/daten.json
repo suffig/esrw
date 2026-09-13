@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 92,
+ "spiele_gesamt": 91,
  "saison": "2026/27",
  "archiv_spiele": 113,
  "rollen": {
@@ -563,31 +563,6 @@
     "letzte": "2026-09-20"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-06T14:00:00+02:00",
-     "treffpunkt": "2026-09-06T13:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U15 RLA",
-     "paarung": "Krefelder EV – Düsseldorfer EG",
-     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-     "halle": "Rheinlandhalle Krefeld",
-     "koordinaten": [
-      51.339877,
-      6.540168
-     ],
-     "gespann": [
-      {
-       "name": "Hofer, Carsten",
-       "slug": "hofer-carsten",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null
-    },
     {
      "beginn": "2026-09-18T20:15:00+02:00",
      "treffpunkt": "2026-09-18T19:15:00+02:00",
@@ -2394,31 +2369,6 @@
     "letzte": "2026-09-20"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-06T14:00:00+02:00",
-     "treffpunkt": "2026-09-06T13:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U15 RLA",
-     "paarung": "Krefelder EV – Düsseldorfer EG",
-     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-     "halle": "Rheinlandhalle Krefeld",
-     "koordinaten": [
-      51.339877,
-      6.540168
-     ],
-     "gespann": [
-      {
-       "name": "Caelers, Fabian",
-       "slug": "caelers-fabian",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null
-    },
     {
      "beginn": "2026-09-12T16:45:00+02:00",
      "treffpunkt": "2026-09-12T15:45:00+02:00",
@@ -4759,7 +4709,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     },
@@ -6638,7 +6588,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     }
@@ -7571,29 +7521,6 @@
  ],
  "spiele": [
   {
-   "beginn": "2026-09-06T14:00:00+02:00",
-   "treffpunkt": "2026-09-06T13:00:00+02:00",
-   "liga": "U15 RLA",
-   "paarung": "Krefelder EV – Düsseldorfer EG",
-   "halle": "Rheinlandhalle Krefeld",
-   "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Caelers, Fabian",
-     "rolle": "SR",
-     "slug": "caelers-fabian"
-    },
-    {
-     "name": "Hofer, Carsten",
-     "rolle": "SR",
-     "slug": "hofer-carsten"
-    }
-   ],
-   "vergangen": true
-  },
-  {
    "beginn": "2026-09-06T14:45:00+02:00",
    "treffpunkt": "2026-09-06T13:45:00+02:00",
    "liga": "U15 RLB",
@@ -8516,7 +8443,7 @@
      "slug": "stocker-quirin"
     }
    ],
-   "vergangen": false
+   "vergangen": true
   },
   {
    "beginn": "2026-09-13T14:45:00+02:00",
