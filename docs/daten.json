@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 97,
+ "spiele_gesamt": 95,
  "saison": "2026/27",
  "archiv_spiele": 113,
  "rollen": {
@@ -4002,7 +4002,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     },
@@ -4318,31 +4318,6 @@
     "letzte": "2026-09-20"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-06T09:45:00+02:00",
-     "treffpunkt": "2026-09-06T08:45:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U17 FS",
-     "paarung": "Herner EV – Eisadler Dortmund",
-     "ort": "Gysenberghalle Herne, Am Revierpark 22, 44627 Herne",
-     "halle": "Gysenberghalle Herne",
-     "koordinaten": [
-      51.532602,
-      7.254372
-     ],
-     "gespann": [
-      {
-       "name": "Schmidt, Waldemar",
-       "slug": "schmidt-waldemar",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null
-    },
     {
      "beginn": "2026-09-11T20:00:00+02:00",
      "treffpunkt": "2026-09-11T19:00:00+02:00",
@@ -4770,7 +4745,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     },
@@ -4936,31 +4911,6 @@
     "letzte": "2026-09-20"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-06T10:00:00+02:00",
-     "treffpunkt": "2026-09-06T09:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U17 II",
-     "paarung": "EV Duisburg – ESV 03 Chemnitz",
-     "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
-     "halle": "PreZero Rheinlandhalle Duisburg",
-     "koordinaten": [
-      51.405718,
-      6.780082
-     ],
-     "gespann": [
-      {
-       "name": "Strube, Julia",
-       "slug": "strube-julia",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null
-    },
     {
      "beginn": "2026-09-20T10:00:00+02:00",
      "treffpunkt": "2026-09-20T09:00:00+02:00",
@@ -5164,7 +5114,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     }
@@ -5620,31 +5570,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-06T09:45:00+02:00",
-     "treffpunkt": "2026-09-06T08:45:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U17 FS",
-     "paarung": "Herner EV – Eisadler Dortmund",
-     "ort": "Gysenberghalle Herne, Am Revierpark 22, 44627 Herne",
-     "halle": "Gysenberghalle Herne",
-     "koordinaten": [
-      51.532602,
-      7.254372
-     ],
-     "gespann": [
-      {
-       "name": "Müller, Lars",
-       "slug": "mueller-lars",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null
-    },
-    {
      "beginn": "2026-09-12T12:30:00+02:00",
      "treffpunkt": "2026-09-12T11:30:00+02:00",
      "rolle": "SR",
@@ -5920,7 +5845,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     },
@@ -6532,7 +6457,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     },
@@ -6959,7 +6884,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     },
@@ -6994,7 +6919,6 @@
    "slug": "strube-julia",
    "name": "Strube, Julia",
    "varianten": [
-    "Strube Julia",
     "Strube, Julia"
    ],
    "statistik": {
@@ -7028,31 +6952,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-06T10:00:00+02:00",
-     "treffpunkt": "2026-09-06T09:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U17 II",
-     "paarung": "EV Duisburg – ESV 03 Chemnitz",
-     "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
-     "halle": "PreZero Rheinlandhalle Duisburg",
-     "koordinaten": [
-      51.405718,
-      6.780082
-     ],
-     "gespann": [
-      {
-       "name": "Quint, Sascha",
-       "slug": "quint-sascha",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null
-    },
-    {
      "beginn": "2026-09-13T10:00:00+02:00",
      "treffpunkt": "2026-09-13T09:00:00+02:00",
      "rolle": "SR",
@@ -7073,7 +6972,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     },
@@ -7650,7 +7549,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     },
@@ -7821,52 +7720,6 @@
   }
  ],
  "spiele": [
-  {
-   "beginn": "2026-09-06T09:45:00+02:00",
-   "treffpunkt": "2026-09-06T08:45:00+02:00",
-   "liga": "U17 FS",
-   "paarung": "Herner EV – Eisadler Dortmund",
-   "halle": "Gysenberghalle Herne",
-   "ort": "Gysenberghalle Herne, Am Revierpark 22, 44627 Herne",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Schmidt, Waldemar",
-     "rolle": "SR",
-     "slug": "schmidt-waldemar"
-    },
-    {
-     "name": "Müller, Lars",
-     "rolle": "SR",
-     "slug": "mueller-lars"
-    }
-   ],
-   "vergangen": true
-  },
-  {
-   "beginn": "2026-09-06T10:00:00+02:00",
-   "treffpunkt": "2026-09-06T09:00:00+02:00",
-   "liga": "U17 II",
-   "paarung": "EV Duisburg – ESV 03 Chemnitz",
-   "halle": "PreZero Rheinlandhalle Duisburg",
-   "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Quint, Sascha",
-     "rolle": "SR",
-     "slug": "quint-sascha"
-    },
-    {
-     "name": "Strube, Julia",
-     "rolle": "SR",
-     "slug": "strube-julia"
-    }
-   ],
-   "vergangen": true
-  },
   {
    "beginn": "2026-09-06T11:00:00+02:00",
    "treffpunkt": "2026-09-06T10:00:00+02:00",
@@ -8675,7 +8528,7 @@
      "slug": "reuter-rick"
     }
    ],
-   "vergangen": false
+   "vergangen": true
   },
   {
    "beginn": "2026-09-13T10:00:00+02:00",
@@ -8698,7 +8551,7 @@
      "slug": "strube-julia"
     }
    ],
-   "vergangen": false
+   "vergangen": true
   },
   {
    "beginn": "2026-09-13T10:00:00+02:00",
@@ -8721,7 +8574,7 @@
      "slug": "zynda-jayden"
     }
    ],
-   "vergangen": false
+   "vergangen": true
   },
   {
    "beginn": "2026-09-13T10:00:00+02:00",
@@ -8744,7 +8597,7 @@
      "slug": "strohmenger-svenja"
     }
    ],
-   "vergangen": false
+   "vergangen": true
   },
   {
    "beginn": "2026-09-13T11:00:00+02:00",

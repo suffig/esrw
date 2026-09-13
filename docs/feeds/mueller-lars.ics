@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:18cf64b0fddb78956783b860799b1c45f8f0c3f3@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260906T064500Z
-DTEND:20260906T101500Z
-SUMMARY:SR · U17 FS · Herner EV – Eisadler Dortmund
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:45 Uhr\nTreffpunkt:
-  08:45 Uhr (60 Min vor Spielbeginn)\nLiga: U17 FS\nHalle: Gysenberghalle H
- erne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Schmidt\, Waldemar
- \n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Gysenberghalle Herne\, Am Revierpark 22\, 44627 Herne
-GEO:51.532602;7.254372
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
- evierpark 22, 44627 Herne";X-APPLE-RADIUS=100;X-TITLE="Gysenberghalle Hern
- e":geo:51.532602,7.254372
-END:VEVENT
-BEGIN:VEVENT
 UID:ff95ad08213ece2ef42d7a4c2eaf4a1f09e5b020@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z
