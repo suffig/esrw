@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 88,
+ "spiele_gesamt": 87,
  "saison": "2026/27",
  "archiv_spiele": 113,
  "rollen": {
@@ -60,7 +60,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     }
@@ -2790,7 +2790,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     },
@@ -3121,31 +3121,6 @@
     "letzte": "2026-09-20"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-06T17:00:00+02:00",
-     "treffpunkt": "2026-09-06T16:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U15 FS",
-     "paarung": "Krefelder EV 1b – Iserlohner EC 1b",
-     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-     "halle": "Rheinlandhalle Krefeld",
-     "koordinaten": [
-      51.339877,
-      6.540168
-     ],
-     "gespann": [
-      {
-       "name": "Reuter, Fynn",
-       "slug": "reuter-fynn",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null
-    },
     {
      "beginn": "2026-09-20T19:00:00+02:00",
      "treffpunkt": "2026-09-20T18:00:00+02:00",
@@ -4809,31 +4784,6 @@
     "letzte": "2026-09-19"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-06T17:00:00+02:00",
-     "treffpunkt": "2026-09-06T16:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U15 FS",
-     "paarung": "Krefelder EV 1b – Iserlohner EC 1b",
-     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-     "halle": "Rheinlandhalle Krefeld",
-     "koordinaten": [
-      51.339877,
-      6.540168
-     ],
-     "gespann": [
-      {
-       "name": "Krüger, Martin",
-       "slug": "krueger-martin",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null
-    },
     {
      "beginn": "2026-09-19T16:30:00+02:00",
      "treffpunkt": "2026-09-19T15:30:00+02:00",
@@ -7371,29 +7321,6 @@
  ],
  "spiele": [
   {
-   "beginn": "2026-09-06T17:00:00+02:00",
-   "treffpunkt": "2026-09-06T16:00:00+02:00",
-   "liga": "U15 FS",
-   "paarung": "Krefelder EV 1b – Iserlohner EC 1b",
-   "halle": "Rheinlandhalle Krefeld",
-   "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Reuter, Fynn",
-     "rolle": "SR",
-     "slug": "reuter-fynn"
-    },
-    {
-     "name": "Krüger, Martin",
-     "rolle": "SR",
-     "slug": "krueger-martin"
-    }
-   ],
-   "vergangen": true
-  },
-  {
    "beginn": "2026-09-06T17:30:00+02:00",
    "treffpunkt": "2026-09-06T16:30:00+02:00",
    "liga": "U13 RLA",
@@ -8316,7 +8243,7 @@
      "slug": "kiefer-dennis"
     }
    ],
-   "vergangen": false
+   "vergangen": true
   },
   {
    "beginn": "2026-09-13T17:30:00+02:00",
