@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 87,
+ "spiele_gesamt": 86,
  "saison": "2026/27",
  "archiv_spiele": 113,
  "rollen": {
@@ -2533,7 +2533,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     },
@@ -3978,73 +3978,6 @@
    ]
   },
   {
-   "slug": "moritz-alexander",
-   "name": "Moritz, Alexander",
-   "varianten": [
-    "Moritz, Alexander"
-   ],
-   "statistik": {
-    "gesamt": 3,
-    "saison": 3,
-    "rollen": {
-     "SR": 3
-    },
-    "ligen": [
-     [
-      "U15 RLB",
-      1
-     ],
-     [
-      "BL FS",
-      1
-     ],
-     [
-      "U13 RLA",
-      1
-     ]
-    ],
-    "hallen": [
-     [
-      "Kölnarena 2",
-      2
-     ],
-     [
-      "ICEDOME Troisdorf",
-      1
-     ]
-    ],
-    "erste": "2026-09-05",
-    "letzte": "2026-09-06"
-   },
-   "spiele": [
-    {
-     "beginn": "2026-09-06T17:30:00+02:00",
-     "treffpunkt": "2026-09-06T16:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U13 RLA",
-     "paarung": "Kölner Junghaie – Krefelder EV",
-     "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
-     "halle": "Kölnarena 2",
-     "koordinaten": [
-      50.937979,
-      6.98935
-     ],
-     "gespann": [
-      {
-       "name": "Rieneck, Maximilian",
-       "slug": "rieneck-maximilian",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null
-    }
-   ]
-  },
-  {
    "slug": "mueller-lars",
    "name": "Müller, Lars",
    "varianten": [
@@ -4910,31 +4843,6 @@
     "letzte": "2026-09-13"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-06T17:30:00+02:00",
-     "treffpunkt": "2026-09-06T16:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U13 RLA",
-     "paarung": "Kölner Junghaie – Krefelder EV",
-     "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
-     "halle": "Kölnarena 2",
-     "koordinaten": [
-      50.937979,
-      6.98935
-     ],
-     "gespann": [
-      {
-       "name": "Moritz, Alexander",
-       "slug": "moritz-alexander",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null
-    },
     {
      "beginn": "2026-09-13T18:00:00+02:00",
      "treffpunkt": "2026-09-13T17:00:00+02:00",
@@ -5961,7 +5869,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     },
@@ -7321,29 +7229,6 @@
  ],
  "spiele": [
   {
-   "beginn": "2026-09-06T17:30:00+02:00",
-   "treffpunkt": "2026-09-06T16:30:00+02:00",
-   "liga": "U13 RLA",
-   "paarung": "Kölner Junghaie – Krefelder EV",
-   "halle": "Kölnarena 2",
-   "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Rieneck, Maximilian",
-     "rolle": "SR",
-     "slug": "rieneck-maximilian"
-    },
-    {
-     "name": "Moritz, Alexander",
-     "rolle": "SR",
-     "slug": "moritz-alexander"
-    }
-   ],
-   "vergangen": true
-  },
-  {
    "beginn": "2026-09-06T18:30:00+02:00",
    "treffpunkt": "2026-09-06T17:30:00+02:00",
    "liga": "U15 LL FS",
@@ -8266,7 +8151,7 @@
      "slug": "starke-matthias"
     }
    ],
-   "vergangen": false
+   "vergangen": true
   },
   {
    "beginn": "2026-09-13T18:00:00+02:00",
