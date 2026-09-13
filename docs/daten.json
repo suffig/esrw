@@ -1144,7 +1144,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     },
@@ -3194,7 +3194,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     },
@@ -3847,7 +3847,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     },
@@ -5410,7 +5410,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null
     },
@@ -8679,7 +8679,7 @@
      "slug": "schlueter-thomas"
     }
    ],
-   "vergangen": false
+   "vergangen": true
   },
   {
    "beginn": "2026-09-13T08:00:00+02:00",
@@ -8702,7 +8702,7 @@
      "slug": "garbsch-rene"
     }
    ],
-   "vergangen": false
+   "vergangen": true
   },
   {
    "beginn": "2026-09-13T09:15:00+02:00",
