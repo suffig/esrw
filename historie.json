@@ -306,6 +306,24 @@
   "zuerst_gesehen": "2026-09-11",
   "zuletzt_gesehen": "2026-09-14"
  },
+ "320f93e4261c960971424abc2fb965adf8723d1c": {
+  "begegnung": "DNL III FS: EV Duisburg - EV Duisburg OL",
+  "beginn": "2026-09-15T20:00:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Musga, Maurice",
+    "Hornig, Marius"
+   ],
+   "HSR": [
+    "Licau, Sebastian"
+   ]
+  },
+  "halle": "PreZero Rheinlandhalle Duisburg",
+  "liga": "DNL III FS",
+  "paarung": "EV Duisburg – EV Duisburg OL",
+  "zuerst_gesehen": "2026-09-14",
+  "zuletzt_gesehen": "2026-09-14"
+ },
  "32ed0fb4bd0d6084b8fe7f20427d8c05070cba6b": {
   "begegnung": "LL FS: Dinslakener Kobras 1b - EHC Essen Ruhr",
   "beginn": "2026-09-13T19:00:00+02:00",
@@ -1196,7 +1214,7 @@
     "Stockenschneider, Lars"
    ],
    "HSR": [
-    "Priebsch, Jan Philipp"
+    "Licau, Sebastian"
    ]
   },
   "halle": "Eissporthalle Dinslaken",

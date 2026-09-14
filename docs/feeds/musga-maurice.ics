@@ -1,0 +1,39 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//esrw-ical//Schiedsrichter-Einteilungen//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Einteilungen – Musga\, Maurice
+X-WR-TIMEZONE:Europe/Berlin
+REFRESH-INTERVAL;VALUE=DURATION:PT1H
+X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:db3107065fc261999403e71b75bf15a12b3b4375@esrw.de
+SEQUENCE:0
+DTSTAMP:20260914T193036Z
+LAST-MODIFIED:20260914T193036Z
+DTSTART:20260915T170000Z
+DTEND:20260915T203000Z
+SUMMARY:LSR · DNL III FS · EV Duisburg – EV Duisburg OL
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III FS\nHalle: PreZero Rhei
+ nlandhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespa
+ nn: Licau\, Sebastian (HSR) / Hornig\, Marius (LSR)\n\nQuelle: https://www
+ .esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · DNL III FS · EV Duisburg
+  – EV Duisburg OL
+END:VALARM
+END:VEVENT
+END:VCALENDAR

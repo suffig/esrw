@@ -371,6 +371,18 @@
   "titel": "SR · U13 RLB · Herforder EV – EHC Troisdorf",
   "treffpunkt": "2026-09-19T12:30:00+02:00"
  },
+ "264187c7f3ed134712e18535491aa27180bcfe56@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-15T20:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "2ca4418309adc0b4d31559295b7603227ea85a70",
+  "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
+  "sequence": 0,
+  "slug": "licau-sebastian",
+  "stempel": "2026-09-14T19:30:36.339102+00:00",
+  "titel": "HSR · DNL III FS · EV Duisburg – EV Duisburg OL",
+  "treffpunkt": "2026-09-15T19:00:00+02:00"
+ },
  "27f468207fc77cf30e66cb6db36c1fad1dbbdb04@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-20T19:00:00+02:00",
@@ -1391,18 +1403,6 @@
   "titel": "SR · U15 RLB · Herner EV – EV Duisburg",
   "treffpunkt": "2026-09-20T08:30:00+02:00"
  },
- "a0e9ed9e8e8182b80d9ebe66b10c3f2bb8725573@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-20T19:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "b1af1cd041fa84fedd91a9f568b4e8e1d0a83780",
-  "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
-  "sequence": 0,
-  "slug": "priebsch-jan-philipp",
-  "stempel": "2026-09-11T15:00:47.546895+00:00",
-  "titel": "HSR · RL FS · Dinslakener Kobras – UNIS Flyers Heerenveen",
-  "treffpunkt": "2026-09-20T18:00:00+02:00"
- },
  "a1929f3bff56f97e6ffecefd724b3c4bc9a46fdc@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-11T20:15:00+02:00",
@@ -1739,6 +1739,18 @@
   "titel": "SR · U9 LL Rot · Krefelder EV 1b -",
   "treffpunkt": "2026-09-20T13:00:00+02:00"
  },
+ "cb59679ad48f394d1d970beb80a3f61ca4cde1e9@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T19:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "b1af1cd041fa84fedd91a9f568b4e8e1d0a83780",
+  "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+  "sequence": 0,
+  "slug": "licau-sebastian",
+  "stempel": "2026-09-14T19:30:36.339102+00:00",
+  "titel": "HSR · RL FS · Dinslakener Kobras – UNIS Flyers Heerenveen",
+  "treffpunkt": "2026-09-20T18:00:00+02:00"
+ },
  "ce557fae9c6496c443ec68774a2e44948df32338@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-13T08:00:00+02:00",
@@ -1834,6 +1846,18 @@
   "stempel": "2026-09-11T15:00:47.546895+00:00",
   "titel": "SR · U13 RLB · Herner EV – Düsseldorfer EG 1b",
   "treffpunkt": "2026-09-20T15:30:00+02:00"
+ },
+ "db3107065fc261999403e71b75bf15a12b3b4375@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-15T20:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "8611c2f5cd73a5829196662707d9c7ab2f838c79",
+  "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
+  "sequence": 0,
+  "slug": "musga-maurice",
+  "stempel": "2026-09-14T19:30:36.339102+00:00",
+  "titel": "LSR · DNL III FS · EV Duisburg – EV Duisburg OL",
+  "treffpunkt": "2026-09-15T19:00:00+02:00"
  },
  "dbeb5417849cd8a4c25f6fad4127c89b8be54876@esrw.de": {
   "aenderung": null,
@@ -1966,6 +1990,18 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "SR · U17 FS · EHC Troisdorf – Eisadler Dortmund",
   "treffpunkt": "2026-09-13T17:00:00+02:00"
+ },
+ "f2fccd6586b3bb883ab06680a0a31093773e8488@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-15T20:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "8611c2f5cd73a5829196662707d9c7ab2f838c79",
+  "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
+  "sequence": 0,
+  "slug": "hornig-marius",
+  "stempel": "2026-09-14T19:30:36.339102+00:00",
+  "titel": "LSR · DNL III FS · EV Duisburg – EV Duisburg OL",
+  "treffpunkt": "2026-09-15T19:00:00+02:00"
  },
  "f371e217a117fbfbd90f4320296b3266a8fbff59@esrw.de": {
   "aenderung": null,

@@ -644,6 +644,15 @@
     "rolle": "SR"
    }
   ],
+  "hornig-marius": [
+   {
+    "beginn": "2026-09-15T20:00:00+02:00",
+    "liga": "DNL III FS",
+    "paarung": "EV Duisburg – EV Duisburg OL",
+    "halle": "PreZero Rheinlandhalle Duisburg",
+    "rolle": "LSR"
+   }
+  ],
   "keller-alexander": [
    {
     "beginn": "2026-09-12T13:30:00+02:00",
@@ -761,6 +770,22 @@
     "paarung": "Kölner Junghaie – Düsseldorfer EG",
     "halle": "Kölnarena 2",
     "rolle": "SR"
+   }
+  ],
+  "licau-sebastian": [
+   {
+    "beginn": "2026-09-20T19:00:00+02:00",
+    "liga": "RL FS",
+    "paarung": "Dinslakener Kobras – UNIS Flyers Heerenveen",
+    "halle": "Eissporthalle Dinslaken",
+    "rolle": "HSR"
+   },
+   {
+    "beginn": "2026-09-15T20:00:00+02:00",
+    "liga": "DNL III FS",
+    "paarung": "EV Duisburg – EV Duisburg OL",
+    "halle": "PreZero Rheinlandhalle Duisburg",
+    "rolle": "HSR"
    }
   ],
   "lindemans-pepe": [
@@ -943,6 +968,22 @@
     "rolle": "SR"
    }
   ],
+  "musga-maurice": [
+   {
+    "beginn": "2026-09-15T20:00:00+02:00",
+    "liga": "DNL III FS",
+    "paarung": "EV Duisburg – EV Duisburg OL",
+    "halle": "PreZero Rheinlandhalle Duisburg",
+    "rolle": "LSR"
+   },
+   {
+    "beginn": "2026-09-05T16:30:00+02:00",
+    "liga": "U17 I",
+    "paarung": "Düsseldorfer EG – Eisbären Juniors Berlin",
+    "halle": "Eishalle Brehmstraße",
+    "rolle": "SR"
+   }
+  ],
   "nieberle-christian": [
    {
     "beginn": "2026-09-19T19:30:00+02:00",
@@ -1029,13 +1070,6 @@
    }
   ],
   "priebsch-jan-philipp": [
-   {
-    "beginn": "2026-09-20T19:00:00+02:00",
-    "liga": "RL FS",
-    "paarung": "Dinslakener Kobras – UNIS Flyers Heerenveen",
-    "halle": "Eissporthalle Dinslaken",
-    "rolle": "HSR"
-   },
    {
     "beginn": "2026-09-13T14:00:00+02:00",
     "liga": "U17 I",

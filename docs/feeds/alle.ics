@@ -917,6 +917,35 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
  .937979,6.98935
 END:VEVENT
 BEGIN:VEVENT
+UID:e017e783e51b601f6647d97f3dc9c00335d89eef@esrw.de
+SEQUENCE:0
+DTSTAMP:20260914T193036Z
+LAST-MODIFIED:20260914T193036Z
+DTSTART:20260915T170000Z
+DTEND:20260915T203000Z
+SUMMARY:DNL III FS · EV Duisburg – EV Duisburg OL
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III FS\nHalle: PreZero Rhei
+ nlandhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespa
+ nn: Licau\, Sebastian (HSR) / Musga\, Maurice (LSR)\n\nQuelle: https://www
+ .esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - DNL III FS · EV Duisburg – EV
+  Duisburg OL
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:0be5edd926de70b13b34b54eec5019582ab51934@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z
@@ -2030,8 +2059,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:30ce28dca8f5bcc9a5e1bfc1e3e4070305a14715@esrw.de
 SEQUENCE:0
-DTSTAMP:20260911T150047Z
-LAST-MODIFIED:20260911T150047Z
+DTSTAMP:20260914T193036Z
+LAST-MODIFIED:20260914T193036Z
 DTSTART:20260920T160000Z
 DTEND:20260920T193000Z
 SUMMARY:RL FS · Dinslakener Kobras – UNIS Flyers Heerenveen

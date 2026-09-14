@@ -2,9 +2,9 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 85,
+ "spiele_gesamt": 86,
  "saison": "2026/27",
- "archiv_spiele": 114,
+ "archiv_spiele": 115,
  "rollen": {
   "SR": "Schiedsrichter",
   "HSR": "Hauptschiedsrichter",
@@ -2595,6 +2595,66 @@
    ]
   },
   {
+   "slug": "hornig-marius",
+   "name": "Hornig, Marius",
+   "varianten": [
+    "Hornig, Marius"
+   ],
+   "statistik": {
+    "gesamt": 1,
+    "saison": 1,
+    "rollen": {
+     "LSR": 1
+    },
+    "ligen": [
+     [
+      "DNL III FS",
+      1
+     ]
+    ],
+    "hallen": [
+     [
+      "PreZero Rheinlandhalle Duisburg",
+      1
+     ]
+    ],
+    "erste": "2026-09-15",
+    "letzte": "2026-09-15"
+   },
+   "spiele": [
+    {
+     "beginn": "2026-09-15T20:00:00+02:00",
+     "treffpunkt": "2026-09-15T19:00:00+02:00",
+     "rolle": "LSR",
+     "system": 3,
+     "liga": "DNL III FS",
+     "paarung": "EV Duisburg – EV Duisburg OL",
+     "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
+     "halle": "PreZero Rheinlandhalle Duisburg",
+     "koordinaten": [
+      51.405718,
+      6.780082
+     ],
+     "gespann": [
+      {
+       "name": "Licau, Sebastian",
+       "slug": "licau-sebastian",
+       "rolle": "HSR"
+      },
+      {
+       "name": "Musga, Maurice",
+       "slug": "musga-maurice",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    }
+   ]
+  },
+  {
    "slug": "keller-alexander",
    "name": "Keller, Alexander",
    "varianten": [
@@ -3198,6 +3258,104 @@
        "name": "Garcia Nieto, Dario",
        "slug": "garcia-nieto-dario",
        "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    }
+   ]
+  },
+  {
+   "slug": "licau-sebastian",
+   "name": "Licau, Sebastian",
+   "varianten": [
+    "Licau, Sebastian"
+   ],
+   "statistik": {
+    "gesamt": 2,
+    "saison": 2,
+    "rollen": {
+     "HSR": 2
+    },
+    "ligen": [
+     [
+      "RL FS",
+      1
+     ],
+     [
+      "DNL III FS",
+      1
+     ]
+    ],
+    "hallen": [
+     [
+      "Eissporthalle Dinslaken",
+      1
+     ],
+     [
+      "PreZero Rheinlandhalle Duisburg",
+      1
+     ]
+    ],
+    "erste": "2026-09-15",
+    "letzte": "2026-09-20"
+   },
+   "spiele": [
+    {
+     "beginn": "2026-09-15T20:00:00+02:00",
+     "treffpunkt": "2026-09-15T19:00:00+02:00",
+     "rolle": "HSR",
+     "system": 3,
+     "liga": "DNL III FS",
+     "paarung": "EV Duisburg – EV Duisburg OL",
+     "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
+     "halle": "PreZero Rheinlandhalle Duisburg",
+     "koordinaten": [
+      51.405718,
+      6.780082
+     ],
+     "gespann": [
+      {
+       "name": "Musga, Maurice",
+       "slug": "musga-maurice",
+       "rolle": "LSR"
+      },
+      {
+       "name": "Hornig, Marius",
+       "slug": "hornig-marius",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-20T19:00:00+02:00",
+     "treffpunkt": "2026-09-20T18:00:00+02:00",
+     "rolle": "HSR",
+     "system": 3,
+     "liga": "RL FS",
+     "paarung": "Dinslakener Kobras – UNIS Flyers Heerenveen",
+     "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+     "halle": "Eissporthalle Dinslaken",
+     "koordinaten": [
+      51.574578,
+      6.735361
+     ],
+     "gespann": [
+      {
+       "name": "Quint, Sascha",
+       "slug": "quint-sascha",
+       "rolle": "LSR"
+      },
+      {
+       "name": "Stockenschneider, Lars",
+       "slug": "stockenschneider-lars",
+       "rolle": "LSR"
       }
      ],
      "halle_erkannt": true,
@@ -4084,6 +4242,75 @@
    ]
   },
   {
+   "slug": "musga-maurice",
+   "name": "Musga, Maurice",
+   "varianten": [
+    "Musga, Maurice"
+   ],
+   "statistik": {
+    "gesamt": 2,
+    "saison": 2,
+    "rollen": {
+     "SR": 1,
+     "LSR": 1
+    },
+    "ligen": [
+     [
+      "U17 I",
+      1
+     ],
+     [
+      "DNL III FS",
+      1
+     ]
+    ],
+    "hallen": [
+     [
+      "Eishalle Brehmstraße",
+      1
+     ],
+     [
+      "PreZero Rheinlandhalle Duisburg",
+      1
+     ]
+    ],
+    "erste": "2026-09-05",
+    "letzte": "2026-09-15"
+   },
+   "spiele": [
+    {
+     "beginn": "2026-09-15T20:00:00+02:00",
+     "treffpunkt": "2026-09-15T19:00:00+02:00",
+     "rolle": "LSR",
+     "system": 3,
+     "liga": "DNL III FS",
+     "paarung": "EV Duisburg – EV Duisburg OL",
+     "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
+     "halle": "PreZero Rheinlandhalle Duisburg",
+     "koordinaten": [
+      51.405718,
+      6.780082
+     ],
+     "gespann": [
+      {
+       "name": "Licau, Sebastian",
+       "slug": "licau-sebastian",
+       "rolle": "HSR"
+      },
+      {
+       "name": "Hornig, Marius",
+       "slug": "hornig-marius",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    }
+   ]
+  },
+  {
    "slug": "nieberle-christian",
    "name": "Nieberle, Christian",
    "varianten": [
@@ -4466,19 +4693,14 @@
     "Priebsch, Jan Philipp"
    ],
    "statistik": {
-    "gesamt": 2,
-    "saison": 2,
+    "gesamt": 1,
+    "saison": 1,
     "rollen": {
-     "SR": 1,
-     "HSR": 1
+     "SR": 1
     },
     "ligen": [
      [
       "U17 I",
-      1
-     ],
-     [
-      "RL FS",
       1
      ]
     ],
@@ -4486,14 +4708,10 @@
      [
       "Eishalle Brehmstraße",
       1
-     ],
-     [
-      "Eissporthalle Dinslaken",
-      1
      ]
     ],
     "erste": "2026-09-13",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-13"
    },
    "spiele": [
     {
@@ -4518,36 +4736,6 @@
      ],
      "halle_erkannt": true,
      "vergangen": true,
-     "aenderung": null,
-     "hinweis": null
-    },
-    {
-     "beginn": "2026-09-20T19:00:00+02:00",
-     "treffpunkt": "2026-09-20T18:00:00+02:00",
-     "rolle": "HSR",
-     "system": 3,
-     "liga": "RL FS",
-     "paarung": "Dinslakener Kobras – UNIS Flyers Heerenveen",
-     "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
-     "halle": "Eissporthalle Dinslaken",
-     "koordinaten": [
-      51.574578,
-      6.735361
-     ],
-     "gespann": [
-      {
-       "name": "Quint, Sascha",
-       "slug": "quint-sascha",
-       "rolle": "LSR"
-      },
-      {
-       "name": "Stockenschneider, Lars",
-       "slug": "stockenschneider-lars",
-       "rolle": "LSR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": false,
      "aenderung": null,
      "hinweis": null
     }
@@ -4639,8 +4827,8 @@
      ],
      "gespann": [
       {
-       "name": "Priebsch, Jan Philipp",
-       "slug": "priebsch-jan-philipp",
+       "name": "Licau, Sebastian",
+       "slug": "licau-sebastian",
        "rolle": "HSR"
       },
       {
@@ -6188,8 +6376,8 @@
      ],
      "gespann": [
       {
-       "name": "Priebsch, Jan Philipp",
-       "slug": "priebsch-jan-philipp",
+       "name": "Licau, Sebastian",
+       "slug": "licau-sebastian",
        "rolle": "HSR"
       },
       {
@@ -8173,6 +8361,34 @@
    "vergangen": true
   },
   {
+   "beginn": "2026-09-15T20:00:00+02:00",
+   "treffpunkt": "2026-09-15T19:00:00+02:00",
+   "liga": "DNL III FS",
+   "paarung": "EV Duisburg – EV Duisburg OL",
+   "halle": "PreZero Rheinlandhalle Duisburg",
+   "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
+   "halle_erkannt": true,
+   "system": 3,
+   "besetzung": [
+    {
+     "name": "Licau, Sebastian",
+     "rolle": "HSR",
+     "slug": "licau-sebastian"
+    },
+    {
+     "name": "Musga, Maurice",
+     "rolle": "LSR",
+     "slug": "musga-maurice"
+    },
+    {
+     "name": "Hornig, Marius",
+     "rolle": "LSR",
+     "slug": "hornig-marius"
+    }
+   ],
+   "vergangen": false
+  },
+  {
    "beginn": "2026-09-16T19:30:00+02:00",
    "treffpunkt": "2026-09-16T18:30:00+02:00",
    "liga": "U15 RLA",
@@ -9148,9 +9364,9 @@
    "system": 3,
    "besetzung": [
     {
-     "name": "Priebsch, Jan Philipp",
+     "name": "Licau, Sebastian",
      "rolle": "HSR",
-     "slug": "priebsch-jan-philipp"
+     "slug": "licau-sebastian"
     },
     {
      "name": "Quint, Sascha",
