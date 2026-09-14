@@ -3281,21 +3281,21 @@
     },
     "ligen": [
      [
-      "RL FS",
+      "DNL III FS",
       1
      ],
      [
-      "DNL III FS",
+      "RL FS",
       1
      ]
     ],
     "hallen": [
      [
-      "Eissporthalle Dinslaken",
+      "PreZero Rheinlandhalle Duisburg",
       1
      ],
      [
-      "PreZero Rheinlandhalle Duisburg",
+      "Eissporthalle Dinslaken",
       1
      ]
     ],
@@ -4251,26 +4251,26 @@
     "gesamt": 2,
     "saison": 2,
     "rollen": {
-     "SR": 1,
-     "LSR": 1
+     "LSR": 1,
+     "SR": 1
     },
     "ligen": [
      [
-      "U17 I",
+      "DNL III FS",
       1
      ],
      [
-      "DNL III FS",
+      "U17 I",
       1
      ]
     ],
     "hallen": [
      [
-      "Eishalle Brehmstraße",
+      "PreZero Rheinlandhalle Duisburg",
       1
      ],
      [
-      "PreZero Rheinlandhalle Duisburg",
+      "Eishalle Brehmstraße",
       1
      ]
     ],
