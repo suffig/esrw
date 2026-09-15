@@ -47,6 +47,8 @@ docs/
   daten.json            alle Personen und Spiele, für die Webseite
   stand.json            nur der Zeitpunkt des letzten Laufs
   archiv.json           Saisonliste je Person aus dem Archiv
+  mitglieder.js         Mitgliederbereich (Konto, Abrechnung), laedt bei Bedarf
+  supabase.json         Zugang zum Backend, leer = Mitgliederbereich aus
   manifest.webmanifest  macht die Seite als App installierbar
   sw.js                 Service Worker, damit sie offline funktioniert
   feeds/
@@ -55,6 +57,7 @@ docs/
     alle.ics            Gesamtkalender aller Spiele
 historie.json           dauerhaftes Archiv aller je gesehenen Spiele
 state.json              letzter Stand, um Änderungen zu erkennen
+supabase/schema.sql     Tabellen und Zugriffsregeln für den Mitgliederbereich
 ```
 
 Feeds und `daten.json` sind **byte-stabil**: ändert sich inhaltlich nichts, sind
@@ -165,6 +168,28 @@ selbst.
 pfeift, taucht nicht auf. Urlaub, Verletzung, Lizenzstufe und ob jemand
 überhaupt Lust hat – all das steht nirgends. Es ist eine Vorschlagsliste, die
 das Suchen abkürzt, keine Zusage.
+
+## Mitgliederbereich
+
+Der dritte Reiter ist der einzige Teil mit Backend: Konten, Profil und eine
+Abrechnung je Saison, gespeichert bei [Supabase](https://supabase.com)
+(Postgres + Login, Frankfurt). Der Browser spricht direkt damit; GitHub Pages
+bleibt statisch. Was ein Nutzer sehen und ändern darf, erzwingt die Datenbank
+über Row Level Security (`supabase/schema.sql`) – jeder ausschließlich seine
+eigenen Zeilen. Der `anon`-Schlüssel in `docs/supabase.json` ist dafür gemacht,
+öffentlich zu sein.
+
+Solange `supabase.json` leer ist, zeigt der Reiter nur einen Hinweis; alles
+andere läuft unverändert. Einrichtung: ANLEITUNG.md, Schritt 10.
+
+**Abrechnung**: alle Spiele der Saison aus dem Archiv, je Spiel km, Vergütung,
+Auslagen, bezahlt, Notiz. Summen oben, km-Schätzung aus Heimatadresse und
+Hallenkoordinaten (Luftlinie × 1,3, hin und zurück), CSV-Export. Es ist eine
+Aufstellung, keine Steuerberatung.
+
+Die Logik liegt in `docs/mitglieder.js` und wird erst geladen, wenn jemand
+den Reiter öffnet. Mit `"mock": true` läuft eine Attrappe im Browser, um die
+Oberfläche ohne Supabase auszuprobieren.
 
 ## Benachrichtigungen in der App
 

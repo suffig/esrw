@@ -1,0 +1,6 @@
+{
+  "_hinweis": "Zugang zum Mitgliederbereich. 'url' und 'anon_key' stehen im Supabase-Dashboard unter Project Settings -> API. Der anon-Schluessel ist dafuer gedacht, im Browser zu liegen - er erlaubt nur, was die Zugriffsregeln in supabase/schema.sql zulassen. Solange beide leer sind, zeigt der Reiter Mitglieder nur einen Hinweis. 'mock': true schaltet eine Attrappe im Browser ein, um die Oberflaeche ohne Supabase auszuprobieren.",
+  "url": "",
+  "anon_key": "",
+  "mock": false
+}

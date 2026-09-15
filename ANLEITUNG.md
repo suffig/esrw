@@ -581,6 +581,116 @@ nicht einmal ein Commit erzeugt.
 
 ---
 
+## Schritt 10 (optional) – Mitgliederbereich mit Supabase
+
+Der Reiter **Mitglieder** bietet Konten, ein Profil und eine Abrechnung je Saison
+(Kilometer, Vergütung, Auslagen, CSV-Export). Dafür braucht es zum ersten Mal
+ein Backend: eine Datenbank mit Login. Supabase liefert beides, kostenlos für
+diese Größenordnung. GitHub Pages bleibt, wie es ist – der Browser spricht
+direkt mit Supabase.
+
+Solange nichts eingerichtet ist, zeigt der Reiter nur einen Hinweis. Alles
+andere funktioniert weiter wie bisher.
+
+### 10.1 Projekt anlegen
+
+1. <https://supabase.com> → **Start your project** → Konto anlegen (GitHub-Login
+   geht)
+2. **New project**
+   * **Name**: `esrw`
+   * **Database Password**: generieren lassen und im Passwortmanager ablegen –
+     du brauchst es später praktisch nie, aber es lässt sich nicht anzeigen
+   * **Region**: **Frankfurt (eu-central-1)** – die Daten bleiben in der EU
+3. Warten, bis das Projekt steht (eine Minute)
+
+### 10.2 Tabellen anlegen
+
+Links **SQL Editor** → **New query** → den kompletten Inhalt von
+`supabase/schema.sql` einfügen → **Run**.
+
+Das legt zwei Tabellen an (`profile`, `einsaetze`) und die Zugriffsregeln:
+**Jeder Nutzer sieht und ändert ausschließlich seine eigenen Zeilen.** Das
+erzwingt die Datenbank selbst, nicht die Webseite. Auch wer den anonymen
+Schlüssel aus dem Quelltext kopiert, kommt an fremde Daten nicht heran.
+
+Die Datei lässt sich gefahrlos mehrfach ausführen.
+
+### 10.3 Login-Einstellungen
+
+Links **Authentication** → **URL Configuration**:
+
+* **Site URL**: `https://suffig.github.io/esrw/`
+* **Redirect URLs** → **Add URL**: `https://suffig.github.io/esrw/**`
+
+Ohne das landen Bestätigungslinks aus der E-Mail auf einer leeren Seite.
+
+Unter **Authentication → Providers → Email** kannst du entscheiden, ob neue
+Konten die E-Mail bestätigen müssen (**Confirm email**). Für einen
+Kollegenkreis ist *an* sinnvoll – dann kann niemand mit fremder Adresse ein
+Konto anlegen.
+
+### 10.4 Zugangsdaten eintragen
+
+Links **Project Settings** (Zahnrad) → **API**:
+
+* **Project URL** → nach `docs/supabase.json` in `"url"`
+* **Project API keys → anon public** → nach `"anon_key"`
+
+```json
+{
+  "url": "https://abcdefghijkl.supabase.co",
+  "anon_key": "eyJhbGciOi…",
+  "mock": false
+}
+```
+
+Der **anon**-Schlüssel darf im Quelltext liegen – er ist genau dafür gemacht
+und öffnet nichts, was die Zugriffsregeln nicht erlauben. Der **service_role**-
+Schlüssel darunter ist etwas anderes: **niemals** irgendwo eintragen.
+
+Committen, pushen, fertig. Beim nächsten Öffnen des Reiters erscheint die
+Anmeldung.
+
+### 10.5 Ausprobieren ohne Supabase
+
+Mit `"mock": true` in `supabase.json` läuft eine Attrappe im Browser: Konten
+und Einträge landen nur im `localStorage` dieses Geräts, nichts geht raus.
+Damit lässt sich die Oberfläche durchklicken, bevor das Projekt steht. Vor dem
+Veröffentlichen wieder auf `false`.
+
+### 10.6 Was drin ist
+
+Nach der Anmeldung wählt man einmal seinen Namen von esrw.de und optional die
+Heimatadresse (nur für die km-Schätzung; liegt im eigenen Profil, für
+niemanden sonst lesbar) und den Kilometersatz.
+
+Die **Abrechnung** listet alle Spiele der Saison – aus dem Archiv, also auch
+die, die auf esrw.de längst verschwunden sind. Je Spiel: gefahrene km,
+Vergütung, Auslagen, bezahlt ja/nein, Notiz. Gespeichert wird beim Verlassen
+des Feldes. Oben die Summen der Saison, daneben **km-Vorschläge übernehmen**
+(Luftlinie × 1,3, hin und zurück – bitte gegen die echte Strecke prüfen) und
+**CSV exportieren** für Excel oder den Steuerberater.
+
+> **Keine Steuerberatung.** Die Abrechnung ist eine Aufstellung. Ob und wie
+> Vergütung und Fahrtkosten steuerlich zählen – Ehrenamtspauschale,
+> Übungsleiterpauschale, Werbungskosten – hängt vom Einzelfall ab und sagt
+> dir dein Steuerberater, nicht diese Seite.
+
+### 10.7 Zwei Dinge, die man wissen muss
+
+**Kostenlose Supabase-Projekte werden nach sieben Tagen ohne Zugriff
+pausiert.** Dann meldet der Reiter „nicht erreichbar", bis du im Dashboard auf
+**Restore project** drückst. Bei regelmäßiger Nutzung passiert das nicht; in
+der Sommerpause vermutlich schon. Die Daten gehen dabei nicht verloren.
+
+**Du bist Betreiber.** Mit Konten verarbeitest du personenbezogene Daten deiner
+Kollegen (E-Mail, Adresse, Einnahmen). Das ist etwas anderes als das
+Weiterreichen öffentlicher Einteilungen. Wer mitmacht, sollte wissen, wo die
+Daten liegen (Supabase, Frankfurt) und dass du sie als Betreiber sehen
+*könntest* – über das Dashboard, nicht über die Webseite.
+
+---
+
 ## Wenn mal etwas nicht stimmt
 
 | Symptom | Ursache und Abhilfe |

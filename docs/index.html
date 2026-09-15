@@ -191,6 +191,34 @@
              background:var(--akzent); color:var(--akzent-text); border:0;
              border-radius:99px; cursor:pointer; white-space:nowrap; }
 
+  .mg-meldung { padding:9px 12px; border-radius:9px; font-size:.88rem; margin-bottom:10px;
+                background:var(--karte); border:1px solid var(--linie); }
+  .mg-meldung.gut { color:var(--gut); background:var(--gut-bg); border-color:transparent; }
+  .mg-meldung.warn { color:var(--warn); background:var(--warn-bg); border-color:transparent; }
+  .mg-form { display:flex; flex-direction:column; gap:9px; }
+  .mg-form h4 { margin:0 0 4px; font-size:1rem; }
+  .mg-form label { font-size:.8rem; color:var(--dim); margin-top:4px; }
+  .mg-form input, .mg-form select, .mg-felder input {
+    width:100%; padding:10px 12px; font:inherit; color:var(--text); background:var(--bg);
+    border:1px solid var(--linie); border-radius:9px; -webkit-appearance:none; appearance:none; }
+  .mg-form input:focus, .mg-felder input:focus { outline:2px solid var(--akzent); outline-offset:-1px; }
+  .mg-zeile { display:flex; gap:8px; }
+  .mg-zeile input { flex:1; }
+  .mg-haupt { padding:12px; font:inherit; font-weight:650; cursor:pointer; margin-top:6px;
+              background:var(--akzent); color:var(--akzent-text); border:0; border-radius:10px; }
+  .mg-haupt:disabled { opacity:.6; }
+  .mg-neben { padding:9px 12px; font:inherit; cursor:pointer; white-space:nowrap;
+              background:var(--karte); color:var(--text); border:1px solid var(--linie); border-radius:9px; }
+  .mg-wechsel { margin:10px 0 6px; }
+  .mg-eintrag .mg-felder { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:9px; }
+  .mg-eintrag .mg-felder label { font-size:.72rem; color:var(--dim); display:flex; flex-direction:column; gap:3px; }
+  .mg-eintrag .mg-felder input { padding:7px 9px; font-size:.9rem; }
+  .mg-eintrag .mg-check { flex-direction:row !important; align-items:center; gap:6px !important;
+                          font-size:.85rem !important; color:var(--text) !important; align-self:end; }
+  .mg-eintrag .mg-check input { width:auto; }
+  .mg-eintrag .mg-notiz { grid-column:2 / 4; }
+  .mg-fuss { margin-top:16px; }
+
   footer { margin-top:34px; padding-top:16px; border-top:1px solid var(--linie);
            color:var(--dim); font-size:.83rem; }
   footer a { color:var(--akzent); }
@@ -207,7 +235,11 @@
   <nav class="tabs" id="tabs">
     <button type="button" id="tab-meine" class="aktiv">Meine Spiele</button>
     <button type="button" id="tab-plan">Spielplan</button>
+    <button type="button" id="tab-mitglieder">Mitglieder</button>
   </nav>
+
+  <!-- Mitgliederbereich: Konto, Abrechnung. Logik in mitglieder.js -->
+  <section id="mitglieder" class="versteckt"></section>
 
   <!-- Spielplan: alle Spiele nach Tag und Uhrzeit -->
   <section id="plan" class="versteckt">
@@ -1147,12 +1179,38 @@
   }
 
   function ansicht(name) {
-    // Genau eine der drei Ansichten ist sichtbar; die Tabs folgen.
+    // Genau eine der Ansichten ist sichtbar; die Tabs folgen.
     el("auswahl").classList.toggle("versteckt", name !== "auswahl");
     el("detail").classList.toggle("versteckt", name !== "detail");
     el("plan").classList.toggle("versteckt", name !== "plan");
-    el("tab-meine").classList.toggle("aktiv", name !== "plan");
+    el("mitglieder").classList.toggle("versteckt", name !== "mitglieder");
+    el("tab-meine").classList.toggle("aktiv", name !== "plan" && name !== "mitglieder");
     el("tab-plan").classList.toggle("aktiv", name === "plan");
+    el("tab-mitglieder").classList.toggle("aktiv", name === "mitglieder");
+  }
+
+  // Mitgliederbereich liegt in einer eigenen Datei und wird erst geholt,
+  // wenn jemand den Reiter oeffnet.
+  var mitgliederGeladen = null;
+  function zeigeMitglieder() {
+    aktuell = null;
+    ansicht("mitglieder");
+    if (!mitgliederGeladen) {
+      mitgliederGeladen = new Promise(function (ok, nein) {
+        var s = document.createElement("script");
+        s.src = "mitglieder.js?" + (daten && daten.version || "1");
+        s.onload = ok; s.onerror = function () { nein(new Error("mitglieder.js nicht ladbar")); };
+        document.head.appendChild(s);
+      });
+    }
+    mitgliederGeladen.then(function () {
+      window.Mitglieder.oeffnen(el("mitglieder"), {
+        daten: daten, slug: profil && profil.slug, personMit: personMit, hole: hole
+      });
+    }).catch(function (e) {
+      el("mitglieder").textContent = "Mitgliederbereich konnte nicht geladen werden: " + e.message;
+    });
+    window.scrollTo(0, 0);
   }
 
   function zeigeAuswahl(wechsel) {
@@ -1172,6 +1230,7 @@
       window.scrollTo(0, 0);
       return;
     }
+    if (slug === "mitglieder") { zeigeMitglieder(); return; }
     if (slug) {
       var p = personMit(slug);
       if (p) { zeigePerson(p); return; }
@@ -1211,6 +1270,7 @@
   });
   window.addEventListener("hashchange", ausHash);
   el("tab-plan").addEventListener("click", function () { location.hash = "plan"; });
+  el("tab-mitglieder").addEventListener("click", function () { location.hash = "mitglieder"; });
   el("tab-meine").addEventListener("click", function () {
     // Ist der Hash schon leer, feuert kein hashchange - dann selbst rendern
     if (location.hash === "" || location.hash === "#") ausHash();
@@ -1274,6 +1334,7 @@
         } else if (!el("plan").classList.contains("versteckt")) {
           zeigePlan();
         }
+        // Mitgliederbereich hat eigenen Zustand (Formulare) und bleibt unangetastet
       })
       .catch(function () {});
   }
