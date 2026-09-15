@@ -1,10 +1,19 @@
 #!/usr/bin/env python3
 """
-Schickt Push-Nachrichten fuer neue, geaenderte und abgesetzte Einteilungen
-an alle Mitglieder, die in der App Push eingeschaltet haben.
+Schickt Push-Nachrichten an alle Mitglieder, die in der App Push
+eingeschaltet haben:
 
-Laeuft im GitHub-Workflow direkt nach esrw_ical.py und liest dessen
-aenderungen.json. Die Push-Abos kommen aus Supabase - mit dem
+  * neue, geaenderte und abgesetzte Einteilungen (aus aenderungen.json,
+    das esrw_ical.py im selben Lauf schreibt)
+  * am Spieltag ab 07:00 Uhr eine Erinnerung je Spiel (Uhrzeit, Treffpunkt,
+    Halle, Abfahrt wenn die Strecke im Profil bekannt ist)
+  * kurz vor der Abfahrt "In ~30 Minuten losfahren" - nur, wenn die Person
+    ihre Heimatadresse hinterlegt und die Strecke berechnet hat
+
+Damit der halbstuendliche Lauf nichts doppelt schickt, merkt sich die
+Tabelle push_gesendet, was schon raus ist.
+
+Die Push-Abos und Profile kommen aus Supabase - mit dem
 service_role-Schluessel, weil die Zugriffsregeln sonst nur die eigenen
 Zeilen zeigen. Deshalb gehoert dieser Schluessel ausschliesslich in ein
 GitHub-Secret.
@@ -26,19 +35,95 @@ import os
 import sys
 import urllib.parse
 import urllib.request
+from datetime import datetime, timedelta, timezone
+
+try:
+    from zoneinfo import ZoneInfo
+    BERLIN = ZoneInfo("Europe/Berlin")
+except Exception:  # pragma: no cover - sehr alte Python-Version
+    BERLIN = timezone(timedelta(hours=2))
 
 BASIS = os.path.dirname(os.path.abspath(__file__))
+ERINNERUNG_AB_STUNDE = 7      # Spieltag-Erinnerung fruehestens um 07:00
+ABFAHRT_FENSTER_MIN = 45      # "losfahren" wenn die Abfahrt in <= 45 Minuten liegt
 
 
-def api(url, schluessel, pfad, methode="GET", daten=None):
+def api(url, schluessel, pfad, methode="GET", daten=None, prefer="return=minimal"):
     req = urllib.request.Request(
         url.rstrip("/") + "/rest/v1/" + pfad, method=methode,
         data=json.dumps(daten).encode("utf-8") if daten is not None else None,
         headers={"apikey": schluessel, "Authorization": "Bearer " + schluessel,
-                 "Content-Type": "application/json", "Prefer": "return=minimal"})
+                 "Content-Type": "application/json", "Prefer": prefer})
     with urllib.request.urlopen(req, timeout=30) as r:
         roh = r.read().decode("utf-8")
         return json.loads(roh) if roh else None
+
+
+def lade_json(name, standard):
+    pfad = os.path.join(BASIS, name)
+    if not os.path.exists(pfad):
+        return standard
+    with open(pfad, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def uhr(iso):
+    return datetime.fromisoformat(iso).astimezone(BERLIN).strftime("%H:%M")
+
+
+def aenderungs_nachricht(slug, a):
+    zeilen = (["Neu: " + z for z in a.get("neu", [])]
+              + ["Geändert: " + z for z in a.get("geaendert", [])]
+              + ["Abgesetzt: " + z for z in a.get("entfallen", [])])
+    if not zeilen:
+        return None
+    titel = "Einteilung: %s" % ", ".join(
+        t for t, n in (("%d neu" % len(a.get("neu", [])), a.get("neu")),
+                       ("%d geändert" % len(a.get("geaendert", [])), a.get("geaendert")),
+                       ("%d abgesetzt" % len(a.get("entfallen", [])), a.get("entfallen"))) if n)
+    return {"titel": titel, "text": "\n".join(zeilen)[:900], "url": "./#" + slug}
+
+
+def erinnerungen(person, profil, jetzt, schon):
+    """Spieltag- und Abfahrt-Erinnerungen fuer eine Person. Liefert
+    (schluessel, nutzlast)-Paare, die noch nicht verschickt wurden."""
+    heraus = []
+    strecken = (profil or {}).get("strecken") or {}
+    heute = jetzt.date()
+    for s in person.get("spiele", []):
+        try:
+            beginn = datetime.fromisoformat(s["beginn"]).astimezone(BERLIN)
+            treff = datetime.fromisoformat(s["treffpunkt"]).astimezone(BERLIN)
+        except (KeyError, ValueError):
+            continue
+        if beginn.date() != heute or beginn < jetzt:
+            continue
+        kennung = s["beginn"] + "|" + s["paarung"]
+        strecke = strecken.get(s.get("halle") or "") or {}
+        minuten = strecke.get("minuten")
+        abfahrt = treff - timedelta(minutes=minuten) if minuten else None
+
+        k = "spieltag|" + kennung
+        if jetzt.hour >= ERINNERUNG_AB_STUNDE and k not in schon:
+            text = "%s Uhr %s%s\nTreffpunkt %s Uhr · %s" % (
+                beginn.strftime("%H:%M"), (s.get("liga") + ": ") if s.get("liga") else "",
+                s.get("paarung", ""), treff.strftime("%H:%M"), s.get("halle") or "Halle unbekannt")
+            if abfahrt:
+                text += "\nAbfahrt ca. %s Uhr (%s km, ohne Verkehr)" % (
+                    abfahrt.strftime("%H:%M"), strecke.get("km", "?"))
+            heraus.append((k, {"titel": "Heute: %s als %s" % (s.get("paarung", "Spiel"), s.get("rolle", "SR")),
+                               "text": text[:900], "url": "./#" + person["slug"]}))
+
+        k = "abfahrt|" + kennung
+        if abfahrt and k not in schon:
+            rest = (abfahrt - jetzt).total_seconds() / 60
+            if 0 < rest <= ABFAHRT_FENSTER_MIN:
+                heraus.append((k, {"titel": "In ~%d Min. losfahren" % round(rest),
+                                   "text": "%s, Treffpunkt %s Uhr. %s km bis %s." % (
+                                       s.get("paarung", ""), treff.strftime("%H:%M"),
+                                       strecke.get("km", "?"), s.get("halle") or "zur Halle"),
+                                   "url": "./#" + person["slug"]}))
+    return heraus
 
 
 def main():
@@ -56,66 +141,87 @@ def main():
         print("Push: pywebpush fehlt (pip install pywebpush).")
         return 0
 
-    pfad = os.path.join(BASIS, "aenderungen.json")
-    if not os.path.exists(pfad):
-        print("Push: keine aenderungen.json - nichts zu melden.")
-        return 0
-    with open(pfad, encoding="utf-8") as f:
-        aenderungen = json.load(f).get("personen", {})
-    if not aenderungen:
-        print("Push: keine Aenderungen.")
-        return 0
+    aenderungen = lade_json("aenderungen.json", {}).get("personen", {})
+    daten = lade_json(os.path.join("docs", "daten.json"), {})
+    personen = {p["slug"]: p for p in daten.get("personen", [])}
+    jetzt = datetime.now(BERLIN)
 
-    # Wer hat Push an, und welche Person aus daten.json ist das?
-    profile = api(url, service, "profile?select=id,slug&slug=in.(%s)"
-                  % ",".join('"%s"' % s for s in aenderungen))
-    slug_von = {p["id"]: p["slug"] for p in profile or []}
-    if not slug_von:
-        print("Push: keiner der Betroffenen hat ein Profil.")
-        return 0
-    abos = api(url, service, "push_abos?select=id,user_id,endpoint,p256dh,auth&user_id=in.(%s)"
-               % ",".join(slug_von))
+    # Alle Profile mit Push-Abo - ohne Abo gibt es nichts zu schicken
+    abos = api(url, service, "push_abos?select=id,user_id,endpoint,p256dh,auth") or []
     if not abos:
-        print("Push: keiner der Betroffenen hat Push an.")
+        print("Push: niemand hat Push an.")
+        return 0
+    ids = sorted({a["user_id"] for a in abos})
+    profile = api(url, service, "profile?select=id,slug,strecken&id=in.(%s)" % ",".join(ids)) or []
+    profil_von = {p["id"]: p for p in profile}
+
+    # Was heute schon rausging (Erinnerungen), damit nichts doppelt kommt
+    seit = (jetzt - timedelta(days=2)).astimezone(timezone.utc).isoformat()
+    gesendet = api(url, service, "push_gesendet?select=user_id,schluessel&gesendet=gte." + urllib.parse.quote(seit)) or []
+    schon = {}
+    for g in gesendet:
+        schon.setdefault(g["user_id"], set()).add(g["schluessel"])
+
+    # Nachrichten je Nutzer einsammeln
+    nachrichten = {}   # user_id -> [(schluessel oder None, nutzlast)]
+    for uid, profil in profil_von.items():
+        slug = profil.get("slug")
+        if not slug:
+            continue
+        liste = []
+        n = aenderungs_nachricht(slug, aenderungen.get(slug) or {})
+        if n:
+            liste.append((None, n))
+        if slug in personen:
+            liste.extend(erinnerungen(personen[slug], profil, jetzt, schon.get(uid, set())))
+        if liste:
+            nachrichten[uid] = liste
+    if not nachrichten:
+        print("Push: nichts zu melden.")
         return 0
 
-    gesendet, tot = 0, 0
+    gesendet_n, tot, neu_gemerkt = 0, 0, []
     for abo in abos:
-        slug = slug_von.get(abo["user_id"])
-        a = aenderungen.get(slug) or {}
-        zeilen = (["Neu: " + z for z in a.get("neu", [])]
-                  + ["Geändert: " + z for z in a.get("geaendert", [])]
-                  + ["Abgesetzt: " + z for z in a.get("entfallen", [])])
-        if not zeilen:
-            continue
-        titel = "Einteilung: %s" % ", ".join(
-            t for t, n in (("%d neu" % len(a.get("neu", [])), a.get("neu")),
-                           ("%d geändert" % len(a.get("geaendert", [])), a.get("geaendert")),
-                           ("%d abgesetzt" % len(a.get("entfallen", [])), a.get("entfallen"))) if n)
-        nutzlast = json.dumps({"titel": titel, "text": "\n".join(zeilen)[:900],
-                               "url": "./#" + slug}, ensure_ascii=False)
+        for schluessel, nutzlast in nachrichten.get(abo["user_id"], []):
+            try:
+                webpush(
+                    subscription_info={"endpoint": abo["endpoint"],
+                                       "keys": {"p256dh": abo["p256dh"], "auth": abo["auth"]}},
+                    data=json.dumps(nutzlast, ensure_ascii=False), vapid_private_key=vapid,
+                    vapid_claims={"sub": kontakt}, ttl=3600 if schluessel else 86400)
+                gesendet_n += 1
+                if schluessel:
+                    neu_gemerkt.append({"user_id": abo["user_id"], "schluessel": schluessel})
+            except WebPushException as e:
+                status = getattr(e.response, "status_code", None)
+                if status in (404, 410):
+                    # Abo ist tot (App deinstalliert, Berechtigung entzogen) - aufraeumen
+                    try:
+                        api(url, service, "push_abos?id=eq." + urllib.parse.quote(abo["id"]), "DELETE")
+                    except Exception:
+                        pass
+                    tot += 1
+                    break
+                print("Push an %s fehlgeschlagen: %s" % (abo["user_id"][:8], e), file=sys.stderr)
+            except Exception as e:
+                # Netzfehler o.ae. - ein einzelnes Abo darf den Lauf nicht abbrechen
+                print("Push an %s nicht moeglich: %s" % (abo["user_id"][:8], str(e)[:120]), file=sys.stderr)
+
+    # Erinnerungen als verschickt merken; alte Eintraege wegraeumen
+    if neu_gemerkt:
+        # gleiche (user, schluessel) nur einmal, auch bei mehreren Geraeten
+        einmal = {(m["user_id"], m["schluessel"]): m for m in neu_gemerkt}
         try:
-            webpush(
-                subscription_info={"endpoint": abo["endpoint"],
-                                   "keys": {"p256dh": abo["p256dh"], "auth": abo["auth"]}},
-                data=nutzlast, vapid_private_key=vapid,
-                vapid_claims={"sub": kontakt}, ttl=86400)
-            gesendet += 1
-        except WebPushException as e:
-            status = getattr(e.response, "status_code", None)
-            if status in (404, 410):
-                # Abo ist tot (App deinstalliert, Berechtigung entzogen) - aufraeumen
-                try:
-                    api(url, service, "push_abos?id=eq." + urllib.parse.quote(abo["id"]), "DELETE")
-                except Exception:
-                    pass
-                tot += 1
-            else:
-                print("Push an %s fehlgeschlagen: %s" % (slug, e), file=sys.stderr)
+            api(url, service, "push_gesendet?on_conflict=user_id,schluessel", "POST",
+                list(einmal.values()), prefer="resolution=ignore-duplicates,return=minimal")
         except Exception as e:
-            # Netzfehler o.ae. - ein einzelnes Abo darf den Lauf nicht abbrechen
-            print("Push an %s nicht moeglich: %s" % (slug, str(e)[:120]), file=sys.stderr)
-    print("Push: %d gesendet, %d tote Abos entfernt." % (gesendet, tot))
+            print("Push: Historie nicht gespeichert: %s" % str(e)[:120], file=sys.stderr)
+    try:
+        alt = (jetzt - timedelta(days=7)).astimezone(timezone.utc).isoformat()
+        api(url, service, "push_gesendet?gesendet=lt." + urllib.parse.quote(alt), "DELETE")
+    except Exception:
+        pass
+    print("Push: %d gesendet, %d tote Abos entfernt." % (gesendet_n, tot))
     return 0
 
 

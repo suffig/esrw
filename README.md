@@ -209,8 +209,15 @@ oder direkt aus den Tauschoptionen. Alle Mitglieder sehen sie und melden
 Tauschoptionen aller ein – Gesperrte fallen raus, Freigemeldete rutschen nach
 oben.
 
+**Hallen-Wiki, Kontakt, Fahrgemeinschaft, Notizen**: unter jedem Spiel
+(angemeldet) Hinweise aller Mitglieder zur Halle, Anrufen/WhatsApp bei
+Gespannkollegen mit freigegebener Nummer, Mitfahrangebote je Spiel und eine
+private Spielnotiz. Mit Heimatadresse zeigt die Karte oben die Abfahrtszeit
+(OSRM-Fahrzeit, ohne Verkehr).
+
 **Push**: echte Web-Push-Nachricht bei neuer, geänderter oder abgesetzter
-Einteilung, auch bei geschlossener App. Der Workflow-Schritt `push_senden.py`
+Einteilung, auch bei geschlossener App; dazu Spieltag-Erinnerung ab 07:00
+und „In ~30 Min. losfahren“ (mit berechneter Strecke). Der Workflow-Schritt `push_senden.py`
 liest die Push-Adressen mit dem `service_role`-Schlüssel (nur als
 GitHub-Secret) und signiert mit dem privaten VAPID-Schlüssel (ebenfalls nur
 Secret; `push_schluessel.py` erzeugt das Paar, der öffentliche Teil steht in

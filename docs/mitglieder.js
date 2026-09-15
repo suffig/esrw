@@ -413,7 +413,7 @@ window.Mitglieder = (function () {
       h("button", { type: "button", class: "textknopf", text: "Abmelden", onclick: abmelden })
     ]));
     var leiste = h("div", { class: "mg-untertabs" });
-    [["abrechnung", "Abrechnung"], ["tausch", "Tauschbörse"], ["frei", "Verfügbarkeit"], ["konto", "Konto"]].forEach(function (t) {
+    [["abrechnung", "Abrechnung"], ["tausch", "Tauschbörse"], ["frei", "Verfügbarkeit"], ["notizen", "Notizen"], ["konto", "Konto"]].forEach(function (t) {
       leiste.appendChild(h("button", { type: "button", "data-reiter": t[0], text: t[1], onclick: function () { zeigeReiter(t[0]); } }));
     });
     wurzel.appendChild(leiste);
@@ -431,6 +431,7 @@ window.Mitglieder = (function () {
     if (name === "abrechnung") zeigeAbrechnung();
     else if (name === "tausch") zeigeTausch();
     else if (name === "frei") zeigeVerfuegbarkeit();
+    else if (name === "notizen") zeigeNotizen();
     else zeigeKonto();
   }
 
@@ -540,14 +541,15 @@ window.Mitglieder = (function () {
 
   function streckeBerechnen(halle) {
     var gesp = streckeGespeichert(halle);
-    if (gesp && gesp.art === "route") return Promise.resolve(gesp);
+    if (gesp && gesp.art === "route" && gesp.minuten) return Promise.resolve(gesp);
     if (!profil || profil.heimat_lat == null) return Promise.resolve(null);
     var ziel = ctx.daten.hallen && ctx.daten.hallen[halle];
     if (!ziel) return Promise.resolve(null);
     var url = OSRM + profil.heimat_lon + "," + profil.heimat_lat + ";" + ziel[1] + "," + ziel[0] + "?overview=false";
     return fetch(url).then(function (r) { return r.json(); }).then(function (d) {
       if (d.code !== "Ok" || !d.routes || !d.routes[0]) throw new Error(d.code || "keine Route");
-      return { km: Math.round(d.routes[0].distance / 100) / 10, art: "route", am: new Date().toISOString() };
+      return { km: Math.round(d.routes[0].distance / 100) / 10, minuten: Math.round(d.routes[0].duration / 60),
+               art: "route", am: new Date().toISOString() };
     }).catch(function () {
       var l = luftlinie(halle);
       return l == null ? null : { km: l, art: "luftlinie", am: new Date().toISOString() };
@@ -556,7 +558,7 @@ window.Mitglieder = (function () {
 
   function streckenFuer(hallen) {
     // Nacheinander, mit kleiner Pause - der Demoserver ist ein Gemeingut.
-    var offen = hallen.filter(function (x) { return x && !(streckeGespeichert(x) && streckeGespeichert(x).art === "route"); });
+    var offen = hallen.filter(function (x) { var g = streckeGespeichert(x); return x && !(g && g.art === "route" && g.minuten); });
     var ergebnis = Object.assign({}, profil.strecken || {});
     var kette = Promise.resolve();
     offen.forEach(function (halle, i) {
@@ -1255,9 +1257,12 @@ window.Mitglieder = (function () {
     var pushBox = h("div", { class: "melde karte" }, [h("h4", {}, [ikone("i-bell"), " Push-Benachrichtigungen ", h("span", { class: "status", text: "" })]), h("p", { text: "prüfe …" })]);
     inhalt.appendChild(pushBox);
     pushRendern(pushBox);
+    var kontaktBox = h("div", { class: "melde karte" }, [h("h4", { text: "Handynummer für Gespannkollegen" }), h("p", { text: "lade …" })]);
+    inhalt.appendChild(kontaktBox);
+    kontaktRendern(kontaktBox);
     inhalt.appendChild(h("div", { class: "melde karte" }, [
       h("h4", { text: "Daten" }),
-      h("p", { text: "Alles, was du hier einträgst, liegt in deinem Supabase-Konto und ist nur für dich lesbar – außer Gesuche, Angebote und Verfügbarkeiten, die alle Mitglieder sehen. " +
+      h("p", { text: "Alles, was du hier einträgst, liegt in deinem Supabase-Konto und ist nur für dich lesbar – außer Gesuche, Angebote, Verfügbarkeiten, Hallen-Hinweise, Mitfahrten und eine freigegebene Handynummer, die alle Mitglieder sehen. " +
         "Export: Abrechnung → CSV. Konto löschen: E-Mail an den Betreiber." })
     ]));
   }
@@ -1327,6 +1332,248 @@ window.Mitglieder = (function () {
       .then(function () { kurzMeldung("Push ist aus.", ""); }).catch(function () {});
   }
 
+  // ---- Gespann-Kontakt: freiwillig freigegebene Nummer (Tabelle kontakte)
+
+  function telefonLink(nr) {
+    var ziffern = String(nr).replace(/[^\d+]/g, "");
+    if (ziffern.indexOf("+") === 0) ziffern = ziffern.slice(1);
+    else if (ziffern.indexOf("00") === 0) ziffern = ziffern.slice(2);
+    else if (ziffern.indexOf("0") === 0) ziffern = "49" + ziffern.slice(1);
+    return { tel: "tel:+" + ziffern, wa: "https://wa.me/" + ziffern };
+  }
+
+  function kontaktRendern(box) {
+    sb.from("kontakte").select("*").eq("user_id", session.user.id).maybeSingle().then(function (r) {
+      var k = r.data;
+      leeren(box);
+      var telefon = h("input", { type: "tel", placeholder: "z. B. 0171 2345678", value: k ? k.telefon : "", autocomplete: "tel" });
+      var hinweis = h("input", { type: "text", placeholder: "Hinweis (optional), z. B. „lieber WhatsApp“", value: k && k.hinweis ? k.hinweis : "", maxlength: "80" });
+      var speichern = h("button", { type: "button", class: "haupt", text: k ? "Aktualisieren" : "Freigeben", onclick: function () {
+        var nr = telefon.value.trim();
+        if (!nr) { meldung("Bitte eine Nummer eintragen.", "warn"); return; }
+        sb.from("kontakte").upsert({ user_id: session.user.id, slug: profil.slug, name: profil.name || profil.slug, telefon: nr, hinweis: hinweis.value.trim() || null }, { onConflict: "user_id" })
+          .then(function (r2) { if (r2.error) { meldung(fehlerText(r2.error), "warn"); return; } cache.kontakte = {}; kurzMeldung("Nummer freigegeben ✓", "gut"); kontaktRendern(box); });
+      } });
+      box.appendChild(h("h4", { text: "Handynummer für Gespannkollegen" }));
+      box.appendChild(h("p", { text: (k ? "Freigegeben. " : "") + "Wer sie freigibt, bekommt auf der Spielkarte bei den Kollegen „Anrufen“ und „WhatsApp“ – und umgekehrt. " +
+        "Sichtbar für alle angemeldeten Mitglieder, jederzeit zurückziehbar." }));
+      box.appendChild(h("div", { class: "mg-form" }, [telefon, hinweis]));
+      box.appendChild(speichern);
+      if (k) box.appendChild(h("button", { type: "button", class: "mg-neben", style: "margin-top:8px;width:100%", text: "Nummer zurückziehen", onclick: function () {
+        sb.from("kontakte").delete().eq("user_id", session.user.id).then(function () { cache.kontakte = {}; kurzMeldung("Zurückgezogen.", ""); kontaktRendern(box); });
+      } }));
+    }).catch(function (e) { leeren(box); box.appendChild(h("p", { class: "achtung", text: fehlerText(e) })); });
+  }
+
+  // ---- Extras je Spielkarte: Hallen-Wiki, Kontakte, Fahrgemeinschaft, Notiz
+  //
+  // Die Startseite ruft extrasLaden() einmal fuer alle sichtbaren Spiele
+  // (vier Abfragen) und danach spielExtras() je Karte. Alles im Cache, bis
+  // sich etwas aendert.
+
+  var cache = { hallen: {}, kontakte: {}, mitfahrten: {}, notizen: {}, geladen: {} };
+
+  function extrasLaden(spiele) {
+    return bereit().then(function (st) {
+      if (!st.eingerichtet || !session) return false;
+      return ladeProfil().then(function () {
+        var hallen = [], slugs = [], kennungen = [];
+        spiele.forEach(function (s) {
+          if (s.halle && hallen.indexOf(s.halle) < 0 && !cache.geladen["h|" + s.halle]) hallen.push(s.halle);
+          (s.gespann || []).forEach(function (g) { if (g.slug && slugs.indexOf(g.slug) < 0) slugs.push(g.slug); });
+          var k = kennungVon(s);
+          if (kennungen.indexOf(k) < 0 && !cache.geladen["k|" + k]) kennungen.push(k);
+        });
+        var laeufe = [];
+        if (hallen.length) laeufe.push(sb.from("hallen_notizen").select("*").in("halle", hallen).order("angelegt").then(function (r) {
+          hallen.forEach(function (x) { cache.hallen[x] = []; cache.geladen["h|" + x] = 1; });
+          (r.data || []).forEach(function (z) { (cache.hallen[z.halle] = cache.hallen[z.halle] || []).push(z); });
+        }));
+        if (slugs.length && !cache.geladen.kontakte) laeufe.push(sb.from("kontakte").select("*").then(function (r) {
+          cache.kontakte = {}; (r.data || []).forEach(function (z) { cache.kontakte[z.slug] = z; }); cache.geladen.kontakte = 1;
+        }));
+        if (kennungen.length) {
+          laeufe.push(sb.from("mitfahrten").select("*").in("kennung", kennungen).then(function (r) {
+            kennungen.forEach(function (k) { cache.mitfahrten[k] = []; });
+            (r.data || []).forEach(function (z) { (cache.mitfahrten[z.kennung] = cache.mitfahrten[z.kennung] || []).push(z); });
+          }));
+          laeufe.push(sb.from("spielnotizen").select("*").eq("user_id", session.user.id).in("kennung", kennungen).then(function (r) {
+            (r.data || []).forEach(function (z) { cache.notizen[z.kennung] = z; });
+            kennungen.forEach(function (k) { cache.geladen["k|" + k] = 1; });
+          }));
+        }
+        return Promise.all(laeufe).then(function () { return true; });
+      });
+    }).catch(function () { return false; });
+  }
+
+  function spielExtras(spiel, ziel, istIch) {
+    if (!session || !profil) return;
+    leeren(ziel);
+    var kennung = kennungVon(spiel);
+    var hinweise = cache.hallen[spiel.halle] || [];
+    var mitfahrten = (cache.mitfahrten[kennung] || []).filter(function (m) { return m.user_id !== session.user.id; });
+    var meineMitfahrt = (cache.mitfahrten[kennung] || []).filter(function (m) { return m.user_id === session.user.id; })[0];
+    var notiz = cache.notizen[kennung];
+    var kontakte = (spiel.gespann || []).map(function (g) { return g.slug && cache.kontakte[g.slug] ? { g: g, k: cache.kontakte[g.slug] } : null; }).filter(Boolean);
+
+    var teile = [];
+    if (spiel.halle) teile.push(hinweise.length ? hinweise.length + (hinweise.length === 1 ? " Hallen-Hinweis" : " Hallen-Hinweise") : "Halle");
+    if (kontakte.length) teile.push(kontakte.length + " Kontakt" + (kontakte.length === 1 ? "" : "e"));
+    if (mitfahrten.length) teile.push(mitfahrten.length + " Mitfahrt");
+    if (istIch) teile.push(notiz ? "Notiz ✓" : "Notiz");
+    if (!teile.length) return;
+
+    var box = h("details", { class: "tausch extras" }, [h("summary", { text: teile.join(" · ") })]);
+    var innen = h("div"); box.appendChild(innen);
+    box.addEventListener("toggle", function () {
+      if (!box.open || innen.childNodes.length) return;
+
+      // Hallen-Wiki
+      if (spiel.halle) {
+        innen.appendChild(h("h4", { text: "Hallen-Hinweise · " + spiel.halle }));
+        if (!hinweise.length) innen.appendChild(h("p", { class: "meta", text: "Noch nichts eingetragen. Parken, Kabineneingang, Schlüssel, Kantine – was Kollegen wissen sollten." }));
+        hinweise.forEach(function (n) {
+          var z = h("div", { class: "kandidat" }, [
+            h("div", { text: n.text }),
+            h("div", { class: "meta" }, [n.name + " · " + new Date(n.angelegt).toLocaleDateString("de-DE"),
+              n.user_id === session.user.id ? h("button", { type: "button", class: "textknopf", style: "margin-left:8px", text: "löschen", onclick: function () {
+                sb.from("hallen_notizen").delete().eq("id", n.id).then(function () { cache.hallen[spiel.halle] = hinweise.filter(function (x) { return x !== n; }); leeren(innen); box.open = false; spielExtras(spiel, ziel, istIch); ziel.querySelector("details").open = true; });
+              } }) : null])
+          ]);
+          innen.appendChild(z);
+        });
+        var neu = h("textarea", { rows: "2", placeholder: "Hinweis zur Halle hinzufügen …", maxlength: "500" });
+        innen.appendChild(h("div", { class: "mg-form" }, [neu, h("button", { type: "button", class: "anfrage", text: "Hinweis speichern", onclick: function () {
+          var t = neu.value.trim(); if (!t) return;
+          sb.from("hallen_notizen").insert({ user_id: session.user.id, slug: profil.slug, name: profil.name || profil.slug, halle: spiel.halle, text: t }).select()
+            .then(function (r) { if (r.error) { meldung(fehlerText(r.error), "warn"); return; }
+              (cache.hallen[spiel.halle] = cache.hallen[spiel.halle] || []).push((r.data && r.data[0]) || { user_id: session.user.id, name: profil.name, text: t, angelegt: new Date().toISOString() });
+              kurzMeldung("Hinweis gespeichert ✓", "gut"); spielExtras(spiel, ziel, istIch); ziel.querySelector("details").open = true; });
+        } })]));
+      }
+
+      // Kontakte im Gespann
+      if (kontakte.length) {
+        innen.appendChild(h("h4", { text: "Gespann" }));
+        kontakte.forEach(function (x) {
+          var l = telefonLink(x.k.telefon);
+          innen.appendChild(h("div", { class: "kandidat" }, [
+            h("div", { class: "kandidat-kopf" }, [h("b", { text: x.g.name }),
+              h("span", {}, [h("a", { class: "anfrage", href: l.tel, text: "Anrufen" }), " ", h("a", { class: "anfrage", href: l.wa, target: "_blank", rel: "noopener", text: "WhatsApp" })])]),
+            h("div", { class: "meta", text: x.k.telefon + (x.k.hinweis ? " · " + x.k.hinweis : "") })
+          ]));
+        });
+      }
+
+      // Fahrgemeinschaft
+      if (!spiel.vergangen) {
+        innen.appendChild(h("h4", { text: "Fahrgemeinschaft" }));
+        mitfahrten.forEach(function (m) {
+          innen.appendChild(h("div", { class: "kandidat" }, [h("div", { text: m.text }), h("div", { class: "meta", text: m.name })]));
+        });
+        if (istIch) {
+          var mf = h("input", { type: "text", placeholder: "z. B. „Ich fahre ab Iserlohn, 2 Plätze frei“", value: meineMitfahrt ? meineMitfahrt.text : "", maxlength: "160" });
+          innen.appendChild(h("div", { class: "mg-form" }, [mf, h("div", { class: "zweit" }, [
+            h("button", { type: "button", text: meineMitfahrt ? "Aktualisieren" : "Anbieten", onclick: function () {
+              var t = mf.value.trim(); if (!t) return;
+              sb.from("mitfahrten").upsert({ user_id: session.user.id, slug: profil.slug, name: profil.name || profil.slug, kennung: kennung, beginn: spiel.beginn, text: t }, { onConflict: "user_id,kennung" })
+                .then(function (r) { if (r.error) { meldung(fehlerText(r.error), "warn"); return; } delete cache.geladen["k|" + kennung]; kurzMeldung("Gespeichert ✓ – Gespannkollegen sehen es auf ihrer Karte.", "gut"); extrasLaden([spiel]).then(function () { spielExtras(spiel, ziel, istIch); }); });
+            } }),
+            meineMitfahrt ? h("button", { type: "button", text: "Zurückziehen", onclick: function () {
+              sb.from("mitfahrten").delete().eq("id", meineMitfahrt.id).then(function () { delete cache.geladen["k|" + kennung]; extrasLaden([spiel]).then(function () { spielExtras(spiel, ziel, istIch); }); });
+            } }) : null
+          ])]));
+        } else if (!mitfahrten.length) innen.appendChild(h("p", { class: "meta", text: "Niemand bietet eine Mitfahrt an." }));
+      }
+
+      // Private Notiz
+      if (istIch) {
+        innen.appendChild(h("h4", { text: "Meine Notiz (nur für mich)" }));
+        var ta = h("textarea", { rows: "3", placeholder: "Vorkommnisse, Strafen, Lernpunkte …", maxlength: "4000" });
+        ta.value = notiz ? notiz.text : "";
+        var timer = null;
+        ta.addEventListener("input", function () {
+          clearTimeout(timer);
+          timer = setTimeout(function () { notizSpeichern(spiel, ta.value.trim()); }, 800);
+        });
+        innen.appendChild(h("div", { class: "mg-form" }, [ta, h("p", { class: "meta", text: "Speichert von selbst. Alle Notizen: Mitglieder → Notizen." })]));
+      }
+    });
+    ziel.appendChild(box);
+  }
+
+  function notizSpeichern(spiel, text) {
+    var kennung = kennungVon(spiel);
+    var lauf = text
+      ? sb.from("spielnotizen").upsert({ user_id: session.user.id, kennung: kennung, beginn: spiel.beginn, liga: spiel.liga || null, paarung: spiel.paarung, halle: spiel.halle || null, text: text }, { onConflict: "user_id,kennung" }).select()
+      : sb.from("spielnotizen").delete().eq("user_id", session.user.id).eq("kennung", kennung);
+    return lauf.then(function (r) {
+      if (r.error) { meldung(fehlerText(r.error), "warn"); return; }
+      if (text) cache.notizen[kennung] = (r.data && r.data[0]) || { kennung: kennung, text: text, beginn: spiel.beginn, paarung: spiel.paarung };
+      else delete cache.notizen[kennung];
+      kurzMeldung("Notiz gespeichert ✓", "gut");
+    });
+  }
+
+  function zeigeNotizen() {
+    leeren(inhalt);
+    inhalt.appendChild(h("p", { class: "meta", text: "Lade Notizen …" }));
+    sb.from("spielnotizen").select("*").eq("user_id", session.user.id).order("beginn", { ascending: false }).then(function (r) {
+      if (r.error) throw r.error;
+      var alle = r.data || [];
+      leeren(inhalt);
+      var suche = h("input", { type: "search", placeholder: "Notizen durchsuchen …" });
+      var liste = h("div");
+      function rendern() {
+        leeren(liste);
+        var f = suche.value.trim().toLowerCase();
+        var treffer = alle.filter(function (n) { return !f || (n.text + " " + n.paarung + " " + (n.liga || "") + " " + (n.halle || "")).toLowerCase().indexOf(f) >= 0; });
+        if (!treffer.length) liste.appendChild(h("p", { class: "leer", text: alle.length ? "Nichts gefunden." : "Noch keine Notizen. Unter jedem eigenen Spiel gibt es „Notiz“." }));
+        treffer.forEach(function (n) {
+          var d = new Date(n.beginn);
+          var ta = h("textarea", { rows: "3", maxlength: "4000" }); ta.value = n.text;
+          var timer = null;
+          ta.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(function () {
+            notizSpeichern({ beginn: n.beginn, paarung: n.paarung, liga: n.liga, halle: n.halle }, ta.value.trim()).then(function () { n.text = ta.value.trim(); });
+          }, 800); });
+          liste.appendChild(h("div", { class: "spiel karte" }, [
+            h("div", { class: "kopfzeile" }, [h("span", { class: "datum", text: datum(d) + " · " + uhr(d) + " Uhr" }),
+              h("button", { type: "button", class: "textknopf", text: "löschen", onclick: function () {
+                if (!confirm("Notiz löschen?")) return;
+                notizSpeichern({ beginn: n.beginn, paarung: n.paarung }, "").then(function () { alle = alle.filter(function (x) { return x !== n; }); rendern(); });
+              } })]),
+            h("div", { class: "paarung", text: (n.liga ? n.liga + ": " : "") + n.paarung }),
+            h("div", { class: "meta", text: n.halle || "" }),
+            h("div", { class: "mg-form", style: "margin-top:8px" }, [ta])
+          ]));
+        });
+      }
+      suche.addEventListener("input", rendern);
+      inhalt.appendChild(h("div", { class: "mg-form" }, [suche]));
+      inhalt.appendChild(liste);
+      rendern();
+    }).catch(function (e) { leeren(inhalt); inhalt.appendChild(h("p", { class: "achtung", text: "Notizen nicht ladbar: " + fehlerText(e) })); });
+  }
+
+  // Fahrzeit zur Halle fuer die Karte oben - berechnet und merkt sie bei Bedarf
+  function abfahrt(halle) {
+    return bereit().then(function (st) {
+      if (!st.eingerichtet || !session || !halle) return null;
+      return ladeProfil().then(function () {
+        if (!profil || profil.heimat_lat == null) return null;
+        var g = streckeGespeichert(halle);
+        if (g && g.minuten) return g;
+        return streckeBerechnen(halle).then(function (s) {
+          if (!s || !s.minuten) return null;
+          profil.strecken = Object.assign({}, profil.strecken || {}); profil.strecken[halle] = s;
+          return sb.from("profile").upsert({ id: session.user.id, strecken: profil.strecken }).then(function () { return s; });
+        });
+      });
+    }).catch(function () { return null; });
+  }
+
   return { oeffnen: oeffnen, bereit: bereit, angemeldet: angemeldet,
-           sperrenAm: sperrenAm, gesuchAnlegen: gesuchAnlegen, offeneAbrechnungen: offeneAbrechnungen };
+           sperrenAm: sperrenAm, gesuchAnlegen: gesuchAnlegen, offeneAbrechnungen: offeneAbrechnungen,
+           extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt };
 })();

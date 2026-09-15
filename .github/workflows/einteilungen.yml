@@ -71,10 +71,11 @@ jobs:
         run: python esrw_ical.py
 
       # Push-Nachrichten an alle Mitglieder, die Push in der App eingeschaltet
-      # haben. Braucht drei Secrets; fehlen sie, meldet das Skript das nur.
-      # Ein Fehler hier darf die Feeds nicht aufhalten (continue-on-error).
+      # haben: Aenderungen, Spieltag-Erinnerung, Abfahrt. Laeuft in jedem
+      # Lauf, weil die Erinnerungen von der Uhrzeit abhaengen. Braucht vier
+      # Secrets; fehlen sie, meldet das Skript das nur. Ein Fehler hier darf
+      # die Feeds nicht aufhalten (continue-on-error).
       - name: Push senden
-        if: hashFiles('aenderungen.json') != ''
         continue-on-error: true
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}

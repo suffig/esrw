@@ -727,8 +727,30 @@ in die Tauschoptionen aller Kollegen ein: wer „nicht“ gesetzt hat, taucht
 dort nicht auf; wer „gern“ gesetzt hat, steht ganz oben. Der Obmann sieht
 das nicht automatisch – Abmeldungen laufen weiter über ihn.
 
-**Konto** (vierter Unterreiter): Einstellungen (Name, Adresse, Sätze) und
-Push-Benachrichtigungen (Schritt 11).
+**Notizen** (vierter Unterreiter): private Spielnotizen – Vorkommnisse,
+Strafen, Lernpunkte. Eintragen direkt unter dem Spiel („Notiz“), hier alle
+auf einmal, durchsuchbar. Sieht nur du.
+
+**Konto** (fünfter Unterreiter): Einstellungen (Name, Adresse, Sätze),
+Push-Benachrichtigungen (Schritt 11) und die **Handynummer für
+Gespannkollegen** – freiwillig; wer sie freigibt, bekommt auf der Spielkarte
+bei den Kollegen „Anrufen“ und „WhatsApp“ und umgekehrt.
+
+**Unter jedem Spiel** (angemeldet) klappt eine Zeile wie „2 Hallen-Hinweise ·
+1 Kontakt · Notiz ✓“ auf:
+
+* **Hallen-Hinweise** – gemeinsames Wissen aller Mitglieder je Halle:
+  Parken, Kabineneingang, Schlüssel, Kantine. Jeder kann ergänzen, löschen nur
+  den eigenen Eintrag.
+* **Gespann** – Anrufen / WhatsApp bei Kollegen, die ihre Nummer freigegeben
+  haben.
+* **Fahrgemeinschaft** – „Ich fahre ab Iserlohn, 2 Plätze frei“; die
+  Gespannkollegen sehen es auf ihrer Karte desselben Spiels.
+* **Meine Notiz** – privat, speichert von selbst.
+
+**Abfahrtszeit**: Mit Heimatadresse steht auf der Karte oben „Abfahrt ca.
+17:50 Uhr · 40 Min., 38 km ohne Verkehr“ – Fahrzeit vom Routendienst OSRM,
+also ohne Stau. Einmal je Halle berechnet, im Profil gemerkt.
 
 > **Keine Steuerberatung.** Die Abrechnung ist eine Aufstellung. Ob und wie
 > Vergütung und Fahrtkosten steuerlich zählen – Ehrenamtspauschale,
@@ -818,6 +840,21 @@ Push geht nur an Mitglieder, die im Profil den passenden Namen gewählt haben;
 die Zuordnung läuft über den `slug` (`melchert-philip`). Wer Push
 ausschaltet oder die App löscht, fällt beim nächsten Versand von selbst aus
 der Liste.
+
+### 11.4 Was noch kommt, wenn Push an ist
+
+* **Spieltag-Erinnerung**: am Spieltag beim ersten Lauf nach 07:00 Uhr je
+  Spiel „Heute: … als HSR – 19:30 Uhr, Treffpunkt 18:30, Halle, Abfahrt ca.
+  17:50“. Die Abfahrt steht nur drin, wenn die Strecke im Profil berechnet
+  ist.
+* **Losfahren**: „In ~30 Min. losfahren“ – ebenfalls nur mit berechneter
+  Strecke. Da der Lauf alle 30 Minuten kommt (cron-job.org), landet die
+  Nachricht irgendwo zwischen 45 und 15 Minuten vor der Abfahrt. Verkehr
+  kennt sie nicht.
+
+Damit nichts doppelt kommt, merkt sich die Tabelle `push_gesendet`, was
+raus ist (räumt sich nach sieben Tagen selbst auf). Ohne cron-job.org
+(Schritt 9) sind die Erinnerungen unzuverlässig – GitHub lässt Läufe aus.
 
 ---
 

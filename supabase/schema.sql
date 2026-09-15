@@ -224,3 +224,114 @@ create policy "eigene Belege hochladen" on storage.objects for insert
   with check (bucket_id = 'belege' and (storage.foldername(name))[1] = auth.uid()::text);
 create policy "eigene Belege loeschen" on storage.objects for delete
   using (bucket_id = 'belege' and (storage.foldername(name))[1] = auth.uid()::text);
+
+-- ======================================================================
+-- v4: Hallen-Wiki, Gespann-Kontakt, Fahrgemeinschaft, private Spielnotizen
+-- ======================================================================
+
+-- Hallen-Wiki: Hinweise je Halle (Parken, Kabine, Schluessel). Lesen alle
+-- Mitglieder, aendern nur der Verfasser.
+create table if not exists public.hallen_notizen (
+  id        uuid primary key default gen_random_uuid(),
+  user_id   uuid not null references auth.users (id) on delete cascade,
+  slug      text not null,
+  name      text not null,
+  halle     text not null,
+  text      text not null,
+  angelegt  timestamptz not null default now(),
+  geaendert timestamptz not null default now()
+);
+create index if not exists hallen_notizen_halle on public.hallen_notizen (halle);
+alter table public.hallen_notizen enable row level security;
+drop policy if exists "Hallenhinweise lesen (alle Mitglieder)" on public.hallen_notizen;
+drop policy if exists "eigene Hallenhinweise anlegen"  on public.hallen_notizen;
+drop policy if exists "eigene Hallenhinweise aendern"  on public.hallen_notizen;
+drop policy if exists "eigene Hallenhinweise loeschen" on public.hallen_notizen;
+create policy "Hallenhinweise lesen (alle Mitglieder)" on public.hallen_notizen for select to authenticated using (true);
+create policy "eigene Hallenhinweise anlegen"  on public.hallen_notizen for insert with check (auth.uid() = user_id);
+create policy "eigene Hallenhinweise aendern"  on public.hallen_notizen for update using (auth.uid() = user_id);
+create policy "eigene Hallenhinweise loeschen" on public.hallen_notizen for delete using (auth.uid() = user_id);
+drop trigger if exists hallen_notizen_geaendert on public.hallen_notizen;
+create trigger hallen_notizen_geaendert before update on public.hallen_notizen
+  for each row execute function public.setze_geaendert();
+
+-- Gespann-Kontakt: freiwillig freigegebene Telefonnummer. Eine Zeile = Opt-in;
+-- loeschen = zurueckziehen. Sichtbar fuer alle angemeldeten Mitglieder.
+create table if not exists public.kontakte (
+  user_id   uuid primary key references auth.users (id) on delete cascade,
+  slug      text not null,
+  name      text not null,
+  telefon   text not null,
+  hinweis   text,
+  geaendert timestamptz not null default now()
+);
+alter table public.kontakte enable row level security;
+drop policy if exists "Kontakte lesen (alle Mitglieder)" on public.kontakte;
+drop policy if exists "eigenen Kontakt anlegen"  on public.kontakte;
+drop policy if exists "eigenen Kontakt aendern"  on public.kontakte;
+drop policy if exists "eigenen Kontakt loeschen" on public.kontakte;
+create policy "Kontakte lesen (alle Mitglieder)" on public.kontakte for select to authenticated using (true);
+create policy "eigenen Kontakt anlegen"  on public.kontakte for insert with check (auth.uid() = user_id);
+create policy "eigenen Kontakt aendern"  on public.kontakte for update using (auth.uid() = user_id);
+create policy "eigenen Kontakt loeschen" on public.kontakte for delete using (auth.uid() = user_id);
+
+-- Fahrgemeinschaft je Spiel: "Ich fahre ab Iserlohn, 2 Plaetze"
+create table if not exists public.mitfahrten (
+  id        uuid primary key default gen_random_uuid(),
+  user_id   uuid not null references auth.users (id) on delete cascade,
+  slug      text not null,
+  name      text not null,
+  kennung   text not null,
+  beginn    timestamptz not null,
+  text      text not null,
+  angelegt  timestamptz not null default now(),
+  unique (user_id, kennung)
+);
+create index if not exists mitfahrten_kennung on public.mitfahrten (kennung);
+alter table public.mitfahrten enable row level security;
+drop policy if exists "Mitfahrten lesen (alle Mitglieder)" on public.mitfahrten;
+drop policy if exists "eigene Mitfahrten anlegen"  on public.mitfahrten;
+drop policy if exists "eigene Mitfahrten aendern"  on public.mitfahrten;
+drop policy if exists "eigene Mitfahrten loeschen" on public.mitfahrten;
+create policy "Mitfahrten lesen (alle Mitglieder)" on public.mitfahrten for select to authenticated using (true);
+create policy "eigene Mitfahrten anlegen"  on public.mitfahrten for insert with check (auth.uid() = user_id);
+create policy "eigene Mitfahrten aendern"  on public.mitfahrten for update using (auth.uid() = user_id);
+create policy "eigene Mitfahrten loeschen" on public.mitfahrten for delete using (auth.uid() = user_id);
+
+-- Private Spielnotizen: nur der Besitzer
+create table if not exists public.spielnotizen (
+  id        uuid primary key default gen_random_uuid(),
+  user_id   uuid not null references auth.users (id) on delete cascade,
+  kennung   text not null,
+  beginn    timestamptz not null,
+  liga      text, paarung text, halle text,
+  text      text not null,
+  geaendert timestamptz not null default now(),
+  unique (user_id, kennung)
+);
+alter table public.spielnotizen enable row level security;
+drop policy if exists "eigene Spielnotizen lesen"    on public.spielnotizen;
+drop policy if exists "eigene Spielnotizen anlegen"  on public.spielnotizen;
+drop policy if exists "eigene Spielnotizen aendern"  on public.spielnotizen;
+drop policy if exists "eigene Spielnotizen loeschen" on public.spielnotizen;
+create policy "eigene Spielnotizen lesen"    on public.spielnotizen for select using (auth.uid() = user_id);
+create policy "eigene Spielnotizen anlegen"  on public.spielnotizen for insert with check (auth.uid() = user_id);
+create policy "eigene Spielnotizen aendern"  on public.spielnotizen for update using (auth.uid() = user_id);
+create policy "eigene Spielnotizen loeschen" on public.spielnotizen for delete using (auth.uid() = user_id);
+drop trigger if exists spielnotizen_geaendert on public.spielnotizen;
+create trigger spielnotizen_geaendert before update on public.spielnotizen
+  for each row execute function public.setze_geaendert();
+
+-- Erinnerungs-Push (Spieltag, Abfahrt): welche Nachrichten schon raus sind,
+-- damit der halbstuendliche Lauf nichts doppelt schickt. Schreibt nur der
+-- Workflow (service_role); Mitglieder sehen nur ihre eigenen Zeilen.
+create table if not exists public.push_gesendet (
+  id        uuid primary key default gen_random_uuid(),
+  user_id   uuid not null references auth.users (id) on delete cascade,
+  schluessel text not null,           -- z.B. "spieltag|<kennung>" oder "abfahrt|<kennung>"
+  gesendet  timestamptz not null default now(),
+  unique (user_id, schluessel)
+);
+alter table public.push_gesendet enable row level security;
+drop policy if exists "eigene Push-Historie lesen" on public.push_gesendet;
+create policy "eigene Push-Historie lesen" on public.push_gesendet for select using (auth.uid() = user_id);

@@ -397,17 +397,26 @@ def statistik_aus_historie(historie, stand):
         except (ValueError, KeyError):
             continue
         saison = saison_von(beginn)
-        for name, rolle in rollen_fuer(eintrag.get("besetzung") or {}):
+        paare = rollen_fuer(eintrag.get("besetzung") or {})
+        for name, rolle in paare:
             schluessel = personen_schluessel(name)
             if not schluessel:
                 continue
             s = werte.setdefault(schluessel, {
                 "gesamt": 0, "saison": 0, "rollen": Counter(),
                 "ligen": Counter(), "hallen": Counter(),
+                "partner": Counter(), "partner_namen": {}, "je_saison": Counter(),
                 "erste": None, "letzte": None, "spiele_saison": []})
             s["gesamt"] += 1
+            s["je_saison"][saison] += 1
             if saison == jetzt_saison:
                 s["saison"] += 1
+            # Mit wem man am haeufigsten im Gespann stand
+            for anderer, _ in paare:
+                k2 = personen_schluessel(anderer)
+                if k2 and k2 != schluessel:
+                    s["partner"][k2] += 1
+                    s["partner_namen"].setdefault(k2, anderer)
             # Fuer die Saisonlisten auf der Webseite - esrw.de zeigt nur
             # wenige Tage zurueck, das Archiv alle Saisons.
             s["spiele_saison"].append({
@@ -956,6 +965,8 @@ def main():
     with open(os.path.join(feeds, "alle.ics"), "w", encoding="utf-8", newline="") as f:
         f.write(baue_ics(gesamt, "Alle Spiele (ESRW)", cfg, stand))
 
+    name_von = {p["schluessel"]: p["name"] for p in personen}
+
     def stat_fuer(p):
         s = stats.get(p["schluessel"])
         if not s:
@@ -965,6 +976,9 @@ def main():
             "rollen": dict(s["rollen"]),
             "ligen": s["ligen"].most_common(4),
             "hallen": s["hallen"].most_common(4),
+            "partner": [(name_von.get(k, s["partner_namen"].get(k, k)), n)
+                        for k, n in s["partner"].most_common(5)],
+            "je_saison": sorted(s["je_saison"].items()),
             "erste": s["erste"], "letzte": s["letzte"],
         }
 

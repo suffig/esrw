@@ -284,6 +284,11 @@
   .sperre { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-top:1px solid var(--linie); font-size:.9rem; }
   .sperre:first-child { border-top:0; }
 
+  .extras summary { color:var(--dim); }
+  .extras textarea { resize:vertical; }
+  .anfrage[href] { text-decoration:none; }
+  .abfahrt { margin-top:6px; font-size:.86rem; opacity:.92; display:flex; gap:6px; align-items:center; }
+
   /* Untere Leiste */
   .leiste { position:fixed; left:0; right:0; bottom:0; z-index:10;
             background:var(--karte); border-top:1px solid var(--linie);
@@ -727,8 +732,23 @@
     }
     if (s.hinweis) { var hw = document.createElement("div"); hw.className = "achtung"; hw.textContent = "⚠ " + s.hinweis; d.appendChild(hw); }
     if (s.aenderung) { var ae = document.createElement("div"); ae.className = "geaendert"; ae.textContent = "⚠ Geändert: " + s.aenderung; d.appendChild(ae); }
+    var extras = document.createElement("div"); extras.className = "extras-ziel"; d.appendChild(extras);
     if (fuer && !s.vergangen) d.appendChild(tauschBereich(s, fuer));
+    d._spiel = s;
     return d;
+  }
+
+  // Hallen-Wiki, Kontakte, Fahrgemeinschaft, Notiz - nur angemeldet
+  function extrasFuellen(karten, istIch) {
+    if (!karten.length) return;
+    ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) {
+      if (!st.eingerichtet || !st.session) return;
+      var spiele = karten.map(function (k) { return k._spiel; });
+      return window.Mitglieder.extrasLaden(spiele).then(function (ok) {
+        if (!ok) return;
+        karten.forEach(function (k) { if (k.isConnected) window.Mitglieder.spielExtras(k._spiel, k.querySelector(".extras-ziel"), istIch); });
+      });
+    }).catch(function () {});
   }
 
   function chip(person, mitRolle, klasseExtra) {
@@ -781,6 +801,18 @@
     }
     h.appendChild(ak);
     ziel.appendChild(h);
+    if (profil && profil.slug === p.slug && s.halle) {
+      ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) {
+        if (!st.eingerichtet || !st.session) return null;
+        return window.Mitglieder.abfahrt(s.halle);
+      }).then(function (st) {
+        if (!st || !st.minuten || !h.isConnected) return;
+        var ab = new Date(new Date(s.treffpunkt).getTime() - st.minuten * 60000);
+        var z = document.createElement("div"); z.className = "abfahrt"; z.appendChild(ikone("i-route"));
+        z.appendChild(document.createTextNode("Abfahrt ca. " + uhr(ab) + " Uhr · " + st.minuten + " Min., " + st.km + " km ohne Verkehr"));
+        h.appendChild(z);
+      }).catch(function () {});
+    }
   }
 
   // ----------------------------------------------------- Nachtrag-Hinweis
@@ -1073,7 +1105,15 @@
       k.appendChild(b); k.appendChild(t); zahlen.appendChild(k);
     });
     ziel.appendChild(zahlen);
-    [balken("Meiste Ligen", s.ligen), balken("Meiste Hallen", s.hallen)].forEach(function (b) { if (b) ziel.appendChild(b); });
+    [balken("Meiste Ligen", s.ligen), balken("Meiste Hallen", s.hallen), balken("Meiste Gespannpartner", s.partner),
+     s.je_saison && s.je_saison.length > 1 ? balken("Spiele je Saison", s.je_saison.slice().reverse()) : null
+    ].forEach(function (b) { if (b) ziel.appendChild(b); });
+    var hsr = (s.rollen && s.rollen.HSR) || 0, lsr = (s.rollen && s.rollen.LSR) || 0;
+    if (hsr + lsr) {
+      var q = document.createElement("p"); q.className = "meta"; q.style.marginTop = "10px";
+      q.textContent = "Im 3er/4er-System: " + Math.round(hsr / (hsr + lsr) * 100) + " % als HSR (" + hsr + " von " + (hsr + lsr) + ").";
+      ziel.appendChild(q);
+    }
     var fuss = document.createElement("p"); fuss.className = "meta"; fuss.style.marginTop = "10px";
     fuss.textContent = "Gezählt seit " + (s.erste || "?").split("-").reverse().join(".") + ". Das Archiv wächst mit jedem Lauf – esrw.de selbst zeigt nur wenige Tage.";
     ziel.appendChild(fuss);
@@ -1124,12 +1164,18 @@
     var kommend = p.spiele.filter(function (s) { return !s.vergangen; });
     var gewesen = p.spiele.filter(function (s) { return s.vergangen; }).reverse();
     var h = document.createElement("h3"); h.className = "abschnitt"; h.textContent = "Kommende Einteilungen"; ziel.appendChild(h);
+    var istIch = !!(profil && profil.slug === p.slug), karten = [];
     if (!kommend.length) ziel.appendChild(leerZustand("Zurzeit keine Einteilung. Der Kalender füllt sich von allein."));
-    else kommend.forEach(function (s) { ziel.appendChild(karte(s, p)); });
+    else kommend.forEach(function (s) { var k = karte(s, p); karten.push(k); ziel.appendChild(k); });
+    extrasFuellen(karten, istIch);
     if (gewesen.length) {
       var box = document.createElement("details"); box.className = "karte zuletzt-box";
       var sum = document.createElement("summary"); sum.className = "abschnitt"; sum.textContent = "Zuletzt (" + gewesen.length + ")"; box.appendChild(sum);
-      box.addEventListener("toggle", function () { if (box.open && box.childNodes.length === 1) gewesen.forEach(function (s) { box.appendChild(karte(s)); }); });
+      box.addEventListener("toggle", function () {
+        if (!box.open || box.childNodes.length !== 1) return;
+        var alte = gewesen.map(function (s) { var k = karte(s); box.appendChild(k); return k; });
+        extrasFuellen(alte, istIch);
+      });
       ziel.appendChild(box);
     }
     if (!profil || profil.slug !== p.slug) zuletztMerken(p.slug);
