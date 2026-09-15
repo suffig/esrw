@@ -1,0 +1,41 @@
+{
+  "_hinweis": "Spielleitungsgebuehren des ESRW, abgetippt aus der Gebuehrenordnung. Wenn der ESRW etwas aendert, hier anpassen - die Abrechnung im Mitgliederbereich rechnet damit. Betraege in Euro je Schiedsrichter und Spiel.",
+  "stand": "Saison 2026/27",
+
+  "senioren": {
+    "RL": { "HSR": 160, "LSR": 110, "SR": 180, "_": "Regionalliga West. HSR/LSR im 3-Mann-System, SR im 2-Mann-System. Zusaetzlicher HSR im 4-Mann-System 160." },
+    "LL": { "SR": 120, "HSR": 160, "LSR": 110, "_": "Landesliga NRW. Zusaetzlicher SR im 3-Mann-System laut Ordnung 'wie RL West' - deshalb HSR/LSR wie dort." },
+    "BL": { "SR": 100, "HSR": 100, "LSR": 100, "_": "Bezirksliga NRW. Zusaetzlicher SR im 3-Mann-System 100." }
+  },
+  "frauen": { "SR": 95, "_": "Frauen 2. Liga Nord, Landesliga, Bezirksliga - alle 95 im 2-Mann-System." },
+  "nachwuchs": {
+    "U20": { "RL": { "HSR": 100, "LSR": 80, "SR": 90 }, "sonst": { "SR": 90 }, "_": "U20 Regionalliga mit 3-Mann-System; Landes-/Bezirksliga 2-Mann." },
+    "U17": { "SR": 85 },
+    "U15": { "SR": 80 },
+    "U13": { "SR": 80 },
+    "U11": { "SR": 85, "SR_allein": 80, "_": "Turnier-Modus 85, 1-Mann-System 80." },
+    "U9":  { "SR": 85, "SR_allein": 80 },
+    "U7":  { "SR": 85, "SR_allein": 80 }
+  },
+
+  "zuschlag_zeit": {
+    "prozent": 20,
+    "bis_einschliesslich": "09:14",
+    "ab_einschliesslich": "21:46",
+    "_": "Die Pauschale erhoeht sich um 20 %, wenn der offizielle Spielbeginn bis einschliesslich 09:14 Uhr oder ab einschliesslich 21:46 Uhr liegt."
+  },
+  "zuschlag_uebergreifend": {
+    "je_sr": 50,
+    "je_sr_2mann": 75,
+    "gilt_fuer": ["RL", "frauen_2liga"],
+    "_": "Landesverbandsuebergreifend eingesetzte Schiedsrichter in der Regionalliga West und der Frauen 2. Liga Nord: +50 je SR, im 2-Mann-System +75. Nur auf Anforderung - deshalb je Spiel von Hand ankreuzen."
+  },
+  "ausfall_vor_ort_prozent": 50,
+
+  "kilometer": {
+    "_": "Steuerliche Voreinstellungen. Die Entfernungspauschale gilt seit 01.01.2026 mit 0,38 Euro ab dem ersten vollen Kilometer der einfachen Strecke (Steueraenderungsgesetz 2025). Fuer Reisekosten mit tatsaechlich gefahrenen Kilometern gelten 0,30 Euro je km. Welches Modell fuer Schiedsrichter passt, entscheidet der Einzelfall - hier ist nur die Voreinstellung.",
+    "satz_einfach": 0.38,
+    "satz_hinrueck": 0.30,
+    "strassenfaktor_luftlinie": 1.3
+  }
+}

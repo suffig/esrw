@@ -660,21 +660,49 @@ Veröffentlichen wieder auf `false`.
 
 ### 10.6 Was drin ist
 
-Nach der Anmeldung wählt man einmal seinen Namen von esrw.de und optional die
-Heimatadresse (nur für die km-Schätzung; liegt im eigenen Profil, für
-niemanden sonst lesbar) und den Kilometersatz.
+Nach der Anmeldung wählt man einmal seinen Namen von esrw.de, die
+**Heimatadresse** (Startpunkt für die Strecke; nach dem Tippen **Adresse
+suchen** drücken) und das **Kilometermodell**:
 
-Die **Abrechnung** listet alle Spiele der Saison – aus dem Archiv, also auch
-die, die auf esrw.de längst verschwunden sind. Je Spiel: gefahrene km,
-Vergütung, Auslagen, bezahlt ja/nein, Notiz. Gespeichert wird beim Verlassen
-des Feldes. Oben die Summen der Saison, daneben **km-Vorschläge übernehmen**
-(Luftlinie × 1,3, hin und zurück – bitte gegen die echte Strecke prüfen) und
-**CSV exportieren** für Excel oder den Steuerberater.
+| Modell | Rechnung | Voreinstellung |
+|---|---|---|
+| Entfernungspauschale | einfache Strecke, nur volle km | 0,38 €/km – gilt seit 01.01.2026 ab dem ersten Kilometer |
+| Reisekosten | gefahrene km, hin und zurück | 0,30 €/km |
+
+Welches Modell für Schiedsrichter passt, ist Sache des Steuerberaters; die
+Sätze lassen sich jederzeit ändern.
+
+**Abrechnung**: alle Spiele der Saison aus dem Archiv, auch die, die auf
+esrw.de längst verschwunden sind. Drei Knöpfe oben:
+
+* **Strecken berechnen** – holt einmal je Halle die Straßenkilometer von der
+  Heimatadresse (Routendienst OSRM, nur Koordinaten gehen raus, kein Schlüssel
+  nötig), merkt sie sich im Profil und trägt sie bei allen Spielen ohne
+  km-Angabe ein. Fällt der Dienst aus, bleibt Luftlinie × 1,3.
+* **Vergütung eintragen** – setzt die Grundgebühr nach der ESRW-Gebührenordnung
+  (`docs/gebuehren.json`) aus Liga, Rolle und Anzahl Offizieller. Was sich nicht
+  zuordnen lässt (DNL, U17-Bundesliga, Auswahlspiele), bleibt leer.
+* **CSV** – für Excel oder den Steuerberater, mit allen Einzelposten.
+
+Je Spiel: km einfach, Vergütung, Auslagen, Notiz und drei Schalter:
+**bezahlt**, **vor Ort ausgefallen** (50 %), **übergreifend** (nur bei
+Regionalliga West und Frauen 2. Liga; +50 € je SR, im 2-Mann-System +75 €).
+Den **Zuschlag von 20 %** bei Spielbeginn bis 09:14 oder ab 21:46 Uhr setzt die
+Seite selbst. Reihenfolge (die Ordnung sagt es nicht): erst +20 %, dann
+übergreifend, dann die Halbierung.
+
+Oben stehen die Summen doppelt: **Saison** und **Steuerjahr** – fürs Finanzamt
+zählt das Kalenderjahr, für den Verband die Saison.
+
+Wenn der ESRW die Gebühren ändert: `docs/gebuehren.json` anpassen, committen.
 
 > **Keine Steuerberatung.** Die Abrechnung ist eine Aufstellung. Ob und wie
 > Vergütung und Fahrtkosten steuerlich zählen – Ehrenamtspauschale,
 > Übungsleiterpauschale, Werbungskosten – hängt vom Einzelfall ab und sagt
 > dir dein Steuerberater, nicht diese Seite.
+
+**Hinter dem Login liegen** außerdem die Tauschoptionen. Anzeigen, Spielplan
+und Kalender bleiben offen.
 
 ### 10.7 Zwei Dinge, die man wissen muss
 

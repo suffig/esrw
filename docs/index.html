@@ -218,6 +218,13 @@
   .mg-eintrag .mg-check input { width:auto; }
   .mg-eintrag .mg-notiz { grid-column:2 / 4; }
   .mg-fuss { margin-top:16px; }
+  .mg-schalter { display:flex; flex-wrap:wrap; gap:6px 16px; margin-top:8px; }
+  .mg-schalter .mg-check { font-size:.85rem; display:flex; align-items:center; gap:6px; }
+  .mg-zwei { grid-template-columns:1fr 1fr !important; }
+  .mg-form .mg-felder { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .mg-form .mg-felder label { display:flex; flex-direction:column; gap:3px; }
+  .mg-betrag { margin-top:8px; font-weight:600; color:var(--text); }
+  .mg-summenblock h3 { margin-top:18px; }
 
   footer { margin-top:34px; padding-top:16px; border-top:1px solid var(--linie);
            color:var(--dim); font-size:.83rem; }
@@ -816,6 +823,34 @@
 
     box.addEventListener("toggle", function () {
       if (!box.open || inhalt.childNodes.length) return;
+      inhalt.appendChild(h1Lade());
+      // Hinter dem Login: wer Kollegen anfragen will, soll angemeldet sein.
+      ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
+        .then(function (st) {
+          inhalt.innerHTML = "";
+          if (!st.eingerichtet) {
+            var p0 = document.createElement("p"); p0.className = "meta";
+            p0.textContent = "Tauschoptionen gibt es im Mitgliederbereich – der ist noch nicht eingerichtet.";
+            inhalt.appendChild(p0); return;
+          }
+          if (!st.session) {
+            var p1 = document.createElement("p"); p1.className = "meta";
+            p1.textContent = "Tauschoptionen gibt es nur angemeldet. ";
+            var a = document.createElement("a"); a.href = "#mitglieder"; a.textContent = "Zum Mitgliederbereich";
+            p1.appendChild(a); inhalt.appendChild(p1); return;
+          }
+          tauschRendern(spiel, ich, inhalt);
+        })
+        .catch(function (e) { inhalt.textContent = "Nicht verfügbar: " + (e.message || e); });
+    });
+    return box;
+  }
+
+  function h1Lade() {
+    var p = document.createElement("p"); p.className = "meta"; p.textContent = "Prüfe Anmeldung …"; return p;
+  }
+
+  function tauschRendern(spiel, ich, inhalt) {
       var o = tauschOptionen(spiel, ich);
 
       var h1 = document.createElement("h4");
@@ -865,8 +900,6 @@
         "Spiele. Wer in dem Zeitraum nirgends eingeteilt war, taucht nicht auf. Urlaub, " +
         "Verletzung und Lizenz kennt die Liste nicht – fragen musst du selbst.";
       inhalt.appendChild(fuss);
-    });
-    return box;
   }
 
   // Namens-Chip mit Rolle. Im Zwei-Mann-System sind beide Schiedsrichter,
@@ -1192,21 +1225,27 @@
   // Mitgliederbereich liegt in einer eigenen Datei und wird erst geholt,
   // wenn jemand den Reiter oeffnet.
   var mitgliederGeladen = null;
-  function zeigeMitglieder() {
-    aktuell = null;
-    ansicht("mitglieder");
+  function ladeMitglieder() {
     if (!mitgliederGeladen) {
       mitgliederGeladen = new Promise(function (ok, nein) {
+        if (window.Mitglieder) return ok(window.Mitglieder);
         var s = document.createElement("script");
-        s.src = "mitglieder.js?" + (daten && daten.version || "1");
-        s.onload = ok; s.onerror = function () { nein(new Error("mitglieder.js nicht ladbar")); };
+        s.src = "mitglieder.js?" + Date.now();
+        s.onload = function () { ok(window.Mitglieder); };
+        s.onerror = function () { nein(new Error("mitglieder.js nicht ladbar")); };
         document.head.appendChild(s);
       });
     }
-    mitgliederGeladen.then(function () {
-      window.Mitglieder.oeffnen(el("mitglieder"), {
-        daten: daten, slug: profil && profil.slug, personMit: personMit, hole: hole
-      });
+    return mitgliederGeladen;
+  }
+  function mitgliederKontext() {
+    return { daten: daten, slug: profil && profil.slug, personMit: personMit, hole: hole };
+  }
+  function zeigeMitglieder() {
+    aktuell = null;
+    ansicht("mitglieder");
+    ladeMitglieder().then(function (M) {
+      M.oeffnen(el("mitglieder"), mitgliederKontext());
     }).catch(function (e) {
       el("mitglieder").textContent = "Mitgliederbereich konnte nicht geladen werden: " + e.message;
     });

@@ -416,6 +416,7 @@ def statistik_aus_historie(historie, stand):
                     "paarung": eintrag.get("paarung", ""),
                     "halle": eintrag.get("halle", ""),
                     "rolle": rolle,
+                    "system": len(rollen_fuer(eintrag.get("besetzung") or {})),
                 })
             s["rollen"][rolle] += 1
             if eintrag.get("liga"):

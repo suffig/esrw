@@ -49,6 +49,7 @@ docs/
   archiv.json           Saisonliste je Person aus dem Archiv
   mitglieder.js         Mitgliederbereich (Konto, Abrechnung), laedt bei Bedarf
   supabase.json         Zugang zum Backend, leer = Mitgliederbereich aus
+  gebuehren.json        ESRW-Gebührenordnung, Basis der Vergütungsvorschläge
   manifest.webmanifest  macht die Seite als App installierbar
   sw.js                 Service Worker, damit sie offline funktioniert
   feeds/
@@ -183,9 +184,16 @@ Solange `supabase.json` leer ist, zeigt der Reiter nur einen Hinweis; alles
 andere läuft unverändert. Einrichtung: ANLEITUNG.md, Schritt 10.
 
 **Abrechnung**: alle Spiele der Saison aus dem Archiv, je Spiel km, Vergütung,
-Auslagen, bezahlt, Notiz. Summen oben, km-Schätzung aus Heimatadresse und
-Hallenkoordinaten (Luftlinie × 1,3, hin und zurück), CSV-Export. Es ist eine
-Aufstellung, keine Steuerberatung.
+Auslagen, bezahlt, vor Ort ausgefallen (50 %), übergreifend, Notiz. Summen für
+Saison und Steuerjahr. Straßenkilometer je Halle einmal über OSRM berechnet
+und im Profil gespeichert; Kilometermodell wählbar (Entfernungspauschale
+0,38 €/km einfache Strecke seit 2026, oder Reisekosten 0,30 €/km gefahren).
+Vergütung nach ESRW-Gebührenordnung aus `docs/gebuehren.json` – Liga, Rolle,
+System, +20 % bei früher/später Anstoßzeit. CSV-Export mit allen Posten. Es
+ist eine Aufstellung, keine Steuerberatung.
+
+Tauschoptionen liegen ebenfalls hinter dem Login; Anzeigen, Spielplan und
+Kalender bleiben offen.
 
 Die Logik liegt in `docs/mitglieder.js` und wird erst geladen, wenn jemand
 den Reiter öffnet. Mit `"mock": true` läuft eine Attrappe im Browser, um die

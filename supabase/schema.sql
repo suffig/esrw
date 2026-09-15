@@ -74,6 +74,23 @@ create policy "eigene Einsaetze anlegen"  on public.einsaetze for insert with ch
 create policy "eigene Einsaetze aendern"  on public.einsaetze for update using (auth.uid() = user_id);
 create policy "eigene Einsaetze loeschen" on public.einsaetze for delete using (auth.uid() = user_id);
 
+-- --------------------------------------------- Ergaenzungen (Version 2)
+--
+-- Gefahrlos mehrfach ausfuehrbar: 'add column if not exists'.
+
+-- Kilometermodell je Nutzer und gespeicherte Strecken zu den Hallen
+alter table public.profile add column if not exists km_modell   text not null default 'einfach';
+alter table public.profile add column if not exists satz_einfach numeric(5,2) not null default 0.38;
+alter table public.profile add column if not exists satz_hinrueck numeric(5,2) not null default 0.30;
+alter table public.profile add column if not exists strecken    jsonb not null default '{}'::jsonb;
+
+-- Je Spiel: vor Ort ausgefallen (50 %), landesverbandsuebergreifend (Zuschlag)
+alter table public.einsaetze add column if not exists ausgefallen   boolean not null default false;
+alter table public.einsaetze add column if not exists uebergreifend boolean not null default false;
+
+comment on column public.einsaetze.km is 'einfache Strecke Wohnung -> Halle in km';
+comment on column public.profile.strecken is 'Cache: Hallenname -> {km, art, am}';
+
 -- "geaendert" automatisch mitfuehren
 create or replace function public.setze_geaendert()
 returns trigger language plpgsql as $$
