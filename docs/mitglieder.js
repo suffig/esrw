@@ -522,6 +522,7 @@ window.Mitglieder = (function () {
     return ladeProfil()
       .then(function () {
         if (!profil || !profil.slug) return zeigeEinrichtung();
+        document.dispatchEvent(new CustomEvent("mg-profil", { detail: { slug: profil.slug, name: profil.name } }));
         return ladeEinsaetze().then(function () { rahmen(); zeigeReiter(reiter); });
       })
       .catch(function (e) { meldung("Profil konnte nicht geladen werden: " + fehlerText(e), "warn"); });
@@ -541,12 +542,15 @@ window.Mitglieder = (function () {
     if (!frei()) wurzel.appendChild(h("div", { class: "hinweis warn" }, [ikone("i-lock"),
       h("span", { text: "Dein Konto wartet auf die Freischaltung durch den Betreiber. Abrechnung, Notizen und Push gehen schon; Tauschbörse, Verfügbarkeit, Hallen-Hinweise und Kontakte kommen nach der Freischaltung." })]));
     var leiste = h("div", { class: "mg-untertabs" });
-    [["abrechnung", "Abrechnung"], ["tausch", "Tauschbörse"], ["frei", "Verfügbarkeit"], ["notizen", "Notizen"], ["konto", "Konto"]].forEach(function (t) {
-      leiste.appendChild(h("button", { type: "button", "data-reiter": t[0], text: t[1], onclick: function () { zeigeReiter(t[0]); } }));
+    var reiterListe = [["abrechnung", "Abrechnung", "i-euro"], ["tausch", "Tausch", "i-swap"], ["frei", "Verfügbar", "i-cal"], ["notizen", "Notizen", "i-note"], ["konto", "Konto", "i-key"]];
+    if (profil.admin) reiterListe.push(["admin", "Admin", "i-shield"]);
+    reiterListe.forEach(function (t) {
+      leiste.appendChild(h("button", { type: "button", "data-reiter": t[0], onclick: function () { zeigeReiter(t[0]); } }, [ikone(t[2]), t[1], h("span", { class: "zaehler versteckt" })]));
     });
     wurzel.appendChild(leiste);
     inhalt = h("div", { class: "mg-inhalt" });
     wurzel.appendChild(inhalt);
+    zaehler().then(zaehlerAnzeigen);
   }
 
   function zeigeReiter(name) {
@@ -564,6 +568,7 @@ window.Mitglieder = (function () {
     else if (name === "tausch") zeigeTausch();
     else if (name === "frei") zeigeVerfuegbarkeit();
     else if (name === "notizen") zeigeNotizen();
+    else if (name === "admin" && profil.admin) zeigeAdmin();
     else zeigeKonto();
   }
 
@@ -630,6 +635,7 @@ window.Mitglieder = (function () {
         speichern.disabled = false;
         if (r.error) { meldung("Speichern fehlgeschlagen: " + fehlerText(r.error), "warn"); return; }
         profil = Object.assign({}, profil || {}, zeile);
+        document.dispatchEvent(new CustomEvent("mg-profil", { detail: { slug: profil.slug, name: profil.name } }));
         meldung("Gespeichert.", "gut");
         ladeEinsaetze().then(function () { rahmen(); zeigeReiter(zurueck ? "konto" : "abrechnung"); });
       });
@@ -1408,7 +1414,6 @@ window.Mitglieder = (function () {
     var kontaktBox = h("div", { class: "melde karte" }, [h("h4", { text: "Handynummer für Gespannkollegen" }), h("p", { text: "lade …" })]);
     inhalt.appendChild(kontaktBox);
     kontaktRendern(kontaktBox);
-    if (profil.admin) { var adminBox = h("div", { class: "melde karte" }, [h("h4", { text: "Freischaltung" }), skelett(1)]); inhalt.appendChild(adminBox); adminRendern(adminBox); }
 
     var pw = h("input", { type: "password", placeholder: "Neues Passwort (mind. 8 Zeichen)", autocomplete: "new-password", minlength: "8" });
     inhalt.appendChild(h("div", { class: "melde karte" }, [
@@ -1447,8 +1452,14 @@ window.Mitglieder = (function () {
       status.className = "status " + (lage === "an" ? "an" : "aus");
       status.textContent = lage === "an" ? "an" : lage === "aus" ? "aus" : "nicht möglich";
       text.textContent = txt;
-      var alt = box.querySelector("button"); if (alt) alt.remove();
+      Array.prototype.forEach.call(box.querySelectorAll("button"), function (b) { b.remove(); });
       if (knopfText) box.appendChild(h("button", { type: "button", class: "haupt", text: knopfText, onclick: aktion }));
+      if (lage === "an") box.appendChild(h("button", { type: "button", class: "mg-neben", style: "margin-top:8px;width:100%", text: "Testnachricht auf diesem Gerät", onclick: function () {
+        navigator.serviceWorker.ready.then(function (reg) {
+          return reg.showNotification("Einteilungen: Test", { body: "Wenn du das siehst, kommen Mitteilungen an. Echte Push-Nachrichten schickt der Server bei Änderungen.", icon: "icon-192.png", badge: "icon-192.png", tag: "test" });
+        }).then(function () { kurzMeldung("Testnachricht geschickt – sie erscheint oben oder in der Mitteilungszentrale.", "gut"); })
+          .catch(function (e) { meldung("Konnte nicht anzeigen: " + (e.message || e), "warn"); });
+      } }));
     }
     var alsApp = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
     if (!pushCfg || !pushCfg.public_key) return setze("nein", "Push ist vom Betreiber noch nicht eingerichtet (Anleitung Schritt 11).");
@@ -1723,6 +1734,36 @@ window.Mitglieder = (function () {
 
   // ---- Admin: neue Konten freischalten
 
+  function zeigeAdmin() {
+    var box = h("div", { class: "melde karte" }, [h("h4", { text: "Freischaltung" }), skelett(1)]);
+    inhalt.appendChild(box);
+    adminRendern(box);
+    inhalt.appendChild(h("p", { class: "meta mg-fuss", text: "Freigeschaltete sehen Tauschbörse, Verfügbarkeiten, Hallen-Hinweise, Kontakte und Mitfahrten. " +
+      "Admins können außerdem freischalten und weitere Admins ernennen. Das eigene Admin-Recht lässt sich hier nicht entfernen – dafür SQL im Supabase-Dashboard." }));
+  }
+
+  // Zaehler fuer Reiter und die Leiste unten: offene Gesuche, wartende Konten
+  function zaehler() {
+    if (!session) return Promise.resolve({ angemeldet: false });
+    return ladeProfil().then(function () {
+      var z = { angemeldet: true, gesuche: 0, wartend: 0 };
+      var laeufe = [];
+      if (frei()) laeufe.push(sb.from("gesuche").select("id,user_id").eq("status", "offen").gte("beginn", new Date(Date.now() - 6 * 3600000).toISOString())
+        .then(function (r) { z.gesuche = (r.data || []).filter(function (g) { return g.user_id !== session.user.id; }).length; }));
+      if (profil && profil.admin) laeufe.push(sb.from("profile").select("id,freigeschaltet,admin").eq("freigeschaltet", false)
+        .then(function (r) { z.wartend = (r.data || []).filter(function (p) { return !p.admin; }).length; }));
+      return Promise.all(laeufe).then(function () { document.dispatchEvent(new CustomEvent("mg-zaehler", { detail: z })); return z; });
+    }).catch(function () { return { angemeldet: true }; });
+  }
+  function zaehlerAnzeigen(z) {
+    if (!wurzel) return;
+    [["tausch", z.gesuche], ["admin", z.wartend]].forEach(function (p) {
+      var b = wurzel.querySelector('.mg-untertabs button[data-reiter="' + p[0] + '"] .zaehler');
+      if (!b) return;
+      b.textContent = p[1] || ""; b.classList.toggle("versteckt", !p[1]);
+    });
+  }
+
   function adminRendern(box) {
     sb.from("profile").select("id,name,slug,email,freigeschaltet,admin").order("name").then(function (r) {
       if (r.error) throw r.error;
@@ -1748,14 +1789,33 @@ window.Mitglieder = (function () {
         var det = h("details", { class: "tausch" }, [h("summary", { text: freie.length + " freigeschaltet" })]);
         freie.forEach(function (p) {
           det.appendChild(h("div", { class: "sperre" }, [
-            h("span", { text: p.name || p.slug }),
-            h("button", { type: "button", class: "textknopf", text: "sperren", onclick: function () {
-              sb.from("profile").update({ freigeschaltet: false }).eq("id", p.id).then(function () { adminRendern(box); });
-            } })
+            h("span", {}, [h("b", { text: p.name || p.slug || "(ohne Namen)" }), h("small", { class: "meta", style: "display:block", text: p.email || "" })]),
+            h("span", {}, [
+              h("button", { type: "button", class: "textknopf", text: "Admin", title: "Zum Admin machen", onclick: function () {
+                if (!confirm((p.name || p.email) + " zum Admin machen? Kann dann freischalten und Admins ernennen.")) return;
+                sb.from("profile").update({ admin: true }).eq("id", p.id).then(function (r2) { if (r2.error) meldung(fehlerText(r2.error), "warn"); adminRendern(box); });
+              } }), " · ",
+              h("button", { type: "button", class: "textknopf", text: "sperren", onclick: function () {
+                sb.from("profile").update({ freigeschaltet: false }).eq("id", p.id).then(function () { adminRendern(box); });
+              } })
+            ])
           ]));
         });
         box.appendChild(det);
       }
+      var admins = alle.filter(function (p) { return p.admin; });
+      var adet = h("details", { class: "tausch" }, [h("summary", { text: admins.length + (admins.length === 1 ? " Admin" : " Admins") })]);
+      admins.forEach(function (p) {
+        adet.appendChild(h("div", { class: "sperre" }, [
+          h("span", {}, [h("b", { text: (p.name || p.slug || "(ohne Namen)") + (p.id === session.user.id ? " (du)" : "") }), h("small", { class: "meta", style: "display:block", text: p.email || "" })]),
+          p.id === session.user.id ? null : h("button", { type: "button", class: "textknopf", text: "Admin entfernen", onclick: function () {
+            if (!confirm((p.name || p.email) + " das Admin-Recht nehmen?")) return;
+            sb.from("profile").update({ admin: false, freigeschaltet: true }).eq("id", p.id).then(function () { adminRendern(box); });
+          } })
+        ]));
+      });
+      box.appendChild(adet);
+      zaehler().then(zaehlerAnzeigen);
     }).catch(function (e) { leeren(box); box.appendChild(h("p", { class: "achtung", text: fehlerText(e) })); });
   }
 
@@ -1808,5 +1868,5 @@ window.Mitglieder = (function () {
 
   return { oeffnen: oeffnen, bereit: bereit, angemeldet: angemeldet,
            sperrenAm: sperrenAm, gesuchAnlegen: gesuchAnlegen, offeneAbrechnungen: offeneAbrechnungen,
-           extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt };
+           extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler };
 })();

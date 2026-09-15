@@ -360,6 +360,18 @@
       ak.appendChild(ge);
     }
     h.appendChild(ak);
+    if (kommend[1]) {
+      var n2 = kommend[1], d2 = new Date(n2.beginn);
+      var dn = document.createElement("div"); dn.className = "danach"; dn.appendChild(ikone("i-cal"));
+      dn.appendChild(document.createTextNode("Danach: " + datumKurz(d2) + " · " + uhr(d2) + " · " + (n2.liga ? n2.liga + " " : "") + n2.paarung));
+      h.appendChild(dn);
+    }
+    h.classList.add("tippbar"); h.title = "Zur Spielkarte";
+    h.addEventListener("click", function (ev) {
+      if (ev.target.closest("a")) return;
+      var erste = el("spiele").querySelector(".spiel");
+      if (erste) window.scrollTo({ top: erste.getBoundingClientRect().top + window.scrollY - 12, behavior: "smooth" });
+    });
     ziel.appendChild(h);
     if (profil && profil.slug === p.slug && s.halle) {
       ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) {
@@ -810,7 +822,10 @@
     aktuell = p;
     ansicht("detail");
     el("person").textContent = p.name;
-    el("profil-hinweis").textContent = (profil && profil.slug === p.slug) ? "dein Profil" : "fremdes Profil";
+    var meins = !!(profil && profil.slug === p.slug);
+    el("profil-hinweis").textContent = meins ? "dein Profil" : "fremdes Profil";
+    el("uebernehmen").classList.toggle("versteckt", meins);
+    el("uebernehmen").onclick = function () { profilSetzen(p); toast("„Meine Spiele“ zeigt jetzt " + p.name, "gut"); };
     el("abo").href = feedUrl(p.slug, "webcal:");
     el("laden").onclick = function () { location.href = feedUrl(p.slug, location.protocol); };
     zeigeHeld(p);
@@ -900,6 +915,46 @@
   el("wechseln").addEventListener("click", function () { el("suche").value = ""; zeigeListe(""); zeigeAuswahl(true); });
   el("abbrechen").addEventListener("click", function () { if (profil && personMit(profil.slug)) zeigePerson(personMit(profil.slug)); });
   el("suche").addEventListener("input", function (e) { zeigeListe(e.target.value); });
+  el("suche").addEventListener("keydown", function (e) {
+    if (e.key !== "Enter") return;
+    var erster = el("namen").querySelector("li button");
+    if (erster) { e.preventDefault(); erster.click(); }
+  });
+
+  // Nach dem Login im Mitgliederbereich: "Meine Spiele" auf den dort
+  // gewaehlten Namen stellen, damit niemand zweimal gefragt wird.
+  document.addEventListener("mg-profil", function (e) {
+    var slug = e.detail && e.detail.slug, p = slug && personMit(slug);
+    if (!p || (profil && profil.slug === slug)) return;
+    profil = { slug: p.slug, name: p.name, gesehen: {}, begonnen: false };
+    profilSchreiben(); schreiben("person", null);
+    toast("„Meine Spiele“ zeigt jetzt " + p.name, "gut");
+  });
+  document.addEventListener("mg-zaehler", function (e) { leisteZaehler(e.detail || {}); });
+
+  // Punkt/Zahl am Reiter "Mitglieder": angemeldet, offene Gesuche, wartende Konten
+  function leisteZaehler(z) {
+    var b = el("tab-mitglieder"), alt = b.querySelector(".punkt");
+    if (alt) alt.remove();
+    if (!z.angemeldet) return;
+    var n = (z.gesuche || 0) + (z.wartend || 0);
+    var p = document.createElement("span"); p.className = "punkt" + (n ? " zahl" : "");
+    if (n) p.textContent = n > 9 ? "9+" : String(n);
+    p.title = n ? (z.gesuche || 0) + " offene Gesuche" + (z.wartend ? ", " + z.wartend + " warten auf Freischaltung" : "") : "angemeldet";
+    b.appendChild(p);
+  }
+  function sitzungVorhanden() {
+    try {
+      for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); if (/^sb-.*-auth-token$/.test(k) || k === "mock_session") return true; }
+    } catch (e) {}
+    return false;
+  }
+  function zaehlerHolen() {
+    if (!sitzungVorhanden()) return;
+    ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
+      .then(function (st) { if (st.eingerichtet && st.session) return window.Mitglieder.zaehler(); })
+      .then(function (z) { if (z) leisteZaehler(z); }).catch(function () {});
+  }
   el("melde-knopf").addEventListener("click", meldeAnfragen);
   el("kopieren").addEventListener("click", function () {
     if (!aktuell) return;
@@ -981,6 +1036,7 @@
       standAnzeigen(daten, b[1]);
       el("fuss").textContent = "Termine beginnen " + daten.vorlauf_minuten + " Minuten vor Spielbeginn, damit du rechtzeitig an der Halle bist.";
       zeigeListe(""); ausHash(); zeigeInstallHinweis(); zeigeNeu(); filterHoehe(); netzAnzeigen();
+      setTimeout(zaehlerHolen, 1500);
     })
     .catch(function () { el("stand").className = "stand alt"; el("stand").textContent = "Daten konnten nicht geladen werden."; });
 

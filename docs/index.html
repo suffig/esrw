@@ -368,6 +368,18 @@
   .leiste button svg.i { width:1.35rem; height:1.35rem; }
   .leiste button.aktiv { color:var(--akzent); }
   .leiste button.aktiv svg.i { stroke-width:2.4; }
+  .leiste button { position:relative; }
+  .leiste .punkt { position:absolute; top:4px; left:calc(50% + 8px); min-width:8px; height:8px; border-radius:99px; background:var(--gut); }
+  .leiste .punkt.zahl { min-width:17px; height:17px; top:0; padding:0 5px; background:var(--warn); color:#fff; font-size:.66rem; font-weight:800;
+                       display:flex; align-items:center; justify-content:center; line-height:1; }
+  .held .danach { margin-top:10px; padding-top:10px; border-top:1px solid rgba(255,255,255,.2); font-size:.84rem; opacity:.9; display:flex; gap:6px; align-items:center; }
+  .held.tippbar { cursor:pointer; }
+  .mg-untertabs button { display:inline-flex; align-items:center; gap:5px; position:relative; }
+  .mg-untertabs button svg.i { width:1rem; height:1rem; }
+  .mg-untertabs .zaehler { background:var(--warn); color:#fff; border-radius:99px; font-size:.66rem; padding:1px 6px; margin-left:2px; }
+  .mg-untertabs button.aktiv .zaehler { background:rgba(255,255,255,.3); }
+  .mg-untertabs { -webkit-mask-image:linear-gradient(90deg, #000 90%, transparent); mask-image:linear-gradient(90deg, #000 90%, transparent); padding-right:24px; scrollbar-width:none; }
+  .mg-untertabs::-webkit-scrollbar { display:none; }
 
   footer { margin-top:34px; padding-top:16px; border-top:1px solid var(--linie); color:var(--dim); font-size:.8rem; }
 
@@ -431,6 +443,10 @@
   <symbol id="i-empty" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2.5"/><path d="M4 10h16M9 14h6"/></symbol>
   <symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 8h13l-3-3M20 16H7l3 3"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-note" viewBox="0 0 24 24"><path d="M4 20h4l10-10-4-4L4 16z"/><path d="M12.5 7.5l4 4"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="i-euro" viewBox="0 0 24 24"><path d="M17 6.5A6 6 0 0 0 7.5 9M17 17.5A6 6 0 0 1 7.5 15M4 10.5h9M4 13.5h9"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="14" r="4"/><path d="M11 11l8-8M15 7l2.5 2.5M12.5 9.5 15 12"/></symbol>
 </svg>
 
 <header class="kopf">
@@ -497,7 +513,7 @@
     <div class="spalte-haupt">
     <div class="profilzeile karte">
       <span><b id="person"></b><small id="profil-hinweis">dein Profil</small></span>
-      <button class="textknopf" id="wechseln">Wechseln</button>
+      <span><button class="textknopf versteckt" id="uebernehmen">Als mein Profil</button> <button class="textknopf" id="wechseln">Wechseln</button></span>
     </div>
 
     <div id="held"></div>
@@ -567,6 +583,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=14"></script>
+<script src="app.js?v=16"></script>
 </body>
 </html>

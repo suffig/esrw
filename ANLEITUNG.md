@@ -640,8 +640,8 @@ update public.profile set admin = true, freigeschaltet = true
 select email, slug, admin, freigeschaltet from public.profile;
 ```
 
-4. In der App abmelden und wieder anmelden. Unter **Konto** steht jetzt
-   „Freischaltung“.
+4. In der App abmelden und wieder anmelden. In der Unterreiter-Leiste
+   steht jetzt ganz rechts **Admin**.
 
 Kommt bei Schritt 3 keine Zeile: Das Konto ist noch nicht bestätigt
 (`select email, email_confirmed_at from auth.users;` – ist die Spalte leer,
@@ -868,9 +868,11 @@ Links (24 Stunden) werden beim Ankommen erklärt, ebenfalls mit diesem Knopf.
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –
 alles, was nur ihn selbst betrifft. **Tauschbörse, Verfügbarkeiten,
 Hallen-Hinweise, Kontakte und Mitfahrten** sieht er erst, wenn du ihn
-freischaltest: **Mitglieder → Konto → Freischaltung** listet, wer wartet
+freischaltest: **Mitglieder → Reiter „Admin“** (ganz rechts in der
+Unterreiter-Leiste, nur für Admins sichtbar, mit Zähler) listet, wer wartet
 (Name von esrw.de und E-Mail), ein Tipp auf **Freischalten** genügt. Dort
-kannst du auch wieder sperren.
+kannst du auch wieder sperren und weitere Admins ernennen. Der Reiter
+„Mitglieder“ unten zeigt dir die Zahl wartender Konten als Badge.
 
 Das erzwingt die Datenbank (`ist_freigeschaltet()` in den Zugriffsregeln),
 nicht die App – ein fremdes Konto sieht auch mit Bastelei keine
