@@ -21,8 +21,13 @@ window.Mitglieder = (function () {
   var session = null, profil = null, einsaetze = {}, archivDaten = null;
   var speicherTimer = {}, bereitVersprechen = null, profilVersprechen = null;
   var reiter = "abrechnung", gewaehlteSaison = null, nurOffene = false;
+  var angezeigt = null;          // "anmeldung" | "bereich" | "passwort"
+  var passwortNeu = false;       // kam ueber den Link aus "Passwort vergessen"
 
-  var SUPABASE_CDN = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js";
+  // Feste Version mit Pruefsumme: der Browser laedt die Datei nur, wenn sie
+  // exakt so aussieht wie beim Einbau. Neue Version = neue Zeile hier.
+  var SUPABASE_CDN = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0/dist/umd/supabase.js";
+  var SUPABASE_SRI = "sha384-iLddHTLokph6Omwoyid4XKxHaWa6w41BnoEj0q5oOrzmYPpHIKt1wyjReA7s//pP";
   var OSRM = "https://router.project-osrm.org/route/v1/driving/";
   var WT = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
   var MONATE = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
@@ -91,7 +96,8 @@ window.Mitglieder = (function () {
     return new Promise(function (ok, nein) {
       if (window.supabase && window.supabase.createClient) return ok();
       var s = document.createElement("script");
-      s.src = url; s.onload = ok; s.onerror = function () { nein(new Error("Supabase-Bibliothek nicht ladbar")); };
+      s.src = url; s.integrity = SUPABASE_SRI; s.crossOrigin = "anonymous";
+      s.onload = ok; s.onerror = function () { nein(new Error("Supabase-Bibliothek nicht ladbar (Netz oder Prüfsumme)")); };
       document.head.appendChild(s);
     });
   }
@@ -103,6 +109,12 @@ window.Mitglieder = (function () {
   }
 
   function rolleBadge(rolle) { return h("span", { class: "rolle " + (rolle || ""), text: rolle || "" }); }
+  function skelett(n) {
+    var box = h("div", { class: "skelett" });
+    for (var i = 0; i < (n || 3); i++) box.appendChild(h("div", { class: "karte skelett-karte" }));
+    return box;
+  }
+  function frei() { return !!(sb && sb._attrappe) || !!(profil && (profil.freigeschaltet || profil.admin)); }
 
   // --------------------------------------------------------- Attrappe
   //
@@ -237,10 +249,25 @@ window.Mitglieder = (function () {
           return Promise.resolve({ data: { session: sitzung() }, error: null });
         },
         signOut: function () { localStorage.removeItem("mock_session"); melde(); return Promise.resolve({ error: null }); },
-        resetPasswordForEmail: function () { return Promise.resolve({ error: null }); }
+        resetPasswordForEmail: function () { return Promise.resolve({ error: null }); },
+        updateUser: function (p) {
+          var s = sitzung(); if (!s) return Promise.resolve({ error: { message: "nicht angemeldet" } });
+          var nutzer = lies("users", {}); if (nutzer[s.user.email] && p.password) nutzer[s.user.email].pw = p.password;
+          schreib("users", nutzer); return Promise.resolve({ data: { user: s.user }, error: null });
+        }
       },
       from: tabelle,
-      storage: { from: ablage }
+      storage: { from: ablage },
+      rpc: function (name) {
+        if (name !== "konto_loeschen") return Promise.resolve({ error: { message: "unbekannt" } });
+        var s = sitzung(); if (!s) return Promise.resolve({ error: { message: "nicht angemeldet" } });
+        ["profile", "einsaetze", "gesuche", "angebote", "sperren", "push_abos", "hallen_notizen", "kontakte", "mitfahrten", "spielnotizen"].forEach(function (t) {
+          schreib(t, lies(t, []).filter(function (z) { return (z.user_id || z.id) !== s.user.id; }));
+        });
+        var nutzer = lies("users", {}); delete nutzer[s.user.email]; schreib("users", nutzer);
+        localStorage.removeItem("mock_session"); melde();
+        return Promise.resolve({ data: null, error: null });
+      }
     };
   }
 
@@ -265,12 +292,24 @@ window.Mitglieder = (function () {
       .then(function () {
         if (!sb) return { eingerichtet: false, session: null };
         sb.auth.onAuthStateChange(function (ereignis, s) {
+          var vorher = session;
           session = s;
+          if (ereignis === "PASSWORD_RECOVERY") {
+            // Link aus "Passwort vergessen": erst neues Passwort, dann der Rest
+            passwortNeu = true;
+            if (wurzel) zeigePasswortNeu();
+            return;
+          }
           if (!s) { profil = null; profilVersprechen = null; einsaetze = {}; if (wurzel) zeigeAnmeldung(); }
+          else if (!vorher && wurzel && angezeigt === "anmeldung" && !passwortNeu) nachLogin();
           document.dispatchEvent(new CustomEvent("mg-sitzung", { detail: { angemeldet: !!s } }));
         });
         return sb.auth.getSession().then(function (r) {
           session = r.data.session;
+          // Token aus dem Mail-Link ist verarbeitet - raus aus der Adresszeile
+          if (/access_token=|type=recovery|error=/.test(location.hash) || /[?&]code=/.test(location.search)) {
+            try { history.replaceState(null, "", location.pathname + "#mitglieder"); } catch (e) {}
+          }
           return { eingerichtet: true, session: session };
         });
       });
@@ -288,13 +327,15 @@ window.Mitglieder = (function () {
     return profilVersprechen;
   }
 
-  function oeffnen(container, kontext) {
+  function oeffnen(container, kontext, wunschReiter) {
     wurzel = container; ctx = kontext;
+    if (wunschReiter) reiter = wunschReiter;
     leeren(wurzel);
-    wurzel.appendChild(h("p", { class: "meta", text: "Mitgliederbereich wird geladen …" }));
+    wurzel.appendChild(skelett(3));
     bereit(kontext)
       .then(function (st) {
         if (!st.eingerichtet) { zeigeKeinBackend(); return; }
+        if (passwortNeu) return zeigePasswortNeu();
         return session ? nachLogin() : zeigeAnmeldung();
       })
       .catch(function (e) {
@@ -315,8 +356,29 @@ window.Mitglieder = (function () {
 
   // --------------------------------------------------------- Anmeldung
 
+  function zeigePasswortNeu() {
+    angezeigt = "passwort";
+    leeren(wurzel);
+    var pw = h("input", { type: "password", placeholder: "Neues Passwort (mind. 8 Zeichen)", autocomplete: "new-password", minlength: "8", required: "" });
+    var pw2 = h("input", { type: "password", placeholder: "Noch einmal", autocomplete: "new-password", minlength: "8", required: "" });
+    var knopf = h("button", { type: "submit", class: "mg-haupt", text: "Passwort setzen" });
+    wurzel.appendChild(h("div", { class: "melde karte" }, [h("form", { class: "mg-form", onsubmit: function (e) {
+      e.preventDefault();
+      if (pw.value !== pw2.value) { meldung("Die Passwörter sind nicht gleich.", "warn"); return; }
+      knopf.disabled = true;
+      sb.auth.updateUser({ password: pw.value }).then(function (r) {
+        knopf.disabled = false;
+        if (r.error) { meldung(fehlerText(r.error), "warn"); return; }
+        passwortNeu = false;
+        kurzMeldung("Passwort gesetzt ✓", "gut");
+        return sb.auth.getSession().then(function (r2) { session = r2.data.session; return session ? nachLogin() : zeigeAnmeldung(); });
+      });
+    } }, [h("h4", { text: "Neues Passwort" }), pw, pw2, knopf])]));
+  }
+
   function zeigeAnmeldung(modus) {
     modus = modus || "anmelden";
+    angezeigt = "anmeldung";
     leeren(wurzel);
     var email = h("input", { type: "email", placeholder: "E-Mail", autocomplete: "email", required: "" });
     var pw = h("input", { type: "password", placeholder: "Passwort (mind. 8 Zeichen)",
@@ -342,7 +404,7 @@ window.Mitglieder = (function () {
         if (r.error) { meldung(fehlerText(r.error), "warn"); return; }
         if (modus === "vergessen") { meldung("Falls es das Konto gibt, ist eine E-Mail mit dem Link unterwegs.", "gut"); return; }
         if (modus === "registrieren" && !(r.data && r.data.session)) {
-          meldung("Konto angelegt. Bitte den Bestätigungslink in der E-Mail antippen, danach hier anmelden.", "gut");
+          meldung("Konto angelegt. Bitte den Bestätigungslink in der E-Mail antippen, danach hier anmelden. Der Betreiber schaltet dich dann frei.", "gut");
           return;
         }
         session = r.data.session;
@@ -391,8 +453,9 @@ window.Mitglieder = (function () {
   // --------------------------------------------------------- Nach Login
 
   function nachLogin() {
+    angezeigt = "bereich";
     leeren(wurzel);
-    wurzel.appendChild(h("p", { class: "meta", text: "Lade dein Profil …" }));
+    wurzel.appendChild(skelett(3));
     return ladeProfil()
       .then(function () {
         if (!profil || !profil.slug) return zeigeEinrichtung();
@@ -412,6 +475,8 @@ window.Mitglieder = (function () {
       h("span", {}, [h("b", { text: profil.name || profil.slug }), h("small", { text: session.user.email })]),
       h("button", { type: "button", class: "textknopf", text: "Abmelden", onclick: abmelden })
     ]));
+    if (!frei()) wurzel.appendChild(h("div", { class: "hinweis warn" }, [ikone("i-lock"),
+      h("span", { text: "Dein Konto wartet auf die Freischaltung durch den Betreiber. Abrechnung, Notizen und Push gehen schon; Tauschbörse, Verfügbarkeit, Hallen-Hinweise und Kontakte kommen nach der Freischaltung." })]));
     var leiste = h("div", { class: "mg-untertabs" });
     [["abrechnung", "Abrechnung"], ["tausch", "Tauschbörse"], ["frei", "Verfügbarkeit"], ["notizen", "Notizen"], ["konto", "Konto"]].forEach(function (t) {
       leiste.appendChild(h("button", { type: "button", "data-reiter": t[0], text: t[1], onclick: function () { zeigeReiter(t[0]); } }));
@@ -428,6 +493,10 @@ window.Mitglieder = (function () {
       b.classList.toggle("aktiv", b.getAttribute("data-reiter") === name);
     });
     leeren(inhalt);
+    if ((name === "tausch" || name === "frei") && !frei()) {
+      inhalt.appendChild(h("p", { class: "leer", text: "Erst nach der Freischaltung durch den Betreiber." }));
+      return;
+    }
     if (name === "abrechnung") zeigeAbrechnung();
     else if (name === "tausch") zeigeTausch();
     else if (name === "frei") zeigeVerfuegbarkeit();
@@ -486,6 +555,7 @@ window.Mitglieder = (function () {
       speichern.disabled = true;
       var person = ctx.personMit(auswahl.value);
       var zeile = { id: session.user.id, slug: auswahl.value, name: person ? person.name : auswahl.value,
+                    email: session.user.email || null,
                     heimat: heimat.value.trim() || null, heimat_lat: lat, heimat_lon: lon,
                     km_modell: modell.value,
                     satz_einfach: zahl(satzEinfach.value) != null ? zahl(satzEinfach.value) : 0.38,
@@ -496,7 +566,7 @@ window.Mitglieder = (function () {
       sb.from("profile").upsert(zeile).then(function (r) {
         speichern.disabled = false;
         if (r.error) { meldung("Speichern fehlgeschlagen: " + fehlerText(r.error), "warn"); return; }
-        profil = zeile;
+        profil = Object.assign({}, profil || {}, zeile);
         meldung("Gespeichert.", "gut");
         ladeEinsaetze().then(function () { rahmen(); zeigeReiter(zurueck ? "konto" : "abrechnung"); });
       });
@@ -832,9 +902,24 @@ window.Mitglieder = (function () {
     });
   }
 
+  // Vergangene Spiele ohne Zeile bekommen von selbst eine: km aus der
+  // gemerkten Strecke, Verguetung nach Ordnung. Uebrig bleibt "bezahlt".
+  function automatischVorbelegen(spiele) {
+    var n = 0, jetzt = new Date();
+    spiele.forEach(function (sp) {
+      if (einsaetze[sp.kennung] || new Date(sp.beginn) > jetzt) return;
+      var v = kmVorschlag(sp), g = grundgebuehr(sp);
+      if (v == null && g == null) return;
+      speichereEinsatz(sp, { km: v && v.art === "route" ? v.km : null, verguetung: g });
+      n++;
+    });
+    if (n) kurzMeldung(n + (n === 1 ? " Spiel" : " Spiele") + " automatisch vorbelegt – nur noch „bezahlt“ abhaken.", "gut");
+  }
+
   function rendereAbrechnung() {
     leeren(inhalt);
     var spiele = saisonSpiele(gewaehlteSaison);
+    automatischVorbelegen(spiele);
 
     var saisonWahl = h("select", { class: "mg-select", onchange: function (ev) { gewaehlteSaison = ev.target.value; rendereAbrechnung(); } },
       saisonen().map(function (s) { var o = h("option", { value: s, text: "Saison " + s }); if (s === gewaehlteSaison) o.selected = true; return o; }));
@@ -1046,7 +1131,7 @@ window.Mitglieder = (function () {
     return bereit().then(function (st) {
       if (!st.eingerichtet || !session) return false;
       return ladeProfil().then(function () {
-        if (!profil || !profil.slug) return false;
+        if (!profil || !profil.slug || !frei()) return false;
         var zeile = { user_id: session.user.id, slug: profil.slug, name: profil.name || (ich && ich.name) || profil.slug,
                       kennung: kennungVon(spiel), beginn: spiel.beginn, liga: spiel.liga || null, paarung: spiel.paarung,
                       halle: spiel.halle || null, rolle: spiel.rolle || null, status: "offen" };
@@ -1170,11 +1255,11 @@ window.Mitglieder = (function () {
   function sperrenAm(beginn) {
     return bereit().then(function (st) {
       if (!st.eingerichtet || !session) return {};
-      return sb.from("sperren").select("slug,status").eq("datum", isoTag(new Date(beginn))).then(function (r) {
+      return ladeProfil().then(function () { if (!frei()) return {}; return sb.from("sperren").select("slug,status").eq("datum", isoTag(new Date(beginn))).then(function (r) {
         var m = {};
         (r.data || []).forEach(function (z) { m[z.slug] = z.status; });
         return m;
-      });
+      }); });
     }).catch(function () { return {}; });
   }
 
@@ -1260,10 +1345,26 @@ window.Mitglieder = (function () {
     var kontaktBox = h("div", { class: "melde karte" }, [h("h4", { text: "Handynummer für Gespannkollegen" }), h("p", { text: "lade …" })]);
     inhalt.appendChild(kontaktBox);
     kontaktRendern(kontaktBox);
+    if (profil.admin) { var adminBox = h("div", { class: "melde karte" }, [h("h4", { text: "Freischaltung" }), skelett(1)]); inhalt.appendChild(adminBox); adminRendern(adminBox); }
+
+    var pw = h("input", { type: "password", placeholder: "Neues Passwort (mind. 8 Zeichen)", autocomplete: "new-password", minlength: "8" });
+    inhalt.appendChild(h("div", { class: "melde karte" }, [
+      h("h4", { text: "Passwort ändern" }),
+      h("div", { class: "mg-form" }, [pw]),
+      h("button", { type: "button", class: "haupt", text: "Passwort ändern", onclick: function () {
+        if (pw.value.length < 8) { meldung("Mindestens 8 Zeichen.", "warn"); return; }
+        sb.auth.updateUser({ password: pw.value }).then(function (r) { if (r.error) meldung(fehlerText(r.error), "warn"); else { pw.value = ""; kurzMeldung("Passwort geändert ✓", "gut"); } });
+      } })
+    ]));
+
     inhalt.appendChild(h("div", { class: "melde karte" }, [
       h("h4", { text: "Daten" }),
       h("p", { text: "Alles, was du hier einträgst, liegt in deinem Supabase-Konto und ist nur für dich lesbar – außer Gesuche, Angebote, Verfügbarkeiten, Hallen-Hinweise, Mitfahrten und eine freigegebene Handynummer, die alle Mitglieder sehen. " +
-        "Export: Abrechnung → CSV. Konto löschen: E-Mail an den Betreiber." })
+        "Abrechnung als CSV gibt es im Reiter Abrechnung." }),
+      h("div", { class: "zweit" }, [
+        h("button", { type: "button", text: "Alle meine Daten (JSON)", onclick: datenExport }),
+        h("button", { type: "button", style: "color:var(--warn)", text: "Konto löschen", onclick: kontoLoeschen })
+      ])
     ]));
   }
 
@@ -1377,6 +1478,7 @@ window.Mitglieder = (function () {
     return bereit().then(function (st) {
       if (!st.eingerichtet || !session) return false;
       return ladeProfil().then(function () {
+        if (!frei()) return false;
         var hallen = [], slugs = [], kennungen = [];
         spiele.forEach(function (s) {
           if (s.halle && hallen.indexOf(s.halle) < 0 && !cache.geladen["h|" + s.halle]) hallen.push(s.halle);
@@ -1554,6 +1656,74 @@ window.Mitglieder = (function () {
       inhalt.appendChild(liste);
       rendern();
     }).catch(function (e) { leeren(inhalt); inhalt.appendChild(h("p", { class: "achtung", text: "Notizen nicht ladbar: " + fehlerText(e) })); });
+  }
+
+  // ---- Admin: neue Konten freischalten
+
+  function adminRendern(box) {
+    sb.from("profile").select("id,name,slug,email,freigeschaltet,admin").order("name").then(function (r) {
+      if (r.error) throw r.error;
+      var alle = r.data || [];
+      var offen = alle.filter(function (p) { return !p.freigeschaltet && !p.admin; });
+      leeren(box);
+      box.appendChild(h("h4", { text: "Freischaltung" }));
+      box.appendChild(h("p", { text: alle.length + " Konten, " + offen.length + " warten. Wer noch keinen Namen gewählt hat, taucht hier erst nach dem ersten Speichern auf." }));
+      if (!offen.length) box.appendChild(h("p", { class: "meta", text: "Niemand wartet." }));
+      offen.forEach(function (p) {
+        box.appendChild(h("div", { class: "sperre" }, [
+          h("span", {}, [h("b", { text: p.name || p.slug || "(ohne Namen)" }), h("small", { class: "meta", style: "display:block", text: p.email || "" })]),
+          h("button", { type: "button", class: "anfrage", text: "Freischalten", onclick: function () {
+            sb.from("profile").update({ freigeschaltet: true }).eq("id", p.id).then(function (r2) {
+              if (r2.error) { meldung(fehlerText(r2.error), "warn"); return; }
+              kurzMeldung((p.name || "Konto") + " freigeschaltet ✓", "gut"); adminRendern(box);
+            });
+          } })
+        ]));
+      });
+      var freie = alle.filter(function (p) { return p.freigeschaltet && !p.admin; });
+      if (freie.length) {
+        var det = h("details", { class: "tausch" }, [h("summary", { text: freie.length + " freigeschaltet" })]);
+        freie.forEach(function (p) {
+          det.appendChild(h("div", { class: "sperre" }, [
+            h("span", { text: p.name || p.slug }),
+            h("button", { type: "button", class: "textknopf", text: "sperren", onclick: function () {
+              sb.from("profile").update({ freigeschaltet: false }).eq("id", p.id).then(function () { adminRendern(box); });
+            } })
+          ]));
+        });
+        box.appendChild(det);
+      }
+    }).catch(function (e) { leeren(box); box.appendChild(h("p", { class: "achtung", text: fehlerText(e) })); });
+  }
+
+  // ---- Datenexport und Konto loeschen
+
+  function datenExport() {
+    var uid = session.user.id;
+    var tabellen = [["einsaetze", "user_id"], ["spielnotizen", "user_id"], ["gesuche", "user_id"], ["angebote", "user_id"],
+                    ["sperren", "user_id"], ["hallen_notizen", "user_id"], ["kontakte", "user_id"], ["mitfahrten", "user_id"], ["push_abos", "user_id"]];
+    var aus = { exportiert: new Date().toISOString(), email: session.user.email, profil: profil };
+    Promise.all(tabellen.map(function (t) {
+      return sb.from(t[0]).select("*").eq(t[1], uid).then(function (r) { aus[t[0]] = r.error ? { fehler: r.error.message } : r.data; });
+    })).then(function () {
+      var blob = new Blob([JSON.stringify(aus, null, 2)], { type: "application/json" });
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(blob); a.download = "einteilungen_daten_" + (profil.slug || "konto") + ".json";
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
+    });
+  }
+
+  function kontoLoeschen() {
+    var eingabe = prompt("Das löscht dein Konto mit Abrechnung, Belegen, Notizen und Push-Abos – endgültig. Zum Bestätigen LÖSCHEN eingeben:");
+    if (eingabe !== "LÖSCHEN") return;
+    sb.rpc("konto_loeschen").then(function (r) {
+      if (r.error) { meldung("Löschen fehlgeschlagen: " + fehlerText(r.error), "warn"); return; }
+      session = null; profil = null; profilVersprechen = null; einsaetze = {};
+      try { sb.auth.signOut(); } catch (e) {}
+      meldung("Konto gelöscht.", "gut");
+      zeigeAnmeldung();
+    });
   }
 
   // Fahrzeit zur Halle fuer die Karte oben - berechnet und merkt sie bei Bedarf

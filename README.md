@@ -43,7 +43,8 @@ liest die Seite und schreibt einen Ordner mit fertigen Dateien:
 
 ```
 docs/
-  index.html            Webseite: Namen suchen, Kalender abonnieren, Statistik
+  index.html            Webseite (Aufbau und Stil), Logik in app.js
+  app.js                Startseite: Namen, Kalender, Spielplan, Statistik
   daten.json            alle Personen und Spiele, für die Webseite
   stand.json            nur der Zeitpunkt des letzten Laufs
   archiv.json           Spiele je Person aus dem Archiv, alle Saisons
@@ -217,7 +218,15 @@ private Spielnotiz. Mit Heimatadresse zeigt die Karte oben die Abfahrtszeit
 
 **Push**: echte Web-Push-Nachricht bei neuer, geänderter oder abgesetzter
 Einteilung, auch bei geschlossener App; dazu Spieltag-Erinnerung ab 07:00
-und „In ~30 Min. losfahren“ (mit berechneter Strecke). Der Workflow-Schritt `push_senden.py`
+und „In ~30 Min. losfahren“ (mit berechneter Strecke).
+
+**Abrechnung automatisch**: vergangene Spiele bekommen ihre Zeile von
+selbst (km aus der gemerkten Strecke, Vergütung nach Ordnung); übrig bleibt
+„bezahlt“ abhaken. Filter „nur unbezahlte / unvollständige“, Drucken.
+
+**Spielplan**: Karten, Liste oder Monatsraster (eigene Spiele, unbesetzte
+Spiele und Rest als Punkte, Tag antippen), Filter „nur unbesetzte“, Liga-Chips.
+Auf breiten Bildschirmen zwei Spalten. Der Workflow-Schritt `push_senden.py`
 liest die Push-Adressen mit dem `service_role`-Schlüssel (nur als
 GitHub-Secret) und signiert mit dem privaten VAPID-Schlüssel (ebenfalls nur
 Secret; `push_schluessel.py` erzeugt das Paar, der öffentliche Teil steht in
@@ -343,6 +352,31 @@ mich auf Verbandsangaben und nicht auf eigene Anschauung:
 Neue Vereine trägst du unter `vereine` ein, Schreibweise egal. Danach einmal
 `python geo_holen.py` – der Test besteht sonst nicht, weil er Koordinaten für
 jede Halle verlangt.
+
+## Sicherheit
+
+* **Zugriff**: Row Level Security in Postgres, nicht die Webseite. Eigene
+  Daten (Abrechnung, Belege, Notizen, Push-Abos) sieht nur der Besitzer;
+  gemeinsame Tabellen (Tauschbörse, Verfügbarkeit, Hallen-Wiki, Kontakte,
+  Mitfahrten) nur, wer vom Admin **freigeschaltet** wurde. Der Admin ist
+  ein Flag in `profile`, das nur per SQL gesetzt wird; ein Trigger
+  verhindert, dass sich jemand selbst freischaltet.
+* **Schlüssel**: im Browser liegt nur der `anon`-Schlüssel (dafür gemacht).
+  `service_role` und der private VAPID-Schlüssel existieren ausschließlich
+  als GitHub-Secrets und werden nur im Workflow benutzt.
+* **Content-Security-Policy** in `index.html`: Skripte nur von der Seite
+  selbst und jsdelivr, Verbindungen nur zu Supabase, OSRM und Nominatim.
+  supabase-js ist auf eine feste Version mit Prüfsumme (SRI) gepinnt – eine
+  veränderte Datei lädt der Browser nicht. Kein Inline-JavaScript.
+* **Belege**: privater Bucket, Ordner je Nutzer, nur Bilder/PDF bis 10 MB
+  (serverseitig), Links laufen nach 5 Minuten ab.
+* **Konto**: Passwort-Reset über Supabase-Mail, Passwort ändern, Konto
+  samt allen Daten selbst löschen (`konto_loeschen()`), Datenexport als
+  JSON. Alle Texte werden als Text gerendert, nie als HTML.
+* **Was offen bleibt**: Wer den `anon`-Schlüssel hat, kann sich ein Konto
+  anlegen – er sieht damit aber nichts Gemeinsames, bis der Admin
+  freischaltet. Der Kalender und der Spielplan sind öffentlich, wie auf
+  esrw.de.
 
 ## Wenn etwas schiefgeht
 

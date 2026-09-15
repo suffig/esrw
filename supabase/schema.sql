@@ -335,3 +335,114 @@ create table if not exists public.push_gesendet (
 alter table public.push_gesendet enable row level security;
 drop policy if exists "eigene Push-Historie lesen" on public.push_gesendet;
 create policy "eigene Push-Historie lesen" on public.push_gesendet for select using (auth.uid() = user_id);
+
+-- ======================================================================
+-- v5: Freischaltung, Admin, Konto loeschen, Beleg-Limits
+-- ======================================================================
+
+-- Neue Konten sind gesperrt, bis der Admin (du) sie freischaltet. Gemeinsame
+-- Tabellen (Tauschboerse, Verfuegbarkeit, Hallen-Wiki, Kontakte, Mitfahrten)
+-- sehen nur Freigeschaltete. Eigene Daten (Abrechnung, Notizen, Belege)
+-- gehen weiterhin sofort.
+alter table public.profile add column if not exists freigeschaltet boolean not null default false;
+alter table public.profile add column if not exists admin boolean not null default false;
+alter table public.profile add column if not exists email text;
+
+-- Hilfsfunktionen fuer die Zugriffsregeln. security definer, damit sie das
+-- Profil lesen duerfen, ohne dass die Profil-Regeln selbst im Weg stehen.
+create or replace function public.ist_freigeschaltet()
+returns boolean language sql stable security definer set search_path = public as $$
+  select coalesce((select freigeschaltet or admin from public.profile where id = auth.uid()), false);
+$$;
+create or replace function public.ist_admin()
+returns boolean language sql stable security definer set search_path = public as $$
+  select coalesce((select admin from public.profile where id = auth.uid()), false);
+$$;
+revoke all on function public.ist_freigeschaltet() from public;
+revoke all on function public.ist_admin() from public;
+grant execute on function public.ist_freigeschaltet() to authenticated;
+grant execute on function public.ist_admin() to authenticated;
+
+-- Admin darf alle Profile sehen (Name, E-Mail, Status) und freischalten.
+-- Die Spalten admin/freigeschaltet kann ein Nutzer fuer sich selbst nicht
+-- setzen: der Trigger unten stellt sie zurueck.
+drop policy if exists "Admin liest alle Profile" on public.profile;
+drop policy if exists "Admin schaltet frei"     on public.profile;
+create policy "Admin liest alle Profile" on public.profile for select using (public.ist_admin());
+create policy "Admin schaltet frei"     on public.profile for update using (public.ist_admin());
+
+create or replace function public.profil_schutz()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  if not public.ist_admin() then
+    -- Normale Nutzer behalten, was der Admin gesetzt hat
+    if tg_op = 'UPDATE' then
+      new.freigeschaltet := old.freigeschaltet;
+      new.admin := old.admin;
+    else
+      new.freigeschaltet := false;
+      new.admin := false;
+    end if;
+  end if;
+  return new;
+end;
+$$;
+drop trigger if exists profil_schutz on public.profile;
+create trigger profil_schutz before insert or update on public.profile
+  for each row execute function public.profil_schutz();
+
+-- Gemeinsame Tabellen: lesen und schreiben nur freigeschaltet
+drop policy if exists "Gesuche lesen (alle Mitglieder)" on public.gesuche;
+create policy "Gesuche lesen (alle Mitglieder)" on public.gesuche for select to authenticated using (public.ist_freigeschaltet());
+drop policy if exists "eigene Gesuche anlegen" on public.gesuche;
+create policy "eigene Gesuche anlegen" on public.gesuche for insert with check (auth.uid() = user_id and public.ist_freigeschaltet());
+
+drop policy if exists "Angebote lesen (alle Mitglieder)" on public.angebote;
+create policy "Angebote lesen (alle Mitglieder)" on public.angebote for select to authenticated using (public.ist_freigeschaltet());
+drop policy if exists "eigene Angebote anlegen" on public.angebote;
+create policy "eigene Angebote anlegen" on public.angebote for insert with check (auth.uid() = user_id and public.ist_freigeschaltet());
+
+drop policy if exists "Sperren lesen (alle Mitglieder)" on public.sperren;
+create policy "Sperren lesen (alle Mitglieder)" on public.sperren for select to authenticated using (public.ist_freigeschaltet());
+drop policy if exists "eigene Sperren anlegen" on public.sperren;
+create policy "eigene Sperren anlegen" on public.sperren for insert with check (auth.uid() = user_id and public.ist_freigeschaltet());
+
+drop policy if exists "Hallenhinweise lesen (alle Mitglieder)" on public.hallen_notizen;
+create policy "Hallenhinweise lesen (alle Mitglieder)" on public.hallen_notizen for select to authenticated using (public.ist_freigeschaltet());
+drop policy if exists "eigene Hallenhinweise anlegen" on public.hallen_notizen;
+create policy "eigene Hallenhinweise anlegen" on public.hallen_notizen for insert with check (auth.uid() = user_id and public.ist_freigeschaltet());
+
+drop policy if exists "Kontakte lesen (alle Mitglieder)" on public.kontakte;
+create policy "Kontakte lesen (alle Mitglieder)" on public.kontakte for select to authenticated using (public.ist_freigeschaltet());
+drop policy if exists "eigenen Kontakt anlegen" on public.kontakte;
+create policy "eigenen Kontakt anlegen" on public.kontakte for insert with check (auth.uid() = user_id and public.ist_freigeschaltet());
+
+drop policy if exists "Mitfahrten lesen (alle Mitglieder)" on public.mitfahrten;
+create policy "Mitfahrten lesen (alle Mitglieder)" on public.mitfahrten for select to authenticated using (public.ist_freigeschaltet());
+drop policy if exists "eigene Mitfahrten anlegen" on public.mitfahrten;
+create policy "eigene Mitfahrten anlegen" on public.mitfahrten for insert with check (auth.uid() = user_id and public.ist_freigeschaltet());
+
+-- Konto selbst loeschen: entfernt Belege und den Auth-Nutzer; alle Tabellen
+-- haengen per "on delete cascade" daran.
+create or replace function public.konto_loeschen()
+returns void language plpgsql security definer set search_path = public as $$
+begin
+  if auth.uid() is null then
+    raise exception 'nicht angemeldet';
+  end if;
+  delete from storage.objects where bucket_id = 'belege' and (storage.foldername(name))[1] = auth.uid()::text;
+  delete from auth.users where id = auth.uid();
+end;
+$$;
+revoke all on function public.konto_loeschen() from public;
+grant execute on function public.konto_loeschen() to authenticated;
+
+-- Belege: nur Bilder und PDF, hoechstens 10 MB - serverseitig erzwungen
+update storage.buckets
+   set file_size_limit = 10485760,
+       allowed_mime_types = array['image/jpeg','image/png','image/webp','image/heic','image/heif','application/pdf']
+ where id = 'belege';
+
+-- Einmalig: dich selbst zum Admin machen (E-Mail anpassen, dann ausfuehren):
+-- update public.profile set admin = true, freigeschaltet = true
+--  where id = (select id from auth.users where email = 'deine@adresse.de');

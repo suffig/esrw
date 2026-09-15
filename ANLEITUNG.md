@@ -621,6 +621,19 @@ Die Datei lässt sich gefahrlos mehrfach ausführen – **und das musst du auch
 tun, wenn sie sich ändert** (steht dann im Commit). Fehlt eine Tabelle, sagt
 die App „Die Datenbank kennt eine Tabelle noch nicht“.
 
+**Danach einmalig dich selbst zum Admin machen** (sonst kann niemand
+freigeschaltet werden, auch du nicht). Im SQL Editor, mit deiner Adresse:
+
+```sql
+update public.profile set admin = true, freigeschaltet = true
+ where id = (select id from auth.users where email = 'deine@adresse.de');
+```
+
+Das geht erst, nachdem du dich in der App registriert **und** unter „Wer bist
+du?“ deinen Namen gespeichert hast – vorher gibt es deine Profilzeile noch
+nicht. Steht danach unter **Konto** der Abschnitt „Freischaltung“, hat es
+geklappt.
+
 ### 10.3 Login-Einstellungen
 
 Links **Authentication** → **URL Configuration**:
@@ -634,6 +647,21 @@ Unter **Authentication → Providers → Email** kannst du entscheiden, ob neue
 Konten die E-Mail bestätigen müssen (**Confirm email**). Für einen
 Kollegenkreis ist *an* sinnvoll – dann kann niemand mit fremder Adresse ein
 Konto anlegen.
+
+Empfohlene Schalter, alle unter **Authentication**:
+
+| Wo | Schalter | Empfehlung |
+|---|---|---|
+| Providers → Email | Confirm email | **an** |
+| Providers → Email | Minimum password length | **8** (die App verlangt es auch) |
+| Providers → Email | Password requirements | mindestens „Letters and digits“ |
+| Attack Protection (oder Settings) | Leaked password protection | **an**, wenn im Plan enthalten – lehnt Passwörter ab, die in bekannten Datenlecks stehen |
+| Rate Limits | alles | Voreinstellung lassen |
+| Providers → Email | Secure email change | **an** |
+
+Die Links in den Mails (Bestätigung, Passwort vergessen) führen auf die
+App; die verarbeitet sie im Reiter Mitglieder – beim Passwort-Link erscheint
+dort direkt „Neues Passwort“.
 
 ### 10.4 Zugangsdaten eintragen
 
@@ -760,7 +788,29 @@ also ohne Stau. Einmal je Halle berechnet, im Profil gemerkt.
 **Hinter dem Login liegen** außerdem die Tauschoptionen. Anzeigen, Spielplan
 und Kalender bleiben offen.
 
-### 10.7 Zwei Dinge, die man wissen muss
+### 10.7 Freischaltung neuer Konten
+
+Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –
+alles, was nur ihn selbst betrifft. **Tauschbörse, Verfügbarkeiten,
+Hallen-Hinweise, Kontakte und Mitfahrten** sieht er erst, wenn du ihn
+freischaltest: **Mitglieder → Konto → Freischaltung** listet, wer wartet
+(Name von esrw.de und E-Mail), ein Tipp auf **Freischalten** genügt. Dort
+kannst du auch wieder sperren.
+
+Das erzwingt die Datenbank (`ist_freigeschaltet()` in den Zugriffsregeln),
+nicht die App – ein fremdes Konto sieht auch mit Bastelei keine
+Handynummern. Sag neuen Kollegen, dass sie nach dem Registrieren erst den
+Namen wählen müssen, sonst tauchen sie in deiner Liste nicht auf.
+
+### 10.8 Konto löschen und Daten mitnehmen
+
+Jeder kann unter **Konto** alle eigenen Daten als JSON herunterladen und
+das Konto selbst löschen – samt Belegen, Notizen, Push-Abos, Gesuchen.
+Das läuft über die Datenbankfunktion `konto_loeschen()`; du musst nichts
+tun. Freigegebene Handynummern und Hallen-Hinweise des Kontos verschwinden
+dabei mit.
+
+### 10.9 Zwei Dinge, die man wissen muss
 
 **Kostenlose Supabase-Projekte werden nach sieben Tagen ohne Zugriff
 pausiert.** Dann meldet der Reiter „nicht erreichbar", bis du im Dashboard auf
