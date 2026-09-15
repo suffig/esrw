@@ -174,6 +174,18 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Kiefer, Dennis",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      1
+     ]
+    ],
     "erste": "2026-09-13",
     "letzte": "2026-09-13"
    },
@@ -243,6 +255,30 @@
      [
       "Rheinlandhalle Krefeld",
       1
+     ]
+    ],
+    "partner": [
+     [
+      "Keller, Alexander",
+      2
+     ],
+     [
+      "Zynda, Nick",
+      2
+     ],
+     [
+      "Brücker, Tobias",
+      2
+     ],
+     [
+      "Menzel, Joey-Max",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      7
      ]
     ],
     "erste": "2026-09-05",
@@ -387,6 +423,26 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Garcia Nieto, Dario",
+      1
+     ],
+     [
+      "Fenke, Matthias",
+      1
+     ],
+     [
+      "Starke, Matthias",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      3
+     ]
+    ],
     "erste": "2026-09-05",
     "letzte": "2026-09-12"
    },
@@ -439,6 +495,18 @@
     "hallen": [
      [
       "ICEDOME Troisdorf",
+      1
+     ]
+    ],
+    "partner": [
+     [
+      "Rieneck, Maximilian",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
       1
      ]
     ],
@@ -506,6 +574,18 @@
     "hallen": [
      [
       "Eishalle Im Kleinen Felde",
+      4
+     ]
+    ],
+    "partner": [
+     [
+      "Berger, Eugen",
+      2
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
       4
      ]
     ],
@@ -648,6 +728,30 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Hofer, Carsten",
+      2
+     ],
+     [
+      "Krüger, Martin",
+      1
+     ],
+     [
+      "Lindemans, Pepe",
+      1
+     ],
+     [
+      "Pluschkell, Julian",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      4
+     ]
+    ],
     "erste": "2026-09-06",
     "letzte": "2026-09-20"
    },
@@ -762,6 +866,26 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Garcia Nieto, Dario",
+      3
+     ],
+     [
+      "Steven, Patrick",
+      2
+     ],
+     [
+      "Perlitz, Christian",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      3
+     ]
+    ],
     "erste": "2026-09-11",
     "letzte": "2026-09-18"
    },
@@ -852,6 +976,18 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Krawinkel, Markus",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      1
+     ]
+    ],
     "erste": "2026-09-12",
     "letzte": "2026-09-12"
    },
@@ -904,6 +1040,18 @@
     "hallen": [
      [
       "ICEDOME Troisdorf",
+      1
+     ]
+    ],
+    "partner": [
+     [
+      "Starke, Matthias",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
       1
      ]
     ],
@@ -976,6 +1124,30 @@
      [
       "Eissportzentrum Westfalen",
       1
+     ]
+    ],
+    "partner": [
+     [
+      "Malik, Orlando",
+      1
+     ],
+     [
+      "Heu, Alexander",
+      1
+     ],
+     [
+      "Steeg, Cedric",
+      1
+     ],
+     [
+      "Marks, Marcel",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      4
      ]
     ],
     "erste": "2026-09-04",
@@ -1081,6 +1253,34 @@
      [
       "Kölnarena 2",
       1
+     ]
+    ],
+    "partner": [
+     [
+      "Vorgeitz, Benny",
+      3
+     ],
+     [
+      "Malik, Orlando",
+      2
+     ],
+     [
+      "Schöche, Gian-Carlo",
+      2
+     ],
+     [
+      "Müller, Lars",
+      1
+     ],
+     [
+      "Scholz, Arien",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      12
      ]
     ],
     "erste": "2026-09-05",
@@ -1343,6 +1543,34 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Dietrich, Jonas",
+      3
+     ],
+     [
+      "Steven, Patrick",
+      2
+     ],
+     [
+      "Hauerwaas, Gabriel",
+      2
+     ],
+     [
+      "Leibfried, Raphael",
+      1
+     ],
+     [
+      "Bocklemünd, Cid",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      7
+     ]
+    ],
     "erste": "2026-09-05",
     "letzte": "2026-09-20"
    },
@@ -1491,6 +1719,26 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Schöche, Gian-Carlo",
+      2
+     ],
+     [
+      "Perlitz, Christian",
+      1
+     ],
+     [
+      "Heffler, Philipp",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      4
+     ]
+    ],
     "erste": "2026-09-05",
     "letzte": "2026-09-13"
    },
@@ -1604,6 +1852,22 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Marks, Marcel",
+      1
+     ],
+     [
+      "Vorgeitz, Benny",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      2
+     ]
+    ],
     "erste": "2026-09-10",
     "letzte": "2026-09-19"
    },
@@ -1704,6 +1968,26 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Garcia Nieto, Dario",
+      2
+     ],
+     [
+      "Schöche, Gian-Carlo",
+      1
+     ],
+     [
+      "Hoffmann, Jan",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      4
+     ]
+    ],
     "erste": "2026-09-04",
     "letzte": "2026-09-14"
    },
@@ -1781,6 +2065,34 @@
      [
       "Eishalle Brehmstraße",
       1
+     ]
+    ],
+    "partner": [
+     [
+      "Schmidt, Waldemar",
+      2
+     ],
+     [
+      "Stocker, Quirin",
+      1
+     ],
+     [
+      "Steven, Patrick",
+      1
+     ],
+     [
+      "Hoffmann, Jan",
+      1
+     ],
+     [
+      "Giesen, Tom",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      6
      ]
     ],
     "erste": "2026-09-06",
@@ -1954,6 +2266,22 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Pacalaj, Erik",
+      2
+     ],
+     [
+      "Victor, Tobias (N)",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      3
+     ]
+    ],
     "erste": "2026-09-12",
     "letzte": "2026-09-20"
    },
@@ -2059,6 +2387,22 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Meißner, Nils",
+      1
+     ],
+     [
+      "Schöche, Gian-Carlo",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      1
+     ]
+    ],
     "erste": "2026-09-19",
     "letzte": "2026-09-19"
    },
@@ -2125,6 +2469,26 @@
      [
       "HELINET Eissportarena Hamm",
       1
+     ]
+    ],
+    "partner": [
+     [
+      "Melchert, Philip",
+      2
+     ],
+     [
+      "Zynda, Jayden",
+      1
+     ],
+     [
+      "Galeske, Jonas",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      4
      ]
     ],
     "erste": "2026-09-06",
@@ -2207,6 +2571,18 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Hofer, Carsten",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      1
+     ]
+    ],
     "erste": "2026-09-12",
     "letzte": "2026-09-12"
    },
@@ -2276,6 +2652,26 @@
      [
       "Gysenberghalle Herne",
       1
+     ]
+    ],
+    "partner": [
+     [
+      "Zynda, Jayden",
+      2
+     ],
+     [
+      "Hofer, Carsten",
+      1
+     ],
+     [
+      "Kiefer, Dennis",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      4
      ]
     ],
     "erste": "2026-09-12",
@@ -2427,6 +2823,34 @@
      [
       "Eissporthalle Dinslaken",
       1
+     ]
+    ],
+    "partner": [
+     [
+      "Caelers, Fabian",
+      2
+     ],
+     [
+      "Schlüter, Thomas",
+      2
+     ],
+     [
+      "Hindley, David",
+      1
+     ],
+     [
+      "Heyer, Christoph (N)",
+      1
+     ],
+     [
+      "Lindemans, Pepe",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      6
      ]
     ],
     "erste": "2026-09-06",
@@ -2597,6 +3021,26 @@
       3
      ]
     ],
+    "partner": [
+     [
+      "Heffler, Philipp",
+      1
+     ],
+     [
+      "Hauerwaas, Gabriel",
+      1
+     ],
+     [
+      "Starke, Matthias",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      3
+     ]
+    ],
     "erste": "2026-09-13",
     "letzte": "2026-09-14"
    },
@@ -2702,6 +3146,18 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Klemm, Julian",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      1
+     ]
+    ],
     "erste": "2026-09-19",
     "letzte": "2026-09-19"
    },
@@ -2754,6 +3210,22 @@
     "hallen": [
      [
       "PreZero Rheinlandhalle Duisburg",
+      2
+     ]
+    ],
+    "partner": [
+     [
+      "Licau, Sebastian",
+      2
+     ],
+     [
+      "Musga, Maurice",
+      2
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
       2
      ]
     ],
@@ -2819,6 +3291,18 @@
     "hallen": [
      [
       "Eishalle Im Kleinen Felde",
+      2
+     ]
+    ],
+    "partner": [
+     [
+      "Berger, Eugen",
+      2
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
       2
      ]
     ],
@@ -2912,6 +3396,26 @@
      [
       "Gysenberghalle Herne",
       1
+     ]
+    ],
+    "partner": [
+     [
+      "Schmidt, Waldemar",
+      1
+     ],
+     [
+      "Beckford, Emanuel",
+      1
+     ],
+     [
+      "Hindley, David",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      3
      ]
     ],
     "erste": "2026-09-12",
@@ -3027,6 +3531,18 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Honselmann, Tom (N)",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      2
+     ]
+    ],
     "erste": "2026-09-19",
     "letzte": "2026-09-20"
    },
@@ -3116,6 +3632,30 @@
      [
       "ICEDOME Troisdorf",
       1
+     ]
+    ],
+    "partner": [
+     [
+      "Schlüter, Thomas",
+      1
+     ],
+     [
+      "Quint, Sascha",
+      1
+     ],
+     [
+      "Pacalaj, Erik",
+      1
+     ],
+     [
+      "Engler, Gerhard",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      3
      ]
     ],
     "erste": "2026-09-12",
@@ -3228,6 +3768,18 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Schöche, Gian-Carlo",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      1
+     ]
+    ],
     "erste": "2026-09-11",
     "letzte": "2026-09-11"
    },
@@ -3291,6 +3843,22 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Caelers, Fabian",
+      1
+     ],
+     [
+      "Reuter, Fynn",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      2
+     ]
+    ],
     "erste": "2026-09-06",
     "letzte": "2026-09-20"
    },
@@ -3348,6 +3916,22 @@
      [
       "Kölnarena 2",
       1
+     ]
+    ],
+    "partner": [
+     [
+      "Garcia Nieto, Dario",
+      1
+     ],
+     [
+      "Garbsch, René",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      2
      ]
     ],
     "erste": "2026-09-19",
@@ -3436,6 +4020,30 @@
      [
       "Eissporthalle Dinslaken",
       1
+     ]
+    ],
+    "partner": [
+     [
+      "Musga, Maurice",
+      2
+     ],
+     [
+      "Hornig, Marius",
+      2
+     ],
+     [
+      "Quint, Sascha",
+      1
+     ],
+     [
+      "Stockenschneider, Lars",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      3
      ]
     ],
     "erste": "2026-09-15",
@@ -3530,6 +4138,26 @@
     "hallen": [
      [
       "Eissporthalle Dinslaken",
+      2
+     ]
+    ],
+    "partner": [
+     [
+      "Schmidt, Waldemar",
+      1
+     ],
+     [
+      "Caelers, Fabian",
+      1
+     ],
+     [
+      "Hofer, Carsten",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
       2
      ]
     ],
@@ -3637,6 +4265,30 @@
      [
       "Eissportzentrum Westfalen",
       1
+     ]
+    ],
+    "partner": [
+     [
+      "Garbsch, René",
+      2
+     ],
+     [
+      "Skalecki, Martin",
+      2
+     ],
+     [
+      "Müller, Lars",
+      1
+     ],
+     [
+      "Galeske, Jonas",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      5
      ]
     ],
     "erste": "2026-09-16",
@@ -3792,6 +4444,34 @@
      [
       "Eissportzentrum Westfalen",
       1
+     ]
+    ],
+    "partner": [
+     [
+      "Garbsch, René",
+      1
+     ],
+     [
+      "Scholz, Arien",
+      1
+     ],
+     [
+      "Hartmann, Marius",
+      1
+     ],
+     [
+      "Galeske, Jonas",
+      1
+     ],
+     [
+      "Victor, Tobias (N)",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      5
      ]
     ],
     "erste": "2026-09-10",
@@ -3974,6 +4654,26 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Strohmenger, Svenja",
+      4
+     ],
+     [
+      "Schöche, Gian-Carlo",
+      1
+     ],
+     [
+      "Hellingrath, Luca",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      5
+     ]
+    ],
     "erste": "2026-09-12",
     "letzte": "2026-09-20"
    },
@@ -4143,6 +4843,22 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Heu, Alexander",
+      2
+     ],
+     [
+      "Müller, Lars",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      3
+     ]
+    ],
     "erste": "2026-09-13",
     "letzte": "2026-09-20"
    },
@@ -4269,6 +4985,34 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Garbsch, René",
+      1
+     ],
+     [
+      "Malik, Orlando",
+      1
+     ],
+     [
+      "Warnke, Christoph",
+      1
+     ],
+     [
+      "Melchert, Philip",
+      1
+     ],
+     [
+      "Schmidt, Waldemar",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      4
+     ]
+    ],
     "erste": "2026-09-06",
     "letzte": "2026-09-20"
    },
@@ -4388,6 +5132,26 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Licau, Sebastian",
+      2
+     ],
+     [
+      "Hornig, Marius",
+      2
+     ],
+     [
+      "Butt, Caroline",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      3
+     ]
+    ],
     "erste": "2026-09-05",
     "letzte": "2026-09-15"
    },
@@ -4445,6 +5209,18 @@
     "hallen": [
      [
       "Eissporthalle am Seilersee",
+      1
+     ]
+    ],
+    "partner": [
+     [
+      "van Himbeeck, Frederic",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
       1
      ]
     ],
@@ -4526,6 +5302,34 @@
      [
       "PreZero Rheinlandhalle Duisburg",
       1
+     ]
+    ],
+    "partner": [
+     [
+      "Heffler, Zsolt",
+      2
+     ],
+     [
+      "Vorgeitz, Benny",
+      1
+     ],
+     [
+      "Krawinkel, Markus",
+      1
+     ],
+     [
+      "Quint, Sascha",
+      1
+     ],
+     [
+      "Reuter, Rick",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      5
      ]
     ],
     "erste": "2026-09-05",
@@ -4672,6 +5476,26 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Giesen, Tom",
+      1
+     ],
+     [
+      "Dietrich, Jonas",
+      1
+     ],
+     [
+      "Garcia Nieto, Dario",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      2
+     ]
+    ],
     "erste": "2026-09-05",
     "letzte": "2026-09-11"
    },
@@ -4742,6 +5566,26 @@
      [
       "Gysenberghalle Herne",
       1
+     ]
+    ],
+    "partner": [
+     [
+      "Schlüter, Thomas",
+      1
+     ],
+     [
+      "Reuter, Rick",
+      1
+     ],
+     [
+      "Caelers, Fabian",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      3
      ]
     ],
     "erste": "2026-09-04",
@@ -4824,6 +5668,18 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Stocker, Quirin",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      1
+     ]
+    ],
     "erste": "2026-09-13",
     "letzte": "2026-09-13"
    },
@@ -4890,6 +5746,34 @@
      [
       "Eissporthalle Dinslaken",
       1
+     ]
+    ],
+    "partner": [
+     [
+      "Strube, Julia",
+      1
+     ],
+     [
+      "Krawinkel, Markus",
+      1
+     ],
+     [
+      "Pacalaj, Erik",
+      1
+     ],
+     [
+      "Licau, Sebastian",
+      1
+     ],
+     [
+      "Stockenschneider, Lars",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      3
      ]
     ],
     "erste": "2026-09-06",
@@ -4990,6 +5874,22 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Schmidt, Eugen",
+      1
+     ],
+     [
+      "Krüger, Martin",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      2
+     ]
+    ],
     "erste": "2026-09-06",
     "letzte": "2026-09-19"
    },
@@ -5046,6 +5946,22 @@
     "hallen": [
      [
       "Rheinlandhalle Krefeld",
+      2
+     ]
+    ],
+    "partner": [
+     [
+      "Pacalaj, Erik",
+      1
+     ],
+     [
+      "Pluschkell, Julian",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
       2
      ]
     ],
@@ -5114,6 +6030,22 @@
      [
       "ICEDOME Troisdorf",
       1
+     ]
+    ],
+    "partner": [
+     [
+      "Moritz, Alexander",
+      2
+     ],
+     [
+      "Braun, Benjamin",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      3
      ]
     ],
     "erste": "2026-09-06",
@@ -5193,6 +6125,34 @@
      [
       "ICEDOME Troisdorf",
       1
+     ]
+    ],
+    "partner": [
+     [
+      "Hofer, Carsten",
+      2
+     ],
+     [
+      "Krawinkel, Markus",
+      1
+     ],
+     [
+      "Pluschkell, Julian",
+      1
+     ],
+     [
+      "Solbach, Carsten",
+      1
+     ],
+     [
+      "Garbsch, René",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      8
      ]
     ],
     "erste": "2026-09-04",
@@ -5400,6 +6360,18 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Reuter, Fynn",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      1
+     ]
+    ],
     "erste": "2026-09-19",
     "letzte": "2026-09-19"
    },
@@ -5473,6 +6445,30 @@
      [
       "Gysenberghalle Herne",
       1
+     ]
+    ],
+    "partner": [
+     [
+      "Heffler, Philipp",
+      2
+     ],
+     [
+      "Kiefer, Dennis",
+      1
+     ],
+     [
+      "Lindemans, Pepe",
+      1
+     ],
+     [
+      "Müller, Lars",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      5
      ]
     ],
     "erste": "2026-09-06",
@@ -5628,6 +6624,34 @@
      [
       "Eissporthalle am Seilersee",
       2
+     ]
+    ],
+    "partner": [
+     [
+      "Giesen, Tom",
+      2
+     ],
+     [
+      "Starke, Matthias",
+      2
+     ],
+     [
+      "Garbsch, René",
+      2
+     ],
+     [
+      "Moritz, Alexander",
+      1
+     ],
+     [
+      "Kremer, Igor",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      11
      ]
     ],
     "erste": "2026-09-04",
@@ -5857,6 +6881,30 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Garbsch, René",
+      1
+     ],
+     [
+      "Marks, Marcel",
+      1
+     ],
+     [
+      "Stocker, Quirin",
+      1
+     ],
+     [
+      "Rieneck, Julian",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      3
+     ]
+    ],
     "erste": "2026-09-04",
     "letzte": "2026-09-11"
    },
@@ -5922,6 +6970,22 @@
      [
       "Eissportzentrum Westfalen",
       2
+     ]
+    ],
+    "partner": [
+     [
+      "Malik, Orlando",
+      2
+     ],
+     [
+      "Warnke, Christoph",
+      2
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      4
      ]
     ],
     "erste": "2026-09-13",
@@ -6029,6 +7093,18 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Schlüter, Thomas",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      1
+     ]
+    ],
     "erste": "2026-09-19",
     "letzte": "2026-09-19"
    },
@@ -6094,6 +7170,30 @@
      [
       "ICEDOME Troisdorf",
       2
+     ]
+    ],
+    "partner": [
+     [
+      "Schöche, Gian-Carlo",
+      2
+     ],
+     [
+      "Bocklemünd, Cid",
+      1
+     ],
+     [
+      "Hoffmann, Jan",
+      1
+     ],
+     [
+      "Finke, Gudrun",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      5
      ]
     ],
     "erste": "2026-09-06",
@@ -6242,6 +7342,26 @@
       2
      ]
     ],
+    "partner": [
+     [
+      "Zynda, Jayden",
+      2
+     ],
+     [
+      "Galeske, Jonas",
+      1
+     ],
+     [
+      "Garbsch, René",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      4
+     ]
+    ],
     "erste": "2026-09-04",
     "letzte": "2026-09-13"
    },
@@ -6356,6 +7476,26 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Dietrich, Jonas",
+      2
+     ],
+     [
+      "Garcia Nieto, Dario",
+      2
+     ],
+     [
+      "Heffler, Philipp",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      3
+     ]
+    ],
     "erste": "2026-09-06",
     "letzte": "2026-09-18"
    },
@@ -6418,6 +7558,26 @@
     "hallen": [
      [
       "Eissporthalle Dinslaken",
+      2
+     ]
+    ],
+    "partner": [
+     [
+      "Licau, Sebastian",
+      1
+     ],
+     [
+      "Quint, Sascha",
+      1
+     ],
+     [
+      "Schlüter, Thomas",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
       2
      ]
     ],
@@ -6523,6 +7683,30 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Heffler, Philipp",
+      1
+     ],
+     [
+      "Priebsch, Jan Philipp",
+      1
+     ],
+     [
+      "Rieneck, Julian",
+      1
+     ],
+     [
+      "Scholz, Arien",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      3
+     ]
+    ],
     "erste": "2026-09-04",
     "letzte": "2026-09-13"
    },
@@ -6617,6 +7801,18 @@
      [
       "Eissporthalle Essen-West",
       1
+     ]
+    ],
+    "partner": [
+     [
+      "Meißner, Nils",
+      4
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      4
      ]
     ],
     "erste": "2026-09-12",
@@ -6757,6 +7953,26 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Quint, Sascha",
+      1
+     ],
+     [
+      "Schlüter, Thomas",
+      1
+     ],
+     [
+      "Schöche, Gian-Carlo",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      3
+     ]
+    ],
     "erste": "2026-09-06",
     "letzte": "2026-09-18"
    },
@@ -6837,6 +8053,18 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Nieberle, Christian",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      1
+     ]
+    ],
     "erste": "2026-09-19",
     "letzte": "2026-09-19"
    },
@@ -6894,6 +8122,22 @@
      [
       "PreZero Rheinlandhalle Duisburg",
       1
+     ]
+    ],
+    "partner": [
+     [
+      "Heffler, Zsolt",
+      1
+     ],
+     [
+      "Marks, Marcel",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      2
      ]
     ],
     "erste": "2026-09-18",
@@ -6994,6 +8238,26 @@
      [
       "Eishalle Brehmstraße",
       1
+     ]
+    ],
+    "partner": [
+     [
+      "Garbsch, René",
+      3
+     ],
+     [
+      "Pacalaj, Erik",
+      1
+     ],
+     [
+      "Hartmann, Marius",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      5
      ]
     ],
     "erste": "2026-09-13",
@@ -7134,6 +8398,22 @@
       1
      ]
     ],
+    "partner": [
+     [
+      "Skalecki, Martin",
+      2
+     ],
+     [
+      "Müller, Lars",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      3
+     ]
+    ],
     "erste": "2026-09-11",
     "letzte": "2026-09-13"
    },
@@ -7257,6 +8537,30 @@
      [
       "HELINET Eissportarena Hamm",
       1
+     ]
+    ],
+    "partner": [
+     [
+      "Hindley, David",
+      2
+     ],
+     [
+      "Steeg, Cedric",
+      2
+     ],
+     [
+      "Heu, Alexander",
+      1
+     ],
+     [
+      "Zynda, Nick",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      6
      ]
     ],
     "erste": "2026-09-06",
@@ -7419,6 +8723,22 @@
     "hallen": [
      [
       "Eishalle Im Kleinen Felde",
+      3
+     ]
+    ],
+    "partner": [
+     [
+      "Berger, Eugen",
+      2
+     ],
+     [
+      "Zynda, Jayden",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
       3
      ]
     ],
