@@ -299,6 +299,18 @@
   "titel": "SR · U9 RL · Iserlohner EC – Iserlohn",
   "treffpunkt": "2026-09-13T07:00:00+02:00"
  },
+ "1e071d1ac8e345cdbd98e0900e085ce6cbaba8cc@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-15T19:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "dc8d82ef38f48163f32618e508801c54b2973eb4",
+  "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
+  "sequence": 0,
+  "slug": "licau-sebastian",
+  "stempel": "2026-09-15T06:00:43.093200+00:00",
+  "titel": "HSR · DNL III FS · EV Duisburg – EV Duisburg OL",
+  "treffpunkt": "2026-09-15T18:00:00+02:00"
+ },
  "1f0dfe62bbfe8be178dc1e974ce50b13858bd4ff@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-14T18:15:00+02:00",
@@ -370,18 +382,6 @@
   "stempel": "2026-09-11T15:00:47.546895+00:00",
   "titel": "SR · U13 RLB · Herforder EV – EHC Troisdorf",
   "treffpunkt": "2026-09-19T12:30:00+02:00"
- },
- "264187c7f3ed134712e18535491aa27180bcfe56@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-15T20:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "2ca4418309adc0b4d31559295b7603227ea85a70",
-  "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
-  "sequence": 0,
-  "slug": "licau-sebastian",
-  "stempel": "2026-09-14T19:30:36.339102+00:00",
-  "titel": "HSR · DNL III FS · EV Duisburg – EV Duisburg OL",
-  "treffpunkt": "2026-09-15T19:00:00+02:00"
  },
  "27f468207fc77cf30e66cb6db36c1fad1dbbdb04@esrw.de": {
   "aenderung": null,
@@ -562,6 +562,18 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "SR · LL FS · EHC Troisdorf – TuS Wiehl",
   "treffpunkt": "2026-09-12T18:30:00+02:00"
+ },
+ "36d132fc34fd7b516e406c71defad23e71a39eb4@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-15T19:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "71d659c31758bb0f57db5c7348bb6b3745915cc0",
+  "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
+  "sequence": 0,
+  "slug": "musga-maurice",
+  "stempel": "2026-09-15T06:00:43.093200+00:00",
+  "titel": "LSR · DNL III FS · EV Duisburg – EV Duisburg OL",
+  "treffpunkt": "2026-09-15T18:00:00+02:00"
  },
  "376d35f3f4abad629799391d8f28ad621995faf0@esrw.de": {
   "aenderung": null,
@@ -1847,18 +1859,6 @@
   "titel": "SR · U13 RLB · Herner EV – Düsseldorfer EG 1b",
   "treffpunkt": "2026-09-20T15:30:00+02:00"
  },
- "db3107065fc261999403e71b75bf15a12b3b4375@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-15T20:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "8611c2f5cd73a5829196662707d9c7ab2f838c79",
-  "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
-  "sequence": 0,
-  "slug": "musga-maurice",
-  "stempel": "2026-09-14T19:30:36.339102+00:00",
-  "titel": "LSR · DNL III FS · EV Duisburg – EV Duisburg OL",
-  "treffpunkt": "2026-09-15T19:00:00+02:00"
- },
  "dbeb5417849cd8a4c25f6fad4127c89b8be54876@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-13T10:00:00+02:00",
@@ -1943,6 +1943,18 @@
   "titel": "SR · Senioren BZL · Herforder EV 1b – EHC Troisdorf 1b",
   "treffpunkt": "2026-09-20T16:30:00+02:00"
  },
+ "e71111185e2e9bcd29a1b5bd698c145df520c703@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-15T19:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "71d659c31758bb0f57db5c7348bb6b3745915cc0",
+  "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
+  "sequence": 0,
+  "slug": "hornig-marius",
+  "stempel": "2026-09-15T06:00:43.093200+00:00",
+  "titel": "LSR · DNL III FS · EV Duisburg – EV Duisburg OL",
+  "treffpunkt": "2026-09-15T18:00:00+02:00"
+ },
  "e79c662556133b839de49ec258caadc78eed6f3a@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-20T09:30:00+02:00",
@@ -1990,18 +2002,6 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "SR · U17 FS · EHC Troisdorf – Eisadler Dortmund",
   "treffpunkt": "2026-09-13T17:00:00+02:00"
- },
- "f2fccd6586b3bb883ab06680a0a31093773e8488@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-15T20:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "8611c2f5cd73a5829196662707d9c7ab2f838c79",
-  "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
-  "sequence": 0,
-  "slug": "hornig-marius",
-  "stempel": "2026-09-14T19:30:36.339102+00:00",
-  "titel": "LSR · DNL III FS · EV Duisburg – EV Duisburg OL",
-  "treffpunkt": "2026-09-15T19:00:00+02:00"
  },
  "f371e217a117fbfbd90f4320296b3266a8fbff59@esrw.de": {
   "aenderung": null,

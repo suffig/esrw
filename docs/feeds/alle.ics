@@ -917,15 +917,15 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
  .937979,6.98935
 END:VEVENT
 BEGIN:VEVENT
-UID:e017e783e51b601f6647d97f3dc9c00335d89eef@esrw.de
+UID:5211db93a4a23b492fee61c237aeb41efd10fd39@esrw.de
 SEQUENCE:0
-DTSTAMP:20260914T193036Z
-LAST-MODIFIED:20260914T193036Z
-DTSTART:20260915T170000Z
-DTEND:20260915T203000Z
+DTSTAMP:20260915T060043Z
+LAST-MODIFIED:20260915T060043Z
+DTSTART:20260915T160000Z
+DTEND:20260915T193000Z
 SUMMARY:DNL III FS · EV Duisburg – EV Duisburg OL
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
-  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III FS\nHalle: PreZero Rhei
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
+  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III FS\nHalle: PreZero Rhei
  nlandhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespa
  nn: Licau\, Sebastian (HSR) / Musga\, Maurice (LSR)\n\nQuelle: https://www
  .esrw.de/einteilungen.html

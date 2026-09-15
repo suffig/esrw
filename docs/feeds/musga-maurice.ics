@@ -8,15 +8,15 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:db3107065fc261999403e71b75bf15a12b3b4375@esrw.de
+UID:36d132fc34fd7b516e406c71defad23e71a39eb4@esrw.de
 SEQUENCE:0
-DTSTAMP:20260914T193036Z
-LAST-MODIFIED:20260914T193036Z
-DTSTART:20260915T170000Z
-DTEND:20260915T203000Z
+DTSTAMP:20260915T060043Z
+LAST-MODIFIED:20260915T060043Z
+DTSTART:20260915T160000Z
+DTEND:20260915T193000Z
 SUMMARY:LSR · DNL III FS · EV Duisburg – EV Duisburg OL
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
-  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III FS\nHalle: PreZero Rhei
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
+  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III FS\nHalle: PreZero Rhei
  nlandhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespa
  nn: Licau\, Sebastian (HSR) / Hornig\, Marius (LSR)\n\nQuelle: https://www
  .esrw.de/einteilungen.html

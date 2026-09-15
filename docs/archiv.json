@@ -651,6 +651,13 @@
     "paarung": "EV Duisburg – EV Duisburg OL",
     "halle": "PreZero Rheinlandhalle Duisburg",
     "rolle": "LSR"
+   },
+   {
+    "beginn": "2026-09-15T19:00:00+02:00",
+    "liga": "DNL III FS",
+    "paarung": "EV Duisburg – EV Duisburg OL",
+    "halle": "PreZero Rheinlandhalle Duisburg",
+    "rolle": "LSR"
    }
   ],
   "keller-alexander": [
@@ -782,6 +789,13 @@
    },
    {
     "beginn": "2026-09-15T20:00:00+02:00",
+    "liga": "DNL III FS",
+    "paarung": "EV Duisburg – EV Duisburg OL",
+    "halle": "PreZero Rheinlandhalle Duisburg",
+    "rolle": "HSR"
+   },
+   {
+    "beginn": "2026-09-15T19:00:00+02:00",
     "liga": "DNL III FS",
     "paarung": "EV Duisburg – EV Duisburg OL",
     "halle": "PreZero Rheinlandhalle Duisburg",
@@ -971,6 +985,13 @@
   "musga-maurice": [
    {
     "beginn": "2026-09-15T20:00:00+02:00",
+    "liga": "DNL III FS",
+    "paarung": "EV Duisburg – EV Duisburg OL",
+    "halle": "PreZero Rheinlandhalle Duisburg",
+    "rolle": "LSR"
+   },
+   {
+    "beginn": "2026-09-15T19:00:00+02:00",
     "liga": "DNL III FS",
     "paarung": "EV Duisburg – EV Duisburg OL",
     "halle": "PreZero Rheinlandhalle Duisburg",
