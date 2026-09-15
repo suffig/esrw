@@ -179,6 +179,18 @@
   .saisonzeile .liga { align-self:center; }
   .saisonzeile small { display:block; color:var(--dim); }
 
+  .tausch { margin:10px 0 0; padding:0 12px; background:var(--bg); }
+  .tausch summary { padding:9px 0; font-size:.88rem; color:var(--akzent); }
+  .tausch h4 { margin:8px 0 6px; font-size:.75rem; text-transform:uppercase;
+               letter-spacing:.05em; color:var(--dim); font-weight:650; }
+  .tausch > div { padding-bottom:10px; }
+  .kandidat { padding:7px 0; border-top:1px solid var(--linie); }
+  .kandidat-kopf { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+  .kandidat .meta { font-size:.8rem; margin-top:3px; }
+  .anfrage { font:inherit; font-size:.8rem; font-weight:600; padding:4px 11px;
+             background:var(--akzent); color:var(--akzent-text); border:0;
+             border-radius:99px; cursor:pointer; white-space:nowrap; }
+
   footer { margin-top:34px; padding-top:16px; border-top:1px solid var(--linie);
            color:var(--dim); font-size:.83rem; }
   footer a { color:var(--akzent); }
@@ -523,7 +535,7 @@
 
   // -------------------------------------------------------------- Karten
 
-  function karte(s) {
+  function karte(s, fuer) {
     var beginn = new Date(s.beginn), treff = new Date(s.treffpunkt);
     var d = document.createElement("div");
     d.className = "spiel" + (s.vergangen ? " war" : "") + (s.aenderung ? " neu" : "");
@@ -589,7 +601,240 @@
       ae.textContent = "⚠ Geändert: " + s.aenderung;
       d.appendChild(ae);
     }
+
+    if (fuer && !s.vergangen) d.appendChild(tauschBereich(s, fuer));
     return d;
+  }
+
+  // ------------------------------------------------------ Tauschoptionen
+  //
+  // Alles aus den vorhandenen Daten gerechnet, ohne Server. Grenzen: Es
+  // kennt nur Leute, die im Datenfenster (letzte 30 Tage + kommende Spiele)
+  // irgendwo eingeteilt sind, und es weiss nichts ueber Urlaub, Verletzung
+  // oder Lizenzstufe. Es ist eine Vorschlagsliste, keine Zusage.
+
+  function tagVon(iso) { return new Date(iso).toDateString(); }
+
+  function fenster(s) {
+    // Belegte Zeit eines Spiels: vom Treffpunkt bis Spielende
+    var dauer = (daten.spieldauer_minuten || 150) * 60000;
+    var b = new Date(s.beginn).getTime();
+    return [new Date(s.treffpunkt).getTime(), b + dauer];
+  }
+
+  function ueberschneidet(a, b) {
+    var fa = fenster(a), fb = fenster(b);
+    return fa[0] < fb[1] && fb[0] < fa[1];
+  }
+
+  function kmZwischen(a, b) {
+    var r = 6371, p1 = a[0] * Math.PI / 180, p2 = b[0] * Math.PI / 180;
+    var dp = (b[0] - a[0]) * Math.PI / 180, dl = (b[1] - a[1]) * Math.PI / 180;
+    var h = Math.sin(dp / 2) * Math.sin(dp / 2) +
+            Math.cos(p1) * Math.cos(p2) * Math.sin(dl / 2) * Math.sin(dl / 2);
+    return 2 * r * Math.asin(Math.sqrt(h));
+  }
+
+  // Wo ist jemand "zu Hause"? Beste Naeherung ohne Adresse: die Hallen, in
+  // denen er am haeufigsten pfeift.
+  function naeheZu(person, hallenName) {
+    var ziel = daten.hallen && daten.hallen[hallenName];
+    if (!ziel || !person.statistik || !person.statistik.hallen) return null;
+    var beste = null;
+    person.statistik.hallen.forEach(function (paar) {
+      var k = daten.hallen[paar[0]];
+      if (!k) return;
+      var d = kmZwischen(k, ziel);
+      if (beste === null || d < beste) beste = d;
+    });
+    return beste;
+  }
+
+  function vorname(name) {
+    var t = name.split(",");
+    return (t.length > 1 ? t[1] : t[0]).trim().split(" ")[0];
+  }
+
+  function tauschOptionen(spiel, ich) {
+    var tag = tagVon(spiel.beginn);
+    var gespann = {};
+    (spiel.gespann || []).forEach(function (g) { if (g.slug) gespann[g.slug] = 1; });
+    var meineAnderen = ich.spiele.filter(function (s) {
+      return s !== spiel && !s.vergangen && tagVon(s.beginn) === tag;
+    });
+    var uebernehmen = [], tausch = [];
+
+    daten.personen.forEach(function (p) {
+      if (p.slug === ich.slug || gespann[p.slug]) return;
+      var amTag = p.spiele.filter(function (s) { return tagVon(s.beginn) === tag; });
+      var frei = amTag.length === 0;
+      var passtDazu = amTag.every(function (s) { return !ueberschneidet(s, spiel); });
+      var gleicheHalle = amTag.some(function (s) { return s.halle && s.halle === spiel.halle; });
+      var kenntHalle = !!(p.statistik && p.statistik.hallen &&
+        p.statistik.hallen.some(function (h) { return h[0] === spiel.halle; }));
+      var warHSR = !!(p.statistik && p.statistik.rollen && p.statistik.rollen.HSR);
+      var km = naeheZu(p, spiel.halle);
+      var woche = p.spiele.filter(function (s) {
+        var diff = Math.abs(new Date(s.beginn) - new Date(spiel.beginn)) / 86400000;
+        return !s.vergangen && diff <= 3;
+      }).length;
+
+      var gruende = [];
+      var punkte = 0;
+      if (gleicheHalle) { gruende.push("am selben Tag in dieser Halle"); punkte += 4; }
+      else if (frei) { gruende.push("kein Spiel an dem Tag"); punkte += 2; }
+      else if (passtDazu) { gruende.push("passt zeitlich zu seinem Spiel"); punkte += 1; }
+      if (kenntHalle) { gruende.push("kennt die Halle"); punkte += 2; }
+      if (spiel.rolle === "HSR" && warHSR) { gruende.push("war schon HSR"); punkte += 1; }
+      // Unter 2 km ist es seine Heimhalle - das sagt "kennt die Halle" schon
+      if (km !== null && km >= 2 && km <= 25) { gruende.push("spielt oft in der Nähe (~" + Math.round(km) + " km)"); punkte += 1; }
+      else if (km !== null && km < 2) { punkte += 1; }
+      if (woche === 0) { gruende.push("diese Woche frei"); punkte += 1; }
+      else if (woche >= 3) { punkte -= 1; }
+
+      if (frei || passtDazu) {
+        uebernehmen.push({ person: p, gruende: gruende, punkte: punkte, km: km, woche: woche });
+      }
+
+      // Tausch: er nimmt meins, ich nehme eins von seinen am selben Tag
+      amTag.forEach(function (seins) {
+        if (seins.vergangen) return;
+        var seineAnderen = amTag.filter(function (x) { return x !== seins; });
+        var ichKann = meineAnderen.every(function (m) { return !ueberschneidet(m, seins); });
+        var erKann = seineAnderen.every(function (x) { return !ueberschneidet(x, spiel); });
+        if (ichKann && erKann) {
+          // Wie attraktiv ist SEIN Spiel fuer MICH? Gleiche Halle, eine Halle,
+          // die ich kenne, oder eine in meiner Naehe zaehlt.
+          var wert = punkte;
+          if (seins.halle && seins.halle === spiel.halle) wert += 3;
+          else if (ich.statistik && ich.statistik.hallen &&
+                   ich.statistik.hallen.some(function (h) { return h[0] === seins.halle; })) wert += 2;
+          var meinWeg = naeheZu(ich, seins.halle);
+          if (meinWeg !== null && meinWeg <= 25) wert += 1;
+          tausch.push({ person: p, spiel: seins, punkte: wert });
+        }
+      });
+    });
+
+    uebernehmen.sort(function (a, b) { return b.punkte - a.punkte || (a.km || 999) - (b.km || 999); });
+    tausch.sort(function (a, b) { return b.punkte - a.punkte; });
+    return { uebernehmen: uebernehmen, tausch: tausch };
+  }
+
+  function anfrageText(spiel, ich, kandidat, seinSpiel) {
+    var d = new Date(spiel.beginn);
+    var wann = wochentag[d.getDay()] + ". " +
+      d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }) + " um " + uhr(d) + " Uhr";
+    var text = "Hallo " + vorname(kandidat.name) + ", könntest du am " + wann +
+      " das Spiel " + (spiel.liga ? spiel.liga + " " : "") + spiel.paarung +
+      (spiel.halle ? " in der " + spiel.halle : "") + " für mich übernehmen?";
+    if (seinSpiel) {
+      var e = new Date(seinSpiel.beginn);
+      text += " Ich würde dafür dein Spiel um " + uhr(e) + " Uhr (" +
+        (seinSpiel.liga ? seinSpiel.liga + " " : "") + seinSpiel.paarung + ") übernehmen.";
+    }
+    text += " Treffpunkt wäre " + uhr(new Date(spiel.treffpunkt)) + " Uhr. Danke, " + vorname(ich.name);
+    return text;
+  }
+
+  function anfragen(text) {
+    if (navigator.share) {
+      navigator.share({ text: text }).catch(function () {});
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(function () { alert("Anfrage kopiert – in WhatsApp o.ä. einfügen."); });
+    } else {
+      prompt("Anfrage:", text);
+    }
+  }
+
+  function kandidatZeile(k, spiel, ich, seinSpiel) {
+    var z = document.createElement("div");
+    z.className = "kandidat";
+    var kopf = document.createElement("div");
+    kopf.className = "kandidat-kopf";
+    kopf.appendChild(chip({ name: k.person.name, slug: k.person.slug }, false));
+    var knopf = document.createElement("button");
+    knopf.type = "button";
+    knopf.className = "anfrage";
+    knopf.textContent = "Anfragen";
+    knopf.addEventListener("click", function () { anfragen(anfrageText(spiel, ich, k.person, seinSpiel)); });
+    kopf.appendChild(knopf);
+    z.appendChild(kopf);
+    var info = document.createElement("div");
+    info.className = "meta";
+    if (seinSpiel) {
+      info.textContent = "sein Spiel: " + uhr(new Date(seinSpiel.beginn)) + " Uhr · " +
+        (seinSpiel.liga ? seinSpiel.liga + " " : "") + seinSpiel.paarung +
+        (seinSpiel.halle ? " · " + seinSpiel.halle : "");
+    } else {
+      info.textContent = k.gruende.join(" · ") || "zeitlich möglich";
+    }
+    z.appendChild(info);
+    return z;
+  }
+
+  function tauschBereich(spiel, ich) {
+    var box = document.createElement("details");
+    box.className = "tausch";
+    var kopf = document.createElement("summary");
+    kopf.textContent = "Tauschoptionen";
+    box.appendChild(kopf);
+    var inhalt = document.createElement("div");
+    box.appendChild(inhalt);
+
+    box.addEventListener("toggle", function () {
+      if (!box.open || inhalt.childNodes.length) return;
+      var o = tauschOptionen(spiel, ich);
+
+      var h1 = document.createElement("h4");
+      h1.textContent = "Könnten übernehmen";
+      inhalt.appendChild(h1);
+      if (!o.uebernehmen.length) {
+        var l1 = document.createElement("p"); l1.className = "meta";
+        l1.textContent = "Niemand im Datenfenster, der frei wäre.";
+        inhalt.appendChild(l1);
+      }
+      var zeigen = 6;
+      o.uebernehmen.slice(0, zeigen).forEach(function (k) { inhalt.appendChild(kandidatZeile(k, spiel, ich)); });
+      if (o.uebernehmen.length > zeigen) {
+        var mehr = document.createElement("button");
+        mehr.type = "button"; mehr.className = "textknopf";
+        mehr.textContent = "alle " + o.uebernehmen.length + " anzeigen";
+        mehr.addEventListener("click", function () {
+          o.uebernehmen.slice(zeigen).forEach(function (k) { inhalt.insertBefore(kandidatZeile(k, spiel, ich), mehr); });
+          mehr.remove();
+        });
+        inhalt.appendChild(mehr);
+      }
+
+      var h2 = document.createElement("h4");
+      h2.textContent = "Tausch am selben Tag";
+      inhalt.appendChild(h2);
+      if (!o.tausch.length) {
+        var l2 = document.createElement("p"); l2.className = "meta";
+        l2.textContent = "Kein Kollege mit einem tauschbaren Spiel an diesem Tag.";
+        inhalt.appendChild(l2);
+      }
+      o.tausch.slice(0, zeigen).forEach(function (k) { inhalt.appendChild(kandidatZeile(k, spiel, ich, k.spiel)); });
+      if (o.tausch.length > zeigen) {
+        var mehr2 = document.createElement("button");
+        mehr2.type = "button"; mehr2.className = "textknopf";
+        mehr2.textContent = "alle " + o.tausch.length + " anzeigen";
+        mehr2.addEventListener("click", function () {
+          o.tausch.slice(zeigen).forEach(function (k) { inhalt.insertBefore(kandidatZeile(k, spiel, ich, k.spiel), mehr2); });
+          mehr2.remove();
+        });
+        inhalt.appendChild(mehr2);
+      }
+
+      var fuss = document.createElement("p");
+      fuss.className = "meta";
+      fuss.textContent = "Vorschläge aus den Einteilungen der letzten 30 Tage und der kommenden " +
+        "Spiele. Wer in dem Zeitraum nirgends eingeteilt war, taucht nicht auf. Urlaub, " +
+        "Verletzung und Lizenz kennt die Liste nicht – fragen musst du selbst.";
+      inhalt.appendChild(fuss);
+    });
+    return box;
   }
 
   // Namens-Chip mit Rolle. Im Zwei-Mann-System sind beide Schiedsrichter,
@@ -884,7 +1129,7 @@
       leer.textContent = "Zurzeit keine Einteilung. Der Kalender füllt sich von allein.";
       ziel.appendChild(leer);
     } else {
-      kommend.forEach(function (s) { ziel.appendChild(karte(s)); });
+      kommend.forEach(function (s) { ziel.appendChild(karte(s, p)); });
     }
 
     if (gewesen.length) {

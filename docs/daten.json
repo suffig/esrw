@@ -10,6 +10,145 @@
   "HSR": "Hauptschiedsrichter",
   "LSR": "Linienrichter"
  },
+ "spieldauer_minuten": 150,
+ "hallen": {
+  "Eishalle Brehmstraße": [
+   51.242557,
+   6.802144
+  ],
+  "Eissporthalle Dinslaken": [
+   51.574578,
+   6.735361
+  ],
+  "Eishalle Im Kleinen Felde": [
+   52.114893,
+   8.652028
+  ],
+  "Eislaufcenter Wesel": [
+   51.681561,
+   6.602407
+  ],
+  "Eissporthalle Düsseldorf-Benrath": [
+   51.168801,
+   6.858999
+  ],
+  "Eissporthalle Bergisch Gladbach": [
+   50.967548,
+   7.135355
+  ],
+  "Eissporthalle Bergkamen": [
+   51.602578,
+   7.626858
+  ],
+  "Eissporthalle Dorsten": [
+   51.666208,
+   6.967759
+  ],
+  "PreZero Rheinlandhalle Duisburg": [
+   51.405718,
+   6.780082
+  ],
+  "Eissporthalle Essen-West": [
+   51.454179,
+   6.976731
+  ],
+  "Eissporthalle Moers": [
+   51.43973,
+   6.6198
+  ],
+  "Eissporthalle Ratingen": [
+   51.295808,
+   6.834624
+  ],
+  "Eissporthalle Solingen": [
+   51.165932,
+   7.086769
+  ],
+  "Eissporthalle Wiehl": [
+   50.947034,
+   7.5553
+  ],
+  "Eissportzentrum Grefrath": [
+   51.348547,
+   6.341019
+  ],
+  "Eissportzentrum Möhnesee": [
+   51.515208,
+   8.159069
+  ],
+  "Eissportzentrum Westfalen": [
+   51.49525,
+   7.458288
+  ],
+  "Der Eisschuppen Lippstadt": [
+   51.656859,
+   8.354724
+  ],
+  "Eissporthalle am Seilersee": [
+   51.384598,
+   7.713829
+  ],
+  "Eissporthalle Neuss": [
+   51.175806,
+   6.680258
+  ],
+  "Gysenberghalle Herne": [
+   51.532602,
+   7.254372
+  ],
+  "HELINET Eissportarena Hamm": [
+   51.686934,
+   7.886138
+  ],
+  "ICEDOME Troisdorf": [
+   50.811945,
+   7.109233
+  ],
+  "Kölnarena 2": [
+   50.937979,
+   6.98935
+  ],
+  "Lentpark Köln": [
+   50.95863,
+   6.964401
+  ],
+  "Oetker Eisbahn Bielefeld": [
+   51.979731,
+   8.496038
+  ],
+  "Rheinlandhalle Krefeld": [
+   51.339877,
+   6.540168
+  ],
+  "Yayla Arena Krefeld": [
+   51.340907,
+   6.540218
+  ],
+  "Emscher-Lippe-Halle Gelsenkirchen": [
+   51.553483,
+   7.073102
+  ],
+  "100'5 Arena Aachen": [
+   50.79546,
+   6.100933
+  ],
+  "Eisbahn Paderborn": [
+   51.685351,
+   8.719409
+  ],
+  "Eissporthalle Frankfurt": [
+   50.125485,
+   8.721619
+  ],
+  "Eissporthalle Kassel": [
+   51.298003,
+   9.48235
+  ],
+  "Wellblechpalast Berlin": [
+   52.541033,
+   13.480632
+  ]
+ },
  "personen": [
   {
    "slug": "beckford-emanuel",
@@ -849,7 +988,7 @@
      "rolle": "SR",
      "system": 2,
      "liga": "U11 RL",
-     "paarung": "Iserlohner EC -",
+     "paarung": "Iserlohner EC",
      "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
      "halle": "Eissporthalle am Seilersee",
      "koordinaten": [
@@ -865,7 +1004,7 @@
      ],
      "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Ansetzung",
      "hinweis": null
     },
     {
@@ -1109,7 +1248,7 @@
      "rolle": "SR",
      "system": 2,
      "liga": "U11 LL Rot",
-     "paarung": "Iserlohner EC 1b -",
+     "paarung": "Iserlohner EC 1b",
      "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
      "halle": "Eissporthalle am Seilersee",
      "koordinaten": [
@@ -1125,7 +1264,7 @@
      ],
      "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Ansetzung",
      "hinweis": null
     },
     {
@@ -2380,7 +2519,7 @@
      "rolle": "SR",
      "system": 2,
      "liga": "U9 LL Rot",
-     "paarung": "Krefelder EV 1b -",
+     "paarung": "Krefelder EV 1b",
      "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
      "halle": "Rheinlandhalle Krefeld",
      "koordinaten": [
@@ -2396,7 +2535,7 @@
      ],
      "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Ansetzung",
      "hinweis": null
     },
     {
@@ -3565,7 +3704,7 @@
      "rolle": "SR",
      "system": 2,
      "liga": "U11 RL",
-     "paarung": "Iserlohner EC -",
+     "paarung": "Iserlohner EC",
      "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
      "halle": "Eissporthalle am Seilersee",
      "koordinaten": [
@@ -3581,7 +3720,7 @@
      ],
      "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Ansetzung",
      "hinweis": null
     },
     {
@@ -5191,7 +5330,7 @@
      "rolle": "SR",
      "system": 2,
      "liga": "U9 RL",
-     "paarung": "EHC Troisdorf -",
+     "paarung": "EHC Troisdorf",
      "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
      "halle": "ICEDOME Troisdorf",
      "koordinaten": [
@@ -5207,7 +5346,7 @@
      ],
      "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Ansetzung",
      "hinweis": null
     },
     {
@@ -5216,7 +5355,7 @@
      "rolle": "SR",
      "system": 2,
      "liga": "U9 LL Rot",
-     "paarung": "Krefelder EV 1b -",
+     "paarung": "Krefelder EV 1b",
      "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
      "halle": "Rheinlandhalle Krefeld",
      "koordinaten": [
@@ -5232,7 +5371,7 @@
      ],
      "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Ansetzung",
      "hinweis": null
     },
     {
@@ -5820,7 +5959,7 @@
      "rolle": "SR",
      "system": 2,
      "liga": "DA FS",
-     "paarung": "Spiel um Platz 3 -",
+     "paarung": "Spiel um Platz 3",
      "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
      "halle": "Eissportzentrum Westfalen",
      "koordinaten": [
@@ -5836,7 +5975,7 @@
      ],
      "halle_erkannt": true,
      "vergangen": true,
-     "aenderung": null,
+     "aenderung": "Ansetzung",
      "hinweis": null
     },
     {
@@ -5845,7 +5984,7 @@
      "rolle": "SR",
      "system": 2,
      "liga": "DA FS",
-     "paarung": "Finale -",
+     "paarung": "Finale",
      "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
      "halle": "Eissportzentrum Westfalen",
      "koordinaten": [
@@ -5861,7 +6000,7 @@
      ],
      "halle_erkannt": true,
      "vergangen": true,
-     "aenderung": null,
+     "aenderung": "Ansetzung",
      "hinweis": null
     },
     {
@@ -5950,7 +6089,7 @@
      "rolle": "SR",
      "system": 2,
      "liga": "U9 RL",
-     "paarung": "EHC Troisdorf -",
+     "paarung": "EHC Troisdorf",
      "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
      "halle": "ICEDOME Troisdorf",
      "koordinaten": [
@@ -5966,7 +6105,7 @@
      ],
      "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Ansetzung",
      "hinweis": null
     }
    ]
@@ -6967,7 +7106,7 @@
      "rolle": "SR",
      "system": 2,
      "liga": "U11 LL Rot",
-     "paarung": "Iserlohner EC 1b -",
+     "paarung": "Iserlohner EC 1b",
      "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
      "halle": "Eissporthalle am Seilersee",
      "koordinaten": [
@@ -6983,7 +7122,7 @@
      ],
      "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Ansetzung",
      "hinweis": null
     },
     {
@@ -7080,7 +7219,7 @@
      "rolle": "SR",
      "system": 2,
      "liga": "DA FS",
-     "paarung": "Spiel um Platz 3 -",
+     "paarung": "Spiel um Platz 3",
      "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
      "halle": "Eissportzentrum Westfalen",
      "koordinaten": [
@@ -7096,7 +7235,7 @@
      ],
      "halle_erkannt": true,
      "vergangen": true,
-     "aenderung": null,
+     "aenderung": "Ansetzung",
      "hinweis": null
     },
     {
@@ -7105,7 +7244,7 @@
      "rolle": "SR",
      "system": 2,
      "liga": "DA FS",
-     "paarung": "Finale -",
+     "paarung": "Finale",
      "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
      "halle": "Eissportzentrum Westfalen",
      "koordinaten": [
@@ -7121,7 +7260,7 @@
      ],
      "halle_erkannt": true,
      "vergangen": true,
-     "aenderung": null,
+     "aenderung": "Ansetzung",
      "hinweis": null
     }
    ]
@@ -8111,7 +8250,7 @@
    "beginn": "2026-09-13T13:00:00+02:00",
    "treffpunkt": "2026-09-13T12:00:00+02:00",
    "liga": "DA FS",
-   "paarung": "Spiel um Platz 3 -",
+   "paarung": "Spiel um Platz 3",
    "halle": "Eissportzentrum Westfalen",
    "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
    "halle_erkannt": true,
@@ -8180,7 +8319,7 @@
    "beginn": "2026-09-13T15:00:00+02:00",
    "treffpunkt": "2026-09-13T14:00:00+02:00",
    "liga": "DA FS",
-   "paarung": "Finale -",
+   "paarung": "Finale",
    "halle": "Eissportzentrum Westfalen",
    "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
    "halle_erkannt": true,
@@ -8568,7 +8707,7 @@
    "beginn": "2026-09-19T10:00:00+02:00",
    "treffpunkt": "2026-09-19T09:00:00+02:00",
    "liga": "U9 RL",
-   "paarung": "EHC Troisdorf -",
+   "paarung": "EHC Troisdorf",
    "halle": "ICEDOME Troisdorf",
    "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
    "halle_erkannt": true,
@@ -8637,7 +8776,7 @@
    "beginn": "2026-09-19T12:15:00+02:00",
    "treffpunkt": "2026-09-19T11:15:00+02:00",
    "liga": "U11 RL",
-   "paarung": "Iserlohner EC -",
+   "paarung": "Iserlohner EC",
    "halle": "Eissporthalle am Seilersee",
    "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
    "halle_erkannt": true,
@@ -8895,7 +9034,7 @@
    "beginn": "2026-09-20T08:00:00+02:00",
    "treffpunkt": "2026-09-20T07:00:00+02:00",
    "liga": "U11 LL Rot",
-   "paarung": "Iserlohner EC 1b -",
+   "paarung": "Iserlohner EC 1b",
    "halle": "Eissporthalle am Seilersee",
    "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
    "halle_erkannt": true,
@@ -9127,7 +9266,7 @@
    "beginn": "2026-09-20T14:00:00+02:00",
    "treffpunkt": "2026-09-20T13:00:00+02:00",
    "liga": "U9 LL Rot",
-   "paarung": "Krefelder EV 1b -",
+   "paarung": "Krefelder EV 1b",
    "halle": "Rheinlandhalle Krefeld",
    "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
    "halle_erkannt": true,

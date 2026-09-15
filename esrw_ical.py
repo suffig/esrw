@@ -238,7 +238,8 @@ def finde_halle(begegnung, venues):
         rest = rest[:m.start()].strip()
 
     teile = rest.split(" - ", 1)
-    heim = teile[0].strip()
+    # Turniere stehen als "EHC Troisdorf -" ohne Gast auf der Seite
+    heim = teile[0].strip().rstrip("-").strip()
     gast = teile[1].strip() if len(teile) > 1 else ""
 
     if not ort_hinweis and gast:
@@ -881,6 +882,11 @@ def main():
         "saison": saison,
         "archiv_spiele": len(historie),
         "rollen": ROLLEN,
+        "spieldauer_minuten": cfg["spieldauer_minuten"],
+        # Koordinaten je Halle - die Webseite schaetzt daraus, wer in der
+        # Naehe eines Spiels zu Hause ist (Tauschvorschlaege)
+        "hallen": {h["name"]: h["koordinaten"] for h in venues["hallen"].values()
+                   if h.get("koordinaten")},
         "personen": [{
             "slug": p["slug"],
             "name": p["name"],

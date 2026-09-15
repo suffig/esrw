@@ -57,16 +57,17 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:1ad65c29bc6e1cfc8cf86ffb2761d486f799e3d9@esrw.de
-SEQUENCE:0
-DTSTAMP:20260911T150047Z
-LAST-MODIFIED:20260911T150047Z
+SEQUENCE:1
+DTSTAMP:20260915T152741Z
+LAST-MODIFIED:20260915T152741Z
 DTSTART:20260920T050000Z
 DTEND:20260920T083000Z
-SUMMARY:SR · U11 LL Rot · Iserlohner EC 1b -
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
-  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Rot\nHalle: Eissporthall
- e am Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Garb
- sch\, René\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ SR · U11 LL Rot · Iserlohner EC 1b
+DESCRIPTION:Geändert: Ansetzung\n\nRolle: Schiedsrichter (SR)\nSpielbeginn
+ : 08:00 Uhr\nTreffpunkt: 07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL 
+ Rot\nHalle: Eissporthalle am Seilersee\nAdresse: Seeuferstraße 25\, 58636
+  Iserlohn\nGespann: Garbsch\, René\n\nQuelle: https://www.esrw.de/einteil
+ ungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -79,7 +80,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Rot · Iserlohner E
- C 1b -
+ C 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

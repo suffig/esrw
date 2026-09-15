@@ -136,6 +136,36 @@ Zeile je Spiel, wie die Tabelle auf esrw.de; die Wahl bleibt gespeichert. Jeder
 Name führt zum jeweiligen Profil. Der Reiter ist auch direkt erreichbar:
 `…/#plan`.
 
+## Tauschoptionen
+
+Unter jedem eigenen kommenden Spiel klappt **Tauschoptionen** auf. Zwei Listen,
+komplett aus den vorhandenen Daten gerechnet, ohne Server:
+
+**Könnten übernehmen** – Kollegen, die an dem Tag kein Spiel haben oder deren
+Spiel zeitlich nicht kollidiert. Sortiert nach Plausibilität: am selben Tag
+schon in dieser Halle, kennt die Halle, spielt oft in der Nähe (aus den
+Koordinaten seiner häufigsten Hallen geschätzt), war schon HSR (falls die
+Rolle HSR ist), diese Woche frei. Wer drei oder mehr Spiele in der Woche hat,
+rutscht nach hinten.
+
+**Tausch am selben Tag** – Kollegen mit einem Spiel an dem Tag, bei dem der
+Tausch für beide aufgeht: er nimmt meins, ich nehme seins, und nichts
+überschneidet sich mit den restlichen Spielen des Tages. Sortiert danach, wie
+attraktiv *sein* Spiel für *mich* ist – gleiche Halle, eine Halle, die ich
+kenne, oder in meiner Nähe.
+
+Der Knopf **Anfragen** formuliert die Nachricht vor („Hallo Cedric, könntest du
+am Mi. 16.09. um 19:30 Uhr das Spiel … für mich übernehmen? Treffpunkt wäre
+18:30 Uhr. Danke, René") und öffnet das Teilen-Menü – WhatsApp, SMS, was
+immer da ist. Telefonnummern kennt die App nicht; den Empfänger wählst du
+selbst.
+
+**Was die Liste nicht weiß:** Sie kennt nur Leute, die im Datenfenster (letzte
+30 Tage plus kommende Spiele) irgendwo eingeteilt waren. Wer gerade nirgends
+pfeift, taucht nicht auf. Urlaub, Verletzung, Lizenzstufe und ob jemand
+überhaupt Lust hat – all das steht nirgends. Es ist eine Vorschlagsliste, die
+das Suchen abkürzt, keine Zusage.
+
 ## Benachrichtigungen in der App
 
 Liegt die App auf dem Home-Bildschirm (iOS 16.4+ oder Android), kann sie

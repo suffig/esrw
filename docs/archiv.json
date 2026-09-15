@@ -198,7 +198,7 @@
    {
     "beginn": "2026-09-19T12:15:00+02:00",
     "liga": "U11 RL",
-    "paarung": "Iserlohner EC -",
+    "paarung": "Iserlohner EC",
     "halle": "Eissporthalle am Seilersee",
     "rolle": "SR"
    },
@@ -228,7 +228,7 @@
    {
     "beginn": "2026-09-20T08:00:00+02:00",
     "liga": "U11 LL Rot",
-    "paarung": "Iserlohner EC 1b -",
+    "paarung": "Iserlohner EC 1b",
     "halle": "Eissporthalle am Seilersee",
     "rolle": "SR"
    },
@@ -579,7 +579,7 @@
    {
     "beginn": "2026-09-20T14:00:00+02:00",
     "liga": "U9 LL Rot",
-    "paarung": "Krefelder EV 1b -",
+    "paarung": "Krefelder EV 1b",
     "halle": "Rheinlandhalle Krefeld",
     "rolle": "SR"
    },
@@ -836,7 +836,7 @@
    {
     "beginn": "2026-09-19T12:15:00+02:00",
     "liga": "U11 RL",
-    "paarung": "Iserlohner EC -",
+    "paarung": "Iserlohner EC",
     "halle": "Eissporthalle am Seilersee",
     "rolle": "SR"
    },
@@ -1188,14 +1188,14 @@
    {
     "beginn": "2026-09-20T14:00:00+02:00",
     "liga": "U9 LL Rot",
-    "paarung": "Krefelder EV 1b -",
+    "paarung": "Krefelder EV 1b",
     "halle": "Rheinlandhalle Krefeld",
     "rolle": "SR"
    },
    {
     "beginn": "2026-09-19T10:00:00+02:00",
     "liga": "U9 RL",
-    "paarung": "EHC Troisdorf -",
+    "paarung": "EHC Troisdorf",
     "halle": "ICEDOME Troisdorf",
     "rolle": "SR"
    },
@@ -1401,14 +1401,14 @@
    {
     "beginn": "2026-09-13T15:00:00+02:00",
     "liga": "DA FS",
-    "paarung": "Finale -",
+    "paarung": "Finale",
     "halle": "Eissportzentrum Westfalen",
     "rolle": "SR"
    },
    {
     "beginn": "2026-09-13T13:00:00+02:00",
     "liga": "DA FS",
-    "paarung": "Spiel um Platz 3 -",
+    "paarung": "Spiel um Platz 3",
     "halle": "Eissportzentrum Westfalen",
     "rolle": "SR"
    }
@@ -1417,7 +1417,7 @@
    {
     "beginn": "2026-09-19T10:00:00+02:00",
     "liga": "U9 RL",
-    "paarung": "EHC Troisdorf -",
+    "paarung": "EHC Troisdorf",
     "halle": "ICEDOME Troisdorf",
     "rolle": "SR"
    }
@@ -1633,7 +1633,7 @@
    {
     "beginn": "2026-09-20T08:00:00+02:00",
     "liga": "U11 LL Rot",
-    "paarung": "Iserlohner EC 1b -",
+    "paarung": "Iserlohner EC 1b",
     "halle": "Eissporthalle am Seilersee",
     "rolle": "SR"
    },
@@ -1663,14 +1663,14 @@
    {
     "beginn": "2026-09-13T15:00:00+02:00",
     "liga": "DA FS",
-    "paarung": "Finale -",
+    "paarung": "Finale",
     "halle": "Eissportzentrum Westfalen",
     "rolle": "SR"
    },
    {
     "beginn": "2026-09-13T13:00:00+02:00",
     "liga": "DA FS",
-    "paarung": "Spiel um Platz 3 -",
+    "paarung": "Spiel um Platz 3",
     "halle": "Eissportzentrum Westfalen",
     "rolle": "SR"
    },

@@ -64,16 +64,17 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:df815118049cd019abeb4e3a22e1828fc1a72cc8@esrw.de
-SEQUENCE:0
-DTSTAMP:20260911T150047Z
-LAST-MODIFIED:20260911T150047Z
+SEQUENCE:1
+DTSTAMP:20260915T152741Z
+LAST-MODIFIED:20260915T152741Z
 DTSTART:20260919T091500Z
 DTEND:20260919T124500Z
-SUMMARY:SR · U11 RL · Iserlohner EC -
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:15 Uhr\nTreffpunkt:
-  11:15 Uhr (60 Min vor Spielbeginn)\nLiga: U11 RL\nHalle: Eissporthalle am
-  Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Galeske\
- , Jonas\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ SR · U11 RL · Iserlohner EC
+DESCRIPTION:Geändert: Ansetzung\n\nRolle: Schiedsrichter (SR)\nSpielbeginn
+ : 12:15 Uhr\nTreffpunkt: 11:15 Uhr (60 Min vor Spielbeginn)\nLiga: U11 RL\
+ nHalle: Eissporthalle am Seilersee\nAdresse: Seeuferstraße 25\, 58636 Ise
+ rlohn\nGespann: Galeske\, Jonas\n\nQuelle: https://www.esrw.de/einteilunge
+ n.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -85,7 +86,7 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U11 RL · Iserlohner EC -
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 RL · Iserlohner EC
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
