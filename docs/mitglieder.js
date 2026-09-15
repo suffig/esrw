@@ -20,7 +20,7 @@ window.Mitglieder = (function () {
   var wurzel = null, inhalt = null, ctx = null, cfg = null, sb = null, gebuehren = null, pushCfg = null;
   var session = null, profil = null, einsaetze = {}, archivDaten = null;
   var speicherTimer = {}, bereitVersprechen = null, profilVersprechen = null;
-  var reiter = "abrechnung", gewaehlteSaison = null;
+  var reiter = "abrechnung", gewaehlteSaison = null, nurOffene = false;
 
   var SUPABASE_CDN = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js";
   var OSRM = "https://router.project-osrm.org/route/v1/driving/";
@@ -76,17 +76,16 @@ window.Mitglieder = (function () {
   }
 
   function meldung(text, art) {
+    if (window.zeigeToast) window.zeigeToast(text, art);
     if (!wurzel) return;
+    // Fehler bleiben zusaetzlich oben stehen, bis etwas anderes passiert
     var m = wurzel.querySelector(".mg-meldung");
     if (!m) { m = h("div", { class: "mg-meldung" }); wurzel.insertBefore(m, wurzel.firstChild); }
-    m.textContent = text;
+    m.textContent = art === "warn" ? text : "";
     m.className = "mg-meldung " + (art || "");
-    m.hidden = !text;
+    m.hidden = art !== "warn" || !text;
   }
-  function kurzMeldung(text, art) {
-    meldung(text, art);
-    setTimeout(function () { var m = wurzel && wurzel.querySelector(".mg-meldung"); if (m && m.textContent === text) meldung("", ""); }, 1800);
-  }
+  function kurzMeldung(text, art) { meldung(text, art); }
 
   function skriptLaden(url) {
     return new Promise(function (ok, nein) {
@@ -837,7 +836,13 @@ window.Mitglieder = (function () {
 
     var saisonWahl = h("select", { class: "mg-select", onchange: function (ev) { gewaehlteSaison = ev.target.value; rendereAbrechnung(); } },
       saisonen().map(function (s) { var o = h("option", { value: s, text: "Saison " + s }); if (s === gewaehlteSaison) o.selected = true; return o; }));
-    inhalt.appendChild(h("div", { class: "mg-form" }, [saisonWahl]));
+    var offenSchalter = h("input", { type: "checkbox", onchange: function (ev) { nurOffene = ev.target.checked; rendereAbrechnung(); } });
+    offenSchalter.checked = nurOffene;
+    inhalt.appendChild(h("div", { class: "mg-form" }, [saisonWahl,
+      h("div", { class: "schalterzeile" }, [
+        h("label", { class: "schalter" }, [offenSchalter, " nur unbezahlte / unvollständige"]),
+        h("button", { type: "button", class: "textknopf", text: "Drucken", onclick: function () { window.print(); } })
+      ])]));
 
     inhalt.appendChild(h("div", { class: "mg-summenblock" }));
 
@@ -872,11 +877,17 @@ window.Mitglieder = (function () {
     inhalt.appendChild(h("div", { class: "zweit" }, [strecken, gebuehr,
       h("button", { type: "button", text: "CSV", onclick: function () { csvExport(spiele); } })]));
 
+    var liste = spiele;
+    if (nurOffene) liste = spiele.filter(function (sp) {
+      var e = einsaetze[sp.kennung];
+      return !e || !e.bezahlt || e.verguetung == null || e.km == null;
+    });
     if (!spiele.length) inhalt.appendChild(h("p", { class: "leer", text: "Keine Spiele in dieser Saison." }));
+    else if (!liste.length) inhalt.appendChild(h("p", { class: "leer", text: "Alles abgerechnet und bezahlt ✓" }));
 
     // Nach Monat gruppiert, mit "alles bezahlt" je Monat
     var monat = null;
-    spiele.forEach(function (sp) {
+    liste.forEach(function (sp) {
       var d = new Date(sp.beginn), m = d.getFullYear() + "-" + d.getMonth();
       if (m !== monat) {
         monat = m;
@@ -1223,8 +1234,11 @@ window.Mitglieder = (function () {
       } });
     }
     knoepfe.appendChild(knopf("", "frei")); knoepfe.appendChild(knopf("nein", "nicht")); knoepfe.appendChild(knopf("gern", "gern"));
+    var konflikt = status === "nein" && spiele > 0;
     return h("div", { class: "sperre" }, [
-      h("span", {}, [datumLang(d), spiele ? h("small", { class: "meta", text: " · " + spiele + (spiele === 1 ? " Spiel" : " Spiele") }) : null]),
+      h("span", {}, [datumLang(d),
+        spiele ? h("small", { class: "meta", text: " · " + spiele + (spiele === 1 ? " Spiel" : " Spiele") }) : null,
+        konflikt ? h("small", { class: "achtung", style: "display:block;margin-top:4px", text: "Du bist an dem Tag eingeteilt – Abmeldung läuft über den Obmann, hier landet nur der Hinweis für Kollegen." }) : null]),
       knoepfe
     ]);
   }

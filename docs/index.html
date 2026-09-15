@@ -249,6 +249,8 @@
     width:100%; padding:10px 12px; font:inherit; color:var(--text); background:var(--bg);
     border:1px solid var(--linie); border-radius:10px; -webkit-appearance:none; appearance:none; }
   .mg-form input:focus, .mg-felder input:focus, .mg-form textarea:focus { outline:2px solid var(--akzent); outline-offset:-1px; }
+  .mg-form input[type=checkbox] { width:auto; padding:0; }
+  .mg-form .schalterzeile { margin:2px 0 0; }
   .mg-zeile { display:flex; gap:8px; }
   .mg-zeile input { flex:1; }
   .mg-haupt { padding:12px; font-weight:800; cursor:pointer; margin-top:6px; background:var(--akzent); color:var(--akzent-text); border:0; border-radius:10px; }
@@ -295,6 +297,48 @@
   .leiste button.aktiv svg.i { stroke-width:2.4; }
 
   footer { margin-top:34px; padding-top:16px; border-top:1px solid var(--linie); color:var(--dim); font-size:.8rem; }
+
+  /* Kurze Rueckmeldung ueber der Leiste, damit sie auch beim Scrollen sichtbar ist */
+  .toast { position:fixed; left:50%; bottom:calc(84px + env(safe-area-inset-bottom)); transform:translateX(-50%) translateY(8px);
+           z-index:20; max-width:min(92vw, 520px); background:var(--text); color:var(--bg); padding:10px 16px; border-radius:12px;
+           font-size:.9rem; font-weight:700; box-shadow:0 6px 20px rgba(0,0,0,.25); opacity:0; pointer-events:none;
+           transition:opacity .18s, transform .18s; }
+  .toast.zeigt { opacity:1; transform:translateX(-50%) translateY(0); }
+  .toast.gut { background:var(--gut); color:#fff; }
+  .toast.warn { background:var(--warn); color:#fff; pointer-events:auto; }
+
+  /* Hinweis, die Seite auf den Home-Bildschirm zu legen */
+  .install { display:flex; gap:12px; align-items:center; padding:12px 14px; margin:0 0 12px; }
+  .install img { width:40px; height:40px; border-radius:10px; flex:none; }
+  .install p { margin:0; font-size:.86rem; }
+  .install p b { display:block; font-size:.92rem; }
+  .install button { flex:none; }
+
+  /* Zuletzt angesehen */
+  .zuletzt { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 12px; }
+
+  /* Tagesueberschriften bleiben beim Scrollen unter der Filterleiste stehen */
+  #plan .tag { position:sticky; top:var(--filter-hoehe, 110px); background:var(--bg); z-index:4; padding:6px 0; margin-top:14px; }
+
+  /* Vergangene Spiele eingeklappt */
+  details.zuletzt-box { border:0; background:none; box-shadow:none; padding:0; }
+  details.zuletzt-box summary { padding:6px 0; }
+
+  /* Sichtbarer Fokus fuer Tastatur, keine Ringe fuer Maus/Touch */
+  :focus-visible { outline:2px solid var(--akzent); outline-offset:2px; }
+  button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline:none; }
+  section { animation:einblenden .16s ease-out; }
+  @keyframes einblenden { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation:none !important; transition:none !important; } }
+
+  /* Druck: Abrechnung fuer den Steuerberater, ohne Bedienelemente */
+  @media print {
+    body { background:#fff; color:#000; padding:0; font-size:11pt; }
+    .leiste, .kopf button, .filterleiste, .zweit, .mg-untertabs, .toast, .install, .abo, .melde, details.karte, .tausch, .mg-datei, .profilzeile button { display:none !important; }
+    .karte, .spiel { border:1px solid #999; box-shadow:none; break-inside:avoid; }
+    .mg-eintrag input[type=text], .mg-eintrag input[type=number] { border:0; padding:0; background:none; font-weight:700; }
+    a { color:#000; text-decoration:none; }
+  }
 </style>
 </head>
 <body>
@@ -327,6 +371,13 @@
 </header>
 
 <main>
+  <div class="install karte versteckt" id="install">
+    <img src="icon-192.png" alt="" width="40" height="40">
+    <p><b>Als App aufs Handy</b><span id="install-text"></span></p>
+    <button type="button" class="textknopf versteckt" id="install-knopf">Installieren</button>
+    <button type="button" class="rund" id="install-weg" aria-label="Hinweis ausblenden">✕</button>
+  </div>
+
   <!-- Spielplan: alle Spiele nach Tag und Uhrzeit -->
   <section id="plan" class="versteckt">
     <div class="filterleiste">
@@ -347,6 +398,7 @@
   <!-- Namensauswahl -->
   <section id="auswahl">
     <p class="frage" id="frage">Wer bist du?</p>
+    <div class="zuletzt versteckt" id="zuletzt"></div>
     <label for="suche" class="versteckt">Name suchen</label>
     <input type="search" id="suche" placeholder="Eigenen Namen suchen …"
            autocomplete="off" autocorrect="off" spellcheck="false">
@@ -418,6 +470,7 @@
   </footer>
 </main>
 
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 <nav class="leiste" id="tabs">
   <div>
     <button type="button" id="tab-meine" class="aktiv"><svg class="i"><use href="#i-user"/></svg>Meine Spiele</button>
@@ -501,6 +554,25 @@
     p.appendChild(ikone("i-empty"));
     p.appendChild(document.createTextNode(text));
     return p;
+  }
+
+  // Kurze Rueckmeldung unten ueber der Leiste. Auch mitglieder.js nutzt sie.
+  var toastTimer = null;
+  function toast(text, art) {
+    var t = el("toast");
+    clearTimeout(toastTimer);
+    if (!text) { t.classList.remove("zeigt"); return; }
+    t.textContent = text; t.className = "toast " + (art || "");
+    requestAnimationFrame(function () { t.classList.add("zeigt"); });
+    toastTimer = setTimeout(function () { t.classList.remove("zeigt"); }, art === "warn" ? 7000 : 2500);
+  }
+  window.zeigeToast = toast;
+
+  function zuletztLesen() { try { return JSON.parse(lesen("zuletzt") || "[]"); } catch (e) { return []; } }
+  function zuletztMerken(slug) {
+    if (profil && profil.slug === slug) return;
+    var l = zuletztLesen().filter(function (x) { return x !== slug; });
+    l.unshift(slug); schreiben("zuletzt", JSON.stringify(l.slice(0, 5)));
   }
 
   // --------------------------------------------------------- Namensliste
@@ -683,6 +755,12 @@
     var tag = new Date(d); tag.setHours(0, 0, 0, 0);
     var diff = Math.round((tag - heute) / 86400000);
     var wann = diff === 0 ? "Heute" : diff === 1 ? "Morgen" : "In " + diff + " Tagen";
+    if (diff === 0) {
+      var min = Math.round((new Date(s.treffpunkt) - Date.now()) / 60000);
+      if (min <= 0) wann = new Date(s.beginn) < Date.now() ? "Läuft" : "Jetzt hin";
+      else if (min < 60) wann = "Treffpunkt in " + min + " Min.";
+      else wann = "Treffpunkt in " + Math.floor(min / 60) + " Std. " + (min % 60) + " Min.";
+    }
 
     var h = document.createElement("div"); h.className = "held";
     var w = document.createElement("div"); w.className = "wann"; w.textContent = wann + " · " + datumKurz(d); h.appendChild(w);
@@ -903,6 +981,7 @@
   }
 
   function zeigePlan() {
+    filterHoehe();
     var ziel = el("plan-liste");
     ziel.innerHTML = "";
     var f = ohneZeichen(el("plan-filter").value);
@@ -1048,9 +1127,12 @@
     if (!kommend.length) ziel.appendChild(leerZustand("Zurzeit keine Einteilung. Der Kalender füllt sich von allein."));
     else kommend.forEach(function (s) { ziel.appendChild(karte(s, p)); });
     if (gewesen.length) {
-      var h2 = document.createElement("h3"); h2.className = "abschnitt"; h2.textContent = "Zuletzt"; ziel.appendChild(h2);
-      gewesen.forEach(function (s) { ziel.appendChild(karte(s)); });
+      var box = document.createElement("details"); box.className = "karte zuletzt-box";
+      var sum = document.createElement("summary"); sum.className = "abschnitt"; sum.textContent = "Zuletzt (" + gewesen.length + ")"; box.appendChild(sum);
+      box.addEventListener("toggle", function () { if (box.open && box.childNodes.length === 1) gewesen.forEach(function (s) { box.appendChild(karte(s)); }); });
+      ziel.appendChild(box);
     }
+    if (!profil || profil.slug !== p.slug) zuletztMerken(p.slug);
     zeigeStatistik(p); zeigeSaison(p); zeigeMeldeKarte();
     if (profil && profil.slug === p.slug) pruefeNeue(p, false);
     if (!stillesNachladen) window.scrollTo(0, 0);
@@ -1061,11 +1143,23 @@
     el("tab-meine").classList.toggle("aktiv", name === "auswahl" || name === "detail");
     el("tab-plan").classList.toggle("aktiv", name === "plan");
     el("tab-mitglieder").classList.toggle("aktiv", name === "mitglieder");
+    Array.prototype.forEach.call(document.querySelectorAll(".leiste button"), function (b) {
+      if (b.classList.contains("aktiv")) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
+    });
   }
   function zeigeAuswahl(wechsel) {
     aktuell = null; ansicht("auswahl"); el("statistik").innerHTML = "";
-    el("frage").textContent = wechsel ? "Auf wen soll umgestellt werden?" : "Wer bist du?";
+    el("frage").textContent = wechsel ? "Wen willst du sehen?" : "Wer bist du?";
     el("abbrechen-zeile").classList.toggle("versteckt", !wechsel || !profil);
+    var z = el("zuletzt"); z.innerHTML = "";
+    var slugs = (profil && profil.slug ? [profil.slug] : []).concat(zuletztLesen());
+    slugs.forEach(function (slug) {
+      var p = personMit(slug); if (!p) return;
+      var c = chip({ name: p.name, slug: p.slug }, false, profil && slug === profil.slug ? "ich" : "");
+      c.addEventListener("click", function (ev) { ev.preventDefault(); if (profil && slug === profil.slug) zeigePerson(p); else { zuletztMerken(slug); location.hash = slug; } });
+      z.appendChild(c);
+    });
+    z.classList.toggle("versteckt", !z.childNodes.length);
   }
 
   var mitgliederGeladen = null;
@@ -1106,7 +1200,7 @@
   el("kopieren").addEventListener("click", function () {
     if (!aktuell) return;
     var url = feedUrl(aktuell.slug, location.protocol), knopf = el("kopieren");
-    var fertig = function () { knopf.textContent = "Kopiert ✓"; setTimeout(function () { knopf.textContent = "Link kopieren"; }, 2000); };
+    var fertig = function () { toast("Link kopiert ✓", "gut"); knopf.textContent = "Kopiert ✓"; setTimeout(function () { knopf.textContent = "Link kopieren"; }, 2000); };
     if (navigator.clipboard) navigator.clipboard.writeText(url).then(fertig, function () { prompt("Link:", url); }); else prompt("Link:", url);
   });
   window.addEventListener("hashchange", ausHash);
@@ -1125,6 +1219,31 @@
     el("teilen").addEventListener("click", function () { if (aktuell) navigator.share({ title: "Einteilungen " + aktuell.name, url: basis + "#" + aktuell.slug }).catch(function () {}); });
   }
   document.addEventListener("visibilitychange", function () { if (document.visibilityState === "visible" && daten) neuLaden(); });
+
+  function filterHoehe() {
+    var f = document.querySelector("#plan .filterleiste");
+    if (f) document.documentElement.style.setProperty("--filter-hoehe", f.offsetHeight + "px");
+  }
+  window.addEventListener("resize", filterHoehe);
+
+  // Hinweis, die Seite als App abzulegen: iOS zeigt keinen eigenen Dialog,
+  // Android liefert ein beforeinstallprompt-Ereignis, das wir aufheben.
+  var installEreignis = null;
+  window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); installEreignis = e; zeigeInstallHinweis(); });
+  function zeigeInstallHinweis() {
+    var box = el("install");
+    if (alsApp() || lesen("install-weg") === "1") { box.classList.add("versteckt"); return; }
+    var ios = /iPhone|iPad|iPod/.test(navigator.userAgent) && !window.MSStream;
+    if (!ios && !installEreignis) { box.classList.add("versteckt"); return; }
+    box.classList.remove("versteckt");
+    el("install-text").textContent = ios
+      ? "In Safari unten auf Teilen tippen, dann „Zum Home-Bildschirm“. Dann gibt es auch Mitteilungen."
+      : "Als App auf den Startbildschirm legen – startet schneller, kann Mitteilungen.";
+    var knopf = el("install-knopf");
+    knopf.classList.toggle("versteckt", !installEreignis);
+    knopf.onclick = function () { if (installEreignis) { installEreignis.prompt(); installEreignis = null; box.classList.add("versteckt"); } };
+    el("install-weg").onclick = function () { schreiben("install-weg", "1"); box.classList.add("versteckt"); };
+  }
 
   function hole(name) { return fetch(name + "?" + Date.now()).then(function (r) { if (!r.ok) throw 0; return r.json(); }); }
   function standAnzeigen(d, lauf) {
@@ -1151,7 +1270,7 @@
       document.title = daten.titel; el("titel").textContent = daten.titel; el("quelle").href = daten.quelle;
       standAnzeigen(daten, b[1]);
       el("fuss").textContent = "Termine beginnen " + daten.vorlauf_minuten + " Minuten vor Spielbeginn, damit du rechtzeitig an der Halle bist.";
-      zeigeListe(""); ausHash();
+      zeigeListe(""); ausHash(); zeigeInstallHinweis(); filterHoehe();
     })
     .catch(function () { el("stand").className = "stand alt"; el("stand").textContent = "Daten konnten nicht geladen werden."; });
 
