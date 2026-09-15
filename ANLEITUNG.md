@@ -622,17 +622,33 @@ tun, wenn sie sich ändert** (steht dann im Commit). Fehlt eine Tabelle, sagt
 die App „Die Datenbank kennt eine Tabelle noch nicht“.
 
 **Danach einmalig dich selbst zum Admin machen** (sonst kann niemand
-freigeschaltet werden, auch du nicht). Im SQL Editor, mit deiner Adresse:
+freigeschaltet werden, auch du nicht). Reihenfolge:
+
+1. In der App **Mitglieder → Konto anlegen**, Link in der Bestätigungsmail
+   antippen. Die Profilzeile entsteht dabei von selbst (Datenbank-Trigger),
+   einen Namen musst du dafür noch nicht wählen.
+2. Im SQL Editor, mit deiner Adresse:
 
 ```sql
 update public.profile set admin = true, freigeschaltet = true
- where id = (select id from auth.users where email = 'deine@adresse.de');
+ where email = 'deine@adresse.de';
 ```
 
-Das geht erst, nachdem du dich in der App registriert **und** unter „Wer bist
-du?“ deinen Namen gespeichert hast – vorher gibt es deine Profilzeile noch
-nicht. Steht danach unter **Konto** der Abschnitt „Freischaltung“, hat es
-geklappt.
+3. Prüfen – die Zeile muss `admin = true` zeigen:
+
+```sql
+select email, slug, admin, freigeschaltet from public.profile;
+```
+
+4. In der App abmelden und wieder anmelden. Unter **Konto** steht jetzt
+   „Freischaltung“.
+
+Kommt bei Schritt 3 keine Zeile: Das Konto ist noch nicht bestätigt
+(`select email, email_confirmed_at from auth.users;` – ist die Spalte leer,
+den Link aus der Mail antippen oder in der App „Bestätigungsmail erneut
+senden“) oder `schema.sql` wurde vor der Registrierung noch nicht bis v6
+ausgeführt – dann einfach noch einmal ausführen, der Nachtrag holt
+bestehende Konten in die Tabelle.
 
 ### 10.3 Login-Einstellungen
 
@@ -661,7 +677,52 @@ Empfohlene Schalter, alle unter **Authentication**:
 
 Die Links in den Mails (Bestätigung, Passwort vergessen) führen auf die
 App; die verarbeitet sie im Reiter Mitglieder – beim Passwort-Link erscheint
-dort direkt „Neues Passwort“.
+dort direkt „Neues Passwort“. **Ohne die Site URL und Redirect URL von oben
+landen die Links auf `localhost:3000`, also im Nichts** – das Konto ist
+dann zwar bestätigt, aber niemand merkt es.
+
+#### E-Mails auf Deutsch
+
+Supabase verschickt englische Standardmails („Confirm your signup“). Unter
+**Authentication → Email Templates** lassen sich Betreff und Text je Mail
+ersetzen. Vorschläge – `{{ .ConfirmationURL }}` ist der Link und muss
+drinbleiben:
+
+**Confirm signup** – Betreff: `Einteilungen: E-Mail bestätigen`
+
+```html
+<h2>Willkommen bei den Einteilungen</h2>
+<p>Du hast ein Konto für den Mitgliederbereich angelegt. Ein Tipp auf den
+Link bestätigt deine Adresse und bringt dich zurück in die App:</p>
+<p><a href="{{ .ConfirmationURL }}">E-Mail bestätigen</a></p>
+<p>Danach wählst du in der App deinen Namen. Für Tauschbörse, Verfügbarkeit
+und Hallen-Hinweise schaltet dich der Betreiber anschließend frei.</p>
+<p>Wenn du das nicht warst, ignoriere diese Mail.</p>
+```
+
+**Reset password** – Betreff: `Einteilungen: Neues Passwort`
+
+```html
+<h2>Neues Passwort</h2>
+<p>Jemand hat für dieses Konto ein neues Passwort angefordert. Der Link
+bringt dich in die App, dort gibst du das neue Passwort ein:</p>
+<p><a href="{{ .ConfirmationURL }}">Neues Passwort setzen</a></p>
+<p>Wenn du das nicht warst, ignoriere diese Mail – das Passwort bleibt, wie
+es ist.</p>
+```
+
+**Change email address** – Betreff: `Einteilungen: Neue E-Mail-Adresse bestätigen`
+
+```html
+<h2>Neue E-Mail-Adresse</h2>
+<p>Bitte bestätige, dass dieses Konto künftig über {{ .NewEmail }} läuft:</p>
+<p><a href="{{ .ConfirmationURL }}">Adresse bestätigen</a></p>
+```
+
+Die Absenderadresse bleibt `noreply@mail.app.supabase.io`, solange kein
+eigener SMTP-Server eingetragen ist (Project Settings → Auth → SMTP). Für
+einen Kollegenkreis reicht die Voreinstellung; sie ist auf wenige Mails pro
+Stunde begrenzt.
 
 ### 10.4 Zugangsdaten eintragen
 
@@ -788,6 +849,20 @@ also ohne Stau. Einmal je Halle berechnet, im Profil gemerkt.
 **Hinter dem Login liegen** außerdem die Tauschoptionen. Anzeigen, Spielplan
 und Kalender bleiben offen.
 
+### 10.6a Was ein neuer Kollege sieht
+
+1. **Mitglieder → Konto anlegen** → Karte „Fast geschafft – wir haben eine
+   E-Mail an … geschickt“.
+2. Link in der Mail → landet in der App, Meldung „E-Mail bestätigt –
+   willkommen!“, direkt die Frage „Wer bist du?“.
+3. Name wählen, optional Adresse → Abrechnung geht sofort.
+4. Gelber Hinweis „wartet auf Freischaltung“, bis du unter Konto →
+   Freischaltung getippt hast.
+
+Wer sich anmelden will, bevor der Link angetippt wurde, bekommt „noch nicht
+bestätigt“ und einen Knopf **Bestätigungsmail erneut senden**. Abgelaufene
+Links (24 Stunden) werden beim Ankommen erklärt, ebenfalls mit diesem Knopf.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –
@@ -909,6 +984,24 @@ raus ist (räumt sich nach sieben Tagen selbst auf). Ohne cron-job.org
 ---
 
 ## Wenn mal etwas nicht stimmt
+
+**Registriert, Mail bestätigt, aber „ich bin nicht in der Datenbank“ /
+Admin-SQL wirkt nicht.** Drei Ursachen, in dieser Reihenfolge prüfen:
+
+1. `select email, email_confirmed_at from auth.users;` – Konto da? Spalte
+   gefüllt? Wenn leer: Link nicht angekommen (Spam, oder Site URL fehlt →
+   Link ging auf localhost). In der App „Bestätigungsmail erneut senden“.
+2. `select email, admin, freigeschaltet from public.profile;` – Zeile da?
+   Wenn nicht: `schema.sql` (ab v6) noch einmal ausführen, der Nachtrag legt
+   sie an. Vor v6 entstand die Zeile erst beim Speichern des Namens in der
+   App, und das Admin-SQL lief ins Leere.
+3. Admin-SQL mit `where email = '…'` ausführen, nicht mit der `id`-Unterabfrage
+   aus älteren Fassungen. Danach in der App **ab- und wieder anmelden**.
+
+**„E-Mail oder Passwort stimmt nicht“ direkt nach der Registrierung.**
+Supabase meldet bei unbestätigten Konten je nach Einstellung diesen Text
+statt „nicht bestätigt“. Also: erst den Link in der Mail, dann anmelden.
+
 
 | Symptom | Ursache und Abhilfe |
 |---|---|

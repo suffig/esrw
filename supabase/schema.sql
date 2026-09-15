@@ -374,7 +374,9 @@ create policy "Admin schaltet frei"     on public.profile for update using (publ
 create or replace function public.profil_schutz()
 returns trigger language plpgsql security definer set search_path = public as $$
 begin
-  if not public.ist_admin() then
+  -- auth.uid() ist null im SQL Editor, fuer service_role und in Triggern
+  -- aus dem Auth-System - die duerfen alles. Nur echte Nutzer werden gebremst.
+  if auth.uid() is not null and not public.ist_admin() then
     -- Normale Nutzer behalten, was der Admin gesetzt hat
     if tg_op = 'UPDATE' then
       new.freigeschaltet := old.freigeschaltet;
@@ -443,6 +445,38 @@ update storage.buckets
        allowed_mime_types = array['image/jpeg','image/png','image/webp','image/heic','image/heif','application/pdf']
  where id = 'belege';
 
--- Einmalig: dich selbst zum Admin machen (E-Mail anpassen, dann ausfuehren):
+-- Einmalig: dich selbst zum Admin machen - siehe v6 unten (die Profilzeile
+-- entsteht dort automatisch mit dem Konto).
+
+-- ======================================================================
+-- v6: Profilzeile entsteht mit dem Konto
+-- ======================================================================
+-- Bisher gab es die Profilzeile erst, wenn jemand in der App seinen Namen
+-- gespeichert hatte - vorher lief das Admin-SQL ins Leere und die Person
+-- fehlte in der Freischaltungsliste. Jetzt legt das Auth-System sie an.
+create or replace function public.neues_konto()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  insert into public.profile (id, email) values (new.id, new.email)
+    on conflict (id) do update set email = excluded.email;
+  return new;
+end;
+$$;
+drop trigger if exists konto_angelegt on auth.users;
+create trigger konto_angelegt after insert or update of email on auth.users
+  for each row execute function public.neues_konto();
+
+-- Bestehende Konten nachtragen (E-Mail mitnehmen)
+insert into public.profile (id, email)
+  select id, email from auth.users
+  on conflict (id) do update set email = excluded.email;
+
+-- ----------------------------------------------------------------------
+-- Einmalig: dich selbst zum Admin machen. E-Mail anpassen, ausfuehren.
+-- Geht sofort nach der Registrierung, auch ohne Namen in der App.
+-- ----------------------------------------------------------------------
 -- update public.profile set admin = true, freigeschaltet = true
---  where id = (select id from auth.users where email = 'deine@adresse.de');
+--  where email = 'deine@adresse.de';
+--
+-- Pruefen:
+-- select email, slug, admin, freigeschaltet from public.profile;

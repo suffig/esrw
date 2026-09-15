@@ -23,6 +23,29 @@ window.Mitglieder = (function () {
   var reiter = "abrechnung", gewaehlteSaison = null, nurOffene = false;
   var angezeigt = null;          // "anmeldung" | "bereich" | "passwort"
   var passwortNeu = false;       // kam ueber den Link aus "Passwort vergessen"
+  var ankunft = ankunftLesen();  // was der Mail-Link in der Adresse mitbrachte
+
+  // Rueckkehradresse fuer Mail-Links: ohne Suchteil und ohne Raute, sonst
+  // passt sie nicht auf die Freigabeliste in Supabase.
+  function rueckkehr() { return location.origin + location.pathname; }
+
+  function ankunftLesen() {
+    var werte = {};
+    [location.hash.replace(/^#/, ""), location.search.replace(/^\?/, "")].forEach(function (teil) {
+      teil.split("&").forEach(function (paar) {
+        var i = paar.indexOf("=");
+        if (i > 0) try { werte[decodeURIComponent(paar.slice(0, i))] = decodeURIComponent(paar.slice(i + 1).replace(/\+/g, " ")); } catch (e) {}
+      });
+    });
+    if (!werte.access_token && !werte.code && !werte.error && !werte.error_description && !werte.type) return null;
+    return werte;
+  }
+  function ankunftText(a) {
+    var m = (a.error_description || a.error || "").toLowerCase();
+    if (/expired|invalid/.test(m)) return "Der Link aus der E-Mail ist abgelaufen oder wurde schon benutzt. Melde dich einfach an – falls das nicht geht, unten „Bestätigungsmail erneut senden“.";
+    if (m) return "Der Link hat nicht funktioniert: " + (a.error_description || a.error);
+    return null;
+  }
 
   // Feste Version mit Pruefsumme: der Browser laedt die Datei nur, wenn sie
   // exakt so aussieht wie beim Einbau. Neue Version = neue Zeile hier.
@@ -250,6 +273,7 @@ window.Mitglieder = (function () {
         },
         signOut: function () { localStorage.removeItem("mock_session"); melde(); return Promise.resolve({ error: null }); },
         resetPasswordForEmail: function () { return Promise.resolve({ error: null }); },
+        resend: function () { return Promise.resolve({ error: null }); },
         updateUser: function (p) {
           var s = sitzung(); if (!s) return Promise.resolve({ error: { message: "nicht angemeldet" } });
           var nutzer = lies("users", {}); if (nutzer[s.user.email] && p.password) nutzer[s.user.email].pw = p.password;
@@ -302,6 +326,9 @@ window.Mitglieder = (function () {
           }
           if (!s) { profil = null; profilVersprechen = null; einsaetze = {}; if (wurzel) zeigeAnmeldung(); }
           else if (!vorher && wurzel && angezeigt === "anmeldung" && !passwortNeu) nachLogin();
+          if (s && !vorher && ankunft && (ankunft.type === "signup" || ankunft.type === "email" || ankunft.code)) {
+            kurzMeldung("E-Mail bestätigt – willkommen!", "gut"); ankunft = null;
+          }
           document.dispatchEvent(new CustomEvent("mg-sitzung", { detail: { angemeldet: !!s } }));
         });
         return sb.auth.getSession().then(function (r) {
@@ -393,18 +420,25 @@ window.Mitglieder = (function () {
       var lauf;
       if (modus === "registrieren") {
         lauf = sb.auth.signUp({ email: p.email, password: p.password,
-          options: { emailRedirectTo: location.href.split("#")[0] } });
+          options: { emailRedirectTo: rueckkehr() } });
       } else if (modus === "vergessen") {
-        lauf = sb.auth.resetPasswordForEmail(p.email, { redirectTo: location.href.split("#")[0] });
+        lauf = sb.auth.resetPasswordForEmail(p.email, { redirectTo: rueckkehr() });
       } else {
         lauf = sb.auth.signInWithPassword(p);
       }
       lauf.then(function (r) {
         knopf.disabled = false;
-        if (r.error) { meldung(fehlerText(r.error), "warn"); return; }
-        if (modus === "vergessen") { meldung("Falls es das Konto gibt, ist eine E-Mail mit dem Link unterwegs.", "gut"); return; }
+        if (r.error) {
+          meldung(fehlerText(r.error), "warn");
+          // Nicht bestaetigt oder Passwort falsch: Weg zur neuen Bestaetigungsmail anbieten
+          if (modus === "anmelden" && /not confirmed|invalid login/i.test(r.error.message || "")) erneutSenden.classList.remove("versteckt");
+          return;
+        }
+        if (modus === "vergessen") { zeigeMailHinweis("Passwort zurücksetzen", p.email, "Darin ist ein Link „Neues Passwort setzen“. Er bringt dich hierher zurück, du gibst ein neues Passwort ein – fertig."); return; }
         if (modus === "registrieren" && !(r.data && r.data.session)) {
-          meldung("Konto angelegt. Bitte den Bestätigungslink in der E-Mail antippen, danach hier anmelden. Der Betreiber schaltet dich dann frei.", "gut");
+          var schonDa = r.data && r.data.user && r.data.user.identities && r.data.user.identities.length === 0;
+          if (schonDa) { meldung("Für diese E-Mail gibt es schon ein Konto – bitte anmelden oder „Passwort vergessen“.", "warn"); zeigeAnmeldung("anmelden"); return; }
+          zeigeMailHinweis("Fast geschafft", p.email, "Darin ist ein Link „E-Mail bestätigen“. Nach dem Antippen bist du hier angemeldet und wählst deinen Namen. Der Betreiber schaltet dich danach für die gemeinsamen Funktionen frei.");
           return;
         }
         session = r.data.session;
@@ -417,6 +451,19 @@ window.Mitglieder = (function () {
       knopf
     ]);
 
+    var erneutSenden = h("p", { class: "hinweis warn versteckt" }, [
+      h("span", {}, ["Konto noch nicht bestätigt? ",
+        h("button", { type: "button", class: "textknopf", text: "Bestätigungsmail erneut senden", onclick: function () {
+          var adresse = email.value.trim();
+          if (!adresse) { meldung("Erst die E-Mail-Adresse oben eintragen.", "warn"); return; }
+          sb.auth.resend({ type: "signup", email: adresse, options: { emailRedirectTo: rueckkehr() } }).then(function (r) {
+            if (r.error) meldung(fehlerText(r.error), "warn");
+            else zeigeMailHinweis("Neue Bestätigungsmail", adresse, "Der alte Link gilt nicht mehr, bitte den neuen antippen.");
+          });
+        } })])
+    ]);
+    if (ankunft && ankunftText(ankunft)) { meldung(ankunftText(ankunft), "warn"); erneutSenden.classList.remove("versteckt"); ankunft = null; }
+
     var wechsel = h("p", { class: "meta mg-wechsel" }, modus === "anmelden" ? [
       h("button", { type: "button", class: "textknopf", text: "Konto anlegen", onclick: function () { zeigeAnmeldung("registrieren"); } }),
       " · ",
@@ -426,7 +473,7 @@ window.Mitglieder = (function () {
     ]);
 
     wurzel.appendChild(h("div", { class: "melde karte" }, [
-      form, wechsel,
+      form, erneutSenden, wechsel,
       h("p", { class: "meta", text: "Konto und Daten liegen bei Supabase" +
         (sb && sb._attrappe ? " – hier gerade als Attrappe im Browser, nichts geht raus." : ". Jeder sieht nur seine eigenen Einträge; Tauschbörse und Verfügbarkeiten sehen alle Mitglieder.") })
     ]));
@@ -436,14 +483,30 @@ window.Mitglieder = (function () {
         "Tauschbörse für Spiele, die du abgeben musst · Tage, an denen du nicht kannst oder gern pfeifen würdest · " +
         "echte Push-Nachrichten bei neuen Einteilungen." })
     ]));
-    if (sb && sb._attrappe) meldung("Attrappe aktiv: Konten werden nur in diesem Browser gespeichert.", "");
+  }
+
+  // Nach Registrierung / Passwort vergessen / erneut senden: eine Karte, die
+  // sagt, was jetzt passiert - statt einer Zeile, die gleich wieder weg ist.
+  function zeigeMailHinweis(titel, adresse, text) {
+    angezeigt = "anmeldung";
+    leeren(wurzel);
+    wurzel.appendChild(h("div", { class: "melde karte" }, [
+      h("h4", {}, [ikone("i-bell"), " " + titel]),
+      h("p", {}, ["Wir haben eine E-Mail an ", h("b", { text: adresse }), " geschickt. " + text]),
+      h("p", { class: "meta", text: "Nichts da? Ein, zwei Minuten warten und den Spam-Ordner prüfen. Absender ist Supabase (noreply@mail.app.supabase.io), Betreff je nach Einstellung „Confirm your signup“ oder „E-Mail bestätigen“." }),
+      h("button", { type: "button", class: "haupt", text: "Zur Anmeldung", onclick: function () { zeigeAnmeldung("anmelden"); } })
+    ]));
   }
 
   function fehlerText(err) {
     var m = (err && err.message) || "";
-    if (/invalid login/i.test(m)) return "E-Mail oder Passwort stimmt nicht.";
-    if (/already registered|gibt es schon/i.test(m)) return "Für diese E-Mail gibt es schon ein Konto.";
-    if (/email not confirmed/i.test(m)) return "Bitte erst den Bestätigungslink in der E-Mail antippen.";
+    if (/invalid login/i.test(m)) return "E-Mail oder Passwort stimmt nicht. Falls du das Konto gerade erst angelegt hast: erst den Link in der Bestätigungsmail antippen.";
+    if (/already registered|gibt es schon/i.test(m)) return "Für diese E-Mail gibt es schon ein Konto – anmelden oder „Passwort vergessen“.";
+    if (/email not confirmed/i.test(m)) return "Das Konto ist noch nicht bestätigt – bitte den Link in der E-Mail antippen (unten kannst du sie erneut anfordern).";
+    if (/signup.*disabled|signups not allowed/i.test(m)) return "Registrierung ist beim Betreiber abgeschaltet.";
+    if (/over_email_send_rate_limit|rate limit exceeded/i.test(m)) return "Zu viele E-Mails in kurzer Zeit – bitte ein paar Minuten warten.";
+    if (/same password|different from the old/i.test(m)) return "Das neue Passwort muss sich vom alten unterscheiden.";
+    if (/weak|pwned|leaked|easy to guess/i.test(m)) return "Das Passwort ist zu unsicher oder aus einem bekannten Datenleck – bitte ein anderes wählen.";
     if (/password/i.test(m) && /short|least/i.test(m)) return "Das Passwort ist zu kurz.";
     if (/rate limit/i.test(m)) return "Zu viele Versuche – kurz warten.";
     if (/does not exist|schema cache/i.test(m)) return "Die Datenbank kennt eine Tabelle noch nicht – bitte supabase/schema.sql erneut ausführen (Anleitung Schritt 10).";
@@ -1667,7 +1730,7 @@ window.Mitglieder = (function () {
       var offen = alle.filter(function (p) { return !p.freigeschaltet && !p.admin; });
       leeren(box);
       box.appendChild(h("h4", { text: "Freischaltung" }));
-      box.appendChild(h("p", { text: alle.length + " Konten, " + offen.length + " warten. Wer noch keinen Namen gewählt hat, taucht hier erst nach dem ersten Speichern auf." }));
+      box.appendChild(h("p", { text: alle.length + " Konten, " + offen.length + " warten. „(ohne Namen)“ heißt: registriert, aber in der App noch keinen Namen gewählt – freischalten geht trotzdem." }));
       if (!offen.length) box.appendChild(h("p", { class: "meta", text: "Niemand wartet." }));
       offen.forEach(function (p) {
         box.appendChild(h("div", { class: "sperre" }, [
