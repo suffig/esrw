@@ -5,7 +5,7 @@
  * Parkhaus, Zug - kommt die zuletzt gespeicherte Fassung zum Zug.
  */
 
-const VERSION = "v9";
+const VERSION = "v11";
 const CACHE = "einteilungen-" + VERSION;
 
 // Wird beim ersten Besuch gespeichert, damit die App auch dann startet,
@@ -19,6 +19,7 @@ const GRUNDGERUEST = [
   "./mitglieder.js",
   "./supabase.json",
   "./gebuehren.json",
+  "./push.json",
   "./manifest.webmanifest",
   "./icon-192.png",
   "./icon-512.png",
@@ -45,16 +46,31 @@ self.addEventListener("activate", (e) => {
   );
 });
 
+// Echtes Push vom Workflow (push_senden.py): Nutzlast ist JSON mit
+// titel, text, url. Ohne Nutzlast (Test aus den Browser-Werkzeugen) kommt
+// eine allgemeine Meldung.
+self.addEventListener("push", (e) => {
+  let daten = { titel: "Einteilungen", text: "Es gibt Neues.", url: "./" };
+  try { if (e.data) daten = Object.assign(daten, e.data.json()); } catch (err) {
+    try { daten.text = e.data.text(); } catch (err2) {}
+  }
+  e.waitUntil(self.registration.showNotification(daten.titel, {
+    body: daten.text, icon: "icon-192.png", badge: "icon-192.png",
+    tag: "einteilung", renotify: true, data: { url: daten.url }
+  }));
+});
+
 // Tippt jemand auf die Mitteilung, soll die App nach vorn kommen statt
 // ein zweites Fenster zu oeffnen.
 self.addEventListener("notificationclick", (e) => {
   e.notification.close();
-  const ziel = new URL("./", self.location).href;
+  const zielPfad = (e.notification.data && e.notification.data.url) || "./";
+  const ziel = new URL(zielPfad, self.location).href;
   e.waitUntil(
     self.clients.matchAll({ type: "window", includeUncontrolled: true })
       .then((fenster) => {
         for (const f of fenster) {
-          if (f.url.startsWith(ziel) && "focus" in f) return f.focus();
+          if (f.url.split("#")[0] === ziel.split("#")[0] && "focus" in f) { f.navigate && f.navigate(ziel); return f.focus(); }
         }
         return self.clients.openWindow(ziel);
       })

@@ -1,12 +1,14 @@
-/* Mitgliederbereich: Konto, Profil, Abrechnung.
+/* Mitgliederbereich: Konto, Abrechnung, Tauschboerse, Verfuegbarkeit, Push.
  *
- * Spricht direkt aus dem Browser mit Supabase (Datenbank + Login). Was ein
- * Nutzer sehen und aendern darf, erzwingt die Datenbank ueber Row Level
- * Security - siehe supabase/schema.sql. Der "anon"-Schluessel im Quelltext
- * ist dafuer vorgesehen und oeffnet nichts, was die Regeln nicht erlauben.
+ * Spricht direkt aus dem Browser mit Supabase (Datenbank + Login + Storage).
+ * Was ein Nutzer sehen und aendern darf, erzwingt die Datenbank ueber Row
+ * Level Security - siehe supabase/schema.sql. Der "anon"-Schluessel im
+ * Quelltext ist dafuer vorgesehen und oeffnet nichts, was die Regeln nicht
+ * erlauben.
  *
  * Wird von index.html erst geladen, wenn der Reiter "Mitglieder" geoeffnet
- * wird oder eine Funktion hinter dem Login gebraucht wird (Tauschoptionen).
+ * wird oder eine Funktion hinter dem Login gebraucht wird (Tauschoptionen,
+ * Hinweis auf fehlende Abrechnungen).
  *
  * Mit "mock": true in supabase.json laeuft eine Attrappe im Browser, um die
  * Oberflaeche ohne Supabase auszuprobieren. Sie speichert in localStorage.
@@ -15,13 +17,15 @@
 window.Mitglieder = (function () {
   "use strict";
 
-  var wurzel = null, ctx = null, cfg = null, sb = null, gebuehren = null;
+  var wurzel = null, inhalt = null, ctx = null, cfg = null, sb = null, gebuehren = null, pushCfg = null;
   var session = null, profil = null, einsaetze = {}, archivDaten = null;
-  var speicherTimer = {}, bereitVersprechen = null;
+  var speicherTimer = {}, bereitVersprechen = null, profilVersprechen = null;
+  var reiter = "abrechnung", gewaehlteSaison = null;
 
   var SUPABASE_CDN = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js";
   var OSRM = "https://router.project-osrm.org/route/v1/driving/";
   var WT = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+  var MONATE = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
 
   // ------------------------------------------------------------ Hilfen
 
@@ -41,6 +45,7 @@ window.Mitglieder = (function () {
   }
 
   function leeren(el) { while (el.firstChild) el.removeChild(el.firstChild); }
+  function ikone(name) { return ctx && ctx.ikone ? ctx.ikone(name) : document.createTextNode(""); }
 
   function euro(n) {
     return (Math.round((n || 0) * 100) / 100).toLocaleString("de-DE",
@@ -55,6 +60,12 @@ window.Mitglieder = (function () {
 
   function uhr(d) { return d.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" }); }
   function datum(d) { return WT[d.getDay()] + ". " + d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }); }
+  function datumLang(d) { return WT[d.getDay()] + ". " + d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" }); }
+  function isoTag(d) {
+    return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2);
+  }
+  function kennungVon(s) { return s.beginn + "|" + s.paarung; }
+  function sicher(s) { return String(s).replace(/[^a-zA-Z0-9._-]+/g, "_").slice(0, 80); }
 
   function kmZwischen(a, b) {
     var r = 6371, p1 = a[0] * Math.PI / 180, p2 = b[0] * Math.PI / 180;
@@ -72,6 +83,10 @@ window.Mitglieder = (function () {
     m.className = "mg-meldung " + (art || "");
     m.hidden = !text;
   }
+  function kurzMeldung(text, art) {
+    meldung(text, art);
+    setTimeout(function () { var m = wurzel && wurzel.querySelector(".mg-meldung"); if (m && m.textContent === text) meldung("", ""); }, 1800);
+  }
 
   function skriptLaden(url) {
     return new Promise(function (ok, nein) {
@@ -88,11 +103,13 @@ window.Mitglieder = (function () {
       .catch(function () { return standard; });
   }
 
+  function rolleBadge(rolle) { return h("span", { class: "rolle " + (rolle || ""), text: rolle || "" }); }
+
   // --------------------------------------------------------- Attrappe
   //
-  // Bildet genau die Handvoll Aufrufe nach, die dieses Modul benutzt.
-  // Passwoerter liegen im Klartext im localStorage - eine Attrappe zum
-  // Ausprobieren der Oberflaeche, kein Login.
+  // Bildet die Aufrufe nach, die dieses Modul benutzt (Auth, Tabellen mit
+  // Filtern, Storage). Passwoerter liegen im Klartext im localStorage -
+  // eine Attrappe zum Ausprobieren der Oberflaeche, kein Login.
 
   function attrappe() {
     function lies(k, std) { try { return JSON.parse(localStorage.getItem("mock_" + k)) || std; } catch (e) { return std; } }
@@ -105,40 +122,97 @@ window.Mitglieder = (function () {
     function melde() { var s = sitzung(); hoerer.forEach(function (f) { f(s ? "SIGNED_IN" : "SIGNED_OUT", s); }); }
 
     function tabelle(name) {
-      var zeilen = lies(name, []);
-      var filter = [];
-      var api = {
-        select: function () { return api; },
-        eq: function (feld, wert) { filter.push([feld, wert]); return api; },
-        order: function () { return api; },
-        maybeSingle: function () { return Promise.resolve({ data: api._treffer()[0] || null, error: null }); },
-        then: function (ok) { return Promise.resolve({ data: api._treffer(), error: null }).then(ok); },
-        _treffer: function () {
-          return zeilen.filter(function (z) { return filter.every(function (f) { return z[f[0]] === f[1]; }); });
-        },
-        upsert: function (obj, opt) {
-          var liste = Array.isArray(obj) ? obj : [obj];
+      var filter = [], sortierung = null, aktion = null, nutz = null, opt = null, limitN = null;
+      function passt(z) {
+        return filter.every(function (f) {
+          var v = z[f[0]];
+          switch (f[1]) {
+            case "eq": return v === f[2];
+            case "neq": return v !== f[2];
+            case "in": return f[2].indexOf(v) >= 0;
+            case "gte": return v >= f[2];
+            case "lte": return v <= f[2];
+            case "lt": return v < f[2];
+          }
+          return true;
+        });
+      }
+      function ausfuehren() {
+        var zeilen = lies(name, []);
+        if (!aktion || aktion === "select") {
+          var t = zeilen.filter(passt);
+          if (sortierung) t.sort(function (a, b) { var x = a[sortierung[0]], y = b[sortierung[0]]; return (x < y ? -1 : x > y ? 1 : 0) * (sortierung[1] ? 1 : -1); });
+          if (limitN) t = t.slice(0, limitN);
+          return { data: t, error: null };
+        }
+        if (aktion === "insert" || aktion === "upsert") {
+          var liste = Array.isArray(nutz) ? nutz : [nutz], raus = [];
           liste.forEach(function (o) {
             var i = -1;
-            if (name === "profile") i = zeilen.findIndex(function (z) { return z.id === o.id; });
-            else if (opt && opt.onConflict) i = zeilen.findIndex(function (z) { return z.user_id === o.user_id && z.kennung === o.kennung; });
-            else if (o.id) i = zeilen.findIndex(function (z) { return z.id === o.id; });
-            var neu = Object.assign({}, i >= 0 ? zeilen[i] : { id: o.id || ("m" + Date.now() + Math.random()) }, o, { geaendert: new Date().toISOString() });
+            if (aktion === "upsert") {
+              var felder = name === "profile" ? ["id"] : opt && opt.onConflict ? opt.onConflict.split(",") : ["id"];
+              i = zeilen.findIndex(function (z) { return felder.every(function (f) { return z[f.trim()] === o[f.trim()]; }); });
+            }
+            var neu = Object.assign({}, i >= 0 ? zeilen[i] : { id: o.id || ("m" + Date.now() + Math.random().toString(36).slice(2)), angelegt: new Date().toISOString() },
+                                    o, { geaendert: new Date().toISOString() });
             if (i >= 0) zeilen[i] = neu; else zeilen.push(neu);
+            raus.push(neu);
           });
           schreib(name, zeilen);
-          return { select: function () { return Promise.resolve({ data: liste, error: null }); },
-                   then: function (ok) { return Promise.resolve({ data: liste, error: null }).then(ok); } };
-        },
-        delete: function () {
-          return { eq: function (feld, wert) {
-            zeilen = zeilen.filter(function (z) { return z[feld] !== wert; });
-            schreib(name, zeilen);
-            return Promise.resolve({ error: null });
-          } };
+          return { data: raus, error: null };
         }
+        if (aktion === "update") {
+          var geaendert = [];
+          zeilen.forEach(function (z) { if (passt(z)) { Object.assign(z, nutz, { geaendert: new Date().toISOString() }); geaendert.push(z); } });
+          schreib(name, zeilen);
+          return { data: geaendert, error: null };
+        }
+        if (aktion === "delete") {
+          schreib(name, zeilen.filter(function (z) { return !passt(z); }));
+          return { data: null, error: null };
+        }
+        return { data: null, error: { message: "unbekannte Aktion" } };
+      }
+      var api = {
+        select: function () { if (!aktion) aktion = "select"; return api; },
+        eq: function (f, w) { filter.push([f, "eq", w]); return api; },
+        neq: function (f, w) { filter.push([f, "neq", w]); return api; },
+        in: function (f, w) { filter.push([f, "in", w]); return api; },
+        gte: function (f, w) { filter.push([f, "gte", w]); return api; },
+        lte: function (f, w) { filter.push([f, "lte", w]); return api; },
+        lt: function (f, w) { filter.push([f, "lt", w]); return api; },
+        order: function (f, o) { sortierung = [f, !(o && o.ascending === false)]; return api; },
+        limit: function (n) { limitN = n; return api; },
+        insert: function (o) { aktion = "insert"; nutz = o; return api; },
+        upsert: function (o, op) { aktion = "upsert"; nutz = o; opt = op; return api; },
+        update: function (o) { aktion = "update"; nutz = o; return api; },
+        delete: function () { aktion = "delete"; return api; },
+        maybeSingle: function () { return Promise.resolve().then(ausfuehren).then(function (r) { return { data: (r.data || [])[0] || null, error: r.error }; }); },
+        then: function (ok, nein) { return Promise.resolve().then(ausfuehren).then(ok, nein); }
       };
       return api;
+    }
+
+    function ablage(bucket) {
+      return {
+        upload: function (pfad, datei) {
+          return new Promise(function (ok) {
+            if (datei.size > 1500000) return ok({ data: null, error: { message: "Attrappe: Datei über 1,5 MB" } });
+            var r = new FileReader();
+            r.onload = function () { try { localStorage.setItem("mock_datei_" + bucket + "/" + pfad, r.result); ok({ data: { path: pfad }, error: null }); }
+                                     catch (e) { ok({ data: null, error: { message: "Speicher im Browser voll" } }); } };
+            r.onerror = function () { ok({ data: null, error: { message: "Datei nicht lesbar" } }); };
+            r.readAsDataURL(datei);
+          });
+        },
+        createSignedUrl: function (pfad) {
+          return Promise.resolve({ data: { signedUrl: localStorage.getItem("mock_datei_" + bucket + "/" + pfad) || "" }, error: null });
+        },
+        remove: function (pfade) {
+          pfade.forEach(function (p) { localStorage.removeItem("mock_datei_" + bucket + "/" + p); });
+          return Promise.resolve({ data: pfade, error: null });
+        }
+      };
     }
 
     return {
@@ -166,7 +240,8 @@ window.Mitglieder = (function () {
         signOut: function () { localStorage.removeItem("mock_session"); melde(); return Promise.resolve({ error: null }); },
         resetPasswordForEmail: function () { return Promise.resolve({ error: null }); }
       },
-      from: tabelle
+      from: tabelle,
+      storage: { from: ablage }
     };
   }
 
@@ -174,14 +249,14 @@ window.Mitglieder = (function () {
   //
   // bereit(): Verbindung und Sitzung herstellen, ohne etwas zu zeichnen.
   // Wird auch von index.html gebraucht, um Funktionen hinter dem Login
-  // (Tauschoptionen) freizugeben.
+  // freizugeben.
 
   function bereit(kontext) {
     if (kontext) ctx = kontext;
     if (bereitVersprechen) return bereitVersprechen;
-    bereitVersprechen = Promise.all([holeJson("supabase.json", {}), holeJson("gebuehren.json", null)])
+    bereitVersprechen = Promise.all([holeJson("supabase.json", {}), holeJson("gebuehren.json", null), holeJson("push.json", {})])
       .then(function (r) {
-        cfg = r[0] || {}; gebuehren = r[1];
+        cfg = r[0] || {}; gebuehren = r[1]; pushCfg = r[2] || {};
         if (cfg.mock) { sb = attrappe(); return; }
         if (!cfg.url || !cfg.anon_key) { sb = null; return; }
         return skriptLaden(SUPABASE_CDN).then(function () {
@@ -192,7 +267,7 @@ window.Mitglieder = (function () {
         if (!sb) return { eingerichtet: false, session: null };
         sb.auth.onAuthStateChange(function (ereignis, s) {
           session = s;
-          if (!s) { profil = null; einsaetze = {}; if (wurzel) zeigeAnmeldung(); }
+          if (!s) { profil = null; profilVersprechen = null; einsaetze = {}; if (wurzel) zeigeAnmeldung(); }
           document.dispatchEvent(new CustomEvent("mg-sitzung", { detail: { angemeldet: !!s } }));
         });
         return sb.auth.getSession().then(function (r) {
@@ -204,6 +279,15 @@ window.Mitglieder = (function () {
   }
 
   function angemeldet() { return !!session; }
+
+  function ladeProfil() {
+    if (!session) return Promise.resolve(null);
+    if (profil && profil.id === session.user.id) return Promise.resolve(profil);
+    if (profilVersprechen) return profilVersprechen;
+    profilVersprechen = sb.from("profile").select("*").eq("id", session.user.id).maybeSingle()
+      .then(function (r) { if (r.error) throw r.error; profil = r.data; return profil; });
+    return profilVersprechen;
+  }
 
   function oeffnen(container, kontext) {
     wurzel = container; ctx = kontext;
@@ -222,9 +306,9 @@ window.Mitglieder = (function () {
 
   function zeigeKeinBackend() {
     leeren(wurzel);
-    wurzel.appendChild(h("div", { class: "melde" }, [
+    wurzel.appendChild(h("div", { class: "melde karte" }, [
       h("h4", { text: "Mitgliederbereich noch nicht eingerichtet" }),
-      h("p", { text: "Hier kommen Konto, Abrechnung und Tauschoptionen hin. Dafür muss der " +
+      h("p", { text: "Hier kommen Konto, Abrechnung, Tauschbörse und Push hin. Dafür muss der " +
         "Betreiber einmal ein Supabase-Projekt anlegen und die Zugangsdaten in " +
         "supabase.json eintragen – Schritt 10 in der Anleitung." })
     ]));
@@ -280,10 +364,16 @@ window.Mitglieder = (function () {
       h("button", { type: "button", class: "textknopf", text: "Zurück zur Anmeldung", onclick: function () { zeigeAnmeldung("anmelden"); } })
     ]);
 
-    wurzel.appendChild(h("div", { class: "melde" }, [
+    wurzel.appendChild(h("div", { class: "melde karte" }, [
       form, wechsel,
       h("p", { class: "meta", text: "Konto und Daten liegen bei Supabase" +
-        (sb && sb._attrappe ? " – hier gerade als Attrappe im Browser, nichts geht raus." : ". Jeder sieht nur seine eigenen Einträge.") })
+        (sb && sb._attrappe ? " – hier gerade als Attrappe im Browser, nichts geht raus." : ". Jeder sieht nur seine eigenen Einträge; Tauschbörse und Verfügbarkeiten sehen alle Mitglieder.") })
+    ]));
+    wurzel.appendChild(h("div", { class: "melde karte" }, [
+      h("h4", { text: "Was gibt es hier?" }),
+      h("p", { text: "Abrechnung mit Strecken und Gebührenordnung, Belege, CSV für die Steuer · " +
+        "Tauschbörse für Spiele, die du abgeben musst · Tage, an denen du nicht kannst oder gern pfeifen würdest · " +
+        "echte Push-Nachrichten bei neuen Einteilungen." })
     ]));
     if (sb && sb._attrappe) meldung("Attrappe aktiv: Konten werden nur in diesem Browser gespeichert.", "");
   }
@@ -295,6 +385,7 @@ window.Mitglieder = (function () {
     if (/email not confirmed/i.test(m)) return "Bitte erst den Bestätigungslink in der E-Mail antippen.";
     if (/password/i.test(m) && /short|least/i.test(m)) return "Das Passwort ist zu kurz.";
     if (/rate limit/i.test(m)) return "Zu viele Versuche – kurz warten.";
+    if (/does not exist|schema cache/i.test(m)) return "Die Datenbank kennt eine Tabelle noch nicht – bitte supabase/schema.sql erneut ausführen (Anleitung Schritt 10).";
     return m || "Unbekannter Fehler.";
   }
 
@@ -303,24 +394,52 @@ window.Mitglieder = (function () {
   function nachLogin() {
     leeren(wurzel);
     wurzel.appendChild(h("p", { class: "meta", text: "Lade dein Profil …" }));
-    return sb.from("profile").select("*").eq("id", session.user.id).maybeSingle()
-      .then(function (r) {
-        if (r.error) throw r.error;
-        profil = r.data;
+    return ladeProfil()
+      .then(function () {
         if (!profil || !profil.slug) return zeigeEinrichtung();
-        return ladeEinsaetze().then(zeigeAbrechnung);
+        return ladeEinsaetze().then(function () { rahmen(); zeigeReiter(reiter); });
       })
-      .catch(function (e) { meldung("Profil konnte nicht geladen werden: " + (e.message || e), "warn"); });
+      .catch(function (e) { meldung("Profil konnte nicht geladen werden: " + fehlerText(e), "warn"); });
   }
 
   function abmelden() {
-    sb.auth.signOut().then(function () { session = null; profil = null; einsaetze = {}; zeigeAnmeldung(); });
+    sb.auth.signOut().then(function () { session = null; profil = null; profilVersprechen = null; einsaetze = {}; zeigeAnmeldung(); });
+  }
+
+  // Kopf mit Name und Unterreitern; der Inhalt darunter wechselt.
+  function rahmen() {
+    leeren(wurzel);
+    wurzel.appendChild(h("div", { class: "profilzeile karte" }, [
+      h("span", {}, [h("b", { text: profil.name || profil.slug }), h("small", { text: session.user.email })]),
+      h("button", { type: "button", class: "textknopf", text: "Abmelden", onclick: abmelden })
+    ]));
+    var leiste = h("div", { class: "mg-untertabs" });
+    [["abrechnung", "Abrechnung"], ["tausch", "Tauschbörse"], ["frei", "Verfügbarkeit"], ["konto", "Konto"]].forEach(function (t) {
+      leiste.appendChild(h("button", { type: "button", "data-reiter": t[0], text: t[1], onclick: function () { zeigeReiter(t[0]); } }));
+    });
+    wurzel.appendChild(leiste);
+    inhalt = h("div", { class: "mg-inhalt" });
+    wurzel.appendChild(inhalt);
+  }
+
+  function zeigeReiter(name) {
+    reiter = name;
+    if (!inhalt) rahmen();
+    Array.prototype.forEach.call(wurzel.querySelectorAll(".mg-untertabs button"), function (b) {
+      b.classList.toggle("aktiv", b.getAttribute("data-reiter") === name);
+    });
+    leeren(inhalt);
+    if (name === "abrechnung") zeigeAbrechnung();
+    else if (name === "tausch") zeigeTausch();
+    else if (name === "frei") zeigeVerfuegbarkeit();
+    else zeigeKonto();
   }
 
   // --------------------------------------------------------- Einrichtung
 
   function zeigeEinrichtung(zurueck) {
-    leeren(wurzel);
+    var ziel = zurueck && inhalt ? inhalt : wurzel;
+    leeren(ziel);
     var p = profil || {};
     var kmStd = (gebuehren && gebuehren.kilometer) || {};
     var auswahl = h("select", { class: "mg-select" },
@@ -376,10 +495,10 @@ window.Mitglieder = (function () {
                     strecken: adresseGeaendert ? {} : (p.strecken || {}) };
       sb.from("profile").upsert(zeile).then(function (r) {
         speichern.disabled = false;
-        if (r.error) { meldung("Speichern fehlgeschlagen: " + r.error.message, "warn"); return; }
+        if (r.error) { meldung("Speichern fehlgeschlagen: " + fehlerText(r.error), "warn"); return; }
         profil = zeile;
         meldung("Gespeichert.", "gut");
-        ladeEinsaetze().then(zeigeAbrechnung);
+        ladeEinsaetze().then(function () { rahmen(); zeigeReiter(zurueck ? "konto" : "abrechnung"); });
       });
     } }, [
       h("h4", { text: zurueck ? "Einstellungen" : "Wer bist du?" }),
@@ -397,9 +516,9 @@ window.Mitglieder = (function () {
       h("p", { class: "meta", text: "Die Adresse liegt in deinem Profil bei Supabase und ist für niemanden sonst " +
         "lesbar. Für die Streckenberechnung gehen nur Koordinaten an den Routendienst (OSRM), keine Adresse." }),
       speichern,
-      zurueck ? h("button", { type: "button", class: "mg-neben", text: "Zurück", onclick: function () { zeigeAbrechnung(); } }) : null
+      zurueck ? h("button", { type: "button", class: "mg-neben", text: "Zurück", onclick: function () { zeigeReiter("konto"); } }) : null
     ]);
-    wurzel.appendChild(h("div", { class: "melde" }, [form]));
+    ziel.appendChild(h("div", { class: "melde karte" }, [form]));
   }
 
   // ------------------------------------------------------------ Strecken
@@ -554,18 +673,37 @@ window.Mitglieder = (function () {
       });
   }
 
-  function saisonSpiele() {
+  function ladeArchiv() {
+    return archivDaten ? Promise.resolve(archivDaten)
+      : ctx.hole("archiv.json").catch(function () { return { personen: {}, saisons: [] }; })
+        .then(function (a) { archivDaten = a; return a; });
+  }
+
+  function saisonen() {
+    var liste = ((archivDaten && archivDaten.saisons) || []).slice();
+    if (ctx.daten.saison && liste.indexOf(ctx.daten.saison) < 0) liste.push(ctx.daten.saison);
+    return liste.sort().reverse();
+  }
+
+  // Alle Spiele der Person ueber alle Saisons, Archiv und aktuelle Daten
+  // zusammengelegt; neueste zuerst.
+  function alleSpiele() {
     var person = ctx.personMit(profil.slug);
     var karte = {};
     var archiv = (archivDaten && archivDaten.personen && archivDaten.personen[profil.slug]) || [];
     archiv.forEach(function (s) {
-      karte[s.beginn + "|" + s.paarung] = { beginn: s.beginn, liga: s.liga, paarung: s.paarung, halle: s.halle, rolle: s.rolle, system: s.system };
+      karte[kennungVon(s)] = { beginn: s.beginn, liga: s.liga, paarung: s.paarung, halle: s.halle, rolle: s.rolle, system: s.system, saison: s.saison || ctx.daten.saison };
     });
     if (person) person.spiele.forEach(function (s) {
-      karte[s.beginn + "|" + s.paarung] = { beginn: s.beginn, liga: s.liga, paarung: s.paarung, halle: s.halle, rolle: s.rolle, system: s.system };
+      var alt = karte[kennungVon(s)];
+      karte[kennungVon(s)] = { beginn: s.beginn, liga: s.liga, paarung: s.paarung, halle: s.halle, rolle: s.rolle, system: s.system,
+                               saison: (alt && alt.saison) || ctx.daten.saison };
     });
     return Object.keys(karte).map(function (k) { var s = karte[k]; s.kennung = k; return s; })
       .sort(function (a, b) { return a.beginn < b.beginn ? 1 : -1; });
+  }
+  function saisonSpiele(saison) {
+    return alleSpiele().filter(function (s) { return !saison || s.saison === saison; });
   }
 
   function speichereEinsatz(spiel, aenderung) {
@@ -578,17 +716,16 @@ window.Mitglieder = (function () {
       auslagen: alt.auslagen != null ? alt.auslagen : null,
       bezahlt: !!alt.bezahlt, ausgefallen: !!alt.ausgefallen, uebergreifend: !!alt.uebergreifend,
       notiz: alt.notiz || null
-    }, alt.id ? { id: alt.id } : {}, aenderung);
+    }, alt.id ? { id: alt.id } : {}, alt.belege !== undefined ? { belege: alt.belege } : {}, aenderung);
     einsaetze[spiel.kennung] = zeile;
     aktualisiereSummen();
     aktualisiereZeile(spiel);
     clearTimeout(speicherTimer[spiel.kennung]);
     speicherTimer[spiel.kennung] = setTimeout(function () {
-      sb.from("einsaetze").upsert(zeile, { onConflict: "user_id,kennung" }).then(function (r) {
-        if (r.error) { meldung("Speichern fehlgeschlagen: " + r.error.message, "warn"); return; }
+      sb.from("einsaetze").upsert(zeile, { onConflict: "user_id,kennung" }).select().then(function (r) {
+        if (r.error) { meldung("Speichern fehlgeschlagen: " + fehlerText(r.error), "warn"); return; }
         if (r.data && r.data[0] && r.data[0].id) einsaetze[spiel.kennung].id = r.data[0].id;
-        meldung("Gespeichert ✓", "gut");
-        setTimeout(function () { meldung("", ""); }, 1500);
+        kurzMeldung("Gespeichert ✓", "gut");
       });
     }, 600);
   }
@@ -610,7 +747,7 @@ window.Mitglieder = (function () {
   }
 
   function summenBox(titel, s) {
-    var box = h("div", {}, [h("h3", { text: titel })]);
+    var box = h("div", {}, [h("h3", { class: "abschnitt", text: titel })]);
     var z = h("div", { class: "zahlen mg-summen" });
     var einfach = (profil.km_modell || "einfach") === "einfach";
     [["Spiele erfasst", s.spiele],
@@ -618,21 +755,23 @@ window.Mitglieder = (function () {
      ["Fahrtkosten", euro(s.fahrt)], ["Vergütung", euro(s.verg)],
      ["Auslagen", euro(s.ausl)], ["noch offen", s.offen ? euro(s.offenBetrag) : "–"]
     ].forEach(function (p) {
-      z.appendChild(h("div", { class: "zahl" }, [h("b", { text: String(p[1]) }), h("span", { text: p[0] })]));
+      z.appendChild(h("div", { class: "zahl karte" }, [h("b", { text: String(p[1]) }), h("span", { text: p[0] })]));
     });
     box.appendChild(z);
     return box;
   }
 
   function aktualisiereSummen() {
-    var alt = wurzel.querySelector(".mg-summenblock");
+    var alt = wurzel && wurzel.querySelector(".mg-summenblock");
     if (!alt) return;
-    var spiele = saisonSpiele();
-    var jahr = new Date().getFullYear();
-    var neu = h("div", { class: "mg-summenblock" }, [
-      summenBox("Saison " + (ctx.daten.saison || ""), summen(spiele)),
-      summenBox("Steuerjahr " + jahr, summen(spiele, function (sp) { return new Date(sp.beginn).getFullYear() === jahr; }))
-    ]);
+    var spiele = saisonSpiele(gewaehlteSaison), alle = alleSpiele();
+    var jahre = [];
+    spiele.forEach(function (sp) { var j = new Date(sp.beginn).getFullYear(); if (jahre.indexOf(j) < 0) jahre.push(j); });
+    if (!jahre.length) jahre.push(new Date().getFullYear());
+    var neu = h("div", { class: "mg-summenblock" }, [summenBox("Saison " + (gewaehlteSaison || ""), summen(spiele))]);
+    jahre.sort().reverse().forEach(function (jahr) {
+      neu.appendChild(summenBox("Steuerjahr " + jahr, summen(alle, function (sp) { return new Date(sp.beginn).getFullYear() === jahr; })));
+    });
     alt.parentNode.replaceChild(neu, alt);
   }
 
@@ -640,8 +779,7 @@ window.Mitglieder = (function () {
     var el = wurzel.querySelector('[data-kennung="' + spiel.kennung.replace(/"/g, "") + '"] .mg-betrag');
     if (!el) return;
     var e = einsaetze[spiel.kennung];
-    var b = betragFuer(spiel, e);
-    el.textContent = betragText(spiel, e, b);
+    el.textContent = betragText(spiel, e, betragFuer(spiel, e));
   }
 
   function betragText(spiel, e, b) {
@@ -656,21 +794,21 @@ window.Mitglieder = (function () {
 
   function csvExport(spiele) {
     var einfach = (profil.km_modell || "einfach") === "einfach";
-    var zeilen = [["Datum", "Uhrzeit", "Liga", "Begegnung", "Halle", "Rolle", "System",
+    var zeilen = [["Saison", "Datum", "Uhrzeit", "Liga", "Begegnung", "Halle", "Rolle", "System",
                    "km einfach", "km gefahren", "Kilometermodell", "Satz €/km", "Fahrtkosten",
                    "Grundgebühr", "Zuschlag Uhrzeit", "Zuschlag übergreifend", "Ausfall vor Ort", "Vergütung",
-                   "Auslagen", "bezahlt", "Notiz"]];
+                   "Auslagen", "Belege", "bezahlt", "Notiz"]];
     var dez = function (n) { return n == null ? "" : String(Math.round(n * 100) / 100).replace(".", ","); };
     spiele.forEach(function (sp) {
       var e = einsaetze[sp.kennung] || {};
       var d = new Date(sp.beginn);
       var b = betragFuer(sp, e);
       zeilen.push([
-        d.toLocaleDateString("de-DE"), uhr(d), sp.liga || "", sp.paarung || "", sp.halle || "", sp.rolle || "",
+        sp.saison || "", d.toLocaleDateString("de-DE"), uhr(d), sp.liga || "", sp.paarung || "", sp.halle || "", sp.rolle || "",
         sp.system || "", dez(e.km), dez(e.km != null ? e.km * 2 : null), einfach ? "einfache Strecke" : "hin und zurück",
         dez(einfach ? profil.satz_einfach : profil.satz_hinrueck), dez(e.km != null ? fahrtkosten(e) : null),
         dez(b.grund), dez(b.zeit || null), dez(b.ueber || null), e.ausgefallen ? "ja" : "", dez(b.betrag),
-        dez(e.auslagen), e.bezahlt ? "ja" : "nein", e.notiz || ""
+        dez(e.auslagen), (e.belege || []).length || "", e.bezahlt ? "ja" : "nein", e.notiz || ""
       ]);
     });
     var text = zeilen.map(function (z) {
@@ -679,35 +817,33 @@ window.Mitglieder = (function () {
     var blob = new Blob(["﻿" + text], { type: "text/csv;charset=utf-8" });
     var a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
-    a.download = "Abrechnung_" + (ctx.daten.saison || "").replace("/", "-") + "_" + profil.slug + ".csv";
+    a.download = "Abrechnung_" + (gewaehlteSaison || "alle").replace("/", "-") + "_" + profil.slug + ".csv";
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
     setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
   }
 
   function zeigeAbrechnung() {
-    leeren(wurzel);
-    wurzel.appendChild(h("p", { class: "meta", text: "Lade Saison …" }));
-    (archivDaten ? Promise.resolve(archivDaten) : ctx.hole("archiv.json").catch(function () { return { personen: {} }; }))
-      .then(function (a) { archivDaten = a; rendereAbrechnung(); });
+    leeren(inhalt);
+    inhalt.appendChild(h("p", { class: "meta", text: "Lade Saison …" }));
+    ladeArchiv().then(function () {
+      if (!gewaehlteSaison || saisonen().indexOf(gewaehlteSaison) < 0) gewaehlteSaison = ctx.daten.saison || saisonen()[0] || null;
+      rendereAbrechnung();
+    });
   }
 
   function rendereAbrechnung() {
-    leeren(wurzel);
-    var spiele = saisonSpiele();
-    wurzel.appendChild(h("div", { class: "profilzeile" }, [
-      h("span", {}, [h("b", { text: profil.name || profil.slug }), h("small", { text: session.user.email })]),
-      h("span", {}, [
-        h("button", { type: "button", class: "textknopf", text: "Einstellungen", onclick: function () { zeigeEinrichtung(true); } }),
-        " · ",
-        h("button", { type: "button", class: "textknopf", text: "Abmelden", onclick: abmelden })
-      ])
-    ]));
+    leeren(inhalt);
+    var spiele = saisonSpiele(gewaehlteSaison);
 
-    wurzel.appendChild(h("div", { class: "mg-summenblock" }));
+    var saisonWahl = h("select", { class: "mg-select", onchange: function (ev) { gewaehlteSaison = ev.target.value; rendereAbrechnung(); } },
+      saisonen().map(function (s) { var o = h("option", { value: s, text: "Saison " + s }); if (s === gewaehlteSaison) o.selected = true; return o; }));
+    inhalt.appendChild(h("div", { class: "mg-form" }, [saisonWahl]));
+
+    inhalt.appendChild(h("div", { class: "mg-summenblock" }));
 
     var hallen = []; spiele.forEach(function (sp) { if (sp.halle && hallen.indexOf(sp.halle) < 0) hallen.push(sp.halle); });
     var strecken = h("button", { type: "button", text: "Strecken berechnen", onclick: function () {
-      if (!profil.heimat_lat) { meldung("Erst in den Einstellungen die Heimatadresse setzen und suchen lassen.", "warn"); return; }
+      if (!profil.heimat_lat) { meldung("Erst unter Konto → Einstellungen die Heimatadresse setzen und suchen lassen.", "warn"); return; }
       strecken.disabled = true; strecken.textContent = "berechne …";
       streckenFuer(hallen).then(function () {
         var n = 0;
@@ -733,14 +869,30 @@ window.Mitglieder = (function () {
       meldung(n + " Spiele nach Gebührenordnung eingetragen" + (offen ? ", " + offen + " ohne Zuordnung (bitte von Hand)" : "") + ".", n ? "gut" : "warn");
       rendereAbrechnung();
     } });
-    wurzel.appendChild(h("div", { class: "zweit" }, [strecken, gebuehr,
+    inhalt.appendChild(h("div", { class: "zweit" }, [strecken, gebuehr,
       h("button", { type: "button", text: "CSV", onclick: function () { csvExport(spiele); } })]));
 
-    if (!spiele.length) wurzel.appendChild(h("p", { class: "leer", text: "Noch keine Spiele in dieser Saison." }));
+    if (!spiele.length) inhalt.appendChild(h("p", { class: "leer", text: "Keine Spiele in dieser Saison." }));
 
-    spiele.forEach(function (sp) { wurzel.appendChild(eintrag(sp)); });
+    // Nach Monat gruppiert, mit "alles bezahlt" je Monat
+    var monat = null;
+    spiele.forEach(function (sp) {
+      var d = new Date(sp.beginn), m = d.getFullYear() + "-" + d.getMonth();
+      if (m !== monat) {
+        monat = m;
+        var imMonat = spiele.filter(function (x) { var y = new Date(x.beginn); return y.getFullYear() + "-" + y.getMonth() === m; });
+        var offen = imMonat.filter(function (x) { var e = einsaetze[x.kennung]; return e && !e.bezahlt && (betragFuer(x, e).betrag || 0) > 0; });
+        var kopf = h("div", { class: "mg-monat" }, [h("b", { text: MONATE[d.getMonth()] + " " + d.getFullYear() })]);
+        if (offen.length) kopf.appendChild(h("button", { type: "button", class: "textknopf", text: "Monat als bezahlt ✓", onclick: function () {
+          offen.forEach(function (x) { speichereEinsatz(x, { bezahlt: true }); });
+          rendereAbrechnung();
+        } }));
+        inhalt.appendChild(kopf);
+      }
+      inhalt.appendChild(eintrag(sp));
+    });
 
-    wurzel.appendChild(h("p", { class: "meta mg-fuss", text:
+    inhalt.appendChild(h("p", { class: "meta mg-fuss", text:
       "km = einfache Strecke Wohnung → Halle (Straßenkilometer, wenn berechnet; sonst Luftlinie × 1,3). " +
       "Vergütung nach ESRW-Gebührenordnung (" + ((gebuehren && gebuehren.stand) || "?") + "): " +
       "+20 % bei Spielbeginn bis 09:14 oder ab 21:46 Uhr, Zuschlag für landesverbandsübergreifenden " +
@@ -748,6 +900,55 @@ window.Mitglieder = (function () {
       "Aufstellung für dich oder deinen Steuerberater; was davon steuerlich zählt, sagt sie nicht." }));
 
     aktualisiereSummen();
+  }
+
+  // ---- Belege (Storage-Bucket "belege", Ordner je Nutzer)
+
+  function belegHochladen(sp, datei, zeile) {
+    var pfad = session.user.id + "/" + sicher(sp.kennung) + "/" + Date.now() + "_" + sicher(datei.name);
+    kurzMeldung("Lade " + datei.name + " hoch …", "");
+    return sb.storage.from("belege").upload(pfad, datei, { upsert: false }).then(function (r) {
+      if (r.error) { meldung("Beleg konnte nicht gespeichert werden: " + fehlerText(r.error), "warn"); return; }
+      var alt = (einsaetze[sp.kennung] && einsaetze[sp.kennung].belege) || [];
+      speichereEinsatz(sp, { belege: alt.concat([pfad]) });
+      belegeRendern(sp, zeile);
+    });
+  }
+
+  function belegOeffnen(pfad) {
+    sb.storage.from("belege").createSignedUrl(pfad, 300).then(function (r) {
+      if (r.error || !r.data || !r.data.signedUrl) { meldung("Beleg nicht abrufbar.", "warn"); return; }
+      window.open(r.data.signedUrl, "_blank", "noopener");
+    });
+  }
+
+  function belegLoeschen(sp, pfad, zeile) {
+    if (!confirm("Beleg löschen?")) return;
+    sb.storage.from("belege").remove([pfad]).then(function () {
+      var alt = (einsaetze[sp.kennung] && einsaetze[sp.kennung].belege) || [];
+      speichereEinsatz(sp, { belege: alt.filter(function (p) { return p !== pfad; }) });
+      belegeRendern(sp, zeile);
+    });
+  }
+
+  function belegeRendern(sp, zeile) {
+    var box = zeile.querySelector(".mg-belege");
+    if (!box) return;
+    leeren(box);
+    var e = einsaetze[sp.kennung] || {};
+    (e.belege || []).forEach(function (pfad) {
+      var name = pfad.split("/").pop().replace(/^\d+_/, "");
+      box.appendChild(h("span", { class: "chip" }, [
+        h("a", { href: "#", text: name, onclick: function (ev) { ev.preventDefault(); belegOeffnen(pfad); } }),
+        h("button", { type: "button", class: "textknopf", text: "✕", title: "löschen", onclick: function () { belegLoeschen(sp, pfad, zeile); } })
+      ]));
+    });
+    var datei = h("input", { type: "file", accept: "image/*,application/pdf", onchange: function (ev) {
+      var f = ev.target.files && ev.target.files[0];
+      if (f) belegHochladen(sp, f, zeile);
+      ev.target.value = "";
+    } });
+    box.appendChild(h("label", { class: "mg-datei" }, ["+ Beleg (Foto/PDF)", datei]));
   }
 
   function eintrag(sp) {
@@ -776,10 +977,10 @@ window.Mitglieder = (function () {
       onchange: function (ev) { speichereEinsatz(sp, { notiz: ev.target.value.trim() || null }); } });
 
     var b = betragFuer(sp, e);
-    return h("div", { class: "spiel mg-eintrag" + (vergangen ? "" : " war"), "data-kennung": sp.kennung.replace(/"/g, "") }, [
-      h("div", { class: "kopf" }, [
+    var zeile = h("div", { class: "spiel karte mg-eintrag" + (vergangen ? "" : " war"), "data-kennung": sp.kennung.replace(/"/g, "") }, [
+      h("div", { class: "kopfzeile" }, [
         h("span", { class: "datum", text: datum(d) + " · " + uhr(d) + " Uhr" + (zeitzuschlag(sp) ? " · +20 %" : "") }),
-        h("span", { class: "rolle", text: (sp.rolle || "") + (sp.system >= 3 ? " · " + sp.system + "er" : "") })
+        rolleBadge((sp.rolle || "") + (sp.system >= 3 ? " · " + sp.system + "er" : ""))
       ]),
       h("div", { class: "paarung", text: (sp.liga ? sp.liga + ": " : "") + sp.paarung }),
       h("div", { class: "meta", text: (sp.halle || "Halle unbekannt") +
@@ -793,9 +994,325 @@ window.Mitglieder = (function () {
         uebergreifendMoeglich(sp) ? h("label", { class: "mg-check" }, [ueb, " übergreifend"]) : null
       ]),
       h("div", { class: "mg-felder" }, [h("label", { class: "mg-notiz" }, ["Notiz", notiz])]),
+      h("div", { class: "mg-belege" }),
       h("div", { class: "meta mg-betrag", text: betragText(sp, e, b) })
+    ]);
+    zeile.querySelector(".rolle").className = "rolle " + (sp.rolle || "");
+    belegeRendern(sp, zeile);
+    return zeile;
+  }
+
+  // Fuer den Hinweis auf der Startseite: vergangene Spiele der letzten
+  // `tage` Tage ohne eingetragene Verguetung.
+  function offeneAbrechnungen(slug, tage) {
+    return bereit().then(function (st) {
+      if (!st.eingerichtet || !session) return [];
+      return ladeProfil().then(function () {
+        if (!profil || profil.slug !== slug) return [];
+        return ladeEinsaetze().then(function () {
+          var person = ctx.personMit(slug);
+          if (!person) return [];
+          var grenze = Date.now() - (tage || 21) * 86400000;
+          return person.spiele.filter(function (s) {
+            if (!s.vergangen || new Date(s.beginn).getTime() < grenze) return false;
+            var e = einsaetze[kennungVon(s)];
+            return !e || e.verguetung == null;
+          }).map(function (s) { return datum(new Date(s.beginn)) + " " + s.paarung; });
+        });
+      });
+    }).catch(function () { return []; });
+  }
+
+  // --------------------------------------------------------- Tauschboerse
+  //
+  // Gesuche sehen alle angemeldeten Mitglieder. Wer helfen kann, meldet
+  // "Ich kann" - der Suchende sieht die Namen und regelt den Rest mit dem
+  // Obmann, der die Einteilung aendern muss.
+
+  function gesuchAnlegen(spiel, ich) {
+    return bereit().then(function (st) {
+      if (!st.eingerichtet || !session) return false;
+      return ladeProfil().then(function () {
+        if (!profil || !profil.slug) return false;
+        var zeile = { user_id: session.user.id, slug: profil.slug, name: profil.name || (ich && ich.name) || profil.slug,
+                      kennung: kennungVon(spiel), beginn: spiel.beginn, liga: spiel.liga || null, paarung: spiel.paarung,
+                      halle: spiel.halle || null, rolle: spiel.rolle || null, status: "offen" };
+        return sb.from("gesuche").upsert(zeile, { onConflict: "user_id,kennung" }).then(function (r) { return !r.error; });
+      });
+    }).catch(function () { return false; });
+  }
+
+  function ladeGesuche() {
+    var ab = new Date(Date.now() - 6 * 3600000).toISOString();
+    return sb.from("gesuche").select("*").gte("beginn", ab).order("beginn").then(function (r) {
+      if (r.error) throw r.error;
+      var gesuche = r.data || [];
+      if (!gesuche.length) return { gesuche: [], angebote: {} };
+      return sb.from("angebote").select("*").in("gesuch_id", gesuche.map(function (g) { return g.id; })).then(function (a) {
+        if (a.error) throw a.error;
+        var je = {};
+        (a.data || []).forEach(function (x) { (je[x.gesuch_id] = je[x.gesuch_id] || []).push(x); });
+        return { gesuche: gesuche, angebote: je };
+      });
+    });
+  }
+
+  function zeigeTausch() {
+    leeren(inhalt);
+    inhalt.appendChild(h("p", { class: "meta", text: "Lade Tauschbörse …" }));
+    ladeGesuche().then(function (d) {
+      leeren(inhalt);
+      var offen = d.gesuche.filter(function (g) { return g.status === "offen"; });
+      var erledigt = d.gesuche.filter(function (g) { return g.status !== "offen"; });
+
+      inhalt.appendChild(h("h3", { class: "abschnitt", text: "Offene Gesuche" }));
+      if (!offen.length) inhalt.appendChild(h("p", { class: "leer", text: "Gerade sucht niemand Ersatz." }));
+      offen.forEach(function (g) { inhalt.appendChild(gesuchKarte(g, d.angebote[g.id] || [])); });
+
+      inhalt.appendChild(h("h3", { class: "abschnitt", text: "Eigenes Gesuch einstellen" }));
+      var person = ctx.personMit(profil.slug);
+      var kommend = person ? person.spiele.filter(function (s) { return !s.vergangen; }) : [];
+      var schonOffen = {}; offen.forEach(function (g) { if (g.user_id === session.user.id) schonOffen[g.kennung] = 1; });
+      kommend = kommend.filter(function (s) { return !schonOffen[kennungVon(s)]; });
+      if (!kommend.length) {
+        inhalt.appendChild(h("p", { class: "meta", text: "Du hast kein kommendes Spiel, das nicht schon drinsteht." }));
+      } else {
+        var wahl = h("select", { class: "mg-select" }, kommend.map(function (s, i) {
+          var dd = new Date(s.beginn);
+          return h("option", { value: String(i), text: datum(dd) + " " + uhr(dd) + " · " + (s.liga ? s.liga + " " : "") + s.paarung });
+        }));
+        var text = h("input", { type: "text", placeholder: "Hinweis (optional), z. B. „Tausch gegen Nachmittagsspiel gern“", maxlength: "200" });
+        var knopf = h("button", { type: "button", class: "mg-haupt", text: "In die Tauschbörse stellen", onclick: function () {
+          var s = kommend[parseInt(wahl.value, 10)];
+          knopf.disabled = true;
+          gesuchAnlegen(s, person).then(function (ok) {
+            if (!ok) { knopf.disabled = false; meldung("Konnte nicht eingestellt werden.", "warn"); return; }
+            if (text.value.trim()) return sb.from("gesuche").update({ text: text.value.trim() }).eq("user_id", session.user.id).eq("kennung", kennungVon(s)).then(function () {});
+          }).then(function () { kurzMeldung("Eingestellt ✓", "gut"); zeigeTausch(); });
+        } });
+        inhalt.appendChild(h("div", { class: "melde karte" }, [h("div", { class: "mg-form" }, [wahl, text, knopf])]));
+      }
+
+      if (erledigt.length) {
+        var box = h("details", { class: "karte" }, [h("summary", { text: "Erledigt (" + erledigt.length + ")" })]);
+        erledigt.forEach(function (g) { box.appendChild(gesuchKarte(g, d.angebote[g.id] || [])); });
+        inhalt.appendChild(box);
+      }
+      inhalt.appendChild(h("p", { class: "meta mg-fuss", text: "Die Tauschbörse ersetzt nicht die Absprache mit dem Obmann – " +
+        "wer übernimmt, muss auf esrw.de eingeteilt werden. Sie zeigt nur, wer könnte." }));
+    }).catch(function (e) { leeren(inhalt); inhalt.appendChild(h("p", { class: "achtung", text: "Tauschbörse nicht ladbar: " + fehlerText(e) })); });
+  }
+
+  function gesuchKarte(g, angebote) {
+    var d = new Date(g.beginn), meins = g.user_id === session.user.id;
+    var meinAngebot = angebote.filter(function (a) { return a.user_id === session.user.id; })[0];
+    var karte = h("div", { class: "gesuch karte" + (g.status !== "offen" ? " war" : "") }, [
+      h("div", { class: "kopfzeile" }, [
+        h("span", { class: "datum", text: datum(d) + " · " + uhr(d) + " Uhr" }),
+        rolleBadge(g.rolle)
+      ]),
+      h("div", { class: "paarung", text: (g.liga ? g.liga + ": " : "") + (g.paarung || "") }),
+      h("div", { class: "meta", text: (g.halle || "Halle unbekannt") }),
+      h("div", { class: "wer", text: (meins ? "Du suchst" : g.name + " sucht") + " Ersatz" + (g.text ? " – „" + g.text + "“" : "") })
+    ]);
+    var ang = h("div", { class: "angebote" });
+    if (angebote.length) {
+      ang.appendChild(document.createTextNode("Könnte: "));
+      angebote.forEach(function (a) { ang.appendChild(h("span", { text: a.name + (a.text ? " (" + a.text + ")" : "") })); });
+    } else if (g.status === "offen") ang.appendChild(document.createTextNode("Noch kein Angebot."));
+    karte.appendChild(ang);
+
+    if (g.status !== "offen") return karte;
+    var knoepfe = h("div", { class: "zweit" });
+    if (meins) {
+      knoepfe.appendChild(h("button", { type: "button", text: "Erledigt", onclick: function () {
+        sb.from("gesuche").update({ status: "erledigt" }).eq("id", g.id).then(function (r) { if (r.error) meldung(fehlerText(r.error), "warn"); zeigeTausch(); });
+      } }));
+      knoepfe.appendChild(h("button", { type: "button", text: "Zurückziehen", onclick: function () {
+        sb.from("gesuche").delete().eq("id", g.id).then(function () { zeigeTausch(); });
+      } }));
+    } else if (meinAngebot) {
+      knoepfe.appendChild(h("button", { type: "button", text: "Angebot zurückziehen", onclick: function () {
+        sb.from("angebote").delete().eq("id", meinAngebot.id).then(function () { zeigeTausch(); });
+      } }));
+    } else {
+      var hinweis = h("input", { type: "text", placeholder: "Kurz dazu (optional), z. B. Handynummer", maxlength: "120" });
+      knoepfe.appendChild(h("button", { type: "button", text: "Ich kann übernehmen", onclick: function () {
+        sb.from("angebote").insert({ gesuch_id: g.id, user_id: session.user.id, slug: profil.slug, name: profil.name || profil.slug,
+                                     text: hinweis.value.trim() || null })
+          .then(function (r) { if (r.error) { meldung(fehlerText(r.error), "warn"); return; } kurzMeldung("Gemeldet ✓", "gut"); zeigeTausch(); });
+      } }));
+      karte.appendChild(h("div", { class: "mg-form" }, [hinweis]));
+    }
+    karte.appendChild(knoepfe);
+    return karte;
+  }
+
+  // ------------------------------------------------------ Verfuegbarkeit
+  //
+  // 'nein' = an dem Tag nicht verfuegbar, 'gern' = haette gern ein Spiel.
+  // Fliesst in die Tauschoptionen ein (gesperrte Kollegen fallen raus,
+  // freigemeldete rutschen nach oben).
+
+  function sperrenAm(beginn) {
+    return bereit().then(function (st) {
+      if (!st.eingerichtet || !session) return {};
+      return sb.from("sperren").select("slug,status").eq("datum", isoTag(new Date(beginn))).then(function (r) {
+        var m = {};
+        (r.data || []).forEach(function (z) { m[z.slug] = z.status; });
+        return m;
+      });
+    }).catch(function () { return {}; });
+  }
+
+  function zeigeVerfuegbarkeit() {
+    leeren(inhalt);
+    inhalt.appendChild(h("p", { class: "meta", text: "Lade Verfügbarkeiten …" }));
+    var heute = isoTag(new Date());
+    sb.from("sperren").select("*").eq("user_id", session.user.id).gte("datum", heute).order("datum").then(function (r) {
+      if (r.error) throw r.error;
+      var meine = {};
+      (r.data || []).forEach(function (z) { meine[z.datum] = z; });
+      leeren(inhalt);
+      inhalt.appendChild(h("p", { class: "meta", text: "Trag ein, wann du nicht kannst oder gern ein Spiel hättest. " +
+        "Kollegen sehen das in ihren Tauschoptionen; der Obmann sieht es nicht automatisch." }));
+
+      // Meine Spiele je Tag, zur Orientierung
+      var person = ctx.personMit(profil.slug), spieleAm = {};
+      if (person) person.spiele.forEach(function (s) { if (!s.vergangen) spieleAm[isoTag(new Date(s.beginn))] = (spieleAm[isoTag(new Date(s.beginn))] || 0) + 1; });
+
+      // Naechste 10 Wochenenden plus alles, was schon eingetragen ist
+      var tage = [], d = new Date(); d.setHours(12, 0, 0, 0);
+      for (var i = 0; i < 70; i++) {
+        var t = new Date(d.getTime() + i * 86400000);
+        if (t.getDay() === 0 || t.getDay() === 6) tage.push(isoTag(t));
+      }
+      Object.keys(meine).forEach(function (k) { if (tage.indexOf(k) < 0) tage.push(k); });
+      tage.sort();
+
+      var liste = h("div", { class: "karte", style: "padding:4px 14px" });
+      tage.forEach(function (tag) { liste.appendChild(sperreZeile(tag, meine[tag] && meine[tag].status, spieleAm[tag] || 0)); });
+      inhalt.appendChild(liste);
+
+      var eingabe = h("input", { type: "date", min: heute });
+      var art = h("select", { class: "mg-select" }, [h("option", { value: "nein", text: "kann nicht" }), h("option", { value: "gern", text: "hätte gern ein Spiel" })]);
+      inhalt.appendChild(h("div", { class: "melde karte" }, [h("div", { class: "mg-form" }, [
+        h("h4", { text: "Anderer Tag" }),
+        h("div", { class: "mg-zeile" }, [eingabe, art]),
+        h("button", { type: "button", class: "mg-haupt", text: "Eintragen", onclick: function () {
+          if (!eingabe.value) return;
+          sperreSetzen(eingabe.value, art.value).then(zeigeVerfuegbarkeit);
+        } })
+      ])]));
+    }).catch(function (e) { leeren(inhalt); inhalt.appendChild(h("p", { class: "achtung", text: "Nicht ladbar: " + fehlerText(e) })); });
+  }
+
+  function sperreSetzen(tag, status) {
+    var lauf = status
+      ? sb.from("sperren").upsert({ user_id: session.user.id, slug: profil.slug, datum: tag, status: status }, { onConflict: "user_id,datum" })
+      : sb.from("sperren").delete().eq("user_id", session.user.id).eq("datum", tag);
+    return lauf.then(function (r) { if (r.error) meldung(fehlerText(r.error), "warn"); else kurzMeldung("Gespeichert ✓", "gut"); });
+  }
+
+  function sperreZeile(tag, status, spiele) {
+    var d = new Date(tag + "T12:00:00");
+    var knoepfe = h("div", { class: "mg-untertabs", style: "margin:0" });
+    function knopf(wert, text) {
+      return h("button", { type: "button", class: (status || "") === wert ? "aktiv" : "", text: text, onclick: function () {
+        sperreSetzen(tag, wert).then(zeigeVerfuegbarkeit);
+      } });
+    }
+    knoepfe.appendChild(knopf("", "frei")); knoepfe.appendChild(knopf("nein", "nicht")); knoepfe.appendChild(knopf("gern", "gern"));
+    return h("div", { class: "sperre" }, [
+      h("span", {}, [datumLang(d), spiele ? h("small", { class: "meta", text: " · " + spiele + (spiele === 1 ? " Spiel" : " Spiele") }) : null]),
+      knoepfe
     ]);
   }
 
-  return { oeffnen: oeffnen, bereit: bereit, angemeldet: angemeldet };
+  // ----------------------------------------------------------------- Konto
+
+  function zeigeKonto() {
+    leeren(inhalt);
+    inhalt.appendChild(h("div", { class: "melde karte" }, [
+      h("h4", { text: "Einstellungen" }),
+      h("p", { text: "Name auf esrw.de, Heimatadresse, Kilometermodell und Sätze." }),
+      h("button", { type: "button", class: "haupt", text: "Einstellungen öffnen", onclick: function () { zeigeEinrichtung(true); } })
+    ]));
+    var pushBox = h("div", { class: "melde karte" }, [h("h4", {}, [ikone("i-bell"), " Push-Benachrichtigungen ", h("span", { class: "status", text: "" })]), h("p", { text: "prüfe …" })]);
+    inhalt.appendChild(pushBox);
+    pushRendern(pushBox);
+    inhalt.appendChild(h("div", { class: "melde karte" }, [
+      h("h4", { text: "Daten" }),
+      h("p", { text: "Alles, was du hier einträgst, liegt in deinem Supabase-Konto und ist nur für dich lesbar – außer Gesuche, Angebote und Verfügbarkeiten, die alle Mitglieder sehen. " +
+        "Export: Abrechnung → CSV. Konto löschen: E-Mail an den Betreiber." })
+    ]));
+  }
+
+  // ---- Web Push: Abo im Browser anlegen und Endpoint in push_abos ablegen.
+
+  function b64ZuBytes(s) {
+    var p = "=".repeat((4 - s.length % 4) % 4);
+    var roh = atob((s + p).replace(/-/g, "+").replace(/_/g, "/"));
+    var a = new Uint8Array(roh.length);
+    for (var i = 0; i < roh.length; i++) a[i] = roh.charCodeAt(i);
+    return a;
+  }
+
+  function pushRendern(box) {
+    var status = box.querySelector(".status"), text = box.querySelector("p");
+    function setze(lage, txt, knopfText, aktion) {
+      status.className = "status " + (lage === "an" ? "an" : "aus");
+      status.textContent = lage === "an" ? "an" : lage === "aus" ? "aus" : "nicht möglich";
+      text.textContent = txt;
+      var alt = box.querySelector("button"); if (alt) alt.remove();
+      if (knopfText) box.appendChild(h("button", { type: "button", class: "haupt", text: knopfText, onclick: aktion }));
+    }
+    var alsApp = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+    if (!pushCfg || !pushCfg.public_key) return setze("nein", "Push ist vom Betreiber noch nicht eingerichtet (Anleitung Schritt 11).");
+    if (!("PushManager" in window) || !("serviceWorker" in navigator) || !("Notification" in window)) {
+      return setze("nein", alsApp ? "Dieser Browser kann kein Web Push." : "Dafür muss die Seite auf dem Home-Bildschirm liegen: in Safari Teilen → Zum Home-Bildschirm, dann hier wieder öffnen.");
+    }
+    if (Notification.permission === "denied") return setze("aus", "Mitteilungen sind abgelehnt. Wieder erlauben in Einstellungen → Apps → Einteilungen → Mitteilungen.");
+    navigator.serviceWorker.ready.then(function (reg) {
+      return reg.pushManager.getSubscription().then(function (abo) {
+        if (abo) {
+          setze("an", "Dieses Gerät bekommt eine Nachricht, wenn für " + (profil.name || "dich") + " eine Einteilung dazukommt, sich ändert oder wegfällt – auch bei geschlossener App.",
+                "Push ausschalten", function () { pushAus(abo).then(function () { pushRendern(box); }); });
+          // Abo sicherheitshalber (wieder) eintragen, falls die Zeile fehlt
+          pushEintragen(abo).catch(function () {});
+        } else {
+          setze("aus", "Echte Push-Nachricht bei neuen Einteilungen, auch wenn die App zu ist.",
+                "Push einschalten", function () {
+                  pushAn(reg).then(function () { pushRendern(box); })
+                    .catch(function (e) { meldung("Push konnte nicht eingeschaltet werden: " + (e.message || e), "warn"); });
+                });
+        }
+      });
+    }).catch(function () { setze("nein", "Service Worker nicht bereit – Seite neu laden."); });
+  }
+
+  function pushEintragen(abo) {
+    var j = abo.toJSON();
+    var geraet = (navigator.userAgent.match(/iPhone|iPad|Android|Windows|Macintosh/) || ["?"])[0];
+    return sb.from("push_abos").upsert({ user_id: session.user.id, endpoint: j.endpoint, p256dh: j.keys.p256dh, auth: j.keys.auth, geraet: geraet },
+                                       { onConflict: "endpoint" })
+      .then(function (r) { if (r.error) throw r.error; });
+  }
+
+  function pushAn(reg) {
+    return Notification.requestPermission().then(function (erg) {
+      if (erg !== "granted") throw new Error("Mitteilungen nicht erlaubt");
+      return reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64ZuBytes(pushCfg.public_key) });
+    }).then(function (abo) {
+      return pushEintragen(abo).then(function () { kurzMeldung("Push ist an ✓", "gut"); });
+    });
+  }
+
+  function pushAus(abo) {
+    return sb.from("push_abos").delete().eq("endpoint", abo.endpoint).then(function () { return abo.unsubscribe(); })
+      .then(function () { kurzMeldung("Push ist aus.", ""); }).catch(function () {});
+  }
+
+  return { oeffnen: oeffnen, bereit: bereit, angemeldet: angemeldet,
+           sperrenAm: sperrenAm, gesuchAnlegen: gesuchAnlegen, offeneAbrechnungen: offeneAbrechnungen };
 })();

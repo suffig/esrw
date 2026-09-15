@@ -408,16 +408,17 @@ def statistik_aus_historie(historie, stand):
             s["gesamt"] += 1
             if saison == jetzt_saison:
                 s["saison"] += 1
-                # Fuer die Saisonliste auf der Webseite - esrw.de zeigt
-                # nur wenige Tage zurueck, das Archiv die ganze Saison.
-                s["spiele_saison"].append({
-                    "beginn": eintrag["beginn"],
-                    "liga": eintrag.get("liga", ""),
-                    "paarung": eintrag.get("paarung", ""),
-                    "halle": eintrag.get("halle", ""),
-                    "rolle": rolle,
-                    "system": len(rollen_fuer(eintrag.get("besetzung") or {})),
-                })
+            # Fuer die Saisonlisten auf der Webseite - esrw.de zeigt nur
+            # wenige Tage zurueck, das Archiv alle Saisons.
+            s["spiele_saison"].append({
+                "saison": saison,
+                "beginn": eintrag["beginn"],
+                "liga": eintrag.get("liga", ""),
+                "paarung": eintrag.get("paarung", ""),
+                "halle": eintrag.get("halle", ""),
+                "rolle": rolle,
+                "system": len(rollen_fuer(eintrag.get("besetzung") or {})),
+            })
             s["rollen"][rolle] += 1
             if eintrag.get("liga"):
                 s["ligen"][eintrag["liga"]] += 1
@@ -429,6 +430,69 @@ def statistik_aus_historie(historie, stand):
             if s["letzte"] is None or tag > s["letzte"]:
                 s["letzte"] = tag
     return werte, jetzt_saison
+
+
+# ------------------------------------------------------------ Verguetung
+#
+# Gleiche Zuordnung wie in docs/mitglieder.js, damit Kalender und
+# Abrechnung dieselben Zahlen zeigen. Quelle: docs/gebuehren.json.
+
+def liga_einordnen(liga):
+    L = (liga or "").upper()
+    alter = re.search(r"U(7|9|11|13|15|17|20)", L)
+    if alter:
+        if re.search(r"DNL|U17 (I|II)", L):
+            return None
+        stufe = ("RL" if re.search(r"RL[A-Z]?|REGIONAL", L) else
+                 "LL" if re.search(r"LL|LANDES", L) else
+                 "BL" if re.search(r"BL|BZL|BEZIRK", L) else "")
+        return ("U" + alter.group(1), stufe)
+    if re.search(r"DNL|DA|AUSWAHL", L):
+        return None
+    if re.search(r"FRAUEN|DAMEN|DEFL|DFEL", L):
+        return ("frauen", "2LIGA" if re.search(r"2|DEFL|DFEL", L) else "")
+    if re.search(r"RL|REGIONAL", L):
+        return ("senioren", "RL")
+    if re.search(r"LL|LANDES", L):
+        return ("senioren", "LL")
+    if re.search(r"BL|BZL|BEZIRK|SENIOREN", L):
+        return ("senioren", "BL")
+    return None
+
+
+def grundgebuehr(gebuehren, liga, rolle, system):
+    """Spielleitungsgebuehr laut Ordnung oder None, wenn nicht zuzuordnen."""
+    if not gebuehren:
+        return None
+    e = liga_einordnen(liga)
+    if not e:
+        return None
+    klasse, stufe = e
+    if klasse == "senioren":
+        satz = gebuehren.get("senioren", {}).get(stufe)
+    elif klasse == "frauen":
+        satz = gebuehren.get("frauen")
+    else:
+        n = gebuehren.get("nachwuchs", {}).get(klasse)
+        if not n:
+            return None
+        satz = (n.get("RL") if stufe == "RL" else n.get("sonst")) if klasse == "U20" else n
+    if not satz:
+        return None
+    if satz.get("SR_allein") is not None and system <= 1:
+        return satz["SR_allein"]
+    betrag = satz.get(rolle)
+    return betrag if betrag is not None else satz.get("SR")
+
+
+def zeitzuschlag(gebuehren, anstoss):
+    z = (gebuehren or {}).get("zuschlag_zeit")
+    if not z:
+        return 0
+    hm = anstoss.strftime("%H:%M")
+    if hm <= z.get("bis_einschliesslich", "00:00") or hm >= z.get("ab_einschliesslich", "99:99"):
+        return z.get("prozent", 0)
+    return 0
 
 
 # ------------------------------------------------------------ Personen bilden
@@ -466,7 +530,7 @@ def pruefe_konflikte(termine, cfg):
                             % (a["paarung"], a["halle_name"] or "anderer Halle", luecke))
 
 
-def sammle_personen(spiele, cfg, venues, jetzt, bevorzugt=frozenset()):
+def sammle_personen(spiele, cfg, venues, jetzt, bevorzugt=frozenset(), gebuehren=None):
     vorlauf = timedelta(minutes=cfg["vorlauf_minuten"])
     dauer = timedelta(minutes=cfg["spieldauer_minuten"])
     personen = {}
@@ -524,6 +588,14 @@ def sammle_personen(spiele, cfg, venues, jetzt, bevorzugt=frozenset()):
                 zeilen.append("Gespann: %s" % " / ".join(
                     "%s (%s)" % (n, r) if len(besetzung) >= DREIER_SYSTEM_AB else n
                     for n, r, _ in kollegen))
+            gebuehr = grundgebuehr(gebuehren, liga, rolle, len(besetzung))
+            if gebuehr is not None:
+                prozent = zeitzuschlag(gebuehren, anstoss)
+                if prozent:
+                    zeilen.append("Vergütung lt. Ordnung: %d € + %d %% Uhrzeit = %d €"
+                                  % (gebuehr, prozent, round(gebuehr * (1 + prozent / 100.0))))
+                else:
+                    zeilen.append("Vergütung lt. Ordnung: %d €" % gebuehr)
             zeilen += ["", "Quelle: %s" % cfg["quelle"]]
 
             titel = "%s · %s · %s" % (rolle, liga, paarung) if liga \
@@ -634,6 +706,7 @@ def verarbeite_aenderungen(personen, alt, stand, eigene_slugs):
     """Vergibt SEQUENCE, markiert frische Aenderungen und meldet, was fuer
     die eigenen Namen neu, geaendert oder entfallen ist."""
     neu_state, neue, geaendert, entfallen = {}, [], [], []
+    alle_neu, alle_geaendert, alle_entfallen = {}, {}, {}
     heute = stand.date()
 
     for p in personen:
@@ -662,14 +735,18 @@ def verarbeite_aenderungen(personen, alt, stand, eigene_slugs):
 
             if vorher is None:
                 t["sequence"] = 0
-                if ist_eigen and not t["vergangen"] and alt:
-                    neue.append(t)
+                if not t["vergangen"] and alt:
+                    alle_neu.setdefault(p["slug"], []).append(t)
+                    if ist_eigen:
+                        neue.append(t)
             elif vorher_inhalt != vergleich:
                 t["sequence"] = vorher.get("sequence", 0) + 1
                 geaendert_am = heute.isoformat()
                 t["aenderung"] = beschreibe_aenderung(vorher, t)
-                if ist_eigen and not t["vergangen"]:
-                    geaendert.append(t)
+                if not t["vergangen"]:
+                    alle_geaendert.setdefault(p["slug"], []).append(t)
+                    if ist_eigen:
+                        geaendert.append(t)
             else:
                 t["sequence"] = vorher.get("sequence", 0)
                 geaendert_am = vorher.get("geaendert_am")
@@ -706,14 +783,29 @@ def verarbeite_aenderungen(personen, alt, stand, eigene_slugs):
     # Was aus den Daten verschwunden ist und noch in der Zukunft lag, ist eine
     # Absetzung. Aeltere Eintraege fallen nur aus dem Rueckschau-Fenster.
     for uid, eintrag in alt.items():
-        if uid in neu_state or eintrag.get("slug") not in eigene_slugs:
+        if uid in neu_state:
             continue
         try:
             beginn = datetime.fromisoformat(eintrag.get("beginn", ""))
         except ValueError:
             continue
         if beginn > stand:
-            entfallen.append(eintrag)
+            alle_entfallen.setdefault(eintrag.get("slug", ""), []).append(eintrag)
+            if eintrag.get("slug") in eigene_slugs:
+                entfallen.append(eintrag)
+
+    # Fuer den Push-Versand (push_senden.py, laeuft im Workflow danach):
+    # je Person, was sich getan hat. Liegt nicht in docs/, wird nicht committet.
+    push = {}
+    for slug in set(alle_neu) | set(alle_geaendert) | set(alle_entfallen):
+        push[slug] = {
+            "neu": ["%s Uhr – %s" % (kurz_datum(t["anstoss"]), t["titel"]) for t in alle_neu.get(slug, [])],
+            "geaendert": ["%s Uhr – %s (%s)" % (kurz_datum(t["anstoss"]), t["titel"], t.get("aenderung", ""))
+                          for t in alle_geaendert.get(slug, [])],
+            "entfallen": ["%s Uhr – %s" % (kurz_datum(datetime.fromisoformat(e["beginn"])), e.get("titel", ""))
+                          for e in alle_entfallen.get(slug, [])],
+        }
+    schreibe("aenderungen.json", {"stand": stand.isoformat(), "personen": push})
 
     return neu_state, neue, geaendert, entfallen
 
@@ -785,7 +877,8 @@ def main():
           % (len(spiele), aktuell, len(spiele) - aktuell, tage))
 
     bevorzugt = aliase_laden(cfg)
-    personen, uebersicht = sammle_personen(spiele, cfg, venues, stand, bevorzugt)
+    gebuehren = lade(os.path.join(cfg["ausgabe_verzeichnis"], "gebuehren.json"), {})
+    personen, uebersicht = sammle_personen(spiele, cfg, venues, stand, bevorzugt, gebuehren)
     print("%d Personen." % len(personen))
 
     unklar = sorted({t["paarung"] for p in personen for t in p["termine"]
@@ -935,8 +1028,10 @@ def main():
         if s and s["spiele_saison"]:
             archiv[p["slug"]] = sorted(s["spiele_saison"],
                                        key=lambda x: x["beginn"], reverse=True)
+    saisons = sorted({e["saison"] for liste in archiv.values() for e in liste}, reverse=True)
     with open(os.path.join(ziel, "archiv.json"), "w", encoding="utf-8") as f:
-        json.dump({"saison": saison, "personen": archiv}, f, ensure_ascii=False, indent=1)
+        json.dump({"saison": saison, "saisons": saisons, "personen": archiv},
+                  f, ensure_ascii=False, indent=1)
 
     # Der Zeitpunkt des Laufs steht bewusst in einer eigenen, winzigen Datei.
     # Sonst gaebe es allein deswegen bei jedem Lauf eine Aenderung an der

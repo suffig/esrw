@@ -106,3 +106,121 @@ create trigger profile_geaendert before update on public.profile
 drop trigger if exists einsaetze_geaendert on public.einsaetze;
 create trigger einsaetze_geaendert before update on public.einsaetze
   for each row execute function public.setze_geaendert();
+
+-- --------------------------------------------- Ergaenzungen (Version 3)
+--
+-- Tauschboerse, Verfuegbarkeiten, Push-Abos, Belege. Wieder mehrfach
+-- ausfuehrbar. Neu ist eine zweite Art von Regel: Zeilen, die ALLE
+-- angemeldeten Mitglieder lesen duerfen (Gesuche, Angebote, Sperren) -
+-- schreiben darf weiterhin nur, wem die Zeile gehoert.
+
+-- Belege an Auslagen: Liste von Pfaden im Storage-Bucket 'belege'
+alter table public.einsaetze add column if not exists belege jsonb not null default '[]'::jsonb;
+
+-- ---- Tauschboerse: Gesuche ------------------------------------------
+create table if not exists public.gesuche (
+  id        uuid primary key default gen_random_uuid(),
+  user_id   uuid not null references auth.users (id) on delete cascade,
+  slug      text not null,               -- wer sucht (Person aus daten.json)
+  name      text not null,               -- Anzeigename, Kopie aus dem Profil
+  kennung   text not null,               -- beginn|paarung des Spiels
+  beginn    timestamptz not null,
+  liga      text, paarung text, halle text, rolle text,
+  text      text,                        -- freier Hinweis
+  status    text not null default 'offen' check (status in ('offen','erledigt')),
+  angelegt  timestamptz not null default now(),
+  geaendert timestamptz not null default now(),
+  unique (user_id, kennung)
+);
+create index if not exists gesuche_status_beginn on public.gesuche (status, beginn);
+alter table public.gesuche enable row level security;
+drop policy if exists "Gesuche lesen (alle Mitglieder)" on public.gesuche;
+drop policy if exists "eigene Gesuche anlegen"  on public.gesuche;
+drop policy if exists "eigene Gesuche aendern"  on public.gesuche;
+drop policy if exists "eigene Gesuche loeschen" on public.gesuche;
+create policy "Gesuche lesen (alle Mitglieder)" on public.gesuche for select to authenticated using (true);
+create policy "eigene Gesuche anlegen"  on public.gesuche for insert with check (auth.uid() = user_id);
+create policy "eigene Gesuche aendern"  on public.gesuche for update using (auth.uid() = user_id);
+create policy "eigene Gesuche loeschen" on public.gesuche for delete using (auth.uid() = user_id);
+drop trigger if exists gesuche_geaendert on public.gesuche;
+create trigger gesuche_geaendert before update on public.gesuche
+  for each row execute function public.setze_geaendert();
+
+-- ---- Tauschboerse: Angebote ("ich kann") ------------------------------
+create table if not exists public.angebote (
+  id        uuid primary key default gen_random_uuid(),
+  gesuch_id uuid not null references public.gesuche (id) on delete cascade,
+  user_id   uuid not null references auth.users (id) on delete cascade,
+  slug      text not null,
+  name      text not null,
+  text      text,
+  angelegt  timestamptz not null default now(),
+  unique (gesuch_id, user_id)
+);
+alter table public.angebote enable row level security;
+drop policy if exists "Angebote lesen (alle Mitglieder)" on public.angebote;
+drop policy if exists "eigene Angebote anlegen"  on public.angebote;
+drop policy if exists "eigene Angebote loeschen" on public.angebote;
+create policy "Angebote lesen (alle Mitglieder)" on public.angebote for select to authenticated using (true);
+create policy "eigene Angebote anlegen"  on public.angebote for insert with check (auth.uid() = user_id);
+create policy "eigene Angebote loeschen" on public.angebote for delete using (auth.uid() = user_id);
+
+-- ---- Verfuegbarkeiten -------------------------------------------------
+-- 'nein' = nicht verfuegbar, 'gern' = haette gern ein Spiel
+create table if not exists public.sperren (
+  id        uuid primary key default gen_random_uuid(),
+  user_id   uuid not null references auth.users (id) on delete cascade,
+  slug      text not null,
+  datum     date not null,
+  status    text not null default 'nein' check (status in ('nein','gern')),
+  grund     text,
+  angelegt  timestamptz not null default now(),
+  unique (user_id, datum)
+);
+create index if not exists sperren_datum on public.sperren (datum);
+alter table public.sperren enable row level security;
+drop policy if exists "Sperren lesen (alle Mitglieder)" on public.sperren;
+drop policy if exists "eigene Sperren anlegen"  on public.sperren;
+drop policy if exists "eigene Sperren aendern"  on public.sperren;
+drop policy if exists "eigene Sperren loeschen" on public.sperren;
+create policy "Sperren lesen (alle Mitglieder)" on public.sperren for select to authenticated using (true);
+create policy "eigene Sperren anlegen"  on public.sperren for insert with check (auth.uid() = user_id);
+create policy "eigene Sperren aendern"  on public.sperren for update using (auth.uid() = user_id);
+create policy "eigene Sperren loeschen" on public.sperren for delete using (auth.uid() = user_id);
+
+-- ---- Push-Abos --------------------------------------------------------
+-- Nur der Besitzer sieht seine Zeilen. Der Versand laeuft im GitHub-
+-- Workflow mit dem service_role-Schluessel, der die Regeln umgeht - deshalb
+-- liegt der ausschliesslich als GitHub-Secret, nie im Browser.
+create table if not exists public.push_abos (
+  id        uuid primary key default gen_random_uuid(),
+  user_id   uuid not null references auth.users (id) on delete cascade,
+  endpoint  text not null unique,
+  p256dh    text not null,
+  auth      text not null,
+  geraet    text,
+  angelegt  timestamptz not null default now()
+);
+alter table public.push_abos enable row level security;
+drop policy if exists "eigene Push-Abos lesen"    on public.push_abos;
+drop policy if exists "eigene Push-Abos anlegen"  on public.push_abos;
+drop policy if exists "eigene Push-Abos aendern"  on public.push_abos;
+drop policy if exists "eigene Push-Abos loeschen" on public.push_abos;
+create policy "eigene Push-Abos lesen"    on public.push_abos for select using (auth.uid() = user_id);
+create policy "eigene Push-Abos anlegen"  on public.push_abos for insert with check (auth.uid() = user_id);
+create policy "eigene Push-Abos aendern"  on public.push_abos for update using (auth.uid() = user_id);
+create policy "eigene Push-Abos loeschen" on public.push_abos for delete using (auth.uid() = user_id);
+
+-- ---- Belege (Storage) -------------------------------------------------
+-- Privater Bucket; jeder darf nur in seinen eigenen Ordner (<user_id>/...)
+insert into storage.buckets (id, name, public) values ('belege', 'belege', false)
+  on conflict (id) do nothing;
+drop policy if exists "eigene Belege lesen"     on storage.objects;
+drop policy if exists "eigene Belege hochladen" on storage.objects;
+drop policy if exists "eigene Belege loeschen"  on storage.objects;
+create policy "eigene Belege lesen" on storage.objects for select
+  using (bucket_id = 'belege' and (storage.foldername(name))[1] = auth.uid()::text);
+create policy "eigene Belege hochladen" on storage.objects for insert
+  with check (bucket_id = 'belege' and (storage.foldername(name))[1] = auth.uid()::text);
+create policy "eigene Belege loeschen" on storage.objects for delete
+  using (bucket_id = 'belege' and (storage.foldername(name))[1] = auth.uid()::text);

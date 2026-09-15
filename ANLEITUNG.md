@@ -608,12 +608,18 @@ andere funktioniert weiter wie bisher.
 Links **SQL Editor** → **New query** → den kompletten Inhalt von
 `supabase/schema.sql` einfügen → **Run**.
 
-Das legt zwei Tabellen an (`profile`, `einsaetze`) und die Zugriffsregeln:
-**Jeder Nutzer sieht und ändert ausschließlich seine eigenen Zeilen.** Das
-erzwingt die Datenbank selbst, nicht die Webseite. Auch wer den anonymen
-Schlüssel aus dem Quelltext kopiert, kommt an fremde Daten nicht heran.
+Das legt die Tabellen an (`profile`, `einsaetze`, `gesuche`, `angebote`,
+`sperren`, `push_abos`), den privaten Ablageordner `belege` für Quittungen
+und die Zugriffsregeln: **Profil, Abrechnung, Belege und Push-Adressen sieht
+und ändert ausschließlich der Besitzer.** Gesuche, Angebote und
+Verfügbarkeiten sehen alle angemeldeten Mitglieder, ändern darf sie nur, wem
+sie gehören. Das erzwingt die Datenbank selbst, nicht die Webseite. Auch wer
+den anonymen Schlüssel aus dem Quelltext kopiert, kommt an fremde Daten nicht
+heran.
 
-Die Datei lässt sich gefahrlos mehrfach ausführen.
+Die Datei lässt sich gefahrlos mehrfach ausführen – **und das musst du auch
+tun, wenn sie sich ändert** (steht dann im Commit). Fehlt eine Tabelle, sagt
+die App „Die Datenbank kennt eine Tabelle noch nicht“.
 
 ### 10.3 Login-Einstellungen
 
@@ -692,9 +698,37 @@ Seite selbst. Reihenfolge (die Ordnung sagt es nicht): erst +20 %, dann
 übergreifend, dann die Halbierung.
 
 Oben stehen die Summen doppelt: **Saison** und **Steuerjahr** – fürs Finanzamt
-zählt das Kalenderjahr, für den Verband die Saison.
+zählt das Kalenderjahr, für den Verband die Saison. Die Saison wählst du oben
+aus; das Archiv behält alle Spielzeiten, die Steuerjahr-Summe rechnet über
+Saisongrenzen hinweg.
+
+Die Spiele sind nach Monat gruppiert; **Monat als bezahlt ✓** hakt alle
+offenen Spiele des Monats auf einmal ab, wenn die Abrechnung des Verbands
+gekommen ist.
+
+**+ Beleg (Foto/PDF)** hängt Quittungen an ein Spiel (Parkticket, Bahnticket).
+Die Dateien liegen in deinem privaten Ordner bei Supabase; niemand sonst kann
+sie öffnen, auch nicht über einen weitergegebenen Link – der läuft nach fünf
+Minuten ab.
 
 Wenn der ESRW die Gebühren ändert: `docs/gebuehren.json` anpassen, committen.
+
+**Tauschbörse** (zweiter Unterreiter): Wer ein Spiel abgeben muss, stellt es
+ein – aus der Liste oder direkt aus den Tauschoptionen unter dem Spiel
+(„Ersatz in der Tauschbörse suchen“). Alle Mitglieder sehen offene Gesuche
+und melden mit **Ich kann übernehmen**, gern mit Handynummer im Feld dazu.
+Der Suchende sieht die Namen, spricht sich ab und setzt das Gesuch auf
+**Erledigt**. Eingeteilt wird weiterhin vom Obmann – die Börse zeigt nur,
+wer könnte.
+
+**Verfügbarkeit** (dritter Unterreiter): je Wochenendtag der nächsten zehn
+Wochen **frei / nicht / gern**, andere Tage über das Datumsfeld. Das fließt
+in die Tauschoptionen aller Kollegen ein: wer „nicht“ gesetzt hat, taucht
+dort nicht auf; wer „gern“ gesetzt hat, steht ganz oben. Der Obmann sieht
+das nicht automatisch – Abmeldungen laufen weiter über ihn.
+
+**Konto** (vierter Unterreiter): Einstellungen (Name, Adresse, Sätze) und
+Push-Benachrichtigungen (Schritt 11).
 
 > **Keine Steuerberatung.** Die Abrechnung ist eine Aufstellung. Ob und wie
 > Vergütung und Fahrtkosten steuerlich zählen – Ehrenamtspauschale,
@@ -716,6 +750,74 @@ Kollegen (E-Mail, Adresse, Einnahmen). Das ist etwas anderes als das
 Weiterreichen öffentlicher Einteilungen. Wer mitmacht, sollte wissen, wo die
 Daten liegen (Supabase, Frankfurt) und dass du sie als Betreiber sehen
 *könntest* – über das Dashboard, nicht über die Webseite.
+
+---
+
+## Schritt 11 (optional) – Echte Push-Benachrichtigungen
+
+Bisher meldet sich die App nur beim Öffnen. Mit Web Push kommt die Nachricht
+auch bei geschlossener App – auf dem iPhone ab iOS 16.4, wenn die Seite auf
+dem Home-Bildschirm liegt. Braucht Schritt 10 (die Push-Adressen liegen bei
+Supabase, jeder sieht nur seine eigenen) und einmalig ein Schlüsselpaar.
+
+### 11.1 Schlüsselpaar erzeugen
+
+Auf deinem Rechner, im Ordner des Repositories:
+
+```bash
+pip install pywebpush
+```
+
+```bash
+python push_schluessel.py
+```
+
+Das schreibt zwei Dateien: `docs/push.json` mit dem **öffentlichen**
+Schlüssel (darf jeder sehen, wird committet) und `vapid_privat.txt` mit dem
+**privaten** (steht in `.gitignore`, wird nie committet und nicht auf dem
+Bildschirm angezeigt). Wer den privaten Schlüssel hat, kann in eurem Namen
+Push-Nachrichten schicken – er gehört nur an einen Ort: ein GitHub-Secret.
+
+### 11.2 Vier Secrets im Repository
+
+GitHub → dein Repository → **Settings** → **Secrets and variables** →
+**Actions** → **New repository secret**, viermal:
+
+| Name | Inhalt | Woher |
+|---|---|---|
+| `VAPID_PRIVATE` | Inhalt von `vapid_privat.txt` (eine Zeile) | Schritt 11.1 |
+| `VAPID_KONTAKT` | `mailto:deine@adresse.de` | deine E-Mail, Pflicht laut Push-Standard |
+| `SUPABASE_URL` | Project URL | Supabase → Project Settings → API |
+| `SUPABASE_SERVICE_KEY` | **service_role**-Schlüssel | Supabase → Project Settings → API → „service_role“, **Reveal** |
+
+Der `service_role`-Schlüssel umgeht alle Zugriffsregeln. Er gehört
+**ausschließlich** in dieses Secret – nie in `supabase.json`, nie in den
+Quelltext, nie in einen Screenshot. Der Workflow braucht ihn, um die
+Push-Adressen aller Mitglieder zu lesen; im Browser liegt weiterhin nur der
+`anon`-Schlüssel.
+
+Danach `vapid_privat.txt` löschen. Brauchst du das Paar irgendwann neu
+(Schlüssel verloren oder verraten): Datei löschen, `push_schluessel.py` erneut
+laufen lassen, Secret ersetzen, `push.json` committen – alle Kollegen müssen
+Push dann einmal aus- und wieder einschalten.
+
+### 11.3 Committen und ausprobieren
+
+`docs/push.json` committen und pushen. Dann auf dem Handy: App vom
+Home-Bildschirm öffnen → **Mitglieder** → anmelden → **Konto** → **Push
+einschalten** → Mitteilungen erlauben. Steht dort „an“, ist das Gerät
+eingetragen.
+
+Beim nächsten Lauf, der für dich eine neue, geänderte oder abgesetzte
+Einteilung findet, schickt der Schritt **Push senden** die Nachricht. Im
+Lauf-Protokoll steht `Push: 1 gesendet, 0 tote Abos entfernt.` Zum Testen
+ohne echte Änderung: `state.json` im Repository um ein eigenes Spiel kürzen
+und committen – der nächste Lauf sieht es als „neu“.
+
+Push geht nur an Mitglieder, die im Profil den passenden Namen gewählt haben;
+die Zuordnung läuft über den `slug` (`melchert-philip`). Wer Push
+ausschaltet oder die App löscht, fällt beim nächsten Versand von selbst aus
+der Liste.
 
 ---
 

@@ -46,8 +46,10 @@ docs/
   index.html            Webseite: Namen suchen, Kalender abonnieren, Statistik
   daten.json            alle Personen und Spiele, für die Webseite
   stand.json            nur der Zeitpunkt des letzten Laufs
-  archiv.json           Saisonliste je Person aus dem Archiv
-  mitglieder.js         Mitgliederbereich (Konto, Abrechnung), laedt bei Bedarf
+  archiv.json           Spiele je Person aus dem Archiv, alle Saisons
+  mitglieder.js         Mitgliederbereich (Konto, Abrechnung, Tauschboerse,
+                        Verfuegbarkeit, Push), laedt bei Bedarf
+  push.json             oeffentlicher VAPID-Schluessel fuer Web Push
   supabase.json         Zugang zum Backend, leer = Mitgliederbereich aus
   gebuehren.json        ESRW-Gebührenordnung, Basis der Vergütungsvorschläge
   manifest.webmanifest  macht die Seite als App installierbar
@@ -104,6 +106,8 @@ Braucht Python 3.8+, keine Pakete.
 | `python tests/test_esrw.py` | Regressionstest, ohne Netz |
 | `python geo_holen.py` | Koordinaten für neue Hallen nachtragen |
 | `python icons_bauen.py` | App-Symbole neu erzeugen |
+| `python push_schluessel.py` | VAPID-Schlüsselpaar für Web Push erzeugen (einmalig) |
+| `python push_senden.py` | Push-Nachrichten verschicken (läuft im Workflow) |
 
 ## Als App aufs Handy
 
@@ -192,6 +196,26 @@ Vergütung nach ESRW-Gebührenordnung aus `docs/gebuehren.json` – Liga, Rolle,
 System, +20 % bei früher/später Anstoßzeit. CSV-Export mit allen Posten. Es
 ist eine Aufstellung, keine Steuerberatung.
 
+**Mehrere Saisons und Belege**: Saison oben wählbar, das Archiv behält alle
+Spielzeiten, die Steuerjahr-Summe rechnet über Saisongrenzen. Spiele nach
+Monat gruppiert mit „Monat als bezahlt“. Quittungen (Foto/PDF) hängen am
+Spiel und liegen im privaten Storage-Ordner des Nutzers.
+
+**Tauschbörse**: Gesuche für Spiele, die man abgeben muss – aus der Liste
+oder direkt aus den Tauschoptionen. Alle Mitglieder sehen sie und melden
+„Ich kann übernehmen“. Eingeteilt wird weiterhin vom Obmann.
+
+**Verfügbarkeit**: je Wochenendtag frei / nicht / gern. Fließt in die
+Tauschoptionen aller ein – Gesperrte fallen raus, Freigemeldete rutschen nach
+oben.
+
+**Push**: echte Web-Push-Nachricht bei neuer, geänderter oder abgesetzter
+Einteilung, auch bei geschlossener App. Der Workflow-Schritt `push_senden.py`
+liest die Push-Adressen mit dem `service_role`-Schlüssel (nur als
+GitHub-Secret) und signiert mit dem privaten VAPID-Schlüssel (ebenfalls nur
+Secret; `push_schluessel.py` erzeugt das Paar, der öffentliche Teil steht in
+`docs/push.json`). Einrichtung: ANLEITUNG.md, Schritt 11.
+
 Tauschoptionen liegen ebenfalls hinter dem Login; Anzeigen, Spielplan und
 Kalender bleiben offen.
 
@@ -206,15 +230,12 @@ Mitteilungen anzeigen, wenn eine Einteilung dazugekommen ist oder sich geändert
 hat. Zusätzlich zeigt das Symbol auf dem Home-Bildschirm die Anzahl als Zähler,
 und der bleibt dort stehen, auch wenn die App geschlossen ist.
 
-**Was das nicht kann:** von selbst im Hintergrund melden. Dafür bräuchte es
-echtes Web Push, und das verlangt einen Absender mit geheimem Schlüssel sowie
-eine Ablage der Push-Adressen aller Nutzer. In einem **öffentlichen**
-Repository wäre diese Ablage für jeden lesbar – deshalb ist sie hier bewusst
-nicht gebaut. Die App meldet sich also, wenn du sie öffnest oder aus dem
-Hintergrund holst.
-
-Wer eine echte Hintergrund-Benachrichtigung will, nimmt ntfy oder die
-GitHub-Meldung aus dem nächsten Abschnitt.
+**Ohne Login** meldet sich die App nur, wenn du sie öffnest oder aus dem
+Hintergrund holst. Echtes Web Push im Hintergrund braucht eine Ablage der
+Push-Adressen und einen geheimen Absenderschlüssel – beides gibt es erst mit
+dem Mitgliederbereich (Supabase, Row Level Security) und den GitHub-Secrets
+aus Schritt 11; die Adressen liegen nie im Repository. Alternativen ohne
+Konto: ntfy oder die GitHub-Meldung aus dem nächsten Abschnitt.
 
 ## Archiv und Statistik
 

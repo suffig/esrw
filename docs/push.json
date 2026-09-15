@@ -1,0 +1,4 @@
+{
+  "_hinweis": "Oeffentlicher VAPID-Schluessel fuer Web Push. Wird von push_schluessel.py erzeugt. Leer = Push in der App aus.",
+  "public_key": ""
+}

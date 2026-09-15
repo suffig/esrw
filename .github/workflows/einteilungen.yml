@@ -70,6 +70,22 @@ jobs:
           MELDUNG_DATEI: meldung.txt
         run: python esrw_ical.py
 
+      # Push-Nachrichten an alle Mitglieder, die Push in der App eingeschaltet
+      # haben. Braucht drei Secrets; fehlen sie, meldet das Skript das nur.
+      # Ein Fehler hier darf die Feeds nicht aufhalten (continue-on-error).
+      - name: Push senden
+        if: hashFiles('aenderungen.json') != ''
+        continue-on-error: true
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          VAPID_PRIVATE: ${{ secrets.VAPID_PRIVATE }}
+          VAPID_KONTAKT: ${{ secrets.VAPID_KONTAKT }}
+        run: |
+          if [ -z "$VAPID_PRIVATE" ]; then echo "Push nicht eingerichtet."; exit 0; fi
+          pip install --quiet pywebpush
+          python push_senden.py
+
       # Zweiter Meldeweg, der ohne zusaetzliche App auskommt: GitHub schickt
       # fuer ein neues Issue von sich aus eine E-Mail an den Repository-
       # Eigentuemer, und die GitHub-App auf dem Handy meldet sich per Push.

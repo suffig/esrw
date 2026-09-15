@@ -2,3 +2,6 @@ __pycache__/
 *.pyc
 meldung.txt
 rumpf.txt
+aenderungen.json
+vapid_privat.txt
+.claude/

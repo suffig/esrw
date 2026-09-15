@@ -7,256 +7,339 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" href="icon-192.png" type="image/png">
-<meta name="theme-color" content="#15599e">
+<meta name="theme-color" content="#0f3d6e" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101319" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Einteilungen">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="description" content="Schiedsrichter-Einteilungen mit Hallenadresse und Treffpunkt, als Kalender zum Abonnieren.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg:#f6f6f4; --karte:#fff; --text:#1b1b19; --dim:#6d6d67; --linie:#e4e4df;
-    --akzent:#15599e; --akzent-text:#fff; --warn:#9a4a15; --warn-bg:#fdf3e7;
-    --gut:#1d6b3f; --gut-bg:#eaf5ee;
-    --schatten:0 1px 2px rgba(0,0,0,.05);
+    --bg:#f3f4f6; --karte:#ffffff; --text:#151a22; --dim:#5f6774; --linie:#e2e5ea;
+    --akzent:#0f3d6e; --akzent-hell:#e3ecf7; --akzent-text:#ffffff;
+    --warn:#9a4a15; --warn-bg:#fdf1e6; --gut:#1d6b3f; --gut-bg:#e6f4ec;
+    --sr:#0f3d6e; --hsr:#8a4b00; --lsr:#0b6e6e;
+    --sr-bg:#e3ecf7; --hsr-bg:#fbeedd; --lsr-bg:#dff3f3;
+    --schatten:0 1px 2px rgba(16,24,40,.06), 0 1px 3px rgba(16,24,40,.04);
+    --held-schatten:0 8px 24px rgba(15,61,110,.25);
+    --radius:14px;
+    color-scheme: light;
+  }
+  :root[data-theme="dark"] {
+    --bg:#101319; --karte:#181c24; --text:#eceff3; --dim:#98a1ad; --linie:#2a303a;
+    --akzent:#6aa7e8; --akzent-hell:#1b2a3d; --akzent-text:#0b1a2a;
+    --warn:#e6a76b; --warn-bg:#2e2417; --gut:#7ed09c; --gut-bg:#17281d;
+    --sr:#6aa7e8; --hsr:#f0b56b; --lsr:#5fd0d0;
+    --sr-bg:#1b2a3d; --hsr-bg:#3a2a14; --lsr-bg:#12302f;
+    --schatten:none; --held-schatten:none;
+    color-scheme: dark;
   }
   @media (prefers-color-scheme: dark) {
-    :root {
-      --bg:#141417; --karte:#1e1e23; --text:#ececeb; --dim:#9c9c96; --linie:#31313a;
-      --akzent:#4b93de; --akzent-text:#0b1a2a; --warn:#e0a670; --warn-bg:#2c2318;
-      --gut:#7ec79b; --gut-bg:#17261d;
-      --schatten:none;
+    :root:not([data-theme="light"]) {
+      --bg:#101319; --karte:#181c24; --text:#eceff3; --dim:#98a1ad; --linie:#2a303a;
+      --akzent:#6aa7e8; --akzent-hell:#1b2a3d; --akzent-text:#0b1a2a;
+      --warn:#e6a76b; --warn-bg:#2e2417; --gut:#7ed09c; --gut-bg:#17281d;
+      --sr:#6aa7e8; --hsr:#f0b56b; --lsr:#5fd0d0;
+      --sr-bg:#1b2a3d; --hsr-bg:#3a2a14; --lsr-bg:#12302f;
+      --schatten:none; --held-schatten:none;
+      color-scheme: dark;
     }
   }
-  * { box-sizing:border-box; }
-  body {
-    margin:0; padding:0 16px 56px; background:var(--bg); color:var(--text);
-    font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    -webkit-text-size-adjust:100%;
-  }
-  main { max-width:620px; margin:0 auto; }
-  header { padding:28px 0 18px; }
-  h1 { font-size:1.45rem; margin:0 0 4px; letter-spacing:-.01em; }
-  .stand { color:var(--dim); font-size:.85rem; }
-  .alt { color:var(--warn); }
 
+  * { box-sizing:border-box; }
+  html { -webkit-text-size-adjust:100%; }
+  body {
+    margin:0; background:var(--bg); color:var(--text);
+    font:16px/1.5 "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    padding:0 16px calc(84px + env(safe-area-inset-bottom));
+  }
+  main { max-width:640px; margin:0 auto; }
+  a { color:var(--akzent); }
+  button { font:inherit; }
+  svg.i { width:1.05em; height:1.05em; vertical-align:-.18em; fill:none; stroke:currentColor;
+          stroke-width:2; stroke-linecap:round; stroke-linejoin:round; flex:none; }
+  .versteckt { display:none !important; }
+
+  /* Kopf */
+  .kopf { display:flex; align-items:center; justify-content:space-between; gap:12px;
+          padding:calc(18px + env(safe-area-inset-top)) 0 12px; max-width:640px; margin:0 auto; }
+  .kopf h1 { font-size:1.3rem; font-weight:800; letter-spacing:-.02em; margin:0; }
+  .kopf .stand { color:var(--dim); font-size:.78rem; margin:2px 0 0; font-weight:500; }
+  .kopf .alt { color:var(--warn); }
+  .rund { width:40px; height:40px; border-radius:50%; border:1px solid var(--linie);
+          background:var(--karte); color:var(--text); display:inline-flex; align-items:center;
+          justify-content:center; cursor:pointer; flex:none; }
+  .rund svg.i { width:1.15rem; height:1.15rem; }
+
+  /* Karten */
+  .karte { background:var(--karte); border:1px solid var(--linie); border-radius:var(--radius);
+           box-shadow:var(--schatten); }
+  .abschnitt { font-size:.74rem; text-transform:uppercase; letter-spacing:.08em;
+               color:var(--dim); margin:24px 0 10px; font-weight:800; display:flex;
+               justify-content:space-between; align-items:baseline; }
+
+  /* Held: naechstes Spiel */
+  .held { background:linear-gradient(135deg, #0f3d6e 0%, #1d5a99 100%); color:#fff;
+          border-radius:18px; padding:18px 18px 16px; margin-bottom:12px;
+          box-shadow:var(--held-schatten); position:relative; overflow:hidden; }
+  .held .wann { font-size:.78rem; font-weight:700; opacity:.85; text-transform:uppercase; letter-spacing:.08em; }
+  .held .zeit { font-size:2rem; font-weight:800; letter-spacing:-.03em; line-height:1.1; margin:4px 0 2px; }
+  .held .paarung { font-size:1.05rem; font-weight:700; margin:0; }
+  .held .halle { opacity:.9; font-size:.9rem; margin-top:6px; display:flex; gap:6px; align-items:center; }
+  .held .aktionen { display:flex; gap:8px; margin-top:14px; flex-wrap:wrap; align-items:center; }
+  .held .aktionen a { display:inline-flex; align-items:center; gap:6px;
+    background:rgba(255,255,255,.16); color:#fff; border:1px solid rgba(255,255,255,.3);
+    border-radius:99px; padding:8px 14px; text-decoration:none; font-weight:700; font-size:.88rem; }
+  .held .aktionen span { display:inline-flex; align-items:center; gap:6px; font-size:.88rem; opacity:.9; padding:8px 4px; }
+  .held .rolle { position:absolute; top:16px; right:16px; background:rgba(255,255,255,.22); color:#fff; }
+
+  /* Namensauswahl */
+  .frage { font-weight:800; font-size:1.2rem; margin:8px 0 10px; }
   input[type=search] {
-    width:100%; padding:13px 14px; font-size:1rem; color:var(--text);
-    background:var(--karte); border:1px solid var(--linie); border-radius:11px;
+    width:100%; padding:13px 14px 13px 40px; font:inherit; color:var(--text);
+    background:var(--karte); border:1px solid var(--linie); border-radius:12px;
     -webkit-appearance:none; appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235f6774' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:12px center; background-size:18px;
   }
   input[type=search]:focus { outline:2px solid var(--akzent); outline-offset:-1px; }
-  .frage { font-weight:650; margin:0 0 10px; }
-
-  .namen { list-style:none; margin:14px 0 0; padding:0;
-           border:1px solid var(--linie); border-radius:11px; overflow:hidden;
-           background:var(--karte); box-shadow:var(--schatten); }
+  .namen { list-style:none; margin:12px 0 0; padding:0; overflow:hidden; }
   .namen li + li { border-top:1px solid var(--linie); }
-  .namen button {
-    display:flex; justify-content:space-between; align-items:center; gap:12px;
-    width:100%; padding:13px 15px; background:none; border:0; cursor:pointer;
-    font:inherit; color:inherit; text-align:left;
-  }
-  .namen button:hover { background:var(--bg); }
-  .anzahl { color:var(--dim); font-size:.85rem; white-space:nowrap; }
-  .leer { color:var(--dim); padding:24px 4px; text-align:center; }
+  .namen button { display:flex; justify-content:space-between; align-items:center; gap:12px;
+    width:100%; padding:13px 15px; background:none; border:0; cursor:pointer; color:inherit; text-align:left; font-weight:600; }
+  .namen button:hover { background:var(--akzent-hell); }
+  .anzahl { color:var(--dim); font-size:.82rem; white-space:nowrap; font-weight:500; }
+  .leer { color:var(--dim); padding:28px 16px; text-align:center; }
+  .leer svg.i { width:2rem; height:2rem; display:block; margin:0 auto 8px; opacity:.5; }
 
-  .profilzeile { display:flex; justify-content:space-between; align-items:center;
-                 gap:12px; background:var(--karte); border:1px solid var(--linie);
-                 border-radius:11px; padding:11px 15px; margin-bottom:12px;
-                 box-shadow:var(--schatten); }
-  .profilzeile b { font-size:1.05rem; }
-  .profilzeile small { display:block; color:var(--dim); font-size:.78rem; }
-  .textknopf { background:none; border:0; color:var(--akzent); font:inherit;
+  .profilzeile { display:flex; justify-content:space-between; align-items:center; gap:12px;
+                 padding:12px 16px; margin-bottom:12px; }
+  .profilzeile b { font-size:1.05rem; font-weight:800; }
+  .profilzeile small { display:block; color:var(--dim); font-size:.76rem; }
+  .textknopf { background:none; border:0; color:var(--akzent); font:inherit; font-weight:700;
                padding:0; cursor:pointer; white-space:nowrap; }
 
-  .abo { display:block; background:var(--akzent); color:var(--akzent-text);
-         text-decoration:none; padding:15px 18px; border-radius:12px;
-         font-weight:650; text-align:center; }
+  .abo { display:flex; align-items:center; justify-content:center; gap:8px;
+         background:var(--akzent); color:var(--akzent-text); text-decoration:none;
+         padding:14px 18px; border-radius:12px; font-weight:800; }
   .zweit { display:flex; gap:8px; margin-top:8px; }
-  .zweit button { flex:1; padding:11px; font:inherit; cursor:pointer;
-                  background:var(--karte); color:var(--text);
-                  border:1px solid var(--linie); border-radius:10px; }
+  .zweit button { flex:1; padding:11px; cursor:pointer; background:var(--karte); color:var(--text);
+                  border:1px solid var(--linie); border-radius:10px; font-weight:600; }
   .zweit button:hover { border-color:var(--akzent); }
 
-  .melde { background:var(--karte); border:1px solid var(--linie);
-           border-radius:11px; padding:13px 15px; margin-top:12px;
-           box-shadow:var(--schatten); }
-  .melde h4 { margin:0 0 5px; font-size:.95rem; }
-  .melde p { margin:0 0 10px; color:var(--dim); font-size:.87rem; }
-  .melde button { width:100%; padding:11px; font:inherit; cursor:pointer;
-                  background:var(--akzent); color:var(--akzent-text);
-                  border:0; border-radius:10px; font-weight:600; }
-  .melde .status { display:inline-block; font-size:.8rem; font-weight:600;
-                   padding:2px 9px; border-radius:99px; }
-  .melde .an  { background:var(--gut-bg); color:var(--gut); }
-  .melde .aus { background:var(--warn-bg); color:var(--warn); }
+  .hinweis { display:flex; gap:10px; align-items:flex-start; padding:12px 14px; border-radius:12px;
+             margin:12px 0; font-size:.9rem; }
+  .hinweis.warn { background:var(--warn-bg); color:var(--warn); }
+  .hinweis.gut { background:var(--gut-bg); color:var(--gut); }
+  .hinweis a { color:inherit; font-weight:700; }
 
-  details { margin-top:14px; background:var(--karte); border:1px solid var(--linie);
-            border-radius:11px; padding:0 15px; }
-  summary { cursor:pointer; padding:13px 0; font-weight:600; font-size:.95rem; }
+  .melde { padding:14px 16px; margin-top:12px; }
+  .melde h4 { margin:0 0 5px; font-size:.95rem; font-weight:800; }
+  .melde p { margin:0 0 10px; color:var(--dim); font-size:.87rem; }
+  .melde button.haupt { width:100%; padding:11px; cursor:pointer; background:var(--akzent);
+                        color:var(--akzent-text); border:0; border-radius:10px; font-weight:700; }
+  .status { display:inline-block; font-size:.74rem; font-weight:800; padding:2px 9px; border-radius:99px; }
+  .status.an { background:var(--gut-bg); color:var(--gut); }
+  .status.aus { background:var(--warn-bg); color:var(--warn); }
+
+  details.karte { padding:0 16px; margin-top:12px; }
+  details.karte summary { cursor:pointer; padding:13px 0; font-weight:700; font-size:.95rem; list-style:none; display:flex; justify-content:space-between; align-items:center; }
+  details.karte summary::-webkit-details-marker { display:none; }
+  details.karte summary::after { content:"›"; color:var(--dim); transform:rotate(90deg); transition:transform .15s; font-size:1.2rem; }
+  details.karte[open] summary::after { transform:rotate(-90deg); }
   details ol { margin:0 0 14px; padding-left:20px; }
   details li { margin-bottom:7px; }
   details p { margin:0 0 12px; color:var(--dim); font-size:.9rem; }
   mark { background:#ffe9a8; color:#3a2c00; padding:0 3px; border-radius:3px; }
-  @media (prefers-color-scheme: dark) { mark { background:#5c4a13; color:#ffeab4; } }
+  :root[data-theme="dark"] mark { background:#5c4a13; color:#ffeab4; }
 
-  h3 { font-size:.8rem; text-transform:uppercase; letter-spacing:.06em;
-       color:var(--dim); margin:26px 0 10px; font-weight:650; }
-  .spiel { background:var(--karte); border:1px solid var(--linie); border-radius:11px;
-           padding:13px 15px; margin-bottom:9px; box-shadow:var(--schatten); }
-  .spiel.war { opacity:.62; }
+  /* Spielkarten */
+  .spiel { padding:13px 15px; margin-bottom:9px; }
+  .spiel.war { opacity:.6; }
   .spiel.neu { border-color:var(--warn); }
-  .kopf { display:flex; justify-content:space-between; gap:10px; align-items:baseline; }
-  .datum { font-weight:640; }
-  .rolle { font-size:.72rem; font-weight:650; background:var(--akzent);
-           color:var(--akzent-text); padding:2px 8px; border-radius:99px;
-           white-space:nowrap; }
-  .paarung { margin:5px 0 3px; }
-  .meta { color:var(--dim); font-size:.87rem; }
+  .kopfzeile { display:flex; justify-content:space-between; gap:10px; align-items:center; }
+  .datum { font-weight:800; display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+  .rolle { font-size:.7rem; font-weight:800; padding:3px 9px; border-radius:99px; white-space:nowrap;
+           background:var(--sr-bg); color:var(--sr); letter-spacing:.03em; }
+  .rolle.HSR { background:var(--hsr-bg); color:var(--hsr); }
+  .rolle.LSR { background:var(--lsr-bg); color:var(--lsr); }
+  .liga { font-size:.7rem; font-weight:700; color:var(--dim); border:1px solid var(--linie);
+          padding:1px 7px; border-radius:99px; white-space:nowrap; }
+  .paarung { margin:6px 0 4px; font-weight:700; font-size:1.02rem; }
+  .meta { color:var(--dim); font-size:.86rem; display:flex; gap:6px; align-items:flex-start; }
+  .meta + .meta { margin-top:3px; }
   .meta a { color:var(--akzent); }
   .achtung { color:var(--warn); background:var(--warn-bg); font-size:.85rem;
-             padding:6px 9px; border-radius:7px; margin-top:7px; }
+             padding:7px 10px; border-radius:9px; margin-top:8px; }
   .geaendert { color:var(--warn); background:var(--warn-bg); font-size:.85rem;
-               font-weight:600; padding:6px 9px; border-radius:7px; margin:8px 0 0; }
+               font-weight:700; padding:7px 10px; border-radius:9px; margin:8px 0 0; }
+  .chips { display:flex; flex-wrap:wrap; gap:6px; margin-top:9px; }
+  .chip { display:inline-flex; align-items:center; gap:6px; font-size:.84rem; font-weight:600;
+          background:var(--bg); border:1px solid var(--linie); border-radius:99px;
+          padding:4px 10px; color:var(--text); text-decoration:none; }
+  a.chip:hover { border-color:var(--akzent); }
+  .chip b { font-size:.66rem; font-weight:800; padding:1px 6px; border-radius:99px; background:var(--sr-bg); color:var(--sr); }
+  .chip b.HSR { background:var(--hsr-bg); color:var(--hsr); }
+  .chip b.LSR { background:var(--lsr-bg); color:var(--lsr); }
+  .chip.ich { border-color:var(--akzent); background:var(--akzent-hell); }
+  .chip.offen { border-style:dashed; color:var(--warn); }
+  .chip.gern { border-color:var(--gut); }
 
-  .zahlen { display:grid; grid-template-columns:repeat(3,1fr); gap:9px;
-            margin-bottom:10px; }
-  .zahl { background:var(--karte); border:1px solid var(--linie); border-radius:11px;
-          padding:11px 8px; text-align:center; box-shadow:var(--schatten); }
-  .zahl b { display:block; font-size:1.4rem; line-height:1.15; }
-  .zahl span { color:var(--dim); font-size:.74rem; }
-  .balken { background:var(--karte); border:1px solid var(--linie);
-            border-radius:11px; padding:12px 15px; box-shadow:var(--schatten); }
+  /* Statistik */
+  .zahlen { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin-bottom:10px; }
+  .zahl { padding:12px 8px; text-align:center; }
+  .zahl b { display:block; font-size:1.45rem; line-height:1.1; font-weight:800; letter-spacing:-.02em; }
+  .zahl span { color:var(--dim); font-size:.72rem; font-weight:600; }
+  .balken { padding:12px 15px; }
   .balken + .balken { margin-top:9px; }
-  .balken h4 { margin:0 0 9px; font-size:.78rem; text-transform:uppercase;
-               letter-spacing:.05em; color:var(--dim); font-weight:650; }
-  .reihe { display:grid; grid-template-columns:1fr auto; gap:8px;
-           align-items:center; margin-bottom:7px; font-size:.9rem; }
+  .balken h4 { margin:0 0 9px; font-size:.74rem; text-transform:uppercase; letter-spacing:.06em; color:var(--dim); font-weight:800; }
+  .reihe { display:grid; grid-template-columns:1fr auto; gap:8px; align-items:center; margin-bottom:7px; font-size:.9rem; }
   .reihe:last-child { margin-bottom:0; }
-  .reihe i { display:block; height:5px; border-radius:3px; background:var(--akzent);
-             font-style:normal; margin-top:3px; }
-  .reihe em { font-style:normal; color:var(--dim); font-size:.85rem; }
+  .reihe i { display:block; height:6px; border-radius:3px; background:var(--akzent); margin-top:3px; }
+  .reihe em { font-style:normal; color:var(--dim); font-size:.85rem; font-weight:600; }
 
-  .tabs { display:flex; gap:6px; background:var(--karte); border:1px solid var(--linie);
-          border-radius:12px; padding:4px; margin-bottom:16px; }
-  .tabs button { flex:1; padding:9px 10px; font:inherit; font-weight:600; cursor:pointer;
-                 background:none; border:0; border-radius:9px; color:var(--dim); }
-  .tabs button.aktiv { background:var(--akzent); color:var(--akzent-text); }
-
-  .schalterzeile { display:flex; flex-wrap:wrap; gap:4px 16px; align-items:center;
-                   margin:10px 2px 0; }
-  .schalter { color:var(--dim); font-size:.87rem; }
-  .schalter input { vertical-align:-2px; margin-right:6px; }
+  /* Spielplan */
+  .filterleiste { position:sticky; top:0; z-index:5; background:var(--bg); padding:6px 16px 8px; margin:0 -16px; }
+  .schalterzeile { display:flex; flex-wrap:wrap; gap:6px 14px; align-items:center; margin:8px 2px 0; }
+  .schalter { color:var(--dim); font-size:.84rem; font-weight:600; display:inline-flex; align-items:center; gap:5px; }
+  .schalter input { margin:0; }
   #plan-zaehler { margin-left:auto; }
-  .zeile { display:grid; grid-template-columns:3.4em 1fr; gap:2px 10px;
-           padding:8px 4px; border-top:1px solid var(--linie); font-size:.92rem; }
-  .zeile:first-of-type, .tag + .zeile { border-top:0; }
-  .zeile.war { opacity:.62; }
+  .tag { font-size:.74rem; text-transform:uppercase; letter-spacing:.08em; color:var(--dim);
+         margin:20px 0 8px; font-weight:800; display:flex; justify-content:space-between; }
+  .tag.heute { color:var(--akzent); }
+  .zeit { font-weight:800; min-width:5.2em; }
+  .zeile { display:grid; grid-template-columns:3.4em 1fr; gap:2px 10px; padding:9px 4px;
+           border-top:1px solid var(--linie); font-size:.92rem; }
+  .tag + .zeile { border-top:0; }
+  .zeile.war { opacity:.6; }
   .zeile small { display:block; color:var(--dim); font-size:.8rem; }
   .zeile-wer { grid-column:2; display:flex; flex-wrap:wrap; gap:4px; }
-  .zeile-wer .chip { font-size:.78rem; padding:1px 7px 1px 8px; }
-  .chip.offen { border-style:dashed; color:var(--warn); }
-  .tag { font-size:.8rem; text-transform:uppercase; letter-spacing:.06em;
-         color:var(--dim); margin:22px 0 8px; font-weight:650;
-         display:flex; justify-content:space-between; }
-  .tag.heute { color:var(--akzent); }
-  .zeit { font-weight:640; min-width:5.2em; }
-  .liga { font-size:.72rem; font-weight:650; color:var(--dim); border:1px solid var(--linie);
-          padding:1px 7px; border-radius:99px; white-space:nowrap; }
-  .chips { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
-  .chip { display:inline-flex; align-items:center; gap:5px; font-size:.85rem;
-          background:var(--bg); border:1px solid var(--linie); border-radius:99px;
-          padding:3px 9px 3px 10px; color:var(--text); text-decoration:none; }
-  a.chip:hover { border-color:var(--akzent); }
-  .chip b { font-size:.68rem; font-weight:700; background:var(--akzent);
-            color:var(--akzent-text); padding:1px 6px; border-radius:99px; }
-  .chip.ich { border-color:var(--akzent); }
-  .system { font-size:.72rem; color:var(--dim); }
-  #saison { margin-top:14px; }
-  .saisonzeile { display:grid; grid-template-columns:auto auto 1fr; gap:10px;
-                 font-size:.88rem; padding:7px 0; border-top:1px solid var(--linie); }
+  .zeile-wer .chip { font-size:.78rem; padding:2px 8px; }
+
+  /* Saison */
+  .saisonzeile { display:grid; grid-template-columns:auto auto 1fr; gap:10px; font-size:.88rem;
+                 padding:8px 0; border-top:1px solid var(--linie); align-items:start; }
   .saisonzeile:first-child { border-top:0; }
-  .saisonzeile .liga { align-self:center; }
   .saisonzeile small { display:block; color:var(--dim); }
 
-  .tausch { margin:10px 0 0; padding:0 12px; background:var(--bg); }
-  .tausch summary { padding:9px 0; font-size:.88rem; color:var(--akzent); }
-  .tausch h4 { margin:8px 0 6px; font-size:.75rem; text-transform:uppercase;
-               letter-spacing:.05em; color:var(--dim); font-weight:650; }
+  /* Tausch */
+  .tausch { margin:10px 0 0; padding:0 12px; background:var(--bg); border:1px solid var(--linie); border-radius:12px; }
+  .tausch summary { padding:9px 0; font-size:.88rem; color:var(--akzent); font-weight:700; cursor:pointer; list-style:none; }
+  .tausch summary::-webkit-details-marker { display:none; }
+  .tausch h4 { margin:10px 0 6px; font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--dim); font-weight:800; }
   .tausch > div { padding-bottom:10px; }
-  .kandidat { padding:7px 0; border-top:1px solid var(--linie); }
+  .kandidat { padding:8px 0; border-top:1px solid var(--linie); }
   .kandidat-kopf { display:flex; justify-content:space-between; align-items:center; gap:8px; }
   .kandidat .meta { font-size:.8rem; margin-top:3px; }
-  .anfrage { font:inherit; font-size:.8rem; font-weight:600; padding:4px 11px;
-             background:var(--akzent); color:var(--akzent-text); border:0;
-             border-radius:99px; cursor:pointer; white-space:nowrap; }
+  .anfrage { font-size:.8rem; font-weight:800; padding:5px 12px; background:var(--akzent); color:var(--akzent-text);
+             border:0; border-radius:99px; cursor:pointer; white-space:nowrap; display:inline-flex; align-items:center; gap:5px; }
+  .anfrage.zweit { background:var(--karte); color:var(--akzent); border:1px solid var(--akzent); margin-top:6px; }
 
-  .mg-meldung { padding:9px 12px; border-radius:9px; font-size:.88rem; margin-bottom:10px;
-                background:var(--karte); border:1px solid var(--linie); }
+  /* Mitglieder (Stile fuer mitglieder.js) */
+  .mg-meldung { padding:10px 12px; border-radius:10px; font-size:.88rem; margin-bottom:10px; background:var(--karte); border:1px solid var(--linie); }
   .mg-meldung.gut { color:var(--gut); background:var(--gut-bg); border-color:transparent; }
   .mg-meldung.warn { color:var(--warn); background:var(--warn-bg); border-color:transparent; }
   .mg-form { display:flex; flex-direction:column; gap:9px; }
-  .mg-form h4 { margin:0 0 4px; font-size:1rem; }
-  .mg-form label { font-size:.8rem; color:var(--dim); margin-top:4px; }
-  .mg-form input, .mg-form select, .mg-felder input {
+  .mg-form h4 { margin:0 0 4px; font-size:1.05rem; font-weight:800; }
+  .mg-form label { font-size:.78rem; color:var(--dim); margin-top:4px; font-weight:600; }
+  .mg-form input, .mg-form select, .mg-felder input, .mg-form textarea {
     width:100%; padding:10px 12px; font:inherit; color:var(--text); background:var(--bg);
-    border:1px solid var(--linie); border-radius:9px; -webkit-appearance:none; appearance:none; }
-  .mg-form input:focus, .mg-felder input:focus { outline:2px solid var(--akzent); outline-offset:-1px; }
+    border:1px solid var(--linie); border-radius:10px; -webkit-appearance:none; appearance:none; }
+  .mg-form input:focus, .mg-felder input:focus, .mg-form textarea:focus { outline:2px solid var(--akzent); outline-offset:-1px; }
   .mg-zeile { display:flex; gap:8px; }
   .mg-zeile input { flex:1; }
-  .mg-haupt { padding:12px; font:inherit; font-weight:650; cursor:pointer; margin-top:6px;
-              background:var(--akzent); color:var(--akzent-text); border:0; border-radius:10px; }
+  .mg-haupt { padding:12px; font-weight:800; cursor:pointer; margin-top:6px; background:var(--akzent); color:var(--akzent-text); border:0; border-radius:10px; }
   .mg-haupt:disabled { opacity:.6; }
-  .mg-neben { padding:9px 12px; font:inherit; cursor:pointer; white-space:nowrap;
-              background:var(--karte); color:var(--text); border:1px solid var(--linie); border-radius:9px; }
+  .mg-neben { padding:9px 12px; cursor:pointer; white-space:nowrap; background:var(--karte); color:var(--text); border:1px solid var(--linie); border-radius:10px; font-weight:600; }
   .mg-wechsel { margin:10px 0 6px; }
   .mg-eintrag .mg-felder { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:9px; }
-  .mg-eintrag .mg-felder label { font-size:.72rem; color:var(--dim); display:flex; flex-direction:column; gap:3px; }
-  .mg-eintrag .mg-felder input { padding:7px 9px; font-size:.9rem; }
-  .mg-eintrag .mg-check { flex-direction:row !important; align-items:center; gap:6px !important;
-                          font-size:.85rem !important; color:var(--text) !important; align-self:end; }
-  .mg-eintrag .mg-check input { width:auto; }
-  .mg-eintrag .mg-notiz { grid-column:2 / 4; }
-  .mg-fuss { margin-top:16px; }
-  .mg-schalter { display:flex; flex-wrap:wrap; gap:6px 16px; margin-top:8px; }
-  .mg-schalter .mg-check { font-size:.85rem; display:flex; align-items:center; gap:6px; }
-  .mg-zwei { grid-template-columns:1fr 1fr !important; }
+  .mg-eintrag .mg-felder label, .mg-form .mg-felder label { font-size:.72rem; color:var(--dim); display:flex; flex-direction:column; gap:3px; font-weight:600; }
   .mg-form .mg-felder { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
-  .mg-form .mg-felder label { display:flex; flex-direction:column; gap:3px; }
-  .mg-betrag { margin-top:8px; font-weight:600; color:var(--text); }
+  .mg-eintrag .mg-felder input { padding:7px 9px; font-size:.9rem; }
+  .mg-eintrag .mg-notiz { grid-column:1 / 4; }
+  .mg-schalter { display:flex; flex-wrap:wrap; gap:6px 16px; margin-top:8px; }
+  .mg-check { font-size:.85rem; display:flex; align-items:center; gap:6px; font-weight:600; }
+  .mg-betrag { margin-top:8px; font-weight:700; color:var(--text); }
+  .mg-fuss { margin-top:16px; }
   .mg-summenblock h3 { margin-top:18px; }
+  .mg-monat { display:flex; justify-content:space-between; align-items:baseline; margin:18px 0 8px; }
+  .mg-monat b { font-size:.9rem; font-weight:800; }
+  .mg-belege { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; align-items:center; }
+  .mg-belege a { font-size:.8rem; }
+  .mg-datei { font-size:.8rem; color:var(--akzent); font-weight:700; cursor:pointer; }
+  .mg-datei input { display:none; }
+  .mg-untertabs { display:flex; gap:6px; margin:0 0 14px; overflow-x:auto; }
+  .mg-untertabs button { padding:8px 13px; border-radius:99px; border:1px solid var(--linie); background:var(--karte); color:var(--dim); font-weight:700; cursor:pointer; white-space:nowrap; font-size:.88rem; }
+  .mg-untertabs button.aktiv { background:var(--akzent); color:var(--akzent-text); border-color:var(--akzent); }
+  .gesuch { padding:12px 15px; margin-bottom:9px; }
+  .gesuch .kopfzeile { align-items:flex-start; }
+  .gesuch .wer { font-size:.8rem; color:var(--dim); font-weight:600; }
+  .gesuch .angebote { margin-top:8px; font-size:.85rem; }
+  .gesuch .angebote span { display:inline-block; background:var(--gut-bg); color:var(--gut); border-radius:99px; padding:2px 9px; margin:2px 4px 2px 0; font-weight:700; font-size:.8rem; }
+  .sperre { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-top:1px solid var(--linie); font-size:.9rem; }
+  .sperre:first-child { border-top:0; }
 
-  footer { margin-top:34px; padding-top:16px; border-top:1px solid var(--linie);
-           color:var(--dim); font-size:.83rem; }
-  footer a { color:var(--akzent); }
-  .versteckt { display:none; }
+  /* Untere Leiste */
+  .leiste { position:fixed; left:0; right:0; bottom:0; z-index:10;
+            background:var(--karte); border-top:1px solid var(--linie);
+            padding:6px 8px calc(8px + env(safe-area-inset-bottom)); }
+  .leiste div { max-width:640px; margin:0 auto; display:flex; }
+  .leiste button { flex:1; background:none; border:0; color:var(--dim); cursor:pointer;
+                   display:flex; flex-direction:column; align-items:center; gap:3px;
+                   padding:6px 4px; font-size:.7rem; font-weight:800; border-radius:10px; }
+  .leiste button svg.i { width:1.35rem; height:1.35rem; }
+  .leiste button.aktiv { color:var(--akzent); }
+  .leiste button.aktiv svg.i { stroke-width:2.4; }
+
+  footer { margin-top:34px; padding-top:16px; border-top:1px solid var(--linie); color:var(--dim); font-size:.8rem; }
 </style>
 </head>
 <body>
-<main>
-  <header>
-    <h1 id="titel">Einteilungen im Kalender</h1>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6-5.3-6-11a6 6 0 0 1 12 0c0 5.7-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.2c2.8.2 5 2 5 4.8"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="18" r="1" fill="currentColor"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 20c0-3.6 3.4-6 7.5-6s7.5 2.4 7.5 6"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.2 16.5 15.8 7.5"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+  <symbol id="i-empty" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2.5"/><path d="M4 10h16M9 14h6"/></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 8h13l-3-3M20 16H7l3 3"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+</svg>
+
+<header class="kopf">
+  <div>
+    <h1 id="titel">Einteilungen</h1>
     <p class="stand" id="stand">wird geladen …</p>
-  </header>
+  </div>
+  <button type="button" class="rund" id="thema" title="Hell / Dunkel" aria-label="Hell oder Dunkel">
+    <svg class="i"><use href="#i-moon"/></svg>
+  </button>
+</header>
 
-  <nav class="tabs" id="tabs">
-    <button type="button" id="tab-meine" class="aktiv">Meine Spiele</button>
-    <button type="button" id="tab-plan">Spielplan</button>
-    <button type="button" id="tab-mitglieder">Mitglieder</button>
-  </nav>
-
-  <!-- Mitgliederbereich: Konto, Abrechnung. Logik in mitglieder.js -->
-  <section id="mitglieder" class="versteckt"></section>
-
+<main>
   <!-- Spielplan: alle Spiele nach Tag und Uhrzeit -->
   <section id="plan" class="versteckt">
-    <label for="plan-filter" class="versteckt">Spielplan filtern</label>
-    <input type="search" id="plan-filter" placeholder="Verein, Halle, Liga oder Name …"
-           autocomplete="off" autocorrect="off" spellcheck="false">
-    <div class="schalterzeile">
-      <label class="schalter"><input type="checkbox" id="plan-vergangene"> auch vergangene</label>
-      <label class="schalter"><input type="checkbox" id="plan-kompakt"> als Liste</label>
-      <span class="schalter" id="plan-zaehler"></span>
+    <div class="filterleiste">
+      <label for="plan-filter" class="versteckt">Spielplan filtern</label>
+      <input type="search" id="plan-filter" placeholder="Verein, Halle, Liga oder Name …"
+             autocomplete="off" autocorrect="off" spellcheck="false">
+      <div class="schalterzeile">
+        <label class="schalter"><input type="checkbox" id="plan-vergangene"> vergangene</label>
+        <label class="schalter"><input type="checkbox" id="plan-kompakt"> als Liste</label>
+        <label class="schalter versteckt" id="plan-hallen-label"><input type="checkbox" id="plan-hallen"> meine Hallen</label>
+        <button type="button" class="textknopf" id="plan-heute">Heute ↓</button>
+        <span class="schalter" id="plan-zaehler"></span>
+      </div>
     </div>
     <div id="plan-liste"></div>
   </section>
@@ -267,7 +350,7 @@
     <label for="suche" class="versteckt">Name suchen</label>
     <input type="search" id="suche" placeholder="Eigenen Namen suchen …"
            autocomplete="off" autocorrect="off" spellcheck="false">
-    <ul class="namen" id="namen"></ul>
+    <ul class="namen karte" id="namen"></ul>
     <p class="leer versteckt" id="nichts">Kein Name gefunden.</p>
     <p class="leer versteckt" id="abbrechen-zeile">
       <button class="textknopf" id="abbrechen">Abbrechen</button>
@@ -276,125 +359,148 @@
 
   <!-- Persönliche Ansicht -->
   <section id="detail" class="versteckt">
-    <div class="profilzeile">
+    <div class="profilzeile karte">
       <span><b id="person"></b><small id="profil-hinweis">dein Profil</small></span>
       <button class="textknopf" id="wechseln">Wechseln</button>
     </div>
 
-    <a class="abo" id="abo" href="#">Im Kalender abonnieren</a>
+    <div id="held"></div>
+    <div id="nachtrag"></div>
+
+    <a class="abo" id="abo" href="#"><svg class="i"><use href="#i-cal"/></svg> Im Kalender abonnieren</a>
     <div class="zweit">
       <button id="kopieren">Link kopieren</button>
       <button id="laden">Einmalig laden</button>
       <button id="teilen" class="versteckt">Teilen</button>
     </div>
 
-    <div class="melde versteckt" id="melde">
-      <h4>Benachrichtigungen <span class="status" id="melde-status"></span></h4>
+    <div class="melde karte versteckt" id="melde">
+      <h4><svg class="i"><use href="#i-bell"/></svg> Benachrichtigungen <span class="status" id="melde-status"></span></h4>
       <p id="melde-text"></p>
-      <button id="melde-knopf" class="versteckt"></button>
+      <button id="melde-knopf" class="haupt versteckt"></button>
     </div>
 
-    <details id="anleitung">
+    <details id="anleitung" class="karte">
       <summary>Wie abonniere ich das?</summary>
       <p><strong>iPhone / iPad</strong></p>
       <ol>
         <li>Oben auf <em>Im Kalender abonnieren</em> tippen.</li>
         <li>iOS fragt nach – mit <em>Abonnieren</em> bestätigen.</li>
-        <li>Bei <mark>„Alarme entfernen“ auf AUS</mark> stellen, sonst kommen
-            keine Erinnerungen.</li>
+        <li>Bei <mark>„Alarme entfernen“ auf AUS</mark> stellen, sonst kommen keine Erinnerungen.</li>
         <li>Unter <em>Aktualisieren</em> „Alle 15 Minuten“ oder „Stündlich“ wählen.</li>
       </ol>
-      <p>Falls nichts passiert: Einstellungen → Apps → Kalender → Accounts →
-         Account hinzufügen → Andere → Kalenderabo hinzufügen, dort den
-         kopierten Link einsetzen.</p>
+      <p>Falls nichts passiert: Einstellungen → Apps → Kalender → Accounts → Account hinzufügen →
+         Andere → Kalenderabo hinzufügen, dort den kopierten Link einsetzen.</p>
       <p><strong>Android / Google Kalender</strong></p>
       <ol>
         <li><em>Link kopieren</em> antippen.</li>
-        <li>Am Rechner auf <a href="https://calendar.google.com/calendar/u/0/r/settings/addbyurl"
-            target="_blank" rel="noopener">calendar.google.com</a> →
-            „Per URL hinzufügen“ – der Link muss mit <code>https</code> anfangen.</li>
+        <li>Am Rechner auf <a href="https://calendar.google.com/calendar/u/0/r/settings/addbyurl" target="_blank" rel="noopener">calendar.google.com</a> → „Per URL hinzufügen“ – der Link muss mit <code>https</code> anfangen.</li>
         <li>Nach ein paar Minuten steht der Kalender auch im Handy.</li>
       </ol>
-      <p>Der Kalender ist nur lesend. Neue Einteilungen, Absetzungen und
-         Zeitänderungen kommen von allein nach.</p>
+      <p>Der Kalender ist nur lesend. Neue Einteilungen, Absetzungen und Zeitänderungen kommen von allein nach.</p>
     </details>
 
     <div id="spiele"></div>
     <div id="statistik"></div>
-    <details id="saison" class="versteckt">
-      <summary id="saison-titel">Alle Spiele der Saison</summary>
+    <details id="saison" class="karte versteckt">
+      <summary id="saison-titel">Alle Spiele im Archiv</summary>
       <div id="saison-liste"></div>
     </details>
   </section>
 
+  <!-- Mitgliederbereich: Konto, Abrechnung, Tauschbörse. Logik in mitglieder.js -->
+  <section id="mitglieder" class="versteckt"></section>
+
   <footer>
     <p id="fuss"></p>
     <p>Alle Spiele als Kalender: <a id="alle" href="feeds/alle.ics">alle.ics</a><br>
-       Daten von <a id="quelle" href="https://www.esrw.de/einteilungen.html"
-       target="_blank" rel="noopener">esrw.de</a> – dort steht, was gilt.</p>
+       Daten von <a id="quelle" href="https://www.esrw.de/einteilungen.html" target="_blank" rel="noopener">esrw.de</a> – dort steht, was gilt.</p>
   </footer>
 </main>
+
+<nav class="leiste" id="tabs">
+  <div>
+    <button type="button" id="tab-meine" class="aktiv"><svg class="i"><use href="#i-user"/></svg>Meine Spiele</button>
+    <button type="button" id="tab-plan"><svg class="i"><use href="#i-list"/></svg>Spielplan</button>
+    <button type="button" id="tab-mitglieder"><svg class="i"><use href="#i-lock"/></svg>Mitglieder</button>
+  </div>
+</nav>
 
 <script>
 (function () {
   "use strict";
 
-  var basis = location.href.split("#")[0].split("?")[0]
-                .replace(/index\.html$/, "").replace(/\/?$/, "/");
+  var basis = location.href.split("#")[0].split("?")[0].replace(/index\.html$/, "").replace(/\/?$/, "/");
   var daten = null, aktuell = null, profil = null;
   var el = function (id) { return document.getElementById(id); };
   var wochentag = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
 
   // ------------------------------------------------------------- Speicher
 
-  function lesen(schluessel) {
-    try { return localStorage.getItem(schluessel); } catch (e) { return null; }
-  }
-  function schreiben(schluessel, wert) {
-    try {
-      if (wert === null) localStorage.removeItem(schluessel);
-      else localStorage.setItem(schluessel, wert);
-    } catch (e) {}
-  }
+  function lesen(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function schreiben(k, v) { try { v === null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (e) {} }
   function profilLesen() {
-    try {
-      var roh = lesen("profil");
-      if (roh) return JSON.parse(roh);
-    } catch (e) {}
-    // Aus der Zeit vor den Profilen: da stand nur der Name im Speicher.
+    try { var roh = lesen("profil"); if (roh) return JSON.parse(roh); } catch (e) {}
     var alt = lesen("person");
     return alt ? { slug: alt, gesehen: {} } : null;
   }
-  function profilSchreiben() {
-    if (profil) schreiben("profil", JSON.stringify(profil));
-  }
+  function profilSchreiben() { if (profil) schreiben("profil", JSON.stringify(profil)); }
 
-  // --------------------------------------------------------------- Suche
+  // ----------------------------------------------------------------- Thema
 
-  // Nachsichtig bei Sonderzeichen: "muller", "mueller" und "Müller" sollen
-  // alle "Müller" finden, "rene" auch "René".
-  function ohneZeichen(s) {                       // ü -> u, é -> e
-    return (s || "").toLowerCase().normalize("NFD")
-      .replace(/[̀-ͯ]/g, "").replace(/ß/g, "ss")
-      .replace(/[^a-z0-9]+/g, " ").trim();
+  function themaAnwenden() {
+    var t = lesen("thema");
+    if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t);
+    else document.documentElement.removeAttribute("data-theme");
+    var dunkel = t === "dark" || (!t && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    el("thema").querySelector("use").setAttribute("href", dunkel ? "#i-sun" : "#i-moon");
   }
-  function ausgeschrieben(s) {                    // ü -> ue
-    return (s || "").toLowerCase()
-      .replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue")
-      .replace(/ß/g, "ss").normalize("NFD").replace(/[̀-ͯ]/g, "")
-      .replace(/[^a-z0-9]+/g, " ").trim();
+  el("thema").addEventListener("click", function () {
+    var t = lesen("thema");
+    var dunkel = t === "dark" || (!t && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    schreiben("thema", dunkel ? "light" : "dark");
+    themaAnwenden();
+  });
+  themaAnwenden();
+
+  // --------------------------------------------------------------- Helfer
+
+  function ikone(name) {
+    var s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    s.setAttribute("class", "i");
+    var u = document.createElementNS("http://www.w3.org/2000/svg", "use");
+    u.setAttribute("href", "#" + name);
+    s.appendChild(u);
+    return s;
+  }
+  function ohneZeichen(s) {
+    return (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/ß/g, "ss").replace(/[^a-z0-9]+/g, " ").trim();
+  }
+  function ausgeschrieben(s) {
+    return (s || "").toLowerCase().replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue").replace(/ß/g, "ss")
+      .normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, " ").trim();
   }
   function suchtextVon(s) { return ohneZeichen(s) + " " + ausgeschrieben(s); }
-
-  function uhr(d) {
-    return d.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
+  function uhr(d) { return d.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" }); }
+  function datumKurz(d) { return wochentag[d.getDay()] + ". " + d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }); }
+  function feedUrl(slug, protokoll) { return protokoll + "//" + basis.replace(/^https?:\/\//, "") + "feeds/" + slug + ".ics"; }
+  function personMit(slug) { return daten.personen.filter(function (p) { return p.slug === slug; })[0]; }
+  function tagVon(iso) { return new Date(iso).toDateString(); }
+  function mitIkone(name, text, klasse) {
+    var d = document.createElement("div");
+    d.className = klasse || "meta";
+    d.appendChild(ikone(name));
+    var s = document.createElement("span");
+    if (typeof text === "string") s.textContent = text; else s.appendChild(text);
+    d.appendChild(s);
+    return d;
   }
-  function feedUrl(slug, protokoll) {
-    return protokoll + "//" + basis.replace(/^https?:\/\//, "") +
-           "feeds/" + slug + ".ics";
-  }
-  function personMit(slug) {
-    return daten.personen.filter(function (p) { return p.slug === slug; })[0];
+  function leerZustand(text) {
+    var p = document.createElement("p");
+    p.className = "leer";
+    p.appendChild(ikone("i-empty"));
+    p.appendChild(document.createTextNode(text));
+    return p;
   }
 
   // --------------------------------------------------------- Namensliste
@@ -403,12 +509,10 @@
     var liste = el("namen"), treffer = 0;
     liste.innerHTML = "";
     var f = ohneZeichen(filter);
-
     daten.personen.forEach(function (p) {
       var suchtext = suchtextVon(p.name + " " + (p.varianten || []).join(" "));
       if (f && suchtext.indexOf(f) === -1) {
-        var teile = suchtext.split(" ");
-        if (!teile.some(function (t) { return t.indexOf(f) === 0; })) return;
+        if (!suchtext.split(" ").some(function (t) { return t.indexOf(f) === 0; })) return;
       }
       treffer++;
       var li = document.createElement("li");
@@ -425,19 +529,14 @@
       li.appendChild(b);
       liste.appendChild(li);
     });
-
     el("nichts").classList.toggle("versteckt", treffer > 0);
   }
 
   function profilSetzen(p) {
     var vorher = profil && profil.slug;
     profil = profil || {};
-    if (profil.slug !== p.slug) {
-      // Anderer Mensch: Gesehen-Merker gehören nicht zu ihm.
-      profil = { slug: p.slug, gesehen: {}, begonnen: false };
-    }
-    profil.slug = p.slug;
-    profil.name = p.name;
+    if (profil.slug !== p.slug) profil = { slug: p.slug, gesehen: {}, begonnen: false };
+    profil.slug = p.slug; profil.name = p.name;
     profilSchreiben();
     if (vorher !== p.slug) schreiben("person", null);
     location.hash = p.slug;
@@ -446,315 +545,251 @@
 
   // -------------------------------------------------- Benachrichtigungen
 
-  // Merker-Format. Wird es geaendert, die Nummer hochzaehlen: alte Merker
-  // werden dann still neu aufgebaut, statt alles als "neu" zu melden.
   var GESEHEN_VERSION = 2;
-
-  function schluesselVon(s) {
-    // Rolle bewusst nicht dabei - ein Rollenwechsel kommt ohnehin als
-    // "aenderung" mit, und eine blosse Umbenennung der Rollen soll nicht
-    // jedem Kollegen "4 neue Einteilungen" melden.
-    return s.beginn + "|" + s.paarung + "|" + (s.aenderung || "");
+  function schluesselVon(s) { return s.beginn + "|" + s.paarung + "|" + (s.aenderung || ""); }
+  function badgeSetzen(n) {
+    try { if (n > 0 && navigator.setAppBadge) navigator.setAppBadge(n); else if (navigator.clearAppBadge) navigator.clearAppBadge(); } catch (e) {}
   }
-
-  function badgeSetzen(anzahl) {
-    try {
-      if (anzahl > 0 && navigator.setAppBadge) navigator.setAppBadge(anzahl);
-      else if (navigator.clearAppBadge) navigator.clearAppBadge();
-    } catch (e) {}
-  }
-
-  function alsApp() {
-    return window.matchMedia("(display-mode: standalone)").matches ||
-           navigator.standalone === true;
-  }
-
+  function alsApp() { return window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true; }
   function meldeLage() {
-    if (!("Notification" in window)) {
-      return alsApp() ? "geht-nicht" : "erst-installieren";
-    }
+    if (!("Notification" in window)) return alsApp() ? "geht-nicht" : "erst-installieren";
     if (Notification.permission === "granted") return "an";
     if (Notification.permission === "denied") return "abgelehnt";
     return "fragen";
   }
-
   function zeigeMeldeKarte() {
-    var karte = el("melde"), status = el("melde-status"),
-        text = el("melde-text"), knopf = el("melde-knopf");
-    karte.classList.remove("versteckt");
-    knopf.classList.add("versteckt");
-
+    var karte = el("melde"), status = el("melde-status"), text = el("melde-text"), knopf = el("melde-knopf");
+    karte.classList.remove("versteckt"); knopf.classList.add("versteckt");
     var lage = meldeLage();
+    status.className = "status " + (lage === "an" ? "an" : "aus");
     if (lage === "an") {
-      status.className = "status an";
       status.textContent = "an";
-      text.textContent = "Beim Öffnen der App bekommst du eine Mitteilung, " +
-        "wenn eine Einteilung dazugekommen ist oder sich geändert hat. " +
-        "Das Symbol auf dem Home-Bildschirm zeigt die Anzahl.";
+      text.textContent = "Beim Öffnen der App bekommst du eine Mitteilung, wenn eine Einteilung dazugekommen ist oder sich geändert hat. Echtes Push auch bei geschlossener App gibt es im Mitgliederbereich.";
     } else if (lage === "fragen") {
-      status.className = "status aus";
       status.textContent = "aus";
-      text.textContent = "Die App meldet sich dann, wenn eine Einteilung " +
-        "dazukommt oder sich ändert.";
-      knopf.textContent = "Benachrichtigungen einschalten";
-      knopf.classList.remove("versteckt");
+      text.textContent = "Die App meldet sich dann, wenn eine Einteilung dazukommt oder sich ändert.";
+      knopf.textContent = "Benachrichtigungen einschalten"; knopf.classList.remove("versteckt");
     } else if (lage === "abgelehnt") {
-      status.className = "status aus";
       status.textContent = "abgelehnt";
-      text.textContent = "Du hast Mitteilungen abgelehnt. Wieder erlauben in " +
-        "Einstellungen → Apps → Einteilungen → Mitteilungen.";
+      text.textContent = "Du hast Mitteilungen abgelehnt. Wieder erlauben in Einstellungen → Apps → Einteilungen → Mitteilungen.";
     } else if (lage === "erst-installieren") {
-      status.className = "status aus";
       status.textContent = "aus";
-      text.textContent = "Dafür muss die Seite auf dem Home-Bildschirm liegen: " +
-        "in Safari auf Teilen → Zum Home-Bildschirm. Danach hier nochmal " +
-        "hereinschauen.";
+      text.textContent = "Dafür muss die Seite auf dem Home-Bildschirm liegen: in Safari auf Teilen → Zum Home-Bildschirm.";
     } else {
-      status.className = "status aus";
       status.textContent = "nicht möglich";
-      text.textContent = "Dieser Browser kennt keine Mitteilungen. Der " +
-        "Kalender oben funktioniert trotzdem.";
+      text.textContent = "Dieser Browser kennt keine Mitteilungen. Der Kalender funktioniert trotzdem.";
     }
   }
-
   function meldeAnfragen() {
     if (!("Notification" in window)) return;
-    // Muss aus einem Klick heraus passieren, sonst blockt iOS es stillschweigend.
-    Notification.requestPermission().then(function () {
-      zeigeMeldeKarte();
-      if (Notification.permission === "granted") pruefeNeue(aktuell, true);
-    });
+    Notification.requestPermission().then(function () { zeigeMeldeKarte(); if (Notification.permission === "granted") pruefeNeue(aktuell, true); });
   }
-
   function melden(titel, rumpf) {
-    if (!("Notification" in window) || Notification.permission !== "granted") return;
-    if (!navigator.serviceWorker) return;
+    if (!("Notification" in window) || Notification.permission !== "granted" || !navigator.serviceWorker) return;
     navigator.serviceWorker.ready.then(function (reg) {
-      reg.showNotification(titel, {
-        body: rumpf,
-        icon: "icon-192.png",
-        badge: "icon-192.png",
-        tag: "einteilung",
-        renotify: true,
-        data: { slug: profil && profil.slug }
-      });
+      reg.showNotification(titel, { body: rumpf, icon: "icon-192.png", badge: "icon-192.png", tag: "einteilung", renotify: true, data: { url: "./#" + (profil && profil.slug) } });
     }).catch(function () {});
   }
-
   function pruefeNeue(person, stumm) {
     if (!person || !profil) return;
     var kommend = person.spiele.filter(function (s) { return !s.vergangen; });
     var vorher = profil.gesehen || {};
     var neu = kommend.filter(function (s) { return !vorher[schluesselVon(s)]; });
-
-    // Merker neu aufbauen, damit er nicht endlos wächst
     var jetzt = {};
     kommend.forEach(function (s) { jetzt[schluesselVon(s)] = 1; });
-    // Erster Besuch oder altes Merker-Format: still uebernehmen, nicht melden
     var ersterBesuch = !profil.begonnen || profil.gesehenVersion !== GESEHEN_VERSION;
-    profil.gesehen = jetzt;
-    profil.gesehenVersion = GESEHEN_VERSION;
-    profil.begonnen = true;
+    profil.gesehen = jetzt; profil.gesehenVersion = GESEHEN_VERSION; profil.begonnen = true;
     profilSchreiben();
-
-    // Beim ersten Mal wäre alles "neu" - das wäre eine sinnlose Sammelmeldung.
     if (ersterBesuch || !neu.length) { badgeSetzen(0); return; }
-
     badgeSetzen(neu.length);
     if (stumm) return;
-
-    var erstes = neu[0];
-    var d = new Date(erstes.beginn);
-    var zeile = wochentag[d.getDay()] + ". " +
-      d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }) +
-      ", " + uhr(d) + " Uhr – " + erstes.paarung;
+    var e = neu[0], d = new Date(e.beginn);
+    var zeile = datumKurz(d) + ", " + uhr(d) + " Uhr – " + e.paarung;
     melden(neu.length === 1 ? "Neue Einteilung" : neu.length + " neue Einteilungen",
            neu.length === 1 ? zeile : zeile + " und " + (neu.length - 1) + " weitere");
   }
 
-  // -------------------------------------------------------------- Karten
+  // ----------------------------------------------------------- Spielkarte
+
+  function rolleBadge(rolle, klasse) {
+    var r = document.createElement("span");
+    r.className = (klasse || "rolle") + " " + (rolle || "");
+    r.textContent = rolle || "";
+    return r;
+  }
 
   function karte(s, fuer) {
     var beginn = new Date(s.beginn), treff = new Date(s.treffpunkt);
     var d = document.createElement("div");
-    d.className = "spiel" + (s.vergangen ? " war" : "") + (s.aenderung ? " neu" : "");
+    d.className = "spiel karte" + (s.vergangen ? " war" : "") + (s.aenderung ? " neu" : "");
 
     var kopf = document.createElement("div");
-    kopf.className = "kopf";
+    kopf.className = "kopfzeile";
     var datum = document.createElement("span");
     datum.className = "datum";
-    datum.textContent = wochentag[beginn.getDay()] + ". " +
-      beginn.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }) +
-      " · " + uhr(beginn) + " Uhr";
-    var rolle = document.createElement("span");
-    rolle.className = "rolle";
-    rolle.textContent = s.rolle;
-    kopf.appendChild(datum); kopf.appendChild(rolle);
+    datum.appendChild(document.createTextNode(datumKurz(beginn) + " · " + uhr(beginn) + " Uhr"));
+    if (s.liga) { var l = document.createElement("span"); l.className = "liga"; l.textContent = s.liga; datum.appendChild(l); }
+    kopf.appendChild(datum); kopf.appendChild(rolleBadge(s.rolle));
     d.appendChild(kopf);
 
     var paarung = document.createElement("div");
-    paarung.className = "paarung";
-    paarung.textContent = s.paarung;
+    paarung.className = "paarung"; paarung.textContent = s.paarung;
     d.appendChild(paarung);
 
-    var meta = document.createElement("div");
-    meta.className = "meta";
-    meta.textContent = "An der Halle: " + uhr(treff) + " Uhr" + (s.liga ? " · " + s.liga : "");
-    d.appendChild(meta);
+    d.appendChild(mitIkone("i-clock", "An der Halle: " + uhr(treff) + " Uhr" + (s.system >= 3 ? " · " + s.system + "er-System" : "")));
 
     if (s.ort) {
-      var ort = document.createElement("div");
-      ort.className = "meta";
       var a = document.createElement("a");
-      a.href = "https://maps.apple.com/?q=" + encodeURIComponent(s.ort);
-      a.target = "_blank"; a.rel = "noopener";
-      a.textContent = s.ort;
-      ort.appendChild(a);
-      d.appendChild(ort);
+      a.href = "https://maps.apple.com/?daddr=" + encodeURIComponent(s.ort);
+      a.target = "_blank"; a.rel = "noopener"; a.textContent = s.ort;
+      d.appendChild(mitIkone("i-pin", a));
     } else {
-      var w = document.createElement("div");
-      w.className = "achtung";
-      w.textContent = "Halle nicht automatisch erkannt – bitte selbst prüfen.";
-      d.appendChild(w);
+      var w = document.createElement("div"); w.className = "achtung";
+      w.textContent = "Halle nicht automatisch erkannt – bitte selbst prüfen."; d.appendChild(w);
     }
 
     if (s.gespann && s.gespann.length) {
-      var g = document.createElement("div");
-      g.className = "chips";
-      s.gespann.forEach(function (k) {
-        g.appendChild(chip(k, s.system >= 3));
-      });
+      var g = document.createElement("div"); g.className = "chips";
+      s.gespann.forEach(function (k) { g.appendChild(chip(k, s.system >= 3)); });
       d.appendChild(g);
     }
-
-    if (s.hinweis) {
-      var hw = document.createElement("div");
-      hw.className = "achtung";
-      hw.textContent = "⚠ " + s.hinweis;
-      d.appendChild(hw);
-    }
-
-    if (s.aenderung) {
-      var ae = document.createElement("div");
-      ae.className = "geaendert";
-      ae.textContent = "⚠ Geändert: " + s.aenderung;
-      d.appendChild(ae);
-    }
-
+    if (s.hinweis) { var hw = document.createElement("div"); hw.className = "achtung"; hw.textContent = "⚠ " + s.hinweis; d.appendChild(hw); }
+    if (s.aenderung) { var ae = document.createElement("div"); ae.className = "geaendert"; ae.textContent = "⚠ Geändert: " + s.aenderung; d.appendChild(ae); }
     if (fuer && !s.vergangen) d.appendChild(tauschBereich(s, fuer));
     return d;
   }
 
-  // ------------------------------------------------------ Tauschoptionen
-  //
-  // Alles aus den vorhandenen Daten gerechnet, ohne Server. Grenzen: Es
-  // kennt nur Leute, die im Datenfenster (letzte 30 Tage + kommende Spiele)
-  // irgendwo eingeteilt sind, und es weiss nichts ueber Urlaub, Verletzung
-  // oder Lizenzstufe. Es ist eine Vorschlagsliste, keine Zusage.
+  function chip(person, mitRolle, klasseExtra) {
+    var e = document.createElement(person.slug ? "a" : "span");
+    e.className = "chip" + (profil && person.slug === profil.slug ? " ich" : "") + (klasseExtra ? " " + klasseExtra : "");
+    if (person.slug) e.href = "#" + person.slug;
+    e.appendChild(document.createTextNode(person.name));
+    if (mitRolle && person.rolle) {
+      var b = document.createElement("b"); b.className = person.rolle; b.textContent = person.rolle;
+      b.title = (daten.rollen && daten.rollen[person.rolle]) || person.rolle; e.appendChild(b);
+    }
+    return e;
+  }
 
-  function tagVon(iso) { return new Date(iso).toDateString(); }
+  // ---------------------------------------------------------------- Held
+
+  function zeigeHeld(p) {
+    var ziel = el("held");
+    ziel.innerHTML = "";
+    var kommend = p.spiele.filter(function (s) { return !s.vergangen; });
+    if (!kommend.length) return;
+    var s = kommend[0], d = new Date(s.beginn);
+    var heute = new Date(); heute.setHours(0, 0, 0, 0);
+    var tag = new Date(d); tag.setHours(0, 0, 0, 0);
+    var diff = Math.round((tag - heute) / 86400000);
+    var wann = diff === 0 ? "Heute" : diff === 1 ? "Morgen" : "In " + diff + " Tagen";
+
+    var h = document.createElement("div"); h.className = "held";
+    var w = document.createElement("div"); w.className = "wann"; w.textContent = wann + " · " + datumKurz(d); h.appendChild(w);
+    h.appendChild(rolleBadge(s.rolle, "rolle"));
+    var z = document.createElement("div"); z.className = "zeit"; z.textContent = uhr(d) + " Uhr"; h.appendChild(z);
+    var pa = document.createElement("p"); pa.className = "paarung"; pa.textContent = (s.liga ? s.liga + ": " : "") + s.paarung; h.appendChild(pa);
+    var ha = document.createElement("div"); ha.className = "halle"; ha.appendChild(ikone("i-pin"));
+    ha.appendChild(document.createTextNode((s.halle || "Halle unbekannt") + " · Treffpunkt " + uhr(new Date(s.treffpunkt)) + " Uhr")); h.appendChild(ha);
+    var ak = document.createElement("div"); ak.className = "aktionen";
+    if (s.ort) {
+      var r = document.createElement("a"); r.href = "https://maps.apple.com/?daddr=" + encodeURIComponent(s.ort);
+      r.target = "_blank"; r.rel = "noopener"; r.appendChild(ikone("i-route")); r.appendChild(document.createTextNode("Route")); ak.appendChild(r);
+    }
+    if (s.gespann && s.gespann.length) {
+      var ge = document.createElement("span");
+      ge.appendChild(ikone("i-users")); ge.appendChild(document.createTextNode(s.gespann.map(function (x) { return x.name.split(",")[0]; }).join(", ")));
+      ak.appendChild(ge);
+    }
+    h.appendChild(ak);
+    ziel.appendChild(h);
+  }
+
+  // ----------------------------------------------------- Nachtrag-Hinweis
+
+  function zeigeNachtrag(p) {
+    var ziel = el("nachtrag");
+    ziel.innerHTML = "";
+    if (!profil || profil.slug !== p.slug) return;
+    ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) {
+      if (!st.eingerichtet || !st.session) return;
+      return window.Mitglieder.offeneAbrechnungen(p.slug, 21);
+    }).then(function (offen) {
+      if (!offen || !offen.length) return;
+      var h = document.createElement("div"); h.className = "hinweis warn";
+      h.appendChild(ikone("i-check"));
+      var t = document.createElement("span");
+      t.appendChild(document.createTextNode(offen.length === 1 ? "Ein Spiel ohne Abrechnung: " + offen[0] + ". "
+        : offen.length + " Spiele ohne Abrechnung. "));
+      var a = document.createElement("a"); a.href = "#mitglieder"; a.textContent = "Jetzt nachtragen"; t.appendChild(a);
+      h.appendChild(t); ziel.appendChild(h);
+    }).catch(function () {});
+  }
+
+  // ------------------------------------------------------ Tauschoptionen
 
   function fenster(s) {
-    // Belegte Zeit eines Spiels: vom Treffpunkt bis Spielende
-    var dauer = (daten.spieldauer_minuten || 150) * 60000;
-    var b = new Date(s.beginn).getTime();
+    var dauer = (daten.spieldauer_minuten || 150) * 60000, b = new Date(s.beginn).getTime();
     return [new Date(s.treffpunkt).getTime(), b + dauer];
   }
-
-  function ueberschneidet(a, b) {
-    var fa = fenster(a), fb = fenster(b);
-    return fa[0] < fb[1] && fb[0] < fa[1];
-  }
-
+  function ueberschneidet(a, b) { var fa = fenster(a), fb = fenster(b); return fa[0] < fb[1] && fb[0] < fa[1]; }
   function kmZwischen(a, b) {
-    var r = 6371, p1 = a[0] * Math.PI / 180, p2 = b[0] * Math.PI / 180;
-    var dp = (b[0] - a[0]) * Math.PI / 180, dl = (b[1] - a[1]) * Math.PI / 180;
-    var h = Math.sin(dp / 2) * Math.sin(dp / 2) +
-            Math.cos(p1) * Math.cos(p2) * Math.sin(dl / 2) * Math.sin(dl / 2);
+    var r = 6371, p1 = a[0] * Math.PI / 180, p2 = b[0] * Math.PI / 180, dp = (b[0] - a[0]) * Math.PI / 180, dl = (b[1] - a[1]) * Math.PI / 180;
+    var h = Math.sin(dp / 2) * Math.sin(dp / 2) + Math.cos(p1) * Math.cos(p2) * Math.sin(dl / 2) * Math.sin(dl / 2);
     return 2 * r * Math.asin(Math.sqrt(h));
   }
-
-  // Wo ist jemand "zu Hause"? Beste Naeherung ohne Adresse: die Hallen, in
-  // denen er am haeufigsten pfeift.
   function naeheZu(person, hallenName) {
     var ziel = daten.hallen && daten.hallen[hallenName];
     if (!ziel || !person.statistik || !person.statistik.hallen) return null;
     var beste = null;
-    person.statistik.hallen.forEach(function (paar) {
-      var k = daten.hallen[paar[0]];
-      if (!k) return;
-      var d = kmZwischen(k, ziel);
-      if (beste === null || d < beste) beste = d;
-    });
+    person.statistik.hallen.forEach(function (paar) { var k = daten.hallen[paar[0]]; if (!k) return; var d = kmZwischen(k, ziel); if (beste === null || d < beste) beste = d; });
     return beste;
   }
+  function vorname(name) { var t = name.split(","); return (t.length > 1 ? t[1] : t[0]).trim().split(" ")[0]; }
 
-  function vorname(name) {
-    var t = name.split(",");
-    return (t.length > 1 ? t[1] : t[0]).trim().split(" ")[0];
-  }
-
-  function tauschOptionen(spiel, ich) {
-    var tag = tagVon(spiel.beginn);
-    var gespann = {};
+  function tauschOptionen(spiel, ich, sperren) {
+    var tag = tagVon(spiel.beginn), gespann = {};
     (spiel.gespann || []).forEach(function (g) { if (g.slug) gespann[g.slug] = 1; });
-    var meineAnderen = ich.spiele.filter(function (s) {
-      return s !== spiel && !s.vergangen && tagVon(s.beginn) === tag;
-    });
+    var meineAnderen = ich.spiele.filter(function (s) { return s !== spiel && !s.vergangen && tagVon(s.beginn) === tag; });
     var uebernehmen = [], tausch = [];
-
     daten.personen.forEach(function (p) {
       if (p.slug === ich.slug || gespann[p.slug]) return;
+      var sperre = sperren && sperren[p.slug];
+      if (sperre === "nein") return;
       var amTag = p.spiele.filter(function (s) { return tagVon(s.beginn) === tag; });
       var frei = amTag.length === 0;
       var passtDazu = amTag.every(function (s) { return !ueberschneidet(s, spiel); });
       var gleicheHalle = amTag.some(function (s) { return s.halle && s.halle === spiel.halle; });
-      var kenntHalle = !!(p.statistik && p.statistik.hallen &&
-        p.statistik.hallen.some(function (h) { return h[0] === spiel.halle; }));
+      var kenntHalle = !!(p.statistik && p.statistik.hallen && p.statistik.hallen.some(function (h) { return h[0] === spiel.halle; }));
       var warHSR = !!(p.statistik && p.statistik.rollen && p.statistik.rollen.HSR);
       var km = naeheZu(p, spiel.halle);
-      var woche = p.spiele.filter(function (s) {
-        var diff = Math.abs(new Date(s.beginn) - new Date(spiel.beginn)) / 86400000;
-        return !s.vergangen && diff <= 3;
-      }).length;
-
-      var gruende = [];
-      var punkte = 0;
+      var woche = p.spiele.filter(function (s) { return !s.vergangen && Math.abs(new Date(s.beginn) - new Date(spiel.beginn)) / 86400000 <= 3; }).length;
+      var gruende = [], punkte = 0;
+      if (sperre === "gern") { gruende.push("hat sich freigemeldet"); punkte += 5; }
       if (gleicheHalle) { gruende.push("am selben Tag in dieser Halle"); punkte += 4; }
       else if (frei) { gruende.push("kein Spiel an dem Tag"); punkte += 2; }
       else if (passtDazu) { gruende.push("passt zeitlich zu seinem Spiel"); punkte += 1; }
       if (kenntHalle) { gruende.push("kennt die Halle"); punkte += 2; }
       if (spiel.rolle === "HSR" && warHSR) { gruende.push("war schon HSR"); punkte += 1; }
-      // Unter 2 km ist es seine Heimhalle - das sagt "kennt die Halle" schon
       if (km !== null && km >= 2 && km <= 25) { gruende.push("spielt oft in der Nähe (~" + Math.round(km) + " km)"); punkte += 1; }
-      else if (km !== null && km < 2) { punkte += 1; }
-      if (woche === 0) { gruende.push("diese Woche frei"); punkte += 1; }
-      else if (woche >= 3) { punkte -= 1; }
-
-      if (frei || passtDazu) {
-        uebernehmen.push({ person: p, gruende: gruende, punkte: punkte, km: km, woche: woche });
-      }
-
-      // Tausch: er nimmt meins, ich nehme eins von seinen am selben Tag
+      else if (km !== null && km < 2) punkte += 1;
+      if (woche === 0) { gruende.push("diese Woche frei"); punkte += 1; } else if (woche >= 3) punkte -= 1;
+      if (frei || passtDazu) uebernehmen.push({ person: p, gruende: gruende, punkte: punkte, km: km, gern: sperre === "gern" });
       amTag.forEach(function (seins) {
         if (seins.vergangen) return;
         var seineAnderen = amTag.filter(function (x) { return x !== seins; });
         var ichKann = meineAnderen.every(function (m) { return !ueberschneidet(m, seins); });
         var erKann = seineAnderen.every(function (x) { return !ueberschneidet(x, spiel); });
         if (ichKann && erKann) {
-          // Wie attraktiv ist SEIN Spiel fuer MICH? Gleiche Halle, eine Halle,
-          // die ich kenne, oder eine in meiner Naehe zaehlt.
           var wert = punkte;
           if (seins.halle && seins.halle === spiel.halle) wert += 3;
-          else if (ich.statistik && ich.statistik.hallen &&
-                   ich.statistik.hallen.some(function (h) { return h[0] === seins.halle; })) wert += 2;
+          else if (ich.statistik && ich.statistik.hallen && ich.statistik.hallen.some(function (h) { return h[0] === seins.halle; })) wert += 2;
           var meinWeg = naeheZu(ich, seins.halle);
           if (meinWeg !== null && meinWeg <= 25) wert += 1;
           tausch.push({ person: p, spiel: seins, punkte: wert });
         }
       });
     });
-
     uebernehmen.sort(function (a, b) { return b.punkte - a.punkte || (a.km || 999) - (b.km || 999); });
     tausch.sort(function (a, b) { return b.punkte - a.punkte; });
     return { uebernehmen: uebernehmen, tausch: tausch };
@@ -762,160 +797,90 @@
 
   function anfrageText(spiel, ich, kandidat, seinSpiel) {
     var d = new Date(spiel.beginn);
-    var wann = wochentag[d.getDay()] + ". " +
-      d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }) + " um " + uhr(d) + " Uhr";
-    var text = "Hallo " + vorname(kandidat.name) + ", könntest du am " + wann +
-      " das Spiel " + (spiel.liga ? spiel.liga + " " : "") + spiel.paarung +
-      (spiel.halle ? " in der " + spiel.halle : "") + " für mich übernehmen?";
+    var text = "Hallo " + vorname(kandidat.name) + ", könntest du am " + datumKurz(d) + " um " + uhr(d) + " Uhr das Spiel " +
+      (spiel.liga ? spiel.liga + " " : "") + spiel.paarung + (spiel.ort ? " (" + spiel.ort + ")" : "") + " für mich übernehmen?";
     if (seinSpiel) {
-      var e = new Date(seinSpiel.beginn);
-      text += " Ich würde dafür dein Spiel um " + uhr(e) + " Uhr (" +
-        (seinSpiel.liga ? seinSpiel.liga + " " : "") + seinSpiel.paarung + ") übernehmen.";
+      text += " Ich würde dafür dein Spiel um " + uhr(new Date(seinSpiel.beginn)) + " Uhr (" + (seinSpiel.liga ? seinSpiel.liga + " " : "") + seinSpiel.paarung + ") übernehmen.";
     }
-    text += " Treffpunkt wäre " + uhr(new Date(spiel.treffpunkt)) + " Uhr. Danke, " + vorname(ich.name);
-    return text;
+    return text + " Treffpunkt wäre " + uhr(new Date(spiel.treffpunkt)) + " Uhr. Danke, " + vorname(ich.name);
   }
-
   function anfragen(text) {
-    if (navigator.share) {
-      navigator.share({ text: text }).catch(function () {});
-    } else if (navigator.clipboard) {
-      navigator.clipboard.writeText(text).then(function () { alert("Anfrage kopiert – in WhatsApp o.ä. einfügen."); });
-    } else {
-      prompt("Anfrage:", text);
-    }
+    if (navigator.share) navigator.share({ text: text }).catch(function () {});
+    else if (navigator.clipboard) navigator.clipboard.writeText(text).then(function () { alert("Anfrage kopiert – in WhatsApp o.ä. einfügen."); });
+    else prompt("Anfrage:", text);
   }
-
   function kandidatZeile(k, spiel, ich, seinSpiel) {
-    var z = document.createElement("div");
-    z.className = "kandidat";
-    var kopf = document.createElement("div");
-    kopf.className = "kandidat-kopf";
-    kopf.appendChild(chip({ name: k.person.name, slug: k.person.slug }, false));
-    var knopf = document.createElement("button");
-    knopf.type = "button";
-    knopf.className = "anfrage";
-    knopf.textContent = "Anfragen";
+    var z = document.createElement("div"); z.className = "kandidat";
+    var kopf = document.createElement("div"); kopf.className = "kandidat-kopf";
+    kopf.appendChild(chip({ name: k.person.name, slug: k.person.slug }, false, k.gern ? "gern" : ""));
+    var knopf = document.createElement("button"); knopf.type = "button"; knopf.className = "anfrage"; knopf.textContent = "Anfragen";
     knopf.addEventListener("click", function () { anfragen(anfrageText(spiel, ich, k.person, seinSpiel)); });
-    kopf.appendChild(knopf);
-    z.appendChild(kopf);
-    var info = document.createElement("div");
-    info.className = "meta";
-    if (seinSpiel) {
-      info.textContent = "sein Spiel: " + uhr(new Date(seinSpiel.beginn)) + " Uhr · " +
-        (seinSpiel.liga ? seinSpiel.liga + " " : "") + seinSpiel.paarung +
-        (seinSpiel.halle ? " · " + seinSpiel.halle : "");
-    } else {
-      info.textContent = k.gruende.join(" · ") || "zeitlich möglich";
-    }
+    kopf.appendChild(knopf); z.appendChild(kopf);
+    var info = document.createElement("div"); info.className = "meta";
+    info.textContent = seinSpiel
+      ? "sein Spiel: " + uhr(new Date(seinSpiel.beginn)) + " Uhr · " + (seinSpiel.liga ? seinSpiel.liga + " " : "") + seinSpiel.paarung + (seinSpiel.halle ? " · " + seinSpiel.halle : "")
+      : (k.gruende.join(" · ") || "zeitlich möglich");
     z.appendChild(info);
     return z;
   }
 
   function tauschBereich(spiel, ich) {
-    var box = document.createElement("details");
-    box.className = "tausch";
-    var kopf = document.createElement("summary");
-    kopf.textContent = "Tauschoptionen";
-    box.appendChild(kopf);
-    var inhalt = document.createElement("div");
-    box.appendChild(inhalt);
-
+    var box = document.createElement("details"); box.className = "tausch";
+    var kopf = document.createElement("summary"); kopf.textContent = "Tauschoptionen"; box.appendChild(kopf);
+    var inhalt = document.createElement("div"); box.appendChild(inhalt);
     box.addEventListener("toggle", function () {
       if (!box.open || inhalt.childNodes.length) return;
-      inhalt.appendChild(h1Lade());
-      // Hinter dem Login: wer Kollegen anfragen will, soll angemeldet sein.
+      var lade = document.createElement("p"); lade.className = "meta"; lade.textContent = "Prüfe Anmeldung …"; inhalt.appendChild(lade);
       ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
         .then(function (st) {
           inhalt.innerHTML = "";
-          if (!st.eingerichtet) {
-            var p0 = document.createElement("p"); p0.className = "meta";
-            p0.textContent = "Tauschoptionen gibt es im Mitgliederbereich – der ist noch nicht eingerichtet.";
-            inhalt.appendChild(p0); return;
-          }
+          if (!st.eingerichtet) { inhalt.appendChild(leerZustand("Tauschoptionen gibt es im Mitgliederbereich – der ist noch nicht eingerichtet.")); return; }
           if (!st.session) {
             var p1 = document.createElement("p"); p1.className = "meta";
-            p1.textContent = "Tauschoptionen gibt es nur angemeldet. ";
-            var a = document.createElement("a"); a.href = "#mitglieder"; a.textContent = "Zum Mitgliederbereich";
-            p1.appendChild(a); inhalt.appendChild(p1); return;
+            p1.appendChild(document.createTextNode("Tauschoptionen gibt es nur angemeldet. "));
+            var a = document.createElement("a"); a.href = "#mitglieder"; a.textContent = "Zum Mitgliederbereich"; p1.appendChild(a);
+            inhalt.appendChild(p1); return;
           }
-          tauschRendern(spiel, ich, inhalt);
+          return window.Mitglieder.sperrenAm(spiel.beginn).then(function (sperren) { tauschRendern(spiel, ich, inhalt, sperren || {}); });
         })
         .catch(function (e) { inhalt.textContent = "Nicht verfügbar: " + (e.message || e); });
     });
     return box;
   }
 
-  function h1Lade() {
-    var p = document.createElement("p"); p.className = "meta"; p.textContent = "Prüfe Anmeldung …"; return p;
-  }
+  function tauschRendern(spiel, ich, inhalt, sperren) {
+    var o = tauschOptionen(spiel, ich, sperren);
+    var zeigen = 6;
 
-  function tauschRendern(spiel, ich, inhalt) {
-      var o = tauschOptionen(spiel, ich);
+    var suche = document.createElement("button"); suche.type = "button"; suche.className = "anfrage zweit";
+    suche.appendChild(ikone("i-swap")); suche.appendChild(document.createTextNode("Ersatz in der Tauschbörse suchen"));
+    suche.addEventListener("click", function () {
+      suche.disabled = true;
+      window.Mitglieder.gesuchAnlegen(spiel, ich).then(function (ok) {
+        suche.textContent = ok ? "In der Tauschbörse eingestellt ✓" : "Konnte nicht eingestellt werden";
+      });
+    });
+    inhalt.appendChild(suche);
 
-      var h1 = document.createElement("h4");
-      h1.textContent = "Könnten übernehmen";
-      inhalt.appendChild(h1);
-      if (!o.uebernehmen.length) {
-        var l1 = document.createElement("p"); l1.className = "meta";
-        l1.textContent = "Niemand im Datenfenster, der frei wäre.";
-        inhalt.appendChild(l1);
-      }
-      var zeigen = 6;
-      o.uebernehmen.slice(0, zeigen).forEach(function (k) { inhalt.appendChild(kandidatZeile(k, spiel, ich)); });
-      if (o.uebernehmen.length > zeigen) {
-        var mehr = document.createElement("button");
-        mehr.type = "button"; mehr.className = "textknopf";
-        mehr.textContent = "alle " + o.uebernehmen.length + " anzeigen";
-        mehr.addEventListener("click", function () {
-          o.uebernehmen.slice(zeigen).forEach(function (k) { inhalt.insertBefore(kandidatZeile(k, spiel, ich), mehr); });
-          mehr.remove();
-        });
-        inhalt.appendChild(mehr);
-      }
-
-      var h2 = document.createElement("h4");
-      h2.textContent = "Tausch am selben Tag";
-      inhalt.appendChild(h2);
-      if (!o.tausch.length) {
-        var l2 = document.createElement("p"); l2.className = "meta";
-        l2.textContent = "Kein Kollege mit einem tauschbaren Spiel an diesem Tag.";
-        inhalt.appendChild(l2);
-      }
-      o.tausch.slice(0, zeigen).forEach(function (k) { inhalt.appendChild(kandidatZeile(k, spiel, ich, k.spiel)); });
-      if (o.tausch.length > zeigen) {
-        var mehr2 = document.createElement("button");
-        mehr2.type = "button"; mehr2.className = "textknopf";
-        mehr2.textContent = "alle " + o.tausch.length + " anzeigen";
-        mehr2.addEventListener("click", function () {
-          o.tausch.slice(zeigen).forEach(function (k) { inhalt.insertBefore(kandidatZeile(k, spiel, ich, k.spiel), mehr2); });
-          mehr2.remove();
-        });
-        inhalt.appendChild(mehr2);
-      }
-
-      var fuss = document.createElement("p");
-      fuss.className = "meta";
-      fuss.textContent = "Vorschläge aus den Einteilungen der letzten 30 Tage und der kommenden " +
-        "Spiele. Wer in dem Zeitraum nirgends eingeteilt war, taucht nicht auf. Urlaub, " +
-        "Verletzung und Lizenz kennt die Liste nicht – fragen musst du selbst.";
-      inhalt.appendChild(fuss);
-  }
-
-  // Namens-Chip mit Rolle. Im Zwei-Mann-System sind beide Schiedsrichter,
-  // da lohnt keine Rollenangabe; ab drei Offiziellen steht HSR / LSR dabei.
-  function chip(person, mitRolle) {
-    var el_ = document.createElement(person.slug ? "a" : "span");
-    el_.className = "chip" + (profil && person.slug === profil.slug ? " ich" : "");
-    if (person.slug) el_.href = "#" + person.slug;
-    el_.appendChild(document.createTextNode(person.name));
-    if (mitRolle && person.rolle) {
-      var b = document.createElement("b");
-      b.textContent = person.rolle;
-      b.title = (daten.rollen && daten.rollen[person.rolle]) || person.rolle;
-      el_.appendChild(b);
+    var h1 = document.createElement("h4"); h1.textContent = "Könnten übernehmen"; inhalt.appendChild(h1);
+    if (!o.uebernehmen.length) inhalt.appendChild(leerZustand("Niemand im Datenfenster, der frei wäre."));
+    o.uebernehmen.slice(0, zeigen).forEach(function (k) { inhalt.appendChild(kandidatZeile(k, spiel, ich)); });
+    if (o.uebernehmen.length > zeigen) {
+      var mehr = document.createElement("button"); mehr.type = "button"; mehr.className = "textknopf"; mehr.textContent = "alle " + o.uebernehmen.length + " anzeigen";
+      mehr.addEventListener("click", function () { o.uebernehmen.slice(zeigen).forEach(function (k) { inhalt.insertBefore(kandidatZeile(k, spiel, ich), mehr); }); mehr.remove(); });
+      inhalt.appendChild(mehr);
     }
-    return el_;
+    var h2 = document.createElement("h4"); h2.textContent = "Tausch am selben Tag"; inhalt.appendChild(h2);
+    if (!o.tausch.length) inhalt.appendChild(leerZustand("Kein Kollege mit einem tauschbaren Spiel an diesem Tag."));
+    o.tausch.slice(0, zeigen).forEach(function (k) { inhalt.appendChild(kandidatZeile(k, spiel, ich, k.spiel)); });
+    if (o.tausch.length > zeigen) {
+      var mehr2 = document.createElement("button"); mehr2.type = "button"; mehr2.className = "textknopf"; mehr2.textContent = "alle " + o.tausch.length + " anzeigen";
+      mehr2.addEventListener("click", function () { o.tausch.slice(zeigen).forEach(function (k) { inhalt.insertBefore(kandidatZeile(k, spiel, ich, k.spiel), mehr2); }); mehr2.remove(); });
+      inhalt.appendChild(mehr2);
+    }
+    var fuss = document.createElement("p"); fuss.className = "meta";
+    fuss.textContent = "Vorschläge aus den Einteilungen der letzten 30 Tage und der kommenden Spiele, abzüglich Kollegen, die sich für den Tag abgemeldet haben. Urlaub und Lizenz kennt die Liste nicht – fragen musst du selbst.";
+    inhalt.appendChild(fuss);
   }
 
   // ----------------------------------------------------------- Spielplan
@@ -924,16 +889,17 @@
     var heute = new Date(); heute.setHours(0, 0, 0, 0);
     var tag = new Date(d); tag.setHours(0, 0, 0, 0);
     var diff = Math.round((tag - heute) / 86400000);
-    var datum = wochentag[d.getDay()] + ". " +
-      d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" });
+    var datum = wochentag[d.getDay()] + ". " + d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" });
     if (diff === 0) return ["Heute", datum, true];
     if (diff === 1) return ["Morgen", datum, false];
     if (diff === -1) return ["Gestern", datum, false];
     return [datum, "", false];
   }
-
-  function planKompakt() {
-    return lesen("plan-kompakt") === "1";
+  function planKompakt() { return lesen("plan-kompakt") === "1"; }
+  function meineHallen() {
+    var p = profil && personMit(profil.slug);
+    if (!p || !p.statistik || !p.statistik.hallen) return null;
+    return p.statistik.hallen.map(function (h) { return h[0]; });
   }
 
   function zeigePlan() {
@@ -943,230 +909,125 @@
     var mitVergangenen = el("plan-vergangene").checked;
     var kompakt = planKompakt();
     el("plan-kompakt").checked = kompakt;
-    var letzterTag = null, treffer = 0, gesamt = 0;
-    // Alte, noch vom Service Worker gespeicherte daten.json ohne Spielplan
+    var hallen = meineHallen();
+    el("plan-hallen-label").classList.toggle("versteckt", !hallen);
+    var nurMeine = hallen && el("plan-hallen").checked;
+    var letzterTag = null, treffer = 0, gesamt = 0, heuteGesetzt = false;
     var spiele = daten.spiele || [];
 
     spiele.forEach(function (s) {
       if (s.vergangen && !mitVergangenen) return;
+      if (nurMeine && hallen.indexOf(s.halle) < 0) return;
       gesamt++;
       if (f) {
-        var text = suchtextVon([s.paarung, s.liga, s.halle]
-          .concat(s.besetzung.map(function (b) { return b.name; })).join(" "));
+        var text = suchtextVon([s.paarung, s.liga, s.halle].concat(s.besetzung.map(function (b) { return b.name; })).join(" "));
         if (text.indexOf(f) === -1) return;
       }
       treffer++;
-      var beginn = new Date(s.beginn);
-      var tagKey = beginn.toDateString();
+      var beginn = new Date(s.beginn), tagKey = beginn.toDateString();
       if (tagKey !== letzterTag) {
         letzterTag = tagKey;
         var t = tagTitel(beginn);
-        var h = document.createElement("div");
-        h.className = "tag" + (t[2] ? " heute" : "");
-        var links = document.createElement("span");
-        links.textContent = t[0];
-        var rechts = document.createElement("span");
-        rechts.textContent = t[1];
-        h.appendChild(links); h.appendChild(rechts);
-        ziel.appendChild(h);
+        var h = document.createElement("div"); h.className = "tag" + (t[2] ? " heute" : "");
+        if (!heuteGesetzt && beginn >= new Date(new Date().setHours(0, 0, 0, 0))) { h.id = "plan-ab-heute"; heuteGesetzt = true; }
+        var links = document.createElement("span"); links.textContent = t[0];
+        var rechts = document.createElement("span"); rechts.textContent = t[1];
+        h.appendChild(links); h.appendChild(rechts); ziel.appendChild(h);
       }
       ziel.appendChild(kompakt ? planZeile(s, beginn) : planKarte(s, beginn));
     });
-
-    el("plan-zaehler").textContent = f
-      ? treffer + " von " + gesamt + " Spielen"
-      : gesamt + (gesamt === 1 ? " Spiel" : " Spiele");
-
-    if (!treffer) {
-      var leer = document.createElement("p");
-      leer.className = "leer";
-      leer.textContent = f ? "Nichts gefunden." : "Keine kommenden Spiele.";
-      ziel.appendChild(leer);
-    }
+    el("plan-zaehler").textContent = f ? treffer + " von " + gesamt + " Spielen" : gesamt + (gesamt === 1 ? " Spiel" : " Spiele");
+    if (!treffer) ziel.appendChild(leerZustand(f ? "Nichts gefunden." : "Keine kommenden Spiele."));
   }
-
   function besetzungOder(s, ziel) {
-    if (s.besetzung.length) {
-      s.besetzung.forEach(function (b) { ziel.appendChild(chip(b, s.system >= 3)); });
-    } else {
-      var offen = document.createElement("span");
-      offen.className = "chip offen";
-      offen.textContent = "noch nicht besetzt";
-      ziel.appendChild(offen);
-    }
+    if (s.besetzung.length) s.besetzung.forEach(function (b) { ziel.appendChild(chip(b, s.system >= 3)); });
+    else { var offen = document.createElement("span"); offen.className = "chip offen"; offen.textContent = "noch nicht besetzt"; ziel.appendChild(offen); }
   }
-
   function planKarte(s, beginn) {
-    var d = document.createElement("div");
-    d.className = "spiel" + (s.vergangen ? " war" : "");
-    var kopf = document.createElement("div");
-    kopf.className = "kopf";
-    var zeit = document.createElement("span");
-    zeit.className = "zeit";
-    zeit.textContent = uhr(beginn) + " Uhr";
-    kopf.appendChild(zeit);
-    if (s.liga) {
-      var liga = document.createElement("span");
-      liga.className = "liga";
-      liga.textContent = s.liga;
-      kopf.appendChild(liga);
-    }
+    var d = document.createElement("div"); d.className = "spiel karte" + (s.vergangen ? " war" : "");
+    var kopf = document.createElement("div"); kopf.className = "kopfzeile";
+    var zeit = document.createElement("span"); zeit.className = "zeit"; zeit.textContent = uhr(beginn) + " Uhr"; kopf.appendChild(zeit);
+    if (s.liga) { var liga = document.createElement("span"); liga.className = "liga"; liga.textContent = s.liga; kopf.appendChild(liga); }
     d.appendChild(kopf);
-
-    var paarung = document.createElement("div");
-    paarung.className = "paarung";
-    paarung.textContent = s.paarung;
-    d.appendChild(paarung);
-
-    var meta = document.createElement("div");
-    meta.className = "meta";
-    meta.textContent = (s.halle || "Halle unbekannt") +
-      " · Treffpunkt " + uhr(new Date(s.treffpunkt)) + " Uhr" +
-      (s.system >= 3 ? " · " + s.system + "er-System" : "");
-    d.appendChild(meta);
-
-    var chips = document.createElement("div");
-    chips.className = "chips";
-    besetzungOder(s, chips);
-    d.appendChild(chips);
+    var paarung = document.createElement("div"); paarung.className = "paarung"; paarung.textContent = s.paarung; d.appendChild(paarung);
+    d.appendChild(mitIkone("i-pin", (s.halle || "Halle unbekannt") + " · Treffpunkt " + uhr(new Date(s.treffpunkt)) + " Uhr" + (s.system >= 3 ? " · " + s.system + "er-System" : "")));
+    var chips = document.createElement("div"); chips.className = "chips"; besetzungOder(s, chips); d.appendChild(chips);
     return d;
   }
-
-  // Eine Zeile je Spiel, wie die Tabelle auf esrw.de
   function planZeile(s, beginn) {
-    var z = document.createElement("div");
-    z.className = "zeile" + (s.vergangen ? " war" : "");
-    var zeit = document.createElement("span");
-    zeit.className = "zeit";
-    zeit.textContent = uhr(beginn);
+    var z = document.createElement("div"); z.className = "zeile" + (s.vergangen ? " war" : "");
+    var zeit = document.createElement("span"); zeit.className = "zeit"; zeit.textContent = uhr(beginn);
     var mitte = document.createElement("span");
-    var titel = document.createElement("span");
-    titel.textContent = (s.liga ? s.liga + ": " : "") + s.paarung;
-    var klein = document.createElement("small");
-    klein.textContent = s.halle || "Halle unbekannt";
+    var titel = document.createElement("span"); titel.textContent = (s.liga ? s.liga + ": " : "") + s.paarung;
+    var klein = document.createElement("small"); klein.textContent = s.halle || "Halle unbekannt";
     mitte.appendChild(titel); mitte.appendChild(klein);
-    var wer = document.createElement("span");
-    wer.className = "zeile-wer";
-    besetzungOder(s, wer);
+    var wer = document.createElement("span"); wer.className = "zeile-wer"; besetzungOder(s, wer);
     z.appendChild(zeit); z.appendChild(mitte); z.appendChild(wer);
     return z;
   }
 
-  // ---------------------------------------------------------- Saisonliste
+  // ---------------------------------------------------- Statistik/Saison
 
   var archivDaten = null;
-
-  function zeigeSaison(p) {
-    var box = el("saison"), liste = el("saison-liste");
-    var s = p.statistik;
-    if (!s || !s.saison) { box.classList.add("versteckt"); return; }
-    box.classList.remove("versteckt");
-    box.open = false;
-    el("saison-titel").textContent = "Alle " + s.saison + " Spiele der Saison " + (daten.saison || "");
-    liste.innerHTML = "";
-
-    function rendern(eintraege) {
-      liste.innerHTML = "";
-      eintraege.forEach(function (e) {
-        var d = new Date(e.beginn);
-        var zeile = document.createElement("div");
-        zeile.className = "saisonzeile";
-        var datum = document.createElement("span");
-        datum.textContent = wochentag[d.getDay()] + ". " +
-          d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" });
-        var klein = document.createElement("small");
-        klein.textContent = uhr(d) + " Uhr";
-        datum.appendChild(klein);
-        var rolle = document.createElement("span");
-        rolle.className = "liga";
-        rolle.textContent = e.rolle;
-        var text = document.createElement("span");
-        text.textContent = e.paarung;
-        var halle = document.createElement("small");
-        halle.textContent = (e.liga ? e.liga + " · " : "") + (e.halle || "");
-        text.appendChild(halle);
-        zeile.appendChild(datum); zeile.appendChild(rolle); zeile.appendChild(text);
-        liste.appendChild(zeile);
-      });
-    }
-
-    if (box._laden) box.removeEventListener("toggle", box._laden);
-    box._laden = function laden() {
-      if (!box.open) return;
-      box.removeEventListener("toggle", laden);
-      box._laden = null;
-      (archivDaten ? Promise.resolve(archivDaten) : hole("archiv.json"))
-        .then(function (a) {
-          archivDaten = a;
-          rendern((a.personen && a.personen[p.slug]) || []);
-        })
-        .catch(function () { liste.textContent = "Archiv konnte nicht geladen werden."; });
-    };
-    box.addEventListener("toggle", box._laden);
-  }
-
-  // ----------------------------------------------------------- Statistik
-
   function balken(titel, eintraege) {
     if (!eintraege || !eintraege.length) return null;
     var hoechste = eintraege[0][1] || 1;
-    var box = document.createElement("div");
-    box.className = "balken";
-    var h = document.createElement("h4");
-    h.textContent = titel;
-    box.appendChild(h);
+    var box = document.createElement("div"); box.className = "balken karte";
+    var h = document.createElement("h4"); h.textContent = titel; box.appendChild(h);
     eintraege.forEach(function (paar) {
-      var reihe = document.createElement("div");
-      reihe.className = "reihe";
-      var links = document.createElement("div");
-      links.textContent = paar[0];
-      var strich = document.createElement("i");
-      strich.style.width = Math.max(6, Math.round(paar[1] / hoechste * 100)) + "%";
-      links.appendChild(strich);
-      var rechts = document.createElement("em");
-      rechts.textContent = paar[1] + "×";
-      reihe.appendChild(links); reihe.appendChild(rechts);
-      box.appendChild(reihe);
+      var reihe = document.createElement("div"); reihe.className = "reihe";
+      var links = document.createElement("div"); links.textContent = paar[0];
+      var strich = document.createElement("i"); strich.style.width = Math.max(6, Math.round(paar[1] / hoechste * 100)) + "%"; links.appendChild(strich);
+      var rechts = document.createElement("em"); rechts.textContent = paar[1] + "×";
+      reihe.appendChild(links); reihe.appendChild(rechts); box.appendChild(reihe);
     });
     return box;
   }
-
   function zeigeStatistik(p) {
-    var ziel = el("statistik");
-    ziel.innerHTML = "";
-    var s = p.statistik;
-    if (!s) return;
-
-    var h = document.createElement("h3");
-    h.textContent = "Deine Statistik";
-    ziel.appendChild(h);
-
-    var zahlen = document.createElement("div");
-    zahlen.className = "zahlen";
-    [["Saison " + (daten.saison || ""), s.saison],
-     ["Insgesamt", s.gesamt],
-     ["als HSR", (s.rollen && s.rollen["HSR"]) || 0]
-    ].forEach(function (paar) {
-      var k = document.createElement("div");
-      k.className = "zahl";
-      var b = document.createElement("b");
-      b.textContent = paar[1];
-      var t = document.createElement("span");
-      t.textContent = paar[0];
-      k.appendChild(b); k.appendChild(t);
-      zahlen.appendChild(k);
+    var ziel = el("statistik"); ziel.innerHTML = "";
+    var s = p.statistik; if (!s) return;
+    var h = document.createElement("h3"); h.className = "abschnitt"; h.textContent = "Statistik"; ziel.appendChild(h);
+    var zahlen = document.createElement("div"); zahlen.className = "zahlen";
+    [["Saison " + (daten.saison || ""), s.saison], ["Insgesamt", s.gesamt], ["als HSR", (s.rollen && s.rollen["HSR"]) || 0]].forEach(function (paar) {
+      var k = document.createElement("div"); k.className = "zahl karte";
+      var b = document.createElement("b"); b.textContent = paar[1]; var t = document.createElement("span"); t.textContent = paar[0];
+      k.appendChild(b); k.appendChild(t); zahlen.appendChild(k);
     });
     ziel.appendChild(zahlen);
-
-    [balken("Meiste Ligen", s.ligen), balken("Meiste Hallen", s.hallen)]
-      .forEach(function (b) { if (b) ziel.appendChild(b); });
-
-    var fuss = document.createElement("p");
-    fuss.className = "meta";
-    fuss.style.marginTop = "10px";
-    fuss.textContent = "Gezählt seit " + (s.erste || "?").split("-").reverse().join(".") +
-      ". Das Archiv wächst mit jedem Lauf – esrw.de selbst zeigt nur wenige Tage.";
+    [balken("Meiste Ligen", s.ligen), balken("Meiste Hallen", s.hallen)].forEach(function (b) { if (b) ziel.appendChild(b); });
+    var fuss = document.createElement("p"); fuss.className = "meta"; fuss.style.marginTop = "10px";
+    fuss.textContent = "Gezählt seit " + (s.erste || "?").split("-").reverse().join(".") + ". Das Archiv wächst mit jedem Lauf – esrw.de selbst zeigt nur wenige Tage.";
     ziel.appendChild(fuss);
+  }
+  function zeigeSaison(p) {
+    var box = el("saison"), liste = el("saison-liste"), s = p.statistik;
+    if (!s || !s.gesamt) { box.classList.add("versteckt"); return; }
+    box.classList.remove("versteckt"); box.open = false;
+    el("saison-titel").textContent = "Alle " + s.gesamt + " Spiele im Archiv";
+    liste.innerHTML = "";
+    function rendern(eintraege) {
+      liste.innerHTML = "";
+      var saison = null;
+      eintraege.forEach(function (e) {
+        if (e.saison !== saison) { saison = e.saison; var h = document.createElement("div"); h.className = "tag"; h.textContent = "Saison " + saison; liste.appendChild(h); }
+        var d = new Date(e.beginn);
+        var zeile = document.createElement("div"); zeile.className = "saisonzeile";
+        var datum = document.createElement("span"); datum.textContent = datumKurz(d);
+        var klein = document.createElement("small"); klein.textContent = uhr(d) + " Uhr"; datum.appendChild(klein);
+        var text = document.createElement("span"); text.textContent = e.paarung;
+        var halle = document.createElement("small"); halle.textContent = (e.liga ? e.liga + " · " : "") + (e.halle || ""); text.appendChild(halle);
+        zeile.appendChild(datum); zeile.appendChild(rolleBadge(e.rolle)); zeile.appendChild(text); liste.appendChild(zeile);
+      });
+    }
+    if (box._laden) box.removeEventListener("toggle", box._laden);
+    box._laden = function laden() {
+      if (!box.open) return;
+      box.removeEventListener("toggle", laden); box._laden = null;
+      (archivDaten ? Promise.resolve(archivDaten) : hole("archiv.json"))
+        .then(function (a) { archivDaten = a; rendern((a.personen && a.personen[p.slug]) || []); })
+        .catch(function () { liste.textContent = "Archiv konnte nicht geladen werden."; });
+    };
+    box.addEventListener("toggle", box._laden);
   }
 
   // ------------------------------------------------------------ Ansichten
@@ -1175,233 +1036,127 @@
     aktuell = p;
     ansicht("detail");
     el("person").textContent = p.name;
-    el("profil-hinweis").textContent =
-      (profil && profil.slug === p.slug) ? "dein Profil" : "fremdes Profil";
+    el("profil-hinweis").textContent = (profil && profil.slug === p.slug) ? "dein Profil" : "fremdes Profil";
     el("abo").href = feedUrl(p.slug, "webcal:");
     el("laden").onclick = function () { location.href = feedUrl(p.slug, location.protocol); };
-
-    var ziel = el("spiele");
-    ziel.innerHTML = "";
+    zeigeHeld(p);
+    zeigeNachtrag(p);
+    var ziel = el("spiele"); ziel.innerHTML = "";
     var kommend = p.spiele.filter(function (s) { return !s.vergangen; });
     var gewesen = p.spiele.filter(function (s) { return s.vergangen; }).reverse();
-
-    var h = document.createElement("h3");
-    h.textContent = "Kommende Einteilungen";
-    ziel.appendChild(h);
-    if (!kommend.length) {
-      var leer = document.createElement("p");
-      leer.className = "leer";
-      leer.textContent = "Zurzeit keine Einteilung. Der Kalender füllt sich von allein.";
-      ziel.appendChild(leer);
-    } else {
-      kommend.forEach(function (s) { ziel.appendChild(karte(s, p)); });
-    }
-
+    var h = document.createElement("h3"); h.className = "abschnitt"; h.textContent = "Kommende Einteilungen"; ziel.appendChild(h);
+    if (!kommend.length) ziel.appendChild(leerZustand("Zurzeit keine Einteilung. Der Kalender füllt sich von allein."));
+    else kommend.forEach(function (s) { ziel.appendChild(karte(s, p)); });
     if (gewesen.length) {
-      var h2 = document.createElement("h3");
-      h2.textContent = "Zuletzt";
-      ziel.appendChild(h2);
+      var h2 = document.createElement("h3"); h2.className = "abschnitt"; h2.textContent = "Zuletzt"; ziel.appendChild(h2);
       gewesen.forEach(function (s) { ziel.appendChild(karte(s)); });
     }
-
-    zeigeStatistik(p);
-    zeigeSaison(p);
-    zeigeMeldeKarte();
+    zeigeStatistik(p); zeigeSaison(p); zeigeMeldeKarte();
     if (profil && profil.slug === p.slug) pruefeNeue(p, false);
     if (!stillesNachladen) window.scrollTo(0, 0);
   }
 
   function ansicht(name) {
-    // Genau eine der Ansichten ist sichtbar; die Tabs folgen.
-    el("auswahl").classList.toggle("versteckt", name !== "auswahl");
-    el("detail").classList.toggle("versteckt", name !== "detail");
-    el("plan").classList.toggle("versteckt", name !== "plan");
-    el("mitglieder").classList.toggle("versteckt", name !== "mitglieder");
-    el("tab-meine").classList.toggle("aktiv", name !== "plan" && name !== "mitglieder");
+    ["auswahl", "detail", "plan", "mitglieder"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
+    el("tab-meine").classList.toggle("aktiv", name === "auswahl" || name === "detail");
     el("tab-plan").classList.toggle("aktiv", name === "plan");
     el("tab-mitglieder").classList.toggle("aktiv", name === "mitglieder");
   }
+  function zeigeAuswahl(wechsel) {
+    aktuell = null; ansicht("auswahl"); el("statistik").innerHTML = "";
+    el("frage").textContent = wechsel ? "Auf wen soll umgestellt werden?" : "Wer bist du?";
+    el("abbrechen-zeile").classList.toggle("versteckt", !wechsel || !profil);
+  }
 
-  // Mitgliederbereich liegt in einer eigenen Datei und wird erst geholt,
-  // wenn jemand den Reiter oeffnet.
   var mitgliederGeladen = null;
   function ladeMitglieder() {
     if (!mitgliederGeladen) {
       mitgliederGeladen = new Promise(function (ok, nein) {
         if (window.Mitglieder) return ok(window.Mitglieder);
-        var s = document.createElement("script");
-        s.src = "mitglieder.js?" + Date.now();
-        s.onload = function () { ok(window.Mitglieder); };
-        s.onerror = function () { nein(new Error("mitglieder.js nicht ladbar")); };
+        var s = document.createElement("script"); s.src = "mitglieder.js?" + Date.now();
+        s.onload = function () { ok(window.Mitglieder); }; s.onerror = function () { nein(new Error("mitglieder.js nicht ladbar")); };
         document.head.appendChild(s);
       });
     }
     return mitgliederGeladen;
   }
-  function mitgliederKontext() {
-    return { daten: daten, slug: profil && profil.slug, personMit: personMit, hole: hole };
-  }
+  function mitgliederKontext() { return { daten: daten, slug: profil && profil.slug, personMit: personMit, hole: hole, ikone: ikone }; }
   function zeigeMitglieder() {
-    aktuell = null;
-    ansicht("mitglieder");
-    ladeMitglieder().then(function (M) {
-      M.oeffnen(el("mitglieder"), mitgliederKontext());
-    }).catch(function (e) {
-      el("mitglieder").textContent = "Mitgliederbereich konnte nicht geladen werden: " + e.message;
-    });
+    aktuell = null; ansicht("mitglieder");
+    ladeMitglieder().then(function (M) { M.oeffnen(el("mitglieder"), mitgliederKontext()); })
+      .catch(function (e) { el("mitglieder").textContent = "Mitgliederbereich konnte nicht geladen werden: " + e.message; });
     window.scrollTo(0, 0);
-  }
-
-  function zeigeAuswahl(wechsel) {
-    aktuell = null;
-    ansicht("auswahl");
-    el("statistik").innerHTML = "";
-    el("frage").textContent = wechsel ? "Auf wen soll umgestellt werden?" : "Wer bist du?";
-    el("abbrechen-zeile").classList.toggle("versteckt", !wechsel || !profil);
   }
 
   function ausHash() {
     var slug = location.hash.replace(/^#/, "");
-    if (slug === "plan") {
-      aktuell = null;
-      ansicht("plan");
-      zeigePlan();
-      window.scrollTo(0, 0);
-      return;
-    }
+    if (slug === "plan") { aktuell = null; ansicht("plan"); zeigePlan(); window.scrollTo(0, 0); return; }
     if (slug === "mitglieder") { zeigeMitglieder(); return; }
-    if (slug) {
-      var p = personMit(slug);
-      if (p) { zeigePerson(p); return; }
-    }
-    if (profil && profil.slug && personMit(profil.slug)) {
-      zeigePerson(personMit(profil.slug));
-      return;
-    }
+    if (slug) { var p = personMit(slug); if (p) { zeigePerson(p); return; } }
+    if (profil && profil.slug && personMit(profil.slug)) { zeigePerson(personMit(profil.slug)); return; }
     zeigeAuswahl(false);
   }
 
-  // --------------------------------------------------------------- Start
+  // ----------------------------------------------------------------- Start
 
-  el("wechseln").addEventListener("click", function () {
-    el("suche").value = "";
-    zeigeListe("");
-    zeigeAuswahl(true);
-  });
-  el("abbrechen").addEventListener("click", function () {
-    if (profil && personMit(profil.slug)) zeigePerson(personMit(profil.slug));
-  });
+  el("wechseln").addEventListener("click", function () { el("suche").value = ""; zeigeListe(""); zeigeAuswahl(true); });
+  el("abbrechen").addEventListener("click", function () { if (profil && personMit(profil.slug)) zeigePerson(personMit(profil.slug)); });
   el("suche").addEventListener("input", function (e) { zeigeListe(e.target.value); });
   el("melde-knopf").addEventListener("click", meldeAnfragen);
   el("kopieren").addEventListener("click", function () {
     if (!aktuell) return;
-    var url = feedUrl(aktuell.slug, location.protocol);
-    var knopf = el("kopieren");
-    var fertig = function () {
-      knopf.textContent = "Kopiert ✓";
-      setTimeout(function () { knopf.textContent = "Link kopieren"; }, 2000);
-    };
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(url).then(fertig, function () { prompt("Link:", url); });
-    } else {
-      prompt("Link:", url);
-    }
+    var url = feedUrl(aktuell.slug, location.protocol), knopf = el("kopieren");
+    var fertig = function () { knopf.textContent = "Kopiert ✓"; setTimeout(function () { knopf.textContent = "Link kopieren"; }, 2000); };
+    if (navigator.clipboard) navigator.clipboard.writeText(url).then(fertig, function () { prompt("Link:", url); }); else prompt("Link:", url);
   });
   window.addEventListener("hashchange", ausHash);
   el("tab-plan").addEventListener("click", function () { location.hash = "plan"; });
   el("tab-mitglieder").addEventListener("click", function () { location.hash = "mitglieder"; });
-  el("tab-meine").addEventListener("click", function () {
-    // Ist der Hash schon leer, feuert kein hashchange - dann selbst rendern
-    if (location.hash === "" || location.hash === "#") ausHash();
-    else location.hash = "";
-  });
-  el("plan-kompakt").addEventListener("change", function (e) {
-    schreiben("plan-kompakt", e.target.checked ? "1" : null);
-    zeigePlan();
-  });
+  el("tab-meine").addEventListener("click", function () { if (location.hash === "" || location.hash === "#") ausHash(); else location.hash = ""; });
   el("plan-filter").addEventListener("input", zeigePlan);
   el("plan-vergangene").addEventListener("change", zeigePlan);
-
-  // Teilen ueber das System-Menue (iOS/Android), sonst bleibt der Knopf weg
+  el("plan-hallen").addEventListener("change", zeigePlan);
+  el("plan-kompakt").addEventListener("change", function (e) { schreiben("plan-kompakt", e.target.checked ? "1" : null); zeigePlan(); });
+  el("plan-heute").addEventListener("click", function () {
+    var h = el("plan-ab-heute"); if (h) window.scrollTo({ top: h.getBoundingClientRect().top + window.scrollY - 120, behavior: "smooth" });
+  });
   if (navigator.share) {
     el("teilen").classList.remove("versteckt");
-    el("teilen").addEventListener("click", function () {
-      if (!aktuell) return;
-      navigator.share({
-        title: "Einteilungen " + aktuell.name,
-        url: basis + "#" + aktuell.slug
-      }).catch(function () {});
-    });
+    el("teilen").addEventListener("click", function () { if (aktuell) navigator.share({ title: "Einteilungen " + aktuell.name, url: basis + "#" + aktuell.slug }).catch(function () {}); });
   }
+  document.addEventListener("visibilitychange", function () { if (document.visibilityState === "visible" && daten) neuLaden(); });
 
-  // Beim Zurückkehren zur App erneut prüfen - dann meldet sie sich auch,
-  // wenn sie nur aus dem Hintergrund geholt wird.
-  document.addEventListener("visibilitychange", function () {
-    if (document.visibilityState === "visible" && daten) neuLaden();
-  });
-
-  function hole(name) {
-    return fetch(name + "?" + Date.now())
-      .then(function (r) { if (!r.ok) throw 0; return r.json(); });
-  }
-
+  function hole(name) { return fetch(name + "?" + Date.now()).then(function (r) { if (!r.ok) throw 0; return r.json(); }); }
   function standAnzeigen(d, lauf) {
-    var s = el("stand");
-    s.className = "stand";
+    var s = el("stand"); s.className = "stand";
     s.textContent = d.personen.length + " Schiedsrichter · " + d.spiele_gesamt + " Spiele";
     if (lauf && lauf.stand) {
-      var stand = new Date(lauf.stand);
-      var alter = (Date.now() - stand.getTime()) / 3600000;
-      s.textContent = "Stand: " + stand.toLocaleString("de-DE",
-        { dateStyle: "medium", timeStyle: "short" }) + " Uhr · " + s.textContent;
-      if (alter > 6) {
-        s.className = "stand alt";
-        s.textContent += " – seit " + Math.round(alter) + " Std. nicht aktualisiert";
-      }
+      var stand = new Date(lauf.stand), alter = (Date.now() - stand.getTime()) / 3600000;
+      s.textContent = "Stand " + stand.toLocaleString("de-DE", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }) + " · " + s.textContent;
+      if (alter > 6) { s.className = "stand alt"; s.textContent += " – seit " + Math.round(alter) + " Std. nicht aktualisiert"; }
     }
   }
-
   function neuLaden() {
-    return Promise.all([hole("daten.json"),
-                        hole("stand.json").catch(function () { return null; })])
-      .then(function (beides) {
-        daten = beides[0];
-        standAnzeigen(daten, beides[1]);
-        if (aktuell) {
-          var frisch = personMit(aktuell.slug);
-          if (frisch) zeigePerson(frisch, true);
-        } else if (!el("plan").classList.contains("versteckt")) {
-          zeigePlan();
-        }
-        // Mitgliederbereich hat eigenen Zustand (Formulare) und bleibt unangetastet
-      })
-      .catch(function () {});
+    return Promise.all([hole("daten.json"), hole("stand.json").catch(function () { return null; })])
+      .then(function (b) {
+        daten = b[0]; standAnzeigen(daten, b[1]);
+        if (aktuell) { var frisch = personMit(aktuell.slug); if (frisch) zeigePerson(frisch, true); }
+        else if (!el("plan").classList.contains("versteckt")) zeigePlan();
+      }).catch(function () {});
   }
 
   Promise.all([hole("daten.json"), hole("stand.json").catch(function () { return null; })])
-    .then(function (beides) {
-      daten = beides[0];
-      profil = profilLesen();
-      document.title = daten.titel;
-      el("titel").textContent = daten.titel;
-      el("quelle").href = daten.quelle;
-      standAnzeigen(daten, beides[1]);
-      el("fuss").textContent = "Termine beginnen " + daten.vorlauf_minuten +
-        " Minuten vor Spielbeginn, damit du rechtzeitig an der Halle bist.";
-      zeigeListe("");
-      ausHash();
+    .then(function (b) {
+      daten = b[0]; profil = profilLesen();
+      document.title = daten.titel; el("titel").textContent = daten.titel; el("quelle").href = daten.quelle;
+      standAnzeigen(daten, b[1]);
+      el("fuss").textContent = "Termine beginnen " + daten.vorlauf_minuten + " Minuten vor Spielbeginn, damit du rechtzeitig an der Halle bist.";
+      zeigeListe(""); ausHash();
     })
-    .catch(function () {
-      el("stand").className = "stand alt";
-      el("stand").textContent = "Daten konnten nicht geladen werden.";
-    });
+    .catch(function () { el("stand").className = "stand alt"; el("stand").textContent = "Daten konnten nicht geladen werden."; });
 
-  // Offlinefähig machen und aufs Handy installierbar. Braucht https oder
-  // localhost - beim Öffnen als Datei passiert einfach nichts.
   if ("serviceWorker" in navigator && location.protocol !== "file:") {
-    window.addEventListener("load", function () {
-      navigator.serviceWorker.register("sw.js").catch(function () {});
-    });
+    window.addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function () {}); });
   }
 })();
 </script>
