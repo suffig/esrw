@@ -2,9 +2,9 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 86,
+ "spiele_gesamt": 85,
  "saison": "2026/27",
- "archiv_spiele": 116,
+ "archiv_spiele": 117,
  "rollen": {
   "SR": "Schiedsrichter",
   "HSR": "Hauptschiedsrichter",
@@ -741,21 +741,21 @@
     "Dietrich, Jonas"
    ],
    "statistik": {
-    "gesamt": 2,
-    "saison": 2,
+    "gesamt": 3,
+    "saison": 3,
     "rollen": {
-     "LSR": 2
+     "LSR": 3
     },
     "ligen": [
      [
       "RL FS",
-      2
+      3
      ]
     ],
     "hallen": [
      [
       "Eissporthalle Ratingen",
-      1
+      2
      ],
      [
       "Eissporthalle Essen-West",
@@ -797,8 +797,8 @@
      "hinweis": null
     },
     {
-     "beginn": "2026-09-18T20:00:00+02:00",
-     "treffpunkt": "2026-09-18T19:00:00+02:00",
+     "beginn": "2026-09-18T19:30:00+02:00",
+     "treffpunkt": "2026-09-18T18:30:00+02:00",
      "rolle": "LSR",
      "system": 3,
      "liga": "RL FS",
@@ -1301,16 +1301,16 @@
     "Garcia Nieto, Dario"
    ],
    "statistik": {
-    "gesamt": 6,
-    "saison": 6,
+    "gesamt": 7,
+    "saison": 7,
     "rollen": {
-     "LSR": 2,
+     "LSR": 3,
      "SR": 4
     },
     "ligen": [
      [
       "RL FS",
-      2
+      3
      ],
      [
       "U15 RLA",
@@ -1327,12 +1327,12 @@
     ],
     "hallen": [
      [
-      "ICEDOME Troisdorf",
+      "Eissporthalle Ratingen",
       2
      ],
      [
-      "Eissporthalle Ratingen",
-      1
+      "ICEDOME Troisdorf",
+      2
      ],
      [
       "Eishalle Brehmstraße",
@@ -1403,8 +1403,8 @@
      "hinweis": null
     },
     {
-     "beginn": "2026-09-18T20:00:00+02:00",
-     "treffpunkt": "2026-09-18T19:00:00+02:00",
+     "beginn": "2026-09-18T19:30:00+02:00",
+     "treffpunkt": "2026-09-18T18:30:00+02:00",
      "rolle": "LSR",
      "system": 3,
      "liga": "RL FS",
@@ -3724,31 +3724,6 @@
      "hinweis": null
     },
     {
-     "beginn": "2026-09-20T15:00:00+02:00",
-     "treffpunkt": "2026-09-20T14:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U17 RL",
-     "paarung": "Herforder EV – Ratinger Ice Aliens",
-     "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-     "halle": "Eishalle Im Kleinen Felde",
-     "koordinaten": [
-      52.114893,
-      8.652028
-     ],
-     "gespann": [
-      {
-       "name": "Skalecki, Martin",
-       "slug": "skalecki-martin",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": false,
-     "aenderung": null,
-     "hinweis": null
-    },
-    {
      "beginn": "2026-09-20T17:30:00+02:00",
      "treffpunkt": "2026-09-20T16:30:00+02:00",
      "rolle": "SR",
@@ -6004,31 +5979,6 @@
      "hinweis": null
     },
     {
-     "beginn": "2026-09-20T15:00:00+02:00",
-     "treffpunkt": "2026-09-20T14:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U17 RL",
-     "paarung": "Herforder EV – Ratinger Ice Aliens",
-     "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-     "halle": "Eishalle Im Kleinen Felde",
-     "koordinaten": [
-      52.114893,
-      8.652028
-     ],
-     "gespann": [
-      {
-       "name": "Malik, Orlando",
-       "slug": "malik-orlando",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": false,
-     "aenderung": null,
-     "hinweis": null
-    },
-    {
      "beginn": "2026-09-20T17:30:00+02:00",
      "treffpunkt": "2026-09-20T16:30:00+02:00",
      "rolle": "SR",
@@ -6380,16 +6330,16 @@
     "Steven, Patrick"
    ],
    "statistik": {
-    "gesamt": 2,
-    "saison": 2,
+    "gesamt": 3,
+    "saison": 3,
     "rollen": {
-     "HSR": 1,
+     "HSR": 2,
      "SR": 1
     },
     "ligen": [
      [
       "RL FS",
-      1
+      2
      ],
      [
       "U17 I",
@@ -6399,7 +6349,7 @@
     "hallen": [
      [
       "Eissporthalle Ratingen",
-      1
+      2
      ],
      [
       "Eishalle Brehmstraße",
@@ -6411,8 +6361,8 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-18T20:00:00+02:00",
-     "treffpunkt": "2026-09-18T19:00:00+02:00",
+     "beginn": "2026-09-18T19:30:00+02:00",
+     "treffpunkt": "2026-09-18T18:30:00+02:00",
      "rolle": "HSR",
      "system": 3,
      "liga": "RL FS",
@@ -8574,6 +8524,34 @@
    "vergangen": false
   },
   {
+   "beginn": "2026-09-18T19:30:00+02:00",
+   "treffpunkt": "2026-09-18T18:30:00+02:00",
+   "liga": "RL FS",
+   "paarung": "Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!",
+   "halle": "Eissporthalle Ratingen",
+   "ort": "Eissporthalle Ratingen, Am Sandbach 12, 40878 Ratingen",
+   "halle_erkannt": true,
+   "system": 3,
+   "besetzung": [
+    {
+     "name": "Steven, Patrick",
+     "rolle": "HSR",
+     "slug": "steven-patrick"
+    },
+    {
+     "name": "Dietrich, Jonas",
+     "rolle": "LSR",
+     "slug": "dietrich-jonas"
+    },
+    {
+     "name": "Garcia Nieto, Dario",
+     "rolle": "LSR",
+     "slug": "garcia-nieto-dario"
+    }
+   ],
+   "vergangen": false
+  },
+  {
    "beginn": "2026-09-18T20:00:00+02:00",
    "treffpunkt": "2026-09-18T19:00:00+02:00",
    "liga": "BL FS",
@@ -8620,34 +8598,6 @@
      "name": "Malik, Orlando",
      "rolle": "LSR",
      "slug": "malik-orlando"
-    }
-   ],
-   "vergangen": false
-  },
-  {
-   "beginn": "2026-09-18T20:00:00+02:00",
-   "treffpunkt": "2026-09-18T19:00:00+02:00",
-   "liga": "RL FS",
-   "paarung": "Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!",
-   "halle": "Eissporthalle Ratingen",
-   "ort": "Eissporthalle Ratingen, Am Sandbach 12, 40878 Ratingen",
-   "halle_erkannt": true,
-   "system": 3,
-   "besetzung": [
-    {
-     "name": "Steven, Patrick",
-     "rolle": "HSR",
-     "slug": "steven-patrick"
-    },
-    {
-     "name": "Dietrich, Jonas",
-     "rolle": "LSR",
-     "slug": "dietrich-jonas"
-    },
-    {
-     "name": "Garcia Nieto, Dario",
-     "rolle": "LSR",
-     "slug": "garcia-nieto-dario"
     }
    ],
    "vergangen": false
@@ -9327,29 +9277,6 @@
      "name": "Schöche, Gian-Carlo",
      "rolle": "SR",
      "slug": "schoeche-gian-carlo"
-    }
-   ],
-   "vergangen": false
-  },
-  {
-   "beginn": "2026-09-20T15:00:00+02:00",
-   "treffpunkt": "2026-09-20T14:00:00+02:00",
-   "liga": "U17 RL",
-   "paarung": "Herforder EV – Ratinger Ice Aliens",
-   "halle": "Eishalle Im Kleinen Felde",
-   "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Malik, Orlando",
-     "rolle": "SR",
-     "slug": "malik-orlando"
-    },
-    {
-     "name": "Skalecki, Martin",
-     "rolle": "SR",
-     "slug": "skalecki-martin"
     }
    ],
    "vergangen": false

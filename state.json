@@ -59,18 +59,6 @@
   "titel": "SR · U13 FS · Krefelder EV – Löwen Frankfurt",
   "treffpunkt": "2026-09-12T18:30:00+02:00"
  },
- "03e32f84a84666987901cc2818f3216b11e5eab2@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-18T20:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "41a27d94cf6cbceac15419fa9ad277218f36faf8",
-  "ort": "Eissporthalle Ratingen, Am Sandbach 12, 40878 Ratingen",
-  "sequence": 0,
-  "slug": "garcia-nieto-dario",
-  "stempel": "2026-09-11T15:00:47.546895+00:00",
-  "titel": "LSR · RL FS · Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!",
-  "treffpunkt": "2026-09-18T19:00:00+02:00"
- },
  "05bb298d6e4e19d20cfb8e64c4fb170753d832a3@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-19T16:30:00+02:00",
@@ -154,6 +142,18 @@
   "stempel": "2026-09-15T15:27:41.584000+00:00",
   "titel": "SR · U11 RL · Iserlohner EC",
   "treffpunkt": "2026-09-19T11:15:00+02:00"
+ },
+ "1238c2f52eedaf21a69e1c1e5d667838ce349b5b@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-18T19:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "1b1079dd88dc5c022e57125353af63d265a473fd",
+  "ort": "Eissporthalle Ratingen, Am Sandbach 12, 40878 Ratingen",
+  "sequence": 0,
+  "slug": "steven-patrick",
+  "stempel": "2026-09-15T16:46:33.991155+00:00",
+  "titel": "HSR · RL FS · Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!",
+  "treffpunkt": "2026-09-18T18:30:00+02:00"
  },
  "13febb764d56242ca0d77a709af925de77137415@esrw.de": {
   "aenderung": null,
@@ -503,18 +503,6 @@
   "titel": "SR · U17 FS · EHC Troisdorf – Eisadler Dortmund",
   "treffpunkt": "2026-09-13T17:00:00+02:00"
  },
- "334d2af3cfd3dabb11dc5ba20b9eb4e5ccdce0d8@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-18T20:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "41a27d94cf6cbceac15419fa9ad277218f36faf8",
-  "ort": "Eissporthalle Ratingen, Am Sandbach 12, 40878 Ratingen",
-  "sequence": 0,
-  "slug": "dietrich-jonas",
-  "stempel": "2026-09-11T15:00:47.546895+00:00",
-  "titel": "LSR · RL FS · Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!",
-  "treffpunkt": "2026-09-18T19:00:00+02:00"
- },
  "34f1964e65b499c2878fa694c5d0e3ca7c764e2c@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-20T19:00:00+02:00",
@@ -658,18 +646,6 @@
   "stempel": "2026-09-11T15:00:47.546895+00:00",
   "titel": "SR · DEFL 2 FS · Düsseldorfer EG – NL U18",
   "treffpunkt": "2026-09-19T12:30:00+02:00"
- },
- "463684baa8fddcd81aeaa2657b325d3a891e3914@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-18T20:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "8e07fcd20dfc520da72c15bec57c781ce0f4525a",
-  "ort": "Eissporthalle Ratingen, Am Sandbach 12, 40878 Ratingen",
-  "sequence": 0,
-  "slug": "steven-patrick",
-  "stempel": "2026-09-11T15:00:47.546895+00:00",
-  "titel": "HSR · RL FS · Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!",
-  "treffpunkt": "2026-09-18T19:00:00+02:00"
  },
  "463e9ace43bef9492dc616c6b15287d3f70b769e@esrw.de": {
   "aenderung": null,
@@ -1511,18 +1487,6 @@
   "titel": "SR · U11 RL · Kölner Junghaie – Kölnarena 2",
   "treffpunkt": "2026-09-13T13:45:00+02:00"
  },
- "a8574aafd99561b4b7ab1b8aa02b5a9f6f71daf4@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-20T15:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "cf0a143bffecee8b8442e4871cb827a163055d12",
-  "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-  "sequence": 0,
-  "slug": "skalecki-martin",
-  "stempel": "2026-09-11T15:00:47.546895+00:00",
-  "titel": "SR · U17 RL · Herforder EV – Ratinger Ice Aliens",
-  "treffpunkt": "2026-09-20T14:00:00+02:00"
- },
  "a8c8a8d341e29a8f989df83a1b7f2a202891d15a@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-20T17:30:00+02:00",
@@ -1907,18 +1871,6 @@
   "titel": "SR · U9 RL · EHC Troisdorf",
   "treffpunkt": "2026-09-19T09:00:00+02:00"
  },
- "e41da0291df59fdd71a48194444675c20fad6305@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-20T15:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "cf0a143bffecee8b8442e4871cb827a163055d12",
-  "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-  "sequence": 0,
-  "slug": "malik-orlando",
-  "stempel": "2026-09-11T15:00:47.546895+00:00",
-  "titel": "SR · U17 RL · Herforder EV – Ratinger Ice Aliens",
-  "treffpunkt": "2026-09-20T14:00:00+02:00"
- },
  "e482d3efe0a103ce6d9915b10801a135bf7036e1@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-12T09:15:00+02:00",
@@ -2003,6 +1955,18 @@
   "titel": "SR · U17 FS · EHC Troisdorf – Eisadler Dortmund",
   "treffpunkt": "2026-09-13T17:00:00+02:00"
  },
+ "ef219d7d9d1e90a15a6f8dfa850fa65df4f1f20f@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-18T19:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "989a377e092693d40042baaf417660bb20d82063",
+  "ort": "Eissporthalle Ratingen, Am Sandbach 12, 40878 Ratingen",
+  "sequence": 0,
+  "slug": "dietrich-jonas",
+  "stempel": "2026-09-15T16:46:33.991155+00:00",
+  "titel": "LSR · RL FS · Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!",
+  "treffpunkt": "2026-09-18T18:30:00+02:00"
+ },
  "f371e217a117fbfbd90f4320296b3266a8fbff59@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-13T17:00:00+02:00",
@@ -2026,6 +1990,18 @@
   "stempel": "2026-09-11T15:00:47.546895+00:00",
   "titel": "SR · DEFL 2 FS · Düsseldorfer EG – NL U18",
   "treffpunkt": "2026-09-19T12:30:00+02:00"
+ },
+ "f7976576a282a42adbf8f2f73a30a7abae1096f3@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-18T19:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "989a377e092693d40042baaf417660bb20d82063",
+  "ort": "Eissporthalle Ratingen, Am Sandbach 12, 40878 Ratingen",
+  "sequence": 0,
+  "slug": "garcia-nieto-dario",
+  "stempel": "2026-09-15T16:46:33.991155+00:00",
+  "titel": "LSR · RL FS · Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!",
+  "treffpunkt": "2026-09-18T18:30:00+02:00"
  },
  "f79abcb750020543d929782f6cef39e02a689edd@esrw.de": {
   "aenderung": null,

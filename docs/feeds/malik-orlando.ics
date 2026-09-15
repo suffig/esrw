@@ -90,33 +90,6 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U11 RL · Iserlohner EC
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:e41da0291df59fdd71a48194444675c20fad6305@esrw.de
-SEQUENCE:0
-DTSTAMP:20260911T150047Z
-LAST-MODIFIED:20260911T150047Z
-DTSTART:20260920T120000Z
-DTEND:20260920T153000Z
-SUMMARY:SR · U17 RL · Herforder EV – Ratinger Ice Aliens
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 15:00 Uhr\nTreffpunkt:
-  14:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eishalle Im Klei
- nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Skalecki\, 
- Martin\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eishalle Im Kleinen Felde\, Im Kleinen Felde\, 32051 Herford
-GEO:52.114893;8.652028
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
-  Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
- Kleinen Felde":geo:52.114893,8.652028
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL · Herforder EV –
-  Ratinger Ice Aliens
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:a8c8a8d341e29a8f989df83a1b7f2a202891d15a@esrw.de
 SEQUENCE:0
 DTSTAMP:20260911T150047Z
@@ -127,7 +100,8 @@ SUMMARY:SR · Senioren BZL · Herforder EV 1b – EHC Troisdorf 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
   16:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eishalle I
  m Kleinen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Skale
- cki\, Martin\n\nQuelle: https://www.esrw.de/einteilungen.html
+ cki\, Martin\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.
+ de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
