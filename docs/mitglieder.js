@@ -1798,7 +1798,7 @@ window.Mitglieder = (function () {
   function zaehler() {
     if (!session) return Promise.resolve({ angemeldet: false });
     return ladeProfil().then(function () {
-      var z = { angemeldet: true, gesuche: 0, wartend: 0 };
+      var z = { angemeldet: true, gesuche: 0, wartend: 0, info: 0, admin: !!(profil && profil.admin) };
       var laeufe = [];
       if (frei()) laeufe.push(sb.from("gesuche").select("id,user_id").eq("status", "offen").gte("beginn", new Date(Date.now() - 6 * 3600000).toISOString())
         .then(function (r) { z.gesuche = (r.data || []).filter(function (g) { return g.user_id !== session.user.id; }).length; }));
@@ -2088,6 +2088,14 @@ window.Mitglieder = (function () {
     });
   }
 
+  // Heimatkoordinaten fuer Hallenkarte und Abfahrtsdatei
+  function heimat() {
+    return bereit().then(function (st) {
+      if (!st.eingerichtet || !session) return null;
+      return ladeProfil().then(function () { return profil && profil.heimat_lat != null ? { lat: profil.heimat_lat, lon: profil.heimat_lon } : null; });
+    }).catch(function () { return null; });
+  }
+
   // Fahrzeit zur Halle fuer die Karte oben - berechnet und merkt sie bei Bedarf
   function abfahrt(halle) {
     return bereit().then(function (st) {
@@ -2107,5 +2115,5 @@ window.Mitglieder = (function () {
 
   return { oeffnen: oeffnen, bereit: bereit, angemeldet: angemeldet,
            sperrenAm: sperrenAm, gesuchAnlegen: gesuchAnlegen, offeneAbrechnungen: offeneAbrechnungen,
-           extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise };
+           extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat };
 })();

@@ -84,6 +84,45 @@ def aenderungs_nachricht(slug, a):
     return {"titel": titel, "text": "\n".join(zeilen)[:900], "url": "./#" + slug}
 
 
+WETTER_CODES = {0: "klar", 1: "meist klar", 2: "wolkig", 3: "bedeckt", 45: "Nebel", 48: "Nebel (Reif)",
+                51: "Nieselregen", 53: "Nieselregen", 55: "Nieselregen", 56: "gefrierender Niesel", 57: "gefrierender Niesel",
+                61: "Regen", 63: "Regen", 65: "starker Regen", 66: "gefrierender Regen", 67: "gefrierender Regen",
+                71: "Schnee", 73: "Schnee", 75: "starker Schnee", 77: "Schneegriesel", 80: "Schauer", 81: "Schauer",
+                82: "starke Schauer", 85: "Schneeschauer", 86: "Schneeschauer", 95: "Gewitter", 96: "Gewitter", 99: "Gewitter"}
+_wetter_cache = {}
+
+
+def wetter(koordinaten, zeitpunkt):
+    """Wetter an der Halle zur gegebenen Stunde (Open-Meteo, ohne Schluessel).
+    Liefert einen kurzen Text oder None; Fehler sind kein Grund abzubrechen."""
+    if not koordinaten:
+        return None
+    key = (round(koordinaten[0], 2), round(koordinaten[1], 2))
+    try:
+        if key not in _wetter_cache:
+            url = ("https://api.open-meteo.com/v1/forecast?latitude=%s&longitude=%s"
+                   "&hourly=temperature_2m,precipitation,snowfall,weather_code&timezone=Europe%%2FBerlin&forecast_days=2"
+                   % key)
+            with urllib.request.urlopen(url, timeout=15) as r:
+                _wetter_cache[key] = json.loads(r.read().decode("utf-8")).get("hourly") or {}
+        h = _wetter_cache[key]
+        stunde = zeitpunkt.astimezone(BERLIN).strftime("%Y-%m-%dT%H:00")
+        if stunde not in h.get("time", []):
+            return None
+        i = h["time"].index(stunde)
+        temp, regen, schnee, code = h["temperature_2m"][i], h["precipitation"][i], h["snowfall"][i], h["weather_code"][i]
+        text = "%d °C, %s" % (round(temp), WETTER_CODES.get(code, "wechselhaft"))
+        if schnee and schnee > 0:
+            text += " – Schnee, mehr Zeit einplanen"
+        elif temp <= 2 and (regen or 0) > 0:
+            text += " – Glättegefahr"
+        elif code in (56, 57, 66, 67):
+            text += " – gefrierender Regen, Glättegefahr"
+        return text
+    except Exception:
+        return None
+
+
 def erinnerungen(person, profil, jetzt, schon):
     """Spieltag- und Abfahrt-Erinnerungen fuer eine Person. Liefert
     (schluessel, nutzlast)-Paare, die noch nicht verschickt wurden."""
@@ -111,6 +150,9 @@ def erinnerungen(person, profil, jetzt, schon):
             if abfahrt:
                 text += "\nAbfahrt ca. %s Uhr (%s km, ohne Verkehr)" % (
                     abfahrt.strftime("%H:%M"), strecke.get("km", "?"))
+            w = wetter(s.get("koordinaten"), abfahrt or treff)
+            if w:
+                text += "\nWetter: " + w
             heraus.append((k, {"titel": "Heute: %s als %s" % (s.get("paarung", "Spiel"), s.get("rolle", "SR")),
                                "text": text[:900], "url": "./#" + person["slug"],
                                "ort": s.get("ort") or None, "tag": "spieltag"}))

@@ -6,12 +6,12 @@
   var basis = location.href.split("#")[0].split("?")[0].replace(/index\.html$/, "").replace(/\/?$/, "/");
 
   // Wird einmal je Fassung gezeigt, damit die Kollegen neue Funktionen finden.
-  var NEUIGKEITEN = { version: "2026-09-16b", punkte: [
-    "Hallen-Seite: Tipp auf einen Hallennamen zeigt Adresse, Route, alle Spiele dort und Hinweise",
-    "Spielplan: Wochenleiste zum Springen, Ligen farbig, Monatsraster mit Liga-Punkten",
-    "Mitglieder → Info: Ankündigungen vom Betreiber (Lehrgang, Regeltest, Sitzung)",
-    "Abrechnung: Monat per E-Mail an den Obmann, Fahrtenbuch zum Drucken",
-    "Statistik: „Meine Saison als Bild teilen“ · Google Maps auf Android · Adresse kopieren"
+  var NEUIGKEITEN = { version: "2026-09-16c", punkte: [
+    "Fünf Reiter unten: Heute · Spielplan · Tausch · Abrechnung · Mehr",
+    "Tipp auf ein Spiel öffnet die Spielseite mit Route, Gespann, Tausch, Hinweisen, Notiz und Wetter",
+    "Hallenkarte, Kalenderdatei mit Abfahrtsalarm, Saisonziel und Abzeichen (Einstellungen unter Mehr)",
+    "Spielplan-Filter in einem Blatt, Startseite mit Kacheln für Gesuche und Ankündigungen",
+    "Wetter zur Abfahrt auf der Karte oben und in der Spieltag-Push"
   ] };
   var daten = null, aktuell = null, profil = null;
   var el = function (id) { return document.getElementById(id); };
@@ -37,6 +37,7 @@
     var dunkel = t === "dark" || (!t && window.matchMedia("(prefers-color-scheme: dark)").matches);
     el("thema").querySelector("use").setAttribute("href", dunkel ? "#i-sun" : "#i-moon");
   }
+  el("thema2").addEventListener("click", function () { el("thema").click(); });
   el("thema").addEventListener("click", function () {
     var t = lesen("thema");
     var dunkel = t === "dark" || (!t && window.matchMedia("(prefers-color-scheme: dark)").matches);
@@ -134,6 +135,7 @@
     Array.prototype.forEach.call(el("akzent").querySelectorAll("button"), function (b) {
       b.addEventListener("click", function () { var f = b.getAttribute("data-akzent"); schreiben("akzent", f === "blau" ? null : f); akzentSetzen(f); });
     });
+    el("ziel").value = lesen("ziel") || "";
     el("stand").style.cursor = "pointer"; el("stand").title = "Antippen: neu laden";
     el("stand").addEventListener("click", function () { neuLaden().then(function () { toast("Aktualisiert", "gut"); }); });
     el("abo").addEventListener("click", function () { schreiben("abo-geklickt", "1"); setTimeout(function () { kalenderBoxStand(); onboardingStand(); }, 500); });
@@ -389,27 +391,19 @@
     var datum = document.createElement("span");
     datum.className = "datum";
     if (s.liga) datum.appendChild(ligaPille(s.liga));
-    kopf.appendChild(datum); kopf.appendChild(teilenKnopf(s)); kopf.appendChild(rolleBadge(s.rolle));
+    kopf.appendChild(datum); kopf.appendChild(rolleBadge(s.rolle));
     d.appendChild(kopf);
 
     var paarung = document.createElement("div");
     paarung.className = "paarung"; paarung.textContent = s.paarung;
     d.appendChild(paarung);
 
-    d.appendChild(mitIkone("i-clock", "An der Halle: " + uhr(treff) + " Uhr" + (s.system >= 3 ? " · " + s.system + "er-System" : "")));
-
-    if (s.ort) {
-      var ortZeile = document.createElement("span");
-      ortZeile.appendChild(hallenLink(s.halle));
-      var a = document.createElement("a");
-      a.href = kartenLink(s.ort); a.target = "_blank"; a.rel = "noopener";
-      a.textContent = s.ort.indexOf(s.halle + ", ") === 0 ? s.ort.slice(s.halle.length + 2) : s.ort;
-      ortZeile.appendChild(document.createTextNode(" · ")); ortZeile.appendChild(a); ortZeile.appendChild(kopierKnopf(s.ort));
-      d.appendChild(mitIkone("i-pin", ortZeile));
-    } else {
-      var w = document.createElement("div"); w.className = "achtung";
-      w.textContent = "Halle nicht automatisch erkannt – bitte selbst prüfen."; d.appendChild(w);
-    }
+    var wo = document.createElement("span");
+    wo.appendChild(document.createTextNode("Treffpunkt " + uhr(treff) + " Uhr · "));
+    wo.appendChild(hallenLink(s.halle));
+    if (s.system >= 3) wo.appendChild(document.createTextNode(" · " + s.system + "er-System"));
+    d.appendChild(mitIkone("i-pin", wo));
+    if (!s.ort) { var w = document.createElement("div"); w.className = "achtung"; w.textContent = "Halle nicht automatisch erkannt – bitte selbst prüfen."; d.appendChild(w); }
 
     if (s.gespann && s.gespann.length) {
       var g = document.createElement("div"); g.className = "chips";
@@ -418,10 +412,157 @@
     }
     if (s.hinweis) { var hw = document.createElement("div"); hw.className = "achtung"; hw.textContent = "⚠ " + s.hinweis; d.appendChild(hw); }
     if (s.aenderung) { var ae = document.createElement("div"); ae.className = "geaendert"; ae.textContent = "⚠ Geändert: " + s.aenderung; d.appendChild(ae); }
-    var extras = document.createElement("div"); extras.className = "extras-ziel"; karteEl.appendChild(extras);
-    if (fuer && !s.vergangen) karteEl.appendChild(tauschBereich(s, fuer));
+    var mehr = document.createElement("div"); mehr.className = "meta"; mehr.style.marginTop = "6px"; mehr.style.color = "var(--akzent)"; mehr.textContent = "Details, Route, Tausch ›";
+    d.appendChild(mehr);
+    karteEl.classList.add("tippbar");
+    karteEl.addEventListener("click", function (ev) { if (ev.target.closest("a, button")) return; location.hash = "spiel/" + encodeURIComponent(kennungVon(s)); });
     karteEl._spiel = s;
     return karteEl;
+  }
+
+  function kennungVon(s) { return s.beginn + "|" + s.paarung; }
+
+  // ---------------------------------------------------- Wetter (Open-Meteo)
+
+  var wetterCache = {};
+  var WETTER_CODES = { 0: "klar", 1: "meist klar", 2: "wolkig", 3: "bedeckt", 45: "Nebel", 48: "Nebel", 51: "Nieselregen", 53: "Nieselregen", 55: "Nieselregen",
+    56: "gefrierender Niesel", 57: "gefrierender Niesel", 61: "Regen", 63: "Regen", 65: "starker Regen", 66: "gefrierender Regen", 67: "gefrierender Regen",
+    71: "Schnee", 73: "Schnee", 75: "starker Schnee", 77: "Schneegriesel", 80: "Schauer", 81: "Schauer", 82: "starke Schauer", 85: "Schneeschauer", 86: "Schneeschauer", 95: "Gewitter", 96: "Gewitter", 99: "Gewitter" };
+  function wetterFuer(koord, zeit) {
+    if (!koord || !navigator.onLine) return Promise.resolve(null);
+    var d = new Date(zeit), diff = (d - Date.now()) / 3600000;
+    if (diff < -3 || diff > 60) return Promise.resolve(null);
+    var key = koord[0].toFixed(2) + "," + koord[1].toFixed(2);
+    var lauf = wetterCache[key] || (wetterCache[key] = fetch("https://api.open-meteo.com/v1/forecast?latitude=" + key.split(",")[0] + "&longitude=" + key.split(",")[1] +
+      "&hourly=temperature_2m,precipitation,snowfall,weather_code&timezone=Europe%2FBerlin&forecast_days=3").then(function (r) { return r.json(); }).catch(function () { return null; }));
+    return lauf.then(function (j) {
+      var h = j && j.hourly; if (!h) return null;
+      var stunde = d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2) + "T" + ("0" + d.getHours()).slice(-2) + ":00";
+      var i = h.time.indexOf(stunde); if (i < 0) return null;
+      var temp = h.temperature_2m[i], regen = h.precipitation[i] || 0, schnee = h.snowfall[i] || 0, code = h.weather_code[i];
+      var text = Math.round(temp) + " °C, " + (WETTER_CODES[code] || "wechselhaft"), warnt = false;
+      if (schnee > 0) { text += " – Schnee, mehr Zeit einplanen"; warnt = true; }
+      else if (temp <= 2 && regen > 0) { text += " – Glättegefahr"; warnt = true; }
+      else if ([56, 57, 66, 67].indexOf(code) >= 0) { text += " – gefrierender Regen"; warnt = true; }
+      return { text: text, warnt: warnt };
+    });
+  }
+  function wetterZeile(koord, zeit, wann) {
+    var z = document.createElement("div"); z.className = "wetter";
+    wetterFuer(koord, zeit).then(function (w) {
+      if (!w) { z.remove(); return; }
+      if (w.warnt) z.classList.add("warnt");
+      z.appendChild(ikone(w.warnt ? "i-bell" : "i-sun"));
+      z.appendChild(document.createTextNode((wann || "Wetter an der Halle") + ": " + w.text));
+    });
+    return z;
+  }
+
+  // ------------------------------------------------------ Spiel-Detailseite
+
+  function zeigeSpiel(kennung) {
+    var s0 = (daten.spiele || []).filter(function (x) { return kennungVon(x) === kennung; })[0];
+    if (!s0) { toast("Spiel nicht (mehr) im Datenfenster.", "warn"); return ausHash(location.hash = ""); }
+    var meins = !!(profil && profil.slug && s0.besetzung.some(function (b) { return b.slug === profil.slug; }));
+    var ps = meins ? (personMit(profil.slug).spiele.filter(function (x) { return kennungVon(x) === kennung; })[0] || null) : null;
+    var s = Object.assign({}, s0, ps || {});
+    if (!s.ort && s.halle && daten.adressen && daten.adressen[s.halle]) s.ort = s.halle + ", " + daten.adressen[s.halle];
+    ansicht("spiel"); aktuell = null;
+    var d = new Date(s.beginn), treff = new Date(s.treffpunkt);
+    el("spiel-titel").textContent = (s.liga ? s.liga + ": " : "") + s.paarung;
+    el("spiel-unter").textContent = datumKurz(d) + " · " + uhr(d) + " Uhr" + (meins ? " · du als " + (s.rolle || "SR") : "");
+
+    var kopf = el("spiel-kopf"); kopf.innerHTML = "";
+    var h = document.createElement("div"); h.className = "spiel-kopf";
+    var w = document.createElement("div"); w.className = "wann";
+    var t = tagTitel(d); w.textContent = t[0] + (t[1] ? " · " + t[1] : ""); h.appendChild(w);
+    var z = document.createElement("div"); z.className = "zeit"; z.textContent = uhr(d) + " Uhr"; h.appendChild(z);
+    var pa = document.createElement("p"); pa.className = "paarung"; pa.textContent = s.paarung; h.appendChild(pa);
+    var info = document.createElement("div"); info.className = "halle"; info.style.marginTop = "8px";
+    info.appendChild(ikone("i-clock")); info.appendChild(document.createTextNode("Treffpunkt " + uhr(treff) + " Uhr" + (s.system >= 3 ? " · " + s.system + "er-System" : " · 2er-System")));
+    h.appendChild(info);
+    var ak = document.createElement("div"); ak.className = "aktionen";
+    if (s.liga) ak.appendChild(ligaPille(s.liga));
+    if (s.ort) { var r = document.createElement("a"); r.href = kartenLink(s.ort); r.target = "_blank"; r.rel = "noopener"; r.appendChild(ikone("i-route")); r.appendChild(document.createTextNode("Route")); ak.appendChild(r); }
+    var tb = teilenKnopf(s); tb.className = ""; tb.textContent = "Teilen"; ak.appendChild(tb);
+    h.appendChild(ak);
+    kopf.appendChild(h);
+
+    var inhalt = el("spiel-inhalt"); inhalt.innerHTML = "";
+    function karteAbschnitt(titel) { var k = document.createElement("div"); k.className = "karte abschnitt-karte"; if (titel) { var hh = document.createElement("h4"); hh.textContent = titel; k.appendChild(hh); } inhalt.appendChild(k); return k; }
+
+    var ort = karteAbschnitt("Halle");
+    var oz = document.createElement("div"); oz.appendChild(hallenLink(s.halle));
+    if (s.ort) { oz.appendChild(document.createTextNode(" · ")); var ad = document.createElement("span"); ad.className = "meta"; ad.style.display = "inline"; ad.textContent = s.ort.indexOf(s.halle + ", ") === 0 ? s.ort.slice(s.halle.length + 2) : s.ort; oz.appendChild(ad); oz.appendChild(document.createTextNode(" ")); oz.appendChild(kopierKnopf(s.ort)); }
+    ort.appendChild(oz);
+    var koord = daten.hallen && daten.hallen[s.halle];
+    if (koord && !s.vergangen) ort.appendChild(wetterZeile(koord, treff, "Wetter zum Treffpunkt"));
+    if (meins && s.halle) {
+      ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.abfahrt(s.halle) : null; })
+        .then(function (sk) { if (!sk || !sk.minuten) return; var ab = new Date(treff.getTime() - sk.minuten * 60000);
+          var zz = document.createElement("div"); zz.className = "meta"; zz.style.marginTop = "6px"; zz.textContent = "Abfahrt ca. " + uhr(ab) + " Uhr · " + sk.minuten + " Min., " + sk.km + " km ohne Verkehr"; ort.appendChild(zz); }).catch(function () {});
+    }
+    if (s.hinweis) { var hw = document.createElement("div"); hw.className = "achtung"; hw.textContent = "⚠ " + s.hinweis; ort.appendChild(hw); }
+    if (s.aenderung) { var ae = document.createElement("div"); ae.className = "geaendert"; ae.textContent = "⚠ Geändert: " + s.aenderung; ort.appendChild(ae); }
+
+    var wer = karteAbschnitt(meins ? "Gespann" : "Besetzung");
+    var chips = document.createElement("div"); chips.className = "chips";
+    var liste = meins && s.gespann ? s.gespann : s.besetzung;
+    if (liste.length) liste.forEach(function (k) { chips.appendChild(chip(k, s.system >= 3)); });
+    else { var o = document.createElement("span"); o.className = "chip offen"; o.textContent = "noch nicht besetzt"; chips.appendChild(o); }
+    wer.appendChild(chips);
+
+    // Angemeldet: Hallen-Hinweise, Kontakte, Fahrgemeinschaft, Notiz
+    var ex = karteAbschnitt(null); ex.classList.add("versteckt");
+    var exZiel = document.createElement("div"); exZiel.className = "extras-ziel"; ex.appendChild(exZiel);
+    ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) {
+      if (!st.eingerichtet || !st.session) {
+        var p = document.createElement("p"); p.className = "meta"; p.style.margin = "0";
+        var a = document.createElement("a"); a.href = "#mitglieder"; a.textContent = "Anmelden"; p.appendChild(a);
+        p.appendChild(document.createTextNode(" für Hallen-Hinweise, Kontakte, Fahrgemeinschaft und Notizen."));
+        ex.classList.remove("versteckt"); ex.appendChild(p); return;
+      }
+      return window.Mitglieder.extrasLaden([s]).then(function (ok) {
+        if (!ok) return;
+        window.Mitglieder.spielExtras(s, exZiel, meins);
+        var det = exZiel.querySelector("details"); if (det) { det.open = true; ex.classList.remove("versteckt"); }
+      });
+    }).catch(function () {});
+
+    if (meins && !s.vergangen) {
+      var ta = karteAbschnitt("Tauschoptionen");
+      var box = tauschBereich(s, personMit(profil.slug)); ta.appendChild(box); box.open = true;
+    }
+    if (meins) {
+      var ab = karteAbschnitt("Abrechnung");
+      var l = document.createElement("a"); l.href = "#mitglieder/abrechnung"; l.textContent = "Zur Abrechnung (km, Vergütung, bezahlt)"; ab.appendChild(l);
+    }
+    window.scrollTo(0, 0);
+  }
+
+  // -------------------------------------------------------- Dashboard-Kacheln
+
+  function zeigeUebersicht(p) {
+    var ziel = el("uebersicht"); ziel.innerHTML = "";
+    if (!profil || profil.slug !== p.slug) return;
+    var heute = new Date(); heute.setHours(0, 0, 0, 0);
+    var inSieben = p.spiele.filter(function (s) { var d = new Date(s.beginn); return d >= heute && d < new Date(heute.getTime() + 7 * 86400000); });
+    function kachel(wert, label, href, markiert) {
+      var a = document.createElement(href ? "a" : "div"); if (href) a.href = href;
+      var k = document.createElement("div"); k.className = "zahl karte" + (markiert ? " neu-markiert" : "");
+      var b = document.createElement("b"); b.textContent = wert; var sp = document.createElement("span"); sp.textContent = label;
+      k.appendChild(b); k.appendChild(sp); a.appendChild(k); return a;
+    }
+    ziel.appendChild(kachel(inSieben.length, "Spiele in 7 Tagen" + (inSieben.length ? ": " + inSieben.map(function (s) { return wochentag[new Date(s.beginn).getDay()]; }).join(", ") : ""), "#plan"));
+    if (!sitzungVorhanden()) { ziel.appendChild(kachel("→", "Anmelden für Tausch, Abrechnung, Info", "#mitglieder")); return; }
+    ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
+      .then(function (st) { if (st.eingerichtet && st.session) return window.Mitglieder.zaehler(); })
+      .then(function (z) {
+        if (!z || !ziel.isConnected) return;
+        ziel.appendChild(kachel(z.gesuche || 0, "offene Gesuche", "#mitglieder/tausch", z.gesuche > 0));
+        ziel.appendChild(kachel(z.info || 0, "neue Ankündigungen", "#mitglieder/info", z.info > 0));
+        if (z.wartend) ziel.appendChild(kachel(z.wartend, "warten auf Freischaltung", "#mitglieder/admin", true));
+      }).catch(function () {});
   }
 
   // Hallen-Wiki, Kontakte, Fahrgemeinschaft, Notiz - nur angemeldet
@@ -494,11 +635,12 @@
       dn.appendChild(document.createTextNode("Danach: " + datumKurz(d2) + " · " + uhr(d2) + " · " + (n2.liga ? n2.liga + " " : "") + n2.paarung));
       h.appendChild(dn);
     }
-    h.classList.add("tippbar"); h.title = "Zur Spielkarte";
+    var koord = daten.hallen && daten.hallen[s.halle];
+    if (koord) { var wz = wetterZeile(koord, s.treffpunkt, "Wetter"); wz.classList.add("danach"); h.appendChild(wz); }
+    h.classList.add("tippbar"); h.title = "Zum Spiel";
     h.addEventListener("click", function (ev) {
       if (ev.target.closest("a")) return;
-      var erste = el("spiele").querySelector(".spiel");
-      if (erste) window.scrollTo({ top: erste.getBoundingClientRect().top + window.scrollY - 12, behavior: "smooth" });
+      location.hash = "spiel/" + encodeURIComponent(kennungVon(s));
     });
     ziel.appendChild(h);
     if (profil && profil.slug === p.slug && s.halle) {
@@ -844,7 +986,16 @@
     return p.statistik.hallen.map(function (h) { return h[0]; });
   }
 
+  function filterAktiv() {
+    var n = 0;
+    ["plan-vergangene", "plan-offen", "plan-hallen", "plan-meine"].forEach(function (id) { if (el(id).checked && !el(id).parentNode.classList.contains("versteckt")) n++; });
+    n += Object.keys(ligenWahl).length;
+    var z = el("plan-filter-zahl"); z.textContent = n; z.classList.toggle("versteckt", !n);
+    el("plan-filter-knopf").classList.toggle("aktiv", n > 0);
+    return n;
+  }
   function zeigePlan() {
+    filterAktiv();
     var modus = planModus();
     Array.prototype.forEach.call(el("plan-modus").querySelectorAll("button"), function (b) { b.classList.toggle("aktiv", b.getAttribute("data-modus") === modus); });
     el("plan-hallen-label").classList.toggle("versteckt", !meineHallen());
@@ -898,6 +1049,8 @@
     wo.appendChild(document.createTextNode(" · Treffpunkt " + uhr(new Date(s.treffpunkt)) + " Uhr" + (s.system >= 3 ? " · " + s.system + "er-System" : "")));
     d.appendChild(mitIkone("i-pin", wo));
     var chips = document.createElement("div"); chips.className = "chips"; besetzungOder(s, chips); d.appendChild(chips);
+    d.classList.add("tippbar");
+    d.addEventListener("click", function (ev) { if (ev.target.closest("a, button")) return; location.hash = "spiel/" + encodeURIComponent(kennungVon(s)); });
     return d;
   }
   function planZeile(s, beginn) {
@@ -933,6 +1086,7 @@
     var ziel = el("statistik"); ziel.innerHTML = "";
     var s = p.statistik; if (!s) return;
     var h = document.createElement("h3"); h.className = "abschnitt"; h.textContent = "Statistik"; ziel.appendChild(h);
+    zielUndAbzeichen(p, ziel);
     var zahlen = document.createElement("div"); zahlen.className = "zahlen";
     [["Saison " + (daten.saison || ""), s.saison], ["Insgesamt", s.gesamt], ["als HSR", (s.rollen && s.rollen["HSR"]) || 0]].forEach(function (paar) {
       var k = document.createElement("div"); k.className = "zahl karte";
@@ -991,6 +1145,8 @@
     if (s.hallen && s.hallen[0]) zeile(850, "MEISTE HALLE", s.hallen[0][0] + " · " + s.hallen[0][1] + "×");
     if (s.ligen && s.ligen[0]) zeile(960, "MEISTE LIGA", s.ligen[0][0] + " · " + s.ligen[0][1] + "×");
     if (s.partner && s.partner[0]) zeile(1070, "MEISTER GESPANNPARTNER", s.partner[0][0].split(",").reverse().join(" ").trim() + " · " + s.partner[0][1] + "×");
+    var abz = archivDaten && archivDaten.personen ? abzeichenFuer(s, archivDaten.personen[p.slug] || []).filter(function (a) { return a.hat; }).slice(0, 4).map(function (a) { return a.name; }) : [];
+    if (abz.length) { x.fillStyle = "rgba(255,255,255,.7)"; x.font = "600 26px " + schrift; x.fillText("ABZEICHEN: " + abz.join(" · ").toUpperCase(), 80, 1240); }
     x.fillStyle = "rgba(255,255,255,.55)"; x.font = "500 26px " + schrift; x.fillText(basis.replace(/^https?:\/\//, ""), 80, 1290);
     c.toBlob(function (blob) {
       if (!blob) { toast("Bild konnte nicht erzeugt werden.", "warn"); return; }
@@ -1049,36 +1205,43 @@
     el("abo").href = feedUrl(p.slug, "webcal:");
     el("laden").onclick = function () { location.href = feedUrl(p.slug, location.protocol); };
     zeigeHeld(p);
+    zeigeUebersicht(p);
     zeigeNachtrag(p);
     var ziel = el("spiele"); ziel.innerHTML = "";
     var kommend = p.spiele.filter(function (s) { return !s.vergangen; });
     var gewesen = p.spiele.filter(function (s) { return s.vergangen; }).reverse();
     var h = document.createElement("h3"); h.className = "abschnitt"; h.textContent = "Kommende Einteilungen"; ziel.appendChild(h);
-    var istIch = !!(profil && profil.slug === p.slug), karten = [];
+    var istIch = !!(profil && profil.slug === p.slug);
     if (!kommend.length) ziel.appendChild(leerZustand("Zurzeit keine Einteilung. Der Kalender füllt sich von allein."));
-    else kommend.forEach(function (s) { var k = karte(s, p); karten.push(k); ziel.appendChild(k); });
-    extrasFuellen(karten, istIch);
+    else kommend.forEach(function (s) { ziel.appendChild(karte(s, p)); });
     if (gewesen.length) {
       var box = document.createElement("details"); box.className = "karte zuletzt-box";
       var sum = document.createElement("summary"); sum.className = "abschnitt"; sum.textContent = "Zuletzt (" + gewesen.length + ")"; box.appendChild(sum);
       box.addEventListener("toggle", function () {
         if (!box.open || box.childNodes.length !== 1) return;
-        var alte = gewesen.map(function (s) { var k = karte(s); box.appendChild(k); return k; });
-        extrasFuellen(alte, istIch);
+        gewesen.forEach(function (s) { box.appendChild(karte(s)); });
+        void istIch;
       });
       ziel.appendChild(box);
     }
     if (!profil || profil.slug !== p.slug) zuletztMerken(p.slug);
     zeigeStatistik(p); zeigeSaison(p); zeigeMeldeKarte(); kalenderBoxStand(); onboardingStand();
+    el("abfahrt-ics").classList.add("versteckt");
+    if (profil && profil.slug === p.slug && sitzungVorhanden()) ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
+      .then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.heimat() : null; })
+      .then(function (hm) { if (hm) el("abfahrt-ics").classList.remove("versteckt"); }).catch(function () {});
     if (profil && profil.slug === p.slug) pruefeNeue(p, false);
     if (!stillesNachladen) window.scrollTo(0, 0);
   }
 
   function ansicht(name) {
-    ["auswahl", "detail", "plan", "mitglieder", "halle", "status"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
-    el("tab-meine").classList.toggle("aktiv", name === "auswahl" || name === "detail");
-    el("tab-plan").classList.toggle("aktiv", name === "plan");
-    el("tab-mitglieder").classList.toggle("aktiv", name === "mitglieder");
+    ["auswahl", "detail", "plan", "mitglieder", "halle", "status", "spiel", "mehr", "einstellungen", "karte"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
+    var reiter = (location.hash.split("/")[1] || "");
+    el("tab-meine").classList.toggle("aktiv", name === "auswahl" || name === "detail" || name === "spiel");
+    el("tab-plan").classList.toggle("aktiv", name === "plan" || name === "halle");
+    el("tab-tausch").classList.toggle("aktiv", name === "mitglieder" && reiter === "tausch");
+    el("tab-abrechnung").classList.toggle("aktiv", name === "mitglieder" && reiter === "abrechnung");
+    el("tab-mitglieder").classList.toggle("aktiv", name === "mehr" || name === "einstellungen" || name === "karte" || name === "status" || (name === "mitglieder" && reiter !== "tausch" && reiter !== "abrechnung"));
     Array.prototype.forEach.call(document.querySelectorAll(".leiste button"), function (b) {
       if (b.classList.contains("aktiv")) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
     });
@@ -1206,9 +1369,194 @@
     window.scrollTo(0, 0);
   }
 
+  function zeigeMehr() {
+    ansicht("mehr"); aktuell = null;
+    var liste = el("mehr-liste"); liste.innerHTML = "";
+    var eintraege = [
+      ["#mitglieder/info", "i-bell", "Info", "Ankündigungen vom Betreiber", "info"],
+      ["#mitglieder/frei", "i-cal", "Verfügbarkeit", "Wann du nicht kannst oder gern pfeifst"],
+      ["#mitglieder/notizen", "i-note", "Notizen", "Private Spielnotizen"],
+      ["#mitglieder/konto", "i-key", "Konto", "Profil, Push, Passwort, Handynummer"],
+      ["#mitglieder/admin", "i-shield", "Admin", "Freischaltung, Ankündigungen", "wartend", true],
+      ["#karte", "i-pin", "Hallenkarte", "Alle Hallen auf der Karte"],
+      ["#einstellungen", "i-sun", "Einstellungen", "Karten-App, Schrift, Farbe, Saisonziel"],
+      ["#status", "i-check", "Diagnose", "Für die Fehlersuche"]
+    ];
+    var links = {};
+    eintraege.forEach(function (e) {
+      var a = document.createElement("a"); a.href = e[0]; a.appendChild(ikone(e[1]));
+      var sp = document.createElement("span"); sp.textContent = e[2]; var sm = document.createElement("small"); sm.textContent = e[3]; sp.appendChild(sm); a.appendChild(sp);
+      if (e[4]) { var z = document.createElement("span"); z.className = "zaehler versteckt"; a.appendChild(z); links[e[4]] = z; }
+      if (e[5]) a.classList.add("versteckt");
+      liste.appendChild(a); if (e[5]) a._nurAdmin = true;
+    });
+    if (sitzungVorhanden()) ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
+      .then(function (st) { if (st.eingerichtet && st.session) return window.Mitglieder.zaehler(); })
+      .then(function (z) {
+        if (!z) return;
+        if (z.admin) Array.prototype.forEach.call(liste.querySelectorAll("a"), function (a) { if (a._nurAdmin) a.classList.remove("versteckt"); });
+        Object.keys(links).forEach(function (k) { if (z[k]) { links[k].textContent = z[k]; links[k].classList.remove("versteckt"); } });
+      }).catch(function () {});
+    window.scrollTo(0, 0);
+  }
+  function zeigeEinstellungen() { ansicht("einstellungen"); aktuell = null; window.scrollTo(0, 0); }
+
+  // ------------------------------------------------------------ Hallenkarte
+
+  var leafletGeladen = null;
+  function ladeLeaflet() {
+    if (leafletGeladen) return leafletGeladen;
+    leafletGeladen = new Promise(function (ok, nein) {
+      var css = document.createElement("link"); css.rel = "stylesheet"; css.href = "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css";
+      css.integrity = "sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H"; css.crossOrigin = "anonymous"; document.head.appendChild(css);
+      var js = document.createElement("script"); js.src = "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js";
+      js.integrity = "sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH"; js.crossOrigin = "anonymous";
+      js.onload = function () { ok(window.L); }; js.onerror = function () { nein(new Error("Karte nicht ladbar")); };
+      document.head.appendChild(js);
+    });
+    return leafletGeladen;
+  }
+  var karteObjekt = null;
+  function zeigeKarte() {
+    ansicht("karte"); aktuell = null; window.scrollTo(0, 0);
+    var div = el("karte-div");
+    ladeLeaflet().then(function (L) {
+      if (karteObjekt) { karteObjekt.remove(); karteObjekt = null; }
+      div.innerHTML = "";
+      var m = L.map(div, { scrollWheelZoom: false });
+      karteObjekt = m;
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "© OpenStreetMap" }).addTo(m);
+      var meine = {};
+      if (profil && personMit(profil.slug)) personMit(profil.slug).spiele.forEach(function (s) { if (!s.vergangen && s.halle) meine[s.halle] = (meine[s.halle] || 0) + 1; });
+      var anzahl = {};
+      (daten.spiele || []).forEach(function (s) { if (!s.vergangen && s.halle) anzahl[s.halle] = (anzahl[s.halle] || 0) + 1; });
+      var punkte = [];
+      var akzent = getComputedStyle(document.documentElement).getPropertyValue("--akzent").trim() || "#0f3d6e";
+      Object.keys(daten.hallen || {}).forEach(function (name) {
+        var k = daten.hallen[name]; if (!k) return;
+        var mein = !!meine[name];
+        var c = L.circleMarker([k[0], k[1]], { radius: mein ? 10 : 7, color: mein ? akzent : "#6b7280", fillColor: mein ? akzent : "#9ca3af", fillOpacity: .85, weight: 2 }).addTo(m);
+        var inhalt = document.createElement("div");
+        var b = document.createElement("b"); b.textContent = name; inhalt.appendChild(b);
+        var p = document.createElement("div"); p.textContent = (anzahl[name] || 0) + " kommende Spiele" + (mein ? " · " + meine[name] + " eigene" : ""); inhalt.appendChild(p);
+        var a = document.createElement("a"); a.href = "#halle/" + hallenSlug(name); a.textContent = "Hallen-Seite ›"; inhalt.appendChild(a);
+        c.bindPopup(inhalt);
+        punkte.push([k[0], k[1]]);
+      });
+      function fertig(heim) {
+        if (heim) {
+          var hm = L.circleMarker([heim.lat, heim.lon], { radius: 8, color: "#fff", fillColor: "#d97706", fillOpacity: 1, weight: 3 }).addTo(m).bindPopup("Zuhause");
+          [25, 50].forEach(function (km) { L.circle([heim.lat, heim.lon], { radius: km * 1000, color: "#d97706", weight: 1, fill: false, dashArray: "4 6" }).addTo(m); });
+          punkte.push([heim.lat, heim.lon]);
+          el("karte-unter").textContent = "Ringe: 25 und 50 km von zu Hause";
+        }
+        // Nah ranzoomen: mit Heimat nur Hallen im Umkreis von 120 km, sonst alle
+        var nah = heim ? punkte.filter(function (pt) { return kmZwischen(pt, [heim.lat, heim.lon]) <= 120; }) : punkte;
+        if (nah.length < 2) nah = punkte;
+        if (nah.length) m.fitBounds(nah, { padding: [24, 24], maxZoom: 11 }); else m.setView([51.4, 7.3], 8);
+        setTimeout(function () { m.invalidateSize(); }, 200);
+      }
+      if (sitzungVorhanden()) ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
+        .then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.heimat() : null; }).then(fertig).catch(function () { fertig(null); });
+      else fertig(null);
+    }).catch(function (e) { div.textContent = "Karte konnte nicht geladen werden: " + e.message; });
+  }
+
+  // ------------------------------------------- Kalenderdatei mit Abfahrtsalarm
+
+  function icsText(t) { return String(t).replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\n/g, "\\n"); }
+  function icsZeit(d) { return d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, ""); }
+  function abfahrtIcs(p) {
+    var kommend = p.spiele.filter(function (s) { return !s.vergangen; });
+    if (!kommend.length) { toast("Keine kommenden Spiele.", ""); return; }
+    var knopf = el("abfahrt-ics"); knopf.disabled = true; knopf.textContent = "berechne Strecken …";
+    var M = window.Mitglieder, zeilen = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Einteilungen//Abfahrt//DE", "CALSCALE:GREGORIAN", "X-WR-CALNAME:Einteilungen mit Abfahrt"];
+    var kette = Promise.resolve();
+    kommend.forEach(function (s) {
+      kette = kette.then(function () { return s.halle ? M.abfahrt(s.halle) : null; }).then(function (sk) {
+        var treff = new Date(s.treffpunkt), ende = new Date(new Date(s.beginn).getTime() + (daten.spieldauer_minuten || 150) * 60000);
+        var puffer = sk && sk.minuten ? sk.minuten + 10 : null;
+        zeilen.push("BEGIN:VEVENT", "UID:abfahrt-" + icsZeit(treff) + "-" + s.paarung.replace(/[^a-z0-9]/gi, "").slice(0, 30) + "@einteilungen",
+          "DTSTAMP:" + icsZeit(new Date()), "DTSTART:" + icsZeit(treff), "DTEND:" + icsZeit(ende),
+          "SUMMARY:" + icsText((s.rolle ? s.rolle + " · " : "") + (s.liga ? s.liga + ": " : "") + s.paarung),
+          "LOCATION:" + icsText(s.ort || s.halle || ""),
+          "DESCRIPTION:" + icsText("Treffpunkt " + uhr(treff) + " Uhr, Spielbeginn " + uhr(new Date(s.beginn)) + " Uhr" + (puffer ? "\nAbfahrt ca. " + uhr(new Date(treff.getTime() - (puffer - 10) * 60000)) + " Uhr (" + sk.km + " km, " + sk.minuten + " Min. ohne Verkehr)" : "")));
+        if (puffer) zeilen.push("BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsText("Losfahren: " + s.paarung + " (" + sk.km + " km)"), "TRIGGER:-PT" + puffer + "M", "END:VALARM");
+        zeilen.push("BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:In einer Stunde an der Halle", "TRIGGER:-PT1H", "END:VALARM", "END:VEVENT");
+      });
+    });
+    kette.then(function () {
+      zeilen.push("END:VCALENDAR");
+      var blob = new Blob([zeilen.join("\r\n") + "\r\n"], { type: "text/calendar;charset=utf-8" });
+      var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "einteilungen-abfahrt.ics";
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 3000);
+      knopf.disabled = false; knopf.textContent = "Kalenderdatei mit Abfahrtsalarm laden";
+      toast("Kalenderdatei erzeugt – beim Öffnen in einen eigenen Kalender importieren, sonst stehen die Spiele doppelt drin.", "gut");
+    }).catch(function (e) { knopf.disabled = false; knopf.textContent = "Kalenderdatei mit Abfahrtsalarm laden"; toast("Nicht möglich: " + (e.message || e), "warn"); });
+  }
+
+  // ------------------------------------------------- Saisonziel und Abzeichen
+
+  function zielUndAbzeichen(p, ziel) {
+    var s = p.statistik; if (!s) return;
+    var meins = !!(profil && profil.slug === p.slug);
+    var zielWert = parseInt(lesen("ziel") || "0", 10);
+    if (meins && zielWert > 0) {
+      var box = document.createElement("div"); box.className = "karte ziel";
+      var kopf = document.createElement("div"); kopf.className = "kopfzeile";
+      var b = document.createElement("b"); b.textContent = "Saisonziel: " + s.saison + " von " + zielWert + " Spielen";
+      var q = document.createElement("span"); q.className = "meta"; q.textContent = Math.min(100, Math.round(s.saison / zielWert * 100)) + " %";
+      kopf.appendChild(b); kopf.appendChild(q); box.appendChild(kopf);
+      var rahmen = document.createElement("div"); rahmen.className = "balkenrahmen"; var i = document.createElement("i"); i.style.width = Math.min(100, Math.round(s.saison / zielWert * 100)) + "%"; rahmen.appendChild(i); box.appendChild(rahmen);
+      var rest = zielWert - s.saison;
+      var t = document.createElement("div"); t.className = "meta"; t.textContent = rest > 0 ? "Noch " + rest + (rest === 1 ? " Spiel" : " Spiele") + " bis zum Ziel." : "Ziel erreicht – stark!"; box.appendChild(t);
+      ziel.appendChild(box);
+    } else if (meins) {
+      var hint = document.createElement("p"); hint.className = "meta"; hint.style.margin = "0 0 10px";
+      var a = document.createElement("a"); a.href = "#einstellungen"; a.textContent = "Saisonziel setzen"; hint.appendChild(a); hint.appendChild(document.createTextNode(" – dann steht hier der Fortschritt."));
+      ziel.appendChild(hint);
+    }
+    var abz = document.createElement("div"); abz.className = "karte ziel"; var h4 = document.createElement("h4"); h4.className = "abschnitt"; h4.style.margin = "0 0 8px"; h4.textContent = "Abzeichen"; abz.appendChild(h4);
+    var reihe = document.createElement("div"); reihe.className = "abzeichen"; abz.appendChild(reihe); ziel.appendChild(abz);
+    (archivDaten ? Promise.resolve(archivDaten) : hole("archiv.json").then(function (a) { archivDaten = a; return a; })).then(function (a) {
+      var eintraege = (a.personen && a.personen[p.slug]) || [];
+      abzeichenFuer(s, eintraege).forEach(function (x) {
+        var sp = document.createElement("span"); sp.className = x.hat ? "" : "offen"; sp.textContent = (x.hat ? "✓ " : "") + x.name; sp.title = x.text; reihe.appendChild(sp);
+      });
+    }).catch(function () { abz.remove(); });
+  }
+  function abzeichenFuer(s, eintraege) {
+    var tage = {}, frueh = false, spaet = false;
+    eintraege.forEach(function (e) { var d = new Date(e.beginn); var k = d.toDateString(); tage[k] = (tage[k] || 0) + 1; if (d.getHours() < 9) frueh = true; if (d.getHours() >= 20 && d.getMinutes() >= 30 || d.getHours() >= 21) spaet = true; });
+    var doppel = Object.keys(tage).some(function (k) { return tage[k] >= 2; });
+    var hallen = {}; eintraege.forEach(function (e) { if (e.halle) hallen[e.halle] = 1; });
+    var ligen = {}; eintraege.forEach(function (e) { if (e.liga) ligen[ligaGruppe(e.liga)] = 1; });
+    var hsr = (s.rollen && s.rollen.HSR) || 0;
+    return [
+      { name: "Erstes Spiel", hat: s.gesamt >= 1, text: "Mindestens ein Spiel im Archiv" },
+      { name: "Erstes HSR", hat: hsr >= 1, text: "Einmal Hauptschiedsrichter" },
+      { name: "HSR-Routinier", hat: hsr >= 10, text: "10 Spiele als HSR" },
+      { name: "Marathon", hat: s.saison >= 25, text: "25 Spiele in einer Saison" },
+      { name: "Halbe Hundert", hat: s.gesamt >= 50, text: "50 Spiele im Archiv" },
+      { name: "Hundert", hat: s.gesamt >= 100, text: "100 Spiele im Archiv" },
+      { name: "Stammgast", hat: !!(s.hallen && s.hallen[0] && s.hallen[0][1] >= 10), text: "10× in derselben Halle" + (s.hallen && s.hallen[0] ? " (" + s.hallen[0][0] + ")" : "") },
+      { name: "Weitgereist", hat: Object.keys(hallen).length >= 8, text: "8 verschiedene Hallen" },
+      { name: "Vielseitig", hat: Object.keys(ligen).length >= 5, text: "5 verschiedene Ligagruppen" },
+      { name: "Frühaufsteher", hat: frueh, text: "Spiel vor 09:00 Uhr" },
+      { name: "Nachteule", hat: spaet, text: "Spiel ab 20:30 Uhr" },
+      { name: "Doppelschicht", hat: doppel, text: "Zwei Spiele an einem Tag" },
+      { name: "Treues Gespann", hat: !!(s.partner && s.partner[0] && s.partner[0][1] >= 5), text: "5× mit demselben Partner" }
+    ];
+  }
+
   function ausHash() {
     var slug = location.hash.replace(/^#/, "");
     if (slug === "status") { zeigeStatus(); return; }
+    if (slug === "mehr") { zeigeMehr(); return; }
+    if (slug === "einstellungen") { zeigeEinstellungen(); return; }
+    if (slug === "karte") { zeigeKarte(); return; }
+    if (slug.indexOf("spiel/") === 0) { zeigeSpiel(decodeURIComponent(slug.slice(6))); return; }
     if (slug.indexOf("halle/") === 0) { zeigeHalle(slug.slice(6)); return; }
     if (slug === "plan") { aktuell = null; ansicht("plan"); zeigePlan(); window.scrollTo(0, 0); return; }
     if (slug === "mitglieder" || slug.indexOf("mitglieder/") === 0) { zeigeMitglieder(slug.split("/")[1] || null); return; }
@@ -1274,13 +1622,25 @@
   });
   window.addEventListener("hashchange", ausHash);
   el("tab-plan").addEventListener("click", function () { location.hash = "plan"; });
-  el("tab-mitglieder").addEventListener("click", function () { location.hash = "mitglieder"; });
+  el("tab-tausch").addEventListener("click", function () { location.hash = "mitglieder/tausch"; });
+  el("tab-abrechnung").addEventListener("click", function () { location.hash = "mitglieder/abrechnung"; });
+  el("tab-mitglieder").addEventListener("click", function () { location.hash = "mehr"; });
+  el("spiel-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = ""; });
+  el("einstellungen-zurueck").addEventListener("click", function () { location.hash = "mehr"; });
+  el("karte-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
+  el("abfahrt-ics").addEventListener("click", function () { if (aktuell) abfahrtIcs(aktuell); });
+  el("ziel").addEventListener("change", function (e) { var v = parseInt(e.target.value, 10); schreiben("ziel", v > 0 ? String(v) : null); toast(v > 0 ? "Saisonziel: " + v + " Spiele" : "Saisonziel entfernt", "gut"); });
   el("halle-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = ""; });
   el("tab-meine").addEventListener("click", function () { if (location.hash === "" || location.hash === "#") ausHash(); else location.hash = ""; });
   el("plan-filter").addEventListener("input", zeigePlan);
   el("plan-vergangene").addEventListener("change", zeigePlan);
   el("plan-hallen").addEventListener("change", zeigePlan);
   el("plan-offen").addEventListener("change", zeigePlan);
+  el("plan-filter-knopf").addEventListener("click", function () { el("plan-filter-blatt").classList.toggle("versteckt"); filterHoehe(); });
+  el("plan-filter-leeren").addEventListener("click", function () {
+    ["plan-vergangene", "plan-offen", "plan-hallen", "plan-meine"].forEach(function (id) { el(id).checked = false; });
+    ligenWahl = {}; el("plan-filter").value = ""; zeigePlan();
+  });
   el("plan-meine").addEventListener("change", zeigePlan);
   el("plan-drucken").addEventListener("click", function () {
     if (planModus() === "monat") { toast("Drucken geht in der Karten- oder Listenansicht.", ""); return; }

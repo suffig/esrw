@@ -232,6 +232,17 @@ Spiele, Hinweise). Karten-Links passen sich dem Handy an (Google Maps auf
 Android), Adresse kopieren, Wochenleiste und Liga-Farben im Spielplan,
 Onboarding für neue Kollegen.
 
+**Navigation**: fünf Reiter (Heute · Spielplan · Tausch · Abrechnung · Mehr).
+„Heute“ ist ein Dashboard (nächstes Spiel mit Wetter und Abfahrt, Spiele in
+7 Tagen, offene Gesuche, neue Ankündigungen, fehlende Abrechnungen). Jedes
+Spiel hat eine eigene Seite (`#spiel/<kennung>`) mit Route, Wetter, Gespann
+und Kontakt, Tauschoptionen, Hallen-Hinweisen, Fahrgemeinschaft, Notiz.
+Filter im Spielplan liegen in einem Blatt. **Hallenkarte** (Leaflet /
+OpenStreetMap) mit eigenen Spielen und Heimatringen. **Kalenderdatei mit
+Abfahrtsalarm** (einmaliger Download, Alarm aus der eigenen Strecke).
+**Saisonziel** und **Abzeichen** aus dem Archiv, auch im Saison-Bild.
+Wetter kommt von Open-Meteo (ohne Schlüssel), auch in der Spieltag-Push.
+
 **Teilen & Diagnose**: „Teilen“ an jeder Spielkarte (Text für WhatsApp),
 Spieltag-Push mit „Route“-Knopf (Android), Seite `#status` mit allem für die
 Fehlersuche; Laufzeitfehler erscheinen als Toast mit „kopieren“. Schriftgröße

@@ -886,6 +886,20 @@ Links (24 Stunden) werden beim Ankommen erklärt, ebenfalls mit diesem Knopf.
 * **Statistik → „Meine Saison als Bild teilen“**: erzeugt ein Bild
   (1080×1350) fürs Teilen.
 
+### 10.6c Wo ist was (seit dem Umbau auf fünf Reiter)
+
+| Reiter unten | Inhalt |
+|---|---|
+| Heute | dein Profil, nächstes Spiel mit Wetter/Abfahrt, Kacheln (Spiele in 7 Tagen, Gesuche, Ankündigungen), Kalender-Karte, deine Spiele, Statistik mit Saisonziel und Abzeichen |
+| Spielplan | alle Spiele; Filter-Blatt (vergangene, unbesetzte, meine Hallen, meine Spiele, Ligen), Karten / Liste / Monat, Drucken |
+| Tausch | Tauschbörse (Login) |
+| Abrechnung | Abrechnung, Fahrtenbuch, CSV (Login) |
+| Mehr | Info, Verfügbarkeit, Notizen, Konto, Admin, Hallenkarte, Einstellungen, Diagnose |
+
+Ein Tipp auf ein Spiel öffnet die **Spielseite**: Route, Adresse kopieren,
+Teilen, Wetter zum Treffpunkt, Abfahrt, Gespann mit Kontakt, Hallen-Hinweise,
+Fahrgemeinschaft, Notiz, Tauschoptionen.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

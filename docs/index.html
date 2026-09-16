@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://router.project-osrm.org https://nominatim.openstreetmap.org; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://tile.openstreetmap.org; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://router.project-osrm.org https://nominatim.openstreetmap.org https://api.open-meteo.com; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
 <title>Einteilungen im Kalender</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -473,6 +473,71 @@
     body.druck-plan .tag { position:static; }
   }
 
+  /* Filter-Blatt im Spielplan */
+  .filterknopf { display:inline-flex; align-items:center; gap:5px; border:1px solid var(--linie); background:var(--karte); color:var(--text);
+                 border-radius:99px; padding:5px 11px; font-size:.8rem; font-weight:700; cursor:pointer; }
+  .filterknopf.aktiv { border-color:var(--akzent); color:var(--akzent); }
+  .filterknopf .zaehler { background:var(--akzent); color:var(--akzent-text); border-radius:99px; font-size:.66rem; padding:1px 6px; }
+  .filterblatt { padding:10px 14px; margin-top:8px; display:flex; flex-direction:column; gap:8px; }
+  .filterblatt .zweit { margin-top:4px; }
+
+  /* Dashboard-Kacheln */
+  .uebersicht { display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:8px; margin-bottom:12px; }
+  .uebersicht a { text-decoration:none; color:inherit; }
+  .uebersicht .zahl { text-align:left; padding:10px 12px; display:flex; flex-direction:column; gap:2px; }
+  .uebersicht .zahl b { font-size:1.15rem; display:flex; align-items:center; gap:6px; }
+  .uebersicht .zahl.neu-markiert b { color:var(--warn); }
+
+  /* Spiel-Detailseite */
+  .spiel-kopf { padding:16px 18px; border-radius:18px; color:#fff; background:linear-gradient(135deg, var(--held-1, #0f3d6e) 0%, var(--held-2, #1d5a99) 100%); margin-bottom:12px; }
+  .spiel-kopf .wann { font-size:.78rem; font-weight:700; opacity:.85; text-transform:uppercase; letter-spacing:.08em; }
+  .spiel-kopf .zeit { font-size:1.9rem; font-weight:800; letter-spacing:-.03em; line-height:1.1; margin:4px 0 2px; }
+  .spiel-kopf .paarung { font-size:1.05rem; font-weight:700; margin:0; }
+  .spiel-kopf .aktionen { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+  .spiel-kopf .aktionen a, .spiel-kopf .aktionen button { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.16); color:#fff; border:1px solid rgba(255,255,255,.3);
+    border-radius:99px; padding:8px 14px; text-decoration:none; font-weight:700; font-size:.88rem; cursor:pointer; }
+  .spiel-kopf .liga { background:rgba(255,255,255,.2); color:#fff; border-color:transparent; }
+  .abschnitt-karte { padding:12px 14px; margin-bottom:10px; }
+  .abschnitt-karte h4 { margin:0 0 8px; font-size:.74rem; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); }
+  .abschnitt-karte .tausch, .abschnitt-karte .extras { margin-top:0; border:0; background:none; padding:0; }
+  .abschnitt-karte .tausch > summary { display:none; }
+  .abschnitt-karte .tausch > div { padding:0; }
+  .spiel.tippbar { cursor:pointer; }
+  .spiel.tippbar:hover { border-color:var(--akzent); }
+  .wetter { display:flex; gap:8px; align-items:center; font-size:.88rem; }
+  .wetter.warnt { color:var(--warn); font-weight:700; }
+
+  /* Mehr-Menue */
+  .menue { padding:0 4px; }
+  .menue a { display:flex; align-items:center; gap:12px; padding:14px 12px; color:inherit; text-decoration:none; font-weight:700; border-top:1px solid var(--linie); }
+  .menue a:first-child { border-top:0; }
+  .menue a svg.i { width:1.3rem; height:1.3rem; color:var(--akzent); }
+  .menue a small { display:block; color:var(--dim); font-weight:500; font-size:.78rem; }
+  .menue a .zaehler { margin-left:auto; background:var(--warn); color:#fff; border-radius:99px; font-size:.7rem; padding:2px 8px; }
+  .menue a::after { content:"›"; color:var(--dim); margin-left:auto; font-size:1.2rem; }
+  .menue a .zaehler + ::after { margin-left:8px; }
+
+  /* Einstellungen */
+  .einstellungen-liste { padding:4px 14px; }
+  .einstellungen-liste label { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:12px 0; border-top:1px solid var(--linie); font-weight:600; }
+  .einstellungen-liste label:first-child { border-top:0; }
+  .einstellungen-liste select, .einstellungen-liste input[type=number] { font:inherit; color:var(--text); background:var(--bg); border:1px solid var(--linie); border-radius:8px; padding:5px 8px; }
+
+  /* Hallenkarte */
+  #karte-div { height:min(70vh, 640px); overflow:hidden; }
+  .leaflet-container { font:inherit; background:var(--bg); }
+  .leaflet-popup-content { font-size:.9rem; }
+
+  /* Saisonziel + Abzeichen */
+  .ziel { padding:12px 15px; margin-bottom:10px; }
+  .ziel .balkenrahmen { height:10px; border-radius:5px; background:var(--linie); overflow:hidden; margin:8px 0 6px; }
+  .ziel .balkenrahmen i { display:block; height:100%; background:var(--akzent); border-radius:5px; }
+  .abzeichen { display:flex; flex-wrap:wrap; gap:8px; }
+  .abzeichen span { display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:12px; background:var(--akzent-hell); color:var(--akzent); font-size:.82rem; font-weight:700; }
+  .abzeichen span.offen { background:var(--bg); color:var(--dim); border:1px dashed var(--linie); }
+
+  .leiste button { font-size:.64rem; padding:6px 2px; }
+
   /* Untere Leiste */
   .leiste { position:fixed; left:0; right:0; bottom:0; z-index:10;
             background:var(--karte); border-top:1px solid var(--linie);
@@ -602,20 +667,23 @@
       <input type="search" id="plan-filter" placeholder="Verein, Halle, Liga oder Name …"
              autocomplete="off" autocorrect="off" spellcheck="false">
       <div class="schalterzeile">
-        <label class="schalter"><input type="checkbox" id="plan-vergangene"> vergangene</label>
-        <label class="schalter"><input type="checkbox" id="plan-offen"> nur unbesetzte</label>
-        <label class="schalter versteckt" id="plan-hallen-label"><input type="checkbox" id="plan-hallen"> meine Hallen</label>
-        <label class="schalter versteckt" id="plan-meine-label"><input type="checkbox" id="plan-meine"> nur meine</label>
-        <button type="button" class="textknopf" id="plan-drucken" title="Wochenzettel drucken">Drucken</button>
         <span class="modus" id="plan-modus" role="tablist">
           <button type="button" data-modus="karten" class="aktiv">Karten</button><button type="button" data-modus="liste">Liste</button><button type="button" data-modus="monat">Monat</button>
         </span>
+        <button type="button" class="filterknopf" id="plan-filter-knopf"><svg class="i"><use href="#i-list"/></svg> Filter <span class="zaehler versteckt" id="plan-filter-zahl"></span></button>
         <button type="button" class="textknopf" id="plan-heute">Heute ↓</button>
         <span class="schalter" id="plan-zaehler"></span>
       </div>
+      <div class="filterblatt karte versteckt" id="plan-filter-blatt">
+        <label class="schalter"><input type="checkbox" id="plan-vergangene"> vergangene Spiele</label>
+        <label class="schalter"><input type="checkbox" id="plan-offen"> nur unbesetzte</label>
+        <label class="schalter versteckt" id="plan-hallen-label"><input type="checkbox" id="plan-hallen"> meine Hallen</label>
+        <label class="schalter versteckt" id="plan-meine-label"><input type="checkbox" id="plan-meine"> nur meine Spiele</label>
+        <div class="ligen" id="plan-ligen"></div>
+        <div class="zweit"><button type="button" id="plan-filter-leeren">Zurücksetzen</button><button type="button" id="plan-drucken">Drucken</button></div>
+      </div>
     </div>
     <div class="woche" id="plan-woche"></div>
-    <div class="ligen" id="plan-ligen"></div>
     <div id="plan-monat" class="versteckt"></div>
     <div id="plan-liste"></div>
   </section>
@@ -644,6 +712,7 @@
     </div>
 
     <div id="held"></div>
+    <div id="uebersicht" class="uebersicht"></div>
     <div id="nachtrag"></div>
 
     <details class="karte kalender-box" id="kalender-box" open>
@@ -655,6 +724,7 @@
           <button id="laden">Einmalig laden</button>
           <button id="teilen" class="versteckt">Teilen</button>
         </div>
+        <button type="button" class="mg-neben versteckt" id="abfahrt-ics" style="width:100%;margin-top:8px">Kalenderdatei mit Abfahrtsalarm laden</button>
     <div class="melde unterpunkt versteckt" id="melde">
       <h4><svg class="i"><use href="#i-bell"/></svg> Benachrichtigungen <span class="status" id="melde-status"></span></h4>
       <p id="melde-text"></p>
@@ -696,6 +766,49 @@
     </div>
   </section>
 
+  <!-- Spiel-Detailseite -->
+  <section id="spiel" class="versteckt">
+    <div class="profilzeile karte">
+      <span><b id="spiel-titel"></b><small id="spiel-unter"></small></span>
+      <button class="textknopf" id="spiel-zurueck">Zurück</button>
+    </div>
+    <div id="spiel-kopf"></div>
+    <div id="spiel-inhalt"></div>
+  </section>
+
+  <!-- Mehr: alles, was nicht in die Leiste passt -->
+  <section id="mehr" class="versteckt">
+    <p class="frage">Mehr</p>
+    <div class="menue karte" id="mehr-liste"></div>
+  </section>
+
+  <!-- Einstellungen -->
+  <section id="einstellungen" class="versteckt">
+    <div class="profilzeile karte">
+      <span><b>Einstellungen</b><small>gelten für dieses Gerät</small></span>
+      <button class="textknopf" id="einstellungen-zurueck">Zurück</button>
+    </div>
+    <div class="karte einstellungen-liste">
+      <label>Karten-App <select id="karten-app"><option value="auto">automatisch</option><option value="apple">Apple Karten</option><option value="google">Google Maps</option></select></label>
+      <label>Schrift <span class="stufen" id="schrift"><button type="button" data-stufe="klein">A−</button><button type="button" data-stufe="normal">A</button><button type="button" data-stufe="gross">A+</button></span></label>
+      <label>Farbe <span class="farben" id="akzent"><button type="button" data-akzent="blau" style="background:#0f3d6e" aria-label="Blau"></button><button type="button" data-akzent="gruen" style="background:#1d6b3f" aria-label="Grün"></button><button type="button" data-akzent="rot" style="background:#a12a2a" aria-label="Rot"></button><button type="button" data-akzent="orange" style="background:#b55a12" aria-label="Orange"></button></span></label>
+      <label>Hell / Dunkel <button type="button" class="mg-neben" id="thema2">umschalten</button></label>
+      <label>Kompakte Ansicht <input type="checkbox" id="kompakt"></label>
+      <label>Saisonziel <input type="number" id="ziel" min="1" max="200" placeholder="z. B. 40" style="width:6em"> Spiele</label>
+    </div>
+    <p class="meta" style="margin-top:12px">Profil, Push und Konto: unter Mehr → Konto. Alles hier bleibt auf diesem Gerät.</p>
+  </section>
+
+  <!-- Hallenkarte -->
+  <section id="karte" class="versteckt">
+    <div class="profilzeile karte">
+      <span><b>Hallenkarte</b><small id="karte-unter">alle Hallen aus den Einteilungen</small></span>
+      <button class="textknopf" id="karte-zurueck">Zurück</button>
+    </div>
+    <div id="karte-div" class="karte"></div>
+    <p class="meta" style="margin-top:8px">Blau: Halle mit eigenem Spiel · Grau: übrige Hallen · Tipp auf einen Punkt zeigt Name und Spiele. Kartendaten © OpenStreetMap.</p>
+  </section>
+
   <!-- Diagnose -->
   <section id="status" class="versteckt">
     <div class="profilzeile karte">
@@ -723,13 +836,7 @@
   <section id="mitglieder" class="versteckt"></section>
 
   <footer>
-    <div class="einstellungen">
-      <label>Karten-App <select id="karten-app"><option value="auto">automatisch</option><option value="apple">Apple Karten</option><option value="google">Google Maps</option></select></label>
-      <label><input type="checkbox" id="kompakt"> kompakte Ansicht</label>
-      <label>Schrift <span class="stufen" id="schrift"><button type="button" data-stufe="klein">A−</button><button type="button" data-stufe="normal">A</button><button type="button" data-stufe="gross">A+</button></span></label>
-      <label>Farbe <span class="farben" id="akzent"><button type="button" data-akzent="blau" style="background:#0f3d6e" aria-label="Blau"></button><button type="button" data-akzent="gruen" style="background:#1d6b3f" aria-label="Grün"></button><button type="button" data-akzent="rot" style="background:#a12a2a" aria-label="Rot"></button><button type="button" data-akzent="orange" style="background:#b55a12" aria-label="Orange"></button></span></label>
-      <a href="#status">Diagnose</a>
-    </div>
+    <p><a href="#einstellungen">Einstellungen</a> · <a href="#status">Diagnose</a> · <a href="#karte">Hallenkarte</a></p>
     <p id="fuss"></p>
     <p>Alle Spiele als Kalender: <a id="alle" href="feeds/alle.ics">alle.ics</a><br>
        Daten von <a id="quelle" href="https://www.esrw.de/einteilungen.html" target="_blank" rel="noopener">esrw.de</a> – dort steht, was gilt.</p>
@@ -739,12 +846,14 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <nav class="leiste" id="tabs">
   <div>
-    <button type="button" id="tab-meine" class="aktiv"><svg class="i"><use href="#i-user"/></svg>Meine Spiele</button>
+    <button type="button" id="tab-meine" class="aktiv"><svg class="i"><use href="#i-user"/></svg>Heute</button>
     <button type="button" id="tab-plan"><svg class="i"><use href="#i-list"/></svg>Spielplan</button>
-    <button type="button" id="tab-mitglieder"><svg class="i"><use href="#i-lock"/></svg>Mitglieder</button>
+    <button type="button" id="tab-tausch"><svg class="i"><use href="#i-swap"/></svg>Tausch</button>
+    <button type="button" id="tab-abrechnung"><svg class="i"><use href="#i-euro"/></svg>Abrechnung</button>
+    <button type="button" id="tab-mitglieder"><svg class="i"><use href="#i-list"/></svg>Mehr</button>
   </div>
 </nav>
 
-<script src="app.js?v=19"></script>
+<script src="app.js?v=20"></script>
 </body>
 </html>
