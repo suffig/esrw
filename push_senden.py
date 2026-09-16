@@ -112,7 +112,8 @@ def erinnerungen(person, profil, jetzt, schon):
                 text += "\nAbfahrt ca. %s Uhr (%s km, ohne Verkehr)" % (
                     abfahrt.strftime("%H:%M"), strecke.get("km", "?"))
             heraus.append((k, {"titel": "Heute: %s als %s" % (s.get("paarung", "Spiel"), s.get("rolle", "SR")),
-                               "text": text[:900], "url": "./#" + person["slug"]}))
+                               "text": text[:900], "url": "./#" + person["slug"],
+                               "ort": s.get("ort") or None, "tag": "spieltag"}))
 
         k = "abfahrt|" + kennung
         if abfahrt and k not in schon:
@@ -122,7 +123,7 @@ def erinnerungen(person, profil, jetzt, schon):
                                    "text": "%s, Treffpunkt %s Uhr. %s km bis %s." % (
                                        s.get("paarung", ""), treff.strftime("%H:%M"),
                                        strecke.get("km", "?"), s.get("halle") or "zur Halle"),
-                                   "url": "./#" + person["slug"]}))
+                                   "url": "./#" + person["slug"], "ort": s.get("ort") or None, "tag": "abfahrt"}))
     return heraus
 
 

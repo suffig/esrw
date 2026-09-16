@@ -1010,6 +1010,13 @@ raus ist (räumt sich nach sieben Tagen selbst auf). Ohne cron-job.org
 
 ## Wenn mal etwas nicht stimmt
 
+**Zuerst: Diagnose.** Ganz unten auf der Seite steht „Diagnose“ (oder
+direkt `…/esrw/#status`): App-Fassung, Datenstand, Profil, Mitteilungen,
+Push-Abo, Anmeldung. „Kopieren“ und den Text schicken lassen – das
+beantwortet die meisten Fragen, bevor man raten muss. Tritt in der App ein
+Fehler auf, erscheint unten ein roter Hinweis; antippen kopiert den
+Fehlerbericht.
+
 **Registriert, Mail bestätigt, aber „ich bin nicht in der Datenbank“ /
 Admin-SQL wirkt nicht.** Drei Ursachen, in dieser Reihenfolge prüfen:
 

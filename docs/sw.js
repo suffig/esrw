@@ -5,7 +5,7 @@
  * Parkhaus, Zug - kommt die zuletzt gespeicherte Fassung zum Zug.
  */
 
-const VERSION = "v17";
+const VERSION = "v18";
 const CACHE = "einteilungen-" + VERSION;
 
 // Wird beim ersten Besuch gespeichert, damit die App auch dann startet,
@@ -55,16 +55,29 @@ self.addEventListener("push", (e) => {
   try { if (e.data) daten = Object.assign(daten, e.data.json()); } catch (err) {
     try { daten.text = e.data.text(); } catch (err2) {}
   }
+  // Mit Adresse gibt es einen Route-Knopf (Android zeigt ihn, iOS nicht)
+  const aktionen = daten.ort ? [{ action: "route", title: "Route" }, { action: "oeffnen", title: "Öffnen" }] : [];
   e.waitUntil(self.registration.showNotification(daten.titel, {
     body: daten.text, icon: "icon-192.png", badge: "icon-192.png",
-    tag: "einteilung", renotify: true, data: { url: daten.url }
+    tag: daten.tag || "einteilung", renotify: true, actions: aktionen,
+    data: { url: daten.url, ort: daten.ort || null }
   }));
 });
 
 // Tippt jemand auf die Mitteilung, soll die App nach vorn kommen statt
 // ein zweites Fenster zu oeffnen.
+function kartenLink(ort) {
+  const android = /Android/i.test(self.navigator.userAgent || "");
+  return android ? "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(ort)
+                 : "https://maps.apple.com/?daddr=" + encodeURIComponent(ort);
+}
+
 self.addEventListener("notificationclick", (e) => {
   e.notification.close();
+  if (e.action === "route" && e.notification.data && e.notification.data.ort) {
+    e.waitUntil(self.clients.openWindow(kartenLink(e.notification.data.ort)));
+    return;
+  }
   const zielPfad = (e.notification.data && e.notification.data.url) || "./";
   const ziel = new URL(zielPfad, self.location).href;
   e.waitUntil(

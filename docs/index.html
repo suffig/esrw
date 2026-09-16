@@ -50,11 +50,27 @@
     }
   }
 
+  /* Waehlbare Akzentfarbe (Fuss der Seite) */
+  :root[data-akzent="gruen"] { --akzent:#1d6b3f; --akzent-hell:#e3f3ea; --sr:#1d6b3f; --sr-bg:#e3f3ea; --held-1:#155232; --held-2:#2a8a55; --held-schatten:0 8px 24px rgba(29,107,63,.25); }
+  :root[data-akzent="rot"]   { --akzent:#a12a2a; --akzent-hell:#fbe6e6; --sr:#a12a2a; --sr-bg:#fbe6e6; --held-1:#7d1f1f; --held-2:#c0403a; --held-schatten:0 8px 24px rgba(161,42,42,.25); }
+  :root[data-akzent="orange"]{ --akzent:#b55a12; --akzent-hell:#fdeedd; --sr:#b55a12; --sr-bg:#fdeedd; --held-1:#8f4410; --held-2:#d97a2a; --held-schatten:0 8px 24px rgba(181,90,18,.25); }
+  :root[data-theme="dark"][data-akzent="gruen"] { --akzent:#6fd39a; --akzent-hell:#17301f; --sr:#6fd39a; --sr-bg:#17301f; --akzent-text:#08160d; }
+  :root[data-theme="dark"][data-akzent="rot"] { --akzent:#f08a8a; --akzent-hell:#3a1a1a; --sr:#f08a8a; --sr-bg:#3a1a1a; --akzent-text:#1e0808; }
+  :root[data-theme="dark"][data-akzent="orange"] { --akzent:#f2b06a; --akzent-hell:#3a2410; --sr:#f2b06a; --sr-bg:#3a2410; --akzent-text:#1e1004; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"])[data-akzent="gruen"] { --akzent:#6fd39a; --akzent-hell:#17301f; --sr:#6fd39a; --sr-bg:#17301f; --akzent-text:#08160d; }
+    :root:not([data-theme="light"])[data-akzent="rot"] { --akzent:#f08a8a; --akzent-hell:#3a1a1a; --sr:#f08a8a; --sr-bg:#3a1a1a; --akzent-text:#1e0808; }
+    :root:not([data-theme="light"])[data-akzent="orange"] { --akzent:#f2b06a; --akzent-hell:#3a2410; --sr:#f2b06a; --sr-bg:#3a2410; --akzent-text:#1e1004; }
+  }
+  html { font-size:16px; }
+  html[data-schrift="klein"] { font-size:14.5px; }
+  html[data-schrift="gross"] { font-size:18px; }
+
   * { box-sizing:border-box; }
   html { -webkit-text-size-adjust:100%; }
   body {
     margin:0; background:var(--bg); color:var(--text);
-    font:16px/1.5 "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font:1rem/1.5 "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     padding:0 16px calc(84px + env(safe-area-inset-bottom));
   }
   main { max-width:640px; margin:0 auto; }
@@ -83,7 +99,7 @@
                justify-content:space-between; align-items:baseline; }
 
   /* Held: naechstes Spiel */
-  .held { background:linear-gradient(135deg, #0f3d6e 0%, #1d5a99 100%); color:#fff;
+  .held { background:linear-gradient(135deg, var(--held-1, #0f3d6e) 0%, var(--held-2, #1d5a99) 100%); color:#fff;
           border-radius:18px; padding:18px 18px 16px; margin-bottom:12px;
           box-shadow:var(--held-schatten); position:relative; overflow:hidden; }
   .held .wann { font-size:.78rem; font-weight:700; opacity:.85; text-transform:uppercase; letter-spacing:.08em; padding-right:56px; }
@@ -427,6 +443,36 @@
     .fahrtenbuch .zweit { display:none !important; }
   }
 
+  /* Eigene Spiele im Spielplan */
+  .spiel.meins, .zeile.meins { border-left:4px solid var(--akzent); }
+  .zeile.meins { padding-left:8px; }
+
+  /* Teilen an der Spielkarte */
+  .teilen-knopf { font-size:.75rem; margin-left:auto; }
+  .kopfzeile .teilen-knopf { margin-left:8px; }
+
+  /* Diagnose */
+  .status-liste { padding:6px 14px; }
+  .status-liste div { display:flex; justify-content:space-between; gap:12px; padding:8px 0; border-top:1px solid var(--linie); font-size:.9rem; }
+  .status-liste div:first-child { border-top:0; }
+  .status-liste span:last-child { text-align:right; color:var(--dim); word-break:break-all; }
+
+  /* Schrift und Akzent im Fuss */
+  .stufen { display:inline-flex; border:1px solid var(--linie); border-radius:99px; overflow:hidden; background:var(--karte); }
+  .stufen button { border:0; background:none; color:var(--dim); font-weight:800; padding:3px 10px; cursor:pointer; }
+  .stufen button.aktiv { background:var(--akzent); color:var(--akzent-text); }
+  .farben { display:inline-flex; gap:6px; }
+  .farben button { width:22px; height:22px; border-radius:50%; border:2px solid transparent; cursor:pointer; padding:0; }
+  .farben button.aktiv { border-color:var(--text); }
+
+  /* Druck: Spielplan als Wochenzettel */
+  @media print {
+    body.druck-plan main > *:not(#plan), body.druck-plan .kopf button, body.druck-plan .filterleiste, body.druck-plan #plan-woche, body.druck-plan #plan-ligen, body.druck-plan .chip.offen { display:none !important; }
+    body.druck-plan #plan-liste.raster { display:block; }
+    body.druck-plan .spiel { padding:6px 10px; margin-bottom:4px; }
+    body.druck-plan .tag { position:static; }
+  }
+
   /* Untere Leiste */
   .leiste { position:fixed; left:0; right:0; bottom:0; z-index:10;
             background:var(--karte); border-top:1px solid var(--linie);
@@ -559,6 +605,8 @@
         <label class="schalter"><input type="checkbox" id="plan-vergangene"> vergangene</label>
         <label class="schalter"><input type="checkbox" id="plan-offen"> nur unbesetzte</label>
         <label class="schalter versteckt" id="plan-hallen-label"><input type="checkbox" id="plan-hallen"> meine Hallen</label>
+        <label class="schalter versteckt" id="plan-meine-label"><input type="checkbox" id="plan-meine"> nur meine</label>
+        <button type="button" class="textknopf" id="plan-drucken" title="Wochenzettel drucken">Drucken</button>
         <span class="modus" id="plan-modus" role="tablist">
           <button type="button" data-modus="karten" class="aktiv">Karten</button><button type="button" data-modus="liste">Liste</button><button type="button" data-modus="monat">Monat</button>
         </span>
@@ -648,6 +696,16 @@
     </div>
   </section>
 
+  <!-- Diagnose -->
+  <section id="status" class="versteckt">
+    <div class="profilzeile karte">
+      <span><b>Diagnose</b><small>für die Fehlersuche – nichts davon geht irgendwohin</small></span>
+      <button class="textknopf" id="status-kopieren">Kopieren</button>
+    </div>
+    <div class="karte status-liste" id="status-liste"></div>
+    <p class="meta" style="margin-top:12px">Wenn etwas nicht funktioniert: hier „Kopieren“ und den Text an den Betreiber schicken. Beim nächsten Fehler erscheint unten automatisch ein roter Hinweis mit „kopieren“.</p>
+  </section>
+
   <!-- Hallen-Seite: Adresse, Route, Spiele dort, Hinweise -->
   <section id="halle" class="versteckt">
     <div class="profilzeile karte">
@@ -668,6 +726,9 @@
     <div class="einstellungen">
       <label>Karten-App <select id="karten-app"><option value="auto">automatisch</option><option value="apple">Apple Karten</option><option value="google">Google Maps</option></select></label>
       <label><input type="checkbox" id="kompakt"> kompakte Ansicht</label>
+      <label>Schrift <span class="stufen" id="schrift"><button type="button" data-stufe="klein">A−</button><button type="button" data-stufe="normal">A</button><button type="button" data-stufe="gross">A+</button></span></label>
+      <label>Farbe <span class="farben" id="akzent"><button type="button" data-akzent="blau" style="background:#0f3d6e" aria-label="Blau"></button><button type="button" data-akzent="gruen" style="background:#1d6b3f" aria-label="Grün"></button><button type="button" data-akzent="rot" style="background:#a12a2a" aria-label="Rot"></button><button type="button" data-akzent="orange" style="background:#b55a12" aria-label="Orange"></button></span></label>
+      <a href="#status">Diagnose</a>
     </div>
     <p id="fuss"></p>
     <p>Alle Spiele als Kalender: <a id="alle" href="feeds/alle.ics">alle.ics</a><br>
@@ -684,6 +745,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=18"></script>
+<script src="app.js?v=19"></script>
 </body>
 </html>

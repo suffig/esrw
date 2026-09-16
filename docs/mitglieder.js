@@ -890,18 +890,38 @@ window.Mitglieder = (function () {
     return s;
   }
 
-  function summenBox(titel, s) {
+  function summenBox(titel, s, monate) {
     var box = h("div", {}, [h("h3", { class: "abschnitt", text: titel })]);
     var z = h("div", { class: "zahlen mg-summen" });
     var einfach = (profil.km_modell || "einfach") === "einfach";
-    [["Spiele erfasst", s.spiele],
+    [["Spiele erfasst", s.spiele, function () { nurOffene = false; rendereAbrechnung(); }],
      [einfach ? "km einfach" : "km gefahren", Math.round(einfach ? s.km : s.km * 2) + " km"],
      ["Fahrtkosten", euro(s.fahrt)], ["Vergütung", euro(s.verg)],
-     ["Auslagen", euro(s.ausl)], ["noch offen", s.offen ? euro(s.offenBetrag) : "–"]
+     ["Auslagen", euro(s.ausl)], ["noch offen", s.offen ? euro(s.offenBetrag) : "–", function () { nurOffene = true; rendereAbrechnung(); }]
     ].forEach(function (p) {
-      z.appendChild(h("div", { class: "zahl karte" }, [h("b", { text: String(p[1]) }), h("span", { text: p[0] })]));
+      var k = h("div", { class: "zahl karte" + (p[2] ? " tippbar" : "") }, [h("b", { text: String(p[1]) }), h("span", { text: p[0] })]);
+      if (p[2]) { k.style.cursor = "pointer"; k.title = "Antippen: Filter"; k.addEventListener("click", p[2]); }
+      z.appendChild(k);
     });
     box.appendChild(z);
+    if (monate) box.appendChild(monatsBalken(monate));
+    return box;
+  }
+
+  // Balken je Monat: Verguetung und km
+  function monatsBalken(monate) {
+    var max = Math.max.apply(null, monate.map(function (m) { return m.verg; }).concat([1]));
+    var box = h("details", { class: "tausch", style: "margin-top:8px" }, [h("summary", { text: "Monate im Überblick" })]);
+    var innen = h("div", { class: "balken", style: "padding:6px 0 4px" });
+    monate.forEach(function (m) {
+      if (!m.spiele) return;
+      var reihe = h("div", { class: "reihe" });
+      var links = h("div", { text: MONATE[m.monat].slice(0, 3) + " · " + m.spiele + (m.spiele === 1 ? " Spiel" : " Spiele") + " · " + Math.round(m.km) + " km" });
+      var strich = h("i"); strich.style.width = Math.max(4, Math.round(m.verg / max * 100)) + "%"; links.appendChild(strich);
+      reihe.appendChild(links); reihe.appendChild(h("em", { text: euro(m.verg) }));
+      innen.appendChild(reihe);
+    });
+    box.appendChild(innen);
     return box;
   }
 
@@ -914,7 +934,12 @@ window.Mitglieder = (function () {
     if (!jahre.length) jahre.push(new Date().getFullYear());
     var neu = h("div", { class: "mg-summenblock" }, [summenBox("Saison " + (gewaehlteSaison || ""), summen(spiele))]);
     jahre.sort().reverse().forEach(function (jahr) {
-      neu.appendChild(summenBox("Steuerjahr " + jahr, summen(alle, function (sp) { return new Date(sp.beginn).getFullYear() === jahr; })));
+      var monate = [];
+      for (var m = 0; m < 12; m++) {
+        var s = summen(alle, function (sp) { var d = new Date(sp.beginn); return d.getFullYear() === jahr && d.getMonth() === m; });
+        monate.push({ monat: m, spiele: s.spiele, verg: s.verg, km: s.km });
+      }
+      neu.appendChild(summenBox("Steuerjahr " + jahr, summen(alle, function (sp) { return new Date(sp.beginn).getFullYear() === jahr; }), monate));
     });
     alt.parentNode.replaceChild(neu, alt);
   }

@@ -232,6 +232,13 @@ Spiele, Hinweise). Karten-Links passen sich dem Handy an (Google Maps auf
 Android), Adresse kopieren, Wochenleiste und Liga-Farben im Spielplan,
 Onboarding für neue Kollegen.
 
+**Teilen & Diagnose**: „Teilen“ an jeder Spielkarte (Text für WhatsApp),
+Spieltag-Push mit „Route“-Knopf (Android), Seite `#status` mit allem für die
+Fehlersuche; Laufzeitfehler erscheinen als Toast mit „kopieren“. Schriftgröße
+(A−/A/A+) und Akzentfarbe im Fuß, eigene Spiele im Spielplan hervorgehoben
+(„nur meine“), Wochenzettel drucken, Abrechnungs-Kacheln filtern per Tipp,
+Monatsbalken je Steuerjahr.
+
 **Spielplan**: Karten, Liste oder Monatsraster (eigene Spiele, unbesetzte
 Spiele und Rest als Punkte, Tag antippen), Filter „nur unbesetzte“, Liga-Chips.
 Auf breiten Bildschirmen zwei Spalten. Der Workflow-Schritt `push_senden.py`

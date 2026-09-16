@@ -118,6 +118,22 @@
     el("karten-app").addEventListener("change", function (e) { schreiben("karten", e.target.value === "auto" ? null : e.target.value); if (aktuell) zeigePerson(aktuell, true); toast("Karten-App: " + e.target.options[e.target.selectedIndex].text, ""); });
     var k = lesen("kompakt") === "1"; el("kompakt").checked = k; document.body.classList.toggle("kompakt", k);
     el("kompakt").addEventListener("change", function (e) { schreiben("kompakt", e.target.checked ? "1" : null); document.body.classList.toggle("kompakt", e.target.checked); });
+    function schriftSetzen(stufe) {
+      if (stufe === "normal" || !stufe) document.documentElement.removeAttribute("data-schrift"); else document.documentElement.setAttribute("data-schrift", stufe);
+      Array.prototype.forEach.call(el("schrift").querySelectorAll("button"), function (b) { b.classList.toggle("aktiv", (b.getAttribute("data-stufe") === (stufe || "normal"))); });
+    }
+    schriftSetzen(lesen("schrift"));
+    Array.prototype.forEach.call(el("schrift").querySelectorAll("button"), function (b) {
+      b.addEventListener("click", function () { var st = b.getAttribute("data-stufe"); schreiben("schrift", st === "normal" ? null : st); schriftSetzen(st); filterHoehe(); });
+    });
+    function akzentSetzen(farbe) {
+      if (!farbe || farbe === "blau") document.documentElement.removeAttribute("data-akzent"); else document.documentElement.setAttribute("data-akzent", farbe);
+      Array.prototype.forEach.call(el("akzent").querySelectorAll("button"), function (b) { b.classList.toggle("aktiv", (b.getAttribute("data-akzent") === (farbe || "blau"))); });
+    }
+    akzentSetzen(lesen("akzent"));
+    Array.prototype.forEach.call(el("akzent").querySelectorAll("button"), function (b) {
+      b.addEventListener("click", function () { var f = b.getAttribute("data-akzent"); schreiben("akzent", f === "blau" ? null : f); akzentSetzen(f); });
+    });
     el("stand").style.cursor = "pointer"; el("stand").title = "Antippen: neu laden";
     el("stand").addEventListener("click", function () { neuLaden().then(function () { toast("Aktualisiert", "gut"); }); });
     el("abo").addEventListener("click", function () { schreiben("abo-geklickt", "1"); setTimeout(function () { kalenderBoxStand(); onboardingStand(); }, 500); });
@@ -190,6 +206,39 @@
     var f = ligaFarbe(liga); l.style.background = f.bg; l.style.color = f.fg; l.setAttribute("data-farbe", "1");
     return l;
   }
+
+  function spielText(s) {
+    var d = new Date(s.beginn);
+    return datumKurz(d) + " " + uhr(d) + " Uhr – " + (s.liga ? s.liga + ": " : "") + s.paarung +
+      "\nTreffpunkt " + uhr(new Date(s.treffpunkt)) + " Uhr" + (s.halle ? ", " + s.halle : "") +
+      (s.ort ? "\n" + s.ort + "\nRoute: " + kartenLink(s.ort) : "");
+  }
+  function teilenKnopf(s) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "textknopf teilen-knopf"; b.textContent = "Teilen";
+    b.addEventListener("click", function (ev) {
+      ev.preventDefault(); ev.stopPropagation();
+      var text = spielText(s);
+      if (navigator.share) navigator.share({ text: text }).catch(function () {});
+      else if (navigator.clipboard) navigator.clipboard.writeText(text).then(function () { toast("Spiel kopiert ✓", "gut"); });
+      else prompt("Spiel:", text);
+    });
+    return b;
+  }
+
+  // Fehler sichtbar machen, statt still zu scheitern
+  var letzterFehler = null;
+  function fehlerZeigen(text) {
+    letzterFehler = { zeit: new Date().toISOString(), text: text };
+    var t = el("toast");
+    toast("Fehler: " + text.slice(0, 80) + " · antippen zum Kopieren", "warn");
+    t.onclick = function () {
+      var voll = diagnoseText() + "\n\nFehler:\n" + text;
+      if (navigator.clipboard) navigator.clipboard.writeText(voll).then(function () { toast("Fehlerbericht kopiert ✓", "gut"); });
+      t.onclick = null;
+    };
+  }
+  window.addEventListener("error", function (e) { fehlerZeigen((e.message || "unbekannt") + (e.filename ? " (" + e.filename.split("/").pop() + ":" + e.lineno + ")" : "")); });
+  window.addEventListener("unhandledrejection", function (e) { var r = e.reason; fehlerZeigen(r && r.message ? r.message : String(r)); });
 
   function initialen(name) {
     var t = name.split(",");
@@ -340,7 +389,7 @@
     var datum = document.createElement("span");
     datum.className = "datum";
     if (s.liga) datum.appendChild(ligaPille(s.liga));
-    kopf.appendChild(datum); kopf.appendChild(rolleBadge(s.rolle));
+    kopf.appendChild(datum); kopf.appendChild(teilenKnopf(s)); kopf.appendChild(rolleBadge(s.rolle));
     d.appendChild(kopf);
 
     var paarung = document.createElement("div");
@@ -656,6 +705,7 @@
     if (diff === -1) return ["Gestern", datum, false];
     return [datum, "", false];
   }
+  function istMeins(s) { return !!(profil && profil.slug && s.besetzung && s.besetzung.some(function (b) { return b.slug === profil.slug; })); }
   function planModus() { var m = lesen("plan-modus"); return m === "liste" || m === "monat" ? m : (lesen("plan-kompakt") === "1" ? "liste" : "karten"); }
   var ligenWahl = {}, planMonatStart = null, planTag = null;
   function ligaGruppe(liga) {
@@ -687,10 +737,12 @@
     var nurOffen = el("plan-offen").checked;
     var hallen = meineHallen();
     var nurMeine = hallen && el("plan-hallen").checked;
+    var nurIch = profil && profil.slug && el("plan-meine").checked;
     var ligen = Object.keys(ligenWahl).length ? ligenWahl : null;
     return (daten.spiele || []).filter(function (s) {
       if (s.vergangen && !mitVergangenen) return false;
       if (nurMeine && hallen.indexOf(s.halle) < 0) return false;
+      if (nurIch && !istMeins(s)) return false;
       if (nurOffen && s.besetzung.length) return false;
       if (ligen && !ligen[ligaGruppe(s.liga)]) return false;
       if (f) {
@@ -796,6 +848,7 @@
     var modus = planModus();
     Array.prototype.forEach.call(el("plan-modus").querySelectorAll("button"), function (b) { b.classList.toggle("aktiv", b.getAttribute("data-modus") === modus); });
     el("plan-hallen-label").classList.toggle("versteckt", !meineHallen());
+    el("plan-meine-label").classList.toggle("versteckt", !(profil && profil.slug));
     zeigeLigen(daten.spiele || []);
     filterHoehe();
     var ziel = el("plan-liste");
@@ -834,9 +887,10 @@
     else { var offen = document.createElement("span"); offen.className = "chip offen"; offen.textContent = "noch nicht besetzt"; ziel.appendChild(offen); }
   }
   function planKarte(s, beginn) {
-    var d = document.createElement("div"); d.className = "spiel karte" + (s.vergangen ? " war" : "");
+    var d = document.createElement("div"); d.className = "spiel karte" + (s.vergangen ? " war" : "") + (istMeins(s) ? " meins" : "");
     var kopf = document.createElement("div"); kopf.className = "kopfzeile";
     var zeit = document.createElement("span"); zeit.className = "zeit"; zeit.textContent = uhr(beginn) + " Uhr"; kopf.appendChild(zeit);
+    kopf.appendChild(teilenKnopf(s));
     if (s.liga) kopf.appendChild(ligaPille(s.liga));
     d.appendChild(kopf);
     var paarung = document.createElement("div"); paarung.className = "paarung"; paarung.textContent = s.paarung; d.appendChild(paarung);
@@ -847,7 +901,7 @@
     return d;
   }
   function planZeile(s, beginn) {
-    var z = document.createElement("div"); z.className = "zeile" + (s.vergangen ? " war" : "");
+    var z = document.createElement("div"); z.className = "zeile" + (s.vergangen ? " war" : "") + (istMeins(s) ? " meins" : "");
     var zeit = document.createElement("span"); zeit.className = "zeit"; zeit.textContent = uhr(beginn);
     var mitte = document.createElement("span");
     var titel = document.createElement("span"); titel.textContent = (s.liga ? s.liga + ": " : "") + s.paarung;
@@ -1021,7 +1075,7 @@
   }
 
   function ansicht(name) {
-    ["auswahl", "detail", "plan", "mitglieder", "halle"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
+    ["auswahl", "detail", "plan", "mitglieder", "halle", "status"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
     el("tab-meine").classList.toggle("aktiv", name === "auswahl" || name === "detail");
     el("tab-plan").classList.toggle("aktiv", name === "plan");
     el("tab-mitglieder").classList.toggle("aktiv", name === "mitglieder");
@@ -1111,8 +1165,50 @@
     window.scrollTo(0, 0);
   }
 
+  function diagnoseText() {
+    return Object.keys(diagnose).map(function (k) { return k + ": " + diagnose[k]; }).join("\n");
+  }
+  var diagnose = {};
+  function zeigeStatus() {
+    ansicht("status"); aktuell = null;
+    var liste = el("status-liste"); liste.innerHTML = "";
+    diagnose = {
+      "App-Fassung": NEUIGKEITEN.version, "Adresse": location.href.split("#")[0],
+      "Datenstand": letzterStand || "?", "Spiele / Personen": daten ? daten.spiele_gesamt + " / " + daten.personen.length : "?",
+      "Profil": profil && profil.slug ? profil.slug : "keins", "Thema": lesen("thema") || "System", "Schrift": lesen("schrift") || "normal",
+      "Online": navigator.onLine ? "ja" : "nein", "Als App": alsApp() ? "ja" : "nein",
+      "Mitteilungen": ("Notification" in window) ? Notification.permission : "nicht verfügbar",
+      "Browser": navigator.userAgent.replace(/Mozilla\/5\.0 \(/, "(").slice(0, 120),
+      "Letzter Fehler": letzterFehler ? letzterFehler.zeit.slice(11, 19) + " " + letzterFehler.text : "keiner"
+    };
+    try { var n = 0; for (var i = 0; i < localStorage.length; i++) n += (localStorage.getItem(localStorage.key(i)) || "").length; diagnose["Speicher (localStorage)"] = Math.round(n / 1024) + " kB"; } catch (e) { diagnose["Speicher (localStorage)"] = "gesperrt"; }
+    function rendern() {
+      liste.innerHTML = "";
+      Object.keys(diagnose).forEach(function (k) {
+        var z = document.createElement("div"); var a = document.createElement("span"); a.textContent = k; var b = document.createElement("span"); b.textContent = diagnose[k];
+        z.appendChild(a); z.appendChild(b); liste.appendChild(z);
+      });
+    }
+    rendern();
+    if ("serviceWorker" in navigator) navigator.serviceWorker.getRegistration().then(function (reg) {
+      diagnose["Service Worker"] = reg ? (reg.active ? "aktiv" : "wartet") : "keiner";
+      return reg && reg.pushManager ? reg.pushManager.getSubscription().then(function (abo) { diagnose["Push-Abo"] = abo ? "vorhanden" : "keins"; }) : null;
+    }).then(rendern).catch(function () {});
+    if (sitzungVorhanden()) ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) {
+      diagnose["Mitglieder"] = !st.eingerichtet ? "nicht eingerichtet" : st.session ? "angemeldet als " + (st.session.user && st.session.user.email) : "nicht angemeldet";
+      rendern();
+    }).catch(function (e) { diagnose["Mitglieder"] = "Fehler: " + (e.message || e); rendern(); });
+    else diagnose["Mitglieder"] = "nicht angemeldet";
+    el("status-kopieren").onclick = function () {
+      if (navigator.clipboard) navigator.clipboard.writeText(diagnoseText()).then(function () { toast("Diagnose kopiert ✓", "gut"); }, function () { prompt("Diagnose:", diagnoseText()); });
+      else prompt("Diagnose:", diagnoseText());
+    };
+    window.scrollTo(0, 0);
+  }
+
   function ausHash() {
     var slug = location.hash.replace(/^#/, "");
+    if (slug === "status") { zeigeStatus(); return; }
     if (slug.indexOf("halle/") === 0) { zeigeHalle(slug.slice(6)); return; }
     if (slug === "plan") { aktuell = null; ansicht("plan"); zeigePlan(); window.scrollTo(0, 0); return; }
     if (slug === "mitglieder" || slug.indexOf("mitglieder/") === 0) { zeigeMitglieder(slug.split("/")[1] || null); return; }
@@ -1185,6 +1281,14 @@
   el("plan-vergangene").addEventListener("change", zeigePlan);
   el("plan-hallen").addEventListener("change", zeigePlan);
   el("plan-offen").addEventListener("change", zeigePlan);
+  el("plan-meine").addEventListener("change", zeigePlan);
+  el("plan-drucken").addEventListener("click", function () {
+    if (planModus() === "monat") { toast("Drucken geht in der Karten- oder Listenansicht.", ""); return; }
+    document.body.classList.add("druck-plan");
+    var weg = function () { document.body.classList.remove("druck-plan"); window.removeEventListener("afterprint", weg); };
+    window.addEventListener("afterprint", weg);
+    window.print();
+  });
   Array.prototype.forEach.call(el("plan-modus").querySelectorAll("button"), function (b) {
     b.addEventListener("click", function () { schreiben("plan-modus", b.getAttribute("data-modus")); schreiben("plan-kompakt", null); zeigePlan(); });
   });
