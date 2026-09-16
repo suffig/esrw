@@ -243,6 +243,13 @@ Abfahrtsalarm** (einmaliger Download, Alarm aus der eigenen Strecke).
 **Saisonziel** mit Fortschritt in der Statistik.
 Wetter kommt von Open-Meteo (ohne Schlüssel), auch in der Spieltag-Push.
 
+**Gespann-Notizen & Radar**: Nachrichten am Spiel nur fürs Gespann (RLS über
+die Slugs, Push an die Kollegen), Vertretungs-Radar auf Start (fremde Gesuche
+und unbesetzte Spiele in der Nähe an freien Tagen), Push-Geräte einzeln
+verwalten mit Server-Test, Einstellungen im Konto synchron, Kalender-Link-
+Prüfung, Offline-Balken; Spielseite in Ligafarbe, ruhigere Startseite mit
+Wochenstreifen in der Karte oben, sanfte Übergänge (reduced-motion respektiert).
+
 **Termine & Tausch abschließen**: Ankündigungen mit Datum erscheinen auf
 Start als „Nächste Termine“ (Push am Vortag); in der Tauschbörse nimmt der
 Suchende ein Angebot an → „vereinbart“, Push an den Helfer, fertige

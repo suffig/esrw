@@ -5,7 +5,7 @@
  * Parkhaus, Zug - kommt die zuletzt gespeicherte Fassung zum Zug.
  */
 
-const VERSION = "v23";
+const VERSION = "v24";
 const CACHE = "einteilungen-" + VERSION;
 
 // Wird beim ersten Besuch gespeichert, damit die App auch dann startet,
@@ -112,7 +112,8 @@ self.addEventListener("fetch", (e) => {
         }
         return antwort;
       })
-      .catch(() => caches.match(anfrage).then(
+      // ?v=... in der Adresse ignorieren, sonst findet der Cache app.js nicht
+      .catch(() => caches.match(anfrage, { ignoreSearch: true }).then(
         (treffer) => treffer || caches.match("./index.html")))
   );
 });

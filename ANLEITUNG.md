@@ -618,7 +618,7 @@ den anonymen Schlüssel aus dem Quelltext kopiert, kommt an fremde Daten nicht
 heran.
 
 Die Datei lässt sich gefahrlos mehrfach ausführen – **und das musst du auch
-tun, wenn sie sich ändert** (steht dann im Commit; aktuell v8). Fehlt eine Tabelle, sagt
+tun, wenn sie sich ändert** (steht dann im Commit; aktuell v9). Fehlt eine Tabelle, sagt
 die App „Die Datenbank kennt eine Tabelle noch nicht“.
 
 **Danach einmalig dich selbst zum Admin machen** (sonst kann niemand
@@ -917,6 +917,25 @@ Fahrgemeinschaft, Notiz, Tauschoptionen.
   ändern (Bestätigung an beide Adressen).
 * **Abrechnung**: kompakte Zeilen, Details klappen per Tipp auf; „bezahlt“
   direkt in der Zeile.
+
+### 10.6e Gespann-Notizen, Radar, Geräte (Schema v9)
+
+* **Gespann-Notizen**: Auf der Spielseite kurze Nachrichten, die nur die
+  Kollegen im selben Spiel sehen (die Datenbank prüft das über die Slugs im
+  Gespann). Push an die anderen beim nächsten Lauf.
+* **Vertretungs-Radar** auf Start: fremde Gesuche und unbesetzte Spiele bis
+  40 km von zu Hause an Tagen ohne eigenes Spiel und ohne „nicht“-Sperre –
+  mit „Ich kann“ direkt aus der Karte.
+* **Konto → Push-Geräte**: jedes Gerät einzeln abmelden, „Test“ schickt
+  beim nächsten Lauf eine Server-Push nur an dieses Gerät.
+* **Einstellungen im Konto**: Schrift, Farbe, Karten-App, kompakt und
+  Saisonziel wandern beim Login auf jedes Gerät mit.
+* **Kalender-Link prüfen**: Die Kalender-Karte prüft beim Aufklappen, ob der
+  Feed erreichbar ist, wie viele Termine drinstehen und wann er sich zuletzt
+  geändert hat. Ob das Handy ihn abruft, kann die Seite nicht sehen – das
+  steht nur im Kalender-Konto des Geräts (Einstellungen → Kalender → Accounts).
+* **Offline**: oranger Balken oben, Kalender/Spielplan/Spielseiten laufen aus
+  dem Cache.
 
 ### 10.7 Freischaltung neuer Konten
 

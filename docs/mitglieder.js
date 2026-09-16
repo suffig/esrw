@@ -350,7 +350,8 @@ window.Mitglieder = (function () {
     if (profil && profil.id === session.user.id) return Promise.resolve(profil);
     if (profilVersprechen) return profilVersprechen;
     profilVersprechen = sb.from("profile").select("*").eq("id", session.user.id).maybeSingle()
-      .then(function (r) { if (r.error) throw r.error; profil = r.data; return profil; });
+      .then(function (r) { if (r.error) throw r.error; profil = r.data; return profil; })
+      .catch(function (e) { profilVersprechen = null; throw e; });   // naechster Versuch darf neu laden
     return profilVersprechen;
   }
 
@@ -527,7 +528,7 @@ window.Mitglieder = (function () {
     return ladeProfil()
       .then(function () {
         if (!profil || !profil.slug) return zeigeEinrichtung();
-        document.dispatchEvent(new CustomEvent("mg-profil", { detail: { slug: profil.slug, name: profil.name } }));
+        document.dispatchEvent(new CustomEvent("mg-profil", { detail: { slug: profil.slug, name: profil.name, einstellungen: profil.einstellungen || null } }));
         return ladeEinsaetze().then(function () { rahmen(); zeigeReiter(reiter); });
       })
       .catch(function (e) { meldung("Profil konnte nicht geladen werden: " + fehlerText(e), "warn"); });
@@ -562,6 +563,9 @@ window.Mitglieder = (function () {
   function zeigeReiter(name) {
     reiter = name;
     if (!inhalt) rahmen();
+    // Adresse mitfuehren, damit Zurueck und die Leiste unten stimmen
+    try { if (location.hash.indexOf("#mitglieder") === 0 && location.hash !== "#mitglieder/" + name) history.replaceState(null, "", "#mitglieder/" + name); } catch (e) {}
+    document.dispatchEvent(new CustomEvent("mg-reiter", { detail: { reiter: name } }));
     Array.prototype.forEach.call(wurzel.querySelectorAll(".mg-untertabs button"), function (b) {
       var aktiv = b.getAttribute("data-reiter") === name;
       b.classList.toggle("aktiv", aktiv);
@@ -1617,11 +1621,68 @@ window.Mitglieder = (function () {
       box.appendChild(liste);
     }
     rendern();
-    sb.from("push_abos").select("id,geraet").eq("user_id", session.user.id).then(function (r) {
+    sb.from("push_abos").select("id,geraet,angelegt,endpoint").eq("user_id", session.user.id).then(function (r) {
       var abos = r.data || [];
-      zeilen.push(["Push-Geräte", abos.length ? abos.length + " (" + abos.map(function (a) { return a.geraet || "?"; }).join(", ") + ")" : "keins"]);
+      zeilen.push(["Push-Geräte", abos.length ? String(abos.length) : "keins"]);
       rendern();
+      if (!abos.length) return;
+      var liste = h("div", { style: "margin-top:8px" });
+      var eigener = null;
+      var weiter = function () {
+        abos.forEach(function (a) {
+          liste.appendChild(h("div", { class: "sperre" }, [
+            h("span", {}, [h("b", { text: (a.geraet || "Gerät") + (eigener && eigener === a.endpoint ? " (dieses)" : "") }), h("small", { class: "meta", style: "display:block", text: "seit " + new Date(a.angelegt).toLocaleDateString("de-DE") })]),
+            h("span", {}, [
+              h("button", { type: "button", class: "textknopf", text: "Test", title: "Test-Push vom Server (beim nächsten Lauf, bis 30 Min.)", onclick: function () {
+                sb.from("push_test").insert({ user_id: session.user.id, abo_id: a.id }).then(function (r2) { if (r2.error) meldung(fehlerText(r2.error), "warn"); else kurzMeldung("Test angefordert – kommt beim nächsten Lauf (bis 30 Min.).", "gut"); });
+              } }), " · ",
+              h("button", { type: "button", class: "textknopf", text: "abmelden", onclick: function () {
+                sb.from("push_abos").delete().eq("id", a.id).then(function () {
+                  if (eigener && eigener === a.endpoint && navigator.serviceWorker) navigator.serviceWorker.ready.then(function (reg) { return reg.pushManager.getSubscription(); }).then(function (abo) { if (abo) abo.unsubscribe(); }).catch(function () {});
+                  kurzMeldung("Gerät abgemeldet.", ""); zeigeReiter("konto");
+                });
+              } })
+            ])
+          ]));
+        });
+        box.appendChild(liste);
+      };
+      if (navigator.serviceWorker && "PushManager" in window) navigator.serviceWorker.ready.then(function (reg) { return reg.pushManager.getSubscription(); })
+        .then(function (abo) { eigener = abo ? abo.endpoint : null; weiter(); }).catch(weiter);
+      else weiter();
     }).catch(function () {});
+  }
+
+  // ---- Einstellungen (Schrift, Farbe, Karten-App, kompakt) im Konto
+  function einstellungenSpeichern(obj) {
+    if (!session || !profil) return Promise.resolve(false);
+    profil.einstellungen = obj;
+    return sb.from("profile").upsert({ id: session.user.id, einstellungen: obj }).then(function (r) { return !r.error; }).catch(function () { return false; });
+  }
+
+  // ---- Vertretungs-Radar: fremde offene Gesuche + eigene Sperrtage
+  function radar() {
+    return bereit().then(function (st) {
+      if (!st.eingerichtet || !session) return null;
+      return ladeProfil().then(function () {
+        if (!frei()) return null;
+        var ab = new Date().toISOString();
+        return Promise.all([
+          sb.from("gesuche").select("*").eq("status", "offen").gte("beginn", ab).order("beginn").limit(20),
+          sb.from("sperren").select("datum,status").eq("user_id", session.user.id).gte("datum", isoTag(new Date())),
+          sb.from("angebote").select("gesuch_id").eq("user_id", session.user.id)
+        ]).then(function (r) {
+          var meineAngebote = {}; (r[2].data || []).forEach(function (a) { meineAngebote[a.gesuch_id] = 1; });
+          var sperren = {}; (r[1].data || []).forEach(function (x) { sperren[x.datum] = x.status; });
+          return { gesuche: (r[0].data || []).filter(function (g) { return g.user_id !== session.user.id; }), sperren: sperren, meineAngebote: meineAngebote,
+                   heimat: profil.heimat_lat != null ? [profil.heimat_lat, profil.heimat_lon] : null };
+        });
+      });
+    }).catch(function () { return null; });
+  }
+  function angebotMachen(gesuchId) {
+    return sb.from("angebote").insert({ gesuch_id: gesuchId, user_id: session.user.id, slug: profil.slug, name: profil.name || profil.slug, text: null })
+      .then(function (r) { if (r.error) { meldung(fehlerText(r.error), "warn"); return false; } kurzMeldung("Gemeldet ✓", "gut"); return true; });
   }
 
   // ---- Web Push: Abo im Browser anlegen und Endpoint in push_abos ablegen.
@@ -1734,7 +1795,7 @@ window.Mitglieder = (function () {
   // (vier Abfragen) und danach spielExtras() je Karte. Alles im Cache, bis
   // sich etwas aendert.
 
-  var cache = { hallen: {}, kontakte: {}, mitfahrten: {}, notizen: {}, geladen: {} };
+  var cache = { hallen: {}, kontakte: {}, mitfahrten: {}, notizen: {}, kommentare: {}, geladen: {} };
 
   function extrasLaden(spiele) {
     return bereit().then(function (st) {
@@ -1765,6 +1826,10 @@ window.Mitglieder = (function () {
             (r.data || []).forEach(function (z) { cache.notizen[z.kennung] = z; });
             kennungen.forEach(function (k) { cache.geladen["k|" + k] = 1; });
           }));
+          laeufe.push(sb.from("spielkommentare").select("*").in("kennung", kennungen).order("angelegt").then(function (r) {
+            kennungen.forEach(function (k) { cache.kommentare[k] = []; });
+            (r.data || []).forEach(function (z) { (cache.kommentare[z.kennung] = cache.kommentare[z.kennung] || []).push(z); });
+          }).catch(function () {}));
         }
         return Promise.all(laeufe).then(function () { return true; });
       });
@@ -1779,9 +1844,11 @@ window.Mitglieder = (function () {
     var mitfahrten = (cache.mitfahrten[kennung] || []).filter(function (m) { return m.user_id !== session.user.id; });
     var meineMitfahrt = (cache.mitfahrten[kennung] || []).filter(function (m) { return m.user_id === session.user.id; })[0];
     var notiz = cache.notizen[kennung];
+    var kommentare = cache.kommentare[kennung] || [];
     var kontakte = (spiel.gespann || []).map(function (g) { return g.slug && cache.kontakte[g.slug] ? { g: g, k: cache.kontakte[g.slug] } : null; }).filter(Boolean);
 
     var teile = [];
+    if (istIch) teile.push(kommentare.length ? kommentare.length + (kommentare.length === 1 ? " Gespann-Notiz" : " Gespann-Notizen") : "Gespann-Notiz");
     if (spiel.halle) teile.push(hinweise.length ? hinweise.length + (hinweise.length === 1 ? " Hallen-Hinweis" : " Hallen-Hinweise") : "Halle");
     if (kontakte.length) teile.push(kontakte.length + " Kontakt" + (kontakte.length === 1 ? "" : "e"));
     if (mitfahrten.length) teile.push(mitfahrten.length + " Mitfahrt");
@@ -1849,6 +1916,28 @@ window.Mitglieder = (function () {
             } }) : null
           ])]));
         } else if (!mitfahrten.length) innen.appendChild(h("p", { class: "meta", text: "Niemand bietet eine Mitfahrt an." }));
+      }
+
+      // Gespann-Notizen: nur fuer die, die im Spiel stehen
+      if (istIch) {
+        innen.appendChild(h("h4", { text: "Gespann-Notizen (sehen nur die Kollegen im Spiel)" }));
+        if (!kommentare.length) innen.appendChild(h("p", { class: "meta", text: "Noch nichts – „Ich bringe die Pucks“, „Parke hinten“, „Bin 10 Min. später“. Die Kollegen bekommen Push." }));
+        kommentare.forEach(function (k) {
+          innen.appendChild(h("div", { class: "kandidat" }, [h("div", { text: k.text }),
+            h("div", { class: "meta" }, [k.name + " · " + new Date(k.angelegt).toLocaleString("de-DE", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }),
+              k.user_id === session.user.id ? h("button", { type: "button", class: "textknopf", style: "margin-left:8px", text: "löschen", onclick: function () {
+                sb.from("spielkommentare").delete().eq("id", k.id).then(function () { delete cache.geladen["k|" + kennung]; extrasLaden([spiel]).then(function () { spielExtras(spiel, ziel, istIch); var d = ziel.querySelector("details"); if (d) d.open = true; }); });
+              } }) : null])]));
+        });
+        var ki = h("input", { type: "text", placeholder: "Nachricht ans Gespann …", maxlength: "300" });
+        innen.appendChild(h("div", { class: "mg-form" }, [ki, h("button", { type: "button", class: "anfrage", text: "Ans Gespann schicken", onclick: function () {
+          var t = ki.value.trim(); if (!t) return;
+          var slugs = (spiel.gespann || []).map(function (g) { return g.slug; }).filter(Boolean).concat([profil.slug]);
+          sb.from("spielkommentare").insert({ user_id: session.user.id, slug: profil.slug, name: profil.name || profil.slug, kennung: kennung, beginn: spiel.beginn, paarung: spiel.paarung, gespann: slugs, text: t })
+            .then(function (r) { if (r.error) { meldung(fehlerText(r.error), "warn"); return; }
+              kurzMeldung("Geschickt ✓ – Push geht beim nächsten Lauf raus.", "gut"); delete cache.geladen["k|" + kennung];
+              extrasLaden([spiel]).then(function () { spielExtras(spiel, ziel, istIch); var d = ziel.querySelector("details"); if (d) d.open = true; }); });
+        } })]));
       }
 
       // Private Notiz
@@ -2274,5 +2363,6 @@ window.Mitglieder = (function () {
 
   return { oeffnen: oeffnen, bereit: bereit, angemeldet: angemeldet,
            sperrenAm: sperrenAm, gesuchAnlegen: gesuchAnlegen, offeneAbrechnungen: offeneAbrechnungen,
-           extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat, obmann: obmann, termine: termine };
+           extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat, obmann: obmann, termine: termine,
+           einstellungenSpeichern: einstellungenSpeichern, radar: radar, angebotMachen: angebotMachen };
 })();

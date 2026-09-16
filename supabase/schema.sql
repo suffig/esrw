@@ -534,3 +534,58 @@ alter table public.gesuche add constraint gesuche_status_check check (status in 
 alter table public.gesuche add column if not exists vereinbart_mit uuid;
 alter table public.gesuche add column if not exists vereinbart_name text;
 alter table public.gesuche add column if not exists vereinbart_gemeldet boolean not null default false;
+
+-- ======================================================================
+-- v9: Gespann-Notizen, Einstellungen im Konto, Test-Push je Geraet
+-- ======================================================================
+
+-- Kurze Nachrichten am Spiel, nur fuer das Gespann. Wer dazugehoert, steht
+-- in gespann (Slugs aus daten.json, inkl. Verfasser) - die Regel prueft den
+-- eigenen Slug aus dem Profil dagegen.
+create table if not exists public.spielkommentare (
+  id        uuid primary key default gen_random_uuid(),
+  user_id   uuid not null references auth.users (id) on delete cascade,
+  slug      text not null,
+  name      text not null,
+  kennung   text not null,
+  beginn    timestamptz not null,
+  paarung   text,
+  gespann   text[] not null default '{}',
+  text      text not null,
+  gemeldet  boolean not null default false,
+  angelegt  timestamptz not null default now()
+);
+create index if not exists spielkommentare_kennung on public.spielkommentare (kennung);
+alter table public.spielkommentare enable row level security;
+create or replace function public.mein_slug()
+returns text language sql stable security definer set search_path = public as $$
+  select slug from public.profile where id = auth.uid();
+$$;
+revoke all on function public.mein_slug() from public;
+grant execute on function public.mein_slug() to authenticated;
+drop policy if exists "Gespann liest Kommentare"  on public.spielkommentare;
+drop policy if exists "eigene Kommentare anlegen"  on public.spielkommentare;
+drop policy if exists "eigene Kommentare loeschen" on public.spielkommentare;
+create policy "Gespann liest Kommentare" on public.spielkommentare for select to authenticated
+  using (public.ist_freigeschaltet() and (user_id = auth.uid() or public.mein_slug() = any (gespann)));
+create policy "eigene Kommentare anlegen" on public.spielkommentare for insert
+  with check (auth.uid() = user_id and public.ist_freigeschaltet());
+create policy "eigene Kommentare loeschen" on public.spielkommentare for delete using (auth.uid() = user_id);
+
+-- Einstellungen (Schrift, Farbe, Karten-App, kompakt) im Konto, damit sie
+-- auf allen Geraeten gleich sind
+alter table public.profile add column if not exists einstellungen jsonb;
+
+-- Test-Push an ein bestimmtes Geraet: die App legt eine Zeile an, der
+-- Workflow schickt und loescht sie wieder
+create table if not exists public.push_test (
+  id        uuid primary key default gen_random_uuid(),
+  user_id   uuid not null references auth.users (id) on delete cascade,
+  abo_id    uuid not null references public.push_abos (id) on delete cascade,
+  angelegt  timestamptz not null default now()
+);
+alter table public.push_test enable row level security;
+drop policy if exists "eigene Tests anlegen" on public.push_test;
+drop policy if exists "eigene Tests lesen"   on public.push_test;
+create policy "eigene Tests anlegen" on public.push_test for insert with check (auth.uid() = user_id);
+create policy "eigene Tests lesen"   on public.push_test for select using (auth.uid() = user_id);

@@ -123,29 +123,48 @@
     if (!box._gesetzt) { box.open = !abo; box._gesetzt = true; }
     var lage = ("Notification" in window) ? Notification.permission : "";
     el("kalender-stand").textContent = (abo ? "abonniert ✓" : "noch nicht abonniert") + (lage === "granted" ? " · Mitteilungen an" : "");
+    if (aktuell && !box._pruefung) box.addEventListener("toggle", function () { if (box.open) feedPruefen(aktuell); });
+    box._pruefung = true;
+    if (box.open && aktuell) feedPruefen(aktuell);
   }
-  function einstellungenLaden() {
+  // Ob der Feed erreichbar und aktuell ist. Was das Handy daraus macht, sieht
+  // die Seite nicht - das steht nur im Kalender-Konto des Geraets.
+  var feedGeprueft = {};
+  function feedPruefen(p) {
+    var ziel = el("feed-pruefung");
+    if (feedGeprueft[p.slug]) { ziel.textContent = feedGeprueft[p.slug]; return; }
+    ziel.textContent = "Prüfe den Kalender-Link …";
+    fetch(feedUrl(p.slug, location.protocol) + "?" + Date.now()).then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); }).then(function (t) {
+      var n = (t.match(/BEGIN:VEVENT/g) || []).length, stempel = (t.match(/DTSTAMP:(\d{8}T\d{6}Z)/) || [])[1];
+      var wann = stempel ? new Date(stempel.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/, "$1-$2-$3T$4:$5:$6Z")).toLocaleString("de-DE", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }) : "?";
+      feedGeprueft[p.slug] = "Kalender-Link geprüft ✓ · " + n + (n === 1 ? " Termin" : " Termine") + " · letzte Änderung " + wann +
+        ". Ob dein Handy ihn abruft, zeigt nur das Handy: Einstellungen → Kalender → Accounts → Abo (Aktualisieren: stündlich).";
+      ziel.textContent = feedGeprueft[p.slug];
+    }).catch(function () { ziel.textContent = "Kalender-Link gerade nicht erreichbar – ohne Netz normal, sonst bitte später noch einmal."; });
+  }
+  function einstellungenLaden(nurAnwenden) {
     el("karten-app").value = lesen("karten") || "auto";
-    el("karten-app").addEventListener("change", function (e) { schreiben("karten", e.target.value === "auto" ? null : e.target.value); if (aktuell) zeigePerson(aktuell, true); toast("Karten-App: " + e.target.options[e.target.selectedIndex].text, ""); });
+    if (!nurAnwenden) el("karten-app").addEventListener("change", function (e) { schreiben("karten", e.target.value === "auto" ? null : e.target.value); if (aktuell) zeigePerson(aktuell, true); toast("Karten-App: " + e.target.options[e.target.selectedIndex].text, ""); einstellungenSync(); });
     var k = lesen("kompakt") === "1"; el("kompakt").checked = k; document.body.classList.toggle("kompakt", k);
-    el("kompakt").addEventListener("change", function (e) { schreiben("kompakt", e.target.checked ? "1" : null); document.body.classList.toggle("kompakt", e.target.checked); });
+    if (!nurAnwenden) el("kompakt").addEventListener("change", function (e) { schreiben("kompakt", e.target.checked ? "1" : null); document.body.classList.toggle("kompakt", e.target.checked); einstellungenSync(); });
     function schriftSetzen(stufe) {
       if (stufe === "normal" || !stufe) document.documentElement.removeAttribute("data-schrift"); else document.documentElement.setAttribute("data-schrift", stufe);
       Array.prototype.forEach.call(el("schrift").querySelectorAll("button"), function (b) { b.classList.toggle("aktiv", (b.getAttribute("data-stufe") === (stufe || "normal"))); });
     }
     schriftSetzen(lesen("schrift"));
-    Array.prototype.forEach.call(el("schrift").querySelectorAll("button"), function (b) {
-      b.addEventListener("click", function () { var st = b.getAttribute("data-stufe"); schreiben("schrift", st === "normal" ? null : st); schriftSetzen(st); filterHoehe(); });
+    if (!nurAnwenden) Array.prototype.forEach.call(el("schrift").querySelectorAll("button"), function (b) {
+      b.addEventListener("click", function () { var st = b.getAttribute("data-stufe"); schreiben("schrift", st === "normal" ? null : st); schriftSetzen(st); filterHoehe(); einstellungenSync(); });
     });
     function akzentSetzen(farbe) {
       if (!farbe || farbe === "blau") document.documentElement.removeAttribute("data-akzent"); else document.documentElement.setAttribute("data-akzent", farbe);
       Array.prototype.forEach.call(el("akzent").querySelectorAll("button"), function (b) { b.classList.toggle("aktiv", (b.getAttribute("data-akzent") === (farbe || "blau"))); });
     }
     akzentSetzen(lesen("akzent"));
-    Array.prototype.forEach.call(el("akzent").querySelectorAll("button"), function (b) {
-      b.addEventListener("click", function () { var f = b.getAttribute("data-akzent"); schreiben("akzent", f === "blau" ? null : f); akzentSetzen(f); });
+    if (!nurAnwenden) Array.prototype.forEach.call(el("akzent").querySelectorAll("button"), function (b) {
+      b.addEventListener("click", function () { var f = b.getAttribute("data-akzent"); schreiben("akzent", f === "blau" ? null : f); akzentSetzen(f); einstellungenSync(); });
     });
     el("ziel").value = lesen("ziel") || "";
+    if (nurAnwenden) return;
     el("stand").style.cursor = "pointer"; el("stand").title = "Antippen: neu laden";
     el("stand").addEventListener("click", function () { neuLaden().then(function () { toast("Aktualisiert", "gut"); }); });
     el("abo").addEventListener("click", function () { schreiben("abo-geklickt", "1"); setTimeout(function () { kalenderBoxStand(); onboardingStand(); }, 500); });
@@ -165,7 +184,11 @@
   var letzterStand = null;
   function netzAnzeigen() {
     var s = el("stand");
-    if (!navigator.onLine) { s.className = "stand alt"; s.textContent = "Offline – gespeicherter Stand" + (letzterStand ? " von " + letzterStand : ""); }
+    el("offline").classList.toggle("versteckt", !!navigator.onLine);
+    if (!navigator.onLine) {
+      s.className = "stand alt"; s.textContent = "Offline – gespeicherter Stand" + (letzterStand ? " von " + letzterStand : "");
+      el("offline-text").textContent = "Offline – Stand von " + (letzterStand || "?") + ". Kalender, Spielplan und Spielseiten gehen; Mitgliederbereich und Wetter brauchen Netz.";
+    }
     else if (daten) standAnzeigen(daten, letzterLauf);
   }
   window.addEventListener("online", netzAnzeigen);
@@ -330,7 +353,7 @@
     status.className = "status " + (lage === "an" ? "an" : "aus");
     if (lage === "an") {
       status.textContent = "an";
-      text.textContent = "Beim Öffnen der App bekommst du eine Mitteilung, wenn eine Einteilung dazugekommen ist oder sich geändert hat. Echtes Push auch bei geschlossener App gibt es im Mitgliederbereich.";
+      text.textContent = "Beim Öffnen der App bekommst du eine Mitteilung, wenn eine Einteilung dazugekommen ist oder sich geändert hat. Echtes Push auch bei geschlossener App: Mehr → Konto → Push.";
     } else if (lage === "fragen") {
       status.textContent = "aus";
       text.textContent = "Die App meldet sich dann, wenn eine Einteilung dazukommt oder sich ändert.";
@@ -485,6 +508,10 @@
 
     var kopf = el("spiel-kopf"); kopf.innerHTML = "";
     var h = document.createElement("div"); h.className = "spiel-kopf";
+    if (s.liga) {
+      var hue = (function () { var g = ligaGruppe(s.liga), hv = LIGA_FARBEN[g]; if (hv === undefined) { hv = 0; for (var i = 0; i < g.length; i++) hv = (hv * 31 + g.charCodeAt(i)) % 360; } return hv; })();
+      h.classList.add("liga-farbe"); h.style.setProperty("--liga-dunkel-1", "hsl(" + hue + ", 45%, 26%)"); h.style.setProperty("--liga-dunkel-2", "hsl(" + hue + ", 50%, 40%)");
+    }
     var w = document.createElement("div"); w.className = "wann";
     var t = tagTitel(d); w.textContent = t[0] + (t[1] ? " · " + t[1] : ""); h.appendChild(w);
     var z = document.createElement("div"); z.className = "zeit"; z.textContent = uhr(d) + " Uhr"; h.appendChild(z);
@@ -492,8 +519,11 @@
     var info = document.createElement("div"); info.className = "halle"; info.style.marginTop = "8px";
     info.appendChild(ikone("i-clock")); info.appendChild(document.createTextNode("Treffpunkt " + uhr(treff) + " Uhr" + (s.system >= 3 ? " · " + s.system + "er-System" : " · 2er-System")));
     h.appendChild(info);
+    var pillen = document.createElement("div"); pillen.className = "grosse-pillen";
+    if (s.liga) { var lp = document.createElement("span"); lp.textContent = s.liga; pillen.appendChild(lp); }
+    if (meins && s.rolle) { var rp = document.createElement("span"); rp.textContent = "Du: " + s.rolle + ((daten.rollen && daten.rollen[s.rolle]) ? " · " + daten.rollen[s.rolle] : ""); pillen.appendChild(rp); }
+    if (pillen.childNodes.length) h.appendChild(pillen);
     var ak = document.createElement("div"); ak.className = "aktionen";
-    if (s.liga) ak.appendChild(ligaPille(s.liga));
     if (s.ort) { var r = document.createElement("a"); r.href = kartenLink(s.ort); r.target = "_blank"; r.rel = "noopener"; r.appendChild(ikone("i-route")); r.appendChild(document.createTextNode("Route")); ak.appendChild(r); }
     var tb = teilenKnopf(s); tb.className = ""; tb.textContent = "Teilen"; ak.appendChild(tb);
     h.appendChild(ak);
@@ -572,7 +602,13 @@
   // -------------------------------------------------------- Dashboard-Kacheln
 
   function zeigeStartWoche(p) {
+    // Ohne kommendes Spiel gibt es keine Karte oben - dann steht der Streifen frei
     var ziel = el("start-woche"); ziel.innerHTML = "";
+    if (p.spiele.some(function (s) { return !s.vergangen; })) { ziel.classList.add("versteckt"); return; }
+    ziel.classList.remove("versteckt");
+    startWocheFuellen(ziel, p);
+  }
+  function startWocheFuellen(ziel, p) {
     var heute = new Date(); heute.setHours(0, 0, 0, 0);
     var jeTag = {};
     p.spiele.forEach(function (s) { var k = new Date(s.beginn).toDateString(); (jeTag[k] = jeTag[k] || []).push(s); });
@@ -595,16 +631,83 @@
     }
   }
 
+  function hochzaehlen(el, ziel) {
+    var start = performance.now(), dauer = 500;
+    function schritt(t) { var f = Math.min(1, (t - start) / dauer); el.textContent = Math.round(ziel * (1 - Math.pow(1 - f, 3))); if (f < 1) requestAnimationFrame(schritt); }
+    requestAnimationFrame(schritt);
+  }
+
+  // Vertretungs-Radar: fremde Gesuche und unbesetzte Spiele, die zu dir passen
+  function zeigeRadar(p) {
+    var ziel = el("radar"); ziel.innerHTML = "";
+    if (!profil || profil.slug !== p.slug || !sitzungVorhanden()) return;
+    var lauf = ziel._lauf = {};
+    ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
+      .then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.radar() : null; })
+      .then(function (r) {
+        if (!r || ziel._lauf !== lauf) return;
+        var meineTage = {}; p.spiele.forEach(function (s) { if (!s.vergangen) meineTage[new Date(s.beginn).toDateString()] = 1; });
+        function passt(beginn) {
+          var d = new Date(beginn), tag = d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2);
+          return r.sperren[tag] !== "nein" && !meineTage[d.toDateString()];
+        }
+        var treffer = [];
+        r.gesuche.forEach(function (g) {
+          if (!passt(g.beginn)) return;
+          var k = daten.hallen && daten.hallen[g.halle], km = k && r.heimat ? Math.round(kmZwischen(k, r.heimat)) : null;
+          if (km !== null && km > 60) return;
+          treffer.push({ art: "gesuch", g: g, km: km, beginn: g.beginn });
+        });
+        (daten.spiele || []).forEach(function (s) {
+          if (s.vergangen || s.besetzung.length || !passt(s.beginn)) return;
+          var k = daten.hallen && daten.hallen[s.halle], km = k && r.heimat ? Math.round(kmZwischen(k, r.heimat)) : null;
+          if (km === null || km > 40) return;
+          treffer.push({ art: "offen", s: s, km: km, beginn: s.beginn });
+        });
+        if (!treffer.length) return;
+        treffer.sort(function (a, b) { return a.beginn < b.beginn ? -1 : 1; });
+        var box = document.createElement("div"); box.className = "karte radar";
+        var hh = document.createElement("h4"); hh.appendChild(ikone("i-swap")); hh.appendChild(document.createTextNode("Vertretungs-Radar")); box.appendChild(hh);
+        var hint = document.createElement("p"); hint.className = "meta"; hint.style.margin = "0 0 6px";
+        hint.textContent = "Gesuche der Kollegen und unbesetzte Spiele in deiner Nähe an Tagen, an denen du frei bist.";
+        box.appendChild(hint);
+        treffer.slice(0, 5).forEach(function (t) {
+          var z = document.createElement("div"); z.className = "kandidat";
+          var kopf = document.createElement("div"); kopf.className = "kandidat-kopf";
+          var d = new Date(t.beginn);
+          var links = document.createElement("span"); links.style.minWidth = "0";
+          var b = document.createElement("b"); b.textContent = datumKurz(d) + " " + uhr(d) + " · " + (t.art === "gesuch" ? (t.g.liga ? t.g.liga + " " : "") + t.g.paarung : (t.s.liga ? t.s.liga + " " : "") + t.s.paarung);
+          links.appendChild(b); kopf.appendChild(links);
+          if (t.art === "gesuch") {
+            var kn = document.createElement("button"); kn.type = "button"; kn.className = "anfrage"; kn.textContent = r.meineAngebote[t.g.id] ? "gemeldet ✓" : "Ich kann";
+            kn.disabled = !!r.meineAngebote[t.g.id];
+            kn.addEventListener("click", function () { window.Mitglieder.angebotMachen(t.g.id).then(function (ok) { if (ok) { kn.textContent = "gemeldet ✓"; kn.disabled = true; } }); });
+            kopf.appendChild(kn);
+          } else {
+            var a = document.createElement("a"); a.className = "anfrage"; a.href = "#spiel/" + encodeURIComponent(kennungVon(t.s)); a.textContent = "Ansehen"; kopf.appendChild(a);
+          }
+          z.appendChild(kopf);
+          var meta = document.createElement("div"); meta.className = "meta";
+          meta.textContent = (t.art === "gesuch" ? t.g.name + " sucht Ersatz · " + (t.g.halle || "?") : "Noch unbesetzt auf esrw.de · " + (t.s.halle || "?")) + (t.km !== null ? " · ~" + t.km + " km" : "");
+          z.appendChild(meta); box.appendChild(z);
+        });
+        ziel.appendChild(box);
+      }).catch(function () {});
+  }
+
   function zeigeUebersicht(p) {
     zeigeStartWoche(p);
+    zeigeRadar(p);
     var ziel = el("uebersicht"); ziel.innerHTML = "";
     if (!profil || profil.slug !== p.slug) return;
     var heute = new Date(); heute.setHours(0, 0, 0, 0);
     var inSieben = p.spiele.filter(function (s) { var d = new Date(s.beginn); return d >= heute && d < new Date(heute.getTime() + 7 * 86400000); });
+    var kachelN = 0;
     function kachel(wert, label, href, markiert) {
       var a = document.createElement(href ? "a" : "div"); if (href) a.href = href;
-      var k = document.createElement("div"); k.className = "zahl karte" + (markiert ? " neu-markiert" : "");
+      var k = document.createElement("div"); k.className = "zahl karte" + (markiert ? " neu-markiert" : ""); k.style.setProperty("--i", kachelN++);
       var b = document.createElement("b"); b.textContent = wert; var sp = document.createElement("span"); sp.textContent = label;
+      if (typeof wert === "number" && wert > 0 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) hochzaehlen(b, wert);
       k.appendChild(b); k.appendChild(sp); a.appendChild(k); return a;
     }
     ziel.appendChild(kachel(inSieben.length, "Spiele in 7 Tagen" + (inSieben.length ? ": " + inSieben.map(function (s) { return wochentag[new Date(s.beginn).getDay()]; }).join(", ") : ""), "#plan"));
@@ -692,6 +795,7 @@
       ak.appendChild(ge);
     }
     h.appendChild(ak);
+    el("start-woche").classList.add("versteckt");
     if (kommend[1]) {
       var n2 = kommend[1], d2 = new Date(n2.beginn);
       var dn = document.createElement("div"); dn.className = "danach"; dn.appendChild(ikone("i-cal"));
@@ -702,9 +806,11 @@
     if (koord) { var wz = wetterZeile(koord, s.treffpunkt, "Wetter"); wz.classList.add("danach"); h.appendChild(wz); }
     h.classList.add("tippbar"); h.title = "Zum Spiel";
     h.addEventListener("click", function (ev) {
-      if (ev.target.closest("a")) return;
+      if (ev.target.closest("a, button")) return;
       location.hash = "spiel/" + encodeURIComponent(kennungVon(s));
     });
+    var wochenStreifen = document.createElement("div"); wochenStreifen.className = "woche start-woche"; h.appendChild(wochenStreifen);
+    startWocheFuellen(wochenStreifen, p);
     ziel.appendChild(h);
     if (profil && profil.slug === p.slug && s.halle) {
       ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) {
@@ -1356,7 +1462,7 @@
     var hs = document.createElement("small"); hs.textContent = "Tipp für Route, Tausch, Notiz"; h.appendChild(hs); ziel.appendChild(h);
     var istIch = !!(profil && profil.slug === p.slug);
     if (!kommend.length) ziel.appendChild(leerZustand("Zurzeit keine Einteilung. Der Kalender füllt sich von allein."));
-    else kommend.forEach(function (s) { ziel.appendChild(karte(s, p)); });
+    else kommend.forEach(function (s, i) { var k = karte(s, p); k.style.setProperty("--i", Math.min(i, 8)); ziel.appendChild(k); });
     if (gewesen.length) {
       var box = document.createElement("details"); box.className = "karte zuletzt-box";
       var sum = document.createElement("summary"); sum.className = "abschnitt"; sum.textContent = "Vergangene Spiele (" + gewesen.length + ")"; box.appendChild(sum);
@@ -1374,7 +1480,7 @@
       .then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.heimat() : null; })
       .then(function (hm) { if (hm) el("abfahrt-ics").classList.remove("versteckt"); }).catch(function () {});
     if (profil && profil.slug === p.slug) pruefeNeue(p, false);
-    if (!stillesNachladen && scrollMerker[location.hash] === undefined) window.scrollTo(0, 0);
+    if (!stillesNachladen && sprungZiel === null) window.scrollTo(0, 0);
   }
 
   function ansicht(name) {
@@ -1674,7 +1780,7 @@
     if (slug === "karte") { zeigeKarte(); return; }
     if (slug.indexOf("spiel/") === 0) { zeigeSpiel(decodeURIComponent(slug.slice(6))); return; }
     if (slug.indexOf("halle/") === 0) { zeigeHalle(slug.slice(6)); return; }
-    if (slug === "plan") { aktuell = null; ansicht("plan"); zeigePlan(); window.scrollTo(0, 0); return; }
+    if (slug === "plan") { aktuell = null; ansicht("plan"); zeigePlan(); if (sprungZiel === null) window.scrollTo(0, 0); return; }
     if (slug === "mitglieder" || slug.indexOf("mitglieder/") === 0) { zeigeMitglieder(slug.split("/")[1] || null); return; }
     // Links aus Supabase-Mails (Bestaetigung, Passwort vergessen) landen mit
     // Token in der Adresse - die verarbeitet der Mitgliederbereich
@@ -1697,7 +1803,26 @@
 
   // Nach dem Login im Mitgliederbereich: "Meine Spiele" auf den dort
   // gewaehlten Namen stellen, damit niemand zweimal gefragt wird.
+  function einstellungenSammeln() {
+    return { karten: lesen("karten") || null, schrift: lesen("schrift") || null, akzent: lesen("akzent") || null, kompakt: lesen("kompakt") || null, ziel: lesen("ziel") || null };
+  }
+  var syncTimer = null;
+  function einstellungenSync() {
+    clearTimeout(syncTimer);
+    syncTimer = setTimeout(function () {
+      if (!sitzungVorhanden() || !window.Mitglieder) return;
+      window.Mitglieder.einstellungenSpeichern(einstellungenSammeln()).catch(function () {});
+    }, 800);
+  }
+  function einstellungenAnwenden(e) {
+    if (!e) return;
+    var geaendert = false;
+    ["karten", "schrift", "akzent", "kompakt", "ziel"].forEach(function (k) { if ((lesen(k) || null) !== (e[k] || null)) { schreiben(k, e[k] || null); geaendert = true; } });
+    if (geaendert) { einstellungenLaden(true); themaAnwenden(); toast("Einstellungen vom Konto übernommen", ""); if (aktuell) zeigePerson(aktuell, true); }
+  }
   document.addEventListener("mg-profil", function (e) {
+    if (e.detail && e.detail.einstellungen) einstellungenAnwenden(e.detail.einstellungen);
+    else if (e.detail && sitzungVorhanden()) einstellungenSync();
     var slug = e.detail && e.detail.slug, p = slug && personMit(slug);
     if (!p || (profil && profil.slug === slug)) return;
     profil = { slug: p.slug, name: p.name, gesehen: {}, begonnen: false };
@@ -1705,6 +1830,7 @@
     toast("„Start“ zeigt jetzt " + p.name, "gut");
   });
   document.addEventListener("mg-zaehler", function (e) { leisteZaehler(e.detail || {}); });
+  document.addEventListener("mg-reiter", function () { if (!el("mitglieder").classList.contains("versteckt")) ansicht("mitglieder"); });
 
   // Punkt/Zahl am Reiter "Mitglieder": angemeldet, offene Gesuche, wartende Konten
   function leisteZaehler(z) {
@@ -1745,7 +1871,7 @@
   el("einstellungen-zurueck").addEventListener("click", function () { location.hash = "mehr"; });
   el("karte-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
   el("abfahrt-ics").addEventListener("click", function () { if (aktuell) abfahrtIcs(aktuell); });
-  el("ziel").addEventListener("change", function (e) { var v = parseInt(e.target.value, 10); schreiben("ziel", v > 0 ? String(v) : null); toast(v > 0 ? "Saisonziel: " + v + " Spiele" : "Saisonziel entfernt", "gut"); });
+  el("ziel").addEventListener("change", function (e) { var v = parseInt(e.target.value, 10); schreiben("ziel", v > 0 ? String(v) : null); toast(v > 0 ? "Saisonziel: " + v + " Spiele" : "Saisonziel entfernt", "gut"); einstellungenSync(); });
   el("halle-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = ""; });
   el("tab-meine").addEventListener("click", function () { if (location.hash === "" || location.hash === "#") ausHash(); else location.hash = ""; });
   el("plan-filter").addEventListener("input", zeigePlan);
@@ -1759,11 +1885,14 @@
   el("hoch").addEventListener("click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); });
   window.addEventListener("scroll", function () { el("hoch").classList.toggle("versteckt", window.scrollY < 700); }, { passive: true });
   // Sprung-Merker: zurueck von der Spielseite landet wieder an der alten Stelle
-  var scrollMerker = {};
+  var scrollMerker = {}, sprungZiel = null;
   window.addEventListener("hashchange", function (e) {
     try { var alt = new URL(e.oldURL).hash; if (alt && alt.indexOf("#spiel/") !== 0) scrollMerker[alt] = window.scrollY; } catch (x) {}
     var neu = location.hash;
-    if (scrollMerker[neu] !== undefined) { var y = scrollMerker[neu]; delete scrollMerker[neu]; setTimeout(function () { window.scrollTo(0, y); }, 60); }
+    if (scrollMerker[neu] !== undefined) {
+      sprungZiel = scrollMerker[neu]; delete scrollMerker[neu];
+      setTimeout(function () { if (sprungZiel !== null) { window.scrollTo(0, sprungZiel); sprungZiel = null; } }, 30);
+    }
   });
   window.addEventListener("hashchange", ausHash);
   el("plan-filter-knopf").addEventListener("click", function () { el("plan-filter-blatt").classList.toggle("versteckt"); filterHoehe(); });

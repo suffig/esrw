@@ -282,6 +282,44 @@ def main():
             except Exception:
                 pass
 
+    # Gespann-Notizen: die anderen im Gespann bekommen Bescheid
+    try:
+        neu = api(url, service, "spielkommentare?select=id,name,slug,paarung,beginn,gespann,text&gemeldet=eq.false") or []
+        if neu:
+            slug_zu_uid = {}
+            for p in api(url, service, "profile?select=id,slug&slug=in.(%s)" % ",".join(
+                    '"%s"' % g for k in neu for g in (k.get("gespann") or []))) or []:
+                slug_zu_uid[p["slug"]] = p["id"]
+            for k in neu:
+                for g in k.get("gespann") or []:
+                    uid = slug_zu_uid.get(g)
+                    if not uid or g == k.get("slug"):
+                        continue
+                    nachrichten.setdefault(uid, []).append((None, {
+                        "titel": "%s zum Spiel %s" % (k.get("name", "?").split(",")[-1].strip(), uhr(k["beginn"]) + " Uhr" if k.get("beginn") else ""),
+                        "text": (k.get("paarung", "") + ": " + (k.get("text") or ""))[:400],
+                        "url": "./#spiel/" + urllib.parse.quote(k.get("kennung") or "", safe="")}))
+                api(url, service, "spielkommentare?id=eq." + urllib.parse.quote(k["id"]), "PATCH", {"gemeldet": True})
+    except Exception as e:
+        print("Push: Gespann-Notizen nicht verarbeitet: %s" % str(e)[:120], file=sys.stderr)
+
+    # Test-Push an ein einzelnes Geraet
+    try:
+        tests = api(url, service, "push_test?select=id,user_id,abo_id") or []
+        for t in tests:
+            abo = api(url, service, "push_abos?select=id,user_id,endpoint,p256dh,auth&id=eq." + urllib.parse.quote(t["abo_id"]))
+            if abo:
+                a = abo[0]
+                try:
+                    webpush(subscription_info={"endpoint": a["endpoint"], "keys": {"p256dh": a["p256dh"], "auth": a["auth"]}},
+                            data=json.dumps({"titel": "Einteilungen: Test vom Server", "text": "Dieses Gerät bekommt Push-Nachrichten. Alles gut.", "url": "./#mitglieder/konto"}, ensure_ascii=False),
+                            vapid_private_key=vapid, vapid_claims={"sub": kontakt}, ttl=600)
+                except Exception as e:
+                    print("Push-Test fehlgeschlagen: %s" % str(e)[:120], file=sys.stderr)
+            api(url, service, "push_test?id=eq." + urllib.parse.quote(t["id"]), "DELETE")
+    except Exception as e:
+        print("Push: Tests nicht verarbeitet: %s" % str(e)[:120], file=sys.stderr)
+
     # Tauschboerse: Gesuch von selbst erledigt, wenn esrw.de jemand anderen
     # im Spiel fuehrt; Helfer bekommen Bescheid
     try:

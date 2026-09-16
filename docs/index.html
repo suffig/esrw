@@ -714,6 +714,39 @@
     .leiste button svg.i { padding:5px 16px; }
   }
 
+  /* Design 5: ruhigere Startseite, Offline, Animationen, Ligafarbe auf der Spielseite */
+  .offline { position:sticky; top:0; z-index:30; margin:0 -16px 10px; padding:8px 16px; background:var(--warn); color:#fff; font-size:.84rem; font-weight:700; display:flex; gap:8px; align-items:center; }
+  .uebersicht { grid-template-columns:repeat(3, minmax(0, 1fr)); gap:8px; }
+  .uebersicht .zahl { padding:10px 10px; }
+  .uebersicht .zahl b { font-size:1.25rem; }
+  .uebersicht .zahl span { font-size:.68rem; line-height:1.25; }
+  .uebersicht a[style*="grid-column"] .zahl b { font-size:.95rem; }
+  .start-woche { margin:0; padding:0; }
+  .held .start-woche { margin-top:12px; padding-top:10px; border-top:1px solid rgba(255,255,255,.2); }
+  .held .start-woche button { background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.18); color:#fff; }
+  .held .start-woche button.heute { border-color:#fff; }
+  .held .start-woche button i { background:rgba(255,255,255,.7); }
+  .held .start-woche button i.ich { background:#fff; width:7px; height:7px; }
+  .held .start-woche button i.keins { background:transparent; }
+  .kalender-box:not([open]) { margin-bottom:10px; }
+  .kalender-box:not([open]) > summary { padding:9px 0; font-size:.92rem; }
+  .radar { padding:12px 14px; margin-bottom:12px; }
+  .radar h4 { margin:0 0 6px; font-size:.95rem; display:flex; gap:6px; align-items:center; }
+  .radar .kandidat-kopf { gap:8px; }
+  .radar .kandidat .meta { font-size:.8rem; }
+  .spiel-kopf.liga-farbe { background:linear-gradient(135deg, var(--liga-dunkel-1) 0%, var(--liga-dunkel-2) 100%); }
+  .spiel-kopf .grosse-pillen { display:flex; gap:8px; margin:8px 0 2px; flex-wrap:wrap; }
+  .spiel-kopf .grosse-pillen span { background:rgba(255,255,255,.18); color:#fff; border:1px solid rgba(255,255,255,.3); border-radius:99px; padding:4px 12px; font-weight:800; font-size:.8rem; letter-spacing:.03em; }
+  @media (prefers-reduced-motion: no-preference) {
+    section { animation:seite-rein .22s ease-out; }
+    #spiel.versteckt { animation:none; }
+    #spiel { animation:seite-slide .24s ease-out; }
+    @keyframes seite-rein { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+    @keyframes seite-slide { from { opacity:0; transform:translateX(24px); } to { opacity:1; transform:none; } }
+    .spiel.karte, .gesuch.karte, .zahl.karte { animation:karte-rein .32s ease-out both; animation-delay:calc(var(--i, 0) * 45ms); }
+    @keyframes karte-rein { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+  }
+
   /* Design 4: Schnellfilter, Nach-oben, Wochenansicht, kompakte Abrechnung, Mini-Kalender */
   .schnell { margin:2px 0 4px; }
   .schnell .chip { white-space:nowrap; }
@@ -804,6 +837,7 @@
 </header>
 
 <main>
+  <div class="offline versteckt" id="offline"><svg class="i"><use href="#i-bell"/></svg><span id="offline-text">Offline – gespeicherter Stand</span></div>
   <div class="neu karte versteckt" id="neu">
     <div class="kopfzeile"><b>Neu in der App</b><button type="button" class="textknopf" id="neu-weg">Verstanden</button></div>
     <ul id="neu-liste"></ul>
@@ -883,6 +917,7 @@
     <div class="woche start-woche" id="start-woche"></div>
     <div id="held"></div>
     <div id="uebersicht" class="uebersicht"></div>
+    <div id="radar"></div>
     <div id="nachtrag"></div>
 
     <details class="karte kalender-box" id="kalender-box" open>
@@ -895,6 +930,7 @@
           <button id="teilen" class="versteckt">Teilen</button>
         </div>
         <button type="button" class="mg-neben versteckt" id="abfahrt-ics" style="width:100%;margin-top:8px">Kalenderdatei mit Abfahrtsalarm laden</button>
+        <p class="meta" id="feed-pruefung" style="margin:10px 0 0"></p>
     <div class="melde unterpunkt versteckt" id="melde">
       <h4><svg class="i"><use href="#i-bell"/></svg> Benachrichtigungen <span class="status" id="melde-status"></span></h4>
       <p id="melde-text"></p>
@@ -1030,6 +1066,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=25"></script>
+<script src="app.js?v=26"></script>
 </body>
 </html>
