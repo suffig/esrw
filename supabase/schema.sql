@@ -480,3 +480,41 @@ insert into public.profile (id, email)
 --
 -- Pruefen:
 -- select email, slug, admin, freigeschaltet from public.profile;
+
+-- ======================================================================
+-- v7: Ankuendigungen, Obmann-Adresse, Gesuche automatisch erledigt
+-- ======================================================================
+
+-- Ankuendigungen vom Admin an alle Mitglieder (Lehrgang, Regeltest, Sitzung)
+create table if not exists public.ankuendigungen (
+  id        uuid primary key default gen_random_uuid(),
+  user_id   uuid not null references auth.users (id) on delete cascade,
+  name      text not null,
+  titel     text not null,
+  text      text not null,
+  wichtig   boolean not null default false,
+  bis       date,                              -- danach ausgeblendet (optional)
+  push      boolean not null default false,    -- auch als Push an alle
+  push_gesendet timestamptz,                   -- vom Workflow gesetzt
+  angelegt  timestamptz not null default now(),
+  geaendert timestamptz not null default now()
+);
+alter table public.ankuendigungen enable row level security;
+drop policy if exists "Ankuendigungen lesen"    on public.ankuendigungen;
+drop policy if exists "Admin schreibt Ankuendigungen"  on public.ankuendigungen;
+drop policy if exists "Admin aendert Ankuendigungen"   on public.ankuendigungen;
+drop policy if exists "Admin loescht Ankuendigungen"   on public.ankuendigungen;
+create policy "Ankuendigungen lesen" on public.ankuendigungen for select to authenticated using (public.ist_freigeschaltet());
+create policy "Admin schreibt Ankuendigungen" on public.ankuendigungen for insert with check (public.ist_admin() and auth.uid() = user_id);
+create policy "Admin aendert Ankuendigungen"  on public.ankuendigungen for update using (public.ist_admin());
+create policy "Admin loescht Ankuendigungen"  on public.ankuendigungen for delete using (public.ist_admin());
+drop trigger if exists ankuendigungen_geaendert on public.ankuendigungen;
+create trigger ankuendigungen_geaendert before update on public.ankuendigungen
+  for each row execute function public.setze_geaendert();
+
+-- E-Mail des Obmanns fuer die Monatsabrechnung per Mail (je Nutzer, frei)
+alter table public.profile add column if not exists obmann_email text;
+
+-- Gesuche: wann erledigt, und ob die Helfer schon benachrichtigt wurden
+alter table public.gesuche add column if not exists erledigt_am timestamptz;
+alter table public.gesuche add column if not exists gemeldet boolean not null default false;

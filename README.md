@@ -224,6 +224,14 @@ und „In ~30 Min. losfahren“ (mit berechneter Strecke).
 selbst (km aus der gemerkten Strecke, Vergütung nach Ordnung); übrig bleibt
 „bezahlt“ abhaken. Filter „nur unbezahlte / unvollständige“, Drucken.
 
+**Ankündigungen**: Admin → Info, optional als Push an alle. **Monatsabrechnung
+per E-Mail** an den Obmann, **Fahrtenbuch** zum Drucken, **Saison-Rückblick**
+als Bild. Gesuche in der Tauschbörse erledigen sich von selbst, sobald
+esrw.de jemand anderen führt. **Hallen-Seite** je Halle (Adresse, Route,
+Spiele, Hinweise). Karten-Links passen sich dem Handy an (Google Maps auf
+Android), Adresse kopieren, Wochenleiste und Liga-Farben im Spielplan,
+Onboarding für neue Kollegen.
+
 **Spielplan**: Karten, Liste oder Monatsraster (eigene Spiele, unbesetzte
 Spiele und Rest als Punkte, Tag antippen), Filter „nur unbesetzte“, Liga-Chips.
 Auf breiten Bildschirmen zwei Spalten. Der Workflow-Schritt `push_senden.py`

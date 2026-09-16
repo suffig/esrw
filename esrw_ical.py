@@ -993,6 +993,7 @@ def main():
         "spieldauer_minuten": cfg["spieldauer_minuten"],
         # Koordinaten je Halle - die Webseite schaetzt daraus, wer in der
         # Naehe eines Spiels zu Hause ist (Tauschvorschlaege)
+        "adressen": {h["name"]: h.get("adresse", "") for h in venues["hallen"].values()},
         "hallen": {h["name"]: h["koordinaten"] for h in venues["hallen"].values()
                    if h.get("koordinaten")},
         "personen": [{

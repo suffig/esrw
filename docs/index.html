@@ -86,7 +86,7 @@
   .held { background:linear-gradient(135deg, #0f3d6e 0%, #1d5a99 100%); color:#fff;
           border-radius:18px; padding:18px 18px 16px; margin-bottom:12px;
           box-shadow:var(--held-schatten); position:relative; overflow:hidden; }
-  .held .wann { font-size:.78rem; font-weight:700; opacity:.85; text-transform:uppercase; letter-spacing:.08em; }
+  .held .wann { font-size:.78rem; font-weight:700; opacity:.85; text-transform:uppercase; letter-spacing:.08em; padding-right:56px; }
   .held .zeit { font-size:2rem; font-weight:800; letter-spacing:-.03em; line-height:1.1; margin:4px 0 2px; }
   .held .paarung { font-size:1.05rem; font-weight:700; margin:0; }
   .held .halle { opacity:.9; font-size:.9rem; margin-top:6px; display:flex; gap:6px; align-items:center; }
@@ -357,6 +357,76 @@
     .monat .zelle { aspect-ratio:auto; min-height:64px; }
   }
 
+  /* Kalender-Box */
+  .kalender-box { padding:0 14px; margin-bottom:12px; }
+  .kalender-box > summary { list-style:none; cursor:pointer; padding:12px 0; display:flex; justify-content:space-between; align-items:center; font-weight:800; }
+  .kalender-box > summary::-webkit-details-marker { display:none; }
+  .kalender-box > summary small { color:var(--dim); font-weight:600; font-size:.78rem; }
+  .kalender-box > summary::after { content:"›"; color:var(--dim); transform:rotate(90deg); margin-left:8px; font-size:1.2rem; }
+  .kalender-box[open] > summary::after { transform:rotate(-90deg); }
+  .kalender-innen { padding-bottom:12px; }
+  .unterpunkt { border-top:1px solid var(--linie); margin-top:12px; padding-top:10px; }
+  .melde.unterpunkt { padding:10px 0 0; }
+  details.unterpunkt summary { cursor:pointer; padding:4px 0; font-weight:700; font-size:.95rem; list-style:none; display:flex; justify-content:space-between; }
+  details.unterpunkt summary::-webkit-details-marker { display:none; }
+  details.unterpunkt summary::after { content:"›"; color:var(--dim); transform:rotate(90deg); }
+  details.unterpunkt[open] summary::after { transform:rotate(-90deg); }
+
+  /* Onboarding */
+  .onboarding { padding:12px 14px; margin-bottom:12px; border-color:var(--akzent); }
+  .onboarding ol { list-style:none; margin:8px 0 0; padding:0; }
+  .onboarding li { display:flex; gap:10px; align-items:flex-start; padding:6px 0; }
+  .onboarding li small { display:block; color:var(--dim); font-size:.8rem; }
+  .ob-nr { flex:none; width:24px; height:24px; border-radius:50%; background:var(--akzent-hell); color:var(--akzent); font-size:.8rem; font-weight:800; display:inline-flex; align-items:center; justify-content:center; }
+  .onboarding li.fertig .ob-nr { background:var(--gut); color:#fff; }
+  .onboarding li.fertig b { text-decoration:line-through; color:var(--dim); }
+
+  /* Adresse kopieren, Hallen-Link */
+  .meta .kopier { margin-left:6px; font-size:.75rem; }
+  a.hallenlink { color:inherit; text-decoration:underline; text-decoration-color:var(--linie); text-underline-offset:3px; }
+  a.hallenlink:hover { text-decoration-color:var(--akzent); }
+
+  /* Liga-Farben */
+  .liga[data-farbe] { border-color:transparent; }
+
+  /* Wochenleiste im Spielplan */
+  .woche { display:flex; gap:6px; overflow-x:auto; padding:6px 0 4px; scrollbar-width:none; }
+  .woche::-webkit-scrollbar { display:none; }
+  .woche button { flex:none; width:44px; border:1px solid var(--linie); background:var(--karte); color:var(--text); border-radius:12px; padding:5px 0 4px; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:2px; font-size:.7rem; font-weight:700; }
+  .woche button b { font-size:.95rem; font-weight:800; }
+  .woche button.heute { border-color:var(--akzent); color:var(--akzent); }
+  .woche button i { width:5px; height:5px; border-radius:50%; background:var(--dim); }
+  .woche button i.ich { background:var(--akzent); }
+  .woche button i.leer { background:transparent; }
+
+  /* Einstellungen im Fuss */
+  .einstellungen { display:flex; flex-wrap:wrap; gap:8px 18px; margin-bottom:12px; font-size:.82rem; color:var(--dim); font-weight:600; }
+  .einstellungen label { display:inline-flex; align-items:center; gap:6px; }
+  .einstellungen select { font:inherit; color:var(--text); background:var(--karte); border:1px solid var(--linie); border-radius:8px; padding:3px 6px; }
+  body.kompakt .spiel { padding:9px 11px; margin-bottom:6px; }
+  body.kompakt .meta { font-size:.8rem; }
+  body.kompakt .paarung { font-size:.95rem; margin:3px 0 2px; }
+  body.kompakt .held { padding:14px 14px 12px; }
+  body.kompakt .zahl { padding:8px 6px; }
+  body.kompakt .abschnitt { margin:16px 0 8px; }
+
+  /* Hallen-Seite */
+  #halle-strecke .hinweis { margin:0 0 12px; }
+
+  /* Rueckblick */
+  .rueckblick-knopf { margin-top:10px; }
+  .rueckblick-bild { width:100%; border-radius:12px; margin-top:10px; display:block; }
+
+  /* Fahrtenbuch */
+  .fahrtenbuch table { width:100%; border-collapse:collapse; font-size:.85rem; }
+  .fahrtenbuch th, .fahrtenbuch td { text-align:left; padding:6px 6px; border-bottom:1px solid var(--linie); vertical-align:top; }
+  .fahrtenbuch th { font-size:.7rem; text-transform:uppercase; letter-spacing:.06em; color:var(--dim); }
+  .fahrtenbuch td.zahl, .fahrtenbuch th.zahl { text-align:right; white-space:nowrap; }
+  @media print {
+    body.druck-fahrtenbuch main > *:not(#mitglieder), body.druck-fahrtenbuch .kopf, body.druck-fahrtenbuch #mitglieder > *:not(.mg-inhalt), body.druck-fahrtenbuch .mg-inhalt > *:not(.fahrtenbuch) { display:none !important; }
+    .fahrtenbuch .zweit { display:none !important; }
+  }
+
   /* Untere Leiste */
   .leiste { position:fixed; left:0; right:0; bottom:0; z-index:10;
             background:var(--karte); border-top:1px solid var(--linie);
@@ -464,6 +534,14 @@
     <div class="kopfzeile"><b>Neu in der App</b><button type="button" class="textknopf" id="neu-weg">Verstanden</button></div>
     <ul id="neu-liste"></ul>
   </div>
+  <div class="onboarding karte versteckt" id="onboarding">
+    <div class="kopfzeile"><b>In drei Schritten startklar</b><button type="button" class="textknopf" id="onboarding-weg">Ausblenden</button></div>
+    <ol>
+      <li id="ob-1"><span class="ob-nr">1</span><span><b>Namen wählen</b><small>Unten in der Liste antippen – das ist dein Profil auf diesem Gerät.</small></span></li>
+      <li id="ob-2"><span class="ob-nr">2</span><span><b>Kalender abonnieren</b><small>Ein Tipp auf „Im Kalender abonnieren“, danach kommen neue Spiele von allein aufs Handy.</small></span></li>
+      <li id="ob-3"><span class="ob-nr">3</span><span><b>Konto anlegen</b><small>Reiter „Mitglieder“: Abrechnung, Tauschbörse, Push – nach Freischaltung durch den Betreiber.</small></span></li>
+    </ol>
+  </div>
   <div class="install karte versteckt" id="install">
     <img src="icon-192.png" alt="" width="40" height="40">
     <p><b>Als App aufs Handy</b><span id="install-text"></span></p>
@@ -488,6 +566,7 @@
         <span class="schalter" id="plan-zaehler"></span>
       </div>
     </div>
+    <div class="woche" id="plan-woche"></div>
     <div class="ligen" id="plan-ligen"></div>
     <div id="plan-monat" class="versteckt"></div>
     <div id="plan-liste"></div>
@@ -519,23 +598,21 @@
     <div id="held"></div>
     <div id="nachtrag"></div>
 
-    <a class="abo" id="abo" href="#"><svg class="i"><use href="#i-cal"/></svg> Im Kalender abonnieren</a>
-    <div class="zweit">
-      <button id="kopieren">Link kopieren</button>
-      <button id="laden">Einmalig laden</button>
-      <button id="teilen" class="versteckt">Teilen</button>
-    </div>
-
-    <div id="spiele"></div>
-    </div>
-    <div class="spalte-seite">
-    <div class="melde karte versteckt" id="melde">
+    <details class="karte kalender-box" id="kalender-box" open>
+      <summary><span><svg class="i"><use href="#i-cal"/></svg> Kalender</span><small id="kalender-stand">noch nicht abonniert</small></summary>
+      <div class="kalender-innen">
+        <a class="abo" id="abo" href="#"><svg class="i"><use href="#i-cal"/></svg> Im Kalender abonnieren</a>
+        <div class="zweit">
+          <button id="kopieren">Link kopieren</button>
+          <button id="laden">Einmalig laden</button>
+          <button id="teilen" class="versteckt">Teilen</button>
+        </div>
+    <div class="melde unterpunkt versteckt" id="melde">
       <h4><svg class="i"><use href="#i-bell"/></svg> Benachrichtigungen <span class="status" id="melde-status"></span></h4>
       <p id="melde-text"></p>
       <button id="melde-knopf" class="haupt versteckt"></button>
     </div>
-
-    <details id="anleitung" class="karte">
+    <details id="anleitung" class="unterpunkt">
       <summary>Wie abonniere ich das?</summary>
       <p><strong>iPhone / iPad</strong></p>
       <ol>
@@ -554,6 +631,13 @@
       </ol>
       <p>Der Kalender ist nur lesend. Neue Einteilungen, Absetzungen und Zeitänderungen kommen von allein nach.</p>
     </details>
+      </div>
+    </details>
+
+    <div id="spiele"></div>
+    </div>
+    <div class="spalte-seite">
+
 
     <div id="statistik"></div>
     <details id="saison" class="karte versteckt">
@@ -564,10 +648,27 @@
     </div>
   </section>
 
+  <!-- Hallen-Seite: Adresse, Route, Spiele dort, Hinweise -->
+  <section id="halle" class="versteckt">
+    <div class="profilzeile karte">
+      <span><b id="halle-name"></b><small id="halle-adresse"></small></span>
+      <button class="textknopf" id="halle-zurueck">Zurück</button>
+    </div>
+    <div class="zweit" id="halle-knoepfe"></div>
+    <div id="halle-strecke"></div>
+    <div id="halle-hinweise"></div>
+    <h3 class="abschnitt">Spiele in dieser Halle</h3>
+    <div id="halle-spiele"></div>
+  </section>
+
   <!-- Mitgliederbereich: Konto, Abrechnung, Tauschbörse. Logik in mitglieder.js -->
   <section id="mitglieder" class="versteckt"></section>
 
   <footer>
+    <div class="einstellungen">
+      <label>Karten-App <select id="karten-app"><option value="auto">automatisch</option><option value="apple">Apple Karten</option><option value="google">Google Maps</option></select></label>
+      <label><input type="checkbox" id="kompakt"> kompakte Ansicht</label>
+    </div>
     <p id="fuss"></p>
     <p>Alle Spiele als Kalender: <a id="alle" href="feeds/alle.ics">alle.ics</a><br>
        Daten von <a id="quelle" href="https://www.esrw.de/einteilungen.html" target="_blank" rel="noopener">esrw.de</a> – dort steht, was gilt.</p>
@@ -583,6 +684,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=16"></script>
+<script src="app.js?v=18"></script>
 </body>
 </html>

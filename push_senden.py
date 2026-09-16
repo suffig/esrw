@@ -126,6 +126,30 @@ def erinnerungen(person, profil, jetzt, schon):
     return heraus
 
 
+def gesuche_pflegen(url, service, daten, jetzt, nachrichten):
+    """Offene Gesuche schliessen, sobald esrw.de den Suchenden nicht mehr im
+    Spiel fuehrt; Helfer erledigter Gesuche benachrichtigen."""
+    spiele_von = {s["beginn"] + "|" + s["paarung"]: s for s in daten.get("spiele", [])}
+    offen = api(url, service, "gesuche?select=id,slug,kennung&status=eq.offen") or []
+    for g in offen:
+        s = spiele_von.get(g["kennung"])
+        if not s or not s.get("besetzung"):
+            continue
+        if all(b.get("slug") != g["slug"] for b in s["besetzung"]):
+            api(url, service, "gesuche?id=eq." + urllib.parse.quote(g["id"]), "PATCH",
+                {"status": "erledigt", "erledigt_am": jetzt.astimezone(timezone.utc).isoformat()})
+    zu_melden = api(url, service, "gesuche?select=id,name,paarung,beginn&status=eq.erledigt&gemeldet=eq.false") or []
+    for g in zu_melden:
+        helfer = api(url, service, "angebote?select=user_id&gesuch_id=eq." + urllib.parse.quote(g["id"])) or []
+        for a in helfer:
+            nachrichten.setdefault(a["user_id"], []).append((None, {
+                "titel": "Gesuch erledigt",
+                "text": "%s hat für %s (%s Uhr) Ersatz gefunden – danke fürs Anbieten." % (
+                    g.get("name", "?"), g.get("paarung", ""), uhr(g["beginn"]) if g.get("beginn") else "?"),
+                "url": "./#mitglieder/tausch"}))
+        api(url, service, "gesuche?id=eq." + urllib.parse.quote(g["id"]), "PATCH", {"gemeldet": True})
+
+
 def main():
     url = os.environ.get("SUPABASE_URL", "").strip()
     service = os.environ.get("SUPABASE_SERVICE_KEY", "").strip()
@@ -176,6 +200,24 @@ def main():
             liste.extend(erinnerungen(personen[slug], profil, jetzt, schon.get(uid, set())))
         if liste:
             nachrichten[uid] = liste
+    # Ankuendigungen vom Admin, die als Push markiert sind - an alle
+    ank = []
+    try:
+        ank = api(url, service, "ankuendigungen?select=id,titel,text&push=eq.true&push_gesendet=is.null") or []
+    except Exception as e:
+        print("Push: Ankuendigungen nicht lesbar: %s" % str(e)[:120], file=sys.stderr)
+    for a in ank:
+        for uid in ids:
+            nachrichten.setdefault(uid, []).append((None, {
+                "titel": "Ankündigung: " + a["titel"], "text": (a.get("text") or "")[:900], "url": "./#mitglieder/info"}))
+
+    # Tauschboerse: Gesuch von selbst erledigt, wenn esrw.de jemand anderen
+    # im Spiel fuehrt; Helfer bekommen Bescheid
+    try:
+        gesuche_pflegen(url, service, daten, jetzt, nachrichten)
+    except Exception as e:
+        print("Push: Tauschboerse nicht gepflegt: %s" % str(e)[:120], file=sys.stderr)
+
     if not nachrichten:
         print("Push: nichts zu melden.")
         return 0
@@ -206,6 +248,13 @@ def main():
             except Exception as e:
                 # Netzfehler o.ae. - ein einzelnes Abo darf den Lauf nicht abbrechen
                 print("Push an %s nicht moeglich: %s" % (abo["user_id"][:8], str(e)[:120]), file=sys.stderr)
+
+    if ank:
+        try:
+            api(url, service, "ankuendigungen?id=in.(%s)" % ",".join(a["id"] for a in ank), "PATCH",
+                {"push_gesendet": jetzt.astimezone(timezone.utc).isoformat()})
+        except Exception as e:
+            print("Push: Ankuendigung nicht als gesendet markiert: %s" % str(e)[:120], file=sys.stderr)
 
     # Erinnerungen als verschickt merken; alte Eintraege wegraeumen
     if neu_gemerkt:

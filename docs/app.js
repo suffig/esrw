@@ -6,12 +6,12 @@
   var basis = location.href.split("#")[0].split("?")[0].replace(/index\.html$/, "").replace(/\/?$/, "/");
 
   // Wird einmal je Fassung gezeigt, damit die Kollegen neue Funktionen finden.
-  var NEUIGKEITEN = { version: "2026-09-16", punkte: [
-    "Spielplan als Monatsraster, Filter „nur unbesetzte“ und Liga-Chips",
-    "Unter jedem Spiel: Hallen-Hinweise, Kontakt zum Gespann, Fahrgemeinschaft, private Notiz (angemeldet)",
-    "Abrechnung füllt sich nach dem Spiel von selbst – nur noch „bezahlt“ abhaken",
-    "Karte oben zeigt die Abfahrtszeit, Push erinnert am Spieltag",
-    "Neue Konten werden vom Betreiber freigeschaltet; Konto löschen und Datenexport unter Konto"
+  var NEUIGKEITEN = { version: "2026-09-16b", punkte: [
+    "Hallen-Seite: Tipp auf einen Hallennamen zeigt Adresse, Route, alle Spiele dort und Hinweise",
+    "Spielplan: Wochenleiste zum Springen, Ligen farbig, Monatsraster mit Liga-Punkten",
+    "Mitglieder → Info: Ankündigungen vom Betreiber (Lehrgang, Regeltest, Sitzung)",
+    "Abrechnung: Monat per E-Mail an den Obmann, Fahrtenbuch zum Drucken",
+    "Statistik: „Meine Saison als Bild teilen“ · Google Maps auf Android · Adresse kopieren"
   ] };
   var daten = null, aktuell = null, profil = null;
   var el = function (id) { return document.getElementById(id); };
@@ -97,8 +97,36 @@
   }
   window.zeigeToast = toast;
 
+  function onboardingStand() {
+    var box = el("onboarding");
+    if (lesen("onboarding-weg") === "1") { box.classList.add("versteckt"); return; }
+    var s1 = !!(profil && profil.slug), s2 = lesen("abo-geklickt") === "1", s3 = sitzungVorhanden();
+    if (s1 && s2 && s3) { box.classList.add("versteckt"); return; }
+    el("ob-1").classList.toggle("fertig", s1); el("ob-2").classList.toggle("fertig", s2); el("ob-3").classList.toggle("fertig", s3);
+    box.classList.remove("versteckt");
+    el("onboarding-weg").onclick = function () { schreiben("onboarding-weg", "1"); box.classList.add("versteckt"); };
+  }
+  function kalenderBoxStand() {
+    var abo = lesen("abo-geklickt") === "1";
+    var box = el("kalender-box");
+    if (!box._gesetzt) { box.open = !abo; box._gesetzt = true; }
+    var lage = ("Notification" in window) ? Notification.permission : "";
+    el("kalender-stand").textContent = (abo ? "abonniert ✓" : "noch nicht abonniert") + (lage === "granted" ? " · Mitteilungen an" : "");
+  }
+  function einstellungenLaden() {
+    el("karten-app").value = lesen("karten") || "auto";
+    el("karten-app").addEventListener("change", function (e) { schreiben("karten", e.target.value === "auto" ? null : e.target.value); if (aktuell) zeigePerson(aktuell, true); toast("Karten-App: " + e.target.options[e.target.selectedIndex].text, ""); });
+    var k = lesen("kompakt") === "1"; el("kompakt").checked = k; document.body.classList.toggle("kompakt", k);
+    el("kompakt").addEventListener("change", function (e) { schreiben("kompakt", e.target.checked ? "1" : null); document.body.classList.toggle("kompakt", e.target.checked); });
+    el("stand").style.cursor = "pointer"; el("stand").title = "Antippen: neu laden";
+    el("stand").addEventListener("click", function () { neuLaden().then(function () { toast("Aktualisiert", "gut"); }); });
+    el("abo").addEventListener("click", function () { schreiben("abo-geklickt", "1"); setTimeout(function () { kalenderBoxStand(); onboardingStand(); }, 500); });
+  }
+
   function zeigeNeu() {
     var box = el("neu");
+    // Neulinge bekommen das Onboarding, nicht die Aenderungsliste
+    if (!profil || !profil.slug) { schreiben("neu-gesehen", NEUIGKEITEN.version); box.classList.add("versteckt"); return; }
     if (lesen("neu-gesehen") === NEUIGKEITEN.version) { box.classList.add("versteckt"); return; }
     var ul = el("neu-liste"); ul.innerHTML = "";
     NEUIGKEITEN.punkte.forEach(function (t) { var li = document.createElement("li"); li.textContent = t; ul.appendChild(li); });
@@ -114,6 +142,54 @@
   }
   window.addEventListener("online", netzAnzeigen);
   window.addEventListener("offline", netzAnzeigen);
+
+  // Karten-App: Android-Handys haben selten Apple Karten
+  function kartenApp() {
+    var w = lesen("karten") || "auto";
+    if (w !== "auto") return w;
+    return /Android/i.test(navigator.userAgent) ? "google" : "apple";
+  }
+  function kartenLink(ort) {
+    return kartenApp() === "google"
+      ? "https://www.google.com/maps/dir/?api=1&destination=" + encodeURIComponent(ort)
+      : "https://maps.apple.com/?daddr=" + encodeURIComponent(ort);
+  }
+  function kopierKnopf(text, was) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "textknopf kopier"; b.textContent = "kopieren";
+    b.title = (was || "Adresse") + " kopieren";
+    b.addEventListener("click", function (ev) {
+      ev.preventDefault(); ev.stopPropagation();
+      if (navigator.clipboard) navigator.clipboard.writeText(text).then(function () { toast((was || "Adresse") + " kopiert ✓", "gut"); }, function () { prompt("Kopieren:", text); });
+      else prompt("Kopieren:", text);
+    });
+    return b;
+  }
+  function hallenSlug(name) { return ohneZeichen(name).replace(/\s+/g, "-"); }
+  function halleVonSlug(slug) {
+    var namen = Object.keys(daten.hallen || {}).concat(Object.keys(daten.adressen || {}));
+    (daten.spiele || []).forEach(function (sp) { if (sp.halle && namen.indexOf(sp.halle) < 0) namen.push(sp.halle); });
+    return namen.filter(function (n) { return hallenSlug(n) === slug; })[0] || null;
+  }
+  function hallenLink(name) {
+    if (!name) { var sp = document.createElement("span"); sp.textContent = "Halle unbekannt"; return sp; }
+    var a = document.createElement("a"); a.className = "hallenlink"; a.href = "#halle/" + hallenSlug(name); a.textContent = name; return a;
+  }
+
+  // Feste Farbe je Ligagruppe, damit U13 / RL / Frauen auf einen Blick unterscheidbar sind
+  var LIGA_FARBEN = { U7: 195, U9: 175, U11: 150, U13: 120, U15: 90, U17: 60, U20: 35, RL: 260, LL: 290, BL: 320, DNL: 10, DA: 0, Frauen: 340 };
+  function ligaFarbe(liga) {
+    var g = ligaGruppe(liga), hue = LIGA_FARBEN[g];
+    if (hue === undefined) { hue = 0; for (var i = 0; i < g.length; i++) hue = (hue * 31 + g.charCodeAt(i)) % 360; }
+    var dunkel = document.documentElement.getAttribute("data-theme") === "dark" ||
+      (!document.documentElement.getAttribute("data-theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    return dunkel ? { bg: "hsl(" + hue + ", 35%, 22%)", fg: "hsl(" + hue + ", 70%, 78%)", punkt: "hsl(" + hue + ", 60%, 60%)" }
+                  : { bg: "hsl(" + hue + ", 60%, 93%)", fg: "hsl(" + hue + ", 55%, 30%)", punkt: "hsl(" + hue + ", 55%, 45%)" };
+  }
+  function ligaPille(liga) {
+    var l = document.createElement("span"); l.className = "liga"; l.textContent = liga;
+    var f = ligaFarbe(liga); l.style.background = f.bg; l.style.color = f.fg; l.setAttribute("data-farbe", "1");
+    return l;
+  }
 
   function initialen(name) {
     var t = name.split(",");
@@ -263,7 +339,7 @@
     kopf.className = "kopfzeile";
     var datum = document.createElement("span");
     datum.className = "datum";
-    if (s.liga) { var l = document.createElement("span"); l.className = "liga"; l.textContent = s.liga; datum.appendChild(l); }
+    if (s.liga) datum.appendChild(ligaPille(s.liga));
     kopf.appendChild(datum); kopf.appendChild(rolleBadge(s.rolle));
     d.appendChild(kopf);
 
@@ -274,10 +350,13 @@
     d.appendChild(mitIkone("i-clock", "An der Halle: " + uhr(treff) + " Uhr" + (s.system >= 3 ? " · " + s.system + "er-System" : "")));
 
     if (s.ort) {
+      var ortZeile = document.createElement("span");
+      ortZeile.appendChild(hallenLink(s.halle));
       var a = document.createElement("a");
-      a.href = "https://maps.apple.com/?daddr=" + encodeURIComponent(s.ort);
-      a.target = "_blank"; a.rel = "noopener"; a.textContent = s.ort;
-      d.appendChild(mitIkone("i-pin", a));
+      a.href = kartenLink(s.ort); a.target = "_blank"; a.rel = "noopener";
+      a.textContent = s.ort.indexOf(s.halle + ", ") === 0 ? s.ort.slice(s.halle.length + 2) : s.ort;
+      ortZeile.appendChild(document.createTextNode(" · ")); ortZeile.appendChild(a); ortZeile.appendChild(kopierKnopf(s.ort));
+      d.appendChild(mitIkone("i-pin", ortZeile));
     } else {
       var w = document.createElement("div"); w.className = "achtung";
       w.textContent = "Halle nicht automatisch erkannt – bitte selbst prüfen."; d.appendChild(w);
@@ -351,7 +430,7 @@
     ha.appendChild(document.createTextNode((s.halle || "Halle unbekannt") + " · Treffpunkt " + uhr(new Date(s.treffpunkt)) + " Uhr")); h.appendChild(ha);
     var ak = document.createElement("div"); ak.className = "aktionen";
     if (s.ort) {
-      var r = document.createElement("a"); r.href = "https://maps.apple.com/?daddr=" + encodeURIComponent(s.ort);
+      var r = document.createElement("a"); r.href = kartenLink(s.ort);
       r.target = "_blank"; r.rel = "noopener"; r.appendChild(ikone("i-route")); r.appendChild(document.createTextNode("Route")); ak.appendChild(r);
     }
     if (s.gespann && s.gespann.length) {
@@ -621,6 +700,33 @@
       return true;
     });
   }
+  // Naechste 14 Tage als Leiste zum Springen
+  function zeigeWoche() {
+    var ziel = el("plan-woche"); ziel.innerHTML = ""; ziel.classList.remove("versteckt");
+    var heute = new Date(); heute.setHours(0, 0, 0, 0);
+    var jeTag = {};
+    (daten.spiele || []).forEach(function (sp) { var k = new Date(sp.beginn).toDateString(); (jeTag[k] = jeTag[k] || []).push(sp); });
+    for (var i = 0; i < 14; i++) {
+      (function (i) {
+        var d = new Date(heute.getTime() + i * 86400000), key = d.toDateString(), liste = jeTag[key] || [];
+        var b = document.createElement("button"); b.type = "button"; b.className = i === 0 ? "heute" : "";
+        var wt = document.createElement("span"); wt.textContent = wochentag[d.getDay()];
+        var nr = document.createElement("b"); nr.textContent = d.getDate();
+        var punkt = document.createElement("i");
+        if (!liste.length) punkt.className = "leer";
+        else if (profil && liste.some(function (sp) { return sp.besetzung.some(function (x) { return x.slug === profil.slug; }); })) punkt.className = "ich";
+        b.appendChild(wt); b.appendChild(nr); b.appendChild(punkt);
+        b.title = liste.length ? liste.length + " Spiele" : "keine Spiele";
+        b.addEventListener("click", function () {
+          var h = el("plan-liste").querySelector('[data-tag="' + key + '"]');
+          if (h) window.scrollTo({ top: h.getBoundingClientRect().top + window.scrollY - (parseInt(getComputedStyle(document.documentElement).getPropertyValue("--filter-hoehe")) || 110) - 4, behavior: "smooth" });
+          else toast("An dem Tag steht nichts im Plan.", "");
+        });
+        ziel.appendChild(b);
+      })(i);
+    }
+  }
+
   function zeigeMonat() {
     var ziel = el("plan-monat"); ziel.innerHTML = "";
     var heute = new Date(); heute.setHours(0, 0, 0, 0);
@@ -653,9 +759,13 @@
           var p = document.createElement("div"); p.className = "punkte";
           var ich = profil && liste.some(function (s) { return s.besetzung.some(function (b) { return b.slug === profil.slug; }); });
           var offen = liste.some(function (s) { return !s.besetzung.length; });
-          if (ich) { var i1 = document.createElement("i"); i1.className = "ich"; p.appendChild(i1); }
-          if (offen) { var i2 = document.createElement("i"); i2.className = "offen"; p.appendChild(i2); }
-          if (!ich || liste.length > 1) { var i3 = document.createElement("i"); p.appendChild(i3); }
+          liste.slice(0, 4).forEach(function (sp) {
+            var i1 = document.createElement("i"); i1.style.background = ligaFarbe(sp.liga).punkt;
+            if (profil && sp.besetzung.some(function (b) { return b.slug === profil.slug; })) i1.style.boxShadow = "0 0 0 2px var(--akzent)";
+            else if (!sp.besetzung.length) i1.style.boxShadow = "0 0 0 2px var(--warn)";
+            p.appendChild(i1);
+          });
+          void ich; void offen;
           z.appendChild(p);
           var n = document.createElement("small"); n.textContent = liste.length; z.appendChild(n);
           z.addEventListener("click", function () { planTag = planTag === key ? null : key; zeigeMonat(); });
@@ -693,7 +803,8 @@
     el("plan-monat").classList.toggle("versteckt", modus !== "monat");
     el("plan-vergangene").parentNode.classList.toggle("versteckt", modus === "monat");
     el("plan-heute").classList.toggle("versteckt", modus === "monat");
-    if (modus === "monat") { zeigeMonat(); return; }
+    if (modus === "monat") { el("plan-woche").classList.add("versteckt"); zeigeMonat(); return; }
+    zeigeWoche();
     var kompakt = modus === "liste";
     ziel.classList.toggle("raster", !kompakt);
     var f = ohneZeichen(el("plan-filter").value);
@@ -708,6 +819,7 @@
         var t = tagTitel(beginn);
         var h = document.createElement("div"); h.className = "tag" + (t[2] ? " heute" : "");
         if (!heuteGesetzt && beginn >= new Date(new Date().setHours(0, 0, 0, 0))) { h.id = "plan-ab-heute"; heuteGesetzt = true; }
+        h.setAttribute("data-tag", tagKey);
         var links = document.createElement("span"); links.textContent = t[0];
         var rechts = document.createElement("span"); rechts.textContent = t[1];
         h.appendChild(links); h.appendChild(rechts); ziel.appendChild(h);
@@ -725,10 +837,12 @@
     var d = document.createElement("div"); d.className = "spiel karte" + (s.vergangen ? " war" : "");
     var kopf = document.createElement("div"); kopf.className = "kopfzeile";
     var zeit = document.createElement("span"); zeit.className = "zeit"; zeit.textContent = uhr(beginn) + " Uhr"; kopf.appendChild(zeit);
-    if (s.liga) { var liga = document.createElement("span"); liga.className = "liga"; liga.textContent = s.liga; kopf.appendChild(liga); }
+    if (s.liga) kopf.appendChild(ligaPille(s.liga));
     d.appendChild(kopf);
     var paarung = document.createElement("div"); paarung.className = "paarung"; paarung.textContent = s.paarung; d.appendChild(paarung);
-    d.appendChild(mitIkone("i-pin", (s.halle || "Halle unbekannt") + " · Treffpunkt " + uhr(new Date(s.treffpunkt)) + " Uhr" + (s.system >= 3 ? " · " + s.system + "er-System" : "")));
+    var wo = document.createElement("span"); wo.appendChild(hallenLink(s.halle));
+    wo.appendChild(document.createTextNode(" · Treffpunkt " + uhr(new Date(s.treffpunkt)) + " Uhr" + (s.system >= 3 ? " · " + s.system + "er-System" : "")));
+    d.appendChild(mitIkone("i-pin", wo));
     var chips = document.createElement("div"); chips.className = "chips"; besetzungOder(s, chips); d.appendChild(chips);
     return d;
   }
@@ -737,7 +851,7 @@
     var zeit = document.createElement("span"); zeit.className = "zeit"; zeit.textContent = uhr(beginn);
     var mitte = document.createElement("span");
     var titel = document.createElement("span"); titel.textContent = (s.liga ? s.liga + ": " : "") + s.paarung;
-    var klein = document.createElement("small"); klein.textContent = s.halle || "Halle unbekannt";
+    var klein = document.createElement("small"); klein.appendChild(hallenLink(s.halle));
     mitte.appendChild(titel); mitte.appendChild(klein);
     var wer = document.createElement("span"); wer.className = "zeile-wer"; besetzungOder(s, wer);
     z.appendChild(zeit); z.appendChild(mitte); z.appendChild(wer);
@@ -784,6 +898,58 @@
     var fuss = document.createElement("p"); fuss.className = "meta"; fuss.style.marginTop = "10px";
     fuss.textContent = "Gezählt seit " + (s.erste || "?").split("-").reverse().join(".") + ". Das Archiv wächst mit jedem Lauf – esrw.de selbst zeigt nur wenige Tage.";
     ziel.appendChild(fuss);
+    if (s.gesamt) {
+      var rk = document.createElement("button"); rk.type = "button"; rk.className = "mg-neben rueckblick-knopf"; rk.style.width = "100%";
+      rk.textContent = "Meine Saison als Bild teilen";
+      rk.addEventListener("click", function () { rueckblickBild(p, rk); });
+      ziel.appendChild(rk);
+    }
+  }
+
+  // Zeichnet die Saison auf eine Leinwand (1080x1350) und teilt sie als PNG
+  function rueckblickBild(p, knopf) {
+    var s = p.statistik, c = document.createElement("canvas"); c.width = 1080; c.height = 1350;
+    var x = c.getContext("2d");
+    var g = x.createLinearGradient(0, 0, 1080, 1350); g.addColorStop(0, "#0f3d6e"); g.addColorStop(1, "#1d5a99");
+    x.fillStyle = g; x.fillRect(0, 0, 1080, 1350);
+    // Puck als Deko
+    x.fillStyle = "rgba(0,0,0,.25)"; x.beginPath(); x.ellipse(900, 1180, 150, 55, 0, 0, Math.PI * 2); x.fill();
+    x.fillStyle = "#15161a"; x.fillRect(750, 1100, 300, 80); x.beginPath(); x.ellipse(900, 1180, 150, 55, 0, 0, Math.PI); x.fill();
+    x.fillStyle = "#2c2e34"; x.beginPath(); x.ellipse(900, 1100, 150, 55, 0, 0, Math.PI * 2); x.fill();
+    var schrift = "Manrope, -apple-system, Segoe UI, Roboto, sans-serif";
+    x.fillStyle = "rgba(255,255,255,.75)"; x.font = "700 34px " + schrift; x.fillText("SAISON " + (daten.saison || "").toUpperCase(), 80, 120);
+    x.fillStyle = "#fff"; x.font = "800 64px " + schrift; x.fillText(p.name.split(",").reverse().join(" ").trim(), 80, 200);
+    x.font = "500 32px " + schrift; x.fillStyle = "rgba(255,255,255,.8)"; x.fillText("Schiedsrichter · ESRW", 80, 250);
+    function kachel(cx, cy, wert, label) {
+      x.fillStyle = "rgba(255,255,255,.12)"; x.beginPath(); x.roundRect(cx, cy, 440, 200, 28); x.fill();
+      x.fillStyle = "#fff"; x.font = "800 84px " + schrift; x.fillText(String(wert), cx + 32, cy + 110);
+      x.fillStyle = "rgba(255,255,255,.75)"; x.font = "600 30px " + schrift; x.fillText(label, cx + 32, cy + 160);
+    }
+    var hsr = (s.rollen && s.rollen.HSR) || 0, lsr = (s.rollen && s.rollen.LSR) || 0;
+    kachel(80, 320, s.saison, "Spiele diese Saison");
+    kachel(560, 320, s.gesamt, "Spiele im Archiv");
+    kachel(80, 550, hsr, "als Hauptschiedsrichter");
+    kachel(560, 550, hsr + lsr ? Math.round(hsr / (hsr + lsr) * 100) + " %" : "–", "HSR-Anteil im 3er/4er");
+    function zeile(y, titel, wert) {
+      x.fillStyle = "rgba(255,255,255,.7)"; x.font = "600 28px " + schrift; x.fillText(titel, 80, y);
+      x.fillStyle = "#fff"; x.font = "800 40px " + schrift; x.fillText(wert, 80, y + 50);
+    }
+    if (s.hallen && s.hallen[0]) zeile(850, "MEISTE HALLE", s.hallen[0][0] + " · " + s.hallen[0][1] + "×");
+    if (s.ligen && s.ligen[0]) zeile(960, "MEISTE LIGA", s.ligen[0][0] + " · " + s.ligen[0][1] + "×");
+    if (s.partner && s.partner[0]) zeile(1070, "MEISTER GESPANNPARTNER", s.partner[0][0].split(",").reverse().join(" ").trim() + " · " + s.partner[0][1] + "×");
+    x.fillStyle = "rgba(255,255,255,.55)"; x.font = "500 26px " + schrift; x.fillText(basis.replace(/^https?:\/\//, ""), 80, 1290);
+    c.toBlob(function (blob) {
+      if (!blob) { toast("Bild konnte nicht erzeugt werden.", "warn"); return; }
+      var datei = new File([blob], "meine-saison.png", { type: "image/png" });
+      if (navigator.canShare && navigator.canShare({ files: [datei] })) {
+        navigator.share({ files: [datei], title: "Meine Saison" }).catch(function () {});
+      } else {
+        var alt = knopf.parentNode.querySelector(".rueckblick-bild"); if (alt) alt.remove();
+        var img = document.createElement("img"); img.className = "rueckblick-bild"; img.src = URL.createObjectURL(blob); img.alt = "Saison-Rückblick";
+        knopf.parentNode.appendChild(img);
+        toast("Bild erzeugt – lange drücken zum Sichern.", "gut");
+      }
+    }, "image/png");
   }
   function zeigeSaison(p) {
     var box = el("saison"), liste = el("saison-liste"), s = p.statistik;
@@ -849,13 +1015,13 @@
       ziel.appendChild(box);
     }
     if (!profil || profil.slug !== p.slug) zuletztMerken(p.slug);
-    zeigeStatistik(p); zeigeSaison(p); zeigeMeldeKarte();
+    zeigeStatistik(p); zeigeSaison(p); zeigeMeldeKarte(); kalenderBoxStand(); onboardingStand();
     if (profil && profil.slug === p.slug) pruefeNeue(p, false);
     if (!stillesNachladen) window.scrollTo(0, 0);
   }
 
   function ansicht(name) {
-    ["auswahl", "detail", "plan", "mitglieder"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
+    ["auswahl", "detail", "plan", "mitglieder", "halle"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
     el("tab-meine").classList.toggle("aktiv", name === "auswahl" || name === "detail");
     el("tab-plan").classList.toggle("aktiv", name === "plan");
     el("tab-mitglieder").classList.toggle("aktiv", name === "mitglieder");
@@ -866,6 +1032,7 @@
   function zeigeAuswahl(wechsel) {
     aktuell = null; ansicht("auswahl"); el("statistik").innerHTML = "";
     el("frage").textContent = wechsel ? "Wen willst du sehen?" : "Wer bist du?";
+    onboardingStand();
     el("abbrechen-zeile").classList.toggle("versteckt", !wechsel || !profil);
     var z = el("zuletzt"); z.innerHTML = "";
     var slugs = (profil && profil.slug ? [profil.slug] : []).concat(zuletztLesen());
@@ -898,8 +1065,55 @@
     window.scrollTo(0, 0);
   }
 
+  function zeigeHalle(slug) {
+    var name = halleVonSlug(slug);
+    if (!name) { toast("Halle nicht gefunden.", "warn"); return zeigeAuswahl(false); }
+    ansicht("halle"); aktuell = null;
+    var adresse = (daten.adressen && daten.adressen[name]) || "";
+    el("halle-name").textContent = name;
+    el("halle-adresse").textContent = adresse || "Adresse unbekannt";
+    var kn = el("halle-knoepfe"); kn.innerHTML = "";
+    if (adresse) {
+      var r = document.createElement("a"); r.className = "abo"; r.style.flex = "1"; r.href = kartenLink(name + ", " + adresse); r.target = "_blank"; r.rel = "noopener";
+      r.appendChild(ikone("i-route")); r.appendChild(document.createTextNode("Route")); kn.appendChild(r);
+      var k = document.createElement("button"); k.type = "button"; k.textContent = "Adresse kopieren";
+      k.addEventListener("click", function () { if (navigator.clipboard) navigator.clipboard.writeText(name + ", " + adresse).then(function () { toast("Adresse kopiert ✓", "gut"); }); });
+      kn.appendChild(k);
+    }
+    var st = el("halle-strecke"); st.innerHTML = "";
+    var hw = el("halle-hinweise"); hw.innerHTML = "";
+    var liste = el("halle-spiele"); liste.innerHTML = "";
+    var spiele = (daten.spiele || []).filter(function (sp) { return sp.halle === name; });
+    if (!spiele.length) liste.appendChild(leerZustand("Im Datenfenster kein Spiel in dieser Halle."));
+    var letzterTag = null;
+    spiele.forEach(function (sp) {
+      var beginn = new Date(sp.beginn), tagKey = beginn.toDateString();
+      if (tagKey !== letzterTag) {
+        letzterTag = tagKey; var t = tagTitel(beginn);
+        var h = document.createElement("div"); h.className = "tag" + (t[2] ? " heute" : "");
+        var l1 = document.createElement("span"); l1.textContent = t[0]; var r1 = document.createElement("span"); r1.textContent = t[1];
+        h.appendChild(l1); h.appendChild(r1); liste.appendChild(h);
+      }
+      liste.appendChild(planKarte(sp, beginn));
+    });
+    // Angemeldet: eigene Strecke und Hallen-Hinweise
+    ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (stt) {
+      if (!stt.eingerichtet || !stt.session) {
+        var p = document.createElement("p"); p.className = "meta"; p.textContent = "Angemeldet siehst du hier deine Fahrzeit und die Hallen-Hinweise der Kollegen."; hw.appendChild(p); return;
+      }
+      window.Mitglieder.abfahrt(name).then(function (sk) {
+        if (!sk || !sk.minuten) return;
+        var h = document.createElement("div"); h.className = "hinweis gut"; h.appendChild(ikone("i-route"));
+        var sp2 = document.createElement("span"); sp2.textContent = "Von zu Hause: " + sk.km + " km, ca. " + sk.minuten + " Min. ohne Verkehr."; h.appendChild(sp2); st.appendChild(h);
+      });
+      window.Mitglieder.hallenHinweise(name, hw);
+    }).catch(function () {});
+    window.scrollTo(0, 0);
+  }
+
   function ausHash() {
     var slug = location.hash.replace(/^#/, "");
+    if (slug.indexOf("halle/") === 0) { zeigeHalle(slug.slice(6)); return; }
     if (slug === "plan") { aktuell = null; ansicht("plan"); zeigePlan(); window.scrollTo(0, 0); return; }
     if (slug === "mitglieder" || slug.indexOf("mitglieder/") === 0) { zeigeMitglieder(slug.split("/")[1] || null); return; }
     // Links aus Supabase-Mails (Bestaetigung, Passwort vergessen) landen mit
@@ -965,6 +1179,7 @@
   window.addEventListener("hashchange", ausHash);
   el("tab-plan").addEventListener("click", function () { location.hash = "plan"; });
   el("tab-mitglieder").addEventListener("click", function () { location.hash = "mitglieder"; });
+  el("halle-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = ""; });
   el("tab-meine").addEventListener("click", function () { if (location.hash === "" || location.hash === "#") ausHash(); else location.hash = ""; });
   el("plan-filter").addEventListener("input", zeigePlan);
   el("plan-vergangene").addEventListener("change", zeigePlan);
@@ -1035,7 +1250,7 @@
       document.title = daten.titel; el("titel").textContent = daten.titel; el("quelle").href = daten.quelle;
       standAnzeigen(daten, b[1]);
       el("fuss").textContent = "Termine beginnen " + daten.vorlauf_minuten + " Minuten vor Spielbeginn, damit du rechtzeitig an der Halle bist.";
-      zeigeListe(""); ausHash(); zeigeInstallHinweis(); zeigeNeu(); filterHoehe(); netzAnzeigen();
+      einstellungenLaden(); zeigeListe(""); ausHash(); zeigeInstallHinweis(); zeigeNeu(); filterHoehe(); netzAnzeigen();
       setTimeout(zaehlerHolen, 1500);
     })
     .catch(function () { el("stand").className = "stand alt"; el("stand").textContent = "Daten konnten nicht geladen werden."; });

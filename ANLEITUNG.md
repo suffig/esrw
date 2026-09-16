@@ -618,7 +618,7 @@ den anonymen Schlüssel aus dem Quelltext kopiert, kommt an fremde Daten nicht
 heran.
 
 Die Datei lässt sich gefahrlos mehrfach ausführen – **und das musst du auch
-tun, wenn sie sich ändert** (steht dann im Commit). Fehlt eine Tabelle, sagt
+tun, wenn sie sich ändert** (steht dann im Commit; aktuell v7). Fehlt eine Tabelle, sagt
 die App „Die Datenbank kennt eine Tabelle noch nicht“.
 
 **Danach einmalig dich selbst zum Admin machen** (sonst kann niemand
@@ -862,6 +862,29 @@ und Kalender bleiben offen.
 Wer sich anmelden will, bevor der Link angetippt wurde, bekommt „noch nicht
 bestätigt“ und einen Knopf **Bestätigungsmail erneut senden**. Abgelaufene
 Links (24 Stunden) werden beim Ankommen erklärt, ebenfalls mit diesem Knopf.
+
+### 10.6b Ankündigungen, Monatsabrechnung, Fahrtenbuch, Hallen-Seite
+
+* **Info** (Unterreiter): Ankündigungen von dir an alle Mitglieder –
+  Lehrgang, Regeltest, Sitzung. Als Admin siehst du oben „Neue Ankündigung“:
+  Überschrift, Text, optional „gilt bis“, „wichtig“ und **„auch als Push an
+  alle mit Push“** (geht beim nächsten Workflow-Lauf raus, also innerhalb
+  von 30 Minuten). Ungelesene zählt der Reiter „Info“ und die Leiste unten.
+* **Abrechnung → „per E-Mail“** am Monat: öffnet die Mail-App mit einer
+  fertigen Aufstellung (Spiele, Vergütung, km, Summe). Empfänger kommt aus
+  **Konto → Einstellungen → E-Mail des Obmanns**; ohne Eintrag bleibt das
+  An-Feld leer.
+* **Abrechnung → Fahrtenbuch**: Steuerjahr wählen, „Drucken / PDF“ –
+  Datum, von (Heimatadresse), nach (Halle mit Adresse), Zweck, km, Betrag.
+  Nur Spiele mit km-Eintrag.
+* **Tauschbörse**: Steht auf esrw.de inzwischen jemand anderes im Spiel,
+  setzt die App (und der Workflow) dein Gesuch von selbst auf „erledigt“;
+  wer „Ich kann“ gemeldet hatte, bekommt einen Push.
+* **Hallen-Seite** (ohne Login): Tipp auf einen Hallennamen – Adresse,
+  Route, alle Spiele dort; angemeldet dazu deine Fahrzeit und die
+  Hallen-Hinweise.
+* **Statistik → „Meine Saison als Bild teilen“**: erzeugt ein Bild
+  (1080×1350) fürs Teilen.
 
 ### 10.7 Freischaltung neuer Konten
 
