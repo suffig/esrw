@@ -417,7 +417,7 @@
   .woche button.heute { border-color:var(--akzent); color:var(--akzent); }
   .woche button i { width:5px; height:5px; border-radius:50%; background:var(--dim); }
   .woche button i.ich { background:var(--akzent); }
-  .woche button i.leer { background:transparent; }
+  .woche button i.keins { background:transparent; }
 
   /* Einstellungen im Fuss */
   .einstellungen { display:flex; flex-wrap:wrap; gap:8px 18px; margin-bottom:12px; font-size:.82rem; color:var(--dim); font-weight:600; }
@@ -713,6 +713,23 @@
   @media (min-width: 900px) {
     .leiste button svg.i { padding:5px 16px; }
   }
+
+  /* Design 3: Akzentschimmer oben, Datumskachel in Ligafarbe, Kopfknoepfe */
+  body { position:relative; }
+  body::before { content:""; position:fixed; inset:0 0 auto 0; height:260px; pointer-events:none; z-index:-1;
+    background:radial-gradient(60% 120% at 20% -20%, color-mix(in srgb, var(--akzent) 16%, transparent), transparent 70%); }
+  .kopf-knoepfe { display:inline-flex; gap:8px; align-items:center; }
+  .kopf .rund { width:44px; height:44px; border-color:transparent; box-shadow:var(--schatten); }
+  .start-woche { margin:0 0 12px; }
+  .start-woche button { width:auto; flex:1; min-width:40px; }
+  .start-woche button i.ich { width:7px; height:7px; }
+  .halle-kopf .aktionen a, .halle-kopf .aktionen button { background:rgba(255,255,255,.16); color:#fff; border:1px solid rgba(255,255,255,.3); }
+  .halle-kopf .wann { padding-right:0; }
+  .abschnitt-karte h4 { display:flex; align-items:center; gap:6px; }
+  .abschnitt-karte h4 svg.i { width:.95rem; height:.95rem; }
+  .spiel.zeit-links .wann { background:var(--liga-bg, var(--bg)); color:var(--liga-fg, inherit); }
+  .spiel.zeit-links .wann b { color:inherit; opacity:.75; }
+  .gruppe-anfrage { margin-top:6px; }
 </style>
 </head>
 <body>
@@ -735,6 +752,8 @@
   <symbol id="i-note" viewBox="0 0 24 24"><path d="M4 20h4l10-10-4-4L4 16z"/><path d="M12.5 7.5l4 4"/></symbol>
   <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
   <symbol id="i-euro" viewBox="0 0 24 24"><path d="M17 6.5A6 6 0 0 0 7.5 9M17 17.5A6 6 0 0 1 7.5 15M4 10.5h9M4 13.5h9"/></symbol>
+  <symbol id="i-mehr" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></symbol>
+  <symbol id="i-suche" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></symbol>
   <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
   <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1z"/></symbol>
   <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="14" r="4"/><path d="M11 11l8-8M15 7l2.5 2.5M12.5 9.5 15 12"/></symbol>
@@ -748,7 +767,10 @@
   <button type="button" class="rund versteckt" id="thema" title="Hell / Dunkel" aria-label="Hell oder Dunkel">
     <svg class="i"><use href="#i-moon"/></svg>
   </button>
-  <button type="button" class="avatar-knopf leer" id="avatar" title="Profil und mehr" aria-label="Profil und mehr">?</button>
+  <span class="kopf-knoepfe">
+    <button type="button" class="rund" id="suche-knopf" title="Spielplan durchsuchen" aria-label="Suchen"><svg class="i"><use href="#i-suche"/></svg></button>
+    <button type="button" class="avatar-knopf leer" id="avatar" title="Profil und mehr" aria-label="Profil und mehr">?</button>
+  </span>
 </header>
 
 <main>
@@ -824,6 +846,7 @@
       <span><button class="textknopf versteckt" id="uebernehmen">Als mein Profil</button> <button class="textknopf" id="wechseln">Wechseln</button></span>
     </div>
 
+    <div class="woche start-woche" id="start-woche"></div>
     <div id="held"></div>
     <div id="uebersicht" class="uebersicht"></div>
     <div id="nachtrag"></div>
@@ -935,10 +958,15 @@
   <!-- Hallen-Seite: Adresse, Route, Spiele dort, Hinweise -->
   <section id="halle" class="versteckt">
     <div class="profilzeile karte">
-      <span><b id="halle-name"></b><small id="halle-adresse"></small></span>
+      <span><span class="avatar-gross"><svg class="i"><use href="#i-pin"/></svg></span><span><b>Halle</b><small>Adresse, Route, Spiele, Hinweise</small></span></span>
       <button class="textknopf zurueck" id="halle-zurueck"><svg class="i"><use href="#i-back"/></svg>Zurück</button>
     </div>
-    <div class="zweit" id="halle-knoepfe"></div>
+    <div class="spiel-kopf halle-kopf">
+      <div class="wann">Eishalle</div>
+      <div class="zeit" id="halle-name" style="font-size:1.5rem"></div>
+      <p class="paarung" id="halle-adresse" style="font-weight:500;opacity:.9"></p>
+      <div class="aktionen" id="halle-knoepfe"></div>
+    </div>
     <div id="halle-strecke"></div>
     <div id="halle-hinweise"></div>
     <h3 class="abschnitt">Spiele in dieser Halle</h3>
@@ -963,10 +991,10 @@
     <button type="button" id="tab-plan"><svg class="i"><use href="#i-list"/></svg>Spielplan</button>
     <button type="button" id="tab-tausch"><svg class="i"><use href="#i-swap"/></svg>Tausch</button>
     <button type="button" id="tab-abrechnung"><svg class="i"><use href="#i-euro"/></svg>Abrechnung</button>
-    <button type="button" id="tab-mitglieder"><svg class="i"><use href="#i-list"/></svg>Mehr</button>
+    <button type="button" id="tab-mitglieder"><svg class="i"><use href="#i-mehr"/></svg>Mehr</button>
   </div>
 </nav>
 
-<script src="app.js?v=22"></script>
+<script src="app.js?v=24"></script>
 </body>
 </html>

@@ -43,6 +43,10 @@
     if (profil && profil.name) { b.textContent = initialen(profil.name); b.classList.remove("leer"); b.style.background = farbeFuer(profil.slug); }
     else { b.textContent = "?"; b.classList.add("leer"); b.style.background = ""; }
   }
+  el("suche-knopf").addEventListener("click", function () {
+    location.hash = "plan";
+    setTimeout(function () { var f = el("plan-filter"); f.focus(); f.select(); window.scrollTo({ top: 0 }); }, 150);
+  });
   el("avatar").addEventListener("click", function () { location.hash = profil && profil.slug ? "mehr" : ""; if (!(profil && profil.slug)) zeigeAuswahl(false); });
   el("thema").addEventListener("click", function () {
     var t = lesen("thema");
@@ -385,6 +389,7 @@
     var karteEl = document.createElement("div");
     karteEl.className = "spiel karte zeit-links" + (s.vergangen ? " war" : "") + (s.aenderung ? " neu" : "");
     var wann = document.createElement("div"); wann.className = "wann";
+    if (s.liga) { var lf = ligaFarbe(s.liga); wann.style.setProperty("--liga-bg", lf.bg); wann.style.setProperty("--liga-fg", lf.fg); }
     var wt = document.createElement("b"); wt.textContent = wochentag[beginn.getDay()];
     var tg = document.createElement("span"); tg.textContent = beginn.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" });
     var zt = document.createElement("em"); zt.textContent = uhr(beginn);
@@ -495,7 +500,8 @@
     kopf.appendChild(h);
 
     var inhalt = el("spiel-inhalt"); inhalt.innerHTML = "";
-    function karteAbschnitt(titel) { var k = document.createElement("div"); k.className = "karte abschnitt-karte"; if (titel) { var hh = document.createElement("h4"); hh.textContent = titel; k.appendChild(hh); } inhalt.appendChild(k); return k; }
+    var symbole = { "Halle": "i-pin", "Gespann": "i-users", "Besetzung": "i-users", "Tauschoptionen": "i-swap", "Weiteres": "i-list" };
+    function karteAbschnitt(titel) { var k = document.createElement("div"); k.className = "karte abschnitt-karte"; if (titel) { var hh = document.createElement("h4"); if (symbole[titel]) hh.appendChild(ikone(symbole[titel])); hh.appendChild(document.createTextNode(titel)); k.appendChild(hh); } inhalt.appendChild(k); return k; }
 
     var ort = karteAbschnitt("Halle");
     var oz = document.createElement("div"); oz.appendChild(hallenLink(s.halle));
@@ -562,7 +568,32 @@
 
   // -------------------------------------------------------- Dashboard-Kacheln
 
+  function zeigeStartWoche(p) {
+    var ziel = el("start-woche"); ziel.innerHTML = "";
+    var heute = new Date(); heute.setHours(0, 0, 0, 0);
+    var jeTag = {};
+    p.spiele.forEach(function (s) { var k = new Date(s.beginn).toDateString(); (jeTag[k] = jeTag[k] || []).push(s); });
+    for (var i = 0; i < 7; i++) {
+      (function (i) {
+        var d = new Date(heute.getTime() + i * 86400000), key = d.toDateString(), liste = jeTag[key] || [];
+        var b = document.createElement("button"); b.type = "button"; b.className = i === 0 ? "heute" : "";
+        var wt = document.createElement("span"); wt.textContent = wochentag[d.getDay()];
+        var nr = document.createElement("b"); nr.textContent = d.getDate();
+        var punkt = document.createElement("i"); punkt.className = liste.length ? "ich" : "keins";
+        b.appendChild(wt); b.appendChild(nr); b.appendChild(punkt);
+        b.title = liste.length ? liste.map(function (s) { return uhr(new Date(s.beginn)) + " " + s.paarung; }).join(", ") : "frei";
+        b.addEventListener("click", function () {
+          if (liste.length === 1) location.hash = "spiel/" + encodeURIComponent(kennungVon(liste[0]));
+          else if (liste.length) { location.hash = "plan"; }
+          else toast(datumKurz(d) + ": kein Spiel", "");
+        });
+        ziel.appendChild(b);
+      })(i);
+    }
+  }
+
   function zeigeUebersicht(p) {
+    zeigeStartWoche(p);
     var ziel = el("uebersicht"); ziel.innerHTML = "";
     if (!profil || profil.slug !== p.slug) return;
     var heute = new Date(); heute.setHours(0, 0, 0, 0);
@@ -824,6 +855,14 @@
     var o = tauschOptionen(spiel, ich, sperren);
     var zeigen = 6;
 
+    var gruppe = document.createElement("button"); gruppe.type = "button"; gruppe.className = "anfrage zweit gruppe-anfrage";
+    gruppe.appendChild(ikone("i-users")); gruppe.appendChild(document.createTextNode("In der Gruppe fragen (Text teilen)"));
+    gruppe.addEventListener("click", function () {
+      var d = new Date(spiel.beginn);
+      anfragen("Hallo zusammen, ich suche Ersatz für " + datumKurz(d) + " " + uhr(d) + " Uhr: " + (spiel.liga ? spiel.liga + " " : "") + spiel.paarung +
+        (spiel.halle ? " in " + spiel.halle : "") + " (" + (spiel.rolle || "SR") + ", Treffpunkt " + uhr(new Date(spiel.treffpunkt)) + " Uhr). Wer kann? Danke, " + vorname(ich.name));
+    });
+    inhalt.appendChild(gruppe);
     var suche = document.createElement("button"); suche.type = "button"; suche.className = "anfrage zweit";
     suche.appendChild(ikone("i-swap")); suche.appendChild(document.createTextNode("Ersatz in der Tauschbörse suchen"));
     suche.addEventListener("click", function () {
@@ -927,7 +966,7 @@
         var wt = document.createElement("span"); wt.textContent = wochentag[d.getDay()];
         var nr = document.createElement("b"); nr.textContent = d.getDate();
         var punkt = document.createElement("i");
-        if (!liste.length) punkt.className = "leer";
+        if (!liste.length) punkt.className = "keins";
         else if (profil && liste.some(function (sp) { return sp.besetzung.some(function (x) { return x.slug === profil.slug; }); })) punkt.className = "ich";
         b.appendChild(wt); b.appendChild(nr); b.appendChild(punkt);
         b.title = liste.length ? liste.length + " Spiele" : "keine Spiele";
@@ -1325,11 +1364,12 @@
     el("halle-adresse").textContent = adresse || "Adresse unbekannt";
     var kn = el("halle-knoepfe"); kn.innerHTML = "";
     if (adresse) {
-      var r = document.createElement("a"); r.className = "abo"; r.style.flex = "1"; r.href = kartenLink(name + ", " + adresse); r.target = "_blank"; r.rel = "noopener";
+      var r = document.createElement("a"); r.href = kartenLink(name + ", " + adresse); r.target = "_blank"; r.rel = "noopener";
       r.appendChild(ikone("i-route")); r.appendChild(document.createTextNode("Route")); kn.appendChild(r);
       var k = document.createElement("button"); k.type = "button"; k.textContent = "Adresse kopieren";
       k.addEventListener("click", function () { if (navigator.clipboard) navigator.clipboard.writeText(name + ", " + adresse).then(function () { toast("Adresse kopiert ✓", "gut"); }); });
       kn.appendChild(k);
+      var kk = document.createElement("a"); kk.href = "#karte"; kk.appendChild(ikone("i-pin")); kk.appendChild(document.createTextNode("Karte")); kn.appendChild(kk);
     }
     var st = el("halle-strecke"); st.innerHTML = "";
     var hw = el("halle-hinweise"); hw.innerHTML = "";
@@ -1600,6 +1640,7 @@
     if (alt) alt.remove();
     if (!z.angemeldet) return;
     var n = (z.gesuche || 0) + (z.wartend || 0);
+    try { if (navigator.setAppBadge && (z.info || 0) + n > 0) navigator.setAppBadge((z.info || 0) + n); } catch (e) {}
     var p = document.createElement("span"); p.className = "punkt" + (n ? " zahl" : "");
     if (n) p.textContent = n > 9 ? "9+" : String(n);
     p.title = n ? (z.gesuche || 0) + " offene Gesuche" + (z.wartend ? ", " + z.wartend + " warten auf Freischaltung" : "") : "angemeldet";
@@ -1710,7 +1751,7 @@
     letzterLauf = lauf;
     if (lauf && lauf.stand) letzterStand = new Date(lauf.stand).toLocaleString("de-DE", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
     var s = el("stand"); s.className = "stand";
-    s.textContent = d.personen.length + " Schiedsrichter · " + d.spiele_gesamt + " Spiele";
+    s.textContent = d.spiele_gesamt + " Spiele · " + d.personen.length + " SR";
     if (lauf && lauf.stand) {
       var stand = new Date(lauf.stand), alter = (Date.now() - stand.getTime()) / 3600000, min = Math.round(alter * 60);
       var relativ = min < 1 ? "gerade eben" : min < 60 ? "vor " + min + " Min." : alter < 24 ? "vor " + Math.round(alter) + " Std." : stand.toLocaleString("de-DE", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
