@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 86,
+ "spiele_gesamt": 84,
  "saison": "2026/27",
  "archiv_spiele": 118,
  "rollen": {
@@ -3643,25 +3643,6 @@
        "rolle": "SR"
       }
      ],
-     "halle_erkannt": true,
-     "vergangen": false,
-     "aenderung": null,
-     "hinweis": null
-    },
-    {
-     "beginn": "2026-09-20T08:00:00+02:00",
-     "treffpunkt": "2026-09-20T07:00:00+02:00",
-     "rolle": "SR",
-     "system": 1,
-     "liga": "U13 BZL Gr.A",
-     "paarung": "Eisadler Dortmund 1b – Mädchen W.I.N. 2",
-     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-     "halle": "Eissportzentrum Westfalen",
-     "koordinaten": [
-      51.49525,
-      7.458288
-     ],
-     "gespann": [],
      "halle_erkannt": true,
      "vergangen": false,
      "aenderung": null,
@@ -8805,110 +8786,6 @@
      "vergangen": true,
      "aenderung": null,
      "hinweis": null
-    },
-    {
-     "beginn": "2026-09-19T16:15:00+02:00",
-     "treffpunkt": "2026-09-19T15:15:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U15 LL",
-     "paarung": "Herforder EV – Ratinger Ice Aliens",
-     "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-     "halle": "Eishalle Im Kleinen Felde",
-     "koordinaten": [
-      52.114893,
-      8.652028
-     ],
-     "gespann": [
-      {
-       "name": "Zynda, Nick",
-       "slug": "zynda-nick",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": false,
-     "aenderung": null,
-     "hinweis": null
-    }
-   ]
-  },
-  {
-   "slug": "zynda-nick",
-   "name": "Zynda, Nick",
-   "varianten": [
-    "Zynda, Nick"
-   ],
-   "statistik": {
-    "gesamt": 3,
-    "saison": 3,
-    "rollen": {
-     "SR": 3
-    },
-    "ligen": [
-     [
-      "U20 FS",
-      1
-     ],
-     [
-      "U15 FS",
-      1
-     ],
-     [
-      "U15 LL",
-      1
-     ]
-    ],
-    "hallen": [
-     [
-      "Eishalle Im Kleinen Felde",
-      3
-     ]
-    ],
-    "partner": [
-     [
-      "Berger, Eugen",
-      2
-     ],
-     [
-      "Zynda, Jayden",
-      1
-     ]
-    ],
-    "je_saison": [
-     [
-      "2026/27",
-      3
-     ]
-    ],
-    "erste": "2026-09-06",
-    "letzte": "2026-09-19"
-   },
-   "spiele": [
-    {
-     "beginn": "2026-09-19T16:15:00+02:00",
-     "treffpunkt": "2026-09-19T15:15:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U15 LL",
-     "paarung": "Herforder EV – Ratinger Ice Aliens",
-     "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-     "halle": "Eishalle Im Kleinen Felde",
-     "koordinaten": [
-      52.114893,
-      8.652028
-     ],
-     "gespann": [
-      {
-       "name": "Zynda, Jayden",
-       "slug": "zynda-jayden",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": false,
-     "aenderung": null,
-     "hinweis": null
     }
    ]
   }
@@ -10325,29 +10202,6 @@
    "vergangen": false
   },
   {
-   "beginn": "2026-09-19T16:15:00+02:00",
-   "treffpunkt": "2026-09-19T15:15:00+02:00",
-   "liga": "U15 LL",
-   "paarung": "Herforder EV – Ratinger Ice Aliens",
-   "halle": "Eishalle Im Kleinen Felde",
-   "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Zynda, Nick",
-     "rolle": "SR",
-     "slug": "zynda-nick"
-    },
-    {
-     "name": "Zynda, Jayden",
-     "rolle": "SR",
-     "slug": "zynda-jayden"
-    }
-   ],
-   "vergangen": false
-  },
-  {
    "beginn": "2026-09-19T16:30:00+02:00",
    "treffpunkt": "2026-09-19T15:30:00+02:00",
    "liga": "U17 I",
@@ -10458,24 +10312,6 @@
      "name": "Vorgeitz, Benny",
      "rolle": "SR",
      "slug": "vorgeitz-benny"
-    }
-   ],
-   "vergangen": false
-  },
-  {
-   "beginn": "2026-09-20T08:00:00+02:00",
-   "treffpunkt": "2026-09-20T07:00:00+02:00",
-   "liga": "U13 BZL Gr.A",
-   "paarung": "Eisadler Dortmund 1b – Mädchen W.I.N. 2",
-   "halle": "Eissportzentrum Westfalen",
-   "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-   "halle_erkannt": true,
-   "system": 1,
-   "besetzung": [
-    {
-     "name": "Klemm, Julian",
-     "rolle": "SR",
-     "slug": "klemm-julian"
     }
    ],
    "vergangen": false

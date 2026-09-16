@@ -2236,35 +2236,6 @@
     "rolle": "SR",
     "system": 2
    }
-  ],
-  "zynda-nick": [
-   {
-    "saison": "2026/27",
-    "beginn": "2026-09-19T16:15:00+02:00",
-    "liga": "U15 LL",
-    "paarung": "Herforder EV – Ratinger Ice Aliens",
-    "halle": "Eishalle Im Kleinen Felde",
-    "rolle": "SR",
-    "system": 2
-   },
-   {
-    "saison": "2026/27",
-    "beginn": "2026-09-06T15:00:00+02:00",
-    "liga": "U20 FS",
-    "paarung": "Herforder EV – Eisadler Dortmund",
-    "halle": "Eishalle Im Kleinen Felde",
-    "rolle": "SR",
-    "system": 2
-   },
-   {
-    "saison": "2026/27",
-    "beginn": "2026-09-06T12:30:00+02:00",
-    "liga": "U15 FS",
-    "paarung": "Herforder EV – REV Bremerhaven",
-    "halle": "Eishalle Im Kleinen Felde",
-    "rolle": "SR",
-    "system": 2
-   }
   ]
  }
 }

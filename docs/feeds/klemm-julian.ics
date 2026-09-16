@@ -34,31 +34,4 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL · Lippe Hockey Ham
  m – SpG Neusser EV / GSC Moers
 END:VALARM
 END:VEVENT
-BEGIN:VEVENT
-UID:c85307ca315e7edbdbddb7b749eb0af1fb7fafe8@esrw.de
-SEQUENCE:0
-DTSTAMP:20260911T150047Z
-LAST-MODIFIED:20260911T150047Z
-DTSTART:20260920T050000Z
-DTEND:20260920T083000Z
-SUMMARY:SR · U13 BZL Gr.A · Eisadler Dortmund 1b – Mädchen W.I.N. 2
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
-  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\nHalle: Eissportze
- ntrum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\n\nQuelle: http
- s://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
-GEO:51.49525;7.458288
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
-  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
- rum Westfalen":geo:51.49525,7.458288
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A · Eisadler D
- ortmund 1b – Mädchen W.I.N. 2
-END:VALARM
-END:VEVENT
 END:VCALENDAR

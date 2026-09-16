@@ -1376,33 +1376,6 @@ DESCRIPTION:In einer Stunde an der Halle - DNL III · EV Duisburg – SCC A
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:ea6a2214ffd0f8547c191c7fe6f297149d10fde3@esrw.de
-SEQUENCE:0
-DTSTAMP:20260911T150047Z
-LAST-MODIFIED:20260911T150047Z
-DTSTART:20260919T131500Z
-DTEND:20260919T164500Z
-SUMMARY:U15 LL · Herforder EV – Ratinger Ice Aliens
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:15 Uhr\nTreffpunkt:
-  15:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eishalle Im Klei
- nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Zynda\, Nic
- k\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eishalle Im Kleinen Felde\, Im Kleinen Felde\, 32051 Herford
-GEO:52.114893;8.652028
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
-  Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
- Kleinen Felde":geo:52.114893,8.652028
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U15 LL · Herforder EV – Ratin
- ger Ice Aliens
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:a5f5f69752aa7f94c8bafa611b25347029108bed@esrw.de
 SEQUENCE:0
 DTSTAMP:20260911T150047Z
@@ -1535,33 +1508,6 @@ BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - U11 LL Rot · Iserlohner EC 1b
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
-UID:06774cae081f635b338327273d1ebc68505d382a@esrw.de
-SEQUENCE:0
-DTSTAMP:20260911T150047Z
-LAST-MODIFIED:20260911T150047Z
-DTSTART:20260920T050000Z
-DTEND:20260920T083000Z
-SUMMARY:U13 BZL Gr.A · Eisadler Dortmund 1b – Mädchen W.I.N. 2
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
-  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\nHalle: Eissportze
- ntrum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\n\nQuelle: http
- s://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
-GEO:51.49525;7.458288
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
-  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
- rum Westfalen":geo:51.49525,7.458288
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U13 BZL Gr.A · Eisadler Dortmun
- d 1b – Mädchen W.I.N. 2
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
