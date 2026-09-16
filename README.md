@@ -232,8 +232,8 @@ Spiele, Hinweise). Karten-Links passen sich dem Handy an (Google Maps auf
 Android), Adresse kopieren, Wochenleiste und Liga-Farben im Spielplan,
 Onboarding für neue Kollegen.
 
-**Navigation**: fünf Reiter (Heute · Spielplan · Tausch · Abrechnung · Mehr).
-„Heute“ ist ein Dashboard (nächstes Spiel mit Wetter und Abfahrt, Spiele in
+**Navigation**: fünf Reiter (Start · Spielplan · Tausch · Abrechnung · Mehr).
+„Start“ ist ein Dashboard (nächstes Spiel mit Wetter und Abfahrt, Spiele in
 7 Tagen, offene Gesuche, neue Ankündigungen, fehlende Abrechnungen). Jedes
 Spiel hat eine eigene Seite (`#spiel/<kennung>`) mit Route, Wetter, Gespann
 und Kontakt, Tauschoptionen, Hallen-Hinweisen, Fahrgemeinschaft, Notiz.

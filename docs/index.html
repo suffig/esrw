@@ -607,6 +607,112 @@
     .mg-eintrag input[type=text], .mg-eintrag input[type=number] { border:0; padding:0; background:none; font-weight:700; }
     a { color:#000; text-decoration:none; }
   }
+
+  /* ==================================================================
+     Design 2: weichere Flaechen, klarere Hierarchie, groessere Tipp-Ziele.
+     Liegt als Schicht ueber den Regeln oben - spaetere Regeln gewinnen.
+     ================================================================== */
+  :root { --radius:20px; --radius-klein:14px; --bg:#f2f4f8; --karte:#ffffff; --linie:#e6e9ef;
+          --schatten:0 1px 2px rgba(20,28,45,.05), 0 6px 20px -8px rgba(20,28,45,.12); }
+  :root[data-theme="dark"] { --bg:#0e1116; --karte:#171b22; --linie:#262c36; --schatten:0 1px 0 rgba(255,255,255,.03); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#0e1116; --karte:#171b22; --linie:#262c36; --schatten:0 1px 0 rgba(255,255,255,.03); } }
+
+  body { padding-bottom:calc(92px + env(safe-area-inset-bottom)); }
+  .karte { border-radius:var(--radius); }
+  .spiel, .zahl, .melde, .gesuch, .profilzeile, .install, .neu, .onboarding, .kalender-box, .ziel, .abschnitt-karte, .menue, .einstellungen-liste, .status-liste { border-radius:var(--radius); }
+  button, .abo, .chip, .anfrage, .filterknopf, .modus, input, select, textarea { -webkit-tap-highlight-color:transparent; }
+  .spiel.tippbar:active, .zahl.tippbar:active, .menue a:active, .namen button:active, .held.tippbar:active { transform:scale(.985); transition:transform .08s; }
+
+  /* Kopf: Avatar statt Mond, Stand als Pille */
+  .kopf { padding:calc(14px + env(safe-area-inset-top)) 0 10px; }
+  .kopf h1 { font-size:1.35rem; }
+  .kopf .stand { display:inline-block; margin-top:5px; padding:3px 10px; border-radius:99px; background:var(--karte); box-shadow:var(--schatten); font-size:.74rem; }
+  .kopf .stand.alt { background:var(--warn-bg); }
+  .avatar-knopf { width:44px; height:44px; border-radius:50%; border:0; cursor:pointer; color:#fff; font-weight:800; font-size:.95rem;
+                  background:var(--akzent); box-shadow:var(--schatten); display:inline-flex; align-items:center; justify-content:center; flex:none; }
+  .avatar-knopf.leer { background:var(--karte); color:var(--dim); border:1px dashed var(--linie); }
+
+  /* Ueberschriften: lesbar statt Kapitaelchen */
+  .abschnitt { font-size:1.02rem; text-transform:none; letter-spacing:-.01em; color:var(--text); margin:26px 0 10px; align-items:flex-end; }
+  .abschnitt small { font-size:.78rem; font-weight:500; color:var(--dim); letter-spacing:0; text-transform:none; }
+  .abschnitt-karte h4, .balken h4, .tausch h4 { font-size:.72rem; letter-spacing:.06em; }
+  .seitentitel { margin:6px 0 12px; }
+  .seitentitel h2 { font-size:1.5rem; font-weight:800; letter-spacing:-.02em; margin:0; }
+  .seitentitel p { margin:2px 0 0; color:var(--dim); font-size:.88rem; }
+  .frage { font-size:1.5rem; letter-spacing:-.02em; }
+  .frage + .meta { margin:-6px 0 12px; }
+
+  /* Profilzeile mit Avatar */
+  .profilzeile { padding:12px 14px; gap:10px; }
+  .profilzeile .avatar-gross { width:42px; height:42px; border-radius:50%; background:var(--akzent); color:#fff; font-weight:800; display:inline-flex; align-items:center; justify-content:center; flex:none; font-size:.9rem; }
+  .profilzeile > span:first-child { display:flex; align-items:center; gap:10px; min-width:0; }
+  .profilzeile > span:first-child > span { min-width:0; }
+  .profilzeile b { display:block; line-height:1.2; }
+  .zurueck { display:inline-flex; align-items:center; gap:4px; }
+
+  /* Karte oben */
+  .held { border-radius:22px; padding:20px 18px 16px; }
+  .held .zeit { font-size:2.4rem; }
+  .held .aktionen a { padding:9px 15px; }
+
+  /* Spielkarten */
+  .spiel { padding:14px 16px; margin-bottom:10px; border:1px solid var(--linie); }
+  .spiel.zeit-links .wann { border-right:0; padding-right:0; background:var(--bg); border-radius:12px; padding:8px 4px; justify-content:center; align-self:start; }
+  .spiel.zeit-links { grid-template-columns:3.8em 1fr; column-gap:14px; }
+  .wann em { font-size:1.05rem; }
+  .spiel .kopfzeile { margin-bottom:2px; }
+  .paarung { font-size:1.05rem; letter-spacing:-.01em; }
+  .meta { line-height:1.4; }
+  .chip { padding:6px 12px 6px 8px; font-size:.86rem; }
+  .avatar { width:22px; height:22px; font-size:.62rem; }
+  .rolle { padding:4px 10px; }
+
+  /* Eingaben und Knoepfe */
+  input[type=search] { border-radius:var(--radius-klein); padding:14px 14px 14px 42px; box-shadow:var(--schatten); border-color:transparent; }
+  .abo { border-radius:var(--radius-klein); padding:15px 18px; box-shadow:0 8px 20px -10px var(--akzent); }
+  .zweit button, .mg-neben, .mg-haupt, .melde button.haupt, .mg-untertabs button, .filterknopf, .textknopf { border-radius:var(--radius-klein); min-height:44px; }
+  .textknopf { min-height:0; padding:6px 2px; }
+  .mg-untertabs button { border-radius:99px; }
+  .mg-form input, .mg-form select, .mg-felder input, .mg-form textarea { border-radius:var(--radius-klein); padding:12px 13px; }
+  .modus { border-radius:var(--radius-klein); }
+  .modus button { padding:8px 12px; }
+  .filterknopf { padding:8px 13px; }
+  .woche button { border-radius:var(--radius-klein); }
+  .zahlen { gap:10px; }
+  .zahl { padding:14px 8px; }
+
+  /* Namensliste */
+  .namen li button { padding:15px 16px; }
+  .namen { border-radius:var(--radius); }
+
+  /* Untere Leiste: Glas, aktiver Reiter mit Pille */
+  .leiste { background:color-mix(in srgb, var(--karte) 82%, transparent); -webkit-backdrop-filter:saturate(1.4) blur(14px); backdrop-filter:saturate(1.4) blur(14px);
+            border-top:1px solid var(--linie); padding:8px 6px calc(10px + env(safe-area-inset-bottom)); }
+  .leiste button { font-size:.66rem; gap:4px; padding:4px 2px 2px; }
+  .leiste button svg.i { width:1.5rem; height:1.5rem; padding:5px 12px; box-sizing:content-box; border-radius:99px; transition:background .15s; }
+  .leiste button.aktiv svg.i { background:var(--akzent-hell); stroke-width:2.2; }
+  .leiste .punkt { top:2px; left:calc(50% + 12px); }
+
+  /* Toast etwas hoeher wegen der hoeheren Leiste */
+  .toast { bottom:calc(96px + env(safe-area-inset-bottom)); border-radius:var(--radius-klein); }
+
+  /* Mehr-Menue */
+  .menue a { padding:15px 14px; }
+  .menue a svg.i { width:1.45rem; height:1.45rem; padding:8px; box-sizing:content-box; border-radius:12px; background:var(--akzent-hell); }
+
+  /* Anmeldung */
+  .anmelde-kopf { text-align:center; padding:8px 0 14px; }
+  .anmelde-kopf .avatar-gross { width:56px; height:56px; margin:0 auto 10px; font-size:1.2rem; background:var(--akzent); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+  .anmelde-kopf h2 { margin:0; font-size:1.35rem; letter-spacing:-.02em; }
+  .anmelde-kopf p { margin:4px 0 0; color:var(--dim); font-size:.9rem; }
+
+  /* Leere Zustaende */
+  .leer { padding:32px 16px; }
+  .leer svg.i { width:2.4rem; height:2.4rem; opacity:.35; margin-bottom:10px; }
+
+  @media (min-width: 900px) {
+    .leiste button svg.i { padding:5px 16px; }
+  }
 </style>
 </head>
 <body>
@@ -629,6 +735,8 @@
   <symbol id="i-note" viewBox="0 0 24 24"><path d="M4 20h4l10-10-4-4L4 16z"/><path d="M12.5 7.5l4 4"/></symbol>
   <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
   <symbol id="i-euro" viewBox="0 0 24 24"><path d="M17 6.5A6 6 0 0 0 7.5 9M17 17.5A6 6 0 0 1 7.5 15M4 10.5h9M4 13.5h9"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1z"/></symbol>
   <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="14" r="4"/><path d="M11 11l8-8M15 7l2.5 2.5M12.5 9.5 15 12"/></symbol>
 </svg>
 
@@ -637,9 +745,10 @@
     <h1 id="titel">Einteilungen</h1>
     <p class="stand" id="stand">wird geladen …</p>
   </div>
-  <button type="button" class="rund" id="thema" title="Hell / Dunkel" aria-label="Hell oder Dunkel">
+  <button type="button" class="rund versteckt" id="thema" title="Hell / Dunkel" aria-label="Hell oder Dunkel">
     <svg class="i"><use href="#i-moon"/></svg>
   </button>
+  <button type="button" class="avatar-knopf leer" id="avatar" title="Profil und mehr" aria-label="Profil und mehr">?</button>
 </header>
 
 <main>
@@ -664,6 +773,7 @@
 
   <!-- Spielplan: alle Spiele nach Tag und Uhrzeit -->
   <section id="plan" class="versteckt">
+    <div class="seitentitel"><h2>Spielplan</h2><p>Alle Spiele von esrw.de – Tipp auf ein Spiel für Details.</p></div>
     <div class="filterleiste">
       <label for="plan-filter" class="versteckt">Spielplan filtern</label>
       <input type="search" id="plan-filter" placeholder="Verein, Halle, Liga oder Name …"
@@ -693,6 +803,7 @@
   <!-- Namensauswahl -->
   <section id="auswahl">
     <p class="frage" id="frage">Wer bist du?</p>
+    <p class="meta" id="frage-unter">Wähle deinen Namen – danach siehst du deine Spiele, kannst den Kalender abonnieren und Mitteilungen bekommen.</p>
     <div class="zuletzt versteckt" id="zuletzt"></div>
     <label for="suche" class="versteckt">Name suchen</label>
     <input type="search" id="suche" placeholder="Eigenen Namen suchen …"
@@ -709,7 +820,7 @@
     <div class="spalten">
     <div class="spalte-haupt">
     <div class="profilzeile karte">
-      <span><b id="person"></b><small id="profil-hinweis">dein Profil</small></span>
+      <span><span class="avatar-gross" id="person-avatar"></span><span><b id="person"></b><small id="profil-hinweis">dein Profil</small></span></span>
       <span><button class="textknopf versteckt" id="uebernehmen">Als mein Profil</button> <button class="textknopf" id="wechseln">Wechseln</button></span>
     </div>
 
@@ -772,7 +883,7 @@
   <section id="spiel" class="versteckt">
     <div class="profilzeile karte">
       <span><b id="spiel-titel"></b><small id="spiel-unter"></small></span>
-      <button class="textknopf" id="spiel-zurueck">Zurück</button>
+      <button class="textknopf zurueck" id="spiel-zurueck"><svg class="i"><use href="#i-back"/></svg>Zurück</button>
     </div>
     <div id="spiel-kopf"></div>
     <div id="spiel-inhalt"></div>
@@ -780,7 +891,7 @@
 
   <!-- Mehr: alles, was nicht in die Leiste passt -->
   <section id="mehr" class="versteckt">
-    <p class="frage">Mehr</p>
+    <div class="seitentitel"><h2>Mehr</h2><p>Alles, was nicht in die Leiste passt.</p></div>
     <div class="menue karte" id="mehr-liste"></div>
   </section>
 
@@ -788,7 +899,7 @@
   <section id="einstellungen" class="versteckt">
     <div class="profilzeile karte">
       <span><b>Einstellungen</b><small>gelten für dieses Gerät</small></span>
-      <button class="textknopf" id="einstellungen-zurueck">Zurück</button>
+      <button class="textknopf zurueck" id="einstellungen-zurueck"><svg class="i"><use href="#i-back"/></svg>Zurück</button>
     </div>
     <div class="karte einstellungen-liste">
       <label>Karten-App <select id="karten-app"><option value="auto">automatisch</option><option value="apple">Apple Karten</option><option value="google">Google Maps</option></select></label>
@@ -805,7 +916,7 @@
   <section id="karte" class="versteckt">
     <div class="profilzeile karte">
       <span><b>Hallenkarte</b><small id="karte-unter">alle Hallen aus den Einteilungen</small></span>
-      <button class="textknopf" id="karte-zurueck">Zurück</button>
+      <button class="textknopf zurueck" id="karte-zurueck"><svg class="i"><use href="#i-back"/></svg>Zurück</button>
     </div>
     <div id="karte-div" class="karte"></div>
     <p class="meta" style="margin-top:8px">Blau: Halle mit eigenem Spiel · Grau: übrige Hallen · Tipp auf einen Punkt zeigt Name und Spiele. Kartendaten © OpenStreetMap.</p>
@@ -825,7 +936,7 @@
   <section id="halle" class="versteckt">
     <div class="profilzeile karte">
       <span><b id="halle-name"></b><small id="halle-adresse"></small></span>
-      <button class="textknopf" id="halle-zurueck">Zurück</button>
+      <button class="textknopf zurueck" id="halle-zurueck"><svg class="i"><use href="#i-back"/></svg>Zurück</button>
     </div>
     <div class="zweit" id="halle-knoepfe"></div>
     <div id="halle-strecke"></div>
@@ -848,7 +959,7 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <nav class="leiste" id="tabs">
   <div>
-    <button type="button" id="tab-meine" class="aktiv"><svg class="i"><use href="#i-user"/></svg>Heute</button>
+    <button type="button" id="tab-meine" class="aktiv"><svg class="i"><use href="#i-home"/></svg>Start</button>
     <button type="button" id="tab-plan"><svg class="i"><use href="#i-list"/></svg>Spielplan</button>
     <button type="button" id="tab-tausch"><svg class="i"><use href="#i-swap"/></svg>Tausch</button>
     <button type="button" id="tab-abrechnung"><svg class="i"><use href="#i-euro"/></svg>Abrechnung</button>
@@ -856,6 +967,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=21"></script>
+<script src="app.js?v=22"></script>
 </body>
 </html>

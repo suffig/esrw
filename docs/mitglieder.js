@@ -472,6 +472,11 @@ window.Mitglieder = (function () {
       h("button", { type: "button", class: "textknopf", text: "Zurück zur Anmeldung", onclick: function () { zeigeAnmeldung("anmelden"); } })
     ]);
 
+    wurzel.appendChild(h("div", { class: "anmelde-kopf" }, [
+      h("div", { class: "avatar-gross" }, [ikone("i-lock")]),
+      h("h2", { text: modus === "registrieren" ? "Konto anlegen" : "Mitgliederbereich" }),
+      h("p", { text: "Tauschbörse, Abrechnung, Ankündigungen, Push – für Schiedsrichter des ESRW." })
+    ]));
     wurzel.appendChild(h("div", { class: "melde karte" }, [
       form, erneutSenden, wechsel,
       h("p", { class: "meta", text: "Konto und Daten liegen bei Supabase" +

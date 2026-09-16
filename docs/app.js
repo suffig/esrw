@@ -38,6 +38,12 @@
     el("thema").querySelector("use").setAttribute("href", dunkel ? "#i-sun" : "#i-moon");
   }
   el("thema2").addEventListener("click", function () { el("thema").click(); });
+  function avatarKopf() {
+    var b = el("avatar");
+    if (profil && profil.name) { b.textContent = initialen(profil.name); b.classList.remove("leer"); b.style.background = farbeFuer(profil.slug); }
+    else { b.textContent = "?"; b.classList.add("leer"); b.style.background = ""; }
+  }
+  el("avatar").addEventListener("click", function () { location.hash = profil && profil.slug ? "mehr" : ""; if (!(profil && profil.slug)) zeigeAuswahl(false); });
   el("thema").addEventListener("click", function () {
     var t = lesen("thema");
     var dunkel = t === "dark" || (!t && window.matchMedia("(prefers-color-scheme: dark)").matches);
@@ -1110,7 +1116,8 @@
   function zeigeStatistik(p) {
     var ziel = el("statistik"); ziel.innerHTML = "";
     var s = p.statistik; if (!s) return;
-    var h = document.createElement("h3"); h.className = "abschnitt"; h.textContent = "Statistik"; ziel.appendChild(h);
+    var h = document.createElement("h3"); h.className = "abschnitt"; h.textContent = "Statistik";
+    var hs2 = document.createElement("small"); hs2.textContent = "aus dem Archiv, seit " + (s.erste || "?").split("-").reverse().join("."); h.appendChild(hs2); ziel.appendChild(h);
     saisonziel(p, ziel);
     var zahlen = document.createElement("div"); zahlen.className = "zahlen";
     [["Saison " + (daten.saison || ""), s.saison], ["Insgesamt", s.gesamt], ["als HSR", (s.rollen && s.rollen["HSR"]) || 0]].forEach(function (paar) {
@@ -1221,6 +1228,8 @@
     aktuell = p;
     ansicht("detail");
     el("person").textContent = p.name;
+    el("person-avatar").textContent = initialen(p.name); el("person-avatar").style.background = farbeFuer(p.slug);
+    avatarKopf();
     var meins = !!(profil && profil.slug === p.slug);
     el("profil-hinweis").textContent = meins ? "dein Profil" : "fremdes Profil";
     el("uebernehmen").classList.toggle("versteckt", meins);
@@ -1233,13 +1242,14 @@
     var ziel = el("spiele"); ziel.innerHTML = "";
     var kommend = p.spiele.filter(function (s) { return !s.vergangen; });
     var gewesen = p.spiele.filter(function (s) { return s.vergangen; }).reverse();
-    var h = document.createElement("h3"); h.className = "abschnitt"; h.textContent = "Kommende Einteilungen"; ziel.appendChild(h);
+    var h = document.createElement("h3"); h.className = "abschnitt"; h.textContent = "Deine nächsten Spiele";
+    var hs = document.createElement("small"); hs.textContent = "Tipp für Route, Tausch, Notiz"; h.appendChild(hs); ziel.appendChild(h);
     var istIch = !!(profil && profil.slug === p.slug);
     if (!kommend.length) ziel.appendChild(leerZustand("Zurzeit keine Einteilung. Der Kalender füllt sich von allein."));
     else kommend.forEach(function (s) { ziel.appendChild(karte(s, p)); });
     if (gewesen.length) {
       var box = document.createElement("details"); box.className = "karte zuletzt-box";
-      var sum = document.createElement("summary"); sum.className = "abschnitt"; sum.textContent = "Zuletzt (" + gewesen.length + ")"; box.appendChild(sum);
+      var sum = document.createElement("summary"); sum.className = "abschnitt"; sum.textContent = "Vergangene Spiele (" + gewesen.length + ")"; box.appendChild(sum);
       box.addEventListener("toggle", function () {
         if (!box.open || box.childNodes.length !== 1) return;
         gewesen.forEach(function (s) { box.appendChild(karte(s)); });
@@ -1272,6 +1282,7 @@
   function zeigeAuswahl(wechsel) {
     aktuell = null; ansicht("auswahl"); el("statistik").innerHTML = "";
     el("frage").textContent = wechsel ? "Wen willst du sehen?" : "Wer bist du?";
+    el("frage-unter").textContent = wechsel ? "Du kannst jeden Kollegen ansehen – dein eigenes Profil bleibt gemerkt." : "Wähle deinen Namen – danach siehst du deine Spiele, kannst den Kalender abonnieren und Mitteilungen bekommen.";
     onboardingStand();
     el("abbrechen-zeile").classList.toggle("versteckt", !wechsel || !profil);
     var z = el("zuletzt"); z.innerHTML = "";
@@ -1406,6 +1417,7 @@
       ["#status", "i-check", "Diagnose", "Für die Fehlersuche"]
     ];
     var links = {};
+    if (!sitzungVorhanden()) eintraege.unshift(["#mitglieder", "i-lock", "Anmelden", "Konto anlegen oder anmelden – für Tausch, Abrechnung, Info"]);
     eintraege.forEach(function (e) {
       var a = document.createElement("a"); a.href = e[0]; a.appendChild(ikone(e[1]));
       var sp = document.createElement("span"); sp.textContent = e[2]; var sm = document.createElement("small"); sm.textContent = e[3]; sp.appendChild(sm); a.appendChild(sp);
@@ -1577,8 +1589,8 @@
     var slug = e.detail && e.detail.slug, p = slug && personMit(slug);
     if (!p || (profil && profil.slug === slug)) return;
     profil = { slug: p.slug, name: p.name, gesehen: {}, begonnen: false };
-    profilSchreiben(); schreiben("person", null);
-    toast("„Meine Spiele“ zeigt jetzt " + p.name, "gut");
+    profilSchreiben(); schreiben("person", null); avatarKopf();
+    toast("„Start“ zeigt jetzt " + p.name, "gut");
   });
   document.addEventListener("mg-zaehler", function (e) { leisteZaehler(e.detail || {}); });
 
@@ -1722,7 +1734,7 @@
       document.title = daten.titel; el("titel").textContent = daten.titel; el("quelle").href = daten.quelle;
       standAnzeigen(daten, b[1]);
       el("fuss").textContent = "Termine beginnen " + daten.vorlauf_minuten + " Minuten vor Spielbeginn, damit du rechtzeitig an der Halle bist.";
-      einstellungenLaden(); filterLaden(); zeigeListe(""); ausHash(); zeigeInstallHinweis(); zeigeNeu(); filterHoehe(); netzAnzeigen();
+      einstellungenLaden(); filterLaden(); avatarKopf(); zeigeListe(""); ausHash(); zeigeInstallHinweis(); zeigeNeu(); filterHoehe(); netzAnzeigen();
       setTimeout(zaehlerHolen, 1500);
     })
     .catch(function () { el("stand").className = "stand alt"; el("stand").textContent = "Daten konnten nicht geladen werden."; });
