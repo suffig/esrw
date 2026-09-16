@@ -240,8 +240,14 @@ und Kontakt, Tauschoptionen, Hallen-Hinweisen, Fahrgemeinschaft, Notiz.
 Filter im Spielplan liegen in einem Blatt. **Hallenkarte** (Leaflet /
 OpenStreetMap) mit eigenen Spielen und Heimatringen. **Kalenderdatei mit
 Abfahrtsalarm** (einmaliger Download, Alarm aus der eigenen Strecke).
-**Saisonziel** und **Abzeichen** aus dem Archiv, auch im Saison-Bild.
+**Saisonziel** mit Fortschritt in der Statistik.
 Wetter kommt von Open-Meteo (ohne Schlüssel), auch in der Spieltag-Push.
+
+**Kleinigkeiten**: Stand als „vor 12 Min.“, Hinweis wenn eine neue Fassung
+geladen wurde, Spielplan-Filter bleiben für die Sitzung erhalten, „Teilen“ im
+Filter-Blatt schickt den (gefilterten) Spielplan als Text in die Gruppe, auf
+der Spielseite „Obmann anschreiben“ (Absage/Frage, Adresse aus dem Profil),
+Gesuche verlinken auf die Spielseite.
 
 **Teilen & Diagnose**: „Teilen“ an jeder Spielkarte (Text für WhatsApp),
 Spieltag-Push mit „Route“-Knopf (Android), Seite `#status` mit allem für die

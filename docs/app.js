@@ -9,7 +9,7 @@
   var NEUIGKEITEN = { version: "2026-09-16c", punkte: [
     "Fünf Reiter unten: Heute · Spielplan · Tausch · Abrechnung · Mehr",
     "Tipp auf ein Spiel öffnet die Spielseite mit Route, Gespann, Tausch, Hinweisen, Notiz und Wetter",
-    "Hallenkarte, Kalenderdatei mit Abfahrtsalarm, Saisonziel und Abzeichen (Einstellungen unter Mehr)",
+    "Hallenkarte, Kalenderdatei mit Abfahrtsalarm, Saisonziel (Einstellungen unter Mehr)",
     "Spielplan-Filter in einem Blatt, Startseite mit Kacheln für Gesuche und Ankündigungen",
     "Wetter zur Abfahrt auf der Karte oben und in der Spieltag-Push"
   ] };
@@ -534,8 +534,22 @@
       var box = tauschBereich(s, personMit(profil.slug)); ta.appendChild(box); box.open = true;
     }
     if (meins) {
-      var ab = karteAbschnitt("Abrechnung");
+      var ab = karteAbschnitt("Weiteres");
       var l = document.createElement("a"); l.href = "#mitglieder/abrechnung"; l.textContent = "Zur Abrechnung (km, Vergütung, bezahlt)"; ab.appendChild(l);
+      if (!s.vergangen) {
+        var mailZeile = document.createElement("div"); mailZeile.style.marginTop = "8px";
+        var mail = document.createElement("a"); mail.href = "#"; mail.textContent = "Obmann anschreiben (Absage / Frage zu diesem Spiel)";
+        mail.addEventListener("click", function (ev) {
+          ev.preventDefault();
+          ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.obmann() : null; })
+            .then(function (an) {
+              var text = "Hallo,\n\nes geht um mein Spiel:\n" + spielText(s) + "\n\n[Grund / Frage hier eintragen]\n\nViele Grüße\n" + (profil.name ? profil.name.split(",").reverse().join(" ").trim() : "");
+              location.href = "mailto:" + encodeURIComponent(an || "") + "?subject=" + encodeURIComponent("Spiel " + datumKurz(d) + " " + s.paarung) + "&body=" + encodeURIComponent(text);
+              if (!an) toast("Obmann-Adresse fehlt – unter Konto → Einstellungen eintragen, dann steht sie gleich drin.", "");
+            }).catch(function () {});
+        });
+        mailZeile.appendChild(mail); ab.appendChild(mailZeile);
+      }
     }
     window.scrollTo(0, 0);
   }
@@ -986,7 +1000,18 @@
     return p.statistik.hallen.map(function (h) { return h[0]; });
   }
 
+  function filterMerken() {
+    try { sessionStorage.setItem("plan-filter", JSON.stringify({ v: el("plan-vergangene").checked, o: el("plan-offen").checked, h: el("plan-hallen").checked, m: el("plan-meine").checked, l: ligenWahl, s: el("plan-filter").value })); } catch (e) {}
+  }
+  function filterLaden() {
+    try {
+      var f = JSON.parse(sessionStorage.getItem("plan-filter") || "null"); if (!f) return;
+      el("plan-vergangene").checked = !!f.v; el("plan-offen").checked = !!f.o; el("plan-hallen").checked = !!f.h; el("plan-meine").checked = !!f.m;
+      ligenWahl = f.l || {}; el("plan-filter").value = f.s || "";
+    } catch (e) {}
+  }
   function filterAktiv() {
+    filterMerken();
     var n = 0;
     ["plan-vergangene", "plan-offen", "plan-hallen", "plan-meine"].forEach(function (id) { if (el(id).checked && !el(id).parentNode.classList.contains("versteckt")) n++; });
     n += Object.keys(ligenWahl).length;
@@ -1086,7 +1111,7 @@
     var ziel = el("statistik"); ziel.innerHTML = "";
     var s = p.statistik; if (!s) return;
     var h = document.createElement("h3"); h.className = "abschnitt"; h.textContent = "Statistik"; ziel.appendChild(h);
-    zielUndAbzeichen(p, ziel);
+    saisonziel(p, ziel);
     var zahlen = document.createElement("div"); zahlen.className = "zahlen";
     [["Saison " + (daten.saison || ""), s.saison], ["Insgesamt", s.gesamt], ["als HSR", (s.rollen && s.rollen["HSR"]) || 0]].forEach(function (paar) {
       var k = document.createElement("div"); k.className = "zahl karte";
@@ -1145,8 +1170,6 @@
     if (s.hallen && s.hallen[0]) zeile(850, "MEISTE HALLE", s.hallen[0][0] + " · " + s.hallen[0][1] + "×");
     if (s.ligen && s.ligen[0]) zeile(960, "MEISTE LIGA", s.ligen[0][0] + " · " + s.ligen[0][1] + "×");
     if (s.partner && s.partner[0]) zeile(1070, "MEISTER GESPANNPARTNER", s.partner[0][0].split(",").reverse().join(" ").trim() + " · " + s.partner[0][1] + "×");
-    var abz = archivDaten && archivDaten.personen ? abzeichenFuer(s, archivDaten.personen[p.slug] || []).filter(function (a) { return a.hat; }).slice(0, 4).map(function (a) { return a.name; }) : [];
-    if (abz.length) { x.fillStyle = "rgba(255,255,255,.7)"; x.font = "600 26px " + schrift; x.fillText("ABZEICHEN: " + abz.join(" · ").toUpperCase(), 80, 1240); }
     x.fillStyle = "rgba(255,255,255,.55)"; x.font = "500 26px " + schrift; x.fillText(basis.replace(/^https?:\/\//, ""), 80, 1290);
     c.toBlob(function (blob) {
       if (!blob) { toast("Bild konnte nicht erzeugt werden.", "warn"); return; }
@@ -1496,9 +1519,9 @@
     }).catch(function (e) { knopf.disabled = false; knopf.textContent = "Kalenderdatei mit Abfahrtsalarm laden"; toast("Nicht möglich: " + (e.message || e), "warn"); });
   }
 
-  // ------------------------------------------------- Saisonziel und Abzeichen
+  // ------------------------------------------------------------ Saisonziel
 
-  function zielUndAbzeichen(p, ziel) {
+  function saisonziel(p, ziel) {
     var s = p.statistik; if (!s) return;
     var meins = !!(profil && profil.slug === p.slug);
     var zielWert = parseInt(lesen("ziel") || "0", 10);
@@ -1517,37 +1540,6 @@
       var a = document.createElement("a"); a.href = "#einstellungen"; a.textContent = "Saisonziel setzen"; hint.appendChild(a); hint.appendChild(document.createTextNode(" – dann steht hier der Fortschritt."));
       ziel.appendChild(hint);
     }
-    var abz = document.createElement("div"); abz.className = "karte ziel"; var h4 = document.createElement("h4"); h4.className = "abschnitt"; h4.style.margin = "0 0 8px"; h4.textContent = "Abzeichen"; abz.appendChild(h4);
-    var reihe = document.createElement("div"); reihe.className = "abzeichen"; abz.appendChild(reihe); ziel.appendChild(abz);
-    (archivDaten ? Promise.resolve(archivDaten) : hole("archiv.json").then(function (a) { archivDaten = a; return a; })).then(function (a) {
-      var eintraege = (a.personen && a.personen[p.slug]) || [];
-      abzeichenFuer(s, eintraege).forEach(function (x) {
-        var sp = document.createElement("span"); sp.className = x.hat ? "" : "offen"; sp.textContent = (x.hat ? "✓ " : "") + x.name; sp.title = x.text; reihe.appendChild(sp);
-      });
-    }).catch(function () { abz.remove(); });
-  }
-  function abzeichenFuer(s, eintraege) {
-    var tage = {}, frueh = false, spaet = false;
-    eintraege.forEach(function (e) { var d = new Date(e.beginn); var k = d.toDateString(); tage[k] = (tage[k] || 0) + 1; if (d.getHours() < 9) frueh = true; if (d.getHours() >= 20 && d.getMinutes() >= 30 || d.getHours() >= 21) spaet = true; });
-    var doppel = Object.keys(tage).some(function (k) { return tage[k] >= 2; });
-    var hallen = {}; eintraege.forEach(function (e) { if (e.halle) hallen[e.halle] = 1; });
-    var ligen = {}; eintraege.forEach(function (e) { if (e.liga) ligen[ligaGruppe(e.liga)] = 1; });
-    var hsr = (s.rollen && s.rollen.HSR) || 0;
-    return [
-      { name: "Erstes Spiel", hat: s.gesamt >= 1, text: "Mindestens ein Spiel im Archiv" },
-      { name: "Erstes HSR", hat: hsr >= 1, text: "Einmal Hauptschiedsrichter" },
-      { name: "HSR-Routinier", hat: hsr >= 10, text: "10 Spiele als HSR" },
-      { name: "Marathon", hat: s.saison >= 25, text: "25 Spiele in einer Saison" },
-      { name: "Halbe Hundert", hat: s.gesamt >= 50, text: "50 Spiele im Archiv" },
-      { name: "Hundert", hat: s.gesamt >= 100, text: "100 Spiele im Archiv" },
-      { name: "Stammgast", hat: !!(s.hallen && s.hallen[0] && s.hallen[0][1] >= 10), text: "10× in derselben Halle" + (s.hallen && s.hallen[0] ? " (" + s.hallen[0][0] + ")" : "") },
-      { name: "Weitgereist", hat: Object.keys(hallen).length >= 8, text: "8 verschiedene Hallen" },
-      { name: "Vielseitig", hat: Object.keys(ligen).length >= 5, text: "5 verschiedene Ligagruppen" },
-      { name: "Frühaufsteher", hat: frueh, text: "Spiel vor 09:00 Uhr" },
-      { name: "Nachteule", hat: spaet, text: "Spiel ab 20:30 Uhr" },
-      { name: "Doppelschicht", hat: doppel, text: "Zwei Spiele an einem Tag" },
-      { name: "Treues Gespann", hat: !!(s.partner && s.partner[0] && s.partner[0][1] >= 5), text: "5× mit demselben Partner" }
-    ];
   }
 
   function ausHash() {
@@ -1637,6 +1629,20 @@
   el("plan-hallen").addEventListener("change", zeigePlan);
   el("plan-offen").addEventListener("change", zeigePlan);
   el("plan-filter-knopf").addEventListener("click", function () { el("plan-filter-blatt").classList.toggle("versteckt"); filterHoehe(); });
+  el("plan-teilen").addEventListener("click", function () {
+    var liste = planGefiltert(false).filter(function (s) { return !s.vergangen; }).slice(0, 40);
+    if (!liste.length) { toast("Nichts zu teilen.", ""); return; }
+    var tag = null, zeilen = [];
+    liste.forEach(function (s) {
+      var d = new Date(s.beginn), k = d.toDateString();
+      if (k !== tag) { tag = k; zeilen.push(""); zeilen.push(datumKurz(d).toUpperCase()); }
+      zeilen.push(uhr(d) + " " + (s.liga ? s.liga + " " : "") + s.paarung + " · " + (s.halle || "?") + (s.besetzung.length ? " · " + s.besetzung.map(function (b) { return b.name.split(",")[0]; }).join("/") : " · OFFEN"));
+    });
+    var text = "Spielplan" + (filterAktiv() ? " (gefiltert)" : "") + ":" + zeilen.join("\n") + "\n\n" + basis + "#plan";
+    if (navigator.share) navigator.share({ text: text }).catch(function () {});
+    else if (navigator.clipboard) navigator.clipboard.writeText(text).then(function () { toast("Spielplan kopiert ✓", "gut"); });
+    else prompt("Spielplan:", text);
+  });
   el("plan-filter-leeren").addEventListener("click", function () {
     ["plan-vergangene", "plan-offen", "plan-hallen", "plan-meine"].forEach(function (id) { el(id).checked = false; });
     ligenWahl = {}; el("plan-filter").value = ""; zeigePlan();
@@ -1694,9 +1700,11 @@
     var s = el("stand"); s.className = "stand";
     s.textContent = d.personen.length + " Schiedsrichter · " + d.spiele_gesamt + " Spiele";
     if (lauf && lauf.stand) {
-      var stand = new Date(lauf.stand), alter = (Date.now() - stand.getTime()) / 3600000;
-      s.textContent = "Stand " + stand.toLocaleString("de-DE", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }) + " · " + s.textContent;
-      if (alter > 6) { s.className = "stand alt"; s.textContent += " – seit " + Math.round(alter) + " Std. nicht aktualisiert"; }
+      var stand = new Date(lauf.stand), alter = (Date.now() - stand.getTime()) / 3600000, min = Math.round(alter * 60);
+      var relativ = min < 1 ? "gerade eben" : min < 60 ? "vor " + min + " Min." : alter < 24 ? "vor " + Math.round(alter) + " Std." : stand.toLocaleString("de-DE", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+      s.textContent = "Stand " + relativ + " · " + s.textContent;
+      s.title = "Letzter Lauf: " + stand.toLocaleString("de-DE");
+      if (alter > 6) { s.className = "stand alt"; s.textContent += " – lange nicht aktualisiert"; }
     }
   }
   function neuLaden() {
@@ -1714,12 +1722,18 @@
       document.title = daten.titel; el("titel").textContent = daten.titel; el("quelle").href = daten.quelle;
       standAnzeigen(daten, b[1]);
       el("fuss").textContent = "Termine beginnen " + daten.vorlauf_minuten + " Minuten vor Spielbeginn, damit du rechtzeitig an der Halle bist.";
-      einstellungenLaden(); zeigeListe(""); ausHash(); zeigeInstallHinweis(); zeigeNeu(); filterHoehe(); netzAnzeigen();
+      einstellungenLaden(); filterLaden(); zeigeListe(""); ausHash(); zeigeInstallHinweis(); zeigeNeu(); filterHoehe(); netzAnzeigen();
       setTimeout(zaehlerHolen, 1500);
     })
     .catch(function () { el("stand").className = "stand alt"; el("stand").textContent = "Daten konnten nicht geladen werden."; });
 
   if ("serviceWorker" in navigator && location.protocol !== "file:") {
+    var hatteController = !!navigator.serviceWorker.controller;
+    navigator.serviceWorker.addEventListener("controllerchange", function () {
+      // Neue Fassung ist da - beim naechsten Laden aktiv; kurz sagen, statt dass sich Dinge still aendern
+      if (hatteController) toast("Neue Fassung geladen – einmal neu öffnen, dann ist alles frisch.", "gut");
+      hatteController = true;
+    });
     window.addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function () {}); });
   }
 })();

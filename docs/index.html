@@ -142,9 +142,9 @@
   .abo { display:flex; align-items:center; justify-content:center; gap:8px;
          background:var(--akzent); color:var(--akzent-text); text-decoration:none;
          padding:14px 18px; border-radius:12px; font-weight:800; }
-  .zweit { display:flex; gap:8px; margin-top:8px; }
-  .zweit button { flex:1; padding:11px; cursor:pointer; background:var(--karte); color:var(--text);
-                  border:1px solid var(--linie); border-radius:10px; font-weight:600; }
+  .zweit { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+  .zweit button { flex:1 1 calc(50% - 4px); min-width:0; padding:11px 8px; cursor:pointer; background:var(--karte); color:var(--text);
+                  border:1px solid var(--linie); border-radius:10px; font-weight:600; white-space:normal; }
   .zweit button:hover { border-color:var(--akzent); }
 
   .hinweis { display:flex; gap:10px; align-items:flex-start; padding:12px 14px; border-radius:12px;
@@ -253,7 +253,7 @@
   .kandidat .meta { font-size:.8rem; margin-top:3px; }
   .anfrage { font-size:.8rem; font-weight:800; padding:5px 12px; background:var(--akzent); color:var(--akzent-text);
              border:0; border-radius:99px; cursor:pointer; white-space:nowrap; display:inline-flex; align-items:center; gap:5px; }
-  .anfrage.zweit { background:var(--karte); color:var(--akzent); border:1px solid var(--akzent); margin-top:6px; }
+  .anfrage.zweit { background:var(--karte); color:var(--akzent); border:1px solid var(--akzent); margin-top:6px; white-space:normal; max-width:100%; text-align:left; }
 
   /* Mitglieder (Stile fuer mitglieder.js) */
   .mg-meldung { padding:10px 12px; border-radius:10px; font-size:.88rem; margin-bottom:10px; background:var(--karte); border:1px solid var(--linie); }
@@ -284,7 +284,7 @@
   .mg-betrag { margin-top:8px; font-weight:700; color:var(--text); }
   .mg-fuss { margin-top:16px; }
   .mg-summenblock h3 { margin-top:18px; }
-  .mg-monat { display:flex; justify-content:space-between; align-items:baseline; margin:18px 0 8px; }
+  .mg-monat { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:2px 12px; margin:18px 0 8px; }
   .mg-monat b { font-size:.9rem; font-weight:800; }
   .mg-belege { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; align-items:center; }
   .mg-belege a { font-size:.8rem; }
@@ -298,7 +298,9 @@
   .gesuch .wer { font-size:.8rem; color:var(--dim); font-weight:600; }
   .gesuch .angebote { margin-top:8px; font-size:.85rem; }
   .gesuch .angebote span { display:inline-block; background:var(--gut-bg); color:var(--gut); border-radius:99px; padding:2px 9px; margin:2px 4px 2px 0; font-weight:700; font-size:.8rem; }
-  .sperre { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-top:1px solid var(--linie); font-size:.9rem; }
+  .sperre { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:6px 10px; padding:8px 0; border-top:1px solid var(--linie); font-size:.9rem; }
+  .sperre .mg-untertabs { margin:0; padding-right:0; -webkit-mask-image:none; mask-image:none; flex:none; }
+  .sperre .mg-untertabs button { padding:6px 10px; font-size:.8rem; }
   .sperre:first-child { border-top:0; }
 
   .extras summary { color:var(--dim); }
@@ -377,7 +379,9 @@
   .kalender-box { padding:0 14px; margin-bottom:12px; }
   .kalender-box > summary { list-style:none; cursor:pointer; padding:12px 0; display:flex; justify-content:space-between; align-items:center; font-weight:800; }
   .kalender-box > summary::-webkit-details-marker { display:none; }
-  .kalender-box > summary small { color:var(--dim); font-weight:600; font-size:.78rem; }
+  .kalender-box > summary small { color:var(--dim); font-weight:600; font-size:.78rem; text-align:right; margin-left:auto; padding-left:8px; }
+  .kalender-box > summary > span { white-space:nowrap; }
+  .kalender-box .mg-neben { white-space:normal; }
   .kalender-box > summary::after { content:"›"; color:var(--dim); transform:rotate(90deg); margin-left:8px; font-size:1.2rem; }
   .kalender-box[open] > summary::after { transform:rotate(-90deg); }
   .kalender-innen { padding-bottom:12px; }
@@ -528,13 +532,11 @@
   .leaflet-container { font:inherit; background:var(--bg); }
   .leaflet-popup-content { font-size:.9rem; }
 
-  /* Saisonziel + Abzeichen */
+  /* Saisonziel */
   .ziel { padding:12px 15px; margin-bottom:10px; }
+  .ziel .kopfzeile .meta { white-space:nowrap; }
   .ziel .balkenrahmen { height:10px; border-radius:5px; background:var(--linie); overflow:hidden; margin:8px 0 6px; }
   .ziel .balkenrahmen i { display:block; height:100%; background:var(--akzent); border-radius:5px; }
-  .abzeichen { display:flex; flex-wrap:wrap; gap:8px; }
-  .abzeichen span { display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:12px; background:var(--akzent-hell); color:var(--akzent); font-size:.82rem; font-weight:700; }
-  .abzeichen span.offen { background:var(--bg); color:var(--dim); border:1px dashed var(--linie); }
 
   .leiste button { font-size:.64rem; padding:6px 2px; }
 
@@ -680,7 +682,7 @@
         <label class="schalter versteckt" id="plan-hallen-label"><input type="checkbox" id="plan-hallen"> meine Hallen</label>
         <label class="schalter versteckt" id="plan-meine-label"><input type="checkbox" id="plan-meine"> nur meine Spiele</label>
         <div class="ligen" id="plan-ligen"></div>
-        <div class="zweit"><button type="button" id="plan-filter-leeren">Zurücksetzen</button><button type="button" id="plan-drucken">Drucken</button></div>
+        <div class="zweit"><button type="button" id="plan-filter-leeren">Zurücksetzen</button><button type="button" id="plan-teilen">Teilen</button><button type="button" id="plan-drucken">Drucken</button></div>
       </div>
     </div>
     <div class="woche" id="plan-woche"></div>
@@ -854,6 +856,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=20"></script>
+<script src="app.js?v=21"></script>
 </body>
 </html>

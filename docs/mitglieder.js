@@ -557,7 +557,9 @@ window.Mitglieder = (function () {
     reiter = name;
     if (!inhalt) rahmen();
     Array.prototype.forEach.call(wurzel.querySelectorAll(".mg-untertabs button"), function (b) {
-      b.classList.toggle("aktiv", b.getAttribute("data-reiter") === name);
+      var aktiv = b.getAttribute("data-reiter") === name;
+      b.classList.toggle("aktiv", aktiv);
+      if (aktiv && b.scrollIntoView) try { b.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" }); } catch (e) {}
     });
     leeren(inhalt);
     if ((name === "tausch" || name === "frei" || name === "info") && !frei()) {
@@ -1330,8 +1332,8 @@ window.Mitglieder = (function () {
         h("span", { class: "datum", text: datum(d) + " · " + uhr(d) + " Uhr" }),
         rolleBadge(g.rolle)
       ]),
-      h("div", { class: "paarung", text: (g.liga ? g.liga + ": " : "") + (g.paarung || "") }),
-      h("div", { class: "meta", text: (g.halle || "Halle unbekannt") }),
+      h("div", { class: "paarung" }, [h("a", { href: "#spiel/" + encodeURIComponent(g.kennung), style: "color:inherit;text-decoration:none", text: (g.liga ? g.liga + ": " : "") + (g.paarung || "") })]),
+      h("div", { class: "meta", text: (g.halle || "Halle unbekannt") + " · Tipp auf den Namen öffnet das Spiel" }),
       h("div", { class: "wer", text: (meins ? "Du suchst" : g.name + " sucht") + " Ersatz" + (g.text ? " – „" + g.text + "“" : "") })
     ]);
     var ang = h("div", { class: "angebote" });
@@ -1725,7 +1727,7 @@ window.Mitglieder = (function () {
           clearTimeout(timer);
           timer = setTimeout(function () { notizSpeichern(spiel, ta.value.trim()); }, 800);
         });
-        innen.appendChild(h("div", { class: "mg-form" }, [ta, h("p", { class: "meta", text: "Speichert von selbst. Alle Notizen: Mitglieder → Notizen." })]));
+        innen.appendChild(h("div", { class: "mg-form" }, [ta, h("p", { class: "meta", text: "Speichert von selbst. Alle Notizen: Mehr → Notizen." })]));
       }
     });
     ziel.appendChild(box);
@@ -1757,7 +1759,7 @@ window.Mitglieder = (function () {
         leeren(liste);
         var f = suche.value.trim().toLowerCase();
         var treffer = alle.filter(function (n) { return !f || (n.text + " " + n.paarung + " " + (n.liga || "") + " " + (n.halle || "")).toLowerCase().indexOf(f) >= 0; });
-        if (!treffer.length) liste.appendChild(h("p", { class: "leer", text: alle.length ? "Nichts gefunden." : "Noch keine Notizen. Unter jedem eigenen Spiel gibt es „Notiz“." }));
+        if (!treffer.length) liste.appendChild(h("p", { class: "leer", text: alle.length ? "Nichts gefunden." : "Noch keine Notizen. Auf jeder Spielseite gibt es „Meine Notiz“." }));
         treffer.forEach(function (n) {
           var d = new Date(n.beginn);
           var ta = h("textarea", { rows: "3", maxlength: "4000" }); ta.value = n.text;
@@ -2088,6 +2090,14 @@ window.Mitglieder = (function () {
     });
   }
 
+  // Obmann-Adresse aus dem Profil (fuer Mails von der Spielseite)
+  function obmann() {
+    return bereit().then(function (st) {
+      if (!st.eingerichtet || !session) return null;
+      return ladeProfil().then(function () { return (profil && profil.obmann_email) || null; });
+    }).catch(function () { return null; });
+  }
+
   // Heimatkoordinaten fuer Hallenkarte und Abfahrtsdatei
   function heimat() {
     return bereit().then(function (st) {
@@ -2115,5 +2125,5 @@ window.Mitglieder = (function () {
 
   return { oeffnen: oeffnen, bereit: bereit, angemeldet: angemeldet,
            sperrenAm: sperrenAm, gesuchAnlegen: gesuchAnlegen, offeneAbrechnungen: offeneAbrechnungen,
-           extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat };
+           extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat, obmann: obmann };
 })();

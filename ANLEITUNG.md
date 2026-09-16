@@ -890,7 +890,7 @@ Links (24 Stunden) werden beim Ankommen erklärt, ebenfalls mit diesem Knopf.
 
 | Reiter unten | Inhalt |
 |---|---|
-| Heute | dein Profil, nächstes Spiel mit Wetter/Abfahrt, Kacheln (Spiele in 7 Tagen, Gesuche, Ankündigungen), Kalender-Karte, deine Spiele, Statistik mit Saisonziel und Abzeichen |
+| Heute | dein Profil, nächstes Spiel mit Wetter/Abfahrt, Kacheln (Spiele in 7 Tagen, Gesuche, Ankündigungen), Kalender-Karte, deine Spiele, Statistik mit Saisonziel |
 | Spielplan | alle Spiele; Filter-Blatt (vergangene, unbesetzte, meine Hallen, meine Spiele, Ligen), Karten / Liste / Monat, Drucken |
 | Tausch | Tauschbörse (Login) |
 | Abrechnung | Abrechnung, Fahrtenbuch, CSV (Login) |
