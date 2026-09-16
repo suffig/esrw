@@ -540,8 +540,9 @@ window.Mitglieder = (function () {
   // Kopf mit Name und Unterreitern; der Inhalt darunter wechselt.
   function rahmen() {
     leeren(wurzel);
+    var initialen = (function (n) { var t = (n || "?").split(","); return (((t[1] || "").trim()[0] || "") + ((t[0] || "").trim()[0] || "")).toUpperCase() || "?"; })(profil.name);
     wurzel.appendChild(h("div", { class: "profilzeile karte" }, [
-      h("span", {}, [h("b", { text: profil.name || profil.slug }), h("small", { text: session.user.email })]),
+      h("span", {}, [h("span", { class: "avatar-gross", text: initialen }), h("span", {}, [h("b", { text: profil.name || profil.slug }), h("small", { text: session.user.email })])]),
       h("button", { type: "button", class: "textknopf", text: "Abmelden", onclick: abmelden })
     ]));
     if (!frei()) wurzel.appendChild(h("div", { class: "hinweis warn" }, [ikone("i-lock"),
@@ -954,8 +955,12 @@ window.Mitglieder = (function () {
   function aktualisiereZeile(spiel) {
     var el = wurzel.querySelector('[data-kennung="' + spiel.kennung.replace(/"/g, "") + '"] .mg-betrag');
     if (!el) return;
-    var e = einsaetze[spiel.kennung];
-    el.textContent = betragText(spiel, e, betragFuer(spiel, e));
+    var e = einsaetze[spiel.kennung], b = betragFuer(spiel, e);
+    el.textContent = betragText(spiel, e, b);
+    var kurz = wurzel.querySelector('[data-kennung="' + spiel.kennung.replace(/"/g, "") + '"] .mg-betrag-kurz');
+    if (kurz) kurz.textContent = b.betrag != null ? euro(b.betrag) + (e.km != null ? " · " + e.km + " km" : "") : "Betrag fehlt";
+    var karte = wurzel.querySelector('[data-kennung="' + spiel.kennung.replace(/"/g, "") + '"]');
+    if (karte) karte.classList.toggle("bezahlt", !!e.bezahlt);
   }
 
   function betragText(spiel, e, b) {
@@ -1000,7 +1005,7 @@ window.Mitglieder = (function () {
 
   function zeigeAbrechnung() {
     leeren(inhalt);
-    inhalt.appendChild(h("p", { class: "meta", text: "Lade Saison …" }));
+    inhalt.appendChild(skelett(3));
     ladeArchiv().then(function () {
       if (!gewaehlteSaison || saisonen().indexOf(gewaehlteSaison) < 0) gewaehlteSaison = ctx.daten.saison || saisonen()[0] || null;
       rendereAbrechnung();
@@ -1073,7 +1078,8 @@ window.Mitglieder = (function () {
     var liste = spiele;
     if (nurOffene) liste = spiele.filter(function (sp) {
       var e = einsaetze[sp.kennung];
-      return !e || !e.bezahlt || e.verguetung == null || e.km == null;
+      // km zaehlt nur als "fehlt", wenn eine Heimatadresse da ist - sonst waere jedes Spiel unvollstaendig
+      return !e || !e.bezahlt || e.verguetung == null || (e.km == null && profil.heimat_lat != null);
     });
     if (!spiele.length) inhalt.appendChild(h("p", { class: "leer", text: "Keine Spiele in dieser Saison." }));
     else if (!liste.length) inhalt.appendChild(h("p", { class: "leer", text: "Alles abgerechnet und bezahlt ✓" }));
@@ -1187,14 +1193,27 @@ window.Mitglieder = (function () {
       onchange: function (ev) { speichereEinsatz(sp, { notiz: ev.target.value.trim() || null }); } });
 
     var b = betragFuer(sp, e);
-    var zeile = h("div", { class: "spiel karte mg-eintrag" + (vergangen ? "" : " war"), "data-kennung": sp.kennung.replace(/"/g, "") }, [
-      h("div", { class: "kopfzeile" }, [
-        h("span", { class: "datum", text: datum(d) + " · " + uhr(d) + " Uhr" + (zeitzuschlag(sp) ? " · +20 %" : "") }),
-        rolleBadge((sp.rolle || "") + (sp.system >= 3 ? " · " + sp.system + "er" : ""))
+    var kopfBezahlt = h("input", { type: "checkbox", title: "bezahlt", onchange: function (ev) { bez.checked = ev.target.checked; speichereEinsatz(sp, { bezahlt: ev.target.checked }); } });
+    kopfBezahlt.checked = !!e.bezahlt;
+    var details = h("div", { class: "mg-details versteckt" });
+    var zeile = h("div", { class: "spiel karte mg-eintrag" + (vergangen ? "" : " war") + (e.bezahlt ? " bezahlt" : ""), "data-kennung": sp.kennung.replace(/"/g, "") }, [
+      h("div", { class: "mg-kopf", onclick: function (ev) { if (ev.target.closest("input, button, a, label")) return; details.classList.toggle("versteckt"); zeile.classList.toggle("offen", !details.classList.contains("versteckt")); } }, [
+        h("div", { class: "kopfzeile" }, [
+          h("span", { class: "datum", text: datum(d) + " · " + uhr(d) + " Uhr" + (zeitzuschlag(sp) ? " · +20 %" : "") }),
+          rolleBadge((sp.rolle || "") + (sp.system >= 3 ? " · " + sp.system + "er" : ""))
+        ]),
+        h("div", { class: "paarung", text: (sp.liga ? sp.liga + ": " : "") + sp.paarung }),
+        h("div", { class: "mg-summe" }, [
+          h("span", { class: "meta mg-betrag-kurz", text: b.betrag != null ? euro(b.betrag) + (e.km != null ? " · " + e.km + " km" : "") : "Betrag fehlt" }),
+          h("label", { class: "mg-check" }, [kopfBezahlt, " bezahlt"]),
+          h("span", { class: "meta mg-auf", text: "Details ›" })
+        ])
       ]),
-      h("div", { class: "paarung", text: (sp.liga ? sp.liga + ": " : "") + sp.paarung }),
-      h("div", { class: "meta", text: (sp.halle || "Halle unbekannt") +
-        (vorschlag && vorschlag.art === "route" ? " · " + vorschlag.km + " km Straße" : "") }),
+      details
+    ]);
+    details.appendChild(h("div", { class: "meta", text: (sp.halle || "Halle unbekannt") +
+        (vorschlag && vorschlag.art === "route" ? " · " + vorschlag.km + " km Straße" : "") }));
+    [
       h("div", { class: "mg-felder" }, [
         h("label", {}, ["km einfach", km]), h("label", {}, ["Vergütung €", verg]), h("label", {}, ["Auslagen €", ausl])
       ]),
@@ -1206,7 +1225,8 @@ window.Mitglieder = (function () {
       h("div", { class: "mg-felder" }, [h("label", { class: "mg-notiz" }, ["Notiz", notiz])]),
       h("div", { class: "mg-belege" }),
       h("div", { class: "meta mg-betrag", text: betragText(sp, e, b) })
-    ]);
+    ].forEach(function (x) { details.appendChild(x); });
+    bez.addEventListener("change", function () { kopfBezahlt.checked = bez.checked; });
     zeile.querySelector(".rolle").className = "rolle " + (sp.rolle || "");
     belegeRendern(sp, zeile);
     return zeile;
@@ -1269,7 +1289,7 @@ window.Mitglieder = (function () {
 
   function zeigeTausch() {
     leeren(inhalt);
-    inhalt.appendChild(h("p", { class: "meta", text: "Lade Tauschbörse …" }));
+    inhalt.appendChild(skelett(3));
     ladeGesuche().then(function (d) {
       // Eigene Gesuche, bei denen esrw.de inzwischen jemand anderen fuehrt
       var spieleVon = {};
@@ -1288,10 +1308,10 @@ window.Mitglieder = (function () {
       return d;
     }).then(function (d) {
       leeren(inhalt);
-      var offen = d.gesuche.filter(function (g) { return g.status === "offen"; });
-      var erledigt = d.gesuche.filter(function (g) { return g.status !== "offen"; });
+      var offen = d.gesuche.filter(function (g) { return g.status !== "erledigt"; });
+      var erledigt = d.gesuche.filter(function (g) { return g.status === "erledigt"; });
 
-      inhalt.appendChild(h("h3", { class: "abschnitt", text: "Offene Gesuche" }));
+      inhalt.appendChild(h("h3", { class: "abschnitt", text: "Offene und vereinbarte Gesuche" }));
       if (!offen.length) inhalt.appendChild(h("p", { class: "leer", text: "Gerade sucht niemand Ersatz." }));
       offen.forEach(function (g) { inhalt.appendChild(gesuchKarte(g, d.angebote[g.id] || [])); });
 
@@ -1342,21 +1362,39 @@ window.Mitglieder = (function () {
       h("div", { class: "wer", text: (meins ? "Du suchst" : g.name + " sucht") + " Ersatz" + (g.text ? " – „" + g.text + "“" : "") })
     ]);
     var ang = h("div", { class: "angebote" });
-    if (angebote.length) {
-      ang.appendChild(document.createTextNode("Könnte: "));
-      angebote.forEach(function (a) { ang.appendChild(h("span", { text: a.name + (a.text ? " (" + a.text + ")" : "") })); });
+    if (g.status === "vereinbart") {
+      ang.appendChild(h("div", { class: "hinweis gut", style: "margin:8px 0 0" }, [ikone("i-check"),
+        h("span", { text: "Vereinbart mit " + (g.vereinbart_name || "?") + " – der Obmann muss noch umteilen. Sobald esrw.de den neuen Namen zeigt, wird das Gesuch von selbst erledigt." })]));
+    } else if (angebote.length) {
+      ang.appendChild(document.createTextNode(meins ? "Angebote – eins annehmen: " : "Könnte: "));
+      angebote.forEach(function (a) {
+        var chip = h("span", { text: a.name + (a.text ? " (" + a.text + ")" : "") });
+        if (meins && g.status === "offen") {
+          chip.style.cursor = "pointer"; chip.title = "Dieses Angebot annehmen";
+          chip.appendChild(h("b", { text: " · annehmen", style: "font-weight:800" }));
+          chip.addEventListener("click", function () { angebotAnnehmen(g, a); });
+        }
+        ang.appendChild(chip);
+      });
     } else if (g.status === "offen") ang.appendChild(document.createTextNode("Noch kein Angebot."));
     karte.appendChild(ang);
 
-    if (g.status !== "offen") return karte;
+    if (g.status === "erledigt") return karte;
     var knoepfe = h("div", { class: "zweit" });
     if (meins) {
       knoepfe.appendChild(h("button", { type: "button", text: "Erledigt", onclick: function () {
         sb.from("gesuche").update({ status: "erledigt" }).eq("id", g.id).then(function (r) { if (r.error) meldung(fehlerText(r.error), "warn"); zeigeTausch(); });
       } }));
-      knoepfe.appendChild(h("button", { type: "button", text: "Zurückziehen", onclick: function () {
+      if (g.status === "vereinbart") {
+        knoepfe.appendChild(h("button", { type: "button", text: "Mail an Obmann erneut", onclick: function () { obmannMail(g, g.vereinbart_name); } }));
+        knoepfe.appendChild(h("button", { type: "button", text: "Doch nicht (wieder offen)", onclick: function () {
+          sb.from("gesuche").update({ status: "offen", vereinbart_mit: null, vereinbart_name: null, vereinbart_gemeldet: false }).eq("id", g.id).then(function () { zeigeTausch(); });
+        } }));
+      } else knoepfe.appendChild(h("button", { type: "button", text: "Zurückziehen", onclick: function () {
         sb.from("gesuche").delete().eq("id", g.id).then(function () { zeigeTausch(); });
       } }));
+    } else if (g.status === "vereinbart") {
+      // Fremdes, vereinbartes Gesuch: nichts mehr zu tun
     } else if (meinAngebot) {
       knoepfe.appendChild(h("button", { type: "button", text: "Angebot zurückziehen", onclick: function () {
         sb.from("angebote").delete().eq("id", meinAngebot.id).then(function () { zeigeTausch(); });
@@ -1372,6 +1410,28 @@ window.Mitglieder = (function () {
     }
     karte.appendChild(knoepfe);
     return karte;
+  }
+
+  function angebotAnnehmen(g, a) {
+    if (!confirm(a.name + " übernimmt " + g.paarung + "? Danach geht eine Mail an den Obmann.")) return;
+    sb.from("gesuche").update({ status: "vereinbart", vereinbart_mit: a.user_id, vereinbart_name: a.name, vereinbart_gemeldet: false }).eq("id", g.id)
+      .then(function (r) {
+        if (r.error) { meldung(fehlerText(r.error), "warn"); return; }
+        kurzMeldung("Vereinbart ✓ – " + a.name + " bekommt Bescheid.", "gut");
+        obmannMail(g, a.name);
+        zeigeTausch();
+      });
+  }
+
+  function obmannMail(g, neuerName) {
+    var d = new Date(g.beginn);
+    var text = "Hallo,\n\nbitte das folgende Spiel umteilen:\n\n" + datum(d) + " " + uhr(d) + " Uhr – " + (g.liga ? g.liga + ": " : "") + g.paarung +
+      (g.halle ? "\n" + g.halle : "") + "\nRolle: " + (g.rolle || "SR") +
+      "\n\nBisher: " + (profil.name || profil.slug) + "\nNeu: " + neuerName + "\n\nWir haben das untereinander abgesprochen.\n\nViele Grüße\n" +
+      (profil.name ? profil.name.split(",").reverse().join(" ").trim() : "");
+    var an = profil.obmann_email || "";
+    location.href = "mailto:" + encodeURIComponent(an) + "?subject=" + encodeURIComponent("Umteilung " + datum(d) + " " + g.paarung) + "&body=" + encodeURIComponent(text);
+    if (!an) kurzMeldung("Obmann-Adresse fehlt – unter Konto → Einstellungen eintragen.", "");
   }
 
   // ------------------------------------------------------ Verfuegbarkeit
@@ -1393,7 +1453,7 @@ window.Mitglieder = (function () {
 
   function zeigeVerfuegbarkeit() {
     leeren(inhalt);
-    inhalt.appendChild(h("p", { class: "meta", text: "Lade Verfügbarkeiten …" }));
+    inhalt.appendChild(skelett(2));
     var heute = isoTag(new Date());
     sb.from("sperren").select("*").eq("user_id", session.user.id).gte("datum", heute).order("datum").then(function (r) {
       if (r.error) throw r.error;
@@ -1407,9 +1467,9 @@ window.Mitglieder = (function () {
       var person = ctx.personMit(profil.slug), spieleAm = {};
       if (person) person.spiele.forEach(function (s) { if (!s.vergangen) spieleAm[isoTag(new Date(s.beginn))] = (spieleAm[isoTag(new Date(s.beginn))] || 0) + 1; });
 
-      // Naechste 10 Wochenenden plus alles, was schon eingetragen ist
+      // Naechste 4 Wochenenden als Schnellzeile; der Rest im Mini-Kalender
       var tage = [], d = new Date(); d.setHours(12, 0, 0, 0);
-      for (var i = 0; i < 70; i++) {
+      for (var i = 0; i < 28; i++) {
         var t = new Date(d.getTime() + i * 86400000);
         if (t.getDay() === 0 || t.getDay() === 6) tage.push(isoTag(t));
       }
@@ -1420,24 +1480,61 @@ window.Mitglieder = (function () {
       tage.forEach(function (tag) { liste.appendChild(sperreZeile(tag, meine[tag] && meine[tag].status, spieleAm[tag] || 0)); });
       inhalt.appendChild(liste);
 
-      var eingabe = h("input", { type: "date", min: heute });
-      var art = h("select", { class: "mg-select" }, [h("option", { value: "nein", text: "kann nicht" }), h("option", { value: "gern", text: "hätte gern ein Spiel" })]);
+      var von = h("input", { type: "date", min: heute }), bis = h("input", { type: "date", min: heute });
+      var art = h("select", { class: "mg-select" }, [h("option", { value: "nein", text: "kann nicht" }), h("option", { value: "gern", text: "hätte gern ein Spiel" }), h("option", { value: "", text: "wieder frei" })]);
       inhalt.appendChild(h("div", { class: "melde karte" }, [h("div", { class: "mg-form" }, [
-        h("h4", { text: "Anderer Tag" }),
-        h("div", { class: "mg-zeile" }, [eingabe, art]),
+        h("h4", { text: "Zeitraum eintragen" }),
+        h("p", { class: "meta", style: "margin:0", text: "Urlaub, Prüfungen, Dienstreise: von – bis, alle Tage dazwischen. Ein einzelner Tag: nur „von“ ausfüllen." }),
+        h("div", { class: "mg-felder" }, [h("label", {}, ["von", von]), h("label", {}, ["bis (optional)", bis])]),
+        art,
         h("button", { type: "button", class: "mg-haupt", text: "Eintragen", onclick: function () {
-          if (!eingabe.value) return;
-          sperreSetzen(eingabe.value, art.value).then(zeigeVerfuegbarkeit);
+          if (!von.value) return;
+          var a = new Date(von.value + "T12:00:00"), b = new Date((bis.value || von.value) + "T12:00:00");
+          if (b < a) { meldung("„bis“ liegt vor „von“.", "warn"); return; }
+          var tage = [];
+          for (var t = new Date(a); t <= b && tage.length < 120; t = new Date(t.getTime() + 86400000)) tage.push(isoTag(t));
+          var kette = Promise.resolve();
+          tage.forEach(function (tag) { kette = kette.then(function () { return sperreSetzen(tag, art.value, true); }); });
+          kette.then(function () { kurzMeldung(tage.length + (tage.length === 1 ? " Tag" : " Tage") + " eingetragen ✓", "gut"); zeigeVerfuegbarkeit(); });
         } })
       ])]));
+      inhalt.appendChild(miniKalender(meine, spieleAm));
     }).catch(function (e) { leeren(inhalt); inhalt.appendChild(h("p", { class: "achtung", text: "Nicht ladbar: " + fehlerText(e) })); });
   }
 
-  function sperreSetzen(tag, status) {
+  function sperreSetzen(tag, status, leise) {
     var lauf = status
       ? sb.from("sperren").upsert({ user_id: session.user.id, slug: profil.slug, datum: tag, status: status }, { onConflict: "user_id,datum" })
       : sb.from("sperren").delete().eq("user_id", session.user.id).eq("datum", tag);
-    return lauf.then(function (r) { if (r.error) meldung(fehlerText(r.error), "warn"); else kurzMeldung("Gespeichert ✓", "gut"); });
+    return lauf.then(function (r) { if (r.error) meldung(fehlerText(r.error), "warn"); else if (!leise) kurzMeldung("Gespeichert ✓", "gut"); });
+  }
+
+  // Zwei Monate als Raster: eigene Sperrtage farbig, Tipp wechselt frei -> nicht -> gern -> frei
+  function miniKalender(meine, spieleAm) {
+    var box = h("div", { class: "melde karte" }, [h("h4", { text: "Überblick" }), h("p", { class: "meta", style: "margin:0 0 8px", text: "Tipp auf einen Tag: frei → nicht → gern → frei. Punkt = eigenes Spiel." })]);
+    var heute = new Date(); heute.setHours(0, 0, 0, 0);
+    for (var m = 0; m < 2; m++) {
+      var start = new Date(heute.getFullYear(), heute.getMonth() + m, 1), ende = new Date(start.getFullYear(), start.getMonth() + 1, 0);
+      box.appendChild(h("div", { class: "monat-kopf", style: "margin:8px 0 4px" }, [h("b", { text: start.toLocaleDateString("de-DE", { month: "long", year: "numeric" }) })]));
+      var raster = h("div", { class: "monat mini" });
+      ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"].forEach(function (w) { raster.appendChild(h("div", { class: "wt", text: w })); });
+      for (var i = 0; i < (start.getDay() + 6) % 7; i++) raster.appendChild(h("div", { class: "zelle leer" }));
+      for (var tag = 1; tag <= ende.getDate(); tag++) {
+        (function (tag) {
+          var d = new Date(start.getFullYear(), start.getMonth(), tag), key = isoTag(d);
+          var st = meine[key] && meine[key].status;
+          var z = h("div", { class: "zelle" + (d < heute ? " war" : "") + (key === isoTag(heute) ? " heute" : "") + (st === "nein" ? " nein" : st === "gern" ? " gern" : "") }, [h("span", { text: String(tag) })]);
+          if (spieleAm[key]) z.appendChild(h("div", { class: "punkte" }, [h("i", { class: "ich" })]));
+          if (d >= heute) z.addEventListener("click", function () {
+            var neu = !st ? "nein" : st === "nein" ? "gern" : "";
+            sperreSetzen(key, neu, true).then(zeigeVerfuegbarkeit);
+          });
+          raster.appendChild(z);
+        })(tag);
+      }
+      box.appendChild(raster);
+    }
+    return box;
   }
 
   function sperreZeile(tag, status, spiele) {
@@ -1462,6 +1559,9 @@ window.Mitglieder = (function () {
 
   function zeigeKonto() {
     leeren(inhalt);
+    var ueber = h("div", { class: "melde karte" }, [h("h4", { text: "Dein Konto" }), skelett(1)]);
+    inhalt.appendChild(ueber);
+    kontoUebersicht(ueber);
     inhalt.appendChild(h("div", { class: "melde karte" }, [
       h("h4", { text: "Einstellungen" }),
       h("p", { text: "Name auf esrw.de, Heimatadresse, Kilometermodell und Sätze." }),
@@ -1474,6 +1574,16 @@ window.Mitglieder = (function () {
     inhalt.appendChild(kontaktBox);
     kontaktRendern(kontaktBox);
 
+    var neueMail = h("input", { type: "email", placeholder: "neue@adresse.de", autocomplete: "email" });
+    inhalt.appendChild(h("div", { class: "melde karte" }, [
+      h("h4", { text: "E-Mail-Adresse ändern" }),
+      h("p", { text: "Aktuell: " + session.user.email + ". Nach dem Ändern kommt an beide Adressen eine Bestätigungsmail; erst wenn beide Links angetippt sind, gilt die neue." }),
+      h("div", { class: "mg-form" }, [neueMail]),
+      h("button", { type: "button", class: "haupt", text: "Adresse ändern", onclick: function () {
+        var m = neueMail.value.trim(); if (!m || m.indexOf("@") < 1) { meldung("Bitte eine gültige Adresse.", "warn"); return; }
+        sb.auth.updateUser({ email: m }).then(function (r) { if (r.error) meldung(fehlerText(r.error), "warn"); else { neueMail.value = ""; meldung("Bestätigungsmails sind unterwegs – bitte beide Links antippen.", "gut"); } });
+      } })
+    ]));
     var pw = h("input", { type: "password", placeholder: "Neues Passwort (mind. 8 Zeichen)", autocomplete: "new-password", minlength: "8" });
     inhalt.appendChild(h("div", { class: "melde karte" }, [
       h("h4", { text: "Passwort ändern" }),
@@ -1493,6 +1603,25 @@ window.Mitglieder = (function () {
         h("button", { type: "button", style: "color:var(--warn)", text: "Konto löschen", onclick: kontoLoeschen })
       ])
     ]));
+  }
+
+  function kontoUebersicht(box) {
+    var zeilen = [["Name", profil.name || profil.slug || "–"], ["E-Mail", session.user.email || "–"],
+                  ["Freischaltung", profil.admin ? "Admin" : profil.freigeschaltet ? "freigeschaltet ✓" : "wartet auf den Betreiber"],
+                  ["Heimatadresse", profil.heimat ? "hinterlegt ✓" : "fehlt (für Strecken und Abfahrt)"],
+                  ["Obmann-E-Mail", profil.obmann_email || "fehlt (für Mails aus der App)"]];
+    function rendern() {
+      leeren(box); box.appendChild(h("h4", { text: "Dein Konto" }));
+      var liste = h("div", { class: "status-liste", style: "padding:0" });
+      zeilen.forEach(function (z) { liste.appendChild(h("div", {}, [h("span", { text: z[0] }), h("span", { text: z[1] })])); });
+      box.appendChild(liste);
+    }
+    rendern();
+    sb.from("push_abos").select("id,geraet").eq("user_id", session.user.id).then(function (r) {
+      var abos = r.data || [];
+      zeilen.push(["Push-Geräte", abos.length ? abos.length + " (" + abos.map(function (a) { return a.geraet || "?"; }).join(", ") + ")" : "keins"]);
+      rendern();
+    }).catch(function () {});
   }
 
   // ---- Web Push: Abo im Browser anlegen und Endpoint in push_abos ablegen.
@@ -1753,7 +1882,7 @@ window.Mitglieder = (function () {
 
   function zeigeNotizen() {
     leeren(inhalt);
-    inhalt.appendChild(h("p", { class: "meta", text: "Lade Notizen …" }));
+    inhalt.appendChild(skelett(2));
     sb.from("spielnotizen").select("*").eq("user_id", session.user.id).order("beginn", { ascending: false }).then(function (r) {
       if (r.error) throw r.error;
       var alle = r.data || [];
@@ -1925,7 +2054,7 @@ window.Mitglieder = (function () {
     var heute = isoTag(new Date());
     sb.from("ankuendigungen").select("*").order("angelegt", { ascending: false }).then(function (r) {
       if (r.error) throw r.error;
-      var alle = (r.data || []).filter(function (a) { return !a.bis || a.bis >= heute; });
+      var alle = (r.data || []).filter(function (a) { return (!a.bis || a.bis >= heute) && (!a.termin || a.termin >= heute || (a.bis && a.bis >= heute)); });
       var gelesen = gelesenLesen();
       leeren(inhalt);
       if (profil.admin) inhalt.appendChild(ankuendigungFormular());
@@ -1937,7 +2066,7 @@ window.Mitglieder = (function () {
             h("span", { class: "datum" }, [datum(d) + " · " + a.name, gelesen[a.id] ? null : h("span", { class: "status aus", style: "margin-left:6px", text: "neu" })]),
             a.wichtig ? h("span", { class: "rolle HSR", text: "wichtig" }) : null
           ]),
-          h("div", { class: "paarung", text: a.titel }),
+          h("div", { class: "paarung", text: (a.termin ? a.termin.split("-").reverse().join(".") + " · " : "") + a.titel }),
           h("div", { style: "white-space:pre-wrap; margin-top:4px", text: a.text }),
           a.bis ? h("div", { class: "meta", text: "gilt bis " + a.bis.split("-").reverse().join(".") }) : null,
           profil.admin ? h("div", { class: "zweit" }, [
@@ -1959,13 +2088,14 @@ window.Mitglieder = (function () {
     var titel = h("input", { type: "text", placeholder: "Überschrift", maxlength: "120" });
     var text = h("textarea", { rows: "4", placeholder: "Text – Lehrgang, Regeltest, Sitzung, Hinweise …", maxlength: "4000" });
     var bis = h("input", { type: "date" });
+    var termin = h("input", { type: "date" });
     var wichtig = h("input", { type: "checkbox" });
     var push = h("input", { type: "checkbox" });
     var knopf = h("button", { type: "button", class: "mg-haupt", text: "Veröffentlichen", onclick: function () {
       if (!titel.value.trim() || !text.value.trim()) { meldung("Überschrift und Text bitte ausfüllen.", "warn"); return; }
       knopf.disabled = true;
       sb.from("ankuendigungen").insert({ user_id: session.user.id, name: profil.name || profil.slug, titel: titel.value.trim(), text: text.value.trim(),
-                                          wichtig: wichtig.checked, push: push.checked, bis: bis.value || null })
+                                          wichtig: wichtig.checked, push: push.checked, bis: bis.value || null, termin: termin.value || null })
         .then(function (r) {
           knopf.disabled = false;
           if (r.error) { meldung(fehlerText(r.error), "warn"); return; }
@@ -1976,7 +2106,8 @@ window.Mitglieder = (function () {
       h("summary", { style: "padding:12px 0; font-weight:800; cursor:pointer", text: "Neue Ankündigung" }),
       h("div", { class: "mg-form", style: "padding-bottom:12px" }, [
         titel, text,
-        h("div", { class: "mg-felder" }, [h("label", {}, ["gilt bis (optional)", bis])]),
+        h("div", { class: "mg-felder" }, [h("label", {}, ["Termin (optional)", termin]), h("label", {}, ["gilt bis (optional)", bis])]),
+        h("p", { class: "meta", style: "margin:0", text: "Mit Termin erscheint die Ankündigung auf der Startseite unter „Nächste Termine“, und alle mit Push bekommen am Vortag eine Erinnerung." }),
         h("div", { class: "mg-schalter" }, [
           h("label", { class: "mg-check" }, [wichtig, " wichtig (hervorgehoben)"]),
           h("label", { class: "mg-check" }, [push, " auch als Push an alle mit Push"])
@@ -2095,6 +2226,19 @@ window.Mitglieder = (function () {
     });
   }
 
+  // Naechste Termine (Ankuendigungen mit Datum) fuer die Startseite
+  function termine() {
+    return bereit().then(function (st) {
+      if (!st.eingerichtet || !session) return [];
+      return ladeProfil().then(function () {
+        if (!frei()) return [];
+        var heute = isoTag(new Date());
+        return sb.from("ankuendigungen").select("id,titel,termin,wichtig").gte("termin", heute).order("termin").limit(5)
+          .then(function (r) { return r.data || []; });
+      });
+    }).catch(function () { return []; });
+  }
+
   // Obmann-Adresse aus dem Profil (fuer Mails von der Spielseite)
   function obmann() {
     return bereit().then(function (st) {
@@ -2130,5 +2274,5 @@ window.Mitglieder = (function () {
 
   return { oeffnen: oeffnen, bereit: bereit, angemeldet: angemeldet,
            sperrenAm: sperrenAm, gesuchAnlegen: gesuchAnlegen, offeneAbrechnungen: offeneAbrechnungen,
-           extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat, obmann: obmann };
+           extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat, obmann: obmann, termine: termine };
 })();

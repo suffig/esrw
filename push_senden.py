@@ -173,7 +173,7 @@ def gesuche_pflegen(url, service, daten, jetzt, nachrichten):
     """Offene Gesuche schliessen, sobald esrw.de den Suchenden nicht mehr im
     Spiel fuehrt; Helfer erledigter Gesuche benachrichtigen."""
     spiele_von = {s["beginn"] + "|" + s["paarung"]: s for s in daten.get("spiele", [])}
-    offen = api(url, service, "gesuche?select=id,slug,kennung&status=eq.offen") or []
+    offen = api(url, service, "gesuche?select=id,slug,kennung&status=in.(offen,vereinbart)") or []
     for g in offen:
         s = spiele_von.get(g["kennung"])
         if not s or not s.get("besetzung"):
@@ -181,6 +181,16 @@ def gesuche_pflegen(url, service, daten, jetzt, nachrichten):
         if all(b.get("slug") != g["slug"] for b in s["besetzung"]):
             api(url, service, "gesuche?id=eq." + urllib.parse.quote(g["id"]), "PATCH",
                 {"status": "erledigt", "erledigt_am": jetzt.astimezone(timezone.utc).isoformat()})
+    # Angebot angenommen: der Helfer bekommt Bescheid
+    vereinbart = api(url, service, "gesuche?select=id,name,paarung,beginn,vereinbart_mit&status=eq.vereinbart&vereinbart_gemeldet=eq.false") or []
+    for g in vereinbart:
+        if g.get("vereinbart_mit"):
+            nachrichten.setdefault(g["vereinbart_mit"], []).append((None, {
+                "titel": "Tausch vereinbart",
+                "text": "%s nimmt dein Angebot für %s (%s Uhr) an. Der Obmann wird informiert – warte auf die Umteilung auf esrw.de." % (
+                    g.get("name", "?"), g.get("paarung", ""), uhr(g["beginn"]) if g.get("beginn") else "?"),
+                "url": "./#mitglieder/tausch"}))
+        api(url, service, "gesuche?id=eq." + urllib.parse.quote(g["id"]), "PATCH", {"vereinbart_gemeldet": True})
     zu_melden = api(url, service, "gesuche?select=id,name,paarung,beginn&status=eq.erledigt&gemeldet=eq.false") or []
     for g in zu_melden:
         helfer = api(url, service, "angebote?select=user_id&gesuch_id=eq." + urllib.parse.quote(g["id"])) or []
@@ -253,6 +263,24 @@ def main():
         for uid in ids:
             nachrichten.setdefault(uid, []).append((None, {
                 "titel": "Ankündigung: " + a["titel"], "text": (a.get("text") or "")[:900], "url": "./#mitglieder/info"}))
+
+    # Termine vom Betreiber: am Vortag (ab 17 Uhr) an alle erinnern
+    if jetzt.hour >= 17:
+        morgen = (jetzt + timedelta(days=1)).date().isoformat()
+        try:
+            termine = api(url, service, "ankuendigungen?select=id,titel,text&termin=eq.%s&erinnert=is.null" % morgen) or []
+        except Exception as e:
+            termine = []
+            print("Push: Termine nicht lesbar: %s" % str(e)[:120], file=sys.stderr)
+        for t in termine:
+            for uid in ids:
+                nachrichten.setdefault(uid, []).append((None, {
+                    "titel": "Morgen: " + t["titel"], "text": (t.get("text") or "")[:400], "url": "./#mitglieder/info"}))
+            try:
+                api(url, service, "ankuendigungen?id=eq." + urllib.parse.quote(t["id"]), "PATCH",
+                    {"erinnert": jetzt.astimezone(timezone.utc).isoformat()})
+            except Exception:
+                pass
 
     # Tauschboerse: Gesuch von selbst erledigt, wenn esrw.de jemand anderen
     # im Spiel fuehrt; Helfer bekommen Bescheid

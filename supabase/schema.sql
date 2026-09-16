@@ -518,3 +518,19 @@ alter table public.profile add column if not exists obmann_email text;
 -- Gesuche: wann erledigt, und ob die Helfer schon benachrichtigt wurden
 alter table public.gesuche add column if not exists erledigt_am timestamptz;
 alter table public.gesuche add column if not exists gemeldet boolean not null default false;
+
+-- ======================================================================
+-- v8: Termine, Tausch vereinbaren
+-- ======================================================================
+
+-- Ankuendigungen mit Datum (Lehrgang, Regeltest, Sitzung) - erscheinen auf
+-- der Startseite als "Naechste Termine", Push am Vortag
+alter table public.ankuendigungen add column if not exists termin date;
+alter table public.ankuendigungen add column if not exists erinnert timestamptz;
+
+-- Tauschboerse: ein Angebot annehmen -> "vereinbart", Obmann bekommt Mail
+alter table public.gesuche drop constraint if exists gesuche_status_check;
+alter table public.gesuche add constraint gesuche_status_check check (status in ('offen','vereinbart','erledigt'));
+alter table public.gesuche add column if not exists vereinbart_mit uuid;
+alter table public.gesuche add column if not exists vereinbart_name text;
+alter table public.gesuche add column if not exists vereinbart_gemeldet boolean not null default false;

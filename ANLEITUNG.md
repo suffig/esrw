@@ -618,7 +618,7 @@ den anonymen Schlüssel aus dem Quelltext kopiert, kommt an fremde Daten nicht
 heran.
 
 Die Datei lässt sich gefahrlos mehrfach ausführen – **und das musst du auch
-tun, wenn sie sich ändert** (steht dann im Commit; aktuell v7). Fehlt eine Tabelle, sagt
+tun, wenn sie sich ändert** (steht dann im Commit; aktuell v8). Fehlt eine Tabelle, sagt
 die App „Die Datenbank kennt eine Tabelle noch nicht“.
 
 **Danach einmalig dich selbst zum Admin machen** (sonst kann niemand
@@ -899,6 +899,24 @@ Links (24 Stunden) werden beim Ankommen erklärt, ebenfalls mit diesem Knopf.
 Ein Tipp auf ein Spiel öffnet die **Spielseite**: Route, Adresse kopieren,
 Teilen, Wetter zum Treffpunkt, Abfahrt, Gespann mit Kontakt, Hallen-Hinweise,
 Fahrgemeinschaft, Notiz, Tauschoptionen.
+
+### 10.6d Termine und Tausch abschließen (Schema v8)
+
+* **Termine**: Eine Ankündigung mit Datum („Termin“) erscheint bei allen auf
+  der Startseite unter „Nächste Termine“; wer Push an hat, bekommt am
+  Vortag ab 17 Uhr eine Erinnerung.
+* **Tausch abschließen**: Der Suchende tippt in seinem Gesuch auf ein
+  Angebot („annehmen“). Status wird „vereinbart“, der Helfer bekommt Push,
+  und die Mail-App öffnet sich mit „Bitte Spiel X von A auf B umteilen“ an
+  die Obmann-Adresse aus den Einstellungen. Sobald esrw.de den neuen Namen
+  führt, setzt der Workflow das Gesuch auf „erledigt“. „Doch nicht“ macht es
+  wieder offen.
+* **Verfügbarkeit**: Zeitraum von–bis auf einmal (Urlaub), zwei Monate als
+  Mini-Kalender (Tipp wechselt frei → nicht → gern).
+* **Konto**: Übersicht (Freischaltung, Adresse, Push-Geräte) und E-Mail
+  ändern (Bestätigung an beide Adressen).
+* **Abrechnung**: kompakte Zeilen, Details klappen per Tipp auf; „bezahlt“
+  direkt in der Zeile.
 
 ### 10.7 Freischaltung neuer Konten
 

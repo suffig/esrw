@@ -243,6 +243,15 @@ Abfahrtsalarm** (einmaliger Download, Alarm aus der eigenen Strecke).
 **Saisonziel** mit Fortschritt in der Statistik.
 Wetter kommt von Open-Meteo (ohne Schlüssel), auch in der Spieltag-Push.
 
+**Termine & Tausch abschließen**: Ankündigungen mit Datum erscheinen auf
+Start als „Nächste Termine“ (Push am Vortag); in der Tauschbörse nimmt der
+Suchende ein Angebot an → „vereinbart“, Push an den Helfer, fertige
+Umteilungs-Mail an den Obmann; erledigt sich, sobald esrw.de umgeteilt hat.
+Spielplan mit Schnellfiltern (Wochenende, 7 Tage, abends, vormittags) und
+Wochenansicht; Verfügbarkeit als Zeitraum und Mini-Kalender; Konto-Übersicht
+und E-Mail ändern; Abrechnung als kompakte Zeilen; Nach-oben-Knopf; Zurück
+von der Spielseite landet an der alten Stelle; Skelett-Platzhalter beim Laden.
+
 **Kleinigkeiten**: Stand als „vor 12 Min.“, Hinweis wenn eine neue Fassung
 geladen wurde, Spielplan-Filter bleiben für die Sitzung erhalten, „Teilen“ im
 Filter-Blatt schickt den (gefilterten) Spielplan als Text in die Gruppe, auf

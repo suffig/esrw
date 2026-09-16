@@ -714,6 +714,36 @@
     .leiste button svg.i { padding:5px 16px; }
   }
 
+  /* Design 4: Schnellfilter, Nach-oben, Wochenansicht, kompakte Abrechnung, Mini-Kalender */
+  .schnell { margin:2px 0 4px; }
+  .schnell .chip { white-space:nowrap; }
+  @media (max-width: 420px) { .abschnitt { flex-wrap:wrap; } .abschnitt small { flex:1 1 100%; margin-top:2px; } }
+  .hoch { position:fixed; right:16px; bottom:calc(100px + env(safe-area-inset-bottom)); width:44px; height:44px; border-radius:50%; border:0; z-index:15;
+          background:var(--karte); color:var(--akzent); box-shadow:0 6px 18px rgba(0,0,0,.18); cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .hoch svg.i { transform:rotate(90deg); width:1.2rem; height:1.2rem; }
+  .wochenansicht-kopf { display:flex; justify-content:space-between; align-items:center; margin:10px 0 8px; }
+  .wochenansicht-kopf b { font-size:1.02rem; font-weight:800; }
+  .wochenansicht { display:grid; grid-template-columns:1fr; gap:8px; }
+  .wtag { padding:10px 12px; }
+  .wtag.heute { border-color:var(--akzent); }
+  .wtag .tagkopf { display:flex; justify-content:space-between; font-weight:800; margin-bottom:6px; }
+  .wtag .tagkopf span:last-child { color:var(--dim); font-weight:600; font-size:.8rem; }
+  .wtag .leerzeile { color:var(--dim); font-size:.82rem; }
+  .wtag .zeile { padding:6px 0; grid-template-columns:3.2em 1fr; }
+  .wtag .zeile.meins { padding-left:6px; }
+  @media (min-width: 900px) { .wochenansicht { grid-template-columns:repeat(7, minmax(0, 1fr)); } .wtag .zeile { grid-template-columns:1fr; } .wtag .zeile .zeit { font-size:.8rem; } .wtag .zeile-wer { grid-column:1; } }
+  .mg-kopf { cursor:pointer; }
+  .mg-summe { display:flex; align-items:center; gap:12px; margin-top:6px; flex-wrap:wrap; }
+  .mg-summe .mg-betrag-kurz { font-weight:800; color:var(--text); }
+  .mg-summe .mg-auf { margin-left:auto; color:var(--akzent); font-weight:700; }
+  .mg-eintrag.offen .mg-auf { display:none; }
+  .mg-eintrag.bezahlt .mg-betrag-kurz { color:var(--gut); }
+  .mg-details { margin-top:4px; }
+  .monat.mini .zelle { aspect-ratio:auto; min-height:38px; padding:4px 0; font-size:.78rem; }
+  .monat.mini .zelle.nein { background:var(--warn-bg); color:var(--warn); border-color:transparent; }
+  .monat.mini .zelle.gern { background:var(--gut-bg); color:var(--gut); border-color:transparent; }
+  .monat.mini .punkte i { width:5px; height:5px; }
+
   /* Design 3: Akzentschimmer oben, Datumskachel in Ligafarbe, Kopfknoepfe */
   body { position:relative; }
   body::before { content:""; position:fixed; inset:0 0 auto 0; height:260px; pointer-events:none; z-index:-1;
@@ -802,7 +832,7 @@
              autocomplete="off" autocorrect="off" spellcheck="false">
       <div class="schalterzeile">
         <span class="modus" id="plan-modus" role="tablist">
-          <button type="button" data-modus="karten" class="aktiv">Karten</button><button type="button" data-modus="liste">Liste</button><button type="button" data-modus="monat">Monat</button>
+          <button type="button" data-modus="karten" class="aktiv">Karten</button><button type="button" data-modus="liste">Liste</button><button type="button" data-modus="woche">Woche</button><button type="button" data-modus="monat">Monat</button>
         </span>
         <button type="button" class="filterknopf" id="plan-filter-knopf"><svg class="i"><use href="#i-list"/></svg> Filter <span class="zaehler versteckt" id="plan-filter-zahl"></span></button>
         <button type="button" class="textknopf" id="plan-heute">Heute ↓</button>
@@ -817,7 +847,11 @@
         <div class="zweit"><button type="button" id="plan-filter-leeren">Zurücksetzen</button><button type="button" id="plan-teilen">Teilen</button><button type="button" id="plan-drucken">Drucken</button></div>
       </div>
     </div>
+    <div class="ligen schnell" id="plan-schnell">
+      <span class="chip" data-schnell="wochenende">Dieses Wochenende</span><span class="chip" data-schnell="woche">Nächste 7 Tage</span><span class="chip" data-schnell="abends">Abends</span><span class="chip" data-schnell="frueh">Vormittags</span>
+    </div>
     <div class="woche" id="plan-woche"></div>
+    <div id="plan-wochenansicht" class="versteckt"></div>
     <div id="plan-monat" class="versteckt"></div>
     <div id="plan-liste"></div>
   </section>
@@ -985,6 +1019,7 @@
 </main>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<button type="button" class="hoch versteckt" id="hoch" aria-label="Nach oben"><svg class="i"><use href="#i-back"/></svg></button>
 <nav class="leiste" id="tabs">
   <div>
     <button type="button" id="tab-meine" class="aktiv"><svg class="i"><use href="#i-home"/></svg>Start</button>
@@ -995,6 +1030,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=24"></script>
+<script src="app.js?v=25"></script>
 </body>
 </html>

@@ -6,12 +6,12 @@
   var basis = location.href.split("#")[0].split("?")[0].replace(/index\.html$/, "").replace(/\/?$/, "/");
 
   // Wird einmal je Fassung gezeigt, damit die Kollegen neue Funktionen finden.
-  var NEUIGKEITEN = { version: "2026-09-16c", punkte: [
-    "Fünf Reiter unten: Heute · Spielplan · Tausch · Abrechnung · Mehr",
-    "Tipp auf ein Spiel öffnet die Spielseite mit Route, Gespann, Tausch, Hinweisen, Notiz und Wetter",
-    "Hallenkarte, Kalenderdatei mit Abfahrtsalarm, Saisonziel (Einstellungen unter Mehr)",
-    "Spielplan-Filter in einem Blatt, Startseite mit Kacheln für Gesuche und Ankündigungen",
-    "Wetter zur Abfahrt auf der Karte oben und in der Spieltag-Push"
+  var NEUIGKEITEN = { version: "2026-09-17", punkte: [
+    "Fünf Reiter unten: Start · Spielplan · Tausch · Abrechnung · Mehr – Einstellungen und Diagnose unter Mehr",
+    "Tipp auf ein Spiel öffnet die Spielseite: Route, Wetter, Gespann, Tausch, Hallen-Hinweise, Notiz",
+    "Start: Wochenstreifen, Kacheln für Gesuche und Ankündigungen, Abfahrtszeit und Wetter",
+    "Hallenkarte, Kalenderdatei mit Abfahrtsalarm, Saisonziel, Schriftgröße und Farbe",
+    "Neues Design: Avatar oben, Suche im Kopf, Datumskachel in Ligafarbe"
   ] };
   var daten = null, aktuell = null, profil = null;
   var el = function (id) { return document.getElementById(id); };
@@ -525,9 +525,12 @@
     wer.appendChild(chips);
 
     // Angemeldet: Hallen-Hinweise, Kontakte, Fahrgemeinschaft, Notiz
-    var ex = karteAbschnitt(null); ex.classList.add("versteckt");
+    var ex = karteAbschnitt(null);
+    var skel = document.createElement("div"); skel.className = "skelett-karte"; skel.style.height = "70px"; skel.style.margin = "0"; ex.appendChild(skel);
+    if (!sitzungVorhanden()) ex.classList.add("versteckt");
     var exZiel = document.createElement("div"); exZiel.className = "extras-ziel"; ex.appendChild(exZiel);
     ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) {
+      skel.remove();
       if (!st.eingerichtet || !st.session) {
         var p = document.createElement("p"); p.className = "meta"; p.style.margin = "0";
         var a = document.createElement("a"); a.href = "#mitglieder"; a.textContent = "Anmelden"; p.appendChild(a);
@@ -537,7 +540,7 @@
       return window.Mitglieder.extrasLaden([s]).then(function (ok) {
         if (!ok) return;
         window.Mitglieder.spielExtras(s, exZiel, meins);
-        var det = exZiel.querySelector("details"); if (det) { det.open = true; ex.classList.remove("versteckt"); }
+        var det = exZiel.querySelector("details"); if (det) { det.open = true; ex.classList.remove("versteckt"); } else ex.classList.add("versteckt");
       });
     }).catch(function () {});
 
@@ -606,11 +609,20 @@
     }
     ziel.appendChild(kachel(inSieben.length, "Spiele in 7 Tagen" + (inSieben.length ? ": " + inSieben.map(function (s) { return wochentag[new Date(s.beginn).getDay()]; }).join(", ") : ""), "#plan"));
     if (!sitzungVorhanden()) { ziel.appendChild(kachel("→", "Anmelden für Tausch, Abrechnung, Info", "#mitglieder")); return; }
+    var lauf = ziel._lauf = {};
     ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
       .then(function (st) { if (st.eingerichtet && st.session) return window.Mitglieder.zaehler(); })
       .then(function (z) {
-        if (!z || !ziel.isConnected) return;
+        if (!z || ziel._lauf !== lauf) return;
         ziel.appendChild(kachel(z.gesuche || 0, "offene Gesuche", "#mitglieder/tausch", z.gesuche > 0));
+        window.Mitglieder.termine().then(function (t) {
+          if (!t || !t.length || ziel._lauf !== lauf) return;
+          var box = document.createElement("a"); box.href = "#mitglieder/info"; box.style.gridColumn = "1 / -1";
+          var k = document.createElement("div"); k.className = "zahl karte"; k.style.textAlign = "left";
+          var b = document.createElement("b"); b.textContent = "Nächste Termine"; k.appendChild(b);
+          t.forEach(function (x) { var sp = document.createElement("span"); sp.textContent = x.termin.split("-").reverse().slice(0, 2).join(".") + ". · " + x.titel; sp.style.display = "block"; k.appendChild(sp); });
+          box.appendChild(k); ziel.appendChild(box);
+        });
         ziel.appendChild(kachel(z.info || 0, "neue Ankündigungen", "#mitglieder/info", z.info > 0));
         if (z.wartend) ziel.appendChild(kachel(z.wartend, "warten auf Freischaltung", "#mitglieder/admin", true));
       }).catch(function () {});
@@ -714,11 +726,12 @@
     var ziel = el("nachtrag");
     ziel.innerHTML = "";
     if (!profil || profil.slug !== p.slug) return;
+    var lauf = ziel._lauf = {};
     ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) {
       if (!st.eingerichtet || !st.session) return;
       return window.Mitglieder.offeneAbrechnungen(p.slug, 21);
     }).then(function (offen) {
-      if (!offen || !offen.length) return;
+      if (!offen || !offen.length || ziel._lauf !== lauf) return;
       var h = document.createElement("div"); h.className = "hinweis warn";
       h.appendChild(ikone("i-check"));
       var t = document.createElement("span");
@@ -907,7 +920,49 @@
     return [datum, "", false];
   }
   function istMeins(s) { return !!(profil && profil.slug && s.besetzung && s.besetzung.some(function (b) { return b.slug === profil.slug; })); }
-  function planModus() { var m = lesen("plan-modus"); return m === "liste" || m === "monat" ? m : (lesen("plan-kompakt") === "1" ? "liste" : "karten"); }
+  function planModus() { var m = lesen("plan-modus"); return m === "liste" || m === "monat" || m === "woche" ? m : (lesen("plan-kompakt") === "1" ? "liste" : "karten"); }
+  var schnellWahl = null, planWocheStart = null;
+  function schnellAnzeigen() {
+    Array.prototype.forEach.call(el("plan-schnell").querySelectorAll(".chip"), function (c) { c.classList.toggle("aktiv", c.getAttribute("data-schnell") === schnellWahl); });
+  }
+
+  // Wochenansicht: sieben Tage, jeder Tag ein Block (Desktop: Spalten)
+  function zeigeWochenansicht() {
+    var ziel = el("plan-wochenansicht"); ziel.innerHTML = ""; ziel.classList.remove("versteckt");
+    var heute = new Date(); heute.setHours(0, 0, 0, 0);
+    if (!planWocheStart) { var mo = new Date(heute); mo.setDate(heute.getDate() - ((heute.getDay() + 6) % 7)); planWocheStart = mo; }
+    var start = planWocheStart, ende = new Date(start.getTime() + 7 * 86400000);
+    var spiele = planGefiltert(true).filter(function (s) { var d = new Date(s.beginn); return d >= start && d < ende; });
+    var kopf = document.createElement("div"); kopf.className = "wochenansicht-kopf";
+    var z = document.createElement("button"); z.type = "button"; z.className = "rund"; z.textContent = "‹"; z.setAttribute("aria-label", "Vorwoche");
+    var t = document.createElement("b"); t.textContent = "KW " + kalenderwoche(start) + " · " + start.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }) + " – " + new Date(ende.getTime() - 86400000).toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" });
+    var v = document.createElement("button"); v.type = "button"; v.className = "rund"; v.textContent = "›"; v.setAttribute("aria-label", "Nächste Woche");
+    z.addEventListener("click", function () { planWocheStart = new Date(start.getTime() - 7 * 86400000); zeigeWochenansicht(); });
+    v.addEventListener("click", function () { planWocheStart = new Date(start.getTime() + 7 * 86400000); zeigeWochenansicht(); });
+    kopf.appendChild(z); kopf.appendChild(t); kopf.appendChild(v); ziel.appendChild(kopf);
+    var raster = document.createElement("div"); raster.className = "wochenansicht";
+    for (var i = 0; i < 7; i++) {
+      (function (i) {
+        var d = new Date(start.getTime() + i * 86400000), key = d.toDateString();
+        var liste = spiele.filter(function (s) { return new Date(s.beginn).toDateString() === key; });
+        var box = document.createElement("div"); box.className = "karte wtag" + (key === heute.toDateString() ? " heute" : "");
+        var tk = document.createElement("div"); tk.className = "tagkopf";
+        var l = document.createElement("span"); l.textContent = wochentag[d.getDay()] + " " + d.getDate() + ".";
+        var r = document.createElement("span"); r.textContent = liste.length ? liste.length + (liste.length === 1 ? " Spiel" : " Spiele") : "";
+        tk.appendChild(l); tk.appendChild(r); box.appendChild(tk);
+        if (!liste.length) { var le = document.createElement("div"); le.className = "leerzeile"; le.textContent = "–"; box.appendChild(le); }
+        liste.forEach(function (s) { box.appendChild(planZeile(s, new Date(s.beginn))); });
+        raster.appendChild(box);
+      })(i);
+    }
+    ziel.appendChild(raster);
+    el("plan-zaehler").textContent = spiele.length + (spiele.length === 1 ? " Spiel" : " Spiele");
+  }
+  function kalenderwoche(d) {
+    var t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())); var tag = t.getUTCDay() || 7;
+    t.setUTCDate(t.getUTCDate() + 4 - tag); var jahr = new Date(Date.UTC(t.getUTCFullYear(), 0, 1));
+    return Math.ceil(((t - jahr) / 86400000 + 1) / 7);
+  }
   var ligenWahl = {}, planMonatStart = null, planTag = null;
   function ligaGruppe(liga) {
     var L = (liga || "").toUpperCase().trim();
@@ -940,8 +995,21 @@
     var nurMeine = hallen && el("plan-hallen").checked;
     var nurIch = profil && profil.slug && el("plan-meine").checked;
     var ligen = Object.keys(ligenWahl).length ? ligenWahl : null;
+    var heute = new Date(); heute.setHours(0, 0, 0, 0);
+    var wochenende = null;
+    if (schnellWahl === "wochenende") {
+      // Freitag bis Sonntag der laufenden Woche; ab Montag das kommende
+      var tag = heute.getDay(), bisFreitag = (5 - tag + 7) % 7;
+      var fr = new Date(heute.getTime() + (tag >= 5 || tag === 0 ? (tag === 0 ? -2 : 5 - tag) : bisFreitag) * 86400000);
+      wochenende = [fr, new Date(fr.getTime() + 3 * 86400000)];
+    }
     return (daten.spiele || []).filter(function (s) {
       if (s.vergangen && !mitVergangenen) return false;
+      var d = new Date(s.beginn);
+      if (schnellWahl === "wochenende" && (d < wochenende[0] || d >= wochenende[1])) return false;
+      if (schnellWahl === "woche" && (d < heute || d >= new Date(heute.getTime() + 7 * 86400000))) return false;
+      if (schnellWahl === "abends" && d.getHours() < 18) return false;
+      if (schnellWahl === "frueh" && d.getHours() >= 13) return false;
       if (nurMeine && hallen.indexOf(s.halle) < 0) return false;
       if (nurIch && !istMeins(s)) return false;
       if (nurOffen && s.besetzung.length) return false;
@@ -1059,7 +1127,7 @@
     filterMerken();
     var n = 0;
     ["plan-vergangene", "plan-offen", "plan-hallen", "plan-meine"].forEach(function (id) { if (el(id).checked && !el(id).parentNode.classList.contains("versteckt")) n++; });
-    n += Object.keys(ligenWahl).length;
+    n += Object.keys(ligenWahl).length + (schnellWahl ? 1 : 0);
     var z = el("plan-filter-zahl"); z.textContent = n; z.classList.toggle("versteckt", !n);
     el("plan-filter-knopf").classList.toggle("aktiv", n > 0);
     return n;
@@ -1074,10 +1142,13 @@
     filterHoehe();
     var ziel = el("plan-liste");
     ziel.innerHTML = "";
+    schnellAnzeigen();
     el("plan-monat").classList.toggle("versteckt", modus !== "monat");
-    el("plan-vergangene").parentNode.classList.toggle("versteckt", modus === "monat");
-    el("plan-heute").classList.toggle("versteckt", modus === "monat");
+    el("plan-wochenansicht").classList.toggle("versteckt", modus !== "woche");
+    el("plan-vergangene").parentNode.classList.toggle("versteckt", modus === "monat" || modus === "woche");
+    el("plan-heute").classList.toggle("versteckt", modus === "monat" || modus === "woche");
     if (modus === "monat") { el("plan-woche").classList.add("versteckt"); zeigeMonat(); return; }
+    if (modus === "woche") { el("plan-woche").classList.add("versteckt"); zeigeWochenansicht(); return; }
     zeigeWoche();
     var kompakt = modus === "liste";
     ziel.classList.toggle("raster", !kompakt);
@@ -1303,7 +1374,7 @@
       .then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.heimat() : null; })
       .then(function (hm) { if (hm) el("abfahrt-ics").classList.remove("versteckt"); }).catch(function () {});
     if (profil && profil.slug === p.slug) pruefeNeue(p, false);
-    if (!stillesNachladen) window.scrollTo(0, 0);
+    if (!stillesNachladen && scrollMerker[location.hash] === undefined) window.scrollTo(0, 0);
   }
 
   function ansicht(name) {
@@ -1373,6 +1444,7 @@
     }
     var st = el("halle-strecke"); st.innerHTML = "";
     var hw = el("halle-hinweise"); hw.innerHTML = "";
+    if (sitzungVorhanden()) { var hsk = document.createElement("div"); hsk.className = "skelett-karte"; hsk.style.height = "90px"; hw.appendChild(hsk); }
     var liste = el("halle-spiele"); liste.innerHTML = "";
     var spiele = (daten.spiele || []).filter(function (sp) { return sp.halle === name; });
     if (!spiele.length) liste.appendChild(leerZustand("Im Datenfenster kein Spiel in dieser Halle."));
@@ -1665,7 +1737,6 @@
     var fertig = function () { toast("Link kopiert ✓", "gut"); knopf.textContent = "Kopiert ✓"; setTimeout(function () { knopf.textContent = "Link kopieren"; }, 2000); };
     if (navigator.clipboard) navigator.clipboard.writeText(url).then(fertig, function () { prompt("Link:", url); }); else prompt("Link:", url);
   });
-  window.addEventListener("hashchange", ausHash);
   el("tab-plan").addEventListener("click", function () { location.hash = "plan"; });
   el("tab-tausch").addEventListener("click", function () { location.hash = "mitglieder/tausch"; });
   el("tab-abrechnung").addEventListener("click", function () { location.hash = "mitglieder/abrechnung"; });
@@ -1681,6 +1752,20 @@
   el("plan-vergangene").addEventListener("change", zeigePlan);
   el("plan-hallen").addEventListener("change", zeigePlan);
   el("plan-offen").addEventListener("change", zeigePlan);
+  Array.prototype.forEach.call(el("plan-schnell").querySelectorAll(".chip"), function (c) {
+    c.addEventListener("click", function () { var w = c.getAttribute("data-schnell"); schnellWahl = schnellWahl === w ? null : w; zeigePlan(); });
+  });
+  // Nach oben
+  el("hoch").addEventListener("click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); });
+  window.addEventListener("scroll", function () { el("hoch").classList.toggle("versteckt", window.scrollY < 700); }, { passive: true });
+  // Sprung-Merker: zurueck von der Spielseite landet wieder an der alten Stelle
+  var scrollMerker = {};
+  window.addEventListener("hashchange", function (e) {
+    try { var alt = new URL(e.oldURL).hash; if (alt && alt.indexOf("#spiel/") !== 0) scrollMerker[alt] = window.scrollY; } catch (x) {}
+    var neu = location.hash;
+    if (scrollMerker[neu] !== undefined) { var y = scrollMerker[neu]; delete scrollMerker[neu]; setTimeout(function () { window.scrollTo(0, y); }, 60); }
+  });
+  window.addEventListener("hashchange", ausHash);
   el("plan-filter-knopf").addEventListener("click", function () { el("plan-filter-blatt").classList.toggle("versteckt"); filterHoehe(); });
   el("plan-teilen").addEventListener("click", function () {
     var liste = planGefiltert(false).filter(function (s) { return !s.vergangen; }).slice(0, 40);
@@ -1698,7 +1783,7 @@
   });
   el("plan-filter-leeren").addEventListener("click", function () {
     ["plan-vergangene", "plan-offen", "plan-hallen", "plan-meine"].forEach(function (id) { el(id).checked = false; });
-    ligenWahl = {}; el("plan-filter").value = ""; zeigePlan();
+    ligenWahl = {}; schnellWahl = null; el("plan-filter").value = ""; zeigePlan();
   });
   el("plan-meine").addEventListener("change", zeigePlan);
   el("plan-drucken").addEventListener("click", function () {
