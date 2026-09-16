@@ -49,4 +49,26 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
   Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
  rum Westfalen":geo:51.49525,7.458288
 END:VEVENT
+BEGIN:VEVENT
+UID:265707cd4d45388f8a36be005f64eec5975fcac1@esrw.de
+SEQUENCE:0
+DTSTAMP:20260916T070046Z
+LAST-MODIFIED:20260916T070046Z
+DTSTART:20260920T153000Z
+DTEND:20260920T190000Z
+SUMMARY:LSR · RL FS · ESV Grizzlys Bergkamen – Eisadler Dortmund
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
+  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\n!! Halle nicht automatis
+ ch erkannt - bitte selbst pruefen !!\nGespann: Stocker\, Quirin (HSR) / Sc
+ hmidt\, Waldemar (LSR)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · RL FS · ESV Grizzlys Ber
+ gkamen – Eisadler Dortmund
+END:VALARM
+END:VEVENT
 END:VCALENDAR

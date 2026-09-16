@@ -383,6 +383,18 @@
   "titel": "SR · U13 RLB · Herforder EV – EHC Troisdorf",
   "treffpunkt": "2026-09-19T12:30:00+02:00"
  },
+ "265707cd4d45388f8a36be005f64eec5975fcac1@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T18:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "02ad9e24689aef28950dd13e33ceac677e7a7ca1",
+  "ort": "",
+  "sequence": 0,
+  "slug": "heu-alexander",
+  "stempel": "2026-09-16T07:00:46.276266+00:00",
+  "titel": "LSR · RL FS · ESV Grizzlys Bergkamen – Eisadler Dortmund",
+  "treffpunkt": "2026-09-20T17:30:00+02:00"
+ },
  "27f468207fc77cf30e66cb6db36c1fad1dbbdb04@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-20T19:00:00+02:00",
@@ -958,6 +970,18 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "SR · U17 FS · Dinslakener Kobras – Düsseldorfer EG U15",
   "treffpunkt": "2026-09-13T11:30:00+02:00"
+ },
+ "6f2f424384db924cbd0bb68823b1e4c148e05069@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T18:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "80997b744448d5730c252f214722e36c16a97d00",
+  "ort": "",
+  "sequence": 0,
+  "slug": "stocker-quirin",
+  "stempel": "2026-09-16T07:00:46.276266+00:00",
+  "titel": "HSR · RL FS · ESV Grizzlys Bergkamen – Eisadler Dortmund",
+  "treffpunkt": "2026-09-20T17:30:00+02:00"
  },
  "75cc53519bee8aa9b2d7ec3b213c8b1a87266736@esrw.de": {
   "aenderung": null,
@@ -1822,6 +1846,18 @@
   "stempel": "2026-09-11T15:00:47.546895+00:00",
   "titel": "SR · U13 RLB · Herner EV – Düsseldorfer EG 1b",
   "treffpunkt": "2026-09-20T15:30:00+02:00"
+ },
+ "d7ca0968d4efc99e11b814ec86c0a8203f79bafc@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T18:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "02ad9e24689aef28950dd13e33ceac677e7a7ca1",
+  "ort": "",
+  "sequence": 0,
+  "slug": "schmidt-waldemar",
+  "stempel": "2026-09-16T07:00:46.276266+00:00",
+  "titel": "LSR · RL FS · ESV Grizzlys Bergkamen – Eisadler Dortmund",
+  "treffpunkt": "2026-09-20T17:30:00+02:00"
  },
  "dbeb5417849cd8a4c25f6fad4127c89b8be54876@esrw.de": {
   "aenderung": null,

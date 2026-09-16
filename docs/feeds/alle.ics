@@ -1979,6 +1979,28 @@ DESCRIPTION:In einer Stunde an der Halle - U13 RLB · Kölner Junghaie 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:a63397541e3b80f9068fcffc56b20bd66d642783@esrw.de
+SEQUENCE:0
+DTSTAMP:20260916T070046Z
+LAST-MODIFIED:20260916T070046Z
+DTSTART:20260920T153000Z
+DTEND:20260920T190000Z
+SUMMARY:RL FS · ESV Grizzlys Bergkamen – Eisadler Dortmund
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
+  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\n!! Halle nicht automatis
+ ch erkannt - bitte selbst pruefen !!\nGespann: Stocker\, Quirin (HSR) / Sc
+ hmidt\, Waldemar (LSR)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - RL FS · ESV Grizzlys Bergkamen 
+ – Eisadler Dortmund
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:da3b207daed19a7779f536c266d4caafad8df29b@esrw.de
 SEQUENCE:0
 DTSTAMP:20260911T150047Z

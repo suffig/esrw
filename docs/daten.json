@@ -2,9 +2,9 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 85,
+ "spiele_gesamt": 86,
  "saison": "2026/27",
- "archiv_spiele": 117,
+ "archiv_spiele": 118,
  "rollen": {
   "SR": "Schiedsrichter",
   "HSR": "Hauptschiedsrichter",
@@ -2482,10 +2482,11 @@
     "Heu, Alexander"
    ],
    "statistik": {
-    "gesamt": 4,
-    "saison": 4,
+    "gesamt": 5,
+    "saison": 5,
     "rollen": {
-     "SR": 4
+     "SR": 4,
+     "LSR": 1
     },
     "ligen": [
      [
@@ -2494,6 +2495,10 @@
      ],
      [
       "U15 LL FS",
+      1
+     ],
+     [
+      "RL FS",
       1
      ]
     ],
@@ -2519,16 +2524,24 @@
      [
       "Galeske, Jonas",
       1
+     ],
+     [
+      "Stocker, Quirin",
+      1
+     ],
+     [
+      "Schmidt, Waldemar",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      4
+      5
      ]
     ],
     "erste": "2026-09-06",
-    "letzte": "2026-09-13"
+    "letzte": "2026-09-20"
    },
    "spiele": [
     {
@@ -2578,6 +2591,33 @@
      ],
      "halle_erkannt": true,
      "vergangen": true,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-20T18:30:00+02:00",
+     "treffpunkt": "2026-09-20T17:30:00+02:00",
+     "rolle": "LSR",
+     "system": 3,
+     "liga": "RL FS",
+     "paarung": "ESV Grizzlys Bergkamen – Eisadler Dortmund",
+     "ort": "",
+     "halle": "",
+     "koordinaten": null,
+     "gespann": [
+      {
+       "name": "Stocker, Quirin",
+       "slug": "stocker-quirin",
+       "rolle": "HSR"
+      },
+      {
+       "name": "Schmidt, Waldemar",
+       "slug": "schmidt-waldemar",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": false,
+     "vergangen": false,
      "aenderung": null,
      "hinweis": null
     }
@@ -6446,10 +6486,11 @@
     "Schmidt, Waldemar"
    ],
    "statistik": {
-    "gesamt": 5,
-    "saison": 5,
+    "gesamt": 6,
+    "saison": 6,
     "rollen": {
-     "SR": 5
+     "SR": 5,
+     "LSR": 1
     },
     "ligen": [
      [
@@ -6499,16 +6540,20 @@
      [
       "Müller, Lars",
       1
+     ],
+     [
+      "Stocker, Quirin",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      5
+      6
      ]
     ],
     "erste": "2026-09-06",
-    "letzte": "2026-09-19"
+    "letzte": "2026-09-20"
    },
    "spiele": [
     {
@@ -6607,6 +6652,33 @@
       }
      ],
      "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-20T18:30:00+02:00",
+     "treffpunkt": "2026-09-20T17:30:00+02:00",
+     "rolle": "LSR",
+     "system": 3,
+     "liga": "RL FS",
+     "paarung": "ESV Grizzlys Bergkamen – Eisadler Dortmund",
+     "ort": "",
+     "halle": "",
+     "koordinaten": null,
+     "gespann": [
+      {
+       "name": "Stocker, Quirin",
+       "slug": "stocker-quirin",
+       "rolle": "HSR"
+      },
+      {
+       "name": "Heu, Alexander",
+       "slug": "heu-alexander",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": false,
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
@@ -7685,23 +7757,23 @@
     "Stocker, Quirin"
    ],
    "statistik": {
-    "gesamt": 3,
-    "saison": 3,
+    "gesamt": 4,
+    "saison": 4,
     "rollen": {
      "SR": 2,
-     "HSR": 1
+     "HSR": 2
     },
     "ligen": [
+     [
+      "RL FS",
+      2
+     ],
      [
       "U17 II",
       1
      ],
      [
       "U17 I",
-      1
-     ],
-     [
-      "RL FS",
       1
      ]
     ],
@@ -7735,16 +7807,20 @@
      [
       "Scholz, Arien",
       1
+     ],
+     [
+      "Heu, Alexander",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      3
+      4
      ]
     ],
     "erste": "2026-09-04",
-    "letzte": "2026-09-13"
+    "letzte": "2026-09-20"
    },
    "spiele": [
     {
@@ -7794,6 +7870,33 @@
      ],
      "halle_erkannt": true,
      "vergangen": true,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-20T18:30:00+02:00",
+     "treffpunkt": "2026-09-20T17:30:00+02:00",
+     "rolle": "HSR",
+     "system": 3,
+     "liga": "RL FS",
+     "paarung": "ESV Grizzlys Bergkamen – Eisadler Dortmund",
+     "ort": "",
+     "halle": "",
+     "koordinaten": null,
+     "gespann": [
+      {
+       "name": "Heu, Alexander",
+       "slug": "heu-alexander",
+       "rolle": "LSR"
+      },
+      {
+       "name": "Schmidt, Waldemar",
+       "slug": "schmidt-waldemar",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": false,
+     "vergangen": false,
      "aenderung": null,
      "hinweis": null
     }
@@ -10748,6 +10851,34 @@
      "name": "Müller, Lars",
      "rolle": "SR",
      "slug": "mueller-lars"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-20T18:30:00+02:00",
+   "treffpunkt": "2026-09-20T17:30:00+02:00",
+   "liga": "RL FS",
+   "paarung": "ESV Grizzlys Bergkamen – Eisadler Dortmund",
+   "halle": "",
+   "ort": "",
+   "halle_erkannt": false,
+   "system": 3,
+   "besetzung": [
+    {
+     "name": "Stocker, Quirin",
+     "rolle": "HSR",
+     "slug": "stocker-quirin"
+    },
+    {
+     "name": "Heu, Alexander",
+     "rolle": "LSR",
+     "slug": "heu-alexander"
+    },
+    {
+     "name": "Schmidt, Waldemar",
+     "rolle": "LSR",
+     "slug": "schmidt-waldemar"
     }
    ],
    "vergangen": false

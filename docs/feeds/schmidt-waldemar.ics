@@ -103,4 +103,26 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U17 I · Krefelder EV –
  EHC GA Wolfsburg YAYLA Krefeld
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:d7ca0968d4efc99e11b814ec86c0a8203f79bafc@esrw.de
+SEQUENCE:0
+DTSTAMP:20260916T070046Z
+LAST-MODIFIED:20260916T070046Z
+DTSTART:20260920T153000Z
+DTEND:20260920T190000Z
+SUMMARY:LSR · RL FS · ESV Grizzlys Bergkamen – Eisadler Dortmund
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
+  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\n!! Halle nicht automatis
+ ch erkannt - bitte selbst pruefen !!\nGespann: Stocker\, Quirin (HSR) / He
+ u\, Alexander (LSR)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · RL FS · ESV Grizzlys Ber
+ gkamen – Eisadler Dortmund
+END:VALARM
+END:VEVENT
 END:VCALENDAR

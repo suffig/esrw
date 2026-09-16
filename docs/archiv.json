@@ -655,6 +655,15 @@
   "heu-alexander": [
    {
     "saison": "2026/27",
+    "beginn": "2026-09-20T18:30:00+02:00",
+    "liga": "RL FS",
+    "paarung": "ESV Grizzlys Bergkamen – Eisadler Dortmund",
+    "halle": "",
+    "rolle": "LSR",
+    "system": 3
+   },
+   {
+    "saison": "2026/27",
     "beginn": "2026-09-13T11:00:00+02:00",
     "liga": "DA FS",
     "paarung": "NRW – Hessen",
@@ -1594,6 +1603,15 @@
   "schmidt-waldemar": [
    {
     "saison": "2026/27",
+    "beginn": "2026-09-20T18:30:00+02:00",
+    "liga": "RL FS",
+    "paarung": "ESV Grizzlys Bergkamen – Eisadler Dortmund",
+    "halle": "",
+    "rolle": "LSR",
+    "system": 3
+   },
+   {
+    "saison": "2026/27",
     "beginn": "2026-09-19T16:30:00+02:00",
     "liga": "U17 I",
     "paarung": "Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld",
@@ -1952,6 +1970,15 @@
    }
   ],
   "stocker-quirin": [
+   {
+    "saison": "2026/27",
+    "beginn": "2026-09-20T18:30:00+02:00",
+    "liga": "RL FS",
+    "paarung": "ESV Grizzlys Bergkamen – Eisadler Dortmund",
+    "halle": "",
+    "rolle": "HSR",
+    "system": 3
+   },
    {
     "saison": "2026/27",
     "beginn": "2026-09-13T14:00:00+02:00",
