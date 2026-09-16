@@ -2485,8 +2485,8 @@
     "gesamt": 5,
     "saison": 5,
     "rollen": {
-     "SR": 4,
-     "LSR": 1
+     "LSR": 1,
+     "SR": 4
     },
     "ligen": [
      [
@@ -2494,11 +2494,11 @@
       3
      ],
      [
-      "U15 LL FS",
+      "RL FS",
       1
      ],
      [
-      "RL FS",
+      "U15 LL FS",
       1
      ]
     ],
@@ -2518,19 +2518,19 @@
       2
      ],
      [
-      "Zynda, Jayden",
-      1
-     ],
-     [
-      "Galeske, Jonas",
-      1
-     ],
-     [
       "Stocker, Quirin",
       1
      ],
      [
       "Schmidt, Waldemar",
+      1
+     ],
+     [
+      "Zynda, Jayden",
+      1
+     ],
+     [
+      "Galeske, Jonas",
       1
      ]
     ],
@@ -6489,10 +6489,14 @@
     "gesamt": 6,
     "saison": 6,
     "rollen": {
-     "SR": 5,
-     "LSR": 1
+     "LSR": 1,
+     "SR": 5
     },
     "ligen": [
+     [
+      "RL FS",
+      1
+     ],
      [
       "U13 FS",
       1
@@ -6503,10 +6507,6 @@
      ],
      [
       "U15 RLB",
-      1
-     ],
-     [
-      "U17 FS",
       1
      ]
     ],
@@ -6530,19 +6530,19 @@
       2
      ],
      [
+      "Stocker, Quirin",
+      1
+     ],
+     [
+      "Heu, Alexander",
+      1
+     ],
+     [
       "Kiefer, Dennis",
       1
      ],
      [
       "Lindemans, Pepe",
-      1
-     ],
-     [
-      "Müller, Lars",
-      1
-     ],
-     [
-      "Stocker, Quirin",
       1
      ]
     ],
@@ -7760,8 +7760,8 @@
     "gesamt": 4,
     "saison": 4,
     "rollen": {
-     "SR": 2,
-     "HSR": 2
+     "HSR": 2,
+     "SR": 2
     },
     "ligen": [
      [
@@ -7793,6 +7793,14 @@
     ],
     "partner": [
      [
+      "Heu, Alexander",
+      1
+     ],
+     [
+      "Schmidt, Waldemar",
+      1
+     ],
+     [
       "Heffler, Philipp",
       1
      ],
@@ -7802,14 +7810,6 @@
      ],
      [
       "Rieneck, Julian",
-      1
-     ],
-     [
-      "Scholz, Arien",
-      1
-     ],
-     [
-      "Heu, Alexander",
       1
      ]
     ],
@@ -10634,18 +10634,6 @@
      "slug": "bruecker-tobias"
     }
    ],
-   "vergangen": false
-  },
-  {
-   "beginn": "2026-09-20T13:00:00+02:00",
-   "treffpunkt": "2026-09-20T12:00:00+02:00",
-   "liga": "U9 LL Blau",
-   "paarung": "Ratinger Ice Aliens – Ratingen",
-   "halle": "Eissporthalle Ratingen",
-   "ort": "Eissporthalle Ratingen, Am Sandbach 12, 40878 Ratingen",
-   "halle_erkannt": true,
-   "system": 0,
-   "besetzung": [],
    "vergangen": false
   },
   {
