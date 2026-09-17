@@ -989,10 +989,10 @@
    },
    {
     "saison": "2026/27",
-    "beginn": "2026-09-20T09:30:00+02:00",
-    "liga": "U15 RLB",
-    "paarung": "Herner EV – EV Duisburg",
-    "halle": "Gysenberghalle Herne",
+    "beginn": "2026-09-20T13:30:00+02:00",
+    "liga": "U17 FS",
+    "paarung": "Eisadler Dortmund – EHC Troisdorf",
+    "halle": "Eissportzentrum Westfalen",
     "rolle": "SR",
     "system": 2
    },
@@ -1634,10 +1634,10 @@
    },
    {
     "saison": "2026/27",
-    "beginn": "2026-09-20T13:30:00+02:00",
-    "liga": "U17 FS",
-    "paarung": "Eisadler Dortmund – EHC Troisdorf",
-    "halle": "Eissportzentrum Westfalen",
+    "beginn": "2026-09-20T09:30:00+02:00",
+    "liga": "U15 RLB",
+    "paarung": "Herner EV – EV Duisburg",
+    "halle": "Gysenberghalle Herne",
     "rolle": "SR",
     "system": 2
    },
