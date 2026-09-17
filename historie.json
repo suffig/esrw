@@ -69,6 +69,22 @@
   "zuerst_gesehen": "2026-09-11",
   "zuletzt_gesehen": "2026-09-15"
  },
+ "05a353e47f6c537edef0311755c14b2dd49772b7": {
+  "begegnung": "U13 LL: ESV Grizzlys Bergkamen - Ratinger Ice Aliens",
+  "beginn": "2026-09-27T09:00:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Brücker, Tobias",
+    "Malik, Orlando"
+   ],
+   "HSR": []
+  },
+  "halle": "",
+  "liga": "U13 LL",
+  "paarung": "ESV Grizzlys Bergkamen – Ratinger Ice Aliens",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
  "0807e23d8fad869ceff2a546de9e5d883aeaa196": {
   "begegnung": "U13 BZL Gr.A: Eisadler Dortmund 1b - Mädchen W.I.N. 2",
   "beginn": "2026-09-20T08:00:00+02:00",
@@ -83,6 +99,22 @@
   "paarung": "Eisadler Dortmund 1b – Mädchen W.I.N. 2",
   "zuerst_gesehen": "2026-09-11",
   "zuletzt_gesehen": "2026-09-16"
+ },
+ "0844ff9181aff9159d84a32d37c883c515b6f00f": {
+  "begegnung": "U17 I: Düsseldorfer EG - Krefelder EV",
+  "beginn": "2026-09-26T19:30:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Dietrich, Jonas",
+    "Kratschmar, Jocelyn"
+   ],
+   "HSR": []
+  },
+  "halle": "Eishalle Brehmstraße",
+  "liga": "U17 I",
+  "paarung": "Düsseldorfer EG – Krefelder EV",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
  },
  "090995a830f082b13c933f8daab5f26cf7d1803a": {
   "begegnung": "U9 LL Rot: Krefelder EV 1b -",
@@ -180,6 +212,56 @@
   "zuerst_gesehen": "2026-09-11",
   "zuletzt_gesehen": "2026-09-17"
  },
+ "13e709e6738abd9f0990e3492f355ecb4ffe03b5": {
+  "begegnung": "U20 RL: Dinslakener Kobras - EHC Troisdorf",
+  "beginn": "2026-09-27T19:00:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Hartmann, Marius",
+    "Krüger, Martin"
+   ],
+   "HSR": [
+    "Caelers, Fabian"
+   ]
+  },
+  "halle": "Eissporthalle Dinslaken",
+  "liga": "U20 RL",
+  "paarung": "Dinslakener Kobras – EHC Troisdorf",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
+ "1880fd07a2db5283ec2bc9b97e37836ea4e0503e": {
+  "begegnung": "U13 RLA: Düsseldorfer EG - Iserlohner EC",
+  "beginn": "2026-09-26T16:30:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Heffler, Philipp",
+    "Pacalaj, Erik"
+   ],
+   "HSR": []
+  },
+  "halle": "Eishalle Brehmstraße",
+  "liga": "U13 RLA",
+  "paarung": "Düsseldorfer EG – Iserlohner EC",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
+ "19dc34d83a7050f80397051eeef63d4164860259": {
+  "begegnung": "U17 RL: EHC Troisdorf - Dinslakener Kobras",
+  "beginn": "2026-09-25T20:15:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Finke, Gudrun",
+    "Moritz, Alexander"
+   ],
+   "HSR": []
+  },
+  "halle": "ICEDOME Troisdorf",
+  "liga": "U17 RL",
+  "paarung": "EHC Troisdorf – Dinslakener Kobras",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
  "1b5883faf5c9a04ffc0e5fb99160307704b0f434": {
   "begegnung": "RL FS: Ratinger Ice Aliens - Chiefs Leuwen Düsseldorf !!!",
   "beginn": "2026-09-18T19:30:00+02:00",
@@ -196,6 +278,22 @@
   "liga": "RL FS",
   "paarung": "Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!",
   "zuerst_gesehen": "2026-09-15",
+  "zuletzt_gesehen": "2026-09-17"
+ },
+ "1d0efeb9f8851d784d4dd43e8a5263a7ab33f5b8": {
+  "begegnung": "U15 LL: EHC Essen Ruhr - Herforder EV",
+  "beginn": "2026-09-27T10:15:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Melchert, Philip",
+    "Solbach, Carsten"
+   ],
+   "HSR": []
+  },
+  "halle": "Eissporthalle Essen-West",
+  "liga": "U15 LL",
+  "paarung": "EHC Essen Ruhr – Herforder EV",
+  "zuerst_gesehen": "2026-09-17",
   "zuletzt_gesehen": "2026-09-17"
  },
  "1f187607eda3002dba69baa66bb338734f2a6a54": {
@@ -230,6 +328,22 @@
   "zuerst_gesehen": "2026-09-09",
   "zuletzt_gesehen": "2026-09-12"
  },
+ "20e6a6d160a1e82ac6eec10a057f495922b841cf": {
+  "begegnung": "U11 RL: EV Duisburg - in Krefeld !!!!",
+  "beginn": "2026-09-27T10:00:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Marks, Marcel",
+    "Baum, Fabian (N)"
+   ],
+   "HSR": []
+  },
+  "halle": "Rheinlandhalle Krefeld",
+  "liga": "U11 RL",
+  "paarung": "EV Duisburg",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
  "24173e361c211e18ade30a6288ba80933f36c824": {
   "begegnung": "U15 RLA: Düsseldorfer EG - Iserlohner EC",
   "beginn": "2026-09-20T14:00:00+02:00",
@@ -244,6 +358,22 @@
   "liga": "U15 RLA",
   "paarung": "Düsseldorfer EG – Iserlohner EC",
   "zuerst_gesehen": "2026-09-11",
+  "zuletzt_gesehen": "2026-09-17"
+ },
+ "24993040fcf63e3cf0fff617a9561fc5ce11b9c3": {
+  "begegnung": "U13 RLA: Krefelder EV - Kölner Junghaie",
+  "beginn": "2026-09-26T19:30:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Heyer, Christoph (N)",
+    "Heffler, Zsolt"
+   ],
+   "HSR": []
+  },
+  "halle": "Rheinlandhalle Krefeld",
+  "liga": "U13 RLA",
+  "paarung": "Krefelder EV – Kölner Junghaie",
+  "zuerst_gesehen": "2026-09-17",
   "zuletzt_gesehen": "2026-09-17"
  },
  "24fd4c0e4933c247eb7114a8f7b586114ead74ba": {
@@ -294,6 +424,22 @@
   "zuerst_gesehen": "2026-09-09",
   "zuletzt_gesehen": "2026-09-13"
  },
+ "2af51709fe04610362a3758773e555d9bb36260f": {
+  "begegnung": "BL FS: EHC Essen Ruhr - Dinslakener Kobras 1b",
+  "beginn": "2026-09-25T20:00:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Caelers, Fabian",
+    "Malik, Orlando"
+   ],
+   "HSR": []
+  },
+  "halle": "Eissporthalle Essen-West",
+  "liga": "BL FS",
+  "paarung": "EHC Essen Ruhr – Dinslakener Kobras 1b",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
  "2ce6bb5039131a1fe2b70f8da57b527810d6d39d": {
   "begegnung": "U13 FS: Dinslakener Kobras - TuS Wiehl",
   "beginn": "2026-09-12T12:30:00+02:00",
@@ -308,6 +454,38 @@
   "liga": "U13 FS",
   "paarung": "Dinslakener Kobras – TuS Wiehl",
   "zuerst_gesehen": "2026-09-09",
+  "zuletzt_gesehen": "2026-09-17"
+ },
+ "2d210e61e690876dfbf79f0ff514661e126be049": {
+  "begegnung": "U17 LL: ESV Grizzlys Bergkamen - ESC Darmstadt",
+  "beginn": "2026-09-26T10:30:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Galeske, Jonas",
+    "Klemm, Julian"
+   ],
+   "HSR": []
+  },
+  "halle": "",
+  "liga": "U17 LL",
+  "paarung": "ESV Grizzlys Bergkamen – ESC Darmstadt",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
+ "3039e4313fbd44be7171a1ed52beadf845947117": {
+  "begegnung": "BL FS: Herner EV 1b - Soester EG",
+  "beginn": "2026-09-27T16:45:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Kyei-Nimako, Denis",
+    "Skalecki, Martin"
+   ],
+   "HSR": []
+  },
+  "halle": "Emscher-Lippe-Halle Gelsenkirchen",
+  "liga": "BL FS",
+  "paarung": "Herner EV 1b – Soester EG",
+  "zuerst_gesehen": "2026-09-17",
   "zuletzt_gesehen": "2026-09-17"
  },
  "30d4df3c88bf92b375241e21ef4d6465cad6f3c6": {
@@ -408,6 +586,35 @@
   "zuerst_gesehen": "2026-09-09",
   "zuletzt_gesehen": "2026-09-11"
  },
+ "340d990b451a73737077a74a153470e7635611de": {
+  "begegnung": "U15 RLB: Kölner Junghaie 1b - EJ Kassel",
+  "beginn": "2026-09-27T17:30:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Garbsch, René",
+    "Pluschkell, Julian"
+   ],
+   "HSR": []
+  },
+  "halle": "Kölnarena 2",
+  "liga": "U15 RLB",
+  "paarung": "Kölner Junghaie 1b – EJ Kassel",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
+ "35dbb21f2a030288e357fd5c939bf7e27ecd22ee": {
+  "begegnung": "U15 LL: Ratinger Ice Aliens - Lippe Hockey Hamm Ratingen",
+  "beginn": "2026-09-26T11:00:00+02:00",
+  "besetzung": {
+   "(L)SR": [],
+   "HSR": []
+  },
+  "halle": "Eissporthalle Ratingen",
+  "liga": "U15 LL",
+  "paarung": "Ratinger Ice Aliens – Lippe Hockey Hamm Ratingen",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
  "3656c3da76a45e945a27c9cfe53f501fd4c6eead": {
   "begegnung": "U13 RLA: Kölner Junghaie - Krefelder EV",
   "beginn": "2026-09-06T17:30:00+02:00",
@@ -472,6 +679,38 @@
   "liga": "DNL III",
   "paarung": "EV Duisburg – SCC Adler Berlin",
   "zuerst_gesehen": "2026-09-11",
+  "zuletzt_gesehen": "2026-09-17"
+ },
+ "3cef9f6865b250b52f13bb1bf75ff5585517bd1f": {
+  "begegnung": "Frauen BZL: ESV Grizzlys Bergkamen - Herforder EV",
+  "beginn": "2026-09-26T17:30:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Scholz, Arien",
+    "Zynda, Jayden"
+   ],
+   "HSR": []
+  },
+  "halle": "",
+  "liga": "Frauen BZL",
+  "paarung": "ESV Grizzlys Bergkamen – Herforder EV",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
+ "40b9115aa9b2a67e04b47c3aaf9259346cfc646e": {
+  "begegnung": "U9 RL: EV Duisburg -",
+  "beginn": "2026-09-26T10:00:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Marks, Marcel",
+    "Schmidt, Waldemar"
+   ],
+   "HSR": []
+  },
+  "halle": "PreZero Rheinlandhalle Duisburg",
+  "liga": "U9 RL",
+  "paarung": "EV Duisburg",
+  "zuerst_gesehen": "2026-09-17",
   "zuletzt_gesehen": "2026-09-17"
  },
  "41a6b798217f486bbf3f0fbabc25e4f31ef5a1df": {
@@ -552,6 +791,22 @@
   "liga": "U15 RLA",
   "paarung": "Kölner Junghaie – Düsseldorfer EG",
   "zuerst_gesehen": "2026-09-11",
+  "zuletzt_gesehen": "2026-09-17"
+ },
+ "4d9fa53cdb8c7a17765f19831ccb699e9e5e8856": {
+  "begegnung": "U15 RLA: Düsseldorfer EG - Krefelder EV",
+  "beginn": "2026-09-26T13:30:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Heffler, Philipp",
+    "Pacalaj, Erik"
+   ],
+   "HSR": []
+  },
+  "halle": "Eishalle Brehmstraße",
+  "liga": "U15 RLA",
+  "paarung": "Düsseldorfer EG – Krefelder EV",
+  "zuerst_gesehen": "2026-09-17",
   "zuletzt_gesehen": "2026-09-17"
  },
  "4ea9d541204227cc3d51c93452a2bc5ac0a4a9eb": {
@@ -732,6 +987,22 @@
   "zuerst_gesehen": "2026-09-09",
   "zuletzt_gesehen": "2026-09-12"
  },
+ "5930691eb781af3693ae4b225cb066c6f75edf12": {
+  "begegnung": "U9 LL Gelb: EHC Troisdorf 1c -",
+  "beginn": "2026-09-26T10:00:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Henkels, André",
+    "Somplatzki, Torben"
+   ],
+   "HSR": []
+  },
+  "halle": "ICEDOME Troisdorf",
+  "liga": "U9 LL Gelb",
+  "paarung": "EHC Troisdorf 1c",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
  "599bf7c1c586e63b139cbca65c8a3e943127abd0": {
   "begegnung": "U17 FS: Dinslakener Kobras - Düsseldorfer EG U15",
   "beginn": "2026-09-13T12:30:00+02:00",
@@ -779,6 +1050,38 @@
   "paarung": "EHC Troisdorf – EV Duisburg",
   "zuerst_gesehen": "2026-09-09",
   "zuletzt_gesehen": "2026-09-13"
+ },
+ "5ef87fad9fb1ea16202fe2f3a44d5dd9eff8ed77": {
+  "begegnung": "U13 RLA: Krefelder EV - Düsseldorfer EG",
+  "beginn": "2026-09-27T17:00:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Kiefer, Dennis",
+    "Quint, Sascha"
+   ],
+   "HSR": []
+  },
+  "halle": "Rheinlandhalle Krefeld",
+  "liga": "U13 RLA",
+  "paarung": "Krefelder EV – Düsseldorfer EG",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
+ "614f125b3bc09bdf114a09fbbde2120ab2840cb5": {
+  "begegnung": "U11 LL Blau: Kölner Junghaie 1c -",
+  "beginn": "2026-09-27T11:30:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Hindley, David",
+    "Krawinkel, Markus"
+   ],
+   "HSR": []
+  },
+  "halle": "Kölnarena 2",
+  "liga": "U11 LL Blau",
+  "paarung": "Kölner Junghaie 1c",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
  },
  "628f1523d96378fdd16c36621fda0b2d2dc3b8b7": {
   "begegnung": "U17 I: Iserlohner EC - Krefelder EV",
@@ -828,6 +1131,56 @@
   "zuerst_gesehen": "2026-09-09",
   "zuletzt_gesehen": "2026-09-17"
  },
+ "666f20df1d86f76f141f0df5f9c0acd5acd73b40": {
+  "begegnung": "U11 RL: Herforder EV -",
+  "beginn": "2026-09-26T11:30:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Berger, Eugen",
+    "Schmidt, Eugen"
+   ],
+   "HSR": []
+  },
+  "halle": "Eishalle Im Kleinen Felde",
+  "liga": "U11 RL",
+  "paarung": "Herforder EV",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
+ "685abe69b6b04d0a591712143583c58d2a6c8634": {
+  "begegnung": "RL FS: Ratinger Ice Aliens - Grefrather EG in Düsseldorf !!!",
+  "beginn": "2026-09-25T19:30:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Braun, Benjamin",
+    "Leibfried, Raphael"
+   ],
+   "HSR": [
+    "Licau, Sebastian"
+   ]
+  },
+  "halle": "Eishalle Brehmstraße",
+  "liga": "RL FS",
+  "paarung": "Ratinger Ice Aliens – Grefrather EG",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
+ "6d1166d7e89ed9ded3a41e3222644d23f866d552": {
+  "begegnung": "U15 RLA: Krefelder EV - Kölner Junghaie",
+  "beginn": "2026-09-27T14:00:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Kiefer, Dennis",
+    "Quint, Sascha"
+   ],
+   "HSR": []
+  },
+  "halle": "Rheinlandhalle Krefeld",
+  "liga": "U15 RLA",
+  "paarung": "Krefelder EV – Kölner Junghaie",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
  "6dc5d13c48efb3613e0645cb1d01239b3031e7a1": {
   "begegnung": "U17 I: Krefelder EV - Iserlohner EC",
   "beginn": "2026-09-05T16:30:00+02:00",
@@ -843,6 +1196,40 @@
   "paarung": "Krefelder EV – Iserlohner EC",
   "zuerst_gesehen": "2026-09-09",
   "zuletzt_gesehen": "2026-09-12"
+ },
+ "6e4ff4158943bdecce5461f4362441de41c40270": {
+  "begegnung": "U20 RL: Herforder EV - Eisadler Dortmund",
+  "beginn": "2026-09-27T18:00:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Zynda, Jayden",
+    "Zynda, Nick"
+   ],
+   "HSR": [
+    "Steeg, Cedric"
+   ]
+  },
+  "halle": "Eishalle Im Kleinen Felde",
+  "liga": "U20 RL",
+  "paarung": "Herforder EV – Eisadler Dortmund",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
+ "6f13c43e13e33882cc91bc2b130f005aceb8a16e": {
+  "begegnung": "U17 RL: Lippe Hockey Hamm - Eisadler Dortmund",
+  "beginn": "2026-09-25T19:30:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Steeg, Cedric",
+    "Zynda, Jayden"
+   ],
+   "HSR": []
+  },
+  "halle": "HELINET Eissportarena Hamm",
+  "liga": "U17 RL",
+  "paarung": "Lippe Hockey Hamm – Eisadler Dortmund",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
  },
  "7094ba95159dbdc4a2efba6844e26e4a2c2ff2d3": {
   "begegnung": "DNL III: EV Duisburg - SCC Adler Berlin",
@@ -910,6 +1297,38 @@
   "zuerst_gesehen": "2026-09-17",
   "zuletzt_gesehen": "2026-09-17"
  },
+ "762eb88907408465ce628e8606c771636fb92f73": {
+  "begegnung": "U13 LL: Neusser EV - Ratinger Ice Aliens",
+  "beginn": "2026-09-25T20:00:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Hindley, David",
+    "Victor, Tobias (N)"
+   ],
+   "HSR": []
+  },
+  "halle": "Eissporthalle Neuss",
+  "liga": "U13 LL",
+  "paarung": "Neusser EV – Ratinger Ice Aliens",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
+ "768fc4c5be3c525b24e256638cef79c16d43fb04": {
+  "begegnung": "U15 RLA: Iserlohner EC - Kölner Junghaie",
+  "beginn": "2026-09-26T12:15:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Zynda, Nick",
+    "Steeg, Cedric"
+   ],
+   "HSR": []
+  },
+  "halle": "Eissporthalle am Seilersee",
+  "liga": "U15 RLA",
+  "paarung": "Iserlohner EC – Kölner Junghaie",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
  "7e248c45ddab64c8023420179827337c400f9da9": {
   "begegnung": "U17 I: Düsseldorfer EG - Eisbären Juniors Berlin",
   "beginn": "2026-09-06T11:00:00+02:00",
@@ -942,6 +1361,22 @@
   "zuerst_gesehen": "2026-09-11",
   "zuletzt_gesehen": "2026-09-17"
  },
+ "7fba3f8169086fd46d19338021233386c1d43781": {
+  "begegnung": "U15 LL: Eisadler Dortmund - ESC Darmstadt",
+  "beginn": "2026-09-26T13:30:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Budzynski, Mika (N)",
+    "Schlüter, Thomas"
+   ],
+   "HSR": []
+  },
+  "halle": "Eissportzentrum Westfalen",
+  "liga": "U15 LL",
+  "paarung": "Eisadler Dortmund – ESC Darmstadt",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
  "80f85d6066f441c8aa507f2ac8b624e5a7323d97": {
   "begegnung": "U15 LL: Herforder EV - Eisadler Dortmund Herford",
   "beginn": "2026-09-13T12:30:00+02:00",
@@ -958,6 +1393,22 @@
   "zuerst_gesehen": "2026-09-09",
   "zuletzt_gesehen": "2026-09-17"
  },
+ "8690d6939f23e74f92c33e40dbb8b5cda45bdecd": {
+  "begegnung": "U15 LL: Dinslakener Kobras - EHC Die Bären Neuwied",
+  "beginn": "2026-09-27T12:30:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Hornig, Matthias",
+    "Kuriata, Florian-Nikita"
+   ],
+   "HSR": []
+  },
+  "halle": "Eissporthalle Dinslaken",
+  "liga": "U15 LL",
+  "paarung": "Dinslakener Kobras – EHC Die Bären Neuwied",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
  "8852a7d12f8281737c1c39f8a49d09b4c5f92632": {
   "begegnung": "U13 RLB: Herner EV - Düsseldorfer EG 1b",
   "beginn": "2026-09-20T16:30:00+02:00",
@@ -972,6 +1423,22 @@
   "liga": "U13 RLB",
   "paarung": "Herner EV – Düsseldorfer EG 1b",
   "zuerst_gesehen": "2026-09-11",
+  "zuletzt_gesehen": "2026-09-17"
+ },
+ "8870d3864bd9fe2cbba75b0ba3f6f2d23446cb66": {
+  "begegnung": "U15 RLA: Iserlohner EC - Düsseldorfer EG",
+  "beginn": "2026-09-27T12:00:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Priebsch, Jan Philipp",
+    "Licau, Alexander"
+   ],
+   "HSR": []
+  },
+  "halle": "Eissporthalle am Seilersee",
+  "liga": "U15 RLA",
+  "paarung": "Iserlohner EC – Düsseldorfer EG",
+  "zuerst_gesehen": "2026-09-17",
   "zuletzt_gesehen": "2026-09-17"
  },
  "8967335919e9f8fe91d4fad5557c365703340730": {
@@ -1019,6 +1486,22 @@
   "zuerst_gesehen": "2026-09-11",
   "zuletzt_gesehen": "2026-09-16"
  },
+ "90ea88ec0b1a31f5790a94802734cca1d0960419": {
+  "begegnung": "U17 I: Krefelder EV - Düsseldorfer EG",
+  "beginn": "2026-09-25T19:00:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Hornig, Marius",
+    "Pluschkell, Julian"
+   ],
+   "HSR": []
+  },
+  "halle": "Rheinlandhalle Krefeld",
+  "liga": "U17 I",
+  "paarung": "Krefelder EV – Düsseldorfer EG",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
  "92199c124a8638eea2356b03b5ccdfaeace48333": {
   "begegnung": "U11 RL: Kölner Junghaie - Kölnarena 2",
   "beginn": "2026-09-13T14:45:00+02:00",
@@ -1033,6 +1516,22 @@
   "liga": "U11 RL",
   "paarung": "Kölner Junghaie – Kölnarena 2",
   "zuerst_gesehen": "2026-09-09",
+  "zuletzt_gesehen": "2026-09-17"
+ },
+ "937bf5e93296839f06197d6b1b6c4ca164c13134": {
+  "begegnung": "U15 RLB: Herner EV - EHC Troisdorf",
+  "beginn": "2026-09-27T09:30:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Rieneck, Maximilian",
+    "Strube, Julia"
+   ],
+   "HSR": []
+  },
+  "halle": "Gysenberghalle Herne",
+  "liga": "U15 RLB",
+  "paarung": "Herner EV – EHC Troisdorf",
+  "zuerst_gesehen": "2026-09-17",
   "zuletzt_gesehen": "2026-09-17"
  },
  "9392cabf6f2033b3e06b3cc10bd492c0e06a601c": {
@@ -1099,6 +1598,22 @@
   "zuerst_gesehen": "2026-09-09",
   "zuletzt_gesehen": "2026-09-17"
  },
+ "a0abc811ef5830d7bdb5117d98299aac1a4797dd": {
+  "begegnung": "U9 RL: Krefelder EV -",
+  "beginn": "2026-09-26T16:45:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Heyer, Christoph (N)",
+    "Heffler, Zsolt"
+   ],
+   "HSR": []
+  },
+  "halle": "Rheinlandhalle Krefeld",
+  "liga": "U9 RL",
+  "paarung": "Krefelder EV",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
  "a2c7ac2649ffe08bca21913a00cdbd04253e5560": {
   "begegnung": "U11 RL: Iserlohner EC -",
   "beginn": "2026-09-19T12:15:00+02:00",
@@ -1113,6 +1628,54 @@
   "liga": "U11 RL",
   "paarung": "Iserlohner EC",
   "zuerst_gesehen": "2026-09-11",
+  "zuletzt_gesehen": "2026-09-17"
+ },
+ "a4b890e147afab129a72405a3415ed46f32cced4": {
+  "begegnung": "DFEL2 Nord: KEC \"Die Haie\" - FASS Berlin",
+  "beginn": "2026-09-26T19:15:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Engler, Gerhard",
+    "Hauerwaas, Gabriel"
+   ],
+   "HSR": []
+  },
+  "halle": "Kölnarena 2",
+  "liga": "DFEL2 Nord",
+  "paarung": "KEC \"Die Haie\" – FASS Berlin",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
+ "a70a0f8af60236fd7c9ab3fef5b4cb1c49965e4f": {
+  "begegnung": "U9 LL Grün: Lippe Hockey Hamm -",
+  "beginn": "2026-09-26T09:30:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Garbsch, René",
+    "Skalecki, Martin"
+   ],
+   "HSR": []
+  },
+  "halle": "HELINET Eissportarena Hamm",
+  "liga": "U9 LL Grün",
+  "paarung": "Lippe Hockey Hamm",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
+ "a78f68295400a0afe37d16c8458fee13d111f9ed": {
+  "begegnung": "U13 LL: EHC Troisdorf 1b - EC Bergisch Land",
+  "beginn": "2026-09-27T18:00:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Beckford, Emanuel",
+    "Starke, Matthias"
+   ],
+   "HSR": []
+  },
+  "halle": "ICEDOME Troisdorf",
+  "liga": "U13 LL",
+  "paarung": "EHC Troisdorf 1b – EC Bergisch Land",
+  "zuerst_gesehen": "2026-09-17",
   "zuletzt_gesehen": "2026-09-17"
  },
  "a9f31ea0861ccd59b51acec1934a1404c3f69082": {
@@ -1373,6 +1936,22 @@
   "zuerst_gesehen": "2026-09-09",
   "zuletzt_gesehen": "2026-09-17"
  },
+ "bac4095062aba59dc39d97a93778ea0a89407dcc": {
+  "begegnung": "U15 LL: Lippe Hockey Hamm - Eisadler Dortmund",
+  "beginn": "2026-09-27T08:00:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Zynda, Jayden",
+    "Zynda, Nick"
+   ],
+   "HSR": []
+  },
+  "halle": "HELINET Eissportarena Hamm",
+  "liga": "U15 LL",
+  "paarung": "Lippe Hockey Hamm – Eisadler Dortmund",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
  "bbdae24c77024aeccc4f810c636d924b42a219f3": {
   "begegnung": "DA FS: NEV - BW/NRW in Dortmund !!!",
   "beginn": "2026-09-12T15:00:00+02:00",
@@ -1487,6 +2066,24 @@
   "zuerst_gesehen": "2026-09-09",
   "zuletzt_gesehen": "2026-09-17"
  },
+ "c74ee685f2f0c3c1c4336cb8afccbfff6b15a780": {
+  "begegnung": "RL FS: Eisadler Dortmund - Harzer Falken",
+  "beginn": "2026-09-27T19:00:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Kratschmar, Jocelyn",
+    "Scholz, Arien"
+   ],
+   "HSR": [
+    "Pernt, Hendrik"
+   ]
+  },
+  "halle": "Eissportzentrum Westfalen",
+  "liga": "RL FS",
+  "paarung": "Eisadler Dortmund – Harzer Falken",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
  "cac16759f8bbeb036c11a4708e5a1ef4a58be22b": {
   "begegnung": "RL FS: Ratinger Ice Aliens - Utrecht Dragons in Essen",
   "beginn": "2026-09-04T20:00:00+02:00",
@@ -1520,6 +2117,38 @@
   "paarung": "Krefelder EV – Düsseldorfer EG",
   "zuerst_gesehen": "2026-09-09",
   "zuletzt_gesehen": "2026-09-12"
+ },
+ "cc0d17335e779a02710165a996970990d40c52d3": {
+  "begegnung": "U15 RLB: EV Duisburg - EJ Kassel",
+  "beginn": "2026-09-26T16:00:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Kalischke, Christian (N)",
+    "Hofer, Carsten"
+   ],
+   "HSR": []
+  },
+  "halle": "PreZero Rheinlandhalle Duisburg",
+  "liga": "U15 RLB",
+  "paarung": "EV Duisburg – EJ Kassel",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
+ "cc3ce67e54511cdbb9a51ec0bbb6591c4e8e88a1": {
+  "begegnung": "U13 RLB: Herforder EV - EV Duisburg",
+  "beginn": "2026-09-26T08:00:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Berger, Eugen",
+    "Schmidt, Eugen"
+   ],
+   "HSR": []
+  },
+  "halle": "Eishalle Im Kleinen Felde",
+  "liga": "U13 RLB",
+  "paarung": "Herforder EV – EV Duisburg",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
  },
  "cc52832fc0662a126cc889f8d902b2df0885abf7": {
   "begegnung": "U20 FS: Dinslakener Kobras - Ratinger Ice Aliens",
@@ -1567,6 +2196,40 @@
   "liga": "U11 LL Gelb",
   "paarung": "EHC Essen Ruhr – Essen",
   "zuerst_gesehen": "2026-09-09",
+  "zuletzt_gesehen": "2026-09-17"
+ },
+ "ce81a68356fd51d319031b9d961ac4398c86c273": {
+  "begegnung": "RL FS: Dinslakener Kobras - ESV Grizzlys Bergkamen",
+  "beginn": "2026-09-25T20:15:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Quint, Sascha",
+    "Reuter, Rick"
+   ],
+   "HSR": [
+    "Krawinkel, Markus"
+   ]
+  },
+  "halle": "Eissporthalle Dinslaken",
+  "liga": "RL FS",
+  "paarung": "Dinslakener Kobras – ESV Grizzlys Bergkamen",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
+ "cf27c5a0f1e5b883cdb514dbb352872b2c98c0e0": {
+  "begegnung": "U13 RLB: Herner EV - Iserlohner EC 1b",
+  "beginn": "2026-09-26T08:30:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Baum, Fabian (N)",
+    "Heu, Alexander"
+   ],
+   "HSR": []
+  },
+  "halle": "Gysenberghalle Herne",
+  "liga": "U13 RLB",
+  "paarung": "Herner EV – Iserlohner EC 1b",
+  "zuerst_gesehen": "2026-09-17",
   "zuletzt_gesehen": "2026-09-17"
  },
  "cf7829d1dfe7c8bb22a98c5b16857d036abc9c7f": {
@@ -1681,6 +2344,24 @@
   "liga": "U15 RLB",
   "paarung": "EHC Troisdorf – EV Duisburg",
   "zuerst_gesehen": "2026-09-11",
+  "zuletzt_gesehen": "2026-09-17"
+ },
+ "dceb08770ee72708fa5acb2296696a60f01eaba2": {
+  "begegnung": "RL FS: Eisadler Dortmund - ESV Bergisch Gladbach",
+  "beginn": "2026-09-25T20:00:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Stockenschneider, Lars",
+    "Hofer, Carsten"
+   ],
+   "HSR": [
+    "Müller, Lars"
+   ]
+  },
+  "halle": "Eissportzentrum Westfalen",
+  "liga": "RL FS",
+  "paarung": "Eisadler Dortmund – ESV Bergisch Gladbach",
+  "zuerst_gesehen": "2026-09-17",
   "zuletzt_gesehen": "2026-09-17"
  },
  "de08cb1b37c9e5e79ffbb001015f34187d33a399": {
@@ -1828,6 +2509,22 @@
   "zuerst_gesehen": "2026-09-09",
   "zuletzt_gesehen": "2026-09-17"
  },
+ "ebbf9ba814fe5bed102d4e09cecc4bfd746b9669": {
+  "begegnung": "LL FS: EC Bergisch Land - Dinslakener Kobras",
+  "beginn": "2026-09-27T19:00:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Henkels, André",
+    "Reuter, Fynn"
+   ],
+   "HSR": []
+  },
+  "halle": "Eissporthalle Solingen",
+  "liga": "LL FS",
+  "paarung": "EC Bergisch Land – Dinslakener Kobras",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
  "ed4a10d8e8948fff731d025f3e57aa90e3f3db84": {
   "begegnung": "U17 I: Krefelder EV - EHC GA Wolfsburg YAYLA Krefeld",
   "beginn": "2026-09-20T11:00:00+02:00",
@@ -1858,6 +2555,22 @@
   "liga": "U17 II",
   "paarung": "EV Duisburg – SCC Adler Berlin",
   "zuerst_gesehen": "2026-09-09",
+  "zuletzt_gesehen": "2026-09-17"
+ },
+ "efda038257d194123d04076a3c2e89830c527ed0": {
+  "begegnung": "U11 LL Lila: Eisadler Dortmund -",
+  "beginn": "2026-09-27T13:30:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Klemm, Julian",
+    "Budzynski, Mika (N)"
+   ],
+   "HSR": []
+  },
+  "halle": "Eissportzentrum Westfalen",
+  "liga": "U11 LL Lila",
+  "paarung": "Eisadler Dortmund",
+  "zuerst_gesehen": "2026-09-17",
   "zuletzt_gesehen": "2026-09-17"
  },
  "f2b4b8d2aef81ec0dd7cab05efd519ac13d8835b": {

@@ -2,9 +2,9 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 85,
+ "spiele_gesamt": 128,
  "saison": "2026/27",
- "archiv_spiele": 120,
+ "archiv_spiele": 164,
  "rollen": {
   "SR": "Schiedsrichter",
   "HSR": "Hauptschiedsrichter",
@@ -187,16 +187,120 @@
  },
  "personen": [
   {
+   "slug": "baum-fabian",
+   "name": "Baum, Fabian (N)",
+   "varianten": [
+    "Baum, Fabian (N)"
+   ],
+   "statistik": {
+    "gesamt": 2,
+    "saison": 2,
+    "rollen": {
+     "SR": 2
+    },
+    "ligen": [
+     [
+      "U13 RLB",
+      1
+     ],
+     [
+      "U11 RL",
+      1
+     ]
+    ],
+    "hallen": [
+     [
+      "Gysenberghalle Herne",
+      1
+     ],
+     [
+      "Rheinlandhalle Krefeld",
+      1
+     ]
+    ],
+    "partner": [
+     [
+      "Heu, Alexander",
+      1
+     ],
+     [
+      "Marks, Marcel",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      2
+     ]
+    ],
+    "erste": "2026-09-26",
+    "letzte": "2026-09-27"
+   },
+   "spiele": [
+    {
+     "beginn": "2026-09-26T08:30:00+02:00",
+     "treffpunkt": "2026-09-26T07:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U13 RLB",
+     "paarung": "Herner EV – Iserlohner EC 1b",
+     "ort": "Gysenberghalle Herne, Am Revierpark 22, 44627 Herne",
+     "halle": "Gysenberghalle Herne",
+     "koordinaten": [
+      51.532602,
+      7.254372
+     ],
+     "gespann": [
+      {
+       "name": "Heu, Alexander",
+       "slug": "heu-alexander",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T10:00:00+02:00",
+     "treffpunkt": "2026-09-27T09:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U11 RL",
+     "paarung": "EV Duisburg",
+     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+     "halle": "Rheinlandhalle Krefeld",
+     "koordinaten": [
+      51.339877,
+      6.540168
+     ],
+     "gespann": [
+      {
+       "name": "Marks, Marcel",
+       "slug": "marks-marcel",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    }
+   ]
+  },
+  {
    "slug": "beckford-emanuel",
    "name": "Beckford, Emanuel",
    "varianten": [
     "Beckford, Emanuel"
    ],
    "statistik": {
-    "gesamt": 2,
-    "saison": 2,
+    "gesamt": 3,
+    "saison": 3,
     "rollen": {
-     "SR": 1,
+     "SR": 2,
      "LSR": 1
     },
     "ligen": [
@@ -207,6 +311,10 @@
      [
       "RL FS",
       1
+     ],
+     [
+      "U13 LL",
+      1
      ]
     ],
     "hallen": [
@@ -216,6 +324,10 @@
      ],
      [
       "Eissporthalle Neuss",
+      1
+     ],
+     [
+      "ICEDOME Troisdorf",
       1
      ]
     ],
@@ -231,16 +343,20 @@
      [
       "Lindemans, Pepe",
       1
+     ],
+     [
+      "Starke, Matthias",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      2
+      3
      ]
     ],
     "erste": "2026-09-13",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -297,6 +413,31 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T18:00:00+02:00",
+     "treffpunkt": "2026-09-27T17:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U13 LL",
+     "paarung": "EHC Troisdorf 1b – EC Bergisch Land",
+     "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
+     "halle": "ICEDOME Troisdorf",
+     "koordinaten": [
+      50.811945,
+      7.109233
+     ],
+     "gespann": [
+      {
+       "name": "Starke, Matthias",
+       "slug": "starke-matthias",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -307,15 +448,15 @@
     "Berger, Eugen"
    ],
    "statistik": {
-    "gesamt": 7,
-    "saison": 7,
+    "gesamt": 9,
+    "saison": 9,
     "rollen": {
-     "SR": 7
+     "SR": 9
     },
     "ligen": [
      [
       "U13 RLB",
-      2
+      3
      ],
      [
       "U17 RL",
@@ -333,7 +474,7 @@
     "hallen": [
      [
       "Eishalle Im Kleinen Felde",
-      6
+      8
      ],
      [
       "Rheinlandhalle Krefeld",
@@ -354,6 +495,10 @@
       2
      ],
      [
+      "Schmidt, Eugen",
+      2
+     ],
+     [
       "Menzel, Joey-Max",
       1
      ]
@@ -361,11 +506,11 @@
     "je_saison": [
      [
       "2026/27",
-      7
+      9
      ]
     ],
     "erste": "2026-09-05",
-    "letzte": "2026-09-19"
+    "letzte": "2026-09-26"
    },
    "spiele": [
     {
@@ -460,6 +605,56 @@
       {
        "name": "Brücker, Tobias",
        "slug": "bruecker-tobias",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T08:00:00+02:00",
+     "treffpunkt": "2026-09-26T07:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U13 RLB",
+     "paarung": "Herforder EV – EV Duisburg",
+     "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
+     "halle": "Eishalle Im Kleinen Felde",
+     "koordinaten": [
+      52.114893,
+      8.652028
+     ],
+     "gespann": [
+      {
+       "name": "Schmidt, Eugen",
+       "slug": "schmidt-eugen",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T11:30:00+02:00",
+     "treffpunkt": "2026-09-26T10:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U11 RL",
+     "paarung": "Herforder EV",
+     "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
+     "halle": "Eishalle Im Kleinen Felde",
+     "koordinaten": [
+      52.114893,
+      8.652028
+     ],
+     "gespann": [
+      {
+       "name": "Schmidt, Eugen",
+       "slug": "schmidt-eugen",
        "rolle": "SR"
       }
      ],
@@ -564,14 +759,19 @@
     "Braun, Benjamin"
    ],
    "statistik": {
-    "gesamt": 1,
-    "saison": 1,
+    "gesamt": 2,
+    "saison": 2,
     "rollen": {
-     "SR": 1
+     "SR": 1,
+     "LSR": 1
     },
     "ligen": [
      [
       "U17 FS",
+      1
+     ],
+     [
+      "RL FS",
       1
      ]
     ],
@@ -579,22 +779,34 @@
      [
       "ICEDOME Troisdorf",
       1
+     ],
+     [
+      "Eishalle Brehmstraße",
+      1
      ]
     ],
     "partner": [
      [
       "Rieneck, Maximilian",
       1
+     ],
+     [
+      "Licau, Sebastian",
+      1
+     ],
+     [
+      "Leibfried, Raphael",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      1
+      2
      ]
     ],
     "erste": "2026-09-13",
-    "letzte": "2026-09-13"
+    "letzte": "2026-09-25"
    },
    "spiele": [
     {
@@ -621,6 +833,36 @@
      "vergangen": true,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-25T19:30:00+02:00",
+     "treffpunkt": "2026-09-25T18:30:00+02:00",
+     "rolle": "LSR",
+     "system": 3,
+     "liga": "RL FS",
+     "paarung": "Ratinger Ice Aliens – Grefrather EG",
+     "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+     "halle": "Eishalle Brehmstraße",
+     "koordinaten": [
+      51.242557,
+      6.802144
+     ],
+     "gespann": [
+      {
+       "name": "Licau, Sebastian",
+       "slug": "licau-sebastian",
+       "rolle": "HSR"
+      },
+      {
+       "name": "Leibfried, Raphael",
+       "slug": "leibfried-raphael",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -631,10 +873,10 @@
     "Brücker, Tobias"
    ],
    "statistik": {
-    "gesamt": 4,
-    "saison": 4,
+    "gesamt": 5,
+    "saison": 5,
     "rollen": {
-     "SR": 4
+     "SR": 5
     },
     "ligen": [
      [
@@ -664,16 +906,20 @@
      [
       "Berger, Eugen",
       2
+     ],
+     [
+      "Malik, Orlando",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      4
+      5
      ]
     ],
     "erste": "2026-09-19",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -763,6 +1009,128 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T09:00:00+02:00",
+     "treffpunkt": "2026-09-27T08:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U13 LL",
+     "paarung": "ESV Grizzlys Bergkamen – Ratinger Ice Aliens",
+     "ort": "",
+     "halle": "",
+     "koordinaten": null,
+     "gespann": [
+      {
+       "name": "Malik, Orlando",
+       "slug": "malik-orlando",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": false,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    }
+   ]
+  },
+  {
+   "slug": "budzynski-mika",
+   "name": "Budzynski, Mika (N)",
+   "varianten": [
+    "Budzynski, Mika (N)"
+   ],
+   "statistik": {
+    "gesamt": 2,
+    "saison": 2,
+    "rollen": {
+     "SR": 2
+    },
+    "ligen": [
+     [
+      "U15 LL",
+      1
+     ],
+     [
+      "U11 LL Lila",
+      1
+     ]
+    ],
+    "hallen": [
+     [
+      "Eissportzentrum Westfalen",
+      2
+     ]
+    ],
+    "partner": [
+     [
+      "Schlüter, Thomas",
+      1
+     ],
+     [
+      "Klemm, Julian",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      2
+     ]
+    ],
+    "erste": "2026-09-26",
+    "letzte": "2026-09-27"
+   },
+   "spiele": [
+    {
+     "beginn": "2026-09-26T13:30:00+02:00",
+     "treffpunkt": "2026-09-26T12:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U15 LL",
+     "paarung": "Eisadler Dortmund – ESC Darmstadt",
+     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+     "halle": "Eissportzentrum Westfalen",
+     "koordinaten": [
+      51.49525,
+      7.458288
+     ],
+     "gespann": [
+      {
+       "name": "Schlüter, Thomas",
+       "slug": "schlueter-thomas",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T13:30:00+02:00",
+     "treffpunkt": "2026-09-27T12:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U11 LL Lila",
+     "paarung": "Eisadler Dortmund",
+     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+     "halle": "Eissportzentrum Westfalen",
+     "koordinaten": [
+      51.49525,
+      7.458288
+     ],
+     "gespann": [
+      {
+       "name": "Klemm, Julian",
+       "slug": "klemm-julian",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -773,11 +1141,11 @@
     "Caelers, Fabian"
    ],
    "statistik": {
-    "gesamt": 4,
-    "saison": 4,
+    "gesamt": 6,
+    "saison": 6,
     "rollen": {
-     "SR": 3,
-     "HSR": 1
+     "SR": 4,
+     "HSR": 2
     },
     "ligen": [
      [
@@ -803,11 +1171,15 @@
       2
      ],
      [
+      "Eissporthalle Dinslaken",
+      2
+     ],
+     [
       "Eissportzentrum Westfalen",
       1
      ],
      [
-      "Eissporthalle Dinslaken",
+      "Eissporthalle Essen-West",
       1
      ]
     ],
@@ -818,7 +1190,7 @@
      ],
      [
       "Krüger, Martin",
-      1
+      2
      ],
      [
       "Lindemans, Pepe",
@@ -827,16 +1199,20 @@
      [
       "Pluschkell, Julian",
       1
+     ],
+     [
+      "Malik, Orlando",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      4
+      6
      ]
     ],
     "erste": "2026-09-06",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -918,6 +1294,61 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-25T20:00:00+02:00",
+     "treffpunkt": "2026-09-25T19:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "BL FS",
+     "paarung": "EHC Essen Ruhr – Dinslakener Kobras 1b",
+     "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
+     "halle": "Eissporthalle Essen-West",
+     "koordinaten": [
+      51.454179,
+      6.976731
+     ],
+     "gespann": [
+      {
+       "name": "Malik, Orlando",
+       "slug": "malik-orlando",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T19:00:00+02:00",
+     "treffpunkt": "2026-09-27T18:00:00+02:00",
+     "rolle": "HSR",
+     "system": 3,
+     "liga": "U20 RL",
+     "paarung": "Dinslakener Kobras – EHC Troisdorf",
+     "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+     "halle": "Eissporthalle Dinslaken",
+     "koordinaten": [
+      51.574578,
+      6.735361
+     ],
+     "gespann": [
+      {
+       "name": "Hartmann, Marius",
+       "slug": "hartmann-marius",
+       "rolle": "LSR"
+      },
+      {
+       "name": "Krüger, Martin",
+       "slug": "krueger-martin",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -928,15 +1359,20 @@
     "Dietrich, Jonas"
    ],
    "statistik": {
-    "gesamt": 2,
-    "saison": 2,
+    "gesamt": 3,
+    "saison": 3,
     "rollen": {
-     "LSR": 2
+     "LSR": 2,
+     "SR": 1
     },
     "ligen": [
      [
       "RL FS",
       2
+     ],
+     [
+      "U17 I",
+      1
      ]
     ],
     "hallen": [
@@ -946,6 +1382,10 @@
      ],
      [
       "Eissporthalle Essen-West",
+      1
+     ],
+     [
+      "Eishalle Brehmstraße",
       1
      ]
     ],
@@ -961,16 +1401,20 @@
      [
       "Perlitz, Christian",
       1
+     ],
+     [
+      "Kratschmar, Jocelyn",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      2
+      3
      ]
     ],
     "erste": "2026-09-11",
-    "letzte": "2026-09-18"
+    "letzte": "2026-09-26"
    },
    "spiele": [
     {
@@ -1002,6 +1446,31 @@
      "vergangen": true,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T19:30:00+02:00",
+     "treffpunkt": "2026-09-26T18:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U17 I",
+     "paarung": "Düsseldorfer EG – Krefelder EV",
+     "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+     "halle": "Eishalle Brehmstraße",
+     "koordinaten": [
+      51.242557,
+      6.802144
+     ],
+     "gespann": [
+      {
+       "name": "Kratschmar, Jocelyn",
+       "slug": "kratschmar-jocelyn",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -1012,14 +1481,18 @@
     "Engler, Gerhard"
    ],
    "statistik": {
-    "gesamt": 1,
-    "saison": 1,
+    "gesamt": 2,
+    "saison": 2,
     "rollen": {
-     "SR": 1
+     "SR": 2
     },
     "ligen": [
      [
       "LL FS",
+      1
+     ],
+     [
+      "DFEL2 Nord",
       1
      ]
     ],
@@ -1027,22 +1500,30 @@
      [
       "ICEDOME Troisdorf",
       1
+     ],
+     [
+      "Kölnarena 2",
+      1
      ]
     ],
     "partner": [
      [
       "Krawinkel, Markus",
       1
+     ],
+     [
+      "Hauerwaas, Gabriel",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      1
+      2
      ]
     ],
     "erste": "2026-09-12",
-    "letzte": "2026-09-12"
+    "letzte": "2026-09-26"
    },
    "spiele": [
     {
@@ -1069,6 +1550,31 @@
      "vergangen": true,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T19:15:00+02:00",
+     "treffpunkt": "2026-09-26T18:15:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "DFEL2 Nord",
+     "paarung": "KEC \"Die Haie\" – FASS Berlin",
+     "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
+     "halle": "Kölnarena 2",
+     "koordinaten": [
+      50.937979,
+      6.98935
+     ],
+     "gespann": [
+      {
+       "name": "Hauerwaas, Gabriel",
+       "slug": "hauerwaas-gabriel",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -1079,37 +1585,45 @@
     "Finke, Gudrun"
    ],
    "statistik": {
-    "gesamt": 1,
-    "saison": 1,
+    "gesamt": 2,
+    "saison": 2,
     "rollen": {
-     "SR": 1
+     "SR": 2
     },
     "ligen": [
      [
       "U15 RLB",
+      1
+     ],
+     [
+      "U17 RL",
       1
      ]
     ],
     "hallen": [
      [
       "ICEDOME Troisdorf",
-      1
+      2
      ]
     ],
     "partner": [
      [
       "Starke, Matthias",
       1
+     ],
+     [
+      "Moritz, Alexander",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      1
+      2
      ]
     ],
     "erste": "2026-09-18",
-    "letzte": "2026-09-18"
+    "letzte": "2026-09-25"
    },
    "spiele": [
     {
@@ -1136,6 +1650,31 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-25T20:15:00+02:00",
+     "treffpunkt": "2026-09-25T19:15:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U17 RL",
+     "paarung": "EHC Troisdorf – Dinslakener Kobras",
+     "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
+     "halle": "ICEDOME Troisdorf",
+     "koordinaten": [
+      50.811945,
+      7.109233
+     ],
+     "gespann": [
+      {
+       "name": "Moritz, Alexander",
+       "slug": "moritz-alexander",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -1146,10 +1685,10 @@
     "Galeske, Jonas"
    ],
    "statistik": {
-    "gesamt": 4,
-    "saison": 4,
+    "gesamt": 5,
+    "saison": 5,
     "rollen": {
-     "SR": 4
+     "SR": 5
     },
     "ligen": [
      [
@@ -1195,16 +1734,20 @@
      [
       "Marks, Marcel",
       1
+     ],
+     [
+      "Klemm, Julian",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      4
+      5
      ]
     ],
     "erste": "2026-09-04",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-26"
    },
    "spiele": [
     {
@@ -1256,6 +1799,28 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T10:30:00+02:00",
+     "treffpunkt": "2026-09-26T09:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U17 LL",
+     "paarung": "ESV Grizzlys Bergkamen – ESC Darmstadt",
+     "ort": "",
+     "halle": "",
+     "koordinaten": null,
+     "gespann": [
+      {
+       "name": "Klemm, Julian",
+       "slug": "klemm-julian",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": false,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -1266,11 +1831,11 @@
     "Garbsch, René"
    ],
    "statistik": {
-    "gesamt": 12,
-    "saison": 12,
+    "gesamt": 14,
+    "saison": 14,
     "rollen": {
      "LSR": 1,
-     "SR": 11
+     "SR": 13
     },
     "ligen": [
      [
@@ -1297,14 +1862,14 @@
      ],
      [
       "HELINET Eissportarena Hamm",
+      3
+     ],
+     [
+      "Kölnarena 2",
       2
      ],
      [
       "Eissportzentrum Westfalen",
-      1
-     ],
-     [
-      "Kölnarena 2",
       1
      ]
     ],
@@ -1333,11 +1898,11 @@
     "je_saison": [
      [
       "2026/27",
-      12
+      14
      ]
     ],
     "erste": "2026-09-05",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -1537,6 +2102,56 @@
       {
        "name": "Vorgeitz, Benny",
        "slug": "vorgeitz-benny",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T09:30:00+02:00",
+     "treffpunkt": "2026-09-26T08:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U9 LL Grün",
+     "paarung": "Lippe Hockey Hamm",
+     "ort": "HELINET Eissportarena Hamm, Karl-Koßmann-Straße 1, 59071 Hamm",
+     "halle": "HELINET Eissportarena Hamm",
+     "koordinaten": [
+      51.686934,
+      7.886138
+     ],
+     "gespann": [
+      {
+       "name": "Skalecki, Martin",
+       "slug": "skalecki-martin",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T17:30:00+02:00",
+     "treffpunkt": "2026-09-27T16:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U15 RLB",
+     "paarung": "Kölner Junghaie 1b – EJ Kassel",
+     "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
+     "halle": "Kölnarena 2",
+     "koordinaten": [
+      50.937979,
+      6.98935
+     ],
+     "gespann": [
+      {
+       "name": "Pluschkell, Julian",
+       "slug": "pluschkell-julian",
        "rolle": "SR"
       }
      ],
@@ -1880,10 +2495,11 @@
     "Hartmann, Marius"
    ],
    "statistik": {
-    "gesamt": 2,
-    "saison": 2,
+    "gesamt": 3,
+    "saison": 3,
     "rollen": {
-     "SR": 2
+     "SR": 2,
+     "LSR": 1
     },
     "ligen": [
      [
@@ -1892,6 +2508,10 @@
      ],
      [
       "DEFL 2 FS",
+      1
+     ],
+     [
+      "U20 RL",
       1
      ]
     ],
@@ -1903,6 +2523,10 @@
      [
       "Eishalle Brehmstraße",
       1
+     ],
+     [
+      "Eissporthalle Dinslaken",
+      1
      ]
     ],
     "partner": [
@@ -1913,16 +2537,24 @@
      [
       "Vorgeitz, Benny",
       1
+     ],
+     [
+      "Caelers, Fabian",
+      1
+     ],
+     [
+      "Krüger, Martin",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      2
+      3
      ]
     ],
     "erste": "2026-09-10",
-    "letzte": "2026-09-19"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -1949,6 +2581,36 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T19:00:00+02:00",
+     "treffpunkt": "2026-09-27T18:00:00+02:00",
+     "rolle": "LSR",
+     "system": 3,
+     "liga": "U20 RL",
+     "paarung": "Dinslakener Kobras – EHC Troisdorf",
+     "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+     "halle": "Eissporthalle Dinslaken",
+     "koordinaten": [
+      51.574578,
+      6.735361
+     ],
+     "gespann": [
+      {
+       "name": "Caelers, Fabian",
+       "slug": "caelers-fabian",
+       "rolle": "HSR"
+      },
+      {
+       "name": "Krüger, Martin",
+       "slug": "krueger-martin",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -1959,10 +2621,10 @@
     "Hauerwaas, Gabriel"
    ],
    "statistik": {
-    "gesamt": 4,
-    "saison": 4,
+    "gesamt": 5,
+    "saison": 5,
     "rollen": {
-     "SR": 4
+     "SR": 5
     },
     "ligen": [
      [
@@ -1988,11 +2650,11 @@
       2
      ],
      [
-      "PreZero Rheinlandhalle Duisburg",
-      1
+      "Kölnarena 2",
+      2
      ],
      [
-      "Kölnarena 2",
+      "PreZero Rheinlandhalle Duisburg",
       1
      ]
     ],
@@ -2008,16 +2670,20 @@
      [
       "Hoffmann, Jan",
       1
+     ],
+     [
+      "Engler, Gerhard",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      4
+      5
      ]
     ],
     "erste": "2026-09-04",
-    "letzte": "2026-09-14"
+    "letzte": "2026-09-26"
    },
    "spiele": [
     {
@@ -2044,6 +2710,31 @@
      "vergangen": true,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T19:15:00+02:00",
+     "treffpunkt": "2026-09-26T18:15:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "DFEL2 Nord",
+     "paarung": "KEC \"Die Haie\" – FASS Berlin",
+     "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
+     "halle": "Kölnarena 2",
+     "koordinaten": [
+      50.937979,
+      6.98935
+     ],
+     "gespann": [
+      {
+       "name": "Engler, Gerhard",
+       "slug": "engler-gerhard",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -2054,10 +2745,10 @@
     "Heffler, Philipp"
    ],
    "statistik": {
-    "gesamt": 6,
-    "saison": 6,
+    "gesamt": 8,
+    "saison": 8,
     "rollen": {
-     "SR": 6
+     "SR": 8
     },
     "ligen": [
      [
@@ -2079,6 +2770,10 @@
     ],
     "hallen": [
      [
+      "Eishalle Brehmstraße",
+      3
+     ],
+     [
       "Rheinlandhalle Krefeld",
       2
      ],
@@ -2089,15 +2784,15 @@
      [
       "PreZero Rheinlandhalle Duisburg",
       1
-     ],
-     [
-      "Eishalle Brehmstraße",
-      1
      ]
     ],
     "partner": [
      [
       "Schmidt, Waldemar",
+      2
+     ],
+     [
+      "Pacalaj, Erik",
       2
      ],
      [
@@ -2111,20 +2806,16 @@
      [
       "Hoffmann, Jan",
       1
-     ],
-     [
-      "Giesen, Tom",
-      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      6
+      8
      ]
     ],
     "erste": "2026-09-06",
-    "letzte": "2026-09-19"
+    "letzte": "2026-09-26"
    },
    "spiele": [
     {
@@ -2251,6 +2942,56 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T13:30:00+02:00",
+     "treffpunkt": "2026-09-26T12:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U15 RLA",
+     "paarung": "Düsseldorfer EG – Krefelder EV",
+     "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+     "halle": "Eishalle Brehmstraße",
+     "koordinaten": [
+      51.242557,
+      6.802144
+     ],
+     "gespann": [
+      {
+       "name": "Pacalaj, Erik",
+       "slug": "pacalaj-erik",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T16:30:00+02:00",
+     "treffpunkt": "2026-09-26T15:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U13 RLA",
+     "paarung": "Düsseldorfer EG – Iserlohner EC",
+     "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+     "halle": "Eishalle Brehmstraße",
+     "koordinaten": [
+      51.242557,
+      6.802144
+     ],
+     "gespann": [
+      {
+       "name": "Pacalaj, Erik",
+       "slug": "pacalaj-erik",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -2261,10 +3002,10 @@
     "Heffler, Zsolt"
    ],
    "statistik": {
-    "gesamt": 3,
-    "saison": 3,
+    "gesamt": 5,
+    "saison": 5,
     "rollen": {
-     "SR": 3
+     "SR": 5
     },
     "ligen": [
      [
@@ -2278,9 +3019,17 @@
      [
       "U13 FS",
       1
+     ],
+     [
+      "U9 RL",
+      1
      ]
     ],
     "hallen": [
+     [
+      "Rheinlandhalle Krefeld",
+      3
+     ],
      [
       "Eissportzentrum Westfalen",
       1
@@ -2288,15 +3037,15 @@
      [
       "Eissporthalle Dinslaken",
       1
-     ],
-     [
-      "Rheinlandhalle Krefeld",
-      1
      ]
     ],
     "partner": [
      [
       "Pacalaj, Erik",
+      2
+     ],
+     [
+      "Heyer, Christoph (N)",
       2
      ],
      [
@@ -2307,11 +3056,11 @@
     "je_saison": [
      [
       "2026/27",
-      3
+      5
      ]
     ],
     "erste": "2026-09-12",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-26"
    },
    "spiele": [
     {
@@ -2381,6 +3130,56 @@
       {
        "name": "Victor, Tobias (N)",
        "slug": "victor-tobias",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T16:45:00+02:00",
+     "treffpunkt": "2026-09-26T15:45:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U9 RL",
+     "paarung": "Krefelder EV",
+     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+     "halle": "Rheinlandhalle Krefeld",
+     "koordinaten": [
+      51.339877,
+      6.540168
+     ],
+     "gespann": [
+      {
+       "name": "Heyer, Christoph (N)",
+       "slug": "heyer-christoph",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T19:30:00+02:00",
+     "treffpunkt": "2026-09-26T18:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U13 RLA",
+     "paarung": "Krefelder EV – Kölner Junghaie",
+     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+     "halle": "Rheinlandhalle Krefeld",
+     "koordinaten": [
+      51.339877,
+      6.540168
+     ],
+     "gespann": [
+      {
+       "name": "Heyer, Christoph (N)",
+       "slug": "heyer-christoph",
        "rolle": "SR"
       }
      ],
@@ -2468,17 +3267,121 @@
    ]
   },
   {
+   "slug": "henkels-andre",
+   "name": "Henkels, André",
+   "varianten": [
+    "Henkels, André"
+   ],
+   "statistik": {
+    "gesamt": 2,
+    "saison": 2,
+    "rollen": {
+     "SR": 2
+    },
+    "ligen": [
+     [
+      "U9 LL Gelb",
+      1
+     ],
+     [
+      "LL FS",
+      1
+     ]
+    ],
+    "hallen": [
+     [
+      "ICEDOME Troisdorf",
+      1
+     ],
+     [
+      "Eissporthalle Solingen",
+      1
+     ]
+    ],
+    "partner": [
+     [
+      "Somplatzki, Torben",
+      1
+     ],
+     [
+      "Reuter, Fynn",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      2
+     ]
+    ],
+    "erste": "2026-09-26",
+    "letzte": "2026-09-27"
+   },
+   "spiele": [
+    {
+     "beginn": "2026-09-26T10:00:00+02:00",
+     "treffpunkt": "2026-09-26T09:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U9 LL Gelb",
+     "paarung": "EHC Troisdorf 1c",
+     "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
+     "halle": "ICEDOME Troisdorf",
+     "koordinaten": [
+      50.811945,
+      7.109233
+     ],
+     "gespann": [
+      {
+       "name": "Somplatzki, Torben",
+       "slug": "somplatzki-torben",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T19:00:00+02:00",
+     "treffpunkt": "2026-09-27T18:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "LL FS",
+     "paarung": "EC Bergisch Land – Dinslakener Kobras",
+     "ort": "Eissporthalle Solingen, Brühler Straße 20, 42657 Solingen",
+     "halle": "Eissporthalle Solingen",
+     "koordinaten": [
+      51.165932,
+      7.086769
+     ],
+     "gespann": [
+      {
+       "name": "Reuter, Fynn",
+       "slug": "reuter-fynn",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    }
+   ]
+  },
+  {
    "slug": "heu-alexander",
    "name": "Heu, Alexander",
    "varianten": [
     "Heu, Alexander"
    ],
    "statistik": {
-    "gesamt": 5,
-    "saison": 5,
+    "gesamt": 6,
+    "saison": 6,
     "rollen": {
      "LSR": 1,
-     "SR": 4
+     "SR": 5
     },
     "ligen": [
      [
@@ -2492,6 +3395,10 @@
      [
       "U15 LL FS",
       1
+     ],
+     [
+      "U13 RLB",
+      1
      ]
     ],
     "hallen": [
@@ -2501,6 +3408,10 @@
      ],
      [
       "HELINET Eissportarena Hamm",
+      1
+     ],
+     [
+      "Gysenberghalle Herne",
       1
      ]
     ],
@@ -2529,11 +3440,11 @@
     "je_saison": [
      [
       "2026/27",
-      5
+      6
      ]
     ],
     "erste": "2026-09-06",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-26"
    },
    "spiele": [
     {
@@ -2612,6 +3523,31 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T08:30:00+02:00",
+     "treffpunkt": "2026-09-26T07:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U13 RLB",
+     "paarung": "Herner EV – Iserlohner EC 1b",
+     "ort": "Gysenberghalle Herne, Am Revierpark 22, 44627 Herne",
+     "halle": "Gysenberghalle Herne",
+     "koordinaten": [
+      51.532602,
+      7.254372
+     ],
+     "gespann": [
+      {
+       "name": "Baum, Fabian (N)",
+       "slug": "baum-fabian",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -2622,24 +3558,36 @@
     "Heyer, Christoph (N)"
    ],
    "statistik": {
-    "gesamt": 1,
-    "saison": 1,
+    "gesamt": 3,
+    "saison": 3,
     "rollen": {
-     "SR": 1
+     "SR": 3
     },
     "ligen": [
      [
       "U13 FS",
+      1
+     ],
+     [
+      "U9 RL",
+      1
+     ],
+     [
+      "U13 RLA",
       1
      ]
     ],
     "hallen": [
      [
       "Rheinlandhalle Krefeld",
-      1
+      3
      ]
     ],
     "partner": [
+     [
+      "Heffler, Zsolt",
+      2
+     ],
      [
       "Hofer, Carsten",
       1
@@ -2648,11 +3596,11 @@
     "je_saison": [
      [
       "2026/27",
-      1
+      3
      ]
     ],
     "erste": "2026-09-12",
-    "letzte": "2026-09-12"
+    "letzte": "2026-09-26"
    },
    "spiele": [
     {
@@ -2679,6 +3627,56 @@
      "vergangen": true,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T16:45:00+02:00",
+     "treffpunkt": "2026-09-26T15:45:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U9 RL",
+     "paarung": "Krefelder EV",
+     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+     "halle": "Rheinlandhalle Krefeld",
+     "koordinaten": [
+      51.339877,
+      6.540168
+     ],
+     "gespann": [
+      {
+       "name": "Heffler, Zsolt",
+       "slug": "heffler-zsolt",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T19:30:00+02:00",
+     "treffpunkt": "2026-09-26T18:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U13 RLA",
+     "paarung": "Krefelder EV – Kölner Junghaie",
+     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+     "halle": "Rheinlandhalle Krefeld",
+     "koordinaten": [
+      51.339877,
+      6.540168
+     ],
+     "gespann": [
+      {
+       "name": "Heffler, Zsolt",
+       "slug": "heffler-zsolt",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -2689,22 +3687,26 @@
     "Hindley, David"
    ],
    "statistik": {
-    "gesamt": 4,
-    "saison": 4,
+    "gesamt": 6,
+    "saison": 6,
     "rollen": {
-     "SR": 4
+     "SR": 6
     },
     "ligen": [
+     [
+      "U13 LL",
+      2
+     ],
      [
       "DA FS",
       2
      ],
      [
-      "U13 LL",
+      "U15 RLB",
       1
      ],
      [
-      "U15 RLB",
+      "U11 LL Blau",
       1
      ]
     ],
@@ -2720,6 +3722,10 @@
      [
       "Gysenberghalle Herne",
       1
+     ],
+     [
+      "Eissporthalle Neuss",
+      1
      ]
     ],
     "partner": [
@@ -2734,16 +3740,24 @@
      [
       "Kiefer, Dennis",
       1
+     ],
+     [
+      "Victor, Tobias (N)",
+      1
+     ],
+     [
+      "Krawinkel, Markus",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      4
+      6
      ]
     ],
     "erste": "2026-09-12",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -2845,6 +3859,56 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-25T20:00:00+02:00",
+     "treffpunkt": "2026-09-25T19:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U13 LL",
+     "paarung": "Neusser EV – Ratinger Ice Aliens",
+     "ort": "Eissporthalle Neuss, Jakob-Koch-Straße 1, 41466 Neuss",
+     "halle": "Eissporthalle Neuss",
+     "koordinaten": [
+      51.175806,
+      6.680258
+     ],
+     "gespann": [
+      {
+       "name": "Victor, Tobias (N)",
+       "slug": "victor-tobias",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T11:30:00+02:00",
+     "treffpunkt": "2026-09-27T10:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U11 LL Blau",
+     "paarung": "Kölner Junghaie 1c",
+     "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
+     "halle": "Kölnarena 2",
+     "koordinaten": [
+      50.937979,
+      6.98935
+     ],
+     "gespann": [
+      {
+       "name": "Krawinkel, Markus",
+       "slug": "krawinkel-markus",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -2855,15 +3919,19 @@
     "Hofer, Carsten"
    ],
    "statistik": {
-    "gesamt": 6,
-    "saison": 6,
+    "gesamt": 8,
+    "saison": 8,
     "rollen": {
-     "SR": 5,
-     "LSR": 1
+     "SR": 6,
+     "LSR": 2
     },
     "ligen": [
      [
       "U15 RLA",
+      2
+     ],
+     [
+      "RL FS",
       2
      ],
      [
@@ -2872,10 +3940,6 @@
      ],
      [
       "U13 LL",
-      1
-     ],
-     [
-      "U13 FS",
       1
      ]
     ],
@@ -2890,6 +3954,10 @@
      ],
      [
       "Eissporthalle Dinslaken",
+      1
+     ],
+     [
+      "Eissportzentrum Westfalen",
       1
      ]
     ],
@@ -2918,11 +3986,11 @@
     "je_saison": [
      [
       "2026/27",
-      6
+      8
      ]
     ],
     "erste": "2026-09-06",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-26"
    },
    "spiele": [
     {
@@ -3047,6 +4115,61 @@
       {
        "name": "Schlüter, Thomas",
        "slug": "schlueter-thomas",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-25T20:00:00+02:00",
+     "treffpunkt": "2026-09-25T19:00:00+02:00",
+     "rolle": "LSR",
+     "system": 3,
+     "liga": "RL FS",
+     "paarung": "Eisadler Dortmund – ESV Bergisch Gladbach",
+     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+     "halle": "Eissportzentrum Westfalen",
+     "koordinaten": [
+      51.49525,
+      7.458288
+     ],
+     "gespann": [
+      {
+       "name": "Müller, Lars",
+       "slug": "mueller-lars",
+       "rolle": "HSR"
+      },
+      {
+       "name": "Stockenschneider, Lars",
+       "slug": "stockenschneider-lars",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T16:00:00+02:00",
+     "treffpunkt": "2026-09-26T15:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U15 RLB",
+     "paarung": "EV Duisburg – EJ Kassel",
+     "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
+     "halle": "PreZero Rheinlandhalle Duisburg",
+     "koordinaten": [
+      51.405718,
+      6.780082
+     ],
+     "gespann": [
+      {
+       "name": "Kalischke, Christian (N)",
+       "slug": "kalischke-christian",
        "rolle": "SR"
       }
      ],
@@ -3264,21 +4387,30 @@
     "Hornig, Marius"
    ],
    "statistik": {
-    "gesamt": 2,
-    "saison": 2,
+    "gesamt": 3,
+    "saison": 3,
     "rollen": {
-     "LSR": 2
+     "LSR": 2,
+     "SR": 1
     },
     "ligen": [
      [
       "DNL III FS",
       2
+     ],
+     [
+      "U17 I",
+      1
      ]
     ],
     "hallen": [
      [
       "PreZero Rheinlandhalle Duisburg",
       2
+     ],
+     [
+      "Rheinlandhalle Krefeld",
+      1
      ]
     ],
     "partner": [
@@ -3289,16 +4421,20 @@
      [
       "Musga, Maurice",
       2
+     ],
+     [
+      "Pluschkell, Julian",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      2
+      3
      ]
     ],
     "erste": "2026-09-15",
-    "letzte": "2026-09-15"
+    "letzte": "2026-09-25"
    },
    "spiele": [
     {
@@ -3328,6 +4464,165 @@
      ],
      "halle_erkannt": true,
      "vergangen": true,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-25T19:00:00+02:00",
+     "treffpunkt": "2026-09-25T18:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U17 I",
+     "paarung": "Krefelder EV – Düsseldorfer EG",
+     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+     "halle": "Rheinlandhalle Krefeld",
+     "koordinaten": [
+      51.339877,
+      6.540168
+     ],
+     "gespann": [
+      {
+       "name": "Pluschkell, Julian",
+       "slug": "pluschkell-julian",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    }
+   ]
+  },
+  {
+   "slug": "hornig-matthias",
+   "name": "Hornig, Matthias",
+   "varianten": [
+    "Hornig, Matthias"
+   ],
+   "statistik": {
+    "gesamt": 1,
+    "saison": 1,
+    "rollen": {
+     "SR": 1
+    },
+    "ligen": [
+     [
+      "U15 LL",
+      1
+     ]
+    ],
+    "hallen": [
+     [
+      "Eissporthalle Dinslaken",
+      1
+     ]
+    ],
+    "partner": [
+     [
+      "Kuriata, Florian-Nikita",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      1
+     ]
+    ],
+    "erste": "2026-09-27",
+    "letzte": "2026-09-27"
+   },
+   "spiele": [
+    {
+     "beginn": "2026-09-27T12:30:00+02:00",
+     "treffpunkt": "2026-09-27T11:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U15 LL",
+     "paarung": "Dinslakener Kobras – EHC Die Bären Neuwied",
+     "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+     "halle": "Eissporthalle Dinslaken",
+     "koordinaten": [
+      51.574578,
+      6.735361
+     ],
+     "gespann": [
+      {
+       "name": "Kuriata, Florian-Nikita",
+       "slug": "kuriata-florian-nikita",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    }
+   ]
+  },
+  {
+   "slug": "kalischke-christian",
+   "name": "Kalischke, Christian (N)",
+   "varianten": [
+    "Kalischke, Christian (N)"
+   ],
+   "statistik": {
+    "gesamt": 1,
+    "saison": 1,
+    "rollen": {
+     "SR": 1
+    },
+    "ligen": [
+     [
+      "U15 RLB",
+      1
+     ]
+    ],
+    "hallen": [
+     [
+      "PreZero Rheinlandhalle Duisburg",
+      1
+     ]
+    ],
+    "partner": [
+     [
+      "Hofer, Carsten",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      1
+     ]
+    ],
+    "erste": "2026-09-26",
+    "letzte": "2026-09-26"
+   },
+   "spiele": [
+    {
+     "beginn": "2026-09-26T16:00:00+02:00",
+     "treffpunkt": "2026-09-26T15:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U15 RLB",
+     "paarung": "EV Duisburg – EJ Kassel",
+     "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
+     "halle": "PreZero Rheinlandhalle Duisburg",
+     "koordinaten": [
+      51.405718,
+      6.780082
+     ],
+     "gespann": [
+      {
+       "name": "Hofer, Carsten",
+       "slug": "hofer-carsten",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
      "aenderung": null,
      "hinweis": null
     }
@@ -3437,10 +4732,10 @@
     "Kiefer, Dennis"
    ],
    "statistik": {
-    "gesamt": 3,
-    "saison": 3,
+    "gesamt": 5,
+    "saison": 5,
     "rollen": {
-     "SR": 3
+     "SR": 5
     },
     "ligen": [
      [
@@ -3450,15 +4745,23 @@
      [
       "U15 RLB",
       1
+     ],
+     [
+      "U15 RLA",
+      1
+     ],
+     [
+      "U13 RLA",
+      1
      ]
     ],
     "hallen": [
      [
-      "Eissporthalle Dinslaken",
-      1
+      "Rheinlandhalle Krefeld",
+      3
      ],
      [
-      "Rheinlandhalle Krefeld",
+      "Eissporthalle Dinslaken",
       1
      ],
      [
@@ -3467,6 +4770,10 @@
      ]
     ],
     "partner": [
+     [
+      "Quint, Sascha",
+      2
+     ],
      [
       "Schmidt, Waldemar",
       1
@@ -3483,11 +4790,11 @@
     "je_saison": [
      [
       "2026/27",
-      3
+      5
      ]
     ],
     "erste": "2026-09-12",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -3564,6 +4871,56 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T14:00:00+02:00",
+     "treffpunkt": "2026-09-27T13:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U15 RLA",
+     "paarung": "Krefelder EV – Kölner Junghaie",
+     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+     "halle": "Rheinlandhalle Krefeld",
+     "koordinaten": [
+      51.339877,
+      6.540168
+     ],
+     "gespann": [
+      {
+       "name": "Quint, Sascha",
+       "slug": "quint-sascha",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T17:00:00+02:00",
+     "treffpunkt": "2026-09-27T16:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U13 RLA",
+     "paarung": "Krefelder EV – Düsseldorfer EG",
+     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+     "halle": "Rheinlandhalle Krefeld",
+     "koordinaten": [
+      51.339877,
+      6.540168
+     ],
+     "gespann": [
+      {
+       "name": "Quint, Sascha",
+       "slug": "quint-sascha",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -3574,10 +4931,10 @@
     "Klemm, Julian"
    ],
    "statistik": {
-    "gesamt": 2,
-    "saison": 2,
+    "gesamt": 4,
+    "saison": 4,
     "rollen": {
-     "SR": 2
+     "SR": 4
     },
     "ligen": [
      [
@@ -3587,12 +4944,20 @@
      [
       "U15 LL",
       1
+     ],
+     [
+      "U17 LL",
+      1
+     ],
+     [
+      "U11 LL Lila",
+      1
      ]
     ],
     "hallen": [
      [
       "Eissportzentrum Westfalen",
-      1
+      2
      ],
      [
       "HELINET Eissportarena Hamm",
@@ -3603,16 +4968,24 @@
      [
       "Honselmann, Tom (N)",
       1
+     ],
+     [
+      "Galeske, Jonas",
+      1
+     ],
+     [
+      "Budzynski, Mika (N)",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      2
+      4
      ]
     ],
     "erste": "2026-09-19",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -3639,6 +5012,167 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T10:30:00+02:00",
+     "treffpunkt": "2026-09-26T09:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U17 LL",
+     "paarung": "ESV Grizzlys Bergkamen – ESC Darmstadt",
+     "ort": "",
+     "halle": "",
+     "koordinaten": null,
+     "gespann": [
+      {
+       "name": "Galeske, Jonas",
+       "slug": "galeske-jonas",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": false,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T13:30:00+02:00",
+     "treffpunkt": "2026-09-27T12:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U11 LL Lila",
+     "paarung": "Eisadler Dortmund",
+     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+     "halle": "Eissportzentrum Westfalen",
+     "koordinaten": [
+      51.49525,
+      7.458288
+     ],
+     "gespann": [
+      {
+       "name": "Budzynski, Mika (N)",
+       "slug": "budzynski-mika",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    }
+   ]
+  },
+  {
+   "slug": "kratschmar-jocelyn",
+   "name": "Kratschmar, Jocelyn",
+   "varianten": [
+    "Kratschmar, Jocelyn"
+   ],
+   "statistik": {
+    "gesamt": 2,
+    "saison": 2,
+    "rollen": {
+     "SR": 1,
+     "LSR": 1
+    },
+    "ligen": [
+     [
+      "U17 I",
+      1
+     ],
+     [
+      "RL FS",
+      1
+     ]
+    ],
+    "hallen": [
+     [
+      "Eishalle Brehmstraße",
+      1
+     ],
+     [
+      "Eissportzentrum Westfalen",
+      1
+     ]
+    ],
+    "partner": [
+     [
+      "Dietrich, Jonas",
+      1
+     ],
+     [
+      "Pernt, Hendrik",
+      1
+     ],
+     [
+      "Scholz, Arien",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      2
+     ]
+    ],
+    "erste": "2026-09-26",
+    "letzte": "2026-09-27"
+   },
+   "spiele": [
+    {
+     "beginn": "2026-09-26T19:30:00+02:00",
+     "treffpunkt": "2026-09-26T18:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U17 I",
+     "paarung": "Düsseldorfer EG – Krefelder EV",
+     "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+     "halle": "Eishalle Brehmstraße",
+     "koordinaten": [
+      51.242557,
+      6.802144
+     ],
+     "gespann": [
+      {
+       "name": "Dietrich, Jonas",
+       "slug": "dietrich-jonas",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T19:00:00+02:00",
+     "treffpunkt": "2026-09-27T18:00:00+02:00",
+     "rolle": "LSR",
+     "system": 3,
+     "liga": "RL FS",
+     "paarung": "Eisadler Dortmund – Harzer Falken",
+     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+     "halle": "Eissportzentrum Westfalen",
+     "koordinaten": [
+      51.49525,
+      7.458288
+     ],
+     "gespann": [
+      {
+       "name": "Pernt, Hendrik",
+       "slug": "pernt-hendrik",
+       "rolle": "HSR"
+      },
+      {
+       "name": "Scholz, Arien",
+       "slug": "scholz-arien",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -3649,11 +5183,11 @@
     "Krawinkel, Markus"
    ],
    "statistik": {
-    "gesamt": 3,
-    "saison": 3,
+    "gesamt": 5,
+    "saison": 5,
     "rollen": {
-     "SR": 2,
-     "HSR": 1
+     "SR": 3,
+     "HSR": 2
     },
     "ligen": [
      [
@@ -3666,6 +5200,10 @@
      ],
      [
       "LL FS",
+      1
+     ],
+     [
+      "RL FS",
       1
      ]
     ],
@@ -3681,15 +5219,19 @@
      [
       "ICEDOME Troisdorf",
       1
+     ],
+     [
+      "Eissporthalle Dinslaken",
+      1
      ]
     ],
     "partner": [
      [
-      "Schlüter, Thomas",
-      1
+      "Quint, Sascha",
+      2
      ],
      [
-      "Quint, Sascha",
+      "Schlüter, Thomas",
       1
      ],
      [
@@ -3699,16 +5241,20 @@
      [
       "Engler, Gerhard",
       1
+     ],
+     [
+      "Reuter, Rick",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      3
+      5
      ]
     ],
     "erste": "2026-09-12",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -3784,6 +5330,61 @@
        "name": "Pacalaj, Erik",
        "slug": "pacalaj-erik",
        "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-25T20:15:00+02:00",
+     "treffpunkt": "2026-09-25T19:15:00+02:00",
+     "rolle": "HSR",
+     "system": 3,
+     "liga": "RL FS",
+     "paarung": "Dinslakener Kobras – ESV Grizzlys Bergkamen",
+     "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+     "halle": "Eissporthalle Dinslaken",
+     "koordinaten": [
+      51.574578,
+      6.735361
+     ],
+     "gespann": [
+      {
+       "name": "Quint, Sascha",
+       "slug": "quint-sascha",
+       "rolle": "LSR"
+      },
+      {
+       "name": "Reuter, Rick",
+       "slug": "reuter-rick",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T11:30:00+02:00",
+     "treffpunkt": "2026-09-27T10:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U11 LL Blau",
+     "paarung": "Kölner Junghaie 1c",
+     "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
+     "halle": "Kölnarena 2",
+     "koordinaten": [
+      50.937979,
+      6.98935
+     ],
+     "gespann": [
+      {
+       "name": "Hindley, David",
+       "slug": "hindley-david",
+       "rolle": "SR"
       }
      ],
      "halle_erkannt": true,
@@ -3867,10 +5468,11 @@
     "Krüger, Martin"
    ],
    "statistik": {
-    "gesamt": 2,
-    "saison": 2,
+    "gesamt": 3,
+    "saison": 3,
     "rollen": {
-     "SR": 2
+     "SR": 2,
+     "LSR": 1
     },
     "ligen": [
      [
@@ -3879,6 +5481,10 @@
      ],
      [
       "U15 FS",
+      1
+     ],
+     [
+      "U20 RL",
       1
      ]
     ],
@@ -3890,26 +5496,34 @@
      [
       "Rheinlandhalle Krefeld",
       1
+     ],
+     [
+      "Eissporthalle Dinslaken",
+      1
      ]
     ],
     "partner": [
      [
       "Caelers, Fabian",
-      1
+      2
      ],
      [
       "Reuter, Fynn",
+      1
+     ],
+     [
+      "Hartmann, Marius",
       1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      2
+      3
      ]
     ],
     "erste": "2026-09-06",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -3936,6 +5550,36 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T19:00:00+02:00",
+     "treffpunkt": "2026-09-27T18:00:00+02:00",
+     "rolle": "LSR",
+     "system": 3,
+     "liga": "U20 RL",
+     "paarung": "Dinslakener Kobras – EHC Troisdorf",
+     "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+     "halle": "Eissporthalle Dinslaken",
+     "koordinaten": [
+      51.574578,
+      6.735361
+     ],
+     "gespann": [
+      {
+       "name": "Caelers, Fabian",
+       "slug": "caelers-fabian",
+       "rolle": "HSR"
+      },
+      {
+       "name": "Hartmann, Marius",
+       "slug": "hartmann-marius",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -3946,37 +5590,45 @@
     "Kuriata, Florian-Nikita"
    ],
    "statistik": {
-    "gesamt": 1,
-    "saison": 1,
+    "gesamt": 2,
+    "saison": 2,
     "rollen": {
-     "SR": 1
+     "SR": 2
     },
     "ligen": [
      [
       "DA FS",
+      1
+     ],
+     [
+      "U15 LL",
       1
      ]
     ],
     "hallen": [
      [
       "Eissporthalle Dinslaken",
-      1
+      2
      ]
     ],
     "partner": [
      [
       "Störmann, Manuel",
       1
+     ],
+     [
+      "Hornig, Matthias",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      1
+      2
      ]
     ],
     "erste": "2026-09-19",
-    "letzte": "2026-09-19"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -4003,6 +5655,31 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T12:30:00+02:00",
+     "treffpunkt": "2026-09-27T11:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U15 LL",
+     "paarung": "Dinslakener Kobras – EHC Die Bären Neuwied",
+     "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+     "halle": "Eissporthalle Dinslaken",
+     "koordinaten": [
+      51.574578,
+      6.735361
+     ],
+     "gespann": [
+      {
+       "name": "Hornig, Matthias",
+       "slug": "hornig-matthias",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -4013,20 +5690,29 @@
     "Kyei-Nimako, Denis"
    ],
    "statistik": {
-    "gesamt": 1,
-    "saison": 1,
+    "gesamt": 2,
+    "saison": 2,
     "rollen": {
-     "HSR": 1
+     "HSR": 1,
+     "SR": 1
     },
     "ligen": [
      [
       "RL FS",
+      1
+     ],
+     [
+      "BL FS",
       1
      ]
     ],
     "hallen": [
      [
       "Eissporthalle Neuss",
+      1
+     ],
+     [
+      "Emscher-Lippe-Halle Gelsenkirchen",
       1
      ]
     ],
@@ -4038,16 +5724,20 @@
      [
       "Lindemans, Pepe",
       1
+     ],
+     [
+      "Skalecki, Martin",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      1
+      2
      ]
     ],
     "erste": "2026-09-20",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -4079,6 +5769,31 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T16:45:00+02:00",
+     "treffpunkt": "2026-09-27T15:45:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "BL FS",
+     "paarung": "Herner EV 1b – Soester EG",
+     "ort": "Emscher-Lippe-Halle Gelsenkirchen, Adenauerallee 118, 45891 Gelsenkirchen",
+     "halle": "Emscher-Lippe-Halle Gelsenkirchen",
+     "koordinaten": [
+      51.553483,
+      7.073102
+     ],
+     "gespann": [
+      {
+       "name": "Skalecki, Martin",
+       "slug": "skalecki-martin",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -4089,21 +5804,26 @@
     "Leibfried, Raphael"
    ],
    "statistik": {
-    "gesamt": 2,
-    "saison": 2,
+    "gesamt": 3,
+    "saison": 3,
     "rollen": {
-     "SR": 2
+     "SR": 2,
+     "LSR": 1
     },
     "ligen": [
      [
       "U15 RLA",
       2
+     ],
+     [
+      "RL FS",
+      1
      ]
     ],
     "hallen": [
      [
       "Eishalle Brehmstraße",
-      1
+      2
      ],
      [
       "Kölnarena 2",
@@ -4118,16 +5838,24 @@
      [
       "Garbsch, René",
       1
+     ],
+     [
+      "Licau, Sebastian",
+      1
+     ],
+     [
+      "Braun, Benjamin",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      2
+      3
      ]
     ],
     "erste": "2026-09-19",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-25"
    },
    "spiele": [
     {
@@ -4179,6 +5907,103 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-25T19:30:00+02:00",
+     "treffpunkt": "2026-09-25T18:30:00+02:00",
+     "rolle": "LSR",
+     "system": 3,
+     "liga": "RL FS",
+     "paarung": "Ratinger Ice Aliens – Grefrather EG",
+     "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+     "halle": "Eishalle Brehmstraße",
+     "koordinaten": [
+      51.242557,
+      6.802144
+     ],
+     "gespann": [
+      {
+       "name": "Licau, Sebastian",
+       "slug": "licau-sebastian",
+       "rolle": "HSR"
+      },
+      {
+       "name": "Braun, Benjamin",
+       "slug": "braun-benjamin",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    }
+   ]
+  },
+  {
+   "slug": "licau-alexander",
+   "name": "Licau, Alexander",
+   "varianten": [
+    "Licau, Alexander"
+   ],
+   "statistik": {
+    "gesamt": 1,
+    "saison": 1,
+    "rollen": {
+     "SR": 1
+    },
+    "ligen": [
+     [
+      "U15 RLA",
+      1
+     ]
+    ],
+    "hallen": [
+     [
+      "Eissporthalle am Seilersee",
+      1
+     ]
+    ],
+    "partner": [
+     [
+      "Priebsch, Jan Philipp",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      1
+     ]
+    ],
+    "erste": "2026-09-27",
+    "letzte": "2026-09-27"
+   },
+   "spiele": [
+    {
+     "beginn": "2026-09-27T12:00:00+02:00",
+     "treffpunkt": "2026-09-27T11:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U15 RLA",
+     "paarung": "Iserlohner EC – Düsseldorfer EG",
+     "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
+     "halle": "Eissporthalle am Seilersee",
+     "koordinaten": [
+      51.384598,
+      7.713829
+     ],
+     "gespann": [
+      {
+       "name": "Priebsch, Jan Philipp",
+       "slug": "priebsch-jan-philipp",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -4189,10 +6014,10 @@
     "Licau, Sebastian"
    ],
    "statistik": {
-    "gesamt": 3,
-    "saison": 3,
+    "gesamt": 4,
+    "saison": 4,
     "rollen": {
-     "HSR": 3
+     "HSR": 4
     },
     "ligen": [
      [
@@ -4201,7 +6026,7 @@
      ],
      [
       "RL FS",
-      1
+      2
      ]
     ],
     "hallen": [
@@ -4211,6 +6036,10 @@
      ],
      [
       "Eissporthalle Dinslaken",
+      1
+     ],
+     [
+      "Eishalle Brehmstraße",
       1
      ]
     ],
@@ -4230,16 +6059,20 @@
      [
       "Stockenschneider, Lars",
       1
+     ],
+     [
+      "Braun, Benjamin",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      3
+      4
      ]
     ],
     "erste": "2026-09-15",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-25"
    },
    "spiele": [
     {
@@ -4294,6 +6127,36 @@
       {
        "name": "Stockenschneider, Lars",
        "slug": "stockenschneider-lars",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-25T19:30:00+02:00",
+     "treffpunkt": "2026-09-25T18:30:00+02:00",
+     "rolle": "HSR",
+     "system": 3,
+     "liga": "RL FS",
+     "paarung": "Ratinger Ice Aliens – Grefrather EG",
+     "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+     "halle": "Eishalle Brehmstraße",
+     "koordinaten": [
+      51.242557,
+      6.802144
+     ],
+     "gespann": [
+      {
+       "name": "Braun, Benjamin",
+       "slug": "braun-benjamin",
+       "rolle": "LSR"
+      },
+      {
+       "name": "Leibfried, Raphael",
+       "slug": "leibfried-raphael",
        "rolle": "LSR"
       }
      ],
@@ -4463,11 +6326,11 @@
     "Malik, Orlando"
    ],
    "statistik": {
-    "gesamt": 5,
-    "saison": 5,
+    "gesamt": 7,
+    "saison": 7,
     "rollen": {
      "LSR": 1,
-     "SR": 4
+     "SR": 6
     },
     "ligen": [
      [
@@ -4499,6 +6362,10 @@
      [
       "Eissportzentrum Westfalen",
       1
+     ],
+     [
+      "Eissporthalle Essen-West",
+      1
      ]
     ],
     "partner": [
@@ -4517,16 +6384,20 @@
      [
       "Galeske, Jonas",
       1
+     ],
+     [
+      "Caelers, Fabian",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      5
+      7
      ]
     ],
     "erste": "2026-09-16",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -4633,6 +6504,53 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-25T20:00:00+02:00",
+     "treffpunkt": "2026-09-25T19:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "BL FS",
+     "paarung": "EHC Essen Ruhr – Dinslakener Kobras 1b",
+     "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
+     "halle": "Eissporthalle Essen-West",
+     "koordinaten": [
+      51.454179,
+      6.976731
+     ],
+     "gespann": [
+      {
+       "name": "Caelers, Fabian",
+       "slug": "caelers-fabian",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T09:00:00+02:00",
+     "treffpunkt": "2026-09-27T08:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U13 LL",
+     "paarung": "ESV Grizzlys Bergkamen – Ratinger Ice Aliens",
+     "ort": "",
+     "halle": "",
+     "koordinaten": null,
+     "gespann": [
+      {
+       "name": "Brücker, Tobias",
+       "slug": "bruecker-tobias",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": false,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -4643,15 +6561,15 @@
     "Marks, Marcel"
    ],
    "statistik": {
-    "gesamt": 5,
-    "saison": 5,
+    "gesamt": 7,
+    "saison": 7,
     "rollen": {
-     "SR": 5
+     "SR": 7
     },
     "ligen": [
      [
       "U9 RL",
-      1
+      2
      ],
      [
       "U15 RLB",
@@ -4669,7 +6587,7 @@
     "hallen": [
      [
       "PreZero Rheinlandhalle Duisburg",
-      3
+      4
      ],
      [
       "Eissporthalle am Seilersee",
@@ -4677,6 +6595,10 @@
      ],
      [
       "Eissportzentrum Westfalen",
+      1
+     ],
+     [
+      "Rheinlandhalle Krefeld",
       1
      ]
     ],
@@ -4705,11 +6627,11 @@
     "je_saison": [
      [
       "2026/27",
-      5
+      7
      ]
     ],
     "erste": "2026-09-10",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -4804,6 +6726,56 @@
       {
        "name": "Galeske, Jonas",
        "slug": "galeske-jonas",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T10:00:00+02:00",
+     "treffpunkt": "2026-09-26T09:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U9 RL",
+     "paarung": "EV Duisburg",
+     "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
+     "halle": "PreZero Rheinlandhalle Duisburg",
+     "koordinaten": [
+      51.405718,
+      6.780082
+     ],
+     "gespann": [
+      {
+       "name": "Schmidt, Waldemar",
+       "slug": "schmidt-waldemar",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T10:00:00+02:00",
+     "treffpunkt": "2026-09-27T09:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U11 RL",
+     "paarung": "EV Duisburg",
+     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+     "halle": "Rheinlandhalle Krefeld",
+     "koordinaten": [
+      51.339877,
+      6.540168
+     ],
+     "gespann": [
+      {
+       "name": "Baum, Fabian (N)",
+       "slug": "baum-fabian",
        "rolle": "SR"
       }
      ],
@@ -5027,10 +6999,10 @@
     "Melchert, Philipp"
    ],
    "statistik": {
-    "gesamt": 3,
-    "saison": 3,
+    "gesamt": 4,
+    "saison": 4,
     "rollen": {
-     "SR": 3
+     "SR": 4
     },
     "ligen": [
      [
@@ -5039,6 +7011,10 @@
      ],
      [
       "BL FS",
+      1
+     ],
+     [
+      "U15 LL",
       1
      ]
     ],
@@ -5049,7 +7025,7 @@
      ],
      [
       "Eissporthalle Essen-West",
-      1
+      2
      ]
     ],
     "partner": [
@@ -5060,16 +7036,20 @@
      [
       "Müller, Lars",
       1
+     ],
+     [
+      "Solbach, Carsten",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      3
+      4
      ]
     ],
     "erste": "2026-09-13",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -5146,6 +7126,122 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T10:15:00+02:00",
+     "treffpunkt": "2026-09-27T09:15:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U15 LL",
+     "paarung": "EHC Essen Ruhr – Herforder EV",
+     "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
+     "halle": "Eissporthalle Essen-West",
+     "koordinaten": [
+      51.454179,
+      6.976731
+     ],
+     "gespann": [
+      {
+       "name": "Solbach, Carsten",
+       "slug": "solbach-carsten",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    }
+   ]
+  },
+  {
+   "slug": "moritz-alexander",
+   "name": "Moritz, Alexander",
+   "varianten": [
+    "Moritz, Alexander"
+   ],
+   "statistik": {
+    "gesamt": 4,
+    "saison": 4,
+    "rollen": {
+     "SR": 4
+    },
+    "ligen": [
+     [
+      "U15 RLB",
+      1
+     ],
+     [
+      "BL FS",
+      1
+     ],
+     [
+      "U13 RLA",
+      1
+     ],
+     [
+      "U17 RL",
+      1
+     ]
+    ],
+    "hallen": [
+     [
+      "Kölnarena 2",
+      2
+     ],
+     [
+      "ICEDOME Troisdorf",
+      2
+     ]
+    ],
+    "partner": [
+     [
+      "Rieneck, Maximilian",
+      2
+     ],
+     [
+      "Schöche, Gian-Carlo",
+      1
+     ],
+     [
+      "Finke, Gudrun",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      4
+     ]
+    ],
+    "erste": "2026-09-05",
+    "letzte": "2026-09-25"
+   },
+   "spiele": [
+    {
+     "beginn": "2026-09-25T20:15:00+02:00",
+     "treffpunkt": "2026-09-25T19:15:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U17 RL",
+     "paarung": "EHC Troisdorf – Dinslakener Kobras",
+     "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
+     "halle": "ICEDOME Troisdorf",
+     "koordinaten": [
+      50.811945,
+      7.109233
+     ],
+     "gespann": [
+      {
+       "name": "Finke, Gudrun",
+       "slug": "finke-gudrun",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -5156,20 +7252,20 @@
     "Müller, Lars"
    ],
    "statistik": {
-    "gesamt": 4,
-    "saison": 4,
+    "gesamt": 5,
+    "saison": 5,
     "rollen": {
-     "HSR": 1,
+     "HSR": 2,
      "SR": 3
     },
     "ligen": [
      [
-      "BL FS",
+      "RL FS",
       2
      ],
      [
-      "RL FS",
-      1
+      "BL FS",
+      2
      ],
      [
       "U17 FS",
@@ -5179,7 +7275,7 @@
     "hallen": [
      [
       "Eissportzentrum Westfalen",
-      1
+      2
      ],
      [
       "Emscher-Lippe-Halle Gelsenkirchen",
@@ -5219,11 +7315,11 @@
     "je_saison": [
      [
       "2026/27",
-      4
+      5
      ]
     ],
     "erste": "2026-09-06",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-25"
    },
    "spiele": [
     {
@@ -5299,6 +7395,36 @@
        "name": "Melchert, Philip",
        "slug": "melchert-philip",
        "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-25T20:00:00+02:00",
+     "treffpunkt": "2026-09-25T19:00:00+02:00",
+     "rolle": "HSR",
+     "system": 3,
+     "liga": "RL FS",
+     "paarung": "Eisadler Dortmund – ESV Bergisch Gladbach",
+     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+     "halle": "Eissportzentrum Westfalen",
+     "koordinaten": [
+      51.49525,
+      7.458288
+     ],
+     "gespann": [
+      {
+       "name": "Stockenschneider, Lars",
+       "slug": "stockenschneider-lars",
+       "rolle": "LSR"
+      },
+      {
+       "name": "Hofer, Carsten",
+       "slug": "hofer-carsten",
+       "rolle": "LSR"
       }
      ],
      "halle_erkannt": true,
@@ -5471,13 +7597,17 @@
     "Pacalaj, Erik"
    ],
    "statistik": {
-    "gesamt": 5,
-    "saison": 5,
+    "gesamt": 7,
+    "saison": 7,
     "rollen": {
-     "SR": 4,
+     "SR": 6,
      "LSR": 1
     },
     "ligen": [
+     [
+      "U13 RLA",
+      2
+     ],
      [
       "U20 FS",
       1
@@ -5489,15 +7619,15 @@
      [
       "DNL III",
       1
-     ],
-     [
-      "U13 RLA",
-      1
      ]
     ],
     "hallen": [
      [
       "Rheinlandhalle Krefeld",
+      2
+     ],
+     [
+      "Eishalle Brehmstraße",
       2
      ],
      [
@@ -5507,15 +7637,15 @@
      [
       "Eissporthalle Dinslaken",
       1
-     ],
-     [
-      "PreZero Rheinlandhalle Duisburg",
-      1
      ]
     ],
     "partner": [
      [
       "Heffler, Zsolt",
+      2
+     ],
+     [
+      "Heffler, Philipp",
       2
      ],
      [
@@ -5529,20 +7659,16 @@
      [
       "Quint, Sascha",
       1
-     ],
-     [
-      "Reuter, Rick",
-      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      5
+      7
      ]
     ],
     "erste": "2026-09-05",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-26"
    },
    "spiele": [
     {
@@ -5649,6 +7775,56 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T13:30:00+02:00",
+     "treffpunkt": "2026-09-26T12:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U15 RLA",
+     "paarung": "Düsseldorfer EG – Krefelder EV",
+     "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+     "halle": "Eishalle Brehmstraße",
+     "koordinaten": [
+      51.242557,
+      6.802144
+     ],
+     "gespann": [
+      {
+       "name": "Heffler, Philipp",
+       "slug": "heffler-philipp",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T16:30:00+02:00",
+     "treffpunkt": "2026-09-26T15:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U13 RLA",
+     "paarung": "Düsseldorfer EG – Iserlohner EC",
+     "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+     "halle": "Eishalle Brehmstraße",
+     "koordinaten": [
+      51.242557,
+      6.802144
+     ],
+     "gespann": [
+      {
+       "name": "Heffler, Philipp",
+       "slug": "heffler-philipp",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -5742,18 +7918,98 @@
    ]
   },
   {
+   "slug": "pernt-hendrik",
+   "name": "Pernt, Hendrik",
+   "varianten": [
+    "Pernt, Hendrik"
+   ],
+   "statistik": {
+    "gesamt": 1,
+    "saison": 1,
+    "rollen": {
+     "HSR": 1
+    },
+    "ligen": [
+     [
+      "RL FS",
+      1
+     ]
+    ],
+    "hallen": [
+     [
+      "Eissportzentrum Westfalen",
+      1
+     ]
+    ],
+    "partner": [
+     [
+      "Kratschmar, Jocelyn",
+      1
+     ],
+     [
+      "Scholz, Arien",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      1
+     ]
+    ],
+    "erste": "2026-09-27",
+    "letzte": "2026-09-27"
+   },
+   "spiele": [
+    {
+     "beginn": "2026-09-27T19:00:00+02:00",
+     "treffpunkt": "2026-09-27T18:00:00+02:00",
+     "rolle": "HSR",
+     "system": 3,
+     "liga": "RL FS",
+     "paarung": "Eisadler Dortmund – Harzer Falken",
+     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+     "halle": "Eissportzentrum Westfalen",
+     "koordinaten": [
+      51.49525,
+      7.458288
+     ],
+     "gespann": [
+      {
+       "name": "Kratschmar, Jocelyn",
+       "slug": "kratschmar-jocelyn",
+       "rolle": "LSR"
+      },
+      {
+       "name": "Scholz, Arien",
+       "slug": "scholz-arien",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    }
+   ]
+  },
+  {
    "slug": "pluschkell-julian",
    "name": "Pluschkell, Julian",
    "varianten": [
     "Pluschkell, Julian"
    ],
    "statistik": {
-    "gesamt": 3,
-    "saison": 3,
+    "gesamt": 5,
+    "saison": 5,
     "rollen": {
-     "SR": 3
+     "SR": 5
     },
     "ligen": [
+     [
+      "U17 I",
+      2
+     ],
      [
       "U20 FS",
       1
@@ -5763,17 +8019,21 @@
       1
      ],
      [
-      "U17 I",
+      "U15 RLB",
       1
      ]
     ],
     "hallen": [
      [
       "Rheinlandhalle Krefeld",
-      2
+      3
      ],
      [
       "Gysenberghalle Herne",
+      1
+     ],
+     [
+      "Kölnarena 2",
       1
      ]
     ],
@@ -5789,16 +8049,24 @@
      [
       "Caelers, Fabian",
       1
+     ],
+     [
+      "Hornig, Marius",
+      1
+     ],
+     [
+      "Garbsch, René",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      3
+      5
      ]
     ],
     "erste": "2026-09-04",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -5850,6 +8118,56 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-25T19:00:00+02:00",
+     "treffpunkt": "2026-09-25T18:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U17 I",
+     "paarung": "Krefelder EV – Düsseldorfer EG",
+     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+     "halle": "Rheinlandhalle Krefeld",
+     "koordinaten": [
+      51.339877,
+      6.540168
+     ],
+     "gespann": [
+      {
+       "name": "Hornig, Marius",
+       "slug": "hornig-marius",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T17:30:00+02:00",
+     "treffpunkt": "2026-09-27T16:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U15 RLB",
+     "paarung": "Kölner Junghaie 1b – EJ Kassel",
+     "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
+     "halle": "Kölnarena 2",
+     "koordinaten": [
+      50.937979,
+      6.98935
+     ],
+     "gespann": [
+      {
+       "name": "Garbsch, René",
+       "slug": "garbsch-rene",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -5860,14 +8178,18 @@
     "Priebsch, Jan Philipp"
    ],
    "statistik": {
-    "gesamt": 1,
-    "saison": 1,
+    "gesamt": 2,
+    "saison": 2,
     "rollen": {
-     "SR": 1
+     "SR": 2
     },
     "ligen": [
      [
       "U17 I",
+      1
+     ],
+     [
+      "U15 RLA",
       1
      ]
     ],
@@ -5875,22 +8197,30 @@
      [
       "Eishalle Brehmstraße",
       1
+     ],
+     [
+      "Eissporthalle am Seilersee",
+      1
      ]
     ],
     "partner": [
      [
       "Stocker, Quirin",
       1
+     ],
+     [
+      "Licau, Alexander",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      1
+      2
      ]
     ],
     "erste": "2026-09-13",
-    "letzte": "2026-09-13"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -5917,6 +8247,31 @@
      "vergangen": true,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T12:00:00+02:00",
+     "treffpunkt": "2026-09-27T11:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U15 RLA",
+     "paarung": "Iserlohner EC – Düsseldorfer EG",
+     "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
+     "halle": "Eissporthalle am Seilersee",
+     "koordinaten": [
+      51.384598,
+      7.713829
+     ],
+     "gespann": [
+      {
+       "name": "Licau, Alexander",
+       "slug": "licau-alexander",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -5927,13 +8282,17 @@
     "Quint, Sascha"
    ],
    "statistik": {
-    "gesamt": 3,
-    "saison": 3,
+    "gesamt": 6,
+    "saison": 6,
     "rollen": {
-     "SR": 1,
-     "LSR": 2
+     "SR": 3,
+     "LSR": 3
     },
     "ligen": [
+     [
+      "RL FS",
+      2
+     ],
      [
       "U17 II",
       1
@@ -5943,7 +8302,7 @@
       1
      ],
      [
-      "RL FS",
+      "U15 RLA",
       1
      ]
     ],
@@ -5954,16 +8313,24 @@
      ],
      [
       "Eissporthalle Dinslaken",
-      1
+      2
+     ],
+     [
+      "Rheinlandhalle Krefeld",
+      2
      ]
     ],
     "partner": [
      [
-      "Strube, Julia",
-      1
+      "Krawinkel, Markus",
+      2
      ],
      [
-      "Krawinkel, Markus",
+      "Kiefer, Dennis",
+      2
+     ],
+     [
+      "Strube, Julia",
       1
      ],
      [
@@ -5973,20 +8340,16 @@
      [
       "Licau, Sebastian",
       1
-     ],
-     [
-      "Stockenschneider, Lars",
-      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      3
+      6
      ]
     ],
     "erste": "2026-09-06",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -6048,6 +8411,86 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-25T20:15:00+02:00",
+     "treffpunkt": "2026-09-25T19:15:00+02:00",
+     "rolle": "LSR",
+     "system": 3,
+     "liga": "RL FS",
+     "paarung": "Dinslakener Kobras – ESV Grizzlys Bergkamen",
+     "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+     "halle": "Eissporthalle Dinslaken",
+     "koordinaten": [
+      51.574578,
+      6.735361
+     ],
+     "gespann": [
+      {
+       "name": "Krawinkel, Markus",
+       "slug": "krawinkel-markus",
+       "rolle": "HSR"
+      },
+      {
+       "name": "Reuter, Rick",
+       "slug": "reuter-rick",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T14:00:00+02:00",
+     "treffpunkt": "2026-09-27T13:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U15 RLA",
+     "paarung": "Krefelder EV – Kölner Junghaie",
+     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+     "halle": "Rheinlandhalle Krefeld",
+     "koordinaten": [
+      51.339877,
+      6.540168
+     ],
+     "gespann": [
+      {
+       "name": "Kiefer, Dennis",
+       "slug": "kiefer-dennis",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T17:00:00+02:00",
+     "treffpunkt": "2026-09-27T16:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U13 RLA",
+     "paarung": "Krefelder EV – Düsseldorfer EG",
+     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+     "halle": "Rheinlandhalle Krefeld",
+     "koordinaten": [
+      51.339877,
+      6.540168
+     ],
+     "gespann": [
+      {
+       "name": "Kiefer, Dennis",
+       "slug": "kiefer-dennis",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -6058,10 +8501,10 @@
     "Reuter, Fynn"
    ],
    "statistik": {
-    "gesamt": 2,
-    "saison": 2,
+    "gesamt": 3,
+    "saison": 3,
     "rollen": {
-     "SR": 2
+     "SR": 3
     },
     "ligen": [
      [
@@ -6070,6 +8513,10 @@
      ],
      [
       "U15 FS",
+      1
+     ],
+     [
+      "LL FS",
       1
      ]
     ],
@@ -6081,6 +8528,10 @@
      [
       "Rheinlandhalle Krefeld",
       1
+     ],
+     [
+      "Eissporthalle Solingen",
+      1
      ]
     ],
     "partner": [
@@ -6091,16 +8542,20 @@
      [
       "Krüger, Martin",
       1
+     ],
+     [
+      "Henkels, André",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      2
+      3
      ]
     ],
     "erste": "2026-09-06",
-    "letzte": "2026-09-19"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -6127,6 +8582,31 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T19:00:00+02:00",
+     "treffpunkt": "2026-09-27T18:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "LL FS",
+     "paarung": "EC Bergisch Land – Dinslakener Kobras",
+     "ort": "Eissporthalle Solingen, Brühler Straße 20, 42657 Solingen",
+     "halle": "Eissporthalle Solingen",
+     "koordinaten": [
+      51.165932,
+      7.086769
+     ],
+     "gespann": [
+      {
+       "name": "Henkels, André",
+       "slug": "henkels-andre",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -6137,10 +8617,11 @@
     "Reuter, Rick"
    ],
    "statistik": {
-    "gesamt": 2,
-    "saison": 2,
+    "gesamt": 3,
+    "saison": 3,
     "rollen": {
-     "SR": 2
+     "SR": 2,
+     "LSR": 1
     },
     "ligen": [
      [
@@ -6150,12 +8631,20 @@
      [
       "U13 FS",
       1
+     ],
+     [
+      "RL FS",
+      1
      ]
     ],
     "hallen": [
      [
       "Rheinlandhalle Krefeld",
       2
+     ],
+     [
+      "Eissporthalle Dinslaken",
+      1
      ]
     ],
     "partner": [
@@ -6166,16 +8655,24 @@
      [
       "Pluschkell, Julian",
       1
+     ],
+     [
+      "Krawinkel, Markus",
+      1
+     ],
+     [
+      "Quint, Sascha",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      2
+      3
      ]
     ],
     "erste": "2026-09-05",
-    "letzte": "2026-09-13"
+    "letzte": "2026-09-25"
    },
    "spiele": [
     {
@@ -6202,6 +8699,36 @@
      "vergangen": true,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-25T20:15:00+02:00",
+     "treffpunkt": "2026-09-25T19:15:00+02:00",
+     "rolle": "LSR",
+     "system": 3,
+     "liga": "RL FS",
+     "paarung": "Dinslakener Kobras – ESV Grizzlys Bergkamen",
+     "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+     "halle": "Eissporthalle Dinslaken",
+     "koordinaten": [
+      51.574578,
+      6.735361
+     ],
+     "gespann": [
+      {
+       "name": "Krawinkel, Markus",
+       "slug": "krawinkel-markus",
+       "rolle": "HSR"
+      },
+      {
+       "name": "Quint, Sascha",
+       "slug": "quint-sascha",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -6212,15 +8739,15 @@
     "Rieneck, Maximilian"
    ],
    "statistik": {
-    "gesamt": 3,
-    "saison": 3,
+    "gesamt": 4,
+    "saison": 4,
     "rollen": {
-     "SR": 3
+     "SR": 4
     },
     "ligen": [
      [
       "U15 RLB",
-      1
+      2
      ],
      [
       "U13 RLA",
@@ -6239,6 +8766,10 @@
      [
       "ICEDOME Troisdorf",
       1
+     ],
+     [
+      "Gysenberghalle Herne",
+      1
      ]
     ],
     "partner": [
@@ -6249,16 +8780,20 @@
      [
       "Braun, Benjamin",
       1
+     ],
+     [
+      "Strube, Julia",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      3
+      4
      ]
     ],
     "erste": "2026-09-06",
-    "letzte": "2026-09-13"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -6285,6 +8820,31 @@
      "vergangen": true,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T09:30:00+02:00",
+     "treffpunkt": "2026-09-27T08:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U15 RLB",
+     "paarung": "Herner EV – EHC Troisdorf",
+     "ort": "Gysenberghalle Herne, Am Revierpark 22, 44627 Herne",
+     "halle": "Gysenberghalle Herne",
+     "koordinaten": [
+      51.532602,
+      7.254372
+     ],
+     "gespann": [
+      {
+       "name": "Strube, Julia",
+       "slug": "strube-julia",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -6295,10 +8855,10 @@
     "Schlüter, Thomas"
    ],
    "statistik": {
-    "gesamt": 8,
-    "saison": 8,
+    "gesamt": 9,
+    "saison": 9,
     "rollen": {
-     "SR": 8
+     "SR": 9
     },
     "ligen": [
      [
@@ -6361,11 +8921,11 @@
     "je_saison": [
      [
       "2026/27",
-      8
+      9
      ]
     ],
     "erste": "2026-09-04",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-26"
    },
    "spiele": [
     {
@@ -6542,6 +9102,31 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T13:30:00+02:00",
+     "treffpunkt": "2026-09-26T12:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U15 LL",
+     "paarung": "Eisadler Dortmund – ESC Darmstadt",
+     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+     "halle": "Eissportzentrum Westfalen",
+     "koordinaten": [
+      51.49525,
+      7.458288
+     ],
+     "gespann": [
+      {
+       "name": "Budzynski, Mika (N)",
+       "slug": "budzynski-mika",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -6552,24 +9137,40 @@
     "Schmidt, Eugen"
    ],
    "statistik": {
-    "gesamt": 1,
-    "saison": 1,
+    "gesamt": 3,
+    "saison": 3,
     "rollen": {
-     "SR": 1
+     "SR": 3
     },
     "ligen": [
      [
       "U17 I",
       1
+     ],
+     [
+      "U13 RLB",
+      1
+     ],
+     [
+      "U11 RL",
+      1
      ]
     ],
     "hallen": [
+     [
+      "Eishalle Im Kleinen Felde",
+      2
+     ],
      [
       "Eishalle Brehmstraße",
       1
      ]
     ],
     "partner": [
+     [
+      "Berger, Eugen",
+      2
+     ],
      [
       "Reuter, Fynn",
       1
@@ -6578,11 +9179,11 @@
     "je_saison": [
      [
       "2026/27",
-      1
+      3
      ]
     ],
     "erste": "2026-09-19",
-    "letzte": "2026-09-19"
+    "letzte": "2026-09-26"
    },
    "spiele": [
     {
@@ -6609,6 +9210,56 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T08:00:00+02:00",
+     "treffpunkt": "2026-09-26T07:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U13 RLB",
+     "paarung": "Herforder EV – EV Duisburg",
+     "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
+     "halle": "Eishalle Im Kleinen Felde",
+     "koordinaten": [
+      52.114893,
+      8.652028
+     ],
+     "gespann": [
+      {
+       "name": "Berger, Eugen",
+       "slug": "berger-eugen",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T11:30:00+02:00",
+     "treffpunkt": "2026-09-26T10:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U11 RL",
+     "paarung": "Herforder EV",
+     "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
+     "halle": "Eishalle Im Kleinen Felde",
+     "koordinaten": [
+      52.114893,
+      8.652028
+     ],
+     "gespann": [
+      {
+       "name": "Berger, Eugen",
+       "slug": "berger-eugen",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -6619,11 +9270,11 @@
     "Schmidt, Waldemar"
    ],
    "statistik": {
-    "gesamt": 6,
-    "saison": 6,
+    "gesamt": 7,
+    "saison": 7,
     "rollen": {
      "LSR": 1,
-     "SR": 5
+     "SR": 6
     },
     "ligen": [
      [
@@ -6655,6 +9306,10 @@
      [
       "Gysenberghalle Herne",
       1
+     ],
+     [
+      "PreZero Rheinlandhalle Duisburg",
+      1
      ]
     ],
     "partner": [
@@ -6682,11 +9337,11 @@
     "je_saison": [
      [
       "2026/27",
-      6
+      7
      ]
     ],
     "erste": "2026-09-06",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-26"
    },
    "spiele": [
     {
@@ -6812,6 +9467,31 @@
       }
      ],
      "halle_erkannt": false,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T10:00:00+02:00",
+     "treffpunkt": "2026-09-26T09:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U9 RL",
+     "paarung": "EV Duisburg",
+     "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
+     "halle": "PreZero Rheinlandhalle Duisburg",
+     "koordinaten": [
+      51.405718,
+      6.780082
+     ],
+     "gespann": [
+      {
+       "name": "Marks, Marcel",
+       "slug": "marks-marcel",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
@@ -7119,13 +9799,17 @@
     "Scholz, Arien"
    ],
    "statistik": {
-    "gesamt": 3,
-    "saison": 3,
+    "gesamt": 5,
+    "saison": 5,
     "rollen": {
-     "SR": 2,
-     "LSR": 1
+     "SR": 3,
+     "LSR": 2
     },
     "ligen": [
+     [
+      "RL FS",
+      2
+     ],
      [
       "U13 FS",
       1
@@ -7135,7 +9819,7 @@
       1
      ],
      [
-      "RL FS",
+      "Frauen BZL",
       1
      ]
     ],
@@ -7150,6 +9834,10 @@
      ],
      [
       "Eissporthalle Essen-West",
+      1
+     ],
+     [
+      "Eissportzentrum Westfalen",
       1
      ]
     ],
@@ -7169,16 +9857,20 @@
      [
       "Rieneck, Julian",
       1
+     ],
+     [
+      "Zynda, Jayden",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      3
+      5
      ]
     ],
     "erste": "2026-09-04",
-    "letzte": "2026-09-11"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -7205,6 +9897,58 @@
      "vergangen": true,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T17:30:00+02:00",
+     "treffpunkt": "2026-09-26T16:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "Frauen BZL",
+     "paarung": "ESV Grizzlys Bergkamen – Herforder EV",
+     "ort": "",
+     "halle": "",
+     "koordinaten": null,
+     "gespann": [
+      {
+       "name": "Zynda, Jayden",
+       "slug": "zynda-jayden",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": false,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T19:00:00+02:00",
+     "treffpunkt": "2026-09-27T18:00:00+02:00",
+     "rolle": "LSR",
+     "system": 3,
+     "liga": "RL FS",
+     "paarung": "Eisadler Dortmund – Harzer Falken",
+     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+     "halle": "Eissportzentrum Westfalen",
+     "koordinaten": [
+      51.49525,
+      7.458288
+     ],
+     "gespann": [
+      {
+       "name": "Pernt, Hendrik",
+       "slug": "pernt-hendrik",
+       "rolle": "HSR"
+      },
+      {
+       "name": "Kratschmar, Jocelyn",
+       "slug": "kratschmar-jocelyn",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -7215,10 +9959,10 @@
     "Skalecki, Martin"
    ],
    "statistik": {
-    "gesamt": 4,
-    "saison": 4,
+    "gesamt": 6,
+    "saison": 6,
     "rollen": {
-     "SR": 4
+     "SR": 6
     },
     "ligen": [
      [
@@ -7232,6 +9976,10 @@
      [
       "U17 RL",
       1
+     ],
+     [
+      "U9 LL Grün",
+      1
      ]
     ],
     "hallen": [
@@ -7242,6 +9990,14 @@
      [
       "Eissportzentrum Westfalen",
       2
+     ],
+     [
+      "HELINET Eissportarena Hamm",
+      1
+     ],
+     [
+      "Emscher-Lippe-Halle Gelsenkirchen",
+      1
      ]
     ],
     "partner": [
@@ -7252,16 +10008,24 @@
      [
       "Warnke, Christoph",
       2
+     ],
+     [
+      "Garbsch, René",
+      1
+     ],
+     [
+      "Kyei-Nimako, Denis",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      4
+      6
      ]
     ],
     "erste": "2026-09-13",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -7338,6 +10102,56 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T09:30:00+02:00",
+     "treffpunkt": "2026-09-26T08:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U9 LL Grün",
+     "paarung": "Lippe Hockey Hamm",
+     "ort": "HELINET Eissportarena Hamm, Karl-Koßmann-Straße 1, 59071 Hamm",
+     "halle": "HELINET Eissportarena Hamm",
+     "koordinaten": [
+      51.686934,
+      7.886138
+     ],
+     "gespann": [
+      {
+       "name": "Garbsch, René",
+       "slug": "garbsch-rene",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T16:45:00+02:00",
+     "treffpunkt": "2026-09-27T15:45:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "BL FS",
+     "paarung": "Herner EV 1b – Soester EG",
+     "ort": "Emscher-Lippe-Halle Gelsenkirchen, Adenauerallee 118, 45891 Gelsenkirchen",
+     "halle": "Emscher-Lippe-Halle Gelsenkirchen",
+     "koordinaten": [
+      51.553483,
+      7.073102
+     ],
+     "gespann": [
+      {
+       "name": "Kyei-Nimako, Denis",
+       "slug": "kyei-nimako-denis",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -7348,14 +10162,18 @@
     "Solbach, Carsten"
    ],
    "statistik": {
-    "gesamt": 1,
-    "saison": 1,
+    "gesamt": 2,
+    "saison": 2,
     "rollen": {
-     "SR": 1
+     "SR": 2
     },
     "ligen": [
      [
       "U9 RL",
+      1
+     ],
+     [
+      "U15 LL",
       1
      ]
     ],
@@ -7363,22 +10181,30 @@
      [
       "ICEDOME Troisdorf",
       1
+     ],
+     [
+      "Eissporthalle Essen-West",
+      1
      ]
     ],
     "partner": [
      [
       "Schlüter, Thomas",
       1
+     ],
+     [
+      "Melchert, Philip",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      1
+      2
      ]
     ],
     "erste": "2026-09-19",
-    "letzte": "2026-09-19"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -7405,6 +10231,98 @@
      "vergangen": false,
      "aenderung": "Ansetzung",
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T10:15:00+02:00",
+     "treffpunkt": "2026-09-27T09:15:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U15 LL",
+     "paarung": "EHC Essen Ruhr – Herforder EV",
+     "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
+     "halle": "Eissporthalle Essen-West",
+     "koordinaten": [
+      51.454179,
+      6.976731
+     ],
+     "gespann": [
+      {
+       "name": "Melchert, Philip",
+       "slug": "melchert-philip",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    }
+   ]
+  },
+  {
+   "slug": "somplatzki-torben",
+   "name": "Somplatzki, Torben",
+   "varianten": [
+    "Somplatzki, Torben"
+   ],
+   "statistik": {
+    "gesamt": 1,
+    "saison": 1,
+    "rollen": {
+     "SR": 1
+    },
+    "ligen": [
+     [
+      "U9 LL Gelb",
+      1
+     ]
+    ],
+    "hallen": [
+     [
+      "ICEDOME Troisdorf",
+      1
+     ]
+    ],
+    "partner": [
+     [
+      "Henkels, André",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      1
+     ]
+    ],
+    "erste": "2026-09-26",
+    "letzte": "2026-09-26"
+   },
+   "spiele": [
+    {
+     "beginn": "2026-09-26T10:00:00+02:00",
+     "treffpunkt": "2026-09-26T09:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U9 LL Gelb",
+     "paarung": "EHC Troisdorf 1c",
+     "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
+     "halle": "ICEDOME Troisdorf",
+     "koordinaten": [
+      50.811945,
+      7.109233
+     ],
+     "gespann": [
+      {
+       "name": "Henkels, André",
+       "slug": "henkels-andre",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -7415,10 +10333,10 @@
     "Starke, Matthias"
    ],
    "statistik": {
-    "gesamt": 5,
-    "saison": 5,
+    "gesamt": 6,
+    "saison": 6,
     "rollen": {
-     "SR": 5
+     "SR": 6
     },
     "ligen": [
      [
@@ -7432,6 +10350,10 @@
      [
       "U17 I",
       1
+     ],
+     [
+      "U13 LL",
+      1
      ]
     ],
     "hallen": [
@@ -7441,7 +10363,7 @@
      ],
      [
       "ICEDOME Troisdorf",
-      2
+      3
      ]
     ],
     "partner": [
@@ -7460,16 +10382,20 @@
      [
       "Finke, Gudrun",
       1
+     ],
+     [
+      "Beckford, Emanuel",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      5
+      6
      ]
     ],
     "erste": "2026-09-06",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -7571,6 +10497,31 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T18:00:00+02:00",
+     "treffpunkt": "2026-09-27T17:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U13 LL",
+     "paarung": "EHC Troisdorf 1b – EC Bergisch Land",
+     "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
+     "halle": "ICEDOME Troisdorf",
+     "koordinaten": [
+      50.811945,
+      7.109233
+     ],
+     "gespann": [
+      {
+       "name": "Beckford, Emanuel",
+       "slug": "beckford-emanuel",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -7581,10 +10532,11 @@
     "Steeg, Cedric"
    ],
    "statistik": {
-    "gesamt": 4,
-    "saison": 4,
+    "gesamt": 7,
+    "saison": 7,
     "rollen": {
-     "SR": 4
+     "SR": 6,
+     "HSR": 1
     },
     "ligen": [
      [
@@ -7607,16 +10559,24 @@
     "hallen": [
      [
       "Eishalle Im Kleinen Felde",
-      2
+      3
      ],
      [
       "Eissporthalle am Seilersee",
-      2
+      3
+     ],
+     [
+      "HELINET Eissportarena Hamm",
+      1
      ]
     ],
     "partner": [
      [
       "Zynda, Jayden",
+      4
+     ],
+     [
+      "Zynda, Nick",
       2
      ],
      [
@@ -7631,11 +10591,11 @@
     "je_saison": [
      [
       "2026/27",
-      4
+      7
      ]
     ],
     "erste": "2026-09-04",
-    "letzte": "2026-09-13"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -7710,6 +10670,86 @@
      ],
      "halle_erkannt": true,
      "vergangen": true,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-25T19:30:00+02:00",
+     "treffpunkt": "2026-09-25T18:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U17 RL",
+     "paarung": "Lippe Hockey Hamm – Eisadler Dortmund",
+     "ort": "HELINET Eissportarena Hamm, Karl-Koßmann-Straße 1, 59071 Hamm",
+     "halle": "HELINET Eissportarena Hamm",
+     "koordinaten": [
+      51.686934,
+      7.886138
+     ],
+     "gespann": [
+      {
+       "name": "Zynda, Jayden",
+       "slug": "zynda-jayden",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T12:15:00+02:00",
+     "treffpunkt": "2026-09-26T11:15:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U15 RLA",
+     "paarung": "Iserlohner EC – Kölner Junghaie",
+     "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
+     "halle": "Eissporthalle am Seilersee",
+     "koordinaten": [
+      51.384598,
+      7.713829
+     ],
+     "gespann": [
+      {
+       "name": "Zynda, Nick",
+       "slug": "zynda-nick",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T18:00:00+02:00",
+     "treffpunkt": "2026-09-27T17:00:00+02:00",
+     "rolle": "HSR",
+     "system": 3,
+     "liga": "U20 RL",
+     "paarung": "Herforder EV – Eisadler Dortmund",
+     "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
+     "halle": "Eishalle Im Kleinen Felde",
+     "koordinaten": [
+      52.114893,
+      8.652028
+     ],
+     "gespann": [
+      {
+       "name": "Zynda, Jayden",
+       "slug": "zynda-jayden",
+       "rolle": "LSR"
+      },
+      {
+       "name": "Zynda, Nick",
+       "slug": "zynda-nick",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
      "aenderung": null,
      "hinweis": null
     }
@@ -7815,16 +10855,16 @@
     "Stockenschneider, Lars"
    ],
    "statistik": {
-    "gesamt": 2,
-    "saison": 2,
+    "gesamt": 3,
+    "saison": 3,
     "rollen": {
-     "LSR": 1,
+     "LSR": 2,
      "SR": 1
     },
     "ligen": [
      [
       "RL FS",
-      1
+      2
      ],
      [
       "U20 FS",
@@ -7835,6 +10875,10 @@
      [
       "Eissporthalle Dinslaken",
       2
+     ],
+     [
+      "Eissportzentrum Westfalen",
+      1
      ]
     ],
     "partner": [
@@ -7849,16 +10893,24 @@
      [
       "Schlüter, Thomas",
       1
+     ],
+     [
+      "Müller, Lars",
+      1
+     ],
+     [
+      "Hofer, Carsten",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      2
+      3
      ]
     ],
     "erste": "2026-09-11",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-25"
    },
    "spiele": [
     {
@@ -7908,6 +10960,36 @@
       {
        "name": "Quint, Sascha",
        "slug": "quint-sascha",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-25T20:00:00+02:00",
+     "treffpunkt": "2026-09-25T19:00:00+02:00",
+     "rolle": "LSR",
+     "system": 3,
+     "liga": "RL FS",
+     "paarung": "Eisadler Dortmund – ESV Bergisch Gladbach",
+     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+     "halle": "Eissportzentrum Westfalen",
+     "koordinaten": [
+      51.49525,
+      7.458288
+     ],
+     "gespann": [
+      {
+       "name": "Müller, Lars",
+       "slug": "mueller-lars",
+       "rolle": "HSR"
+      },
+      {
+       "name": "Hofer, Carsten",
+       "slug": "hofer-carsten",
        "rolle": "LSR"
       }
      ],
@@ -8302,10 +11384,10 @@
     "Strube, Julia"
    ],
    "statistik": {
-    "gesamt": 3,
-    "saison": 3,
+    "gesamt": 4,
+    "saison": 4,
     "rollen": {
-     "SR": 3
+     "SR": 4
     },
     "ligen": [
      [
@@ -8314,6 +11396,10 @@
      ],
      [
       "BL FS",
+      1
+     ],
+     [
+      "U15 RLB",
       1
      ]
     ],
@@ -8324,6 +11410,10 @@
      ],
      [
       "Eissporthalle Essen-West",
+      1
+     ],
+     [
+      "Gysenberghalle Herne",
       1
      ]
     ],
@@ -8339,16 +11429,20 @@
      [
       "Schöche, Gian-Carlo",
       1
+     ],
+     [
+      "Rieneck, Maximilian",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      3
+      4
      ]
     ],
     "erste": "2026-09-06",
-    "letzte": "2026-09-18"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -8393,6 +11487,31 @@
       {
        "name": "Schlüter, Thomas",
        "slug": "schlueter-thomas",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T09:30:00+02:00",
+     "treffpunkt": "2026-09-27T08:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U15 RLB",
+     "paarung": "Herner EV – EHC Troisdorf",
+     "ort": "Gysenberghalle Herne, Am Revierpark 22, 44627 Herne",
+     "halle": "Gysenberghalle Herne",
+     "koordinaten": [
+      51.532602,
+      7.254372
+     ],
+     "gespann": [
+      {
+       "name": "Rieneck, Maximilian",
+       "slug": "rieneck-maximilian",
        "rolle": "SR"
       }
      ],
@@ -8477,15 +11596,15 @@
     "Victor, Tobias (N)"
    ],
    "statistik": {
-    "gesamt": 2,
-    "saison": 2,
+    "gesamt": 3,
+    "saison": 3,
     "rollen": {
-     "SR": 2
+     "SR": 3
     },
     "ligen": [
      [
       "U13 LL",
-      2
+      3
      ]
     ],
     "hallen": [
@@ -8495,6 +11614,10 @@
      ],
      [
       "PreZero Rheinlandhalle Duisburg",
+      1
+     ],
+     [
+      "Eissporthalle Neuss",
       1
      ]
     ],
@@ -8506,16 +11629,20 @@
      [
       "Marks, Marcel",
       1
+     ],
+     [
+      "Hindley, David",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      2
+      3
      ]
     ],
     "erste": "2026-09-18",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-25"
    },
    "spiele": [
     {
@@ -8560,6 +11687,31 @@
       {
        "name": "Heffler, Zsolt",
        "slug": "heffler-zsolt",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-25T20:00:00+02:00",
+     "treffpunkt": "2026-09-25T19:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U13 LL",
+     "paarung": "Neusser EV – Ratinger Ice Aliens",
+     "ort": "Eissporthalle Neuss, Jakob-Koch-Straße 1, 41466 Neuss",
+     "halle": "Eissporthalle Neuss",
+     "koordinaten": [
+      51.175806,
+      6.680258
+     ],
+     "gespann": [
+      {
+       "name": "Hindley, David",
+       "slug": "hindley-david",
        "rolle": "SR"
       }
      ],
@@ -8876,18 +12028,19 @@
     "Zynda, Jayden"
    ],
    "statistik": {
-    "gesamt": 6,
-    "saison": 6,
+    "gesamt": 10,
+    "saison": 10,
     "rollen": {
-     "SR": 6
+     "SR": 9,
+     "LSR": 1
     },
     "ligen": [
      [
-      "DA FS",
-      2
+      "U15 LL",
+      3
      ],
      [
-      "U15 LL",
+      "DA FS",
       2
      ],
      [
@@ -8902,24 +12055,28 @@
     "hallen": [
      [
       "Eishalle Im Kleinen Felde",
+      4
+     ],
+     [
+      "HELINET Eissportarena Hamm",
       3
      ],
      [
       "Eissportzentrum Westfalen",
       2
-     ],
-     [
-      "HELINET Eissportarena Hamm",
-      1
      ]
     ],
     "partner": [
      [
-      "Hindley, David",
-      2
+      "Steeg, Cedric",
+      4
      ],
      [
-      "Steeg, Cedric",
+      "Zynda, Nick",
+      3
+     ],
+     [
+      "Hindley, David",
       2
      ],
      [
@@ -8927,18 +12084,18 @@
       1
      ],
      [
-      "Zynda, Nick",
+      "Scholz, Arien",
       1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      6
+      10
      ]
     ],
     "erste": "2026-09-06",
-    "letzte": "2026-09-19"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -9038,6 +12195,259 @@
      ],
      "halle_erkannt": true,
      "vergangen": true,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-25T19:30:00+02:00",
+     "treffpunkt": "2026-09-25T18:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U17 RL",
+     "paarung": "Lippe Hockey Hamm – Eisadler Dortmund",
+     "ort": "HELINET Eissportarena Hamm, Karl-Koßmann-Straße 1, 59071 Hamm",
+     "halle": "HELINET Eissportarena Hamm",
+     "koordinaten": [
+      51.686934,
+      7.886138
+     ],
+     "gespann": [
+      {
+       "name": "Steeg, Cedric",
+       "slug": "steeg-cedric",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T17:30:00+02:00",
+     "treffpunkt": "2026-09-26T16:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "Frauen BZL",
+     "paarung": "ESV Grizzlys Bergkamen – Herforder EV",
+     "ort": "",
+     "halle": "",
+     "koordinaten": null,
+     "gespann": [
+      {
+       "name": "Scholz, Arien",
+       "slug": "scholz-arien",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": false,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T08:00:00+02:00",
+     "treffpunkt": "2026-09-27T07:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U15 LL",
+     "paarung": "Lippe Hockey Hamm – Eisadler Dortmund",
+     "ort": "HELINET Eissportarena Hamm, Karl-Koßmann-Straße 1, 59071 Hamm",
+     "halle": "HELINET Eissportarena Hamm",
+     "koordinaten": [
+      51.686934,
+      7.886138
+     ],
+     "gespann": [
+      {
+       "name": "Zynda, Nick",
+       "slug": "zynda-nick",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T18:00:00+02:00",
+     "treffpunkt": "2026-09-27T17:00:00+02:00",
+     "rolle": "LSR",
+     "system": 3,
+     "liga": "U20 RL",
+     "paarung": "Herforder EV – Eisadler Dortmund",
+     "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
+     "halle": "Eishalle Im Kleinen Felde",
+     "koordinaten": [
+      52.114893,
+      8.652028
+     ],
+     "gespann": [
+      {
+       "name": "Steeg, Cedric",
+       "slug": "steeg-cedric",
+       "rolle": "HSR"
+      },
+      {
+       "name": "Zynda, Nick",
+       "slug": "zynda-nick",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    }
+   ]
+  },
+  {
+   "slug": "zynda-nick",
+   "name": "Zynda, Nick",
+   "varianten": [
+    "Zynda, Nick"
+   ],
+   "statistik": {
+    "gesamt": 6,
+    "saison": 6,
+    "rollen": {
+     "SR": 5,
+     "LSR": 1
+    },
+    "ligen": [
+     [
+      "U15 LL",
+      2
+     ],
+     [
+      "U20 FS",
+      1
+     ],
+     [
+      "U15 FS",
+      1
+     ],
+     [
+      "U15 RLA",
+      1
+     ]
+    ],
+    "hallen": [
+     [
+      "Eishalle Im Kleinen Felde",
+      4
+     ],
+     [
+      "Eissporthalle am Seilersee",
+      1
+     ],
+     [
+      "HELINET Eissportarena Hamm",
+      1
+     ]
+    ],
+    "partner": [
+     [
+      "Zynda, Jayden",
+      3
+     ],
+     [
+      "Berger, Eugen",
+      2
+     ],
+     [
+      "Steeg, Cedric",
+      2
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      6
+     ]
+    ],
+    "erste": "2026-09-06",
+    "letzte": "2026-09-27"
+   },
+   "spiele": [
+    {
+     "beginn": "2026-09-26T12:15:00+02:00",
+     "treffpunkt": "2026-09-26T11:15:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U15 RLA",
+     "paarung": "Iserlohner EC – Kölner Junghaie",
+     "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
+     "halle": "Eissporthalle am Seilersee",
+     "koordinaten": [
+      51.384598,
+      7.713829
+     ],
+     "gespann": [
+      {
+       "name": "Steeg, Cedric",
+       "slug": "steeg-cedric",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T08:00:00+02:00",
+     "treffpunkt": "2026-09-27T07:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U15 LL",
+     "paarung": "Lippe Hockey Hamm – Eisadler Dortmund",
+     "ort": "HELINET Eissportarena Hamm, Karl-Koßmann-Straße 1, 59071 Hamm",
+     "halle": "HELINET Eissportarena Hamm",
+     "koordinaten": [
+      51.686934,
+      7.886138
+     ],
+     "gespann": [
+      {
+       "name": "Zynda, Jayden",
+       "slug": "zynda-jayden",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T18:00:00+02:00",
+     "treffpunkt": "2026-09-27T17:00:00+02:00",
+     "rolle": "LSR",
+     "system": 3,
+     "liga": "U20 RL",
+     "paarung": "Herforder EV – Eisadler Dortmund",
+     "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
+     "halle": "Eishalle Im Kleinen Felde",
+     "koordinaten": [
+      52.114893,
+      8.652028
+     ],
+     "gespann": [
+      {
+       "name": "Steeg, Cedric",
+       "slug": "steeg-cedric",
+       "rolle": "HSR"
+      },
+      {
+       "name": "Zynda, Jayden",
+       "slug": "zynda-jayden",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
      "aenderung": null,
      "hinweis": null
     }
@@ -11036,6 +14446,1037 @@
      "name": "Lindemans, Pepe",
      "rolle": "LSR",
      "slug": "lindemans-pepe"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-25T19:00:00+02:00",
+   "treffpunkt": "2026-09-25T18:00:00+02:00",
+   "liga": "U17 I",
+   "paarung": "Krefelder EV – Düsseldorfer EG",
+   "halle": "Rheinlandhalle Krefeld",
+   "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Hornig, Marius",
+     "rolle": "SR",
+     "slug": "hornig-marius"
+    },
+    {
+     "name": "Pluschkell, Julian",
+     "rolle": "SR",
+     "slug": "pluschkell-julian"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-25T19:30:00+02:00",
+   "treffpunkt": "2026-09-25T18:30:00+02:00",
+   "liga": "U17 RL",
+   "paarung": "Lippe Hockey Hamm – Eisadler Dortmund",
+   "halle": "HELINET Eissportarena Hamm",
+   "ort": "HELINET Eissportarena Hamm, Karl-Koßmann-Straße 1, 59071 Hamm",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Steeg, Cedric",
+     "rolle": "SR",
+     "slug": "steeg-cedric"
+    },
+    {
+     "name": "Zynda, Jayden",
+     "rolle": "SR",
+     "slug": "zynda-jayden"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-25T19:30:00+02:00",
+   "treffpunkt": "2026-09-25T18:30:00+02:00",
+   "liga": "RL FS",
+   "paarung": "Ratinger Ice Aliens – Grefrather EG",
+   "halle": "Eishalle Brehmstraße",
+   "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+   "halle_erkannt": true,
+   "system": 3,
+   "besetzung": [
+    {
+     "name": "Licau, Sebastian",
+     "rolle": "HSR",
+     "slug": "licau-sebastian"
+    },
+    {
+     "name": "Braun, Benjamin",
+     "rolle": "LSR",
+     "slug": "braun-benjamin"
+    },
+    {
+     "name": "Leibfried, Raphael",
+     "rolle": "LSR",
+     "slug": "leibfried-raphael"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-25T20:00:00+02:00",
+   "treffpunkt": "2026-09-25T19:00:00+02:00",
+   "liga": "U13 LL",
+   "paarung": "Neusser EV – Ratinger Ice Aliens",
+   "halle": "Eissporthalle Neuss",
+   "ort": "Eissporthalle Neuss, Jakob-Koch-Straße 1, 41466 Neuss",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Hindley, David",
+     "rolle": "SR",
+     "slug": "hindley-david"
+    },
+    {
+     "name": "Victor, Tobias (N)",
+     "rolle": "SR",
+     "slug": "victor-tobias"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-25T20:00:00+02:00",
+   "treffpunkt": "2026-09-25T19:00:00+02:00",
+   "liga": "BL FS",
+   "paarung": "EHC Essen Ruhr – Dinslakener Kobras 1b",
+   "halle": "Eissporthalle Essen-West",
+   "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Caelers, Fabian",
+     "rolle": "SR",
+     "slug": "caelers-fabian"
+    },
+    {
+     "name": "Malik, Orlando",
+     "rolle": "SR",
+     "slug": "malik-orlando"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-25T20:00:00+02:00",
+   "treffpunkt": "2026-09-25T19:00:00+02:00",
+   "liga": "RL FS",
+   "paarung": "Eisadler Dortmund – ESV Bergisch Gladbach",
+   "halle": "Eissportzentrum Westfalen",
+   "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+   "halle_erkannt": true,
+   "system": 3,
+   "besetzung": [
+    {
+     "name": "Müller, Lars",
+     "rolle": "HSR",
+     "slug": "mueller-lars"
+    },
+    {
+     "name": "Stockenschneider, Lars",
+     "rolle": "LSR",
+     "slug": "stockenschneider-lars"
+    },
+    {
+     "name": "Hofer, Carsten",
+     "rolle": "LSR",
+     "slug": "hofer-carsten"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-25T20:15:00+02:00",
+   "treffpunkt": "2026-09-25T19:15:00+02:00",
+   "liga": "U17 RL",
+   "paarung": "EHC Troisdorf – Dinslakener Kobras",
+   "halle": "ICEDOME Troisdorf",
+   "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Finke, Gudrun",
+     "rolle": "SR",
+     "slug": "finke-gudrun"
+    },
+    {
+     "name": "Moritz, Alexander",
+     "rolle": "SR",
+     "slug": "moritz-alexander"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-25T20:15:00+02:00",
+   "treffpunkt": "2026-09-25T19:15:00+02:00",
+   "liga": "RL FS",
+   "paarung": "Dinslakener Kobras – ESV Grizzlys Bergkamen",
+   "halle": "Eissporthalle Dinslaken",
+   "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+   "halle_erkannt": true,
+   "system": 3,
+   "besetzung": [
+    {
+     "name": "Krawinkel, Markus",
+     "rolle": "HSR",
+     "slug": "krawinkel-markus"
+    },
+    {
+     "name": "Quint, Sascha",
+     "rolle": "LSR",
+     "slug": "quint-sascha"
+    },
+    {
+     "name": "Reuter, Rick",
+     "rolle": "LSR",
+     "slug": "reuter-rick"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-26T08:00:00+02:00",
+   "treffpunkt": "2026-09-26T07:00:00+02:00",
+   "liga": "U13 RLB",
+   "paarung": "Herforder EV – EV Duisburg",
+   "halle": "Eishalle Im Kleinen Felde",
+   "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Berger, Eugen",
+     "rolle": "SR",
+     "slug": "berger-eugen"
+    },
+    {
+     "name": "Schmidt, Eugen",
+     "rolle": "SR",
+     "slug": "schmidt-eugen"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-26T08:30:00+02:00",
+   "treffpunkt": "2026-09-26T07:30:00+02:00",
+   "liga": "U13 RLB",
+   "paarung": "Herner EV – Iserlohner EC 1b",
+   "halle": "Gysenberghalle Herne",
+   "ort": "Gysenberghalle Herne, Am Revierpark 22, 44627 Herne",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Baum, Fabian (N)",
+     "rolle": "SR",
+     "slug": "baum-fabian"
+    },
+    {
+     "name": "Heu, Alexander",
+     "rolle": "SR",
+     "slug": "heu-alexander"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-26T09:30:00+02:00",
+   "treffpunkt": "2026-09-26T08:30:00+02:00",
+   "liga": "U9 LL Grün",
+   "paarung": "Lippe Hockey Hamm",
+   "halle": "HELINET Eissportarena Hamm",
+   "ort": "HELINET Eissportarena Hamm, Karl-Koßmann-Straße 1, 59071 Hamm",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Garbsch, René",
+     "rolle": "SR",
+     "slug": "garbsch-rene"
+    },
+    {
+     "name": "Skalecki, Martin",
+     "rolle": "SR",
+     "slug": "skalecki-martin"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-26T10:00:00+02:00",
+   "treffpunkt": "2026-09-26T09:00:00+02:00",
+   "liga": "U9 LL Gelb",
+   "paarung": "EHC Troisdorf 1c",
+   "halle": "ICEDOME Troisdorf",
+   "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Henkels, André",
+     "rolle": "SR",
+     "slug": "henkels-andre"
+    },
+    {
+     "name": "Somplatzki, Torben",
+     "rolle": "SR",
+     "slug": "somplatzki-torben"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-26T10:00:00+02:00",
+   "treffpunkt": "2026-09-26T09:00:00+02:00",
+   "liga": "U9 RL",
+   "paarung": "EV Duisburg",
+   "halle": "PreZero Rheinlandhalle Duisburg",
+   "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Marks, Marcel",
+     "rolle": "SR",
+     "slug": "marks-marcel"
+    },
+    {
+     "name": "Schmidt, Waldemar",
+     "rolle": "SR",
+     "slug": "schmidt-waldemar"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-26T10:30:00+02:00",
+   "treffpunkt": "2026-09-26T09:30:00+02:00",
+   "liga": "U17 LL",
+   "paarung": "ESV Grizzlys Bergkamen – ESC Darmstadt",
+   "halle": "",
+   "ort": "",
+   "halle_erkannt": false,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Galeske, Jonas",
+     "rolle": "SR",
+     "slug": "galeske-jonas"
+    },
+    {
+     "name": "Klemm, Julian",
+     "rolle": "SR",
+     "slug": "klemm-julian"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-26T11:00:00+02:00",
+   "treffpunkt": "2026-09-26T10:00:00+02:00",
+   "liga": "U15 LL",
+   "paarung": "Ratinger Ice Aliens – Lippe Hockey Hamm Ratingen",
+   "halle": "Eissporthalle Ratingen",
+   "ort": "Eissporthalle Ratingen, Am Sandbach 12, 40878 Ratingen",
+   "halle_erkannt": true,
+   "system": 0,
+   "besetzung": [],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-26T11:30:00+02:00",
+   "treffpunkt": "2026-09-26T10:30:00+02:00",
+   "liga": "U11 RL",
+   "paarung": "Herforder EV",
+   "halle": "Eishalle Im Kleinen Felde",
+   "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Berger, Eugen",
+     "rolle": "SR",
+     "slug": "berger-eugen"
+    },
+    {
+     "name": "Schmidt, Eugen",
+     "rolle": "SR",
+     "slug": "schmidt-eugen"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-26T12:15:00+02:00",
+   "treffpunkt": "2026-09-26T11:15:00+02:00",
+   "liga": "U15 RLA",
+   "paarung": "Iserlohner EC – Kölner Junghaie",
+   "halle": "Eissporthalle am Seilersee",
+   "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Zynda, Nick",
+     "rolle": "SR",
+     "slug": "zynda-nick"
+    },
+    {
+     "name": "Steeg, Cedric",
+     "rolle": "SR",
+     "slug": "steeg-cedric"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-26T13:30:00+02:00",
+   "treffpunkt": "2026-09-26T12:30:00+02:00",
+   "liga": "U15 RLA",
+   "paarung": "Düsseldorfer EG – Krefelder EV",
+   "halle": "Eishalle Brehmstraße",
+   "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Heffler, Philipp",
+     "rolle": "SR",
+     "slug": "heffler-philipp"
+    },
+    {
+     "name": "Pacalaj, Erik",
+     "rolle": "SR",
+     "slug": "pacalaj-erik"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-26T13:30:00+02:00",
+   "treffpunkt": "2026-09-26T12:30:00+02:00",
+   "liga": "U15 LL",
+   "paarung": "Eisadler Dortmund – ESC Darmstadt",
+   "halle": "Eissportzentrum Westfalen",
+   "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Budzynski, Mika (N)",
+     "rolle": "SR",
+     "slug": "budzynski-mika"
+    },
+    {
+     "name": "Schlüter, Thomas",
+     "rolle": "SR",
+     "slug": "schlueter-thomas"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-26T16:00:00+02:00",
+   "treffpunkt": "2026-09-26T15:00:00+02:00",
+   "liga": "U15 RLB",
+   "paarung": "EV Duisburg – EJ Kassel",
+   "halle": "PreZero Rheinlandhalle Duisburg",
+   "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Kalischke, Christian (N)",
+     "rolle": "SR",
+     "slug": "kalischke-christian"
+    },
+    {
+     "name": "Hofer, Carsten",
+     "rolle": "SR",
+     "slug": "hofer-carsten"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-26T16:30:00+02:00",
+   "treffpunkt": "2026-09-26T15:30:00+02:00",
+   "liga": "U13 RLA",
+   "paarung": "Düsseldorfer EG – Iserlohner EC",
+   "halle": "Eishalle Brehmstraße",
+   "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Heffler, Philipp",
+     "rolle": "SR",
+     "slug": "heffler-philipp"
+    },
+    {
+     "name": "Pacalaj, Erik",
+     "rolle": "SR",
+     "slug": "pacalaj-erik"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-26T16:45:00+02:00",
+   "treffpunkt": "2026-09-26T15:45:00+02:00",
+   "liga": "U9 RL",
+   "paarung": "Krefelder EV",
+   "halle": "Rheinlandhalle Krefeld",
+   "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Heyer, Christoph (N)",
+     "rolle": "SR",
+     "slug": "heyer-christoph"
+    },
+    {
+     "name": "Heffler, Zsolt",
+     "rolle": "SR",
+     "slug": "heffler-zsolt"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-26T17:30:00+02:00",
+   "treffpunkt": "2026-09-26T16:30:00+02:00",
+   "liga": "Frauen BZL",
+   "paarung": "ESV Grizzlys Bergkamen – Herforder EV",
+   "halle": "",
+   "ort": "",
+   "halle_erkannt": false,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Scholz, Arien",
+     "rolle": "SR",
+     "slug": "scholz-arien"
+    },
+    {
+     "name": "Zynda, Jayden",
+     "rolle": "SR",
+     "slug": "zynda-jayden"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-26T19:15:00+02:00",
+   "treffpunkt": "2026-09-26T18:15:00+02:00",
+   "liga": "DFEL2 Nord",
+   "paarung": "KEC \"Die Haie\" – FASS Berlin",
+   "halle": "Kölnarena 2",
+   "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Engler, Gerhard",
+     "rolle": "SR",
+     "slug": "engler-gerhard"
+    },
+    {
+     "name": "Hauerwaas, Gabriel",
+     "rolle": "SR",
+     "slug": "hauerwaas-gabriel"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-26T19:30:00+02:00",
+   "treffpunkt": "2026-09-26T18:30:00+02:00",
+   "liga": "U13 RLA",
+   "paarung": "Krefelder EV – Kölner Junghaie",
+   "halle": "Rheinlandhalle Krefeld",
+   "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Heyer, Christoph (N)",
+     "rolle": "SR",
+     "slug": "heyer-christoph"
+    },
+    {
+     "name": "Heffler, Zsolt",
+     "rolle": "SR",
+     "slug": "heffler-zsolt"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-26T19:30:00+02:00",
+   "treffpunkt": "2026-09-26T18:30:00+02:00",
+   "liga": "U17 I",
+   "paarung": "Düsseldorfer EG – Krefelder EV",
+   "halle": "Eishalle Brehmstraße",
+   "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Dietrich, Jonas",
+     "rolle": "SR",
+     "slug": "dietrich-jonas"
+    },
+    {
+     "name": "Kratschmar, Jocelyn",
+     "rolle": "SR",
+     "slug": "kratschmar-jocelyn"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-27T08:00:00+02:00",
+   "treffpunkt": "2026-09-27T07:00:00+02:00",
+   "liga": "U15 LL",
+   "paarung": "Lippe Hockey Hamm – Eisadler Dortmund",
+   "halle": "HELINET Eissportarena Hamm",
+   "ort": "HELINET Eissportarena Hamm, Karl-Koßmann-Straße 1, 59071 Hamm",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Zynda, Jayden",
+     "rolle": "SR",
+     "slug": "zynda-jayden"
+    },
+    {
+     "name": "Zynda, Nick",
+     "rolle": "SR",
+     "slug": "zynda-nick"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-27T09:00:00+02:00",
+   "treffpunkt": "2026-09-27T08:00:00+02:00",
+   "liga": "U13 LL",
+   "paarung": "ESV Grizzlys Bergkamen – Ratinger Ice Aliens",
+   "halle": "",
+   "ort": "",
+   "halle_erkannt": false,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Brücker, Tobias",
+     "rolle": "SR",
+     "slug": "bruecker-tobias"
+    },
+    {
+     "name": "Malik, Orlando",
+     "rolle": "SR",
+     "slug": "malik-orlando"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-27T09:30:00+02:00",
+   "treffpunkt": "2026-09-27T08:30:00+02:00",
+   "liga": "U15 RLB",
+   "paarung": "Herner EV – EHC Troisdorf",
+   "halle": "Gysenberghalle Herne",
+   "ort": "Gysenberghalle Herne, Am Revierpark 22, 44627 Herne",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Rieneck, Maximilian",
+     "rolle": "SR",
+     "slug": "rieneck-maximilian"
+    },
+    {
+     "name": "Strube, Julia",
+     "rolle": "SR",
+     "slug": "strube-julia"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-27T10:00:00+02:00",
+   "treffpunkt": "2026-09-27T09:00:00+02:00",
+   "liga": "U11 RL",
+   "paarung": "EV Duisburg",
+   "halle": "Rheinlandhalle Krefeld",
+   "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Marks, Marcel",
+     "rolle": "SR",
+     "slug": "marks-marcel"
+    },
+    {
+     "name": "Baum, Fabian (N)",
+     "rolle": "SR",
+     "slug": "baum-fabian"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-27T10:15:00+02:00",
+   "treffpunkt": "2026-09-27T09:15:00+02:00",
+   "liga": "U15 LL",
+   "paarung": "EHC Essen Ruhr – Herforder EV",
+   "halle": "Eissporthalle Essen-West",
+   "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Melchert, Philip",
+     "rolle": "SR",
+     "slug": "melchert-philip"
+    },
+    {
+     "name": "Solbach, Carsten",
+     "rolle": "SR",
+     "slug": "solbach-carsten"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-27T11:30:00+02:00",
+   "treffpunkt": "2026-09-27T10:30:00+02:00",
+   "liga": "U11 LL Blau",
+   "paarung": "Kölner Junghaie 1c",
+   "halle": "Kölnarena 2",
+   "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Hindley, David",
+     "rolle": "SR",
+     "slug": "hindley-david"
+    },
+    {
+     "name": "Krawinkel, Markus",
+     "rolle": "SR",
+     "slug": "krawinkel-markus"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-27T12:00:00+02:00",
+   "treffpunkt": "2026-09-27T11:00:00+02:00",
+   "liga": "U15 RLA",
+   "paarung": "Iserlohner EC – Düsseldorfer EG",
+   "halle": "Eissporthalle am Seilersee",
+   "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Priebsch, Jan Philipp",
+     "rolle": "SR",
+     "slug": "priebsch-jan-philipp"
+    },
+    {
+     "name": "Licau, Alexander",
+     "rolle": "SR",
+     "slug": "licau-alexander"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-27T12:30:00+02:00",
+   "treffpunkt": "2026-09-27T11:30:00+02:00",
+   "liga": "U15 LL",
+   "paarung": "Dinslakener Kobras – EHC Die Bären Neuwied",
+   "halle": "Eissporthalle Dinslaken",
+   "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Hornig, Matthias",
+     "rolle": "SR",
+     "slug": "hornig-matthias"
+    },
+    {
+     "name": "Kuriata, Florian-Nikita",
+     "rolle": "SR",
+     "slug": "kuriata-florian-nikita"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-27T13:30:00+02:00",
+   "treffpunkt": "2026-09-27T12:30:00+02:00",
+   "liga": "U11 LL Lila",
+   "paarung": "Eisadler Dortmund",
+   "halle": "Eissportzentrum Westfalen",
+   "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Klemm, Julian",
+     "rolle": "SR",
+     "slug": "klemm-julian"
+    },
+    {
+     "name": "Budzynski, Mika (N)",
+     "rolle": "SR",
+     "slug": "budzynski-mika"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-27T14:00:00+02:00",
+   "treffpunkt": "2026-09-27T13:00:00+02:00",
+   "liga": "U15 RLA",
+   "paarung": "Krefelder EV – Kölner Junghaie",
+   "halle": "Rheinlandhalle Krefeld",
+   "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Kiefer, Dennis",
+     "rolle": "SR",
+     "slug": "kiefer-dennis"
+    },
+    {
+     "name": "Quint, Sascha",
+     "rolle": "SR",
+     "slug": "quint-sascha"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-27T16:45:00+02:00",
+   "treffpunkt": "2026-09-27T15:45:00+02:00",
+   "liga": "BL FS",
+   "paarung": "Herner EV 1b – Soester EG",
+   "halle": "Emscher-Lippe-Halle Gelsenkirchen",
+   "ort": "Emscher-Lippe-Halle Gelsenkirchen, Adenauerallee 118, 45891 Gelsenkirchen",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Kyei-Nimako, Denis",
+     "rolle": "SR",
+     "slug": "kyei-nimako-denis"
+    },
+    {
+     "name": "Skalecki, Martin",
+     "rolle": "SR",
+     "slug": "skalecki-martin"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-27T17:00:00+02:00",
+   "treffpunkt": "2026-09-27T16:00:00+02:00",
+   "liga": "U13 RLA",
+   "paarung": "Krefelder EV – Düsseldorfer EG",
+   "halle": "Rheinlandhalle Krefeld",
+   "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Kiefer, Dennis",
+     "rolle": "SR",
+     "slug": "kiefer-dennis"
+    },
+    {
+     "name": "Quint, Sascha",
+     "rolle": "SR",
+     "slug": "quint-sascha"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-27T17:30:00+02:00",
+   "treffpunkt": "2026-09-27T16:30:00+02:00",
+   "liga": "U15 RLB",
+   "paarung": "Kölner Junghaie 1b – EJ Kassel",
+   "halle": "Kölnarena 2",
+   "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Garbsch, René",
+     "rolle": "SR",
+     "slug": "garbsch-rene"
+    },
+    {
+     "name": "Pluschkell, Julian",
+     "rolle": "SR",
+     "slug": "pluschkell-julian"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-27T18:00:00+02:00",
+   "treffpunkt": "2026-09-27T17:00:00+02:00",
+   "liga": "U13 LL",
+   "paarung": "EHC Troisdorf 1b – EC Bergisch Land",
+   "halle": "ICEDOME Troisdorf",
+   "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Beckford, Emanuel",
+     "rolle": "SR",
+     "slug": "beckford-emanuel"
+    },
+    {
+     "name": "Starke, Matthias",
+     "rolle": "SR",
+     "slug": "starke-matthias"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-27T18:00:00+02:00",
+   "treffpunkt": "2026-09-27T17:00:00+02:00",
+   "liga": "U20 RL",
+   "paarung": "Herforder EV – Eisadler Dortmund",
+   "halle": "Eishalle Im Kleinen Felde",
+   "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
+   "halle_erkannt": true,
+   "system": 3,
+   "besetzung": [
+    {
+     "name": "Steeg, Cedric",
+     "rolle": "HSR",
+     "slug": "steeg-cedric"
+    },
+    {
+     "name": "Zynda, Jayden",
+     "rolle": "LSR",
+     "slug": "zynda-jayden"
+    },
+    {
+     "name": "Zynda, Nick",
+     "rolle": "LSR",
+     "slug": "zynda-nick"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-27T19:00:00+02:00",
+   "treffpunkt": "2026-09-27T18:00:00+02:00",
+   "liga": "U20 RL",
+   "paarung": "Dinslakener Kobras – EHC Troisdorf",
+   "halle": "Eissporthalle Dinslaken",
+   "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+   "halle_erkannt": true,
+   "system": 3,
+   "besetzung": [
+    {
+     "name": "Caelers, Fabian",
+     "rolle": "HSR",
+     "slug": "caelers-fabian"
+    },
+    {
+     "name": "Hartmann, Marius",
+     "rolle": "LSR",
+     "slug": "hartmann-marius"
+    },
+    {
+     "name": "Krüger, Martin",
+     "rolle": "LSR",
+     "slug": "krueger-martin"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-27T19:00:00+02:00",
+   "treffpunkt": "2026-09-27T18:00:00+02:00",
+   "liga": "LL FS",
+   "paarung": "EC Bergisch Land – Dinslakener Kobras",
+   "halle": "Eissporthalle Solingen",
+   "ort": "Eissporthalle Solingen, Brühler Straße 20, 42657 Solingen",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Henkels, André",
+     "rolle": "SR",
+     "slug": "henkels-andre"
+    },
+    {
+     "name": "Reuter, Fynn",
+     "rolle": "SR",
+     "slug": "reuter-fynn"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-27T19:00:00+02:00",
+   "treffpunkt": "2026-09-27T18:00:00+02:00",
+   "liga": "RL FS",
+   "paarung": "Eisadler Dortmund – Harzer Falken",
+   "halle": "Eissportzentrum Westfalen",
+   "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+   "halle_erkannt": true,
+   "system": 3,
+   "besetzung": [
+    {
+     "name": "Pernt, Hendrik",
+     "rolle": "HSR",
+     "slug": "pernt-hendrik"
+    },
+    {
+     "name": "Kratschmar, Jocelyn",
+     "rolle": "LSR",
+     "slug": "kratschmar-jocelyn"
+    },
+    {
+     "name": "Scholz, Arien",
+     "rolle": "LSR",
+     "slug": "scholz-arien"
     }
    ],
    "vergangen": false

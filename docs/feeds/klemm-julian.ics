@@ -34,4 +34,53 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL · Lippe Hockey Ham
  m – SpG Neusser EV / GSC Moers
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:9cdc95535693dd118fe4737cae9fea4aae78851b@esrw.de
+SEQUENCE:0
+DTSTAMP:20260917T173038Z
+LAST-MODIFIED:20260917T173038Z
+DTSTART:20260926T073000Z
+DTEND:20260926T110000Z
+SUMMARY:SR · U17 LL · ESV Grizzlys Bergkamen – ESC Darmstadt
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
+  09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\n!! Halle nicht automati
+ sch erkannt - bitte selbst pruefen !!\nGespann: Galeske\, Jonas\n\nQuelle:
+  https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL · ESV Grizzlys Ber
+ gkamen – ESC Darmstadt
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:4ce5626111a8224a5d1cd21be233230254df4716@esrw.de
+SEQUENCE:0
+DTSTAMP:20260917T173038Z
+LAST-MODIFIED:20260917T173038Z
+DTSTART:20260927T103000Z
+DTEND:20260927T140000Z
+SUMMARY:SR · U11 LL Lila · Eisadler Dortmund
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
+  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Lila\nHalle: Eissportzen
+ trum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Budzyn
+ ski\, Mika (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Lila · Eisadler Do
+ rtmund
+END:VALARM
+END:VEVENT
 END:VCALENDAR

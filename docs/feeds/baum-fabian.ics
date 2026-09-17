@@ -1,0 +1,63 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//esrw-ical//Schiedsrichter-Einteilungen//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Einteilungen – Baum\, Fabian (N)
+X-WR-TIMEZONE:Europe/Berlin
+REFRESH-INTERVAL;VALUE=DURATION:PT1H
+X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:13e340364359fa7d6db5394a7924d45b8c6bcd42@esrw.de
+SEQUENCE:0
+DTSTAMP:20260917T173038Z
+LAST-MODIFIED:20260917T173038Z
+DTSTART:20260926T053000Z
+DTEND:20260926T090000Z
+SUMMARY:SR · U13 RLB · Herner EV – Iserlohner EC 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:30 Uhr\nTreffpunkt:
+  07:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Gysenberghalle 
+ Herne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Heu\, Alexander\n
+ \nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Gysenberghalle Herne\, Am Revierpark 22\, 44627 Herne
+GEO:51.532602;7.254372
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
+ evierpark 22, 44627 Herne";X-APPLE-RADIUS=100;X-TITLE="Gysenberghalle Hern
+ e":geo:51.532602,7.254372
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB · Herner EV – I
+ serlohner EC 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:e85f7e1e921bd693d2aaf848ac25d45697bda72b@esrw.de
+SEQUENCE:0
+DTSTAMP:20260917T173038Z
+LAST-MODIFIED:20260917T173038Z
+DTSTART:20260927T070000Z
+DTEND:20260927T103000Z
+SUMMARY:SR · U11 RL · EV Duisburg
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 RL\nHalle: Rheinlandhalle K
+ refeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Marks\, Mar
+ cel\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
+GEO:51.339877;6.540168
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
+ stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
+ le Krefeld":geo:51.339877,6.540168
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 RL · EV Duisburg
+END:VALARM
+END:VEVENT
+END:VCALENDAR

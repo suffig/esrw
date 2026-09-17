@@ -105,4 +105,57 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U17 FS · Eisadler Dortmun
  d – EHC Troisdorf
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:931780d3eb77b74e1da51bb6a4b2a181e2b32ac3@esrw.de
+SEQUENCE:0
+DTSTAMP:20260917T173038Z
+LAST-MODIFIED:20260917T173038Z
+DTSTART:20260926T070000Z
+DTEND:20260926T103000Z
+SUMMARY:SR · U9 RL · EV Duisburg
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: PreZero Rheinland
+ halle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: S
+ chmidt\, Waldemar\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 RL · EV Duisburg
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:304229664a91b6753a3ad837448058f69ce8fdc1@esrw.de
+SEQUENCE:0
+DTSTAMP:20260917T173038Z
+LAST-MODIFIED:20260917T173038Z
+DTSTART:20260927T070000Z
+DTEND:20260927T103000Z
+SUMMARY:SR · U11 RL · EV Duisburg
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 RL\nHalle: Rheinlandhalle K
+ refeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Baum\, Fabi
+ an (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
+GEO:51.339877;6.540168
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
+ stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
+ le Krefeld":geo:51.339877,6.540168
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 RL · EV Duisburg
+END:VALARM
+END:VEVENT
 END:VCALENDAR

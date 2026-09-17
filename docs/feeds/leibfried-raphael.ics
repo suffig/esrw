@@ -61,4 +61,32 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA · Düsseldorfer E
  G – Iserlohner EC
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:bfe1d93b9b8c9099475e0c64b8aecd1e99f2e65c@esrw.de
+SEQUENCE:0
+DTSTAMP:20260917T173038Z
+LAST-MODIFIED:20260917T173038Z
+DTSTART:20260925T163000Z
+DTEND:20260925T200000Z
+SUMMARY:LSR · RL FS · Ratinger Ice Aliens – Grefrather EG
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eishalle Brehmstr
+ aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Licau\, Seba
+ stian (HSR) / Braun\, Benjamin (LSR)\n\nQuelle: https://www.esrw.de/eintei
+ lungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · RL FS · Ratinger Ice Ali
+ ens – Grefrather EG
+END:VALARM
+END:VEVENT
 END:VCALENDAR

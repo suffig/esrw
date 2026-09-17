@@ -91,4 +91,108 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
   Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
  Kleinen Felde":geo:52.114893,8.652028
 END:VEVENT
+BEGIN:VEVENT
+UID:467fc6e84aa5939b5ad2168cf35e97823fa70521@esrw.de
+SEQUENCE:0
+DTSTAMP:20260917T173038Z
+LAST-MODIFIED:20260917T173038Z
+DTSTART:20260925T163000Z
+DTEND:20260925T200000Z
+SUMMARY:SR · U17 RL · Lippe Hockey Hamm – Eisadler Dortmund
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: HELINET Eissport
+ arena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Steeg\
+ , Cedric\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:HELINET Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 Hamm
+GEO:51.686934;7.886138
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
+ , Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="HELINET
+  Eissportarena Hamm":geo:51.686934,7.886138
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL · Lippe Hockey Ham
+ m – Eisadler Dortmund
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:191bf21b90ad84e0baf9d3f3dc996407dcbdc073@esrw.de
+SEQUENCE:0
+DTSTAMP:20260917T173038Z
+LAST-MODIFIED:20260917T173038Z
+DTSTART:20260926T143000Z
+DTEND:20260926T180000Z
+SUMMARY:SR · Frauen BZL · ESV Grizzlys Bergkamen – Herforder EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
+  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\n!! Halle nicht auto
+ matisch erkannt - bitte selbst pruefen !!\nGespann: Scholz\, Arien\nVergü
+ tung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL · ESV Grizzlys
+  Bergkamen – Herforder EV
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:e02044affd76062e59c18607e27993a0af43c4f2@esrw.de
+SEQUENCE:0
+DTSTAMP:20260917T173038Z
+LAST-MODIFIED:20260917T173038Z
+DTSTART:20260927T050000Z
+DTEND:20260927T083000Z
+SUMMARY:SR · U15 LL · Lippe Hockey Hamm – Eisadler Dortmund
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: HELINET Eissport
+ arena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Zynda\
+ , Nick\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:HELINET Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 Hamm
+GEO:51.686934;7.886138
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
+ , Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="HELINET
+  Eissportarena Hamm":geo:51.686934,7.886138
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL · Lippe Hockey Ham
+ m – Eisadler Dortmund
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:e2833e043243ea4ba7a02ca94ce68c851980d731@esrw.de
+SEQUENCE:0
+DTSTAMP:20260917T173038Z
+LAST-MODIFIED:20260917T173038Z
+DTSTART:20260927T150000Z
+DTEND:20260927T183000Z
+SUMMARY:LSR · U20 RL · Herforder EV – Eisadler Dortmund
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
+  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eishalle Im Klei
+ nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Steeg\, Ced
+ ric (HSR) / Zynda\, Nick (LSR)\n\nQuelle: https://www.esrw.de/einteilungen
+ .html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Im Kleinen Felde\, Im Kleinen Felde\, 32051 Herford
+GEO:52.114893;8.652028
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
+  Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
+ Kleinen Felde":geo:52.114893,8.652028
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL · Herforder EV 
+ – Eisadler Dortmund
+END:VALARM
+END:VEVENT
 END:VCALENDAR

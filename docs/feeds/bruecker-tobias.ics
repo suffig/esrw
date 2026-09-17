@@ -115,4 +115,26 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL · Herforder EV –
   Lippe Hockey Hamm
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:bff0a01a29d81f9bedb62d5c8e4cdda6b2ad82ef@esrw.de
+SEQUENCE:0
+DTSTAMP:20260917T173038Z
+LAST-MODIFIED:20260917T173038Z
+DTSTART:20260927T060000Z
+DTEND:20260927T093000Z
+SUMMARY:SR · U13 LL · ESV Grizzlys Bergkamen – Ratinger Ice Aliens
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
+  08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\n!! Halle nicht automati
+ sch erkannt - bitte selbst pruefen !!\nGespann: Malik\, Orlando\n\nQuelle:
+  https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL · ESV Grizzlys Ber
+ gkamen – Ratinger Ice Aliens
+END:VALARM
+END:VEVENT
 END:VCALENDAR

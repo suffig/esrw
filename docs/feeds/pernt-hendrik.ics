@@ -1,0 +1,38 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//esrw-ical//Schiedsrichter-Einteilungen//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Einteilungen – Pernt\, Hendrik
+X-WR-TIMEZONE:Europe/Berlin
+REFRESH-INTERVAL;VALUE=DURATION:PT1H
+X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:ef0e97a1af18778212d3cc9177c0772be8e71a89@esrw.de
+SEQUENCE:0
+DTSTAMP:20260917T173038Z
+LAST-MODIFIED:20260917T173038Z
+DTSTART:20260927T160000Z
+DTEND:20260927T193000Z
+SUMMARY:HSR · RL FS · Eisadler Dortmund – Harzer Falken
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 19:00 Uhr\nTreff
+ punkt: 18:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissportzen
+ trum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Kratsc
+ hmar\, Jocelyn (LSR) / Scholz\, Arien (LSR)\n\nQuelle: https://www.esrw.de
+ /einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · RL FS · Eisadler Dortmun
+ d – Harzer Falken
+END:VALARM
+END:VEVENT
+END:VCALENDAR

@@ -3,39 +3,39 @@ VERSION:2.0
 PRODID:-//esrw-ical//Schiedsrichter-Einteilungen//DE
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
-X-WR-CALNAME:Einteilungen – Reuter\, Fynn
+X-WR-CALNAME:Einteilungen – Henkels\, André
 X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:7d2c16d54b121844b6b2f7a465503e7bea7155ab@esrw.de
+UID:be3a9f574b5f674463b65ad0de412f2f52917ea5@esrw.de
 SEQUENCE:0
-DTSTAMP:20260911T150047Z
-LAST-MODIFIED:20260911T150047Z
-DTSTART:20260919T133000Z
-DTEND:20260919T170000Z
-SUMMARY:SR · U17 I · Düsseldorfer EG – Kölner Junghaie
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
-  15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eishalle Brehmstr
- aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Schmidt\, Eu
- gen\n\nQuelle: https://www.esrw.de/einteilungen.html
+DTSTAMP:20260917T173038Z
+LAST-MODIFIED:20260917T173038Z
+DTSTART:20260926T070000Z
+DTEND:20260926T103000Z
+SUMMARY:SR · U9 LL Gelb · EHC Troisdorf 1c
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Gelb\nHalle: ICEDOME Troi
+ sdorf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Sompla
+ tzki\, Torben\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
-GEO:51.242557;6.802144
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
- hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
- hmstraße":geo:51.242557,6.802144
+LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
+GEO:50.811945;7.109233
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
+ rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
+ isdorf":geo:50.811945,7.109233
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 I · Düsseldorfer EG 
- – Kölner Junghaie
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Gelb · EHC Troisdor
+ f 1c
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:842df9c396288501430f9286c155bffb54e2c18c@esrw.de
+UID:59bf132526e35ba6faeda4ab3207e0b2ce949fca@esrw.de
 SEQUENCE:0
 DTSTAMP:20260917T173038Z
 LAST-MODIFIED:20260917T173038Z
@@ -44,8 +44,8 @@ DTEND:20260927T193000Z
 SUMMARY:SR · LL FS · EC Bergisch Land – Dinslakener Kobras
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
   18:00 Uhr (60 Min vor Spielbeginn)\nLiga: LL FS\nHalle: Eissporthalle Sol
- ingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Henkels\, A
- ndré\n\nQuelle: https://www.esrw.de/einteilungen.html
+ ingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Reuter\, Fy
+ nn\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

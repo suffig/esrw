@@ -29,4 +29,54 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
  sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
  reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
 END:VEVENT
+BEGIN:VEVENT
+UID:d0fc0520685d309f7d2b47f9d332b4062572e74b@esrw.de
+SEQUENCE:0
+DTSTAMP:20260917T173038Z
+LAST-MODIFIED:20260917T173038Z
+DTSTART:20260926T143000Z
+DTEND:20260926T180000Z
+SUMMARY:SR · Frauen BZL · ESV Grizzlys Bergkamen – Herforder EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
+  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\n!! Halle nicht auto
+ matisch erkannt - bitte selbst pruefen !!\nGespann: Zynda\, Jayden\nVergü
+ tung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL · ESV Grizzlys
+  Bergkamen – Herforder EV
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:68cdfa13fb9877458eddeb7b39f70f7b040452de@esrw.de
+SEQUENCE:0
+DTSTAMP:20260917T173038Z
+LAST-MODIFIED:20260917T173038Z
+DTSTART:20260927T160000Z
+DTEND:20260927T193000Z
+SUMMARY:LSR · RL FS · Eisadler Dortmund – Harzer Falken
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
+  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissportzentrum W
+ estfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Pernt\, Hend
+ rik (HSR) / Kratschmar\, Jocelyn (LSR)\n\nQuelle: https://www.esrw.de/eint
+ eilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · RL FS · Eisadler Dortmun
+ d – Harzer Falken
+END:VALARM
+END:VEVENT
 END:VCALENDAR

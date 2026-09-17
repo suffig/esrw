@@ -111,4 +111,53 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL · Herforder
  EV 1b – EHC Troisdorf 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:5b7b6fdeda0b2b2831b2b74d25ee0a5ea4ce280c@esrw.de
+SEQUENCE:0
+DTSTAMP:20260917T173038Z
+LAST-MODIFIED:20260917T173038Z
+DTSTART:20260925T170000Z
+DTEND:20260925T203000Z
+SUMMARY:SR · BL FS · EHC Essen Ruhr – Dinslakener Kobras 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: BL FS\nHalle: Eissporthalle Ess
+ en-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Caelers\, Fabian\n
+ \nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Essen-West\, Curtiusstr. 2\, 45144 Essen
+GEO:51.454179;6.976731
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
+ Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
+ n-West":geo:51.454179,6.976731
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · BL FS · EHC Essen Ruhr 
+ – Dinslakener Kobras 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:2cf2f2c2286de519baa758f73ff4c19e158993c8@esrw.de
+SEQUENCE:0
+DTSTAMP:20260917T173038Z
+LAST-MODIFIED:20260917T173038Z
+DTSTART:20260927T060000Z
+DTEND:20260927T093000Z
+SUMMARY:SR · U13 LL · ESV Grizzlys Bergkamen – Ratinger Ice Aliens
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
+  08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\n!! Halle nicht automati
+ sch erkannt - bitte selbst pruefen !!\nGespann: Brücker\, Tobias\n\nQuell
+ e: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL · ESV Grizzlys Ber
+ gkamen – Ratinger Ice Aliens
+END:VALARM
+END:VEVENT
 END:VCALENDAR

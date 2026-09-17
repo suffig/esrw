@@ -61,4 +61,26 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U17 FS · Eisadler Dortmun
  d – EHC Troisdorf
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:7d90b29159be4eabf6455a99b5ed32a5a42994a9@esrw.de
+SEQUENCE:0
+DTSTAMP:20260917T173038Z
+LAST-MODIFIED:20260917T173038Z
+DTSTART:20260926T073000Z
+DTEND:20260926T110000Z
+SUMMARY:SR · U17 LL · ESV Grizzlys Bergkamen – ESC Darmstadt
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
+  09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\n!! Halle nicht automati
+ sch erkannt - bitte selbst pruefen !!\nGespann: Klemm\, Julian\n\nQuelle: 
+ https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL · ESV Grizzlys Ber
+ gkamen – ESC Darmstadt
+END:VALARM
+END:VEVENT
 END:VCALENDAR

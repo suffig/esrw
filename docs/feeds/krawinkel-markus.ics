@@ -78,4 +78,59 @@ DESCRIPTION:In einer Stunde an der Halle - HSR · DNL III · EV Duisburg
  – SCC Adler Berlin
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:2f3ace9ad3aaae0bbe5b88eeaef20f5f02d563d6@esrw.de
+SEQUENCE:0
+DTSTAMP:20260917T173038Z
+LAST-MODIFIED:20260917T173038Z
+DTSTART:20260925T171500Z
+DTEND:20260925T204500Z
+SUMMARY:HSR · RL FS · Dinslakener Kobras – ESV Grizzlys Bergkamen
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:15 Uhr\nTreff
+ punkt: 19:15 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthal
+ le Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Quint\, S
+ ascha (LSR) / Reuter\, Rick (LSR)\n\nQuelle: https://www.esrw.de/einteilun
+ gen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
+GEO:51.574578;6.735361
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
+ m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
+ inslaken":geo:51.574578,6.735361
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · RL FS · Dinslakener Kobr
+ as – ESV Grizzlys Bergkamen
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:c3ce4f84fc5009ea663be98496f42b9d0e87966b@esrw.de
+SEQUENCE:0
+DTSTAMP:20260917T173038Z
+LAST-MODIFIED:20260917T173038Z
+DTSTART:20260927T083000Z
+DTEND:20260927T120000Z
+SUMMARY:SR · U11 LL Blau · Kölner Junghaie 1c
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:30 Uhr\nTreffpunkt:
+  10:30 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Blau\nHalle: Kölnarena 
+ 2\nAdresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Hindley\, Davi
+ d\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Blau · Kölner Jun
+ ghaie 1c
+END:VALARM
+END:VEVENT
 END:VCALENDAR

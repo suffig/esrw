@@ -84,4 +84,32 @@ DESCRIPTION:In einer Stunde an der Halle - SR · BL FS · EHC Essen Ruhr
  – Soester EG
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:5b2260967a5e621d5e22a5ff273930c5c8330e20@esrw.de
+SEQUENCE:0
+DTSTAMP:20260917T173038Z
+LAST-MODIFIED:20260917T173038Z
+DTSTART:20260925T170000Z
+DTEND:20260925T203000Z
+SUMMARY:HSR · RL FS · Eisadler Dortmund – ESV Bergisch Gladbach
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:00 Uhr\nTreff
+ punkt: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissportzen
+ trum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Stocke
+ nschneider\, Lars (LSR) / Hofer\, Carsten (LSR)\n\nQuelle: https://www.esr
+ w.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · RL FS · Eisadler Dortmun
+ d – ESV Bergisch Gladbach
+END:VALARM
+END:VEVENT
 END:VCALENDAR

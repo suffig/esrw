@@ -89,4 +89,59 @@ DESCRIPTION:In einer Stunde an der Halle - SR · LL FS · Eisadler Dortmund
   1b – EHC Troisdorf
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:d8e87858a28ec2208a256ef9b27c9d954ea19e88@esrw.de
+SEQUENCE:0
+DTSTAMP:20260917T173038Z
+LAST-MODIFIED:20260917T173038Z
+DTSTART:20260925T170000Z
+DTEND:20260925T203000Z
+SUMMARY:SR · BL FS · EHC Essen Ruhr – Dinslakener Kobras 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: BL FS\nHalle: Eissporthalle Ess
+ en-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Malik\, Orlando\n\
+ nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Essen-West\, Curtiusstr. 2\, 45144 Essen
+GEO:51.454179;6.976731
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
+ Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
+ n-West":geo:51.454179,6.976731
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · BL FS · EHC Essen Ruhr 
+ – Dinslakener Kobras 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fdf5bc6f88cb374bca9e73f5b3a1f521e73aaa37@esrw.de
+SEQUENCE:0
+DTSTAMP:20260917T173038Z
+LAST-MODIFIED:20260917T173038Z
+DTSTART:20260927T160000Z
+DTEND:20260927T193000Z
+SUMMARY:HSR · U20 RL · Dinslakener Kobras – EHC Troisdorf
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 19:00 Uhr\nTreff
+ punkt: 18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissportha
+ lle Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Hartmann
+ \, Marius (LSR) / Krüger\, Martin (LSR)\n\nQuelle: https://www.esrw.de/ei
+ nteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
+GEO:51.574578;6.735361
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
+ m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
+ inslaken":geo:51.574578,6.735361
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · U20 RL · Dinslakener Kob
+ ras – EHC Troisdorf
+END:VALARM
+END:VEVENT
 END:VCALENDAR
