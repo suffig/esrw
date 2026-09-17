@@ -974,8 +974,8 @@ SUMMARY:RL FS · Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
   18:30 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthalle Rat
  ingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Steven\, Patrick
-  (HSR) / Garcia Nieto\, Dario (LSR)\n\nQuelle: https://www.esrw.de/einteil
- ungen.html
+  (HSR) / Schöche\, Gian Carlo (LSR)\n\nQuelle: https://www.esrw.de/eintei
+ lungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1235,6 +1235,33 @@ BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - U11 RL · Iserlohner EC
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:3b76c417fae2df3cf8fdd6457b1d15b35c9c3a9c@esrw.de
+SEQUENCE:0
+DTSTAMP:20260917T153036Z
+LAST-MODIFIED:20260917T153036Z
+DTSTART:20260919T093000Z
+DTEND:20260919T130000Z
+SUMMARY:DA FS · Dinslakener Kobras – Mechelen
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
+  11:30 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissporthalle Din
+ slaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Störmann\, Man
+ uel\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
+GEO:51.574578;6.735361
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
+ m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
+ inslaken":geo:51.574578,6.735361
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - DA FS · Dinslakener Kobras – 
+ Mechelen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2020,6 +2047,34 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - RL FS · Dinslakener Kobras – 
  UNIS Flyers Heerenveen
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:2f58f866a0fcf6e53008e8b1d426517516a285b5@esrw.de
+SEQUENCE:0
+DTSTAMP:20260917T153036Z
+LAST-MODIFIED:20260917T153036Z
+DTSTART:20260920T170000Z
+DTEND:20260920T203000Z
+SUMMARY:RL FS · Neusser EV – ESV Bergisch Gladbach
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthalle Neu
+ ss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Kyei-Nimako\, De
+ nis (HSR) / Lindemans\, Pepe (LSR)\n\nQuelle: https://www.esrw.de/einteilu
+ ngen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
+GEO:51.175806;6.680258
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
+ -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
+ uss":geo:51.175806,6.680258
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - RL FS · Neusser EV – ESV Berg
+ isch Gladbach
 END:VALARM
 END:VEVENT
 END:VCALENDAR

@@ -7,6 +7,15 @@
   "beckford-emanuel": [
    {
     "saison": "2026/27",
+    "beginn": "2026-09-20T20:00:00+02:00",
+    "liga": "RL FS",
+    "paarung": "Neusser EV – ESV Bergisch Gladbach",
+    "halle": "Eissporthalle Neuss",
+    "rolle": "LSR",
+    "system": 3
+   },
+   {
+    "saison": "2026/27",
     "beginn": "2026-09-13T17:00:00+02:00",
     "liga": "U13 FS",
     "paarung": "Krefelder EV – Löwen Frankfurt",
@@ -200,15 +209,6 @@
    {
     "saison": "2026/27",
     "beginn": "2026-09-18T20:00:00+02:00",
-    "liga": "RL FS",
-    "paarung": "Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!",
-    "halle": "Eissporthalle Ratingen",
-    "rolle": "LSR",
-    "system": 3
-   },
-   {
-    "saison": "2026/27",
-    "beginn": "2026-09-18T19:30:00+02:00",
     "liga": "RL FS",
     "paarung": "Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!",
     "halle": "Eissporthalle Ratingen",
@@ -993,6 +993,28 @@
     "system": 2
    }
   ],
+  "kuriata-florian-nikita": [
+   {
+    "saison": "2026/27",
+    "beginn": "2026-09-19T12:30:00+02:00",
+    "liga": "DA FS",
+    "paarung": "Dinslakener Kobras – Mechelen",
+    "halle": "Eissporthalle Dinslaken",
+    "rolle": "SR",
+    "system": 2
+   }
+  ],
+  "kyei-nimako-denis": [
+   {
+    "saison": "2026/27",
+    "beginn": "2026-09-20T20:00:00+02:00",
+    "liga": "RL FS",
+    "paarung": "Neusser EV – ESV Bergisch Gladbach",
+    "halle": "Eissporthalle Neuss",
+    "rolle": "HSR",
+    "system": 3
+   }
+  ],
   "leibfried-raphael": [
    {
     "saison": "2026/27",
@@ -1043,6 +1065,15 @@
    }
   ],
   "lindemans-pepe": [
+   {
+    "saison": "2026/27",
+    "beginn": "2026-09-20T20:00:00+02:00",
+    "liga": "RL FS",
+    "paarung": "Neusser EV – ESV Bergisch Gladbach",
+    "halle": "Eissporthalle Neuss",
+    "rolle": "LSR",
+    "system": 3
+   },
    {
     "saison": "2026/27",
     "beginn": "2026-09-18T20:15:00+02:00",
@@ -1686,6 +1717,15 @@
    },
    {
     "saison": "2026/27",
+    "beginn": "2026-09-18T19:30:00+02:00",
+    "liga": "RL FS",
+    "paarung": "Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!",
+    "halle": "Eissporthalle Ratingen",
+    "rolle": "LSR",
+    "system": 3
+   },
+   {
+    "saison": "2026/27",
     "beginn": "2026-09-13T10:00:00+02:00",
     "liga": "U17 II",
     "paarung": "EV Duisburg – SCC Adler Berlin",
@@ -2005,6 +2045,17 @@
     "halle": "Eissporthalle Essen-West",
     "rolle": "HSR",
     "system": 3
+   }
+  ],
+  "stoermann-manuel": [
+   {
+    "saison": "2026/27",
+    "beginn": "2026-09-19T12:30:00+02:00",
+    "liga": "DA FS",
+    "paarung": "Dinslakener Kobras – Mechelen",
+    "halle": "Eissporthalle Dinslaken",
+    "rolle": "SR",
+    "system": 2
    }
   ],
   "strohmenger-svenja": [

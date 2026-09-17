@@ -2,9 +2,9 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 84,
+ "spiele_gesamt": 86,
  "saison": "2026/27",
- "archiv_spiele": 118,
+ "archiv_spiele": 120,
  "rollen": {
   "SR": "Schiedsrichter",
   "HSR": "Hauptschiedsrichter",
@@ -193,14 +193,19 @@
     "Beckford, Emanuel"
    ],
    "statistik": {
-    "gesamt": 1,
-    "saison": 1,
+    "gesamt": 2,
+    "saison": 2,
     "rollen": {
-     "SR": 1
+     "SR": 1,
+     "LSR": 1
     },
     "ligen": [
      [
       "U13 FS",
+      1
+     ],
+     [
+      "RL FS",
       1
      ]
     ],
@@ -208,22 +213,34 @@
      [
       "Rheinlandhalle Krefeld",
       1
+     ],
+     [
+      "Eissporthalle Neuss",
+      1
      ]
     ],
     "partner": [
      [
       "Kiefer, Dennis",
       1
+     ],
+     [
+      "Kyei-Nimako, Denis",
+      1
+     ],
+     [
+      "Lindemans, Pepe",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      1
+      2
      ]
     ],
     "erste": "2026-09-13",
-    "letzte": "2026-09-13"
+    "letzte": "2026-09-20"
    },
    "spiele": [
     {
@@ -248,6 +265,36 @@
      ],
      "halle_erkannt": true,
      "vergangen": true,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-20T20:00:00+02:00",
+     "treffpunkt": "2026-09-20T19:00:00+02:00",
+     "rolle": "LSR",
+     "system": 3,
+     "liga": "RL FS",
+     "paarung": "Neusser EV – ESV Bergisch Gladbach",
+     "ort": "Eissporthalle Neuss, Jakob-Koch-Straße 1, 41466 Neuss",
+     "halle": "Eissporthalle Neuss",
+     "koordinaten": [
+      51.175806,
+      6.680258
+     ],
+     "gespann": [
+      {
+       "name": "Kyei-Nimako, Denis",
+       "slug": "kyei-nimako-denis",
+       "rolle": "HSR"
+      },
+      {
+       "name": "Lindemans, Pepe",
+       "slug": "lindemans-pepe",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
      "aenderung": null,
      "hinweis": null
     }
@@ -881,21 +928,21 @@
     "Dietrich, Jonas"
    ],
    "statistik": {
-    "gesamt": 3,
-    "saison": 3,
+    "gesamt": 2,
+    "saison": 2,
     "rollen": {
-     "LSR": 3
+     "LSR": 2
     },
     "ligen": [
      [
       "RL FS",
-      3
+      2
      ]
     ],
     "hallen": [
      [
       "Eissporthalle Ratingen",
-      2
+      1
      ],
      [
       "Eissporthalle Essen-West",
@@ -905,11 +952,11 @@
     "partner": [
      [
       "Garcia Nieto, Dario",
-      3
+      2
      ],
      [
       "Steven, Patrick",
-      2
+      1
      ],
      [
       "Perlitz, Christian",
@@ -919,7 +966,7 @@
     "je_saison": [
      [
       "2026/27",
-      3
+      2
      ]
     ],
     "erste": "2026-09-11",
@@ -953,36 +1000,6 @@
      ],
      "halle_erkannt": true,
      "vergangen": true,
-     "aenderung": null,
-     "hinweis": null
-    },
-    {
-     "beginn": "2026-09-18T19:30:00+02:00",
-     "treffpunkt": "2026-09-18T18:30:00+02:00",
-     "rolle": "LSR",
-     "system": 3,
-     "liga": "RL FS",
-     "paarung": "Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!",
-     "ort": "Eissporthalle Ratingen, Am Sandbach 12, 40878 Ratingen",
-     "halle": "Eissporthalle Ratingen",
-     "koordinaten": [
-      51.295808,
-      6.834624
-     ],
-     "gespann": [
-      {
-       "name": "Steven, Patrick",
-       "slug": "steven-patrick",
-       "rolle": "HSR"
-      },
-      {
-       "name": "Garcia Nieto, Dario",
-       "slug": "garcia-nieto-dario",
-       "rolle": "LSR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": false,
      "aenderung": null,
      "hinweis": null
     }
@@ -1581,11 +1598,11 @@
     ],
     "partner": [
      [
-      "Dietrich, Jonas",
-      3
+      "Steven, Patrick",
+      2
      ],
      [
-      "Steven, Patrick",
+      "Dietrich, Jonas",
       2
      ],
      [
@@ -1593,11 +1610,11 @@
       2
      ],
      [
-      "Leibfried, Raphael",
+      "Schöche, Gian-Carlo",
       1
      ],
      [
-      "Bocklemünd, Cid",
+      "Leibfried, Raphael",
       1
      ]
     ],
@@ -1686,8 +1703,8 @@
        "rolle": "HSR"
       },
       {
-       "name": "Dietrich, Jonas",
-       "slug": "dietrich-jonas",
+       "name": "Schöche, Gian-Carlo",
+       "slug": "schoeche-gian-carlo",
        "rolle": "LSR"
       }
      ],
@@ -3948,6 +3965,149 @@
    ]
   },
   {
+   "slug": "kuriata-florian-nikita",
+   "name": "Kuriata, Florian-Nikita",
+   "varianten": [
+    "Kuriata, Florian-Nikita"
+   ],
+   "statistik": {
+    "gesamt": 1,
+    "saison": 1,
+    "rollen": {
+     "SR": 1
+    },
+    "ligen": [
+     [
+      "DA FS",
+      1
+     ]
+    ],
+    "hallen": [
+     [
+      "Eissporthalle Dinslaken",
+      1
+     ]
+    ],
+    "partner": [
+     [
+      "Störmann, Manuel",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      1
+     ]
+    ],
+    "erste": "2026-09-19",
+    "letzte": "2026-09-19"
+   },
+   "spiele": [
+    {
+     "beginn": "2026-09-19T12:30:00+02:00",
+     "treffpunkt": "2026-09-19T11:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "DA FS",
+     "paarung": "Dinslakener Kobras – Mechelen",
+     "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+     "halle": "Eissporthalle Dinslaken",
+     "koordinaten": [
+      51.574578,
+      6.735361
+     ],
+     "gespann": [
+      {
+       "name": "Störmann, Manuel",
+       "slug": "stoermann-manuel",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    }
+   ]
+  },
+  {
+   "slug": "kyei-nimako-denis",
+   "name": "Kyei-Nimako, Denis",
+   "varianten": [
+    "Kyei-Nimako, Denis"
+   ],
+   "statistik": {
+    "gesamt": 1,
+    "saison": 1,
+    "rollen": {
+     "HSR": 1
+    },
+    "ligen": [
+     [
+      "RL FS",
+      1
+     ]
+    ],
+    "hallen": [
+     [
+      "Eissporthalle Neuss",
+      1
+     ]
+    ],
+    "partner": [
+     [
+      "Beckford, Emanuel",
+      1
+     ],
+     [
+      "Lindemans, Pepe",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      1
+     ]
+    ],
+    "erste": "2026-09-20",
+    "letzte": "2026-09-20"
+   },
+   "spiele": [
+    {
+     "beginn": "2026-09-20T20:00:00+02:00",
+     "treffpunkt": "2026-09-20T19:00:00+02:00",
+     "rolle": "HSR",
+     "system": 3,
+     "liga": "RL FS",
+     "paarung": "Neusser EV – ESV Bergisch Gladbach",
+     "ort": "Eissporthalle Neuss, Jakob-Koch-Straße 1, 41466 Neuss",
+     "halle": "Eissporthalle Neuss",
+     "koordinaten": [
+      51.175806,
+      6.680258
+     ],
+     "gespann": [
+      {
+       "name": "Beckford, Emanuel",
+       "slug": "beckford-emanuel",
+       "rolle": "LSR"
+      },
+      {
+       "name": "Lindemans, Pepe",
+       "slug": "lindemans-pepe",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    }
+   ]
+  },
+  {
    "slug": "leibfried-raphael",
    "name": "Leibfried, Raphael",
    "varianten": [
@@ -4176,19 +4336,19 @@
     "Lindemans, Pepe"
    ],
    "statistik": {
-    "gesamt": 2,
-    "saison": 2,
+    "gesamt": 3,
+    "saison": 3,
     "rollen": {
      "SR": 1,
-     "LSR": 1
+     "LSR": 2
     },
     "ligen": [
      [
-      "LL FS",
-      1
+      "RL FS",
+      2
      ],
      [
-      "RL FS",
+      "LL FS",
       1
      ]
     ],
@@ -4196,6 +4356,10 @@
      [
       "Eissporthalle Dinslaken",
       2
+     ],
+     [
+      "Eissporthalle Neuss",
+      1
      ]
     ],
     "partner": [
@@ -4210,16 +4374,24 @@
      [
       "Hofer, Carsten",
       1
+     ],
+     [
+      "Kyei-Nimako, Denis",
+      1
+     ],
+     [
+      "Beckford, Emanuel",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      2
+      3
      ]
     ],
     "erste": "2026-09-13",
-    "letzte": "2026-09-18"
+    "letzte": "2026-09-20"
    },
    "spiele": [
     {
@@ -4269,6 +4441,36 @@
       {
        "name": "Hofer, Carsten",
        "slug": "hofer-carsten",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-20T20:00:00+02:00",
+     "treffpunkt": "2026-09-20T19:00:00+02:00",
+     "rolle": "LSR",
+     "system": 3,
+     "liga": "RL FS",
+     "paarung": "Neusser EV – ESV Bergisch Gladbach",
+     "ort": "Eissporthalle Neuss, Jakob-Koch-Straße 1, 41466 Neuss",
+     "halle": "Eissporthalle Neuss",
+     "koordinaten": [
+      51.175806,
+      6.680258
+     ],
+     "gespann": [
+      {
+       "name": "Kyei-Nimako, Denis",
+       "slug": "kyei-nimako-denis",
+       "rolle": "HSR"
+      },
+      {
+       "name": "Beckford, Emanuel",
+       "slug": "beckford-emanuel",
        "rolle": "LSR"
       }
      ],
@@ -6670,14 +6872,15 @@
    "slug": "schoeche-gian-carlo",
    "name": "Schöche, Gian-Carlo",
    "varianten": [
+    "Schöche, Gian Carlo",
     "Schöche, Gian-Carlo"
    ],
    "statistik": {
-    "gesamt": 11,
-    "saison": 11,
+    "gesamt": 12,
+    "saison": 12,
     "rollen": {
      "SR": 10,
-     "LSR": 1
+     "LSR": 2
     },
     "ligen": [
      [
@@ -6689,11 +6892,11 @@
       1
      ],
      [
-      "BL FS",
+      "RL FS",
       1
      ],
      [
-      "U20 FS",
+      "BL FS",
       1
      ]
     ],
@@ -6729,18 +6932,18 @@
       2
      ],
      [
-      "Moritz, Alexander",
+      "Steven, Patrick",
       1
      ],
      [
-      "Kremer, Igor",
+      "Garcia Nieto, Dario",
       1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      11
+      12
      ]
     ],
     "erste": "2026-09-04",
@@ -6844,6 +7047,36 @@
      ],
      "halle_erkannt": true,
      "vergangen": true,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-18T19:30:00+02:00",
+     "treffpunkt": "2026-09-18T18:30:00+02:00",
+     "rolle": "LSR",
+     "system": 3,
+     "liga": "RL FS",
+     "paarung": "Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!",
+     "ort": "Eissporthalle Ratingen, Am Sandbach 12, 40878 Ratingen",
+     "halle": "Eissporthalle Ratingen",
+     "koordinaten": [
+      51.295808,
+      6.834624
+     ],
+     "gespann": [
+      {
+       "name": "Steven, Patrick",
+       "slug": "steven-patrick",
+       "rolle": "HSR"
+      },
+      {
+       "name": "Garcia Nieto, Dario",
+       "slug": "garcia-nieto-dario",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
      "aenderung": null,
      "hinweis": null
     },
@@ -7567,12 +7800,16 @@
     ],
     "partner": [
      [
-      "Dietrich, Jonas",
+      "Garcia Nieto, Dario",
       2
      ],
      [
-      "Garcia Nieto, Dario",
-      2
+      "Dietrich, Jonas",
+      1
+     ],
+     [
+      "Schöche, Gian-Carlo",
+      1
      ],
      [
       "Heffler, Philipp",
@@ -7604,8 +7841,8 @@
      ],
      "gespann": [
       {
-       "name": "Dietrich, Jonas",
-       "slug": "dietrich-jonas",
+       "name": "Schöche, Gian-Carlo",
+       "slug": "schoeche-gian-carlo",
        "rolle": "LSR"
       },
       {
@@ -7877,6 +8114,73 @@
       }
      ],
      "halle_erkannt": false,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    }
+   ]
+  },
+  {
+   "slug": "stoermann-manuel",
+   "name": "Störmann, Manuel",
+   "varianten": [
+    "Störmann, Manuel"
+   ],
+   "statistik": {
+    "gesamt": 1,
+    "saison": 1,
+    "rollen": {
+     "SR": 1
+    },
+    "ligen": [
+     [
+      "DA FS",
+      1
+     ]
+    ],
+    "hallen": [
+     [
+      "Eissporthalle Dinslaken",
+      1
+     ]
+    ],
+    "partner": [
+     [
+      "Kuriata, Florian-Nikita",
+      1
+     ]
+    ],
+    "je_saison": [
+     [
+      "2026/27",
+      1
+     ]
+    ],
+    "erste": "2026-09-19",
+    "letzte": "2026-09-19"
+   },
+   "spiele": [
+    {
+     "beginn": "2026-09-19T12:30:00+02:00",
+     "treffpunkt": "2026-09-19T11:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "DA FS",
+     "paarung": "Dinslakener Kobras – Mechelen",
+     "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+     "halle": "Eissporthalle Dinslaken",
+     "koordinaten": [
+      51.574578,
+      6.735361
+     ],
+     "gespann": [
+      {
+       "name": "Kuriata, Florian-Nikita",
+       "slug": "kuriata-florian-nikita",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
@@ -9875,9 +10179,9 @@
      "slug": "steven-patrick"
     },
     {
-     "name": "Dietrich, Jonas",
+     "name": "Schöche, Gian-Carlo",
      "rolle": "LSR",
-     "slug": "dietrich-jonas"
+     "slug": "schoeche-gian-carlo"
     },
     {
      "name": "Garcia Nieto, Dario",
@@ -10077,6 +10381,29 @@
      "name": "Malik, Orlando",
      "rolle": "SR",
      "slug": "malik-orlando"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-19T12:30:00+02:00",
+   "treffpunkt": "2026-09-19T11:30:00+02:00",
+   "liga": "DA FS",
+   "paarung": "Dinslakener Kobras – Mechelen",
+   "halle": "Eissporthalle Dinslaken",
+   "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Störmann, Manuel",
+     "rolle": "SR",
+     "slug": "stoermann-manuel"
+    },
+    {
+     "name": "Kuriata, Florian-Nikita",
+     "rolle": "SR",
+     "slug": "kuriata-florian-nikita"
     }
    ],
    "vergangen": false
@@ -10754,6 +11081,34 @@
      "name": "Stockenschneider, Lars",
      "rolle": "LSR",
      "slug": "stockenschneider-lars"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-20T20:00:00+02:00",
+   "treffpunkt": "2026-09-20T19:00:00+02:00",
+   "liga": "RL FS",
+   "paarung": "Neusser EV – ESV Bergisch Gladbach",
+   "halle": "Eissporthalle Neuss",
+   "ort": "Eissporthalle Neuss, Jakob-Koch-Straße 1, 41466 Neuss",
+   "halle_erkannt": true,
+   "system": 3,
+   "besetzung": [
+    {
+     "name": "Kyei-Nimako, Denis",
+     "rolle": "HSR",
+     "slug": "kyei-nimako-denis"
+    },
+    {
+     "name": "Beckford, Emanuel",
+     "rolle": "LSR",
+     "slug": "beckford-emanuel"
+    },
+    {
+     "name": "Lindemans, Pepe",
+     "rolle": "LSR",
+     "slug": "lindemans-pepe"
     }
    ],
    "vergangen": false

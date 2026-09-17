@@ -185,7 +185,7 @@
   "beginn": "2026-09-18T19:30:00+02:00",
   "besetzung": {
    "(L)SR": [
-    "Dietrich, Jonas",
+    "Schöche, Gian Carlo",
     "Garcia Nieto, Dario"
    ],
    "HSR": [
@@ -666,6 +666,24 @@
   "zuerst_gesehen": "2026-09-11",
   "zuletzt_gesehen": "2026-09-17"
  },
+ "545687347f8c30a0ae144427888abcefb81c18a8": {
+  "begegnung": "RL FS: Neusser EV - ESV Bergisch Gladbach",
+  "beginn": "2026-09-20T20:00:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Beckford, Emanuel",
+    "Lindemans, Pepe"
+   ],
+   "HSR": [
+    "Kyei-Nimako, Denis"
+   ]
+  },
+  "halle": "Eissporthalle Neuss",
+  "liga": "RL FS",
+  "paarung": "Neusser EV – ESV Bergisch Gladbach",
+  "zuerst_gesehen": "2026-09-17",
+  "zuletzt_gesehen": "2026-09-17"
+ },
  "54727a5b72fbfda771c40aaf8ff6d950e3dc01f1": {
   "begegnung": "DA FS: NRW - Sachsen/Berlin in Dortmund !!!",
   "beginn": "2026-09-12T11:00:00+02:00",
@@ -874,6 +892,22 @@
   "liga": "U17 FS",
   "paarung": "EHC Troisdorf – Eisadler Dortmund",
   "zuerst_gesehen": "2026-09-09",
+  "zuletzt_gesehen": "2026-09-17"
+ },
+ "74a5dfb491756fc98946a9e767a888837afa001c": {
+  "begegnung": "DA FS: Dinslakener Kobras - Mechelen",
+  "beginn": "2026-09-19T12:30:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Störmann, Manuel",
+    "Kuriata, Florian-Nikita"
+   ],
+   "HSR": []
+  },
+  "halle": "Eissporthalle Dinslaken",
+  "liga": "DA FS",
+  "paarung": "Dinslakener Kobras – Mechelen",
+  "zuerst_gesehen": "2026-09-17",
   "zuletzt_gesehen": "2026-09-17"
  },
  "7e248c45ddab64c8023420179827337c400f9da9": {
