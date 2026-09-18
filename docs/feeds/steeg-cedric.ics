@@ -124,4 +124,27 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA · Iserlohner EC
  – Kölner Junghaie
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:4b9f63e0fdaf04c18ef42acf267f047a6836d1b2@esrw.de
+SEQUENCE:0
+DTSTAMP:20260918T113038Z
+LAST-MODIFIED:20260918T113038Z
+DTSTART:20260927T153000Z
+DTEND:20260927T190000Z
+SUMMARY:HSR · RL FS · ESV Bergkamen – Bremen
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 18:30 Uhr\nTreff
+ punkt: 17:30 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\n!! Halle nicht aut
+ omatisch erkannt - bitte selbst pruefen !!\nGespann: Schmidt\, Waldemar (L
+ SR) / Pacalaj\, Erik (LSR)\n\nQuelle: https://www.esrw.de/einteilungen.htm
+ l
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · RL FS · ESV Bergkamen 
+ – Bremen
+END:VALARM
+END:VEVENT
 END:VCALENDAR

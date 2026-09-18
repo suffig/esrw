@@ -28,4 +28,30 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
  rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
  isdorf":geo:50.811945,7.109233
 END:VEVENT
+BEGIN:VEVENT
+UID:f7c2c4a688e51f1ebe1850d3b148e71262e5ac4b@esrw.de
+SEQUENCE:0
+DTSTAMP:20260918T113038Z
+LAST-MODIFIED:20260918T113038Z
+DTSTART:20260920T050000Z
+DTEND:20260920T083000Z
+SUMMARY:SR · U7 Rot · Düsseldorfer EG
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U7 Rot\nHalle: Eishalle Brehmst
+ raße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Klemm\, Jul
+ ian\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U7 Rot · Düsseldorfer EG
+END:VALARM
+END:VEVENT
 END:VCALENDAR

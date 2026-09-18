@@ -205,4 +205,32 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB · Kölner Junghai
  e 1b – EV Duisburg
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:7d8768a937d09e9f6798b00ce5def8ef279ac7fe@esrw.de
+SEQUENCE:0
+DTSTAMP:20260918T113038Z
+LAST-MODIFIED:20260918T113038Z
+DTSTART:20260926T173000Z
+DTEND:20260926T210000Z
+SUMMARY:LSR · U20 FS · Neusser EV – Ratinger Ice Aliens
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
+  19:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 FS\nHalle: Eissporthalle Ne
+ uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Priebsch\, Jan 
+ Philipp (HSR) / Solbach\, Carsten (LSR)\n\nQuelle: https://www.esrw.de/ein
+ teilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
+GEO:51.175806;6.680258
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
+ -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
+ uss":geo:51.175806,6.680258
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · U20 FS · Neusser EV – 
+ Ratinger Ice Aliens
+END:VALARM
+END:VEVENT
 END:VCALENDAR

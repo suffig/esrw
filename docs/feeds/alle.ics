@@ -1516,6 +1516,32 @@ DESCRIPTION:In einer Stunde an der Halle - U15 RLA · Kölner Junghaie –
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:daf1122a3c2fa57f4d23f5e5584921728370a496@esrw.de
+SEQUENCE:0
+DTSTAMP:20260918T113038Z
+LAST-MODIFIED:20260918T113038Z
+DTSTART:20260920T050000Z
+DTEND:20260920T083000Z
+SUMMARY:U7 Rot · Düsseldorfer EG
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U7 Rot\nHalle: Eishalle Brehmst
+ raße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Klemm\, Jul
+ ian\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - U7 Rot · Düsseldorfer EG
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:1dd57a39c14c140e138e8a1649309ba4c5b34764@esrw.de
 SEQUENCE:0
 DTSTAMP:20260915T152741Z
@@ -2092,9 +2118,9 @@ DTEND:20260925T200000Z
 SUMMARY:RL FS · Ratinger Ice Aliens – Grefrather EG
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
   18:30 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eishalle Brehmstr
- aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Licau\, Seba
- stian (HSR) / Leibfried\, Raphael (LSR)\n\nQuelle: https://www.esrw.de/ein
- teilungen.html
+ aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Caelers\, Fa
+ bian (HSR) / Leibfried\, Raphael (LSR)\n\nQuelle: https://www.esrw.de/eint
+ eilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2135,33 +2161,6 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - U17 RL · Lippe Hockey Hamm – 
  Eisadler Dortmund
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
-UID:1c8256960a47c23f74eabc82ca3b56eb39bc95f7@esrw.de
-SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
-DTSTART:20260925T170000Z
-DTEND:20260925T203000Z
-SUMMARY:BL FS · EHC Essen Ruhr – Dinslakener Kobras 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
-  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: BL FS\nHalle: Eissporthalle Ess
- en-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Malik\, Orlando\n\
- nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Essen-West\, Curtiusstr. 2\, 45144 Essen
-GEO:51.454179;6.976731
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
- Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
- n-West":geo:51.454179,6.976731
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - BL FS · EHC Essen Ruhr – Dins
- lakener Kobras 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2217,6 +2216,33 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - RL FS · Eisadler Dortmund – E
  SV Bergisch Gladbach
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:1c8256960a47c23f74eabc82ca3b56eb39bc95f7@esrw.de
+SEQUENCE:0
+DTSTAMP:20260917T173038Z
+LAST-MODIFIED:20260917T173038Z
+DTSTART:20260925T170000Z
+DTEND:20260925T203000Z
+SUMMARY:BL FS · EHC Essen Ruhr – Dinslakener Kobras 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: BL FS\nHalle: Eissporthalle Ess
+ en-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Schlüter\, Thomas
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Essen-West\, Curtiusstr. 2\, 45144 Essen
+GEO:51.454179;6.976731
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
+ Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
+ n-West":geo:51.454179,6.976731
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - BL FS · EHC Essen Ruhr – Dins
+ lakener Kobras 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2456,6 +2482,33 @@ DESCRIPTION:In einer Stunde an der Halle - U11 RL · Herforder EV
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:65dad013341015b66cf3d74e6f26732ed9c07c9a@esrw.de
+SEQUENCE:0
+DTSTAMP:20260918T113038Z
+LAST-MODIFIED:20260918T113038Z
+DTSTART:20260926T090000Z
+DTEND:20260926T123000Z
+SUMMARY:U15 RLA · Düsseldorfer EG – Krefelder EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
+  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eishalle Brehms
+ traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Pacalaj\, 
+ Erik\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - U15 RLA · Düsseldorfer EG – 
+ Krefelder EV
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:83e6e4a5018577806016c1ed9375d090489dd195@esrw.de
 SEQUENCE:0
 DTSTAMP:20260917T173038Z
@@ -2507,33 +2560,6 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - U15 LL · Eisadler Dortmund – 
  ESC Darmstadt
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
-UID:da5163278b54ed9cf103dc9a3878eeefd29b5f8f@esrw.de
-SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
-DTSTART:20260926T103000Z
-DTEND:20260926T140000Z
-SUMMARY:U15 RLA · Düsseldorfer EG – Krefelder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
-  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eishalle Brehms
- traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Pacalaj\, 
- Erik\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
-GEO:51.242557;6.802144
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
- hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
- hmstraße":geo:51.242557,6.802144
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U15 RLA · Düsseldorfer EG – 
- Krefelder EV
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2719,6 +2745,60 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - U13 RLA · Krefelder EV – Köl
  ner Junghaie
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:8b2c98eaf9030a6ec9cbf64355c23e72ab652fda@esrw.de
+SEQUENCE:0
+DTSTAMP:20260918T113038Z
+LAST-MODIFIED:20260918T113038Z
+DTSTART:20260926T173000Z
+DTEND:20260926T210000Z
+SUMMARY:U20 FS · Neusser EV – Ratinger Ice Aliens
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:30 Uhr\nTreff
+ punkt: 19:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 FS\nHalle: Eissportha
+ lle Neuss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Solbach\,
+  Carsten (LSR) / Schöche\, Gian-Carlo (LSR)\n\nQuelle: https://www.esrw.d
+ e/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
+GEO:51.175806;6.680258
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
+ -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
+ uss":geo:51.175806,6.680258
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - U20 FS · Neusser EV – Ratinge
+ r Ice Aliens
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:1170bf67b63444b3e074e939cc6983729b29b9a0@esrw.de
+SEQUENCE:0
+DTSTAMP:20260918T113038Z
+LAST-MODIFIED:20260918T113038Z
+DTSTART:20260927T050000Z
+DTEND:20260927T083000Z
+SUMMARY:U7 Blau · Düsseldorfer EG 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U7 Blau\nHalle: Eishalle Brehms
+ traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Victor\, T
+ obias (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - U7 Blau · Düsseldorfer EG 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -3120,6 +3200,28 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - U20 RL · Herforder EV – Eisad
  ler Dortmund
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:dd8b42a3a3ade553175d87168f9c60f6bce9bab0@esrw.de
+SEQUENCE:0
+DTSTAMP:20260918T113038Z
+LAST-MODIFIED:20260918T113038Z
+DTSTART:20260927T153000Z
+DTEND:20260927T190000Z
+SUMMARY:RL FS · ESV Bergkamen – Bremen
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
+  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\n!! Halle nicht automatis
+ ch erkannt - bitte selbst pruefen !!\nGespann: Steeg\, Cedric (HSR) / Schm
+ idt\, Waldemar (LSR)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - RL FS · ESV Bergkamen – Breme
+ n
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

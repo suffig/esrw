@@ -35,6 +35,34 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U9 RL · EHC Troisdorf
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:28da68f9aaf51671b4e4ddba343bc95ec28a5304@esrw.de
+SEQUENCE:0
+DTSTAMP:20260918T113038Z
+LAST-MODIFIED:20260918T113038Z
+DTSTART:20260926T173000Z
+DTEND:20260926T210000Z
+SUMMARY:LSR · U20 FS · Neusser EV – Ratinger Ice Aliens
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
+  19:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 FS\nHalle: Eissporthalle Ne
+ uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Priebsch\, Jan 
+ Philipp (HSR) / Schöche\, Gian-Carlo (LSR)\n\nQuelle: https://www.esrw.de
+ /einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
+GEO:51.175806;6.680258
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
+ -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
+ uss":geo:51.175806,6.680258
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · U20 FS · Neusser EV – 
+ Ratinger Ice Aliens
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:2ef8b0ba89dc41c544c436f7059a662e94b4300e@esrw.de
 SEQUENCE:0
 DTSTAMP:20260917T173038Z

@@ -126,15 +126,15 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U17 I · Krefelder EV –
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:4019c501b82b071849df27f2cc3296f8ca80f145@esrw.de
+UID:f89a46f01d99f49b301dfe136e2a9a743c64eef1@esrw.de
 SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
-DTSTART:20260926T103000Z
-DTEND:20260926T140000Z
+DTSTAMP:20260918T113038Z
+LAST-MODIFIED:20260918T113038Z
+DTSTART:20260926T090000Z
+DTEND:20260926T123000Z
 SUMMARY:SR · U15 RLA · Düsseldorfer EG – Krefelder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
-  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eishalle Brehms
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
+  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eishalle Brehms
  traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Pacalaj\, 
  Erik\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html

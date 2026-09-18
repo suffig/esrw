@@ -131,6 +131,18 @@
   "titel": "SR · U17 RL · Herforder EV – Eisadler Dortmund",
   "treffpunkt": "2026-09-19T09:00:00+02:00"
  },
+ "0b51ed633c1a8a45dd2f8891c0510d6ef109a6fa@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-25T19:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "e806daef988cbb24b399ddbfe98c3432494c4d8a",
+  "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+  "sequence": 0,
+  "slug": "caelers-fabian",
+  "stempel": "2026-09-18T11:30:38.419991+00:00",
+  "titel": "HSR · RL FS · Ratinger Ice Aliens – Grefrather EG",
+  "treffpunkt": "2026-09-25T18:30:00+02:00"
+ },
  "0b66655f044b2edd23104ce11eaa47cb309a9180@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-26T16:00:00+02:00",
@@ -419,6 +431,18 @@
   "titel": "SR · U14 NRW · NRW U14 – Kölner Junghaie U15",
   "treffpunkt": "2026-09-14T17:15:00+02:00"
  },
+ "1f2cd20012e9ed5a2281df4be191592529083c34@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-25T20:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "f491934c2fd10707cf6e1ea3887f1ca8df3c2b2c",
+  "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
+  "sequence": 0,
+  "slug": "schlueter-thomas",
+  "stempel": "2026-09-18T11:30:38.419991+00:00",
+  "titel": "SR · BL FS · EHC Essen Ruhr – Dinslakener Kobras 1b",
+  "treffpunkt": "2026-09-25T19:00:00+02:00"
+ },
  "2052a136d81d357641b6158589afa4402a2e5f82@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-12T16:30:00+02:00",
@@ -478,18 +502,6 @@
   "stempel": "2026-09-11T15:00:47.546895+00:00",
   "titel": "SR · U17 I · Kölner Junghaie – Düsseldorfer EG",
   "treffpunkt": "2026-09-20T13:45:00+02:00"
- },
- "2505799fc268ad314079f7ed5ae925472f9555ce@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-25T19:30:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "e806daef988cbb24b399ddbfe98c3432494c4d8a",
-  "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
-  "sequence": 0,
-  "slug": "licau-sebastian",
-  "stempel": "2026-09-17T17:30:38.957160+00:00",
-  "titel": "HSR · RL FS · Ratinger Ice Aliens – Grefrather EG",
-  "treffpunkt": "2026-09-25T18:30:00+02:00"
  },
  "2554c6083b890f969cf081ac54444b0ccf378ce0@esrw.de": {
   "aenderung": null,
@@ -562,6 +574,18 @@
   "stempel": "2026-09-11T15:00:47.546895+00:00",
   "titel": "SR · U15 RLA · Kölner Junghaie – Düsseldorfer EG",
   "treffpunkt": "2026-09-19T18:45:00+02:00"
+ },
+ "28da68f9aaf51671b4e4ddba343bc95ec28a5304@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-26T20:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "0642f2c7d9fa506f0ec58b284f8f9e147191bcfb",
+  "ort": "Eissporthalle Neuss, Jakob-Koch-Straße 1, 41466 Neuss",
+  "sequence": 0,
+  "slug": "solbach-carsten",
+  "stempel": "2026-09-18T11:30:38.419991+00:00",
+  "titel": "LSR · U20 FS · Neusser EV – Ratinger Ice Aliens",
+  "treffpunkt": "2026-09-26T19:30:00+02:00"
  },
  "2918fe310296a070416eacffd17384571b705ace@esrw.de": {
   "aenderung": null,
@@ -911,18 +935,6 @@
   "titel": "SR · U9 LL Grün · Lippe Hockey Hamm",
   "treffpunkt": "2026-09-26T08:30:00+02:00"
  },
- "4019c501b82b071849df27f2cc3296f8ca80f145@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-26T13:30:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "207e03c795d520b3c7d57ac59f49a628dd71bc18",
-  "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
-  "sequence": 0,
-  "slug": "heffler-philipp",
-  "stempel": "2026-09-17T17:30:38.957160+00:00",
-  "titel": "SR · U15 RLA · Düsseldorfer EG – Krefelder EV",
-  "treffpunkt": "2026-09-26T12:30:00+02:00"
- },
  "416024cc9a6e7eceadd99836e3a248b8c29fdd94@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-13T12:30:00+02:00",
@@ -994,6 +1006,18 @@
   "stempel": "2026-09-17T17:30:38.957160+00:00",
   "titel": "SR · U17 RL · Lippe Hockey Hamm – Eisadler Dortmund",
   "treffpunkt": "2026-09-25T18:30:00+02:00"
+ },
+ "4b9f63e0fdaf04c18ef42acf267f047a6836d1b2@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-27T18:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "1a5106bc20e792cd932f20bed7514b4bf17d8146",
+  "ort": "",
+  "sequence": 0,
+  "slug": "steeg-cedric",
+  "stempel": "2026-09-18T11:30:38.419991+00:00",
+  "titel": "HSR · RL FS · ESV Bergkamen – Bremen",
+  "treffpunkt": "2026-09-27T17:30:00+02:00"
  },
  "4cc90cc0b537e136dd68206a9ee046ce73f60003@esrw.de": {
   "aenderung": null,
@@ -1547,6 +1571,18 @@
   "titel": "SR · BL FS · EHC Essen Ruhr – Herner EV 1b",
   "treffpunkt": "2026-09-18T19:00:00+02:00"
  },
+ "794f8a86c4d83cd736612ac78f465b9c0a6e9957@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-27T18:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "2b02527db5cf22e1bae7546980b5fd7b4b3ea214",
+  "ort": "",
+  "sequence": 0,
+  "slug": "pacalaj-erik",
+  "stempel": "2026-09-18T11:30:38.419991+00:00",
+  "titel": "LSR · RL FS · ESV Bergkamen – Bremen",
+  "treffpunkt": "2026-09-27T17:30:00+02:00"
+ },
  "79a36d739d20985d78f40c2a0c74aae7b71e4c20@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-13T11:00:00+02:00",
@@ -1619,6 +1655,18 @@
   "titel": "SR · U9 RL · EHC Troisdorf",
   "treffpunkt": "2026-09-19T09:00:00+02:00"
  },
+ "7ad6009067822e0284d6f61059606617946dd2fb@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-27T18:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "2b02527db5cf22e1bae7546980b5fd7b4b3ea214",
+  "ort": "",
+  "sequence": 0,
+  "slug": "schmidt-waldemar",
+  "stempel": "2026-09-18T11:30:38.419991+00:00",
+  "titel": "LSR · RL FS · ESV Bergkamen – Bremen",
+  "treffpunkt": "2026-09-27T17:30:00+02:00"
+ },
  "7caa961fcb654cf48c8913921eae2892766f4549@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-12T11:00:00+02:00",
@@ -1654,6 +1702,18 @@
   "stempel": "2026-09-17T17:30:38.957160+00:00",
   "titel": "SR · U15 RLB · Kölner Junghaie 1b – EJ Kassel",
   "treffpunkt": "2026-09-27T16:30:00+02:00"
+ },
+ "7d8768a937d09e9f6798b00ce5def8ef279ac7fe@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-26T20:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "0642f2c7d9fa506f0ec58b284f8f9e147191bcfb",
+  "ort": "Eissporthalle Neuss, Jakob-Koch-Straße 1, 41466 Neuss",
+  "sequence": 0,
+  "slug": "schoeche-gian-carlo",
+  "stempel": "2026-09-18T11:30:38.419991+00:00",
+  "titel": "LSR · U20 FS · Neusser EV – Ratinger Ice Aliens",
+  "treffpunkt": "2026-09-26T19:30:00+02:00"
  },
  "7d90b29159be4eabf6455a99b5ed32a5a42994a9@esrw.de": {
   "aenderung": null,
@@ -2147,6 +2207,18 @@
   "titel": "LSR · RL FS · Neusser EV – ESV Bergisch Gladbach",
   "treffpunkt": "2026-09-20T19:00:00+02:00"
  },
+ "a44eb54e228428b31df07c6ed3220fe0570dfbcc@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T08:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "120de357a868693f8a7572290a8ee941c75ded87",
+  "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+  "sequence": 0,
+  "slug": "klemm-julian",
+  "stempel": "2026-09-18T11:30:38.419991+00:00",
+  "titel": "SR · U7 Rot · Düsseldorfer EG",
+  "treffpunkt": "2026-09-20T07:00:00+02:00"
+ },
  "a4cf46cd5ad5acf94dcc54a77504450217e24700@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-13T09:15:00+02:00",
@@ -2399,18 +2471,6 @@
   "titel": "SR · DA FS · NRW – Hessen",
   "treffpunkt": "2026-09-13T10:00:00+02:00"
  },
- "b6da34a6a5e7676d6420434fafd10838c84c5a0d@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-26T13:30:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "207e03c795d520b3c7d57ac59f49a628dd71bc18",
-  "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
-  "sequence": 0,
-  "slug": "pacalaj-erik",
-  "stempel": "2026-09-17T17:30:38.957160+00:00",
-  "titel": "SR · U15 RLA · Düsseldorfer EG – Krefelder EV",
-  "treffpunkt": "2026-09-26T12:30:00+02:00"
- },
  "b6ed5b27362c979dc7fd9a35bcdcf3537bc7f2a4@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-19T13:30:00+02:00",
@@ -2530,6 +2590,18 @@
   "stempel": "2026-09-18T08:30:38.840230+00:00",
   "titel": "SR · BL FS · Herner EV 1b – Soester EG",
   "treffpunkt": "2026-09-27T15:45:00+02:00"
+ },
+ "c12b31939a7a79066a510a818d37f9df51b22b9e@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-27T08:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "34aff5fac7141d6ce23c04406a430c21b041517d",
+  "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+  "sequence": 0,
+  "slug": "victor-tobias",
+  "stempel": "2026-09-18T11:30:38.419991+00:00",
+  "titel": "SR · U7 Blau · Düsseldorfer EG 1b",
+  "treffpunkt": "2026-09-27T07:00:00+02:00"
  },
  "c15beb415e3e0b2b6decbe60c2df905161c26662@esrw.de": {
   "aenderung": null,
@@ -2771,6 +2843,18 @@
   "titel": "LSR · RL FS · Eisadler Dortmund – Bulldogs de Liege",
   "treffpunkt": "2026-09-18T19:00:00+02:00"
  },
+ "d610361d088d8fefab37efdf24f19c1f96ddcd2b@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-27T08:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "34aff5fac7141d6ce23c04406a430c21b041517d",
+  "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+  "sequence": 0,
+  "slug": "reuter-rick",
+  "stempel": "2026-09-18T11:30:38.419991+00:00",
+  "titel": "SR · U7 Blau · Düsseldorfer EG 1b",
+  "treffpunkt": "2026-09-27T07:00:00+02:00"
+ },
  "d6bba4f31d7a448f8dcc1b352ac726f5524a6475@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-20T16:30:00+02:00",
@@ -2783,6 +2867,18 @@
   "titel": "SR · U13 RLB · Herner EV – Düsseldorfer EG 1b",
   "treffpunkt": "2026-09-20T15:30:00+02:00"
  },
+ "d6dd64efda54bd1a92c92f3b1104940ede238be7@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-26T12:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "ca49f33d6ff73d3dd5b842f56712f11fa75f2d2d",
+  "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+  "sequence": 0,
+  "slug": "pacalaj-erik",
+  "stempel": "2026-09-18T11:30:38.419991+00:00",
+  "titel": "SR · U15 RLA · Düsseldorfer EG – Krefelder EV",
+  "treffpunkt": "2026-09-26T11:00:00+02:00"
+ },
  "d7ca0968d4efc99e11b814ec86c0a8203f79bafc@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-20T18:30:00+02:00",
@@ -2794,18 +2890,6 @@
   "stempel": "2026-09-16T07:00:46.276266+00:00",
   "titel": "LSR · RL FS · ESV Grizzlys Bergkamen – Eisadler Dortmund",
   "treffpunkt": "2026-09-20T17:30:00+02:00"
- },
- "d8e87858a28ec2208a256ef9b27c9d954ea19e88@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-25T20:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "f491934c2fd10707cf6e1ea3887f1ca8df3c2b2c",
-  "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
-  "sequence": 0,
-  "slug": "caelers-fabian",
-  "stempel": "2026-09-17T17:30:38.957160+00:00",
-  "titel": "SR · BL FS · EHC Essen Ruhr – Dinslakener Kobras 1b",
-  "treffpunkt": "2026-09-25T19:00:00+02:00"
  },
  "dbeb5417849cd8a4c25f6fad4127c89b8be54876@esrw.de": {
   "aenderung": null,
@@ -2914,6 +2998,18 @@
   "stempel": "2026-09-17T17:30:38.957160+00:00",
   "titel": "SR · U15 LL · Eisadler Dortmund – ESC Darmstadt",
   "treffpunkt": "2026-09-26T12:30:00+02:00"
+ },
+ "e24991ff9078b0b6bdd8789bbc944f3290e3072c@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-26T20:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "8a5b10e0957d3004fd1b0b9f325503ccb7993906",
+  "ort": "Eissporthalle Neuss, Jakob-Koch-Straße 1, 41466 Neuss",
+  "sequence": 0,
+  "slug": "priebsch-jan-philipp",
+  "stempel": "2026-09-18T11:30:38.419991+00:00",
+  "titel": "HSR · U20 FS · Neusser EV – Ratinger Ice Aliens",
+  "treffpunkt": "2026-09-26T19:30:00+02:00"
  },
  "e2833e043243ea4ba7a02ca94ce68c851980d731@esrw.de": {
   "aenderung": "Rolle (vorher LSR)",
@@ -3142,6 +3238,30 @@
   "stempel": "2026-09-11T15:00:47.546895+00:00",
   "titel": "SR · U17 I · Iserlohner EC – ES Weißwasser",
   "treffpunkt": "2026-09-19T18:30:00+02:00"
+ },
+ "f7c2c4a688e51f1ebe1850d3b148e71262e5ac4b@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T08:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "120de357a868693f8a7572290a8ee941c75ded87",
+  "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+  "sequence": 0,
+  "slug": "bocklemuend-cid",
+  "stempel": "2026-09-18T11:30:38.419991+00:00",
+  "titel": "SR · U7 Rot · Düsseldorfer EG",
+  "treffpunkt": "2026-09-20T07:00:00+02:00"
+ },
+ "f89a46f01d99f49b301dfe136e2a9a743c64eef1@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-26T12:00:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "ca49f33d6ff73d3dd5b842f56712f11fa75f2d2d",
+  "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+  "sequence": 0,
+  "slug": "heffler-philipp",
+  "stempel": "2026-09-18T11:30:38.419991+00:00",
+  "titel": "SR · U15 RLA · Düsseldorfer EG – Krefelder EV",
+  "treffpunkt": "2026-09-26T11:00:00+02:00"
  },
  "f95ecf753a8cca2d859b41d200cbeedade481c28@esrw.de": {
   "aenderung": null,

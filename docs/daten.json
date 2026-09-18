@@ -2,9 +2,9 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 128,
+ "spiele_gesamt": 132,
  "saison": "2026/27",
- "archiv_spiele": 165,
+ "archiv_spiele": 170,
  "rollen": {
   "SR": "Schiedsrichter",
   "HSR": "Hauptschiedsrichter",
@@ -672,10 +672,10 @@
     "Bocklemünd, Cid"
    ],
    "statistik": {
-    "gesamt": 3,
-    "saison": 3,
+    "gesamt": 4,
+    "saison": 4,
     "rollen": {
-     "SR": 3
+     "SR": 4
     },
     "ligen": [
      [
@@ -689,6 +689,10 @@
      [
       "U13 RLB",
       1
+     ],
+     [
+      "U7 Rot",
+      1
      ]
     ],
     "hallen": [
@@ -698,6 +702,10 @@
      ],
      [
       "Kölnarena 2",
+      1
+     ],
+     [
+      "Eishalle Brehmstraße",
       1
      ]
     ],
@@ -713,16 +721,20 @@
      [
       "Starke, Matthias",
       1
+     ],
+     [
+      "Klemm, Julian",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      3
+      4
      ]
     ],
     "erste": "2026-09-05",
-    "letzte": "2026-09-12"
+    "letzte": "2026-09-20"
    },
    "spiele": [
     {
@@ -747,6 +759,31 @@
      ],
      "halle_erkannt": true,
      "vergangen": true,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-20T08:00:00+02:00",
+     "treffpunkt": "2026-09-20T07:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U7 Rot",
+     "paarung": "Düsseldorfer EG",
+     "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+     "halle": "Eishalle Brehmstraße",
+     "koordinaten": [
+      51.242557,
+      6.802144
+     ],
+     "gespann": [
+      {
+       "name": "Klemm, Julian",
+       "slug": "klemm-julian",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
      "aenderung": null,
      "hinweis": null
     }
@@ -787,7 +824,7 @@
     ],
     "partner": [
      [
-      "Licau, Sebastian",
+      "Caelers, Fabian",
       1
      ],
      [
@@ -849,8 +886,8 @@
      ],
      "gespann": [
       {
-       "name": "Licau, Sebastian",
-       "slug": "licau-sebastian",
+       "name": "Caelers, Fabian",
+       "slug": "caelers-fabian",
        "rolle": "HSR"
       },
       {
@@ -1156,10 +1193,14 @@
     "gesamt": 6,
     "saison": 6,
     "rollen": {
-     "SR": 4,
-     "HSR": 2
+     "SR": 3,
+     "HSR": 3
     },
     "ligen": [
+     [
+      "RL FS",
+      2
+     ],
      [
       "U15 RLA",
       1
@@ -1170,10 +1211,6 @@
      ],
      [
       "U20 RL",
-      1
-     ],
-     [
-      "BL FS",
       1
      ]
     ],
@@ -1191,7 +1228,7 @@
       1
      ],
      [
-      "Eissporthalle Essen-West",
+      "Eishalle Brehmstraße",
       1
      ]
     ],
@@ -1209,11 +1246,11 @@
       1
      ],
      [
-      "Malik, Orlando",
+      "Braun, Benjamin",
       1
      ],
      [
-      "Lindemans, Pepe",
+      "Leibfried, Raphael",
       1
      ]
     ],
@@ -1308,23 +1345,28 @@
      "hinweis": null
     },
     {
-     "beginn": "2026-09-25T20:00:00+02:00",
-     "treffpunkt": "2026-09-25T19:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "BL FS",
-     "paarung": "EHC Essen Ruhr – Dinslakener Kobras 1b",
-     "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
-     "halle": "Eissporthalle Essen-West",
+     "beginn": "2026-09-25T19:30:00+02:00",
+     "treffpunkt": "2026-09-25T18:30:00+02:00",
+     "rolle": "HSR",
+     "system": 3,
+     "liga": "RL FS",
+     "paarung": "Ratinger Ice Aliens – Grefrather EG",
+     "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+     "halle": "Eishalle Brehmstraße",
      "koordinaten": [
-      51.454179,
-      6.976731
+      51.242557,
+      6.802144
      ],
      "gespann": [
       {
-       "name": "Malik, Orlando",
-       "slug": "malik-orlando",
-       "rolle": "SR"
+       "name": "Braun, Benjamin",
+       "slug": "braun-benjamin",
+       "rolle": "LSR"
+      },
+      {
+       "name": "Leibfried, Raphael",
+       "slug": "leibfried-raphael",
+       "rolle": "LSR"
       }
      ],
      "halle_erkannt": true,
@@ -2794,15 +2836,19 @@
     "Heffler, Philipp"
    ],
    "statistik": {
-    "gesamt": 8,
-    "saison": 8,
+    "gesamt": 9,
+    "saison": 9,
     "rollen": {
-     "SR": 8
+     "SR": 9
     },
     "ligen": [
      [
       "U17 I",
       3
+     ],
+     [
+      "U15 RLA",
+      2
      ],
      [
       "U13 RLA",
@@ -2811,16 +2857,12 @@
      [
       "U17 II",
       1
-     ],
-     [
-      "U15 RLA",
-      1
      ]
     ],
     "hallen": [
      [
       "Eishalle Brehmstraße",
-      3
+      4
      ],
      [
       "Rheinlandhalle Krefeld",
@@ -2838,7 +2880,7 @@
     "partner": [
      [
       "Pacalaj, Erik",
-      2
+      3
      ],
      [
       "Schmidt, Waldemar",
@@ -2860,7 +2902,7 @@
     "je_saison": [
      [
       "2026/27",
-      8
+      9
      ]
     ],
     "erste": "2026-09-06",
@@ -2993,8 +3035,8 @@
      "hinweis": null
     },
     {
-     "beginn": "2026-09-26T13:30:00+02:00",
-     "treffpunkt": "2026-09-26T12:30:00+02:00",
+     "beginn": "2026-09-26T12:00:00+02:00",
+     "treffpunkt": "2026-09-26T11:00:00+02:00",
      "rolle": "SR",
      "system": 2,
      "liga": "U15 RLA",
@@ -5005,10 +5047,10 @@
     "Klemm, Julian"
    ],
    "statistik": {
-    "gesamt": 4,
-    "saison": 4,
+    "gesamt": 5,
+    "saison": 5,
     "rollen": {
-     "SR": 4
+     "SR": 5
     },
     "ligen": [
      [
@@ -5036,6 +5078,10 @@
      [
       "HELINET Eissportarena Hamm",
       1
+     ],
+     [
+      "Eishalle Brehmstraße",
+      1
      ]
     ],
     "partner": [
@@ -5050,12 +5096,16 @@
      [
       "Budzynski, Mika (N)",
       1
+     ],
+     [
+      "Bocklemünd, Cid",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      4
+      5
      ]
     ],
     "erste": "2026-09-19",
@@ -5079,6 +5129,31 @@
       {
        "name": "Honselmann, Tom (N)",
        "slug": "honselmann-tom",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-20T08:00:00+02:00",
+     "treffpunkt": "2026-09-20T07:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U7 Rot",
+     "paarung": "Düsseldorfer EG",
+     "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+     "halle": "Eishalle Brehmstraße",
+     "koordinaten": [
+      51.242557,
+      6.802144
+     ],
+     "gespann": [
+      {
+       "name": "Bocklemünd, Cid",
+       "slug": "bocklemuend-cid",
        "rolle": "SR"
       }
      ],
@@ -5876,7 +5951,7 @@
       1
      ],
      [
-      "Licau, Sebastian",
+      "Caelers, Fabian",
       1
      ],
      [
@@ -5959,8 +6034,8 @@
      ],
      "gespann": [
       {
-       "name": "Licau, Sebastian",
-       "slug": "licau-sebastian",
+       "name": "Caelers, Fabian",
+       "slug": "caelers-fabian",
        "rolle": "HSR"
       },
       {
@@ -6050,10 +6125,10 @@
     "Licau, Sebastian"
    ],
    "statistik": {
-    "gesamt": 4,
-    "saison": 4,
+    "gesamt": 3,
+    "saison": 3,
     "rollen": {
-     "HSR": 4
+     "HSR": 3
     },
     "ligen": [
      [
@@ -6062,17 +6137,13 @@
      ],
      [
       "RL FS",
-      2
+      1
      ]
     ],
     "hallen": [
      [
       "PreZero Rheinlandhalle Duisburg",
       2
-     ],
-     [
-      "Eishalle Brehmstraße",
-      1
      ],
      [
       "Eissporthalle Dinslaken",
@@ -6089,26 +6160,22 @@
       2
      ],
      [
-      "Braun, Benjamin",
-      1
-     ],
-     [
-      "Leibfried, Raphael",
-      1
-     ],
-     [
       "Quint, Sascha",
+      1
+     ],
+     [
+      "Stockenschneider, Lars",
       1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      4
+      3
      ]
     ],
     "erste": "2026-09-15",
-    "letzte": "2026-09-25"
+    "letzte": "2026-09-20"
    },
    "spiele": [
     {
@@ -6163,36 +6230,6 @@
       {
        "name": "Stockenschneider, Lars",
        "slug": "stockenschneider-lars",
-       "rolle": "LSR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": false,
-     "aenderung": null,
-     "hinweis": null
-    },
-    {
-     "beginn": "2026-09-25T19:30:00+02:00",
-     "treffpunkt": "2026-09-25T18:30:00+02:00",
-     "rolle": "HSR",
-     "system": 3,
-     "liga": "RL FS",
-     "paarung": "Ratinger Ice Aliens – Grefrather EG",
-     "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
-     "halle": "Eishalle Brehmstraße",
-     "koordinaten": [
-      51.242557,
-      6.802144
-     ],
-     "gespann": [
-      {
-       "name": "Braun, Benjamin",
-       "slug": "braun-benjamin",
-       "rolle": "LSR"
-      },
-      {
-       "name": "Leibfried, Raphael",
-       "slug": "leibfried-raphael",
        "rolle": "LSR"
       }
      ],
@@ -6422,7 +6459,7 @@
       1
      ],
      [
-      "Caelers, Fabian",
+      "Schlüter, Thomas",
       1
      ]
     ],
@@ -6581,8 +6618,8 @@
      ],
      "gespann": [
       {
-       "name": "Caelers, Fabian",
-       "slug": "caelers-fabian",
+       "name": "Schlüter, Thomas",
+       "slug": "schlueter-thomas",
        "rolle": "SR"
       }
      ],
@@ -7658,11 +7695,11 @@
     "Pacalaj, Erik"
    ],
    "statistik": {
-    "gesamt": 7,
-    "saison": 7,
+    "gesamt": 9,
+    "saison": 9,
     "rollen": {
-     "SR": 6,
-     "LSR": 1
+     "SR": 7,
+     "LSR": 2
     },
     "ligen": [
      [
@@ -7670,11 +7707,11 @@
       2
      ],
      [
-      "U20 FS",
-      1
+      "U15 RLA",
+      2
      ],
      [
-      "U15 RLA",
+      "U20 FS",
       1
      ],
      [
@@ -7685,7 +7722,7 @@
     "hallen": [
      [
       "Eishalle Brehmstraße",
-      2
+      3
      ],
      [
       "Rheinlandhalle Krefeld",
@@ -7703,7 +7740,7 @@
     "partner": [
      [
       "Heffler, Philipp",
-      2
+      3
      ],
      [
       "Heffler, Zsolt",
@@ -7725,11 +7762,11 @@
     "je_saison": [
      [
       "2026/27",
-      7
+      9
      ]
     ],
     "erste": "2026-09-05",
-    "letzte": "2026-09-26"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -7838,8 +7875,8 @@
      "hinweis": null
     },
     {
-     "beginn": "2026-09-26T13:30:00+02:00",
-     "treffpunkt": "2026-09-26T12:30:00+02:00",
+     "beginn": "2026-09-26T12:00:00+02:00",
+     "treffpunkt": "2026-09-26T11:00:00+02:00",
      "rolle": "SR",
      "system": 2,
      "liga": "U15 RLA",
@@ -7883,6 +7920,33 @@
       }
      ],
      "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T18:30:00+02:00",
+     "treffpunkt": "2026-09-27T17:30:00+02:00",
+     "rolle": "LSR",
+     "system": 3,
+     "liga": "RL FS",
+     "paarung": "ESV Bergkamen – Bremen",
+     "ort": "",
+     "halle": "",
+     "koordinaten": null,
+     "gespann": [
+      {
+       "name": "Steeg, Cedric",
+       "slug": "steeg-cedric",
+       "rolle": "HSR"
+      },
+      {
+       "name": "Schmidt, Waldemar",
+       "slug": "schmidt-waldemar",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": false,
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
@@ -8239,10 +8303,11 @@
     "Priebsch, Jan Philipp"
    ],
    "statistik": {
-    "gesamt": 2,
-    "saison": 2,
+    "gesamt": 3,
+    "saison": 3,
     "rollen": {
-     "SR": 2
+     "SR": 2,
+     "HSR": 1
     },
     "ligen": [
      [
@@ -8251,6 +8316,10 @@
      ],
      [
       "U15 RLA",
+      1
+     ],
+     [
+      "U20 FS",
       1
      ]
     ],
@@ -8262,6 +8331,10 @@
      [
       "Eissporthalle am Seilersee",
       1
+     ],
+     [
+      "Eissporthalle Neuss",
+      1
      ]
     ],
     "partner": [
@@ -8272,12 +8345,20 @@
      [
       "Licau, Alexander",
       1
+     ],
+     [
+      "Solbach, Carsten",
+      1
+     ],
+     [
+      "Schöche, Gian-Carlo",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      2
+      3
      ]
     ],
     "erste": "2026-09-13",
@@ -8306,6 +8387,36 @@
      ],
      "halle_erkannt": true,
      "vergangen": true,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T20:30:00+02:00",
+     "treffpunkt": "2026-09-26T19:30:00+02:00",
+     "rolle": "HSR",
+     "system": 3,
+     "liga": "U20 FS",
+     "paarung": "Neusser EV – Ratinger Ice Aliens",
+     "ort": "Eissporthalle Neuss, Jakob-Koch-Straße 1, 41466 Neuss",
+     "halle": "Eissporthalle Neuss",
+     "koordinaten": [
+      51.175806,
+      6.680258
+     ],
+     "gespann": [
+      {
+       "name": "Solbach, Carsten",
+       "slug": "solbach-carsten",
+       "rolle": "LSR"
+      },
+      {
+       "name": "Schöche, Gian-Carlo",
+       "slug": "schoeche-gian-carlo",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
      "aenderung": null,
      "hinweis": null
     },
@@ -8678,10 +8789,10 @@
     "Reuter, Rick"
    ],
    "statistik": {
-    "gesamt": 3,
-    "saison": 3,
+    "gesamt": 4,
+    "saison": 4,
     "rollen": {
-     "SR": 2,
+     "SR": 3,
      "LSR": 1
     },
     "ligen": [
@@ -8696,6 +8807,10 @@
      [
       "RL FS",
       1
+     ],
+     [
+      "U7 Blau",
+      1
      ]
     ],
     "hallen": [
@@ -8705,6 +8820,10 @@
      ],
      [
       "Eissporthalle Dinslaken",
+      1
+     ],
+     [
+      "Eishalle Brehmstraße",
       1
      ]
     ],
@@ -8724,16 +8843,20 @@
      [
       "Quint, Sascha",
       1
+     ],
+     [
+      "Victor, Tobias (N)",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      3
+      4
      ]
     ],
     "erste": "2026-09-05",
-    "letzte": "2026-09-25"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -8784,6 +8907,31 @@
        "name": "Quint, Sascha",
        "slug": "quint-sascha",
        "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T08:00:00+02:00",
+     "treffpunkt": "2026-09-27T07:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U7 Blau",
+     "paarung": "Düsseldorfer EG 1b",
+     "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+     "halle": "Eishalle Brehmstraße",
+     "koordinaten": [
+      51.242557,
+      6.802144
+     ],
+     "gespann": [
+      {
+       "name": "Victor, Tobias (N)",
+       "slug": "victor-tobias",
+       "rolle": "SR"
       }
      ],
      "halle_erkannt": true,
@@ -8916,14 +9064,18 @@
     "Schlüter, Thomas"
    ],
    "statistik": {
-    "gesamt": 9,
-    "saison": 9,
+    "gesamt": 10,
+    "saison": 10,
     "rollen": {
-     "SR": 9
+     "SR": 10
     },
     "ligen": [
      [
       "U9 RL",
+      2
+     ],
+     [
+      "BL FS",
       2
      ],
      [
@@ -8933,10 +9085,6 @@
      [
       "U9 LL Rot",
       1
-     ],
-     [
-      "U15 LL",
-      1
      ]
     ],
     "hallen": [
@@ -8945,15 +9093,15 @@
       2
      ],
      [
+      "Eissporthalle Essen-West",
+      2
+     ],
+     [
       "Eishalle Brehmstraße",
       1
      ],
      [
       "Gysenberghalle Herne",
-      1
-     ],
-     [
-      "ICEDOME Troisdorf",
       1
      ]
     ],
@@ -8967,22 +9115,22 @@
       1
      ],
      [
+      "Malik, Orlando",
+      1
+     ],
+     [
       "Pluschkell, Julian",
       1
      ],
      [
       "Solbach, Carsten",
       1
-     ],
-     [
-      "Budzynski, Mika (N)",
-      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      9
+      10
      ]
     ],
     "erste": "2026-09-04",
@@ -9165,6 +9313,31 @@
      "hinweis": null
     },
     {
+     "beginn": "2026-09-25T20:00:00+02:00",
+     "treffpunkt": "2026-09-25T19:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "BL FS",
+     "paarung": "EHC Essen Ruhr – Dinslakener Kobras 1b",
+     "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
+     "halle": "Eissporthalle Essen-West",
+     "koordinaten": [
+      51.454179,
+      6.976731
+     ],
+     "gespann": [
+      {
+       "name": "Malik, Orlando",
+       "slug": "malik-orlando",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
      "beginn": "2026-09-26T13:30:00+02:00",
      "treffpunkt": "2026-09-26T12:30:00+02:00",
      "rolle": "SR",
@@ -9331,16 +9504,16 @@
     "Schmidt, Waldemar"
    ],
    "statistik": {
-    "gesamt": 7,
-    "saison": 7,
+    "gesamt": 8,
+    "saison": 8,
     "rollen": {
-     "LSR": 1,
+     "LSR": 2,
      "SR": 6
     },
     "ligen": [
      [
       "RL FS",
-      1
+      2
      ],
      [
       "U13 FS",
@@ -9398,11 +9571,11 @@
     "je_saison": [
      [
       "2026/27",
-      7
+      8
      ]
     ],
     "erste": "2026-09-06",
-    "letzte": "2026-09-26"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -9556,6 +9729,33 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T18:30:00+02:00",
+     "treffpunkt": "2026-09-27T17:30:00+02:00",
+     "rolle": "LSR",
+     "system": 3,
+     "liga": "RL FS",
+     "paarung": "ESV Bergkamen – Bremen",
+     "ort": "",
+     "halle": "",
+     "koordinaten": null,
+     "gespann": [
+      {
+       "name": "Steeg, Cedric",
+       "slug": "steeg-cedric",
+       "rolle": "HSR"
+      },
+      {
+       "name": "Pacalaj, Erik",
+       "slug": "pacalaj-erik",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": false,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
     }
    ]
   },
@@ -9567,11 +9767,11 @@
     "Schöche, Gian-Carlo"
    ],
    "statistik": {
-    "gesamt": 12,
-    "saison": 12,
+    "gesamt": 13,
+    "saison": 13,
     "rollen": {
      "SR": 10,
-     "LSR": 2
+     "LSR": 3
     },
     "ligen": [
      [
@@ -9579,15 +9779,15 @@
       3
      ],
      [
+      "U20 FS",
+      2
+     ],
+     [
       "Frauen BZL",
       1
      ],
      [
       "RL FS",
-      1
-     ],
-     [
-      "BL FS",
       1
      ]
     ],
@@ -9634,11 +9834,11 @@
     "je_saison": [
      [
       "2026/27",
-      12
+      13
      ]
     ],
     "erste": "2026-09-04",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-26"
    },
    "spiele": [
     {
@@ -9844,6 +10044,36 @@
        "name": "Starke, Matthias",
        "slug": "starke-matthias",
        "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T20:30:00+02:00",
+     "treffpunkt": "2026-09-26T19:30:00+02:00",
+     "rolle": "LSR",
+     "system": 3,
+     "liga": "U20 FS",
+     "paarung": "Neusser EV – Ratinger Ice Aliens",
+     "ort": "Eissporthalle Neuss, Jakob-Koch-Straße 1, 41466 Neuss",
+     "halle": "Eissporthalle Neuss",
+     "koordinaten": [
+      51.175806,
+      6.680258
+     ],
+     "gespann": [
+      {
+       "name": "Priebsch, Jan Philipp",
+       "slug": "priebsch-jan-philipp",
+       "rolle": "HSR"
+      },
+      {
+       "name": "Solbach, Carsten",
+       "slug": "solbach-carsten",
+       "rolle": "LSR"
       }
      ],
      "halle_erkannt": true,
@@ -10198,10 +10428,11 @@
     "Solbach, Carsten"
    ],
    "statistik": {
-    "gesamt": 2,
-    "saison": 2,
+    "gesamt": 3,
+    "saison": 3,
     "rollen": {
-     "SR": 2
+     "SR": 2,
+     "LSR": 1
     },
     "ligen": [
      [
@@ -10210,6 +10441,10 @@
      ],
      [
       "U9 RL",
+      1
+     ],
+     [
+      "U20 FS",
       1
      ]
     ],
@@ -10221,6 +10456,10 @@
      [
       "ICEDOME Troisdorf",
       1
+     ],
+     [
+      "Eissporthalle Neuss",
+      1
      ]
     ],
     "partner": [
@@ -10231,12 +10470,20 @@
      [
       "Schlüter, Thomas",
       1
+     ],
+     [
+      "Priebsch, Jan Philipp",
+      1
+     ],
+     [
+      "Schöche, Gian-Carlo",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      2
+      3
      ]
     ],
     "erste": "2026-09-19",
@@ -10266,6 +10513,36 @@
      "halle_erkannt": true,
      "vergangen": false,
      "aenderung": "Ansetzung",
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-26T20:30:00+02:00",
+     "treffpunkt": "2026-09-26T19:30:00+02:00",
+     "rolle": "LSR",
+     "system": 3,
+     "liga": "U20 FS",
+     "paarung": "Neusser EV – Ratinger Ice Aliens",
+     "ort": "Eissporthalle Neuss, Jakob-Koch-Straße 1, 41466 Neuss",
+     "halle": "Eissporthalle Neuss",
+     "koordinaten": [
+      51.175806,
+      6.680258
+     ],
+     "gespann": [
+      {
+       "name": "Priebsch, Jan Philipp",
+       "slug": "priebsch-jan-philipp",
+       "rolle": "HSR"
+      },
+      {
+       "name": "Schöche, Gian-Carlo",
+       "slug": "schoeche-gian-carlo",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
      "hinweis": null
     },
     {
@@ -10568,10 +10845,11 @@
     "Steeg, Cedric"
    ],
    "statistik": {
-    "gesamt": 6,
-    "saison": 6,
+    "gesamt": 7,
+    "saison": 7,
     "rollen": {
-     "SR": 6
+     "SR": 6,
+     "HSR": 1
     },
     "ligen": [
      [
@@ -10621,16 +10899,20 @@
      [
       "Garbsch, René",
       1
+     ],
+     [
+      "Schmidt, Waldemar",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      6
+      7
      ]
     ],
     "erste": "2026-09-04",
-    "letzte": "2026-09-26"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -10754,6 +11036,33 @@
       }
      ],
      "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T18:30:00+02:00",
+     "treffpunkt": "2026-09-27T17:30:00+02:00",
+     "rolle": "HSR",
+     "system": 3,
+     "liga": "RL FS",
+     "paarung": "ESV Bergkamen – Bremen",
+     "ort": "",
+     "halle": "",
+     "koordinaten": null,
+     "gespann": [
+      {
+       "name": "Schmidt, Waldemar",
+       "slug": "schmidt-waldemar",
+       "rolle": "LSR"
+      },
+      {
+       "name": "Pacalaj, Erik",
+       "slug": "pacalaj-erik",
+       "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": false,
      "vergangen": false,
      "aenderung": null,
      "hinweis": null
@@ -11634,15 +11943,19 @@
     "Victor, Tobias (N)"
    ],
    "statistik": {
-    "gesamt": 3,
-    "saison": 3,
+    "gesamt": 4,
+    "saison": 4,
     "rollen": {
-     "SR": 3
+     "SR": 4
     },
     "ligen": [
      [
       "U13 LL",
       3
+     ],
+     [
+      "U7 Blau",
+      1
      ]
     ],
     "hallen": [
@@ -11656,6 +11969,10 @@
      ],
      [
       "PreZero Rheinlandhalle Duisburg",
+      1
+     ],
+     [
+      "Eishalle Brehmstraße",
       1
      ]
     ],
@@ -11671,16 +11988,20 @@
      [
       "Marks, Marcel",
       1
+     ],
+     [
+      "Reuter, Rick",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      3
+      4
      ]
     ],
     "erste": "2026-09-18",
-    "letzte": "2026-09-25"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -11750,6 +12071,31 @@
       {
        "name": "Hindley, David",
        "slug": "hindley-david",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T08:00:00+02:00",
+     "treffpunkt": "2026-09-27T07:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U7 Blau",
+     "paarung": "Düsseldorfer EG 1b",
+     "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+     "halle": "Eishalle Brehmstraße",
+     "koordinaten": [
+      51.242557,
+      6.802144
+     ],
+     "gespann": [
+      {
+       "name": "Reuter, Rick",
+       "slug": "reuter-rick",
        "rolle": "SR"
       }
      ],
@@ -14030,6 +14376,29 @@
    "vergangen": false
   },
   {
+   "beginn": "2026-09-20T08:00:00+02:00",
+   "treffpunkt": "2026-09-20T07:00:00+02:00",
+   "liga": "U7 Rot",
+   "paarung": "Düsseldorfer EG",
+   "halle": "Eishalle Brehmstraße",
+   "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Bocklemünd, Cid",
+     "rolle": "SR",
+     "slug": "bocklemuend-cid"
+    },
+    {
+     "name": "Klemm, Julian",
+     "rolle": "SR",
+     "slug": "klemm-julian"
+    }
+   ],
+   "vergangen": false
+  },
+  {
    "beginn": "2026-09-20T09:30:00+02:00",
    "treffpunkt": "2026-09-20T08:30:00+02:00",
    "liga": "U15 RLB",
@@ -14543,9 +14912,9 @@
    "system": 3,
    "besetzung": [
     {
-     "name": "Licau, Sebastian",
+     "name": "Caelers, Fabian",
      "rolle": "HSR",
-     "slug": "licau-sebastian"
+     "slug": "caelers-fabian"
     },
     {
      "name": "Braun, Benjamin",
@@ -14594,9 +14963,9 @@
    "system": 2,
    "besetzung": [
     {
-     "name": "Caelers, Fabian",
+     "name": "Schlüter, Thomas",
      "rolle": "SR",
-     "slug": "caelers-fabian"
+     "slug": "schlueter-thomas"
     },
     {
      "name": "Malik, Orlando",
@@ -14859,6 +15228,29 @@
    "vergangen": false
   },
   {
+   "beginn": "2026-09-26T12:00:00+02:00",
+   "treffpunkt": "2026-09-26T11:00:00+02:00",
+   "liga": "U15 RLA",
+   "paarung": "Düsseldorfer EG – Krefelder EV",
+   "halle": "Eishalle Brehmstraße",
+   "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Heffler, Philipp",
+     "rolle": "SR",
+     "slug": "heffler-philipp"
+    },
+    {
+     "name": "Pacalaj, Erik",
+     "rolle": "SR",
+     "slug": "pacalaj-erik"
+    }
+   ],
+   "vergangen": false
+  },
+  {
    "beginn": "2026-09-26T12:15:00+02:00",
    "treffpunkt": "2026-09-26T11:15:00+02:00",
    "liga": "U15 RLA",
@@ -14877,29 +15269,6 @@
      "name": "Steeg, Cedric",
      "rolle": "SR",
      "slug": "steeg-cedric"
-    }
-   ],
-   "vergangen": false
-  },
-  {
-   "beginn": "2026-09-26T13:30:00+02:00",
-   "treffpunkt": "2026-09-26T12:30:00+02:00",
-   "liga": "U15 RLA",
-   "paarung": "Düsseldorfer EG – Krefelder EV",
-   "halle": "Eishalle Brehmstraße",
-   "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Heffler, Philipp",
-     "rolle": "SR",
-     "slug": "heffler-philipp"
-    },
-    {
-     "name": "Pacalaj, Erik",
-     "rolle": "SR",
-     "slug": "pacalaj-erik"
     }
    ],
    "vergangen": false
@@ -15089,6 +15458,34 @@
    "vergangen": false
   },
   {
+   "beginn": "2026-09-26T20:30:00+02:00",
+   "treffpunkt": "2026-09-26T19:30:00+02:00",
+   "liga": "U20 FS",
+   "paarung": "Neusser EV – Ratinger Ice Aliens",
+   "halle": "Eissporthalle Neuss",
+   "ort": "Eissporthalle Neuss, Jakob-Koch-Straße 1, 41466 Neuss",
+   "halle_erkannt": true,
+   "system": 3,
+   "besetzung": [
+    {
+     "name": "Priebsch, Jan Philipp",
+     "rolle": "HSR",
+     "slug": "priebsch-jan-philipp"
+    },
+    {
+     "name": "Solbach, Carsten",
+     "rolle": "LSR",
+     "slug": "solbach-carsten"
+    },
+    {
+     "name": "Schöche, Gian-Carlo",
+     "rolle": "LSR",
+     "slug": "schoeche-gian-carlo"
+    }
+   ],
+   "vergangen": false
+  },
+  {
    "beginn": "2026-09-27T08:00:00+02:00",
    "treffpunkt": "2026-09-27T07:00:00+02:00",
    "liga": "U15 LL",
@@ -15107,6 +15504,29 @@
      "name": "Zynda, Nick",
      "rolle": "SR",
      "slug": "zynda-nick"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-27T08:00:00+02:00",
+   "treffpunkt": "2026-09-27T07:00:00+02:00",
+   "liga": "U7 Blau",
+   "paarung": "Düsseldorfer EG 1b",
+   "halle": "Eishalle Brehmstraße",
+   "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Reuter, Rick",
+     "rolle": "SR",
+     "slug": "reuter-rick"
+    },
+    {
+     "name": "Victor, Tobias (N)",
+     "rolle": "SR",
+     "slug": "victor-tobias"
     }
    ],
    "vergangen": false
@@ -15429,6 +15849,34 @@
      "name": "Zynda, Nick",
      "rolle": "SR",
      "slug": "zynda-nick"
+    }
+   ],
+   "vergangen": false
+  },
+  {
+   "beginn": "2026-09-27T18:30:00+02:00",
+   "treffpunkt": "2026-09-27T17:30:00+02:00",
+   "liga": "RL FS",
+   "paarung": "ESV Bergkamen – Bremen",
+   "halle": "",
+   "ort": "",
+   "halle_erkannt": false,
+   "system": 3,
+   "besetzung": [
+    {
+     "name": "Steeg, Cedric",
+     "rolle": "HSR",
+     "slug": "steeg-cedric"
+    },
+    {
+     "name": "Schmidt, Waldemar",
+     "rolle": "LSR",
+     "slug": "schmidt-waldemar"
+    },
+    {
+     "name": "Pacalaj, Erik",
+     "rolle": "LSR",
+     "slug": "pacalaj-erik"
     }
    ],
    "vergangen": false
