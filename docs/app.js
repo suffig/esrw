@@ -6,7 +6,7 @@
   var basis = location.href.split("#")[0].split("?")[0].replace(/index\.html$/, "").replace(/\/?$/, "/");
 
   // Wird einmal je Fassung gezeigt, damit die Kollegen neue Funktionen finden.
-  var NEUIGKEITEN = { version: "2026-09-17", punkte: [
+  var NEUIGKEITEN = { version: "2026-09-18", punkte: [
     "Fünf Reiter unten: Start · Spielplan · Tausch · Abrechnung · Mehr – Einstellungen und Diagnose unter Mehr",
     "Tipp auf ein Spiel öffnet die Spielseite: Route, Wetter, Gespann, Tausch, Hallen-Hinweise, Notiz",
     "Start: Wochenstreifen, Kacheln für Gesuche und Ankündigungen, Abfahrtszeit und Wetter",
@@ -21,6 +21,54 @@
 
   function lesen(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function schreiben(k, v) { try { v === null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (e) {} }
+
+  // ------------------------------------------------ Funktionen (Schalter)
+  // Der Betreiber schaltet unter Admin -> Funktionen an und ab; die Tabelle
+  // "funktionen" darf jeder lesen. Fehlt eine Zeile, gilt der Standard hier.
+  var FUNKTIONEN = [
+    ["tausch", "Tauschbörse", "Gesuche, Angebote, Vertretungs-Radar, Reiter „Tausch“ unten", false],
+    ["frei", "Verfügbarkeit", "Sperrtage, „gern pfeifen“, Mini-Kalender", false],
+    ["abrechnung", "Abrechnung", "km, Vergütung, Belege, Fahrtenbuch, Reiter unten", true],
+    ["info", "Info und Termine", "Ankündigungen vom Betreiber, Termine auf Start", true],
+    ["notizen", "Notizen", "private Spielnotizen", true],
+    ["gespann", "Gespann", "Gespann-Notizen, Handynummern, Fahrgemeinschaft", true],
+    ["hallen", "Hallen-Hinweise und Hallenkarte", "Parken, Kabinen, Karte aller Hallen", true],
+    ["statistik", "Statistik", "Saison, Archiv, Saisonziel, Saison-Bild", true],
+    ["checkliste", "Spieltag-Checkliste", "auf der Spielseite", true],
+    ["wetter", "Wetter", "auf Start und der Spielseite", true],
+    ["push", "Push-Mitteilungen", "Geräte anmelden, Erinnerungen, Testnachricht", true]
+  ];
+  var funktionenStand = null;
+  function funktionenLesen() {
+    if (funktionenStand) return funktionenStand;
+    try { funktionenStand = JSON.parse(lesen("funktionen") || "{}") || {}; } catch (e) { funktionenStand = {}; }
+    return funktionenStand;
+  }
+  function funktion(k) {
+    var f = funktionenLesen(); if (f[k] !== undefined) return !!f[k];
+    var d = FUNKTIONEN.filter(function (x) { return x[0] === k; })[0]; return d ? d[3] : true;
+  }
+  function funktionenAnwenden(obj, neuZeichnen) {
+    var vorher = JSON.stringify(funktionenLesen());
+    funktionenStand = obj || {}; schreiben("funktionen", JSON.stringify(funktionenStand));
+    FUNKTIONEN.forEach(function (f) { document.documentElement.classList.toggle("ohne-" + f[0], !funktion(f[0])); });
+    if (neuZeichnen && vorher !== JSON.stringify(funktionenStand) && typeof ausHash === "function" && daten) ausHash();
+  }
+  function funktionenLaden() {
+    funktionenAnwenden(funktionenLesen());
+    hole("supabase.json").then(function (cfg) {
+      cfg = cfg || {};
+      if (cfg.mock) { try { return JSON.parse(localStorage.getItem("mock_funktionen") || "[]"); } catch (e) { return []; } }
+      if (!cfg.url || !cfg.anon_key) return null;
+      return fetch(cfg.url.replace(/\/$/, "") + "/rest/v1/funktionen?select=schluessel,aktiv", { headers: { apikey: cfg.anon_key, Authorization: "Bearer " + cfg.anon_key } })
+        .then(function (r) { return r.ok ? r.json() : null; });
+    }).then(function (zeilen) {
+      if (!zeilen) return;
+      var o = {}; zeilen.forEach(function (z) { o[z.schluessel] = !!z.aktiv; });
+      funktionenAnwenden(o, true);
+    }).catch(function () {});
+  }
+  document.addEventListener("mg-funktionen", function (e) { funktionenAnwenden(e.detail || {}, true); });
   function profilLesen() {
     try { var roh = lesen("profil"); if (roh) return JSON.parse(roh); } catch (e) {}
     var alt = lesen("person");
@@ -542,8 +590,8 @@
     if (s.ort) { oz.appendChild(document.createTextNode(" · ")); var ad = document.createElement("span"); ad.className = "meta"; ad.style.display = "inline"; ad.textContent = s.ort.indexOf(s.halle + ", ") === 0 ? s.ort.slice(s.halle.length + 2) : s.ort; oz.appendChild(ad); oz.appendChild(document.createTextNode(" ")); oz.appendChild(kopierKnopf(s.ort)); }
     ort.appendChild(oz);
     var koord = daten.hallen && daten.hallen[s.halle];
-    if (koord && !s.vergangen) ort.appendChild(wetterZeile(koord, treff, "Wetter zum Treffpunkt"));
-    if (s.halle) { var hz = document.createElement("div"); hz.className = "meta"; hz.style.marginTop = "6px"; var hl = document.createElement("a"); hl.href = "#halle/" + hallenSlug(s.halle); hl.textContent = "Hallen-Hinweise, Route und alle Spiele dort ›"; hz.appendChild(hl); ort.appendChild(hz); ort._hinweisZeile = hz; }
+    if (koord && !s.vergangen && funktion("wetter")) ort.appendChild(wetterZeile(koord, treff, "Wetter zum Treffpunkt"));
+    if (s.halle) { var hz = document.createElement("div"); hz.className = "meta"; hz.style.marginTop = "6px"; var hl = document.createElement("a"); hl.href = "#halle/" + hallenSlug(s.halle); hl.textContent = (funktion("hallen") ? "Hallen-Hinweise, Route" : "Route") + " und alle Spiele dort ›"; hz.appendChild(hl); ort.appendChild(hz); ort._hinweisZeile = hz; }
     if (meins && s.halle) {
       ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.abfahrt(s.halle) : null; })
         .then(function (sk) { if (!sk || !sk.minuten) return; var ab = new Date(treff.getTime() - sk.minuten * 60000);
@@ -559,7 +607,7 @@
     else { var o = document.createElement("span"); o.className = "chip offen"; o.textContent = "noch nicht besetzt"; chips.appendChild(o); }
     wer.appendChild(chips);
 
-    if (meins && !s.vergangen) checkliste(karteAbschnitt("Spieltag-Checkliste"), s);
+    if (meins && !s.vergangen && funktion("checkliste")) checkliste(karteAbschnitt("Spieltag-Checkliste"), s);
 
     // Angemeldet: Hallen-Hinweise, Kontakte, Fahrgemeinschaft, Notiz
     var ex = karteAbschnitt(null);
@@ -571,7 +619,8 @@
       if (!st.eingerichtet || !st.session) {
         var p = document.createElement("p"); p.className = "meta"; p.style.margin = "0";
         var a = document.createElement("a"); a.href = "#mitglieder"; a.textContent = "Anmelden"; p.appendChild(a);
-        p.appendChild(document.createTextNode(" für Hallen-Hinweise, Kontakte, Fahrgemeinschaft und Notizen."));
+        p.appendChild(document.createTextNode(" für " + [funktion("hallen") ? "Hallen-Hinweise" : "", funktion("gespann") ? "Kontakte und Fahrgemeinschaft" : "", funktion("notizen") ? "Notizen" : ""].filter(Boolean).join(", ") + "."));
+        if (!funktion("hallen") && !funktion("gespann") && !funktion("notizen")) { ex.classList.add("versteckt"); return; }
         ex.classList.remove("versteckt"); ex.appendChild(p); return;
       }
       return window.Mitglieder.extrasLaden([s]).then(function (ok) {
@@ -592,13 +641,13 @@
       });
     }).catch(function () {});
 
-    if (meins && !s.vergangen) {
+    if (meins && !s.vergangen && funktion("tausch")) {
       var ta = karteAbschnitt("Tauschoptionen");
       var box = tauschBereich(s, personMit(profil.slug)); ta.appendChild(box); box.open = true;
     }
     if (meins) {
       var ab = karteAbschnitt("Weiteres");
-      var l = document.createElement("a"); l.href = "#mitglieder/abrechnung"; l.textContent = "Zur Abrechnung (km, Vergütung, bezahlt)"; ab.appendChild(l);
+      if (funktion("abrechnung")) { var l = document.createElement("a"); l.href = "#mitglieder/abrechnung"; l.textContent = "Zur Abrechnung (km, Vergütung, bezahlt)"; ab.appendChild(l); }
       if (!s.vergangen) {
         var mailZeile = document.createElement("div"); mailZeile.style.marginTop = "8px";
         var mail = document.createElement("a"); mail.href = "#"; mail.textContent = "Obmann anschreiben (Absage / Frage zu diesem Spiel)";
@@ -715,42 +764,27 @@
 
   function zeigeUebersicht(p) {
     zeigeStartWoche(p);
-    if (startEinstellung("radar")) zeigeRadar(p); else el("radar").innerHTML = "";
+    if (startEinstellung("radar") && funktion("tausch")) zeigeRadar(p); else el("radar").innerHTML = "";
     var ziel = el("uebersicht"); ziel.innerHTML = "";
-    if (!startEinstellung("kacheln") && !startEinstellung("termine")) return;
-    if (!profil || profil.slug !== p.slug) return;
-    var heute = new Date(); heute.setHours(0, 0, 0, 0);
-    var inSieben = p.spiele.filter(function (s) { var d = new Date(s.beginn); return d >= heute && d < new Date(heute.getTime() + 7 * 86400000); });
-    var kachelN = 0;
-    function kachel(wert, label, href, markiert) {
-      var a = document.createElement(href ? "a" : "div"); if (href) a.href = href;
-      var k = document.createElement("div"); k.className = "zahl karte" + (markiert ? " neu-markiert" : ""); k.style.setProperty("--i", kachelN++);
-      var b = document.createElement("b"); b.textContent = wert; var sp = document.createElement("span"); sp.textContent = label;
-      if (typeof wert === "number" && wert > 0 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) hochzaehlen(b, wert);
-      k.appendChild(b); k.appendChild(sp); a.appendChild(k); return a;
-    }
-    var mitKacheln = startEinstellung("kacheln");
-    if (mitKacheln) {
-      ziel.appendChild(kachel(inSieben.length, "Spiele in 7 Tagen" + (inSieben.length ? ": " + inSieben.map(function (s) { return wochentag[new Date(s.beginn).getDay()]; }).join(", ") : ""), "#plan"));
-      if (p.statistik) ziel.appendChild(kachel(p.statistik.saison, "Spiele diese Saison · Statistik ›", "#statistik/" + p.slug));
-    }
-    if (!sitzungVorhanden()) { if (mitKacheln) ziel.appendChild(kachel("→", "Anmelden für Tausch, Abrechnung, Info", "#mitglieder")); return; }
+    if (!profil || profil.slug !== p.slug || !sitzungVorhanden()) return;
     var lauf = ziel._lauf = {};
     ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
       .then(function (st) { if (st.eingerichtet && st.session) return window.Mitglieder.zaehler(); })
       .then(function (z) {
         if (!z || ziel._lauf !== lauf) return;
-        if (mitKacheln) ziel.appendChild(kachel(z.gesuche || 0, "offene Gesuche", "#mitglieder/tausch", z.gesuche > 0));
-        if (startEinstellung("termine")) window.Mitglieder.termine().then(function (t) {
+        if (startEinstellung("termine") && funktion("info")) window.Mitglieder.termine().then(function (t) {
           if (!t || !t.length || ziel._lauf !== lauf) return;
-          var box = document.createElement("a"); box.href = "#mitglieder/info"; box.style.gridColumn = "1 / -1";
+          var box = document.createElement("a"); box.href = "#mitglieder/info"; box.className = "termine-karte";
           var k = document.createElement("div"); k.className = "zahl karte"; k.style.textAlign = "left";
           var b = document.createElement("b"); b.textContent = "Nächste Termine"; k.appendChild(b);
           t.forEach(function (x) { var sp = document.createElement("span"); sp.textContent = x.termin.split("-").reverse().slice(0, 2).join(".") + ". · " + x.titel; sp.style.display = "block"; k.appendChild(sp); });
           box.appendChild(k); ziel.appendChild(box);
         });
-        if (mitKacheln) ziel.appendChild(kachel(z.info || 0, "neue Ankündigungen", "#mitglieder/info", z.info > 0));
-        if (z.wartend) ziel.appendChild(kachel(z.wartend, "warten auf Freischaltung", "#mitglieder/admin", true));
+        if (z.wartend) {
+          var hw = document.createElement("a"); hw.href = "#mitglieder/admin"; hw.className = "hinweis warn"; hw.style.display = "flex";
+          hw.appendChild(ikone("i-shield")); var t2 = document.createElement("span");
+          t2.textContent = z.wartend + (z.wartend === 1 ? " Konto wartet" : " Konten warten") + " auf Freischaltung ›"; hw.appendChild(t2); ziel.appendChild(hw);
+        }
       }).catch(function () {});
   }
 
@@ -826,7 +860,7 @@
       h.appendChild(dn);
     }
     var koord = daten.hallen && daten.hallen[s.halle];
-    if (koord && startEinstellung("wetter")) { var wz = wetterZeile(koord, s.treffpunkt, "Wetter"); wz.classList.add("danach"); h.appendChild(wz); }
+    if (koord && startEinstellung("wetter") && funktion("wetter")) { var wz = wetterZeile(koord, s.treffpunkt, "Wetter"); wz.classList.add("danach"); h.appendChild(wz); }
     h.classList.add("tippbar"); h.title = "Zum Spiel";
     h.addEventListener("click", function (ev) {
       if (ev.target.closest("a, button")) return;
@@ -853,7 +887,7 @@
   function zeigeNachtrag(p) {
     var ziel = el("nachtrag");
     ziel.innerHTML = "";
-    if (!profil || profil.slug !== p.slug) return;
+    if (!profil || profil.slug !== p.slug || !funktion("abrechnung")) return;
     var lauf = ziel._lauf = {};
     ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) {
       if (!st.eingerichtet || !st.session) return;
@@ -1358,7 +1392,9 @@
     var hs2 = document.createElement("small"); hs2.textContent = "aus dem Archiv, seit " + (s.erste || "?").split("-").reverse().join("."); h.appendChild(hs2); ziel.appendChild(h);
     saisonziel(p, ziel);
     var zahlen = document.createElement("div"); zahlen.className = "zahlen";
-    [["Saison " + (daten.saison || ""), s.saison], ["Insgesamt", s.gesamt], ["als HSR", (s.rollen && s.rollen["HSR"]) || 0]].forEach(function (paar) {
+    var heute = new Date(); heute.setHours(0, 0, 0, 0);
+    var inSieben = p.spiele.filter(function (x) { var d = new Date(x.beginn); return d >= heute && d < new Date(heute.getTime() + 7 * 86400000); }).length;
+    [["in 7 Tagen", inSieben], ["Saison " + (daten.saison || ""), s.saison], ["Insgesamt", s.gesamt], ["als HSR", (s.rollen && s.rollen["HSR"]) || 0]].forEach(function (paar) {
       var k = document.createElement("div"); k.className = "zahl karte";
       var b = document.createElement("b"); b.textContent = paar[1]; var t = document.createElement("span"); t.textContent = paar[0];
       k.appendChild(b); k.appendChild(t); zahlen.appendChild(k);
@@ -1475,6 +1511,8 @@
     el("uebernehmen").classList.toggle("versteckt", meins);
     el("uebernehmen").onclick = function () { profilSetzen(p); toast("„Start“ zeigt jetzt " + p.name, "gut"); };
     el("wechseln").classList.toggle("versteckt", !meins);
+    var pz = el("detail").querySelector(".spalte-haupt > .profilzeile"), haupt = pz && pz.parentNode;
+    if (haupt) { if (meins) haupt.insertBefore(pz, el("start-anpassen")); else haupt.insertBefore(pz, haupt.firstChild); }
     pinKnopf(p); kalenderSpalte();
     el("abo").href = feedUrl(p.slug, "webcal:");
     el("laden").onclick = function () { location.href = feedUrl(p.slug, location.protocol); };
@@ -1552,7 +1590,7 @@
     }
     return mitgliederGeladen;
   }
-  function mitgliederKontext() { return { daten: daten, slug: profil && profil.slug, personMit: personMit, hole: hole, ikone: ikone }; }
+  function mitgliederKontext() { return { daten: daten, slug: profil && profil.slug, personMit: personMit, hole: hole, ikone: ikone, funktion: funktion, funktionen: FUNKTIONEN }; }
   function zeigeMitglieder(reiter) {
     aktuell = null; ansicht("mitglieder");
     ladeMitglieder().then(function (M) { M.oeffnen(el("mitglieder"), mitgliederKontext(), reiter); })
@@ -1603,7 +1641,7 @@
         var h = document.createElement("div"); h.className = "hinweis gut"; h.appendChild(ikone("i-route"));
         var sp2 = document.createElement("span"); sp2.textContent = "Von zu Hause: " + sk.km + " km, ca. " + sk.minuten + " Min. ohne Verkehr."; h.appendChild(sp2); st.appendChild(h);
       });
-      window.Mitglieder.hallenHinweise(name, hw);
+      if (funktion("hallen")) window.Mitglieder.hallenHinweise(name, hw);
     }).catch(function () {});
     window.scrollTo(0, 0);
   }
@@ -1654,12 +1692,12 @@
     var liste = el("mehr-liste"); liste.innerHTML = "";
     var eintraege = [
       ["Gemeinsam"],
-      ["#mitglieder/info", "i-bell", "Info", "Ankündigungen vom Betreiber", "info"],
-      ["#mitglieder/frei", "i-cal", "Verfügbarkeit", "Wann du nicht kannst oder gern pfeifst"],
-      ["#karte", "i-pin", "Hallenkarte", "Alle Hallen auf der Karte"],
+      funktion("info") ? ["#mitglieder/info", "i-bell", "Info", "Ankündigungen vom Betreiber", "info"] : null,
+      funktion("frei") ? ["#mitglieder/frei", "i-cal", "Verfügbarkeit", "Wann du nicht kannst oder gern pfeifst"] : null,
+      funktion("hallen") ? ["#karte", "i-pin", "Hallenkarte", "Alle Hallen auf der Karte"] : null,
       ["Für dich"],
-      ["#statistik", "i-users", "Statistik", "Saison, Archiv, Saisonziel, Saison-Bild"],
-      ["#mitglieder/notizen", "i-note", "Notizen", "Private Spielnotizen"],
+      funktion("statistik") ? ["#statistik", "i-users", "Statistik", "Saison, Archiv, Saisonziel, Saison-Bild"] : null,
+      funktion("notizen") ? ["#mitglieder/notizen", "i-note", "Notizen", "Private Spielnotizen"] : null,
       ["Konto und App"],
       ["#mitglieder/konto", "i-key", "Konto", "Profil, Push, Passwort, Handynummer"],
       ["#einstellungen", "i-sun", "Einstellungen", "Startseite, Schrift, Farbe, Karten-App"],
@@ -1667,7 +1705,8 @@
       ["#status", "i-check", "Diagnose", "Für die Fehlersuche"]
     ];
     var links = {};
-    if (!sitzungVorhanden()) eintraege.unshift(["#mitglieder", "i-lock", "Anmelden", "Konto anlegen oder anmelden – für Tausch, Abrechnung, Info"]);
+    eintraege = eintraege.filter(Boolean).filter(function (e, i, a) { return e.length > 1 || (a[i + 1] && a[i + 1].length > 1); });
+    if (!sitzungVorhanden()) eintraege.unshift(["#mitglieder", "i-lock", "Anmelden", "Konto anlegen oder anmelden – für " + [funktion("tausch") ? "Tausch" : "", funktion("abrechnung") ? "Abrechnung" : "", funktion("info") ? "Info" : "", "Notizen"].filter(Boolean).join(", ")]);
     eintraege.forEach(function (e) {
       if (e.length === 1) { var g = document.createElement("div"); g.className = "menue-gruppe"; g.textContent = e[0]; liste.appendChild(g); return; }
       var a = document.createElement("a"); a.href = e[0]; a.appendChild(ikone(e[1]));
@@ -1908,6 +1947,9 @@
 
   function ausHash() {
     var slug = location.hash.replace(/^#/, "");
+    var gesperrt = { "mitglieder/tausch": "tausch", "mitglieder/frei": "frei", "mitglieder/abrechnung": "abrechnung", "mitglieder/info": "info", "mitglieder/notizen": "notizen", "karte": "hallen", "statistik": "statistik" };
+    var schl = gesperrt[slug] || (slug.indexOf("statistik/") === 0 ? "statistik" : null);
+    if (schl && !funktion(schl)) { toast("Zurzeit abgeschaltet: " + FUNKTIONEN.filter(function (f) { return f[0] === schl; })[0][1] + ".", "warn"); location.hash = slug.indexOf("mitglieder") === 0 ? "mitglieder" : "mehr"; return; }
     if (slug === "status") { zeigeStatus(); return; }
     if (slug.indexOf("statistik") === 0) { zeigeStatSeite(slug.split("/")[1] || (profil && profil.slug) || ""); return; }
     if (slug === "mehr") { zeigeMehr(); return; }
@@ -1939,13 +1981,12 @@
   // Nach dem Login im Mitgliederbereich: "Meine Spiele" auf den dort
   // gewaehlten Namen stellen, damit niemand zweimal gefragt wird.
   var START_BAUSTEINE = [
-    ["kacheln", "Kacheln", "Spiele in 7 Tagen, Gesuche, Ankündigungen, Statistik", true],
     ["danach", "„Danach“ auf der Karte oben", "das übernächste Spiel in einer Zeile", false],
-    ["wetter", "Wetter auf der Karte oben", "zum Treffpunkt, mit Glättehinweis", true],
+    ["wetter", "Wetter auf der Karte oben", "zum Treffpunkt, mit Glättehinweis", true, "wetter"],
     ["abfahrt", "Abfahrtszeit auf der Karte oben", "braucht die Heimatadresse im Konto", true],
     ["woche", "Wochenstreifen", "die nächsten sieben Tage mit Punkten", false],
-    ["termine", "Nächste Termine", "Ankündigungen mit Datum", true],
-    ["radar", "Vertretungs-Radar", "offene Spiele und Gesuche in der Nähe (Login)", false],
+    ["termine", "Nächste Termine", "Ankündigungen mit Datum", true, "info"],
+    ["radar", "Vertretungs-Radar", "offene Spiele und Gesuche in der Nähe (Login)", false, "tausch"],
     ["pins", "Angepinnte Kollegen", "Avatare unter dem Profil", true],
     ["kalender", "Kalender-Karte", "Abo, Link, Mitteilungen – zugeklappt, wenn abonniert", true],
     ["vergangene", "Vergangene Spiele", "eingeklappt unter deinen Spielen", true]
@@ -1957,6 +1998,7 @@
   function startBausteineRendern() {
     var box = el("start-bausteine"); if (!box) return; box.innerHTML = "";
     START_BAUSTEINE.forEach(function (b) {
+      if (b[4] && !funktion(b[4])) return;
       var l = document.createElement("label"); var t = document.createElement("span");
       var bb = document.createElement("b"); bb.textContent = b[1]; bb.style.display = "block"; var sm = document.createElement("small"); sm.textContent = b[2]; sm.style.color = "var(--dim)"; sm.style.fontWeight = "500";
       t.appendChild(bb); t.appendChild(sm);
@@ -2158,7 +2200,7 @@
       document.title = daten.titel; el("titel").textContent = (daten.titel || "Einteilungen").replace(/\s*ESRW\s*$/, ""); el("quelle").href = daten.quelle;
       standAnzeigen(daten, b[1]);
       el("fuss").textContent = "Termine beginnen " + daten.vorlauf_minuten + " Minuten vor Spielbeginn, damit du rechtzeitig an der Halle bist.";
-      einstellungenLaden(); filterLaden(); avatarKopf(); zeigeListe(""); ausHash(); zeigeInstallHinweis(); zeigeNeu(); filterHoehe(); netzAnzeigen();
+      einstellungenLaden(); filterLaden(); avatarKopf(); zeigeListe(""); funktionenLaden(); ausHash(); zeigeInstallHinweis(); zeigeNeu(); filterHoehe(); netzAnzeigen();
       setTimeout(zaehlerHolen, 1500);
     })
     .catch(function () { el("stand").className = "stand alt"; el("stand").textContent = "Daten konnten nicht geladen werden."; });

@@ -589,3 +589,27 @@ drop policy if exists "eigene Tests anlegen" on public.push_test;
 drop policy if exists "eigene Tests lesen"   on public.push_test;
 create policy "eigene Tests anlegen" on public.push_test for insert with check (auth.uid() = user_id);
 create policy "eigene Tests lesen"   on public.push_test for select using (auth.uid() = user_id);
+
+-- ======================================================================
+-- v10: Funktionen an- und abschaltbar (Admin -> Funktionen)
+-- ======================================================================
+-- Eine Zeile je Funktion; fehlt die Zeile, gilt der Standard aus der App.
+-- Lesen darf jeder (auch ohne Login, damit die Leiste unten stimmt),
+-- schreiben nur Admins.
+create table if not exists public.funktionen (
+  schluessel text primary key,
+  aktiv      boolean not null default true,
+  geaendert  timestamptz not null default now()
+);
+alter table public.funktionen enable row level security;
+drop policy if exists "Funktionen lesen"    on public.funktionen;
+drop policy if exists "Admin schaltet"      on public.funktionen;
+drop policy if exists "Admin legt an"       on public.funktionen;
+create policy "Funktionen lesen" on public.funktionen for select to anon, authenticated using (true);
+create policy "Admin schaltet"   on public.funktionen for update to authenticated using (public.ist_admin()) with check (public.ist_admin());
+create policy "Admin legt an"    on public.funktionen for insert to authenticated with check (public.ist_admin());
+grant select on public.funktionen to anon, authenticated;
+grant insert, update on public.funktionen to authenticated;
+-- Tauschboerse und Verfuegbarkeit starten abgeschaltet
+insert into public.funktionen (schluessel, aktiv) values ('tausch', false), ('frei', false)
+  on conflict (schluessel) do nothing;

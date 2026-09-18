@@ -232,6 +232,16 @@ def main():
     profile = api(url, service, "profile?select=id,slug,strecken&id=in.(%s)" % ",".join(ids)) or []
     profil_von = {p["id"]: p for p in profile}
 
+    # Abgeschaltete Funktionen (Admin -> Funktionen) bekommen keinen Push
+    funktionen = {}
+    try:
+        for z in api(url, service, "funktionen?select=schluessel,aktiv") or []:
+            funktionen[z["schluessel"]] = bool(z["aktiv"])
+    except Exception:
+        pass
+    def an(schluessel, standard=True):
+        return funktionen.get(schluessel, standard)
+
     # Was heute schon rausging (Erinnerungen), damit nichts doppelt kommt
     seit = (jetzt - timedelta(days=2)).astimezone(timezone.utc).isoformat()
     gesendet = api(url, service, "push_gesendet?select=user_id,schluessel&gesendet=gte." + urllib.parse.quote(seit)) or []
@@ -284,7 +294,8 @@ def main():
 
     # Gespann-Notizen: die anderen im Gespann bekommen Bescheid
     try:
-        neu = api(url, service, "spielkommentare?select=id,name,slug,paarung,beginn,gespann,text&gemeldet=eq.false") or []
+        neu = api(url, service, "spielkommentare?select=id,name,slug,paarung,beginn,gespann,text&gemeldet=eq.false") if an("gespann") else []
+        neu = neu or []
         if neu:
             slug_zu_uid = {}
             for p in api(url, service, "profile?select=id,slug&slug=in.(%s)" % ",".join(
@@ -323,7 +334,8 @@ def main():
     # Tauschboerse: Gesuch von selbst erledigt, wenn esrw.de jemand anderen
     # im Spiel fuehrt; Helfer bekommen Bescheid
     try:
-        gesuche_pflegen(url, service, daten, jetzt, nachrichten)
+        if an("tausch", False):
+            gesuche_pflegen(url, service, daten, jetzt, nachrichten)
     except Exception as e:
         print("Push: Tauschboerse nicht gepflegt: %s" % str(e)[:120], file=sys.stderr)
 

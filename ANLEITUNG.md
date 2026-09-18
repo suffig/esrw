@@ -890,7 +890,7 @@ Links (24 Stunden) werden beim Ankommen erklärt, ebenfalls mit diesem Knopf.
 
 | Reiter unten | Inhalt |
 |---|---|
-| Start | dein Profil, nächstes Spiel mit Wetter/Abfahrt, Kacheln (Spiele in 7 Tagen, Statistik, Gesuche, Ankündigungen), Termine, Pins, Kalender-Karte, deine Spiele – was davon erscheint, stellst du unter **Mehr → Einstellungen → Startseite** ein (Wochenstreifen, „Danach“ und Radar sind standardmäßig aus; der Link „Startseite anpassen“ steht auch unten auf Start) |
+| Start | nächstes Spiel mit Wetter/Abfahrt, Termine, Pins, Kalender-Karte, deine Spiele, ganz unten dein Profil mit „Wechseln“ – was davon erscheint, stellst du unter **Mehr → Einstellungen → Startseite** ein (Wochenstreifen, „Danach“ und Radar sind standardmäßig aus; der Link „Startseite anpassen“ steht auch unten auf Start). Die Zähl-Kacheln liegen jetzt in der Statistik („in 7 Tagen“) und als Zähler unter „Mehr“ |
 | Statistik | eigene Seite (Mehr → Statistik oder Kachel auf Start): Saison, Ligen, Hallen, Partner, Saisonziel, Archiv, Saison-Bild |
 | Spielplan | alle Spiele; Filter-Blatt (vergangene, unbesetzte, meine Hallen, meine Spiele, Ligen), Karten / Liste / Monat, Drucken |
 | Tausch | Tauschbörse (Login) |
@@ -941,6 +941,26 @@ Kollegen erscheinen als Avatare auf Start.
   steht nur im Kalender-Konto des Geräts (Einstellungen → Kalender → Accounts).
 * **Offline**: oranger Balken oben, Kalender/Spielplan/Spielseiten laufen aus
   dem Cache.
+
+### 10.6f Funktionen an- und abschalten (Schema v10)
+
+Unter **Mehr → Admin → Funktionen** schaltest du Bereiche für alle
+Mitglieder an oder ab: Tauschbörse, Verfügbarkeit, Abrechnung, Info und
+Termine, Notizen, Gespann (Gespann-Notizen, Handynummern, Fahrgemeinschaft),
+Hallen-Hinweise und Hallenkarte, Statistik, Spieltag-Checkliste, Wetter,
+Push. **Tauschbörse und Verfügbarkeit starten abgeschaltet** – einschalten,
+wenn genug Kollegen dabei sind.
+
+Abgeschaltete Bereiche verschwinden aus der Leiste unten, aus „Mehr“, von
+den Spielseiten und aus den Einstellungen; Links darauf landen mit einem
+Hinweis auf „Mehr“. Daten bleiben in der Datenbank, der Workflow schickt
+für abgeschaltete Bereiche keinen Push. Die Schalter liegen in der Tabelle
+`funktionen` (lesbar für alle, schreibbar nur für Admins) – dafür einmal
+`supabase/schema.sql` neu ausführen.
+
+Die Abrechnung zeigt oben nur noch Vergütung, Fahrtkosten und „noch offen“;
+Saison-Details, Steuerjahre, Werkzeuge (Strecken, Vergütung, CSV,
+Fahrtenbuch, Drucken) und die Rechenregeln klappen bei Bedarf auf.
 
 ### 10.7 Freischaltung neuer Konten
 

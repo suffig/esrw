@@ -257,12 +257,18 @@ verwalten mit Server-Test, Einstellungen im Konto synchron, Kalender-Link-
 Prüfung, Offline-Balken; Spielseite in Ligafarbe, ruhigere Startseite mit
 Wochenstreifen in der Karte oben, sanfte Übergänge (reduced-motion respektiert).
 
-**Startseite einstellbar**: Start zeigt nur das Wichtigste (Profil, nächstes
-Spiel, Kacheln, Termine, Pins, Kalender, eigene Spiele); jeder Baustein lässt
-sich unter Einstellungen → Startseite an- oder abschalten (Wochenstreifen,
-„Danach“, Radar sind standardmäßig aus), synchron über das Konto. „Mehr“
-ist in Gemeinsam / Für dich / Konto und App gruppiert, die Checkliste steht
-auf der Spielseite vor den Extras.
+**Startseite einstellbar**: Start zeigt nur das Wichtigste (nächstes
+Spiel, Termine, Pins, Kalender, eigene Spiele, Profil ganz unten); jeder
+Baustein lässt sich unter Einstellungen → Startseite an- oder abschalten
+(Wochenstreifen, „Danach“, Radar sind standardmäßig aus), synchron über das
+Konto. „Mehr“ ist in Gemeinsam / Für dich / Konto und App gruppiert, die
+Checkliste steht auf der Spielseite vor den Extras.
+
+**Funktionen schaltbar (Schema v10)**: Admin → Funktionen schaltet Tauschbörse,
+Verfügbarkeit, Abrechnung, Info, Notizen, Gespann, Hallen, Statistik,
+Checkliste, Wetter und Push für alle an oder ab (Tabelle `funktionen`, für
+alle lesbar, nur Admins schreiben). Tausch und Verfügbarkeit starten aus.
+Abrechnung aufgeräumt: Saldo oben, Details/Steuerjahre/Werkzeuge klappen auf.
 
 **Termine & Tausch abschließen**: Ankündigungen mit Datum erscheinen auf
 Start als „Nächste Termine“ (Push am Vortag); in der Tauschbörse nimmt der

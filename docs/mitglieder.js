@@ -138,6 +138,9 @@ window.Mitglieder = (function () {
     return box;
   }
   function frei() { return !!(sb && sb._attrappe) || !!(profil && (profil.freigeschaltet || profil.admin)); }
+  // Funktion vom Betreiber eingeschaltet? (Schalter kommen aus app.js)
+  function fn(k) { return ctx && ctx.funktion ? ctx.funktion(k) : true; }
+  var REITER_FUNKTION = { abrechnung: "abrechnung", info: "info", tausch: "tausch", frei: "frei", notizen: "notizen" };
 
   // --------------------------------------------------------- Attrappe
   //
@@ -546,10 +549,15 @@ window.Mitglieder = (function () {
       h("span", {}, [h("span", { class: "avatar-gross", text: initialen }), h("span", {}, [h("b", { text: profil.name || profil.slug }), h("small", { text: session.user.email })])]),
       h("button", { type: "button", class: "textknopf", text: "Abmelden", onclick: abmelden })
     ]));
-    if (!frei()) wurzel.appendChild(h("div", { class: "hinweis warn" }, [ikone("i-lock"),
-      h("span", { text: "Dein Konto wartet auf die Freischaltung durch den Betreiber. Abrechnung, Notizen und Push gehen schon; Tauschbörse, Verfügbarkeit, Hallen-Hinweise und Kontakte kommen nach der Freischaltung." })]));
+    if (!frei()) {
+      var sofort = [fn("abrechnung") ? "Abrechnung" : "", fn("notizen") ? "Notizen" : "", fn("push") ? "Push" : ""].filter(Boolean);
+      var spaeter = [fn("tausch") ? "Tauschbörse" : "", fn("frei") ? "Verfügbarkeit" : "", fn("hallen") ? "Hallen-Hinweise" : "", fn("gespann") ? "Kontakte" : "", fn("info") ? "Ankündigungen" : ""].filter(Boolean);
+      wurzel.appendChild(h("div", { class: "hinweis warn" }, [ikone("i-lock"),
+        h("span", { text: "Dein Konto wartet auf die Freischaltung durch den Betreiber." + (sofort.length ? " " + sofort.join(", ") + (sofort.length === 1 ? " geht" : " gehen") + " schon" : "") + (spaeter.length ? "; " + spaeter.join(", ") + (spaeter.length === 1 ? " kommt" : " kommen") + " nach der Freischaltung." : ".") })]));
+    }
     var leiste = h("div", { class: "mg-untertabs" });
-    var reiterListe = [["abrechnung", "Abrechnung", "i-euro"], ["info", "Info", "i-bell"], ["tausch", "Tausch", "i-swap"], ["frei", "Verfügbar", "i-cal"], ["notizen", "Notizen", "i-note"], ["konto", "Konto", "i-key"]];
+    var reiterListe = [["abrechnung", "Abrechnung", "i-euro"], ["info", "Info", "i-bell"], ["tausch", "Tausch", "i-swap"], ["frei", "Verfügbar", "i-cal"], ["notizen", "Notizen", "i-note"], ["konto", "Konto", "i-key"]]
+      .filter(function (t) { return !REITER_FUNKTION[t[0]] || fn(REITER_FUNKTION[t[0]]); });
     if (profil.admin) reiterListe.push(["admin", "Admin", "i-shield"]);
     reiterListe.forEach(function (t) {
       leiste.appendChild(h("button", { type: "button", "data-reiter": t[0], onclick: function () { zeigeReiter(t[0]); } }, [ikone(t[2]), t[1], h("span", { class: "zaehler versteckt" })]));
@@ -572,6 +580,10 @@ window.Mitglieder = (function () {
       if (aktiv && b.scrollIntoView) try { b.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" }); } catch (e) {}
     });
     leeren(inhalt);
+    if (REITER_FUNKTION[name] && !fn(REITER_FUNKTION[name])) {
+      inhalt.appendChild(h("p", { class: "leer", text: "Diese Funktion ist zurzeit abgeschaltet." + (profil.admin ? " Einschalten: Admin → Funktionen." : "") }));
+      return;
+    }
     if ((name === "tausch" || name === "frei" || name === "info") && !frei()) {
       inhalt.appendChild(h("p", { class: "leer", text: "Erst nach der Freischaltung durch den Betreiber." }));
       return;
@@ -944,15 +956,28 @@ window.Mitglieder = (function () {
     var jahre = [];
     spiele.forEach(function (sp) { var j = new Date(sp.beginn).getFullYear(); if (jahre.indexOf(j) < 0) jahre.push(j); });
     if (!jahre.length) jahre.push(new Date().getFullYear());
-    var neu = h("div", { class: "mg-summenblock" }, [summenBox("Saison " + (gewaehlteSaison || ""), summen(spiele))]);
+    // Oben nur das Wesentliche: Vergütung, Fahrtkosten, offen. Der Rest klappt auf.
+    var sS = summen(spiele);
+    var saldo = h("div", { class: "mg-saldo" });
+    [["Vergütung", euro(sS.verg), null, ""], ["Fahrtkosten", euro(sS.fahrt), null, ""],
+     ["noch offen", euro(sS.offen ? sS.offenBetrag : 0), function () { nurOffene = !nurOffene; rendereAbrechnung(); }, "offen" + (sS.offen ? "" : " fertig")]
+    ].forEach(function (p) {
+      var k = h("div", { class: "zahl karte " + p[3] + (p[2] ? " tippbar" : "") }, [h("b", { text: p[1] }), h("span", { text: p[0] + (p[0] === "noch offen" && sS.offen ? " (" + sS.offen + ")" : "") })]);
+      if (p[2]) { k.style.cursor = "pointer"; k.title = "Antippen: nur offene"; k.addEventListener("click", p[2]); }
+      saldo.appendChild(k);
+    });
+    var neu = h("div", { class: "mg-summenblock" }, [saldo]);
+    var det = h("details", { class: "mg-klapp" }, [h("summary", { text: "Saison " + (gewaehlteSaison || "") + " im Detail und Steuerjahre" })]);
+    det.appendChild(summenBox("Saison " + (gewaehlteSaison || ""), sS));
     jahre.sort().reverse().forEach(function (jahr) {
       var monate = [];
       for (var m = 0; m < 12; m++) {
         var s = summen(alle, function (sp) { var d = new Date(sp.beginn); return d.getFullYear() === jahr && d.getMonth() === m; });
         monate.push({ monat: m, spiele: s.spiele, verg: s.verg, km: s.km });
       }
-      neu.appendChild(summenBox("Steuerjahr " + jahr, summen(alle, function (sp) { return new Date(sp.beginn).getFullYear() === jahr; }), monate));
+      det.appendChild(summenBox("Steuerjahr " + jahr, summen(alle, function (sp) { return new Date(sp.beginn).getFullYear() === jahr; }), monate));
     });
+    neu.appendChild(det);
     alt.parentNode.replaceChild(neu, alt);
   }
 
@@ -1041,8 +1066,7 @@ window.Mitglieder = (function () {
     offenSchalter.checked = nurOffene;
     inhalt.appendChild(h("div", { class: "mg-form" }, [saisonWahl,
       h("div", { class: "schalterzeile" }, [
-        h("label", { class: "schalter" }, [offenSchalter, " nur unbezahlte / unvollständige"]),
-        h("button", { type: "button", class: "textknopf", text: "Drucken", onclick: function () { window.print(); } })
+        h("label", { class: "schalter" }, [offenSchalter, " nur unbezahlte / unvollständige"])
       ])]));
 
     inhalt.appendChild(h("div", { class: "mg-summenblock" }));
@@ -1075,9 +1099,12 @@ window.Mitglieder = (function () {
       meldung(n + " Spiele nach Gebührenordnung eingetragen" + (offen ? ", " + offen + " ohne Zuordnung (bitte von Hand)" : "") + ".", n ? "gut" : "warn");
       rendereAbrechnung();
     } });
-    inhalt.appendChild(h("div", { class: "zweit" }, [strecken, gebuehr,
-      h("button", { type: "button", text: "CSV", onclick: function () { csvExport(spiele); } }),
-      h("button", { type: "button", text: "Fahrtenbuch", onclick: function () { zeigeFahrtenbuch(); } })]));
+    inhalt.appendChild(h("details", { class: "mg-klapp" }, [h("summary", { text: "Werkzeuge: Strecken, Vergütung, CSV, Fahrtenbuch, Drucken" }),
+      h("p", { class: "meta", style: "margin:0 0 6px", text: "Vergangene Spiele bekommen km und Vergütung von selbst – die Knöpfe füllen nur, was noch fehlt." }),
+      h("div", { class: "zweit" }, [strecken, gebuehr,
+        h("button", { type: "button", text: "CSV", onclick: function () { csvExport(spiele); } }),
+        h("button", { type: "button", text: "Fahrtenbuch", onclick: function () { zeigeFahrtenbuch(); } }),
+        h("button", { type: "button", text: "Drucken", onclick: function () { window.print(); } })])]));
 
     var liste = spiele;
     if (nurOffene) liste = spiele.filter(function (sp) {
@@ -1112,12 +1139,12 @@ window.Mitglieder = (function () {
       inhalt.appendChild(eintrag(sp));
     });
 
-    inhalt.appendChild(h("p", { class: "meta mg-fuss", text:
+    inhalt.appendChild(h("details", { class: "mg-klapp" }, [h("summary", { text: "Wie wird gerechnet?" }), h("p", { class: "meta mg-fuss", text:
       "km = einfache Strecke Wohnung → Halle (Straßenkilometer, wenn berechnet; sonst Luftlinie × 1,3). " +
       "Vergütung nach ESRW-Gebührenordnung (" + ((gebuehren && gebuehren.stand) || "?") + "): " +
       "+20 % bei Spielbeginn bis 09:14 oder ab 21:46 Uhr, Zuschlag für landesverbandsübergreifenden " +
       "Einsatz in RL West / Frauen 2. Liga nur auf Anforderung, 50 % bei Ausfall vor Ort. Das ist eine " +
-      "Aufstellung für dich oder deinen Steuerberater; was davon steuerlich zählt, sagt sie nicht." }));
+      "Aufstellung für dich oder deinen Steuerberater; was davon steuerlich zählt, sagt sie nicht." })]));
 
     aktualisiereSummen();
   }
@@ -1571,12 +1598,16 @@ window.Mitglieder = (function () {
       h("p", {}, ["Name auf esrw.de, Heimatadresse, Kilometermodell und Sätze. Was auf der Startseite steht, Schrift und Farbe: ", h("a", { href: "#einstellungen", text: "App-Einstellungen" }), "."]),
       h("button", { type: "button", class: "haupt", text: "Einstellungen öffnen", onclick: function () { zeigeEinrichtung(true); } })
     ]));
-    var pushBox = h("div", { class: "melde karte" }, [h("h4", {}, [ikone("i-bell"), " Push-Benachrichtigungen ", h("span", { class: "status", text: "" })]), h("p", { text: "prüfe …" })]);
-    inhalt.appendChild(pushBox);
-    pushRendern(pushBox);
-    var kontaktBox = h("div", { class: "melde karte" }, [h("h4", { text: "Handynummer für Gespannkollegen" }), h("p", { text: "lade …" })]);
-    inhalt.appendChild(kontaktBox);
-    kontaktRendern(kontaktBox);
+    if (fn("push")) {
+      var pushBox = h("div", { class: "melde karte" }, [h("h4", {}, [ikone("i-bell"), " Push-Benachrichtigungen ", h("span", { class: "status", text: "" })]), h("p", { text: "prüfe …" })]);
+      inhalt.appendChild(pushBox);
+      pushRendern(pushBox);
+    }
+    if (fn("gespann")) {
+      var kontaktBox = h("div", { class: "melde karte" }, [h("h4", { text: "Handynummer für Gespannkollegen" }), h("p", { text: "lade …" })]);
+      inhalt.appendChild(kontaktBox);
+      kontaktRendern(kontaktBox);
+    }
 
     var neueMail = h("input", { type: "email", placeholder: "neue@adresse.de", autocomplete: "email" });
     inhalt.appendChild(h("div", { class: "melde karte" }, [
@@ -1853,14 +1884,16 @@ window.Mitglieder = (function () {
     var meineMitfahrt = (cache.mitfahrten[kennung] || []).filter(function (m) { return m.user_id === session.user.id; })[0];
     var notiz = cache.notizen[kennung];
     var kommentare = cache.kommentare[kennung] || [];
-    var kontakte = (spiel.gespann || []).map(function (g) { return g.slug && cache.kontakte[g.slug] ? { g: g, k: cache.kontakte[g.slug] } : null; }).filter(Boolean);
+    var kontakte = fn("gespann") ? (spiel.gespann || []).map(function (g) { return g.slug && cache.kontakte[g.slug] ? { g: g, k: cache.kontakte[g.slug] } : null; }).filter(Boolean) : [];
+    var mitHallen = !!spiel.halle && !ohneHalle && fn("hallen"), mitGespann = fn("gespann"), mitNotiz = istIch && fn("notizen");
+    if (!mitGespann) mitfahrten = [];
 
     var teile = [];
-    if (istIch) teile.push(kommentare.length ? kommentare.length + (kommentare.length === 1 ? " Gespann-Notiz" : " Gespann-Notizen") : "Gespann-Notiz");
-    if (spiel.halle && !ohneHalle) teile.push(hinweise.length ? hinweise.length + (hinweise.length === 1 ? " Hallen-Hinweis" : " Hallen-Hinweise") : "Halle");
+    if (istIch && mitGespann) teile.push(kommentare.length ? kommentare.length + (kommentare.length === 1 ? " Gespann-Notiz" : " Gespann-Notizen") : "Gespann-Notiz");
+    if (mitHallen) teile.push(hinweise.length ? hinweise.length + (hinweise.length === 1 ? " Hallen-Hinweis" : " Hallen-Hinweise") : "Halle");
     if (kontakte.length) teile.push(kontakte.length + " Kontakt" + (kontakte.length === 1 ? "" : "e"));
     if (mitfahrten.length) teile.push(mitfahrten.length + " Mitfahrt");
-    if (istIch) teile.push(notiz ? "Notiz ✓" : "Notiz");
+    if (mitNotiz) teile.push(notiz ? "Notiz ✓" : "Notiz");
     if (!teile.length) return;
 
     var box = h("details", { class: "tausch extras" }, [h("summary", { text: teile.join(" · ") })]);
@@ -1869,7 +1902,7 @@ window.Mitglieder = (function () {
       if (!box.open || innen.childNodes.length) return;
 
       // Hallen-Wiki (auf der Spielseite steht der Link oben in der Hallen-Karte)
-      if (spiel.halle && !ohneHalle) {
+      if (mitHallen) {
         innen.appendChild(h("h4", { text: "Hallen-Hinweise · " + spiel.halle }));
         if (!hinweise.length) innen.appendChild(h("p", { class: "meta", text: "Noch nichts eingetragen. Parken, Kabineneingang, Schlüssel, Kantine – was Kollegen wissen sollten." }));
         hinweise.forEach(function (n) {
@@ -1906,7 +1939,7 @@ window.Mitglieder = (function () {
       }
 
       // Fahrgemeinschaft
-      if (!spiel.vergangen) {
+      if (!spiel.vergangen && mitGespann) {
         innen.appendChild(h("h4", { text: "Fahrgemeinschaft" }));
         mitfahrten.forEach(function (m) {
           innen.appendChild(h("div", { class: "kandidat" }, [h("div", { text: m.text }), h("div", { class: "meta", text: m.name })]));
@@ -1927,7 +1960,7 @@ window.Mitglieder = (function () {
       }
 
       // Gespann-Notizen: nur fuer die, die im Spiel stehen
-      if (istIch) {
+      if (istIch && mitGespann) {
         innen.appendChild(h("h4", { text: "Gespann-Notizen (sehen nur die Kollegen im Spiel)" }));
         if (!kommentare.length) innen.appendChild(h("p", { class: "meta", text: "Noch nichts – „Ich bringe die Pucks“, „Parke hinten“, „Bin 10 Min. später“. Die Kollegen bekommen Push." }));
         kommentare.forEach(function (k) {
@@ -1949,7 +1982,7 @@ window.Mitglieder = (function () {
       }
 
       // Private Notiz
-      if (istIch) {
+      if (mitNotiz) {
         innen.appendChild(h("h4", { text: "Meine Notiz (nur für mich)" }));
         var ta = h("textarea", { rows: "3", placeholder: "Vorkommnisse, Strafen, Lernpunkte …", maxlength: "4000" });
         ta.value = notiz ? notiz.text : "";
@@ -2020,11 +2053,46 @@ window.Mitglieder = (function () {
   // ---- Admin: neue Konten freischalten
 
   function zeigeAdmin() {
+    var fbox = h("div", { class: "melde karte" }, [h("h4", {}, [ikone("i-check"), " Funktionen"]), skelett(1)]);
+    inhalt.appendChild(fbox);
+    funktionenRendern(fbox);
     var box = h("div", { class: "melde karte" }, [h("h4", { text: "Freischaltung" }), skelett(1)]);
     inhalt.appendChild(box);
     adminRendern(box);
     inhalt.appendChild(h("p", { class: "meta mg-fuss", text: "Freigeschaltete sehen Tauschbörse, Verfügbarkeiten, Hallen-Hinweise, Kontakte und Mitfahrten. " +
       "Admins können außerdem freischalten und weitere Admins ernennen. Das eigene Admin-Recht lässt sich hier nicht entfernen – dafür SQL im Supabase-Dashboard." }));
+  }
+
+  // Admin -> Funktionen: Schalter je Funktion, Tabelle "funktionen"
+  function funktionenRendern(box) {
+    var liste = (ctx && ctx.funktionen) || [];
+    sb.from("funktionen").select("schluessel,aktiv").then(function (r) {
+      if (r.error) throw r.error;
+      var stand = {}; (r.data || []).forEach(function (z) { stand[z.schluessel] = !!z.aktiv; });
+      function aktiv(k) { var d = liste.filter(function (f) { return f[0] === k; })[0]; return stand[k] !== undefined ? stand[k] : (d ? d[3] : true); }
+      leeren(box);
+      box.appendChild(h("h4", {}, [ikone("i-check"), " Funktionen"]));
+      box.appendChild(h("p", { class: "meta", text: "Gilt für alle Mitglieder, sofort nach dem Umschalten. Abgeschaltete Bereiche verschwinden aus Leiste, „Mehr“ und den Spielseiten; eingetragene Daten bleiben erhalten." }));
+      liste.forEach(function (f) {
+        var c = h("input", { type: "checkbox" }); c.checked = aktiv(f[0]);
+        c.addEventListener("change", function () {
+          c.disabled = true;
+          sb.from("funktionen").upsert({ schluessel: f[0], aktiv: c.checked, geaendert: new Date().toISOString() }, { onConflict: "schluessel" }).then(function (r2) {
+            c.disabled = false;
+            if (r2.error) { c.checked = !c.checked; meldung(fehlerText(r2.error), "warn"); return; }
+            stand[f[0]] = c.checked;
+            var alle = {}; liste.forEach(function (g) { alle[g[0]] = aktiv(g[0]); });
+            kurzMeldung(f[1] + (c.checked ? " eingeschaltet ✓" : " abgeschaltet"), "gut");
+            document.dispatchEvent(new CustomEvent("mg-funktionen", { detail: alle }));
+          });
+        });
+        box.appendChild(h("label", { class: "mg-funktion" }, [h("span", {}, [h("b", { text: f[1] }), h("small", { text: f[2] })]), c]));
+      });
+    }).catch(function (e) {
+      leeren(box);
+      box.appendChild(h("h4", {}, [ikone("i-check"), " Funktionen"]));
+      box.appendChild(h("p", { class: "achtung", text: "Tabelle „funktionen“ fehlt – bitte supabase/schema.sql (v10) einmal ausführen. " + fehlerText(e) }));
+    });
   }
 
   // Zaehler fuer Reiter und die Leiste unten: offene Gesuche, wartende Konten
@@ -2033,9 +2101,9 @@ window.Mitglieder = (function () {
     return ladeProfil().then(function () {
       var z = { angemeldet: true, gesuche: 0, wartend: 0, info: 0, admin: !!(profil && profil.admin) };
       var laeufe = [];
-      if (frei()) laeufe.push(sb.from("gesuche").select("id,user_id").eq("status", "offen").gte("beginn", new Date(Date.now() - 6 * 3600000).toISOString())
+      if (frei() && fn("tausch")) laeufe.push(sb.from("gesuche").select("id,user_id").eq("status", "offen").gte("beginn", new Date(Date.now() - 6 * 3600000).toISOString())
         .then(function (r) { z.gesuche = (r.data || []).filter(function (g) { return g.user_id !== session.user.id; }).length; }));
-      if (frei()) laeufe.push(sb.from("ankuendigungen").select("id").then(function (r) {
+      if (frei() && fn("info")) laeufe.push(sb.from("ankuendigungen").select("id").then(function (r) {
         var gelesen = gelesenLesen(); z.info = (r.data || []).filter(function (a) { return !gelesen[a.id]; }).length;
       }).catch(function () {}));
       if (profil && profil.admin) laeufe.push(sb.from("profile").select("id,freigeschaltet,admin").eq("freigeschaltet", false)
@@ -2303,6 +2371,7 @@ window.Mitglieder = (function () {
 
   function hallenHinweise(halle, ziel) {
     leeren(ziel);
+    if (!fn("hallen")) return;
     if (!session || !frei()) { ziel.appendChild(h("p", { class: "meta", text: "Hallen-Hinweise gibt es nach der Freischaltung." })); return; }
     extrasLaden([{ halle: halle, beginn: "", paarung: "", gespann: [] }]).then(function () {
       var liste = cache.hallen[halle] || [];

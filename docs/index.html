@@ -648,6 +648,29 @@
   .profilzeile > span:first-child { display:flex; align-items:center; gap:10px; min-width:0; }
   .profilzeile > span:first-child > span { min-width:0; }
   .profilzeile > span:first-child:not(:has(.avatar-gross)) { display:block; }
+  /* Abgeschaltete Funktionen (Admin -> Funktionen) */
+  html.ohne-tausch #tab-tausch, html.ohne-abrechnung #tab-abrechnung { display:none !important; }
+  #uebersicht .termine-karte { display:block; }
+  #uebersicht .termine-karte .zahl { text-align:left; }
+  #uebersicht .hinweis { text-decoration:none; color:inherit; margin-top:8px; }
+  .spalte-haupt > .profilzeile:not(:first-child) { margin-top:14px; }
+  /* Abrechnung: Werkzeuge und Steuerjahre eingeklappt */
+  .mg-saldo { display:flex; gap:10px; align-items:stretch; margin:10px 0 4px; }
+  .mg-saldo .zahl { flex:1; padding:10px 12px; }
+  .mg-saldo .zahl b { font-size:1.15rem; }
+  .mg-saldo .zahl.offen b { color:var(--rot); }
+  .mg-saldo .zahl.offen.fertig b { color:var(--gut, #1a7f37); }
+  details.mg-klapp { margin:8px 0; }
+  details.mg-klapp > summary { cursor:pointer; font-weight:700; padding:8px 0; list-style:none; display:flex; align-items:center; gap:6px; }
+  details.mg-klapp > summary::-webkit-details-marker { display:none; }
+  details.mg-klapp > summary::after { content:"›"; margin-left:auto; transform:rotate(90deg); color:var(--dim); transition:transform .2s; }
+  details.mg-klapp[open] > summary::after { transform:rotate(-90deg); }
+  details.mg-klapp .zweit { margin-top:4px; }
+  .mg-funktion { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:8px 0; border-bottom:1px solid var(--linie); }
+  .mg-funktion:last-child { border-bottom:0; }
+  .mg-funktion b { display:block; }
+  .mg-funktion small { color:var(--dim); display:block; }
+  .mg-funktion input { width:20px; height:20px; flex:none; accent-color:var(--akzent); }
   .profilzeile b { display:block; line-height:1.2; }
   .zurueck { display:inline-flex; align-items:center; gap:4px; }
 
@@ -1135,6 +1158,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=32"></script>
+<script src="app.js?v=33"></script>
 </body>
 </html>
