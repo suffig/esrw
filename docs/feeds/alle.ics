@@ -1925,18 +1925,24 @@ END:VEVENT
 BEGIN:VEVENT
 UID:a63397541e3b80f9068fcffc56b20bd66d642783@esrw.de
 SEQUENCE:0
-DTSTAMP:20260916T070046Z
-LAST-MODIFIED:20260916T070046Z
+DTSTAMP:20260918T173202Z
+LAST-MODIFIED:20260918T173202Z
 DTSTART:20260920T153000Z
 DTEND:20260920T190000Z
-SUMMARY:RL FS · ESV Grizzlys Bergkamen – Eisadler Dortmund
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
-  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\n!! Halle nicht automatis
- ch erkannt - bitte selbst pruefen !!\nGespann: Stocker\, Quirin (HSR) / Sc
- hmidt\, Waldemar (LSR)\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ RL FS · ESV Grizzlys Bergkamen – Eisadler Dortmund
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Linienrichter (LSR)\nSpi
+ elbeginn: 18:30 Uhr\nTreffpunkt: 17:30 Uhr (60 Min vor Spielbeginn)\nLiga:
+  RL FS\nHalle: Eissporthalle Bergkamen\nAdresse: Häupenweg 29\, 59192 Ber
+ gkamen\nGespann: Stocker\, Quirin (HSR) / Schmidt\, Waldemar (LSR)\n\nQuel
+ le: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
@@ -2383,18 +2389,24 @@ END:VEVENT
 BEGIN:VEVENT
 UID:f34581c4fadef154a063c5df1857013d1caf6db4@esrw.de
 SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
+DTSTAMP:20260918T173202Z
+LAST-MODIFIED:20260918T173202Z
 DTSTART:20260926T073000Z
 DTEND:20260926T110000Z
-SUMMARY:U17 LL · ESV Grizzlys Bergkamen – ESC Darmstadt
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
-  09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\n!! Halle nicht automati
- sch erkannt - bitte selbst pruefen !!\nGespann: Klemm\, Julian\n\nQuelle: 
- https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ U17 LL · ESV Grizzlys Bergkamen – ESC Darmstadt
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
+ elbeginn: 10:30 Uhr\nTreffpunkt: 09:30 Uhr (60 Min vor Spielbeginn)\nLiga:
+  U17 LL\nHalle: Eissporthalle Bergkamen\nAdresse: Häupenweg 29\, 59192 Be
+ rgkamen\nGespann: Klemm\, Julian\n\nQuelle: https://www.esrw.de/einteilung
+ en.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
@@ -2594,18 +2606,24 @@ END:VEVENT
 BEGIN:VEVENT
 UID:fea40f8dd88e5525b261e8a10a93ffd6dd480bd3@esrw.de
 SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
+DTSTAMP:20260918T173202Z
+LAST-MODIFIED:20260918T173202Z
 DTSTART:20260926T143000Z
 DTEND:20260926T180000Z
-SUMMARY:Frauen BZL · ESV Grizzlys Bergkamen – Herforder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
-  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\n!! Halle nicht auto
- matisch erkannt - bitte selbst pruefen !!\nGespann: Zynda\, Jayden\nVergü
- tung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ Frauen BZL · ESV Grizzlys Bergkamen – Herforder EV
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
+ elbeginn: 17:30 Uhr\nTreffpunkt: 16:30 Uhr (60 Min vor Spielbeginn)\nLiga:
+  Frauen BZL\nHalle: Eissporthalle Bergkamen\nAdresse: Häupenweg 29\, 5919
+ 2 Bergkamen\nGespann: Zynda\, Jayden\nVergütung lt. Ordnung: 95 €\n\nQu
+ elle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
@@ -2778,18 +2796,24 @@ END:VEVENT
 BEGIN:VEVENT
 UID:744f734e1abbed2d39592f15956c2654562d1985@esrw.de
 SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
+DTSTAMP:20260918T173202Z
+LAST-MODIFIED:20260918T173202Z
 DTSTART:20260927T060000Z
 DTEND:20260927T093000Z
-SUMMARY:U13 LL · ESV Grizzlys Bergkamen – Ratinger Ice Aliens
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
-  08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\n!! Halle nicht automati
- sch erkannt - bitte selbst pruefen !!\nGespann: Malik\, Orlando\n\nQuelle:
-  https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ U13 LL · ESV Grizzlys Bergkamen – Ratinger Ice Aliens
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
+ elbeginn: 09:00 Uhr\nTreffpunkt: 08:00 Uhr (60 Min vor Spielbeginn)\nLiga:
+  U13 LL\nHalle: Eissporthalle Bergkamen\nAdresse: Häupenweg 29\, 59192 Be
+ rgkamen\nGespann: Malik\, Orlando\n\nQuelle: https://www.esrw.de/einteilun
+ gen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
@@ -3152,18 +3176,24 @@ END:VEVENT
 BEGIN:VEVENT
 UID:dd8b42a3a3ade553175d87168f9c60f6bce9bab0@esrw.de
 SEQUENCE:0
-DTSTAMP:20260918T113038Z
-LAST-MODIFIED:20260918T113038Z
+DTSTAMP:20260918T173202Z
+LAST-MODIFIED:20260918T173202Z
 DTSTART:20260927T153000Z
 DTEND:20260927T190000Z
-SUMMARY:RL FS · ESV Bergkamen – Bremen
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
-  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\n!! Halle nicht automatis
- ch erkannt - bitte selbst pruefen !!\nGespann: Steeg\, Cedric (HSR) / Schm
- idt\, Waldemar (LSR)\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ RL FS · ESV Bergkamen – Bremen
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Linienrichter (LSR)\nSpi
+ elbeginn: 18:30 Uhr\nTreffpunkt: 17:30 Uhr (60 Min vor Spielbeginn)\nLiga:
+  RL FS\nHalle: Eissporthalle Bergkamen\nAdresse: Häupenweg 29\, 59192 Ber
+ gkamen\nGespann: Steeg\, Cedric (HSR) / Schmidt\, Waldemar (LSR)\n\nQuelle
+ : https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H

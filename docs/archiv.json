@@ -200,7 +200,7 @@
     "beginn": "2026-09-27T09:00:00+02:00",
     "liga": "U13 LL",
     "paarung": "ESV Grizzlys Bergkamen – Ratinger Ice Aliens",
-    "halle": "",
+    "halle": "Eissporthalle Bergkamen",
     "rolle": "SR",
     "system": 2
    },
@@ -392,7 +392,7 @@
     "beginn": "2026-09-26T10:30:00+02:00",
     "liga": "U17 LL",
     "paarung": "ESV Grizzlys Bergkamen – ESC Darmstadt",
-    "halle": "",
+    "halle": "Eissporthalle Bergkamen",
     "rolle": "SR",
     "system": 2
    },
@@ -925,7 +925,7 @@
     "beginn": "2026-09-20T18:30:00+02:00",
     "liga": "RL FS",
     "paarung": "ESV Grizzlys Bergkamen – Eisadler Dortmund",
-    "halle": "",
+    "halle": "Eissporthalle Bergkamen",
     "rolle": "LSR",
     "system": 3
    },
@@ -1307,7 +1307,7 @@
     "beginn": "2026-09-26T10:30:00+02:00",
     "liga": "U17 LL",
     "paarung": "ESV Grizzlys Bergkamen – ESC Darmstadt",
-    "halle": "",
+    "halle": "Eissporthalle Bergkamen",
     "rolle": "SR",
     "system": 2
    },
@@ -1581,7 +1581,7 @@
     "beginn": "2026-09-27T09:00:00+02:00",
     "liga": "U13 LL",
     "paarung": "ESV Grizzlys Bergkamen – Ratinger Ice Aliens",
-    "halle": "",
+    "halle": "Eissporthalle Bergkamen",
     "rolle": "SR",
     "system": 2
    },
@@ -1939,7 +1939,7 @@
     "beginn": "2026-09-27T18:30:00+02:00",
     "liga": "RL FS",
     "paarung": "ESV Bergkamen – Bremen",
-    "halle": "",
+    "halle": "Eissporthalle Bergkamen",
     "rolle": "LSR",
     "system": 3
    },
@@ -2411,7 +2411,7 @@
     "beginn": "2026-09-27T18:30:00+02:00",
     "liga": "RL FS",
     "paarung": "ESV Bergkamen – Bremen",
-    "halle": "",
+    "halle": "Eissporthalle Bergkamen",
     "rolle": "LSR",
     "system": 3
    },
@@ -2429,7 +2429,7 @@
     "beginn": "2026-09-20T18:30:00+02:00",
     "liga": "RL FS",
     "paarung": "ESV Grizzlys Bergkamen – Eisadler Dortmund",
-    "halle": "",
+    "halle": "Eissporthalle Bergkamen",
     "rolle": "LSR",
     "system": 3
    },
@@ -2613,7 +2613,7 @@
     "beginn": "2026-09-26T17:30:00+02:00",
     "liga": "Frauen BZL",
     "paarung": "ESV Grizzlys Bergkamen – Herforder EV",
-    "halle": "",
+    "halle": "Eissporthalle Bergkamen",
     "rolle": "SR",
     "system": 2
    },
@@ -2803,7 +2803,7 @@
     "beginn": "2026-09-27T18:30:00+02:00",
     "liga": "RL FS",
     "paarung": "ESV Bergkamen – Bremen",
-    "halle": "",
+    "halle": "Eissporthalle Bergkamen",
     "rolle": "HSR",
     "system": 3
    },
@@ -2935,7 +2935,7 @@
     "beginn": "2026-09-20T18:30:00+02:00",
     "liga": "RL FS",
     "paarung": "ESV Grizzlys Bergkamen – Eisadler Dortmund",
-    "halle": "",
+    "halle": "Eissporthalle Bergkamen",
     "rolle": "HSR",
     "system": 3
    },
@@ -3203,7 +3203,7 @@
     "beginn": "2026-09-26T17:30:00+02:00",
     "liga": "Frauen BZL",
     "paarung": "ESV Grizzlys Bergkamen – Herforder EV",
-    "halle": "",
+    "halle": "Eissporthalle Bergkamen",
     "rolle": "SR",
     "system": 2
    },

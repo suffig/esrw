@@ -982,6 +982,10 @@
      [
       "Eishalle Im Kleinen Felde",
       4
+     ],
+     [
+      "Eissporthalle Bergkamen",
+      1
      ]
     ],
     "partner": [
@@ -1123,9 +1127,12 @@
      "system": 2,
      "liga": "U13 LL",
      "paarung": "ESV Grizzlys Bergkamen – Ratinger Ice Aliens",
-     "ort": "",
-     "halle": "",
-     "koordinaten": null,
+     "ort": "Eissporthalle Bergkamen, Häupenweg 29, 59192 Bergkamen",
+     "halle": "Eissporthalle Bergkamen",
+     "koordinaten": [
+      51.602578,
+      7.626858
+     ],
      "gespann": [
       {
        "name": "Malik, Orlando",
@@ -1133,9 +1140,9 @@
        "rolle": "SR"
       }
      ],
-     "halle_erkannt": false,
+     "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-09-27T09:00:00+02:00|ESV Grizzlys Bergkamen – Ratinger Ice Aliens",
      "korrektur": null,
@@ -1867,6 +1874,10 @@
       2
      ],
      [
+      "Eissporthalle Bergkamen",
+      1
+     ],
+     [
       "Eissportzentrum Westfalen",
       1
      ]
@@ -1966,9 +1977,12 @@
      "system": 2,
      "liga": "U17 LL",
      "paarung": "ESV Grizzlys Bergkamen – ESC Darmstadt",
-     "ort": "",
-     "halle": "",
-     "koordinaten": null,
+     "ort": "Eissporthalle Bergkamen, Häupenweg 29, 59192 Bergkamen",
+     "halle": "Eissporthalle Bergkamen",
+     "koordinaten": [
+      51.602578,
+      7.626858
+     ],
      "gespann": [
       {
        "name": "Klemm, Julian",
@@ -1976,9 +1990,9 @@
        "rolle": "SR"
       }
      ],
-     "halle_erkannt": false,
+     "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-09-26T10:30:00+02:00|ESV Grizzlys Bergkamen – ESC Darmstadt",
      "korrektur": null,
@@ -3689,6 +3703,10 @@
       2
      ],
      [
+      "Eissporthalle Bergkamen",
+      1
+     ],
+     [
       "HELINET Eissportarena Hamm",
       1
      ],
@@ -3792,9 +3810,12 @@
      "system": 3,
      "liga": "RL FS",
      "paarung": "ESV Grizzlys Bergkamen – Eisadler Dortmund",
-     "ort": "",
-     "halle": "",
-     "koordinaten": null,
+     "ort": "Eissporthalle Bergkamen, Häupenweg 29, 59192 Bergkamen",
+     "halle": "Eissporthalle Bergkamen",
+     "koordinaten": [
+      51.602578,
+      7.626858
+     ],
      "gespann": [
       {
        "name": "Stocker, Quirin",
@@ -3807,9 +3828,9 @@
        "rolle": "LSR"
       }
      ],
-     "halle_erkannt": false,
+     "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-09-20T18:30:00+02:00|ESV Grizzlys Bergkamen – Eisadler Dortmund",
      "korrektur": null,
@@ -5375,6 +5396,10 @@
       2
      ],
      [
+      "Eissporthalle Bergkamen",
+      1
+     ],
+     [
       "Eishalle Brehmstraße",
       1
      ],
@@ -5474,9 +5499,12 @@
      "system": 2,
      "liga": "U17 LL",
      "paarung": "ESV Grizzlys Bergkamen – ESC Darmstadt",
-     "ort": "",
-     "halle": "",
-     "koordinaten": null,
+     "ort": "Eissporthalle Bergkamen, Häupenweg 29, 59192 Bergkamen",
+     "halle": "Eissporthalle Bergkamen",
+     "koordinaten": [
+      51.602578,
+      7.626858
+     ],
      "gespann": [
       {
        "name": "Galeske, Jonas",
@@ -5484,9 +5512,9 @@
        "rolle": "SR"
       }
      ],
-     "halle_erkannt": false,
+     "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-09-26T10:30:00+02:00|ESV Grizzlys Bergkamen – ESC Darmstadt",
      "korrektur": null,
@@ -6814,7 +6842,7 @@
       1
      ],
      [
-      "Eissporthalle Essen-West",
+      "Eissporthalle Bergkamen",
       1
      ]
     ],
@@ -7030,9 +7058,12 @@
      "system": 2,
      "liga": "U13 LL",
      "paarung": "ESV Grizzlys Bergkamen – Ratinger Ice Aliens",
-     "ort": "",
-     "halle": "",
-     "koordinaten": null,
+     "ort": "Eissporthalle Bergkamen, Häupenweg 29, 59192 Bergkamen",
+     "halle": "Eissporthalle Bergkamen",
+     "koordinaten": [
+      51.602578,
+      7.626858
+     ],
      "gespann": [
       {
        "name": "Brücker, Tobias",
@@ -7040,9 +7071,9 @@
        "rolle": "SR"
       }
      ],
-     "halle_erkannt": false,
+     "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-09-27T09:00:00+02:00|ESV Grizzlys Bergkamen – Ratinger Ice Aliens",
      "korrektur": null,
@@ -8385,9 +8416,12 @@
      "system": 3,
      "liga": "RL FS",
      "paarung": "ESV Bergkamen – Bremen",
-     "ort": "",
-     "halle": "",
-     "koordinaten": null,
+     "ort": "Eissporthalle Bergkamen, Häupenweg 29, 59192 Bergkamen",
+     "halle": "Eissporthalle Bergkamen",
+     "koordinaten": [
+      51.602578,
+      7.626858
+     ],
      "gespann": [
       {
        "name": "Steeg, Cedric",
@@ -8400,9 +8434,9 @@
        "rolle": "LSR"
       }
      ],
-     "halle_erkannt": false,
+     "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-09-27T18:30:00+02:00|ESV Bergkamen – Bremen",
      "korrektur": null,
@@ -10086,6 +10120,10 @@
     ],
     "hallen": [
      [
+      "Eissporthalle Bergkamen",
+      2
+     ],
+     [
       "Eissporthalle Dinslaken",
       2
      ],
@@ -10095,10 +10133,6 @@
      ],
      [
       "PreZero Rheinlandhalle Duisburg",
-      1
-     ],
-     [
-      "Gysenberghalle Herne",
       1
      ]
     ],
@@ -10253,9 +10287,12 @@
      "system": 3,
      "liga": "RL FS",
      "paarung": "ESV Grizzlys Bergkamen – Eisadler Dortmund",
-     "ort": "",
-     "halle": "",
-     "koordinaten": null,
+     "ort": "Eissporthalle Bergkamen, Häupenweg 29, 59192 Bergkamen",
+     "halle": "Eissporthalle Bergkamen",
+     "koordinaten": [
+      51.602578,
+      7.626858
+     ],
      "gespann": [
       {
        "name": "Stocker, Quirin",
@@ -10268,9 +10305,9 @@
        "rolle": "LSR"
       }
      ],
-     "halle_erkannt": false,
+     "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-09-20T18:30:00+02:00|ESV Grizzlys Bergkamen – Eisadler Dortmund",
      "korrektur": null,
@@ -10311,9 +10348,12 @@
      "system": 3,
      "liga": "RL FS",
      "paarung": "ESV Bergkamen – Bremen",
-     "ort": "",
-     "halle": "",
-     "koordinaten": null,
+     "ort": "Eissporthalle Bergkamen, Häupenweg 29, 59192 Bergkamen",
+     "halle": "Eissporthalle Bergkamen",
+     "koordinaten": [
+      51.602578,
+      7.626858
+     ],
      "gespann": [
       {
        "name": "Steeg, Cedric",
@@ -10326,9 +10366,9 @@
        "rolle": "LSR"
       }
      ],
-     "halle_erkannt": false,
+     "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-09-27T18:30:00+02:00|ESV Bergkamen – Bremen",
      "korrektur": null,
@@ -10724,15 +10764,15 @@
       1
      ],
      [
+      "Eissporthalle Bergkamen",
+      1
+     ],
+     [
       "PreZero Rheinlandhalle Duisburg",
       1
      ],
      [
       "Eissportzentrum Westfalen",
-      1
-     ],
-     [
-      "Eissporthalle Essen-West",
       1
      ]
     ],
@@ -10775,9 +10815,12 @@
      "system": 2,
      "liga": "Frauen BZL",
      "paarung": "ESV Grizzlys Bergkamen – Herforder EV",
-     "ort": "",
-     "halle": "",
-     "koordinaten": null,
+     "ort": "Eissporthalle Bergkamen, Häupenweg 29, 59192 Bergkamen",
+     "halle": "Eissporthalle Bergkamen",
+     "koordinaten": [
+      51.602578,
+      7.626858
+     ],
      "gespann": [
       {
        "name": "Zynda, Jayden",
@@ -10785,9 +10828,9 @@
        "rolle": "SR"
       }
      ],
-     "halle_erkannt": false,
+     "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-09-26T17:30:00+02:00|ESV Grizzlys Bergkamen – Herforder EV",
      "korrektur": null,
@@ -11503,6 +11546,10 @@
       2
      ],
      [
+      "Eissporthalle Bergkamen",
+      1
+     ],
+     [
       "HELINET Eissportarena Hamm",
       1
      ]
@@ -11658,9 +11705,12 @@
      "system": 3,
      "liga": "RL FS",
      "paarung": "ESV Bergkamen – Bremen",
-     "ort": "",
-     "halle": "",
-     "koordinaten": null,
+     "ort": "Eissporthalle Bergkamen, Häupenweg 29, 59192 Bergkamen",
+     "halle": "Eissporthalle Bergkamen",
+     "koordinaten": [
+      51.602578,
+      7.626858
+     ],
      "gespann": [
       {
        "name": "Schmidt, Waldemar",
@@ -11673,9 +11723,9 @@
        "rolle": "LSR"
       }
      ],
-     "halle_erkannt": false,
+     "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-09-27T18:30:00+02:00|ESV Bergkamen – Bremen",
      "korrektur": null,
@@ -12005,6 +12055,10 @@
     ],
     "hallen": [
      [
+      "Eissporthalle Bergkamen",
+      1
+     ],
+     [
       "PreZero Rheinlandhalle Duisburg",
       1
      ],
@@ -12112,9 +12166,12 @@
      "system": 3,
      "liga": "RL FS",
      "paarung": "ESV Grizzlys Bergkamen – Eisadler Dortmund",
-     "ort": "",
-     "halle": "",
-     "koordinaten": null,
+     "ort": "Eissporthalle Bergkamen, Häupenweg 29, 59192 Bergkamen",
+     "halle": "Eissporthalle Bergkamen",
+     "koordinaten": [
+      51.602578,
+      7.626858
+     ],
      "gespann": [
       {
        "name": "Heu, Alexander",
@@ -12127,9 +12184,9 @@
        "rolle": "LSR"
       }
      ],
-     "halle_erkannt": false,
+     "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-09-20T18:30:00+02:00|ESV Grizzlys Bergkamen – Eisadler Dortmund",
      "korrektur": null,
@@ -13145,6 +13202,10 @@
      [
       "Eissportzentrum Westfalen",
       2
+     ],
+     [
+      "Eissporthalle Bergkamen",
+      1
      ]
     ],
     "partner": [
@@ -13326,9 +13387,12 @@
      "system": 2,
      "liga": "Frauen BZL",
      "paarung": "ESV Grizzlys Bergkamen – Herforder EV",
-     "ort": "",
-     "halle": "",
-     "koordinaten": null,
+     "ort": "Eissporthalle Bergkamen, Häupenweg 29, 59192 Bergkamen",
+     "halle": "Eissporthalle Bergkamen",
+     "koordinaten": [
+      51.602578,
+      7.626858
+     ],
      "gespann": [
       {
        "name": "Scholz, Arien",
@@ -13336,9 +13400,9 @@
        "rolle": "SR"
       }
      ],
-     "halle_erkannt": false,
+     "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-09-26T17:30:00+02:00|ESV Grizzlys Bergkamen – Herforder EV",
      "korrektur": null,
@@ -15678,9 +15742,9 @@
    "treffpunkt": "2026-09-20T17:30:00+02:00",
    "liga": "RL FS",
    "paarung": "ESV Grizzlys Bergkamen – Eisadler Dortmund",
-   "halle": "",
-   "ort": "",
-   "halle_erkannt": false,
+   "halle": "Eissporthalle Bergkamen",
+   "ort": "Eissporthalle Bergkamen, Häupenweg 29, 59192 Bergkamen",
+   "halle_erkannt": true,
    "system": 3,
    "besetzung": [
     {
@@ -16150,9 +16214,9 @@
    "treffpunkt": "2026-09-26T09:30:00+02:00",
    "liga": "U17 LL",
    "paarung": "ESV Grizzlys Bergkamen – ESC Darmstadt",
-   "halle": "",
-   "ort": "",
-   "halle_erkannt": false,
+   "halle": "Eissporthalle Bergkamen",
+   "ort": "Eissporthalle Bergkamen, Häupenweg 29, 59192 Bergkamen",
+   "halle_erkannt": true,
    "system": 2,
    "besetzung": [
     {
@@ -16373,9 +16437,9 @@
    "treffpunkt": "2026-09-26T16:30:00+02:00",
    "liga": "Frauen BZL",
    "paarung": "ESV Grizzlys Bergkamen – Herforder EV",
-   "halle": "",
-   "ort": "",
-   "halle_erkannt": false,
+   "halle": "Eissporthalle Bergkamen",
+   "ort": "Eissporthalle Bergkamen, Häupenweg 29, 59192 Bergkamen",
+   "halle_erkannt": true,
    "system": 2,
    "besetzung": [
     {
@@ -16560,9 +16624,9 @@
    "treffpunkt": "2026-09-27T08:00:00+02:00",
    "liga": "U13 LL",
    "paarung": "ESV Grizzlys Bergkamen – Ratinger Ice Aliens",
-   "halle": "",
-   "ort": "",
-   "halle_erkannt": false,
+   "halle": "Eissporthalle Bergkamen",
+   "ort": "Eissporthalle Bergkamen, Häupenweg 29, 59192 Bergkamen",
+   "halle_erkannt": true,
    "system": 2,
    "besetzung": [
     {
@@ -16924,9 +16988,9 @@
    "treffpunkt": "2026-09-27T17:30:00+02:00",
    "liga": "RL FS",
    "paarung": "ESV Bergkamen – Bremen",
-   "halle": "",
-   "ort": "",
-   "halle_erkannt": false,
+   "halle": "Eissporthalle Bergkamen",
+   "ort": "Eissporthalle Bergkamen, Häupenweg 29, 59192 Bergkamen",
+   "halle_erkannt": true,
    "system": 3,
    "besetzung": [
     {

@@ -167,19 +167,25 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:2cf2f2c2286de519baa758f73ff4c19e158993c8@esrw.de
-SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
+SEQUENCE:1
+DTSTAMP:20260918T173202Z
+LAST-MODIFIED:20260918T173202Z
 DTSTART:20260927T060000Z
 DTEND:20260927T093000Z
-SUMMARY:SR · U13 LL · ESV Grizzlys Bergkamen – Ratinger Ice Aliens
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
-  08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\n!! Halle nicht automati
- sch erkannt - bitte selbst pruefen !!\nGespann: Brücker\, Tobias\n\nQuell
- e: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ SR · U13 LL · ESV Grizzlys Bergkamen – Ratinger Ice Aliens
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
+ elbeginn: 09:00 Uhr\nTreffpunkt: 08:00 Uhr (60 Min vor Spielbeginn)\nLiga:
+  U13 LL\nHalle: Eissporthalle Bergkamen\nAdresse: Häupenweg 29\, 59192 Be
+ rgkamen\nGespann: Brücker\, Tobias\n\nQuelle: https://www.esrw.de/einteil
+ ungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H

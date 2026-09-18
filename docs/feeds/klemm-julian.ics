@@ -64,19 +64,25 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:9cdc95535693dd118fe4737cae9fea4aae78851b@esrw.de
-SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
+SEQUENCE:1
+DTSTAMP:20260918T173202Z
+LAST-MODIFIED:20260918T173202Z
 DTSTART:20260926T073000Z
 DTEND:20260926T110000Z
-SUMMARY:SR · U17 LL · ESV Grizzlys Bergkamen – ESC Darmstadt
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
-  09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\n!! Halle nicht automati
- sch erkannt - bitte selbst pruefen !!\nGespann: Galeske\, Jonas\n\nQuelle:
-  https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ SR · U17 LL · ESV Grizzlys Bergkamen – ESC Darmstadt
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
+ elbeginn: 10:30 Uhr\nTreffpunkt: 09:30 Uhr (60 Min vor Spielbeginn)\nLiga:
+  U17 LL\nHalle: Eissporthalle Bergkamen\nAdresse: Häupenweg 29\, 59192 Be
+ rgkamen\nGespann: Galeske\, Jonas\n\nQuelle: https://www.esrw.de/einteilun
+ gen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
