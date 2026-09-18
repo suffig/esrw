@@ -890,15 +890,20 @@ Links (24 Stunden) werden beim Ankommen erklärt, ebenfalls mit diesem Knopf.
 
 | Reiter unten | Inhalt |
 |---|---|
-| Start | dein Profil, nächstes Spiel mit Wetter/Abfahrt, Kacheln (Spiele in 7 Tagen, Gesuche, Ankündigungen), Kalender-Karte, deine Spiele, Statistik mit Saisonziel |
+| Start | dein Profil, Pins (bis drei Kollegen), nächstes Spiel mit Wetter/Abfahrt und Wochenstreifen, Kacheln (Spiele in 7 Tagen, Statistik, Gesuche, Ankündigungen), Termine, Radar, Kalender-Karte, deine Spiele |
+| Statistik | eigene Seite (Mehr → Statistik oder Kachel auf Start): Saison, Ligen, Hallen, Partner, Saisonziel, Archiv, Saison-Bild |
 | Spielplan | alle Spiele; Filter-Blatt (vergangene, unbesetzte, meine Hallen, meine Spiele, Ligen), Karten / Liste / Monat, Drucken |
 | Tausch | Tauschbörse (Login) |
 | Abrechnung | Abrechnung, Fahrtenbuch, CSV (Login) |
 | Mehr | Info, Verfügbarkeit, Notizen, Konto, Admin, Hallenkarte, Einstellungen, Diagnose |
 
-Ein Tipp auf ein Spiel öffnet die **Spielseite**: Route, Adresse kopieren,
-Teilen, Wetter zum Treffpunkt, Abfahrt, Gespann mit Kontakt, Hallen-Hinweise,
-Fahrgemeinschaft, Notiz, Tauschoptionen.
+Ein Tipp auf ein Spiel öffnet die **Spielseite**: Route, Teilen, „In
+Kalender“ (nur dieses Spiel als Datei mit Abfahrtsalarm), Anrufen/WhatsApp
+der Gespannkollegen direkt in der Kopfkarte, Wetter, Abfahrt,
+Spieltag-Checkliste (Vorlage selbst anpassbar, privat), Gespann-Notizen,
+Fahrgemeinschaft, Notiz, Tauschoptionen. Unter „Mehr“ liegen die Bereiche
+als Kacheln mit Zählern. Auf fremden Profilen: „Anpinnen“ – bis zu drei
+Kollegen erscheinen als Avatare auf Start.
 
 ### 10.6d Termine und Tausch abschließen (Schema v8)
 

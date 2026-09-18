@@ -714,6 +714,31 @@
     .leiste button svg.i { padding:5px 16px; }
   }
 
+  /* Design 6: einheitliche Kartenkoepfe, Kachel-Menue, Pins, Checkliste */
+  .melde h4, .abschnitt-karte h4, .radar h4, .balken h4, .hinweiskopf { display:flex; align-items:center; gap:8px; margin:0 0 8px; font-size:.86rem; font-weight:800; color:var(--text); text-transform:none; letter-spacing:0; }
+  .melde h4 svg.i, .abschnitt-karte h4 svg.i, .radar h4 svg.i { width:1rem; height:1rem; padding:6px; box-sizing:content-box; border-radius:10px; background:var(--akzent-hell); color:var(--akzent); }
+  .melde h4 .status { margin-left:auto; }
+  .melde { padding:14px 16px; }
+  .abschnitt-karte { padding:14px 16px; }
+  .menue { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:0; background:none; border:0; box-shadow:none; }
+  .menue a { flex-direction:column; align-items:flex-start; gap:8px; padding:14px; background:var(--karte); border:1px solid var(--linie); border-radius:var(--radius); box-shadow:var(--schatten); position:relative; }
+  .menue a::after { content:none; }
+  .menue a .zaehler { position:absolute; top:10px; right:10px; margin:0; }
+  .menue a > span { display:block; }
+  .menue a small { margin-top:2px; }
+  .menue a.breit { grid-column:1 / -1; flex-direction:row; align-items:center; }
+  .pins { display:flex; gap:10px; margin:0 0 12px; overflow-x:auto; scrollbar-width:none; }
+  .pins button { flex:none; border:0; background:var(--karte); border-radius:99px; padding:6px 12px 6px 6px; display:inline-flex; align-items:center; gap:8px; font-weight:700; font-size:.86rem; color:var(--text); box-shadow:var(--schatten); cursor:pointer; }
+  .pins button .avatar { width:26px; height:26px; font-size:.68rem; }
+  .checkliste label { display:flex; align-items:center; gap:10px; padding:8px 0; border-top:1px solid var(--linie); font-weight:600; cursor:pointer; }
+  .checkliste label:first-of-type { border-top:0; }
+  .checkliste label.erledigt { color:var(--dim); text-decoration:line-through; }
+  .checkliste input { width:20px; height:20px; accent-color:var(--akzent); }
+  .checkliste .fortschritt { height:6px; border-radius:3px; background:var(--linie); overflow:hidden; margin:6px 0 4px; }
+  .checkliste .fortschritt i { display:block; height:100%; background:var(--gut); }
+  .kontakt-knoepfe { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+  .kontakt-knoepfe a { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.16); color:#fff; border:1px solid rgba(255,255,255,.3); border-radius:99px; padding:7px 12px; text-decoration:none; font-weight:700; font-size:.82rem; }
+
   /* Design 5: ruhigere Startseite, Offline, Animationen, Ligafarbe auf der Spielseite */
   .offline { position:sticky; top:0; z-index:30; margin:0 -16px 10px; padding:8px 16px; background:var(--warn); color:#fff; font-size:.84rem; font-weight:700; display:flex; gap:8px; align-items:center; }
   .uebersicht { grid-template-columns:repeat(3, minmax(0, 1fr)); gap:8px; }
@@ -743,7 +768,7 @@
     #spiel { animation:seite-slide .24s ease-out; }
     @keyframes seite-rein { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
     @keyframes seite-slide { from { opacity:0; transform:translateX(24px); } to { opacity:1; transform:none; } }
-    .spiel.karte, .gesuch.karte, .zahl.karte { animation:karte-rein .32s ease-out both; animation-delay:calc(var(--i, 0) * 45ms); }
+    #spiele .spiel.karte, #plan-liste .spiel.karte, #halle-spiele .spiel.karte, #uebersicht .zahl.karte { animation:karte-rein .32s ease-out both; animation-delay:calc(var(--i, 0) * 45ms); }
     @keyframes karte-rein { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
   }
 
@@ -911,9 +936,10 @@
     <div class="spalte-haupt">
     <div class="profilzeile karte">
       <span><span class="avatar-gross" id="person-avatar"></span><span><b id="person"></b><small id="profil-hinweis">dein Profil</small></span></span>
-      <span><button class="textknopf versteckt" id="uebernehmen">Als mein Profil</button> <button class="textknopf" id="wechseln">Wechseln</button></span>
+      <span><button class="textknopf versteckt" id="pin">Anpinnen</button> <button class="textknopf versteckt" id="uebernehmen">Als mein Profil</button> <button class="textknopf" id="wechseln">Wechseln</button></span>
     </div>
 
+    <div class="pins versteckt" id="pins"></div>
     <div class="woche start-woche" id="start-woche"></div>
     <div id="held"></div>
     <div id="uebersicht" class="uebersicht"></div>
@@ -960,15 +986,7 @@
 
     <div id="spiele"></div>
     </div>
-    <div class="spalte-seite">
-
-
-    <div id="statistik"></div>
-    <details id="saison" class="karte versteckt">
-      <summary id="saison-titel">Alle Spiele im Archiv</summary>
-      <div id="saison-liste"></div>
-    </details>
-    </div>
+    <div class="spalte-seite" id="spalte-seite"></div>
     </div>
   </section>
 
@@ -1013,6 +1031,19 @@
     </div>
     <div id="karte-div" class="karte"></div>
     <p class="meta" style="margin-top:8px">Blau: Halle mit eigenem Spiel · Grau: übrige Hallen · Tipp auf einen Punkt zeigt Name und Spiele. Kartendaten © OpenStreetMap.</p>
+  </section>
+
+  <!-- Statistik (eigene Seite) -->
+  <section id="statseite" class="versteckt">
+    <div class="profilzeile karte">
+      <span><span class="avatar-gross" id="stat-avatar"></span><span><b id="stat-name"></b><small>Statistik aus dem Archiv</small></span></span>
+      <button class="textknopf zurueck" id="stat-zurueck"><svg class="i"><use href="#i-back"/></svg>Zurück</button>
+    </div>
+    <div id="statistik"></div>
+    <details id="saison" class="karte versteckt">
+      <summary id="saison-titel">Alle Spiele im Archiv</summary>
+      <div id="saison-liste"></div>
+    </details>
   </section>
 
   <!-- Diagnose -->
@@ -1066,6 +1097,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=26"></script>
+<script src="app.js?v=29"></script>
 </body>
 </html>

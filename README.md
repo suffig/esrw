@@ -243,6 +243,12 @@ Abfahrtsalarm** (einmaliger Download, Alarm aus der eigenen Strecke).
 **Saisonziel** mit Fortschritt in der Statistik.
 Wetter kommt von Open-Meteo (ohne Schlüssel), auch in der Spieltag-Push.
 
+**Aufgeräumt**: Statistik auf eigener Seite, Start nur mit Spielen und
+Kacheln; einheitliche Kartenköpfe; „Mehr“ als Kachel-Raster. Spieltag-
+Checkliste je Spiel (privat, Vorlage anpassbar), einzelnes Spiel als
+Kalenderdatei, Profil-Pins (bis drei Kollegen auf Start), Gespann-Kontakte
+direkt in der Kopfkarte der Spielseite.
+
 **Gespann-Notizen & Radar**: Nachrichten am Spiel nur fürs Gespann (RLS über
 die Slugs, Push an die Kollegen), Vertretungs-Radar auf Start (fremde Gesuche
 und unbesetzte Spiele in der Nähe an freien Tagen), Push-Geräte einzeln

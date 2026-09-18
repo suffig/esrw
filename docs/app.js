@@ -144,7 +144,7 @@
   }
   function einstellungenLaden(nurAnwenden) {
     el("karten-app").value = lesen("karten") || "auto";
-    if (!nurAnwenden) el("karten-app").addEventListener("change", function (e) { schreiben("karten", e.target.value === "auto" ? null : e.target.value); if (aktuell) zeigePerson(aktuell, true); toast("Karten-App: " + e.target.options[e.target.selectedIndex].text, ""); einstellungenSync(); });
+    if (!nurAnwenden) el("karten-app").addEventListener("change", function (e) { schreiben("karten", e.target.value === "auto" ? null : e.target.value); if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true); toast("Karten-App: " + e.target.options[e.target.selectedIndex].text, ""); einstellungenSync(); });
     var k = lesen("kompakt") === "1"; el("kompakt").checked = k; document.body.classList.toggle("kompakt", k);
     if (!nurAnwenden) el("kompakt").addEventListener("change", function (e) { schreiben("kompakt", e.target.checked ? "1" : null); document.body.classList.toggle("kompakt", e.target.checked); einstellungenSync(); });
     function schriftSetzen(stufe) {
@@ -526,11 +526,14 @@
     var ak = document.createElement("div"); ak.className = "aktionen";
     if (s.ort) { var r = document.createElement("a"); r.href = kartenLink(s.ort); r.target = "_blank"; r.rel = "noopener"; r.appendChild(ikone("i-route")); r.appendChild(document.createTextNode("Route")); ak.appendChild(r); }
     var tb = teilenKnopf(s); tb.className = ""; tb.textContent = "Teilen"; ak.appendChild(tb);
+    var kb = document.createElement("button"); kb.type = "button"; kb.appendChild(ikone("i-cal")); kb.appendChild(document.createTextNode("In Kalender"));
+    kb.title = "Nur dieses Spiel als Kalenderdatei"; kb.addEventListener("click", function () { einzelIcs(s); }); ak.appendChild(kb);
     h.appendChild(ak);
+    var kontaktZeile = document.createElement("div"); kontaktZeile.className = "kontakt-knoepfe versteckt"; h.appendChild(kontaktZeile);
     kopf.appendChild(h);
 
     var inhalt = el("spiel-inhalt"); inhalt.innerHTML = "";
-    var symbole = { "Halle": "i-pin", "Gespann": "i-users", "Besetzung": "i-users", "Tauschoptionen": "i-swap", "Weiteres": "i-list" };
+    var symbole = { "Halle": "i-pin", "Gespann": "i-users", "Besetzung": "i-users", "Tauschoptionen": "i-swap", "Weiteres": "i-list", "Spieltag-Checkliste": "i-check" };
     function karteAbschnitt(titel) { var k = document.createElement("div"); k.className = "karte abschnitt-karte"; if (titel) { var hh = document.createElement("h4"); if (symbole[titel]) hh.appendChild(ikone(symbole[titel])); hh.appendChild(document.createTextNode(titel)); k.appendChild(hh); } inhalt.appendChild(k); return k; }
 
     var ort = karteAbschnitt("Halle");
@@ -539,6 +542,7 @@
     ort.appendChild(oz);
     var koord = daten.hallen && daten.hallen[s.halle];
     if (koord && !s.vergangen) ort.appendChild(wetterZeile(koord, treff, "Wetter zum Treffpunkt"));
+    if (s.halle) { var hz = document.createElement("div"); hz.className = "meta"; hz.style.marginTop = "6px"; var hl = document.createElement("a"); hl.href = "#halle/" + hallenSlug(s.halle); hl.textContent = "Hallen-Hinweise, Route und alle Spiele dort ›"; hz.appendChild(hl); ort.appendChild(hz); ort._hinweisZeile = hz; }
     if (meins && s.halle) {
       ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.abfahrt(s.halle) : null; })
         .then(function (sk) { if (!sk || !sk.minuten) return; var ab = new Date(treff.getTime() - sk.minuten * 60000);
@@ -569,11 +573,23 @@
       }
       return window.Mitglieder.extrasLaden([s]).then(function (ok) {
         if (!ok) return;
-        window.Mitglieder.spielExtras(s, exZiel, meins);
+        window.Mitglieder.spielExtras(s, exZiel, meins, true);
         var det = exZiel.querySelector("details"); if (det) { det.open = true; ex.classList.remove("versteckt"); } else ex.classList.add("versteckt");
+        // Kontakte des Gespanns direkt in die Kopfkarte
+        var kontakte = window.Mitglieder.kontakteFuer(s);
+        if (kontakte.length) {
+          kontaktZeile.classList.remove("versteckt");
+          kontakte.forEach(function (k) {
+            var a1 = document.createElement("a"); a1.href = k.tel; a1.appendChild(ikone("i-users")); a1.appendChild(document.createTextNode(k.vorname + " anrufen")); kontaktZeile.appendChild(a1);
+            var a2 = document.createElement("a"); a2.href = k.wa; a2.target = "_blank"; a2.rel = "noopener"; a2.textContent = "WhatsApp"; kontaktZeile.appendChild(a2);
+          });
+        }
+        var n = window.Mitglieder.hinweisAnzahl(s.halle);
+        if (ort._hinweisZeile && n) ort._hinweisZeile.firstChild.textContent = n + (n === 1 ? " Hallen-Hinweis" : " Hallen-Hinweise") + ", Route und alle Spiele dort ›";
       });
     }).catch(function () {});
 
+    if (meins && !s.vergangen) checkliste(karteAbschnitt("Spieltag-Checkliste"), s);
     if (meins && !s.vergangen) {
       var ta = karteAbschnitt("Tauschoptionen");
       var box = tauschBereich(s, personMit(profil.slug)); ta.appendChild(box); box.open = true;
@@ -711,6 +727,7 @@
       k.appendChild(b); k.appendChild(sp); a.appendChild(k); return a;
     }
     ziel.appendChild(kachel(inSieben.length, "Spiele in 7 Tagen" + (inSieben.length ? ": " + inSieben.map(function (s) { return wochentag[new Date(s.beginn).getDay()]; }).join(", ") : ""), "#plan"));
+    if (p.statistik) ziel.appendChild(kachel(p.statistik.saison, "Spiele diese Saison · Statistik ›", "#statistik/" + p.slug));
     if (!sitzungVorhanden()) { ziel.appendChild(kachel("→", "Anmelden für Tausch, Abrechnung, Info", "#mitglieder")); return; }
     var lauf = ziel._lauf = {};
     ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
@@ -1449,7 +1466,8 @@
     var meins = !!(profil && profil.slug === p.slug);
     el("profil-hinweis").textContent = meins ? "dein Profil" : "fremdes Profil";
     el("uebernehmen").classList.toggle("versteckt", meins);
-    el("uebernehmen").onclick = function () { profilSetzen(p); toast("„Meine Spiele“ zeigt jetzt " + p.name, "gut"); };
+    el("uebernehmen").onclick = function () { profilSetzen(p); toast("„Start“ zeigt jetzt " + p.name, "gut"); };
+    pinKnopf(p); kalenderSpalte();
     el("abo").href = feedUrl(p.slug, "webcal:");
     el("laden").onclick = function () { location.href = feedUrl(p.slug, location.protocol); };
     zeigeHeld(p);
@@ -1474,7 +1492,7 @@
       ziel.appendChild(box);
     }
     if (!profil || profil.slug !== p.slug) zuletztMerken(p.slug);
-    zeigeStatistik(p); zeigeSaison(p); zeigeMeldeKarte(); kalenderBoxStand(); onboardingStand();
+    zeigeMeldeKarte(); kalenderBoxStand(); onboardingStand(); zeigePins(p);
     el("abfahrt-ics").classList.add("versteckt");
     if (profil && profil.slug === p.slug && sitzungVorhanden()) ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
       .then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.heimat() : null; })
@@ -1484,9 +1502,9 @@
   }
 
   function ansicht(name) {
-    ["auswahl", "detail", "plan", "mitglieder", "halle", "status", "spiel", "mehr", "einstellungen", "karte"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
+    ["auswahl", "detail", "plan", "mitglieder", "halle", "status", "spiel", "mehr", "einstellungen", "karte", "statseite"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
     var reiter = (location.hash.split("/")[1] || "");
-    el("tab-meine").classList.toggle("aktiv", name === "auswahl" || name === "detail" || name === "spiel");
+    el("tab-meine").classList.toggle("aktiv", name === "auswahl" || name === "detail" || name === "spiel" || name === "statseite");
     el("tab-plan").classList.toggle("aktiv", name === "plan" || name === "halle");
     el("tab-tausch").classList.toggle("aktiv", name === "mitglieder" && reiter === "tausch");
     el("tab-abrechnung").classList.toggle("aktiv", name === "mitglieder" && reiter === "abrechnung");
@@ -1631,6 +1649,7 @@
       ["#mitglieder/konto", "i-key", "Konto", "Profil, Push, Passwort, Handynummer"],
       ["#mitglieder/admin", "i-shield", "Admin", "Freischaltung, Ankündigungen", "wartend", true],
       ["#karte", "i-pin", "Hallenkarte", "Alle Hallen auf der Karte"],
+      ["#statistik", "i-users", "Statistik", "Saison, Archiv, Saisonziel, Saison-Bild"],
       ["#einstellungen", "i-sun", "Einstellungen", "Karten-App, Schrift, Farbe, Saisonziel"],
       ["#status", "i-check", "Diagnose", "Für die Fehlersuche"]
     ];
@@ -1719,6 +1738,34 @@
 
   function icsText(t) { return String(t).replace(/\\/g, "\\\\").replace(/;/g, "\\;").replace(/,/g, "\\,").replace(/\n/g, "\\n"); }
   function icsZeit(d) { return d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, ""); }
+  function icsHerunterladen(zeilen, dateiname) {
+    var blob = new Blob([zeilen.join("\r\n") + "\r\n"], { type: "text/calendar;charset=utf-8" });
+    var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = dateiname;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 3000);
+  }
+  // Ein einzelnes Spiel als Kalenderdatei (mit Abfahrt, wenn die Strecke bekannt ist)
+  function einzelIcs(s) {
+    var lauf = sitzungVorhanden() && s.halle ? ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.abfahrt(s.halle) : null; }).catch(function () { return null; }) : Promise.resolve(null);
+    lauf.then(function (sk) {
+      var zeilen = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Einteilungen//Einzel//DE", "CALSCALE:GREGORIAN"];
+      zeilen = zeilen.concat(icsEvent(s, sk)); zeilen.push("END:VCALENDAR");
+      icsHerunterladen(zeilen, "spiel-" + s.beginn.slice(0, 10) + ".ics");
+      toast("Kalenderdatei erzeugt – öffnen und in den Kalender übernehmen.", "gut");
+    });
+  }
+  function icsEvent(s, sk) {
+    var treff = new Date(s.treffpunkt), ende = new Date(new Date(s.beginn).getTime() + (daten.spieldauer_minuten || 150) * 60000);
+    var puffer = sk && sk.minuten ? sk.minuten + 10 : null, zeilen = [];
+    zeilen.push("BEGIN:VEVENT", "UID:abfahrt-" + icsZeit(treff) + "-" + s.paarung.replace(/[^a-z0-9]/gi, "").slice(0, 30) + "@einteilungen",
+      "DTSTAMP:" + icsZeit(new Date()), "DTSTART:" + icsZeit(treff), "DTEND:" + icsZeit(ende),
+      "SUMMARY:" + icsText((s.rolle ? s.rolle + " · " : "") + (s.liga ? s.liga + ": " : "") + s.paarung),
+      "LOCATION:" + icsText(s.ort || s.halle || ""),
+      "DESCRIPTION:" + icsText("Treffpunkt " + uhr(treff) + " Uhr, Spielbeginn " + uhr(new Date(s.beginn)) + " Uhr" + (puffer ? "\nAbfahrt ca. " + uhr(new Date(treff.getTime() - (puffer - 10) * 60000)) + " Uhr (" + sk.km + " km, " + sk.minuten + " Min. ohne Verkehr)" : "")));
+    if (puffer) zeilen.push("BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsText("Losfahren: " + s.paarung + " (" + sk.km + " km)"), "TRIGGER:-PT" + puffer + "M", "END:VALARM");
+    zeilen.push("BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:In einer Stunde an der Halle", "TRIGGER:-PT1H", "END:VALARM", "END:VEVENT");
+    return zeilen;
+  }
   function abfahrtIcs(p) {
     var kommend = p.spiele.filter(function (s) { return !s.vergangen; });
     if (!kommend.length) { toast("Keine kommenden Spiele.", ""); return; }
@@ -1727,26 +1774,50 @@
     var kette = Promise.resolve();
     kommend.forEach(function (s) {
       kette = kette.then(function () { return s.halle ? M.abfahrt(s.halle) : null; }).then(function (sk) {
-        var treff = new Date(s.treffpunkt), ende = new Date(new Date(s.beginn).getTime() + (daten.spieldauer_minuten || 150) * 60000);
-        var puffer = sk && sk.minuten ? sk.minuten + 10 : null;
-        zeilen.push("BEGIN:VEVENT", "UID:abfahrt-" + icsZeit(treff) + "-" + s.paarung.replace(/[^a-z0-9]/gi, "").slice(0, 30) + "@einteilungen",
-          "DTSTAMP:" + icsZeit(new Date()), "DTSTART:" + icsZeit(treff), "DTEND:" + icsZeit(ende),
-          "SUMMARY:" + icsText((s.rolle ? s.rolle + " · " : "") + (s.liga ? s.liga + ": " : "") + s.paarung),
-          "LOCATION:" + icsText(s.ort || s.halle || ""),
-          "DESCRIPTION:" + icsText("Treffpunkt " + uhr(treff) + " Uhr, Spielbeginn " + uhr(new Date(s.beginn)) + " Uhr" + (puffer ? "\nAbfahrt ca. " + uhr(new Date(treff.getTime() - (puffer - 10) * 60000)) + " Uhr (" + sk.km + " km, " + sk.minuten + " Min. ohne Verkehr)" : "")));
-        if (puffer) zeilen.push("BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsText("Losfahren: " + s.paarung + " (" + sk.km + " km)"), "TRIGGER:-PT" + puffer + "M", "END:VALARM");
-        zeilen.push("BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:In einer Stunde an der Halle", "TRIGGER:-PT1H", "END:VALARM", "END:VEVENT");
+        zeilen = zeilen.concat(icsEvent(s, sk)); return;
       });
     });
     kette.then(function () {
       zeilen.push("END:VCALENDAR");
-      var blob = new Blob([zeilen.join("\r\n") + "\r\n"], { type: "text/calendar;charset=utf-8" });
-      var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "einteilungen-abfahrt.ics";
-      document.body.appendChild(a); a.click(); document.body.removeChild(a);
-      setTimeout(function () { URL.revokeObjectURL(a.href); }, 3000);
+      icsHerunterladen(zeilen, "einteilungen-abfahrt.ics");
       knopf.disabled = false; knopf.textContent = "Kalenderdatei mit Abfahrtsalarm laden";
       toast("Kalenderdatei erzeugt – beim Öffnen in einen eigenen Kalender importieren, sonst stehen die Spiele doppelt drin.", "gut");
     }).catch(function (e) { knopf.disabled = false; knopf.textContent = "Kalenderdatei mit Abfahrtsalarm laden"; toast("Nicht möglich: " + (e.message || e), "warn"); });
+  }
+
+  // ------------------------------------------------------- Spieltag-Checkliste
+  //
+  // Privat und offline: Vorlage und Haken liegen im Geraet.
+
+  var CHECK_STANDARD = ["Pfeife und Ersatzpfeife", "Lizenz / Ausweis", "Trikot, Hose, Helm", "Schlittschuhe geschliffen", "Spielbericht vorbereitet", "Anfahrt geprüft, Treffpunkt im Kopf"];
+  function checkVorlage() { try { var v = JSON.parse(lesen("check-vorlage") || "null"); return Array.isArray(v) && v.length ? v : CHECK_STANDARD; } catch (e) { return CHECK_STANDARD; } }
+  function checkStand(kennung) { try { return JSON.parse(lesen("check:" + kennung) || "{}"); } catch (e) { return {}; } }
+  function checkliste(box, s) {
+    var kennung = kennungVon(s), vorlage = checkVorlage(), stand = checkStand(kennung);
+    var wrap = document.createElement("div"); wrap.className = "checkliste";
+    var fort = document.createElement("div"); fort.className = "fortschritt"; var fi = document.createElement("i"); fort.appendChild(fi);
+    var zaehler = document.createElement("div"); zaehler.className = "meta";
+    function aktualisieren() {
+      var n = vorlage.filter(function (t) { return stand[t]; }).length;
+      fi.style.width = Math.round(n / vorlage.length * 100) + "%"; zaehler.textContent = n + " von " + vorlage.length + (n === vorlage.length ? " – alles gepackt ✓" : "");
+      box.querySelector("h4").lastChild.textContent = "Spieltag-Checkliste " + n + "/" + vorlage.length;
+    }
+    wrap.appendChild(fort); wrap.appendChild(zaehler);
+    vorlage.forEach(function (t) {
+      var l = document.createElement("label"), c = document.createElement("input"); c.type = "checkbox"; c.checked = !!stand[t];
+      l.className = c.checked ? "erledigt" : "";
+      c.addEventListener("change", function () { stand[t] = c.checked; if (!c.checked) delete stand[t]; schreiben("check:" + kennung, JSON.stringify(stand)); l.className = c.checked ? "erledigt" : ""; aktualisieren(); });
+      l.appendChild(c); l.appendChild(document.createTextNode(t)); wrap.appendChild(l);
+    });
+    var bearb = document.createElement("button"); bearb.type = "button"; bearb.className = "textknopf"; bearb.textContent = "Vorlage bearbeiten";
+    bearb.addEventListener("click", function () {
+      var neu = prompt("Ein Punkt je Zeile:", vorlage.join("\n"));
+      if (neu === null) return;
+      var liste = neu.split("\n").map(function (x) { return x.trim(); }).filter(Boolean);
+      schreiben("check-vorlage", liste.length ? JSON.stringify(liste) : null); toast("Vorlage gespeichert – gilt für alle Spiele.", "gut");
+      box.innerHTML = ""; var hh = document.createElement("h4"); hh.appendChild(ikone("i-check")); hh.appendChild(document.createTextNode("Spieltag-Checkliste")); box.appendChild(hh); checkliste(box, s);
+    });
+    wrap.appendChild(bearb); box.appendChild(wrap); aktualisieren();
   }
 
   // ------------------------------------------------------------ Saisonziel
@@ -1772,9 +1843,57 @@
     }
   }
 
+  function zeigeStatSeite(slug) {
+    var p = personMit(slug) || (profil && personMit(profil.slug));
+    if (!p) return zeigeAuswahl(false);
+    ansicht("statseite"); aktuell = p;
+    el("stat-name").textContent = p.name; el("stat-avatar").textContent = initialen(p.name); el("stat-avatar").style.background = farbeFuer(p.slug);
+    zeigeStatistik(p); zeigeSaison(p);
+    if (!p.statistik) el("statistik").appendChild(leerZustand("Noch keine Statistik – das Archiv füllt sich mit jedem Lauf."));
+    if (sprungZiel === null) window.scrollTo(0, 0);
+  }
+
+  // Pins: bis zu drei Kollegen als Avatare auf Start
+  function pinsLesen() { try { return JSON.parse(lesen("pins") || "[]"); } catch (e) { return []; } }
+  function zeigePins(p) {
+    var box = el("pins"); box.innerHTML = "";
+    var pins = pinsLesen().filter(function (s) { return personMit(s) && !(profil && profil.slug === s); });
+    box.classList.toggle("versteckt", !(profil && profil.slug === p.slug) || !pins.length);
+    pins.forEach(function (s) {
+      var q = personMit(s), b = document.createElement("button"); b.type = "button";
+      var av = document.createElement("i"); av.className = "avatar"; av.textContent = initialen(q.name); av.style.background = farbeFuer(q.slug);
+      var n = q.spiele.filter(function (x) { return !x.vergangen; }).length;
+      b.appendChild(av); b.appendChild(document.createTextNode(q.name.split(",")[1] ? q.name.split(",")[1].trim() : q.name));
+      var z = document.createElement("span"); z.className = "anzahl"; z.textContent = n ? " · " + n : ""; b.appendChild(z);
+      b.title = q.name; b.addEventListener("click", function () { location.hash = q.slug; });
+      box.appendChild(b);
+    });
+  }
+  function pinKnopf(p) {
+    var b = el("pin"), meins = !!(profil && profil.slug === p.slug);
+    b.classList.toggle("versteckt", meins);
+    var pins = pinsLesen(), drin = pins.indexOf(p.slug) >= 0;
+    b.textContent = drin ? "Lospinnen" : "Anpinnen";
+    b.onclick = function () {
+      var l = pinsLesen().filter(function (s) { return s !== p.slug; });
+      if (!drin) { if (l.length >= 3) { toast("Höchstens drei Pins – erst einen lösen.", "warn"); return; } l.unshift(p.slug); }
+      schreiben("pins", JSON.stringify(l)); pinKnopf(p);
+      toast(drin ? "Pin gelöst." : p.name + " ist auf Start angepinnt.", "gut");
+    };
+  }
+
+  // Kalender-Box: auf breiten Bildschirmen in die rechte Spalte
+  function kalenderSpalte() {
+    var box = el("kalender-box"), seite = el("spalte-seite"), haupt = el("spiele").parentNode;
+    if (window.innerWidth >= 900) { if (box.parentNode !== seite) seite.appendChild(box); }
+    else if (box.parentNode !== haupt) haupt.insertBefore(box, el("spiele"));
+  }
+  window.addEventListener("resize", kalenderSpalte);
+
   function ausHash() {
     var slug = location.hash.replace(/^#/, "");
     if (slug === "status") { zeigeStatus(); return; }
+    if (slug.indexOf("statistik") === 0) { zeigeStatSeite(slug.split("/")[1] || (profil && profil.slug) || ""); return; }
     if (slug === "mehr") { zeigeMehr(); return; }
     if (slug === "einstellungen") { zeigeEinstellungen(); return; }
     if (slug === "karte") { zeigeKarte(); return; }
@@ -1818,7 +1937,7 @@
     if (!e) return;
     var geaendert = false;
     ["karten", "schrift", "akzent", "kompakt", "ziel"].forEach(function (k) { if ((lesen(k) || null) !== (e[k] || null)) { schreiben(k, e[k] || null); geaendert = true; } });
-    if (geaendert) { einstellungenLaden(true); themaAnwenden(); toast("Einstellungen vom Konto übernommen", ""); if (aktuell) zeigePerson(aktuell, true); }
+    if (geaendert) { einstellungenLaden(true); themaAnwenden(); toast("Einstellungen vom Konto übernommen", ""); if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true); }
   }
   document.addEventListener("mg-profil", function (e) {
     if (e.detail && e.detail.einstellungen) einstellungenAnwenden(e.detail.einstellungen);
@@ -1869,6 +1988,7 @@
   el("tab-mitglieder").addEventListener("click", function () { location.hash = "mehr"; });
   el("spiel-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = ""; });
   el("einstellungen-zurueck").addEventListener("click", function () { location.hash = "mehr"; });
+  el("stat-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = ""; });
   el("karte-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
   el("abfahrt-ics").addEventListener("click", function () { if (aktuell) abfahrtIcs(aktuell); });
   el("ziel").addEventListener("change", function (e) { var v = parseInt(e.target.value, 10); schreiben("ziel", v > 0 ? String(v) : null); toast(v > 0 ? "Saisonziel: " + v + " Spiele" : "Saisonziel entfernt", "gut"); einstellungenSync(); });
@@ -1978,8 +2098,11 @@
     return Promise.all([hole("daten.json"), hole("stand.json").catch(function () { return null; })])
       .then(function (b) {
         daten = b[0]; standAnzeigen(daten, b[1]);
-        if (aktuell) { var frisch = personMit(aktuell.slug); if (frisch) zeigePerson(frisch, true); }
-        else if (!el("plan").classList.contains("versteckt")) zeigePlan();
+        // Nur die gerade sichtbare Ansicht neu zeichnen - nie die Seite wechseln
+        var sichtbar = function (id) { return !el(id).classList.contains("versteckt"); };
+        if (aktuell && sichtbar("detail")) { var frisch = personMit(aktuell.slug); if (frisch) zeigePerson(frisch, true); }
+        else if (aktuell && sichtbar("statseite")) zeigeStatSeite(aktuell.slug);
+        else if (sichtbar("plan")) zeigePlan();
       }).catch(function () {});
   }
 

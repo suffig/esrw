@@ -1836,7 +1836,15 @@ window.Mitglieder = (function () {
     }).catch(function () { return false; });
   }
 
-  function spielExtras(spiel, ziel, istIch) {
+  function kontakteFuer(spiel) {
+    return (spiel.gespann || []).map(function (g) {
+      var k = g.slug && cache.kontakte[g.slug]; if (!k) return null;
+      var l = telefonLink(k.telefon); return { name: g.name, vorname: (g.name.split(",")[1] || g.name).trim().split(" ")[0], tel: l.tel, wa: l.wa };
+    }).filter(Boolean);
+  }
+  function hinweisAnzahl(halle) { return (cache.hallen[halle] || []).length; }
+
+  function spielExtras(spiel, ziel, istIch, ohneHalle) {
     if (!session || !profil) return;
     leeren(ziel);
     var kennung = kennungVon(spiel);
@@ -1849,7 +1857,7 @@ window.Mitglieder = (function () {
 
     var teile = [];
     if (istIch) teile.push(kommentare.length ? kommentare.length + (kommentare.length === 1 ? " Gespann-Notiz" : " Gespann-Notizen") : "Gespann-Notiz");
-    if (spiel.halle) teile.push(hinweise.length ? hinweise.length + (hinweise.length === 1 ? " Hallen-Hinweis" : " Hallen-Hinweise") : "Halle");
+    if (spiel.halle && !ohneHalle) teile.push(hinweise.length ? hinweise.length + (hinweise.length === 1 ? " Hallen-Hinweis" : " Hallen-Hinweise") : "Halle");
     if (kontakte.length) teile.push(kontakte.length + " Kontakt" + (kontakte.length === 1 ? "" : "e"));
     if (mitfahrten.length) teile.push(mitfahrten.length + " Mitfahrt");
     if (istIch) teile.push(notiz ? "Notiz ✓" : "Notiz");
@@ -1860,8 +1868,8 @@ window.Mitglieder = (function () {
     box.addEventListener("toggle", function () {
       if (!box.open || innen.childNodes.length) return;
 
-      // Hallen-Wiki
-      if (spiel.halle) {
+      // Hallen-Wiki (auf der Spielseite steht der Link oben in der Hallen-Karte)
+      if (spiel.halle && !ohneHalle) {
         innen.appendChild(h("h4", { text: "Hallen-Hinweise · " + spiel.halle }));
         if (!hinweise.length) innen.appendChild(h("p", { class: "meta", text: "Noch nichts eingetragen. Parken, Kabineneingang, Schlüssel, Kantine – was Kollegen wissen sollten." }));
         hinweise.forEach(function (n) {
@@ -1884,8 +1892,8 @@ window.Mitglieder = (function () {
         } })]));
       }
 
-      // Kontakte im Gespann
-      if (kontakte.length) {
+      // Kontakte im Gespann (auf der Spielseite oben in der Kopfkarte)
+      if (kontakte.length && !ohneHalle) {
         innen.appendChild(h("h4", { text: "Gespann" }));
         kontakte.forEach(function (x) {
           var l = telefonLink(x.k.telefon);
@@ -2364,5 +2372,6 @@ window.Mitglieder = (function () {
   return { oeffnen: oeffnen, bereit: bereit, angemeldet: angemeldet,
            sperrenAm: sperrenAm, gesuchAnlegen: gesuchAnlegen, offeneAbrechnungen: offeneAbrechnungen,
            extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat, obmann: obmann, termine: termine,
-           einstellungenSpeichern: einstellungenSpeichern, radar: radar, angebotMachen: angebotMachen };
+           einstellungenSpeichern: einstellungenSpeichern, radar: radar, angebotMachen: angebotMachen,
+           kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl };
 })();
