@@ -890,12 +890,12 @@ Links (24 Stunden) werden beim Ankommen erklärt, ebenfalls mit diesem Knopf.
 
 | Reiter unten | Inhalt |
 |---|---|
-| Start | dein Profil, Pins (bis drei Kollegen), nächstes Spiel mit Wetter/Abfahrt und Wochenstreifen, Kacheln (Spiele in 7 Tagen, Statistik, Gesuche, Ankündigungen), Termine, Radar, Kalender-Karte, deine Spiele |
+| Start | dein Profil, nächstes Spiel mit Wetter/Abfahrt, Kacheln (Spiele in 7 Tagen, Statistik, Gesuche, Ankündigungen), Termine, Pins, Kalender-Karte, deine Spiele – was davon erscheint, stellst du unter **Mehr → Einstellungen → Startseite** ein (Wochenstreifen, „Danach“ und Radar sind standardmäßig aus; der Link „Startseite anpassen“ steht auch unten auf Start) |
 | Statistik | eigene Seite (Mehr → Statistik oder Kachel auf Start): Saison, Ligen, Hallen, Partner, Saisonziel, Archiv, Saison-Bild |
 | Spielplan | alle Spiele; Filter-Blatt (vergangene, unbesetzte, meine Hallen, meine Spiele, Ligen), Karten / Liste / Monat, Drucken |
 | Tausch | Tauschbörse (Login) |
 | Abrechnung | Abrechnung, Fahrtenbuch, CSV (Login) |
-| Mehr | Info, Verfügbarkeit, Notizen, Konto, Admin, Hallenkarte, Einstellungen, Diagnose |
+| Mehr | in drei Gruppen: **Gemeinsam** (Info, Verfügbarkeit, Hallenkarte, Admin), **Für dich** (Statistik, Notizen), **Konto und App** (Konto, Einstellungen, Diagnose) |
 
 Ein Tipp auf ein Spiel öffnet die **Spielseite**: Route, Teilen, „In
 Kalender“ (nur dieses Spiel als Datei mit Abfahrtsalarm), Anrufen/WhatsApp

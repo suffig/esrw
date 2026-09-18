@@ -1568,7 +1568,7 @@ window.Mitglieder = (function () {
     kontoUebersicht(ueber);
     inhalt.appendChild(h("div", { class: "melde karte" }, [
       h("h4", { text: "Einstellungen" }),
-      h("p", { text: "Name auf esrw.de, Heimatadresse, Kilometermodell und Sätze." }),
+      h("p", {}, ["Name auf esrw.de, Heimatadresse, Kilometermodell und Sätze. Was auf der Startseite steht, Schrift und Farbe: ", h("a", { href: "#einstellungen", text: "App-Einstellungen" }), "."]),
       h("button", { type: "button", class: "haupt", text: "Einstellungen öffnen", onclick: function () { zeigeEinrichtung(true); } })
     ]));
     var pushBox = h("div", { class: "melde karte" }, [h("h4", {}, [ikone("i-bell"), " Push-Benachrichtigungen ", h("span", { class: "status", text: "" })]), h("p", { text: "prüfe …" })]);

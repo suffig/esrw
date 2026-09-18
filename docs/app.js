@@ -164,6 +164,7 @@
       b.addEventListener("click", function () { var f = b.getAttribute("data-akzent"); schreiben("akzent", f === "blau" ? null : f); akzentSetzen(f); einstellungenSync(); });
     });
     el("ziel").value = lesen("ziel") || "";
+    startBausteineRendern();
     if (nurAnwenden) return;
     el("stand").style.cursor = "pointer"; el("stand").title = "Antippen: neu laden";
     el("stand").addEventListener("click", function () { neuLaden().then(function () { toast("Aktualisiert", "gut"); }); });
@@ -558,6 +559,8 @@
     else { var o = document.createElement("span"); o.className = "chip offen"; o.textContent = "noch nicht besetzt"; chips.appendChild(o); }
     wer.appendChild(chips);
 
+    if (meins && !s.vergangen) checkliste(karteAbschnitt("Spieltag-Checkliste"), s);
+
     // Angemeldet: Hallen-Hinweise, Kontakte, Fahrgemeinschaft, Notiz
     var ex = karteAbschnitt(null);
     var skel = document.createElement("div"); skel.className = "skelett-karte"; skel.style.height = "70px"; skel.style.margin = "0"; ex.appendChild(skel);
@@ -589,7 +592,6 @@
       });
     }).catch(function () {});
 
-    if (meins && !s.vergangen) checkliste(karteAbschnitt("Spieltag-Checkliste"), s);
     if (meins && !s.vergangen) {
       var ta = karteAbschnitt("Tauschoptionen");
       var box = tauschBereich(s, personMit(profil.slug)); ta.appendChild(box); box.open = true;
@@ -620,7 +622,7 @@
   function zeigeStartWoche(p) {
     // Ohne kommendes Spiel gibt es keine Karte oben - dann steht der Streifen frei
     var ziel = el("start-woche"); ziel.innerHTML = "";
-    if (p.spiele.some(function (s) { return !s.vergangen; })) { ziel.classList.add("versteckt"); return; }
+    if (!startEinstellung("woche") || p.spiele.some(function (s) { return !s.vergangen; })) { ziel.classList.add("versteckt"); return; }
     ziel.classList.remove("versteckt");
     startWocheFuellen(ziel, p);
   }
@@ -713,8 +715,9 @@
 
   function zeigeUebersicht(p) {
     zeigeStartWoche(p);
-    zeigeRadar(p);
+    if (startEinstellung("radar")) zeigeRadar(p); else el("radar").innerHTML = "";
     var ziel = el("uebersicht"); ziel.innerHTML = "";
+    if (!startEinstellung("kacheln") && !startEinstellung("termine")) return;
     if (!profil || profil.slug !== p.slug) return;
     var heute = new Date(); heute.setHours(0, 0, 0, 0);
     var inSieben = p.spiele.filter(function (s) { var d = new Date(s.beginn); return d >= heute && d < new Date(heute.getTime() + 7 * 86400000); });
@@ -726,16 +729,19 @@
       if (typeof wert === "number" && wert > 0 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) hochzaehlen(b, wert);
       k.appendChild(b); k.appendChild(sp); a.appendChild(k); return a;
     }
-    ziel.appendChild(kachel(inSieben.length, "Spiele in 7 Tagen" + (inSieben.length ? ": " + inSieben.map(function (s) { return wochentag[new Date(s.beginn).getDay()]; }).join(", ") : ""), "#plan"));
-    if (p.statistik) ziel.appendChild(kachel(p.statistik.saison, "Spiele diese Saison · Statistik ›", "#statistik/" + p.slug));
-    if (!sitzungVorhanden()) { ziel.appendChild(kachel("→", "Anmelden für Tausch, Abrechnung, Info", "#mitglieder")); return; }
+    var mitKacheln = startEinstellung("kacheln");
+    if (mitKacheln) {
+      ziel.appendChild(kachel(inSieben.length, "Spiele in 7 Tagen" + (inSieben.length ? ": " + inSieben.map(function (s) { return wochentag[new Date(s.beginn).getDay()]; }).join(", ") : ""), "#plan"));
+      if (p.statistik) ziel.appendChild(kachel(p.statistik.saison, "Spiele diese Saison · Statistik ›", "#statistik/" + p.slug));
+    }
+    if (!sitzungVorhanden()) { if (mitKacheln) ziel.appendChild(kachel("→", "Anmelden für Tausch, Abrechnung, Info", "#mitglieder")); return; }
     var lauf = ziel._lauf = {};
     ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
       .then(function (st) { if (st.eingerichtet && st.session) return window.Mitglieder.zaehler(); })
       .then(function (z) {
         if (!z || ziel._lauf !== lauf) return;
-        ziel.appendChild(kachel(z.gesuche || 0, "offene Gesuche", "#mitglieder/tausch", z.gesuche > 0));
-        window.Mitglieder.termine().then(function (t) {
+        if (mitKacheln) ziel.appendChild(kachel(z.gesuche || 0, "offene Gesuche", "#mitglieder/tausch", z.gesuche > 0));
+        if (startEinstellung("termine")) window.Mitglieder.termine().then(function (t) {
           if (!t || !t.length || ziel._lauf !== lauf) return;
           var box = document.createElement("a"); box.href = "#mitglieder/info"; box.style.gridColumn = "1 / -1";
           var k = document.createElement("div"); k.className = "zahl karte"; k.style.textAlign = "left";
@@ -743,7 +749,7 @@
           t.forEach(function (x) { var sp = document.createElement("span"); sp.textContent = x.termin.split("-").reverse().slice(0, 2).join(".") + ". · " + x.titel; sp.style.display = "block"; k.appendChild(sp); });
           box.appendChild(k); ziel.appendChild(box);
         });
-        ziel.appendChild(kachel(z.info || 0, "neue Ankündigungen", "#mitglieder/info", z.info > 0));
+        if (mitKacheln) ziel.appendChild(kachel(z.info || 0, "neue Ankündigungen", "#mitglieder/info", z.info > 0));
         if (z.wartend) ziel.appendChild(kachel(z.wartend, "warten auf Freischaltung", "#mitglieder/admin", true));
       }).catch(function () {});
   }
@@ -813,23 +819,22 @@
     }
     h.appendChild(ak);
     el("start-woche").classList.add("versteckt");
-    if (kommend[1]) {
+    if (kommend[1] && startEinstellung("danach")) {
       var n2 = kommend[1], d2 = new Date(n2.beginn);
       var dn = document.createElement("div"); dn.className = "danach"; dn.appendChild(ikone("i-cal"));
       dn.appendChild(document.createTextNode("Danach: " + datumKurz(d2) + " · " + uhr(d2) + " · " + (n2.liga ? n2.liga + " " : "") + n2.paarung));
       h.appendChild(dn);
     }
     var koord = daten.hallen && daten.hallen[s.halle];
-    if (koord) { var wz = wetterZeile(koord, s.treffpunkt, "Wetter"); wz.classList.add("danach"); h.appendChild(wz); }
+    if (koord && startEinstellung("wetter")) { var wz = wetterZeile(koord, s.treffpunkt, "Wetter"); wz.classList.add("danach"); h.appendChild(wz); }
     h.classList.add("tippbar"); h.title = "Zum Spiel";
     h.addEventListener("click", function (ev) {
       if (ev.target.closest("a, button")) return;
       location.hash = "spiel/" + encodeURIComponent(kennungVon(s));
     });
-    var wochenStreifen = document.createElement("div"); wochenStreifen.className = "woche start-woche"; h.appendChild(wochenStreifen);
-    startWocheFuellen(wochenStreifen, p);
+    if (startEinstellung("woche")) { var wochenStreifen = document.createElement("div"); wochenStreifen.className = "woche start-woche"; h.appendChild(wochenStreifen); startWocheFuellen(wochenStreifen, p); }
     ziel.appendChild(h);
-    if (profil && profil.slug === p.slug && s.halle) {
+    if (profil && profil.slug === p.slug && s.halle && startEinstellung("abfahrt")) {
       ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) {
         if (!st.eingerichtet || !st.session) return null;
         return window.Mitglieder.abfahrt(s.halle);
@@ -1484,7 +1489,7 @@
     var istIch = !!(profil && profil.slug === p.slug);
     if (!kommend.length) ziel.appendChild(leerZustand("Zurzeit keine Einteilung. Der Kalender füllt sich von allein."));
     else kommend.forEach(function (s, i) { var k = karte(s, p); k.style.setProperty("--i", Math.min(i, 8)); ziel.appendChild(k); });
-    if (gewesen.length) {
+    if (gewesen.length && startEinstellung("vergangene")) {
       var box = document.createElement("details"); box.className = "karte zuletzt-box";
       var sum = document.createElement("summary"); sum.className = "abschnitt"; sum.textContent = "Vergangene Spiele (" + gewesen.length + ")"; box.appendChild(sum);
       box.addEventListener("toggle", function () {
@@ -1496,6 +1501,8 @@
     }
     if (!profil || profil.slug !== p.slug) zuletztMerken(p.slug);
     zeigeMeldeKarte(); kalenderBoxStand(); onboardingStand(); zeigePins(p);
+    el("kalender-box").classList.toggle("versteckt", !startEinstellung("kalender") && lesen("abo-geklickt") === "1");
+    el("start-anpassen").classList.toggle("versteckt", !meins);
     el("abfahrt-ics").classList.add("versteckt");
     if (profil && profil.slug === p.slug && sitzungVorhanden()) ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
       .then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.heimat() : null; })
@@ -1646,19 +1653,23 @@
     ansicht("mehr"); aktuell = null;
     var liste = el("mehr-liste"); liste.innerHTML = "";
     var eintraege = [
+      ["Gemeinsam"],
       ["#mitglieder/info", "i-bell", "Info", "Ankündigungen vom Betreiber", "info"],
       ["#mitglieder/frei", "i-cal", "Verfügbarkeit", "Wann du nicht kannst oder gern pfeifst"],
-      ["#mitglieder/notizen", "i-note", "Notizen", "Private Spielnotizen"],
-      ["#mitglieder/konto", "i-key", "Konto", "Profil, Push, Passwort, Handynummer"],
-      ["#mitglieder/admin", "i-shield", "Admin", "Freischaltung, Ankündigungen", "wartend", true],
       ["#karte", "i-pin", "Hallenkarte", "Alle Hallen auf der Karte"],
+      ["Für dich"],
       ["#statistik", "i-users", "Statistik", "Saison, Archiv, Saisonziel, Saison-Bild"],
-      ["#einstellungen", "i-sun", "Einstellungen", "Karten-App, Schrift, Farbe, Saisonziel"],
+      ["#mitglieder/notizen", "i-note", "Notizen", "Private Spielnotizen"],
+      ["Konto und App"],
+      ["#mitglieder/konto", "i-key", "Konto", "Profil, Push, Passwort, Handynummer"],
+      ["#einstellungen", "i-sun", "Einstellungen", "Startseite, Schrift, Farbe, Karten-App"],
+      ["#mitglieder/admin", "i-shield", "Admin", "Freischaltung, Ankündigungen", "wartend", true],
       ["#status", "i-check", "Diagnose", "Für die Fehlersuche"]
     ];
     var links = {};
     if (!sitzungVorhanden()) eintraege.unshift(["#mitglieder", "i-lock", "Anmelden", "Konto anlegen oder anmelden – für Tausch, Abrechnung, Info"]);
     eintraege.forEach(function (e) {
+      if (e.length === 1) { var g = document.createElement("div"); g.className = "menue-gruppe"; g.textContent = e[0]; liste.appendChild(g); return; }
       var a = document.createElement("a"); a.href = e[0]; a.appendChild(ikone(e[1]));
       var sp = document.createElement("span"); sp.textContent = e[2]; var sm = document.createElement("small"); sm.textContent = e[3]; sp.appendChild(sm); a.appendChild(sp);
       if (e[4]) { var z = document.createElement("span"); z.className = "zaehler versteckt"; a.appendChild(z); links[e[4]] = z; }
@@ -1861,7 +1872,7 @@
   function zeigePins(p) {
     var box = el("pins"); box.innerHTML = "";
     var pins = pinsLesen().filter(function (s) { return personMit(s) && !(profil && profil.slug === s); });
-    box.classList.toggle("versteckt", !(profil && profil.slug === p.slug) || !pins.length);
+    box.classList.toggle("versteckt", !startEinstellung("pins") || !(profil && profil.slug === p.slug) || !pins.length);
     pins.forEach(function (s) {
       var q = personMit(s), b = document.createElement("button"); b.type = "button";
       var av = document.createElement("i"); av.className = "avatar"; av.textContent = initialen(q.name); av.style.background = farbeFuer(q.slug);
@@ -1888,8 +1899,10 @@
   // Kalender-Box: auf breiten Bildschirmen in die rechte Spalte
   function kalenderSpalte() {
     var box = el("kalender-box"), seite = el("spalte-seite"), haupt = el("spiele").parentNode;
-    if (window.innerWidth >= 900) { if (box.parentNode !== seite) seite.appendChild(box); }
-    else if (box.parentNode !== haupt) haupt.insertBefore(box, el("spiele"));
+    if (window.innerWidth >= 900) { if (box.parentNode !== seite) seite.appendChild(box); return; }
+    // Handy: vor den Spielen, solange nicht abonniert - danach dahinter
+    var ziel = lesen("abo-geklickt") === "1" ? el("start-anpassen") : el("spiele");
+    if (box.nextSibling !== ziel || box.parentNode !== haupt) haupt.insertBefore(box, ziel);
   }
   window.addEventListener("resize", kalenderSpalte);
 
@@ -1925,8 +1938,38 @@
 
   // Nach dem Login im Mitgliederbereich: "Meine Spiele" auf den dort
   // gewaehlten Namen stellen, damit niemand zweimal gefragt wird.
+  var START_BAUSTEINE = [
+    ["kacheln", "Kacheln", "Spiele in 7 Tagen, Gesuche, Ankündigungen, Statistik", true],
+    ["danach", "„Danach“ auf der Karte oben", "das übernächste Spiel in einer Zeile", false],
+    ["wetter", "Wetter auf der Karte oben", "zum Treffpunkt, mit Glättehinweis", true],
+    ["abfahrt", "Abfahrtszeit auf der Karte oben", "braucht die Heimatadresse im Konto", true],
+    ["woche", "Wochenstreifen", "die nächsten sieben Tage mit Punkten", false],
+    ["termine", "Nächste Termine", "Ankündigungen mit Datum", true],
+    ["radar", "Vertretungs-Radar", "offene Spiele und Gesuche in der Nähe (Login)", false],
+    ["pins", "Angepinnte Kollegen", "Avatare unter dem Profil", true],
+    ["kalender", "Kalender-Karte", "Abo, Link, Mitteilungen – zugeklappt, wenn abonniert", true],
+    ["vergangene", "Vergangene Spiele", "eingeklappt unter deinen Spielen", true]
+  ];
+  function startEinstellung(k) {
+    try { var st = JSON.parse(lesen("start") || "{}"); if (st[k] !== undefined) return !!st[k]; } catch (e) {}
+    var std = START_BAUSTEINE.filter(function (b) { return b[0] === k; })[0]; return std ? std[3] : true;
+  }
+  function startBausteineRendern() {
+    var box = el("start-bausteine"); if (!box) return; box.innerHTML = "";
+    START_BAUSTEINE.forEach(function (b) {
+      var l = document.createElement("label"); var t = document.createElement("span");
+      var bb = document.createElement("b"); bb.textContent = b[1]; bb.style.display = "block"; var sm = document.createElement("small"); sm.textContent = b[2]; sm.style.color = "var(--dim)"; sm.style.fontWeight = "500";
+      t.appendChild(bb); t.appendChild(sm);
+      var c = document.createElement("input"); c.type = "checkbox"; c.checked = startEinstellung(b[0]);
+      c.addEventListener("change", function () {
+        var st = {}; try { st = JSON.parse(lesen("start") || "{}"); } catch (e) {}
+        st[b[0]] = c.checked; schreiben("start", JSON.stringify(st)); einstellungenSync();
+      });
+      l.appendChild(t); l.appendChild(c); box.appendChild(l);
+    });
+  }
   function einstellungenSammeln() {
-    return { karten: lesen("karten") || null, schrift: lesen("schrift") || null, akzent: lesen("akzent") || null, kompakt: lesen("kompakt") || null, ziel: lesen("ziel") || null };
+    return { karten: lesen("karten") || null, schrift: lesen("schrift") || null, akzent: lesen("akzent") || null, kompakt: lesen("kompakt") || null, ziel: lesen("ziel") || null, start: lesen("start") || null };
   }
   var syncTimer = null;
   function einstellungenSync() {
@@ -1939,7 +1982,7 @@
   function einstellungenAnwenden(e) {
     if (!e) return;
     var geaendert = false;
-    ["karten", "schrift", "akzent", "kompakt", "ziel"].forEach(function (k) { if ((lesen(k) || null) !== (e[k] || null)) { schreiben(k, e[k] || null); geaendert = true; } });
+    ["karten", "schrift", "akzent", "kompakt", "ziel", "start"].forEach(function (k) { if ((lesen(k) || null) !== (e[k] || null)) { schreiben(k, e[k] || null); geaendert = true; } });
     if (geaendert) { einstellungenLaden(true); themaAnwenden(); toast("Einstellungen vom Konto übernommen", ""); if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true); }
   }
   document.addEventListener("mg-profil", function (e) {

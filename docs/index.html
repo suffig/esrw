@@ -647,6 +647,7 @@
   .profilzeile .avatar-gross { width:42px; height:42px; border-radius:50%; background:var(--akzent); color:#fff; font-weight:800; display:inline-flex; align-items:center; justify-content:center; flex:none; font-size:.9rem; }
   .profilzeile > span:first-child { display:flex; align-items:center; gap:10px; min-width:0; }
   .profilzeile > span:first-child > span { min-width:0; }
+  .profilzeile > span:first-child:not(:has(.avatar-gross)) { display:block; }
   .profilzeile b { display:block; line-height:1.2; }
   .zurueck { display:inline-flex; align-items:center; gap:4px; }
 
@@ -737,6 +738,9 @@
   body::before { background:radial-gradient(60% 120% at 20% -20%, color-mix(in srgb, var(--akzent) 14%, transparent), transparent 70%), radial-gradient(40% 80% at 100% 0%, color-mix(in srgb, var(--rot) 8%, transparent), transparent 70%); }
   .neu, .onboarding { border-color:var(--akzent); }
   footer { text-align:center; }
+  .start-anpassen { text-align:center; margin:14px 0 4px; }
+  .menue-gruppe { grid-column:1 / -1; margin:8px 0 -2px; font-size:.74rem; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); font-weight:800; }
+  .menue-gruppe:first-child { margin-top:0; }
   .kopf h1 { white-space:nowrap; font-size:1.15rem; }
   .kopf .stand { max-width:min(46vw, 240px); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:block; }
   .profilzeile > span:last-child { display:flex; flex-direction:column; align-items:flex-end; gap:2px; flex:none; }
@@ -1016,6 +1020,7 @@
     </details>
 
     <div id="spiele"></div>
+    <p class="meta start-anpassen" id="start-anpassen"><a href="#einstellungen">Startseite anpassen ›</a></p>
     </div>
     <div class="spalte-seite" id="spalte-seite"></div>
     </div>
@@ -1051,6 +1056,9 @@
       <label>Kompakte Ansicht <input type="checkbox" id="kompakt"></label>
       <label>Saisonziel <input type="number" id="ziel" min="1" max="200" placeholder="z. B. 40" style="width:6em"> Spiele</label>
     </div>
+    <h3 class="abschnitt">Startseite<small>Was auf „Start“ steht – Profil, nächstes Spiel und deine Spiele immer</small></h3>
+    <div class="karte einstellungen-liste" id="start-bausteine"></div>
+    <p class="meta" style="margin-top:10px">Mit Konto wandern diese Einstellungen auf alle deine Geräte.</p>
     <p class="meta" style="margin-top:12px">Profil, Push und Konto: unter Mehr → Konto. Alles hier bleibt auf diesem Gerät.</p>
   </section>
 
@@ -1127,6 +1135,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=31"></script>
+<script src="app.js?v=32"></script>
 </body>
 </html>

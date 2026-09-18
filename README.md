@@ -257,6 +257,13 @@ verwalten mit Server-Test, Einstellungen im Konto synchron, Kalender-Link-
 Prüfung, Offline-Balken; Spielseite in Ligafarbe, ruhigere Startseite mit
 Wochenstreifen in der Karte oben, sanfte Übergänge (reduced-motion respektiert).
 
+**Startseite einstellbar**: Start zeigt nur das Wichtigste (Profil, nächstes
+Spiel, Kacheln, Termine, Pins, Kalender, eigene Spiele); jeder Baustein lässt
+sich unter Einstellungen → Startseite an- oder abschalten (Wochenstreifen,
+„Danach“, Radar sind standardmäßig aus), synchron über das Konto. „Mehr“
+ist in Gemeinsam / Für dich / Konto und App gruppiert, die Checkliste steht
+auf der Spielseite vor den Extras.
+
 **Termine & Tausch abschließen**: Ankündigungen mit Datum erscheinen auf
 Start als „Nächste Termine“ (Push am Vortag); in der Tauschbörse nimmt der
 Suchende ein Angebot an → „vereinbart“, Push an den Helfer, fertige
