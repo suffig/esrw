@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 129,
+ "spiele_gesamt": 128,
  "saison": "2026/27",
  "archiv_spiele": 165,
  "rollen": {
@@ -3965,11 +3965,11 @@
       1
      ],
      [
-      "Eissporthalle Dinslaken",
+      "Eissporthalle Essen-West",
       1
      ],
      [
-      "PreZero Rheinlandhalle Duisburg",
+      "Eissporthalle Dinslaken",
       1
      ]
     ],
@@ -3987,11 +3987,11 @@
       1
      ],
      [
-      "Heyer, Christoph (N)",
+      "Melchert, Philip",
       1
      ],
      [
-      "Lindemans, Pepe",
+      "Heyer, Christoph (N)",
       1
      ]
     ],
@@ -6521,31 +6521,6 @@
       {
        "name": "Brücker, Tobias",
        "slug": "bruecker-tobias",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": false,
-     "aenderung": null,
-     "hinweis": null
-    },
-    {
-     "beginn": "2026-09-20T17:30:00+02:00",
-     "treffpunkt": "2026-09-20T16:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "Senioren BZL",
-     "paarung": "Herforder EV 1b – EHC Troisdorf 1b",
-     "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-     "halle": "Eishalle Im Kleinen Felde",
-     "koordinaten": [
-      52.114893,
-      8.652028
-     ],
-     "gespann": [
-      {
-       "name": "Skalecki, Martin",
-       "slug": "skalecki-martin",
        "rolle": "SR"
       }
      ],
@@ -10158,31 +10133,6 @@
      "halle_erkannt": true,
      "vergangen": true,
      "aenderung": "Ansetzung",
-     "hinweis": null
-    },
-    {
-     "beginn": "2026-09-20T17:30:00+02:00",
-     "treffpunkt": "2026-09-20T16:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "Senioren BZL",
-     "paarung": "Herforder EV 1b – EHC Troisdorf 1b",
-     "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-     "halle": "Eishalle Im Kleinen Felde",
-     "koordinaten": [
-      52.114893,
-      8.652028
-     ],
-     "gespann": [
-      {
-       "name": "Malik, Orlando",
-       "slug": "malik-orlando",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": false,
-     "aenderung": null,
      "hinweis": null
     },
     {
@@ -14441,29 +14391,6 @@
      "name": "Schöche, Gian-Carlo",
      "rolle": "SR",
      "slug": "schoeche-gian-carlo"
-    }
-   ],
-   "vergangen": false
-  },
-  {
-   "beginn": "2026-09-20T17:30:00+02:00",
-   "treffpunkt": "2026-09-20T16:30:00+02:00",
-   "liga": "Senioren BZL",
-   "paarung": "Herforder EV 1b – EHC Troisdorf 1b",
-   "halle": "Eishalle Im Kleinen Felde",
-   "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Malik, Orlando",
-     "rolle": "SR",
-     "slug": "malik-orlando"
-    },
-    {
-     "name": "Skalecki, Martin",
-     "rolle": "SR",
-     "slug": "skalecki-martin"
     }
    ],
    "vergangen": false

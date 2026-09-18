@@ -1897,34 +1897,6 @@ DESCRIPTION:In einer Stunde an der Halle - U15 RLA · Krefelder EV – Köl
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:461d623ed918873da500ab04c7677c16ab64e6cf@esrw.de
-SEQUENCE:0
-DTSTAMP:20260911T150047Z
-LAST-MODIFIED:20260911T150047Z
-DTSTART:20260920T143000Z
-DTEND:20260920T180000Z
-SUMMARY:Senioren BZL · Herforder EV 1b – EHC Troisdorf 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
-  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eishalle I
- m Kleinen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Skale
- cki\, Martin\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.
- de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eishalle Im Kleinen Felde\, Im Kleinen Felde\, 32051 Herford
-GEO:52.114893;8.652028
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
-  Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
- Kleinen Felde":geo:52.114893,8.652028
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - Senioren BZL · Herforder EV 1b 
- – EHC Troisdorf 1b
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:d9891636bbf04101aa2002f48550a9c8462c4273@esrw.de
 SEQUENCE:0
 DTSTAMP:20260911T150047Z
