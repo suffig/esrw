@@ -278,6 +278,11 @@ Profilen mit Mitfahrt-Anfrage; Monatsabschluss in der Abrechnung mit
 Push-Erinnerung am Monatsende; Wochenvorschau-Push sonntags; Onboarding
 verschwindet nach dem Kalender-Abo.
 
+**Spiele korrigieren (Schema v12)**: Admins ändern je Spiel Halle, Anstoß,
+Treffpunkt, Hinweis oder setzen „abgesagt“ – sofort in der App, beim
+nächsten Lauf auch in Feeds und Push (Tabelle `spiel_korrekturen`).
+Hallen-Erkennung: Ort hinter unbekanntem Gastverein zählt als Spielort.
+
 **Termine & Tausch abschließen**: Ankündigungen mit Datum erscheinen auf
 Start als „Nächste Termine“ (Push am Vortag); in der Tauschbörse nimmt der
 Suchende ein Angebot an → „vereinbart“, Push an den Helfer, fertige

@@ -648,6 +648,9 @@
   .profilzeile > span:first-child { display:flex; align-items:center; gap:10px; min-width:0; }
   .profilzeile > span:first-child > span { min-width:0; }
   .profilzeile > span:first-child:not(:has(.avatar-gross)) { display:block; }
+  /* Korrekturen vom Admin */
+  .spiel.abgesagt .paarung, #spiel-kopf.abgesagt .paarung { text-decoration:line-through; opacity:.75; }
+  .spiel.abgesagt { border-left:4px solid var(--rot); }
   /* Heute-Modus, Kollegen-Karte, Suche, Onboarding kurz */
   .held.heute { box-shadow:0 0 0 3px rgba(255,255,255,.35), var(--held-schatten, none); }
   .held .countdown { margin-top:12px; padding:10px 12px; border-radius:12px; background:rgba(255,255,255,.14); font-weight:700; display:flex; align-items:center; gap:8px; }
@@ -1184,6 +1187,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=34"></script>
+<script src="app.js?v=35"></script>
 </body>
 </html>

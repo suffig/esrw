@@ -248,6 +248,15 @@ def finde_halle(begegnung, venues):
     # 1) Ortshinweis
     if ort_hinweis:
         schluessel = orte.get(nkey(ort_hinweis))
+        if not schluessel and gast and nkey(ort_hinweis) == nkey(gast):
+            # Unbekannter Gastverein: dann steht der Spielort hinten dran
+            # ('Chiefs Leuwen Düsseldorf !!!' -> 'Düsseldorf'). Erst der
+            # laengste Rest, damit 'Kölnarena 2' vor '2' drankommt.
+            worte_h = ort_hinweis.replace("!", "").split()
+            for n in range(len(worte_h) - 1, 0, -1):
+                schluessel = orte.get(nkey(" ".join(worte_h[-n:])))
+                if schluessel:
+                    break
         if schluessel and schluessel in hallen:
             return hallen[schluessel], heim, gast, True
 
@@ -539,23 +548,69 @@ def pruefe_konflikte(termine, cfg):
                             % (a["paarung"], a["halle_name"] or "anderer Halle", luecke))
 
 
-def sammle_personen(spiele, cfg, venues, jetzt, bevorzugt=frozenset(), gebuehren=None):
+def korrekturen_laden(cfg):
+    """Korrekturen des Betreibers (Tabelle spiel_korrekturen) - mit dem
+    Service-Schluessel aus dem Workflow, sonst mit dem oeffentlichen
+    anon-Schluessel aus docs/supabase.json. Ohne Zugang: leer."""
+    url = os.environ.get("SUPABASE_URL", "").strip()
+    schluessel = os.environ.get("SUPABASE_SERVICE_KEY", "").strip()
+    if not url or not schluessel:
+        sb = lade(os.path.join(cfg["ausgabe_verzeichnis"], "supabase.json"), {}) or {}
+        url, schluessel = sb.get("url", ""), sb.get("anon_key", "")
+        if sb.get("mock") or not url or not schluessel:
+            return {}
+    try:
+        anfrage = urllib.request.Request(
+            url.rstrip("/") + "/rest/v1/spiel_korrekturen?select=kennung,halle,beginn,treffpunkt,hinweis,abgesagt",
+            headers={"apikey": schluessel, "Authorization": "Bearer " + schluessel})
+        with urllib.request.urlopen(anfrage, timeout=20) as antwort:
+            zeilen = json.loads(antwort.read().decode("utf-8"))
+        return {z["kennung"]: z for z in zeilen if z.get("kennung")}
+    except Exception as e:
+        print("  ! Korrekturen nicht lesbar: %s" % str(e)[:120], file=sys.stderr)
+        return {}
+
+
+def sammle_personen(spiele, cfg, venues, jetzt, bevorzugt=frozenset(), gebuehren=None, korrekturen=None):
     vorlauf = timedelta(minutes=cfg["vorlauf_minuten"])
     dauer = timedelta(minutes=cfg["spieldauer_minuten"])
     personen = {}
     uebersicht = []
+    hallen_nach_name = {h["name"]: h for h in venues["hallen"].values()}
 
     for spiel in spiele:
         halle, heim, gast, sicher = finde_halle(spiel["begegnung"], venues)
         liga = spiel["begegnung"].split(":", 1)[0].strip() if ":" in spiel["begegnung"] else ""
         anstoss = spiel["start"]
-        treffpunkt = anstoss - vorlauf
         paarung = "%s – %s" % (heim, gast) if gast else heim
         besetzung = rollen_fuer(spiel["besetzung"])
         kennung = spiel_id(anstoss.isoformat(), spiel["begegnung"])
+        # Kennung der App (Original-Beginn|Paarung) - darauf zeigen Korrekturen
+        app_id = anstoss.isoformat() + "|" + paarung
+        korr = (korrekturen or {}).get(app_id)
+        korrektur = None
+        if korr:
+            korrektur = {"halle": korr.get("halle") or None, "beginn": korr.get("beginn") or None,
+                         "treffpunkt": korr.get("treffpunkt") or None, "hinweis": korr.get("hinweis") or None,
+                         "abgesagt": bool(korr.get("abgesagt"))}
+            if korrektur["halle"] and korrektur["halle"] in hallen_nach_name:
+                halle, sicher = hallen_nach_name[korrektur["halle"]], True
+            if korrektur["beginn"]:
+                try:
+                    anstoss = datetime.fromisoformat(korrektur["beginn"].replace("Z", "+00:00")).astimezone(spiel["start"].tzinfo)
+                except ValueError:
+                    pass
+        treffpunkt = anstoss - vorlauf
+        if korrektur and korrektur["treffpunkt"]:
+            try:
+                treffpunkt = datetime.fromisoformat(korrektur["treffpunkt"].replace("Z", "+00:00")).astimezone(spiel["start"].tzinfo)
+            except ValueError:
+                pass
 
         uebersicht.append({
             "kennung": kennung,
+            "id": app_id,
+            "korrektur": korrektur,
             "anstoss": anstoss,
             "treffpunkt": treffpunkt,
             "liga": liga,
@@ -579,7 +634,19 @@ def sammle_personen(spiele, cfg, venues, jetzt, bevorzugt=frozenset(), gebuehren
 
             kollegen = [(n, r, personen_schluessel(n)) for n, r in besetzung
                         if personen_schluessel(n) != schluessel]
-            zeilen = [
+            zeilen = []
+            if korrektur:
+                if korrektur["abgesagt"]:
+                    zeilen.append("!! ABGESAGT - laut Betreiber findet das Spiel nicht statt !!")
+                teile = [t for t in (
+                    ("Halle: " + korrektur["halle"]) if korrektur["halle"] else "",
+                    ("Anstoß " + anstoss.strftime("%H:%M") + " Uhr") if korrektur["beginn"] else "",
+                    ("Treffpunkt " + treffpunkt.strftime("%H:%M") + " Uhr") if korrektur["treffpunkt"] else "",
+                    korrektur["hinweis"] or "") if t]
+                if teile:
+                    zeilen.append("Korrektur vom Betreiber: " + " · ".join(teile))
+                zeilen.append("")
+            zeilen += [
                 "Rolle: %s (%s)" % (ROLLEN.get(rolle, rolle), rolle),
                 "Spielbeginn: %s Uhr" % anstoss.strftime("%H:%M"),
                 "Treffpunkt: %s Uhr (%d Min vor Spielbeginn)" % (
@@ -609,9 +676,13 @@ def sammle_personen(spiele, cfg, venues, jetzt, bevorzugt=frozenset(), gebuehren
 
             titel = "%s · %s · %s" % (rolle, liga, paarung) if liga \
                 else "%s · %s" % (rolle, paarung)
+            if korrektur and korrektur["abgesagt"]:
+                titel = "ABGESAGT · " + titel
 
             eintrag["termine"].append({
                 "kennung": kennung,
+                "id": app_id,
+                "korrektur": korrektur,
                 "titel": titel,
                 "beschreibung": "\n".join(zeilen),
                 "ort": "%s, %s" % (halle["name"], halle["adresse"]) if halle else "",
@@ -887,7 +958,10 @@ def main():
 
     bevorzugt = aliase_laden(cfg)
     gebuehren = lade(os.path.join(cfg["ausgabe_verzeichnis"], "gebuehren.json"), {})
-    personen, uebersicht = sammle_personen(spiele, cfg, venues, stand, bevorzugt, gebuehren)
+    korrekturen = korrekturen_laden(cfg)
+    if korrekturen:
+        print("%d Korrektur(en) vom Betreiber." % len(korrekturen))
+    personen, uebersicht = sammle_personen(spiele, cfg, venues, stand, bevorzugt, gebuehren, korrekturen)
     print("%d Personen." % len(personen))
 
     unklar = sorted({t["paarung"] for p in personen for t in p["termine"]
@@ -1016,6 +1090,8 @@ def main():
                 "vergangen": t["vergangen"],
                 "aenderung": t.get("aenderung"),
                 "hinweis": t.get("hinweis"),
+                "id": t["id"],
+                "korrektur": t.get("korrektur"),
             } for t in p["termine"]],
         } for p in personen],
         # Gesamtuebersicht: jedes Spiel einmal, fuer den Spielplan nach Tagen
@@ -1030,6 +1106,8 @@ def main():
             "system": s["system"],
             "besetzung": s["besetzung"],
             "vergangen": s["vergangen"],
+            "id": s["id"],
+            "korrektur": s.get("korrektur"),
         } for s in uebersicht],
     }
     with open(os.path.join(ziel, "daten.json"), "w", encoding="utf-8") as f:

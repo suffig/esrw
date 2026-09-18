@@ -620,3 +620,30 @@ insert into public.funktionen (schluessel, aktiv) values ('tausch', false), ('fr
 -- "abgerechnet" = Monatsabrechnung ist raus (E-Mail), "bezahlt" = Geld da.
 -- Der Workflow erinnert am Monatsende an nicht abgeschlossene Spiele.
 alter table public.einsaetze add column if not exists abgerechnet boolean not null default false;
+
+-- ======================================================================
+-- v12: Spiele vom Admin korrigieren (Halle, Zeit, Hinweis, Absage)
+-- ======================================================================
+-- Eine Zeile je Spiel (Kennung = Original-Beginn|Paarung wie in der App).
+-- Der Workflow liest sie beim Bauen der Kalender, die App sofort.
+create table if not exists public.spiel_korrekturen (
+  kennung     text primary key,
+  halle       text,                       -- Hallenname aus venues.json, null = unveraendert
+  beginn      timestamptz,                -- neuer Anstoss, null = unveraendert
+  treffpunkt  timestamptz,                -- null = Vorlauf vor dem (neuen) Anstoss
+  hinweis     text,
+  abgesagt    boolean not null default false,
+  von         text,
+  geaendert   timestamptz not null default now()
+);
+alter table public.spiel_korrekturen enable row level security;
+drop policy if exists "Korrekturen lesen"   on public.spiel_korrekturen;
+drop policy if exists "Admin korrigiert"    on public.spiel_korrekturen;
+drop policy if exists "Admin legt an"       on public.spiel_korrekturen;
+drop policy if exists "Admin loescht"       on public.spiel_korrekturen;
+create policy "Korrekturen lesen" on public.spiel_korrekturen for select to anon, authenticated using (true);
+create policy "Admin korrigiert"  on public.spiel_korrekturen for update to authenticated using (public.ist_admin()) with check (public.ist_admin());
+create policy "Admin legt an"     on public.spiel_korrekturen for insert to authenticated with check (public.ist_admin());
+create policy "Admin loescht"     on public.spiel_korrekturen for delete to authenticated using (public.ist_admin());
+grant select on public.spiel_korrekturen to anon, authenticated;
+grant insert, update, delete on public.spiel_korrekturen to authenticated;

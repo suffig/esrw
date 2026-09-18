@@ -987,6 +987,22 @@ Fahrtenbuch, Drucken) und die Rechenregeln klappen bei Bedarf auf.
 * **Onboarding:** Die Drei-Schritte-Karte verschwindet nach dem Kalender-Abo;
   ohne Konto bleibt ein Einzeiler mit Link.
 
+### 10.6h Spiele korrigieren (Schema v12)
+
+Admins sehen auf jeder Spielseite unten **„Korrigieren (Admin)“**: Halle
+(Auswahl aus venues.json), Anstoß, Treffpunkt, Hinweis für alle, „Spiel
+abgesagt“. Leere Felder bleiben wie auf esrw.de. Die Korrektur gilt für
+alle: in der App sofort (Karten, Spielseite, Kopfkarte zeigen „✎ Vom
+Betreiber korrigiert: …“), in Kalender-Feeds und Push beim nächsten Lauf
+(Titel „ABGESAGT · …“, Zeile „Korrektur vom Betreiber“ in der Beschreibung).
+„Korrektur entfernen“ stellt den Stand von esrw.de wieder her. Tabelle
+`spiel_korrekturen` – dafür `supabase/schema.sql` neu ausführen.
+
+Hallen-Erkennung: Steht hinter einem **unbekannten** Gastverein ein Ort
+(„Ratinger Ice Aliens - Chiefs Leuwen Düsseldorf !!!“), zählt der Ort als
+Spielort (Düsseldorf). Bekannte Vereine mit Ortsnamen („Eisadler Dortmund“)
+sind davon nicht betroffen.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

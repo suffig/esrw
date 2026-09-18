@@ -80,6 +80,10 @@ def test_hallen():
          "Eishalle Brehmstraße", "Hallenname an Gaststelle"),
         ("U15 RLB: Iserlohner EC 1b - Düsseldorfer EG 1b",
          "Eissporthalle am Seilersee", "Mannschafts-Zusatz wird ignoriert"),
+        ("RL FS: Ratinger Ice Aliens - Chiefs Leuwen Düsseldorf !!!",
+         "Eishalle Brehmstraße", "unbekannter Gast: Ort steht hinten dran"),
+        ("RL FS: Ratinger Ice Aliens - Chiefs Leuwen",
+         "Eissporthalle Ratingen", "unbekannter Gast ohne Ort: Heimverein"),
     ]
     for begegnung, halle_soll, warum in erwartet:
         halle, heim, gast, erkannt = E.finde_halle(begegnung, venues)

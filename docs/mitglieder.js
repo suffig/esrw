@@ -92,7 +92,7 @@ window.Mitglieder = (function () {
   function isoTag(d) {
     return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2);
   }
-  function kennungVon(s) { return s.beginn + "|" + s.paarung; }
+  function kennungVon(s) { return s.id || (s.beginn + "|" + s.paarung); }
   function sicher(s) { return String(s).replace(/[^a-zA-Z0-9._-]+/g, "_").slice(0, 80); }
 
   function kmZwischen(a, b) {
@@ -2433,6 +2433,14 @@ window.Mitglieder = (function () {
   }
 
   // Naechste Termine (Ankuendigungen mit Datum) fuer die Startseite
+  function istAdmin() { return ladeProfil().then(function () { return !!(profil && profil.admin); }).catch(function () { return false; }); }
+  function korrekturSpeichern(kennung, obj) {
+    if (!session || !profil || !profil.admin) return Promise.resolve(false);
+    var lauf = obj ? sb.from("spiel_korrekturen").upsert(Object.assign({ kennung: kennung, von: profil.name || profil.slug, geaendert: new Date().toISOString() }, obj), { onConflict: "kennung" })
+                   : sb.from("spiel_korrekturen").delete().eq("kennung", kennung);
+    return lauf.then(function (r) { if (r.error) { meldung(fehlerText(r.error) + (/spiel_korrekturen/.test(r.error.message || "") ? " – schema.sql (v12) ausführen." : ""), "warn"); return false; } return true; })
+      .catch(function (e) { meldung(fehlerText(e), "warn"); return false; });
+  }
   function kontaktVon(slug) {
     if (!session || !frei() || !slug) return Promise.resolve(null);
     return sb.from("kontakte").select("slug,telefon,hinweis").eq("slug", slug).maybeSingle().then(function (r) {
@@ -2490,5 +2498,5 @@ window.Mitglieder = (function () {
            sperrenAm: sperrenAm, gesuchAnlegen: gesuchAnlegen, offeneAbrechnungen: offeneAbrechnungen,
            extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat, obmann: obmann, termine: termine,
            einstellungenSpeichern: einstellungenSpeichern, radar: radar, angebotMachen: angebotMachen,
-           kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl, kontoRendern: kontoRendern, kontaktVon: kontaktVon };
+           kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl, kontoRendern: kontoRendern, kontaktVon: kontaktVon, istAdmin: istAdmin, korrekturSpeichern: korrekturSpeichern };
 })();

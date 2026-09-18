@@ -91,6 +91,64 @@
     }).catch(function () {});
   }
   document.addEventListener("mg-funktionen", function (e) { funktionenAnwenden(e.detail || {}, true); });
+
+  // ------------------------------------------ Korrekturen (Admin, je Spiel)
+  // Halle, Anstoss, Treffpunkt, Hinweis, Absage aus der Tabelle
+  // spiel_korrekturen. Der Workflow baut sie in Kalender und daten.json ein;
+  // hier werden sie zusaetzlich sofort angewendet (idempotent).
+  var korrekturen = {};
+  function korrekturAnwendenAuf(s) {
+    var k = korrekturen[kennungVon(s)];
+    if (!k) {
+      if (s._orig) { s.beginn = s._orig.beginn; s.treffpunkt = s._orig.treffpunkt; s.halle = s._orig.halle; s.ort = s._orig.ort; if (s._orig.koordinaten !== undefined) s.koordinaten = s._orig.koordinaten; s.vergangen = new Date(s.beginn) < Date.now(); }
+      if (s.korrektur && s.korrektur._app) s.korrektur = null;
+      return;
+    }
+    if (!s.id) s.id = s.beginn + "|" + s.paarung;
+    if (!s._orig) s._orig = { beginn: s.beginn, treffpunkt: s.treffpunkt, halle: s.halle, ort: s.ort, koordinaten: s.koordinaten };
+    s.beginn = k.beginn || s._orig.beginn;
+    s.treffpunkt = k.treffpunkt || (k.beginn ? new Date(new Date(k.beginn).getTime() - (daten.vorlauf_minuten || 60) * 60000).toISOString() : s._orig.treffpunkt);
+    if (k.halle && daten.adressen && daten.adressen[k.halle] !== undefined) {
+      s.halle = k.halle; s.ort = k.halle + ", " + daten.adressen[k.halle]; s.halle_erkannt = true;
+      if (s._orig.koordinaten !== undefined) s.koordinaten = daten.hallen && daten.hallen[k.halle];
+    } else { s.halle = s._orig.halle; s.ort = s._orig.ort; if (s._orig.koordinaten !== undefined) s.koordinaten = s._orig.koordinaten; }
+    s.korrektur = { halle: k.halle || null, beginn: k.beginn || null, treffpunkt: k.treffpunkt || null, hinweis: k.hinweis || null, abgesagt: !!k.abgesagt, _app: true };
+    s.vergangen = new Date(s.beginn) < Date.now();
+  }
+  function korrekturenAnwenden() {
+    if (!daten) return;
+    (daten.spiele || []).forEach(korrekturAnwendenAuf);
+    (daten.personen || []).forEach(function (p) { p.spiele.forEach(korrekturAnwendenAuf); p.spiele.sort(function (a, b) { return a.beginn < b.beginn ? -1 : a.beginn > b.beginn ? 1 : 0; }); });
+    (daten.spiele || []).sort(function (a, b) { return a.beginn < b.beginn ? -1 : a.beginn > b.beginn ? 1 : 0; });
+  }
+  function korrekturenLaden(neuZeichnen) {
+    return hole("supabase.json").then(function (cfg) {
+      cfg = cfg || {};
+      if (cfg.mock) { try { return JSON.parse(localStorage.getItem("mock_spiel_korrekturen") || "[]"); } catch (e) { return []; } }
+      if (!cfg.url || !cfg.anon_key) return null;
+      return fetch(cfg.url.replace(/\/$/, "") + "/rest/v1/spiel_korrekturen?select=kennung,halle,beginn,treffpunkt,hinweis,abgesagt", { headers: { apikey: cfg.anon_key, Authorization: "Bearer " + cfg.anon_key } })
+        .then(function (r) { return r.ok ? r.json() : null; });
+    }).then(function (zeilen) {
+      if (!zeilen) return false;
+      var neu = {}; zeilen.forEach(function (z) { neu[z.kennung] = z; });
+      var anders = JSON.stringify(neu) !== JSON.stringify(korrekturen);
+      korrekturen = neu; korrekturenAnwenden();
+      if (anders && neuZeichnen) ausHash();
+      return anders;
+    }).catch(function () { return false; });
+  }
+  function korrekturZeile(s) {
+    var k = s.korrektur; if (!k) return null;
+    var z = document.createElement("div"); z.className = k.abgesagt ? "achtung" : "geaendert";
+    var teile = [];
+    if (k.abgesagt) teile.push("ABGESAGT");
+    if (k.halle) teile.push("Halle: " + k.halle);
+    if (k.beginn) teile.push("Anstoß " + uhr(new Date(s.beginn)) + " Uhr");
+    if (k.treffpunkt) teile.push("Treffpunkt " + uhr(new Date(s.treffpunkt)) + " Uhr");
+    if (k.hinweis) teile.push(k.hinweis);
+    z.textContent = "✎ Vom Betreiber korrigiert: " + teile.join(" · ");
+    return z;
+  }
   function profilLesen() {
     try { var roh = lesen("profil"); if (roh) return JSON.parse(roh); } catch (e) {}
     var alt = lesen("person");
@@ -562,6 +620,8 @@
     }
     if (s.hinweis) { var hw = document.createElement("div"); hw.className = "achtung"; hw.textContent = "⚠ " + s.hinweis; d.appendChild(hw); }
     if (s.aenderung) { var ae = document.createElement("div"); ae.className = "geaendert"; ae.textContent = "⚠ Geändert: " + s.aenderung; d.appendChild(ae); }
+    var kz = korrekturZeile(s); if (kz) d.appendChild(kz);
+    if (s.korrektur && s.korrektur.abgesagt) d.classList.add("abgesagt");
     var mehr = document.createElement("div"); mehr.className = "meta"; mehr.style.marginTop = "6px"; mehr.style.color = "var(--akzent)"; mehr.textContent = "Details, Route, Tausch ›";
     d.appendChild(mehr);
     karteEl.classList.add("tippbar");
@@ -570,7 +630,7 @@
     return karteEl;
   }
 
-  function kennungVon(s) { return s.beginn + "|" + s.paarung; }
+  function kennungVon(s) { return s.id || (s.beginn + "|" + s.paarung); }
 
   // ---------------------------------------------------- Wetter (Open-Meteo)
 
@@ -666,6 +726,8 @@
     }
     if (s.hinweis) { var hw = document.createElement("div"); hw.className = "achtung"; hw.textContent = "⚠ " + s.hinweis; ort.appendChild(hw); }
     if (s.aenderung) { var ae = document.createElement("div"); ae.className = "geaendert"; ae.textContent = "⚠ Geändert: " + s.aenderung; ort.appendChild(ae); }
+    var kz2 = korrekturZeile(s); if (kz2) ort.appendChild(kz2);
+    if (s.korrektur && s.korrektur.abgesagt) kopf.classList.add("abgesagt");
 
     var wer = karteAbschnitt(meins ? "Gespann" : "Besetzung");
     var chips = document.createElement("div"); chips.className = "chips";
@@ -730,7 +792,50 @@
         mailZeile.appendChild(mail); ab.appendChild(mailZeile);
       }
     }
+    // Admin: Spiel korrigieren
+    var lauf = inhalt._lauf = {};
+    if (sitzungVorhanden()) ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
+      .then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.istAdmin() : false; })
+      .then(function (istAdmin) { if (istAdmin && inhalt._lauf === lauf) korrekturFormular(s, karteAbschnitt("Korrigieren (Admin)")); }).catch(function () {});
     window.scrollTo(0, 0);
+  }
+
+  // Admin-Formular auf der Spielseite: Halle, Anstoss, Treffpunkt, Hinweis, Absage
+  function lokalInput(iso) { if (!iso) return ""; var d = new Date(iso); function z(n) { return ("0" + n).slice(-2); } return d.getFullYear() + "-" + z(d.getMonth() + 1) + "-" + z(d.getDate()) + "T" + z(d.getHours()) + ":" + z(d.getMinutes()); }
+  function korrekturFormular(s, box) {
+    var k = s.korrektur || {};
+    var p = document.createElement("p"); p.className = "meta"; p.style.margin = "0 0 8px";
+    p.textContent = "Gilt für alle: App sofort, Kalender und Push beim nächsten Lauf (bis 30 Min.). Leere Felder bleiben wie auf esrw.de.";
+    box.appendChild(p);
+    var form = document.createElement("div"); form.className = "mg-form";
+    function feld(label, eingabe) { var l = document.createElement("label"); l.textContent = label; form.appendChild(l); form.appendChild(eingabe); return eingabe; }
+    var halle = document.createElement("select"); halle.className = "mg-select";
+    var o0 = document.createElement("option"); o0.value = ""; o0.textContent = "– wie erkannt (" + ((s._orig && s._orig.halle) || s.halle || "unbekannt") + ") –"; halle.appendChild(o0);
+    Object.keys(daten.adressen || {}).sort(function (a, b) { return a.localeCompare(b, "de"); }).forEach(function (n) { var o = document.createElement("option"); o.value = n; o.textContent = n; if (k.halle === n) o.selected = true; halle.appendChild(o); });
+    feld("Halle", halle);
+    var beginn = document.createElement("input"); beginn.type = "datetime-local"; beginn.value = lokalInput(k.beginn); feld("Anstoß (leer = " + uhr(new Date((s._orig && s._orig.beginn) || s.beginn)) + " Uhr)", beginn);
+    var treff = document.createElement("input"); treff.type = "datetime-local"; treff.value = lokalInput(k.treffpunkt); feld("Treffpunkt (leer = " + (daten.vorlauf_minuten || 60) + " Min. vor Anstoß)", treff);
+    var hinweis = document.createElement("input"); hinweis.type = "text"; hinweis.maxLength = 200; hinweis.placeholder = "z. B. „Nebenhalle, Eingang hinten“"; hinweis.value = k.hinweis || ""; feld("Hinweis für alle", hinweis);
+    var abgesagt = document.createElement("input"); abgesagt.type = "checkbox"; abgesagt.checked = !!k.abgesagt;
+    var al = document.createElement("label"); al.className = "mg-check"; al.appendChild(abgesagt); al.appendChild(document.createTextNode(" Spiel abgesagt")); form.appendChild(al);
+    box.appendChild(form);
+    var zw = document.createElement("div"); zw.className = "zweit"; zw.style.marginTop = "10px";
+    var speichern = document.createElement("button"); speichern.type = "button"; speichern.className = "anfrage"; speichern.textContent = "Korrektur speichern";
+    speichern.addEventListener("click", function () {
+      var obj = { halle: halle.value || null, beginn: beginn.value ? new Date(beginn.value).toISOString() : null, treffpunkt: treff.value ? new Date(treff.value).toISOString() : null, hinweis: hinweis.value.trim() || null, abgesagt: abgesagt.checked };
+      var leer = !obj.halle && !obj.beginn && !obj.treffpunkt && !obj.hinweis && !obj.abgesagt;
+      speichern.disabled = true;
+      window.Mitglieder.korrekturSpeichern(kennungVon(s), leer ? null : obj).then(function (ok) {
+        speichern.disabled = false; if (!ok) return;
+        toast(leer ? "Korrektur entfernt." : "Korrektur gespeichert – alle sehen sie sofort.", "gut");
+        korrekturenLaden(false).then(function () { zeigeSpiel(kennungVon(s)); });
+      });
+    });
+    zw.appendChild(speichern);
+    if (s.korrektur) { var weg = document.createElement("button"); weg.type = "button"; weg.textContent = "Korrektur entfernen"; weg.addEventListener("click", function () {
+      window.Mitglieder.korrekturSpeichern(kennungVon(s), null).then(function (ok) { if (!ok) return; toast("Korrektur entfernt.", "gut"); korrekturenLaden(false).then(function () { zeigeSpiel(kennungVon(s)); }); });
+    }); zw.appendChild(weg); }
+    box.appendChild(zw);
   }
 
   // -------------------------------------------------------- Dashboard-Kacheln
@@ -1692,6 +1797,7 @@
   function ansicht(name) {
     ["auswahl", "detail", "plan", "mitglieder", "halle", "status", "spiel", "mehr", "einstellungen", "karte", "statseite"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
     var reiter = (location.hash.split("/")[1] || "");
+    if (name !== "auswahl" && name !== "detail") { el("onboarding").classList.add("versteckt"); el("onboarding-kurz").classList.add("versteckt"); }
     el("tab-meine").classList.toggle("aktiv", name === "auswahl" || name === "detail" || name === "spiel" || name === "statseite");
     el("tab-plan").classList.toggle("aktiv", name === "plan" || name === "halle");
     el("tab-tausch").classList.toggle("aktiv", name === "mitglieder" && reiter === "tausch");
@@ -2345,7 +2451,7 @@
   function neuLaden() {
     return Promise.all([hole("daten.json"), hole("stand.json").catch(function () { return null; })])
       .then(function (b) {
-        daten = b[0]; standAnzeigen(daten, b[1]);
+        daten = b[0]; standAnzeigen(daten, b[1]); korrekturenAnwenden(); korrekturenLaden(false);
         // Nur die gerade sichtbare Ansicht neu zeichnen - nie die Seite wechseln
         var sichtbar = function (id) { return !el(id).classList.contains("versteckt"); };
         if (aktuell && sichtbar("detail")) { var frisch = personMit(aktuell.slug); if (frisch) zeigePerson(frisch, true); }
@@ -2360,7 +2466,7 @@
       document.title = daten.titel; el("titel").textContent = (daten.titel || "Einteilungen").replace(/\s*ESRW\s*$/, ""); el("quelle").href = daten.quelle;
       standAnzeigen(daten, b[1]);
       el("fuss").textContent = "Termine beginnen " + daten.vorlauf_minuten + " Minuten vor Spielbeginn, damit du rechtzeitig an der Halle bist.";
-      einstellungenLaden(); filterLaden(); avatarKopf(); zeigeListe(""); funktionenLaden(); ausHash(); zeigeInstallHinweis(); zeigeNeu(); filterHoehe(); netzAnzeigen();
+      einstellungenLaden(); filterLaden(); avatarKopf(); zeigeListe(""); funktionenLaden(); korrekturenLaden(true); ausHash(); zeigeInstallHinweis(); zeigeNeu(); filterHoehe(); netzAnzeigen();
       setTimeout(zaehlerHolen, 1500);
     })
     .catch(function () { el("stand").className = "stand alt"; el("stand").textContent = "Daten konnten nicht geladen werden."; });
