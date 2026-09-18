@@ -28,12 +28,6 @@ GEO:51.405718;6.780082
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
  sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
  reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL · EV Duisburg 1b 
- – Ratinger Ice Aliens
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:79a8515def553bb7fd9073fa7a9068c66b7a7530@esrw.de
