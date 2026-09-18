@@ -50,6 +50,33 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
  rum Westfalen":geo:51.49525,7.458288
 END:VEVENT
 BEGIN:VEVENT
+UID:c75b929047c9603c6f88549688f54838ea81b065@esrw.de
+SEQUENCE:0
+DTSTAMP:20260918T083038Z
+LAST-MODIFIED:20260918T083038Z
+DTSTART:20260919T093000Z
+DTEND:20260919T130000Z
+SUMMARY:SR · U15 FS · EHC Essen Ruhr – Dinslakener Kobras
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
+  11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 FS\nHalle: Eissporthalle Es
+ sen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Hofer\, Carsten\n
+ \nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Essen-West\, Curtiusstr. 2\, 45144 Essen
+GEO:51.454179;6.976731
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
+ Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
+ n-West":geo:51.454179,6.976731
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 FS · EHC Essen Ruhr 
+ – Dinslakener Kobras
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:48f265d5bfe7531b39ca6283adfb37ba0bdcb9ab@esrw.de
 SEQUENCE:0
 DTSTAMP:20260911T150047Z

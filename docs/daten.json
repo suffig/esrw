@@ -2,9 +2,9 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 128,
+ "spiele_gesamt": 129,
  "saison": "2026/27",
- "archiv_spiele": 164,
+ "archiv_spiele": 165,
  "rollen": {
   "SR": "Schiedsrichter",
   "HSR": "Hauptschiedsrichter",
@@ -904,12 +904,12 @@
     ],
     "partner": [
      [
-      "Berger, Eugen",
-      2
+      "Malik, Orlando",
+      3
      ],
      [
-      "Malik, Orlando",
-      1
+      "Berger, Eugen",
+      2
      ]
     ],
     "je_saison": [
@@ -976,7 +976,7 @@
      "beginn": "2026-09-20T10:00:00+02:00",
      "treffpunkt": "2026-09-20T09:00:00+02:00",
      "rolle": "SR",
-     "system": 1,
+     "system": 2,
      "liga": "Frauen BZL",
      "paarung": "Herforder EV – KEC \"Die Haie\" 1c",
      "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
@@ -985,7 +985,13 @@
       52.114893,
       8.652028
      ],
-     "gespann": [],
+     "gespann": [
+      {
+       "name": "Malik, Orlando",
+       "slug": "malik-orlando",
+       "rolle": "SR"
+      }
+     ],
      "halle_erkannt": true,
      "vergangen": false,
      "aenderung": null,
@@ -995,7 +1001,7 @@
      "beginn": "2026-09-20T12:30:00+02:00",
      "treffpunkt": "2026-09-20T11:30:00+02:00",
      "rolle": "SR",
-     "system": 1,
+     "system": 2,
      "liga": "U15 LL",
      "paarung": "Herforder EV – Lippe Hockey Hamm",
      "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
@@ -1004,7 +1010,13 @@
       52.114893,
       8.652028
      ],
-     "gespann": [],
+     "gespann": [
+      {
+       "name": "Malik, Orlando",
+       "slug": "malik-orlando",
+       "rolle": "SR"
+      }
+     ],
      "halle_erkannt": true,
      "vergangen": false,
      "aenderung": null,
@@ -3919,10 +3931,10 @@
     "Hofer, Carsten"
    ],
    "statistik": {
-    "gesamt": 8,
-    "saison": 8,
+    "gesamt": 9,
+    "saison": 9,
     "rollen": {
-     "SR": 6,
+     "SR": 7,
      "LSR": 2
     },
     "ligen": [
@@ -3986,7 +3998,7 @@
     "je_saison": [
      [
       "2026/27",
-      8
+      9
      ]
     ],
     "erste": "2026-09-06",
@@ -4066,6 +4078,31 @@
        "name": "Lindemans, Pepe",
        "slug": "lindemans-pepe",
        "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-19T12:30:00+02:00",
+     "treffpunkt": "2026-09-19T11:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U15 FS",
+     "paarung": "EHC Essen Ruhr – Dinslakener Kobras",
+     "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
+     "halle": "Eissporthalle Essen-West",
+     "koordinaten": [
+      51.454179,
+      6.976731
+     ],
+     "gespann": [
+      {
+       "name": "Melchert, Philip",
+       "slug": "melchert-philip",
+       "rolle": "SR"
       }
      ],
      "halle_erkannt": true,
@@ -5690,17 +5727,12 @@
     "Kyei-Nimako, Denis"
    ],
    "statistik": {
-    "gesamt": 2,
-    "saison": 2,
+    "gesamt": 1,
+    "saison": 1,
     "rollen": {
-     "SR": 1,
      "HSR": 1
     },
     "ligen": [
-     [
-      "BL FS",
-      1
-     ],
      [
       "RL FS",
       1
@@ -5708,19 +5740,11 @@
     ],
     "hallen": [
      [
-      "Emscher-Lippe-Halle Gelsenkirchen",
-      1
-     ],
-     [
       "Eissporthalle Neuss",
       1
      ]
     ],
     "partner": [
-     [
-      "Skalecki, Martin",
-      1
-     ],
      [
       "Beckford, Emanuel",
       1
@@ -5733,11 +5757,11 @@
     "je_saison": [
      [
       "2026/27",
-      2
+      1
      ]
     ],
     "erste": "2026-09-20",
-    "letzte": "2026-09-27"
+    "letzte": "2026-09-20"
    },
    "spiele": [
     {
@@ -5763,31 +5787,6 @@
        "name": "Lindemans, Pepe",
        "slug": "lindemans-pepe",
        "rolle": "LSR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": false,
-     "aenderung": null,
-     "hinweis": null
-    },
-    {
-     "beginn": "2026-09-27T16:45:00+02:00",
-     "treffpunkt": "2026-09-27T15:45:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "BL FS",
-     "paarung": "Herner EV 1b – Soester EG",
-     "ort": "Emscher-Lippe-Halle Gelsenkirchen, Adenauerallee 118, 45891 Gelsenkirchen",
-     "halle": "Emscher-Lippe-Halle Gelsenkirchen",
-     "koordinaten": [
-      51.553483,
-      7.073102
-     ],
-     "gespann": [
-      {
-       "name": "Skalecki, Martin",
-       "slug": "skalecki-martin",
-       "rolle": "SR"
       }
      ],
      "halle_erkannt": true,
@@ -6326,11 +6325,11 @@
     "Malik, Orlando"
    ],
    "statistik": {
-    "gesamt": 7,
-    "saison": 7,
+    "gesamt": 9,
+    "saison": 9,
     "rollen": {
      "LSR": 1,
-     "SR": 6
+     "SR": 8
     },
     "ligen": [
      [
@@ -6353,7 +6352,7 @@
     "hallen": [
      [
       "Eishalle Im Kleinen Felde",
-      2
+      4
      ],
      [
       "Eissporthalle am Seilersee",
@@ -6370,6 +6369,10 @@
     ],
     "partner": [
      [
+      "Brücker, Tobias",
+      3
+     ],
+     [
       "Garbsch, René",
       2
      ],
@@ -6382,10 +6385,6 @@
       1
      ],
      [
-      "Brücker, Tobias",
-      1
-     ],
-     [
       "Caelers, Fabian",
       1
      ]
@@ -6393,7 +6392,7 @@
     "je_saison": [
      [
       "2026/27",
-      7
+      9
      ]
     ],
     "erste": "2026-09-16",
@@ -6478,6 +6477,56 @@
      "halle_erkannt": true,
      "vergangen": false,
      "aenderung": "Ansetzung",
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-20T10:00:00+02:00",
+     "treffpunkt": "2026-09-20T09:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "Frauen BZL",
+     "paarung": "Herforder EV – KEC \"Die Haie\" 1c",
+     "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
+     "halle": "Eishalle Im Kleinen Felde",
+     "koordinaten": [
+      52.114893,
+      8.652028
+     ],
+     "gespann": [
+      {
+       "name": "Brücker, Tobias",
+       "slug": "bruecker-tobias",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-20T12:30:00+02:00",
+     "treffpunkt": "2026-09-20T11:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U15 LL",
+     "paarung": "Herforder EV – Lippe Hockey Hamm",
+     "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
+     "halle": "Eishalle Im Kleinen Felde",
+     "koordinaten": [
+      52.114893,
+      8.652028
+     ],
+     "gespann": [
+      {
+       "name": "Brücker, Tobias",
+       "slug": "bruecker-tobias",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
      "hinweis": null
     },
     {
@@ -6999,10 +7048,10 @@
     "Melchert, Philipp"
    ],
    "statistik": {
-    "gesamt": 4,
-    "saison": 4,
+    "gesamt": 5,
+    "saison": 5,
     "rollen": {
-     "SR": 4
+     "SR": 5
     },
     "ligen": [
      [
@@ -7016,15 +7065,19 @@
      [
       "BL FS",
       1
+     ],
+     [
+      "U15 FS",
+      1
      ]
     ],
     "hallen": [
      [
-      "Eissportzentrum Westfalen",
-      2
+      "Eissporthalle Essen-West",
+      3
      ],
      [
-      "Eissporthalle Essen-West",
+      "Eissportzentrum Westfalen",
       2
      ]
     ],
@@ -7040,12 +7093,16 @@
      [
       "Müller, Lars",
       1
+     ],
+     [
+      "Hofer, Carsten",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      4
+      5
      ]
     ],
     "erste": "2026-09-13",
@@ -7099,6 +7156,31 @@
      ],
      "halle_erkannt": true,
      "vergangen": true,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-19T12:30:00+02:00",
+     "treffpunkt": "2026-09-19T11:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U15 FS",
+     "paarung": "EHC Essen Ruhr – Dinslakener Kobras",
+     "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
+     "halle": "Eissporthalle Essen-West",
+     "koordinaten": [
+      51.454179,
+      6.976731
+     ],
+     "gespann": [
+      {
+       "name": "Hofer, Carsten",
+       "slug": "hofer-carsten",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
      "aenderung": null,
      "hinweis": null
     },
@@ -10010,7 +10092,7 @@
       2
      ],
      [
-      "Kyei-Nimako, Denis",
+      "Stockenschneider, Lars",
       1
      ],
      [
@@ -10143,8 +10225,8 @@
      ],
      "gespann": [
       {
-       "name": "Kyei-Nimako, Denis",
-       "slug": "kyei-nimako-denis",
+       "name": "Stockenschneider, Lars",
+       "slug": "stockenschneider-lars",
        "rolle": "SR"
       }
      ],
@@ -10855,16 +10937,20 @@
     "Stockenschneider, Lars"
    ],
    "statistik": {
-    "gesamt": 3,
-    "saison": 3,
+    "gesamt": 4,
+    "saison": 4,
     "rollen": {
-     "LSR": 2,
-     "SR": 1
+     "SR": 2,
+     "LSR": 2
     },
     "ligen": [
      [
       "RL FS",
       2
+     ],
+     [
+      "BL FS",
+      1
      ],
      [
       "U20 FS",
@@ -10877,11 +10963,19 @@
       2
      ],
      [
+      "Emscher-Lippe-Halle Gelsenkirchen",
+      1
+     ],
+     [
       "Eissportzentrum Westfalen",
       1
      ]
     ],
     "partner": [
+     [
+      "Skalecki, Martin",
+      1
+     ],
      [
       "Licau, Sebastian",
       1
@@ -10897,20 +10991,16 @@
      [
       "Müller, Lars",
       1
-     ],
-     [
-      "Hofer, Carsten",
-      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      3
+      4
      ]
     ],
     "erste": "2026-09-11",
-    "letzte": "2026-09-25"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -10991,6 +11081,31 @@
        "name": "Hofer, Carsten",
        "slug": "hofer-carsten",
        "rolle": "LSR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-27T16:45:00+02:00",
+     "treffpunkt": "2026-09-27T15:45:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "BL FS",
+     "paarung": "Herner EV 1b – Soester EG",
+     "ort": "Emscher-Lippe-Halle Gelsenkirchen, Adenauerallee 118, 45891 Gelsenkirchen",
+     "halle": "Emscher-Lippe-Halle Gelsenkirchen",
+     "koordinaten": [
+      51.553483,
+      7.073102
+     ],
+     "gespann": [
+      {
+       "name": "Skalecki, Martin",
+       "slug": "skalecki-martin",
+       "rolle": "SR"
       }
      ],
      "halle_erkannt": true,
@@ -13746,6 +13861,29 @@
    "vergangen": false
   },
   {
+   "beginn": "2026-09-19T12:30:00+02:00",
+   "treffpunkt": "2026-09-19T11:30:00+02:00",
+   "liga": "U15 FS",
+   "paarung": "EHC Essen Ruhr – Dinslakener Kobras",
+   "halle": "Eissporthalle Essen-West",
+   "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Hofer, Carsten",
+     "rolle": "SR",
+     "slug": "hofer-carsten"
+    },
+    {
+     "name": "Melchert, Philip",
+     "rolle": "SR",
+     "slug": "melchert-philip"
+    }
+   ],
+   "vergangen": false
+  },
+  {
    "beginn": "2026-09-19T13:30:00+02:00",
    "treffpunkt": "2026-09-19T12:30:00+02:00",
    "liga": "U13 RLB",
@@ -14039,12 +14177,17 @@
    "halle": "Eishalle Im Kleinen Felde",
    "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
    "halle_erkannt": true,
-   "system": 1,
+   "system": 2,
    "besetzung": [
     {
      "name": "Brücker, Tobias",
      "rolle": "SR",
      "slug": "bruecker-tobias"
+    },
+    {
+     "name": "Malik, Orlando",
+     "rolle": "SR",
+     "slug": "malik-orlando"
     }
    ],
    "vergangen": false
@@ -14126,12 +14269,17 @@
    "halle": "Eishalle Im Kleinen Felde",
    "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
    "halle_erkannt": true,
-   "system": 1,
+   "system": 2,
    "besetzung": [
     {
      "name": "Brücker, Tobias",
      "rolle": "SR",
      "slug": "bruecker-tobias"
+    },
+    {
+     "name": "Malik, Orlando",
+     "rolle": "SR",
+     "slug": "malik-orlando"
     }
    ],
    "vergangen": false
@@ -15293,9 +15441,9 @@
    "system": 2,
    "besetzung": [
     {
-     "name": "Kyei-Nimako, Denis",
+     "name": "Stockenschneider, Lars",
      "rolle": "SR",
-     "slug": "kyei-nimako-denis"
+     "slug": "stockenschneider-lars"
     },
     {
      "name": "Skalecki, Martin",

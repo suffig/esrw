@@ -477,7 +477,7 @@
   "beginn": "2026-09-27T16:45:00+02:00",
   "besetzung": {
    "(L)SR": [
-    "Kyei-Nimako, Denis",
+    "Stockenschneider, Lars",
     "Skalecki, Martin"
    ],
    "HSR": []
@@ -1050,6 +1050,22 @@
   "paarung": "EHC Troisdorf – EV Duisburg",
   "zuerst_gesehen": "2026-09-09",
   "zuletzt_gesehen": "2026-09-13"
+ },
+ "5edd6e9b954df359bcab2ce89c3e60581f82b7c5": {
+  "begegnung": "U15 FS: EHC Essen Ruhr - Dinslakener Kobras",
+  "beginn": "2026-09-19T12:30:00+02:00",
+  "besetzung": {
+   "(L)SR": [
+    "Hofer, Carsten",
+    "Melchert, Philip"
+   ],
+   "HSR": []
+  },
+  "halle": "Eissporthalle Essen-West",
+  "liga": "U15 FS",
+  "paarung": "EHC Essen Ruhr – Dinslakener Kobras",
+  "zuerst_gesehen": "2026-09-18",
+  "zuletzt_gesehen": "2026-09-18"
  },
  "5ef87fad9fb1ea16202fe2f3a44d5dd9eff8ed77": {
   "begegnung": "U13 RLA: Krefelder EV - Düsseldorfer EG",
@@ -2369,7 +2385,8 @@
   "beginn": "2026-09-20T10:00:00+02:00",
   "besetzung": {
    "(L)SR": [
-    "Brücker, Tobias"
+    "Brücker, Tobias",
+    "Malik, Orlando"
    ],
    "HSR": []
   },
@@ -2642,7 +2659,8 @@
   "beginn": "2026-09-20T12:30:00+02:00",
   "besetzung": {
    "(L)SR": [
-    "Brücker, Tobias"
+    "Brücker, Tobias",
+    "Malik, Orlando"
    ],
    "HSR": []
   },

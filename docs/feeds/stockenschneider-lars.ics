@@ -84,4 +84,32 @@ DESCRIPTION:In einer Stunde an der Halle - LSR · RL FS · Eisadler Dortmun
  d – ESV Bergisch Gladbach
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:c0fe3304a4211c704c7da08c7c8e2e782a999ef9@esrw.de
+SEQUENCE:0
+DTSTAMP:20260918T083038Z
+LAST-MODIFIED:20260918T083038Z
+DTSTART:20260927T134500Z
+DTEND:20260927T171500Z
+SUMMARY:SR · BL FS · Herner EV 1b – Soester EG
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:45 Uhr\nTreffpunkt:
+  15:45 Uhr (60 Min vor Spielbeginn)\nLiga: BL FS\nHalle: Emscher-Lippe-Hal
+ le Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\nGespan
+ n: Skalecki\, Martin\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Emscher-Lippe-Halle Gelsenkirchen\, Adenauerallee 118\, 45891 Gels
+ enkirchen
+GEO:51.553483;7.073102
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Emscher-Lippe-Halle Gelsen
+ kirchen, Adenauerallee 118, 45891 Gelsenkirchen";X-APPLE-RADIUS=100;X-TITL
+ E="Emscher-Lippe-Halle Gelsenkirchen":geo:51.553483,7.073102
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · BL FS · Herner EV 1b – 
+ Soester EG
+END:VALARM
+END:VEVENT
 END:VCALENDAR

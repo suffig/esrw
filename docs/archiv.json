@@ -202,7 +202,7 @@
     "paarung": "Herforder EV – Lippe Hockey Hamm",
     "halle": "Eishalle Im Kleinen Felde",
     "rolle": "SR",
-    "system": 1
+    "system": 2
    },
    {
     "saison": "2026/27",
@@ -211,7 +211,7 @@
     "paarung": "Herforder EV – KEC \"Die Haie\" 1c",
     "halle": "Eishalle Im Kleinen Felde",
     "rolle": "SR",
-    "system": 1
+    "system": 2
    },
    {
     "saison": "2026/27",
@@ -1063,6 +1063,15 @@
    },
    {
     "saison": "2026/27",
+    "beginn": "2026-09-19T12:30:00+02:00",
+    "liga": "U15 FS",
+    "paarung": "EHC Essen Ruhr – Dinslakener Kobras",
+    "halle": "Eissporthalle Essen-West",
+    "rolle": "SR",
+    "system": 2
+   },
+   {
+    "saison": "2026/27",
     "beginn": "2026-09-18T20:15:00+02:00",
     "liga": "RL FS",
     "paarung": "Dinslakener Kobras – Grefrather EG",
@@ -1424,15 +1433,6 @@
   "kyei-nimako-denis": [
    {
     "saison": "2026/27",
-    "beginn": "2026-09-27T16:45:00+02:00",
-    "liga": "BL FS",
-    "paarung": "Herner EV 1b – Soester EG",
-    "halle": "Emscher-Lippe-Halle Gelsenkirchen",
-    "rolle": "SR",
-    "system": 2
-   },
-   {
-    "saison": "2026/27",
     "beginn": "2026-09-20T20:00:00+02:00",
     "liga": "RL FS",
     "paarung": "Neusser EV – ESV Bergisch Gladbach",
@@ -1581,6 +1581,24 @@
     "beginn": "2026-09-20T15:00:00+02:00",
     "liga": "U17 RL",
     "paarung": "Herforder EV – Ratinger Ice Aliens",
+    "halle": "Eishalle Im Kleinen Felde",
+    "rolle": "SR",
+    "system": 2
+   },
+   {
+    "saison": "2026/27",
+    "beginn": "2026-09-20T12:30:00+02:00",
+    "liga": "U15 LL",
+    "paarung": "Herforder EV – Lippe Hockey Hamm",
+    "halle": "Eishalle Im Kleinen Felde",
+    "rolle": "SR",
+    "system": 2
+   },
+   {
+    "saison": "2026/27",
+    "beginn": "2026-09-20T10:00:00+02:00",
+    "liga": "Frauen BZL",
+    "paarung": "Herforder EV – KEC \"Die Haie\" 1c",
     "halle": "Eishalle Im Kleinen Felde",
     "rolle": "SR",
     "system": 2
@@ -1740,6 +1758,15 @@
     "beginn": "2026-09-20T18:30:00+02:00",
     "liga": "BL FS",
     "paarung": "EHC Essen Ruhr – Soester EG",
+    "halle": "Eissporthalle Essen-West",
+    "rolle": "SR",
+    "system": 2
+   },
+   {
+    "saison": "2026/27",
+    "beginn": "2026-09-19T12:30:00+02:00",
+    "liga": "U15 FS",
+    "paarung": "EHC Essen Ruhr – Dinslakener Kobras",
     "halle": "Eissporthalle Essen-West",
     "rolle": "SR",
     "system": 2
@@ -2775,6 +2802,15 @@
    }
   ],
   "stockenschneider-lars": [
+   {
+    "saison": "2026/27",
+    "beginn": "2026-09-27T16:45:00+02:00",
+    "liga": "BL FS",
+    "paarung": "Herner EV 1b – Soester EG",
+    "halle": "Emscher-Lippe-Halle Gelsenkirchen",
+    "rolle": "SR",
+    "system": 2
+   },
    {
     "saison": "2026/27",
     "beginn": "2026-09-25T20:00:00+02:00",
