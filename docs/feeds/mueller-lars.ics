@@ -86,25 +86,27 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:5b2260967a5e621d5e22a5ff273930c5c8330e20@esrw.de
-SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
+SEQUENCE:1
+DTSTAMP:20260918T171203Z
+LAST-MODIFIED:20260918T171203Z
 DTSTART:20260925T170000Z
 DTEND:20260925T203000Z
-SUMMARY:HSR · RL FS · Eisadler Dortmund – ESV Bergisch Gladbach
-DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:00 Uhr\nTreff
- punkt: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissportzen
- trum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Stocke
- nschneider\, Lars (LSR) / Hofer\, Carsten (LSR)\n\nQuelle: https://www.esr
- w.de/einteilungen.html
+SUMMARY:⚠ HSR · RL FS · Eisadler Dortmund – ESV Bergisch Gladbach
+DESCRIPTION:Geändert: Halle (vorher Eissportzentrum Westfalen)\n\nRolle: H
+ auptschiedsrichter (HSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt: 19:00 Uhr (6
+ 0 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthalle Bergisch Gladbac
+ h\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbach\nGespann: Stockens
+ chneider\, Lars (LSR) / Hofer\, Carsten (LSR)\n\nQuelle: https://www.esrw.
+ de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
-GEO:51.49525;7.458288
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
-  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
- rum Westfalen":geo:51.49525,7.458288
+LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
+ ch Gladbach
+GEO:50.967548;7.135355
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
+ dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
+ TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H

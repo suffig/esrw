@@ -52,26 +52,26 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
 END:VEVENT
 BEGIN:VEVENT
 UID:f7976576a282a42adbf8f2f73a30a7abae1096f3@esrw.de
-SEQUENCE:0
-DTSTAMP:20260915T164633Z
-LAST-MODIFIED:20260915T164633Z
+SEQUENCE:1
+DTSTAMP:20260918T171203Z
+LAST-MODIFIED:20260918T171203Z
 DTSTART:20260918T163000Z
 DTEND:20260918T200000Z
-SUMMARY:LSR · RL FS · Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !
- !!
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
-  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthalle Rat
- ingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Steven\, Patrick
-  (HSR) / Schöche\, Gian Carlo (LSR)\n\nQuelle: https://www.esrw.de/eintei
- lungen.html
+SUMMARY:⚠ LSR · RL FS · Ratinger Ice Aliens – Chiefs Leuwen Düsseldo
+ rf !!!
+DESCRIPTION:Geändert: Halle (vorher Eissporthalle Ratingen)\n\nRolle: Lini
+ enrichter (LSR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt: 18:30 Uhr (60 Min vor
+  Spielbeginn)\nLiga: RL FS\nHalle: Eishalle Brehmstraße\nAdresse: Brehmst
+ raße 27a\, 40239 Düsseldorf\nGespann: Steven\, Patrick (HSR) / Schöche\
+ , Gian Carlo (LSR)\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
-GEO:51.295808;6.834624
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
-  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
- tingen":geo:51.295808,6.834624
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
