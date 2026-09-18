@@ -44,9 +44,31 @@
     try { funktionenStand = JSON.parse(lesen("funktionen") || "{}") || {}; } catch (e) { funktionenStand = {}; }
     return funktionenStand;
   }
-  function funktion(k) {
+  function funktionGlobal(k) {
     var f = funktionenLesen(); if (f[k] !== undefined) return !!f[k];
     var d = FUNKTIONEN.filter(function (x) { return x[0] === k; })[0]; return d ? d[3] : true;
+  }
+  function bereichAus(k) { try { return !!(JSON.parse(lesen("bereiche") || "{}") || {})[k]; } catch (e) { return false; } }
+  // an, wenn der Betreiber sie eingeschaltet hat UND du sie nicht fuer dich ausgeblendet hast
+  function funktion(k) { return funktionGlobal(k) && !bereichAus(k); }
+  function bereicheRendern() {
+    var box = el("bereiche"); if (!box) return; box.innerHTML = "";
+    var n = 0;
+    FUNKTIONEN.forEach(function (f) {
+      if (!funktionGlobal(f[0])) return; n++;
+      var l = document.createElement("label"); var t = document.createElement("span");
+      var bb = document.createElement("b"); bb.textContent = f[1]; bb.style.display = "block"; var sm = document.createElement("small"); sm.textContent = f[2]; sm.style.color = "var(--dim)"; sm.style.fontWeight = "500";
+      t.appendChild(bb); t.appendChild(sm);
+      var c = document.createElement("input"); c.type = "checkbox"; c.checked = !bereichAus(f[0]);
+      c.addEventListener("change", function () {
+        var st = {}; try { st = JSON.parse(lesen("bereiche") || "{}") || {}; } catch (e) {}
+        if (c.checked) delete st[f[0]]; else st[f[0]] = true;
+        schreiben("bereiche", JSON.stringify(st)); einstellungenSync(); funktionenAnwenden(funktionenLesen()); startBausteineRendern();
+        toast(f[1] + (c.checked ? " wieder eingeblendet" : " für dich ausgeblendet"), "");
+      });
+      l.appendChild(t); l.appendChild(c); box.appendChild(l);
+    });
+    if (!n) { var p = document.createElement("p"); p.className = "meta"; p.style.margin = "0"; p.textContent = "Der Betreiber hat zurzeit keine Bereiche eingeschaltet."; box.appendChild(p); }
   }
   function funktionenAnwenden(obj, neuZeichnen) {
     var vorher = JSON.stringify(funktionenLesen());
@@ -92,8 +114,8 @@
     else { b.textContent = "?"; b.classList.add("leer"); b.style.background = ""; }
   }
   el("suche-knopf").addEventListener("click", function () {
-    location.hash = "plan";
-    setTimeout(function () { var f = el("plan-filter"); f.focus(); f.select(); window.scrollTo({ top: 0 }); }, 150);
+    location.hash = "suche";
+    setTimeout(function () { var f = el("suche"); f.focus(); f.select(); window.scrollTo({ top: 0 }); }, 150);
   });
   el("avatar").addEventListener("click", function () { location.hash = profil && profil.slug ? "mehr" : ""; if (!(profil && profil.slug)) zeigeAuswahl(false); });
   el("thema").addEventListener("click", function () {
@@ -160,7 +182,10 @@
     var box = el("onboarding");
     if (lesen("onboarding-weg") === "1") { box.classList.add("versteckt"); return; }
     var s1 = !!(profil && profil.slug), s2 = lesen("abo-geklickt") === "1", s3 = sitzungVorhanden();
-    if (s1 && s2 && s3) { box.classList.add("versteckt"); return; }
+    var kurz = el("onboarding-kurz");
+    kurz.classList.toggle("versteckt", !(s1 && s2 && !s3) || lesen("onboarding-kurz-weg") === "1" || el("auswahl").classList.contains("versteckt") === false);
+    el("onboarding-kurz-weg").onclick = function () { schreiben("onboarding-kurz-weg", "1"); kurz.classList.add("versteckt"); };
+    if (s1 && s2) { box.classList.add("versteckt"); return; }
     el("ob-1").classList.toggle("fertig", s1); el("ob-2").classList.toggle("fertig", s2); el("ob-3").classList.toggle("fertig", s3);
     box.classList.remove("versteckt");
     el("onboarding-weg").onclick = function () { schreiben("onboarding-weg", "1"); box.classList.add("versteckt"); };
@@ -343,16 +368,57 @@
 
   // --------------------------------------------------------- Namensliste
 
+  function suchEintrag(liste, titel, unter, aktion) {
+    var li = document.createElement("li"); var b = document.createElement("button"); b.type = "button";
+    var t = document.createElement("span"); t.textContent = titel; if (unter) { var sm = document.createElement("small"); sm.textContent = unter; t.appendChild(sm); }
+    b.appendChild(t); b.addEventListener("click", aktion); li.appendChild(b); liste.appendChild(li); return li;
+  }
+  function suchGruppe(liste, name) { var li = document.createElement("li"); li.className = "gruppe"; li.textContent = name; liste.appendChild(li); }
   function zeigeListe(filter) {
     var liste = el("namen"), treffer = 0;
     liste.innerHTML = "";
     var f = ohneZeichen(filter);
+    var lauf = liste._lauf = {};
+    if (suchModus && f.length >= 2) {
+      // Hallen
+      var hallen = Object.keys(daten.hallen || {}).concat(Object.keys(daten.adressen || {})).filter(function (n, i, a) { return a.indexOf(n) === i; })
+        .filter(function (n) { return ohneZeichen(n + " " + ((daten.adressen || {})[n] || "")).indexOf(f) >= 0; }).slice(0, 6);
+      if (hallen.length) { suchGruppe(liste, "Hallen"); treffer += hallen.length; }
+      hallen.forEach(function (n) { suchEintrag(liste, n, (daten.adressen || {})[n] || "", function () { location.hash = "halle/" + hallenSlug(n); }); });
+      // Vereine (aus den Paarungen)
+      var vereine = {};
+      (daten.spiele || []).forEach(function (s) { (s.paarung || "").split(/\s[–-]\s/).forEach(function (v) { v = v.trim(); if (v && ohneZeichen(v).indexOf(f) >= 0) vereine[v] = (vereine[v] || 0) + (s.vergangen ? 0 : 1); }); });
+      var vl = Object.keys(vereine).sort(function (a, b) { return vereine[b] - vereine[a]; });
+      if (vl.some(function (v) { return vereine[v] > 0; })) vl = vl.filter(function (v) { return vereine[v] > 0; });
+      vl = vl.slice(0, 6);
+      if (vl.length) { suchGruppe(liste, "Vereine"); treffer += vl.length; }
+      vl.forEach(function (v) { suchEintrag(liste, v, vereine[v] ? vereine[v] + (vereine[v] === 1 ? " Spiel im Plan" : " Spiele im Plan") : "keine kommenden Spiele", function () {
+        location.hash = "plan"; setTimeout(function () { el("plan-filter").value = v; el("plan-filter").dispatchEvent(new Event("input", { bubbles: true })); }, 100);
+      }); });
+      // Spiele
+      var spiele = (daten.spiele || []).filter(function (s) { return !s.vergangen && ohneZeichen((s.liga || "") + " " + s.paarung + " " + (s.halle || "")).indexOf(f) >= 0; }).slice(0, 8);
+      if (spiele.length) { suchGruppe(liste, "Spiele"); treffer += spiele.length; }
+      spiele.forEach(function (s) { var d = new Date(s.beginn); suchEintrag(liste, datumKurz(d) + " " + uhr(d) + " · " + (s.liga ? s.liga + ": " : "") + s.paarung, (s.halle || "") + (s.besetzung && s.besetzung.length ? " · " + s.besetzung.map(function (b) { return b.name.split(",")[0]; }).join(", ") : " · unbesetzt"), function () { location.hash = "spiel/" + encodeURIComponent(kennungVon(s)); }); });
+      // Termine (Login)
+      if (sitzungVorhanden() && funktion("info")) ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
+        .then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.termine() : null; })
+        .then(function (t) {
+          if (!t || liste._lauf !== lauf) return;
+          var tl = t.filter(function (x) { return ohneZeichen(x.titel + " " + (x.text || "")).indexOf(f) >= 0; }).slice(0, 5);
+          if (!tl.length) return;
+          suchGruppe(liste, "Termine"); el("nichts").classList.add("versteckt");
+          tl.forEach(function (x) { suchEintrag(liste, x.titel, x.termin.split("-").reverse().join("."), function () { location.hash = "mitglieder/info"; }); });
+        }).catch(function () {});
+      suchGruppe(liste, "Kollegen");
+    }
+    var personenTreffer = 0;
     daten.personen.forEach(function (p) {
       var suchtext = suchtextVon(p.name + " " + (p.varianten || []).join(" "));
       if (f && suchtext.indexOf(f) === -1) {
         if (!suchtext.split(" ").some(function (t) { return t.indexOf(f) === 0; })) return;
       }
-      treffer++;
+      treffer++; personenTreffer++;
+      if (suchModus && f.length >= 2 && personenTreffer > 8) return;
       var li = document.createElement("li");
       var b = document.createElement("button");
       b.type = "button";
@@ -363,10 +429,11 @@
       anzahl.className = "anzahl";
       anzahl.textContent = n === 0 ? "–" : n + (n === 1 ? " Spiel" : " Spiele");
       b.appendChild(name); b.appendChild(anzahl);
-      b.addEventListener("click", function () { profilSetzen(p); });
+      b.addEventListener("click", function () { if (suchModus) location.hash = p.slug; else profilSetzen(p); });
       li.appendChild(b);
       liste.appendChild(li);
     });
+    if (suchModus && f.length >= 2 && !personenTreffer) { var letzte = liste.lastChild; if (letzte && letzte.classList.contains("gruppe")) letzte.remove(); }
     el("nichts").classList.toggle("versteckt", treffer > 0);
   }
 
@@ -835,6 +902,8 @@
     }
 
     var h = document.createElement("div"); h.className = "held";
+    var heuteModus = diff === 0 && new Date(s.beginn).getTime() + 3 * 3600000 > Date.now();
+    if (heuteModus) h.classList.add("heute");
     var w = document.createElement("div"); w.className = "wann"; w.textContent = wann + " · " + datumKurz(d); h.appendChild(w);
     h.appendChild(rolleBadge(s.rolle, "rolle"));
     var z = document.createElement("div"); z.className = "zeit"; z.textContent = uhr(d) + " Uhr"; h.appendChild(z);
@@ -852,6 +921,39 @@
       ak.appendChild(ge);
     }
     h.appendChild(ak);
+    var meins = !!(profil && profil.slug === p.slug);
+    // Heute: Countdown bis Abfahrt/Treffpunkt, Kollegen anrufen, Checkliste direkt darunter
+    var heuteBox = el("heute"); heuteBox.innerHTML = "";
+    if (heuteModus) {
+      var cd = document.createElement("div"); cd.className = "countdown"; cd.appendChild(ikone("i-clock"));
+      var cdt = document.createElement("span"); cd.appendChild(cdt); h.appendChild(cd);
+      var abfahrtZeit = null;
+      function countdown() {
+        if (h._timer && !h.isConnected) { clearInterval(h._timer); return; }
+        var ziel = abfahrtZeit || new Date(s.treffpunkt), rest = Math.round((ziel - Date.now()) / 60000), was = abfahrtZeit ? "Abfahrt" : "Treffpunkt";
+        var txt;
+        if (rest > 0) txt = "<b>" + (rest >= 60 ? Math.floor(rest / 60) + " Std. " + (rest % 60) + " Min." : rest + " Min.") + "</b> bis zur " + (abfahrtZeit ? "Abfahrt" : "Ankunft") + "<small>" + was + " " + uhr(ziel) + " Uhr · Spielbeginn " + uhr(d) + " Uhr</small>";
+        else if (new Date(s.beginn) > Date.now()) txt = "<b>" + (abfahrtZeit ? "Jetzt losfahren" : "Jetzt hin") + "</b><small>Spielbeginn " + uhr(d) + " Uhr</small>";
+        else txt = "<b>Spiel läuft</b><small>seit " + uhr(d) + " Uhr – gutes Spiel!</small>";
+        cdt.innerHTML = txt;
+      }
+      countdown(); h._timer = setInterval(countdown, 30000);
+      h._abfahrtSetzen = function (t) { abfahrtZeit = t; countdown(); };
+      if (meins && sitzungVorhanden() && funktion("gespann")) ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) {
+        if (!st.eingerichtet || !st.session) return;
+        return window.Mitglieder.extrasLaden([s]).then(function () {
+          if (!h.isConnected) return;
+          window.Mitglieder.kontakteFuer(s).forEach(function (k) {
+            var a1 = document.createElement("a"); a1.className = "kontakt"; a1.href = k.tel; a1.appendChild(ikone("i-users")); a1.appendChild(document.createTextNode(k.vorname + " anrufen")); ak.appendChild(a1);
+          });
+        });
+      }).catch(function () {});
+      if (meins && funktion("checkliste")) {
+        var cb = document.createElement("div"); cb.className = "karte abschnitt-karte";
+        var hh = document.createElement("h4"); hh.appendChild(ikone("i-check")); hh.appendChild(document.createTextNode("Checkliste für heute")); cb.appendChild(hh);
+        checkliste(cb, s); heuteBox.appendChild(cb);
+      }
+    }
     el("start-woche").classList.add("versteckt");
     if (kommend[1] && startEinstellung("danach")) {
       var n2 = kommend[1], d2 = new Date(n2.beginn);
@@ -875,6 +977,7 @@
       }).then(function (st) {
         if (!st || !st.minuten || !h.isConnected) return;
         var ab = new Date(new Date(s.treffpunkt).getTime() - st.minuten * 60000);
+        if (h._abfahrtSetzen) h._abfahrtSetzen(ab);
         var z = document.createElement("div"); z.className = "abfahrt"; z.appendChild(ikone("i-route"));
         z.appendChild(document.createTextNode("Abfahrt ca. " + uhr(ab) + " Uhr · " + st.minuten + " Min., " + st.km + " km ohne Verkehr"));
         h.appendChild(z);
@@ -1513,6 +1616,7 @@
     el("wechseln").classList.toggle("versteckt", !meins);
     var pz = el("detail").querySelector(".spalte-haupt > .profilzeile"), haupt = pz && pz.parentNode;
     if (haupt) { if (meins) haupt.insertBefore(pz, el("start-anpassen")); else haupt.insertBefore(pz, haupt.firstChild); }
+    zeigeKollege(p, meins);
     pinKnopf(p); kalenderSpalte();
     el("abo").href = feedUrl(p.slug, "webcal:");
     el("laden").onclick = function () { location.href = feedUrl(p.slug, location.protocol); };
@@ -1549,6 +1653,42 @@
     if (!stillesNachladen && sprungZiel === null) window.scrollTo(0, 0);
   }
 
+  // Fremdes Profil: gemeinsame Spiele, Kontakt, Mitfahrt anfragen
+  function zeigeKollege(p, meins) {
+    var alt = el("detail").querySelector(".kollege"); if (alt) alt.remove();
+    if (meins || !profil || !profil.slug || !personMit(profil.slug)) return;
+    var box = document.createElement("div"); box.className = "karte kollege";
+    var hh = document.createElement("h4"); hh.appendChild(ikone("i-users")); hh.appendChild(document.createTextNode("Du und " + (p.name.split(",")[1] || p.name).trim())); box.appendChild(hh);
+    var gemeinsam = p.spiele.filter(function (s) { return (s.gespann || []).some(function (g) { return g.slug === profil.slug; }); });
+    var kommend = gemeinsam.filter(function (s) { return !s.vergangen; }), gewesen = gemeinsam.length - kommend.length;
+    var meta = document.createElement("p"); meta.className = "meta"; meta.style.margin = "0 0 4px";
+    meta.textContent = gemeinsam.length ? (kommend.length ? kommend.length + (kommend.length === 1 ? " gemeinsames Spiel" : " gemeinsame Spiele") + " demnächst" : "Zurzeit kein gemeinsames Spiel") + (gewesen ? " · " + gewesen + " im Datenfenster gepfiffen" : "") : "Noch kein gemeinsames Spiel im Datenfenster.";
+    box.appendChild(meta);
+    kommend.slice(0, 4).forEach(function (s) {
+      var d = new Date(s.beginn), a = document.createElement("a"); a.className = "zeile"; a.href = "#spiel/" + encodeURIComponent(kennungVon(s));
+      var l = document.createElement("span"); var b = document.createElement("b"); b.textContent = datumKurz(d) + " " + uhr(d) + " · " + (s.liga ? s.liga + " " : "") + s.paarung; l.appendChild(b);
+      var sm = document.createElement("small"); sm.textContent = s.halle || ""; l.appendChild(sm); a.appendChild(l);
+      var r = document.createElement("span"); r.className = "meta"; r.textContent = "›"; a.appendChild(r); box.appendChild(a);
+    });
+    var zw = document.createElement("div"); zw.className = "zweit"; box.appendChild(zw);
+    var pz = el("detail").querySelector(".spalte-haupt > .profilzeile");
+    pz.parentNode.insertBefore(box, pz.nextSibling);
+    if (!sitzungVorhanden() || !funktion("gespann")) { var m2 = document.createElement("p"); m2.className = "meta"; m2.style.margin = "8px 0 0"; m2.textContent = sitzungVorhanden() ? "" : "Angemeldet siehst du hier die Handynummer, wenn sie freigegeben ist."; if (m2.textContent) box.appendChild(m2); return; }
+    ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.kontaktVon(p.slug) : null; })
+      .then(function (k) {
+        if (!box.isConnected) return;
+        if (!k) { var m3 = document.createElement("p"); m3.className = "meta"; m3.style.margin = "8px 0 0"; m3.textContent = "Keine Handynummer freigegeben."; box.appendChild(m3); return; }
+        var a1 = document.createElement("a"); a1.className = "anfrage"; a1.href = k.tel; a1.textContent = "Anrufen"; zw.appendChild(a1);
+        var a2 = document.createElement("a"); a2.className = "anfrage"; a2.href = k.wa; a2.target = "_blank"; a2.rel = "noopener"; a2.textContent = "WhatsApp"; zw.appendChild(a2);
+        if (kommend.length) {
+          var s = kommend[0], d = new Date(s.beginn);
+          var text = "Hallo " + (p.name.split(",")[1] || "").trim() + ", fahren wir am " + datumKurz(d) + " zusammen zum Spiel " + s.paarung + " (" + (s.halle || "") + ", Treffpunkt " + uhr(new Date(s.treffpunkt)) + " Uhr)? Viele Grüße, " + ((profil.name || "").split(",")[1] || profil.name || "").trim();
+          var a3 = document.createElement("a"); a3.className = "anfrage"; a3.href = k.wa.split("?")[0] + "?text=" + encodeURIComponent(text); a3.target = "_blank"; a3.rel = "noopener"; a3.textContent = "Mitfahrt anfragen"; zw.appendChild(a3);
+        }
+        var m4 = document.createElement("p"); m4.className = "meta"; m4.style.margin = "8px 0 0"; m4.textContent = k.telefon + (k.hinweis ? " · " + k.hinweis : ""); box.appendChild(m4);
+      }).catch(function () {});
+  }
+
   function ansicht(name) {
     ["auswahl", "detail", "plan", "mitglieder", "halle", "status", "spiel", "mehr", "einstellungen", "karte", "statseite"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
     var reiter = (location.hash.split("/")[1] || "");
@@ -1561,11 +1701,17 @@
       if (b.classList.contains("aktiv")) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
     });
   }
+  var suchModus = false;
   function zeigeAuswahl(wechsel) {
     aktuell = null; ansicht("auswahl"); el("statistik").innerHTML = "";
-    el("frage").textContent = wechsel ? "Wen willst du sehen?" : "Wer bist du?";
-    el("frage-unter").textContent = wechsel ? "Du kannst jeden Kollegen ansehen – dein eigenes Profil bleibt gemerkt." : "Wähle deinen Namen – danach siehst du deine Spiele, kannst den Kalender abonnieren und Mitteilungen bekommen.";
+    suchModus = wechsel === "suche";
+    el("frage").textContent = suchModus ? "Suche" : wechsel ? "Profil wechseln" : "Wer bist du?";
+    el("frage-unter").textContent = suchModus ? "Kollegen, Hallen, Vereine, Spiele und Termine – tippen springt direkt hin." : wechsel ? "Der gewählte Name wird dein Profil auf diesem Gerät." : "Wähle deinen Namen – danach siehst du deine Spiele, kannst den Kalender abonnieren und Mitteilungen bekommen.";
+    el("suche").placeholder = suchModus ? "Name, Halle, Verein, Spiel, Termin …" : "Namen suchen …";
+    if (!suchModus) el("suche").value = "";
+    zeigeListe(el("suche").value);
     onboardingStand();
+    if (suchModus) { el("onboarding").classList.add("versteckt"); el("onboarding-kurz").classList.add("versteckt"); }
     el("abbrechen-zeile").classList.toggle("versteckt", !wechsel || !profil);
     var z = el("zuletzt"); z.innerHTML = "";
     var slugs = (profil && profil.slug ? [profil.slug] : []).concat(zuletztLesen());
@@ -1590,7 +1736,7 @@
     }
     return mitgliederGeladen;
   }
-  function mitgliederKontext() { return { daten: daten, slug: profil && profil.slug, personMit: personMit, hole: hole, ikone: ikone, funktion: funktion, funktionen: FUNKTIONEN }; }
+  function mitgliederKontext() { return { daten: daten, slug: profil && profil.slug, personMit: personMit, hole: hole, ikone: ikone, funktion: funktion, funktionen: FUNKTIONEN, einstellungenSync: einstellungenSync, lesen: lesen, schreiben: schreiben }; }
   function zeigeMitglieder(reiter) {
     aktuell = null; ansicht("mitglieder");
     ladeMitglieder().then(function (M) { M.oeffnen(el("mitglieder"), mitgliederKontext(), reiter); })
@@ -1699,8 +1845,7 @@
       funktion("statistik") ? ["#statistik", "i-users", "Statistik", "Saison, Archiv, Saisonziel, Saison-Bild"] : null,
       funktion("notizen") ? ["#mitglieder/notizen", "i-note", "Notizen", "Private Spielnotizen"] : null,
       ["Konto und App"],
-      ["#mitglieder/konto", "i-key", "Konto", "Profil, Push, Passwort, Handynummer"],
-      ["#einstellungen", "i-sun", "Einstellungen", "Startseite, Schrift, Farbe, Karten-App"],
+      ["#einstellungen", "i-key", "Einstellungen", "Konto, Push, Startseite, Schrift, Farbe"],
       ["#mitglieder/admin", "i-shield", "Admin", "Freischaltung, Ankündigungen", "wartend", true],
       ["#status", "i-check", "Diagnose", "Für die Fehlersuche"]
     ];
@@ -1724,7 +1869,20 @@
       }).catch(function () {});
     window.scrollTo(0, 0);
   }
-  function zeigeEinstellungen() { ansicht("einstellungen"); aktuell = null; window.scrollTo(0, 0); }
+  function zeigeEinstellungen() {
+    ansicht("einstellungen"); aktuell = null; window.scrollTo(0, 0);
+    bereicheRendern(); startBausteineRendern();
+    var kb = el("konto-bereich"); kb.innerHTML = "";
+    if (!sitzungVorhanden()) {
+      var k = document.createElement("a"); k.href = "#mitglieder"; k.className = "hinweis"; k.style.display = "flex"; k.style.textDecoration = "none"; k.style.color = "inherit"; k.style.marginBottom = "12px";
+      k.appendChild(ikone("i-lock")); var t = document.createElement("span"); t.innerHTML = "<b>Konto</b> – anmelden oder anlegen für Abrechnung, Notizen und Push ›"; k.appendChild(t); kb.appendChild(k);
+      return;
+    }
+    ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) {
+      if (!st.eingerichtet || !st.session) return;
+      return window.Mitglieder.kontoRendern(kb);
+    }).catch(function () {});
+  }
 
   // ------------------------------------------------------------ Hallenkarte
 
@@ -1954,6 +2112,8 @@
     if (slug.indexOf("statistik") === 0) { zeigeStatSeite(slug.split("/")[1] || (profil && profil.slug) || ""); return; }
     if (slug === "mehr") { zeigeMehr(); return; }
     if (slug === "einstellungen") { zeigeEinstellungen(); return; }
+    if (slug === "mitglieder/konto") { location.hash = "einstellungen"; return; }
+    if (slug === "suche") { zeigeAuswahl("suche"); return; }
     if (slug === "karte") { zeigeKarte(); return; }
     if (slug.indexOf("spiel/") === 0) { zeigeSpiel(decodeURIComponent(slug.slice(6))); return; }
     if (slug.indexOf("halle/") === 0) { zeigeHalle(slug.slice(6)); return; }
@@ -2011,7 +2171,7 @@
     });
   }
   function einstellungenSammeln() {
-    return { karten: lesen("karten") || null, schrift: lesen("schrift") || null, akzent: lesen("akzent") || null, kompakt: lesen("kompakt") || null, ziel: lesen("ziel") || null, start: lesen("start") || null };
+    return { karten: lesen("karten") || null, schrift: lesen("schrift") || null, akzent: lesen("akzent") || null, kompakt: lesen("kompakt") || null, ziel: lesen("ziel") || null, start: lesen("start") || null, bereiche: lesen("bereiche") || null, pushwoche: lesen("pushwoche") || null };
   }
   var syncTimer = null;
   function einstellungenSync() {
@@ -2024,8 +2184,8 @@
   function einstellungenAnwenden(e) {
     if (!e) return;
     var geaendert = false;
-    ["karten", "schrift", "akzent", "kompakt", "ziel", "start"].forEach(function (k) { if ((lesen(k) || null) !== (e[k] || null)) { schreiben(k, e[k] || null); geaendert = true; } });
-    if (geaendert) { einstellungenLaden(true); themaAnwenden(); toast("Einstellungen vom Konto übernommen", ""); if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true); }
+    ["karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche", "pushwoche"].forEach(function (k) { if ((lesen(k) || null) !== (e[k] || null)) { schreiben(k, e[k] || null); geaendert = true; } });
+    if (geaendert) { einstellungenLaden(true); themaAnwenden(); funktionenAnwenden(funktionenLesen()); toast("Einstellungen vom Konto übernommen", ""); if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true); }
   }
   document.addEventListener("mg-profil", function (e) {
     if (e.detail && e.detail.einstellungen) einstellungenAnwenden(e.detail.einstellungen);

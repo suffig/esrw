@@ -270,6 +270,14 @@ Checkliste, Wetter und Push für alle an oder ab (Tabelle `funktionen`, für
 alle lesbar, nur Admins schreiben). Tausch und Verfügbarkeit starten aus.
 Abrechnung aufgeräumt: Saldo oben, Details/Steuerjahre/Werkzeuge klappen auf.
 
+**Konto in den Einstellungen, Heute-Modus, Suche (Schema v11)**: Einstellungen
+bündelt Konto, Push, App, Startseite und persönliche Bereiche; am Spieltag
+Countdown bis Abfahrt, Anruf-Knöpfe und Checkliste in der Kopfkarte; Suche
+über Kollegen, Hallen, Vereine, Spiele, Termine; „Du und …“-Karte auf fremden
+Profilen mit Mitfahrt-Anfrage; Monatsabschluss in der Abrechnung mit
+Push-Erinnerung am Monatsende; Wochenvorschau-Push sonntags; Onboarding
+verschwindet nach dem Kalender-Abo.
+
 **Termine & Tausch abschließen**: Ankündigungen mit Datum erscheinen auf
 Start als „Nächste Termine“ (Push am Vortag); in der Tauschbörse nimmt der
 Suchende ein Angebot an → „vereinbart“, Push an den Helfer, fertige

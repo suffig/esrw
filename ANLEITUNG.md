@@ -962,6 +962,31 @@ Die Abrechnung zeigt oben nur noch Vergütung, Fahrtkosten und „noch offen“;
 Saison-Details, Steuerjahre, Werkzeuge (Strecken, Vergütung, CSV,
 Fahrtenbuch, Drucken) und die Rechenregeln klappen bei Bedarf auf.
 
+### 10.6g Konto in den Einstellungen, Heute-Modus, Suche, Monatsabschluss (Schema v11)
+
+* **Ein Ort für alles Persönliche:** Mehr → Einstellungen zeigt oben dein
+  Konto (Profil bearbeiten, Push mit Geräten, Handynummer, E-Mail, Passwort,
+  Daten, Abmelden), darunter App, Startseite und **Bereiche** – dort blendet
+  jeder für sich aus, was er nicht braucht (nur auf den eigenen Geräten,
+  mit Konto synchron). Der Unterreiter „Konto“ im Mitgliederbereich ist weg.
+* **Heute-Modus:** Am Spieltag zeigt die Kopfkarte einen Countdown bis zur
+  Abfahrt (mit Heimatadresse) bzw. bis zum Treffpunkt, Anruf-Knöpfe für die
+  Gespannkollegen (wenn Nummern freigegeben) und die Checkliste direkt darunter.
+* **Suche über alles:** Die Lupe oben sucht Kollegen, Hallen, Vereine,
+  Spiele und Termine; ein Tipp springt direkt hin.
+* **Kollegen-Seite:** Auf einem fremden Profil steht oben „Du und …“ mit den
+  gemeinsamen Spielen, Anrufen/WhatsApp (wenn freigegeben) und „Mitfahrt
+  anfragen“ (WhatsApp mit vorgefülltem Text zum nächsten gemeinsamen Spiel).
+* **Monatsabschluss:** In der Abrechnung schließt „Monat abschließen“ den Monat
+  ab – Monatsmail geht raus, alle Spiele gelten als abgerechnet; danach nur
+  noch „alles bezahlt ✓“. Der Workflow erinnert ab dem 27. (bis zum 3. des
+  Folgemonats, ab 17 Uhr) per Push an nicht abgeschlossene Spiele. Dafür
+  `supabase/schema.sql` neu ausführen (Spalte `abgerechnet`).
+* **Wochenvorschau:** Sonntags ab 18 Uhr kommt per Push „Deine Woche: …“ mit
+  den Spielen der nächsten sieben Tage – abschaltbar in der Push-Karte.
+* **Onboarding:** Die Drei-Schritte-Karte verschwindet nach dem Kalender-Abo;
+  ohne Konto bleibt ein Einzeiler mit Link.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

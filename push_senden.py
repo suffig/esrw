@@ -123,6 +123,10 @@ def wetter(koordinaten, zeitpunkt):
         return None
 
 
+WOCHENTAGE = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
+MONATE = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]
+
+
 def erinnerungen(person, profil, jetzt, schon):
     """Spieltag- und Abfahrt-Erinnerungen fuer eine Person. Liefert
     (schluessel, nutzlast)-Paare, die noch nicht verschickt wurden."""
@@ -229,7 +233,7 @@ def main():
         print("Push: niemand hat Push an.")
         return 0
     ids = sorted({a["user_id"] for a in abos})
-    profile = api(url, service, "profile?select=id,slug,strecken&id=in.(%s)" % ",".join(ids)) or []
+    profile = api(url, service, "profile?select=id,slug,strecken,einstellungen&id=in.(%s)" % ",".join(ids)) or []
     profil_von = {p["id"]: p for p in profile}
 
     # Abgeschaltete Funktionen (Admin -> Funktionen) bekommen keinen Push
@@ -263,6 +267,58 @@ def main():
             liste.extend(erinnerungen(personen[slug], profil, jetzt, schon.get(uid, set())))
         if liste:
             nachrichten[uid] = liste
+    # Sonntags ab 18 Uhr: Vorschau auf die Woche (abschaltbar in den Einstellungen)
+    if jetzt.weekday() == 6 and jetzt.hour >= 18:
+        k = "woche|" + jetzt.date().isoformat()
+        for uid, profil in profil_von.items():
+            slug = profil.get("slug")
+            if not slug or slug not in personen or k in schon.get(uid, set()):
+                continue
+            if ((profil.get("einstellungen") or {}).get("pushwoche")) == "0":
+                continue
+            bis = jetzt + timedelta(days=7)
+            zeilen = []
+            for s in personen[slug].get("spiele", []):
+                try:
+                    b = datetime.fromisoformat(s["beginn"]).astimezone(BERLIN)
+                except (KeyError, ValueError):
+                    continue
+                if jetzt < b <= bis:
+                    zeilen.append("%s %s %s%s · %s" % (WOCHENTAGE[b.weekday()], b.strftime("%H:%M"),
+                                  (s.get("liga") + " ") if s.get("liga") else "", s.get("paarung", ""), s.get("halle") or "?"))
+            if not zeilen:
+                continue
+            nachrichten.setdefault(uid, []).append((k, {
+                "titel": "Deine Woche: %d %s" % (len(zeilen), "Spiel" if len(zeilen) == 1 else "Spiele"),
+                "text": "\n".join(zeilen)[:900], "url": "./#plan", "tag": "woche"}))
+
+    # Monatsende (ab dem 27.) und Monatsanfang (bis zum 3.): Abrechnung noch nicht abgeschlossen?
+    if an("abrechnung") and (jetzt.day >= 27 or jetzt.day <= 3) and jetzt.hour >= 17:
+        if jetzt.day <= 3:
+            ende = jetzt.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+            anfang = (ende - timedelta(days=1)).replace(day=1)
+        else:
+            anfang = jetzt.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+            ende = (anfang + timedelta(days=32)).replace(day=1)
+        k = "abrechnung|" + anfang.strftime("%Y-%m")
+        try:
+            laenger = (jetzt - timedelta(days=40)).astimezone(timezone.utc).isoformat()
+            schon_monat = {g["user_id"] for g in (api(url, service, "push_gesendet?select=user_id,schluessel&schluessel=eq." + urllib.parse.quote(k) + "&gesendet=gte." + urllib.parse.quote(laenger)) or [])}
+            offen = api(url, service, "einsaetze?select=user_id,beginn&abgerechnet=eq.false&verguetung=gt.0&beginn=gte.%s&beginn=lt.%s&user_id=in.(%s)" % (
+                urllib.parse.quote(anfang.astimezone(timezone.utc).isoformat()), urllib.parse.quote(ende.astimezone(timezone.utc).isoformat()), ",".join(ids))) or []
+            je_nutzer = {}
+            for e in offen:
+                je_nutzer[e["user_id"]] = je_nutzer.get(e["user_id"], 0) + 1
+            for uid, n in je_nutzer.items():
+                if uid in schon_monat:
+                    continue
+                nachrichten.setdefault(uid, []).append((k, {
+                    "titel": "Abrechnung %s: %d %s offen" % (MONATE[anfang.month - 1], n, "Spiel" if n == 1 else "Spiele"),
+                    "text": "Noch nicht abgeschlossen – in der Abrechnung auf „Monat abschließen“ tippen, dann geht die E-Mail raus.",
+                    "url": "./#mitglieder/abrechnung", "tag": "abrechnung"}))
+        except Exception as e:
+            print("Push: Abrechnungs-Erinnerung nicht verarbeitet: %s" % str(e)[:120], file=sys.stderr)
+
     # Ankuendigungen vom Admin, die als Push markiert sind - an alle
     ank = []
     try:
@@ -388,7 +444,8 @@ def main():
             print("Push: Historie nicht gespeichert: %s" % str(e)[:120], file=sys.stderr)
     try:
         alt = (jetzt - timedelta(days=7)).astimezone(timezone.utc).isoformat()
-        api(url, service, "push_gesendet?gesendet=lt." + urllib.parse.quote(alt), "DELETE")
+        # Monats-Schluessel bleiben laenger, damit die Erinnerung nur einmal kommt
+        api(url, service, "push_gesendet?gesendet=lt." + urllib.parse.quote(alt) + "&schluessel=not.like.abrechnung*", "DELETE")
     except Exception:
         pass
     print("Push: %d gesendet, %d tote Abos entfernt." % (gesendet_n, tot))

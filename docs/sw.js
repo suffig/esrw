@@ -5,7 +5,7 @@
  * Parkhaus, Zug - kommt die zuletzt gespeicherte Fassung zum Zug.
  */
 
-const VERSION = "v28";
+const VERSION = "v29";
 const CACHE = "einteilungen-" + VERSION;
 
 // Wird beim ersten Besuch gespeichert, damit die App auch dann startet,

@@ -20,7 +20,7 @@ window.Mitglieder = (function () {
   var wurzel = null, inhalt = null, ctx = null, cfg = null, sb = null, gebuehren = null, pushCfg = null;
   var session = null, profil = null, einsaetze = {}, archivDaten = null;
   var speicherTimer = {}, bereitVersprechen = null, profilVersprechen = null;
-  var reiter = "abrechnung", gewaehlteSaison = null, nurOffene = false;
+  var reiter = "abrechnung", gewaehlteSaison = null, nurOffene = false, verfuegbareReiter = [], kontoZiel = null;
   var angezeigt = null;          // "anmeldung" | "bereich" | "passwort"
   var passwortNeu = false;       // kam ueber den Link aus "Passwort vergessen"
   var ankunft = ankunftLesen();  // was der Mail-Link in der Adresse mitbrachte
@@ -556,8 +556,9 @@ window.Mitglieder = (function () {
         h("span", { text: "Dein Konto wartet auf die Freischaltung durch den Betreiber." + (sofort.length ? " " + sofort.join(", ") + (sofort.length === 1 ? " geht" : " gehen") + " schon" : "") + (spaeter.length ? "; " + spaeter.join(", ") + (spaeter.length === 1 ? " kommt" : " kommen") + " nach der Freischaltung." : ".") })]));
     }
     var leiste = h("div", { class: "mg-untertabs" });
-    var reiterListe = [["abrechnung", "Abrechnung", "i-euro"], ["info", "Info", "i-bell"], ["tausch", "Tausch", "i-swap"], ["frei", "Verfügbar", "i-cal"], ["notizen", "Notizen", "i-note"], ["konto", "Konto", "i-key"]]
+    var reiterListe = [["abrechnung", "Abrechnung", "i-euro"], ["info", "Info", "i-bell"], ["tausch", "Tausch", "i-swap"], ["frei", "Verfügbar", "i-cal"], ["notizen", "Notizen", "i-note"]]
       .filter(function (t) { return !REITER_FUNKTION[t[0]] || fn(REITER_FUNKTION[t[0]]); });
+    verfuegbareReiter = reiterListe.map(function (t) { return t[0]; });
     if (profil.admin) reiterListe.push(["admin", "Admin", "i-shield"]);
     reiterListe.forEach(function (t) {
       leiste.appendChild(h("button", { type: "button", "data-reiter": t[0], onclick: function () { zeigeReiter(t[0]); } }, [ikone(t[2]), t[1], h("span", { class: "zaehler versteckt" })]));
@@ -594,13 +595,16 @@ window.Mitglieder = (function () {
     else if (name === "notizen") zeigeNotizen();
     else if (name === "info") zeigeInfo();
     else if (name === "admin" && profil.admin) zeigeAdmin();
+    else if (name === "konto") zeigeKonto();
+    else if (verfuegbareReiter.length && verfuegbareReiter[0] !== name) zeigeReiter(verfuegbareReiter[0]);
     else zeigeKonto();
   }
 
   // --------------------------------------------------------- Einrichtung
 
   function zeigeEinrichtung(zurueck) {
-    var ziel = zurueck && inhalt ? inhalt : wurzel;
+    var seite = zurueck === "seite";
+    var ziel = seite ? kontoZiel : zurueck && inhalt ? inhalt : wurzel;
     leeren(ziel);
     var p = profil || {};
     var kmStd = (gebuehren && gebuehren.kilometer) || {};
@@ -664,10 +668,11 @@ window.Mitglieder = (function () {
         profil = Object.assign({}, profil || {}, zeile);
         document.dispatchEvent(new CustomEvent("mg-profil", { detail: { slug: profil.slug, name: profil.name } }));
         meldung("Gespeichert.", "gut");
+        if (seite) { ladeEinsaetze().catch(function () {}); kontoNeu(); return; }
         ladeEinsaetze().then(function () { rahmen(); zeigeReiter(zurueck ? "konto" : "abrechnung"); });
       });
     } }, [
-      h("h4", { text: zurueck ? "Einstellungen" : "Wer bist du?" }),
+      h("h4", { text: zurueck ? "Profil" : "Wer bist du?" }),
       h("label", { text: "Dein Name auf esrw.de" }), auswahl,
       h("label", { text: "Heimatadresse – Startpunkt für die Strecke zur Halle" }),
       h("div", { class: "mg-zeile" }, [heimat, suchen]), koord,
@@ -683,7 +688,7 @@ window.Mitglieder = (function () {
       h("p", { class: "meta", text: "Die Adresse liegt in deinem Profil bei Supabase und ist für niemanden sonst " +
         "lesbar. Für die Streckenberechnung gehen nur Koordinaten an den Routendienst (OSRM), keine Adresse." }),
       speichern,
-      zurueck ? h("button", { type: "button", class: "mg-neben", text: "Zurück", onclick: function () { zeigeReiter("konto"); } }) : null
+      zurueck ? h("button", { type: "button", class: "mg-neben", text: "Zurück", onclick: function () { if (seite) kontoNeu(); else zeigeReiter("konto"); } }) : null
     ]);
     ziel.appendChild(h("div", { class: "melde karte" }, [form]));
   }
@@ -882,7 +887,7 @@ window.Mitglieder = (function () {
       km: alt.km != null ? alt.km : null, km_satz: profil.km_satz != null ? profil.km_satz : null,
       verguetung: alt.verguetung != null ? alt.verguetung : null,
       auslagen: alt.auslagen != null ? alt.auslagen : null,
-      bezahlt: !!alt.bezahlt, ausgefallen: !!alt.ausgefallen, uebergreifend: !!alt.uebergreifend,
+      bezahlt: !!alt.bezahlt, abgerechnet: !!alt.abgerechnet, ausgefallen: !!alt.ausgefallen, uebergreifend: !!alt.uebergreifend,
       notiz: alt.notiz || null
     }, alt.id ? { id: alt.id } : {}, alt.belege !== undefined ? { belege: alt.belege } : {}, aenderung);
     einsaetze[spiel.kennung] = zeile;
@@ -1123,12 +1128,28 @@ window.Mitglieder = (function () {
         monat = m;
         var imMonat = spiele.filter(function (x) { var y = new Date(x.beginn); return y.getFullYear() + "-" + y.getMonth() === m; });
         var offen = imMonat.filter(function (x) { var e = einsaetze[x.kennung]; return e && !e.bezahlt && (betragFuer(x, e).betrag || 0) > 0; });
+        var mitBetrag = imMonat.filter(function (x) { var e = einsaetze[x.kennung]; return e && (betragFuer(x, e).betrag || 0) > 0; });
+        var nichtAbgeschlossen = mitBetrag.filter(function (x) { return !einsaetze[x.kennung].abgerechnet; });
+        var vorbei = new Date(d.getFullYear(), d.getMonth() + 1, 1) <= new Date();
         var kopf = h("div", { class: "mg-monat" }, [h("b", { text: MONATE[d.getMonth()] + " " + d.getFullYear() })]);
         var rechts = h("span", {});
-        rechts.appendChild(h("button", { type: "button", class: "textknopf", text: "per E-Mail", title: "Monatsabrechnung als E-Mail", onclick: function () { monatsMail(imMonat, d); } }));
+        if (mitBetrag.length && nichtAbgeschlossen.length) {
+          // Abschliessen = Monatsmail raus und alle Spiele als abgerechnet markieren
+          rechts.appendChild(h("button", { type: "button", class: "textknopf", text: vorbei ? "Monat abschließen" : "abschließen", title: "Monatsabrechnung per E-Mail und als abgerechnet markieren", onclick: function () {
+            if (!vorbei && !confirm("Der Monat läuft noch – trotzdem abschließen?")) return;
+            monatsMail(imMonat, d);
+            nichtAbgeschlossen.forEach(function (x) { speichereEinsatz(x, { abgerechnet: true }); });
+            kurzMeldung(MONATE[d.getMonth()] + " abgeschlossen ✓ – jetzt nur noch „bezahlt“ abhaken.", "gut");
+            rendereAbrechnung();
+          } }));
+        } else if (mitBetrag.length) {
+          rechts.appendChild(h("span", { class: "abgeschlossen", text: "abgeschlossen ✓" }));
+          rechts.appendChild(document.createTextNode(" · "));
+          rechts.appendChild(h("button", { type: "button", class: "textknopf", text: "E-Mail erneut", onclick: function () { monatsMail(imMonat, d); } }));
+        }
         if (offen.length) {
           rechts.appendChild(document.createTextNode(" · "));
-          rechts.appendChild(h("button", { type: "button", class: "textknopf", text: "Monat als bezahlt ✓", onclick: function () {
+          rechts.appendChild(h("button", { type: "button", class: "textknopf", text: "alles bezahlt ✓", onclick: function () {
             offen.forEach(function (x) { speichereEinsatz(x, { bezahlt: true }); });
             rendereAbrechnung();
           } }));
@@ -1216,6 +1237,8 @@ window.Mitglieder = (function () {
       onchange: function (ev) { speichereEinsatz(sp, { auslagen: zahl(ev.target.value) }); } });
     var bez = h("input", { type: "checkbox", onchange: function (ev) { speichereEinsatz(sp, { bezahlt: ev.target.checked }); } });
     bez.checked = !!e.bezahlt;
+    var abg = h("input", { type: "checkbox", title: "Abrechnung verschickt", onchange: function (ev) { speichereEinsatz(sp, { abgerechnet: ev.target.checked }); } });
+    abg.checked = !!e.abgerechnet;
     var ausf = h("input", { type: "checkbox", onchange: function (ev) { speichereEinsatz(sp, { ausgefallen: ev.target.checked }); } });
     ausf.checked = !!e.ausgefallen;
     var ueb = h("input", { type: "checkbox", onchange: function (ev) { speichereEinsatz(sp, { uebergreifend: ev.target.checked }); } });
@@ -1249,6 +1272,7 @@ window.Mitglieder = (function () {
         h("label", {}, ["km einfach", km]), h("label", {}, ["Vergütung €", verg]), h("label", {}, ["Auslagen €", ausl])
       ]),
       h("div", { class: "mg-schalter" }, [
+        h("label", { class: "mg-check" }, [abg, " abgerechnet"]),
         h("label", { class: "mg-check" }, [bez, " bezahlt"]),
         h("label", { class: "mg-check" }, [ausf, " vor Ort ausgefallen"]),
         uebergreifendMoeglich(sp) ? h("label", { class: "mg-check" }, [ueb, " übergreifend"]) : null
@@ -1588,15 +1612,24 @@ window.Mitglieder = (function () {
 
   // ----------------------------------------------------------------- Konto
 
-  function zeigeKonto() {
-    leeren(inhalt);
+  function zeigeKonto() { leeren(inhalt); kontoInhalt(inhalt, false); }
+  // Konto-Teil der Einstellungen-Seite (index.html #einstellungen)
+  function kontoRendern(container) {
+    kontoZiel = container; leeren(container); container.appendChild(skelett(2));
+    return bereit().then(function (st) {
+      if (!st.eingerichtet || !session) { leeren(container); return; }
+      return ladeProfil().then(function () { leeren(container); if (profil && profil.slug) kontoInhalt(container, true); else zeigeEinrichtung("seite"); });
+    }).catch(function (e) { leeren(container); container.appendChild(h("p", { class: "achtung", text: fehlerText(e) })); });
+  }
+  function kontoNeu() { if (kontoZiel && kontoZiel.isConnected) kontoRendern(kontoZiel); else zeigeReiter("konto"); }
+  function kontoInhalt(inhalt, seite) {
     var ueber = h("div", { class: "melde karte" }, [h("h4", { text: "Dein Konto" }), skelett(1)]);
     inhalt.appendChild(ueber);
     kontoUebersicht(ueber);
     inhalt.appendChild(h("div", { class: "melde karte" }, [
-      h("h4", { text: "Einstellungen" }),
-      h("p", {}, ["Name auf esrw.de, Heimatadresse, Kilometermodell und Sätze. Was auf der Startseite steht, Schrift und Farbe: ", h("a", { href: "#einstellungen", text: "App-Einstellungen" }), "."]),
-      h("button", { type: "button", class: "haupt", text: "Einstellungen öffnen", onclick: function () { zeigeEinrichtung(true); } })
+      h("h4", { text: "Profil" }),
+      h("p", { text: "Name auf esrw.de, Heimatadresse (für Strecken und Abfahrt), Obmann-Adresse, Kilometermodell und Sätze." }),
+      h("button", { type: "button", class: "haupt", text: "Profil bearbeiten", onclick: function () { zeigeEinrichtung(seite ? "seite" : true); } })
     ]));
     if (fn("push")) {
       var pushBox = h("div", { class: "melde karte" }, [h("h4", {}, [ikone("i-bell"), " Push-Benachrichtigungen ", h("span", { class: "status", text: "" })]), h("p", { text: "prüfe …" })]);
@@ -1635,6 +1668,7 @@ window.Mitglieder = (function () {
         "Abrechnung als CSV gibt es im Reiter Abrechnung." }),
       h("div", { class: "zweit" }, [
         h("button", { type: "button", text: "Alle meine Daten (JSON)", onclick: datenExport }),
+        h("button", { type: "button", text: "Abmelden", onclick: function () { abmelden(); if (seite) kontoNeu(); } }),
         h("button", { type: "button", style: "color:var(--warn)", text: "Konto löschen", onclick: kontoLoeschen })
       ])
     ]));
@@ -1670,7 +1704,7 @@ window.Mitglieder = (function () {
               h("button", { type: "button", class: "textknopf", text: "abmelden", onclick: function () {
                 sb.from("push_abos").delete().eq("id", a.id).then(function () {
                   if (eigener && eigener === a.endpoint && navigator.serviceWorker) navigator.serviceWorker.ready.then(function (reg) { return reg.pushManager.getSubscription(); }).then(function (abo) { if (abo) abo.unsubscribe(); }).catch(function () {});
-                  kurzMeldung("Gerät abgemeldet.", ""); zeigeReiter("konto");
+                  kurzMeldung("Gerät abgemeldet.", ""); kontoNeu();
                 });
               } })
             ])
@@ -1734,6 +1768,12 @@ window.Mitglieder = (function () {
       text.textContent = txt;
       Array.prototype.forEach.call(box.querySelectorAll("button"), function (b) { b.remove(); });
       if (knopfText) box.appendChild(h("button", { type: "button", class: "haupt", text: knopfText, onclick: aktion }));
+      if (lage === "an") {
+        var alt = box.querySelector(".mg-woche"); if (alt) alt.remove();
+        var w = h("input", { type: "checkbox" }); w.checked = !(ctx && ctx.lesen && ctx.lesen("pushwoche") === "0");
+        w.addEventListener("change", function () { if (ctx && ctx.schreiben) ctx.schreiben("pushwoche", w.checked ? null : "0"); if (ctx && ctx.einstellungenSync) ctx.einstellungenSync(); kurzMeldung(w.checked ? "Wochenvorschau an – kommt sonntags ab 18 Uhr." : "Wochenvorschau aus.", ""); });
+        box.appendChild(h("label", { class: "mg-check mg-woche", style: "display:flex;gap:8px;align-items:center;margin-top:10px" }, [w, " Sonntags die Vorschau auf deine Woche"]));
+      }
       if (lage === "an") box.appendChild(h("button", { type: "button", class: "mg-neben", style: "margin-top:8px;width:100%", text: "Testnachricht auf diesem Gerät", onclick: function () {
         navigator.serviceWorker.ready.then(function (reg) {
           return reg.showNotification("Einteilungen: Test", { body: "Wenn du das siehst, kommen Mitteilungen an. Echte Push-Nachrichten schickt der Server bei Änderungen.", icon: "icon-192.png", badge: "icon-192.png", tag: "test" });
@@ -2393,6 +2433,14 @@ window.Mitglieder = (function () {
   }
 
   // Naechste Termine (Ankuendigungen mit Datum) fuer die Startseite
+  function kontaktVon(slug) {
+    if (!session || !frei() || !slug) return Promise.resolve(null);
+    return sb.from("kontakte").select("slug,telefon,hinweis").eq("slug", slug).maybeSingle().then(function (r) {
+      if (!r.data || !r.data.telefon) return null;
+      var l = telefonLink(r.data.telefon);
+      return { telefon: r.data.telefon, hinweis: r.data.hinweis || "", tel: l.tel, wa: l.wa };
+    }).catch(function () { return null; });
+  }
   function termine() {
     return bereit().then(function (st) {
       if (!st.eingerichtet || !session) return [];
@@ -2442,5 +2490,5 @@ window.Mitglieder = (function () {
            sperrenAm: sperrenAm, gesuchAnlegen: gesuchAnlegen, offeneAbrechnungen: offeneAbrechnungen,
            extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat, obmann: obmann, termine: termine,
            einstellungenSpeichern: einstellungenSpeichern, radar: radar, angebotMachen: angebotMachen,
-           kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl };
+           kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl, kontoRendern: kontoRendern, kontaktVon: kontaktVon };
 })();

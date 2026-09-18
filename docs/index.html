@@ -648,6 +648,28 @@
   .profilzeile > span:first-child { display:flex; align-items:center; gap:10px; min-width:0; }
   .profilzeile > span:first-child > span { min-width:0; }
   .profilzeile > span:first-child:not(:has(.avatar-gross)) { display:block; }
+  /* Heute-Modus, Kollegen-Karte, Suche, Onboarding kurz */
+  .held.heute { box-shadow:0 0 0 3px rgba(255,255,255,.35), var(--held-schatten, none); }
+  .held .countdown { margin-top:12px; padding:10px 12px; border-radius:12px; background:rgba(255,255,255,.14); font-weight:700; display:flex; align-items:center; gap:8px; }
+  .held .countdown b { font-size:1.2rem; letter-spacing:-.02em; }
+  .held .countdown small { font-weight:500; opacity:.85; display:block; }
+  .held .aktionen a.kontakt { background:rgba(255,255,255,.22); }
+  #heute:empty { display:none; }
+  #heute .abschnitt-karte { margin-bottom:14px; border:2px solid var(--akzent-hell); }
+  .kollege { margin-bottom:14px; }
+  .kollege h4 { margin:0 0 8px; display:flex; align-items:center; gap:8px; font-size:1rem; }
+  .kollege .zeile { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:6px 0; border-top:1px solid var(--linie); text-decoration:none; color:inherit; }
+  .kollege .zeile b { font-weight:700; }
+  .kollege .zeile small { color:var(--dim); display:block; }
+  .kollege .zweit { margin-top:10px; }
+  .namen li.gruppe { padding:10px 14px 4px; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); border-top:1px solid var(--linie); }
+  .namen li.gruppe:first-child { border-top:0; }
+  .namen li.gruppe + li { border-top:0; }
+  .namen button small { color:var(--dim); display:block; font-weight:500; font-size:.8rem; }
+  #onboarding-kurz { position:relative; padding-right:44px; margin-bottom:12px; }
+  #onboarding-kurz .rund { position:absolute; right:8px; top:50%; transform:translateY(-50%); }
+  #konto-bereich .melde.karte { margin-bottom:12px; }
+  .mg-monat .abgeschlossen { color:var(--gut, #1a7f37); font-weight:700; font-size:.82rem; }
   /* Abgeschaltete Funktionen (Admin -> Funktionen) */
   html.ohne-tausch #tab-tausch, html.ohne-abrechnung #tab-abrechnung { display:none !important; }
   #uebersicht .termine-karte { display:block; }
@@ -930,9 +952,10 @@
     <ol>
       <li id="ob-1"><span class="ob-nr">1</span><span><b>Namen wählen</b><small>Unten in der Liste antippen – das ist dein Profil auf diesem Gerät.</small></span></li>
       <li id="ob-2"><span class="ob-nr">2</span><span><b>Kalender abonnieren</b><small>Ein Tipp auf „Im Kalender abonnieren“, danach kommen neue Spiele von allein aufs Handy.</small></span></li>
-      <li id="ob-3"><span class="ob-nr">3</span><span><b>Konto anlegen</b><small>Reiter „Mitglieder“: Abrechnung, Tauschbörse, Push – nach Freischaltung durch den Betreiber.</small></span></li>
+      <li id="ob-3"><span class="ob-nr">3</span><span><b>Konto anlegen</b><small>Unter „Mehr“: Abrechnung, Notizen, Push – Freischaltung durch den Betreiber.</small></span></li>
     </ol>
   </div>
+  <div class="hinweis versteckt" id="onboarding-kurz"><svg class="i"><use href="#i-check"/></svg><span>Kalender abonniert ✓ · <a href="#mitglieder">Konto anlegen</a> für Abrechnung, Notizen und Push.</span><button type="button" class="rund" id="onboarding-kurz-weg" aria-label="Ausblenden">✕</button></div>
   <div class="install karte versteckt" id="install">
     <img src="icon-192.png" alt="" width="40" height="40">
     <p><b>Als App aufs Handy</b><span id="install-text"></span></p>
@@ -979,7 +1002,7 @@
     <p class="meta" id="frage-unter">Wähle deinen Namen – danach siehst du deine Spiele, kannst den Kalender abonnieren und Mitteilungen bekommen.</p>
     <div class="zuletzt versteckt" id="zuletzt"></div>
     <label for="suche" class="versteckt">Name suchen</label>
-    <input type="search" id="suche" placeholder="Eigenen Namen suchen …"
+    <input type="search" id="suche" placeholder="Namen suchen …"
            autocomplete="off" autocorrect="off" spellcheck="false">
     <ul class="namen karte" id="namen"><li class="skelett-zeile"></li><li class="skelett-zeile"></li><li class="skelett-zeile"></li><li class="skelett-zeile"></li></ul>
     <p class="leer versteckt" id="nichts">Kein Name gefunden.</p>
@@ -1000,6 +1023,7 @@
     <div class="pins versteckt" id="pins"></div>
     <div class="woche start-woche" id="start-woche"></div>
     <div id="held"></div>
+    <div id="heute"></div>
     <div id="uebersicht" class="uebersicht"></div>
     <div id="radar"></div>
     <div id="nachtrag"></div>
@@ -1068,9 +1092,11 @@
   <!-- Einstellungen -->
   <section id="einstellungen" class="versteckt">
     <div class="profilzeile karte">
-      <span><b>Einstellungen</b><small>gelten für dieses Gerät</small></span>
+      <span><b>Einstellungen</b><small>Konto, App, Startseite</small></span>
       <button class="textknopf zurueck" id="einstellungen-zurueck"><svg class="i"><use href="#i-back"/></svg>Zurück</button>
     </div>
+    <div id="konto-bereich"></div>
+    <h3 class="abschnitt">App<small>gilt für dieses Gerät – mit Konto auf allen</small></h3>
     <div class="karte einstellungen-liste">
       <label>Karten-App <select id="karten-app"><option value="auto">automatisch</option><option value="apple">Apple Karten</option><option value="google">Google Maps</option></select></label>
       <label>Schrift <span class="stufen" id="schrift"><button type="button" data-stufe="klein">A−</button><button type="button" data-stufe="normal">A</button><button type="button" data-stufe="gross">A+</button></span></label>
@@ -1081,8 +1107,8 @@
     </div>
     <h3 class="abschnitt">Startseite<small>Was auf „Start“ steht – Profil, nächstes Spiel und deine Spiele immer</small></h3>
     <div class="karte einstellungen-liste" id="start-bausteine"></div>
-    <p class="meta" style="margin-top:10px">Mit Konto wandern diese Einstellungen auf alle deine Geräte.</p>
-    <p class="meta" style="margin-top:12px">Profil, Push und Konto: unter Mehr → Konto. Alles hier bleibt auf diesem Gerät.</p>
+    <h3 class="abschnitt">Bereiche<small>Was du nicht brauchst, blendest du für dich aus – nur auf deinen Geräten</small></h3>
+    <div class="karte einstellungen-liste" id="bereiche"></div>
   </section>
 
   <!-- Hallenkarte -->
@@ -1158,6 +1184,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=33"></script>
+<script src="app.js?v=34"></script>
 </body>
 </html>

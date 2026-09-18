@@ -613,3 +613,10 @@ grant insert, update on public.funktionen to authenticated;
 -- Tauschboerse und Verfuegbarkeit starten abgeschaltet
 insert into public.funktionen (schluessel, aktiv) values ('tausch', false), ('frei', false)
   on conflict (schluessel) do nothing;
+
+-- ======================================================================
+-- v11: Monatsabschluss in der Abrechnung
+-- ======================================================================
+-- "abgerechnet" = Monatsabrechnung ist raus (E-Mail), "bezahlt" = Geld da.
+-- Der Workflow erinnert am Monatsende an nicht abgeschlossene Spiele.
+alter table public.einsaetze add column if not exists abgerechnet boolean not null default false;
