@@ -1,4 +1,4 @@
 {
-  "_hinweis": "Oeffentlicher VAPID-Schluessel fuer Web Push. Wird von push_schluessel.py erzeugt. Leer = Push in der App aus.",
-  "public_key": ""
+  "_hinweis": "Oeffentlicher VAPID-Schluessel fuer Web Push. Darf jeder sehen. Der private liegt nur als GitHub-Secret VAPID_PRIVATE.",
+  "public_key": "BFAMCDGYfzK-gWaxWW88n8qfQ4fluFiO1kIAFrMCE9m0vh0PxjebVH08oSuerVcfMoSNJSXvWeLrS24jampPAKo"
 }
