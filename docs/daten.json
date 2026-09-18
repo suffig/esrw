@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 128,
+ "spiele_gesamt": 126,
  "saison": "2026/27",
  "archiv_spiele": 170,
  "rollen": {
@@ -1363,7 +1363,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-18T20:15:00+02:00|Dinslakener Kobras – Grefrather EG",
@@ -1768,7 +1768,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-18T20:15:00+02:00|EHC Troisdorf – EV Duisburg",
@@ -4351,7 +4351,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-18T20:15:00+02:00|Dinslakener Kobras – Grefrather EG",
@@ -5838,76 +5838,6 @@
    ]
   },
   {
-   "slug": "kremer-igor",
-   "name": "Kremer, Igor",
-   "varianten": [
-    "Kremer, Igor"
-   ],
-   "statistik": {
-    "gesamt": 1,
-    "saison": 1,
-    "rollen": {
-     "SR": 1
-    },
-    "ligen": [
-     [
-      "U20 FS",
-      1
-     ]
-    ],
-    "hallen": [
-     [
-      "ICEDOME Troisdorf",
-      1
-     ]
-    ],
-    "partner": [
-     [
-      "Schöche, Gian-Carlo",
-      1
-     ]
-    ],
-    "je_saison": [
-     [
-      "2026/27",
-      1
-     ]
-    ],
-    "erste": "2026-09-11",
-    "letzte": "2026-09-11"
-   },
-   "spiele": [
-    {
-     "beginn": "2026-09-11T20:15:00+02:00",
-     "treffpunkt": "2026-09-11T19:15:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U20 FS",
-     "paarung": "EHC Troisdorf – Eisadler Dortmund",
-     "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-     "halle": "ICEDOME Troisdorf",
-     "koordinaten": [
-      50.811945,
-      7.109233
-     ],
-     "gespann": [
-      {
-       "name": "Schöche, Gian-Carlo",
-       "slug": "schoeche-gian-carlo",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-11T20:15:00+02:00|EHC Troisdorf – Eisadler Dortmund",
-     "korrektur": null,
-     "manuell": false
-    }
-   ]
-  },
-  {
    "slug": "krueger-martin",
    "name": "Krüger, Martin",
    "varianten": [
@@ -6689,7 +6619,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-18T20:15:00+02:00|Dinslakener Kobras – Grefrather EG",
@@ -9506,34 +9436,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-11T20:15:00+02:00",
-     "treffpunkt": "2026-09-11T19:15:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U20 FS",
-     "paarung": "Dinslakener Kobras – Ratinger Ice Aliens",
-     "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
-     "halle": "Eissporthalle Dinslaken",
-     "koordinaten": [
-      51.574578,
-      6.735361
-     ],
-     "gespann": [
-      {
-       "name": "Stockenschneider, Lars",
-       "slug": "stockenschneider-lars",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-11T20:15:00+02:00|Dinslakener Kobras – Ratinger Ice Aliens",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-13T08:00:00+02:00",
      "treffpunkt": "2026-09-13T07:00:00+02:00",
      "rolle": "SR",
@@ -10272,34 +10174,6 @@
     "letzte": "2026-09-26"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-11T20:15:00+02:00",
-     "treffpunkt": "2026-09-11T19:15:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U20 FS",
-     "paarung": "EHC Troisdorf – Eisadler Dortmund",
-     "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-     "halle": "ICEDOME Troisdorf",
-     "koordinaten": [
-      50.811945,
-      7.109233
-     ],
-     "gespann": [
-      {
-       "name": "Kremer, Igor",
-       "slug": "kremer-igor",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-11T20:15:00+02:00|EHC Troisdorf – Eisadler Dortmund",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-12T16:30:00+02:00",
      "treffpunkt": "2026-09-12T15:30:00+02:00",
@@ -11226,7 +11100,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-18T20:15:00+02:00|EHC Troisdorf – EV Duisburg",
@@ -11716,34 +11590,6 @@
     "letzte": "2026-09-27"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-11T20:15:00+02:00",
-     "treffpunkt": "2026-09-11T19:15:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U20 FS",
-     "paarung": "Dinslakener Kobras – Ratinger Ice Aliens",
-     "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
-     "halle": "Eissporthalle Dinslaken",
-     "koordinaten": [
-      51.574578,
-      6.735361
-     ],
-     "gespann": [
-      {
-       "name": "Schlüter, Thomas",
-       "slug": "schlueter-thomas",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-11T20:15:00+02:00|Dinslakener Kobras – Ratinger Ice Aliens",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-20T19:00:00+02:00",
      "treffpunkt": "2026-09-20T18:00:00+02:00",
@@ -13409,58 +13255,6 @@
  ],
  "spiele": [
   {
-   "beginn": "2026-09-11T20:15:00+02:00",
-   "treffpunkt": "2026-09-11T19:15:00+02:00",
-   "liga": "U20 FS",
-   "paarung": "EHC Troisdorf – Eisadler Dortmund",
-   "halle": "ICEDOME Troisdorf",
-   "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Kremer, Igor",
-     "rolle": "SR",
-     "slug": "kremer-igor"
-    },
-    {
-     "name": "Schöche, Gian-Carlo",
-     "rolle": "SR",
-     "slug": "schoeche-gian-carlo"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-11T20:15:00+02:00|EHC Troisdorf – Eisadler Dortmund",
-   "korrektur": null,
-   "manuell": false
-  },
-  {
-   "beginn": "2026-09-11T20:15:00+02:00",
-   "treffpunkt": "2026-09-11T19:15:00+02:00",
-   "liga": "U20 FS",
-   "paarung": "Dinslakener Kobras – Ratinger Ice Aliens",
-   "halle": "Eissporthalle Dinslaken",
-   "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Schlüter, Thomas",
-     "rolle": "SR",
-     "slug": "schlueter-thomas"
-    },
-    {
-     "name": "Stockenschneider, Lars",
-     "rolle": "SR",
-     "slug": "stockenschneider-lars"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-11T20:15:00+02:00|Dinslakener Kobras – Ratinger Ice Aliens",
-   "korrektur": null,
-   "manuell": false
-  },
-  {
    "beginn": "2026-09-12T09:15:00+02:00",
    "treffpunkt": "2026-09-12T08:15:00+02:00",
    "liga": "DA FS",
@@ -14588,7 +14382,7 @@
      "slug": "starke-matthias"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-18T20:15:00+02:00|EHC Troisdorf – EV Duisburg",
    "korrektur": null,
    "manuell": false
@@ -14619,7 +14413,7 @@
      "slug": "lindemans-pepe"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-18T20:15:00+02:00|Dinslakener Kobras – Grefrather EG",
    "korrektur": null,
    "manuell": false
