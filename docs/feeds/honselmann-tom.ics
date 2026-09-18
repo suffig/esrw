@@ -9,26 +9,26 @@ REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
 UID:c15beb415e3e0b2b6decbe60c2df905161c26662@esrw.de
-SEQUENCE:1
-DTSTAMP:20260918T171203Z
-LAST-MODIFIED:20260918T171203Z
+SEQUENCE:2
+DTSTAMP:20260918T172506Z
+LAST-MODIFIED:20260918T172506Z
 DTSTART:20260919T073000Z
 DTEND:20260919T110000Z
 SUMMARY:⚠ SR · U15 LL · Lippe Hockey Hamm – SpG Neusser EV / GSC Moer
  s
-DESCRIPTION:Geändert: Halle (vorher HELINET Eissportarena Hamm)\n\nRolle: 
- Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt: 09:30 Uhr (60 Min
-  vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Moers\nAdresse: Fild
- erstraße 140\, 47447 Moers\nGespann: Klemm\, Julian\n\nQuelle: https://ww
- w.esrw.de/einteilungen.html
+DESCRIPTION:Geändert: Halle (vorher Eissporthalle Moers)\n\nRolle: Schieds
+ richter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt: 09:30 Uhr (60 Min vor Sp
+ ielbeginn)\nLiga: U15 LL\nHalle: HELINET Eissportarena Hamm\nAdresse: Karl
+ -Koßmann-Straße 1\, 59071 Hamm\nGespann: Klemm\, Julian\n\nQuelle: https
+ ://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
-GEO:51.43973;6.6198
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
- rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
- ":geo:51.43973,6.6198
+LOCATION:HELINET Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 Hamm
+GEO:51.686934;7.886138
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
+ , Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="HELINET
+  Eissportarena Hamm":geo:51.686934,7.886138
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H

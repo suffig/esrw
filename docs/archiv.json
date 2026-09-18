@@ -39,7 +39,7 @@
     "beginn": "2026-09-20T20:00:00+02:00",
     "liga": "RL FS",
     "paarung": "Neusser EV – ESV Bergisch Gladbach",
-    "halle": "Eissporthalle Bergisch Gladbach",
+    "halle": "Eissporthalle Neuss",
     "rolle": "LSR",
     "system": 3
    },
@@ -1066,7 +1066,7 @@
     "beginn": "2026-09-25T20:00:00+02:00",
     "liga": "RL FS",
     "paarung": "Eisadler Dortmund – ESV Bergisch Gladbach",
-    "halle": "Eissporthalle Bergisch Gladbach",
+    "halle": "Eissportzentrum Westfalen",
     "rolle": "LSR",
     "system": 3
    },
@@ -1169,7 +1169,7 @@
     "beginn": "2026-09-19T10:30:00+02:00",
     "liga": "U15 LL",
     "paarung": "Lippe Hockey Hamm – SpG Neusser EV / GSC Moers",
-    "halle": "Eissporthalle Moers",
+    "halle": "HELINET Eissportarena Hamm",
     "rolle": "SR",
     "system": 2
    }
@@ -1334,7 +1334,7 @@
     "beginn": "2026-09-19T10:30:00+02:00",
     "liga": "U15 LL",
     "paarung": "Lippe Hockey Hamm – SpG Neusser EV / GSC Moers",
-    "halle": "Eissporthalle Moers",
+    "halle": "HELINET Eissportarena Hamm",
     "rolle": "SR",
     "system": 2
    }
@@ -1374,7 +1374,7 @@
     "beginn": "2026-09-25T20:15:00+02:00",
     "liga": "RL FS",
     "paarung": "Dinslakener Kobras – ESV Grizzlys Bergkamen",
-    "halle": "Eissporthalle Bergkamen",
+    "halle": "Eissporthalle Dinslaken",
     "rolle": "HSR",
     "system": 3
    },
@@ -1472,7 +1472,7 @@
     "beginn": "2026-09-20T20:00:00+02:00",
     "liga": "RL FS",
     "paarung": "Neusser EV – ESV Bergisch Gladbach",
-    "halle": "Eissporthalle Bergisch Gladbach",
+    "halle": "Eissporthalle Neuss",
     "rolle": "HSR",
     "system": 3
    }
@@ -1552,7 +1552,7 @@
     "beginn": "2026-09-20T20:00:00+02:00",
     "liga": "RL FS",
     "paarung": "Neusser EV – ESV Bergisch Gladbach",
-    "halle": "Eissporthalle Bergisch Gladbach",
+    "halle": "Eissporthalle Neuss",
     "rolle": "LSR",
     "system": 3
    },
@@ -1852,7 +1852,7 @@
     "beginn": "2026-09-25T20:00:00+02:00",
     "liga": "RL FS",
     "paarung": "Eisadler Dortmund – ESV Bergisch Gladbach",
-    "halle": "Eissporthalle Bergisch Gladbach",
+    "halle": "Eissportzentrum Westfalen",
     "rolle": "HSR",
     "system": 3
    },
@@ -2147,7 +2147,7 @@
     "beginn": "2026-09-25T20:15:00+02:00",
     "liga": "RL FS",
     "paarung": "Dinslakener Kobras – ESV Grizzlys Bergkamen",
-    "halle": "Eissporthalle Bergkamen",
+    "halle": "Eissporthalle Dinslaken",
     "rolle": "LSR",
     "system": 3
    },
@@ -2223,7 +2223,7 @@
     "beginn": "2026-09-25T20:15:00+02:00",
     "liga": "RL FS",
     "paarung": "Dinslakener Kobras – ESV Grizzlys Bergkamen",
-    "halle": "Eissporthalle Bergkamen",
+    "halle": "Eissporthalle Dinslaken",
     "rolle": "LSR",
     "system": 3
    },
@@ -2906,7 +2906,7 @@
     "beginn": "2026-09-25T20:00:00+02:00",
     "liga": "RL FS",
     "paarung": "Eisadler Dortmund – ESV Bergisch Gladbach",
-    "halle": "Eissporthalle Bergisch Gladbach",
+    "halle": "Eissportzentrum Westfalen",
     "rolle": "LSR",
     "system": 3
    },

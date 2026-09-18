@@ -30,25 +30,25 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
 END:VEVENT
 BEGIN:VEVENT
 UID:3dfb6f428f1c56bef441f800be932d544b22e2b3@esrw.de
-SEQUENCE:1
-DTSTAMP:20260918T171203Z
-LAST-MODIFIED:20260918T171203Z
+SEQUENCE:2
+DTSTAMP:20260918T172506Z
+LAST-MODIFIED:20260918T172506Z
 DTSTART:20260925T171500Z
 DTEND:20260925T204500Z
 SUMMARY:⚠ LSR · RL FS · Dinslakener Kobras – ESV Grizzlys Bergkamen
-DESCRIPTION:Geändert: Halle (vorher Eissporthalle Dinslaken)\n\nRolle: Lin
+DESCRIPTION:Geändert: Halle (vorher Eissporthalle Bergkamen)\n\nRolle: Lin
  ienrichter (LSR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt: 19:15 Uhr (60 Min vo
- r Spielbeginn)\nLiga: RL FS\nHalle: Eissporthalle Bergkamen\nAdresse: Häu
- penweg 29\, 59192 Bergkamen\nGespann: Krawinkel\, Markus (HSR) / Quint\, S
+ r Spielbeginn)\nLiga: RL FS\nHalle: Eissporthalle Dinslaken\nAdresse: Am S
+ tadtbad 1\, 46537 Dinslaken\nGespann: Krawinkel\, Markus (HSR) / Quint\, S
  ascha (LSR)\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
-GEO:51.602578;7.626858
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
- äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
- ergkamen":geo:51.602578,7.626858
+LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
+GEO:51.574578;6.735361
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
+ m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
+ inslaken":geo:51.574578,6.735361
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H

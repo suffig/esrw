@@ -263,7 +263,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T08:30:00+02:00|Herner EV – Iserlohner EC 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T10:00:00+02:00",
@@ -290,7 +291,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T10:00:00+02:00|EV Duisburg",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -327,7 +329,7 @@
       1
      ],
      [
-      "Eissporthalle Bergisch Gladbach",
+      "Eissporthalle Neuss",
       1
      ],
      [
@@ -388,7 +390,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T17:00:00+02:00|Krefelder EV – Löwen Frankfurt",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T20:00:00+02:00",
@@ -397,11 +400,11 @@
      "system": 3,
      "liga": "RL FS",
      "paarung": "Neusser EV – ESV Bergisch Gladbach",
-     "ort": "Eissporthalle Bergisch Gladbach, Saaler Mühle 100, 51429 Bergisch Gladbach",
-     "halle": "Eissporthalle Bergisch Gladbach",
+     "ort": "Eissporthalle Neuss, Jakob-Koch-Straße 1, 41466 Neuss",
+     "halle": "Eissporthalle Neuss",
      "koordinaten": [
-      50.967548,
-      7.135355
+      51.175806,
+      6.680258
      ],
      "gespann": [
       {
@@ -417,10 +420,11 @@
      ],
      "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": "Halle (vorher Eissporthalle Neuss)",
+     "aenderung": "Halle (vorher Eissporthalle Bergisch Gladbach)",
      "hinweis": null,
      "id": "2026-09-20T20:00:00+02:00|Neusser EV – ESV Bergisch Gladbach",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T18:00:00+02:00",
@@ -447,7 +451,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T18:00:00+02:00|EHC Troisdorf 1b – EC Bergisch Land",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -548,7 +553,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T10:00:00+02:00|Herforder EV – Lippe Hockey Hamm Herford",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-12T13:30:00+02:00",
@@ -575,7 +581,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T13:30:00+02:00|Herforder EV – Kölner Junghaie 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-19T10:00:00+02:00",
@@ -602,7 +609,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T10:00:00+02:00|Herforder EV – Eisadler Dortmund",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-19T13:30:00+02:00",
@@ -629,7 +637,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T13:30:00+02:00|Herforder EV – EHC Troisdorf",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T08:00:00+02:00",
@@ -656,7 +665,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T08:00:00+02:00|Herforder EV – EV Duisburg",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T11:30:00+02:00",
@@ -683,7 +693,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T11:30:00+02:00|Herforder EV",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -784,7 +795,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T12:00:00+02:00|EHC Troisdorf – EJ Kassel",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T08:00:00+02:00",
@@ -811,7 +823,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T08:00:00+02:00|Düsseldorfer EG",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -897,7 +910,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T18:00:00+02:00|EHC Troisdorf – Eisadler Dortmund",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-25T19:30:00+02:00",
@@ -929,7 +943,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-25T19:30:00+02:00|Ratinger Ice Aliens – Grefrather EG",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -1014,7 +1029,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T10:00:00+02:00|Herforder EV – Eisadler Dortmund",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-19T13:30:00+02:00",
@@ -1041,7 +1057,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T13:30:00+02:00|Herforder EV – EHC Troisdorf",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T10:00:00+02:00",
@@ -1068,7 +1085,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T10:00:00+02:00|Herforder EV – KEC \"Die Haie\" 1c",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T12:30:00+02:00",
@@ -1095,7 +1113,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T12:30:00+02:00|Herforder EV – Lippe Hockey Hamm",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T09:00:00+02:00",
@@ -1119,7 +1138,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T09:00:00+02:00|ESV Grizzlys Bergkamen – Ratinger Ice Aliens",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -1196,7 +1216,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T13:30:00+02:00|Eisadler Dortmund – ESC Darmstadt",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T13:30:00+02:00",
@@ -1223,7 +1244,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T13:30:00+02:00|Eisadler Dortmund",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -1338,7 +1360,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-18T20:15:00+02:00|Dinslakener Kobras – Grefrather EG",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T11:00:00+02:00",
@@ -1365,7 +1388,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T11:00:00+02:00|Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T19:00:00+02:00",
@@ -1392,7 +1416,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T19:00:00+02:00|Eisadler Dortmund 1b – EHC Troisdorf",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-25T19:30:00+02:00",
@@ -1424,7 +1449,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-25T19:30:00+02:00|Ratinger Ice Aliens – Grefrather EG",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T19:00:00+02:00",
@@ -1456,7 +1482,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T19:00:00+02:00|Dinslakener Kobras – EHC Troisdorf",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -1555,7 +1582,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-11T20:00:00+02:00|Ratinger Ice Aliens – Herner EV",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T19:30:00+02:00",
@@ -1582,7 +1610,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T19:30:00+02:00|Düsseldorfer EG – Krefelder EV",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -1663,7 +1692,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T19:30:00+02:00|EHC Troisdorf – TuS Wiehl",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T19:15:00+02:00",
@@ -1690,7 +1720,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T19:15:00+02:00|KEC \"Die Haie\" – FASS Berlin",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -1767,7 +1798,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-18T20:15:00+02:00|EHC Troisdorf – EV Duisburg",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-25T20:15:00+02:00",
@@ -1794,7 +1826,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-25T20:15:00+02:00|EHC Troisdorf – Dinslakener Kobras",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -1895,7 +1928,8 @@
      "aenderung": "Ansetzung",
      "hinweis": null,
      "id": "2026-09-19T12:15:00+02:00|Iserlohner EC",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T13:30:00+02:00",
@@ -1922,7 +1956,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T13:30:00+02:00|Eisadler Dortmund – EHC Troisdorf",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T10:30:00+02:00",
@@ -1946,7 +1981,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T10:30:00+02:00|ESV Grizzlys Bergkamen – ESC Darmstadt",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -2056,7 +2092,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-11T19:30:00+02:00|Iserlohner EC – Düsseldorfer EG",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T08:00:00+02:00",
@@ -2083,7 +2120,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T08:00:00+02:00|Iserlohner EC – Iserlohn",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T18:30:00+02:00",
@@ -2110,7 +2148,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T18:30:00+02:00|Lippe Hockey Hamm – Herforder EV Hamm",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-16T19:30:00+02:00",
@@ -2137,7 +2176,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-16T19:30:00+02:00|Iserlohner EC – Krefelder EV",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-18T20:00:00+02:00",
@@ -2169,7 +2209,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-18T20:00:00+02:00|Eisadler Dortmund – Bulldogs de Liege",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-19T19:45:00+02:00",
@@ -2196,7 +2237,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T19:45:00+02:00|Kölner Junghaie – Düsseldorfer EG",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T08:00:00+02:00",
@@ -2223,7 +2265,8 @@
      "aenderung": "Ansetzung",
      "hinweis": null,
      "id": "2026-09-20T08:00:00+02:00|Iserlohner EC 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T12:00:00+02:00",
@@ -2250,7 +2293,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T12:00:00+02:00|Iserlohner EC – ES Weißwasser",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T09:30:00+02:00",
@@ -2277,7 +2321,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T09:30:00+02:00|Lippe Hockey Hamm",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T17:30:00+02:00",
@@ -2304,7 +2349,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T17:30:00+02:00|Kölner Junghaie 1b – EJ Kassel",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -2419,7 +2465,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-11T20:00:00+02:00|Ratinger Ice Aliens – Herner EV",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-12T12:00:00+02:00",
@@ -2446,7 +2493,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T12:00:00+02:00|EHC Troisdorf – EJ Kassel",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-18T19:30:00+02:00",
@@ -2478,7 +2526,8 @@
      "aenderung": "Halle (vorher Eissporthalle Ratingen)",
      "hinweis": null,
      "id": "2026-09-18T19:30:00+02:00|Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T14:00:00+02:00",
@@ -2505,7 +2554,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T14:00:00+02:00|Düsseldorfer EG – Iserlohner EC",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -2590,7 +2640,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T16:30:00+02:00|Kölner Junghaie – ES Weißwasser",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-12T19:15:00+02:00",
@@ -2617,7 +2668,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T19:15:00+02:00|KEC \"Die Haie\" 1c – Herforder EV Kölnarena 2",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T12:00:00+02:00",
@@ -2644,7 +2696,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T12:00:00+02:00|Kölner Junghaie – ES Weißwasser",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -2754,7 +2807,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T13:30:00+02:00|Düsseldorfer EG – NL U18",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T18:30:00+02:00",
@@ -2781,7 +2835,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T18:30:00+02:00|EHC Essen Ruhr – Soester EG",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T19:00:00+02:00",
@@ -2813,7 +2868,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T19:00:00+02:00|Dinslakener Kobras – EHC Troisdorf",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -2914,7 +2970,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-14T18:15:00+02:00|NRW U14 – Kölner Junghaie U15",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T19:15:00+02:00",
@@ -2941,7 +2998,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T19:15:00+02:00|KEC \"Die Haie\" – FASS Berlin",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -3050,7 +3108,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T20:00:00+02:00|EV Duisburg – SCC Adler Berlin",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T12:00:00+02:00",
@@ -3077,7 +3136,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T12:00:00+02:00|Kölner Junghaie – ES Weißwasser",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T14:45:00+02:00",
@@ -3104,7 +3164,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T14:45:00+02:00|Kölner Junghaie – Kölnarena 2",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-19T13:30:00+02:00",
@@ -3131,7 +3192,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T13:30:00+02:00|Krefelder EV 1b – EV Duisburg YAYLA Krefeld",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-19T16:30:00+02:00",
@@ -3158,7 +3220,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T16:30:00+02:00|Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T12:00:00+02:00",
@@ -3185,7 +3248,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T12:00:00+02:00|Düsseldorfer EG – Krefelder EV",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T16:30:00+02:00",
@@ -3212,7 +3276,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T16:30:00+02:00|Düsseldorfer EG – Iserlohner EC",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -3309,7 +3374,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T19:30:00+02:00|Krefelder EV – Löwen Frankfurt",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-19T13:30:00+02:00",
@@ -3336,7 +3402,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T13:30:00+02:00|Eisadler Dortmund – EHC Troisdorf",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T12:30:00+02:00",
@@ -3363,7 +3430,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T12:30:00+02:00|Dinslakener Kobras – EHC Troisdorf 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T16:45:00+02:00",
@@ -3390,7 +3458,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T16:45:00+02:00|Krefelder EV",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T19:30:00+02:00",
@@ -3417,7 +3486,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T19:30:00+02:00|Krefelder EV – Kölner Junghaie",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -3495,7 +3565,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T16:00:00+02:00|EV Duisburg – SCC Adler Berlin",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -3576,7 +3647,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T10:00:00+02:00|EHC Troisdorf 1c",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T19:00:00+02:00",
@@ -3603,7 +3675,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T19:00:00+02:00|EC Bergisch Land – Dinslakener Kobras",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -3709,7 +3782,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T09:15:00+02:00|NEV/BW – Sachsen/Berlin",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T11:00:00+02:00",
@@ -3736,7 +3810,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T11:00:00+02:00|NRW – Hessen",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T18:30:00+02:00",
@@ -3765,7 +3840,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T18:30:00+02:00|ESV Grizzlys Bergkamen – Eisadler Dortmund",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T08:30:00+02:00",
@@ -3792,7 +3868,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T08:30:00+02:00|Herner EV – Iserlohner EC 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -3873,7 +3950,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T16:45:00+02:00|Krefelder EV 1b – Löwen Frankfurt 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T16:45:00+02:00",
@@ -3900,7 +3978,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T16:45:00+02:00|Krefelder EV",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T19:30:00+02:00",
@@ -3927,7 +4006,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T19:30:00+02:00|Krefelder EV – Kölner Junghaie",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -4036,7 +4116,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T09:15:00+02:00|NEV – BW/Hessen",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-12T11:00:00+02:00",
@@ -4063,7 +4144,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T11:00:00+02:00|NRW – Sachsen/Berlin",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T15:00:00+02:00",
@@ -4090,7 +4172,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T15:00:00+02:00|EHC Troisdorf 1b – Mädchen W.I.N. 1 Troisdorf",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T13:30:00+02:00",
@@ -4117,7 +4200,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T13:30:00+02:00|Eisadler Dortmund – EHC Troisdorf",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-25T20:00:00+02:00",
@@ -4144,7 +4228,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-25T20:00:00+02:00|Neusser EV – Ratinger Ice Aliens",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T11:30:00+02:00",
@@ -4171,7 +4256,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T11:30:00+02:00|Kölner Junghaie 1c",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -4281,7 +4367,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T16:45:00+02:00|Krefelder EV 1b – Löwen Frankfurt 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T15:00:00+02:00",
@@ -4308,7 +4395,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T15:00:00+02:00|EHC Troisdorf 1b – Mädchen W.I.N. 1 Troisdorf",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-18T20:15:00+02:00",
@@ -4340,7 +4428,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-18T20:15:00+02:00|Dinslakener Kobras – Grefrather EG",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-19T12:30:00+02:00",
@@ -4367,7 +4456,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T12:30:00+02:00|EHC Essen Ruhr – Dinslakener Kobras",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T14:00:00+02:00",
@@ -4394,7 +4484,8 @@
      "aenderung": "Ansetzung",
      "hinweis": null,
      "id": "2026-09-20T14:00:00+02:00|Krefelder EV 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T17:00:00+02:00",
@@ -4421,7 +4512,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T17:00:00+02:00|Krefelder EV – Kölner Junghaie",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-25T20:00:00+02:00",
@@ -4430,11 +4522,11 @@
      "system": 3,
      "liga": "RL FS",
      "paarung": "Eisadler Dortmund – ESV Bergisch Gladbach",
-     "ort": "Eissporthalle Bergisch Gladbach, Saaler Mühle 100, 51429 Bergisch Gladbach",
-     "halle": "Eissporthalle Bergisch Gladbach",
+     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+     "halle": "Eissportzentrum Westfalen",
      "koordinaten": [
-      50.967548,
-      7.135355
+      51.49525,
+      7.458288
      ],
      "gespann": [
       {
@@ -4450,10 +4542,11 @@
      ],
      "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": "Halle (vorher Eissportzentrum Westfalen)",
+     "aenderung": "Halle (vorher Eissporthalle Bergisch Gladbach)",
      "hinweis": null,
      "id": "2026-09-25T20:00:00+02:00|Eisadler Dortmund – ESV Bergisch Gladbach",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T16:00:00+02:00",
@@ -4480,7 +4573,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T16:00:00+02:00|EV Duisburg – EJ Kassel",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -4565,7 +4659,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T14:45:00+02:00|Kölner Junghaie – Kölnarena 2",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T17:30:00+02:00",
@@ -4592,7 +4687,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T17:30:00+02:00|Kölner Junghaie 1b – Iserlohner EC 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-14T18:15:00+02:00",
@@ -4619,7 +4715,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-14T18:15:00+02:00|NRW U14 – Kölner Junghaie U15",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -4643,7 +4740,7 @@
     ],
     "hallen": [
      [
-      "Eissporthalle Moers",
+      "HELINET Eissportarena Hamm",
       1
      ]
     ],
@@ -4670,11 +4767,11 @@
      "system": 2,
      "liga": "U15 LL",
      "paarung": "Lippe Hockey Hamm – SpG Neusser EV / GSC Moers",
-     "ort": "Eissporthalle Moers, Filderstraße 140, 47447 Moers",
-     "halle": "Eissporthalle Moers",
+     "ort": "HELINET Eissportarena Hamm, Karl-Koßmann-Straße 1, 59071 Hamm",
+     "halle": "HELINET Eissportarena Hamm",
      "koordinaten": [
-      51.43973,
-      6.6198
+      51.686934,
+      7.886138
      ],
      "gespann": [
       {
@@ -4685,10 +4782,11 @@
      ],
      "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": "Halle (vorher HELINET Eissportarena Hamm)",
+     "aenderung": "Halle (vorher Eissporthalle Moers)",
      "hinweis": null,
      "id": "2026-09-19T10:30:00+02:00|Lippe Hockey Hamm – SpG Neusser EV / GSC Moers",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -4779,7 +4877,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-15T19:00:00+02:00|EV Duisburg – EV Duisburg OL",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-25T19:00:00+02:00",
@@ -4806,7 +4905,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-25T19:00:00+02:00|Krefelder EV – Düsseldorfer EG",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -4875,7 +4975,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T12:30:00+02:00|Dinslakener Kobras – EHC Die Bären Neuwied",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -4944,7 +5045,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T16:00:00+02:00|EV Duisburg – EJ Kassel",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -5018,7 +5120,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T10:00:00+02:00|Herforder EV – Lippe Hockey Hamm Herford",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-12T13:30:00+02:00",
@@ -5045,7 +5148,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T13:30:00+02:00|Herforder EV – Kölner Junghaie 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -5146,7 +5250,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T12:30:00+02:00|Dinslakener Kobras – TuS Wiehl",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T17:00:00+02:00",
@@ -5173,7 +5278,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T17:00:00+02:00|Krefelder EV – Löwen Frankfurt",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T09:30:00+02:00",
@@ -5200,7 +5306,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T09:30:00+02:00|Herner EV – EV Duisburg",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T14:00:00+02:00",
@@ -5227,7 +5334,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T14:00:00+02:00|Krefelder EV – Kölner Junghaie",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T17:00:00+02:00",
@@ -5254,7 +5362,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T17:00:00+02:00|Krefelder EV – Düsseldorfer EG",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -5298,7 +5407,7 @@
       1
      ],
      [
-      "Eissporthalle Moers",
+      "HELINET Eissportarena Hamm",
       1
      ]
     ],
@@ -5337,11 +5446,11 @@
      "system": 2,
      "liga": "U15 LL",
      "paarung": "Lippe Hockey Hamm – SpG Neusser EV / GSC Moers",
-     "ort": "Eissporthalle Moers, Filderstraße 140, 47447 Moers",
-     "halle": "Eissporthalle Moers",
+     "ort": "HELINET Eissportarena Hamm, Karl-Koßmann-Straße 1, 59071 Hamm",
+     "halle": "HELINET Eissportarena Hamm",
      "koordinaten": [
-      51.43973,
-      6.6198
+      51.686934,
+      7.886138
      ],
      "gespann": [
       {
@@ -5352,10 +5461,11 @@
      ],
      "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": "Halle (vorher HELINET Eissportarena Hamm)",
+     "aenderung": "Halle (vorher Eissporthalle Moers)",
      "hinweis": null,
      "id": "2026-09-19T10:30:00+02:00|Lippe Hockey Hamm – SpG Neusser EV / GSC Moers",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T08:00:00+02:00",
@@ -5382,7 +5492,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T08:00:00+02:00|Düsseldorfer EG",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T10:30:00+02:00",
@@ -5406,7 +5517,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T10:30:00+02:00|ESV Grizzlys Bergkamen – ESC Darmstadt",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T13:30:00+02:00",
@@ -5433,7 +5545,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T13:30:00+02:00|Eisadler Dortmund",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -5519,7 +5632,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T19:30:00+02:00|Düsseldorfer EG – Krefelder EV",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T19:00:00+02:00",
@@ -5551,7 +5665,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T19:00:00+02:00|Eisadler Dortmund – Harzer Falken",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -5661,7 +5776,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T19:30:00+02:00|EHC Troisdorf – TuS Wiehl",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T08:00:00+02:00",
@@ -5688,7 +5804,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T08:00:00+02:00|Düsseldorfer EG – Brehmstraße",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T10:00:00+02:00",
@@ -5720,7 +5837,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T10:00:00+02:00|EV Duisburg – SCC Adler Berlin",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-25T20:15:00+02:00",
@@ -5729,11 +5847,11 @@
      "system": 3,
      "liga": "RL FS",
      "paarung": "Dinslakener Kobras – ESV Grizzlys Bergkamen",
-     "ort": "Eissporthalle Bergkamen, Häupenweg 29, 59192 Bergkamen",
-     "halle": "Eissporthalle Bergkamen",
+     "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+     "halle": "Eissporthalle Dinslaken",
      "koordinaten": [
-      51.602578,
-      7.626858
+      51.574578,
+      6.735361
      ],
      "gespann": [
       {
@@ -5749,10 +5867,11 @@
      ],
      "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": "Halle (vorher Eissporthalle Dinslaken)",
+     "aenderung": "Halle (vorher Eissporthalle Bergkamen)",
      "hinweis": null,
      "id": "2026-09-25T20:15:00+02:00|Dinslakener Kobras – ESV Grizzlys Bergkamen",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T11:30:00+02:00",
@@ -5779,7 +5898,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T11:30:00+02:00|Kölner Junghaie 1c",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -5848,7 +5968,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-11T20:15:00+02:00|EHC Troisdorf – Eisadler Dortmund",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -5942,7 +6063,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T19:00:00+02:00|Eisadler Dortmund 1b – EHC Troisdorf",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T19:00:00+02:00",
@@ -5974,7 +6096,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T19:00:00+02:00|Dinslakener Kobras – EHC Troisdorf",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -6051,7 +6174,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T12:30:00+02:00|Dinslakener Kobras – Mechelen",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T12:30:00+02:00",
@@ -6078,7 +6202,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T12:30:00+02:00|Dinslakener Kobras – EHC Die Bären Neuwied",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -6102,7 +6227,7 @@
     ],
     "hallen": [
      [
-      "Eissporthalle Bergisch Gladbach",
+      "Eissporthalle Neuss",
       1
      ]
     ],
@@ -6133,11 +6258,11 @@
      "system": 3,
      "liga": "RL FS",
      "paarung": "Neusser EV – ESV Bergisch Gladbach",
-     "ort": "Eissporthalle Bergisch Gladbach, Saaler Mühle 100, 51429 Bergisch Gladbach",
-     "halle": "Eissporthalle Bergisch Gladbach",
+     "ort": "Eissporthalle Neuss, Jakob-Koch-Straße 1, 41466 Neuss",
+     "halle": "Eissporthalle Neuss",
      "koordinaten": [
-      50.967548,
-      7.135355
+      51.175806,
+      6.680258
      ],
      "gespann": [
       {
@@ -6153,10 +6278,11 @@
      ],
      "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": "Halle (vorher Eissporthalle Neuss)",
+     "aenderung": "Halle (vorher Eissporthalle Bergisch Gladbach)",
      "hinweis": null,
      "id": "2026-09-20T20:00:00+02:00|Neusser EV – ESV Bergisch Gladbach",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -6246,7 +6372,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T19:45:00+02:00|Kölner Junghaie – Düsseldorfer EG",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T14:00:00+02:00",
@@ -6273,7 +6400,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T14:00:00+02:00|Düsseldorfer EG – Iserlohner EC",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-25T19:30:00+02:00",
@@ -6305,7 +6433,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-25T19:30:00+02:00|Ratinger Ice Aliens – Grefrather EG",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -6374,7 +6503,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T12:00:00+02:00|Iserlohner EC – Düsseldorfer EG",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -6468,7 +6598,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-15T19:00:00+02:00|EV Duisburg – EV Duisburg OL",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T19:00:00+02:00",
@@ -6500,7 +6631,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T19:00:00+02:00|Dinslakener Kobras – UNIS Flyers Heerenveen",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -6533,7 +6665,7 @@
       2
      ],
      [
-      "Eissporthalle Bergisch Gladbach",
+      "Eissporthalle Neuss",
       1
      ]
     ],
@@ -6594,7 +6726,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T19:00:00+02:00|Dinslakener Kobras 1b – EHC Essen Ruhr",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-18T20:15:00+02:00",
@@ -6626,7 +6759,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-18T20:15:00+02:00|Dinslakener Kobras – Grefrather EG",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T20:00:00+02:00",
@@ -6635,11 +6769,11 @@
      "system": 3,
      "liga": "RL FS",
      "paarung": "Neusser EV – ESV Bergisch Gladbach",
-     "ort": "Eissporthalle Bergisch Gladbach, Saaler Mühle 100, 51429 Bergisch Gladbach",
-     "halle": "Eissporthalle Bergisch Gladbach",
+     "ort": "Eissporthalle Neuss, Jakob-Koch-Straße 1, 41466 Neuss",
+     "halle": "Eissporthalle Neuss",
      "koordinaten": [
-      50.967548,
-      7.135355
+      51.175806,
+      6.680258
      ],
      "gespann": [
       {
@@ -6655,10 +6789,11 @@
      ],
      "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": "Halle (vorher Eissporthalle Neuss)",
+     "aenderung": "Halle (vorher Eissporthalle Bergisch Gladbach)",
      "hinweis": null,
      "id": "2026-09-20T20:00:00+02:00|Neusser EV – ESV Bergisch Gladbach",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -6768,7 +6903,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-16T19:30:00+02:00|Iserlohner EC – Krefelder EV",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-18T20:00:00+02:00",
@@ -6800,7 +6936,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-18T20:00:00+02:00|Eisadler Dortmund – Bulldogs de Liege",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-19T12:15:00+02:00",
@@ -6827,7 +6964,8 @@
      "aenderung": "Ansetzung",
      "hinweis": null,
      "id": "2026-09-19T12:15:00+02:00|Iserlohner EC",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T10:00:00+02:00",
@@ -6854,7 +6992,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T10:00:00+02:00|Herforder EV – KEC \"Die Haie\" 1c",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T12:30:00+02:00",
@@ -6881,7 +7020,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T12:30:00+02:00|Herforder EV – Lippe Hockey Hamm",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-25T20:00:00+02:00",
@@ -6908,7 +7048,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-25T20:00:00+02:00|EHC Essen Ruhr – Dinslakener Kobras 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T09:00:00+02:00",
@@ -6932,7 +7073,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T09:00:00+02:00|ESV Grizzlys Bergkamen – Ratinger Ice Aliens",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -7041,7 +7183,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-11T19:30:00+02:00|EV Duisburg – Iserlohner EC 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T08:00:00+02:00",
@@ -7068,7 +7211,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T08:00:00+02:00|Iserlohner EC – Iserlohn",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-18T19:30:00+02:00",
@@ -7095,7 +7239,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-18T19:30:00+02:00|EV Duisburg 1b – Ratinger Ice Aliens",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T09:30:00+02:00",
@@ -7122,7 +7267,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T09:30:00+02:00|Herner EV – EV Duisburg",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T10:00:00+02:00",
@@ -7149,7 +7295,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T10:00:00+02:00|EV Duisburg",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T10:00:00+02:00",
@@ -7176,7 +7323,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T10:00:00+02:00|EV Duisburg",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -7278,7 +7426,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T15:00:00+02:00|NEV – BW/NRW",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-12T16:45:00+02:00",
@@ -7305,7 +7454,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T16:45:00+02:00|Hessen – Sachsen/Berlin",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T10:00:00+02:00",
@@ -7332,7 +7482,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T10:00:00+02:00|EHC Essen Ruhr – Essen",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-19T16:00:00+02:00",
@@ -7364,7 +7515,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T16:00:00+02:00|EV Duisburg – SCC Adler Berlin",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T16:30:00+02:00",
@@ -7391,7 +7543,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T16:30:00+02:00|Herner EV – Düsseldorfer EG 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -7481,7 +7634,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T09:15:00+02:00|NEV/BW – Sachsen/Berlin",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T11:00:00+02:00",
@@ -7508,7 +7662,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T11:00:00+02:00|NRW – Hessen",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-19T12:30:00+02:00",
@@ -7535,7 +7690,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T12:30:00+02:00|EHC Essen Ruhr – Dinslakener Kobras",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T10:15:00+02:00",
@@ -7562,7 +7718,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T10:15:00+02:00|EHC Essen Ruhr – Herforder EV",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -7655,7 +7812,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-25T20:15:00+02:00|EHC Troisdorf – Dinslakener Kobras",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -7689,7 +7847,7 @@
     "hallen": [
      [
       "Eissportzentrum Westfalen",
-      1
+      2
      ],
      [
       "Emscher-Lippe-Halle Gelsenkirchen",
@@ -7761,7 +7919,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-11T20:00:00+02:00|Herner EV 1b – EHC Essen Ruhr",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-18T20:00:00+02:00",
@@ -7793,7 +7952,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-18T20:00:00+02:00|Eisadler Dortmund – Bulldogs de Liege",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T18:30:00+02:00",
@@ -7820,7 +7980,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T18:30:00+02:00|EHC Essen Ruhr – Soester EG",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-25T20:00:00+02:00",
@@ -7829,11 +7990,11 @@
      "system": 3,
      "liga": "RL FS",
      "paarung": "Eisadler Dortmund – ESV Bergisch Gladbach",
-     "ort": "Eissporthalle Bergisch Gladbach, Saaler Mühle 100, 51429 Bergisch Gladbach",
-     "halle": "Eissporthalle Bergisch Gladbach",
+     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+     "halle": "Eissportzentrum Westfalen",
      "koordinaten": [
-      50.967548,
-      7.135355
+      51.49525,
+      7.458288
      ],
      "gespann": [
       {
@@ -7849,10 +8010,11 @@
      ],
      "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": "Halle (vorher Eissportzentrum Westfalen)",
+     "aenderung": "Halle (vorher Eissporthalle Bergisch Gladbach)",
      "hinweis": null,
      "id": "2026-09-25T20:00:00+02:00|Eisadler Dortmund – ESV Bergisch Gladbach",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -7943,7 +8105,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-15T19:00:00+02:00|EV Duisburg – EV Duisburg OL",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -8012,7 +8175,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T19:30:00+02:00|Iserlohner EC – ES Weißwasser",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -8122,7 +8286,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T19:30:00+02:00|Krefelder EV – Löwen Frankfurt",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T12:30:00+02:00",
@@ -8149,7 +8314,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T12:30:00+02:00|Dinslakener Kobras – Düsseldorfer EG U15",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-19T13:30:00+02:00",
@@ -8176,7 +8342,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T13:30:00+02:00|Eisadler Dortmund – EHC Troisdorf",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T10:00:00+02:00",
@@ -8208,7 +8375,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T10:00:00+02:00|EV Duisburg – SCC Adler Berlin",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T12:00:00+02:00",
@@ -8235,7 +8403,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T12:00:00+02:00|Düsseldorfer EG – Krefelder EV",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T16:30:00+02:00",
@@ -8262,7 +8431,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T16:30:00+02:00|Düsseldorfer EG – Iserlohner EC",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T18:30:00+02:00",
@@ -8291,7 +8461,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T18:30:00+02:00|ESV Bergkamen – Bremen",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -8382,7 +8553,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-11T20:00:00+02:00|Ratinger Ice Aliens – Herner EV",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -8460,7 +8632,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T19:00:00+02:00|Eisadler Dortmund – Harzer Falken",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -8565,7 +8738,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T10:00:00+02:00|Krefelder EV 1b – Löwen Frankfurt 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T11:00:00+02:00",
@@ -8592,7 +8766,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T11:00:00+02:00|Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-25T19:00:00+02:00",
@@ -8619,7 +8794,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-25T19:00:00+02:00|Krefelder EV – Düsseldorfer EG",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T17:30:00+02:00",
@@ -8646,7 +8822,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T17:30:00+02:00|Kölner Junghaie 1b – EJ Kassel",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -8744,7 +8921,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T14:00:00+02:00|Düsseldorfer EG – Iserlohner EC",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T20:30:00+02:00",
@@ -8776,7 +8954,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T20:30:00+02:00|Neusser EV – Ratinger Ice Aliens",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T12:00:00+02:00",
@@ -8803,7 +8982,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T12:00:00+02:00|Iserlohner EC – Düsseldorfer EG",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -8849,11 +9029,7 @@
      ],
      [
       "Eissporthalle Dinslaken",
-      1
-     ],
-     [
-      "Eissporthalle Bergkamen",
-      1
+      2
      ]
     ],
     "partner": [
@@ -8918,7 +9094,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T10:00:00+02:00|EV Duisburg – SCC Adler Berlin",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T19:00:00+02:00",
@@ -8950,7 +9127,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T19:00:00+02:00|Dinslakener Kobras – UNIS Flyers Heerenveen",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-25T20:15:00+02:00",
@@ -8959,11 +9137,11 @@
      "system": 3,
      "liga": "RL FS",
      "paarung": "Dinslakener Kobras – ESV Grizzlys Bergkamen",
-     "ort": "Eissporthalle Bergkamen, Häupenweg 29, 59192 Bergkamen",
-     "halle": "Eissporthalle Bergkamen",
+     "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+     "halle": "Eissporthalle Dinslaken",
      "koordinaten": [
-      51.602578,
-      7.626858
+      51.574578,
+      6.735361
      ],
      "gespann": [
       {
@@ -8979,10 +9157,11 @@
      ],
      "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": "Halle (vorher Eissporthalle Dinslaken)",
+     "aenderung": "Halle (vorher Eissporthalle Bergkamen)",
      "hinweis": null,
      "id": "2026-09-25T20:15:00+02:00|Dinslakener Kobras – ESV Grizzlys Bergkamen",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T14:00:00+02:00",
@@ -9009,7 +9188,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T14:00:00+02:00|Krefelder EV – Kölner Junghaie",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T17:00:00+02:00",
@@ -9036,7 +9216,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T17:00:00+02:00|Krefelder EV – Düsseldorfer EG",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -9129,7 +9310,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T16:30:00+02:00|Düsseldorfer EG – Kölner Junghaie",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T19:00:00+02:00",
@@ -9156,7 +9338,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T19:00:00+02:00|EC Bergisch Land – Dinslakener Kobras",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -9197,7 +9380,7 @@
       2
      ],
      [
-      "Eissporthalle Bergkamen",
+      "Eissporthalle Dinslaken",
       1
      ],
      [
@@ -9262,7 +9445,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T10:00:00+02:00|Krefelder EV 1b – Löwen Frankfurt 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-25T20:15:00+02:00",
@@ -9271,11 +9455,11 @@
      "system": 3,
      "liga": "RL FS",
      "paarung": "Dinslakener Kobras – ESV Grizzlys Bergkamen",
-     "ort": "Eissporthalle Bergkamen, Häupenweg 29, 59192 Bergkamen",
-     "halle": "Eissporthalle Bergkamen",
+     "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
+     "halle": "Eissporthalle Dinslaken",
      "koordinaten": [
-      51.602578,
-      7.626858
+      51.574578,
+      6.735361
      ],
      "gespann": [
       {
@@ -9291,10 +9475,11 @@
      ],
      "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": "Halle (vorher Eissporthalle Dinslaken)",
+     "aenderung": "Halle (vorher Eissporthalle Bergkamen)",
      "hinweis": null,
      "id": "2026-09-25T20:15:00+02:00|Dinslakener Kobras – ESV Grizzlys Bergkamen",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T08:00:00+02:00",
@@ -9321,7 +9506,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T08:00:00+02:00|Düsseldorfer EG 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -9414,7 +9600,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T18:00:00+02:00|EHC Troisdorf – Eisadler Dortmund",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T09:30:00+02:00",
@@ -9441,7 +9628,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T09:30:00+02:00|Herner EV – EHC Troisdorf",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -9550,7 +9738,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-11T20:15:00+02:00|Dinslakener Kobras – Ratinger Ice Aliens",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T08:00:00+02:00",
@@ -9577,7 +9766,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T08:00:00+02:00|Düsseldorfer EG – Brehmstraße",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T18:30:00+02:00",
@@ -9604,7 +9794,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T18:30:00+02:00|Lippe Hockey Hamm – Herforder EV Hamm",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-18T20:00:00+02:00",
@@ -9631,7 +9822,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-18T20:00:00+02:00|EHC Essen Ruhr – Herner EV 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-19T10:00:00+02:00",
@@ -9658,7 +9850,8 @@
      "aenderung": "Ansetzung",
      "hinweis": null,
      "id": "2026-09-19T10:00:00+02:00|EHC Troisdorf",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T14:00:00+02:00",
@@ -9685,7 +9878,8 @@
      "aenderung": "Ansetzung",
      "hinweis": null,
      "id": "2026-09-20T14:00:00+02:00|Krefelder EV 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T17:00:00+02:00",
@@ -9712,7 +9906,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T17:00:00+02:00|Krefelder EV – Kölner Junghaie",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-25T20:00:00+02:00",
@@ -9739,7 +9934,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-25T20:00:00+02:00|EHC Essen Ruhr – Dinslakener Kobras 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T13:30:00+02:00",
@@ -9766,7 +9962,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T13:30:00+02:00|Eisadler Dortmund – ESC Darmstadt",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -9851,7 +10048,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T16:30:00+02:00|Düsseldorfer EG – Kölner Junghaie",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T08:00:00+02:00",
@@ -9878,7 +10076,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T08:00:00+02:00|Herforder EV – EV Duisburg",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T11:30:00+02:00",
@@ -9905,7 +10104,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T11:30:00+02:00|Herforder EV",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -10015,7 +10215,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T12:30:00+02:00|Dinslakener Kobras – TuS Wiehl",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T19:00:00+02:00",
@@ -10042,7 +10243,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T19:00:00+02:00|Dinslakener Kobras 1b – EHC Essen Ruhr",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-19T13:30:00+02:00",
@@ -10069,7 +10271,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T13:30:00+02:00|Krefelder EV 1b – EV Duisburg YAYLA Krefeld",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-19T16:30:00+02:00",
@@ -10096,7 +10299,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T16:30:00+02:00|Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T18:30:00+02:00",
@@ -10125,7 +10329,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T18:30:00+02:00|ESV Grizzlys Bergkamen – Eisadler Dortmund",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T10:00:00+02:00",
@@ -10152,7 +10357,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T10:00:00+02:00|EV Duisburg",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T18:30:00+02:00",
@@ -10181,7 +10387,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T18:30:00+02:00|ESV Bergkamen – Bremen",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -10292,7 +10499,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-11T20:15:00+02:00|EHC Troisdorf – Eisadler Dortmund",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-12T16:30:00+02:00",
@@ -10319,7 +10527,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T16:30:00+02:00|Kölner Junghaie – ES Weißwasser",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-12T19:15:00+02:00",
@@ -10346,7 +10555,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T19:15:00+02:00|KEC \"Die Haie\" 1c – Herforder EV Kölnarena 2",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T10:00:00+02:00",
@@ -10373,7 +10583,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T10:00:00+02:00|EV Duisburg – SCC Adler Berlin",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-18T19:30:00+02:00",
@@ -10405,7 +10616,8 @@
      "aenderung": "Halle (vorher Eissporthalle Ratingen)",
      "hinweis": null,
      "id": "2026-09-18T19:30:00+02:00|Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-19T16:00:00+02:00",
@@ -10437,7 +10649,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T16:00:00+02:00|EV Duisburg – SCC Adler Berlin",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T14:45:00+02:00",
@@ -10464,7 +10677,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T14:45:00+02:00|Kölner Junghaie – Düsseldorfer EG",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T17:30:00+02:00",
@@ -10491,7 +10705,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T17:30:00+02:00|Kölner Junghaie 1b – EV Duisburg",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T20:30:00+02:00",
@@ -10523,7 +10738,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T20:30:00+02:00|Neusser EV – Ratinger Ice Aliens",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -10633,7 +10849,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-11T19:30:00+02:00|EV Duisburg – Iserlohner EC 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T17:30:00+02:00",
@@ -10657,7 +10874,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T17:30:00+02:00|ESV Grizzlys Bergkamen – Herforder EV",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T19:00:00+02:00",
@@ -10689,7 +10907,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T19:00:00+02:00|Eisadler Dortmund – Harzer Falken",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -10794,7 +11013,8 @@
      "aenderung": "Ansetzung",
      "hinweis": null,
      "id": "2026-09-13T13:00:00+02:00|Spiel um Platz 3",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T15:00:00+02:00",
@@ -10821,7 +11041,8 @@
      "aenderung": "Ansetzung",
      "hinweis": null,
      "id": "2026-09-13T15:00:00+02:00|Finale",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T09:30:00+02:00",
@@ -10848,7 +11069,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T09:30:00+02:00|Lippe Hockey Hamm",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T16:45:00+02:00",
@@ -10875,7 +11097,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T16:45:00+02:00|Herner EV 1b – Soester EG",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -10973,7 +11196,8 @@
      "aenderung": "Ansetzung",
      "hinweis": null,
      "id": "2026-09-19T10:00:00+02:00|EHC Troisdorf",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T20:30:00+02:00",
@@ -11005,7 +11229,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T20:30:00+02:00|Neusser EV – Ratinger Ice Aliens",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T10:15:00+02:00",
@@ -11032,7 +11257,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T10:15:00+02:00|EHC Essen Ruhr – Herforder EV",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -11101,7 +11327,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T10:00:00+02:00|EHC Troisdorf 1c",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -11202,7 +11429,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T17:30:00+02:00|Kölner Junghaie 1b – Iserlohner EC 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-18T20:15:00+02:00",
@@ -11229,7 +11457,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-18T20:15:00+02:00|EHC Troisdorf – EV Duisburg",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T14:45:00+02:00",
@@ -11256,7 +11485,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T14:45:00+02:00|Kölner Junghaie – Düsseldorfer EG",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T17:30:00+02:00",
@@ -11283,7 +11513,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T17:30:00+02:00|Kölner Junghaie 1b – EV Duisburg",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T18:00:00+02:00",
@@ -11310,7 +11541,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T18:00:00+02:00|EHC Troisdorf 1b – EC Bergisch Land",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -11416,7 +11648,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-11T19:30:00+02:00|Iserlohner EC – Düsseldorfer EG",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T10:00:00+02:00",
@@ -11443,7 +11676,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T10:00:00+02:00|Herforder EV – Iserlohner EC 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T12:30:00+02:00",
@@ -11470,7 +11704,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T12:30:00+02:00|Herforder EV – Eisadler Dortmund Herford",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-25T19:30:00+02:00",
@@ -11497,7 +11732,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-25T19:30:00+02:00|Lippe Hockey Hamm – Eisadler Dortmund",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T12:15:00+02:00",
@@ -11524,7 +11760,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T12:15:00+02:00|Iserlohner EC – Kölner Junghaie",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T18:30:00+02:00",
@@ -11553,7 +11790,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T18:30:00+02:00|ESV Bergkamen – Bremen",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -11648,7 +11886,8 @@
      "aenderung": "Halle (vorher Eissporthalle Ratingen)",
      "hinweis": null,
      "id": "2026-09-18T19:30:00+02:00|Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -11689,7 +11928,7 @@
       1
      ],
      [
-      "Eissporthalle Bergisch Gladbach",
+      "Eissportzentrum Westfalen",
       1
      ]
     ],
@@ -11750,7 +11989,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-11T20:15:00+02:00|Dinslakener Kobras – Ratinger Ice Aliens",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T19:00:00+02:00",
@@ -11782,7 +12022,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T19:00:00+02:00|Dinslakener Kobras – UNIS Flyers Heerenveen",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-25T20:00:00+02:00",
@@ -11791,11 +12032,11 @@
      "system": 3,
      "liga": "RL FS",
      "paarung": "Eisadler Dortmund – ESV Bergisch Gladbach",
-     "ort": "Eissporthalle Bergisch Gladbach, Saaler Mühle 100, 51429 Bergisch Gladbach",
-     "halle": "Eissporthalle Bergisch Gladbach",
+     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
+     "halle": "Eissportzentrum Westfalen",
      "koordinaten": [
-      50.967548,
-      7.135355
+      51.49525,
+      7.458288
      ],
      "gespann": [
       {
@@ -11811,10 +12052,11 @@
      ],
      "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": "Halle (vorher Eissportzentrum Westfalen)",
+     "aenderung": "Halle (vorher Eissporthalle Bergisch Gladbach)",
      "hinweis": null,
      "id": "2026-09-25T20:00:00+02:00|Eisadler Dortmund – ESV Bergisch Gladbach",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T16:45:00+02:00",
@@ -11841,7 +12083,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T16:45:00+02:00|Herner EV 1b – Soester EG",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -11943,7 +12186,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T20:00:00+02:00|EV Duisburg – SCC Adler Berlin",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T14:00:00+02:00",
@@ -11970,7 +12214,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T14:00:00+02:00|Düsseldorfer EG – Iserlohner EC",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T18:30:00+02:00",
@@ -11999,7 +12244,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T18:30:00+02:00|ESV Grizzlys Bergkamen – Eisadler Dortmund",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -12068,7 +12314,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T12:30:00+02:00|Dinslakener Kobras – Mechelen",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -12153,7 +12400,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T15:00:00+02:00|NEV – BW/NRW",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-12T16:45:00+02:00",
@@ -12180,7 +12428,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T16:45:00+02:00|Hessen – Sachsen/Berlin",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T10:00:00+02:00",
@@ -12207,7 +12456,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T10:00:00+02:00|EHC Essen Ruhr – Essen",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T16:30:00+02:00",
@@ -12234,7 +12484,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T16:30:00+02:00|Herner EV – Düsseldorfer EG 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -12331,7 +12582,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T10:00:00+02:00|EV Duisburg – SCC Adler Berlin",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-18T20:00:00+02:00",
@@ -12358,7 +12610,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-18T20:00:00+02:00|EHC Essen Ruhr – Herner EV 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T09:30:00+02:00",
@@ -12385,7 +12638,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T09:30:00+02:00|Herner EV – EHC Troisdorf",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -12454,7 +12708,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T19:30:00+02:00|Iserlohner EC – ES Weißwasser",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -12551,7 +12806,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-18T19:30:00+02:00|EV Duisburg 1b – Ratinger Ice Aliens",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T12:30:00+02:00",
@@ -12578,7 +12834,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T12:30:00+02:00|Dinslakener Kobras – EHC Troisdorf 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-25T20:00:00+02:00",
@@ -12605,7 +12862,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-25T20:00:00+02:00|Neusser EV – Ratinger Ice Aliens",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T08:00:00+02:00",
@@ -12632,7 +12890,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T08:00:00+02:00|Düsseldorfer EG 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -12729,7 +12988,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T12:30:00+02:00|Dinslakener Kobras – Düsseldorfer EG U15",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-19T13:30:00+02:00",
@@ -12756,7 +13016,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T13:30:00+02:00|Düsseldorfer EG – NL U18",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T08:00:00+02:00",
@@ -12783,7 +13044,8 @@
      "aenderung": "Ansetzung",
      "hinweis": null,
      "id": "2026-09-20T08:00:00+02:00|Iserlohner EC 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-20T12:00:00+02:00",
@@ -12810,7 +13072,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T12:00:00+02:00|Iserlohner EC – ES Weißwasser",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -12891,7 +13154,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-11T20:00:00+02:00|Herner EV 1b – EHC Essen Ruhr",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T13:00:00+02:00",
@@ -12918,7 +13182,8 @@
      "aenderung": "Ansetzung",
      "hinweis": null,
      "id": "2026-09-13T13:00:00+02:00|Spiel um Platz 3",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T15:00:00+02:00",
@@ -12945,7 +13210,8 @@
      "aenderung": "Ansetzung",
      "hinweis": null,
      "id": "2026-09-13T15:00:00+02:00|Finale",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -13050,7 +13316,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T09:15:00+02:00|NEV – BW/Hessen",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-12T11:00:00+02:00",
@@ -13077,7 +13344,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-12T11:00:00+02:00|NRW – Sachsen/Berlin",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T10:00:00+02:00",
@@ -13104,7 +13372,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T10:00:00+02:00|Herforder EV – Iserlohner EC 1b",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-13T12:30:00+02:00",
@@ -13131,7 +13400,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-13T12:30:00+02:00|Herforder EV – Eisadler Dortmund Herford",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-25T19:30:00+02:00",
@@ -13158,7 +13428,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-25T19:30:00+02:00|Lippe Hockey Hamm – Eisadler Dortmund",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-26T17:30:00+02:00",
@@ -13182,7 +13453,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T17:30:00+02:00|ESV Grizzlys Bergkamen – Herforder EV",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T08:00:00+02:00",
@@ -13209,7 +13481,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T08:00:00+02:00|Lippe Hockey Hamm – Eisadler Dortmund",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T18:00:00+02:00",
@@ -13236,7 +13509,8 @@
      "aenderung": "Rolle (vorher LSR)",
      "hinweis": null,
      "id": "2026-09-27T18:00:00+02:00|Herforder EV – Eisadler Dortmund",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   },
@@ -13333,7 +13607,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T12:15:00+02:00|Iserlohner EC – Kölner Junghaie",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T08:00:00+02:00",
@@ -13360,7 +13635,8 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-27T08:00:00+02:00|Lippe Hockey Hamm – Eisadler Dortmund",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     },
     {
      "beginn": "2026-09-27T18:00:00+02:00",
@@ -13387,7 +13663,8 @@
      "aenderung": "Rolle (vorher LSR)",
      "hinweis": null,
      "id": "2026-09-27T18:00:00+02:00|Herforder EV – Eisadler Dortmund",
-     "korrektur": null
+     "korrektur": null,
+     "manuell": false
     }
    ]
   }
@@ -13416,7 +13693,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-11T19:30:00+02:00|Iserlohner EC – Düsseldorfer EG",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-11T19:30:00+02:00",
@@ -13441,7 +13719,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-11T19:30:00+02:00|EV Duisburg – Iserlohner EC 1b",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-11T20:00:00+02:00",
@@ -13466,7 +13745,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-11T20:00:00+02:00|Herner EV 1b – EHC Essen Ruhr",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-11T20:00:00+02:00",
@@ -13496,7 +13776,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-11T20:00:00+02:00|Ratinger Ice Aliens – Herner EV",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-11T20:15:00+02:00",
@@ -13521,7 +13802,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-11T20:15:00+02:00|EHC Troisdorf – Eisadler Dortmund",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-11T20:15:00+02:00",
@@ -13546,7 +13828,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-11T20:15:00+02:00|Dinslakener Kobras – Ratinger Ice Aliens",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-12T09:15:00+02:00",
@@ -13571,7 +13854,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-12T09:15:00+02:00|NEV – BW/Hessen",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-12T10:00:00+02:00",
@@ -13596,7 +13880,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-12T10:00:00+02:00|Herforder EV – Lippe Hockey Hamm Herford",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-12T11:00:00+02:00",
@@ -13621,7 +13906,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-12T11:00:00+02:00|NRW – Sachsen/Berlin",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-12T12:00:00+02:00",
@@ -13646,7 +13932,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-12T12:00:00+02:00|EHC Troisdorf – EJ Kassel",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-12T12:30:00+02:00",
@@ -13671,7 +13958,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-12T12:30:00+02:00|Dinslakener Kobras – TuS Wiehl",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-12T13:30:00+02:00",
@@ -13696,7 +13984,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-12T13:30:00+02:00|Herforder EV – Kölner Junghaie 1b",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-12T15:00:00+02:00",
@@ -13721,7 +14010,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-12T15:00:00+02:00|NEV – BW/NRW",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-12T16:30:00+02:00",
@@ -13746,7 +14036,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-12T16:30:00+02:00|Kölner Junghaie – ES Weißwasser",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-12T16:45:00+02:00",
@@ -13771,7 +14062,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-12T16:45:00+02:00|Krefelder EV 1b – Löwen Frankfurt 1b",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-12T16:45:00+02:00",
@@ -13796,7 +14088,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-12T16:45:00+02:00|Hessen – Sachsen/Berlin",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-12T19:15:00+02:00",
@@ -13821,7 +14114,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-12T19:15:00+02:00|KEC \"Die Haie\" 1c – Herforder EV Kölnarena 2",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-12T19:30:00+02:00",
@@ -13846,7 +14140,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-12T19:30:00+02:00|Krefelder EV – Löwen Frankfurt",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-12T19:30:00+02:00",
@@ -13871,7 +14166,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-12T19:30:00+02:00|EHC Troisdorf – TuS Wiehl",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-12T20:00:00+02:00",
@@ -13896,7 +14192,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-12T20:00:00+02:00|EV Duisburg – SCC Adler Berlin",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-13T08:00:00+02:00",
@@ -13921,7 +14218,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-13T08:00:00+02:00|Düsseldorfer EG – Brehmstraße",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-13T08:00:00+02:00",
@@ -13946,7 +14244,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-13T08:00:00+02:00|Iserlohner EC – Iserlohn",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-13T09:15:00+02:00",
@@ -13971,7 +14270,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-13T09:15:00+02:00|NEV/BW – Sachsen/Berlin",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-13T10:00:00+02:00",
@@ -13996,7 +14296,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-13T10:00:00+02:00|Krefelder EV 1b – Löwen Frankfurt 1b",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-13T10:00:00+02:00",
@@ -14021,7 +14322,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-13T10:00:00+02:00|EV Duisburg – SCC Adler Berlin",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-13T10:00:00+02:00",
@@ -14046,7 +14348,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-13T10:00:00+02:00|Herforder EV – Iserlohner EC 1b",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-13T10:00:00+02:00",
@@ -14071,7 +14374,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-13T10:00:00+02:00|EHC Essen Ruhr – Essen",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-13T11:00:00+02:00",
@@ -14096,7 +14400,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-13T11:00:00+02:00|NRW – Hessen",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-13T12:00:00+02:00",
@@ -14121,7 +14426,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-13T12:00:00+02:00|Kölner Junghaie – ES Weißwasser",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-13T12:30:00+02:00",
@@ -14146,7 +14452,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-13T12:30:00+02:00|Dinslakener Kobras – Düsseldorfer EG U15",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-13T12:30:00+02:00",
@@ -14171,7 +14478,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-13T12:30:00+02:00|Herforder EV – Eisadler Dortmund Herford",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-13T13:00:00+02:00",
@@ -14196,7 +14504,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-13T13:00:00+02:00|Spiel um Platz 3",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-13T14:00:00+02:00",
@@ -14221,7 +14530,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-13T14:00:00+02:00|Düsseldorfer EG – Iserlohner EC",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-13T14:45:00+02:00",
@@ -14246,7 +14556,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-13T14:45:00+02:00|Kölner Junghaie – Kölnarena 2",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-13T15:00:00+02:00",
@@ -14271,7 +14582,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-13T15:00:00+02:00|Finale",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-13T15:00:00+02:00",
@@ -14296,7 +14608,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-13T15:00:00+02:00|EHC Troisdorf 1b – Mädchen W.I.N. 1 Troisdorf",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-13T17:00:00+02:00",
@@ -14321,7 +14634,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-13T17:00:00+02:00|Krefelder EV – Löwen Frankfurt",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-13T17:30:00+02:00",
@@ -14346,7 +14660,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-13T17:30:00+02:00|Kölner Junghaie 1b – Iserlohner EC 1b",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-13T18:00:00+02:00",
@@ -14371,7 +14686,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-13T18:00:00+02:00|EHC Troisdorf – Eisadler Dortmund",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-13T18:30:00+02:00",
@@ -14396,7 +14712,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-13T18:30:00+02:00|Lippe Hockey Hamm – Herforder EV Hamm",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-13T19:00:00+02:00",
@@ -14421,7 +14738,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-13T19:00:00+02:00|Dinslakener Kobras 1b – EHC Essen Ruhr",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-14T18:15:00+02:00",
@@ -14446,7 +14764,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-14T18:15:00+02:00|NRW U14 – Kölner Junghaie U15",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-15T19:00:00+02:00",
@@ -14476,7 +14795,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-15T19:00:00+02:00|EV Duisburg – EV Duisburg OL",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-16T19:30:00+02:00",
@@ -14501,7 +14821,8 @@
    ],
    "vergangen": true,
    "id": "2026-09-16T19:30:00+02:00|Iserlohner EC – Krefelder EV",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-18T19:30:00+02:00",
@@ -14526,7 +14847,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-18T19:30:00+02:00|EV Duisburg 1b – Ratinger Ice Aliens",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-18T19:30:00+02:00",
@@ -14556,7 +14878,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-18T19:30:00+02:00|Ratinger Ice Aliens – Chiefs Leuwen Düsseldorf !!!",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-18T20:00:00+02:00",
@@ -14581,7 +14904,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-18T20:00:00+02:00|EHC Essen Ruhr – Herner EV 1b",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-18T20:00:00+02:00",
@@ -14611,7 +14935,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-18T20:00:00+02:00|Eisadler Dortmund – Bulldogs de Liege",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-18T20:15:00+02:00",
@@ -14636,7 +14961,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-18T20:15:00+02:00|EHC Troisdorf – EV Duisburg",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-18T20:15:00+02:00",
@@ -14666,7 +14992,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-18T20:15:00+02:00|Dinslakener Kobras – Grefrather EG",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-19T10:00:00+02:00",
@@ -14691,7 +15018,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-19T10:00:00+02:00|EHC Troisdorf",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-19T10:00:00+02:00",
@@ -14716,15 +15044,16 @@
    ],
    "vergangen": false,
    "id": "2026-09-19T10:00:00+02:00|Herforder EV – Eisadler Dortmund",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-19T10:30:00+02:00",
    "treffpunkt": "2026-09-19T09:30:00+02:00",
    "liga": "U15 LL",
    "paarung": "Lippe Hockey Hamm – SpG Neusser EV / GSC Moers",
-   "halle": "Eissporthalle Moers",
-   "ort": "Eissporthalle Moers, Filderstraße 140, 47447 Moers",
+   "halle": "HELINET Eissportarena Hamm",
+   "ort": "HELINET Eissportarena Hamm, Karl-Koßmann-Straße 1, 59071 Hamm",
    "halle_erkannt": true,
    "system": 2,
    "besetzung": [
@@ -14741,7 +15070,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-19T10:30:00+02:00|Lippe Hockey Hamm – SpG Neusser EV / GSC Moers",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-19T12:15:00+02:00",
@@ -14766,7 +15096,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-19T12:15:00+02:00|Iserlohner EC",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-19T12:30:00+02:00",
@@ -14791,7 +15122,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-19T12:30:00+02:00|Dinslakener Kobras – Mechelen",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-19T12:30:00+02:00",
@@ -14816,7 +15148,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-19T12:30:00+02:00|EHC Essen Ruhr – Dinslakener Kobras",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-19T13:30:00+02:00",
@@ -14841,7 +15174,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-19T13:30:00+02:00|Herforder EV – EHC Troisdorf",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-19T13:30:00+02:00",
@@ -14866,7 +15200,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-19T13:30:00+02:00|Krefelder EV 1b – EV Duisburg YAYLA Krefeld",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-19T13:30:00+02:00",
@@ -14891,7 +15226,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-19T13:30:00+02:00|Eisadler Dortmund – EHC Troisdorf",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-19T13:30:00+02:00",
@@ -14916,7 +15252,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-19T13:30:00+02:00|Düsseldorfer EG – NL U18",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-19T16:00:00+02:00",
@@ -14946,7 +15283,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-19T16:00:00+02:00|EV Duisburg – SCC Adler Berlin",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-19T16:30:00+02:00",
@@ -14971,7 +15309,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-19T16:30:00+02:00|Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-19T16:30:00+02:00",
@@ -14996,7 +15335,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-19T16:30:00+02:00|Düsseldorfer EG – Kölner Junghaie",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-19T19:30:00+02:00",
@@ -15021,7 +15361,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-19T19:30:00+02:00|Iserlohner EC – ES Weißwasser",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-19T19:45:00+02:00",
@@ -15046,7 +15387,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-19T19:45:00+02:00|Kölner Junghaie – Düsseldorfer EG",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-20T08:00:00+02:00",
@@ -15071,7 +15413,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-20T08:00:00+02:00|Iserlohner EC 1b",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-20T08:00:00+02:00",
@@ -15096,7 +15439,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-20T08:00:00+02:00|Düsseldorfer EG",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-20T09:30:00+02:00",
@@ -15121,7 +15465,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-20T09:30:00+02:00|Herner EV – EV Duisburg",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-20T10:00:00+02:00",
@@ -15151,7 +15496,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-20T10:00:00+02:00|EV Duisburg – SCC Adler Berlin",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-20T10:00:00+02:00",
@@ -15176,7 +15522,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-20T10:00:00+02:00|Herforder EV – KEC \"Die Haie\" 1c",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-20T11:00:00+02:00",
@@ -15201,7 +15548,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-20T11:00:00+02:00|Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-20T12:00:00+02:00",
@@ -15226,7 +15574,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-20T12:00:00+02:00|Iserlohner EC – ES Weißwasser",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-20T12:30:00+02:00",
@@ -15251,7 +15600,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-20T12:30:00+02:00|Dinslakener Kobras – EHC Troisdorf 1b",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-20T12:30:00+02:00",
@@ -15276,7 +15626,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-20T12:30:00+02:00|Herforder EV – Lippe Hockey Hamm",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-20T13:30:00+02:00",
@@ -15301,7 +15652,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-20T13:30:00+02:00|Eisadler Dortmund – EHC Troisdorf",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-20T14:00:00+02:00",
@@ -15326,7 +15678,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-20T14:00:00+02:00|Krefelder EV 1b",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-20T14:00:00+02:00",
@@ -15351,7 +15704,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-20T14:00:00+02:00|Düsseldorfer EG – Iserlohner EC",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-20T14:45:00+02:00",
@@ -15376,7 +15730,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-20T14:45:00+02:00|Kölner Junghaie – Düsseldorfer EG",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-20T16:30:00+02:00",
@@ -15401,7 +15756,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-20T16:30:00+02:00|Herner EV – Düsseldorfer EG 1b",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-20T17:00:00+02:00",
@@ -15426,7 +15782,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-20T17:00:00+02:00|Krefelder EV – Kölner Junghaie",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-20T17:30:00+02:00",
@@ -15451,7 +15808,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-20T17:30:00+02:00|Kölner Junghaie 1b – EV Duisburg",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-20T18:30:00+02:00",
@@ -15476,7 +15834,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-20T18:30:00+02:00|EHC Essen Ruhr – Soester EG",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-20T18:30:00+02:00",
@@ -15506,7 +15865,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-20T18:30:00+02:00|ESV Grizzlys Bergkamen – Eisadler Dortmund",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-20T19:00:00+02:00",
@@ -15531,7 +15891,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-20T19:00:00+02:00|Eisadler Dortmund 1b – EHC Troisdorf",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-20T19:00:00+02:00",
@@ -15561,15 +15922,16 @@
    ],
    "vergangen": false,
    "id": "2026-09-20T19:00:00+02:00|Dinslakener Kobras – UNIS Flyers Heerenveen",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-20T20:00:00+02:00",
    "treffpunkt": "2026-09-20T19:00:00+02:00",
    "liga": "RL FS",
    "paarung": "Neusser EV – ESV Bergisch Gladbach",
-   "halle": "Eissporthalle Bergisch Gladbach",
-   "ort": "Eissporthalle Bergisch Gladbach, Saaler Mühle 100, 51429 Bergisch Gladbach",
+   "halle": "Eissporthalle Neuss",
+   "ort": "Eissporthalle Neuss, Jakob-Koch-Straße 1, 41466 Neuss",
    "halle_erkannt": true,
    "system": 3,
    "besetzung": [
@@ -15591,7 +15953,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-20T20:00:00+02:00|Neusser EV – ESV Bergisch Gladbach",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-25T19:00:00+02:00",
@@ -15616,7 +15979,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-25T19:00:00+02:00|Krefelder EV – Düsseldorfer EG",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-25T19:30:00+02:00",
@@ -15641,7 +16005,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-25T19:30:00+02:00|Lippe Hockey Hamm – Eisadler Dortmund",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-25T19:30:00+02:00",
@@ -15671,7 +16036,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-25T19:30:00+02:00|Ratinger Ice Aliens – Grefrather EG",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-25T20:00:00+02:00",
@@ -15696,7 +16062,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-25T20:00:00+02:00|Neusser EV – Ratinger Ice Aliens",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-25T20:00:00+02:00",
@@ -15721,15 +16088,16 @@
    ],
    "vergangen": false,
    "id": "2026-09-25T20:00:00+02:00|EHC Essen Ruhr – Dinslakener Kobras 1b",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-25T20:00:00+02:00",
    "treffpunkt": "2026-09-25T19:00:00+02:00",
    "liga": "RL FS",
    "paarung": "Eisadler Dortmund – ESV Bergisch Gladbach",
-   "halle": "Eissporthalle Bergisch Gladbach",
-   "ort": "Eissporthalle Bergisch Gladbach, Saaler Mühle 100, 51429 Bergisch Gladbach",
+   "halle": "Eissportzentrum Westfalen",
+   "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
    "halle_erkannt": true,
    "system": 3,
    "besetzung": [
@@ -15751,7 +16119,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-25T20:00:00+02:00|Eisadler Dortmund – ESV Bergisch Gladbach",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-25T20:15:00+02:00",
@@ -15776,15 +16145,16 @@
    ],
    "vergangen": false,
    "id": "2026-09-25T20:15:00+02:00|EHC Troisdorf – Dinslakener Kobras",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-25T20:15:00+02:00",
    "treffpunkt": "2026-09-25T19:15:00+02:00",
    "liga": "RL FS",
    "paarung": "Dinslakener Kobras – ESV Grizzlys Bergkamen",
-   "halle": "Eissporthalle Bergkamen",
-   "ort": "Eissporthalle Bergkamen, Häupenweg 29, 59192 Bergkamen",
+   "halle": "Eissporthalle Dinslaken",
+   "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
    "halle_erkannt": true,
    "system": 3,
    "besetzung": [
@@ -15806,7 +16176,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-25T20:15:00+02:00|Dinslakener Kobras – ESV Grizzlys Bergkamen",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-26T08:00:00+02:00",
@@ -15831,7 +16202,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-26T08:00:00+02:00|Herforder EV – EV Duisburg",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-26T08:30:00+02:00",
@@ -15856,7 +16228,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-26T08:30:00+02:00|Herner EV – Iserlohner EC 1b",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-26T09:30:00+02:00",
@@ -15881,7 +16254,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-26T09:30:00+02:00|Lippe Hockey Hamm",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-26T10:00:00+02:00",
@@ -15906,7 +16280,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-26T10:00:00+02:00|EHC Troisdorf 1c",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-26T10:00:00+02:00",
@@ -15931,7 +16306,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-26T10:00:00+02:00|EV Duisburg",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-26T10:30:00+02:00",
@@ -15956,7 +16332,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-26T10:30:00+02:00|ESV Grizzlys Bergkamen – ESC Darmstadt",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-26T11:00:00+02:00",
@@ -15970,7 +16347,8 @@
    "besetzung": [],
    "vergangen": false,
    "id": "2026-09-26T11:00:00+02:00|Ratinger Ice Aliens – Lippe Hockey Hamm Ratingen",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-26T11:30:00+02:00",
@@ -15995,7 +16373,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-26T11:30:00+02:00|Herforder EV",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-26T12:00:00+02:00",
@@ -16020,7 +16399,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-26T12:00:00+02:00|Düsseldorfer EG – Krefelder EV",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-26T12:15:00+02:00",
@@ -16045,7 +16425,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-26T12:15:00+02:00|Iserlohner EC – Kölner Junghaie",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-26T13:30:00+02:00",
@@ -16070,7 +16451,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-26T13:30:00+02:00|Eisadler Dortmund – ESC Darmstadt",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-26T16:00:00+02:00",
@@ -16095,7 +16477,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-26T16:00:00+02:00|EV Duisburg – EJ Kassel",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-26T16:30:00+02:00",
@@ -16120,7 +16503,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-26T16:30:00+02:00|Düsseldorfer EG – Iserlohner EC",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-26T16:45:00+02:00",
@@ -16145,7 +16529,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-26T16:45:00+02:00|Krefelder EV",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-26T17:30:00+02:00",
@@ -16170,7 +16555,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-26T17:30:00+02:00|ESV Grizzlys Bergkamen – Herforder EV",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-26T19:15:00+02:00",
@@ -16195,7 +16581,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-26T19:15:00+02:00|KEC \"Die Haie\" – FASS Berlin",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-26T19:30:00+02:00",
@@ -16220,7 +16607,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-26T19:30:00+02:00|Krefelder EV – Kölner Junghaie",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-26T19:30:00+02:00",
@@ -16245,7 +16633,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-26T19:30:00+02:00|Düsseldorfer EG – Krefelder EV",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-26T20:30:00+02:00",
@@ -16275,7 +16664,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-26T20:30:00+02:00|Neusser EV – Ratinger Ice Aliens",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-27T08:00:00+02:00",
@@ -16300,7 +16690,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-27T08:00:00+02:00|Lippe Hockey Hamm – Eisadler Dortmund",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-27T08:00:00+02:00",
@@ -16325,7 +16716,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-27T08:00:00+02:00|Düsseldorfer EG 1b",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-27T09:00:00+02:00",
@@ -16350,7 +16742,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-27T09:00:00+02:00|ESV Grizzlys Bergkamen – Ratinger Ice Aliens",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-27T09:30:00+02:00",
@@ -16375,7 +16768,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-27T09:30:00+02:00|Herner EV – EHC Troisdorf",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-27T10:00:00+02:00",
@@ -16400,7 +16794,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-27T10:00:00+02:00|EV Duisburg",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-27T10:15:00+02:00",
@@ -16425,7 +16820,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-27T10:15:00+02:00|EHC Essen Ruhr – Herforder EV",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-27T11:30:00+02:00",
@@ -16450,7 +16846,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-27T11:30:00+02:00|Kölner Junghaie 1c",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-27T12:00:00+02:00",
@@ -16475,7 +16872,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-27T12:00:00+02:00|Iserlohner EC – Düsseldorfer EG",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-27T12:30:00+02:00",
@@ -16500,7 +16898,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-27T12:30:00+02:00|Dinslakener Kobras – EHC Die Bären Neuwied",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-27T13:30:00+02:00",
@@ -16525,7 +16924,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-27T13:30:00+02:00|Eisadler Dortmund",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-27T14:00:00+02:00",
@@ -16550,7 +16950,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-27T14:00:00+02:00|Krefelder EV – Kölner Junghaie",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-27T16:45:00+02:00",
@@ -16575,7 +16976,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-27T16:45:00+02:00|Herner EV 1b – Soester EG",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-27T17:00:00+02:00",
@@ -16600,7 +17002,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-27T17:00:00+02:00|Krefelder EV – Düsseldorfer EG",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-27T17:30:00+02:00",
@@ -16625,7 +17028,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-27T17:30:00+02:00|Kölner Junghaie 1b – EJ Kassel",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-27T18:00:00+02:00",
@@ -16650,7 +17054,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-27T18:00:00+02:00|EHC Troisdorf 1b – EC Bergisch Land",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-27T18:00:00+02:00",
@@ -16675,7 +17080,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-27T18:00:00+02:00|Herforder EV – Eisadler Dortmund",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-27T18:30:00+02:00",
@@ -16705,7 +17111,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-27T18:30:00+02:00|ESV Bergkamen – Bremen",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-27T19:00:00+02:00",
@@ -16735,7 +17142,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-27T19:00:00+02:00|Dinslakener Kobras – EHC Troisdorf",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-27T19:00:00+02:00",
@@ -16760,7 +17168,8 @@
    ],
    "vergangen": false,
    "id": "2026-09-27T19:00:00+02:00|EC Bergisch Land – Dinslakener Kobras",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   },
   {
    "beginn": "2026-09-27T19:00:00+02:00",
@@ -16790,7 +17199,9 @@
    ],
    "vergangen": false,
    "id": "2026-09-27T19:00:00+02:00|Eisadler Dortmund – Harzer Falken",
-   "korrektur": null
+   "korrektur": null,
+   "manuell": false
   }
- ]
+ ],
+ "hallen_hinweise": {}
 }
