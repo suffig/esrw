@@ -8,8 +8,8 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" href="icon-192.png" type="image/png">
-<meta name="theme-color" content="#0f3d6e" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#101319" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#0a2d7a" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b1020" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Einteilungen">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -714,6 +714,34 @@
     .leiste button svg.i { padding:5px 16px; }
   }
 
+  /* Design 7: Farben aus dem ESRW-Logo (Eisblau, Rot, Schwarz-Weiss) */
+  :root { --akzent:#0d47a8; --akzent-hell:#e4ecfb; --sr:#0d47a8; --sr-bg:#e4ecfb; --held-1:#082a73; --held-2:#1a5fd0;
+          --held-schatten:0 10px 26px -8px rgba(13,71,168,.45); --rot:#d61f26; --rot-hell:#fde8e8; --bg:#eef2f9; }
+  :root[data-theme="dark"] { --akzent:#6ea3ff; --akzent-hell:#15264a; --sr:#6ea3ff; --sr-bg:#15264a; --akzent-text:#061334; --bg:#0b1020; --karte:#141a2c; --linie:#232b42; --rot:#ff6b6b; --rot-hell:#3a1a1e; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --akzent:#6ea3ff; --akzent-hell:#15264a; --sr:#6ea3ff; --sr-bg:#15264a; --akzent-text:#061334; --bg:#0b1020; --karte:#141a2c; --linie:#232b42; --rot:#ff6b6b; --rot-hell:#3a1a1e; } }
+  :root[data-akzent="blau"], :root:not([data-akzent]) { --held-1:#082a73; --held-2:#1a5fd0; }
+  .marke { display:flex; align-items:center; gap:12px; min-width:0; }
+  .marke .logo { width:44px; height:44px; border-radius:12px; box-shadow:var(--schatten); flex:none; }
+  .kopf h1 { font-size:1.25rem; }
+  .kopf h1::after { content:" ESRW"; color:var(--rot); font-weight:800; }
+  .leiste .punkt.zahl, .zaehler, .mg-untertabs .zaehler, .filterknopf .zaehler { background:var(--rot); color:#fff; }
+  .mg-untertabs button.aktiv .zaehler { background:#fff; color:var(--rot); }
+  .held { background:linear-gradient(135deg, var(--held-1) 0%, var(--held-2) 100%); position:relative; }
+  .held::after { content:""; position:absolute; right:-40px; top:-40px; width:160px; height:160px; border-radius:50%; background:radial-gradient(circle, rgba(255,255,255,.18), transparent 70%); pointer-events:none; }
+  .held .rolle { background:var(--rot); color:#fff; border:0; }
+  .rolle.HSR { background:var(--rot-hell); color:var(--rot); }
+  .hinweis.warn { border-left:4px solid var(--rot); }
+  .abo { background:linear-gradient(135deg, var(--held-1), var(--held-2)); }
+  .mg-haupt, .melde button.haupt, .modus button.aktiv, .mg-untertabs button.aktiv, .leiste button.aktiv svg.i { background:var(--akzent); }
+  .leiste button.aktiv svg.i { background:var(--akzent-hell); }
+  body::before { background:radial-gradient(60% 120% at 20% -20%, color-mix(in srgb, var(--akzent) 14%, transparent), transparent 70%), radial-gradient(40% 80% at 100% 0%, color-mix(in srgb, var(--rot) 8%, transparent), transparent 70%); }
+  .neu, .onboarding { border-color:var(--akzent); }
+  footer { text-align:center; }
+  .kopf h1 { white-space:nowrap; font-size:1.15rem; }
+  .kopf .stand { max-width:min(46vw, 240px); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:block; }
+  .profilzeile > span:last-child { display:flex; flex-direction:column; align-items:flex-end; gap:2px; flex:none; }
+  .profilzeile > span:last-child .textknopf { font-size:.85rem; padding:3px 2px; }
+
   /* Design 6: einheitliche Kartenkoepfe, Kachel-Menue, Pins, Checkliste */
   .melde h4, .abschnitt-karte h4, .radar h4, .balken h4, .hinweiskopf { display:flex; align-items:center; gap:8px; margin:0 0 8px; font-size:.86rem; font-weight:800; color:var(--text); text-transform:none; letter-spacing:0; }
   .melde h4 svg.i, .abschnitt-karte h4 svg.i, .radar h4 svg.i { width:1rem; height:1rem; padding:6px; box-sizing:content-box; border-radius:10px; background:var(--akzent-hell); color:var(--akzent); }
@@ -848,9 +876,12 @@
 </svg>
 
 <header class="kopf">
-  <div>
-    <h1 id="titel">Einteilungen</h1>
-    <p class="stand" id="stand">wird geladen …</p>
+  <div class="marke">
+    <img src="logo-96.png" alt="" width="44" height="44" class="logo">
+    <div>
+      <h1 id="titel">Einteilungen</h1>
+      <p class="stand" id="stand">wird geladen …</p>
+    </div>
   </div>
   <button type="button" class="rund versteckt" id="thema" title="Hell / Dunkel" aria-label="Hell oder Dunkel">
     <svg class="i"><use href="#i-moon"/></svg>
@@ -1078,7 +1109,6 @@
   <section id="mitglieder" class="versteckt"></section>
 
   <footer>
-    <p><a href="#einstellungen">Einstellungen</a> · <a href="#status">Diagnose</a> · <a href="#karte">Hallenkarte</a></p>
     <p id="fuss"></p>
     <p>Alle Spiele als Kalender: <a id="alle" href="feeds/alle.ics">alle.ics</a><br>
        Daten von <a id="quelle" href="https://www.esrw.de/einteilungen.html" target="_blank" rel="noopener">esrw.de</a> – dort steht, was gilt.</p>
@@ -1097,6 +1127,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=29"></script>
+<script src="app.js?v=31"></script>
 </body>
 </html>

@@ -5,7 +5,7 @@
  * Parkhaus, Zug - kommt die zuletzt gespeicherte Fassung zum Zug.
  */
 
-const VERSION = "v25";
+const VERSION = "v26";
 const CACHE = "einteilungen-" + VERSION;
 
 // Wird beim ersten Besuch gespeichert, damit die App auch dann startet,
@@ -25,6 +25,8 @@ const GRUNDGERUEST = [
   "./icon-192.png",
   "./icon-512.png",
   "./apple-touch-icon.png",
+  "./logo-96.png",
+  "./logo-256.png",
 ];
 
 self.addEventListener("install", (e) => {

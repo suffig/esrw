@@ -7,8 +7,8 @@
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#f3f4f6",
-  "theme_color": "#0f3d6e",
+  "background_color": "#0a2d7a",
+  "theme_color": "#0a2d7a",
   "shortcuts": [
     { "name": "Spielplan", "short_name": "Spielplan", "url": "./#plan", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
     { "name": "Tauschbörse", "short_name": "Tausch", "url": "./#mitglieder/tausch", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },

@@ -106,7 +106,8 @@ Braucht Python 3.8+, keine Pakete.
 | `python esrw_ical.py --dry` | nur anzeigen, nichts schreiben |
 | `python tests/test_esrw.py` | Regressionstest, ohne Netz |
 | `python geo_holen.py` | Koordinaten für neue Hallen nachtragen |
-| `python icons_bauen.py` | App-Symbole neu erzeugen |
+| `python logo_bauen.py` | App-Symbole und Kopf-Logo aus `logo_esrw_app.png` erzeugen (braucht Pillow) |
+| `python icons_bauen.py` | Fallback-Symbol (Puck) ohne Bildbibliothek |
 | `python push_schluessel.py` | VAPID-Schlüsselpaar für Web Push erzeugen (einmalig) |
 | `python push_senden.py` | Push-Nachrichten verschicken (läuft im Workflow) |
 

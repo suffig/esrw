@@ -1383,8 +1383,10 @@
   function rueckblickBild(p, knopf) {
     var s = p.statistik, c = document.createElement("canvas"); c.width = 1080; c.height = 1350;
     var x = c.getContext("2d");
-    var g = x.createLinearGradient(0, 0, 1080, 1350); g.addColorStop(0, "#0f3d6e"); g.addColorStop(1, "#1d5a99");
+    var g = x.createLinearGradient(0, 0, 1080, 1350); g.addColorStop(0, "#082a73"); g.addColorStop(1, "#1a5fd0");
     x.fillStyle = g; x.fillRect(0, 0, 1080, 1350);
+    // Logo oben rechts, wenn es geladen ist
+    try { var lg = document.querySelector(".marke .logo"); if (lg && lg.complete && lg.naturalWidth) { x.save(); x.beginPath(); x.roundRect(900, 60, 120, 120, 26); x.clip(); x.drawImage(lg, 900, 60, 120, 120); x.restore(); } } catch (e) {}
     // Puck als Deko
     x.fillStyle = "rgba(0,0,0,.25)"; x.beginPath(); x.ellipse(900, 1180, 150, 55, 0, 0, Math.PI * 2); x.fill();
     x.fillStyle = "#15161a"; x.fillRect(750, 1100, 300, 80); x.beginPath(); x.ellipse(900, 1180, 150, 55, 0, 0, Math.PI); x.fill();
@@ -1467,6 +1469,7 @@
     el("profil-hinweis").textContent = meins ? "dein Profil" : "fremdes Profil";
     el("uebernehmen").classList.toggle("versteckt", meins);
     el("uebernehmen").onclick = function () { profilSetzen(p); toast("„Start“ zeigt jetzt " + p.name, "gut"); };
+    el("wechseln").classList.toggle("versteckt", !meins);
     pinKnopf(p); kalenderSpalte();
     el("abo").href = feedUrl(p.slug, "webcal:");
     el("laden").onclick = function () { location.href = feedUrl(p.slug, location.protocol); };
@@ -2109,7 +2112,7 @@
   Promise.all([hole("daten.json"), hole("stand.json").catch(function () { return null; })])
     .then(function (b) {
       daten = b[0]; profil = profilLesen();
-      document.title = daten.titel; el("titel").textContent = daten.titel; el("quelle").href = daten.quelle;
+      document.title = daten.titel; el("titel").textContent = (daten.titel || "Einteilungen").replace(/\s*ESRW\s*$/, ""); el("quelle").href = daten.quelle;
       standAnzeigen(daten, b[1]);
       el("fuss").textContent = "Termine beginnen " + daten.vorlauf_minuten + " Minuten vor Spielbeginn, damit du rechtzeitig an der Halle bist.";
       einstellungenLaden(); filterLaden(); avatarKopf(); zeigeListe(""); ausHash(); zeigeInstallHinweis(); zeigeNeu(); filterHoehe(); netzAnzeigen();
