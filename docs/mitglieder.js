@@ -668,6 +668,7 @@ window.Mitglieder = (function () {
         profil = Object.assign({}, profil || {}, zeile);
         document.dispatchEvent(new CustomEvent("mg-profil", { detail: { slug: profil.slug, name: profil.name } }));
         meldung("Gespeichert.", "gut");
+        if (!zurueck) document.dispatchEvent(new CustomEvent("mg-neu-konto", { detail: { slug: profil.slug } }));
         if (seite) { ladeEinsaetze().catch(function () {}); kontoNeu(); return; }
         ladeEinsaetze().then(function () { rahmen(); zeigeReiter(zurueck ? "konto" : "abrechnung"); });
       });
@@ -1945,12 +1946,16 @@ window.Mitglieder = (function () {
       if (mitHallen) {
         innen.appendChild(h("h4", { text: "Hallen-Hinweise · " + spiel.halle }));
         if (!hinweise.length) innen.appendChild(h("p", { class: "meta", text: "Noch nichts eingetragen. Parken, Kabineneingang, Schlüssel, Kantine – was Kollegen wissen sollten." }));
-        hinweise.forEach(function (n) {
-          var z = h("div", { class: "kandidat" }, [
-            h("div", { text: n.text }),
+        hinweise.slice().sort(function (a, b) { return (b.offiziell ? 1 : 0) - (a.offiziell ? 1 : 0); }).forEach(function (n) {
+          function neuZeichnen() { leeren(innen); box.open = false; spielExtras(spiel, ziel, istIch); var d2 = ziel.querySelector("details"); if (d2) d2.open = true; }
+          var z = h("div", { class: "kandidat" + (n.offiziell ? " offiziell" : "") }, [
+            h("div", {}, [n.offiziell ? h("span", { class: "offiziell-badge", text: "Offiziell" }) : null, n.text]),
             h("div", { class: "meta" }, [n.name + " · " + new Date(n.angelegt).toLocaleDateString("de-DE"),
-              n.user_id === session.user.id ? h("button", { type: "button", class: "textknopf", style: "margin-left:8px", text: "löschen", onclick: function () {
-                sb.from("hallen_notizen").delete().eq("id", n.id).then(function () { cache.hallen[spiel.halle] = hinweise.filter(function (x) { return x !== n; }); leeren(innen); box.open = false; spielExtras(spiel, ziel, istIch); ziel.querySelector("details").open = true; });
+              (n.user_id === session.user.id || profil.admin) ? h("button", { type: "button", class: "textknopf", style: "margin-left:8px", text: "löschen", onclick: function () {
+                sb.from("hallen_notizen").delete().eq("id", n.id).then(function () { cache.hallen[spiel.halle] = hinweise.filter(function (x) { return x !== n; }); neuZeichnen(); });
+              } }) : null,
+              profil.admin ? h("button", { type: "button", class: "textknopf", style: "margin-left:8px", text: n.offiziell ? "nicht mehr offiziell" : "als offiziell markieren", title: "Offizielle Hinweise stehen oben, auf der Spielseite für alle und im Kalender", onclick: function () {
+                sb.from("hallen_notizen").update({ offiziell: !n.offiziell }).eq("id", n.id).then(function (r) { if (r.error) { meldung(fehlerText(r.error), "warn"); return; } n.offiziell = !n.offiziell; document.dispatchEvent(new CustomEvent("mg-betreiber")); neuZeichnen(); });
               } }) : null])
           ]);
           innen.appendChild(z);
@@ -2093,6 +2098,12 @@ window.Mitglieder = (function () {
   // ---- Admin: neue Konten freischalten
 
   function zeigeAdmin() {
+    var sbox = h("div", { class: "melde karte" }, [h("h4", {}, [ikone("i-cal"), " Spiel anlegen"]), skelett(1)]);
+    inhalt.appendChild(sbox);
+    spielAnlegenRendern(sbox);
+    var hbox = h("div", { class: "melde karte" }, [h("h4", {}, [ikone("i-pin"), " Hallen und Vereine"]), skelett(1)]);
+    inhalt.appendChild(hbox);
+    hallenPflegeRendern(hbox);
     var fbox = h("div", { class: "melde karte" }, [h("h4", {}, [ikone("i-check"), " Funktionen"]), skelett(1)]);
     inhalt.appendChild(fbox);
     funktionenRendern(fbox);
@@ -2101,6 +2112,137 @@ window.Mitglieder = (function () {
     adminRendern(box);
     inhalt.appendChild(h("p", { class: "meta mg-fuss", text: "Freigeschaltete sehen Tauschbörse, Verfügbarkeiten, Hallen-Hinweise, Kontakte und Mitfahrten. " +
       "Admins können außerdem freischalten und weitere Admins ernennen. Das eigene Admin-Recht lässt sich hier nicht entfernen – dafür SQL im Supabase-Dashboard." }));
+  }
+
+  // Admin -> Spiel anlegen: Spiele, die auf esrw.de fehlen
+  function spielManuellLoeschen(id) {
+    if (!session || !profil || !profil.admin) return Promise.resolve(false);
+    return sb.from("spiele_manuell").delete().eq("id", id).then(function (r) { if (r.error) { meldung(fehlerText(r.error), "warn"); return false; } document.dispatchEvent(new CustomEvent("mg-betreiber")); return true; });
+  }
+  function spielAnlegenRendern(box) {
+    function lokal(d) { function z(n) { return ("0" + n).slice(-2); } return d.getFullYear() + "-" + z(d.getMonth() + 1) + "-" + z(d.getDate()) + "T" + z(d.getHours()) + ":" + z(d.getMinutes()); }
+    var liga = h("input", { type: "text", placeholder: "Liga, z. B. „U15 FS“ (optional)", maxlength: "40" });
+    var heim = h("input", { type: "text", placeholder: "Heim, z. B. „EHC Essen Ruhr“", maxlength: "80" });
+    var gast = h("input", { type: "text", placeholder: "Gast (leer bei Turnier/Lehrgang)", maxlength: "80" });
+    var beginn = h("input", { type: "datetime-local" }); beginn.value = lokal(new Date(Date.now() + 7 * 86400000));
+    var treff = h("input", { type: "datetime-local" });
+    var halle = h("select", { class: "mg-select" }, [h("option", { value: "", text: "– Halle wählen –" })].concat(Object.keys(ctx.daten.adressen || {}).sort(function (a, b) { return a.localeCompare(b, "de"); }).map(function (n) { return h("option", { value: n, text: n }); })));
+    var hinweis = h("input", { type: "text", placeholder: "Hinweis für alle (optional)", maxlength: "200" });
+    var namen = ctx.daten.personen.map(function (p) { return p.name; });
+    var zeilen = [];
+    var besetzungBox = h("div");
+    function personZeile() {
+      var p = h("select", { class: "mg-select" }, [h("option", { value: "", text: "– Schiedsrichter –" })].concat(namen.map(function (n) { return h("option", { value: n, text: n }); })));
+      var r = h("select", { class: "mg-select" }, [["SR", "SR"], ["HSR", "HSR"], ["LSR", "LSR"]].map(function (x) { return h("option", { value: x[0], text: x[1] }); }));
+      zeilen.push([p, r]); besetzungBox.appendChild(h("div", { class: "mg-besetzung" }, [p, r]));
+    }
+    personZeile(); personZeile();
+    var mehr = h("button", { type: "button", class: "textknopf", text: "+ weitere Person", onclick: function () { if (zeilen.length < 4) personZeile(); } });
+    var speichern = h("button", { type: "button", class: "anfrage", text: "Spiel anlegen", onclick: function () {
+      var hm = heim.value.trim(), g = gast.value.trim();
+      if (!hm || !beginn.value) { meldung("Heim und Anstoß sind Pflicht.", "warn"); return; }
+      var bes = zeilen.map(function (z) { return z[0].value ? { name: z[0].value, rolle: z[1].value } : null; }).filter(Boolean);
+      speichern.disabled = true;
+      sb.from("spiele_manuell").insert({ beginn: new Date(beginn.value).toISOString(), treffpunkt: treff.value ? new Date(treff.value).toISOString() : null, liga: liga.value.trim() || null, paarung: g ? hm + " – " + g : hm, halle: halle.value || null, hinweis: hinweis.value.trim() || null, besetzung: bes, von: profil.name || profil.slug }).select()
+        .then(function (r) {
+          speichern.disabled = false;
+          if (r.error) { meldung(fehlerText(r.error) + (/spiele_manuell/.test(r.error.message || "") ? " – schema.sql (v13) ausführen." : ""), "warn"); return; }
+          kurzMeldung("Spiel angelegt ✓ – in der App sofort, Kalender und Push beim nächsten Lauf.", "gut");
+          document.dispatchEvent(new CustomEvent("mg-betreiber"));
+          leeren(box); box.appendChild(h("h4", {}, [ikone("i-cal"), " Spiel anlegen"])); spielAnlegenRendern(box);
+        });
+    } });
+    var form = h("div", { class: "mg-form" }, [
+      h("p", { class: "meta", style: "margin:0 0 6px", text: "Für Spiele, die auf esrw.de fehlen – Freundschaftsspiele, Turniere, Lehrgänge. Die Schiedsrichter sehen es wie jedes andere Spiel (Kalender, Push, Abrechnung)." }),
+      h("div", { class: "mg-felder mg-zwei" }, [h("label", {}, ["Liga", liga]), h("label", {}, ["Anstoß", beginn])]),
+      h("div", { class: "mg-felder mg-zwei" }, [h("label", {}, ["Heim", heim]), h("label", {}, ["Gast", gast])]),
+      h("label", { text: "Halle" }), halle,
+      h("div", { class: "mg-felder mg-zwei" }, [h("label", {}, ["Treffpunkt (leer = Vorlauf)", treff]), h("label", {}, ["Hinweis", hinweis])]),
+      h("label", { text: "Besetzung" }), besetzungBox, mehr,
+      h("div", { class: "zweit", style: "margin-top:8px" }, [speichern])
+    ]);
+    sb.from("spiele_manuell").select("id,beginn,liga,paarung,halle,besetzung").order("beginn").then(function (r) {
+      leeren(box); box.appendChild(h("h4", {}, [ikone("i-cal"), " Spiel anlegen"]));
+      box.appendChild(form);
+      var liste = (r.data || []).filter(function (z) { return new Date(z.beginn) > new Date(Date.now() - 86400000); });
+      if (liste.length) {
+        var det = h("details", { class: "tausch", style: "margin-top:10px" }, [h("summary", { text: liste.length + (liste.length === 1 ? " angelegtes Spiel" : " angelegte Spiele") })]);
+        liste.forEach(function (z) {
+          var d = new Date(z.beginn);
+          det.appendChild(h("div", { class: "sperre" }, [
+            h("span", {}, [h("b", { text: datum(d) + " " + uhr(d) + " · " + (z.liga ? z.liga + ": " : "") + z.paarung }), h("small", { class: "meta", style: "display:block", text: (z.halle || "Halle offen") + ((z.besetzung || []).length ? " · " + z.besetzung.map(function (b) { return b.name; }).join(", ") : "") })]),
+            h("button", { type: "button", class: "textknopf", text: "löschen", onclick: function () { if (!confirm("Spiel löschen?")) return; spielManuellLoeschen(z.id).then(function (ok) { if (ok) { leeren(box); box.appendChild(h("h4", {}, [ikone("i-cal"), " Spiel anlegen"])); spielAnlegenRendern(box); } }); } })
+          ]));
+        });
+        box.appendChild(det);
+      }
+    }).catch(function (e) { leeren(box); box.appendChild(h("h4", {}, [ikone("i-cal"), " Spiel anlegen"])); box.appendChild(form); box.appendChild(h("p", { class: "achtung", text: "Tabelle spiele_manuell fehlt – schema.sql (v13) ausführen. " + fehlerText(e) })); });
+  }
+
+  // Admin -> Hallen und Vereine: fehlende Zuordnungen ohne Commit nachtragen
+  function hallenPflegeRendern(box) {
+    var hallenNamen = Object.keys(ctx.daten.adressen || {}).sort(function (a, b) { return a.localeCompare(b, "de"); });
+    function hallenWahl() { return h("select", { class: "mg-select" }, [h("option", { value: "", text: "– Halle –" })].concat(hallenNamen.map(function (n) { return h("option", { value: n, text: n }); }))); }
+    function neu() { leeren(box); box.appendChild(h("h4", {}, [ikone("i-pin"), " Hallen und Vereine"])); hallenPflegeRendern(box); }
+    leeren(box); box.appendChild(h("h4", {}, [ikone("i-pin"), " Hallen und Vereine"]));
+    box.appendChild(h("p", { class: "meta", style: "margin:0 0 6px", text: "Wenn eine Halle nicht erkannt wird: Verein einer Halle zuordnen oder eine neue Halle anlegen. Wirkt in der App sofort, in Kalendern und der Hallen-Erkennung beim nächsten Lauf." }));
+    // Unerkannte Spiele: Heimverein -> Halle
+    var offen = {};
+    (ctx.daten.spiele || []).forEach(function (s) { if (s.halle_erkannt || s.vergangen) return; var heim = (s.paarung || "").split(/\s[–-]\s/)[0].trim(); if (heim) offen[heim] = (offen[heim] || 0) + 1; });
+    var offenListe = Object.keys(offen);
+    if (offenListe.length) {
+      box.appendChild(h("p", { text: "Nicht erkannt (" + offenListe.length + "):" }));
+      offenListe.forEach(function (heim) {
+        var wahl = hallenWahl();
+        box.appendChild(h("div", { class: "sperre" }, [
+          h("span", {}, [h("b", { text: heim }), h("small", { class: "meta", style: "display:block", text: offen[heim] + (offen[heim] === 1 ? " Spiel" : " Spiele") })]),
+          h("span", { style: "display:flex;gap:6px;align-items:center" }, [wahl, h("button", { type: "button", class: "anfrage", text: "Zuordnen", onclick: function () {
+            if (!wahl.value) return;
+            sb.from("vereine_extra").upsert({ verein: heim, halle: wahl.value, von: profil.name || profil.slug }, { onConflict: "verein" }).then(function (r) {
+              if (r.error) { meldung(fehlerText(r.error) + (/vereine_extra/.test(r.error.message || "") ? " – schema.sql (v13) ausführen." : ""), "warn"); return; }
+              kurzMeldung(heim + " → " + wahl.value + " ✓ (Kalender beim nächsten Lauf)", "gut"); neu();
+            });
+          } })])
+        ]));
+      });
+    } else box.appendChild(h("p", { class: "meta", text: "Alle Hallen im Spielplan erkannt ✓" }));
+    // Verein/Ort frei zuordnen
+    var verein = h("input", { type: "text", placeholder: "Verein oder Ort, wie auf esrw.de", maxlength: "80" });
+    var vwahl = hallenWahl();
+    box.appendChild(h("details", { class: "tausch", style: "margin-top:8px" }, [h("summary", { text: "Verein oder Ort einer Halle zuordnen" }),
+      h("div", { class: "mg-form" }, [verein, vwahl, h("button", { type: "button", class: "anfrage", text: "Speichern", onclick: function () {
+        var v = verein.value.trim(); if (!v || !vwahl.value) return;
+        sb.from("vereine_extra").upsert({ verein: v, halle: vwahl.value, von: profil.name || profil.slug }, { onConflict: "verein" }).then(function (r) { if (r.error) { meldung(fehlerText(r.error), "warn"); return; } kurzMeldung("Zugeordnet ✓", "gut"); neu(); });
+      } })])]));
+    // Neue Halle
+    var hname = h("input", { type: "text", placeholder: "Hallenname", maxlength: "80" });
+    var hadresse = h("input", { type: "text", placeholder: "Straße Hausnummer, PLZ Ort", autocomplete: "off" });
+    var koord = h("p", { class: "meta", text: "" }); var lat = null, lon = null;
+    var suchen = h("button", { type: "button", class: "mg-neben", text: "Adresse suchen", onclick: function () {
+      var q = hadresse.value.trim(); if (!q) return; koord.textContent = "suche …";
+      fetch("https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=de,nl,be&q=" + encodeURIComponent(q)).then(function (r) { return r.json(); }).then(function (t) {
+        if (!t.length) { koord.textContent = "nicht gefunden – genauer eingeben"; lat = lon = null; return; }
+        lat = parseFloat(t[0].lat); lon = parseFloat(t[0].lon); koord.textContent = "gefunden: " + t[0].display_name.split(",").slice(0, 3).join(",");
+      }).catch(function () { koord.textContent = "Suche nicht erreichbar"; });
+    } });
+    box.appendChild(h("details", { class: "tausch", style: "margin-top:8px" }, [h("summary", { text: "Neue Halle anlegen" }),
+      h("div", { class: "mg-form" }, [hname, h("div", { class: "mg-zeile" }, [hadresse, suchen]), koord, h("button", { type: "button", class: "anfrage", text: "Halle speichern", onclick: function () {
+        var n = hname.value.trim(); if (!n) { meldung("Name fehlt.", "warn"); return; }
+        if (lat == null) { meldung("Erst die Adresse suchen lassen – ohne Koordinaten keine Karte, kein Wetter, keine Strecke.", "warn"); return; }
+        sb.from("hallen_extra").upsert({ name: n, adresse: hadresse.value.trim(), lat: lat, lon: lon, von: profil.name || profil.slug }, { onConflict: "name" }).then(function (r) {
+          if (r.error) { meldung(fehlerText(r.error) + (/hallen_extra/.test(r.error.message || "") ? " – schema.sql (v13) ausführen." : ""), "warn"); return; }
+          kurzMeldung("Halle angelegt ✓", "gut"); document.dispatchEvent(new CustomEvent("mg-betreiber")); setTimeout(neu, 800);
+        });
+      } })])]));
+    // Bestehende Zuordnungen
+    Promise.all([sb.from("vereine_extra").select("verein,halle").order("verein"), sb.from("hallen_extra").select("name,adresse").order("name")]).then(function (r) {
+      var v = r[0].data || [], hl = r[1].data || [];
+      if (!v.length && !hl.length) return;
+      var det = h("details", { class: "tausch", style: "margin-top:8px" }, [h("summary", { text: "Eingetragen: " + hl.length + " Hallen, " + v.length + " Zuordnungen" })]);
+      hl.forEach(function (x) { det.appendChild(h("div", { class: "sperre" }, [h("span", {}, [h("b", { text: x.name }), h("small", { class: "meta", style: "display:block", text: x.adresse || "" })]), h("button", { type: "button", class: "textknopf", text: "löschen", onclick: function () { sb.from("hallen_extra").delete().eq("name", x.name).then(function () { document.dispatchEvent(new CustomEvent("mg-betreiber")); neu(); }); } })])); });
+      v.forEach(function (x) { det.appendChild(h("div", { class: "sperre" }, [h("span", {}, [h("b", { text: x.verein }), h("small", { class: "meta", style: "display:block", text: "→ " + x.halle })]), h("button", { type: "button", class: "textknopf", text: "löschen", onclick: function () { sb.from("vereine_extra").delete().eq("verein", x.verein).then(function () { neu(); }); } })])); });
+      box.appendChild(det);
+    }).catch(function () {});
   }
 
   // Admin -> Funktionen: Schalter je Funktion, Tabelle "funktionen"
@@ -2264,6 +2406,28 @@ window.Mitglieder = (function () {
       leeren(inhalt);
       if (profil.admin) inhalt.appendChild(ankuendigungFormular());
       if (!alle.length) inhalt.appendChild(h("p", { class: "leer", text: "Keine Ankündigungen." }));
+      var terminIds = alle.filter(function (a) { return a.termin && a.termin >= heute; }).map(function (a) { return a.id; });
+      var antwortenVersprechen = terminIds.length && frei() ? sb.from("termin_antworten").select("ankuendigung_id,user_id,name,antwort").in("ankuendigung_id", terminIds).then(function (r2) { return r2.data || []; }).catch(function () { return []; }) : Promise.resolve([]);
+      function antwortZeile(a, antworten) {
+        var meine = antworten.filter(function (x) { return x.ankuendigung_id === a.id && x.user_id === session.user.id; })[0];
+        var ja = antworten.filter(function (x) { return x.ankuendigung_id === a.id && x.antwort === "ja"; }), nein = antworten.filter(function (x) { return x.ankuendigung_id === a.id && x.antwort === "nein"; });
+        var zeile = h("div", { class: "termin-antwort" });
+        function setze(antwort) {
+          sb.from("termin_antworten").upsert({ ankuendigung_id: a.id, user_id: session.user.id, slug: profil.slug, name: profil.name || profil.slug, antwort: antwort, geaendert: new Date().toISOString() }, { onConflict: "ankuendigung_id,user_id" })
+            .then(function (r3) { if (r3.error) { meldung(fehlerText(r3.error) + (/termin_antworten/.test(r3.error.message || "") ? " – schema.sql (v13) ausführen." : ""), "warn"); return; } kurzMeldung(antwort === "ja" ? "Zugesagt ✓" : "Abgesagt.", "gut"); zeigeInfo(); });
+        }
+        zeile.appendChild(h("button", { type: "button", class: "anfrage" + (meine && meine.antwort === "ja" ? " aktiv" : ""), text: "Ich komme", onclick: function () { setze("ja"); } }));
+        zeile.appendChild(h("button", { type: "button", class: "anfrage" + (meine && meine.antwort === "nein" ? " aktiv" : ""), text: "Komme nicht", onclick: function () { setze("nein"); } }));
+        zeile.appendChild(h("span", { class: "meta", text: ja.length + (ja.length === 1 ? " kommt" : " kommen") + (nein.length ? " · " + nein.length + " nicht" : "") }));
+        if (profil.admin && (ja.length || nein.length)) {
+          var det = h("details", { class: "tausch", style: "width:100%;margin-top:4px" }, [h("summary", { text: "Wer hat geantwortet?" })]);
+          if (ja.length) det.appendChild(h("div", { class: "meta", text: "Kommen: " + ja.map(function (x) { return x.name; }).sort().join(", ") }));
+          if (nein.length) det.appendChild(h("div", { class: "meta", text: "Kommen nicht: " + nein.map(function (x) { return x.name; }).sort().join(", ") }));
+          zeile.appendChild(det);
+        }
+        return zeile;
+      }
+      antwortenVersprechen.then(function (antworten) {
       alle.forEach(function (a) {
         var d = new Date(a.angelegt);
         var karte = h("div", { class: "spiel karte" + (a.wichtig ? " neu" : "") }, [
@@ -2274,6 +2438,7 @@ window.Mitglieder = (function () {
           h("div", { class: "paarung", text: (a.termin ? a.termin.split("-").reverse().join(".") + " · " : "") + a.titel }),
           h("div", { style: "white-space:pre-wrap; margin-top:4px", text: a.text }),
           a.bis ? h("div", { class: "meta", text: "gilt bis " + a.bis.split("-").reverse().join(".") }) : null,
+          a.termin && a.termin >= heute && frei() ? antwortZeile(a, antworten) : null,
           profil.admin ? h("div", { class: "zweit" }, [
             h("button", { type: "button", text: "Löschen", onclick: function () {
               if (!confirm("Ankündigung löschen?")) return;
@@ -2283,6 +2448,7 @@ window.Mitglieder = (function () {
           ]) : null
         ]);
         inhalt.appendChild(karte);
+      });
       });
       gelesenMerken(alle.map(function (a) { return a.id; }));
       zaehler().then(zaehlerAnzeigen);
@@ -2498,5 +2664,5 @@ window.Mitglieder = (function () {
            sperrenAm: sperrenAm, gesuchAnlegen: gesuchAnlegen, offeneAbrechnungen: offeneAbrechnungen,
            extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat, obmann: obmann, termine: termine,
            einstellungenSpeichern: einstellungenSpeichern, radar: radar, angebotMachen: angebotMachen,
-           kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl, kontoRendern: kontoRendern, kontaktVon: kontaktVon, istAdmin: istAdmin, korrekturSpeichern: korrekturSpeichern };
+           kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl, kontoRendern: kontoRendern, kontaktVon: kontaktVon, istAdmin: istAdmin, korrekturSpeichern: korrekturSpeichern, spielManuellLoeschen: spielManuellLoeschen };
 })();

@@ -648,6 +648,40 @@
   .profilzeile > span:first-child { display:flex; align-items:center; gap:10px; min-width:0; }
   .profilzeile > span:first-child > span { min-width:0; }
   .profilzeile > span:first-child:not(:has(.avatar-gross)) { display:block; }
+  /* Anleitung (Tour) */
+  .tour { position:fixed; inset:0; z-index:60; background:rgba(8,12,24,.55); backdrop-filter:blur(4px); display:flex; align-items:flex-end; justify-content:center; padding:16px; padding-bottom:calc(16px + env(safe-area-inset-bottom)); }
+  @media (min-width: 600px) { .tour { align-items:center; } }
+  .tour-karte { position:relative; width:100%; max-width:480px; background:var(--karte); color:var(--text); border-radius:22px; padding:22px 20px 18px; box-shadow:0 20px 60px -10px rgba(0,0,0,.5); animation:tourAuf .28s ease-out; }
+  @keyframes tourAuf { from { transform:translateY(24px); opacity:0; } to { transform:none; opacity:1; } }
+  .tour-weg { position:absolute; right:12px; top:12px; }
+  .tour-symbol { width:56px; height:56px; border-radius:16px; background:var(--akzent-hell); color:var(--akzent); display:flex; align-items:center; justify-content:center; margin-bottom:10px; }
+  .tour-symbol svg.i { width:28px; height:28px; }
+  .tour-schritt { font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); }
+  .tour-karte h3 { margin:4px 0 8px; font-size:1.25rem; letter-spacing:-.01em; }
+  .tour-karte p { margin:0; color:var(--text); line-height:1.5; white-space:pre-line; }
+  .tour-aktion { margin-top:12px; }
+  .tour-aktion a, .tour-aktion button { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:99px; background:var(--akzent-hell); color:var(--akzent); font-weight:700; text-decoration:none; border:0; font-size:.9rem; cursor:pointer; }
+  .tour-fuss { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:18px; }
+  .tour-fuss .haupt { background:var(--akzent); color:#fff; border:0; border-radius:12px; padding:10px 18px; font-weight:800; cursor:pointer; }
+  .tour-fuss .mg-neben { padding:10px 14px; }
+  .tour-fuss .mg-neben[disabled] { opacity:.35; }
+  .tour-punkte { display:flex; gap:5px; }
+  .tour-punkte i { width:7px; height:7px; border-radius:50%; background:var(--linie); }
+  .tour-punkte i.aktiv { background:var(--akzent); width:18px; border-radius:4px; }
+  @media (prefers-reduced-motion: reduce) { .tour-karte { animation:none; } }
+  /* Aenderungsprotokoll */
+  .protokoll-tag { margin:14px 0 6px; font-weight:800; font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); }
+  .protokoll .zeile { display:flex; gap:10px; align-items:flex-start; padding:10px 14px; border-top:1px solid var(--linie); text-decoration:none; color:inherit; }
+  .protokoll .zeile:first-child { border-top:0; }
+  .protokoll .art { flex:none; font-size:.7rem; font-weight:800; text-transform:uppercase; letter-spacing:.06em; padding:3px 8px; border-radius:99px; background:var(--akzent-hell); color:var(--akzent); margin-top:2px; }
+  .protokoll .art.entfallen, .protokoll .art.abgesagt { background:var(--rot-hell); color:var(--rot); }
+  .protokoll .art.neu { background:#e3f5e8; color:#1a7f37; }
+  .protokoll .zeile small { display:block; color:var(--dim); }
+  .hinweis.offiziell { border-left:4px solid var(--akzent); }
+  .offiziell-badge { font-size:.68rem; font-weight:800; text-transform:uppercase; letter-spacing:.06em; background:var(--akzent); color:#fff; padding:2px 7px; border-radius:99px; margin-right:6px; vertical-align:middle; }
+  .mg-besetzung { display:grid; grid-template-columns:1fr 5.5em; gap:6px; margin-bottom:6px; }
+  .termin-antwort { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:8px; }
+  .termin-antwort button.aktiv { background:var(--akzent); color:#fff; border-color:var(--akzent); }
   /* Korrekturen vom Admin */
   .spiel.abgesagt .paarung, #spiel-kopf.abgesagt .paarung { text-decoration:line-through; opacity:.75; }
   .spiel.abgesagt { border-left:4px solid var(--rot); }
@@ -1138,6 +1172,15 @@
   </section>
 
   <!-- Diagnose -->
+  <!-- Aenderungsprotokoll -->
+  <section id="aenderungen" class="versteckt">
+    <div class="profilzeile karte">
+      <span><b>Änderungen</b><small>die letzten 14 Tage – Einteilungen, Korrekturen, angelegte Spiele</small></span>
+      <button class="textknopf zurueck" id="aenderungen-zurueck"><svg class="i"><use href="#i-back"/></svg>Zurück</button>
+    </div>
+    <div id="aenderungen-liste"></div>
+  </section>
+
   <section id="status" class="versteckt">
     <div class="profilzeile karte">
       <span><b>Diagnose</b><small>für die Fehlersuche – nichts davon geht irgendwohin</small></span>
@@ -1176,6 +1219,21 @@
 </main>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="tour versteckt" id="tour" role="dialog" aria-modal="true" aria-labelledby="tour-titel">
+  <div class="tour-karte">
+    <button type="button" class="rund tour-weg" id="tour-weg" aria-label="Anleitung schließen">✕</button>
+    <div class="tour-symbol" id="tour-symbol"></div>
+    <div class="tour-schritt" id="tour-schritt"></div>
+    <h3 id="tour-titel"></h3>
+    <p id="tour-text"></p>
+    <div class="tour-aktion" id="tour-aktion"></div>
+    <div class="tour-fuss">
+      <button type="button" class="mg-neben" id="tour-zurueck">Zurück</button>
+      <span class="tour-punkte" id="tour-punkte"></span>
+      <button type="button" class="haupt" id="tour-weiter">Weiter</button>
+    </div>
+  </div>
+</div>
 <button type="button" class="hoch versteckt" id="hoch" aria-label="Nach oben"><svg class="i"><use href="#i-back"/></svg></button>
 <nav class="leiste" id="tabs">
   <div>
@@ -1187,6 +1245,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=35"></script>
+<script src="app.js?v=36"></script>
 </body>
 </html>

@@ -281,7 +281,15 @@ verschwindet nach dem Kalender-Abo.
 **Spiele korrigieren (Schema v12)**: Admins ändern je Spiel Halle, Anstoß,
 Treffpunkt, Hinweis oder setzen „abgesagt“ – sofort in der App, beim
 nächsten Lauf auch in Feeds und Push (Tabelle `spiel_korrekturen`).
-Hallen-Erkennung: Ort hinter unbekanntem Gastverein zählt als Spielort.
+Hallen-Erkennung: Ort hinter unbekanntem Gastverein zählt als Spielort,
+wenn esrw.de ihn mit „!“ markiert.
+
+**Anleitung, Betreiber-Werkzeuge, Änderungen (Schema v13)**: Tour beim
+ersten Öffnen und nach dem Konto (Mehr → Anleitung); Admin legt Spiele an
+(`spiele_manuell`), pflegt Hallen/Vereine (`hallen_extra`, `vereine_extra`)
+und markiert Hallen-Hinweise als offiziell (stehen im Kalender); Termine
+mit Zu-/Absage (`termin_antworten`); Seite „Änderungen“ (14 Tage,
+`docs/protokoll.json`); Korrekturen werden im Änderungs-Push benannt.
 
 **Termine & Tausch abschließen**: Ankündigungen mit Datum erscheinen auf
 Start als „Nächste Termine“ (Push am Vortag); in der Tauschbörse nimmt der

@@ -1003,6 +1003,35 @@ Hallen-Erkennung: Steht hinter einem **unbekannten** Gastverein ein Ort
 Spielort (Düsseldorf). Bekannte Vereine mit Ortsnamen („Eisadler Dortmund“)
 sind davon nicht betroffen.
 
+### 10.6i Anleitung in der App, Spiele anlegen, Hallen pflegen, Termine, Änderungen (Schema v13)
+
+* **Anleitung (Tour):** Beim ersten Öffnen führt die App in sechs Schritten
+  durch Namen wählen, Kalender-Abo, App + Push, Konto und die Reiter. Nach
+  dem ersten Einrichten eines Kontos folgt eine zweite Runde (Push,
+  Abrechnung, Spielseite, Tausch, Einstellungen, Termine). Jederzeit wieder:
+  Mehr → Anleitung.
+* **Spiel anlegen (Admin):** Mehr → Admin → „Spiel anlegen“ – für Spiele,
+  Turniere oder Lehrgänge, die auf esrw.de fehlen, mit Halle, Treffpunkt,
+  Hinweis und Besetzung (bis vier Namen aus der Liste). In der App sofort,
+  in Kalender und Push beim nächsten Lauf; auf der Spielseite steht „Vom
+  Betreiber angelegt“, Admins können es dort löschen.
+* **Hallen und Vereine (Admin):** Mehr → Admin → „Hallen und Vereine“ zeigt
+  nicht erkannte Heimvereine und ordnet sie einer Halle zu; neue Hallen mit
+  Adresse (Koordinaten über die Adresssuche). Tabellen `vereine_extra` und
+  `hallen_extra` – der Workflow liest sie vor der Hallen-Erkennung.
+  Dauerhaft gehört die Zuordnung trotzdem in `venues.json`.
+* **Änderungen:** Mehr → Änderungen listet 14 Tage: neue, geänderte und
+  abgesetzte Einteilungen aller Kollegen (`docs/protokoll.json`, vom
+  Workflow gepflegt), Korrekturen und angelegte Spiele des Betreibers.
+* **Termine zu-/absagen:** Ankündigungen mit Datum bekommen „Ich komme /
+  Komme nicht“ mit Zähler; Admins sehen, wer geantwortet hat.
+* **Offizielle Hallen-Hinweise:** Admins markieren einen Hallen-Hinweis als
+  offiziell – er steht dann oben, auf der Spielseite und Hallen-Seite für
+  alle (auch ohne Login) und in der Kalender-Beschreibung.
+* **Korrektur-Push:** Ändert der Betreiber ein Spiel (oder esrw.de), meldet
+  der nächste Lauf das den Betroffenen als „Korrektur vom Betreiber: …“
+  bzw. „Geändert: …“ per Push – wie bei jeder Änderung auf esrw.de.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –
