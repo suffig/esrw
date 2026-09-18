@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 130,
+ "spiele_gesamt": 128,
  "saison": "2026/27",
  "archiv_spiele": 170,
  "rollen": {
@@ -1560,39 +1560,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-11T20:00:00+02:00",
-     "treffpunkt": "2026-09-11T19:00:00+02:00",
-     "rolle": "LSR",
-     "system": 3,
-     "liga": "RL FS",
-     "paarung": "Ratinger Ice Aliens – Herner EV",
-     "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
-     "halle": "Eissporthalle Essen-West",
-     "koordinaten": [
-      51.454179,
-      6.976731
-     ],
-     "gespann": [
-      {
-       "name": "Perlitz, Christian",
-       "slug": "perlitz-christian",
-       "rolle": "HSR"
-      },
-      {
-       "name": "Garcia Nieto, Dario",
-       "slug": "garcia-nieto-dario",
-       "rolle": "LSR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-11T20:00:00+02:00|Ratinger Ice Aliens – Herner EV",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-26T19:30:00+02:00",
      "treffpunkt": "2026-09-26T18:30:00+02:00",
      "rolle": "SR",
@@ -2191,7 +2158,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-18T20:00:00+02:00|Eisadler Dortmund – Bulldogs de Liege",
@@ -2421,39 +2388,6 @@
     "letzte": "2026-09-20"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-11T20:00:00+02:00",
-     "treffpunkt": "2026-09-11T19:00:00+02:00",
-     "rolle": "LSR",
-     "system": 3,
-     "liga": "RL FS",
-     "paarung": "Ratinger Ice Aliens – Herner EV",
-     "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
-     "halle": "Eissporthalle Essen-West",
-     "koordinaten": [
-      51.454179,
-      6.976731
-     ],
-     "gespann": [
-      {
-       "name": "Perlitz, Christian",
-       "slug": "perlitz-christian",
-       "rolle": "HSR"
-      },
-      {
-       "name": "Dietrich, Jonas",
-       "slug": "dietrich-jonas",
-       "rolle": "LSR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-11T20:00:00+02:00|Ratinger Ice Aliens – Herner EV",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-12T12:00:00+02:00",
      "treffpunkt": "2026-09-12T11:00:00+02:00",
@@ -6932,7 +6866,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-18T20:00:00+02:00|Eisadler Dortmund – Bulldogs de Liege",
@@ -7870,34 +7804,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-11T20:00:00+02:00",
-     "treffpunkt": "2026-09-11T19:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "BL FS",
-     "paarung": "Herner EV 1b – EHC Essen Ruhr",
-     "ort": "Emscher-Lippe-Halle Gelsenkirchen, Adenauerallee 118, 45891 Gelsenkirchen",
-     "halle": "Emscher-Lippe-Halle Gelsenkirchen",
-     "koordinaten": [
-      51.553483,
-      7.073102
-     ],
-     "gespann": [
-      {
-       "name": "Warnke, Christoph",
-       "slug": "warnke-christoph",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-11T20:00:00+02:00|Herner EV 1b – EHC Essen Ruhr",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-18T20:00:00+02:00",
      "treffpunkt": "2026-09-18T19:00:00+02:00",
      "rolle": "HSR",
@@ -7923,7 +7829,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-18T20:00:00+02:00|Eisadler Dortmund – Bulldogs de Liege",
@@ -8439,98 +8345,6 @@
      "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-09-27T18:30:00+02:00|ESV Bergkamen – Bremen",
-     "korrektur": null,
-     "manuell": false
-    }
-   ]
-  },
-  {
-   "slug": "perlitz-christian",
-   "name": "Perlitz, Christian",
-   "varianten": [
-    "Perlitz, Christian"
-   ],
-   "statistik": {
-    "gesamt": 2,
-    "saison": 2,
-    "rollen": {
-     "SR": 1,
-     "HSR": 1
-    },
-    "ligen": [
-     [
-      "U17 I",
-      1
-     ],
-     [
-      "RL FS",
-      1
-     ]
-    ],
-    "hallen": [
-     [
-      "Rheinlandhalle Krefeld",
-      1
-     ],
-     [
-      "Eissporthalle Essen-West",
-      1
-     ]
-    ],
-    "partner": [
-     [
-      "Giesen, Tom",
-      1
-     ],
-     [
-      "Dietrich, Jonas",
-      1
-     ],
-     [
-      "Garcia Nieto, Dario",
-      1
-     ]
-    ],
-    "je_saison": [
-     [
-      "2026/27",
-      2
-     ]
-    ],
-    "erste": "2026-09-05",
-    "letzte": "2026-09-11"
-   },
-   "spiele": [
-    {
-     "beginn": "2026-09-11T20:00:00+02:00",
-     "treffpunkt": "2026-09-11T19:00:00+02:00",
-     "rolle": "HSR",
-     "system": 3,
-     "liga": "RL FS",
-     "paarung": "Ratinger Ice Aliens – Herner EV",
-     "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
-     "halle": "Eissporthalle Essen-West",
-     "koordinaten": [
-      51.454179,
-      6.976731
-     ],
-     "gespann": [
-      {
-       "name": "Dietrich, Jonas",
-       "slug": "dietrich-jonas",
-       "rolle": "LSR"
-      },
-      {
-       "name": "Garcia Nieto, Dario",
-       "slug": "garcia-nieto-dario",
-       "rolle": "LSR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-11T20:00:00+02:00|Ratinger Ice Aliens – Herner EV",
      "korrektur": null,
      "manuell": false
     }
@@ -9796,7 +9610,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-18T20:00:00+02:00|EHC Essen Ruhr – Herner EV 1b",
@@ -12551,7 +12365,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-18T20:00:00+02:00|EHC Essen Ruhr – Herner EV 1b",
@@ -13075,34 +12889,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-11T20:00:00+02:00",
-     "treffpunkt": "2026-09-11T19:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "BL FS",
-     "paarung": "Herner EV 1b – EHC Essen Ruhr",
-     "ort": "Emscher-Lippe-Halle Gelsenkirchen, Adenauerallee 118, 45891 Gelsenkirchen",
-     "halle": "Emscher-Lippe-Halle Gelsenkirchen",
-     "koordinaten": [
-      51.553483,
-      7.073102
-     ],
-     "gespann": [
-      {
-       "name": "Müller, Lars",
-       "slug": "mueller-lars",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-11T20:00:00+02:00|Herner EV 1b – EHC Essen Ruhr",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-13T13:00:00+02:00",
      "treffpunkt": "2026-09-13T12:00:00+02:00",
      "rolle": "SR",
@@ -13622,63 +13408,6 @@
   }
  ],
  "spiele": [
-  {
-   "beginn": "2026-09-11T20:00:00+02:00",
-   "treffpunkt": "2026-09-11T19:00:00+02:00",
-   "liga": "BL FS",
-   "paarung": "Herner EV 1b – EHC Essen Ruhr",
-   "halle": "Emscher-Lippe-Halle Gelsenkirchen",
-   "ort": "Emscher-Lippe-Halle Gelsenkirchen, Adenauerallee 118, 45891 Gelsenkirchen",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Müller, Lars",
-     "rolle": "SR",
-     "slug": "mueller-lars"
-    },
-    {
-     "name": "Warnke, Christoph",
-     "rolle": "SR",
-     "slug": "warnke-christoph"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-11T20:00:00+02:00|Herner EV 1b – EHC Essen Ruhr",
-   "korrektur": null,
-   "manuell": false
-  },
-  {
-   "beginn": "2026-09-11T20:00:00+02:00",
-   "treffpunkt": "2026-09-11T19:00:00+02:00",
-   "liga": "RL FS",
-   "paarung": "Ratinger Ice Aliens – Herner EV",
-   "halle": "Eissporthalle Essen-West",
-   "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
-   "halle_erkannt": true,
-   "system": 3,
-   "besetzung": [
-    {
-     "name": "Perlitz, Christian",
-     "rolle": "HSR",
-     "slug": "perlitz-christian"
-    },
-    {
-     "name": "Dietrich, Jonas",
-     "rolle": "LSR",
-     "slug": "dietrich-jonas"
-    },
-    {
-     "name": "Garcia Nieto, Dario",
-     "rolle": "LSR",
-     "slug": "garcia-nieto-dario"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-11T20:00:00+02:00|Ratinger Ice Aliens – Herner EV",
-   "korrektur": null,
-   "manuell": false
-  },
   {
    "beginn": "2026-09-11T20:15:00+02:00",
    "treffpunkt": "2026-09-11T19:15:00+02:00",
@@ -14802,7 +14531,7 @@
      "slug": "strube-julia"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-18T20:00:00+02:00|EHC Essen Ruhr – Herner EV 1b",
    "korrektur": null,
    "manuell": false
@@ -14833,7 +14562,7 @@
      "slug": "malik-orlando"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-18T20:00:00+02:00|Eisadler Dortmund – Bulldogs de Liege",
    "korrektur": null,
    "manuell": false
