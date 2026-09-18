@@ -995,18 +995,6 @@
   "titel": "SR · U17 RL · Lippe Hockey Hamm – Eisadler Dortmund",
   "treffpunkt": "2026-09-25T18:30:00+02:00"
  },
- "48f265d5bfe7531b39ca6283adfb37ba0bdcb9ab@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-20T18:30:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "65682dbe7e5f956603d409053eb8448575de4e4c",
-  "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
-  "sequence": 0,
-  "slug": "melchert-philip",
-  "stempel": "2026-09-11T15:00:47.546895+00:00",
-  "titel": "SR · BL FS · EHC Essen Ruhr – Soester EG",
-  "treffpunkt": "2026-09-20T17:30:00+02:00"
- },
  "4cc90cc0b537e136dd68206a9ee046ce73f60003@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-26T11:30:00+02:00",
@@ -1308,15 +1296,15 @@
   "treffpunkt": "2026-09-18T19:15:00+02:00"
  },
  "667b35de8ff42b77e5d9c1b1ec28bc1b9ad6b874@esrw.de": {
-  "aenderung": null,
+  "aenderung": "Rolle (vorher LSR)",
   "beginn": "2026-09-27T18:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "d6bd79e07a6f8bb48aa10905165a99f6b5f94651",
+  "geaendert_am": "2026-09-18",
+  "inhalt": "1dd4a72897371123fd3dda15403418e13ce3830f",
   "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-  "sequence": 0,
+  "sequence": 1,
   "slug": "zynda-nick",
-  "stempel": "2026-09-17T17:30:38.957160+00:00",
-  "titel": "LSR · U20 RL · Herforder EV – Eisadler Dortmund",
+  "stempel": "2026-09-18T11:00:45.225492+00:00",
+  "titel": "SR · U20 RL · Herforder EV – Eisadler Dortmund",
   "treffpunkt": "2026-09-27T17:00:00+02:00"
  },
  "669490be8e2efec99389a5c87a6b6d2ee7e3c2a2@esrw.de": {
@@ -1666,18 +1654,6 @@
   "stempel": "2026-09-17T17:30:38.957160+00:00",
   "titel": "SR · U15 RLB · Kölner Junghaie 1b – EJ Kassel",
   "treffpunkt": "2026-09-27T16:30:00+02:00"
- },
- "7d803f6f1ac62f83213756c47d05bba04cfd22c3@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-27T18:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "51518fb0bd5ac5d015541e3e926435691ba643f9",
-  "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-  "sequence": 0,
-  "slug": "steeg-cedric",
-  "stempel": "2026-09-17T17:30:38.957160+00:00",
-  "titel": "HSR · U20 RL · Herforder EV – Eisadler Dortmund",
-  "treffpunkt": "2026-09-27T17:00:00+02:00"
  },
  "7d90b29159be4eabf6455a99b5ed32a5a42994a9@esrw.de": {
   "aenderung": null,
@@ -2940,15 +2916,15 @@
   "treffpunkt": "2026-09-26T12:30:00+02:00"
  },
  "e2833e043243ea4ba7a02ca94ce68c851980d731@esrw.de": {
-  "aenderung": null,
+  "aenderung": "Rolle (vorher LSR)",
   "beginn": "2026-09-27T18:00:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "d6bd79e07a6f8bb48aa10905165a99f6b5f94651",
+  "geaendert_am": "2026-09-18",
+  "inhalt": "1dd4a72897371123fd3dda15403418e13ce3830f",
   "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-  "sequence": 0,
+  "sequence": 1,
   "slug": "zynda-jayden",
-  "stempel": "2026-09-17T17:30:38.957160+00:00",
-  "titel": "LSR · U20 RL · Herforder EV – Eisadler Dortmund",
+  "stempel": "2026-09-18T11:00:45.225492+00:00",
+  "titel": "SR · U20 RL · Herforder EV – Eisadler Dortmund",
   "treffpunkt": "2026-09-27T17:00:00+02:00"
  },
  "e482d3efe0a103ce6d9915b10801a135bf7036e1@esrw.de": {
@@ -3022,6 +2998,18 @@
   "stempel": "2026-09-17T17:30:38.957160+00:00",
   "titel": "SR · U11 RL · EV Duisburg",
   "treffpunkt": "2026-09-27T09:00:00+02:00"
+ },
+ "e87133042bd78d3d643b657e1a7faa97f5df2a15@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-20T18:30:00+02:00",
+  "geaendert_am": null,
+  "inhalt": "65682dbe7e5f956603d409053eb8448575de4e4c",
+  "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
+  "sequence": 0,
+  "slug": "hartmann-marius",
+  "stempel": "2026-09-18T11:00:45.225492+00:00",
+  "titel": "SR · BL FS · EHC Essen Ruhr – Soester EG",
+  "treffpunkt": "2026-09-20T17:30:00+02:00"
  },
  "e87bd755e553b57b083f109415bd3df4c1711cd8@esrw.de": {
   "aenderung": null,

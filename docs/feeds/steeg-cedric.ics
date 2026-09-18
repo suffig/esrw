@@ -124,32 +124,4 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA · Iserlohner EC
  – Kölner Junghaie
 END:VALARM
 END:VEVENT
-BEGIN:VEVENT
-UID:7d803f6f1ac62f83213756c47d05bba04cfd22c3@esrw.de
-SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
-DTSTART:20260927T150000Z
-DTEND:20260927T183000Z
-SUMMARY:HSR · U20 RL · Herforder EV – Eisadler Dortmund
-DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 18:00 Uhr\nTreff
- punkt: 17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eishalle I
- m Kleinen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Zynda
- \, Jayden (LSR) / Zynda\, Nick (LSR)\n\nQuelle: https://www.esrw.de/eintei
- lungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eishalle Im Kleinen Felde\, Im Kleinen Felde\, 32051 Herford
-GEO:52.114893;8.652028
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
-  Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
- Kleinen Felde":geo:52.114893,8.652028
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - HSR · U20 RL · Herforder EV 
- – Eisadler Dortmund
-END:VALARM
-END:VEVENT
 END:VCALENDAR

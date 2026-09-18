@@ -2507,15 +2507,19 @@
     "Hartmann, Marius"
    ],
    "statistik": {
-    "gesamt": 3,
-    "saison": 3,
+    "gesamt": 4,
+    "saison": 4,
     "rollen": {
      "LSR": 1,
-     "SR": 2
+     "SR": 3
     },
     "ligen": [
      [
       "U20 RL",
+      1
+     ],
+     [
+      "BL FS",
       1
      ],
      [
@@ -2530,6 +2534,10 @@
     "hallen": [
      [
       "Eissporthalle Dinslaken",
+      1
+     ],
+     [
+      "Eissporthalle Essen-West",
       1
      ],
      [
@@ -2551,6 +2559,10 @@
       1
      ],
      [
+      "Müller, Lars",
+      1
+     ],
+     [
       "Marks, Marcel",
       1
      ],
@@ -2562,7 +2574,7 @@
     "je_saison": [
      [
       "2026/27",
-      3
+      4
      ]
     ],
     "erste": "2026-09-10",
@@ -2586,6 +2598,31 @@
       {
        "name": "Vorgeitz, Benny",
        "slug": "vorgeitz-benny",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null
+    },
+    {
+     "beginn": "2026-09-20T18:30:00+02:00",
+     "treffpunkt": "2026-09-20T17:30:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "BL FS",
+     "paarung": "EHC Essen Ruhr – Soester EG",
+     "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
+     "halle": "Eissporthalle Essen-West",
+     "koordinaten": [
+      51.454179,
+      6.976731
+     ],
+     "gespann": [
+      {
+       "name": "Müller, Lars",
+       "slug": "mueller-lars",
        "rolle": "SR"
       }
      ],
@@ -7023,10 +7060,10 @@
     "Melchert, Philipp"
    ],
    "statistik": {
-    "gesamt": 5,
-    "saison": 5,
+    "gesamt": 4,
+    "saison": 4,
     "rollen": {
-     "SR": 5
+     "SR": 4
     },
     "ligen": [
      [
@@ -7038,21 +7075,17 @@
       1
      ],
      [
-      "BL FS",
-      1
-     ],
-     [
       "U15 FS",
       1
      ]
     ],
     "hallen": [
      [
-      "Eissporthalle Essen-West",
-      3
+      "Eissportzentrum Westfalen",
+      2
      ],
      [
-      "Eissportzentrum Westfalen",
+      "Eissporthalle Essen-West",
       2
      ]
     ],
@@ -7066,10 +7099,6 @@
       1
      ],
      [
-      "Müller, Lars",
-      1
-     ],
-     [
       "Hofer, Carsten",
       1
      ]
@@ -7077,7 +7106,7 @@
     "je_saison": [
      [
       "2026/27",
-      5
+      4
      ]
     ],
     "erste": "2026-09-13",
@@ -7151,31 +7180,6 @@
       {
        "name": "Hofer, Carsten",
        "slug": "hofer-carsten",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": false,
-     "aenderung": null,
-     "hinweis": null
-    },
-    {
-     "beginn": "2026-09-20T18:30:00+02:00",
-     "treffpunkt": "2026-09-20T17:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "BL FS",
-     "paarung": "EHC Essen Ruhr – Soester EG",
-     "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
-     "halle": "Eissporthalle Essen-West",
-     "koordinaten": [
-      51.454179,
-      6.976731
-     ],
-     "gespann": [
-      {
-       "name": "Müller, Lars",
-       "slug": "mueller-lars",
        "rolle": "SR"
       }
      ],
@@ -7361,7 +7365,7 @@
       1
      ],
      [
-      "Melchert, Philip",
+      "Hartmann, Marius",
       1
      ],
      [
@@ -7449,8 +7453,8 @@
      ],
      "gespann": [
       {
-       "name": "Melchert, Philip",
-       "slug": "melchert-philip",
+       "name": "Hartmann, Marius",
+       "slug": "hartmann-marius",
        "rolle": "SR"
       }
      ],
@@ -10564,17 +10568,12 @@
     "Steeg, Cedric"
    ],
    "statistik": {
-    "gesamt": 7,
-    "saison": 7,
+    "gesamt": 6,
+    "saison": 6,
     "rollen": {
-     "HSR": 1,
      "SR": 6
     },
     "ligen": [
-     [
-      "U20 RL",
-      1
-     ],
      [
       "U17 RL",
       1
@@ -10586,16 +10585,20 @@
      [
       "U15 LL",
       1
+     ],
+     [
+      "U15 RLB",
+      1
      ]
     ],
     "hallen": [
      [
-      "Eishalle Im Kleinen Felde",
+      "Eissporthalle am Seilersee",
       3
      ],
      [
-      "Eissporthalle am Seilersee",
-      3
+      "Eishalle Im Kleinen Felde",
+      2
      ],
      [
       "HELINET Eissportarena Hamm",
@@ -10605,11 +10608,11 @@
     "partner": [
      [
       "Zynda, Jayden",
-      4
+      3
      ],
      [
       "Zynda, Nick",
-      2
+      1
      ],
      [
       "Galeske, Jonas",
@@ -10623,11 +10626,11 @@
     "je_saison": [
      [
       "2026/27",
-      7
+      6
      ]
     ],
     "erste": "2026-09-04",
-    "letzte": "2026-09-27"
+    "letzte": "2026-09-26"
    },
    "spiele": [
     {
@@ -10748,36 +10751,6 @@
        "name": "Zynda, Nick",
        "slug": "zynda-nick",
        "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": false,
-     "aenderung": null,
-     "hinweis": null
-    },
-    {
-     "beginn": "2026-09-27T18:00:00+02:00",
-     "treffpunkt": "2026-09-27T17:00:00+02:00",
-     "rolle": "HSR",
-     "system": 3,
-     "liga": "U20 RL",
-     "paarung": "Herforder EV – Eisadler Dortmund",
-     "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-     "halle": "Eishalle Im Kleinen Felde",
-     "koordinaten": [
-      52.114893,
-      8.652028
-     ],
-     "gespann": [
-      {
-       "name": "Zynda, Jayden",
-       "slug": "zynda-jayden",
-       "rolle": "LSR"
-      },
-      {
-       "name": "Zynda, Nick",
-       "slug": "zynda-nick",
-       "rolle": "LSR"
       }
      ],
      "halle_erkannt": true,
@@ -12096,8 +12069,7 @@
     "gesamt": 10,
     "saison": 10,
     "rollen": {
-     "SR": 9,
-     "LSR": 1
+     "SR": 10
     },
     "ligen": [
      [
@@ -12133,11 +12105,11 @@
     ],
     "partner": [
      [
-      "Steeg, Cedric",
-      4
+      "Zynda, Nick",
+      3
      ],
      [
-      "Zynda, Nick",
+      "Steeg, Cedric",
       3
      ],
      [
@@ -12338,8 +12310,8 @@
     {
      "beginn": "2026-09-27T18:00:00+02:00",
      "treffpunkt": "2026-09-27T17:00:00+02:00",
-     "rolle": "LSR",
-     "system": 3,
+     "rolle": "SR",
+     "system": 2,
      "liga": "U20 RL",
      "paarung": "Herforder EV – Eisadler Dortmund",
      "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
@@ -12350,19 +12322,14 @@
      ],
      "gespann": [
       {
-       "name": "Steeg, Cedric",
-       "slug": "steeg-cedric",
-       "rolle": "HSR"
-      },
-      {
        "name": "Zynda, Nick",
        "slug": "zynda-nick",
-       "rolle": "LSR"
+       "rolle": "SR"
       }
      ],
      "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Rolle (vorher LSR)",
      "hinweis": null
     }
    ]
@@ -12377,8 +12344,7 @@
     "gesamt": 6,
     "saison": 6,
     "rollen": {
-     "SR": 5,
-     "LSR": 1
+     "SR": 6
     },
     "ligen": [
      [
@@ -12423,7 +12389,7 @@
      ],
      [
       "Steeg, Cedric",
-      2
+      1
      ]
     ],
     "je_saison": [
@@ -12489,8 +12455,8 @@
     {
      "beginn": "2026-09-27T18:00:00+02:00",
      "treffpunkt": "2026-09-27T17:00:00+02:00",
-     "rolle": "LSR",
-     "system": 3,
+     "rolle": "SR",
+     "system": 2,
      "liga": "U20 RL",
      "paarung": "Herforder EV – Eisadler Dortmund",
      "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
@@ -12501,19 +12467,14 @@
      ],
      "gespann": [
       {
-       "name": "Steeg, Cedric",
-       "slug": "steeg-cedric",
-       "rolle": "HSR"
-      },
-      {
        "name": "Zynda, Jayden",
        "slug": "zynda-jayden",
-       "rolle": "LSR"
+       "rolle": "SR"
       }
      ],
      "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Rolle (vorher LSR)",
      "hinweis": null
     }
    ]
@@ -14406,9 +14367,9 @@
    "system": 2,
    "besetzung": [
     {
-     "name": "Melchert, Philip",
+     "name": "Hartmann, Marius",
      "rolle": "SR",
-     "slug": "melchert-philip"
+     "slug": "hartmann-marius"
     },
     {
      "name": "Müller, Lars",
@@ -15457,21 +15418,16 @@
    "halle": "Eishalle Im Kleinen Felde",
    "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
    "halle_erkannt": true,
-   "system": 3,
+   "system": 2,
    "besetzung": [
     {
-     "name": "Steeg, Cedric",
-     "rolle": "HSR",
-     "slug": "steeg-cedric"
-    },
-    {
      "name": "Zynda, Jayden",
-     "rolle": "LSR",
+     "rolle": "SR",
      "slug": "zynda-jayden"
     },
     {
      "name": "Zynda, Nick",
-     "rolle": "LSR",
+     "rolle": "SR",
      "slug": "zynda-nick"
     }
    ],

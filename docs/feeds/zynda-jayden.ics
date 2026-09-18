@@ -169,17 +169,17 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:e2833e043243ea4ba7a02ca94ce68c851980d731@esrw.de
-SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
+SEQUENCE:1
+DTSTAMP:20260918T110045Z
+LAST-MODIFIED:20260918T110045Z
 DTSTART:20260927T150000Z
 DTEND:20260927T183000Z
-SUMMARY:LSR · U20 RL · Herforder EV – Eisadler Dortmund
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
-  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eishalle Im Klei
- nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Steeg\, Ced
- ric (HSR) / Zynda\, Nick (LSR)\n\nQuelle: https://www.esrw.de/einteilungen
- .html
+SUMMARY:⚠ SR · U20 RL · Herforder EV – Eisadler Dortmund
+DESCRIPTION:Geändert: Rolle (vorher LSR)\n\nRolle: Schiedsrichter (SR)\nSp
+ ielbeginn: 18:00 Uhr\nTreffpunkt: 17:00 Uhr (60 Min vor Spielbeginn)\nLiga
+ : U20 RL\nHalle: Eishalle Im Kleinen Felde\nAdresse: Im Kleinen Felde\, 32
+ 051 Herford\nGespann: Zynda\, Nick\n\nQuelle: https://www.esrw.de/einteilu
+ ngen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -191,8 +191,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL · Herforder EV 
- – Eisadler Dortmund
+DESCRIPTION:In einer Stunde an der Halle - SR · U20 RL · Herforder EV –
+  Eisadler Dortmund
 END:VALARM
 END:VEVENT
 END:VCALENDAR
