@@ -679,6 +679,10 @@
     },
     "ligen": [
      [
+      "U7 Rot",
+      1
+     ],
+     [
       "U15 RLB",
       1
      ],
@@ -689,10 +693,6 @@
      [
       "U13 RLB",
       1
-     ],
-     [
-      "U7 Rot",
-      1
      ]
     ],
     "hallen": [
@@ -701,15 +701,19 @@
       2
      ],
      [
-      "Kölnarena 2",
+      "Eishalle Brehmstraße",
       1
      ],
      [
-      "Eishalle Brehmstraße",
+      "Kölnarena 2",
       1
      ]
     ],
     "partner": [
+     [
+      "Klemm, Julian",
+      1
+     ],
      [
       "Garcia Nieto, Dario",
       1
@@ -720,10 +724,6 @@
      ],
      [
       "Starke, Matthias",
-      1
-     ],
-     [
-      "Klemm, Julian",
       1
      ]
     ],
@@ -5062,11 +5062,11 @@
       1
      ],
      [
-      "U15 LL",
+      "U7 Rot",
       1
      ],
      [
-      "U11 LL Lila",
+      "U15 LL",
       1
      ]
     ],
@@ -5076,11 +5076,11 @@
       2
      ],
      [
-      "HELINET Eissportarena Hamm",
+      "Eishalle Brehmstraße",
       1
      ],
      [
-      "Eishalle Brehmstraße",
+      "HELINET Eissportarena Hamm",
       1
      ]
     ],
@@ -5090,15 +5090,15 @@
       1
      ],
      [
+      "Bocklemünd, Cid",
+      1
+     ],
+     [
       "Honselmann, Tom (N)",
       1
      ],
      [
       "Budzynski, Mika (N)",
-      1
-     ],
-     [
-      "Bocklemünd, Cid",
       1
      ]
     ],
@@ -7703,11 +7703,11 @@
     },
     "ligen": [
      [
-      "U13 RLA",
+      "U15 RLA",
       2
      ],
      [
-      "U15 RLA",
+      "U13 RLA",
       2
      ],
      [
@@ -7751,11 +7751,11 @@
       1
      ],
      [
-      "Krawinkel, Markus",
+      "Steeg, Cedric",
       1
      ],
      [
-      "Quint, Sascha",
+      "Schmidt, Waldemar",
       1
      ]
     ],
@@ -8306,10 +8306,14 @@
     "gesamt": 3,
     "saison": 3,
     "rollen": {
-     "SR": 2,
-     "HSR": 1
+     "HSR": 1,
+     "SR": 2
     },
     "ligen": [
+     [
+      "U20 FS",
+      1
+     ],
      [
       "U17 I",
       1
@@ -8317,13 +8321,13 @@
      [
       "U15 RLA",
       1
-     ],
-     [
-      "U20 FS",
-      1
      ]
     ],
     "hallen": [
+     [
+      "Eissporthalle Neuss",
+      1
+     ],
      [
       "Eishalle Brehmstraße",
       1
@@ -8331,27 +8335,23 @@
      [
       "Eissporthalle am Seilersee",
       1
-     ],
-     [
-      "Eissporthalle Neuss",
-      1
      ]
     ],
     "partner": [
-     [
-      "Stocker, Quirin",
-      1
-     ],
-     [
-      "Licau, Alexander",
-      1
-     ],
      [
       "Solbach, Carsten",
       1
      ],
      [
       "Schöche, Gian-Carlo",
+      1
+     ],
+     [
+      "Stocker, Quirin",
+      1
+     ],
+     [
+      "Licau, Alexander",
       1
      ]
     ],
@@ -9823,11 +9823,11 @@
       2
      ],
      [
-      "Steven, Patrick",
+      "Priebsch, Jan Philipp",
       1
      ],
      [
-      "Garcia Nieto, Dario",
+      "Solbach, Carsten",
       1
      ]
     ],
@@ -10431,10 +10431,14 @@
     "gesamt": 3,
     "saison": 3,
     "rollen": {
-     "SR": 2,
-     "LSR": 1
+     "LSR": 1,
+     "SR": 2
     },
     "ligen": [
+     [
+      "U20 FS",
+      1
+     ],
      [
       "U15 LL",
       1
@@ -10442,13 +10446,13 @@
      [
       "U9 RL",
       1
-     ],
-     [
-      "U20 FS",
-      1
      ]
     ],
     "hallen": [
+     [
+      "Eissporthalle Neuss",
+      1
+     ],
      [
       "Eissporthalle Essen-West",
       1
@@ -10456,27 +10460,23 @@
      [
       "ICEDOME Troisdorf",
       1
-     ],
-     [
-      "Eissporthalle Neuss",
-      1
      ]
     ],
     "partner": [
-     [
-      "Melchert, Philip",
-      1
-     ],
-     [
-      "Schlüter, Thomas",
-      1
-     ],
      [
       "Priebsch, Jan Philipp",
       1
      ],
      [
       "Schöche, Gian-Carlo",
+      1
+     ],
+     [
+      "Melchert, Philip",
+      1
+     ],
+     [
+      "Schlüter, Thomas",
       1
      ]
     ],
@@ -10848,10 +10848,14 @@
     "gesamt": 7,
     "saison": 7,
     "rollen": {
-     "SR": 6,
-     "HSR": 1
+     "HSR": 1,
+     "SR": 6
     },
     "ligen": [
+     [
+      "RL FS",
+      1
+     ],
      [
       "U17 RL",
       1
@@ -10862,10 +10866,6 @@
      ],
      [
       "U15 LL",
-      1
-     ],
-     [
-      "U15 RLB",
       1
      ]
     ],
@@ -10889,19 +10889,19 @@
       3
      ],
      [
+      "Schmidt, Waldemar",
+      1
+     ],
+     [
+      "Pacalaj, Erik",
+      1
+     ],
+     [
       "Zynda, Nick",
       1
      ],
      [
       "Galeske, Jonas",
-      1
-     ],
-     [
-      "Garbsch, René",
-      1
-     ],
-     [
-      "Schmidt, Waldemar",
       1
      ]
     ],
@@ -11968,11 +11968,11 @@
       1
      ],
      [
-      "PreZero Rheinlandhalle Duisburg",
+      "Eishalle Brehmstraße",
       1
      ],
      [
-      "Eishalle Brehmstraße",
+      "PreZero Rheinlandhalle Duisburg",
       1
      ]
     ],
@@ -11986,11 +11986,11 @@
       1
      ],
      [
-      "Marks, Marcel",
+      "Reuter, Rick",
       1
      ],
      [
-      "Reuter, Rick",
+      "Marks, Marcel",
       1
      ]
     ],
