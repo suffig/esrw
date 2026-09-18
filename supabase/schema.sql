@@ -647,3 +647,82 @@ create policy "Admin legt an"     on public.spiel_korrekturen for insert to auth
 create policy "Admin loescht"     on public.spiel_korrekturen for delete to authenticated using (public.ist_admin());
 grant select on public.spiel_korrekturen to anon, authenticated;
 grant insert, update, delete on public.spiel_korrekturen to authenticated;
+
+-- ======================================================================
+-- v13: Spiele anlegen, Hallen/Vereine pflegen, Termin-Antworten,
+--      offizielle Hallen-Hinweise
+-- ======================================================================
+-- Spiele, die auf esrw.de fehlen (Freundschaftsspiele, Turniere, Lehrgaenge)
+create table if not exists public.spiele_manuell (
+  id          uuid primary key default gen_random_uuid(),
+  beginn      timestamptz not null,
+  treffpunkt  timestamptz,
+  liga        text,
+  paarung     text not null,
+  halle       text,
+  hinweis     text,
+  besetzung   jsonb not null default '[]',   -- [{"name": "Nachname, Vorname", "rolle": "SR|HSR|LSR"}]
+  von         text,
+  angelegt    timestamptz not null default now()
+);
+alter table public.spiele_manuell enable row level security;
+drop policy if exists "manuelle Spiele lesen" on public.spiele_manuell;
+drop policy if exists "Admin legt Spiele an"  on public.spiele_manuell;
+drop policy if exists "Admin aendert Spiele"  on public.spiele_manuell;
+drop policy if exists "Admin loescht Spiele"  on public.spiele_manuell;
+create policy "manuelle Spiele lesen" on public.spiele_manuell for select to anon, authenticated using (true);
+create policy "Admin legt Spiele an"  on public.spiele_manuell for insert to authenticated with check (public.ist_admin());
+create policy "Admin aendert Spiele"  on public.spiele_manuell for update to authenticated using (public.ist_admin()) with check (public.ist_admin());
+create policy "Admin loescht Spiele"  on public.spiele_manuell for delete to authenticated using (public.ist_admin());
+
+-- Hallen und Vereine, die in venues.json fehlen
+create table if not exists public.hallen_extra (
+  name      text primary key,
+  adresse   text,
+  lat       double precision,
+  lon       double precision,
+  von       text,
+  angelegt  timestamptz not null default now()
+);
+create table if not exists public.vereine_extra (
+  verein    text primary key,               -- Vereins- oder Ortsname, wie er auf esrw.de steht
+  halle     text not null,                  -- Hallenname (venues.json oder hallen_extra)
+  von       text,
+  angelegt  timestamptz not null default now()
+);
+alter table public.hallen_extra  enable row level security;
+alter table public.vereine_extra enable row level security;
+drop policy if exists "Hallen lesen"        on public.hallen_extra;
+drop policy if exists "Admin pflegt Hallen" on public.hallen_extra;
+drop policy if exists "Vereine lesen"        on public.vereine_extra;
+drop policy if exists "Admin pflegt Vereine" on public.vereine_extra;
+create policy "Hallen lesen"        on public.hallen_extra  for select to anon, authenticated using (true);
+create policy "Admin pflegt Hallen" on public.hallen_extra  for all to authenticated using (public.ist_admin()) with check (public.ist_admin());
+create policy "Vereine lesen"        on public.vereine_extra for select to anon, authenticated using (true);
+create policy "Admin pflegt Vereine" on public.vereine_extra for all to authenticated using (public.ist_admin()) with check (public.ist_admin());
+
+-- Zu-/Absagen zu Terminen (Ankuendigungen mit Datum)
+create table if not exists public.termin_antworten (
+  id               uuid primary key default gen_random_uuid(),
+  ankuendigung_id  uuid not null references public.ankuendigungen (id) on delete cascade,
+  user_id          uuid not null references auth.users (id) on delete cascade,
+  slug             text,
+  name             text,
+  antwort          text not null check (antwort in ('ja', 'nein')),
+  geaendert        timestamptz not null default now(),
+  unique (ankuendigung_id, user_id)
+);
+alter table public.termin_antworten enable row level security;
+drop policy if exists "Antworten lesen"    on public.termin_antworten;
+drop policy if exists "eigene Antwort"     on public.termin_antworten;
+create policy "Antworten lesen" on public.termin_antworten for select to authenticated using (public.ist_freigeschaltet());
+create policy "eigene Antwort"  on public.termin_antworten for all to authenticated using (auth.uid() = user_id) with check (auth.uid() = user_id and public.ist_freigeschaltet());
+
+-- Offizielle Hallen-Hinweise: vom Admin markiert, stehen oben und im Kalender
+alter table public.hallen_notizen add column if not exists offiziell boolean not null default false;
+drop policy if exists "offizielle Hinweise lesen"  on public.hallen_notizen;
+drop policy if exists "Admin markiert Hinweise"    on public.hallen_notizen;
+drop policy if exists "Admin loescht Hinweise"     on public.hallen_notizen;
+create policy "offizielle Hinweise lesen" on public.hallen_notizen for select to anon using (offiziell);
+create policy "Admin markiert Hinweise"   on public.hallen_notizen for update to authenticated using (public.ist_admin()) with check (public.ist_admin());
+create policy "Admin loescht Hinweise"    on public.hallen_notizen for delete to authenticated using (public.ist_admin());

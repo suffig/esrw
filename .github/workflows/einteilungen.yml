@@ -66,6 +66,9 @@ jobs:
         env:
           # Optional: Repository -> Settings -> Secrets -> Actions -> NTFY_TOPIC
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          # Korrekturen, manuelle Spiele, Hallen vom Betreiber (Supabase)
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
           # Legt bei Aenderungen eine Meldung fuer den naechsten Schritt ab
           MELDUNG_DATEI: meldung.txt
         run: python esrw_ical.py

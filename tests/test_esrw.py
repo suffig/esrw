@@ -84,6 +84,10 @@ def test_hallen():
          "Eishalle Brehmstraße", "unbekannter Gast: Ort steht hinten dran"),
         ("RL FS: Ratinger Ice Aliens - Chiefs Leuwen",
          "Eissporthalle Ratingen", "unbekannter Gast ohne Ort: Heimverein"),
+        ("RL FS: Neusser EV - ESV Bergisch Gladbach",
+         "Eissporthalle Neuss", "unbekannter Gast mit Ortsnamen, ohne '!': Heimverein"),
+        ("RL FS: Dinslakener Kobras - ESV Grizzlys Bergkamen",
+         "Eissporthalle Dinslaken", "Ortsname im Gastverein ist kein Spielort"),
     ]
     for begegnung, halle_soll, warum in erwartet:
         halle, heim, gast, erkannt = E.finde_halle(begegnung, venues)
