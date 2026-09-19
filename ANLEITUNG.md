@@ -1146,6 +1146,11 @@ sind davon nicht betroffen.
   danach nur noch „E-Mail erneut“. Kommende Spiele zeigen „kommt“.
   Intern laufen beide Spalten (`bezahlt`, `abgerechnet`) gleich, damit
   Push-Erinnerung und alte Daten weiter passen.
+* **Abrechnungs-Leiste:** Statt drei Klapp-Zeilen gibt es eine Leiste
+  „Steuerjahre · Abrechnungsart · Werkzeuge · + Spiel · Regeln“; ein Tipp
+  öffnet genau ein Panel darunter (Saison-Details und Steuerjahre mit
+  CSV/Jahresblatt, km-Modell und Verpflegung, Strecken/Vergütung/CSV/
+  Fahrtenbuch/Drucken, Spiel selbst eintragen, Rechenregeln).
 * **Schnellzugriff:** Unter der Kopfkarte auf Start eine wischbare Reihe
   Knöpfe – Spielplan, Abrechnung, Archiv, Mitfahren, Änderungen, Tausch,
   Statistik, Einstellungen (nur was eingeschaltet ist). Abschaltbar unter

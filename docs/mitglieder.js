@@ -1081,7 +1081,17 @@ window.Mitglieder = (function () {
       saldo.appendChild(k);
     });
     var neu = h("div", { class: "mg-summenblock" }, [saldo]);
-    var det = h("details", { class: "mg-klapp" }, [h("summary", { text: "Saison " + (gewaehlteSaison || "") + " im Detail und Steuerjahre" })]);
+    alt.parentNode.replaceChild(neu, alt);
+    // Offenes Detail-Panel mitziehen
+    var panel = wurzel.querySelector(".mg-panel");
+    if (panel && abrechnungPanel === "detail") { leeren(panel); panel.appendChild(summenDetails()); }
+  }
+  function summenDetails() {
+    var spiele = saisonSpiele(gewaehlteSaison), alle = alleSpiele(), sS = summen(spiele);
+    var jahre = [];
+    spiele.forEach(function (sp) { var j = new Date(sp.beginn).getFullYear(); if (jahre.indexOf(j) < 0) jahre.push(j); });
+    if (!jahre.length) jahre.push(new Date().getFullYear());
+    var det = h("div", {});
     det.appendChild(summenBox("Saison " + (gewaehlteSaison || ""), sS));
     jahre.sort().reverse().forEach(function (jahr) {
       var monate = [];
@@ -1097,8 +1107,7 @@ window.Mitglieder = (function () {
       ]));
       det.appendChild(jahrBox);
     });
-    neu.appendChild(det);
-    alt.parentNode.replaceChild(neu, alt);
+    return det;
   }
 
   function aktualisiereZeile(spiel) {
@@ -1238,10 +1247,11 @@ window.Mitglieder = (function () {
         kurzMeldung(vWahl.value === "aus" ? "Verpflegung aus – Beträge entfernt." : n + " Spiele neu berechnet.", "gut");
       });
     });
-    var det = h("details", { class: "mg-klapp" }, [h("summary", { text: "Abrechnungsart: " + (einfach ? "einfache Strecke" : "hin und zurück") + (modus !== "aus" ? " · Verpflegung " + (modus === "immer" ? "immer" : "ab 8 Std.") : "") }),
-      h("div", { class: "mg-form" }, [h("label", { text: "Kilometer" }), kmWahl, h("label", { text: "Verpflegungsmehraufwand (steuerlich: 14 € bei mehr als 8 Std. Abwesenheit, Fahrzeit zählt mit)" }), vWahl,
-        h("p", { class: "meta", text: "Sätze ändern: Einstellungen → Profil. Ob das für dich passt, sagt dir dein Steuerberater." })])]);
-    return det;
+    return h("div", { class: "mg-form" }, [
+      h("p", { class: "meta", style: "margin:0 0 4px", text: "Zurzeit: " + (einfach ? "einfache Strecke" : "hin und zurück") + (modus !== "aus" ? " · Verpflegung " + (modus === "immer" ? "immer 14 €" : "ab 8 Std.") : " · keine Verpflegung") }),
+      h("label", { text: "Kilometer" }), kmWahl,
+      h("label", { text: "Verpflegungsmehraufwand (steuerlich: 14 € bei mehr als 8 Std. Abwesenheit, Fahrzeit zählt mit)" }), vWahl,
+      h("p", { class: "meta", text: "Sätze ändern: Einstellungen → Profil. Ob das für dich passt, sagt dir dein Steuerberater." })]);
   }
 
   // Spiel selbst eintragen: nur fuer dich und die Abrechnung (privat)
@@ -1260,14 +1270,14 @@ window.Mitglieder = (function () {
       einsaetze[kennung] = { privat: true };
       speichereEinsatz(sp, { privat: true, km: v && v.art === "route" ? v.km : null, verguetung: g, verpflegung: verpflegungVorschlag(sp) });
       kurzMeldung("Eingetragen ✓ – nur für dich und deine Abrechnung.", "gut");
-      setTimeout(rendereAbrechnung, 700);
+      abrechnungPanel = null; setTimeout(rendereAbrechnung, 700);
     } });
     return h("div", { class: "melde karte", style: "margin:8px 0" }, [h("h4", { text: "Spiel selbst eintragen" }),
       h("p", { class: "meta", text: "Für Spiele, die nicht auf esrw.de stehen (andere Verbände, Turniere, Freundschaftsspiele). Nur du siehst es – in deiner Abrechnung, mit km, Vergütung und Verpflegung." }),
       h("div", { class: "mg-form" }, [h("div", { class: "mg-felder mg-zwei" }, [h("label", {}, ["Datum und Anstoß", beginn]), h("label", {}, ["Liga", liga])]), paarung, halle, rolle, h("div", { class: "zweit" }, [speichern, h("button", { type: "button", class: "mg-neben", text: "Abbrechen", onclick: zurueck })])])]);
   }
 
-  var abrechnungZiel = null;
+  var abrechnungZiel = null, abrechnungPanel = null;
   function abrechnungSprung(kennung) { abrechnungZiel = kennung; nurOffene = false; }
   function rendereAbrechnung() {
     leeren(inhalt);
@@ -1284,7 +1294,6 @@ window.Mitglieder = (function () {
     inhalt.appendChild(h("div", { class: "mg-abrechnung-kopf" }, [saisonWahl, chips]));
 
     inhalt.appendChild(h("div", { class: "mg-summenblock" }));
-    inhalt.appendChild(abrechnungEinstellungen(spiele));
 
     var hallen = []; spiele.forEach(function (sp) { if (sp.halle && hallen.indexOf(sp.halle) < 0) hallen.push(sp.halle); });
     var strecken = h("button", { type: "button", text: "Strecken berechnen", onclick: function () {
@@ -1314,13 +1323,37 @@ window.Mitglieder = (function () {
       meldung(n + " Spiele nach Gebührenordnung eingetragen" + (offen ? ", " + offen + " ohne Zuordnung (bitte von Hand)" : "") + ".", n ? "gut" : "warn");
       rendereAbrechnung();
     } });
-    inhalt.appendChild(h("details", { class: "mg-klapp" }, [h("summary", { text: "Werkzeuge: Strecken, Vergütung, CSV, Fahrtenbuch, Drucken" }),
-      h("p", { class: "meta", style: "margin:0 0 6px", text: "Vergangene Spiele bekommen km und Vergütung von selbst – die Knöpfe füllen nur, was noch fehlt." }),
-      h("div", { class: "zweit" }, [strecken, gebuehr,
-        h("button", { type: "button", text: "CSV", onclick: function () { csvExport(spiele); } }),
-        h("button", { type: "button", text: "Fahrtenbuch", onclick: function () { zeigeFahrtenbuch(); } }),
-        h("button", { type: "button", text: "Drucken", onclick: function () { window.print(); } }),
-        h("button", { type: "button", text: "Spiel eintragen", onclick: function () { var alt = inhalt.querySelector(".spiel-eintragen"); if (alt) { alt.remove(); return; } var f = spielEintragenFormular(function () { f.remove(); }); f.classList.add("spiel-eintragen"); inhalt.querySelector(".mg-summenblock").parentNode.insertBefore(f, inhalt.querySelector(".mg-summenblock").nextSibling); f.scrollIntoView({ block: "center", behavior: "smooth" }); } })])]));
+    // Eine Leiste, ein Panel: Steuerjahre, Abrechnungsart, Werkzeuge, Spiel eintragen, Regeln
+    var panelInhalt = {
+      detail: function () { return summenDetails(); },
+      art: function () { return abrechnungEinstellungen(spiele); },
+      werkzeuge: function () {
+        return h("div", {}, [
+          h("p", { class: "meta", style: "margin:0 0 8px", text: "Vergangene Spiele bekommen km und Vergütung von selbst – die Knöpfe füllen nur, was noch fehlt." }),
+          h("div", { class: "zweit" }, [strecken, gebuehr,
+            h("button", { type: "button", text: "CSV der Saison", onclick: function () { csvExport(spiele); } }),
+            h("button", { type: "button", text: "Fahrtenbuch", onclick: function () { zeigeFahrtenbuch(); } }),
+            h("button", { type: "button", text: "Drucken", onclick: function () { window.print(); } })])]);
+      },
+      eintragen: function () { return spielEintragenFormular(function () { abrechnungPanel = null; rendereAbrechnung(); }); },
+      regeln: function () {
+        return h("p", { class: "meta mg-fuss", style: "margin:0", text:
+          "km = einfache Strecke Wohnung → Halle (Straßenkilometer, wenn berechnet; sonst Luftlinie × 1,3). " +
+          "Vergütung nach ESRW-Gebührenordnung (" + ((gebuehren && gebuehren.stand) || "?") + "): " +
+          "+20 % bei Spielbeginn bis 09:14 oder ab 21:46 Uhr, Zuschlag für landesverbandsübergreifenden " +
+          "Einsatz in RL West / Frauen 2. Liga nur auf Anforderung, 50 % bei Ausfall vor Ort. Verpflegung 14 € ab 8 Std. Abwesenheit. Das ist eine " +
+          "Aufstellung für dich oder deinen Steuerberater; was davon steuerlich zählt, sagt sie nicht." });
+      }
+    };
+    var leiste = h("div", { class: "mg-leiste" });
+    [["detail", "Steuerjahre"], ["art", "Abrechnungsart"], ["werkzeuge", "Werkzeuge"], ["eintragen", "+ Spiel"], ["regeln", "Regeln"]].forEach(function (p) {
+      leiste.appendChild(h("button", { type: "button", class: "filterknopf" + (abrechnungPanel === p[0] ? " aktiv" : ""), text: p[1], onclick: function () { abrechnungPanel = abrechnungPanel === p[0] ? null : p[0]; rendereAbrechnung(); } }));
+    });
+    inhalt.appendChild(leiste);
+    if (abrechnungPanel && panelInhalt[abrechnungPanel]) {
+      var panel = h("div", { class: "melde karte mg-panel" }, [panelInhalt[abrechnungPanel]()]);
+      inhalt.appendChild(panel);
+    }
 
     var liste = spiele;
     if (nurOffene) liste = spiele.filter(function (sp) {
@@ -1363,13 +1396,6 @@ window.Mitglieder = (function () {
       }
       inhalt.appendChild(eintrag(sp));
     });
-
-    inhalt.appendChild(h("details", { class: "mg-klapp" }, [h("summary", { text: "Wie wird gerechnet?" }), h("p", { class: "meta mg-fuss", text:
-      "km = einfache Strecke Wohnung → Halle (Straßenkilometer, wenn berechnet; sonst Luftlinie × 1,3). " +
-      "Vergütung nach ESRW-Gebührenordnung (" + ((gebuehren && gebuehren.stand) || "?") + "): " +
-      "+20 % bei Spielbeginn bis 09:14 oder ab 21:46 Uhr, Zuschlag für landesverbandsübergreifenden " +
-      "Einsatz in RL West / Frauen 2. Liga nur auf Anforderung, 50 % bei Ausfall vor Ort. Das ist eine " +
-      "Aufstellung für dich oder deinen Steuerberater; was davon steuerlich zählt, sagt sie nicht." })]));
 
     aktualisiereSummen();
     if (abrechnungZiel) {

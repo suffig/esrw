@@ -290,6 +290,12 @@
   .mg-monat > span:first-child small { color:var(--dim); font-weight:500; }
   .mg-monat-aktion .anfrage { padding:7px 12px; }
   .mg-abrechnung-kopf { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:10px; }
+  .mg-leiste { display:flex; gap:6px; overflow-x:auto; padding:2px 0 6px; margin:10px 0 4px; scrollbar-width:none; }
+  .mg-leiste::-webkit-scrollbar { display:none; }
+  .mg-leiste .filterknopf { flex:none; }
+  .mg-panel { margin:4px 0 10px; }
+  .mg-panel .abschnitt { margin-top:4px; }
+  .mg-panel .spiel-eintragen, .mg-panel .melde.karte { margin:0; padding:0; box-shadow:none; background:transparent; }
   .mg-abrechnung-kopf .mg-select { flex:1 1 160px; margin:0; padding:9px 10px; border-radius:10px; border:1px solid var(--linie); background:var(--karte); color:var(--text); font-size:.9rem; font-family:inherit; }
   .mg-abrechnung-kopf .mg-chips { margin:0; display:flex; gap:6px; }
   .mg-status { border:1px solid var(--linie); background:var(--rot-hell); color:var(--rot); font-weight:800; font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; padding:3px 9px; border-radius:99px; cursor:pointer; font-family:inherit; }
@@ -1363,6 +1369,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=42"></script>
+<script src="app.js?v=43"></script>
 </body>
 </html>
