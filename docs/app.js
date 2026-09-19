@@ -1948,7 +1948,6 @@
     }).then(function (r) {
       if (!r || box._lauf !== lauf) return;
       if (funktion("abrechnung")) punkte.push({ ok: !!r[0], titel: "Heimatadresse", text: "für Strecken, Abfahrtszeit, km in der Abrechnung", href: "#einstellungen" });
-      if (funktion("abrechnung")) punkte.push({ ok: !!r[1], titel: "Obmann-E-Mail", text: "für „Monat abschließen“", href: "#einstellungen" });
       if (funktion("gespann")) punkte.push({ ok: !!r[2], titel: "Wohnort teilen (freiwillig)", text: "damit „Zusammen fahren“ vorschlagen kann", href: "#einstellungen" });
       rendern();
     }).catch(function () { rendern(); });
@@ -2468,7 +2467,7 @@
     konto: [
       ["i-check", "Konto angelegt ✓", "Abrechnung, Notizen, Checkliste und Push gehen sofort. Tauschbörse, Verfügbarkeit, Hallen-Hinweise und Kontakte schaltet der Betreiber nach der Freischaltung frei – du bekommst das hier zu sehen."],
       ["i-bell", "Push einschalten", "Unter Einstellungen → Push: Änderungen an deinen Spielen, Spieltag-Erinnerung mit Wetter, Abfahrt, Termine, Wochenvorschau. Die App muss dafür auf dem Home-Bildschirm liegen.", "#einstellungen", "Push einschalten"],
-      ["i-euro", "Abrechnung", "Vergangene Spiele bekommen km und Vergütung von selbst. Am Monatsende „Monat abschließen“ – die E-Mail an den Obmann geht raus und alle Spiele des Monats gelten als abgerechnet. Belege, CSV und Fahrtenbuch unter „Werkzeuge“.\nHeimatadresse dafür unter Einstellungen → Profil eintragen.", "#mitglieder/abrechnung", "Zur Abrechnung"],
+      ["i-euro", "Abrechnung", "Vergangene Spiele bekommen km und Vergütung von selbst. Am Jahresende gibt es unter „Steuerjahre“ das Jahresblatt und die CSV fürs Finanzamt – gemeldet werden muss nichts. Belege, Fahrtenbuch und Werkzeuge in der Leiste.\nHeimatadresse dafür unter Einstellungen → Profil eintragen.", "#mitglieder/abrechnung", "Zur Abrechnung"],
       ["i-route", "Die Spielseite", "Ein Tipp auf ein Spiel: Route, Teilen, „In Kalender“, Wetter, Abfahrtszeit, Checkliste, Gespann-Notizen (mit Push an die Kollegen), Fahrgemeinschaft und deine private Notiz."],
       ["i-swap", "Tausch und Verfügbarkeit", "Wenn freigeschaltet: Gesuche einstellen, Kollegen finden, die frei sind, Angebote annehmen. Unter Verfügbarkeit trägst du Sperrtage ein – der Radar auf Start zeigt passende offene Spiele."],
       ["i-sun", "Alles anpassbar", "Einstellungen → Startseite: welche Bausteine auf „Start“ stehen. Bereiche, die du nicht brauchst, blendest du aus. Schrift, Farbe, Karten-App – alles wandert mit dem Konto auf jedes Gerät.", "#einstellungen", "Einstellungen öffnen"],

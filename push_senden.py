@@ -304,32 +304,23 @@ def main():
                 "titel": "Deine Woche: %d %s" % (len(zeilen), "Spiel" if len(zeilen) == 1 else "Spiele"),
                 "text": "\n".join(zeilen)[:900], "url": "./#plan", "tag": "woche"}))
 
-    # Monatsende (ab dem 27.) und Monatsanfang (bis zum 3.): Abrechnung noch nicht abgeschlossen?
-    if an("abrechnung") and (jetzt.day >= 27 or jetzt.day <= 3) and jetzt.hour >= 17:
-        if jetzt.day <= 3:
-            ende = jetzt.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-            anfang = (ende - timedelta(days=1)).replace(day=1)
-        else:
-            anfang = jetzt.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-            ende = (anfang + timedelta(days=32)).replace(day=1)
-        k = "abrechnung|" + anfang.strftime("%Y-%m")
+    # Anfang Januar: Jahresblatt fuers Finanzamt erinnern (einmal je Jahr)
+    if an("abrechnung") and jetzt.month == 1 and 2 <= jetzt.day <= 14 and jetzt.hour >= 17:
+        jahr = jetzt.year - 1
+        k = "steuer|%d" % jahr
         try:
             laenger = (jetzt - timedelta(days=40)).astimezone(timezone.utc).isoformat()
-            schon_monat = {g["user_id"] for g in (api(url, service, "push_gesendet?select=user_id,schluessel&schluessel=eq." + urllib.parse.quote(k) + "&gesendet=gte." + urllib.parse.quote(laenger)) or [])}
-            offen = api(url, service, "einsaetze?select=user_id,beginn&abgerechnet=eq.false&verguetung=gt.0&beginn=gte.%s&beginn=lt.%s&user_id=in.(%s)" % (
-                urllib.parse.quote(anfang.astimezone(timezone.utc).isoformat()), urllib.parse.quote(ende.astimezone(timezone.utc).isoformat()), ",".join(ids))) or []
-            je_nutzer = {}
-            for e in offen:
-                je_nutzer[e["user_id"]] = je_nutzer.get(e["user_id"], 0) + 1
-            for uid, n in je_nutzer.items():
-                if uid in schon_monat:
+            schon_jahr = {g["user_id"] for g in (api(url, service, "push_gesendet?select=user_id,schluessel&schluessel=eq." + urllib.parse.quote(k) + "&gesendet=gte." + urllib.parse.quote(laenger)) or [])}
+            mit_eintraegen = api(url, service, "einsaetze?select=user_id&beginn=gte.%d-01-01&beginn=lt.%d-01-01&user_id=in.(%s)" % (jahr, jahr + 1, ",".join(ids))) or []
+            for uid in sorted({e["user_id"] for e in mit_eintraegen}):
+                if uid in schon_jahr:
                     continue
                 nachrichten.setdefault(uid, []).append((k, {
-                    "titel": "Abrechnung %s: %d %s offen" % (MONATE[anfang.month - 1], n, "Spiel" if n == 1 else "Spiele"),
-                    "text": "Noch nicht abgeschlossen – in der Abrechnung auf „Monat abschließen“ tippen, dann geht die E-Mail raus.",
-                    "url": "./#mitglieder/abrechnung", "tag": "abrechnung"}))
+                    "titel": "Steuerjahr %d: Jahresblatt bereit" % jahr,
+                    "text": "In der Abrechnung unter „Steuerjahre“: Jahresblatt drucken oder CSV – mit Vergütung, Fahrtkosten, Verpflegung und Auslagen.",
+                    "url": "./#mitglieder/abrechnung", "tag": "steuer"}))
         except Exception as e:
-            print("Push: Abrechnungs-Erinnerung nicht verarbeitet: %s" % str(e)[:120], file=sys.stderr)
+            print("Push: Steuer-Erinnerung nicht verarbeitet: %s" % str(e)[:120], file=sys.stderr)
 
     # Ankuendigungen vom Admin, die als Push markiert sind - an alle
     ank = []
@@ -433,7 +424,7 @@ def main():
                             continue
                         nachrichten.setdefault(uid, []).append((k, {
                             "titel": "Spiel abrechnen? %s" % s.get("paarung", ""),
-                            "text": "km und Vergütung sind vorbelegt – nur noch Auslagen oder Beleg ergänzen; am Monatsende „Monat abschließen“.",
+                            "text": "km und Vergütung sind vorbelegt – nur noch Auslagen oder Beleg ergänzen.",
                             "url": "./#abrechnen/" + urllib.parse.quote(k[10:], safe=""), "tag": "abrechnen"}))
         except Exception as e:
             print("Push: Schnellabrechnung nicht verarbeitet: %s" % str(e)[:120], file=sys.stderr)
@@ -560,7 +551,7 @@ def main():
     try:
         alt = (jetzt - timedelta(days=7)).astimezone(timezone.utc).isoformat()
         # Monats-Schluessel bleiben laenger, damit die Erinnerung nur einmal kommt
-        api(url, service, "push_gesendet?gesendet=lt." + urllib.parse.quote(alt) + "&schluessel=not.like.abrechnung*", "DELETE")
+        api(url, service, "push_gesendet?gesendet=lt." + urllib.parse.quote(alt) + "&schluessel=not.like.steuer*", "DELETE")
     except Exception:
         pass
     print("Push: %d gesendet, %d tote Abos entfernt." % (gesendet_n, tot))

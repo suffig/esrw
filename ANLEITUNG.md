@@ -1229,6 +1229,18 @@ Kartenkontur, größere Menü-Symbole, einheitliche Auswahlfelder mit Pfeil.
 * **Offline-Balken** nennt den Datenstand, was geht/was Netz braucht und wie
   viele Abrechnungs-Änderungen aufs Nachreichen warten.
 
+### 10.6t Abrechnung ohne Abschluss – nur fürs Finanzamt
+
+Die Abrechnung ist eine private Aufstellung: **nichts muss gemeldet oder
+abgeschlossen werden.** Es gibt keinen Status „offen/abgerechnet“ und
+keine Monatsmail mehr. Oben stehen Vergütung, Kosten (Fahrt, Verpflegung,
+Auslagen) und der Saldo; der Filter „Unvollständig“ zeigt vergangene
+Spiele ohne Vergütung oder km. Je Monat: Anzahl, Summe, fehlende Beträge.
+Am Jahresende: Leiste → „Steuerjahre“ → Jahresblatt drucken / CSV; Anfang
+Januar erinnert ein Push daran. „Alles eingerichtet?“ fragt nicht mehr
+nach der Obmann-E-Mail (die bleibt nur für „Obmann anschreiben“ auf der
+Spielseite). Mehrfachauswahl: Verpflegung 14 € setzen/entfernen, CSV.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

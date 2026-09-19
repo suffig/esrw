@@ -1036,7 +1036,7 @@ window.Mitglieder = (function () {
     [["Spiele erfasst", s.spiele, function () { nurOffene = false; rendereAbrechnung(); }],
      [einfach ? "km einfach" : "km gefahren", Math.round(einfach ? s.km : s.km * 2) + " km"],
      ["Fahrtkosten", euro(s.fahrt)], ["Vergütung", euro(s.verg)],
-     ["Auslagen", euro(s.ausl)], ["Verpflegung", euro(s.verpf)], ["noch offen", s.offen ? euro(s.offenBetrag) : "–", function () { nurOffene = true; rendereAbrechnung(); }]
+     ["Auslagen", euro(s.ausl)], ["Verpflegung", euro(s.verpf)], ["Saldo", euro(s.verg - s.fahrt - s.verpf - s.ausl)]
     ].forEach(function (p) {
       var k = h("div", { class: "zahl karte" + (p[2] ? " tippbar" : "") }, [h("b", { text: String(p[1]) }), h("span", { text: p[0] })]);
       if (p[2]) { k.style.cursor = "pointer"; k.title = "Antippen: Filter"; k.addEventListener("click", p[2]); }
@@ -1074,11 +1074,12 @@ window.Mitglieder = (function () {
     // Oben nur das Wesentliche: Vergütung, Fahrtkosten, offen. Der Rest klappt auf.
     var sS = summen(spiele);
     var saldo = h("div", { class: "mg-saldo" });
-    [["Vergütung", euro(sS.verg), null, ""], [sS.verpf ? "Fahrt + Verpfl." : "Fahrtkosten", euro(sS.fahrt + sS.verpf), null, ""],
-     ["noch offen", euro(sS.offen ? sS.offenBetrag : 0), function () { nurOffene = !nurOffene; rendereAbrechnung(); }, "offen" + (sS.offen ? "" : " fertig")]
+    var kosten = sS.fahrt + sS.verpf + sS.ausl;
+    [["Vergütung", euro(sS.verg), null, ""], ["Kosten", euro(kosten), null, ""],
+     ["Saldo", euro(sS.verg - kosten), function () { abrechnungPanel = "detail"; rendereAbrechnung(); }, sS.verg - kosten < 0 ? "offen" : "offen fertig"]
     ].forEach(function (p) {
-      var k = h("div", { class: "zahl karte " + p[3] + (p[2] ? " tippbar" : "") }, [h("b", { text: p[1] }), h("span", { text: p[0] + (p[0] === "noch offen" && sS.offen ? " (" + sS.offen + ")" : "") })]);
-      if (p[2]) { k.style.cursor = "pointer"; k.title = "Antippen: nur offene"; k.addEventListener("click", p[2]); }
+      var k = h("div", { class: "zahl karte " + p[3] + (p[2] ? " tippbar" : "") }, [h("b", { text: p[1] }), h("span", { text: p[0] })]);
+      if (p[2]) { k.style.cursor = "pointer"; k.title = "Antippen: Steuerjahre"; k.addEventListener("click", p[2]); }
       saldo.appendChild(k);
     });
     var neu = h("div", { class: "mg-summenblock" }, [saldo]);
@@ -1172,7 +1173,7 @@ window.Mitglieder = (function () {
     var zeilen = [["Saison", "Datum", "Uhrzeit", "Liga", "Begegnung", "Halle", "Rolle", "System",
                    "km einfach", "km gefahren", "Kilometermodell", "Satz €/km", "Fahrtkosten",
                    "Grundgebühr", "Zuschlag Uhrzeit", "Zuschlag übergreifend", "Ausfall vor Ort", "Vergütung",
-                   "Auslagen", "Verpflegung", "Belege", "abgerechnet", "Notiz"]];
+                   "Auslagen", "Verpflegung", "Belege", "Notiz"]];
     var dez = function (n) { return n == null ? "" : String(Math.round(n * 100) / 100).replace(".", ","); };
     spiele.forEach(function (sp) {
       var e = einsaetze[sp.kennung] || {};
@@ -1183,7 +1184,7 @@ window.Mitglieder = (function () {
         sp.system || "", dez(e.km), dez(e.km != null ? e.km * 2 : null), einfach ? "einfache Strecke" : "hin und zurück",
         dez(einfach ? profil.satz_einfach : profil.satz_hinrueck), dez(e.km != null ? fahrtkosten(e) : null),
         dez(b.grund), dez(b.zeit || null), dez(b.ueber || null), e.ausgefallen ? "ja" : "", dez(b.betrag),
-        dez(e.auslagen), dez(e.verpflegung), (e.belege || []).length || "", erledigt(e) ? "ja" : "nein", e.notiz || ""
+        dez(e.auslagen), dez(e.verpflegung), (e.belege || []).length || "", e.notiz || ""
       ]);
     });
     var text = zeilen.map(function (z) {
@@ -1218,7 +1219,7 @@ window.Mitglieder = (function () {
       speichereEinsatz(sp, Object.assign({ km: v && v.art === "route" ? v.km : null, verguetung: g }, vp != null ? { verpflegung: vp } : {}));
       n++;
     });
-    if (n) kurzMeldung(n + (n === 1 ? " Spiel" : " Spiele") + " automatisch vorbelegt – am Monatsende „Monat abschließen“.", "gut");
+    if (n) kurzMeldung(n + (n === 1 ? " Spiel" : " Spiele") + " automatisch vorbelegt – prüfen, ggf. Auslagen und Belege ergänzen.", "gut");
   }
 
   // Monatsraster mit Betraegen je Tag; Tipp oeffnet die Zeile
@@ -1243,14 +1244,14 @@ window.Mitglieder = (function () {
         var d = new Date(start.getFullYear(), start.getMonth(), t), key = d.toDateString();
         var amTag = spiele.filter(function (sp) { return new Date(sp.beginn).toDateString() === key; });
         var betrag = 0, alleFertig = amTag.length > 0, offenDa = false;
-        amTag.forEach(function (sp) { var e = einsaetze[sp.kennung]; var b = e ? (betragFuer(sp, e).betrag || 0) : 0; betrag += b; if (!erledigt(e) && b > 0) { offenDa = true; alleFertig = false; } if (!e) alleFertig = false; });
+        amTag.forEach(function (sp) { var e = einsaetze[sp.kennung]; var b = e ? (betragFuer(sp, e).betrag || 0) : 0; betrag += b; if (new Date(sp.beginn) < new Date() && (!e || e.verguetung == null)) { offenDa = true; alleFertig = false; } if (!e) alleFertig = false; });
         summe += betrag;
         var zelle = h("div", { class: "tag" + (amTag.length ? " hat" : "") + (offenDa ? " offen" : alleFertig ? " fertig" : "") + (key === heute ? " heute" : "") }, [h("b", { text: String(t) }), amTag.length ? h("em", { text: betrag ? euro(betrag).replace(",00", "") : (amTag.length + "×") }) : null]);
         if (amTag.length) (function (sp) { zelle.addEventListener("click", function () { abrechnungSprung(sp.kennung); rendereAbrechnung(); }); })(amTag[0]);
         raster.appendChild(zelle);
       }
       box.appendChild(raster);
-      box.appendChild(h("p", { class: "meta", style: "margin:8px 0 0", text: MONATE[start.getMonth()] + ": " + euro(summe) + " · rot = offen, grün = abgerechnet · Tipp auf einen Tag öffnet das Spiel" }));
+      box.appendChild(h("p", { class: "meta", style: "margin:8px 0 0", text: MONATE[start.getMonth()] + ": " + euro(summe) + " · rot = Betrag fehlt, grün = erfasst · Tipp auf einen Tag öffnet das Spiel" }));
     }
     rendern();
     return box;
@@ -1328,8 +1329,8 @@ window.Mitglieder = (function () {
     var liste = Object.keys(auswahl).map(function (k) { return auswahl[k]; }), n = liste.length;
     var leiste = h("div", { class: "mg-auswahlleiste" }, [
       h("span", { text: n + (n === 1 ? " Spiel" : " Spiele") }),
-      h("button", { type: "button", class: "anfrage", text: "abgerechnet ✓", disabled: n ? null : "disabled", onclick: function () { liste.forEach(function (sp) { erledigtSetzen(sp, true); }); auswahlEnde(); } }),
-      h("button", { type: "button", text: "offen", disabled: n ? null : "disabled", onclick: function () { liste.forEach(function (sp) { erledigtSetzen(sp, false); }); auswahlEnde(); } }),
+      h("button", { type: "button", class: "anfrage", text: "Verpflegung 14 €", disabled: n ? null : "disabled", onclick: function () { liste.forEach(function (sp) { speichereEinsatz(sp, { verpflegung: 14 }); }); auswahlEnde(); } }),
+      h("button", { type: "button", text: "ohne Verpfl.", disabled: n ? null : "disabled", onclick: function () { liste.forEach(function (sp) { speichereEinsatz(sp, { verpflegung: null }); }); auswahlEnde(); } }),
       h("button", { type: "button", text: "CSV", disabled: n ? null : "disabled", onclick: function () { csvExport(liste.slice().sort(function (a, b) { return a.beginn < b.beginn ? -1 : 1; }), "Auswahl"); } }),
       h("button", { type: "button", text: "Alle", onclick: function () { saisonSpiele(gewaehlteSaison).forEach(function (sp) { if (new Date(sp.beginn) < new Date()) auswahl[sp.kennung] = sp; }); rendereAbrechnung(); } }),
       h("button", { type: "button", class: "textknopf", text: "Fertig", onclick: auswahlEnde })
@@ -1344,9 +1345,9 @@ window.Mitglieder = (function () {
 
     var saisonWahl = h("select", { class: "mg-select", onchange: function (ev) { gewaehlteSaison = ev.target.value; saisonLaden(gewaehlteSaison).then(rendereAbrechnung); } },
       saisonen().map(function (s) { var o = h("option", { value: s, text: "Saison " + s }); if (s === gewaehlteSaison) o.selected = true; return o; }));
-    var offenN = spiele.filter(function (sp) { var e = einsaetze[sp.kennung]; return new Date(sp.beginn) < new Date() && (!e || !erledigt(e) || e.verguetung == null); }).length;
+    var offenN = spiele.filter(function (sp) { var e = einsaetze[sp.kennung]; return new Date(sp.beginn) < new Date() && (!e || e.verguetung == null || (e.km == null && profil.heimat_lat != null)); }).length;
     var chips = h("div", { class: "schnell mg-chips" }, [
-      h("button", { type: "button", class: "filterknopf" + (nurOffene ? " aktiv" : ""), text: "Offen" + (offenN ? " (" + offenN + ")" : ""), onclick: function () { nurOffene = true; rendereAbrechnung(); } }),
+      h("button", { type: "button", class: "filterknopf" + (nurOffene ? " aktiv" : ""), text: "Unvollständig" + (offenN ? " (" + offenN + ")" : ""), onclick: function () { nurOffene = true; rendereAbrechnung(); } }),
       h("button", { type: "button", class: "filterknopf" + (!nurOffene ? " aktiv" : ""), text: "Alle", onclick: function () { nurOffene = false; rendereAbrechnung(); } })
     ]);
     inhalt.appendChild(h("div", { class: "mg-abrechnung-kopf" }, [saisonWahl, chips]));
@@ -1418,40 +1419,23 @@ window.Mitglieder = (function () {
     if (nurOffene) liste = spiele.filter(function (sp) {
       var e = einsaetze[sp.kennung];
       // km zaehlt nur als "fehlt", wenn eine Heimatadresse da ist - sonst waere jedes Spiel unvollstaendig
-      return !e || !erledigt(e) || e.verguetung == null || (e.km == null && profil.heimat_lat != null);
+      return new Date(sp.beginn) < new Date() && (!e || e.verguetung == null || (e.km == null && profil.heimat_lat != null));
     });
     // Nach dem Speichern eines privaten Spiels die Liste neu laden
     if (!spiele.length) inhalt.appendChild(h("p", { class: "leer" }, ["Keine Spiele in dieser Saison. ", h("button", { type: "button", class: "anfrage", style: "margin-top:10px", text: "+ Spiel selbst eintragen", onclick: function () { abrechnungPanel = "eintragen"; rendereAbrechnung(); } })]));
-    else if (!liste.length) inhalt.appendChild(h("p", { class: "leer", text: "Alles abgerechnet ✓" }));
+    else if (!liste.length) inhalt.appendChild(h("p", { class: "leer", text: "Alle Spiele vollständig erfasst ✓" }));
 
-    // Nach Monat gruppiert, je Monat ein Knopf "Monat abschliessen"
+    // Nach Monat gruppiert: Anzahl, Summe, fehlende Betraege
     var monat = null;
     liste.forEach(function (sp) {
       var d = new Date(sp.beginn), m = d.getFullYear() + "-" + d.getMonth();
       if (m !== monat) {
         monat = m;
         var imMonat = spiele.filter(function (x) { var y = new Date(x.beginn); return y.getFullYear() + "-" + y.getMonth() === m; });
-        var mitBetrag = imMonat.filter(function (x) { var e = einsaetze[x.kennung]; return e && (betragFuer(x, e).betrag || 0) > 0; });
-        var offen = mitBetrag.filter(function (x) { return !erledigt(einsaetze[x.kennung]); });
-        var summeMonat = 0; imMonat.forEach(function (x) { var e = einsaetze[x.kennung]; summeMonat += e ? (betragFuer(x, e).betrag || 0) : 0; });
-        var vorbei = new Date(d.getFullYear(), d.getMonth() + 1, 1) <= new Date();
+        var summeMonat = 0, fehlt = 0; imMonat.forEach(function (x) { var e = einsaetze[x.kennung]; summeMonat += e ? (betragFuer(x, e).betrag || 0) : 0; if (new Date(x.beginn) < new Date() && (!e || e.verguetung == null)) fehlt++; });
         var kopf = h("div", { class: "mg-monat" }, [h("span", {}, [h("b", { text: MONATE[d.getMonth()] + " " + d.getFullYear() }),
-          h("small", { text: imMonat.length + (imMonat.length === 1 ? " Spiel" : " Spiele") + " · " + euro(summeMonat) + (offen.length ? " · " + offen.length + " offen" : mitBetrag.length ? " · abgerechnet ✓" : "") })])]);
+          h("small", { text: imMonat.length + (imMonat.length === 1 ? " Spiel" : " Spiele") + " · " + euro(summeMonat) + (fehlt ? " · " + fehlt + " ohne Betrag" : "") })])]);
         var rechts = h("span", { class: "mg-monat-aktion" });
-        if (offen.length) {
-          // Abschliessen = Monatsmail an den Obmann und alle Spiele des Monats als abgerechnet markieren
-          rechts.appendChild(h("button", { type: "button", class: "anfrage", text: vorbei ? "Monat abschließen" : "Abschließen", title: "Monatsabrechnung per E-Mail und alle Spiele als abgerechnet markieren", onclick: function () {
-            if (!vorbei && !confirm("Der Monat läuft noch – trotzdem abschließen und die E-Mail schicken?")) return;
-            monatsMail(imMonat, d);
-            offen.forEach(function (x) { erledigtSetzen(x, true); });
-            var zurueck = offen.slice();
-            if (window.zeigeToast) window.zeigeToast(MONATE[d.getMonth()] + " abgeschlossen ✓", "gut", { label: "Rückgängig", fn: function () { zurueck.forEach(function (x) { erledigtSetzen(x, false); }); rendereAbrechnung(); kurzMeldung("Wieder offen.", ""); } });
-            else kurzMeldung(MONATE[d.getMonth()] + " abgeschlossen ✓", "gut");
-            rendereAbrechnung();
-          } }));
-        } else if (mitBetrag.length) {
-          rechts.appendChild(h("button", { type: "button", class: "textknopf", text: "E-Mail erneut", onclick: function () { monatsMail(imMonat, d); } }));
-        }
         kopf.appendChild(rechts);
         inhalt.appendChild(kopf);
       }
@@ -1581,7 +1565,7 @@ window.Mitglieder = (function () {
         h("div", { class: "paarung", text: (sp.liga ? sp.liga + ": " : "") + sp.paarung }),
         h("div", { class: "mg-summe" }, [
           h("span", { class: "meta mg-betrag-kurz", text: b.betrag != null ? euro(b.betrag) + (e.km != null ? " · " + e.km + " km" : "") : "Betrag fehlt" }),
-          vergangen ? status : h("span", { class: "mg-status kommt", text: "kommt" }),
+          vergangen ? null : h("span", { class: "mg-status kommt", text: "kommt" }),
           vergangen ? fotoKnopf : null, foto,
           h("span", { class: "meta mg-auf", text: "Details ›" })
         ])
@@ -1596,7 +1580,6 @@ window.Mitglieder = (function () {
       ]),
 
       h("div", { class: "mg-schalter" }, [
-        h("label", { class: "mg-check" }, [abg, " abgerechnet"]),
         h("label", { class: "mg-check" }, [ausf, " vor Ort ausgefallen"]),
         uebergreifendMoeglich(sp) ? h("label", { class: "mg-check" }, [ueb, " übergreifend"]) : null
       ]),
