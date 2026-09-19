@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 119,
+ "spiele_gesamt": 118,
  "saison": "2026/27",
  "archiv_spiele": 170,
  "rollen": {
@@ -2424,34 +2424,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-12T16:30:00+02:00",
-     "treffpunkt": "2026-09-12T15:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U17 I",
-     "paarung": "Kölner Junghaie – ES Weißwasser",
-     "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
-     "halle": "Kölnarena 2",
-     "koordinaten": [
-      50.937979,
-      6.98935
-     ],
-     "gespann": [
-      {
-       "name": "Schöche, Gian-Carlo",
-       "slug": "schoeche-gian-carlo",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-12T16:30:00+02:00|Kölner Junghaie – ES Weißwasser",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-12T19:15:00+02:00",
      "treffpunkt": "2026-09-12T18:15:00+02:00",
      "rolle": "SR",
@@ -3024,7 +2996,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T16:30:00+02:00|Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld",
@@ -8701,7 +8673,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T16:30:00+02:00|Düsseldorfer EG – Kölner Junghaie",
@@ -9411,7 +9383,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T16:30:00+02:00|Düsseldorfer EG – Kölner Junghaie",
@@ -9634,7 +9606,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T16:30:00+02:00|Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld",
@@ -9819,34 +9791,6 @@
     "letzte": "2026-09-26"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-12T16:30:00+02:00",
-     "treffpunkt": "2026-09-12T15:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U17 I",
-     "paarung": "Kölner Junghaie – ES Weißwasser",
-     "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
-     "halle": "Kölnarena 2",
-     "koordinaten": [
-      50.937979,
-      6.98935
-     ],
-     "gespann": [
-      {
-       "name": "Giesen, Tom",
-       "slug": "giesen-tom",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-12T16:30:00+02:00|Kölner Junghaie – ES Weißwasser",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-12T19:15:00+02:00",
      "treffpunkt": "2026-09-12T18:15:00+02:00",
@@ -12816,32 +12760,6 @@
  ],
  "spiele": [
   {
-   "beginn": "2026-09-12T16:30:00+02:00",
-   "treffpunkt": "2026-09-12T15:30:00+02:00",
-   "liga": "U17 I",
-   "paarung": "Kölner Junghaie – ES Weißwasser",
-   "halle": "Kölnarena 2",
-   "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Giesen, Tom",
-     "rolle": "SR",
-     "slug": "giesen-tom"
-    },
-    {
-     "name": "Schöche, Gian-Carlo",
-     "rolle": "SR",
-     "slug": "schoeche-gian-carlo"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-12T16:30:00+02:00|Kölner Junghaie – ES Weißwasser",
-   "korrektur": null,
-   "manuell": false
-  },
-  {
    "beginn": "2026-09-12T16:45:00+02:00",
    "treffpunkt": "2026-09-12T15:45:00+02:00",
    "liga": "U13 FS",
@@ -14109,7 +14027,7 @@
      "slug": "schmidt-waldemar"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-19T16:30:00+02:00|Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld",
    "korrektur": null,
    "manuell": false
@@ -14135,7 +14053,7 @@
      "slug": "reuter-fynn"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-19T16:30:00+02:00|Düsseldorfer EG – Kölner Junghaie",
    "korrektur": null,
    "manuell": false
