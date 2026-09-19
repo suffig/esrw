@@ -4652,7 +4652,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": "Halle (vorher Eissporthalle Moers)",
      "hinweis": null,
      "id": "2026-09-19T10:30:00+02:00|Lippe Hockey Hamm – SpG Neusser EV / GSC Moers",
@@ -5306,7 +5306,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": "Halle (vorher Eissporthalle Moers)",
      "hinweis": null,
      "id": "2026-09-19T10:30:00+02:00|Lippe Hockey Hamm – SpG Neusser EV / GSC Moers",
@@ -14326,7 +14326,7 @@
      "slug": "klemm-julian"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-19T10:30:00+02:00|Lippe Hockey Hamm – SpG Neusser EV / GSC Moers",
    "korrektur": null,
    "manuell": false
