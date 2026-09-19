@@ -2074,7 +2074,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T19:45:00+02:00|Kölner Junghaie – Düsseldorfer EG",
@@ -5737,7 +5737,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T19:45:00+02:00|Kölner Junghaie – Düsseldorfer EG",
@@ -13695,7 +13695,7 @@
      "slug": "leibfried-raphael"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-19T19:45:00+02:00|Kölner Junghaie – Düsseldorfer EG",
    "korrektur": null,
    "manuell": false
