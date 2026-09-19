@@ -2999,6 +2999,9 @@
     }
   });
   window.addEventListener("hashchange", ausHash);
+  // Das Blatt liegt im Markup in der Filterleiste; deren backdrop-filter wuerde ein
+  // position:fixed-Kind einfangen (verschwommen, falsch positioniert) - also an den Body haengen
+  document.body.appendChild(el("plan-filter-blatt"));
   function filterBlatt(offen) {
     var b = el("plan-filter-blatt"), hg = el("blatt-hintergrund");
     if (offen) { b.classList.remove("versteckt"); hg.classList.remove("versteckt"); setTimeout(function () { b.classList.add("offen"); }, 20); document.body.style.overflow = "hidden"; }

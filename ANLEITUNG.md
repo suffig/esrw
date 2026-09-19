@@ -1260,6 +1260,10 @@ Spielseite). Mehrfachauswahl: Verpflegung 14 € setzen/entfernen, CSV.
   die Zahlen stehen auf dem Handy im Tooltip.
 * Notizen leer → Knopf „Zum Spielplan“. Neuigkeiten-Karte aktualisiert.
 
+* Filter-Blatt im Spielplan lag hinter dem abgedunkelten Hintergrund
+  (Stapelkontext der klebenden Filterleiste) – das Blatt hängt jetzt direkt
+  am Seitenkörper und liegt sauber oben.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –
