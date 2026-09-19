@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:a6231bf0cd1949558fe23090fe53bc58dbd99409@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260912T070000Z
-DTEND:20260912T103000Z
-SUMMARY:U17 RL · Herforder EV – Lippe Hockey Hamm Herford
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
-  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eishalle Im Klei
- nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Keller\, Al
- exander\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eishalle Im Kleinen Felde\, Im Kleinen Felde\, 32051 Herford
-GEO:52.114893;8.652028
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
-  Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
- Kleinen Felde":geo:52.114893,8.652028
-END:VEVENT
-BEGIN:VEVENT
 UID:262dffbf22fa88786e6bb07180bd92a6e3149ca7@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z
@@ -941,12 +920,6 @@ GEO:52.114893;8.652028
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
   Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
  Kleinen Felde":geo:52.114893,8.652028
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U17 RL · Herforder EV – Eisad
- ler Dortmund
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:3a0ffe6c4a708885347935d73c37cbef4a54d7ac@esrw.de
@@ -969,11 +942,6 @@ GEO:50.811945;7.109233
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
  rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
  isdorf":geo:50.811945,7.109233
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U9 RL · EHC Troisdorf
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:72f7299cddef2b69a78a8134d9c370aad80e22d0@esrw.de
