@@ -3369,7 +3369,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T16:00:00+02:00|EV Duisburg – SCC Adler Berlin",
@@ -7023,7 +7023,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T16:00:00+02:00|EV Duisburg – SCC Adler Berlin",
@@ -9962,7 +9962,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T16:00:00+02:00|EV Duisburg – SCC Adler Berlin",
@@ -14083,7 +14083,7 @@
      "slug": "hellingrath-luca"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-19T16:00:00+02:00|EV Duisburg – SCC Adler Berlin",
    "korrektur": null,
    "manuell": false
