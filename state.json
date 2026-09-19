@@ -90,19 +90,6 @@
   "titel": "SR · U15 RLA · Iserlohner EC – Krefelder EV",
   "treffpunkt": "2026-09-16T18:30:00+02:00"
  },
- "0ab7d9bd5f1ff6b0b5abc3f61dc6f4dfc23c0721@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-12T16:45:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "c2c00351f489965d0eb7acfa4753c2f30f757fdc",
-  "korrektur": null,
-  "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-  "sequence": 0,
-  "slug": "meissner-nils",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · DA FS · Hessen – Sachsen/Berlin",
-  "treffpunkt": "2026-09-12T15:45:00+02:00"
- },
  "0b322357c43ea201e8158adf4b1504f6fbd2274b@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-19T10:00:00+02:00",
@@ -610,19 +597,6 @@
   "titel": "SR · U17 RL · Herforder EV – Eisadler Dortmund",
   "treffpunkt": "2026-09-19T09:00:00+02:00"
  },
- "2c8ecce607e510bfe0af6d1484fdf3c28c94b86d@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-12T16:45:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "95a50fa82816ac2e98947be2e92360a19ef7cec5",
-  "korrektur": null,
-  "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-  "sequence": 0,
-  "slug": "heyer-christoph",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U13 FS · Krefelder EV 1b – Löwen Frankfurt 1b",
-  "treffpunkt": "2026-09-12T15:45:00+02:00"
- },
  "2cf2f2c2286de519baa758f73ff4c19e158993c8@esrw.de": {
   "aenderung": "Angaben angepasst",
   "beginn": "2026-09-27T09:00:00+02:00",
@@ -843,19 +817,6 @@
   "stempel": "2026-09-09T17:01:29.853290+00:00",
   "titel": "SR · U11 RL · Kölner Junghaie – Kölnarena 2",
   "treffpunkt": "2026-09-13T13:45:00+02:00"
- },
- "3b250fb9d3f3917e41d5dbe2cd4562884c8720de@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-12T16:45:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "c2c00351f489965d0eb7acfa4753c2f30f757fdc",
-  "korrektur": null,
-  "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-  "sequence": 0,
-  "slug": "strohmenger-svenja",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · DA FS · Hessen – Sachsen/Berlin",
-  "treffpunkt": "2026-09-12T15:45:00+02:00"
  },
  "3d7745eb6e6cb367b94c5ae18963711412e5e6a4@esrw.de": {
   "aenderung": "Halle (vorher Eissporthalle Bergisch Gladbach)",
@@ -1688,19 +1649,6 @@
   "stempel": "2026-09-17T17:30:38.957160+00:00",
   "titel": "SR · LL FS · EC Bergisch Land – Dinslakener Kobras",
   "treffpunkt": "2026-09-27T18:00:00+02:00"
- },
- "8486ec3065ad1e6ce59f4eaa74118570fedf62e3@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-12T16:45:00+02:00",
-  "geaendert_am": null,
-  "inhalt": "95a50fa82816ac2e98947be2e92360a19ef7cec5",
-  "korrektur": null,
-  "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-  "sequence": 0,
-  "slug": "hofer-carsten",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U13 FS · Krefelder EV 1b – Löwen Frankfurt 1b",
-  "treffpunkt": "2026-09-12T15:45:00+02:00"
  },
  "84a56d6561a8df261dff761c2dcc2b9b366c8c58@esrw.de": {
   "aenderung": "Halle (vorher Eissporthalle Bergisch Gladbach)",
