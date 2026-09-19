@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 126,
+ "spiele_gesamt": 125,
  "saison": "2026/27",
  "archiv_spiele": 170,
  "rollen": {
@@ -4018,34 +4018,6 @@
     "letzte": "2026-09-27"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-12T09:15:00+02:00",
-     "treffpunkt": "2026-09-12T08:15:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "DA FS",
-     "paarung": "NEV – BW/Hessen",
-     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-     "halle": "Eissportzentrum Westfalen",
-     "koordinaten": [
-      51.49525,
-      7.458288
-     ],
-     "gespann": [
-      {
-       "name": "Zynda, Jayden",
-       "slug": "zynda-jayden",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-12T09:15:00+02:00|NEV – BW/Hessen",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-12T11:00:00+02:00",
      "treffpunkt": "2026-09-12T10:00:00+02:00",
@@ -12873,34 +12845,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-12T09:15:00+02:00",
-     "treffpunkt": "2026-09-12T08:15:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "DA FS",
-     "paarung": "NEV – BW/Hessen",
-     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-     "halle": "Eissportzentrum Westfalen",
-     "koordinaten": [
-      51.49525,
-      7.458288
-     ],
-     "gespann": [
-      {
-       "name": "Hindley, David",
-       "slug": "hindley-david",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-12T09:15:00+02:00|NEV – BW/Hessen",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-12T11:00:00+02:00",
      "treffpunkt": "2026-09-12T10:00:00+02:00",
      "rolle": "SR",
@@ -13254,32 +13198,6 @@
   }
  ],
  "spiele": [
-  {
-   "beginn": "2026-09-12T09:15:00+02:00",
-   "treffpunkt": "2026-09-12T08:15:00+02:00",
-   "liga": "DA FS",
-   "paarung": "NEV – BW/Hessen",
-   "halle": "Eissportzentrum Westfalen",
-   "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Hindley, David",
-     "rolle": "SR",
-     "slug": "hindley-david"
-    },
-    {
-     "name": "Zynda, Jayden",
-     "rolle": "SR",
-     "slug": "zynda-jayden"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-12T09:15:00+02:00|NEV – BW/Hessen",
-   "korrektur": null,
-   "manuell": false
-  },
   {
    "beginn": "2026-09-12T10:00:00+02:00",
    "treffpunkt": "2026-09-12T09:00:00+02:00",
