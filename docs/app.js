@@ -6,12 +6,12 @@
   var basis = location.href.split("#")[0].split("?")[0].replace(/index\.html$/, "").replace(/\/?$/, "/");
 
   // Wird einmal je Fassung gezeigt, damit die Kollegen neue Funktionen finden.
-  var NEUIGKEITEN = { version: "2026-09-18", punkte: [
-    "Fünf Reiter unten: Start · Spielplan · Tausch · Abrechnung · Mehr – Einstellungen und Diagnose unter Mehr",
-    "Tipp auf ein Spiel öffnet die Spielseite: Route, Wetter, Gespann, Tausch, Hallen-Hinweise, Notiz",
-    "Start: Wochenstreifen, Kacheln für Gesuche und Ankündigungen, Abfahrtszeit und Wetter",
-    "Hallenkarte, Kalenderdatei mit Abfahrtsalarm, Saisonziel, Schriftgröße und Farbe",
-    "Neues Design: Avatar oben, Suche im Kopf, Datumskachel in Ligafarbe"
+  var NEUIGKEITEN = { version: "2026-09-19", punkte: [
+    "Neues Logo und Design in Schwarz-Weiß-Rot, Schalter statt Häkchen, Wischen auf Spielkarten",
+    "Abrechnung: private Aufstellung fürs Finanzamt – Steuerjahre, Jahresblatt, Verpflegung, km hin und zurück, eigene Spiele",
+    "Archiv aller Saisons mit Filtern, Änderungen mit Vorher/Nachher, Zusammen fahren mit „auf dem Weg“",
+    "Start: Schnellzugriff, „Alles eingerichtet?“, Termin-Karte; Einstellungen mit Konto und Bereichen",
+    "Anleitung unter Mehr → Anleitung, Offline-Abrechnung mit Nachreichen"
   ] };
   var daten = null, aktuell = null, profil = null;
   var el = function (id) { return document.getElementById(id); };
@@ -78,7 +78,7 @@
   }
   function funktionenLaden() {
     funktionenAnwenden(funktionenLesen());
-    hole("supabase.json").then(function (cfg) {
+    return hole("supabase.json").then(function (cfg) {
       cfg = cfg || {};
       if (cfg.mock) { try { return JSON.parse(localStorage.getItem("mock_funktionen") || "[]"); } catch (e) { return []; } }
       if (!cfg.url || !cfg.anon_key) return null;
@@ -87,9 +87,10 @@
     }).then(function (zeilen) {
       if (!zeilen) return;
       var o = {}; zeilen.forEach(function (z) { o[z.schluessel] = !!z.aktiv; });
-      funktionenAnwenden(o, true);
-    }).catch(function () {});
+      funktionenAnwenden(o, !!funktionenBereit);
+    }).catch(function () {}).then(function () { funktionenBereit = true; });
   }
+  var funktionenBereit = false;
   document.addEventListener("mg-funktionen", function (e) { funktionenAnwenden(e.detail || {}, true); });
 
   // ------------------------------------------ Korrekturen (Admin, je Spiel)
@@ -308,7 +309,7 @@
 
   function onboardingStand() {
     var box = el("onboarding");
-    if (lesen("onboarding-weg") === "1") { box.classList.add("versteckt"); return; }
+    if (lesen("onboarding-weg") === "1" || (aktuell && profil && profil.slug && aktuell.slug !== profil.slug)) { box.classList.add("versteckt"); el("onboarding-kurz").classList.add("versteckt"); return; }
     var s1 = !!(profil && profil.slug), s2 = lesen("abo-geklickt") === "1", s3 = sitzungVorhanden();
     var kurz = el("onboarding-kurz");
     kurz.classList.toggle("versteckt", !(s1 && s2 && !s3) || lesen("onboarding-kurz-weg") === "1" || el("auswahl").classList.contains("versteckt") === false);
@@ -379,8 +380,8 @@
     if (lesen("neu-gesehen") === NEUIGKEITEN.version) { box.classList.add("versteckt"); return; }
     var ul = el("neu-liste"); ul.innerHTML = "";
     NEUIGKEITEN.punkte.forEach(function (t) { var li = document.createElement("li"); li.textContent = t; ul.appendChild(li); });
-    box.classList.remove("versteckt");
-    el("neu-weg").onclick = function () { schreiben("neu-gesehen", NEUIGKEITEN.version); box.classList.add("versteckt"); };
+    box._offen = true; if (!el("detail").classList.contains("versteckt")) box.classList.remove("versteckt");
+    el("neu-weg").onclick = function () { schreiben("neu-gesehen", NEUIGKEITEN.version); box._offen = false; box.classList.add("versteckt"); };
   }
 
   var letzterStand = null;
@@ -891,10 +892,10 @@
     }
     if (meins) {
       var ab = karteAbschnitt("Weiteres");
-      if (funktion("abrechnung")) { var l = document.createElement("a"); l.href = "#mitglieder/abrechnung"; l.textContent = "Zur Abrechnung (km, Vergütung, abgerechnet)"; ab.appendChild(l); }
+      if (funktion("abrechnung")) { var l = document.createElement("a"); l.className = "zeile-link"; l.href = "#abrechnen/" + encodeURIComponent(kennungVon(s)); l.appendChild(ikone("i-euro")); l.appendChild(document.createTextNode("Zur Abrechnung dieses Spiels")); ab.appendChild(l); }
       if (!s.vergangen) {
-        var mailZeile = document.createElement("div"); mailZeile.style.marginTop = "8px";
-        var mail = document.createElement("a"); mail.href = "#"; mail.textContent = "Obmann anschreiben (Absage / Frage zu diesem Spiel)";
+        var mailZeile = document.createElement("div");
+        var mail = document.createElement("a"); mail.className = "zeile-link"; mail.href = "#"; mail.appendChild(ikone("i-bell")); mail.appendChild(document.createTextNode("Obmann anschreiben (Absage / Frage)"));
         mail.addEventListener("click", function (ev) {
           ev.preventDefault();
           ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.obmann() : null; })
@@ -2027,7 +2028,8 @@
   function ansicht(name) {
     ["auswahl", "detail", "plan", "mitglieder", "halle", "status", "spiel", "mehr", "einstellungen", "karte", "statseite", "aenderungen", "mitfahren", "archiv"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
     var reiter = (location.hash.split("/")[1] || "");
-    if (name !== "auswahl" && name !== "detail") { el("onboarding").classList.add("versteckt"); el("onboarding-kurz").classList.add("versteckt"); }
+    if (name !== "auswahl" && name !== "detail") { el("onboarding").classList.add("versteckt"); el("onboarding-kurz").classList.add("versteckt"); el("neu").classList.add("versteckt"); }
+    else if (name === "detail" && el("neu")._offen) el("neu").classList.remove("versteckt");
     el("tab-meine").classList.toggle("aktiv", name === "auswahl" || name === "detail" || name === "spiel" || name === "statseite");
     el("tab-plan").classList.toggle("aktiv", name === "plan" || name === "halle");
     el("tab-tausch").classList.toggle("aktiv", name === "mitglieder" && reiter === "tausch");
@@ -2219,7 +2221,7 @@
         kd.innerHTML = "";
         var m = L.map(kd, { scrollWheelZoom: false }); mitfahrKarte = m;
         L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "© OpenStreetMap" }).addTo(m);
-        var akzent = getComputedStyle(document.documentElement).getPropertyValue("--akzent").trim() || "#0f3d6e", alle = [];
+        var akzent = "#e30613", alle = [];
         var jeHalle = {}; punkte.forEach(function (s) { (jeHalle[s.halle] = jeHalle[s.halle] || []).push(s); });
         Object.keys(jeHalle).forEach(function (name) {
           var k = daten.hallen[name]; alle.push([k[0], k[1]]);
@@ -2354,7 +2356,7 @@
     var rollen = {}, km = 0, hsr = 0;
     treffer.forEach(function (s) { var ich = wer ? s.besetzung.filter(function (b) { return b.slug === wer; })[0] : null; if (ich) rollen[ich.rolle] = (rollen[ich.rolle] || 0) + 1; });
     var hallenN = Object.keys(treffer.reduce(function (o, s) { if (s.halle) o[s.halle] = 1; return o; }, {})).length;
-    [[treffer.length, treffer.length === 1 ? "Spiel" : "Spiele", "liga"], [hallenN, hallenN === 1 ? "Halle" : "Hallen", "halle"], [wer ? ((rollen.HSR || 0) + " HSR · " + (rollen.LSR || 0) + " LSR") : Object.keys(treffer.reduce(function (o, s) { s.besetzung.forEach(function (b) { if (b.slug) o[b.slug] = 1; }); return o; }, {})).length, wer ? "Rollen (3er)" : "Kollegen", "partner"]].forEach(function (p) {
+    [[treffer.length, treffer.length === 1 ? "Spiel" : "Spiele", "liga"], [hallenN, hallenN === 1 ? "Halle" : "Hallen", "halle"], [wer ? ((rollen.HSR || 0) + " / " + (rollen.LSR || 0)) : Object.keys(treffer.reduce(function (o, s) { s.besetzung.forEach(function (b) { if (b.slug) o[b.slug] = 1; }); return o; }, {})).length, wer ? "HSR / LSR" : "Kollegen", "partner"]].forEach(function (p) {
       var k = document.createElement("div"); k.className = "zahl karte tippbar" + (archivAufschluesselung === p[2] ? " neu-markiert" : ""); k.title = "Antippen: Aufschlüsselung"; k.style.cursor = "pointer";
       var b = document.createElement("b"); b.textContent = p[0]; var sp = document.createElement("span"); sp.textContent = p[1] + " ›"; k.appendChild(b); k.appendChild(sp);
       k.addEventListener("click", function () { archivAufschluesselung = archivAufschluesselung === p[2] ? null : p[2]; archivRendern(); });
@@ -2633,7 +2635,7 @@
       var anzahl = {};
       (daten.spiele || []).forEach(function (s) { if (!s.vergangen && s.halle) anzahl[s.halle] = (anzahl[s.halle] || 0) + 1; });
       var punkte = [];
-      var akzent = getComputedStyle(document.documentElement).getPropertyValue("--akzent").trim() || "#0f3d6e";
+      var akzent = "#e30613";
       Object.keys(daten.hallen || {}).forEach(function (name) {
         var k = daten.hallen[name]; if (!k) return;
         var mein = !!meine[name];
@@ -3095,15 +3097,16 @@
   function standAnzeigen(d, lauf) {
     letzterLauf = lauf;
     if (lauf && lauf.stand) letzterStand = new Date(lauf.stand).toLocaleString("de-DE", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
-    var s = el("stand"); s.className = "stand";
-    s.textContent = d.spiele_gesamt + " Spiele · " + d.personen.length + " SR";
+    var s = el("stand"); s.className = "stand"; s.innerHTML = "";
+    var zahlen = d.spiele_gesamt + " Spiele · " + d.personen.length + " SR";
     if (lauf && lauf.stand) {
       var stand = new Date(lauf.stand), alter = (Date.now() - stand.getTime()) / 3600000, min = Math.round(alter * 60);
       var relativ = min < 1 ? "gerade eben" : min < 60 ? "vor " + min + " Min." : alter < 24 ? "vor " + Math.round(alter) + " Std." : stand.toLocaleString("de-DE", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
-      s.textContent = "Stand " + relativ + " · " + s.textContent;
-      s.title = "Letzter Lauf: " + stand.toLocaleString("de-DE");
-      if (alter > 6) { s.className = "stand alt"; s.textContent += " – lange nicht aktualisiert"; }
-    }
+      s.appendChild(document.createTextNode("Stand " + relativ));
+      var mehr = document.createElement("span"); mehr.className = "stand-mehr"; mehr.textContent = " · " + zahlen; s.appendChild(mehr);
+      s.title = "Letzter Lauf: " + stand.toLocaleString("de-DE") + " · " + zahlen;
+      if (alter > 6) { s.className = "stand alt"; s.appendChild(document.createTextNode(" – lange nicht aktualisiert")); }
+    } else s.textContent = zahlen;
   }
   function neuLaden() {
     return Promise.all([hole("daten.json"), hole("stand.json").catch(function () { return null; })])
@@ -3123,7 +3126,12 @@
       document.title = daten.titel; el("titel").textContent = (daten.titel || "Einteilungen").replace(/\s*ESRW\s*$/, ""); el("quelle").href = daten.quelle;
       standAnzeigen(daten, b[1]);
       el("fuss").textContent = "Termine beginnen " + daten.vorlauf_minuten + " Minuten vor Spielbeginn, damit du rechtzeitig an der Halle bist.";
-      einstellungenLaden(); filterLaden(); avatarKopf(); zeigeListe(""); funktionenLaden(); betreiberLaden(true).then(function () { korrekturenLaden(true); }); ausHash(); zeigeInstallHinweis(); zeigeNeu(); filterHoehe(); netzAnzeigen(); tourWennNeu();
+      einstellungenLaden(); filterLaden(); avatarKopf(); zeigeListe("");
+      // Erst die Funktions-Schalter (Cache sofort, Server kurz danach), dann routen - sonst
+      // landet ein Direktlink auf "Tausch" beim ersten Besuch faelschlich auf "abgeschaltet"
+      var geroutet = false, routen = function () { if (geroutet) return; geroutet = true; ausHash(); tourWennNeu(); };
+      funktionenLaden().then(routen); setTimeout(routen, 1500);
+      betreiberLaden(true).then(function () { korrekturenLaden(true); }); zeigeInstallHinweis(); zeigeNeu(); filterHoehe(); netzAnzeigen();
       setTimeout(zaehlerHolen, 1500);
     })
     .catch(function () { el("stand").className = "stand alt"; el("stand").textContent = "Daten konnten nicht geladen werden."; });

@@ -1241,6 +1241,25 @@ Januar erinnert ein Push daran. „Alles eingerichtet?“ fragt nicht mehr
 nach der Obmann-E-Mail (die bleibt nur für „Obmann anschreiben“ auf der
 Spielseite). Mehrfachauswahl: Verpflegung 14 € setzen/entfernen, CSV.
 
+### 10.6u Feinschliff-Runde (Bugfixes, Design, QoL)
+
+* Direktlink auf einen Bereich (z. B. `#mitglieder/tausch`) beim ersten
+  Besuch: erst die Funktions-Schalter laden, dann routen – vorher landete
+  man fälschlich auf „abgeschaltet“.
+* „In drei Schritten startklar“ und „Neu in der App“ erscheinen nur noch auf
+  der eigenen Startseite, nicht auf fremden Profilen oder Unterseiten.
+* Spielseite: „Weiteres“ als Zeilen mit Symbol und Pfeil („Zur Abrechnung
+  dieses Spiels“ springt direkt zur Zeile, „Obmann anschreiben“); Extras
+  (Fahrgemeinschaft, Gespann-Notizen, Notiz) mit Trennlinien statt
+  aufklappbarem Kopf.
+* Statistik-Kacheln passen zu viert in eine Reihe; Archiv-Kachel „HSR / LSR“
+  kürzer; Text-Absätze (`.meta`) mit Links brechen wieder normal um.
+* Dunkelmodus: Avatar-Initialen im Konto lesbar; Kartenmarker immer rot.
+* Formulare: Datumsfelder in zweispaltigen Feldern laufen nicht mehr über,
+  auf sehr schmalen Geräten einspaltig. Kopfzeile: „Stand vor 12 Min.“ –
+  die Zahlen stehen auf dem Handy im Tooltip.
+* Notizen leer → Knopf „Zum Spielplan“. Neuigkeiten-Karte aktualisiert.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

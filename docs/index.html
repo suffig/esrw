@@ -718,6 +718,30 @@
   .tour-punkte i { width:7px; height:7px; border-radius:50%; background:var(--linie); }
   .tour-punkte i.aktiv { background:var(--akzent); width:18px; border-radius:4px; }
   @media (prefers-reduced-motion: reduce) { .tour-karte { animation:none; } }
+  /* Feinschliff-Runde: Kacheln, Formulare, Extras-Abschnitte, Zeilen-Links */
+  .zahlen { grid-template-columns:repeat(auto-fit, minmax(70px, 1fr)); }
+  @media (max-width: 420px) { .mg-form .mg-felder.mg-zwei { grid-template-columns:1fr; } }
+  .extras > div > h4 { margin:14px 0 6px; padding-top:12px; border-top:1px solid var(--linie); font-size:.92rem; }
+  .extras > div > h4:first-child { border-top:0; padding-top:0; margin-top:0; }
+  .abschnitt-karte .extras summary { display:none; }
+  .zeile-link { display:flex; align-items:center; gap:10px; padding:10px 0; border-top:1px solid var(--linie); text-decoration:none; color:var(--text); font-weight:600; }
+  .zeile-link:first-child, .abschnitt-karte h4 + .zeile-link { border-top:0; }
+  .zeile-link::after { content:"›"; margin-left:auto; color:var(--dim); }
+  .zeile-link svg.i { width:18px; height:18px; color:var(--akzent); flex:none; }
+  .leer .anfrage.leer-aktion { text-decoration:none; }
+  .kandidat + .mg-form { margin-top:8px; }
+  .mg-untertabs { padding-bottom:6px; }
+  .mg-monat > span:first-child { min-width:0; }
+  .profilzeile .avatar-gross:not([style*="background"]) { color:var(--akzent-text); }
+  .zahl.karte b { overflow-wrap:anywhere; }
+  /* .meta ist nur mit Symbol davor eine Flex-Zeile - reiner Text soll normal umbrechen */
+  .meta:not(:has(> svg.i)) { display:block; }
+  .meta:not(:has(> svg.i)) > a { display:inline; }
+  @media (max-width: 480px) { .stand-mehr { display:none; } }
+  .mg-form .mg-felder { grid-template-columns:repeat(2, minmax(0, 1fr)); }
+  .mg-eintrag .mg-felder { grid-template-columns:repeat(3, minmax(0, 1fr)); }
+  .mg-felder label > input, .mg-felder label > select { min-width:0; width:100%; box-sizing:border-box; }
+  input[type=date], input[type=datetime-local] { min-width:0; -webkit-appearance:none; appearance:none; }
   /* Design 10: einheitliche Seitenkoepfe, kompaktere Spielkarten, leere Zustaende mit Aktion, Mehrfachauswahl */
   section:not(#detail):not(#mitglieder) > .profilzeile.karte { background:transparent; box-shadow:none; border:0; padding:6px 2px 12px; align-items:flex-start; }
   section:not(#detail):not(#mitglieder) > .profilzeile.karte > span:first-child b { font-size:1.45rem; letter-spacing:-.02em; line-height:1.15; }
@@ -1540,6 +1564,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=47"></script>
+<script src="app.js?v=48"></script>
 </body>
 </html>

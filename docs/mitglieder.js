@@ -2422,7 +2422,7 @@ window.Mitglieder = (function () {
         leeren(liste);
         var f = suche.value.trim().toLowerCase();
         var treffer = alle.filter(function (n) { return !f || (n.text + " " + n.paarung + " " + (n.liga || "") + " " + (n.halle || "")).toLowerCase().indexOf(f) >= 0; });
-        if (!treffer.length) liste.appendChild(h("p", { class: "leer", text: alle.length ? "Nichts gefunden." : "Noch keine Notizen. Auf jeder Spielseite gibt es „Meine Notiz“." }));
+        if (!treffer.length) liste.appendChild(h("p", { class: "leer" }, [alle.length ? "Nichts gefunden." : "Noch keine Notizen. Auf jeder Spielseite gibt es „Meine Notiz“.", alle.length ? null : h("a", { class: "anfrage leer-aktion", href: "#plan", text: "Zum Spielplan" })]));
         treffer.forEach(function (n) {
           var d = new Date(n.beginn);
           var ta = h("textarea", { rows: "3", maxlength: "4000" }); ta.value = n.text;
