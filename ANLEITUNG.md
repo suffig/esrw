@@ -1177,6 +1177,14 @@ sind davon nicht betroffen.
   mit flacher Leiste, sehr schmale Geräte (≤ 360 px) mit zweispaltigen
   Kacheln und kleinerem Titel.
 
+### 10.6q Schalter statt Häkchen
+
+Alle Ja/Nein-Optionen (Einstellungen, Startseite, Bereiche, Filter-Blatt,
+Abrechnungs-Details, Admin-Funktionen) sind jetzt große Schalter (46 × 28 px,
+ganze Zeile tippbar, Text links, Schalter rechts). Listen zum Abhaken
+(Spieltag-Checkliste) haben runde 28-px-Checks mit Haken. Dazu: feine
+Kartenkontur, größere Menü-Symbole, einheitliche Auswahlfelder mit Pfeil.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

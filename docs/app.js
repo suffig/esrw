@@ -2644,10 +2644,11 @@
     }
     wrap.appendChild(fort); wrap.appendChild(zaehler);
     vorlage.forEach(function (t) {
-      var l = document.createElement("label"), c = document.createElement("input"); c.type = "checkbox"; c.checked = !!stand[t];
+      var l = document.createElement("label"), c = document.createElement("input"); c.type = "checkbox"; c.className = "check"; c.checked = !!stand[t];
       l.className = c.checked ? "erledigt" : "";
       c.addEventListener("change", function () { stand[t] = c.checked; if (!c.checked) delete stand[t]; schreiben("check:" + kennung, JSON.stringify(stand)); l.className = c.checked ? "erledigt" : ""; aktualisieren(); });
-      l.appendChild(c); l.appendChild(document.createTextNode(t)); wrap.appendChild(l);
+      var tx = document.createElement("span"); tx.textContent = t;
+      l.appendChild(c); l.appendChild(tx); wrap.appendChild(l);
     });
     var bearb = document.createElement("button"); bearb.type = "button"; bearb.className = "textknopf"; bearb.textContent = "Vorlage bearbeiten";
     bearb.addEventListener("click", function () {

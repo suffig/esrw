@@ -481,7 +481,8 @@
   .status-liste { padding:6px 14px; }
   .status-liste div { display:flex; justify-content:space-between; gap:12px; padding:8px 0; border-top:1px solid var(--linie); font-size:.9rem; }
   .status-liste div:first-child { border-top:0; }
-  .status-liste span:last-child { text-align:right; color:var(--dim); word-break:break-all; }
+  .status-liste span:last-child { text-align:right; color:var(--dim); overflow-wrap:anywhere; word-break:normal; }
+  .status-liste span:first-child { flex:none; font-weight:600; }
 
   /* Schrift und Akzent im Fuss */
   .stufen { display:inline-flex; border:1px solid var(--linie); border-radius:99px; overflow:hidden; background:var(--karte); }
@@ -709,6 +710,51 @@
   .tour-punkte i { width:7px; height:7px; border-radius:50%; background:var(--linie); }
   .tour-punkte i.aktiv { background:var(--akzent); width:18px; border-radius:4px; }
   @media (prefers-reduced-motion: reduce) { .tour-karte { animation:none; } }
+  /* Design 9: Schalter statt Haekchen, grosse Checks in Listen, ruhigere Karten */
+  input[type=checkbox] { -webkit-appearance:none; appearance:none; margin:0; flex:none; cursor:pointer; }
+  /* Schalter (Einstellungen, Filter, Optionen) */
+  input[type=checkbox]:not(.check) { width:46px; height:28px; border-radius:99px; background:var(--linie); position:relative; transition:background .18s; border:0; }
+  input[type=checkbox]:not(.check)::after { content:""; position:absolute; top:3px; left:3px; width:22px; height:22px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.35); transition:transform .18s; }
+  input[type=checkbox]:not(.check):checked { background:var(--akzent); }
+  input[type=checkbox]:not(.check):checked::after { transform:translateX(18px); }
+  :root[data-theme="dark"] input[type=checkbox]:not(.check):checked, :root:not([data-theme="light"]) input[type=checkbox]:not(.check):checked { background:var(--gut); }
+  input[type=checkbox]:focus-visible { outline:2px solid var(--akzent); outline-offset:2px; }
+  input[type=checkbox]:disabled { opacity:.45; }
+  /* Grosse runde Checks fuer Listen (Checkliste) */
+  input[type=checkbox].check { width:28px; height:28px; border-radius:50%; border:2px solid var(--linie); background:var(--karte); position:relative; transition:background .15s, border-color .15s; }
+  input[type=checkbox].check:checked { background:var(--gut); border-color:var(--gut); }
+  input[type=checkbox].check:checked::after { content:""; position:absolute; left:9px; top:4px; width:7px; height:13px; border:solid #fff; border-width:0 3px 3px 0; transform:rotate(45deg); }
+  /* Zeilen mit Schalter: ganze Zeile tippbar, Text links, Schalter rechts */
+  .mg-check, .schalter { display:flex; align-items:center; gap:10px; min-height:44px; cursor:pointer; user-select:none; -webkit-user-select:none; }
+  .mg-check { font-size:.9rem; font-weight:600; }
+  .mg-schalter { display:flex; flex-direction:column; gap:0; margin-top:8px; }
+  .mg-schalter .mg-check { border-top:1px solid var(--linie); padding:2px 0; justify-content:space-between; flex-direction:row-reverse; }
+  .mg-schalter .mg-check:first-child { border-top:0; }
+  .filterblatt .schalter { justify-content:space-between; flex-direction:row-reverse; border-top:1px solid var(--linie); padding:2px 0; color:var(--text); font-size:.92rem; }
+  .filterblatt .schalter:first-child { border-top:0; }
+  .filterblatt .schalterzeile { display:block; margin:6px 0 0; }
+  .einstellungen-liste label { min-height:56px; padding:8px 0; }
+  .checkliste label { min-height:48px; padding:6px 0; font-size:.95rem; }
+  .checkliste label.erledigt { text-decoration:none; }
+  .checkliste label.erledigt span { text-decoration:line-through; }
+  .termin-antwort button.aktiv, .fahrt .meins button.aktiv { background:var(--akzent); color:var(--akzent-text); }
+  /* Karten: feine Kontur, etwas mehr Luft, weichere Schatten */
+  .karte { border:1px solid color-mix(in srgb, var(--linie) 70%, transparent); }
+  :root[data-theme="dark"] .karte, :root:not([data-theme="light"]) .karte { border-color:color-mix(in srgb, var(--linie) 60%, transparent); }
+  .abschnitt { margin-top:22px; }
+  .abschnitt small { font-weight:500; }
+  .melde.karte h4, .abschnitt-karte h4 { font-size:1rem; letter-spacing:-.01em; }
+  .menue a { padding:16px 14px; }
+  .menue a svg.i { width:40px; height:40px; padding:9px; border-radius:12px; background:var(--akzent-hell); color:var(--akzent); }
+  .menue-gruppe { margin:18px 4px 8px; }
+  .zahl.karte { padding:14px 10px; }
+  .zahl.karte b { font-size:1.35rem; letter-spacing:-.02em; }
+  .zahl.karte span { font-size:.72rem; letter-spacing:.02em; }
+  select, .mg-select { -webkit-appearance:none; appearance:none; background-image:linear-gradient(45deg, transparent 50%, var(--dim) 50%), linear-gradient(135deg, var(--dim) 50%, transparent 50%); background-position:calc(100% - 18px) 55%, calc(100% - 13px) 55%; background-size:5px 5px, 5px 5px; background-repeat:no-repeat; padding-right:30px !important; }
+  .mg-eintrag.offen { border-color:var(--akzent); }
+  .mg-eintrag .mg-kopf { padding-bottom:2px; }
+  .mg-summe { gap:10px; }
+  .mg-summe .mg-auf { margin-left:auto; }
   /* Mobile-Feinschliff: Tippflaechen, kein iOS-Zoom, Leiste, Toast mit Aktion */
   html { -webkit-text-size-adjust:100%; }
   body { -webkit-tap-highlight-color:transparent; }
@@ -1416,6 +1462,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=44"></script>
+<script src="app.js?v=45"></script>
 </body>
 </html>
