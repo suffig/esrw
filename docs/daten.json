@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 121,
+ "spiele_gesamt": 120,
  "saison": "2026/27",
  "archiv_spiele": 170,
  "rollen": {
@@ -529,34 +529,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-12T13:30:00+02:00",
-     "treffpunkt": "2026-09-12T12:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U13 RLB",
-     "paarung": "Herforder EV – Kölner Junghaie 1b",
-     "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-     "halle": "Eishalle Im Kleinen Felde",
-     "koordinaten": [
-      52.114893,
-      8.652028
-     ],
-     "gespann": [
-      {
-       "name": "Keller Alexander",
-       "slug": "keller-alexander",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-12T13:30:00+02:00|Herforder EV – Kölner Junghaie 1b",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-19T10:00:00+02:00",
      "treffpunkt": "2026-09-19T09:00:00+02:00",
      "rolle": "SR",
@@ -605,7 +577,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T13:30:00+02:00|Herforder EV – EHC Troisdorf",
@@ -1001,7 +973,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T13:30:00+02:00|Herforder EV – EHC Troisdorf",
@@ -2639,7 +2611,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T13:30:00+02:00|Düsseldorfer EG – NL U18",
@@ -3024,7 +2996,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T13:30:00+02:00|Krefelder EV 1b – EV Duisburg YAYLA Krefeld",
@@ -3234,7 +3206,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T13:30:00+02:00|Eisadler Dortmund – EHC Troisdorf",
@@ -4832,80 +4804,6 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T16:00:00+02:00|EV Duisburg – EJ Kassel",
-     "korrektur": null,
-     "manuell": false
-    }
-   ]
-  },
-  {
-   "slug": "keller-alexander",
-   "name": "Keller Alexander",
-   "varianten": [
-    "Keller Alexander"
-   ],
-   "statistik": {
-    "gesamt": 2,
-    "saison": 2,
-    "rollen": {
-     "SR": 2
-    },
-    "ligen": [
-     [
-      "U13 RLB",
-      1
-     ],
-     [
-      "U17 RL",
-      1
-     ]
-    ],
-    "hallen": [
-     [
-      "Eishalle Im Kleinen Felde",
-      2
-     ]
-    ],
-    "partner": [
-     [
-      "Berger, Eugen",
-      2
-     ]
-    ],
-    "je_saison": [
-     [
-      "2026/27",
-      2
-     ]
-    ],
-    "erste": "2026-09-12",
-    "letzte": "2026-09-12"
-   },
-   "spiele": [
-    {
-     "beginn": "2026-09-12T13:30:00+02:00",
-     "treffpunkt": "2026-09-12T12:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U13 RLB",
-     "paarung": "Herforder EV – Kölner Junghaie 1b",
-     "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-     "halle": "Eishalle Im Kleinen Felde",
-     "koordinaten": [
-      52.114893,
-      8.652028
-     ],
-     "gespann": [
-      {
-       "name": "Berger, Eugen",
-       "slug": "berger-eugen",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-12T13:30:00+02:00|Herforder EV – Kölner Junghaie 1b",
      "korrektur": null,
      "manuell": false
     }
@@ -7952,7 +7850,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T13:30:00+02:00|Eisadler Dortmund – EHC Troisdorf",
@@ -9736,7 +9634,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T13:30:00+02:00|Krefelder EV 1b – EV Duisburg YAYLA Krefeld",
@@ -12392,7 +12290,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T13:30:00+02:00|Düsseldorfer EG – NL U18",
@@ -12973,32 +12871,6 @@
   }
  ],
  "spiele": [
-  {
-   "beginn": "2026-09-12T13:30:00+02:00",
-   "treffpunkt": "2026-09-12T12:30:00+02:00",
-   "liga": "U13 RLB",
-   "paarung": "Herforder EV – Kölner Junghaie 1b",
-   "halle": "Eishalle Im Kleinen Felde",
-   "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Berger, Eugen",
-     "rolle": "SR",
-     "slug": "berger-eugen"
-    },
-    {
-     "name": "Keller Alexander",
-     "rolle": "SR",
-     "slug": "keller-alexander"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-12T13:30:00+02:00|Herforder EV – Kölner Junghaie 1b",
-   "korrektur": null,
-   "manuell": false
-  },
   {
    "beginn": "2026-09-12T15:00:00+02:00",
    "treffpunkt": "2026-09-12T14:00:00+02:00",
@@ -14184,7 +14056,7 @@
      "slug": "bruecker-tobias"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-19T13:30:00+02:00|Herforder EV – EHC Troisdorf",
    "korrektur": null,
    "manuell": false
@@ -14210,7 +14082,7 @@
      "slug": "schmidt-waldemar"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-19T13:30:00+02:00|Krefelder EV 1b – EV Duisburg YAYLA Krefeld",
    "korrektur": null,
    "manuell": false
@@ -14236,7 +14108,7 @@
      "slug": "pacalaj-erik"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-19T13:30:00+02:00|Eisadler Dortmund – EHC Troisdorf",
    "korrektur": null,
    "manuell": false
@@ -14262,7 +14134,7 @@
      "slug": "vorgeitz-benny"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-19T13:30:00+02:00|Düsseldorfer EG – NL U18",
    "korrektur": null,
    "manuell": false
