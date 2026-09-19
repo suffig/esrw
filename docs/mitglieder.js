@@ -1220,6 +1220,41 @@ window.Mitglieder = (function () {
     if (n) kurzMeldung(n + (n === 1 ? " Spiel" : " Spiele") + " automatisch vorbelegt – am Monatsende „Monat abschließen“.", "gut");
   }
 
+  // Monatsraster mit Betraegen je Tag; Tipp oeffnet die Zeile
+  var kalMonat = null;
+  function abrechnungKalender(spiele) {
+    var box = h("div", { class: "mg-kal" });
+    if (!kalMonat) { var jetzt = new Date(); kalMonat = new Date(jetzt.getFullYear(), jetzt.getMonth(), 1); }
+    function rendern() {
+      leeren(box);
+      var start = kalMonat, ende = new Date(start.getFullYear(), start.getMonth() + 1, 0);
+      var kopf = h("div", { class: "kopf2" }, [
+        h("button", { type: "button", class: "rund", text: "‹", onclick: function () { kalMonat = new Date(start.getFullYear(), start.getMonth() - 1, 1); rendern(); } }),
+        h("b", { text: MONATE[start.getMonth()] + " " + start.getFullYear() }),
+        h("button", { type: "button", class: "rund", text: "›", onclick: function () { kalMonat = new Date(start.getFullYear(), start.getMonth() + 1, 1); rendern(); } })]);
+      box.appendChild(kopf);
+      var raster = h("div", { class: "raster" });
+      ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"].forEach(function (w) { raster.appendChild(h("div", { class: "wt", text: w })); });
+      var vor = (start.getDay() + 6) % 7;
+      for (var i = 0; i < vor; i++) raster.appendChild(h("div", { class: "tag leer" }));
+      var heute = new Date().toDateString(), summe = 0;
+      for (var t = 1; t <= ende.getDate(); t++) {
+        var d = new Date(start.getFullYear(), start.getMonth(), t), key = d.toDateString();
+        var amTag = spiele.filter(function (sp) { return new Date(sp.beginn).toDateString() === key; });
+        var betrag = 0, alleFertig = amTag.length > 0, offenDa = false;
+        amTag.forEach(function (sp) { var e = einsaetze[sp.kennung]; var b = e ? (betragFuer(sp, e).betrag || 0) : 0; betrag += b; if (!erledigt(e) && b > 0) { offenDa = true; alleFertig = false; } if (!e) alleFertig = false; });
+        summe += betrag;
+        var zelle = h("div", { class: "tag" + (amTag.length ? " hat" : "") + (offenDa ? " offen" : alleFertig ? " fertig" : "") + (key === heute ? " heute" : "") }, [h("b", { text: String(t) }), amTag.length ? h("em", { text: betrag ? euro(betrag).replace(",00", "") : (amTag.length + "×") }) : null]);
+        if (amTag.length) (function (sp) { zelle.addEventListener("click", function () { abrechnungSprung(sp.kennung); rendereAbrechnung(); }); })(amTag[0]);
+        raster.appendChild(zelle);
+      }
+      box.appendChild(raster);
+      box.appendChild(h("p", { class: "meta", style: "margin:8px 0 0", text: MONATE[start.getMonth()] + ": " + euro(summe) + " · rot = offen, grün = abgerechnet · Tipp auf einen Tag öffnet das Spiel" }));
+    }
+    rendern();
+    return box;
+  }
+
   // Kilometermodell und Verpflegung direkt in der Abrechnung umschalten
   function abrechnungEinstellungen(spiele) {
     var einfach = (profil.km_modell || "einfach") === "einfach";
@@ -1346,7 +1381,8 @@ window.Mitglieder = (function () {
       }
     };
     var leiste = h("div", { class: "mg-leiste" });
-    [["detail", "Steuerjahre"], ["art", "Abrechnungsart"], ["werkzeuge", "Werkzeuge"], ["eintragen", "+ Spiel"], ["regeln", "Regeln"]].forEach(function (p) {
+    panelInhalt.kalender = function () { return abrechnungKalender(spiele); };
+    [["kalender", "Kalender"], ["detail", "Steuerjahre"], ["art", "Abrechnungsart"], ["werkzeuge", "Werkzeuge"], ["eintragen", "+ Spiel"], ["regeln", "Regeln"]].forEach(function (p) {
       leiste.appendChild(h("button", { type: "button", class: "filterknopf" + (abrechnungPanel === p[0] ? " aktiv" : ""), text: p[1], onclick: function () { abrechnungPanel = abrechnungPanel === p[0] ? null : p[0]; rendereAbrechnung(); } }));
     });
     inhalt.appendChild(leiste);
@@ -2985,6 +3021,9 @@ window.Mitglieder = (function () {
       return q.then(function (r) { return r.data || []; });
     }).catch(function () { return null; });
   }
+  function wohnortEigen() {
+    return bereit().then(function (st) { if (!st.eingerichtet || !session) return null; return sb.from("wohnorte").select("user_id").eq("user_id", session.user.id).maybeSingle().then(function (r) { return !!r.data; }); }).catch(function () { return null; });
+  }
   function telefonVon(slug) { var k = nummerVon(slug); if (!k) return null; var l = telefonLink(k.telefon); return { telefon: k.telefon, tel: l.tel, wa: l.wa }; }
   function mitfahrtSetzen(spiel, art, text) {
     if (!session || !profil) return Promise.resolve(false);
@@ -3043,5 +3082,5 @@ window.Mitglieder = (function () {
            extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat, obmann: obmann, termine: termine,
            einstellungenSpeichern: einstellungenSpeichern, radar: radar, angebotMachen: angebotMachen,
            kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl, kontoRendern: kontoRendern, kontaktVon: kontaktVon, istAdmin: istAdmin, korrekturSpeichern: korrekturSpeichern, spielManuellLoeschen: spielManuellLoeschen,
-           mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, telefonVon: telefonVon, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb };
+           mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, telefonVon: telefonVon, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb, wohnortEigen: wohnortEigen };
 })();

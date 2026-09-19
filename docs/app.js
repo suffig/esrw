@@ -422,6 +422,40 @@
     var a = document.createElement("a"); a.className = "hallenlink"; a.href = "#halle/" + hallenSlug(name); a.textContent = name; return a;
   }
 
+  // Wischen auf einer Spielkarte: nach rechts Route, nach links Abrechnen (eigenes,
+  // vergangenes Spiel) bzw. Spielseite. Kurze Vibration, wenn ausgeloest.
+  function wischAktionen(karteEl, s) {
+    if (!("ontouchstart" in window)) return;
+    var meins = !!(profil && profil.slug && ((s.besetzung || []).some(function (b) { return b.slug === profil.slug; }) || s.rolle));
+    var linksAktion = s.ort ? { text: "Route", icon: "i-route", tu: function () { window.open(kartenLink(s.ort), "_blank", "noopener"); } } : null;
+    var rechtsAktion = meins && s.vergangen && funktion("abrechnung") ? { text: "Abrechnen", icon: "i-euro", tu: function () { location.hash = "abrechnen/" + encodeURIComponent(kennungVon(s)); } }
+                     : meins && funktion("notizen") ? { text: "Notiz", icon: "i-note", tu: function () { location.hash = "spiel/" + encodeURIComponent(kennungVon(s)); } }
+                     : { text: "Details", icon: "i-list", tu: function () { location.hash = "spiel/" + encodeURIComponent(kennungVon(s)); } };
+    var l = document.createElement("div"); l.className = "wisch links"; if (linksAktion) { l.appendChild(ikone(linksAktion.icon)); l.appendChild(document.createTextNode(linksAktion.text)); }
+    var r = document.createElement("div"); r.className = "wisch rechts"; r.appendChild(ikone(rechtsAktion.icon)); r.appendChild(document.createTextNode(rechtsAktion.text));
+    karteEl.insertBefore(l, karteEl.firstChild); karteEl.insertBefore(r, karteEl.firstChild);
+    var x0 = null, y0 = null, dx = 0, aktiv = false;
+    karteEl.addEventListener("touchstart", function (ev) { if (ev.touches.length !== 1) return; x0 = ev.touches[0].clientX; y0 = ev.touches[0].clientY; dx = 0; aktiv = false; karteEl._gewischt = false; }, { passive: true });
+    karteEl.addEventListener("touchmove", function (ev) {
+      if (x0 === null) return;
+      var nx = ev.touches[0].clientX - x0, ny = ev.touches[0].clientY - y0;
+      if (!aktiv) { if (Math.abs(ny) > 12 && Math.abs(ny) > Math.abs(nx)) { x0 = null; return; } if (Math.abs(nx) < 14) return; aktiv = true; karteEl.classList.add("wischt"); }
+      dx = Math.max(-110, Math.min(110, nx)); if (dx > 0 && !linksAktion) dx = 0;
+      karteEl.style.transform = "translateX(" + dx + "px)";
+      l.style.opacity = dx > 30 ? Math.min(1, (dx - 30) / 40) : 0; r.style.opacity = dx < -30 ? Math.min(1, (-dx - 30) / 40) : 0;
+    }, { passive: true });
+    function ende() {
+      if (x0 === null) return;
+      var ausloesen = Math.abs(dx) >= 80 ? (dx > 0 ? linksAktion : rechtsAktion) : null;
+      karteEl.classList.remove("wischt"); karteEl.style.transform = ""; l.style.opacity = 0; r.style.opacity = 0;
+      if (aktiv) { karteEl._gewischt = true; setTimeout(function () { karteEl._gewischt = false; }, 400); }
+      x0 = null;
+      if (ausloesen) { if (navigator.vibrate) { try { navigator.vibrate(15); } catch (e) {} } setTimeout(ausloesen.tu, 120); }
+    }
+    karteEl.addEventListener("touchend", ende, { passive: true });
+    karteEl.addEventListener("touchcancel", ende, { passive: true });
+  }
+
   // Feste Farbe je Ligagruppe, damit U13 / RL / Frauen auf einen Blick unterscheidbar sind
   var LIGA_FARBEN = { U7: 195, U9: 175, U11: 150, U13: 120, U15: 90, U17: 60, U20: 35, RL: 260, LL: 290, BL: 320, DNL: 10, DA: 0, Frauen: 340 };
   function ligaFarbe(liga) {
@@ -690,7 +724,11 @@
     var mehr = document.createElement("div"); mehr.className = "meta"; mehr.style.marginTop = "6px"; mehr.style.color = "var(--akzent)"; mehr.textContent = "Details, Route, Tausch ›";
     d.appendChild(mehr);
     karteEl.classList.add("tippbar");
-    karteEl.addEventListener("click", function (ev) { if (ev.target.closest("a, button")) return; location.hash = "spiel/" + encodeURIComponent(kennungVon(s)); });
+    karteEl.addEventListener("click", function (ev) { if (ev.target.closest("a, button") || karteEl._gewischt) return; location.hash = "spiel/" + encodeURIComponent(kennungVon(s)); });
+    // Rollen-Kante: eigene Rolle (Start) oder meine Rolle in der Besetzung (Spielplan)
+    var meineRolle = s.rolle || (profil && profil.slug && (s.besetzung || []).filter(function (b) { return b.slug === profil.slug; })[0] || {}).rolle;
+    if (meineRolle) karteEl.classList.add("rolle-" + meineRolle);
+    wischAktionen(karteEl, s);
     karteEl._spiel = s;
     return karteEl;
   }
@@ -1848,6 +1886,7 @@
     el("laden").onclick = function () { location.href = feedUrl(p.slug, location.protocol); };
     zeigeHeld(p);
     zeigeSchnellzugriff(p, meins);
+    zeigeEinrichtung(p, meins);
     zeigeUebersicht(p);
     zeigeNachtrag(p);
     var ziel = el("spiele"); ziel.innerHTML = "";
@@ -1878,6 +1917,51 @@
       .then(function (hm) { if (hm) el("abfahrt-ics").classList.remove("versteckt"); }).catch(function () {});
     if (profil && profil.slug === p.slug) pruefeNeue(p, false);
     if (!stillesNachladen && sprungZiel === null) window.scrollTo(0, 0);
+  }
+
+  // "Alles eingerichtet?": fehlende Schritte mit Direktlink, verschwindet, wenn alles da ist
+  function zeigeEinrichtung(p, meins) {
+    var box = el("einrichtung"); box.innerHTML = ""; box.className = "versteckt";
+    if (!meins || !startEinstellung("einrichtung") || startEinstellung("ruhig")) return;
+    var weg = lesen("einrichtung-weg"); if (weg && Date.now() - parseInt(weg, 10) < 14 * 86400000) return;
+    var lauf = box._lauf = {};
+    var punkte = [];
+    punkte.push({ ok: lesen("abo-geklickt") === "1", titel: "Kalender abonnieren", text: "Spiele automatisch im iPhone-Kalender", href: "#", tu: function () { var kb = el("kalender-box"); if (kb) { kb.open = true; kb.scrollIntoView({ behavior: "smooth", block: "center" }); } } });
+    var alsApp = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+    var pushOk = ("Notification" in window) && Notification.permission === "granted";
+    if (funktion("push")) punkte.push({ ok: pushOk, titel: alsApp ? "Push einschalten" : "Als App ablegen und Push einschalten", text: "Änderungen, Spieltag, Abfahrt", href: "#einstellungen" });
+    if (!sitzungVorhanden()) {
+      punkte.push({ ok: false, titel: "Konto anlegen", text: "Abrechnung, Notizen, Checkliste, Push auf allen Geräten", href: "#mitglieder" });
+      rendern();
+      return;
+    }
+    ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) {
+      if (!st.eingerichtet || !st.session) return null;
+      return Promise.all([window.Mitglieder.heimat(), window.Mitglieder.obmann(), window.Mitglieder.wohnortEigen ? window.Mitglieder.wohnortEigen() : null, window.Mitglieder.zaehler()]);
+    }).then(function (r) {
+      if (!r || box._lauf !== lauf) return;
+      if (funktion("abrechnung")) punkte.push({ ok: !!r[0], titel: "Heimatadresse", text: "für Strecken, Abfahrtszeit, km in der Abrechnung", href: "#einstellungen" });
+      if (funktion("abrechnung")) punkte.push({ ok: !!r[1], titel: "Obmann-E-Mail", text: "für „Monat abschließen“", href: "#einstellungen" });
+      if (funktion("gespann")) punkte.push({ ok: !!r[2], titel: "Wohnort teilen (freiwillig)", text: "damit „Zusammen fahren“ vorschlagen kann", href: "#einstellungen" });
+      rendern();
+    }).catch(function () { rendern(); });
+    function rendern() {
+      var offen = punkte.filter(function (x) { return !x.ok; });
+      if (!offen.length) { schreiben("einrichtung-weg", String(Date.now() + 365 * 86400000)); return; }
+      box.className = "karte einrichtung";
+      var kz = document.createElement("div"); kz.className = "kopfzeile";
+      var hh = document.createElement("h4"); hh.appendChild(ikone("i-check")); hh.appendChild(document.createTextNode("Alles eingerichtet? " + (punkte.length - offen.length) + " von " + punkte.length)); kz.appendChild(hh);
+      var zu = document.createElement("button"); zu.type = "button"; zu.className = "textknopf"; zu.textContent = "Später"; zu.addEventListener("click", function () { schreiben("einrichtung-weg", String(Date.now())); box.className = "versteckt"; }); kz.appendChild(zu);
+      box.appendChild(kz);
+      var fort = document.createElement("div"); fort.className = "fortschritt"; var fi = document.createElement("i"); fi.style.width = Math.round((punkte.length - offen.length) / punkte.length * 100) + "%"; fort.appendChild(fi); box.appendChild(fort);
+      offen.forEach(function (x) {
+        var a = document.createElement("a"); a.className = "punkt"; a.href = x.href;
+        if (x.tu) a.addEventListener("click", function (ev) { ev.preventDefault(); x.tu(); });
+        var t = document.createElement("span"); var b = document.createElement("b"); b.textContent = x.titel; var sm = document.createElement("small"); sm.textContent = x.text; t.appendChild(b); t.appendChild(sm); a.appendChild(t);
+        var pf = document.createElement("span"); pf.className = "meta"; pf.textContent = "›"; a.appendChild(pf);
+        box.appendChild(a);
+      });
+    }
   }
 
   // Schnellzugriff unter der Kopfkarte: die Kernfunktionen mit einem Tipp
@@ -2778,6 +2862,7 @@
   var START_BAUSTEINE = [
     ["ruhig", "Nur nächstes Spiel", "ganz ruhige Startseite: Kopfkarte und deine Spiele, sonst nichts", false],
     ["schnell", "Schnellzugriff", "eine Reihe Knöpfe unter der Kopfkarte: Abrechnung, Archiv, Zusammen fahren, Änderungen …", true],
+    ["einrichtung", "„Alles eingerichtet?“", "zeigt fehlende Schritte (Kalender, Push, Heimatadresse, Wohnort, Obmann) mit Direktlink", true],
     ["danach", "„Danach“ auf der Karte oben", "das übernächste Spiel in einer Zeile", false],
     ["wetter", "Wetter auf der Karte oben", "zum Treffpunkt, mit Glättehinweis", true, "wetter"],
     ["abfahrt", "Abfahrtszeit auf der Karte oben", "braucht die Heimatadresse im Konto", true],
@@ -2905,7 +2990,23 @@
     }
   });
   window.addEventListener("hashchange", ausHash);
-  el("plan-filter-knopf").addEventListener("click", function () { el("plan-filter-blatt").classList.toggle("versteckt"); filterHoehe(); });
+  function filterBlatt(offen) {
+    var b = el("plan-filter-blatt"), hg = el("blatt-hintergrund");
+    if (offen) { b.classList.remove("versteckt"); hg.classList.remove("versteckt"); setTimeout(function () { b.classList.add("offen"); }, 20); document.body.style.overflow = "hidden"; }
+    else { b.classList.remove("offen"); hg.classList.add("versteckt"); document.body.style.overflow = ""; setTimeout(function () { if (!b.classList.contains("offen")) b.classList.add("versteckt"); }, 300); }
+    filterHoehe();
+  }
+  el("plan-filter-knopf").addEventListener("click", function () { filterBlatt(el("plan-filter-blatt").classList.contains("versteckt")); });
+  el("plan-filter-zu").addEventListener("click", function () { filterBlatt(false); });
+  el("blatt-hintergrund").addEventListener("click", function () { filterBlatt(false); });
+  document.addEventListener("keydown", function (ev) { if (ev.key === "Escape" && !el("plan-filter-blatt").classList.contains("versteckt")) filterBlatt(false); });
+  // Blatt nach unten wischen schliesst
+  (function () { var y0 = null; var b = el("plan-filter-blatt");
+    b.addEventListener("touchstart", function (ev) { if (b.scrollTop <= 0 && ev.touches.length === 1) y0 = ev.touches[0].clientY; }, { passive: true });
+    b.addEventListener("touchend", function (ev) { if (y0 !== null && ev.changedTouches[0].clientY - y0 > 80) filterBlatt(false); y0 = null; }, { passive: true });
+  })();
+  // 1) Leichte Vibration bei Schaltern (Android)
+  document.addEventListener("change", function (ev) { if (ev.target && ev.target.type === "checkbox" && navigator.vibrate) { try { navigator.vibrate(8); } catch (e) {} } });
   el("plan-teilen").addEventListener("click", function () {
     var liste = planGefiltert(false).filter(function (s) { return !s.vergangen; }).slice(0, 40);
     if (!liste.length) { toast("Nichts zu teilen.", ""); return; }

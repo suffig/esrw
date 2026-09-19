@@ -63,8 +63,16 @@
     :root:not([data-theme="light"])[data-akzent="orange"] { --akzent:#f2b06a; --akzent-hell:#3a2410; --sr:#f2b06a; --sr-bg:#3a2410; --akzent-text:#1e1004; }
   }
   html { font-size:16px; }
-  html[data-schrift="klein"] { font-size:14.5px; }
-  html[data-schrift="gross"] { font-size:18px; }
+  /* Systemschrift-Groesse (iOS Dynamic Type) respektieren; Schriftstufe der App relativ dazu */
+  @supports (font: -apple-system-body) {
+    html { font: -apple-system-body; font-family:inherit; }
+    html[data-schrift="klein"] { font-size:calc(1em * .9); }
+    html[data-schrift="gross"] { font-size:calc(1em * 1.12); }
+  }
+  @supports not (font: -apple-system-body) {
+    html[data-schrift="klein"] { font-size:14.5px; }
+    html[data-schrift="gross"] { font-size:18px; }
+  }
 
   * { box-sizing:border-box; }
   html { -webkit-text-size-adjust:100%; }
@@ -710,6 +718,47 @@
   .tour-punkte i { width:7px; height:7px; border-radius:50%; background:var(--linie); }
   .tour-punkte i.aktiv { background:var(--akzent); width:18px; border-radius:4px; }
   @media (prefers-reduced-motion: reduce) { .tour-karte { animation:none; } }
+  /* Bottom-Sheet (Filter), Wisch-Aktionen, Rollen-Kante, Einrichtungs-Check, Abrechnungs-Kalender */
+  .blatt { position:fixed; left:0; right:0; bottom:0; z-index:45; margin:0 auto; max-width:640px; max-height:82vh; overflow:auto; border-radius:22px 22px 0 0; padding:8px 16px calc(16px + env(safe-area-inset-bottom)); box-shadow:0 -12px 40px rgba(0,0,0,.25); transform:translateY(102%); transition:transform .28s cubic-bezier(.2,.8,.2,1); }
+  .blatt.versteckt { display:flex !important; pointer-events:none; }
+  .blatt.offen { transform:none; }
+  .blatt-griff { width:40px; height:5px; border-radius:3px; background:var(--linie); margin:2px auto 8px; }
+  .blatt-kopf { display:flex; justify-content:space-between; align-items:center; padding-bottom:6px; }
+  .blatt-kopf b { font-size:1.05rem; }
+  .blatt-hintergrund { position:fixed; inset:0; z-index:44; background:rgba(8,12,24,.45); backdrop-filter:blur(2px); }
+  .blatt-hintergrund.versteckt { display:none; }
+  @media (prefers-reduced-motion: reduce) { .blatt { transition:none; } }
+  .spiel.karte { position:relative; touch-action:pan-y; }
+  .spiel.karte.wischt { transition:none; }
+  .spiel.karte .wisch { position:absolute; top:0; bottom:0; width:96px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; font-size:.7rem; font-weight:800; color:#fff; border-radius:var(--radius); opacity:0; pointer-events:none; }
+  .spiel.karte .wisch.links { left:0; background:var(--akzent); }
+  .spiel.karte .wisch.rechts { right:0; background:var(--gut); }
+  .spiel.karte .wisch svg.i { width:22px; height:22px; }
+  .spiel.karte .inhalt, .spiel.karte .wann { position:relative; z-index:1; background:inherit; }
+  .spiel.karte.rolle-SR { border-left:4px solid var(--sr); }
+  .spiel.karte.rolle-HSR { border-left:4px solid var(--rot); }
+  .spiel.karte.rolle-LSR { border-left:4px solid var(--lsr); }
+  .einrichtung { margin-bottom:14px; }
+  .einrichtung h4 { margin:0 0 6px; display:flex; align-items:center; gap:8px; font-size:.95rem; }
+  .einrichtung a.punkt { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:9px 0; border-top:1px solid var(--linie); text-decoration:none; color:inherit; font-size:.9rem; }
+  .einrichtung a.punkt:first-of-type { border-top:0; }
+  .einrichtung a.punkt b { display:block; }
+  .einrichtung a.punkt small { color:var(--dim); display:block; }
+  .einrichtung .fortschritt { height:6px; border-radius:3px; background:var(--linie); overflow:hidden; margin:4px 0 8px; }
+  .einrichtung .fortschritt i { display:block; height:100%; background:var(--gut); }
+  .einrichtung .kopfzeile { display:flex; justify-content:space-between; align-items:center; }
+  .mg-kal { }
+  .mg-kal .kopf2 { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+  .mg-kal .raster { display:grid; grid-template-columns:repeat(7, 1fr); gap:4px; }
+  .mg-kal .wt { font-size:.68rem; font-weight:800; color:var(--dim); text-align:center; text-transform:uppercase; }
+  .mg-kal .tag { min-height:52px; border-radius:10px; background:var(--bg); padding:4px 3px; font-size:.7rem; display:flex; flex-direction:column; align-items:center; gap:2px; border:1px solid transparent; }
+  .mg-kal .tag.leer { background:transparent; }
+  .mg-kal .tag.hat { background:var(--karte); border-color:var(--linie); cursor:pointer; }
+  .mg-kal .tag.hat.offen { border-color:var(--rot); }
+  .mg-kal .tag.hat.fertig { border-color:var(--gut); }
+  .mg-kal .tag b { font-size:.8rem; }
+  .mg-kal .tag em { font-style:normal; font-weight:800; font-size:.68rem; }
+  .mg-kal .tag.heute b { color:var(--rot); }
   /* Design 9: Schalter statt Haekchen, grosse Checks in Listen, ruhigere Karten */
   input[type=checkbox] { -webkit-appearance:none; appearance:none; margin:0; flex:none; cursor:pointer; }
   /* Schalter (Einstellungen, Filter, Optionen) */
@@ -1197,7 +1246,9 @@
         <button type="button" class="textknopf" id="plan-heute">Heute ↓</button>
         <span class="schalter" id="plan-zaehler"></span>
       </div>
-      <div class="filterblatt karte versteckt" id="plan-filter-blatt">
+      <div class="filterblatt karte blatt versteckt" id="plan-filter-blatt">
+        <div class="blatt-griff" aria-hidden="true"></div>
+        <div class="blatt-kopf"><b>Filter</b><button type="button" class="textknopf" id="plan-filter-zu">Fertig</button></div>
         <label class="schalter"><input type="checkbox" id="plan-vergangene"> vergangene Spiele</label>
         <label class="schalter"><input type="checkbox" id="plan-offen"> nur unbesetzte</label>
         <label class="schalter versteckt" id="plan-hallen-label"><input type="checkbox" id="plan-hallen"> meine Hallen</label>
@@ -1245,6 +1296,7 @@
     <div id="held"></div>
     <div id="heute"></div>
     <div id="schnellzugriff" class="schnellzugriff versteckt"></div>
+    <div id="einrichtung" class="versteckt"></div>
     <div id="uebersicht" class="uebersicht"></div>
     <div id="radar"></div>
     <div id="nachtrag"></div>
@@ -1435,6 +1487,7 @@
   </footer>
 </main>
 
+<div class="blatt-hintergrund versteckt" id="blatt-hintergrund"></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div class="tour versteckt" id="tour" role="dialog" aria-modal="true" aria-labelledby="tour-titel">
   <div class="tour-karte">
@@ -1462,6 +1515,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=45"></script>
+<script src="app.js?v=46"></script>
 </body>
 </html>

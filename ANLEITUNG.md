@@ -1185,6 +1185,26 @@ ganze Zeile tippbar, Text links, Schalter rechts). Listen zum Abhaken
 (Spieltag-Checkliste) haben runde 28-px-Checks mit Haken. Dazu: feine
 Kartenkontur, größere Menü-Symbole, einheitliche Auswahlfelder mit Pfeil.
 
+### 10.6r Wischen, Bottom-Sheet, Abrechnungs-Kalender, Rollen-Kante, Einrichtungs-Check, Systemschrift
+
+* **Wischen auf Spielkarten** (Start und Spielplan): nach rechts → Route,
+  nach links → „Abrechnen“ (eigenes vergangenes Spiel), sonst Notiz/Details;
+  kurze Vibration auf Android, ebenso bei jedem Schalter.
+* **Filter als Bottom-Sheet:** Das Filter-Blatt im Spielplan schiebt sich
+  von unten hoch (Griff, „Fertig“, Hintergrund antippen oder nach unten
+  wischen schließt, Escape am Desktop).
+* **Abrechnung → Kalender:** Monatsraster mit Betrag je Tag (rot = offen,
+  grün = abgerechnet), Tipp auf einen Tag öffnet die Zeile.
+* **Rollen-Kante:** Spielkarten haben links einen Streifen in Rollenfarbe
+  (SR schwarz, HSR rot, LSR grau) – im Spielplan nach deiner Rolle in der
+  Besetzung.
+* **„Alles eingerichtet?“** auf Start (Baustein, abschaltbar): zeigt nur die
+  fehlenden Schritte – Kalender-Abo, Push/App, Konto, Heimatadresse,
+  Obmann-E-Mail, Wohnort – mit Fortschritt und Direktlink; „Später“ blendet
+  14 Tage aus, komplett eingerichtet verschwindet die Karte.
+* **Systemschrift:** Die App folgt der iOS-Textgröße (Dynamic Type); die
+  eigene Schriftstufe (A−/A/A+) wirkt relativ dazu.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –
