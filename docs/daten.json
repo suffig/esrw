@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 115,
+ "spiele_gesamt": 113,
  "saison": "2026/27",
  "archiv_spiele": 170,
  "rollen": {
@@ -1558,34 +1558,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-12T19:30:00+02:00",
-     "treffpunkt": "2026-09-12T18:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "LL FS",
-     "paarung": "EHC Troisdorf – TuS Wiehl",
-     "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-     "halle": "ICEDOME Troisdorf",
-     "koordinaten": [
-      50.811945,
-      7.109233
-     ],
-     "gespann": [
-      {
-       "name": "Krawinkel, Markus",
-       "slug": "krawinkel-markus",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-12T19:30:00+02:00|EHC Troisdorf – TuS Wiehl",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-26T19:15:00+02:00",
      "treffpunkt": "2026-09-26T18:15:00+02:00",
      "rolle": "SR",
@@ -3101,34 +3073,6 @@
     "letzte": "2026-09-26"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-12T19:30:00+02:00",
-     "treffpunkt": "2026-09-12T18:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U13 FS",
-     "paarung": "Krefelder EV – Löwen Frankfurt",
-     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-     "halle": "Rheinlandhalle Krefeld",
-     "koordinaten": [
-      51.339877,
-      6.540168
-     ],
-     "gespann": [
-      {
-       "name": "Pacalaj, Erik",
-       "slug": "pacalaj-erik",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-12T19:30:00+02:00|Krefelder EV – Löwen Frankfurt",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-19T13:30:00+02:00",
      "treffpunkt": "2026-09-19T12:30:00+02:00",
@@ -5274,34 +5218,6 @@
     "letzte": "2026-09-27"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-12T19:30:00+02:00",
-     "treffpunkt": "2026-09-12T18:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "LL FS",
-     "paarung": "EHC Troisdorf – TuS Wiehl",
-     "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-     "halle": "ICEDOME Troisdorf",
-     "koordinaten": [
-      50.811945,
-      7.109233
-     ],
-     "gespann": [
-      {
-       "name": "Engler, Gerhard",
-       "slug": "engler-gerhard",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-12T19:30:00+02:00|EHC Troisdorf – TuS Wiehl",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-13T08:00:00+02:00",
      "treffpunkt": "2026-09-13T07:00:00+02:00",
@@ -7515,7 +7431,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T19:30:00+02:00|Iserlohner EC – ES Weißwasser",
@@ -7605,34 +7521,6 @@
     "letzte": "2026-09-27"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-12T19:30:00+02:00",
-     "treffpunkt": "2026-09-12T18:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U13 FS",
-     "paarung": "Krefelder EV – Löwen Frankfurt",
-     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-     "halle": "Rheinlandhalle Krefeld",
-     "koordinaten": [
-      51.339877,
-      6.540168
-     ],
-     "gespann": [
-      {
-       "name": "Heffler, Zsolt",
-       "slug": "heffler-zsolt",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-12T19:30:00+02:00|Krefelder EV – Löwen Frankfurt",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-13T12:30:00+02:00",
      "treffpunkt": "2026-09-13T11:30:00+02:00",
@@ -11702,7 +11590,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T19:30:00+02:00|Iserlohner EC – ES Weißwasser",
@@ -12591,58 +12479,6 @@
   }
  ],
  "spiele": [
-  {
-   "beginn": "2026-09-12T19:30:00+02:00",
-   "treffpunkt": "2026-09-12T18:30:00+02:00",
-   "liga": "U13 FS",
-   "paarung": "Krefelder EV – Löwen Frankfurt",
-   "halle": "Rheinlandhalle Krefeld",
-   "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Pacalaj, Erik",
-     "rolle": "SR",
-     "slug": "pacalaj-erik"
-    },
-    {
-     "name": "Heffler, Zsolt",
-     "rolle": "SR",
-     "slug": "heffler-zsolt"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-12T19:30:00+02:00|Krefelder EV – Löwen Frankfurt",
-   "korrektur": null,
-   "manuell": false
-  },
-  {
-   "beginn": "2026-09-12T19:30:00+02:00",
-   "treffpunkt": "2026-09-12T18:30:00+02:00",
-   "liga": "LL FS",
-   "paarung": "EHC Troisdorf – TuS Wiehl",
-   "halle": "ICEDOME Troisdorf",
-   "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Engler, Gerhard",
-     "rolle": "SR",
-     "slug": "engler-gerhard"
-    },
-    {
-     "name": "Krawinkel, Markus",
-     "rolle": "SR",
-     "slug": "krawinkel-markus"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-12T19:30:00+02:00|EHC Troisdorf – TuS Wiehl",
-   "korrektur": null,
-   "manuell": false
-  },
   {
    "beginn": "2026-09-12T20:00:00+02:00",
    "treffpunkt": "2026-09-12T19:00:00+02:00",
@@ -13833,7 +13669,7 @@
      "slug": "van-himbeeck-frederic"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-19T19:30:00+02:00|Iserlohner EC – ES Weißwasser",
    "korrektur": null,
    "manuell": false

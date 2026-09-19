@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:c815d83ce48204182ff27de7cb964af501cf7e04@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260912T163000Z
-DTEND:20260912T200000Z
-SUMMARY:SR · LL FS · EHC Troisdorf – TuS Wiehl
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
-  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: LL FS\nHalle: ICEDOME Troisdorf
- \nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Engler\, Ge
- rhard\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
-GEO:50.811945;7.109233
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
- rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
- isdorf":geo:50.811945,7.109233
-END:VEVENT
-BEGIN:VEVENT
 UID:ce557fae9c6496c443ec68774a2e44948df32338@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z

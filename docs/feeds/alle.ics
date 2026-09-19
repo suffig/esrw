@@ -8,48 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:37d132bf7d0daa752031611b8ab903db337461be@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260912T163000Z
-DTEND:20260912T200000Z
-SUMMARY:LL FS · EHC Troisdorf – TuS Wiehl
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
-  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: LL FS\nHalle: ICEDOME Troisdorf
- \nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Krawinkel\,
-  Markus\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
-GEO:50.811945;7.109233
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
- rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
- isdorf":geo:50.811945,7.109233
-END:VEVENT
-BEGIN:VEVENT
-UID:c6929d65ea3d520cf5fec8df1808001e434caa15@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260912T163000Z
-DTEND:20260912T200000Z
-SUMMARY:U13 FS · Krefelder EV – Löwen Frankfurt
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
-  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 FS\nHalle: Rheinlandhalle K
- refeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Pacalaj\, E
- rik\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
-GEO:51.339877;6.540168
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
- stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
- le Krefeld":geo:51.339877,6.540168
-END:VEVENT
-BEGIN:VEVENT
 UID:fa868416464da1b67ecbb9c46da08a70cbe3d449@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z
@@ -1009,12 +967,6 @@ GEO:51.384598;7.713829
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
  , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
  alle am Seilersee":geo:51.384598,7.713829
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U17 I · Iserlohner EC – ES We
- ißwasser
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:10f366469bd4642adff7d42b21bee9ca1f88fc02@esrw.de
