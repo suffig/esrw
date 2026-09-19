@@ -590,6 +590,55 @@ def _zeit(iso):
     return d.astimezone(BERLIN) if BERLIN else d
 
 
+def tabelle_schreiben(pfad, zeilen):
+    """Upsert in eine Supabase-Tabelle - nur mit dem Service-Schluessel aus
+    dem Workflow (Secrets). Ohne ihn passiert nichts."""
+    url = os.environ.get("SUPABASE_URL", "").strip()
+    schluessel = os.environ.get("SUPABASE_SERVICE_KEY", "").strip()
+    if not url or not schluessel or not zeilen:
+        return False
+    for i in range(0, len(zeilen), 200):
+        anfrage = urllib.request.Request(
+            url.rstrip("/") + "/rest/v1/" + pfad, method="POST",
+            data=json.dumps(zeilen[i:i + 200], ensure_ascii=False).encode("utf-8"),
+            headers={"apikey": schluessel, "Authorization": "Bearer " + schluessel,
+                     "Content-Type": "application/json",
+                     "Prefer": "resolution=merge-duplicates,return=minimal"})
+        with urllib.request.urlopen(anfrage, timeout=60):
+            pass
+    return True
+
+
+def archiv_in_db(historie, uebersicht, personen, stand):
+    """Alle Spiele aller Personen dauerhaft in der Datenbank (spiele_archiv):
+    das komplette Archiv plus das aktuelle Datenfenster, je Lauf per Upsert."""
+    schluessel_slug = {p["schluessel"]: p["slug"] for p in personen}
+    def slug_fuer(name):
+        return schluessel_slug.get(personen_schluessel(name)) or slug_aus(name)
+    zeilen = {}
+    for e in historie.values():
+        try:
+            beginn = datetime.fromisoformat(e["beginn"])
+        except (KeyError, ValueError):
+            continue
+        besetzung = [{"name": n, "rolle": r, "slug": slug_fuer(n)} for n, r in rollen_fuer(e.get("besetzung") or {})]
+        kennung = e["beginn"] + "|" + e.get("paarung", "")
+        zeilen[kennung] = {
+            "kennung": kennung, "beginn": e["beginn"], "liga": e.get("liga") or None, "paarung": e.get("paarung") or None,
+            "halle": e.get("halle") or None, "system": len(besetzung), "besetzung": besetzung,
+            "slugs": [b["slug"] for b in besetzung if b["slug"]], "saison": saison_von(beginn), "manuell": False,
+            "stand": stand.isoformat()}
+    for s in uebersicht:
+        besetzung = [{"name": b["name"], "rolle": b["rolle"], "slug": b.get("slug") or slug_aus(b["name"])} for b in s["besetzung"]]
+        zeilen[s["id"]] = {
+            "kennung": s["id"], "beginn": s["anstoss"].isoformat(), "liga": s["liga"] or None, "paarung": s["paarung"],
+            "halle": s["halle_name"] or None, "system": s["system"], "besetzung": besetzung,
+            "slugs": [b["slug"] for b in besetzung if b["slug"]], "saison": saison_von(s["anstoss"]),
+            "manuell": bool(s.get("manuell")), "stand": stand.isoformat()}
+    if tabelle_schreiben("spiele_archiv?on_conflict=kennung", list(zeilen.values())):
+        print("Archiv in der Datenbank: %d Spiele." % len(zeilen))
+
+
 def betreiber_daten(cfg, venues):
     """Hallen, Vereine, manuelle Spiele und offizielle Hallen-Hinweise aus
     Supabase in venues bzw. die Spielliste einarbeiten."""
@@ -1104,6 +1153,11 @@ def main():
     stats, saison = statistik_aus_historie(historie, stand)
     print("Archiv: %d Spiele insgesamt (%d neu), Saison %s."
           % (len(historie), frisch, saison))
+
+    try:
+        archiv_in_db(historie, uebersicht, personen, stand)
+    except Exception as e:
+        print("  ! Archiv nicht in die Datenbank geschrieben: %s" % str(e)[:120], file=sys.stderr)
 
     eigene_slugs = {slug_aus(n) for n in cfg.get("eigene_namen", [])}
     eigene_slugs |= {p["slug"] for p in personen

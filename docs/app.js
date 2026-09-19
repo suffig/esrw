@@ -1864,7 +1864,7 @@
   }
 
   function ansicht(name) {
-    ["auswahl", "detail", "plan", "mitglieder", "halle", "status", "spiel", "mehr", "einstellungen", "karte", "statseite", "aenderungen"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
+    ["auswahl", "detail", "plan", "mitglieder", "halle", "status", "spiel", "mehr", "einstellungen", "karte", "statseite", "aenderungen", "mitfahren"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
     var reiter = (location.hash.split("/")[1] || "");
     if (name !== "auswahl" && name !== "detail") { el("onboarding").classList.add("versteckt"); el("onboarding-kurz").classList.add("versteckt"); }
     el("tab-meine").classList.toggle("aktiv", name === "auswahl" || name === "detail" || name === "spiel" || name === "statseite");
@@ -1971,6 +1971,105 @@
       hw.parentNode.insertBefore(ob, hw);
     }
     window.scrollTo(0, 0);
+  }
+
+  // ------------------------------------------------------ Zusammen fahren
+  // Je eigenem Spiel der naechsten 14 Tage: wer ist am selben Tag in derselben
+  // Halle (Gespann und andere Spiele), wer bietet oder sucht eine Mitfahrt,
+  // Anruf-Knoepfe, eigener Status. Dazu eine Karte mit Hallen und Zuhause.
+  var mitfahrKarte = null;
+  function zeigeMitfahren() {
+    ansicht("mitfahren"); aktuell = null; window.scrollTo(0, 0);
+    var liste = el("mitfahren-liste"); liste.innerHTML = "";
+    var kd = el("mitfahren-karte"); kd.classList.add("versteckt");
+    if (!profil || !profil.slug || !personMit(profil.slug)) { liste.appendChild(leerZustand("Erst deinen Namen wählen.")); return; }
+    if (!sitzungVorhanden()) { var a = document.createElement("a"); a.href = "#mitglieder"; a.className = "hinweis"; a.style.display = "flex"; a.style.textDecoration = "none"; a.style.color = "inherit"; a.appendChild(ikone("i-lock")); var t = document.createElement("span"); t.textContent = "Anmelden, um Mitfahrten zu sehen, anzubieten oder zu suchen ›"; a.appendChild(t); liste.appendChild(a); return; }
+    var me = personMit(profil.slug), bis = Date.now() + 14 * 86400000;
+    var meine = me.spiele.filter(function (s) { return !s.vergangen && new Date(s.beginn).getTime() <= bis; });
+    if (!meine.length) { liste.appendChild(leerZustand("In den nächsten 14 Tagen kein eigenes Spiel.")); return; }
+    liste.appendChild(skelettKarte(120));
+    // Alle Spiele je Halle/Tag, an denen ich beteiligt bin: dort fahren Kollegen hin
+    var gruppen = meine.map(function (s) {
+      var tag = new Date(s.beginn).toDateString();
+      var dort = (daten.spiele || []).filter(function (x) { return !x.vergangen && x.halle === s.halle && new Date(x.beginn).toDateString() === tag; });
+      var leute = {};
+      dort.forEach(function (x) { (x.besetzung || []).forEach(function (b) { if (b.slug && b.slug !== profil.slug) leute[b.slug] = { name: b.name, slug: b.slug, spiel: x, gespann: kennungVon(x) === kennungVon(s) }; }); });
+      return { s: s, dort: dort, leute: Object.keys(leute).map(function (k) { return leute[k]; }) };
+    });
+    var alleSpiele = []; gruppen.forEach(function (g) { g.dort.forEach(function (x) { if (alleSpiele.indexOf(x) < 0) alleSpiele.push(x); }); });
+    var lauf = liste._lauf = {};
+    ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) {
+      if (!st.eingerichtet || !st.session) return null;
+      return Promise.all([window.Mitglieder.mitfahrtenFuer(alleSpiele), window.Mitglieder.heimat()]);
+    }).then(function (r) {
+      if (liste._lauf !== lauf) return;
+      liste.innerHTML = "";
+      if (!r || !r[0]) { liste.appendChild(leerZustand("Mitfahrten gibt es nach der Freischaltung durch den Betreiber.")); return; }
+      var mitfahrten = r[0], heim = r[1];
+      gruppen.forEach(function (g) {
+        var s = g.s, d = new Date(s.beginn), box = document.createElement("div"); box.className = "karte fahrt";
+        var hh = document.createElement("h4"); hh.appendChild(ikone("i-pin")); hh.appendChild(document.createTextNode((s.halle || "Halle unbekannt") + " · " + datumKurz(d) + " " + uhr(d)));
+        box.appendChild(hh);
+        var meta = document.createElement("p"); meta.className = "meta"; meta.style.margin = "0 0 4px";
+        meta.textContent = (s.liga ? s.liga + ": " : "") + s.paarung + (g.dort.length > 1 ? " · " + g.dort.length + " Spiele an dem Tag dort" : "");
+        box.appendChild(meta);
+        // Alle Mitfahrten zu Spielen an diesem Tag in dieser Halle
+        var angebote = {}; g.dort.forEach(function (x) { (mitfahrten[kennungVon(x)] || []).forEach(function (m) { angebote[m.slug] = m; }); });
+        var meinEintrag = angebote[profil.slug] || null;
+        if (!g.leute.length) { var l0 = document.createElement("p"); l0.className = "meta"; l0.textContent = "Sonst niemand aus der Liste an dem Tag dort."; box.appendChild(l0); }
+        g.leute.sort(function (a, b) { return (b.gespann ? 1 : 0) - (a.gespann ? 1 : 0) || a.name.localeCompare(b.name, "de"); }).forEach(function (k) {
+          var z = document.createElement("div"); z.className = "wer";
+          var links = document.createElement("span"); var b = document.createElement("b"); b.textContent = k.name; links.appendChild(b);
+          var sm = document.createElement("small"); var kd2 = new Date(k.spiel.beginn);
+          sm.textContent = (k.gespann ? "im Gespann" : "dort um " + uhr(kd2) + " Uhr") + (angebote[k.slug] ? " · " + angebote[k.slug].text : ""); links.appendChild(sm); z.appendChild(links);
+          var rechts = document.createElement("span"); rechts.className = "knoepfe";
+          if (angebote[k.slug]) { var stt = document.createElement("span"); stt.className = "status " + (angebote[k.slug].art === "suche" ? "suche" : ""); stt.textContent = angebote[k.slug].art === "suche" ? "sucht Mitfahrt" : "bietet Mitfahrt"; rechts.appendChild(stt); }
+          var nr = window.Mitglieder.telefonVon(k.slug);
+          if (nr) { var a1 = document.createElement("a"); a1.className = "anfrage"; a1.href = nr.tel; a1.textContent = "Anrufen"; rechts.appendChild(a1); var a2 = document.createElement("a"); a2.className = "anfrage"; a2.href = nr.wa + "?text=" + encodeURIComponent("Hallo " + (k.name.split(",")[1] || "").trim() + ", fahren wir am " + datumKurz(d) + " zusammen nach " + (s.halle || "zur Halle") + "?"); a2.target = "_blank"; a2.rel = "noopener"; a2.textContent = "WhatsApp"; rechts.appendChild(a2); }
+          else { var p1 = document.createElement("a"); p1.className = "textknopf"; p1.href = "#" + k.slug; p1.textContent = "Profil ›"; rechts.appendChild(p1); }
+          z.appendChild(rechts); box.appendChild(z);
+        });
+        // Mein Status
+        var mein = document.createElement("div"); mein.className = "meins";
+        var lbl = document.createElement("span"); lbl.className = "meta"; lbl.textContent = "Ich:"; mein.appendChild(lbl);
+        [["biete", "biete Plätze"], ["suche", "suche Mitfahrt"]].forEach(function (o) {
+          var bt = document.createElement("button"); bt.type = "button"; bt.className = "anfrage" + (meinEintrag && meinEintrag.art === o[0] ? " aktiv" : ""); bt.textContent = o[1];
+          bt.addEventListener("click", function () {
+            var neu = meinEintrag && meinEintrag.art === o[0] ? null : o[0];
+            var text = neu ? prompt(neu === "biete" ? "Kurz für die Kollegen (z. B. „ab Essen, 2 Plätze frei“):" : "Kurz für die Kollegen (z. B. „ab Bochum Hbf“):", meinEintrag ? meinEintrag.text : "") : null;
+            if (neu && text === null) return;
+            window.Mitglieder.mitfahrtSetzen(s, neu, text || undefined).then(function (ok) { if (ok) { toast(neu ? "Gespeichert – Kollegen sehen es hier und auf ihrer Spielkarte." : "Zurückgezogen.", "gut"); zeigeMitfahren(); } });
+          });
+          mein.appendChild(bt);
+        });
+        var sl = document.createElement("a"); sl.className = "textknopf"; sl.href = "#spiel/" + encodeURIComponent(kennungVon(s)); sl.textContent = "Spielseite ›"; mein.appendChild(sl);
+        box.appendChild(mein);
+        liste.appendChild(box);
+      });
+      // Karte: Hallen der naechsten Spiele, Zuhause
+      var punkte = meine.filter(function (s) { return daten.hallen && daten.hallen[s.halle]; });
+      if (!punkte.length && !heim) return;
+      kd.classList.remove("versteckt");
+      ladeLeaflet().then(function (L) {
+        if (mitfahrKarte) { mitfahrKarte.remove(); mitfahrKarte = null; }
+        kd.innerHTML = "";
+        var m = L.map(kd, { scrollWheelZoom: false }); mitfahrKarte = m;
+        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "© OpenStreetMap" }).addTo(m);
+        var akzent = getComputedStyle(document.documentElement).getPropertyValue("--akzent").trim() || "#0f3d6e", alle = [];
+        var jeHalle = {}; punkte.forEach(function (s) { (jeHalle[s.halle] = jeHalle[s.halle] || []).push(s); });
+        Object.keys(jeHalle).forEach(function (name) {
+          var k = daten.hallen[name]; alle.push([k[0], k[1]]);
+          var c = L.circleMarker([k[0], k[1]], { radius: 9, color: akzent, fillColor: akzent, fillOpacity: .9, weight: 2 }).addTo(m);
+          var inhalt = document.createElement("div"); var b = document.createElement("b"); b.textContent = name; inhalt.appendChild(b);
+          jeHalle[name].forEach(function (s) { var p = document.createElement("div"); var d = new Date(s.beginn); p.textContent = datumKurz(d) + " " + uhr(d) + " · " + s.paarung; inhalt.appendChild(p); });
+          if (heim) { var km = Math.round(kmZwischen(k, [heim.lat, heim.lon])); var q = document.createElement("div"); q.className = "meta"; q.textContent = "~" + km + " km von zu Hause"; inhalt.appendChild(q); L.polyline([[heim.lat, heim.lon], [k[0], k[1]]], { color: akzent, weight: 2, dashArray: "4 6", opacity: .6 }).addTo(m); }
+          c.bindPopup(inhalt);
+        });
+        if (heim) { L.circleMarker([heim.lat, heim.lon], { radius: 8, color: "#fff", fillColor: "#d97706", fillOpacity: 1, weight: 3 }).addTo(m).bindPopup("Zuhause"); alle.push([heim.lat, heim.lon]); }
+        if (alle.length > 1) m.fitBounds(alle, { padding: [24, 24], maxZoom: 11 }); else if (alle.length) m.setView(alle[0], 10);
+        setTimeout(function () { m.invalidateSize(); }, 200);
+      }).catch(function () { kd.classList.add("versteckt"); });
+    }).catch(function () { if (liste._lauf === lauf) { liste.innerHTML = ""; liste.appendChild(leerZustand("Mitfahrten konnten nicht geladen werden.")); } });
   }
 
   // ------------------------------------------------ Aenderungsprotokoll
@@ -2109,6 +2208,7 @@
     var eintraege = [
       ["Gemeinsam"],
       funktion("info") ? ["#mitglieder/info", "i-bell", "Info", "Ankündigungen und Termine", "info"] : null,
+      funktion("gespann") ? ["#mitfahren", "i-route", "Zusammen fahren", "Wer fährt wohin – Mitfahrt anbieten oder suchen"] : null,
       ["#aenderungen", "i-list", "Änderungen", "Was sich in 14 Tagen getan hat"],
       funktion("frei") ? ["#mitglieder/frei", "i-cal", "Verfügbarkeit", "Wann du nicht kannst oder gern pfeifst"] : null,
       funktion("hallen") ? ["#karte", "i-pin", "Hallenkarte", "Alle Hallen auf der Karte"] : null,
@@ -2386,6 +2486,7 @@
     if (slug === "einstellungen") { zeigeEinstellungen(); return; }
     if (slug === "mitglieder/konto") { location.hash = "einstellungen"; return; }
     if (slug === "aenderungen") { zeigeAenderungen(); return; }
+    if (slug === "mitfahren") { if (!funktion("gespann")) { location.hash = "mehr"; return; } zeigeMitfahren(); return; }
     if (slug === "anleitung") { location.hash = "mehr"; tourOeffnen("alles"); return; }
     if (slug === "suche") { zeigeAuswahl("suche"); return; }
     if (slug === "karte") { zeigeKarte(); return; }
@@ -2506,6 +2607,7 @@
   });
   el("tab-plan").addEventListener("click", function () { location.hash = "plan"; });
   el("aenderungen-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
+  el("mitfahren-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
   el("tab-tausch").addEventListener("click", function () { location.hash = "mitglieder/tausch"; });
   el("tab-abrechnung").addEventListener("click", function () { location.hash = "mitglieder/abrechnung"; });
   el("tab-mitglieder").addEventListener("click", function () { location.hash = "mehr"; });

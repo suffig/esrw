@@ -726,3 +726,48 @@ drop policy if exists "Admin loescht Hinweise"     on public.hallen_notizen;
 create policy "offizielle Hinweise lesen" on public.hallen_notizen for select to anon using (offiziell);
 create policy "Admin markiert Hinweise"   on public.hallen_notizen for update to authenticated using (public.ist_admin()) with check (public.ist_admin());
 create policy "Admin loescht Hinweise"    on public.hallen_notizen for delete to authenticated using (public.ist_admin());
+
+-- ======================================================================
+-- v14: Kilometermodell/Verpflegung in der Abrechnung, private Spiele,
+--      Telefonliste, Mitfahrt suchen/bieten, Spiele-Archiv in der DB
+-- ======================================================================
+alter table public.einsaetze add column if not exists verpflegung numeric(6,2);      -- Verpflegungsmehraufwand je Spiel
+alter table public.einsaetze add column if not exists privat boolean not null default false;  -- selbst eingetragen, nur fuer die Abrechnung
+alter table public.profile  add column if not exists verpflegung_modus text not null default 'aus';  -- aus | auto | immer
+alter table public.mitfahrten add column if not exists art text not null default 'biete';    -- biete | suche
+
+-- Telefonliste des Betreibers (Verbandsliste) - sichtbar fuer freigeschaltete Mitglieder
+create table if not exists public.telefonliste (
+  slug      text primary key,
+  name      text,
+  telefon   text not null,
+  von       text,
+  geaendert timestamptz not null default now()
+);
+alter table public.telefonliste enable row level security;
+drop policy if exists "Telefonliste lesen"  on public.telefonliste;
+drop policy if exists "Admin pflegt Liste"  on public.telefonliste;
+create policy "Telefonliste lesen" on public.telefonliste for select to authenticated using (public.ist_freigeschaltet());
+create policy "Admin pflegt Liste" on public.telefonliste for all to authenticated using (public.ist_admin()) with check (public.ist_admin());
+
+-- Alle Spiele aller Personen, dauerhaft. Der Workflow schreibt sie mit dem
+-- Service-Schluessel bei jedem Lauf (Archiv + aktuelles Datenfenster);
+-- die App liest je Person daraus, wenn das Archiv der Webseite nicht reicht.
+create table if not exists public.spiele_archiv (
+  kennung    text primary key,             -- Beginn|Paarung wie in der App
+  beginn     timestamptz not null,
+  liga       text,
+  paarung    text,
+  halle      text,
+  system     integer,
+  besetzung  jsonb not null default '[]',  -- [{"name","slug","rolle"}]
+  slugs      text[] not null default '{}',
+  saison     text,
+  manuell    boolean not null default false,
+  stand      timestamptz not null default now()
+);
+create index if not exists spiele_archiv_slugs on public.spiele_archiv using gin (slugs);
+create index if not exists spiele_archiv_beginn on public.spiele_archiv (beginn);
+alter table public.spiele_archiv enable row level security;
+drop policy if exists "Archiv lesen" on public.spiele_archiv;
+create policy "Archiv lesen" on public.spiele_archiv for select to authenticated using (true);

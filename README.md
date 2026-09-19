@@ -291,6 +291,12 @@ und markiert Hallen-Hinweise als offiziell (stehen im Kalender); Termine
 mit Zu-/Absage (`termin_antworten`); Seite „Änderungen“ (14 Tage,
 `docs/protokoll.json`); Korrekturen werden im Änderungs-Push benannt.
 
+**Abrechnung v14**: km hin und zurück (Selbstständige) und
+Verpflegungsmehraufwand (14 € ab 8 Std.) direkt in der Abrechnung
+umschaltbar; Spiele selbst eintragen (privat, nur Abrechnung); Telefonliste
+des Betreibers für Anruf-Knöpfe; „Zusammen fahren“ mit Karte, bieten/suchen;
+alle Spiele aller Personen dauerhaft in `spiele_archiv` (Workflow-Upsert).
+
 **Termine & Tausch abschließen**: Ankündigungen mit Datum erscheinen auf
 Start als „Nächste Termine“ (Push am Vortag); in der Tauschbörse nimmt der
 Suchende ein Angebot an → „vereinbart“, Push an den Helfer, fertige

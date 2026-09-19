@@ -1032,6 +1032,37 @@ sind davon nicht betroffen.
   der nächste Lauf das den Betroffenen als „Korrektur vom Betreiber: …“
   bzw. „Geändert: …“ per Push – wie bei jeder Änderung auf esrw.de.
 
+### 10.6j Abrechnung für Selbstständige, Verpflegung, eigene Spiele, Telefonliste, Zusammen fahren, Archiv (Schema v14)
+
+* **Kilometer hin und zurück:** In der Abrechnung unter „Abrechnungsart“
+  zwischen einfacher Strecke (Entfernungspauschale, 0,38 €/km) und „hin und
+  zurück“ (Selbstständige, 0,30 €/km gefahren, km doppelt) umschalten – gilt
+  sofort für alle Summen, CSV, Monatsmail und Fahrtenbuch.
+* **Verpflegungsmehraufwand:** ebenfalls dort – aus, automatisch (14 € ab
+  8 Std. Abwesenheit: Abfahrt bis Rückkehr, Fahrzeit aus der gemerkten
+  Strecke) oder immer 14 €. Je Spiel änderbar („Verpflegung €“ in den
+  Details), eigene Kachel in den Summen, Spalte in der CSV.
+* **Spiel selbst eintragen:** Werkzeuge → „Spiel eintragen“ (Datum, Liga,
+  Begegnung, Halle, Rolle). Nur für dich und die Abrechnung – mit km,
+  Vergütung, Verpflegung, „selbst eingetragen“ als Kennzeichen, löschbar.
+* **Telefonliste (Admin):** Mehr → Admin → „Telefonliste“ – Nummern aller
+  Kollegen einzeln oder als Liste einfügen („Name; Nummer“ je Zeile).
+  Freigeschaltete Mitglieder bekommen dann Anrufen/WhatsApp direkt in der
+  Kopfkarte der Spielseite, auf der Kollegen-Seite und unter „Zusammen
+  fahren“. Eine selbst freigegebene Nummer geht vor.
+* **Zusammen fahren:** Mehr → „Zusammen fahren“ – je eigenem Spiel der
+  nächsten 14 Tage: wer am selben Tag in derselben Halle ist (Gespann und
+  andere Spiele), wer Mitfahrt bietet oder sucht, Anruf/WhatsApp, eigener
+  Status „biete Plätze“ / „suche Mitfahrt“; oben eine Karte mit den Hallen,
+  Zuhause und Luftlinien. Auf der Spielkarte gibt es dazu „Ich biete“ /
+  „Ich suche“.
+* **Alle Spiele in der Datenbank:** Der Workflow schreibt bei jedem Lauf das
+  komplette Archiv (`historie.json`) plus das aktuelle Datenfenster mit
+  Besetzung und Slugs in `spiele_archiv` (Service-Schlüssel, nur lesbar
+  für angemeldete Mitglieder). Die Abrechnung liest daraus je Person – so
+  bleiben alte Saisons erhalten, auch wenn `archiv.json` sie nicht mehr
+  führt. Backup-Tipp: Supabase → Table Editor → Export CSV.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

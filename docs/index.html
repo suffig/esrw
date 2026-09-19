@@ -648,6 +648,19 @@
   .profilzeile > span:first-child { display:flex; align-items:center; gap:10px; min-width:0; }
   .profilzeile > span:first-child > span { min-width:0; }
   .profilzeile > span:first-child:not(:has(.avatar-gross)) { display:block; }
+  /* Zusammen fahren */
+  #mitfahren-karte { padding:0; overflow:hidden; margin-bottom:12px; }
+  .fahrt { margin-bottom:12px; }
+  .fahrt h4 { margin:0 0 4px; display:flex; align-items:center; gap:8px; font-size:1rem; }
+  .fahrt .wer { display:flex; justify-content:space-between; align-items:center; gap:8px; padding:8px 0; border-top:1px solid var(--linie); flex-wrap:wrap; }
+  .fahrt .wer > span:first-child { min-width:0; }
+  .fahrt .wer b { display:block; }
+  .fahrt .wer small { color:var(--dim); display:block; }
+  .fahrt .knoepfe { display:flex; gap:6px; flex-wrap:wrap; }
+  .fahrt .status { font-size:.7rem; font-weight:800; text-transform:uppercase; letter-spacing:.06em; padding:2px 8px; border-radius:99px; background:var(--akzent-hell); color:var(--akzent); }
+  .fahrt .status.suche { background:var(--rot-hell); color:var(--rot); }
+  .fahrt .meins { margin-top:8px; display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+  .fahrt .meins button.aktiv { background:var(--akzent); color:#fff; border-color:var(--akzent); }
   /* Anleitung (Tour) */
   .tour { position:fixed; inset:0; z-index:60; background:rgba(8,12,24,.55); backdrop-filter:blur(4px); display:flex; align-items:flex-end; justify-content:center; padding:16px; padding-bottom:calc(16px + env(safe-area-inset-bottom)); }
   @media (min-width: 600px) { .tour { align-items:center; } }
@@ -1172,6 +1185,16 @@
   </section>
 
   <!-- Diagnose -->
+  <!-- Zusammen fahren -->
+  <section id="mitfahren" class="versteckt">
+    <div class="profilzeile karte">
+      <span><b>Zusammen fahren</b><small>Wer fährt wohin – Mitfahrt anbieten oder suchen</small></span>
+      <button class="textknopf zurueck" id="mitfahren-zurueck"><svg class="i"><use href="#i-back"/></svg>Zurück</button>
+    </div>
+    <div id="mitfahren-karte" class="karte versteckt" style="height:260px"></div>
+    <div id="mitfahren-liste"></div>
+  </section>
+
   <!-- Aenderungsprotokoll -->
   <section id="aenderungen" class="versteckt">
     <div class="profilzeile karte">
@@ -1245,6 +1268,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=36"></script>
+<script src="app.js?v=37"></script>
 </body>
 </html>
