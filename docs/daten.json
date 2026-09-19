@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 123,
+ "spiele_gesamt": 122,
  "saison": "2026/27",
  "archiv_spiele": 170,
  "rollen": {
@@ -742,34 +742,6 @@
     "letzte": "2026-09-20"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-12T12:00:00+02:00",
-     "treffpunkt": "2026-09-12T11:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U15 RLB",
-     "paarung": "EHC Troisdorf – EJ Kassel",
-     "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-     "halle": "ICEDOME Troisdorf",
-     "koordinaten": [
-      50.811945,
-      7.109233
-     ],
-     "gespann": [
-      {
-       "name": "Garcia Nieto, Dario",
-       "slug": "garcia-nieto-dario",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-12T12:00:00+02:00|EHC Troisdorf – EJ Kassel",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-20T08:00:00+02:00",
      "treffpunkt": "2026-09-20T07:00:00+02:00",
@@ -2360,34 +2332,6 @@
     "letzte": "2026-09-20"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-12T12:00:00+02:00",
-     "treffpunkt": "2026-09-12T11:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U15 RLB",
-     "paarung": "EHC Troisdorf – EJ Kassel",
-     "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-     "halle": "ICEDOME Troisdorf",
-     "koordinaten": [
-      50.811945,
-      7.109233
-     ],
-     "gespann": [
-      {
-       "name": "Bocklemünd, Cid",
-       "slug": "bocklemuend-cid",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-12T12:00:00+02:00|EHC Troisdorf – EJ Kassel",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-18T19:30:00+02:00",
      "treffpunkt": "2026-09-18T18:30:00+02:00",
@@ -13085,32 +13029,6 @@
   }
  ],
  "spiele": [
-  {
-   "beginn": "2026-09-12T12:00:00+02:00",
-   "treffpunkt": "2026-09-12T11:00:00+02:00",
-   "liga": "U15 RLB",
-   "paarung": "EHC Troisdorf – EJ Kassel",
-   "halle": "ICEDOME Troisdorf",
-   "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Bocklemünd, Cid",
-     "rolle": "SR",
-     "slug": "bocklemuend-cid"
-    },
-    {
-     "name": "Garcia Nieto, Dario",
-     "rolle": "SR",
-     "slug": "garcia-nieto-dario"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-12T12:00:00+02:00|EHC Troisdorf – EJ Kassel",
-   "korrektur": null,
-   "manuell": false
-  },
   {
    "beginn": "2026-09-12T12:30:00+02:00",
    "treffpunkt": "2026-09-12T11:30:00+02:00",

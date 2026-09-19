@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:2aa89c863fcc48407a537fc70699d29f0cd716ce@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260912T090000Z
-DTEND:20260912T123000Z
-SUMMARY:SR · U15 RLB · EHC Troisdorf – EJ Kassel
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
-  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: ICEDOME Troisdo
- rf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Garcia Ni
- eto\, Dario\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
-GEO:50.811945;7.109233
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
- rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
- isdorf":geo:50.811945,7.109233
-END:VEVENT
-BEGIN:VEVENT
 UID:f7c2c4a688e51f1ebe1850d3b148e71262e5ac4b@esrw.de
 SEQUENCE:0
 DTSTAMP:20260918T113038Z
