@@ -302,6 +302,12 @@ Ort, ~1 km) → „Zusammen fahren“ schlägt Kollegen mit kleinem Umweg vor;
 abgeschlossene Saisons werden kompakt in `docs/archiv/<saison>.json`
 eingefroren, `historie.json` und `archiv.json` bleiben klein.
 
+**Neues Logo (schwarz-weiß-rot), Steuer-Export, Mitfahrt-Push,
+Schnellabrechnung, Offline-Queue (v16)**: Design am Logo ausgerichtet;
+Jahres-CSV und Jahresblatt je Kalenderjahr; Push bei Mitfahrt-Gesuch/
+-Angebot an Kollegen auf dem Weg; abends „Spiel abrechnen?“ mit Direktsprung;
+Abrechnung offline mit Warteschlange.
+
 **Termine & Tausch abschließen**: Ankündigungen mit Datum erscheinen auf
 Start als „Nächste Termine“ (Push am Vortag); in der Tauschbörse nimmt der
 Suchende ein Angebot an → „vereinbart“, Push an den Helfer, fertige

@@ -387,6 +387,106 @@ def main():
     except Exception as e:
         print("Push: Tests nicht verarbeitet: %s" % str(e)[:120], file=sys.stderr)
 
+    # Abends nach dem Spiel: "Spiel abrechnen?" - wenn noch keine Zeile da ist
+    if an("abrechnung") and jetzt.hour >= 17:
+        try:
+            heute_kennungen = {}
+            for uid, profil in profil_von.items():
+                slug = profil.get("slug")
+                if not slug or slug not in personen or ((profil.get("einstellungen") or {}).get("pushabrechnung")) == "0":
+                    continue
+                for s in personen[slug].get("spiele", []):
+                    try:
+                        beginn = datetime.fromisoformat(s["beginn"]).astimezone(BERLIN)
+                    except (KeyError, ValueError):
+                        continue
+                    ende = beginn + timedelta(minutes=int(daten.get("spieldauer_minuten") or 150) + 30)
+                    if beginn.date() != jetzt.date() or ende > jetzt:
+                        continue
+                    k = "abrechnen|" + (s.get("id") or (s["beginn"] + "|" + s.get("paarung", "")))
+                    if k in schon.get(uid, set()):
+                        continue
+                    heute_kennungen.setdefault(uid, []).append((k, s))
+            if heute_kennungen:
+                kennungen = sorted({k[10:] for liste in heute_kennungen.values() for k, _ in liste})
+                vorhanden = api(url, service, "einsaetze?select=user_id,kennung&kennung=in.(%s)&user_id=in.(%s)" % (
+                    ",".join('"%s"' % urllib.parse.quote(k, safe="") for k in kennungen), ",".join(heute_kennungen.keys()))) or []
+                schon_da = {(e["user_id"], e["kennung"]) for e in vorhanden}
+                for uid, liste in heute_kennungen.items():
+                    for k, s in liste:
+                        if (uid, k[10:]) in schon_da:
+                            continue
+                        nachrichten.setdefault(uid, []).append((k, {
+                            "titel": "Spiel abrechnen? %s" % s.get("paarung", ""),
+                            "text": "km und Vergütung werden vorbelegt – nur noch Auslagen oder Beleg ergänzen und „bezahlt“ abhaken, wenn das Geld da ist.",
+                            "url": "./#abrechnen/" + urllib.parse.quote(k[10:], safe=""), "tag": "abrechnen"}))
+        except Exception as e:
+            print("Push: Schnellabrechnung nicht verarbeitet: %s" % str(e)[:120], file=sys.stderr)
+
+    # Mitfahrt gesucht/geboten: Kollegen im selben Spiel oder am selben Tag in
+    # derselben Halle, die laut geteiltem Wohnort auf dem Weg liegen
+    if an("gespann"):
+        try:
+            neue = api(url, service, "mitfahrten?select=id,user_id,slug,name,kennung,beginn,text,art&gemeldet=eq.false") or []
+            if neue:
+                wohnorte = {w["slug"]: w for w in (api(url, service, "wohnorte?select=slug,lat,lon,ort") or [])}
+                heimat = {p["id"]: (p.get("heimat_lat"), p.get("heimat_lon")) for p in (api(url, service, "profile?select=id,heimat_lat,heimat_lon&heimat_lat=not.is.null") or [])}
+                slug_uid = {p.get("slug"): uid for uid, p in profil_von.items() if p.get("slug")}
+                spiele_alle = daten.get("spiele", [])
+                hallen = daten.get("hallen", {})
+                def km(a, b):
+                    import math
+                    p1, p2 = math.radians(a[0]), math.radians(b[0])
+                    dp, dl = math.radians(b[0] - a[0]), math.radians(b[1] - a[1])
+                    x = math.sin(dp / 2) ** 2 + math.cos(p1) * math.cos(p2) * math.sin(dl / 2) ** 2
+                    return 2 * 6371 * math.asin(math.sqrt(x))
+                for m in neue:
+                    spiel = next((s for s in spiele_alle if (s.get("id") or (s["beginn"] + "|" + s.get("paarung", ""))) == m["kennung"]), None)
+                    api(url, service, "mitfahrten?id=eq." + urllib.parse.quote(m["id"]), "PATCH", {"gemeldet": True})
+                    if not spiel:
+                        continue
+                    try:
+                        tag = datetime.fromisoformat(spiel["beginn"]).astimezone(BERLIN).date()
+                    except ValueError:
+                        continue
+                    halle = hallen.get(spiel.get("halle") or "")
+                    kandidaten = {}
+                    for s in spiele_alle:
+                        try:
+                            if datetime.fromisoformat(s["beginn"]).astimezone(BERLIN).date() != tag or s.get("halle") != spiel.get("halle"):
+                                continue
+                        except ValueError:
+                            continue
+                        for b in s.get("besetzung", []):
+                            if b.get("slug") and b["slug"] != m["slug"]:
+                                kandidaten[b["slug"]] = (s is spiel)
+                    poster = wohnorte.get(m["slug"]) or (heimat.get(m["user_id"]) and {"lat": heimat[m["user_id"]][0], "lon": heimat[m["user_id"]][1]})
+                    for slug, im_gespann in kandidaten.items():
+                        uid = slug_uid.get(slug)
+                        if not uid:
+                            continue
+                        w = wohnorte.get(slug) or (heimat.get(uid) and {"lat": heimat[uid][0], "lon": heimat[uid][1]})
+                        auf_dem_weg = None
+                        if poster and w and halle:
+                            a, b_, h_ = (poster["lat"], poster["lon"]), (w["lat"], w["lon"]), (halle[0], halle[1])
+                            direkt_p, direkt_k = km(a, h_), km(b_, h_)
+                            umweg_p = (km(a, b_) + km(b_, h_) - direkt_p) * 1.3
+                            umweg_k = (km(b_, a) + km(a, h_) - direkt_k) * 1.3
+                            if umweg_p <= max(8, direkt_p * 1.3 * 0.3) or umweg_k <= max(8, direkt_k * 1.3 * 0.3):
+                                auf_dem_weg = round(min(umweg_p, umweg_k))
+                        if auf_dem_weg is None and not im_gespann:
+                            continue
+                        wann = datetime.fromisoformat(spiel["beginn"]).astimezone(BERLIN)
+                        vorname = (m.get("name") or "").split(",")[-1].strip() or "Ein Kollege"
+                        nachrichten.setdefault(uid, []).append((None, {
+                            "titel": "%s %s Mitfahrt · %s" % (vorname, "sucht" if m.get("art") == "suche" else "bietet", spiel.get("halle") or "Halle"),
+                            "text": "%s %s Uhr, %s%s%s" % (WOCHENTAGE[wann.weekday()], wann.strftime("%H:%M"), spiel.get("paarung", ""),
+                                                        (" – " + m["text"]) if m.get("text") else "",
+                                                        (" · liegt auf deinem Weg (Umweg ca. %d km)" % auf_dem_weg) if auf_dem_weg is not None else " · im Gespann"),
+                            "url": "./#mitfahren", "tag": "mitfahrt"}))
+        except Exception as e:
+            print("Push: Mitfahrten nicht verarbeitet: %s" % str(e)[:120], file=sys.stderr)
+
     # Tauschboerse: Gesuch von selbst erledigt, wenn esrw.de jemand anderen
     # im Spiel fuehrt; Helfer bekommen Bescheid
     try:

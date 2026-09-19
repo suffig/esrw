@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Erzeugt aus logo_esrw_app.png die App-Symbole und das Kopf-Logo in docs/.
+Erzeugt aus logo_esrw_app_neu.png die App-Symbole und das Kopf-Logo in docs/.
 
     pip install pillow
     python logo_bauen.py
@@ -14,7 +14,7 @@ import os
 from PIL import Image
 
 BASIS = os.path.dirname(os.path.abspath(__file__))
-QUELLE = os.path.join(BASIS, "logo_esrw_app.png")
+QUELLE = os.path.join(BASIS, "logo_esrw_app_neu.png")
 ZIEL = os.path.join(BASIS, "docs")
 GROESSEN = {"icon-512.png": 512, "icon-192.png": 192, "apple-touch-icon.png": 180,
             "logo-256.png": 256, "logo-96.png": 96}

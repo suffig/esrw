@@ -8,8 +8,8 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" href="icon-192.png" type="image/png">
-<meta name="theme-color" content="#0a2d7a" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0b1020" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f1f1f3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#08080a" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Einteilungen">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -649,6 +649,11 @@
   .profilzeile > span:first-child { display:flex; align-items:center; gap:10px; min-width:0; }
   .profilzeile > span:first-child > span { min-width:0; }
   .profilzeile > span:first-child:not(:has(.avatar-gross)) { display:block; }
+  /* Jahresblatt (Steuer) */
+  .jahresblatt table { width:100%; border-collapse:collapse; font-size:.8rem; }
+  .jahresblatt th, .jahresblatt td { padding:5px 6px; border-bottom:1px solid var(--linie); text-align:left; vertical-align:top; }
+  .jahresblatt td.zahl, .jahresblatt th.zahl { text-align:right; white-space:nowrap; }
+  body.druck-fahrtenbuch .jahresblatt { display:block !important; }
   /* Zusammen fahren */
   #mitfahren-karte { padding:0; overflow:hidden; margin-bottom:12px; }
   .fahrt { margin-bottom:12px; }
@@ -811,12 +816,16 @@
     .leiste button svg.i { padding:5px 16px; }
   }
 
-  /* Design 7: Farben aus dem ESRW-Logo (Eisblau, Rot, Schwarz-Weiss) */
-  :root { --akzent:#0d47a8; --akzent-hell:#e4ecfb; --sr:#0d47a8; --sr-bg:#e4ecfb; --held-1:#082a73; --held-2:#1a5fd0;
-          --held-schatten:0 10px 26px -8px rgba(13,71,168,.45); --rot:#d61f26; --rot-hell:#fde8e8; --bg:#eef2f9; }
-  :root[data-theme="dark"] { --akzent:#6ea3ff; --akzent-hell:#15264a; --sr:#6ea3ff; --sr-bg:#15264a; --akzent-text:#061334; --bg:#0b1020; --karte:#141a2c; --linie:#232b42; --rot:#ff6b6b; --rot-hell:#3a1a1e; }
-  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --akzent:#6ea3ff; --akzent-hell:#15264a; --sr:#6ea3ff; --sr-bg:#15264a; --akzent-text:#061334; --bg:#0b1020; --karte:#141a2c; --linie:#232b42; --rot:#ff6b6b; --rot-hell:#3a1a1e; } }
-  :root[data-akzent="blau"], :root:not([data-akzent]) { --held-1:#082a73; --held-2:#1a5fd0; }
+  /* Design 8: Schwarz, Weiss, Rot - aus dem ESRW-Logo (Streifen, Armbinde, Puck) */
+  :root { --akzent:#15161a; --akzent-hell:#ebebee; --akzent-text:#ffffff; --sr:#15161a; --sr-bg:#ebebee; --held-1:#0c0d10; --held-2:#33353d;
+          --held-schatten:0 12px 28px -10px rgba(0,0,0,.55); --rot:#e30613; --rot-hell:#fde7e9; --bg:#f1f1f3; --hsr:#b0000c; --hsr-bg:#fde7e9; --lsr:#3a3c44; --lsr-bg:#ebebee; }
+  :root[data-theme="dark"] { --akzent:#f5f5f7; --akzent-hell:#26272d; --sr:#f5f5f7; --sr-bg:#26272d; --akzent-text:#0c0d10; --bg:#08080a; --karte:#141417; --linie:#26272d; --dim:#9a9ca6; --rot:#ff3b47; --rot-hell:#3a1216; --held-1:#0a0a0c; --held-2:#2a2b31; --hsr:#ff6b74; --hsr-bg:#3a1216; --lsr:#c9cbd3; --lsr-bg:#26272d; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --akzent:#f5f5f7; --akzent-hell:#26272d; --sr:#f5f5f7; --sr-bg:#26272d; --akzent-text:#0c0d10; --bg:#08080a; --karte:#141417; --linie:#26272d; --dim:#9a9ca6; --rot:#ff3b47; --rot-hell:#3a1216; --held-1:#0a0a0c; --held-2:#2a2b31; --hsr:#ff6b74; --hsr-bg:#3a1216; --lsr:#c9cbd3; --lsr-bg:#26272d; } }
+  /* Eisblau bleibt als Wahl */
+  :root[data-akzent="blau"] { --akzent:#0d47a8; --akzent-hell:#e4ecfb; --akzent-text:#ffffff; --sr:#0d47a8; --sr-bg:#e4ecfb; --held-1:#082a73; --held-2:#1a5fd0; --held-schatten:0 10px 26px -8px rgba(13,71,168,.45); --hsr:#8a4b00; --hsr-bg:#fbeedd; --lsr:#0b6e6e; --lsr-bg:#dff3f3; }
+  :root[data-theme="dark"][data-akzent="blau"] { --akzent:#6ea3ff; --akzent-hell:#15264a; --sr:#6ea3ff; --sr-bg:#15264a; --akzent-text:#061334; --held-1:#082a73; --held-2:#1a5fd0; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"])[data-akzent="blau"] { --akzent:#6ea3ff; --akzent-hell:#15264a; --sr:#6ea3ff; --sr-bg:#15264a; --akzent-text:#061334; --held-1:#082a73; --held-2:#1a5fd0; } }
+  .kopf h1::after { color:var(--rot); }
   .marke { display:flex; align-items:center; gap:12px; min-width:0; }
   .marke .logo { width:44px; height:44px; border-radius:12px; box-shadow:var(--schatten); flex:none; }
   .kopf h1 { font-size:1.25rem; }
@@ -834,6 +843,24 @@
   body::before { background:radial-gradient(60% 120% at 20% -20%, color-mix(in srgb, var(--akzent) 14%, transparent), transparent 70%), radial-gradient(40% 80% at 100% 0%, color-mix(in srgb, var(--rot) 8%, transparent), transparent 70%); }
   .neu, .onboarding { border-color:var(--akzent); }
   footer { text-align:center; }
+  /* Rote Kante wie die Armbinde, weisse Streifen im Hintergrund der Kopfkarte */
+  .held { box-shadow:inset 6px 0 0 var(--rot), var(--held-schatten); overflow:hidden; }
+  .held::before { content:""; position:absolute; right:-30px; top:-20px; bottom:-20px; width:150px; background:repeating-linear-gradient(115deg, rgba(255,255,255,.07) 0 12px, transparent 12px 30px); pointer-events:none; }
+  .held .rolle, .spiel-kopf .grosse-pillen span.rolle { background:var(--rot); color:#fff; }
+  .leiste button.aktiv { color:var(--text); }
+  .leiste button.aktiv svg.i { background:var(--akzent); color:var(--akzent-text); }
+  .leiste .punkt { background:var(--rot); }
+  .abo, .mg-haupt, .melde button.haupt, .tour-fuss .haupt { background:var(--akzent); color:var(--akzent-text); }
+  .marke .logo { background:#0c0d10; }
+  .avatar-kopf, #avatar { box-shadow:0 0 0 2px var(--karte), 0 0 0 4px var(--rot); }
+  .anfrage, .textknopf.anfrage { border-color:var(--linie); }
+  .zahl.karte b { color:var(--text); }
+  .mg-saldo .zahl.offen b { color:var(--rot); }
+  .filterknopf.aktiv, .modus button.aktiv, .mg-untertabs button.aktiv { background:var(--akzent); color:var(--akzent-text); }
+  .rolle.SR { background:var(--sr-bg); color:var(--sr); }
+  :root[data-theme="dark"] .rolle.SR, :root:not([data-theme="light"]) .rolle.SR { background:#f5f5f7; color:#0c0d10; }
+  .held .rolle, .held .rolle.SR, .held .rolle.HSR, .held .rolle.LSR, :root .held .rolle.SR { background:var(--rot); color:#fff; }
+  .kopf h1::after { color:var(--rot); }
   .start-anpassen { text-align:center; margin:14px 0 4px; }
   .menue-gruppe { grid-column:1 / -1; margin:8px 0 -2px; font-size:.74rem; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); font-weight:800; }
   .menue-gruppe:first-child { margin-top:0; }
@@ -1151,7 +1178,7 @@
     <div class="karte einstellungen-liste">
       <label>Karten-App <select id="karten-app"><option value="auto">automatisch</option><option value="apple">Apple Karten</option><option value="google">Google Maps</option></select></label>
       <label>Schrift <span class="stufen" id="schrift"><button type="button" data-stufe="klein">A−</button><button type="button" data-stufe="normal">A</button><button type="button" data-stufe="gross">A+</button></span></label>
-      <label>Farbe <span class="farben" id="akzent"><button type="button" data-akzent="blau" style="background:#0f3d6e" aria-label="Blau"></button><button type="button" data-akzent="gruen" style="background:#1d6b3f" aria-label="Grün"></button><button type="button" data-akzent="rot" style="background:#a12a2a" aria-label="Rot"></button><button type="button" data-akzent="orange" style="background:#b55a12" aria-label="Orange"></button></span></label>
+      <label>Farbe <span class="farben" id="akzent"><button type="button" data-akzent="logo" style="background:linear-gradient(135deg,#15161a 55%,#e30613 55%)" aria-label="Schwarz-Rot (Logo)"></button><button type="button" data-akzent="blau" style="background:#0f3d6e" aria-label="Blau"></button><button type="button" data-akzent="gruen" style="background:#1d6b3f" aria-label="Grün"></button><button type="button" data-akzent="rot" style="background:#a12a2a" aria-label="Rot"></button><button type="button" data-akzent="orange" style="background:#b55a12" aria-label="Orange"></button></span></label>
       <label>Hell / Dunkel <button type="button" class="mg-neben" id="thema2">umschalten</button></label>
       <label>Kompakte Ansicht <input type="checkbox" id="kompakt"></label>
       <label>Saisonziel <input type="number" id="ziel" min="1" max="200" placeholder="z. B. 40" style="width:6em"> Spiele</label>
@@ -1269,6 +1296,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=38"></script>
+<script src="app.js?v=39"></script>
 </body>
 </html>

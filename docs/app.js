@@ -346,12 +346,12 @@
       b.addEventListener("click", function () { var st = b.getAttribute("data-stufe"); schreiben("schrift", st === "normal" ? null : st); schriftSetzen(st); filterHoehe(); einstellungenSync(); });
     });
     function akzentSetzen(farbe) {
-      if (!farbe || farbe === "blau") document.documentElement.removeAttribute("data-akzent"); else document.documentElement.setAttribute("data-akzent", farbe);
-      Array.prototype.forEach.call(el("akzent").querySelectorAll("button"), function (b) { b.classList.toggle("aktiv", (b.getAttribute("data-akzent") === (farbe || "blau"))); });
+      if (!farbe || farbe === "logo") document.documentElement.removeAttribute("data-akzent"); else document.documentElement.setAttribute("data-akzent", farbe);
+      Array.prototype.forEach.call(el("akzent").querySelectorAll("button"), function (b) { b.classList.toggle("aktiv", (b.getAttribute("data-akzent") === (farbe || "logo"))); });
     }
     akzentSetzen(lesen("akzent"));
     if (!nurAnwenden) Array.prototype.forEach.call(el("akzent").querySelectorAll("button"), function (b) {
-      b.addEventListener("click", function () { var f = b.getAttribute("data-akzent"); schreiben("akzent", f === "blau" ? null : f); akzentSetzen(f); einstellungenSync(); });
+      b.addEventListener("click", function () { var f = b.getAttribute("data-akzent"); schreiben("akzent", f === "logo" ? null : f); akzentSetzen(f); einstellungenSync(); });
     });
     el("ziel").value = lesen("ziel") || "";
     startBausteineRendern();
@@ -1703,6 +1703,7 @@
     var x = c.getContext("2d");
     var g = x.createLinearGradient(0, 0, 1080, 1350); g.addColorStop(0, "#082a73"); g.addColorStop(1, "#1a5fd0");
     x.fillStyle = g; x.fillRect(0, 0, 1080, 1350);
+    x.fillStyle = "#e30613"; x.fillRect(0, 0, 18, 1350);
     // Logo oben rechts, wenn es geladen ist
     try { var lg = document.querySelector(".marke .logo"); if (lg && lg.complete && lg.naturalWidth) { x.save(); x.beginPath(); x.roundRect(900, 60, 120, 120, 26); x.clip(); x.drawImage(lg, 900, 60, 120, 120); x.restore(); } } catch (e) {}
     // Puck als Deko
@@ -2506,6 +2507,7 @@
     if (slug === "einstellungen") { zeigeEinstellungen(); return; }
     if (slug === "mitglieder/konto") { location.hash = "einstellungen"; return; }
     if (slug === "aenderungen") { zeigeAenderungen(); return; }
+    if (slug.indexOf("abrechnen/") === 0) { var kz = decodeURIComponent(slug.slice(10)); ladeMitglieder().then(function (M) { M.abrechnungSprung(kz); }).catch(function () {}); location.hash = "mitglieder/abrechnung"; return; }
     if (slug === "mitfahren") { if (!funktion("gespann")) { location.hash = "mehr"; return; } zeigeMitfahren(); return; }
     if (slug === "anleitung") { location.hash = "mehr"; tourOeffnen("alles"); return; }
     if (slug === "suche") { zeigeAuswahl("suche"); return; }
@@ -2566,7 +2568,7 @@
     });
   }
   function einstellungenSammeln() {
-    return { karten: lesen("karten") || null, schrift: lesen("schrift") || null, akzent: lesen("akzent") || null, kompakt: lesen("kompakt") || null, ziel: lesen("ziel") || null, start: lesen("start") || null, bereiche: lesen("bereiche") || null, pushwoche: lesen("pushwoche") || null };
+    return { karten: lesen("karten") || null, schrift: lesen("schrift") || null, akzent: lesen("akzent") || null, kompakt: lesen("kompakt") || null, ziel: lesen("ziel") || null, start: lesen("start") || null, bereiche: lesen("bereiche") || null, pushwoche: lesen("pushwoche") || null, pushabrechnung: lesen("pushabrechnung") || null };
   }
   var syncTimer = null;
   function einstellungenSync() {
@@ -2579,7 +2581,7 @@
   function einstellungenAnwenden(e) {
     if (!e) return;
     var geaendert = false;
-    ["karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche", "pushwoche"].forEach(function (k) { if ((lesen(k) || null) !== (e[k] || null)) { schreiben(k, e[k] || null); geaendert = true; } });
+    ["karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche", "pushwoche", "pushabrechnung"].forEach(function (k) { if ((lesen(k) || null) !== (e[k] || null)) { schreiben(k, e[k] || null); geaendert = true; } });
     if (geaendert) { einstellungenLaden(true); themaAnwenden(); funktionenAnwenden(funktionenLesen()); toast("Einstellungen vom Konto übernommen", ""); if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true); }
   }
   document.addEventListener("mg-profil", function (e) {

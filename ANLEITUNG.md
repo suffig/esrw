@@ -1080,6 +1080,29 @@ sind davon nicht betroffen.
   und „Alle Spiele im Archiv“ lesen die eingefrorenen Saisons bei Bedarf
   nach; `archiv.json` enthält nur noch die laufende Saison.
 
+### 10.6l Neues Logo, Steuer-Export, Mitfahrt-Push, Schnellabrechnung, Offline (Schema v16)
+
+* **Logo und Farben:** `logo_esrw_app_neu.png` ist die Quelle für alle
+  Symbole (`python logo_bauen.py`). Die App ist jetzt schwarz-weiß-rot wie
+  das Logo: schwarze Kopfkarte mit roter Kante, rote Rollen-Pille, schwarze
+  aktive Reiter, roter Ring um den Avatar. Unter Einstellungen → Farbe ist
+  „Schwarz-Rot (Logo)“ der Standard, Eisblau, Grün, Rot, Orange bleiben.
+* **Steuer-Export je Kalenderjahr:** Abrechnung → „Saison im Detail und
+  Steuerjahre“ → je Jahr „Jahr 2026 als CSV“ und „Jahresblatt drucken“:
+  alle Spiele des Kalenderjahres über alle Saisons mit km, Fahrtkosten,
+  Verpflegung, Auslagen, Vergütung und Saldo.
+* **Mitfahrt-Push:** Setzt jemand „suche“ oder „biete“, bekommen beim
+  nächsten Lauf die Gespannkollegen und alle, die laut geteiltem Wohnort
+  auf dem Weg liegen, einen Push (Spalte `mitfahrten.gemeldet`).
+* **Schnellabrechnung:** Abends (ab 17 Uhr) nach dem Spiel kommt „Spiel
+  abrechnen?“, wenn noch keine Zeile da ist; ein Tipp öffnet das Spiel in
+  der Abrechnung aufgeklappt und vorbelegt (`#abrechnen/<Kennung>`).
+  Abschaltbar in der Push-Karte.
+* **Offline-Abrechnung:** Ohne Netz zeigt die Abrechnung den letzten Stand
+  (Profil und Einträge aus dem Zwischenspeicher); Änderungen landen in
+  einer Warteschlange und werden nachgereicht, sobald Netz da ist oder
+  die App neu geöffnet wird.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

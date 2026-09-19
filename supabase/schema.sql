@@ -791,3 +791,8 @@ drop policy if exists "Wohnorte lesen"   on public.wohnorte;
 drop policy if exists "eigener Wohnort"  on public.wohnorte;
 create policy "Wohnorte lesen"  on public.wohnorte for select to authenticated using (public.ist_freigeschaltet());
 create policy "eigener Wohnort" on public.wohnorte for all to authenticated using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+-- ======================================================================
+-- v16: Mitfahrt-Push
+-- ======================================================================
+alter table public.mitfahrten add column if not exists gemeldet boolean not null default false;
