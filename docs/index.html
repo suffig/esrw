@@ -688,6 +688,9 @@
   .tour-punkte i { width:7px; height:7px; border-radius:50%; background:var(--linie); }
   .tour-punkte i.aktiv { background:var(--akzent); width:18px; border-radius:4px; }
   @media (prefers-reduced-motion: reduce) { .tour-karte { animation:none; } }
+  /* Ruhige Startseite: nur Kopfkarte und Spiele */
+  #detail.start-ruhig #uebersicht, #detail.start-ruhig #radar, #detail.start-ruhig #nachtrag, #detail.start-ruhig #pins, #detail.start-ruhig #kalender-box, #detail.start-ruhig #start-woche, #detail.start-ruhig #onboarding-kurz, #detail.start-ruhig .kollege { display:none !important; }
+  #detail.start-ruhig .held .danach, #detail.start-ruhig .held .woche { display:none; }
   /* Archiv */
   .archiv-filter { padding:12px 14px; display:flex; flex-direction:column; gap:8px; }
   .archiv-filter input[type="search"] { width:100%; }
@@ -1344,6 +1347,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=40"></script>
+<script src="app.js?v=41"></script>
 </body>
 </html>

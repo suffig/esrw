@@ -72,8 +72,20 @@ def uhr(iso):
 
 
 def aenderungs_nachricht(slug, a):
+    details = (a.get("details") or {}).get("geaendert") or []
+    geaendert = []
+    if details and len(details) == len(a.get("geaendert", [])):
+        for d in details:
+            felder = d.get("felder") or []
+            if felder:
+                was = ", ".join("%s %s → %s" % (f.get("feld", ""), f.get("vorher", ""), f.get("nachher", "")) for f in felder)
+            else:
+                was = d.get("was", "")
+            geaendert.append("Geändert: %s\n   %s%s" % (d.get("text", ""), ("Betreiber: " if d.get("korrektur") else ""), was))
+    else:
+        geaendert = ["Geändert: " + z for z in a.get("geaendert", [])]
     zeilen = (["Neu: " + z for z in a.get("neu", [])]
-              + ["Geändert: " + z for z in a.get("geaendert", [])]
+              + geaendert
               + ["Abgesetzt: " + z for z in a.get("entfallen", [])])
     if not zeilen:
         return None

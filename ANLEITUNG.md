@@ -1118,6 +1118,23 @@ sind davon nicht betroffen.
   letzten 14 Tage. Das Protokoll (`docs/protokoll.json`) speichert Kennung
   und Felder je Eintrag.
 
+### 10.6n Kleine Runden: Spielplan, Push-Details, Archiv-Export, ruhige Startseite
+
+* **Spielplan:** „Nur meine Spiele“ ist mit gewähltem Namen voreingestellt
+  (abwählbar, wird gemerkt); in Wochen- und Monatsansicht wischt man nach
+  links/rechts zur nächsten/vorigen Woche bzw. zum nächsten Monat.
+* **Push „Geändert“** nennt die Felder vorher → nachher (z. B. „Halle
+  Eissporthalle Neuss → Eishalle Brehmstraße, Treffpunkt 17:30 → 18:00“),
+  Korrekturen des Betreibers mit „Betreiber:“ davor.
+* **Archiv:** unter den Kennzahlen „CSV“ und „Liste teilen/kopieren“ für die
+  gefilterte Liste; ein Tipp auf „Spiele“, „Hallen“ oder „Rollen/Kollegen“
+  klappt die Aufschlüsselung als Balken auf (je Liga, je Halle,
+  Gespannpartner bzw. je Kollege).
+* **Startseite „Nur nächstes Spiel“:** Einstellungen → Startseite – blendet
+  Kacheln, Termine, Radar, Pins, Kalender-Karte und Wochenstreifen aus; es
+  bleiben Kopfkarte, Spiele und Profil.
+* **Saison-Bild** in Logo-Schwarz mit rotem Balken.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

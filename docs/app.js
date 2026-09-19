@@ -1574,7 +1574,8 @@
   }
   function filterLaden() {
     try {
-      var f = JSON.parse(sessionStorage.getItem("plan-filter") || "null"); if (!f) return;
+      var f = JSON.parse(sessionStorage.getItem("plan-filter") || "null");
+      if (!f) { el("plan-meine").checked = !!(profil && profil.slug && lesen("plan-meine-aus") !== "1"); return; }
       el("plan-vergangene").checked = !!f.v; el("plan-offen").checked = !!f.o; el("plan-hallen").checked = !!f.h; el("plan-meine").checked = !!f.m;
       ligenWahl = f.l || {}; el("plan-filter").value = f.s || "";
     } catch (e) {}
@@ -1718,7 +1719,7 @@
   function rueckblickBild(p, knopf) {
     var s = p.statistik, c = document.createElement("canvas"); c.width = 1080; c.height = 1350;
     var x = c.getContext("2d");
-    var g = x.createLinearGradient(0, 0, 1080, 1350); g.addColorStop(0, "#082a73"); g.addColorStop(1, "#1a5fd0");
+    var g = x.createLinearGradient(0, 0, 1080, 1350); g.addColorStop(0, "#0c0d10"); g.addColorStop(1, "#33353d");
     x.fillStyle = g; x.fillRect(0, 0, 1080, 1350);
     x.fillStyle = "#e30613"; x.fillRect(0, 0, 18, 1350);
     // Logo oben rechts, wenn es geladen ist
@@ -1812,6 +1813,7 @@
     el("person-avatar").textContent = initialen(p.name); el("person-avatar").style.background = farbeFuer(p.slug);
     avatarKopf();
     var meins = !!(profil && profil.slug === p.slug);
+    el("detail").classList.toggle("start-ruhig", meins && startEinstellung("ruhig"));
     el("profil-hinweis").textContent = meins ? "dein Profil" : "fremdes Profil";
     el("uebernehmen").classList.toggle("versteckt", meins);
     el("uebernehmen").onclick = function () { profilSetzen(p); toast("„Start“ zeigt jetzt " + p.name, "gut"); };
@@ -2183,8 +2185,27 @@
       archivRendern();
     });
   }
+  var archivAufschluesselung = null;
+  function archivCsv(treffer, wer) {
+    var zeilen = [["Datum", "Uhrzeit", "Saison", "Liga", "Begegnung", "Halle", "Rolle", "System", "Gespann"]];
+    treffer.slice().reverse().forEach(function (s) {
+      var d = new Date(s.beginn), ich = wer ? s.besetzung.filter(function (b) { return b.slug === wer; })[0] : null;
+      zeilen.push([d.toLocaleDateString("de-DE"), uhr(d), s.saison || "", s.liga || "", s.paarung || "", s.halle || "", ich ? ich.rolle : "", s.system || s.besetzung.length || "", s.besetzung.filter(function (b) { return b.slug !== wer; }).map(function (b) { return b.name + (b.rolle && s.besetzung.length >= 3 ? " (" + b.rolle + ")" : ""); }).join(" / ")]);
+    });
+    var text = zeilen.map(function (z) { return z.map(function (f) { return '"' + String(f).replace(/"/g, '""') + '"'; }).join(";"); }).join("\r\n");
+    var blob = new Blob(["\ufeff" + text], { type: "text/csv;charset=utf-8" });
+    var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "Archiv_" + (wer || "alle") + "_" + new Date().toISOString().slice(0, 10) + ".csv";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a); setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
+  }
+  function archivTeilen(treffer, wer) {
+    var text = treffer.slice().reverse().map(function (s) { var d = new Date(s.beginn), ich = wer ? s.besetzung.filter(function (b) { return b.slug === wer; })[0] : null; return datumKurz(d) + " " + uhr(d) + " " + (s.liga ? s.liga + ": " : "") + s.paarung + (s.halle ? " · " + s.halle : "") + (ich ? " (" + ich.rolle + ")" : ""); }).join("\n");
+    var titel = treffer.length + " Spiele" + (wer && personMit(wer) ? " · " + personMit(wer).name : "");
+    if (navigator.share) navigator.share({ title: titel, text: titel + "\n" + text }).catch(function () {});
+    else if (navigator.clipboard) navigator.clipboard.writeText(titel + "\n" + text).then(function () { toast("Liste kopiert.", "gut"); }).catch(function () {});
+  }
   function archivRendern() {
     var liste = el("archiv-liste"); liste.innerHTML = "";
+    var altBk = el("archiv").querySelector(".balken.karte"); if (altBk) altBk.remove();
     var slug = profil && profil.slug, alle = archivStand.modus === "alle";
     var f = ohneZeichen(el("archiv-suche").value), sn = el("archiv-saison").value, lg = el("archiv-liga").value, rl = el("archiv-rolle").value, hl = el("archiv-halle").value, ps = alle ? el("archiv-person").value : "";
     var wer = alle ? (ps || null) : slug;
@@ -2201,9 +2222,29 @@
     var z = el("archiv-zahlen"); z.innerHTML = "";
     var rollen = {}, km = 0, hsr = 0;
     treffer.forEach(function (s) { var ich = wer ? s.besetzung.filter(function (b) { return b.slug === wer; })[0] : null; if (ich) rollen[ich.rolle] = (rollen[ich.rolle] || 0) + 1; });
-    [[treffer.length, treffer.length === 1 ? "Spiel" : "Spiele"], [Object.keys(treffer.reduce(function (o, s) { if (s.halle) o[s.halle] = 1; return o; }, {})).length, Object.keys(treffer.reduce(function (o, s) { if (s.halle) o[s.halle] = 1; return o; }, {})).length === 1 ? "Halle" : "Hallen"], [wer ? ((rollen.HSR || 0) + " HSR · " + (rollen.LSR || 0) + " LSR") : Object.keys(treffer.reduce(function (o, s) { s.besetzung.forEach(function (b) { if (b.slug) o[b.slug] = 1; }); return o; }, {})).length, wer ? "Rollen (3er)" : "Kollegen"]].forEach(function (p) {
-      var k = document.createElement("div"); k.className = "zahl karte"; var b = document.createElement("b"); b.textContent = p[0]; var sp = document.createElement("span"); sp.textContent = p[1]; k.appendChild(b); k.appendChild(sp); z.appendChild(k);
+    var hallenN = Object.keys(treffer.reduce(function (o, s) { if (s.halle) o[s.halle] = 1; return o; }, {})).length;
+    [[treffer.length, treffer.length === 1 ? "Spiel" : "Spiele", "liga"], [hallenN, hallenN === 1 ? "Halle" : "Hallen", "halle"], [wer ? ((rollen.HSR || 0) + " HSR · " + (rollen.LSR || 0) + " LSR") : Object.keys(treffer.reduce(function (o, s) { s.besetzung.forEach(function (b) { if (b.slug) o[b.slug] = 1; }); return o; }, {})).length, wer ? "Rollen (3er)" : "Kollegen", "partner"]].forEach(function (p) {
+      var k = document.createElement("div"); k.className = "zahl karte tippbar" + (archivAufschluesselung === p[2] ? " neu-markiert" : ""); k.title = "Antippen: Aufschlüsselung"; k.style.cursor = "pointer";
+      var b = document.createElement("b"); b.textContent = p[0]; var sp = document.createElement("span"); sp.textContent = p[1] + " ›"; k.appendChild(b); k.appendChild(sp);
+      k.addEventListener("click", function () { archivAufschluesselung = archivAufschluesselung === p[2] ? null : p[2]; archivRendern(); });
+      z.appendChild(k);
     });
+    // Aufschluesselung als Balken (Ligen, Hallen, Gespannpartner)
+    if (archivAufschluesselung) {
+      var zaehl = {}, titel = { liga: "Spiele je Liga", halle: "Spiele je Halle", partner: wer ? "Gespannpartner" : "Spiele je Kollege" }[archivAufschluesselung];
+      treffer.forEach(function (s) {
+        if (archivAufschluesselung === "liga") zaehl[s.liga || "ohne Liga"] = (zaehl[s.liga || "ohne Liga"] || 0) + 1;
+        else if (archivAufschluesselung === "halle") zaehl[s.halle || "unbekannt"] = (zaehl[s.halle || "unbekannt"] || 0) + 1;
+        else s.besetzung.forEach(function (b) { if (b.slug !== wer && b.name) zaehl[b.name] = (zaehl[b.name] || 0) + 1; });
+      });
+      var paare = Object.keys(zaehl).map(function (k) { return [k, zaehl[k]]; }).sort(function (a, b) { return b[1] - a[1]; }).slice(0, 12);
+      var bk = balken(titel, paare); if (bk) { bk.style.marginTop = "10px"; z.parentNode.insertBefore(bk, z.nextSibling); z._aufschl = bk; }
+    }
+    // Export der gefilterten Liste
+    var ex = document.createElement("div"); ex.className = "zweit"; ex.style.margin = "8px 0 0";
+    var c1 = document.createElement("button"); c1.type = "button"; c1.textContent = "CSV"; c1.addEventListener("click", function () { archivCsv(treffer, wer); }); ex.appendChild(c1);
+    var c2 = document.createElement("button"); c2.type = "button"; c2.textContent = navigator.share ? "Liste teilen" : "Liste kopieren"; c2.addEventListener("click", function () { archivTeilen(treffer, wer); }); ex.appendChild(c2);
+    liste.appendChild(ex);
     if (!treffer.length) { liste.appendChild(leerZustand(archivStand.spiele.length ? "Nichts passt zu den Filtern." : "Noch keine Spiele im Archiv.")); return; }
     var monat = null, box = null, n = 0;
     treffer.forEach(function (s) {
@@ -2693,6 +2734,7 @@
   // Nach dem Login im Mitgliederbereich: "Meine Spiele" auf den dort
   // gewaehlten Namen stellen, damit niemand zweimal gefragt wird.
   var START_BAUSTEINE = [
+    ["ruhig", "Nur nächstes Spiel", "ganz ruhige Startseite: Kopfkarte und deine Spiele, sonst nichts", false],
     ["danach", "„Danach“ auf der Karte oben", "das übernächste Spiel in einer Zeile", false],
     ["wetter", "Wetter auf der Karte oben", "zum Treffpunkt, mit Glättehinweis", true, "wetter"],
     ["abfahrt", "Abfahrtszeit auf der Karte oben", "braucht die Heimatadresse im Konto", true],
@@ -2839,7 +2881,20 @@
     ["plan-vergangene", "plan-offen", "plan-hallen", "plan-meine"].forEach(function (id) { el(id).checked = false; });
     ligenWahl = {}; schnellWahl = null; el("plan-filter").value = ""; zeigePlan();
   });
-  el("plan-meine").addEventListener("change", zeigePlan);
+  el("plan-meine").addEventListener("change", function () { schreiben("plan-meine-aus", el("plan-meine").checked ? null : "1"); zeigePlan(); });
+  // Wischen zwischen den Wochen (Wochenansicht) und Monaten (Monatsansicht)
+  (function () {
+    var x0 = null, y0 = null;
+    el("plan").addEventListener("touchstart", function (ev) { if (!ev.touches || ev.touches.length !== 1) return; x0 = ev.touches[0].clientX; y0 = ev.touches[0].clientY; }, { passive: true });
+    el("plan").addEventListener("touchend", function (ev) {
+      if (x0 === null || !ev.changedTouches) return;
+      var dx = ev.changedTouches[0].clientX - x0, dy = ev.changedTouches[0].clientY - y0; x0 = y0 = null;
+      if (Math.abs(dx) < 70 || Math.abs(dy) > 50) return;
+      var modus = planModus();
+      if (modus === "woche" && planWocheStart) { planWocheStart = new Date(planWocheStart.getTime() + (dx < 0 ? 7 : -7) * 86400000); zeigeWochenansicht(); }
+      else if (modus === "monat" && planMonatStart) { planMonatStart = new Date(planMonatStart.getFullYear(), planMonatStart.getMonth() + (dx < 0 ? 1 : -1), 1); planTag = null; zeigeMonat(); }
+    }, { passive: true });
+  })();
   el("plan-drucken").addEventListener("click", function () {
     if (planModus() === "monat") { toast("Drucken geht in der Karten- oder Listenansicht.", ""); return; }
     document.body.classList.add("druck-plan");
