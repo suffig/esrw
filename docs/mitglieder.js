@@ -1385,7 +1385,9 @@ window.Mitglieder = (function () {
             if (!vorbei && !confirm("Der Monat läuft noch – trotzdem abschließen und die E-Mail schicken?")) return;
             monatsMail(imMonat, d);
             offen.forEach(function (x) { erledigtSetzen(x, true); });
-            kurzMeldung(MONATE[d.getMonth()] + " abgeschlossen ✓", "gut");
+            var zurueck = offen.slice();
+            if (window.zeigeToast) window.zeigeToast(MONATE[d.getMonth()] + " abgeschlossen ✓", "gut", { label: "Rückgängig", fn: function () { zurueck.forEach(function (x) { erledigtSetzen(x, false); }); rendereAbrechnung(); kurzMeldung("Wieder offen.", ""); } });
+            else kurzMeldung(MONATE[d.getMonth()] + " abgeschlossen ✓", "gut");
             rendereAbrechnung();
           } }));
         } else if (mitBetrag.length) {
@@ -1407,7 +1409,24 @@ window.Mitglieder = (function () {
 
   // ---- Belege (Storage-Bucket "belege", Ordner je Nutzer)
 
-  function belegHochladen(sp, datei, zeile) {
+  // Fotos vor dem Upload verkleinern (max. 1600 px, JPEG) - spart Speicher und Zeit
+  function bildVerkleinern(datei) {
+    if (!/^image\//.test(datei.type) || datei.size < 400000) return Promise.resolve(datei);
+    return new Promise(function (ok) {
+      var url = URL.createObjectURL(datei), img = new Image();
+      img.onload = function () {
+        var max = 1600, f = Math.min(1, max / Math.max(img.width, img.height));
+        var c = document.createElement("canvas"); c.width = Math.round(img.width * f); c.height = Math.round(img.height * f);
+        c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+        URL.revokeObjectURL(url);
+        c.toBlob(function (blob) { ok(blob ? new File([blob], datei.name.replace(/\.[^.]+$/, "") + ".jpg", { type: "image/jpeg" }) : datei); }, "image/jpeg", 0.82);
+      };
+      img.onerror = function () { URL.revokeObjectURL(url); ok(datei); };
+      img.src = url;
+    });
+  }
+  function belegHochladen(sp, dateiRoh, zeile) {
+    return bildVerkleinern(dateiRoh).then(function (datei) {
     var pfad = session.user.id + "/" + sicher(sp.kennung) + "/" + Date.now() + "_" + sicher(datei.name);
     kurzMeldung("Lade " + datei.name + " hoch …", "");
     return sb.storage.from("belege").upload(pfad, datei, { upsert: false }).then(function (r) {
@@ -1415,6 +1434,9 @@ window.Mitglieder = (function () {
       var alt = (einsaetze[sp.kennung] && einsaetze[sp.kennung].belege) || [];
       speichereEinsatz(sp, { belege: alt.concat([pfad]) });
       belegeRendern(sp, zeile);
+      var n = alt.length + 1, kz = zeile.querySelector(".mg-beleg-zahl"); if (kz) { kz.textContent = String(n); kz.classList.remove("versteckt"); }
+      kurzMeldung("Beleg gespeichert ✓", "gut");
+    });
     });
   }
 
@@ -1483,6 +1505,9 @@ window.Mitglieder = (function () {
 
     var b = betragFuer(sp, e);
     var status = h("button", { type: "button", class: "mg-status" + (erledigt(e) ? " fertig" : ""), title: "Antippen: Status wechseln", text: erledigt(e) ? "abgerechnet ✓" : "offen", onclick: function () { var neu = !erledigt(einsaetze[sp.kennung] || {}); abg.checked = neu; erledigtSetzen(sp, neu); } });
+    // Beleg-Foto direkt aus der Zeile: Kamera oeffnet sich, Bild wird verkleinert hochgeladen
+    var foto = h("input", { type: "file", accept: "image/*", capture: "environment", style: "display:none", onchange: function (ev) { var f = ev.target.files && ev.target.files[0]; if (f) belegHochladen(sp, f, zeile); ev.target.value = ""; } });
+    var fotoKnopf = h("button", { type: "button", class: "mg-foto", title: "Beleg fotografieren", onclick: function () { foto.click(); } }, [ikone("i-kamera"), h("span", { class: "mg-beleg-zahl" + ((e.belege || []).length ? "" : " versteckt"), text: String((e.belege || []).length || "") })]);
     var details = h("div", { class: "mg-details versteckt" });
     var zeile = h("div", { class: "spiel karte mg-eintrag" + (vergangen ? "" : " war") + (erledigt(e) ? " bezahlt" : ""), "data-kennung": sp.kennung.replace(/"/g, "") }, [
       h("div", { class: "mg-kopf", onclick: function (ev) { if (ev.target.closest("input, button, a, label")) return; details.classList.toggle("versteckt"); zeile.classList.toggle("offen", !details.classList.contains("versteckt")); } }, [
@@ -1494,6 +1519,7 @@ window.Mitglieder = (function () {
         h("div", { class: "mg-summe" }, [
           h("span", { class: "meta mg-betrag-kurz", text: b.betrag != null ? euro(b.betrag) + (e.km != null ? " · " + e.km + " km" : "") : "Betrag fehlt" }),
           vergangen ? status : h("span", { class: "mg-status kommt", text: "kommt" }),
+          vergangen ? fotoKnopf : null, foto,
           h("span", { class: "meta mg-auf", text: "Details ›" })
         ])
       ]),

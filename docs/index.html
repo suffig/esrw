@@ -709,6 +709,51 @@
   .tour-punkte i { width:7px; height:7px; border-radius:50%; background:var(--linie); }
   .tour-punkte i.aktiv { background:var(--akzent); width:18px; border-radius:4px; }
   @media (prefers-reduced-motion: reduce) { .tour-karte { animation:none; } }
+  /* Mobile-Feinschliff: Tippflaechen, kein iOS-Zoom, Leiste, Toast mit Aktion */
+  html { -webkit-text-size-adjust:100%; }
+  body { -webkit-tap-highlight-color:transparent; }
+  button, a, .chip, .filterknopf { touch-action:manipulation; }
+  @media (max-width: 700px) {
+    input:not([type=checkbox]):not([type=radio]), select, textarea { font-size:16px; }
+    .anfrage { min-height:36px; }
+    .filterknopf { min-height:40px; }
+    .chip { min-height:34px; }
+    .textknopf { min-height:32px; }
+    .leiste button { min-height:54px; gap:4px; padding:6px 2px 4px; }
+    .leiste button svg.i { width:1.5rem; height:1.5rem; }
+    .leiste button.aktiv svg.i { padding:4px 14px; border-radius:99px; }
+    .kopf { padding-top:max(6px, env(safe-area-inset-top)); }
+    .profilzeile.karte { padding:12px 14px; }
+    .spiel-kopf .zeit { font-size:1.7rem; }
+    .tour-karte { padding:20px 16px 16px; }
+  }
+  @media (max-width: 360px) {
+    .kopf h1 { font-size:1.1rem; }
+    .stand { max-width:150px; }
+    .zahlen { grid-template-columns:1fr 1fr; }
+    .mg-saldo { flex-wrap:wrap; }
+    .mg-saldo .zahl { flex:1 1 40%; }
+  }
+  @media (min-width: 700px) and (max-width: 899px) {
+    main { max-width:760px; }
+    .menue { grid-template-columns:repeat(3, 1fr); }
+  }
+  @media (max-height: 460px) and (orientation: landscape) {
+    .leiste button { min-height:40px; font-size:.6rem; }
+    .held { padding:12px 14px; }
+    .held .zeit { font-size:1.6rem; }
+  }
+  .toast.mit-aktion { display:flex; align-items:center; gap:12px; padding-right:8px; }
+  .toast button { background:rgba(255,255,255,.18); color:#fff; border:1px solid rgba(255,255,255,.4); border-radius:99px; padding:6px 12px; font:inherit; font-weight:800; cursor:pointer; white-space:nowrap; }
+  .mg-foto { display:inline-flex; align-items:center; gap:4px; background:var(--akzent-hell); color:var(--text); border:0; border-radius:99px; padding:4px 9px; cursor:pointer; font:inherit; font-size:.72rem; font-weight:800; }
+  .mg-foto svg.i { width:16px; height:16px; }
+  .ligen-schnell .chip { border-left:4px solid var(--linie); }
+  .ligen-schnell:empty { display:none; }
+  .termin-heute { display:block; text-decoration:none; color:inherit; margin-bottom:12px; padding:14px 16px; border-left:5px solid var(--akzent); grid-column:1 / -1; }
+  .termin-heute.jetzt { border-left-color:var(--rot); }
+  .termin-heute .wann { font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); }
+  .termin-heute .titel { font-size:1.05rem; font-weight:800; display:flex; align-items:center; gap:8px; margin:4px 0 2px; }
+  .termin-heute .meta { font-size:.8rem; }
   /* Ruhige Startseite: nur Kopfkarte und Spiele */
   #detail.start-ruhig #uebersicht, #detail.start-ruhig #radar, #detail.start-ruhig #nachtrag, #detail.start-ruhig #pins, #detail.start-ruhig #kalender-box, #detail.start-ruhig #start-woche, #detail.start-ruhig #onboarding-kurz, #detail.start-ruhig .kollege { display:none !important; }
   #detail.start-ruhig .held .danach, #detail.start-ruhig .held .woche { display:none; }
@@ -1041,6 +1086,7 @@
   <symbol id="i-empty" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2.5"/><path d="M4 10h16M9 14h6"/></symbol>
   <symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 8h13l-3-3M20 16H7l3 3"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-kamera" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></symbol>
   <symbol id="i-note" viewBox="0 0 24 24"><path d="M4 20h4l10-10-4-4L4 16z"/><path d="M12.5 7.5l4 4"/></symbol>
   <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
   <symbol id="i-euro" viewBox="0 0 24 24"><path d="M17 6.5A6 6 0 0 0 7.5 9M17 17.5A6 6 0 0 1 7.5 15M4 10.5h9M4 13.5h9"/></symbol>
@@ -1114,6 +1160,7 @@
         <div class="zweit"><button type="button" id="plan-filter-leeren">Zurücksetzen</button><button type="button" id="plan-teilen">Teilen</button><button type="button" id="plan-drucken">Drucken</button></div>
       </div>
     </div>
+    <div class="ligen schnell ligen-schnell" id="plan-ligen-schnell"></div>
     <div class="ligen schnell" id="plan-schnell">
       <span class="chip" data-schnell="wochenende">Dieses Wochenende</span><span class="chip" data-schnell="woche">Nächste 7 Tage</span><span class="chip" data-schnell="abends">Abends</span><span class="chip" data-schnell="frueh">Vormittags</span>
     </div>
@@ -1369,6 +1416,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=43"></script>
+<script src="app.js?v=44"></script>
 </body>
 </html>

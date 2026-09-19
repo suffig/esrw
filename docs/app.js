@@ -285,13 +285,18 @@
 
   // Kurze Rueckmeldung unten ueber der Leiste. Auch mitglieder.js nutzt sie.
   var toastTimer = null;
-  function toast(text, art) {
+  function toast(text, art, aktion) {
     var t = el("toast");
     clearTimeout(toastTimer);
     if (!text) { t.classList.remove("zeigt"); return; }
-    t.textContent = text; t.className = "toast " + (art || "");
+    t.textContent = text; t.className = "toast " + (art || "") + (aktion ? " mit-aktion" : "");
+    if (aktion && aktion.label) {
+      var b = document.createElement("button"); b.type = "button"; b.textContent = aktion.label;
+      b.addEventListener("click", function () { clearTimeout(toastTimer); t.classList.remove("zeigt"); try { aktion.fn(); } catch (e) {} });
+      t.appendChild(b);
+    }
     requestAnimationFrame(function () { t.classList.add("zeigt"); });
-    toastTimer = setTimeout(function () { t.classList.remove("zeigt"); }, art === "warn" ? 7000 : 2500);
+    toastTimer = setTimeout(function () { t.classList.remove("zeigt"); }, aktion ? 10000 : art === "warn" ? 7000 : 2500);
   }
   window.zeigeToast = toast;
 
@@ -1032,6 +1037,18 @@
         if (!z || ziel._lauf !== lauf) return;
         if (startEinstellung("termine") && funktion("info")) window.Mitglieder.termine().then(function (t) {
           if (!t || !t.length || ziel._lauf !== lauf) return;
+          // Steht ein Termin unmittelbar bevor, bekommt er eine eigene Karte wie ein Spiel
+          var heute0 = new Date(); heute0.setHours(0, 0, 0, 0);
+          var naechster = t[0], dT = new Date(naechster.termin + "T00:00:00"), diffT = Math.round((dT - heute0) / 86400000);
+          if (diffT >= 0 && diffT <= 3) {
+            var tk = document.createElement("a"); tk.href = "#mitglieder/info"; tk.className = "karte termin-heute" + (diffT === 0 ? " jetzt" : "");
+            var wann = document.createElement("div"); wann.className = "wann"; wann.textContent = (diffT === 0 ? "Heute" : diffT === 1 ? "Morgen" : "In " + diffT + " Tagen") + " · " + wochentag[dT.getDay()] + " " + dT.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }); tk.appendChild(wann);
+            var tt = document.createElement("div"); tt.className = "titel"; tt.appendChild(ikone("i-cal")); tt.appendChild(document.createTextNode(naechster.titel)); tk.appendChild(tt);
+            var tm = document.createElement("div"); tm.className = "meta"; tm.textContent = "Termin vom Betreiber · Zu-/Absage unter Info ›"; tk.appendChild(tm);
+            ziel.appendChild(tk);
+            t = t.slice(1);
+          }
+          if (!t.length) return;
           var box = document.createElement("a"); box.href = "#mitglieder/info"; box.className = "termine-karte";
           var k = document.createElement("div"); k.className = "zahl karte"; k.style.textAlign = "left";
           var b = document.createElement("b"); b.textContent = "Nächste Termine"; k.appendChild(b);
@@ -1436,11 +1453,16 @@
       return a.localeCompare(b);
     });
     ziel.innerHTML = "";
+    var schnell = el("plan-ligen-schnell"); if (schnell) schnell.innerHTML = "";
     if (gruppen.length < 2) return;
     gruppen.forEach(function (g) {
-      var c = document.createElement("span"); c.className = "chip" + (ligenWahl[g] ? " aktiv" : ""); c.textContent = g;
-      c.addEventListener("click", function () { if (ligenWahl[g]) delete ligenWahl[g]; else ligenWahl[g] = 1; zeigePlan(); });
-      ziel.appendChild(c);
+      [ziel, schnell].forEach(function (z) {
+        if (!z) return;
+        var c = document.createElement("span"); c.className = "chip" + (ligenWahl[g] ? " aktiv" : ""); c.textContent = g + (z === schnell ? " " + zaehler[g] : "");
+        if (z === schnell) { var lf = ligaFarbe(g); c.style.borderLeftColor = lf.punkt; }
+        c.addEventListener("click", function () { if (ligenWahl[g]) delete ligenWahl[g]; else ligenWahl[g] = 1; zeigePlan(); });
+        z.appendChild(c);
+      });
     });
   }
   function planGefiltert(fuerMonat) {

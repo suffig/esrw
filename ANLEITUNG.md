@@ -1158,6 +1158,25 @@ sind davon nicht betroffen.
 * **Mehr:** Gruppe „Für dich“ (Archiv, Statistik, Änderungen, Notizen) steht
   jetzt oben, dann „Gemeinsam“, dann „Konto und App“.
 
+### 10.6p Beleg-Foto aus der Zeile, Rückgängig, Liga-Chips, Termin-Karte, Mobil-Feinschliff
+
+* **Beleg-Foto:** Kamera-Knopf rechts in jeder abgerechneten Spielzeile –
+  öffnet die Kamera, das Bild wird auf 1600 px verkleinert (JPEG) und
+  hochgeladen; die Zahl am Knopf zeigt die Belege. PDFs weiterhin über
+  „+ Beleg“ in den Details.
+* **Rückgängig:** Nach „Monat abschließen“ bleibt 10 Sekunden ein Knopf
+  „Rückgängig“ in der Meldung, der die Spiele wieder auf „offen“ setzt.
+* **Spielplan:** Liga-Chips mit Anzahl stehen direkt über den Schnellfiltern
+  (farbige Kante je Liga); Hallenname auf jeder Karte führt zur Hallen-Seite.
+* **Termin-Karte auf Start:** Steht ein Termin des Betreibers heute, morgen
+  oder in bis zu drei Tagen an, bekommt er eine eigene Karte über den
+  „Nächsten Terminen“ (Tipp führt zu Info mit Zu-/Absage).
+* **Mobil:** Eingabefelder mit 16 px (kein iOS-Zoom beim Tippen), größere
+  Tippflächen (Leiste 54 px, Chips/Knöpfe ≥ 34 px), Safe-Area oben, kein
+  Tap-Highlight, Tablet-Breite 700–899 px mit drei Menü-Spalten, Querformat
+  mit flacher Leiste, sehr schmale Geräte (≤ 360 px) mit zweispaltigen
+  Kacheln und kleinerem Titel.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –
