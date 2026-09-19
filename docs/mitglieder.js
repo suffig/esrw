@@ -1008,6 +1008,10 @@ window.Mitglieder = (function () {
     }, 600);
   }
 
+  // Ein Status je Spiel: "abgerechnet" (frueher getrennt "abgerechnet" und
+  // "bezahlt" - beides meint dasselbe: erledigt). Beide Spalten laufen gleich.
+  function erledigt(e) { return !!(e && (e.bezahlt || e.abgerechnet)); }
+  function erledigtSetzen(sp, wert) { speichereEinsatz(sp, { bezahlt: !!wert, abgerechnet: !!wert }); }
   function summen(spiele, filter) {
     var s = { spiele: 0, km: 0, fahrt: 0, verg: 0, ausl: 0, offen: 0, offenBetrag: 0, verpf: 0 };
     spiele.forEach(function (sp) {
@@ -1019,7 +1023,7 @@ window.Mitglieder = (function () {
       s.fahrt += fahrtkosten(e);
       var b = betragFuer(sp, e).betrag || 0;
       s.verg += b; s.ausl += e.auslagen || 0; s.verpf += e.verpflegung || 0;
-      if (!e.bezahlt && b > 0) { s.offen++; s.offenBetrag += b; }
+      if (!erledigt(e) && b > 0) { s.offen++; s.offenBetrag += b; }
     });
     return s;
   }
@@ -1105,7 +1109,8 @@ window.Mitglieder = (function () {
     var kurz = wurzel.querySelector('[data-kennung="' + spiel.kennung.replace(/"/g, "") + '"] .mg-betrag-kurz');
     if (kurz) kurz.textContent = b.betrag != null ? euro(b.betrag) + (e.km != null ? " · " + e.km + " km" : "") : "Betrag fehlt";
     var karte = wurzel.querySelector('[data-kennung="' + spiel.kennung.replace(/"/g, "") + '"]');
-    if (karte) karte.classList.toggle("bezahlt", !!e.bezahlt);
+    if (karte) karte.classList.toggle("bezahlt", erledigt(e));
+    var pill = karte && karte.querySelector(".mg-status"); if (pill) { pill.textContent = erledigt(e) ? "abgerechnet ✓" : "offen"; pill.classList.toggle("fertig", erledigt(e)); }
   }
 
   function betragText(spiel, e, b) {
@@ -1157,7 +1162,7 @@ window.Mitglieder = (function () {
     var zeilen = [["Saison", "Datum", "Uhrzeit", "Liga", "Begegnung", "Halle", "Rolle", "System",
                    "km einfach", "km gefahren", "Kilometermodell", "Satz €/km", "Fahrtkosten",
                    "Grundgebühr", "Zuschlag Uhrzeit", "Zuschlag übergreifend", "Ausfall vor Ort", "Vergütung",
-                   "Auslagen", "Verpflegung", "Belege", "bezahlt", "Notiz"]];
+                   "Auslagen", "Verpflegung", "Belege", "abgerechnet", "Notiz"]];
     var dez = function (n) { return n == null ? "" : String(Math.round(n * 100) / 100).replace(".", ","); };
     spiele.forEach(function (sp) {
       var e = einsaetze[sp.kennung] || {};
@@ -1168,7 +1173,7 @@ window.Mitglieder = (function () {
         sp.system || "", dez(e.km), dez(e.km != null ? e.km * 2 : null), einfach ? "einfache Strecke" : "hin und zurück",
         dez(einfach ? profil.satz_einfach : profil.satz_hinrueck), dez(e.km != null ? fahrtkosten(e) : null),
         dez(b.grund), dez(b.zeit || null), dez(b.ueber || null), e.ausgefallen ? "ja" : "", dez(b.betrag),
-        dez(e.auslagen), dez(e.verpflegung), (e.belege || []).length || "", e.bezahlt ? "ja" : "nein", e.notiz || ""
+        dez(e.auslagen), dez(e.verpflegung), (e.belege || []).length || "", erledigt(e) ? "ja" : "nein", e.notiz || ""
       ]);
     });
     var text = zeilen.map(function (z) {
@@ -1203,7 +1208,7 @@ window.Mitglieder = (function () {
       speichereEinsatz(sp, Object.assign({ km: v && v.art === "route" ? v.km : null, verguetung: g }, vp != null ? { verpflegung: vp } : {}));
       n++;
     });
-    if (n) kurzMeldung(n + (n === 1 ? " Spiel" : " Spiele") + " automatisch vorbelegt – nur noch „bezahlt“ abhaken.", "gut");
+    if (n) kurzMeldung(n + (n === 1 ? " Spiel" : " Spiele") + " automatisch vorbelegt – am Monatsende „Monat abschließen“.", "gut");
   }
 
   // Kilometermodell und Verpflegung direkt in der Abrechnung umschalten
@@ -1271,12 +1276,12 @@ window.Mitglieder = (function () {
 
     var saisonWahl = h("select", { class: "mg-select", onchange: function (ev) { gewaehlteSaison = ev.target.value; saisonLaden(gewaehlteSaison).then(rendereAbrechnung); } },
       saisonen().map(function (s) { var o = h("option", { value: s, text: "Saison " + s }); if (s === gewaehlteSaison) o.selected = true; return o; }));
-    var offenSchalter = h("input", { type: "checkbox", onchange: function (ev) { nurOffene = ev.target.checked; rendereAbrechnung(); } });
-    offenSchalter.checked = nurOffene;
-    inhalt.appendChild(h("div", { class: "mg-form" }, [saisonWahl,
-      h("div", { class: "schalterzeile" }, [
-        h("label", { class: "schalter" }, [offenSchalter, " nur unbezahlte / unvollständige"])
-      ])]));
+    var offenN = spiele.filter(function (sp) { var e = einsaetze[sp.kennung]; return new Date(sp.beginn) < new Date() && (!e || !erledigt(e) || e.verguetung == null); }).length;
+    var chips = h("div", { class: "schnell mg-chips" }, [
+      h("button", { type: "button", class: "filterknopf" + (nurOffene ? " aktiv" : ""), text: "Offen" + (offenN ? " (" + offenN + ")" : ""), onclick: function () { nurOffene = true; rendereAbrechnung(); } }),
+      h("button", { type: "button", class: "filterknopf" + (!nurOffene ? " aktiv" : ""), text: "Alle", onclick: function () { nurOffene = false; rendereAbrechnung(); } })
+    ]);
+    inhalt.appendChild(h("div", { class: "mg-abrechnung-kopf" }, [saisonWahl, chips]));
 
     inhalt.appendChild(h("div", { class: "mg-summenblock" }));
     inhalt.appendChild(abrechnungEinstellungen(spiele));
@@ -1321,45 +1326,37 @@ window.Mitglieder = (function () {
     if (nurOffene) liste = spiele.filter(function (sp) {
       var e = einsaetze[sp.kennung];
       // km zaehlt nur als "fehlt", wenn eine Heimatadresse da ist - sonst waere jedes Spiel unvollstaendig
-      return !e || !e.bezahlt || e.verguetung == null || (e.km == null && profil.heimat_lat != null);
+      return !e || !erledigt(e) || e.verguetung == null || (e.km == null && profil.heimat_lat != null);
     });
     // Nach dem Speichern eines privaten Spiels die Liste neu laden
     if (!spiele.length) inhalt.appendChild(h("p", { class: "leer", text: "Keine Spiele in dieser Saison." }));
-    else if (!liste.length) inhalt.appendChild(h("p", { class: "leer", text: "Alles abgerechnet und bezahlt ✓" }));
+    else if (!liste.length) inhalt.appendChild(h("p", { class: "leer", text: "Alles abgerechnet ✓" }));
 
-    // Nach Monat gruppiert, mit "alles bezahlt" je Monat
+    // Nach Monat gruppiert, je Monat ein Knopf "Monat abschliessen"
     var monat = null;
     liste.forEach(function (sp) {
       var d = new Date(sp.beginn), m = d.getFullYear() + "-" + d.getMonth();
       if (m !== monat) {
         monat = m;
         var imMonat = spiele.filter(function (x) { var y = new Date(x.beginn); return y.getFullYear() + "-" + y.getMonth() === m; });
-        var offen = imMonat.filter(function (x) { var e = einsaetze[x.kennung]; return e && !e.bezahlt && (betragFuer(x, e).betrag || 0) > 0; });
         var mitBetrag = imMonat.filter(function (x) { var e = einsaetze[x.kennung]; return e && (betragFuer(x, e).betrag || 0) > 0; });
-        var nichtAbgeschlossen = mitBetrag.filter(function (x) { return !einsaetze[x.kennung].abgerechnet; });
+        var offen = mitBetrag.filter(function (x) { return !erledigt(einsaetze[x.kennung]); });
+        var summeMonat = 0; imMonat.forEach(function (x) { var e = einsaetze[x.kennung]; summeMonat += e ? (betragFuer(x, e).betrag || 0) : 0; });
         var vorbei = new Date(d.getFullYear(), d.getMonth() + 1, 1) <= new Date();
-        var kopf = h("div", { class: "mg-monat" }, [h("b", { text: MONATE[d.getMonth()] + " " + d.getFullYear() })]);
-        var rechts = h("span", {});
-        if (mitBetrag.length && nichtAbgeschlossen.length) {
-          // Abschliessen = Monatsmail raus und alle Spiele als abgerechnet markieren
-          rechts.appendChild(h("button", { type: "button", class: "textknopf", text: vorbei ? "Monat abschließen" : "abschließen", title: "Monatsabrechnung per E-Mail und als abgerechnet markieren", onclick: function () {
-            if (!vorbei && !confirm("Der Monat läuft noch – trotzdem abschließen?")) return;
+        var kopf = h("div", { class: "mg-monat" }, [h("span", {}, [h("b", { text: MONATE[d.getMonth()] + " " + d.getFullYear() }),
+          h("small", { text: imMonat.length + (imMonat.length === 1 ? " Spiel" : " Spiele") + " · " + euro(summeMonat) + (offen.length ? " · " + offen.length + " offen" : mitBetrag.length ? " · abgerechnet ✓" : "") })])]);
+        var rechts = h("span", { class: "mg-monat-aktion" });
+        if (offen.length) {
+          // Abschliessen = Monatsmail an den Obmann und alle Spiele des Monats als abgerechnet markieren
+          rechts.appendChild(h("button", { type: "button", class: "anfrage", text: vorbei ? "Monat abschließen" : "Abschließen", title: "Monatsabrechnung per E-Mail und alle Spiele als abgerechnet markieren", onclick: function () {
+            if (!vorbei && !confirm("Der Monat läuft noch – trotzdem abschließen und die E-Mail schicken?")) return;
             monatsMail(imMonat, d);
-            nichtAbgeschlossen.forEach(function (x) { speichereEinsatz(x, { abgerechnet: true }); });
-            kurzMeldung(MONATE[d.getMonth()] + " abgeschlossen ✓ – jetzt nur noch „bezahlt“ abhaken.", "gut");
+            offen.forEach(function (x) { erledigtSetzen(x, true); });
+            kurzMeldung(MONATE[d.getMonth()] + " abgeschlossen ✓", "gut");
             rendereAbrechnung();
           } }));
         } else if (mitBetrag.length) {
-          rechts.appendChild(h("span", { class: "abgeschlossen", text: "abgeschlossen ✓" }));
-          rechts.appendChild(document.createTextNode(" · "));
           rechts.appendChild(h("button", { type: "button", class: "textknopf", text: "E-Mail erneut", onclick: function () { monatsMail(imMonat, d); } }));
-        }
-        if (offen.length) {
-          rechts.appendChild(document.createTextNode(" · "));
-          rechts.appendChild(h("button", { type: "button", class: "textknopf", text: "alles bezahlt ✓", onclick: function () {
-            offen.forEach(function (x) { speichereEinsatz(x, { bezahlt: true }); });
-            rendereAbrechnung();
-          } }));
         }
         kopf.appendChild(rechts);
         inhalt.appendChild(kopf);
@@ -1447,10 +1444,8 @@ window.Mitglieder = (function () {
     var ausl = h("input", { type: "number", step: "0.5", min: "0", inputmode: "decimal",
       value: e.auslagen != null ? e.auslagen : "", placeholder: "€",
       onchange: function (ev) { speichereEinsatz(sp, { auslagen: zahl(ev.target.value) }); } });
-    var bez = h("input", { type: "checkbox", onchange: function (ev) { speichereEinsatz(sp, { bezahlt: ev.target.checked }); } });
-    bez.checked = !!e.bezahlt;
-    var abg = h("input", { type: "checkbox", title: "Abrechnung verschickt", onchange: function (ev) { speichereEinsatz(sp, { abgerechnet: ev.target.checked }); } });
-    abg.checked = !!e.abgerechnet;
+    var abg = h("input", { type: "checkbox", title: "abgerechnet", onchange: function (ev) { erledigtSetzen(sp, ev.target.checked); } });
+    abg.checked = erledigt(e);
     var ausf = h("input", { type: "checkbox", onchange: function (ev) { speichereEinsatz(sp, { ausgefallen: ev.target.checked }); } });
     ausf.checked = !!e.ausgefallen;
     var ueb = h("input", { type: "checkbox", onchange: function (ev) { speichereEinsatz(sp, { uebergreifend: ev.target.checked }); } });
@@ -1461,10 +1456,9 @@ window.Mitglieder = (function () {
       onchange: function (ev) { speichereEinsatz(sp, { verpflegung: zahl(ev.target.value) }); } });
 
     var b = betragFuer(sp, e);
-    var kopfBezahlt = h("input", { type: "checkbox", title: "bezahlt", onchange: function (ev) { bez.checked = ev.target.checked; speichereEinsatz(sp, { bezahlt: ev.target.checked }); } });
-    kopfBezahlt.checked = !!e.bezahlt;
+    var status = h("button", { type: "button", class: "mg-status" + (erledigt(e) ? " fertig" : ""), title: "Antippen: Status wechseln", text: erledigt(e) ? "abgerechnet ✓" : "offen", onclick: function () { var neu = !erledigt(einsaetze[sp.kennung] || {}); abg.checked = neu; erledigtSetzen(sp, neu); } });
     var details = h("div", { class: "mg-details versteckt" });
-    var zeile = h("div", { class: "spiel karte mg-eintrag" + (vergangen ? "" : " war") + (e.bezahlt ? " bezahlt" : ""), "data-kennung": sp.kennung.replace(/"/g, "") }, [
+    var zeile = h("div", { class: "spiel karte mg-eintrag" + (vergangen ? "" : " war") + (erledigt(e) ? " bezahlt" : ""), "data-kennung": sp.kennung.replace(/"/g, "") }, [
       h("div", { class: "mg-kopf", onclick: function (ev) { if (ev.target.closest("input, button, a, label")) return; details.classList.toggle("versteckt"); zeile.classList.toggle("offen", !details.classList.contains("versteckt")); } }, [
         h("div", { class: "kopfzeile" }, [
           h("span", { class: "datum", text: datum(d) + " · " + uhr(d) + " Uhr" + (zeitzuschlag(sp) ? " · +20 %" : "") + (sp.privat ? " · selbst eingetragen" : "") }),
@@ -1473,7 +1467,7 @@ window.Mitglieder = (function () {
         h("div", { class: "paarung", text: (sp.liga ? sp.liga + ": " : "") + sp.paarung }),
         h("div", { class: "mg-summe" }, [
           h("span", { class: "meta mg-betrag-kurz", text: b.betrag != null ? euro(b.betrag) + (e.km != null ? " · " + e.km + " km" : "") : "Betrag fehlt" }),
-          h("label", { class: "mg-check" }, [kopfBezahlt, " bezahlt"]),
+          vergangen ? status : h("span", { class: "mg-status kommt", text: "kommt" }),
           h("span", { class: "meta mg-auf", text: "Details ›" })
         ])
       ]),
@@ -1488,7 +1482,6 @@ window.Mitglieder = (function () {
 
       h("div", { class: "mg-schalter" }, [
         h("label", { class: "mg-check" }, [abg, " abgerechnet"]),
-        h("label", { class: "mg-check" }, [bez, " bezahlt"]),
         h("label", { class: "mg-check" }, [ausf, " vor Ort ausgefallen"]),
         uebergreifendMoeglich(sp) ? h("label", { class: "mg-check" }, [ueb, " übergreifend"]) : null
       ]),
@@ -1500,7 +1493,7 @@ window.Mitglieder = (function () {
         sb.from("einsaetze").delete().eq("user_id", session.user.id).eq("kennung", sp.kennung).then(function () { delete einsaetze[sp.kennung]; rendereAbrechnung(); });
       } })]) : null
     ].forEach(function (x) { if (x) details.appendChild(x); });
-    bez.addEventListener("change", function () { kopfBezahlt.checked = bez.checked; });
+
     zeile.querySelector(".rolle").className = "rolle " + (sp.rolle || "");
     belegeRendern(sp, zeile);
     return zeile;

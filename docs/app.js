@@ -841,7 +841,7 @@
     }
     if (meins) {
       var ab = karteAbschnitt("Weiteres");
-      if (funktion("abrechnung")) { var l = document.createElement("a"); l.href = "#mitglieder/abrechnung"; l.textContent = "Zur Abrechnung (km, Vergütung, bezahlt)"; ab.appendChild(l); }
+      if (funktion("abrechnung")) { var l = document.createElement("a"); l.href = "#mitglieder/abrechnung"; l.textContent = "Zur Abrechnung (km, Vergütung, abgerechnet)"; ab.appendChild(l); }
       if (!s.vergangen) {
         var mailZeile = document.createElement("div"); mailZeile.style.marginTop = "8px";
         var mail = document.createElement("a"); mail.href = "#"; mail.textContent = "Obmann anschreiben (Absage / Frage zu diesem Spiel)";
@@ -1825,6 +1825,7 @@
     el("abo").href = feedUrl(p.slug, "webcal:");
     el("laden").onclick = function () { location.href = feedUrl(p.slug, location.protocol); };
     zeigeHeld(p);
+    zeigeSchnellzugriff(p, meins);
     zeigeUebersicht(p);
     zeigeNachtrag(p);
     var ziel = el("spiele"); ziel.innerHTML = "";
@@ -1855,6 +1856,24 @@
       .then(function (hm) { if (hm) el("abfahrt-ics").classList.remove("versteckt"); }).catch(function () {});
     if (profil && profil.slug === p.slug) pruefeNeue(p, false);
     if (!stillesNachladen && sprungZiel === null) window.scrollTo(0, 0);
+  }
+
+  // Schnellzugriff unter der Kopfkarte: die Kernfunktionen mit einem Tipp
+  function zeigeSchnellzugriff(p, meins) {
+    var box = el("schnellzugriff"); box.innerHTML = "";
+    if (!meins || !startEinstellung("schnell")) { box.classList.add("versteckt"); return; }
+    var eintraege = [
+      ["#plan", "i-list", "Spielplan"],
+      funktion("abrechnung") ? ["#mitglieder/abrechnung", "i-euro", "Abrechnung"] : null,
+      ["#archiv", "i-clock", "Archiv"],
+      funktion("gespann") ? ["#mitfahren", "i-route", "Mitfahren"] : null,
+      ["#aenderungen", "i-bell", "Änderungen"],
+      funktion("tausch") ? ["#mitglieder/tausch", "i-swap", "Tausch"] : null,
+      funktion("statistik") ? ["#statistik", "i-users", "Statistik"] : null,
+      ["#einstellungen", "i-key", "Einstellungen"]
+    ].filter(Boolean);
+    eintraege.forEach(function (e) { var a = document.createElement("a"); a.href = e[0]; a.appendChild(ikone(e[1])); a.appendChild(document.createTextNode(e[2])); box.appendChild(a); });
+    box.classList.remove("versteckt");
   }
 
   // Fremdes Profil: gemeinsame Spiele, Kontakt, Mitfahrt anfragen
@@ -2336,7 +2355,7 @@
     konto: [
       ["i-check", "Konto angelegt ✓", "Abrechnung, Notizen, Checkliste und Push gehen sofort. Tauschbörse, Verfügbarkeit, Hallen-Hinweise und Kontakte schaltet der Betreiber nach der Freischaltung frei – du bekommst das hier zu sehen."],
       ["i-bell", "Push einschalten", "Unter Einstellungen → Push: Änderungen an deinen Spielen, Spieltag-Erinnerung mit Wetter, Abfahrt, Termine, Wochenvorschau. Die App muss dafür auf dem Home-Bildschirm liegen.", "#einstellungen", "Push einschalten"],
-      ["i-euro", "Abrechnung", "Vergangene Spiele bekommen km und Vergütung von selbst. Am Monatsende „Monat abschließen“ – die E-Mail an den Obmann geht raus, danach nur noch „bezahlt“ abhaken. Belege, CSV und Fahrtenbuch unter „Werkzeuge“.\nHeimatadresse dafür unter Einstellungen → Profil eintragen.", "#mitglieder/abrechnung", "Zur Abrechnung"],
+      ["i-euro", "Abrechnung", "Vergangene Spiele bekommen km und Vergütung von selbst. Am Monatsende „Monat abschließen“ – die E-Mail an den Obmann geht raus und alle Spiele des Monats gelten als abgerechnet. Belege, CSV und Fahrtenbuch unter „Werkzeuge“.\nHeimatadresse dafür unter Einstellungen → Profil eintragen.", "#mitglieder/abrechnung", "Zur Abrechnung"],
       ["i-route", "Die Spielseite", "Ein Tipp auf ein Spiel: Route, Teilen, „In Kalender“, Wetter, Abfahrtszeit, Checkliste, Gespann-Notizen (mit Push an die Kollegen), Fahrgemeinschaft und deine private Notiz."],
       ["i-swap", "Tausch und Verfügbarkeit", "Wenn freigeschaltet: Gesuche einstellen, Kollegen finden, die frei sind, Angebote annehmen. Unter Verfügbarkeit trägst du Sperrtage ein – der Radar auf Start zeigt passende offene Spiele."],
       ["i-sun", "Alles anpassbar", "Einstellungen → Startseite: welche Bausteine auf „Start“ stehen. Bereiche, die du nicht brauchst, blendest du aus. Schrift, Farbe, Karten-App – alles wandert mit dem Konto auf jedes Gerät.", "#einstellungen", "Einstellungen öffnen"],
@@ -2421,16 +2440,16 @@
     ansicht("mehr"); aktuell = null;
     var liste = el("mehr-liste"); liste.innerHTML = "";
     var eintraege = [
+      ["Für dich"],
+      ["#archiv", "i-clock", "Archiv", "Alle deine Spiele, alle Saisons, mit Filtern und Export"],
+      funktion("statistik") ? ["#statistik", "i-users", "Statistik", "Saison, Ligen, Hallen, Partner, Saisonziel"] : null,
+      ["#aenderungen", "i-list", "Änderungen", "Was sich in 14 Tagen getan hat – mit Vorher/Nachher"],
+      funktion("notizen") ? ["#mitglieder/notizen", "i-note", "Notizen", "Private Spielnotizen"] : null,
       ["Gemeinsam"],
+      funktion("gespann") ? ["#mitfahren", "i-route", "Zusammen fahren", "Wer fährt wohin – auf dem Weg, bieten, suchen"] : null,
       funktion("info") ? ["#mitglieder/info", "i-bell", "Info", "Ankündigungen und Termine", "info"] : null,
-      funktion("gespann") ? ["#mitfahren", "i-route", "Zusammen fahren", "Wer fährt wohin – Mitfahrt anbieten oder suchen"] : null,
-      ["#aenderungen", "i-list", "Änderungen", "Was sich in 14 Tagen getan hat"],
       funktion("frei") ? ["#mitglieder/frei", "i-cal", "Verfügbarkeit", "Wann du nicht kannst oder gern pfeifst"] : null,
       funktion("hallen") ? ["#karte", "i-pin", "Hallenkarte", "Alle Hallen auf der Karte"] : null,
-      ["Für dich"],
-      funktion("statistik") ? ["#statistik", "i-users", "Statistik", "Saison, Ligen, Hallen, Partner, Saisonziel"] : null,
-      ["#archiv", "i-list", "Archiv", "Alle deine Spiele über alle Saisons, filterbar"],
-      funktion("notizen") ? ["#mitglieder/notizen", "i-note", "Notizen", "Private Spielnotizen"] : null,
       ["Konto und App"],
       ["#einstellungen", "i-key", "Einstellungen", "Konto, Push, Startseite, Schrift, Farbe"],
       ["#mitglieder/admin", "i-shield", "Admin", "Freischaltung, Ankündigungen", "wartend", true],
@@ -2735,6 +2754,7 @@
   // gewaehlten Namen stellen, damit niemand zweimal gefragt wird.
   var START_BAUSTEINE = [
     ["ruhig", "Nur nächstes Spiel", "ganz ruhige Startseite: Kopfkarte und deine Spiele, sonst nichts", false],
+    ["schnell", "Schnellzugriff", "eine Reihe Knöpfe unter der Kopfkarte: Abrechnung, Archiv, Zusammen fahren, Änderungen …", true],
     ["danach", "„Danach“ auf der Karte oben", "das übernächste Spiel in einer Zeile", false],
     ["wetter", "Wetter auf der Karte oben", "zum Treffpunkt, mit Glättehinweis", true, "wetter"],
     ["abfahrt", "Abfahrtszeit auf der Karte oben", "braucht die Heimatadresse im Konto", true],

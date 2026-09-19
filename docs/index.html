@@ -285,7 +285,22 @@
   .mg-betrag { margin-top:8px; font-weight:700; color:var(--text); }
   .mg-fuss { margin-top:16px; }
   .mg-summenblock h3 { margin-top:18px; }
-  .mg-monat { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:2px 12px; margin:18px 0 8px; }
+  .mg-monat { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:6px 12px; margin:18px 0 8px; }
+  .mg-monat > span:first-child b { display:block; font-size:1rem; }
+  .mg-monat > span:first-child small { color:var(--dim); font-weight:500; }
+  .mg-monat-aktion .anfrage { padding:7px 12px; }
+  .mg-abrechnung-kopf { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:10px; }
+  .mg-abrechnung-kopf .mg-select { flex:1 1 160px; margin:0; padding:9px 10px; border-radius:10px; border:1px solid var(--linie); background:var(--karte); color:var(--text); font-size:.9rem; font-family:inherit; }
+  .mg-abrechnung-kopf .mg-chips { margin:0; display:flex; gap:6px; }
+  .mg-status { border:1px solid var(--linie); background:var(--rot-hell); color:var(--rot); font-weight:800; font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; padding:3px 9px; border-radius:99px; cursor:pointer; font-family:inherit; }
+  .mg-status.fertig { background:var(--gut-bg); color:var(--gut); }
+  .mg-status.kommt { background:var(--akzent-hell); color:var(--dim); cursor:default; }
+  .schnellzugriff { display:flex; gap:8px; overflow-x:auto; padding:2px 0 8px; margin:0 0 6px; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
+  .schnellzugriff::-webkit-scrollbar { display:none; }
+  .schnellzugriff a { flex:none; display:flex; flex-direction:column; align-items:center; gap:5px; min-width:64px; padding:8px 6px; border-radius:14px; background:var(--karte); box-shadow:var(--schatten); color:var(--text); text-decoration:none; font-size:.68rem; font-weight:700; }
+  .schnellzugriff a svg.i { width:22px; height:22px; color:var(--akzent); }
+  .schnellzugriff a .punkt { position:absolute; }
+  #detail.start-ruhig #schnellzugriff { display:none; }
   .mg-monat b { font-size:.9rem; font-weight:800; }
   .mg-belege { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; align-items:center; }
   .mg-belege a { font-size:.8rem; }
@@ -1130,6 +1145,7 @@
     <div class="woche start-woche" id="start-woche"></div>
     <div id="held"></div>
     <div id="heute"></div>
+    <div id="schnellzugriff" class="schnellzugriff versteckt"></div>
     <div id="uebersicht" class="uebersicht"></div>
     <div id="radar"></div>
     <div id="nachtrag"></div>
@@ -1347,6 +1363,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=41"></script>
+<script src="app.js?v=42"></script>
 </body>
 </html>

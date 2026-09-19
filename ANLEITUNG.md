@@ -1135,6 +1135,24 @@ sind davon nicht betroffen.
   bleiben Kopfkarte, Spiele und Profil.
 * **Saison-Bild** in Logo-Schwarz mit rotem Balken.
 
+### 10.6o Abrechnung: ein Status, Schnellzugriff auf Start
+
+* **Abrechnung vereinfacht:** „bezahlt“ und „abgerechnet“ waren dasselbe –
+  jetzt gibt es je Spiel nur noch **offen / abgerechnet ✓** (Pille rechts in
+  der Zeile, antippen wechselt; in den Details ein Häkchen). Oben: Saison
+  und Chips „Offen (n) / Alle“, darunter der Saldo. Je Monat ein Kopf mit
+  Spielen, Summe, offenen Einträgen und einem Knopf **„Monat abschließen“**:
+  E-Mail an den Obmann und alle Spiele des Monats gelten als abgerechnet;
+  danach nur noch „E-Mail erneut“. Kommende Spiele zeigen „kommt“.
+  Intern laufen beide Spalten (`bezahlt`, `abgerechnet`) gleich, damit
+  Push-Erinnerung und alte Daten weiter passen.
+* **Schnellzugriff:** Unter der Kopfkarte auf Start eine wischbare Reihe
+  Knöpfe – Spielplan, Abrechnung, Archiv, Mitfahren, Änderungen, Tausch,
+  Statistik, Einstellungen (nur was eingeschaltet ist). Abschaltbar unter
+  Einstellungen → Startseite; in der ruhigen Startseite ausgeblendet.
+* **Mehr:** Gruppe „Für dich“ (Archiv, Statistik, Änderungen, Notizen) steht
+  jetzt oben, dann „Gemeinsam“, dann „Konto und App“.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

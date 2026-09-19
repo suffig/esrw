@@ -430,7 +430,7 @@ def main():
                             continue
                         nachrichten.setdefault(uid, []).append((k, {
                             "titel": "Spiel abrechnen? %s" % s.get("paarung", ""),
-                            "text": "km und Vergütung werden vorbelegt – nur noch Auslagen oder Beleg ergänzen und „bezahlt“ abhaken, wenn das Geld da ist.",
+                            "text": "km und Vergütung sind vorbelegt – nur noch Auslagen oder Beleg ergänzen; am Monatsende „Monat abschließen“.",
                             "url": "./#abrechnen/" + urllib.parse.quote(k[10:], safe=""), "tag": "abrechnen"}))
         except Exception as e:
             print("Push: Schnellabrechnung nicht verarbeitet: %s" % str(e)[:120], file=sys.stderr)
