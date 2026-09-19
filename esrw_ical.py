@@ -403,6 +403,87 @@ def ergaenze_historie(historie, spiele, venues, stand):
     return neu
 
 
+def saison_datei(saison):
+    return os.path.join("docs", "archiv", saison.replace("/", "-") + ".json")
+
+
+def saisonarchiv_laden():
+    """Eingefrorene Saisons (docs/archiv/<saison>.json) wieder als
+    Historie-Eintraege - fuer Statistik und Datenbank-Archiv."""
+    ordner = os.path.join(BASIS, "docs", "archiv")
+    alt = {}
+    if not os.path.isdir(ordner):
+        return alt
+    for name in sorted(os.listdir(ordner)):
+        if not name.endswith(".json") or name == "index.json":
+            continue
+        try:
+            with open(os.path.join(ordner, name), encoding="utf-8") as f:
+                inhalt = json.load(f)
+        except (OSError, ValueError):
+            continue
+        for z in inhalt.get("spiele", []):
+            # [beginn, liga, paarung, halle, [[name, slug, rolle], ...]]
+            besetzung = {"HSR": [], "(L)SR": []}
+            for b in z[4]:
+                (besetzung["HSR"] if b[2] == "HSR" else besetzung["(L)SR"]).append(b[0])
+            alt[z[0] + "|" + z[2]] = {"beginn": z[0], "liga": z[1], "paarung": z[2], "halle": z[3],
+                                     "besetzung": besetzung, "begegnung": (z[1] + ": " if z[1] else "") + z[2],
+                                     "eingefroren": True}
+    return alt
+
+
+def saisonarchiv_einfrieren(historie, personen, stand):
+    """Abgeschlossene Saisons aus historie.json in kompakte Dateien
+    docs/archiv/<saison>.json schreiben und aus der Arbeitsdatei nehmen.
+    Datensparend: je Spiel eine Zeile, Namen mit Slug, kein Ballast."""
+    jetzt = saison_von(stand)
+    schluessel_slug = {p["schluessel"]: p["slug"] for p in personen}
+    je_saison = {}
+    for kennung, e in list(historie.items()):
+        try:
+            saison = saison_von(datetime.fromisoformat(e["beginn"]))
+        except (KeyError, ValueError):
+            continue
+        if saison >= jetzt:
+            continue
+        je_saison.setdefault(saison, []).append((kennung, e))
+    ordner = os.path.join(BASIS, "docs", "archiv")
+    os.makedirs(ordner, exist_ok=True)
+    for saison, eintraege in je_saison.items():
+        pfad = os.path.join(BASIS, saison_datei(saison))
+        vorhanden = {}
+        if os.path.exists(pfad):
+            try:
+                with open(pfad, encoding="utf-8") as f:
+                    vorhanden = {z[0] + "|" + z[2]: z for z in json.load(f).get("spiele", [])}
+            except (OSError, ValueError):
+                vorhanden = {}
+        for kennung, e in eintraege:
+            bes = [[n, schluessel_slug.get(personen_schluessel(n)) or slug_aus(n), r]
+                   for n, r in rollen_fuer(e.get("besetzung") or {})]
+            vorhanden[e["beginn"] + "|" + e.get("paarung", "")] = [e["beginn"], e.get("liga", ""), e.get("paarung", ""), e.get("halle", ""), bes]
+            del historie[kennung]
+        zeilen = sorted(vorhanden.values(), key=lambda z: z[0])
+        with open(pfad, "w", encoding="utf-8") as f:
+            json.dump({"saison": saison, "stand": stand.isoformat(), "spiele": zeilen}, f, ensure_ascii=False, separators=(",", ":"))
+        print("Saison %s eingefroren: %d Spiele -> %s" % (saison, len(zeilen), saison_datei(saison)))
+    # Index aller Saison-Dateien fuer die Webseite
+    index = []
+    for name in sorted(os.listdir(ordner), reverse=True):
+        if not name.endswith(".json") or name == "index.json":
+            continue
+        try:
+            with open(os.path.join(ordner, name), encoding="utf-8") as f:
+                inhalt = json.load(f)
+            index.append({"saison": inhalt.get("saison"), "datei": "archiv/" + name, "spiele": len(inhalt.get("spiele", []))})
+        except (OSError, ValueError):
+            continue
+    with open(os.path.join(ordner, "index.json"), "w", encoding="utf-8") as f:
+        json.dump(index, f, ensure_ascii=False)
+    return index
+
+
 def statistik_aus_historie(historie, stand):
     """Zaehlt je Person die Einsaetze im gesamten Archiv."""
     jetzt_saison = saison_von(stand)
@@ -435,6 +516,8 @@ def statistik_aus_historie(historie, stand):
                     s["partner_namen"].setdefault(k2, anderer)
             # Fuer die Saisonlisten auf der Webseite - esrw.de zeigt nur
             # wenige Tage zurueck, das Archiv alle Saisons.
+            if saison != jetzt_saison:
+                continue
             s["spiele_saison"].append({
                 "saison": saison,
                 "beginn": eintrag["beginn"],
@@ -1150,12 +1233,16 @@ def main():
     # Archiv fortschreiben und daraus die Statistik rechnen
     historie = lade("historie.json", {})
     frisch = ergaenze_historie(historie, spiele, venues, stand)
-    stats, saison = statistik_aus_historie(historie, stand)
-    print("Archiv: %d Spiele insgesamt (%d neu), Saison %s."
-          % (len(historie), frisch, saison))
+    # Abgeschlossene Saisons einfrieren (docs/archiv/), Arbeitsdatei bleibt klein
+    saison_index = saisonarchiv_einfrieren(historie, personen, stand)
+    historie_alle = dict(saisonarchiv_laden())
+    historie_alle.update(historie)
+    stats, saison = statistik_aus_historie(historie_alle, stand)
+    print("Archiv: %d Spiele insgesamt (%d neu, %d in Saison-Dateien), Saison %s."
+          % (len(historie_alle), frisch, len(historie_alle) - len(historie), saison))
 
     try:
-        archiv_in_db(historie, uebersicht, personen, stand)
+        archiv_in_db(historie_alle, uebersicht, personen, stand)
     except Exception as e:
         print("  ! Archiv nicht in die Datenbank geschrieben: %s" % str(e)[:120], file=sys.stderr)
 
@@ -1293,10 +1380,11 @@ def main():
         if s and s["spiele_saison"]:
             archiv[p["slug"]] = sorted(s["spiele_saison"],
                                        key=lambda x: x["beginn"], reverse=True)
-    saisons = sorted({e["saison"] for liste in archiv.values() for e in liste}, reverse=True)
+    saisons = sorted({e["saison"] for liste in archiv.values() for e in liste} | {i["saison"] for i in saison_index if i.get("saison")}, reverse=True)
     with open(os.path.join(ziel, "archiv.json"), "w", encoding="utf-8") as f:
-        json.dump({"saison": saison, "saisons": saisons, "personen": archiv},
-                  f, ensure_ascii=False, indent=1)
+        json.dump({"saison": saison, "saisons": saisons, "personen": archiv,
+                   "dateien": {i["saison"]: i["datei"] for i in saison_index if i.get("saison")}},
+                  f, ensure_ascii=False, separators=(",", ":"))
 
     # Der Zeitpunkt des Laufs steht bewusst in einer eigenen, winzigen Datei.
     # Sonst gaebe es allein deswegen bei jedem Lauf eine Aenderung an der

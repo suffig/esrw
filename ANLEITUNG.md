@@ -1063,6 +1063,23 @@ sind davon nicht betroffen.
   bleiben alte Saisons erhalten, auch wenn `archiv.json` sie nicht mehr
   führt. Backup-Tipp: Supabase → Table Editor → Export CSV.
 
+### 10.6k Wohnort teilen, Saison-Archive (Schema v15)
+
+* **Auf dem Weg:** Wer unter Einstellungen → Profil „Wohnort für
+  Fahrgemeinschaften teilen“ anhakt, legt nur den Ortsnamen und die Lage
+  auf etwa einen Kilometer gerundet ab (Tabelle `wohnorte`, keine Adresse,
+  jederzeit abwählbar). „Zusammen fahren“ und die Fahrgemeinschaft auf der
+  Spielkarte zeigen dann „auf dem Weg“: Der Kollege liegt auf deinem Weg
+  (Umweg höchstens 8 km oder 30 % der Strecke, Luftlinie × 1,3) oder du auf
+  seinem. Geteilte Wohnorte erscheinen grob auf der Karte.
+* **Saison-Archive:** Nach dem Saisonwechsel (1. Juli) friert der Workflow
+  jede abgeschlossene Saison in `docs/archiv/<saison>.json` ein – kompakt,
+  eine Zeile je Spiel mit Namen, Slug und Rolle – und nimmt sie aus
+  `historie.json`, die damit klein bleibt. `docs/archiv/index.json` listet
+  die Saisons. Statistik, Datenbank-Archiv (`spiele_archiv`), Abrechnung
+  und „Alle Spiele im Archiv“ lesen die eingefrorenen Saisons bei Bedarf
+  nach; `archiv.json` enthält nur noch die laufende Saison.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

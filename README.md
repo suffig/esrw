@@ -297,6 +297,11 @@ umschaltbar; Spiele selbst eintragen (privat, nur Abrechnung); Telefonliste
 des Betreibers für Anruf-Knöpfe; „Zusammen fahren“ mit Karte, bieten/suchen;
 alle Spiele aller Personen dauerhaft in `spiele_archiv` (Workflow-Upsert).
 
+**Auf dem Weg & Saison-Archive (v15)**: freiwillig geteilter Wohnort (nur
+Ort, ~1 km) → „Zusammen fahren“ schlägt Kollegen mit kleinem Umweg vor;
+abgeschlossene Saisons werden kompakt in `docs/archiv/<saison>.json`
+eingefroren, `historie.json` und `archiv.json` bleiben klein.
+
 **Termine & Tausch abschließen**: Ankündigungen mit Datum erscheinen auf
 Start als „Nächste Termine“ (Push am Vortag); in der Tauschbörse nimmt der
 Suchende ein Angebot an → „vereinbart“, Push an den Helfer, fertige

@@ -771,3 +771,23 @@ create index if not exists spiele_archiv_beginn on public.spiele_archiv (beginn)
 alter table public.spiele_archiv enable row level security;
 drop policy if exists "Archiv lesen" on public.spiele_archiv;
 create policy "Archiv lesen" on public.spiele_archiv for select to authenticated using (true);
+
+-- ======================================================================
+-- v15: Wohnort fuer Fahrgemeinschaften (freiwillig, grob)
+-- ======================================================================
+-- Nur Ortsname und Lage auf etwa einen Kilometer gerundet - keine Adresse.
+-- Jeder traegt sich selbst ein (Einstellungen -> Profil) und kann es
+-- jederzeit zuruecknehmen; sichtbar fuer freigeschaltete Mitglieder.
+create table if not exists public.wohnorte (
+  user_id   uuid primary key references auth.users (id) on delete cascade,
+  slug      text not null,
+  ort       text,
+  lat       double precision not null,
+  lon       double precision not null,
+  geaendert timestamptz not null default now()
+);
+alter table public.wohnorte enable row level security;
+drop policy if exists "Wohnorte lesen"   on public.wohnorte;
+drop policy if exists "eigener Wohnort"  on public.wohnorte;
+create policy "Wohnorte lesen"  on public.wohnorte for select to authenticated using (public.ist_freigeschaltet());
+create policy "eigener Wohnort" on public.wohnorte for all to authenticated using (auth.uid() = user_id) with check (auth.uid() = user_id);

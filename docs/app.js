@@ -1769,7 +1769,17 @@
       if (!box.open) return;
       box.removeEventListener("toggle", laden); box._laden = null;
       (archivDaten ? Promise.resolve(archivDaten) : hole("archiv.json"))
-        .then(function (a) { archivDaten = a; rendern((a.personen && a.personen[p.slug]) || []); })
+        .then(function (a) {
+          archivDaten = a;
+          var eigene = ((a.personen && a.personen[p.slug]) || []).slice();
+          var dateien = a.dateien || {};
+          // Eingefrorene Saisons (docs/archiv/<saison>.json) dazuladen
+          return Promise.all(Object.keys(dateien).map(function (sn) {
+            return hole(dateien[sn]).then(function (d) {
+              (d.spiele || []).forEach(function (z) { var ich = (z[4] || []).filter(function (b) { return b[1] === p.slug; })[0]; if (ich) eigene.push({ saison: sn, beginn: z[0], liga: z[1], paarung: z[2], halle: z[3], rolle: ich[2], system: z[4].length }); });
+            }).catch(function () {});
+          })).then(function () { eigene.sort(function (x, y) { return x.beginn < y.beginn ? 1 : -1; }); rendern(eigene); });
+        })
         .catch(function () { liste.textContent = "Archiv konnte nicht geladen werden."; });
     };
     box.addEventListener("toggle", box._laden);
@@ -2016,13 +2026,16 @@
         // Alle Mitfahrten zu Spielen an diesem Tag in dieser Halle
         var angebote = {}; g.dort.forEach(function (x) { (mitfahrten[kennungVon(x)] || []).forEach(function (m) { angebote[m.slug] = m; }); });
         var meinEintrag = angebote[profil.slug] || null;
+        var vorschlaege = window.Mitglieder.vorschlaegeFuer(s, g.leute.map(function (k) { return k.slug; }));
+        if (!heim) { var hh0 = document.createElement("p"); hh0.className = "meta"; hh0.style.margin = "0 0 4px"; hh0.innerHTML = "Heimatadresse unter <a href=\"#einstellungen\">Einstellungen → Profil</a> eintragen, dann siehst du, wer auf deinem Weg liegt."; box.appendChild(hh0); }
         if (!g.leute.length) { var l0 = document.createElement("p"); l0.className = "meta"; l0.textContent = "Sonst niemand aus der Liste an dem Tag dort."; box.appendChild(l0); }
-        g.leute.sort(function (a, b) { return (b.gespann ? 1 : 0) - (a.gespann ? 1 : 0) || a.name.localeCompare(b.name, "de"); }).forEach(function (k) {
+        g.leute.sort(function (a, b) { return ((vorschlaege[b.slug] ? 2 : 0) + (b.gespann ? 1 : 0)) - ((vorschlaege[a.slug] ? 2 : 0) + (a.gespann ? 1 : 0)) || a.name.localeCompare(b.name, "de"); }).forEach(function (k) {
           var z = document.createElement("div"); z.className = "wer";
           var links = document.createElement("span"); var b = document.createElement("b"); b.textContent = k.name; links.appendChild(b);
-          var sm = document.createElement("small"); var kd2 = new Date(k.spiel.beginn);
-          sm.textContent = (k.gespann ? "im Gespann" : "dort um " + uhr(kd2) + " Uhr") + (angebote[k.slug] ? " · " + angebote[k.slug].text : ""); links.appendChild(sm); z.appendChild(links);
+          var sm = document.createElement("small"); var kd2 = new Date(k.spiel.beginn), v = vorschlaege[k.slug], wo = window.Mitglieder.wohnortVon(k.slug);
+          sm.textContent = (k.gespann ? "im Gespann" : "dort um " + uhr(kd2) + " Uhr") + (wo && wo.ort ? " · aus " + wo.ort : "") + (v ? (v.richtung === "ich" ? " · liegt auf deinem Weg" : " · du liegst auf seinem Weg") + (v.umweg > 0 ? ", Umweg ca. " + v.umweg + " km" : ", praktisch kein Umweg") : "") + (angebote[k.slug] ? " · " + angebote[k.slug].text : ""); links.appendChild(sm); z.appendChild(links);
           var rechts = document.createElement("span"); rechts.className = "knoepfe";
+          if (v) { var vb = document.createElement("span"); vb.className = "status"; vb.textContent = "auf dem Weg"; rechts.appendChild(vb); }
           if (angebote[k.slug]) { var stt = document.createElement("span"); stt.className = "status " + (angebote[k.slug].art === "suche" ? "suche" : ""); stt.textContent = angebote[k.slug].art === "suche" ? "sucht Mitfahrt" : "bietet Mitfahrt"; rechts.appendChild(stt); }
           var nr = window.Mitglieder.telefonVon(k.slug);
           if (nr) { var a1 = document.createElement("a"); a1.className = "anfrage"; a1.href = nr.tel; a1.textContent = "Anrufen"; rechts.appendChild(a1); var a2 = document.createElement("a"); a2.className = "anfrage"; a2.href = nr.wa + "?text=" + encodeURIComponent("Hallo " + (k.name.split(",")[1] || "").trim() + ", fahren wir am " + datumKurz(d) + " zusammen nach " + (s.halle || "zur Halle") + "?"); a2.target = "_blank"; a2.rel = "noopener"; a2.textContent = "WhatsApp"; rechts.appendChild(a2); }
@@ -2066,6 +2079,13 @@
           c.bindPopup(inhalt);
         });
         if (heim) { L.circleMarker([heim.lat, heim.lon], { radius: 8, color: "#fff", fillColor: "#d97706", fillOpacity: 1, weight: 3 }).addTo(m).bindPopup("Zuhause"); alle.push([heim.lat, heim.lon]); }
+        // Geteilte Wohnorte der Kollegen an diesen Tagen (grob, ~1 km)
+        var gezeigt = {};
+        gruppen.forEach(function (g) { g.leute.forEach(function (k) {
+          var w = window.Mitglieder.wohnortVon(k.slug); if (!w || gezeigt[k.slug]) return; gezeigt[k.slug] = 1;
+          L.circleMarker([w.lat, w.lon], { radius: 6, color: "#fff", fillColor: "#6b7280", fillOpacity: .9, weight: 2 }).addTo(m).bindPopup(k.name + (w.ort ? " · " + w.ort : "") + "<br><small>Wohnort geteilt, auf ~1 km gerundet</small>");
+          alle.push([w.lat, w.lon]);
+        }); });
         if (alle.length > 1) m.fitBounds(alle, { padding: [24, 24], maxZoom: 11 }); else if (alle.length) m.setView(alle[0], 10);
         setTimeout(function () { m.invalidateSize(); }, 200);
       }).catch(function () { kd.classList.add("versteckt"); });

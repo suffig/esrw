@@ -355,11 +355,44 @@ def test_ausgaben():
     pruefe(not kaputt, "keine Konfliktmarker, alle JSON-Dateien gueltig",
            str(kaputt[:3]))
 
+def test_saisonarchiv():
+    """Abgeschlossene Saisons wandern in docs/archiv/<saison>.json und
+    kommen fuer die Statistik unveraendert zurueck."""
+    print("\nSaison-Archiv")
+    import tempfile
+    alt_basis = E.BASIS
+    with tempfile.TemporaryDirectory() as tmp:
+        E.BASIS = tmp
+        try:
+            historie = {
+                "a": {"beginn": "2025-10-04T18:00:00+02:00", "begegnung": "U15: A - B", "liga": "U15", "paarung": "A – B",
+                      "halle": "Halle X", "besetzung": {"HSR": [], "(L)SR": ["Muster, Max", "Beispiel, Bea"]}},
+                "b": {"beginn": "2026-09-10T18:00:00+02:00", "begegnung": "U17: C - D", "liga": "U17", "paarung": "C – D",
+                      "halle": "Halle Y", "besetzung": {"HSR": ["Muster, Max"], "(L)SR": ["Beispiel, Bea", "Dritte, Dora"]}},
+            }
+            personen = [{"schluessel": E.personen_schluessel("Muster, Max"), "slug": "muster-max"}]
+            stand = datetime(2026, 9, 19, 12, 0, tzinfo=timezone.utc)
+            index = E.saisonarchiv_einfrieren(historie, personen, stand)
+            pruefe(list(historie.keys()) == ["b"], "laufende Saison bleibt in historie.json", str(list(historie.keys())))
+            pruefe(index and index[0]["saison"] == "2025/26" and index[0]["spiele"] == 1, "Index nennt die eingefrorene Saison", str(index))
+            zurueck = E.saisonarchiv_laden()
+            e = zurueck.get("2025-10-04T18:00:00+02:00|A – B")
+            pruefe(e is not None and e["besetzung"]["(L)SR"] == ["Muster, Max", "Beispiel, Bea"], "eingefrorene Saison kommt vollstaendig zurueck", str(e))
+            # Zweiter Lauf: nichts geht verloren, nichts doppelt
+            E.saisonarchiv_einfrieren(historie, personen, stand)
+            pruefe(len(E.saisonarchiv_laden()) == 1, "zweiter Lauf aendert nichts")
+            stats, _ = E.statistik_aus_historie(dict(E.saisonarchiv_laden(), **historie), stand)
+            st = stats[E.personen_schluessel("Muster, Max")]
+            pruefe(st["gesamt"] == 2 and st["saison"] == 1 and len(st["spiele_saison"]) == 1, "Statistik zaehlt alle Saisons, Liste nur die laufende", str((st["gesamt"], st["saison"], len(st["spiele_saison"]))))
+        finally:
+            E.BASIS = alt_basis
+
+
 def main():
     print("Regressionstest esrw_ical")
     for test in (test_parsen, test_hallen, test_namen, test_rollen, test_aliase,
                  test_konflikte, test_hash_migration, test_ausgaben, test_faltung,
-                 test_escape, test_ics, test_saison, test_aenderungstext):
+                 test_escape, test_ics, test_saison, test_aenderungstext, test_saisonarchiv):
         test()
     print("\n" + "-" * 58)
     if FEHLER:
