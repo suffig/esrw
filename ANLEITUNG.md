@@ -1103,6 +1103,21 @@ sind davon nicht betroffen.
   einer Warteschlange und werden nachgereicht, sobald Netz da ist oder
   die App neu geöffnet wird.
 
+### 10.6m Archiv-Seite, Änderungen mit Vorher/Nachher
+
+* **Archiv:** Mehr → Archiv zeigt alle eigenen Spiele über alle Saisons
+  (Datenfenster, `archiv.json`, eingefrorene Saison-Dateien und – angemeldet –
+  die Datenbank), gruppiert nach Monat, mit Suche und Filtern nach Saison,
+  Liga, Rolle und Halle plus Kennzahlen (Spiele, Hallen, HSR/LSR). Spiele im
+  aktuellen Datenfenster sind antippbar. Admins schalten „Alle Spiele aller
+  Kollegen“ ein und filtern nach Person.
+* **Änderungen:** Jeder Eintrag „Geändert“ zeigt jetzt, was sich geändert
+  hat – Feld, vorher → nachher (Treffpunkt, Anstoß, Datum, Halle, Rolle,
+  Ansetzung), Korrekturen des Betreibers sind markiert. Oben „Meine / Alle
+  Kollegen“. Auf der Spielseite gibt es dazu den „Änderungsverlauf“ der
+  letzten 14 Tage. Das Protokoll (`docs/protokoll.json`) speichert Kennung
+  und Felder je Eintrag.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

@@ -985,6 +985,31 @@ def inhalt_hash(titel, ort, treffpunkt_iso, rolle):
         _ohne_rolle(titel), ort, treffpunkt_iso, rolle)).encode("utf-8")).hexdigest()
 
 
+def aenderungs_details(vorher, jetzt):
+    """Was genau sich geaendert hat: Feld, vorher, nachher - fuers Protokoll."""
+    details = []
+    alt_zeit = (vorher.get("treffpunkt") or "")[11:16]
+    neu_zeit = jetzt["treffpunkt"].isoformat()[11:16]
+    if alt_zeit and alt_zeit != neu_zeit:
+        details.append({"feld": "Treffpunkt", "vorher": alt_zeit + " Uhr", "nachher": neu_zeit + " Uhr"})
+    alt_beginn = (vorher.get("beginn") or "")[11:16]
+    neu_beginn = jetzt["anstoss"].isoformat()[11:16]
+    if alt_beginn and alt_beginn != neu_beginn:
+        details.append({"feld": "Anstoß", "vorher": alt_beginn + " Uhr", "nachher": neu_beginn + " Uhr"})
+    alt_tag = (vorher.get("beginn") or "")[:10]
+    if alt_tag and alt_tag != jetzt["anstoss"].isoformat()[:10]:
+        details.append({"feld": "Datum", "vorher": ".".join(reversed(alt_tag.split("-"))), "nachher": jetzt["anstoss"].strftime("%d.%m.%Y")})
+    if vorher.get("ort") and vorher["ort"] != jetzt["ort"]:
+        details.append({"feld": "Halle", "vorher": vorher["ort"].split(",")[0], "nachher": (jetzt["ort"] or "unbekannt").split(",")[0]})
+    alte_rolle = _rolle_aus(vorher.get("titel", ""))
+    neue_rolle = jetzt.get("rolle") or _rolle_aus(jetzt.get("titel", ""))
+    if alte_rolle in ROLLEN and neue_rolle in ROLLEN and alte_rolle != neue_rolle:
+        details.append({"feld": "Rolle", "vorher": alte_rolle, "nachher": neue_rolle})
+    if vorher.get("titel") and _ohne_rolle(vorher["titel"]) != _ohne_rolle(jetzt["titel"]):
+        details.append({"feld": "Ansetzung", "vorher": _ohne_rolle(vorher["titel"]), "nachher": _ohne_rolle(jetzt["titel"])})
+    return details
+
+
 def beschreibe_aenderung(vorher, jetzt):
     """Kurztext, was sich seit dem letzten Lauf geaendert hat."""
     teile = []
@@ -1046,6 +1071,7 @@ def verarbeite_aenderungen(personen, alt, stand, eigene_slugs):
                 t["sequence"] = vorher.get("sequence", 0) + 1
                 geaendert_am = heute.isoformat()
                 t["aenderung"] = beschreibe_aenderung(vorher, t)
+                t["aenderung_details"] = aenderungs_details(vorher, t)
                 if korrektur_neu:
                     k = t.get("korrektur") or {}
                     if k.get("abgesagt"):
@@ -1090,6 +1116,7 @@ def verarbeite_aenderungen(personen, alt, stand, eigene_slugs):
                 "aenderung": t.get("aenderung"),
                 "stempel": t["stempel"].isoformat(),
                 "korrektur": t.get("korrektur") or None,
+                "id": t.get("id"),
             }
 
     # Was aus den Daten verschwunden ist und noch in der Zukunft lag, ist eine
@@ -1116,6 +1143,13 @@ def verarbeite_aenderungen(personen, alt, stand, eigene_slugs):
                           for t in alle_geaendert.get(slug, [])],
             "entfallen": ["%s Uhr – %s" % (kurz_datum(datetime.fromisoformat(e["beginn"])), e.get("titel", ""))
                           for e in alle_entfallen.get(slug, [])],
+            # Strukturiert fuers Protokoll: Kennung und was genau sich geaendert hat
+            "details": {
+                "neu": [{"kennung": t.get("id"), "text": "%s Uhr – %s" % (kurz_datum(t["anstoss"]), t["titel"]), "halle": t.get("halle_name") or ""} for t in alle_neu.get(slug, [])],
+                "geaendert": [{"kennung": t.get("id"), "text": "%s Uhr – %s" % (kurz_datum(t["anstoss"]), t["titel"]), "was": t.get("aenderung", ""),
+                               "felder": t.get("aenderung_details") or [], "korrektur": bool(t.get("korrektur"))} for t in alle_geaendert.get(slug, [])],
+                "entfallen": [{"kennung": e.get("id") or (e.get("beginn", "") + "|" + _ohne_rolle(e.get("titel", "")).split(" · ", 1)[-1]), "text": "%s Uhr – %s" % (kurz_datum(datetime.fromisoformat(e["beginn"])), e.get("titel", "")), "halle": (e.get("ort") or "").split(",")[0]} for e in alle_entfallen.get(slug, [])],
+            },
         }
     schreibe("aenderungen.json", {"stand": stand.isoformat(), "personen": push})
 
@@ -1125,8 +1159,16 @@ def verarbeite_aenderungen(personen, alt, stand, eigene_slugs):
     namen = {p["slug"]: p["name"] for p in personen}
     for slug, a in push.items():
         for art in ("neu", "geaendert", "entfallen"):
-            for text in a.get(art, []):
-                protokoll.append({"stand": stand.isoformat(), "slug": slug, "name": namen.get(slug, slug), "art": art, "text": text})
+            for d in (a.get("details") or {}).get(art, []):
+                eintrag = {"stand": stand.isoformat(), "slug": slug, "name": namen.get(slug, slug), "art": art, "text": d["text"], "kennung": d.get("kennung")}
+                if art == "geaendert":
+                    eintrag["was"] = d.get("was", "")
+                    eintrag["felder"] = d.get("felder", [])
+                    if d.get("korrektur"):
+                        eintrag["quelle"] = "Betreiber"
+                elif d.get("halle"):
+                    eintrag["halle"] = d["halle"]
+                protokoll.append(eintrag)
     grenze = (stand - timedelta(days=14)).isoformat()
     protokoll = [e for e in protokoll if e.get("stand", "") >= grenze][-2000:]
     if push or not os.path.exists(os.path.join(BASIS, protokoll_pfad)):

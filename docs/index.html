@@ -688,6 +688,31 @@
   .tour-punkte i { width:7px; height:7px; border-radius:50%; background:var(--linie); }
   .tour-punkte i.aktiv { background:var(--akzent); width:18px; border-radius:4px; }
   @media (prefers-reduced-motion: reduce) { .tour-karte { animation:none; } }
+  /* Archiv */
+  .archiv-filter { padding:12px 14px; display:flex; flex-direction:column; gap:8px; }
+  .archiv-filter input[type="search"] { width:100%; }
+  .archiv-selects { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+  .archiv-selects select { width:100%; min-width:0; font-size:.85rem; padding:8px 10px; border-radius:10px; border:1px solid var(--linie); background:var(--karte); color:var(--text); }
+  .archiv-admin { display:flex; flex-direction:column; gap:6px; padding-top:4px; border-top:1px solid var(--linie); }
+  .archiv-admin select { width:100%; font-size:.85rem; padding:8px 10px; border-radius:10px; border:1px solid var(--linie); background:var(--karte); color:var(--text); }
+  .archiv-zahlen { margin:12px 0 4px; }
+  .archiv-monat { margin:14px 0 6px; font-weight:800; font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); display:flex; justify-content:space-between; }
+  .archiv-liste .zeile { display:grid; grid-template-columns:3.4em auto 1fr; gap:10px; align-items:start; padding:9px 14px; border-top:1px solid var(--linie); text-decoration:none; color:inherit; }
+  .archiv-liste .zeile:first-child { border-top:0; }
+  .archiv-liste .zeile .datum { font-weight:800; line-height:1.15; }
+  .archiv-liste .zeile .datum small { display:block; color:var(--dim); font-weight:500; }
+  .archiv-liste .zeile .text { min-width:0; }
+  .archiv-liste .zeile .text b { display:block; font-weight:700; }
+  .archiv-liste .zeile .text small { display:block; color:var(--dim); }
+  /* Aenderungsprotokoll: Vorher -> Nachher */
+  .protokoll .felder { display:block; margin-top:3px; }
+  .protokoll .felder span { display:inline-block; font-size:.78rem; background:var(--akzent-hell); color:var(--text); border-radius:8px; padding:2px 7px; margin:2px 4px 0 0; }
+  .protokoll .felder span b { font-weight:800; }
+  .protokoll .felder span s { color:var(--dim); }
+  .verlauf { margin-top:6px; }
+  .verlauf .eintrag { font-size:.85rem; padding:6px 0; border-top:1px solid var(--linie); }
+  .verlauf .eintrag:first-child { border-top:0; }
+  .verlauf .eintrag small { display:block; color:var(--dim); }
   /* Aenderungsprotokoll */
   .protokoll-tag { margin:14px 0 6px; font-weight:800; font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); }
   .protokoll .zeile { display:flex; gap:10px; align-items:flex-start; padding:10px 14px; border-top:1px solid var(--linie); text-decoration:none; color:inherit; }
@@ -1223,6 +1248,29 @@
     <div id="mitfahren-liste"></div>
   </section>
 
+  <!-- Archiv: alle Spiele einer Person, filterbar -->
+  <section id="archiv" class="versteckt">
+    <div class="profilzeile karte">
+      <span><b>Archiv</b><small id="archiv-unter">alle deine Spiele, alle Saisons</small></span>
+      <button class="textknopf zurueck" id="archiv-zurueck"><svg class="i"><use href="#i-back"/></svg>Zurück</button>
+    </div>
+    <div class="karte archiv-filter">
+      <input type="search" id="archiv-suche" placeholder="Suchen: Verein, Halle, Liga, Kollege …" autocomplete="off">
+      <div class="archiv-selects">
+        <select id="archiv-saison"><option value="">Alle Saisons</option></select>
+        <select id="archiv-liga"><option value="">Alle Ligen</option></select>
+        <select id="archiv-rolle"><option value="">Alle Rollen</option><option value="SR">SR</option><option value="HSR">HSR</option><option value="LSR">LSR</option></select>
+        <select id="archiv-halle"><option value="">Alle Hallen</option></select>
+      </div>
+      <div class="archiv-admin versteckt" id="archiv-admin">
+        <label class="mg-check"><input type="checkbox" id="archiv-alle"> Alle Spiele aller Kollegen (Admin)</label>
+        <select id="archiv-person" class="versteckt"><option value="">Alle Kollegen</option></select>
+      </div>
+    </div>
+    <div class="zahlen archiv-zahlen" id="archiv-zahlen"></div>
+    <div id="archiv-liste"></div>
+  </section>
+
   <!-- Aenderungsprotokoll -->
   <section id="aenderungen" class="versteckt">
     <div class="profilzeile karte">
@@ -1296,6 +1344,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=39"></script>
+<script src="app.js?v=40"></script>
 </body>
 </html>

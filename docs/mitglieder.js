@@ -2931,6 +2931,15 @@ window.Mitglieder = (function () {
   }
   function wohnortVon(slug) { return cache.wohnorte[slug] || null; }
   function vorschlaegeFuer(spiel, slugs) { return wegVorschlaege(spiel, slugs); }
+  // Archiv aus der Datenbank: eigene Spiele oder (Admin) alle
+  function archivAusDb(alle) {
+    if (!session) return Promise.resolve(null);
+    return ladeProfil().then(function () {
+      var q = sb.from("spiele_archiv").select("kennung,beginn,liga,paarung,halle,system,besetzung,saison,manuell");
+      if (!(alle && profil && profil.admin)) q = q.contains("slugs", [profil.slug]);
+      return q.then(function (r) { return r.data || []; });
+    }).catch(function () { return null; });
+  }
   function telefonVon(slug) { var k = nummerVon(slug); if (!k) return null; var l = telefonLink(k.telefon); return { telefon: k.telefon, tel: l.tel, wa: l.wa }; }
   function mitfahrtSetzen(spiel, art, text) {
     if (!session || !profil) return Promise.resolve(false);
@@ -2989,5 +2998,5 @@ window.Mitglieder = (function () {
            extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat, obmann: obmann, termine: termine,
            einstellungenSpeichern: einstellungenSpeichern, radar: radar, angebotMachen: angebotMachen,
            kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl, kontoRendern: kontoRendern, kontaktVon: kontaktVon, istAdmin: istAdmin, korrekturSpeichern: korrekturSpeichern, spielManuellLoeschen: spielManuellLoeschen,
-           mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, telefonVon: telefonVon, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung };
+           mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, telefonVon: telefonVon, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb };
 })();

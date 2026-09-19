@@ -769,7 +769,7 @@
     kopf.appendChild(h);
 
     var inhalt = el("spiel-inhalt"); inhalt.innerHTML = "";
-    var symbole = { "Halle": "i-pin", "Gespann": "i-users", "Besetzung": "i-users", "Tauschoptionen": "i-swap", "Weiteres": "i-list", "Spieltag-Checkliste": "i-check" };
+    var symbole = { "Halle": "i-pin", "Gespann": "i-users", "Besetzung": "i-users", "Tauschoptionen": "i-swap", "Weiteres": "i-list", "Spieltag-Checkliste": "i-check", "Änderungsverlauf": "i-clock" };
     function karteAbschnitt(titel) { var k = document.createElement("div"); k.className = "karte abschnitt-karte"; if (titel) { var hh = document.createElement("h4"); if (symbole[titel]) hh.appendChild(ikone(symbole[titel])); hh.appendChild(document.createTextNode(titel)); k.appendChild(hh); } inhalt.appendChild(k); return k; }
 
     var ort = karteAbschnitt("Halle");
@@ -857,6 +857,23 @@
         mailZeile.appendChild(mail); ab.appendChild(mailZeile);
       }
     }
+    // Aenderungsverlauf aus dem Protokoll (14 Tage): was wurde wann geaendert
+    hole("protokoll.json").then(function (pl) {
+      if (inhalt._lauf !== lauf) return;
+      var meine = (pl || []).filter(function (e) { return e.kennung && e.kennung === kennungVon(s); });
+      if (!meine.length) return;
+      var vb = karteAbschnitt("Änderungsverlauf"); var vl = document.createElement("div"); vl.className = "verlauf";
+      meine.sort(function (a, b) { return a.stand < b.stand ? 1 : -1; }).forEach(function (e) {
+        var z = document.createElement("div"); z.className = "eintrag";
+        var namen = { neu: "Neu eingeteilt", geaendert: "Geändert", entfallen: "Abgesetzt" };
+        var kopf = document.createElement("b"); kopf.textContent = (namen[e.art] || e.art) + (e.name ? " · " + e.name : "") + (e.quelle ? " · " + e.quelle : ""); z.appendChild(kopf);
+        if (e.felder && e.felder.length) { var fl = document.createElement("span"); fl.className = "felder"; e.felder.forEach(function (f) { var sp = document.createElement("span"); var s1 = document.createElement("s"); s1.textContent = f.vorher; var b1 = document.createElement("b"); b1.textContent = f.nachher; sp.appendChild(document.createTextNode(f.feld + ": ")); sp.appendChild(s1); sp.appendChild(document.createTextNode(" → ")); sp.appendChild(b1); fl.appendChild(sp); }); z.appendChild(fl); }
+        else if (e.was) { var w = document.createElement("div"); w.textContent = e.was; z.appendChild(w); }
+        var d2 = new Date(e.stand); var sm = document.createElement("small"); sm.textContent = datumKurz(d2) + " " + uhr(d2) + " Uhr"; z.appendChild(sm);
+        vl.appendChild(z);
+      });
+      vb.appendChild(vl);
+    }).catch(function () {});
     // Admin: Spiel korrigieren
     var lauf = inhalt._lauf = {};
     if (sitzungVorhanden()) ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
@@ -1749,7 +1766,7 @@
     var box = el("saison"), liste = el("saison-liste"), s = p.statistik;
     if (!s || !s.gesamt) { box.classList.add("versteckt"); return; }
     box.classList.remove("versteckt"); box.open = false;
-    el("saison-titel").textContent = "Alle " + s.gesamt + " Spiele im Archiv";
+    el("saison-titel").textContent = "Alle " + s.gesamt + " Spiele im Archiv (filterbar unter Mehr → Archiv)";
     liste.innerHTML = "";
     function rendern(eintraege) {
       liste.innerHTML = "";
@@ -1875,7 +1892,7 @@
   }
 
   function ansicht(name) {
-    ["auswahl", "detail", "plan", "mitglieder", "halle", "status", "spiel", "mehr", "einstellungen", "karte", "statseite", "aenderungen", "mitfahren"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
+    ["auswahl", "detail", "plan", "mitglieder", "halle", "status", "spiel", "mehr", "einstellungen", "karte", "statseite", "aenderungen", "mitfahren", "archiv"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
     var reiter = (location.hash.split("/")[1] || "");
     if (name !== "auswahl" && name !== "detail") { el("onboarding").classList.add("versteckt"); el("onboarding-kurz").classList.add("versteckt"); }
     el("tab-meine").classList.toggle("aktiv", name === "auswahl" || name === "detail" || name === "spiel" || name === "statseite");
@@ -2093,14 +2110,139 @@
     }).catch(function () { if (liste._lauf === lauf) { liste.innerHTML = ""; liste.appendChild(leerZustand("Mitfahrten konnten nicht geladen werden.")); } });
   }
 
+  // ------------------------------------------------------------- Archiv
+  // Alle Spiele einer Person ueber alle Saisons: aktuelles Datenfenster,
+  // archiv.json (laufende Saison), eingefrorene Saison-Dateien, Datenbank.
+  // Admins koennen alle Spiele aller Kollegen sehen.
+  var archivStand = { spiele: [], modus: "", lauf: null };
+  function archivSaisonAus(beginn) { var d = new Date(beginn), j = d.getFullYear(); return d.getMonth() >= 6 ? j + "/" + String(j + 1).slice(2) : (j - 1) + "/" + String(j).slice(2); }
+  function zeigeArchiv(modus) {
+    ansicht("archiv"); aktuell = null; window.scrollTo(0, 0);
+    var slug = profil && profil.slug, alle = modus === "alle";
+    var liste = el("archiv-liste"); liste.innerHTML = ""; liste.appendChild(skelettKarte(120)); el("archiv-zahlen").innerHTML = "";
+    el("archiv-alle").checked = alle; el("archiv-person").classList.toggle("versteckt", !alle);
+    el("archiv-unter").textContent = alle ? "alle Spiele aller Kollegen" : slug ? "alle deine Spiele, alle Saisons" : "erst deinen Namen wählen";
+    if (!slug && !alle) { liste.innerHTML = ""; liste.appendChild(leerZustand("Wähle zuerst deinen Namen – dann stehen hier alle deine Spiele.")); return; }
+    var lauf = archivStand.lauf = {};
+    var karte = {};
+    function merge(e) {
+      var k = e.kennung; if (!k) return;
+      var alt = karte[k] || {};
+      karte[k] = { kennung: k, beginn: e.beginn, liga: e.liga || alt.liga || "", paarung: e.paarung || alt.paarung || "", halle: e.halle || alt.halle || "", system: e.system || alt.system || 0,
+                   besetzung: (e.besetzung && e.besetzung.length ? e.besetzung : alt.besetzung) || [], saison: e.saison || alt.saison || archivSaisonAus(e.beginn), manuell: e.manuell || alt.manuell || false };
+    }
+    // 1) Datenfenster
+    (daten.spiele || []).forEach(function (s) {
+      if (!alle && !(s.besetzung || []).some(function (b) { return b.slug === slug; })) return;
+      merge({ kennung: kennungVon(s), beginn: s.beginn, liga: s.liga, paarung: s.paarung, halle: s.halle, system: s.system, besetzung: (s.besetzung || []).map(function (b) { return { name: b.name, slug: b.slug, rolle: b.rolle }; }), manuell: s.manuell });
+    });
+    var laeufe = [];
+    // 2) archiv.json (laufende Saison je Person)
+    laeufe.push((archivDaten ? Promise.resolve(archivDaten) : hole("archiv.json")).then(function (a) {
+      archivDaten = a; var pers = a.personen || {};
+      Object.keys(pers).forEach(function (ps) {
+        if (!alle && ps !== slug) return;
+        pers[ps].forEach(function (e) {
+          var k = e.beginn + "|" + e.paarung, vorhanden = karte[k];
+          var bes = (vorhanden && vorhanden.besetzung) ? vorhanden.besetzung.slice() : [];
+          var p = personMit(ps); if (!bes.some(function (b) { return b.slug === ps; })) bes.push({ name: p ? p.name : ps, slug: ps, rolle: e.rolle });
+          merge({ kennung: k, beginn: e.beginn, liga: e.liga, paarung: e.paarung, halle: e.halle, system: e.system, besetzung: bes, saison: e.saison });
+        });
+      });
+      // 3) eingefrorene Saisons
+      var dateien = a.dateien || {};
+      return Promise.all(Object.keys(dateien).map(function (sn) {
+        return hole(dateien[sn]).then(function (d) {
+          (d.spiele || []).forEach(function (z) {
+            var bes = (z[4] || []).map(function (b) { return { name: b[0], slug: b[1], rolle: b[2] }; });
+            if (!alle && !bes.some(function (b) { return b.slug === slug; })) return;
+            merge({ kennung: z[0] + "|" + z[2], beginn: z[0], liga: z[1], paarung: z[2], halle: z[3], system: bes.length, besetzung: bes, saison: sn });
+          });
+        }).catch(function () {});
+      }));
+    }).catch(function () {}));
+    // 4) Datenbank (angemeldet)
+    if (sitzungVorhanden()) laeufe.push(ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.archivAusDb(alle) : null; })
+      .then(function (zeilen) { (zeilen || []).forEach(function (z) { merge({ kennung: z.kennung, beginn: z.beginn, liga: z.liga, paarung: z.paarung, halle: z.halle, system: z.system, besetzung: z.besetzung || [], saison: z.saison, manuell: z.manuell }); }); }).catch(function () {}));
+    // Admin-Schalter nur fuer Admins zeigen
+    if (sitzungVorhanden()) ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.istAdmin() : false; })
+      .then(function (ja) { el("archiv-admin").classList.toggle("versteckt", !ja); }).catch(function () {});
+    else el("archiv-admin").classList.add("versteckt");
+    Promise.all(laeufe).then(function () {
+      if (archivStand.lauf !== lauf) return;
+      archivStand.spiele = Object.keys(karte).map(function (k) { return karte[k]; }).sort(function (a, b) { return a.beginn < b.beginn ? 1 : -1; });
+      archivStand.modus = modus;
+      // Filterlisten fuellen
+      function fuellen(id, werte, leer) { var sel = el(id), alt = sel.value; sel.innerHTML = ""; var o0 = document.createElement("option"); o0.value = ""; o0.textContent = leer; sel.appendChild(o0); werte.forEach(function (w) { var o = document.createElement("option"); o.value = w[0]; o.textContent = w[1]; sel.appendChild(o); }); sel.value = werte.some(function (w) { return w[0] === alt; }) ? alt : ""; }
+      var saisons = {}, ligen = {}, hallen = {}, personen = {};
+      archivStand.spiele.forEach(function (s) { saisons[s.saison] = 1; if (s.liga) ligen[s.liga] = (ligen[s.liga] || 0) + 1; if (s.halle) hallen[s.halle] = (hallen[s.halle] || 0) + 1; s.besetzung.forEach(function (b) { if (b.slug) personen[b.slug] = b.name; }); });
+      fuellen("archiv-saison", Object.keys(saisons).sort().reverse().map(function (x) { return [x, "Saison " + x]; }), "Alle Saisons");
+      fuellen("archiv-liga", Object.keys(ligen).sort().map(function (x) { return [x, x + " (" + ligen[x] + ")"]; }), "Alle Ligen");
+      fuellen("archiv-halle", Object.keys(hallen).sort(function (a, b) { return a.localeCompare(b, "de"); }).map(function (x) { return [x, x]; }), "Alle Hallen");
+      if (alle) fuellen("archiv-person", Object.keys(personen).map(function (x) { return [x, personen[x]]; }).sort(function (a, b) { return a[1].localeCompare(b[1], "de"); }), "Alle Kollegen");
+      archivRendern();
+    });
+  }
+  function archivRendern() {
+    var liste = el("archiv-liste"); liste.innerHTML = "";
+    var slug = profil && profil.slug, alle = archivStand.modus === "alle";
+    var f = ohneZeichen(el("archiv-suche").value), sn = el("archiv-saison").value, lg = el("archiv-liga").value, rl = el("archiv-rolle").value, hl = el("archiv-halle").value, ps = alle ? el("archiv-person").value : "";
+    var wer = alle ? (ps || null) : slug;
+    var treffer = archivStand.spiele.filter(function (s) {
+      if (sn && s.saison !== sn) return false;
+      if (lg && s.liga !== lg) return false;
+      if (hl && s.halle !== hl) return false;
+      if (wer && !s.besetzung.some(function (b) { return b.slug === wer; })) return false;
+      if (rl) { var ich = wer ? s.besetzung.filter(function (b) { return b.slug === wer; })[0] : null; if (ich ? ich.rolle !== rl : !s.besetzung.some(function (b) { return b.rolle === rl; })) return false; }
+      if (f && ohneZeichen((s.liga || "") + " " + s.paarung + " " + (s.halle || "") + " " + s.besetzung.map(function (b) { return b.name; }).join(" ")).indexOf(f) < 0) return false;
+      return true;
+    });
+    // Kennzahlen
+    var z = el("archiv-zahlen"); z.innerHTML = "";
+    var rollen = {}, km = 0, hsr = 0;
+    treffer.forEach(function (s) { var ich = wer ? s.besetzung.filter(function (b) { return b.slug === wer; })[0] : null; if (ich) rollen[ich.rolle] = (rollen[ich.rolle] || 0) + 1; });
+    [[treffer.length, treffer.length === 1 ? "Spiel" : "Spiele"], [Object.keys(treffer.reduce(function (o, s) { if (s.halle) o[s.halle] = 1; return o; }, {})).length, Object.keys(treffer.reduce(function (o, s) { if (s.halle) o[s.halle] = 1; return o; }, {})).length === 1 ? "Halle" : "Hallen"], [wer ? ((rollen.HSR || 0) + " HSR · " + (rollen.LSR || 0) + " LSR") : Object.keys(treffer.reduce(function (o, s) { s.besetzung.forEach(function (b) { if (b.slug) o[b.slug] = 1; }); return o; }, {})).length, wer ? "Rollen (3er)" : "Kollegen"]].forEach(function (p) {
+      var k = document.createElement("div"); k.className = "zahl karte"; var b = document.createElement("b"); b.textContent = p[0]; var sp = document.createElement("span"); sp.textContent = p[1]; k.appendChild(b); k.appendChild(sp); z.appendChild(k);
+    });
+    if (!treffer.length) { liste.appendChild(leerZustand(archivStand.spiele.length ? "Nichts passt zu den Filtern." : "Noch keine Spiele im Archiv.")); return; }
+    var monat = null, box = null, n = 0;
+    treffer.forEach(function (s) {
+      var d = new Date(s.beginn), m = d.getFullYear() + "-" + d.getMonth();
+      if (m !== monat) {
+        monat = m; var h = document.createElement("div"); h.className = "archiv-monat"; var l = document.createElement("span"); l.textContent = d.toLocaleDateString("de-DE", { month: "long", year: "numeric" }); h.appendChild(l);
+        var anz = treffer.filter(function (x) { var dd = new Date(x.beginn); return dd.getFullYear() + "-" + dd.getMonth() === m; }).length; var r = document.createElement("span"); r.textContent = anz + (anz === 1 ? " Spiel" : " Spiele"); h.appendChild(r);
+        liste.appendChild(h); box = document.createElement("div"); box.className = "karte archiv-liste"; liste.appendChild(box);
+      }
+      var imFenster = (daten.spiele || []).some(function (x) { return kennungVon(x) === s.kennung; });
+      var zl = document.createElement(imFenster ? "a" : "div"); zl.className = "zeile"; if (imFenster) zl.href = "#spiel/" + encodeURIComponent(s.kennung);
+      var dt = document.createElement("span"); dt.className = "datum"; dt.textContent = wochentag[d.getDay()] + " " + ("0" + d.getDate()).slice(-2) + "."; var sm0 = document.createElement("small"); sm0.textContent = uhr(d); dt.appendChild(sm0); zl.appendChild(dt);
+      var ich = wer ? s.besetzung.filter(function (b) { return b.slug === wer; })[0] : null;
+      zl.appendChild(rolleBadge(ich ? ich.rolle : (s.system >= 3 ? s.system + "er" : "2er")));
+      var tx = document.createElement("span"); tx.className = "text"; var b1 = document.createElement("b"); b1.textContent = (s.liga ? s.liga + ": " : "") + s.paarung; tx.appendChild(b1);
+      var sm = document.createElement("small"); sm.textContent = (s.halle || "Halle unbekannt") + (s.besetzung.length ? " · " + s.besetzung.filter(function (b) { return b.slug !== wer; }).map(function (b) { return b.name.split(",")[0]; }).join(", ") : "") + (s.manuell ? " · vom Betreiber" : ""); tx.appendChild(sm); zl.appendChild(tx);
+      box.appendChild(zl); n++;
+    });
+  }
+
   // ------------------------------------------------ Aenderungsprotokoll
+  var aenderungenMeine = null;
   function zeigeAenderungen() {
     ansicht("aenderungen"); aktuell = null; window.scrollTo(0, 0);
-    var ziel = el("aenderungen-liste"); ziel.innerHTML = ""; ziel.appendChild(skelettKarte(90));
+    var ziel = el("aenderungen-liste"); ziel.innerHTML = "";
+    if (aenderungenMeine === null) aenderungenMeine = !!(profil && profil.slug);
+    if (profil && profil.slug) {
+      var chips = document.createElement("div"); chips.className = "schnell"; chips.style.marginBottom = "10px";
+      [["Meine", true], ["Alle Kollegen", false]].forEach(function (c) { var b = document.createElement("button"); b.type = "button"; b.className = "filterknopf" + (aenderungenMeine === c[1] ? " aktiv" : ""); b.textContent = c[0]; b.addEventListener("click", function () { aenderungenMeine = c[1]; zeigeAenderungen(); }); chips.appendChild(b); });
+      ziel.appendChild(chips);
+    }
+    ziel.appendChild(skelettKarte(90));
     Promise.all([hole("protokoll.json").catch(function () { return []; }), supabaseRest("spiel_korrekturen?select=kennung,halle,beginn,treffpunkt,hinweis,abgesagt,von,geaendert").catch(function () { return []; })])
       .then(function (r) {
         var eintraege = [];
-        (r[0] || []).forEach(function (e) { eintraege.push({ zeit: e.stand, art: e.art, titel: e.text, unter: e.name, href: "#" + e.slug }); });
+        (r[0] || []).forEach(function (e) {
+          var s = e.kennung && (daten.spiele || []).filter(function (x) { return kennungVon(x) === e.kennung; })[0];
+          eintraege.push({ zeit: e.stand, art: e.art, titel: e.text, unter: e.name + (e.quelle ? " · " + e.quelle : "") + (e.art === "neu" && e.halle ? " · " + e.halle : ""), felder: e.felder || null, was: e.was || null, href: s ? "#spiel/" + encodeURIComponent(kennungVon(s)) : "#" + e.slug, slug: e.slug });
+        });
         (r[1] || []).forEach(function (k) {
           var s = (daten.spiele || []).filter(function (x) { return kennungVon(x) === k.kennung; })[0];
           var teile = []; if (k.abgesagt) teile.push("abgesagt"); if (k.halle) teile.push("Halle: " + k.halle); if (k.beginn) teile.push("Anstoß " + uhr(new Date(k.beginn)) + " Uhr"); if (k.treffpunkt) teile.push("Treffpunkt " + uhr(new Date(k.treffpunkt)) + " Uhr"); if (k.hinweis) teile.push(k.hinweis);
@@ -2113,16 +2255,27 @@
         });
         var grenze = Date.now() - 14 * 86400000;
         eintraege = eintraege.filter(function (e) { return e.zeit && new Date(e.zeit).getTime() >= grenze; });
+        if (aenderungenMeine && profil && profil.slug) eintraege = eintraege.filter(function (e) {
+          if (e.slug) return e.slug === profil.slug;
+          var kz = e.href && e.href.indexOf("#spiel/") === 0 ? decodeURIComponent(e.href.slice(7)) : null, sp = kz && (daten.spiele || []).filter(function (x) { return kennungVon(x) === kz; })[0];
+          return !!(sp && (sp.besetzung || []).some(function (b) { return b.slug === profil.slug; }));
+        });
         eintraege.sort(function (a, b) { return a.zeit < b.zeit ? 1 : -1; });
-        ziel.innerHTML = "";
-        if (!eintraege.length) { ziel.appendChild(leerZustand("In den letzten 14 Tagen hat sich nichts geändert.")); return; }
+        var sk = ziel.querySelector(".skelett-karte"); if (sk) sk.remove();
+        if (!eintraege.length) { ziel.appendChild(leerZustand(aenderungenMeine ? "Bei deinen Spielen hat sich in 14 Tagen nichts geändert." : "In den letzten 14 Tagen hat sich nichts geändert.")); return; }
         var tag = null, box = null, namen = { neu: "Neu", geaendert: "Geändert", entfallen: "Abgesetzt", korrektur: "Korrektur", abgesagt: "Abgesagt", angelegt: "Angelegt" };
         eintraege.forEach(function (e) {
           var d = new Date(e.zeit), t = d.toDateString();
           if (t !== tag) { tag = t; var hh = document.createElement("div"); hh.className = "protokoll-tag"; hh.textContent = tagTitel(d)[0] + " · " + datumKurz(d); ziel.appendChild(hh); box = document.createElement("div"); box.className = "karte protokoll"; ziel.appendChild(box); }
           var z = document.createElement(e.href ? "a" : "div"); z.className = "zeile"; if (e.href) z.href = e.href;
           var art = document.createElement("span"); art.className = "art " + e.art; art.textContent = namen[e.art] || e.art; z.appendChild(art);
-          var txt = document.createElement("span"); txt.style.minWidth = "0"; txt.appendChild(document.createTextNode(e.titel)); var sm = document.createElement("small"); sm.textContent = e.unter + " · " + uhr(d) + " Uhr"; txt.appendChild(sm); z.appendChild(txt);
+          var txt = document.createElement("span"); txt.style.minWidth = "0"; txt.appendChild(document.createTextNode(e.titel));
+          if (e.felder && e.felder.length) {
+            var fl = document.createElement("span"); fl.className = "felder";
+            e.felder.forEach(function (f) { var sp = document.createElement("span"); var s1 = document.createElement("s"); s1.textContent = f.vorher; var b1 = document.createElement("b"); b1.textContent = f.nachher; sp.appendChild(document.createTextNode(f.feld + ": ")); sp.appendChild(s1); sp.appendChild(document.createTextNode(" → ")); sp.appendChild(b1); fl.appendChild(sp); });
+            txt.appendChild(fl);
+          } else if (e.was) { var w1 = document.createElement("span"); w1.className = "felder"; var w2 = document.createElement("span"); w2.textContent = e.was; w1.appendChild(w2); txt.appendChild(w1); }
+          var sm = document.createElement("small"); sm.textContent = e.unter + " · " + uhr(d) + " Uhr"; txt.appendChild(sm); z.appendChild(txt);
           box.appendChild(z);
         });
       });
@@ -2234,7 +2387,8 @@
       funktion("frei") ? ["#mitglieder/frei", "i-cal", "Verfügbarkeit", "Wann du nicht kannst oder gern pfeifst"] : null,
       funktion("hallen") ? ["#karte", "i-pin", "Hallenkarte", "Alle Hallen auf der Karte"] : null,
       ["Für dich"],
-      funktion("statistik") ? ["#statistik", "i-users", "Statistik", "Saison, Archiv, Saisonziel, Saison-Bild"] : null,
+      funktion("statistik") ? ["#statistik", "i-users", "Statistik", "Saison, Ligen, Hallen, Partner, Saisonziel"] : null,
+      ["#archiv", "i-list", "Archiv", "Alle deine Spiele über alle Saisons, filterbar"],
       funktion("notizen") ? ["#mitglieder/notizen", "i-note", "Notizen", "Private Spielnotizen"] : null,
       ["Konto und App"],
       ["#einstellungen", "i-key", "Einstellungen", "Konto, Push, Startseite, Schrift, Farbe"],
@@ -2507,6 +2661,7 @@
     if (slug === "einstellungen") { zeigeEinstellungen(); return; }
     if (slug === "mitglieder/konto") { location.hash = "einstellungen"; return; }
     if (slug === "aenderungen") { zeigeAenderungen(); return; }
+    if (slug === "archiv" || slug.indexOf("archiv/") === 0) { zeigeArchiv(slug.split("/")[1] || ""); return; }
     if (slug.indexOf("abrechnen/") === 0) { var kz = decodeURIComponent(slug.slice(10)); ladeMitglieder().then(function (M) { M.abrechnungSprung(kz); }).catch(function () {}); location.hash = "mitglieder/abrechnung"; return; }
     if (slug === "mitfahren") { if (!funktion("gespann")) { location.hash = "mehr"; return; } zeigeMitfahren(); return; }
     if (slug === "anleitung") { location.hash = "mehr"; tourOeffnen("alles"); return; }
@@ -2629,6 +2784,9 @@
   });
   el("tab-plan").addEventListener("click", function () { location.hash = "plan"; });
   el("aenderungen-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
+  el("archiv-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
+  ["archiv-suche", "archiv-saison", "archiv-liga", "archiv-rolle", "archiv-halle", "archiv-person"].forEach(function (id) { el(id).addEventListener(id === "archiv-suche" ? "input" : "change", function () { archivRendern(); }); });
+  el("archiv-alle").addEventListener("change", function () { el("archiv-person").classList.toggle("versteckt", !el("archiv-alle").checked); zeigeArchiv(el("archiv-alle").checked ? "alle" : ""); });
   el("mitfahren-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
   el("tab-tausch").addEventListener("click", function () { location.hash = "mitglieder/tausch"; });
   el("tab-abrechnung").addEventListener("click", function () { location.hash = "mitglieder/abrechnung"; });

@@ -308,6 +308,10 @@ Jahres-CSV und Jahresblatt je Kalenderjahr; Push bei Mitfahrt-Gesuch/
 -Angebot an Kollegen auf dem Weg; abends „Spiel abrechnen?“ mit Direktsprung;
 Abrechnung offline mit Warteschlange.
 
+**Archiv-Seite & Änderungen mit Details**: Mehr → Archiv (alle Saisons,
+Filter, Admin sieht alle); Änderungen zeigen Feld vorher → nachher, Spielseite
+mit Änderungsverlauf.
+
 **Termine & Tausch abschließen**: Ankündigungen mit Datum erscheinen auf
 Start als „Nächste Termine“ (Push am Vortag); in der Tauschbörse nimmt der
 Suchende ein Angebot an → „vereinbart“, Push an den Helfer, fertige
