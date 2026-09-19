@@ -1846,7 +1846,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": "Ansetzung",
      "hinweis": null,
      "id": "2026-09-19T12:15:00+02:00|Iserlohner EC",
@@ -6655,7 +6655,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": "Ansetzung",
      "hinweis": null,
      "id": "2026-09-19T12:15:00+02:00|Iserlohner EC",
@@ -14188,7 +14188,7 @@
      "slug": "malik-orlando"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-19T12:15:00+02:00|Iserlohner EC",
    "korrektur": null,
    "manuell": false
