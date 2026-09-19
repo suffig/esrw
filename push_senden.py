@@ -334,19 +334,22 @@ def main():
     # Ankuendigungen vom Admin, die als Push markiert sind - an alle
     ank = []
     try:
-        ank = api(url, service, "ankuendigungen?select=id,titel,text&push=eq.true&push_gesendet=is.null") or []
+        ank = api(url, service, "ankuendigungen?select=id,titel,text,an_slugs&push=eq.true&push_gesendet=is.null") or []
     except Exception as e:
         print("Push: Ankuendigungen nicht lesbar: %s" % str(e)[:120], file=sys.stderr)
     for a in ank:
+        an = a.get("an_slugs") or None
         for uid in ids:
+            if an and (profil_von.get(uid) or {}).get("slug") not in an:
+                continue
             nachrichten.setdefault(uid, []).append((None, {
-                "titel": "Ankündigung: " + a["titel"], "text": (a.get("text") or "")[:900], "url": "./#mitglieder/info"}))
+                "titel": ("Nachricht: " if an else "Ankündigung: ") + a["titel"], "text": (a.get("text") or "")[:900], "url": "./#mitglieder/info"}))
 
     # Termine vom Betreiber: am Vortag (ab 17 Uhr) an alle erinnern
     if jetzt.hour >= 17:
         morgen = (jetzt + timedelta(days=1)).date().isoformat()
         try:
-            termine = api(url, service, "ankuendigungen?select=id,titel,text&termin=eq.%s&erinnert=is.null" % morgen) or []
+            termine = api(url, service, "ankuendigungen?select=id,titel,text,an_slugs&termin=eq.%s&erinnert=is.null" % morgen) or []
         except Exception as e:
             termine = []
             print("Push: Termine nicht lesbar: %s" % str(e)[:120], file=sys.stderr)

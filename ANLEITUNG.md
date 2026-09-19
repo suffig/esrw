@@ -1205,6 +1205,30 @@ Kartenkontur, größere Menü-Symbole, einheitliche Auswahlfelder mit Pfeil.
 * **Systemschrift:** Die App folgt der iOS-Textgröße (Dynamic Type); die
   eigene Schriftstufe (A−/A/A+) wirkt relativ dazu.
 
+### 10.6s Seitenköpfe, Mehrfachauswahl, Nachricht an Einzelne (Schema v17)
+
+* **Einheitliche Seitenköpfe:** Archiv, Änderungen, Statistik, Zusammen
+  fahren, Einstellungen, Hallen- und Spielseite haben denselben Kopf –
+  großer Titel, Kontextzeile, „Zurück“ als Pille rechts.
+* **Spielkarten kompakter:** schmalere Zeitspalte, einzeilige Hallenzeile,
+  im Spielplan Gespann nur mit Nachnamen als kleine Chips.
+* **Leere Zustände mit Aktion:** z. B. „Namen wählen“, „Spielplan ansehen“,
+  „+ Spiel selbst eintragen“, „Wohnort teilen“ als Knopf statt nur Text.
+* **App-Badge:** die Zahl auf dem Home-Screen-Symbol (Ankündigungen,
+  Gesuche, wartende Konten) wird jetzt auch wieder gelöscht.
+* **Nachricht an Einzelne (Admin):** Im Ankündigungs-Formular „An: alle /
+  Liga-Gruppe (alle dort Eingeteilten) / Kollege“. Nur die Empfänger (und
+  Admins) sehen sie – per RLS, Spalte `ankuendigungen.an_slugs` –, Push und
+  Termin-Erinnerung gehen nur an sie. `supabase/schema.sql` (v17) ausführen.
+* **Zuletzt gesehen:** Scrollposition wird je Seite gemerkt (auch
+  Spielseiten) und beim Zurückkommen wiederhergestellt – mit mehreren
+  Anläufen, falls die Liste noch lädt.
+* **Mehrfachauswahl in der Abrechnung:** Zeile lange drücken (Desktop:
+  Rechtsklick) → Auswahlmodus mit runden Checks; Leiste unten: abgerechnet ✓,
+  offen, CSV, Alle, Fertig.
+* **Offline-Balken** nennt den Datenstand, was geht/was Netz braucht und wie
+  viele Abrechnungs-Änderungen aufs Nachreichen warten.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

@@ -796,3 +796,12 @@ create policy "eigener Wohnort" on public.wohnorte for all to authenticated usin
 -- v16: Mitfahrt-Push
 -- ======================================================================
 alter table public.mitfahrten add column if not exists gemeldet boolean not null default false;
+
+-- ======================================================================
+-- v17: Ankuendigungen an Einzelne oder Gruppen
+-- ======================================================================
+-- an_slugs leer = alle; sonst sehen nur die genannten (und Admins) die Ankuendigung
+alter table public.ankuendigungen add column if not exists an_slugs text[];
+drop policy if exists "Ankuendigungen lesen" on public.ankuendigungen;
+create policy "Ankuendigungen lesen" on public.ankuendigungen for select to authenticated
+  using (public.ist_freigeschaltet() and (an_slugs is null or public.mein_slug() = any (an_slugs) or public.ist_admin()));

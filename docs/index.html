@@ -718,6 +718,31 @@
   .tour-punkte i { width:7px; height:7px; border-radius:50%; background:var(--linie); }
   .tour-punkte i.aktiv { background:var(--akzent); width:18px; border-radius:4px; }
   @media (prefers-reduced-motion: reduce) { .tour-karte { animation:none; } }
+  /* Design 10: einheitliche Seitenkoepfe, kompaktere Spielkarten, leere Zustaende mit Aktion, Mehrfachauswahl */
+  section:not(#detail):not(#mitglieder) > .profilzeile.karte { background:transparent; box-shadow:none; border:0; padding:6px 2px 12px; align-items:flex-start; }
+  section:not(#detail):not(#mitglieder) > .profilzeile.karte > span:first-child b { font-size:1.45rem; letter-spacing:-.02em; line-height:1.15; }
+  section:not(#detail):not(#mitglieder) > .profilzeile.karte small { font-size:.85rem; margin-top:2px; }
+  section:not(#detail):not(#mitglieder) > .profilzeile.karte .avatar-gross { width:48px; height:48px; font-size:1rem; }
+  .profilzeile .zurueck { background:var(--karte); border:1px solid var(--linie); border-radius:99px; padding:8px 12px 8px 8px; box-shadow:var(--schatten); color:var(--text); font-size:.85rem; flex:none; margin-top:2px; }
+  .profilzeile .zurueck svg.i { width:16px; height:16px; }
+  #spiel > .profilzeile.karte > span:first-child b { font-size:1.15rem; }
+  .spiel.zeit-links .wann { min-width:56px; padding-right:6px; }
+  .spiel.zeit-links .wann b { font-size:.72rem; }
+  .spiel.zeit-links .wann em { font-size:.95rem; }
+  .spiel .paarung { font-size:.98rem; line-height:1.25; }
+  .spiel .inhalt > span { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:.84rem; }
+  .spiel .chips.klein { gap:4px; margin-top:6px; }
+  .spiel .chips.klein .chip { padding:2px 8px 2px 2px; font-size:.76rem; }
+  .spiel .chips.klein .chip .avatar { width:20px; height:20px; font-size:.6rem; }
+  .spiel .meta { margin-top:4px; }
+  .leer { display:flex; flex-direction:column; align-items:center; gap:8px; }
+  .leer .leer-aktion { margin-top:6px; text-decoration:none; }
+  .mg-kopf:has(.mg-wahlfeld:not(.versteckt)) { display:grid; grid-template-columns:auto 1fr; column-gap:10px; }
+  .mg-wahlfeld { grid-row:1 / span 3; align-self:center; }
+  .mg-eintrag.gewaehlt { outline:2px solid var(--akzent); }
+  .mg-auswahlleiste { position:fixed; left:0; right:0; bottom:calc(72px + env(safe-area-inset-bottom)); z-index:30; margin:0 auto; max-width:600px; display:flex; gap:6px; align-items:center; flex-wrap:wrap; padding:10px 12px; background:var(--karte); border:1px solid var(--linie); border-radius:16px; box-shadow:0 10px 30px rgba(0,0,0,.25); }
+  .mg-auswahlleiste > span { font-weight:800; margin-right:auto; }
+  .mg-auswahlleiste button { min-height:34px; }
   /* Bottom-Sheet (Filter), Wisch-Aktionen, Rollen-Kante, Einrichtungs-Check, Abrechnungs-Kalender */
   .blatt { position:fixed; left:0; right:0; bottom:0; z-index:45; margin:0 auto; max-width:640px; max-height:82vh; overflow:auto; border-radius:22px 22px 0 0; padding:8px 16px calc(16px + env(safe-area-inset-bottom)); box-shadow:0 -12px 40px rgba(0,0,0,.25); transform:translateY(102%); transition:transform .28s cubic-bezier(.2,.8,.2,1); }
   .blatt.versteckt { display:flex !important; pointer-events:none; }
@@ -1515,6 +1540,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=46"></script>
+<script src="app.js?v=47"></script>
 </body>
 </html>

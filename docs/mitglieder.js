@@ -625,6 +625,7 @@ window.Mitglieder = (function () {
       inhalt.appendChild(h("p", { class: "leer", text: "Erst nach der Freischaltung durch den Betreiber." }));
       return;
     }
+    if (name !== "abrechnung") { auswahlModus = false; auswahl = {}; var al = document.querySelector(".mg-auswahlleiste"); if (al) al.remove(); }
     if (name === "abrechnung") zeigeAbrechnung();
     else if (name === "tausch") zeigeTausch();
     else if (name === "frei") zeigeVerfuegbarkeit();
@@ -1313,6 +1314,28 @@ window.Mitglieder = (function () {
   }
 
   var abrechnungZiel = null, abrechnungPanel = null;
+  // Mehrfachauswahl in der Abrechnung
+  var auswahl = {}, auswahlModus = false;
+  function auswahlStarten(sp) {
+    if (!auswahlModus) { auswahlModus = true; if (navigator.vibrate) { try { navigator.vibrate(12); } catch (e) {} } }
+    if (sp) auswahl[sp.kennung] = sp;
+    rendereAbrechnung();
+  }
+  function auswahlEnde() { auswahlModus = false; auswahl = {}; var l = document.querySelector(".mg-auswahlleiste"); if (l) l.remove(); rendereAbrechnung(); }
+  function auswahlLeiste() {
+    var alt = document.querySelector(".mg-auswahlleiste"); if (alt) alt.remove();
+    if (!auswahlModus) return;
+    var liste = Object.keys(auswahl).map(function (k) { return auswahl[k]; }), n = liste.length;
+    var leiste = h("div", { class: "mg-auswahlleiste" }, [
+      h("span", { text: n + (n === 1 ? " Spiel" : " Spiele") }),
+      h("button", { type: "button", class: "anfrage", text: "abgerechnet ✓", disabled: n ? null : "disabled", onclick: function () { liste.forEach(function (sp) { erledigtSetzen(sp, true); }); auswahlEnde(); } }),
+      h("button", { type: "button", text: "offen", disabled: n ? null : "disabled", onclick: function () { liste.forEach(function (sp) { erledigtSetzen(sp, false); }); auswahlEnde(); } }),
+      h("button", { type: "button", text: "CSV", disabled: n ? null : "disabled", onclick: function () { csvExport(liste.slice().sort(function (a, b) { return a.beginn < b.beginn ? -1 : 1; }), "Auswahl"); } }),
+      h("button", { type: "button", text: "Alle", onclick: function () { saisonSpiele(gewaehlteSaison).forEach(function (sp) { if (new Date(sp.beginn) < new Date()) auswahl[sp.kennung] = sp; }); rendereAbrechnung(); } }),
+      h("button", { type: "button", class: "textknopf", text: "Fertig", onclick: auswahlEnde })
+    ]);
+    document.body.appendChild(leiste);
+  }
   function abrechnungSprung(kennung) { abrechnungZiel = kennung; nurOffene = false; }
   function rendereAbrechnung() {
     leeren(inhalt);
@@ -1398,7 +1421,7 @@ window.Mitglieder = (function () {
       return !e || !erledigt(e) || e.verguetung == null || (e.km == null && profil.heimat_lat != null);
     });
     // Nach dem Speichern eines privaten Spiels die Liste neu laden
-    if (!spiele.length) inhalt.appendChild(h("p", { class: "leer", text: "Keine Spiele in dieser Saison." }));
+    if (!spiele.length) inhalt.appendChild(h("p", { class: "leer" }, ["Keine Spiele in dieser Saison. ", h("button", { type: "button", class: "anfrage", style: "margin-top:10px", text: "+ Spiel selbst eintragen", onclick: function () { abrechnungPanel = "eintragen"; rendereAbrechnung(); } })]));
     else if (!liste.length) inhalt.appendChild(h("p", { class: "leer", text: "Alles abgerechnet ✓" }));
 
     // Nach Monat gruppiert, je Monat ein Knopf "Monat abschliessen"
@@ -1436,6 +1459,7 @@ window.Mitglieder = (function () {
     });
 
     aktualisiereSummen();
+    auswahlLeiste();
     if (abrechnungZiel) {
       var zielZeile = inhalt.querySelector('[data-kennung="' + abrechnungZiel.replace(/"/g, "") + '"]');
       abrechnungZiel = null;
@@ -1545,8 +1569,11 @@ window.Mitglieder = (function () {
     var foto = h("input", { type: "file", accept: "image/*", capture: "environment", style: "display:none", onchange: function (ev) { var f = ev.target.files && ev.target.files[0]; if (f) belegHochladen(sp, f, zeile); ev.target.value = ""; } });
     var fotoKnopf = h("button", { type: "button", class: "mg-foto", title: "Beleg fotografieren", onclick: function () { foto.click(); } }, [ikone("i-kamera"), h("span", { class: "mg-beleg-zahl" + ((e.belege || []).length ? "" : " versteckt"), text: String((e.belege || []).length || "") })]);
     var details = h("div", { class: "mg-details versteckt" });
-    var zeile = h("div", { class: "spiel karte mg-eintrag" + (vergangen ? "" : " war") + (erledigt(e) ? " bezahlt" : ""), "data-kennung": sp.kennung.replace(/"/g, "") }, [
-      h("div", { class: "mg-kopf", onclick: function (ev) { if (ev.target.closest("input, button, a, label")) return; details.classList.toggle("versteckt"); zeile.classList.toggle("offen", !details.classList.contains("versteckt")); } }, [
+    var wahl = h("input", { type: "checkbox", class: "check mg-wahl" }); wahl.checked = !!auswahl[sp.kennung];
+    wahl.addEventListener("change", function () { if (wahl.checked) auswahl[sp.kennung] = sp; else delete auswahl[sp.kennung]; zeile.classList.toggle("gewaehlt", wahl.checked); auswahlLeiste(); });
+    var zeile = h("div", { class: "spiel karte mg-eintrag" + (vergangen ? "" : " war") + (erledigt(e) ? " bezahlt" : "") + (auswahl[sp.kennung] ? " gewaehlt" : ""), "data-kennung": sp.kennung.replace(/"/g, "") }, [
+      h("div", { class: "mg-kopf", onclick: function (ev) { if (ev.target.closest("input, button, a, label")) return; if (auswahlModus) { wahl.checked = !wahl.checked; wahl.dispatchEvent(new Event("change")); return; } details.classList.toggle("versteckt"); zeile.classList.toggle("offen", !details.classList.contains("versteckt")); } }, [
+        h("div", { class: "mg-wahlfeld" + (auswahlModus ? "" : " versteckt") }, [wahl]),
         h("div", { class: "kopfzeile" }, [
           h("span", { class: "datum", text: datum(d) + " · " + uhr(d) + " Uhr" + (zeitzuschlag(sp) ? " · +20 %" : "") + (sp.privat ? " · selbst eingetragen" : "") }),
           rolleBadge((sp.rolle || "") + (sp.system >= 3 ? " · " + sp.system + "er" : ""))
@@ -1584,6 +1611,11 @@ window.Mitglieder = (function () {
 
     zeile.querySelector(".rolle").className = "rolle " + (sp.rolle || "");
     belegeRendern(sp, zeile);
+    // Langes Druecken (oder Rechtsklick) startet die Mehrfachauswahl
+    var timer = null;
+    zeile.addEventListener("touchstart", function () { timer = setTimeout(function () { auswahlStarten(sp); }, 550); }, { passive: true });
+    ["touchend", "touchmove", "touchcancel"].forEach(function (ev) { zeile.addEventListener(ev, function () { clearTimeout(timer); }, { passive: true }); });
+    zeile.addEventListener("contextmenu", function (ev) { ev.preventDefault(); auswahlStarten(sp); });
     return zeile;
   }
 
@@ -2819,6 +2851,7 @@ window.Mitglieder = (function () {
             a.wichtig ? h("span", { class: "rolle HSR", text: "wichtig" }) : null
           ]),
           h("div", { class: "paarung", text: (a.termin ? a.termin.split("-").reverse().join(".") + " · " : "") + a.titel }),
+          a.an_slugs && a.an_slugs.length ? h("div", { class: "meta", text: "Nur an: " + (a.an_slugs.length > 3 ? a.an_slugs.length + " Kollegen" : a.an_slugs.map(function (sl) { var p = ctx.personMit(sl); return p ? p.name : sl; }).join(", ")) }) : null,
           h("div", { style: "white-space:pre-wrap; margin-top:4px", text: a.text }),
           a.bis ? h("div", { class: "meta", text: "gilt bis " + a.bis.split("-").reverse().join(".") }) : null,
           a.termin && a.termin >= heute && frei() ? antwortZeile(a, antworten) : null,
@@ -2845,21 +2878,32 @@ window.Mitglieder = (function () {
     var termin = h("input", { type: "date" });
     var wichtig = h("input", { type: "checkbox" });
     var push = h("input", { type: "checkbox" });
+    // Empfaenger: alle, ein Kollege oder eine Liga-Gruppe (alle, die dort eingeteilt sind)
+    var gruppen = {}; (ctx.daten.spiele || []).forEach(function (s) { var g = (s.liga || "").toUpperCase().match(/^U\s?(\d+)/) ? "U" + (s.liga || "").toUpperCase().match(/^U\s?(\d+)/)[1] : (s.liga || "").split(/[\s:]+/)[0]; if (!g) return; (s.besetzung || []).forEach(function (b) { if (b.slug) (gruppen[g] = gruppen[g] || {})[b.slug] = 1; }); });
+    var anWahl = h("select", { class: "mg-select" }, [h("option", { value: "", text: "An: alle Mitglieder" })]
+      .concat(Object.keys(gruppen).sort().map(function (g) { return h("option", { value: "liga:" + g, text: "Liga-Gruppe " + g + " (" + Object.keys(gruppen[g]).length + ")" }); }))
+      .concat(ctx.daten.personen.map(function (p) { return h("option", { value: "slug:" + p.slug, text: p.name }); })));
+    function empfaenger() {
+      var v = anWahl.value; if (!v) return null;
+      if (v.indexOf("liga:") === 0) return Object.keys(gruppen[v.slice(5)] || {});
+      return [v.slice(5)];
+    }
     var knopf = h("button", { type: "button", class: "mg-haupt", text: "Veröffentlichen", onclick: function () {
       if (!titel.value.trim() || !text.value.trim()) { meldung("Überschrift und Text bitte ausfüllen.", "warn"); return; }
       knopf.disabled = true;
-      sb.from("ankuendigungen").insert({ user_id: session.user.id, name: profil.name || profil.slug, titel: titel.value.trim(), text: text.value.trim(),
-                                          wichtig: wichtig.checked, push: push.checked, bis: bis.value || null, termin: termin.value || null })
+      var an = empfaenger();
+      sb.from("ankuendigungen").insert(Object.assign({ user_id: session.user.id, name: profil.name || profil.slug, titel: titel.value.trim(), text: text.value.trim(),
+                                          wichtig: wichtig.checked, push: push.checked, bis: bis.value || null, termin: termin.value || null }, an ? { an_slugs: an } : {}))
         .then(function (r) {
           knopf.disabled = false;
-          if (r.error) { meldung(fehlerText(r.error), "warn"); return; }
+          if (r.error) { meldung(fehlerText(r.error) + (/an_slugs/.test(r.error.message || "") ? " – schema.sql (v17) ausführen." : ""), "warn"); return; }
           kurzMeldung("Veröffentlicht ✓" + (push.checked ? " – Push folgt beim nächsten Lauf." : ""), "gut"); zeigeInfo();
         });
     } });
     return h("details", { class: "karte", style: "padding:0 14px; margin-bottom:12px" }, [
       h("summary", { style: "padding:12px 0; font-weight:800; cursor:pointer", text: "Neue Ankündigung" }),
       h("div", { class: "mg-form", style: "padding-bottom:12px" }, [
-        titel, text,
+        anWahl, titel, text,
         h("div", { class: "mg-felder" }, [h("label", {}, ["Termin (optional)", termin]), h("label", {}, ["gilt bis (optional)", bis])]),
         h("p", { class: "meta", style: "margin:0", text: "Mit Termin erscheint die Ankündigung auf der Startseite unter „Nächste Termine“, und alle mit Push bekommen am Vortag eine Erinnerung." }),
         h("div", { class: "mg-schalter" }, [
