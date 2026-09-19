@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 122,
+ "spiele_gesamt": 121,
  "saison": "2026/27",
  "archiv_spiele": 170,
  "rollen": {
@@ -4239,7 +4239,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T12:30:00+02:00|EHC Essen Ruhr – Dinslakener Kobras",
@@ -4983,34 +4983,6 @@
     "letzte": "2026-09-27"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-12T12:30:00+02:00",
-     "treffpunkt": "2026-09-12T11:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U13 FS",
-     "paarung": "Dinslakener Kobras – TuS Wiehl",
-     "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
-     "halle": "Eissporthalle Dinslaken",
-     "koordinaten": [
-      51.574578,
-      6.735361
-     ],
-     "gespann": [
-      {
-       "name": "Schmidt, Waldemar",
-       "slug": "schmidt-waldemar",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-12T12:30:00+02:00|Dinslakener Kobras – TuS Wiehl",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-13T17:00:00+02:00",
      "treffpunkt": "2026-09-13T16:00:00+02:00",
@@ -5865,7 +5837,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T12:30:00+02:00|Dinslakener Kobras – Mechelen",
@@ -7356,7 +7328,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T12:30:00+02:00|EHC Essen Ruhr – Dinslakener Kobras",
@@ -9716,34 +9688,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-12T12:30:00+02:00",
-     "treffpunkt": "2026-09-12T11:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U13 FS",
-     "paarung": "Dinslakener Kobras – TuS Wiehl",
-     "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
-     "halle": "Eissporthalle Dinslaken",
-     "koordinaten": [
-      51.574578,
-      6.735361
-     ],
-     "gespann": [
-      {
-       "name": "Kiefer, Dennis",
-       "slug": "kiefer-dennis",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-12T12:30:00+02:00|Dinslakener Kobras – TuS Wiehl",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-13T19:00:00+02:00",
      "treffpunkt": "2026-09-13T18:00:00+02:00",
      "rolle": "SR",
@@ -11746,7 +11690,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-19T12:30:00+02:00|Dinslakener Kobras – Mechelen",
@@ -13030,32 +12974,6 @@
  ],
  "spiele": [
   {
-   "beginn": "2026-09-12T12:30:00+02:00",
-   "treffpunkt": "2026-09-12T11:30:00+02:00",
-   "liga": "U13 FS",
-   "paarung": "Dinslakener Kobras – TuS Wiehl",
-   "halle": "Eissporthalle Dinslaken",
-   "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Kiefer, Dennis",
-     "rolle": "SR",
-     "slug": "kiefer-dennis"
-    },
-    {
-     "name": "Schmidt, Waldemar",
-     "rolle": "SR",
-     "slug": "schmidt-waldemar"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-12T12:30:00+02:00|Dinslakener Kobras – TuS Wiehl",
-   "korrektur": null,
-   "manuell": false
-  },
-  {
    "beginn": "2026-09-12T13:30:00+02:00",
    "treffpunkt": "2026-09-12T12:30:00+02:00",
    "liga": "U13 RLB",
@@ -14214,7 +14132,7 @@
      "slug": "kuriata-florian-nikita"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-19T12:30:00+02:00|Dinslakener Kobras – Mechelen",
    "korrektur": null,
    "manuell": false
@@ -14240,7 +14158,7 @@
      "slug": "melchert-philip"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-19T12:30:00+02:00|EHC Essen Ruhr – Dinslakener Kobras",
    "korrektur": null,
    "manuell": false

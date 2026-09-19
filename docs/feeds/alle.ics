@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:7fdee8f3e1705798edf027f48fc5b296d9103e4f@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260912T093000Z
-DTEND:20260912T130000Z
-SUMMARY:U13 FS · Dinslakener Kobras – TuS Wiehl
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
-  11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 FS\nHalle: Eissporthalle Di
- nslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Schmidt\, Wald
- emar\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
-GEO:51.574578;6.735361
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
- m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
- inslaken":geo:51.574578,6.735361
-END:VEVENT
-BEGIN:VEVENT
 UID:1ebe321b9b023a2a67f45a4fa71fc39a306aed20@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z
@@ -965,12 +944,6 @@ GEO:51.454179;6.976731
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
  Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
  n-West":geo:51.454179,6.976731
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U15 FS · EHC Essen Ruhr – Din
- slakener Kobras
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:3b76c417fae2df3cf8fdd6457b1d15b35c9c3a9c@esrw.de
@@ -992,12 +965,6 @@ GEO:51.574578;6.735361
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
  m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
  inslaken":geo:51.574578,6.735361
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - DA FS · Dinslakener Kobras – 
- Mechelen
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:7770f4f59cd902a275b331ed4b03cc35e4defbda@esrw.de

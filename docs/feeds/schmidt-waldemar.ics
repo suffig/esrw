@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:9c25870bad6dc5134cfa51c83a174b15375b50be@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260912T093000Z
-DTEND:20260912T130000Z
-SUMMARY:SR · U13 FS · Dinslakener Kobras – TuS Wiehl
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
-  11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 FS\nHalle: Eissporthalle Di
- nslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Kiefer\, Denni
- s\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
-GEO:51.574578;6.735361
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
- m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
- inslaken":geo:51.574578,6.735361
-END:VEVENT
-BEGIN:VEVENT
 UID:5cf17af8aaae528f60e9664f791df35cc6fe375c@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z
