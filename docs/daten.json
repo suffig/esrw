@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 113,
+ "spiele_gesamt": 112,
  "saison": "2026/27",
  "archiv_spiele": 170,
  "rollen": {
@@ -2807,34 +2807,6 @@
     "letzte": "2026-09-26"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-12T20:00:00+02:00",
-     "treffpunkt": "2026-09-12T19:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U17 II",
-     "paarung": "EV Duisburg – SCC Adler Berlin",
-     "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
-     "halle": "PreZero Rheinlandhalle Duisburg",
-     "koordinaten": [
-      51.405718,
-      6.780082
-     ],
-     "gespann": [
-      {
-       "name": "Stocker, Quirin",
-       "slug": "stocker-quirin",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-12T20:00:00+02:00|EV Duisburg – SCC Adler Berlin",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-13T12:00:00+02:00",
      "treffpunkt": "2026-09-13T11:00:00+02:00",
@@ -11101,34 +11073,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-12T20:00:00+02:00",
-     "treffpunkt": "2026-09-12T19:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U17 II",
-     "paarung": "EV Duisburg – SCC Adler Berlin",
-     "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
-     "halle": "PreZero Rheinlandhalle Duisburg",
-     "koordinaten": [
-      51.405718,
-      6.780082
-     ],
-     "gespann": [
-      {
-       "name": "Heffler, Philipp",
-       "slug": "heffler-philipp",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-12T20:00:00+02:00|EV Duisburg – SCC Adler Berlin",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-13T14:00:00+02:00",
      "treffpunkt": "2026-09-13T13:00:00+02:00",
      "rolle": "SR",
@@ -12479,32 +12423,6 @@
   }
  ],
  "spiele": [
-  {
-   "beginn": "2026-09-12T20:00:00+02:00",
-   "treffpunkt": "2026-09-12T19:00:00+02:00",
-   "liga": "U17 II",
-   "paarung": "EV Duisburg – SCC Adler Berlin",
-   "halle": "PreZero Rheinlandhalle Duisburg",
-   "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Heffler, Philipp",
-     "rolle": "SR",
-     "slug": "heffler-philipp"
-    },
-    {
-     "name": "Stocker, Quirin",
-     "rolle": "SR",
-     "slug": "stocker-quirin"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-12T20:00:00+02:00|EV Duisburg – SCC Adler Berlin",
-   "korrektur": null,
-   "manuell": false
-  },
   {
    "beginn": "2026-09-13T08:00:00+02:00",
    "treffpunkt": "2026-09-13T07:00:00+02:00",
