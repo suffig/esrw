@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 120,
+ "spiele_gesamt": 119,
  "saison": "2026/27",
  "archiv_spiele": 170,
  "rollen": {
@@ -6942,34 +6942,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-12T15:00:00+02:00",
-     "treffpunkt": "2026-09-12T14:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "DA FS",
-     "paarung": "NEV – BW/NRW",
-     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-     "halle": "Eissportzentrum Westfalen",
-     "koordinaten": [
-      51.49525,
-      7.458288
-     ],
-     "gespann": [
-      {
-       "name": "Strohmenger, Svenja",
-       "slug": "strohmenger-svenja",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-12T15:00:00+02:00|NEV – BW/NRW",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-12T16:45:00+02:00",
      "treffpunkt": "2026-09-12T15:45:00+02:00",
      "rolle": "SR",
@@ -11654,34 +11626,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-12T15:00:00+02:00",
-     "treffpunkt": "2026-09-12T14:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "DA FS",
-     "paarung": "NEV – BW/NRW",
-     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-     "halle": "Eissportzentrum Westfalen",
-     "koordinaten": [
-      51.49525,
-      7.458288
-     ],
-     "gespann": [
-      {
-       "name": "Meißner, Nils",
-       "slug": "meissner-nils",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-12T15:00:00+02:00|NEV – BW/NRW",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-12T16:45:00+02:00",
      "treffpunkt": "2026-09-12T15:45:00+02:00",
      "rolle": "SR",
@@ -12871,32 +12815,6 @@
   }
  ],
  "spiele": [
-  {
-   "beginn": "2026-09-12T15:00:00+02:00",
-   "treffpunkt": "2026-09-12T14:00:00+02:00",
-   "liga": "DA FS",
-   "paarung": "NEV – BW/NRW",
-   "halle": "Eissportzentrum Westfalen",
-   "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Meißner, Nils",
-     "rolle": "SR",
-     "slug": "meissner-nils"
-    },
-    {
-     "name": "Strohmenger, Svenja",
-     "rolle": "SR",
-     "slug": "strohmenger-svenja"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-12T15:00:00+02:00|NEV – BW/NRW",
-   "korrektur": null,
-   "manuell": false
-  },
   {
    "beginn": "2026-09-12T16:30:00+02:00",
    "treffpunkt": "2026-09-12T15:30:00+02:00",
