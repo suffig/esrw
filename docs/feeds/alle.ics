@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:ba5f337c920501dfa1703b5008d882601a5418f6@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260912T161500Z
-DTEND:20260912T194500Z
-SUMMARY:Frauen BZL · KEC "Die Haie" 1c – Herforder EV Kölnarena 2
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:15 Uhr\nTreffpunkt:
-  18:15 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Kölnarena 2
- \nAdresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Schöche\, Gian
- -Carlo\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/eint
- eilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
-GEO:50.937979;6.98935
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
- r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
- .937979,6.98935
-END:VEVENT
-BEGIN:VEVENT
 UID:37d132bf7d0daa752031611b8ab903db337461be@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z
