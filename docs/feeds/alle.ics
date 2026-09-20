@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:8dccb4f99c125c537667d4b03c6dfe15e9148a11@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260913T140000Z
-DTEND:20260913T173000Z
-SUMMARY:U13 FS · Krefelder EV – Löwen Frankfurt
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:00 Uhr\nTreffpunkt:
-  16:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 FS\nHalle: Rheinlandhalle K
- refeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Kiefer\, De
- nnis\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
-GEO:51.339877;6.540168
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
- stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
- le Krefeld":geo:51.339877,6.540168
-END:VEVENT
-BEGIN:VEVENT
 UID:bb97307bcb928a46e8d53e49f55b2450ae9b1f5a@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z
@@ -947,12 +926,6 @@ GEO:51.339877;6.540168
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
  stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
  le Krefeld":geo:51.339877,6.540168
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U15 RLA · Krefelder EV – Köl
- ner Junghaie
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:d9891636bbf04101aa2002f48550a9c8462c4273@esrw.de

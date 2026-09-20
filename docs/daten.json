@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 96,
+ "spiele_gesamt": 95,
  "saison": "2026/27",
  "archiv_spiele": 170,
  "rollen": {
@@ -365,34 +365,6 @@
     "letzte": "2026-09-27"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-13T17:00:00+02:00",
-     "treffpunkt": "2026-09-13T16:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U13 FS",
-     "paarung": "Krefelder EV – Löwen Frankfurt",
-     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-     "halle": "Rheinlandhalle Krefeld",
-     "koordinaten": [
-      51.339877,
-      6.540168
-     ],
-     "gespann": [
-      {
-       "name": "Kiefer, Dennis",
-       "slug": "kiefer-dennis",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T17:00:00+02:00|Krefelder EV – Löwen Frankfurt",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-20T20:00:00+02:00",
      "treffpunkt": "2026-09-20T19:00:00+02:00",
@@ -3789,7 +3761,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T17:00:00+02:00|Krefelder EV – Kölner Junghaie",
@@ -4375,34 +4347,6 @@
     "letzte": "2026-09-27"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-13T17:00:00+02:00",
-     "treffpunkt": "2026-09-13T16:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U13 FS",
-     "paarung": "Krefelder EV – Löwen Frankfurt",
-     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-     "halle": "Rheinlandhalle Krefeld",
-     "koordinaten": [
-      51.339877,
-      6.540168
-     ],
-     "gespann": [
-      {
-       "name": "Beckford, Emanuel",
-       "slug": "beckford-emanuel",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T17:00:00+02:00|Krefelder EV – Löwen Frankfurt",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-20T09:30:00+02:00",
      "treffpunkt": "2026-09-20T08:30:00+02:00",
@@ -8398,7 +8342,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T17:00:00+02:00|Krefelder EV – Kölner Junghaie",
@@ -11415,32 +11359,6 @@
  ],
  "spiele": [
   {
-   "beginn": "2026-09-13T17:00:00+02:00",
-   "treffpunkt": "2026-09-13T16:00:00+02:00",
-   "liga": "U13 FS",
-   "paarung": "Krefelder EV – Löwen Frankfurt",
-   "halle": "Rheinlandhalle Krefeld",
-   "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Beckford, Emanuel",
-     "rolle": "SR",
-     "slug": "beckford-emanuel"
-    },
-    {
-     "name": "Kiefer, Dennis",
-     "rolle": "SR",
-     "slug": "kiefer-dennis"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-13T17:00:00+02:00|Krefelder EV – Löwen Frankfurt",
-   "korrektur": null,
-   "manuell": false
-  },
-  {
    "beginn": "2026-09-13T17:30:00+02:00",
    "treffpunkt": "2026-09-13T16:30:00+02:00",
    "liga": "U15 RLB",
@@ -12583,7 +12501,7 @@
      "slug": "schlueter-thomas"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-20T17:00:00+02:00|Krefelder EV – Kölner Junghaie",
    "korrektur": null,
    "manuell": false

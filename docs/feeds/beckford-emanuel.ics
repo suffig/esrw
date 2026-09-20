@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:f371e217a117fbfbd90f4320296b3266a8fbff59@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260913T140000Z
-DTEND:20260913T173000Z
-SUMMARY:SR · U13 FS · Krefelder EV – Löwen Frankfurt
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:00 Uhr\nTreffpunkt:
-  16:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 FS\nHalle: Rheinlandhalle K
- refeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Kiefer\, De
- nnis\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
-GEO:51.339877;6.540168
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
- stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
- le Krefeld":geo:51.339877,6.540168
-END:VEVENT
-BEGIN:VEVENT
 UID:84a56d6561a8df261dff761c2dcc2b9b366c8c58@esrw.de
 SEQUENCE:2
 DTSTAMP:20260918T172506Z

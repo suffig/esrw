@@ -1623,20 +1623,6 @@
   "titel": "SR · U13 RLB · Herner EV – Düsseldorfer EG 1b",
   "treffpunkt": "2026-09-20T15:30:00+02:00"
  },
- "92564e89474335e944277d06227d2f37c5643191@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-13T17:00:00+02:00",
-  "geaendert_am": null,
-  "id": "2026-09-13T17:00:00+02:00|Krefelder EV – Löwen Frankfurt",
-  "inhalt": "b27dad964a07582061d9f21421c865707c7f971c",
-  "korrektur": null,
-  "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-  "sequence": 0,
-  "slug": "kiefer-dennis",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U13 FS · Krefelder EV – Löwen Frankfurt",
-  "treffpunkt": "2026-09-13T16:00:00+02:00"
- },
  "92eaf65ffc39386439913635078a09fe4bd355f0@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-20T14:45:00+02:00",
@@ -2742,20 +2728,6 @@
   "stempel": "2026-09-17T17:30:38.957160+00:00",
   "titel": "HSR · RL FS · Eisadler Dortmund – Harzer Falken",
   "treffpunkt": "2026-09-27T18:00:00+02:00"
- },
- "f371e217a117fbfbd90f4320296b3266a8fbff59@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-13T17:00:00+02:00",
-  "geaendert_am": null,
-  "id": "2026-09-13T17:00:00+02:00|Krefelder EV – Löwen Frankfurt",
-  "inhalt": "b27dad964a07582061d9f21421c865707c7f971c",
-  "korrektur": null,
-  "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-  "sequence": 0,
-  "slug": "beckford-emanuel",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U13 FS · Krefelder EV – Löwen Frankfurt",
-  "treffpunkt": "2026-09-13T16:00:00+02:00"
  },
  "f5cc054a6a73d1f4a29d9a8999cfd7379e4d8067@esrw.de": {
   "aenderung": null,
