@@ -391,7 +391,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": "Halle (vorher Eissporthalle Bergisch Gladbach)",
      "hinweis": null,
      "id": "2026-09-20T20:00:00+02:00|Neusser EV – ESV Bergisch Gladbach",
@@ -5140,7 +5140,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": "Halle (vorher Eissporthalle Bergisch Gladbach)",
      "hinweis": null,
      "id": "2026-09-20T20:00:00+02:00|Neusser EV – ESV Bergisch Gladbach",
@@ -5623,7 +5623,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": "Halle (vorher Eissporthalle Bergisch Gladbach)",
      "hinweis": null,
      "id": "2026-09-20T20:00:00+02:00|Neusser EV – ESV Bergisch Gladbach",
@@ -12344,7 +12344,7 @@
      "slug": "lindemans-pepe"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-20T20:00:00+02:00|Neusser EV – ESV Bergisch Gladbach",
    "korrektur": null,
    "manuell": false
