@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 105,
+ "spiele_gesamt": 104,
  "saison": "2026/27",
  "archiv_spiele": 170,
  "rollen": {
@@ -1307,7 +1307,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T11:00:00+02:00|Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld",
@@ -3401,34 +3401,6 @@
     "letzte": "2026-09-26"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-13T11:00:00+02:00",
-     "treffpunkt": "2026-09-13T10:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "DA FS",
-     "paarung": "NRW – Hessen",
-     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-     "halle": "Eissportzentrum Westfalen",
-     "koordinaten": [
-      51.49525,
-      7.458288
-     ],
-     "gespann": [
-      {
-       "name": "Melchert, Philip",
-       "slug": "melchert-philip",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T11:00:00+02:00|NRW – Hessen",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-20T18:30:00+02:00",
      "treffpunkt": "2026-09-20T17:30:00+02:00",
@@ -6672,8 +6644,7 @@
    "slug": "melchert-philip",
    "name": "Melchert, Philip",
    "varianten": [
-    "Melchert, Philip",
-    "Melchert, Philipp"
+    "Melchert, Philip"
    ],
    "statistik": {
     "gesamt": 4,
@@ -6729,34 +6700,6 @@
     "letzte": "2026-09-27"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-13T11:00:00+02:00",
-     "treffpunkt": "2026-09-13T10:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "DA FS",
-     "paarung": "NRW – Hessen",
-     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-     "halle": "Eissportzentrum Westfalen",
-     "koordinaten": [
-      51.49525,
-      7.458288
-     ],
-     "gespann": [
-      {
-       "name": "Heu, Alexander",
-       "slug": "heu-alexander",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T11:00:00+02:00|NRW – Hessen",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-19T12:30:00+02:00",
      "treffpunkt": "2026-09-19T11:30:00+02:00",
@@ -7681,7 +7624,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T11:00:00+02:00|Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld",
@@ -12032,32 +11975,6 @@
  ],
  "spiele": [
   {
-   "beginn": "2026-09-13T11:00:00+02:00",
-   "treffpunkt": "2026-09-13T10:00:00+02:00",
-   "liga": "DA FS",
-   "paarung": "NRW – Hessen",
-   "halle": "Eissportzentrum Westfalen",
-   "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Melchert, Philip",
-     "rolle": "SR",
-     "slug": "melchert-philip"
-    },
-    {
-     "name": "Heu, Alexander",
-     "rolle": "SR",
-     "slug": "heu-alexander"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-13T11:00:00+02:00|NRW – Hessen",
-   "korrektur": null,
-   "manuell": false
-  },
-  {
    "beginn": "2026-09-13T12:00:00+02:00",
    "treffpunkt": "2026-09-13T11:00:00+02:00",
    "liga": "U17 I",
@@ -13200,7 +13117,7 @@
      "slug": "pluschkell-julian"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-20T11:00:00+02:00|Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld",
    "korrektur": null,
    "manuell": false

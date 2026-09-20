@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:b5d97cfe55566b486513b93af310facdd90b4e6c@esrw.de
-SEQUENCE:0
-DTSTAMP:20260913T053611Z
-LAST-MODIFIED:20260913T053611Z
-DTSTART:20260913T080000Z
-DTEND:20260913T113000Z
-SUMMARY:SR · DA FS · NRW – Hessen
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:00 Uhr\nTreffpunkt:
-  10:00 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissportzentrum W
- estfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Heu\, Alexan
- der\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
-GEO:51.49525;7.458288
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
-  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
- rum Westfalen":geo:51.49525,7.458288
-END:VEVENT
-BEGIN:VEVENT
 UID:c75b929047c9603c6f88549688f54838ea81b065@esrw.de
 SEQUENCE:0
 DTSTAMP:20260918T083038Z

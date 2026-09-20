@@ -1455,20 +1455,6 @@
   "titel": "LSR · RL FS · ESV Bergkamen – Bremen",
   "treffpunkt": "2026-09-27T17:30:00+02:00"
  },
- "79a36d739d20985d78f40c2a0c74aae7b71e4c20@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-13T11:00:00+02:00",
-  "geaendert_am": null,
-  "id": "2026-09-13T11:00:00+02:00|NRW – Hessen",
-  "inhalt": "b355543360b44d8ee76e3f5f7a7a8805cf0644dd",
-  "korrektur": null,
-  "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-  "sequence": 0,
-  "slug": "heu-alexander",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · DA FS · NRW – Hessen",
-  "treffpunkt": "2026-09-13T10:00:00+02:00"
- },
  "79a8515def553bb7fd9073fa7a9068c66b7a7530@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-20T12:30:00+02:00",
@@ -2266,20 +2252,6 @@
   "stempel": "2026-09-17T17:30:38.957160+00:00",
   "titel": "LSR · RL FS · Ratinger Ice Aliens – Grefrather EG",
   "treffpunkt": "2026-09-25T18:30:00+02:00"
- },
- "b5d97cfe55566b486513b93af310facdd90b4e6c@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-13T11:00:00+02:00",
-  "geaendert_am": null,
-  "id": "2026-09-13T11:00:00+02:00|NRW – Hessen",
-  "inhalt": "b355543360b44d8ee76e3f5f7a7a8805cf0644dd",
-  "korrektur": null,
-  "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-  "sequence": 0,
-  "slug": "melchert-philip",
-  "stempel": "2026-09-13T05:36:11.362662+00:00",
-  "titel": "SR · DA FS · NRW – Hessen",
-  "treffpunkt": "2026-09-13T10:00:00+02:00"
  },
  "b6ed5b27362c979dc7fd9a35bcdcf3537bc7f2a4@esrw.de": {
   "aenderung": null,

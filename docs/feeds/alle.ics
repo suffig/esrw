@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:41ef972c1ffe4fc0bcc7179189f7622917b3fff9@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260913T080000Z
-DTEND:20260913T113000Z
-SUMMARY:DA FS · NRW – Hessen
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:00 Uhr\nTreffpunkt:
-  10:00 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissportzentrum W
- estfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Melchert\, P
- hilipp\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
-GEO:51.49525;7.458288
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
-  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
- rum Westfalen":geo:51.49525,7.458288
-END:VEVENT
-BEGIN:VEVENT
 UID:7556aeeeae069001077e40b8cdd1bea36e3341e7@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z
@@ -948,12 +927,6 @@ GEO:51.339877;6.540168
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
  stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
  le Krefeld":geo:51.339877,6.540168
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U17 I · Krefelder EV – EHC GA
-  Wolfsburg YAYLA Krefeld
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:f812c4077f7f66de247582d615f1803a17de0c65@esrw.de
