@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:bb962e519e1d05b0acd5b15bbc2b1dd8b3b67af4@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260913T153000Z
-DTEND:20260913T190000Z
-SUMMARY:U17 RL · Lippe Hockey Hamm – Herforder EV Hamm
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
-  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: HELINET Eissport
- arena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Schlü
- ter\, Thomas\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:HELINET Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 Hamm
-GEO:51.686934;7.886138
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
- , Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="HELINET
-  Eissportarena Hamm":geo:51.686934,7.886138
-END:VEVENT
-BEGIN:VEVENT
 UID:e852316a6a1e98239db17f5d4b2bd73fa0c92c46@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z
@@ -926,12 +905,6 @@ GEO:51.454179;6.976731
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
  Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
  n-West":geo:51.454179,6.976731
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - BL FS · EHC Essen Ruhr – Soes
- ter EG
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:a63397541e3b80f9068fcffc56b20bd66d642783@esrw.de
@@ -954,12 +927,6 @@ GEO:51.602578;7.626858
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
  äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
  ergkamen":geo:51.602578,7.626858
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - RL FS · ESV Grizzlys Bergkamen 
- – Eisadler Dortmund
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:81acf4e44705e8a37a92bf1f46b0f1cdf7336d44@esrw.de

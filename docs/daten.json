@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 93,
+ "spiele_gesamt": 92,
  "saison": "2026/27",
  "archiv_spiele": 170,
  "rollen": {
@@ -1881,34 +1881,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-13T18:30:00+02:00",
-     "treffpunkt": "2026-09-13T17:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U17 RL",
-     "paarung": "Lippe Hockey Hamm – Herforder EV Hamm",
-     "ort": "HELINET Eissportarena Hamm, Karl-Koßmann-Straße 1, 59071 Hamm",
-     "halle": "HELINET Eissportarena Hamm",
-     "koordinaten": [
-      51.686934,
-      7.886138
-     ],
-     "gespann": [
-      {
-       "name": "Schlüter, Thomas",
-       "slug": "schlueter-thomas",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T18:30:00+02:00|Lippe Hockey Hamm – Herforder EV Hamm",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-16T19:30:00+02:00",
      "treffpunkt": "2026-09-16T18:30:00+02:00",
      "rolle": "SR",
@@ -2385,7 +2357,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T18:30:00+02:00|EHC Essen Ruhr – Soester EG",
@@ -3229,7 +3201,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-09-20T18:30:00+02:00|ESV Grizzlys Bergkamen – Eisadler Dortmund",
@@ -6645,7 +6617,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T18:30:00+02:00|EHC Essen Ruhr – Soester EG",
@@ -8126,34 +8098,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-13T18:30:00+02:00",
-     "treffpunkt": "2026-09-13T17:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U17 RL",
-     "paarung": "Lippe Hockey Hamm – Herforder EV Hamm",
-     "ort": "HELINET Eissportarena Hamm, Karl-Koßmann-Straße 1, 59071 Hamm",
-     "halle": "HELINET Eissportarena Hamm",
-     "koordinaten": [
-      51.686934,
-      7.886138
-     ],
-     "gespann": [
-      {
-       "name": "Garbsch, René",
-       "slug": "garbsch-rene",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T18:30:00+02:00|Lippe Hockey Hamm – Herforder EV Hamm",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-18T20:00:00+02:00",
      "treffpunkt": "2026-09-18T19:00:00+02:00",
      "rolle": "SR",
@@ -8656,7 +8600,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-09-20T18:30:00+02:00|ESV Grizzlys Bergkamen – Eisadler Dortmund",
@@ -10199,7 +10143,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-09-20T18:30:00+02:00|ESV Grizzlys Bergkamen – Eisadler Dortmund",
@@ -11246,32 +11190,6 @@
   }
  ],
  "spiele": [
-  {
-   "beginn": "2026-09-13T18:30:00+02:00",
-   "treffpunkt": "2026-09-13T17:30:00+02:00",
-   "liga": "U17 RL",
-   "paarung": "Lippe Hockey Hamm – Herforder EV Hamm",
-   "halle": "HELINET Eissportarena Hamm",
-   "ort": "HELINET Eissportarena Hamm, Karl-Koßmann-Straße 1, 59071 Hamm",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Garbsch, René",
-     "rolle": "SR",
-     "slug": "garbsch-rene"
-    },
-    {
-     "name": "Schlüter, Thomas",
-     "rolle": "SR",
-     "slug": "schlueter-thomas"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-13T18:30:00+02:00|Lippe Hockey Hamm – Herforder EV Hamm",
-   "korrektur": null,
-   "manuell": false
-  },
   {
    "beginn": "2026-09-13T19:00:00+02:00",
    "treffpunkt": "2026-09-13T18:00:00+02:00",
@@ -12389,7 +12307,7 @@
      "slug": "mueller-lars"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-20T18:30:00+02:00|EHC Essen Ruhr – Soester EG",
    "korrektur": null,
    "manuell": false
@@ -12420,7 +12338,7 @@
      "slug": "schmidt-waldemar"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-20T18:30:00+02:00|ESV Grizzlys Bergkamen – Eisadler Dortmund",
    "korrektur": null,
    "manuell": false

@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:3a0decfd2a13b48d779a743f7e91efcff8b5d2aa@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260913T153000Z
-DTEND:20260913T190000Z
-SUMMARY:SR · U17 RL · Lippe Hockey Hamm – Herforder EV Hamm
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
-  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: HELINET Eissport
- arena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Garbsc
- h\, René\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:HELINET Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 Hamm
-GEO:51.686934;7.886138
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
- , Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="HELINET
-  Eissportarena Hamm":geo:51.686934,7.886138
-END:VEVENT
-BEGIN:VEVENT
 UID:e87bd755e553b57b083f109415bd3df4c1711cd8@esrw.de
 SEQUENCE:0
 DTSTAMP:20260911T150047Z
