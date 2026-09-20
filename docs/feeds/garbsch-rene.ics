@@ -134,12 +134,6 @@ GEO:51.384598;7.713829
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
  , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
  alle am Seilersee":geo:51.384598,7.713829
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 I · Iserlohner EC –
-  ES Weißwasser
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:b300d9bfa124662bd8ba1677b9a5c4fc04a29b0c@esrw.de

@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 104,
+ "spiele_gesamt": 103,
  "saison": "2026/27",
  "archiv_spiele": 170,
  "rollen": {
@@ -2102,7 +2102,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T12:00:00+02:00|Iserlohner EC – ES Weißwasser",
@@ -2306,92 +2306,6 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T14:00:00+02:00|Düsseldorfer EG – Iserlohner EC",
-     "korrektur": null,
-     "manuell": false
-    }
-   ]
-  },
-  {
-   "slug": "giesen-tom",
-   "name": "Giesen, Tom",
-   "varianten": [
-    "Giesen, Tom"
-   ],
-   "statistik": {
-    "gesamt": 4,
-    "saison": 4,
-    "rollen": {
-     "SR": 4
-    },
-    "ligen": [
-     [
-      "U17 I",
-      3
-     ],
-     [
-      "Frauen BZL",
-      1
-     ]
-    ],
-    "hallen": [
-     [
-      "Kölnarena 2",
-      3
-     ],
-     [
-      "Rheinlandhalle Krefeld",
-      1
-     ]
-    ],
-    "partner": [
-     [
-      "Schöche, Gian-Carlo",
-      2
-     ],
-     [
-      "Perlitz, Christian",
-      1
-     ],
-     [
-      "Heffler, Philipp",
-      1
-     ]
-    ],
-    "je_saison": [
-     [
-      "2026/27",
-      4
-     ]
-    ],
-    "erste": "2026-09-05",
-    "letzte": "2026-09-13"
-   },
-   "spiele": [
-    {
-     "beginn": "2026-09-13T12:00:00+02:00",
-     "treffpunkt": "2026-09-13T11:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U17 I",
-     "paarung": "Kölner Junghaie – ES Weißwasser",
-     "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
-     "halle": "Kölnarena 2",
-     "koordinaten": [
-      50.937979,
-      6.98935
-     ],
-     "gespann": [
-      {
-       "name": "Heffler, Philipp",
-       "slug": "heffler-philipp",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T12:00:00+02:00|Kölner Junghaie – ES Weißwasser",
      "korrektur": null,
      "manuell": false
     }
@@ -2779,34 +2693,6 @@
     "letzte": "2026-09-26"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-13T12:00:00+02:00",
-     "treffpunkt": "2026-09-13T11:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U17 I",
-     "paarung": "Kölner Junghaie – ES Weißwasser",
-     "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
-     "halle": "Kölnarena 2",
-     "koordinaten": [
-      50.937979,
-      6.98935
-     ],
-     "gespann": [
-      {
-       "name": "Giesen, Tom",
-       "slug": "giesen-tom",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T12:00:00+02:00|Kölner Junghaie – ES Weißwasser",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-13T14:45:00+02:00",
      "treffpunkt": "2026-09-13T13:45:00+02:00",
@@ -11477,7 +11363,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T12:00:00+02:00|Iserlohner EC – ES Weißwasser",
@@ -11974,32 +11860,6 @@
   }
  ],
  "spiele": [
-  {
-   "beginn": "2026-09-13T12:00:00+02:00",
-   "treffpunkt": "2026-09-13T11:00:00+02:00",
-   "liga": "U17 I",
-   "paarung": "Kölner Junghaie – ES Weißwasser",
-   "halle": "Kölnarena 2",
-   "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Giesen, Tom",
-     "rolle": "SR",
-     "slug": "giesen-tom"
-    },
-    {
-     "name": "Heffler, Philipp",
-     "rolle": "SR",
-     "slug": "heffler-philipp"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-13T12:00:00+02:00|Kölner Junghaie – ES Weißwasser",
-   "korrektur": null,
-   "manuell": false
-  },
   {
    "beginn": "2026-09-13T12:30:00+02:00",
    "treffpunkt": "2026-09-13T11:30:00+02:00",
@@ -13143,7 +13003,7 @@
      "slug": "vorgeitz-benny"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-20T12:00:00+02:00|Iserlohner EC – ES Weißwasser",
    "korrektur": null,
    "manuell": false
