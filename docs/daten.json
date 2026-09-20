@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 110,
+ "spiele_gesamt": 109,
  "saison": "2026/27",
  "archiv_spiele": 170,
  "rollen": {
@@ -3402,34 +3402,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-13T09:15:00+02:00",
-     "treffpunkt": "2026-09-13T08:15:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "DA FS",
-     "paarung": "NEV/BW – Sachsen/Berlin",
-     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-     "halle": "Eissportzentrum Westfalen",
-     "koordinaten": [
-      51.49525,
-      7.458288
-     ],
-     "gespann": [
-      {
-       "name": "Melchert, Philip",
-       "slug": "melchert-philip",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T09:15:00+02:00|NEV/BW – Sachsen/Berlin",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-13T11:00:00+02:00",
      "treffpunkt": "2026-09-13T10:00:00+02:00",
      "rolle": "SR",
@@ -6785,34 +6757,6 @@
     "letzte": "2026-09-27"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-13T09:15:00+02:00",
-     "treffpunkt": "2026-09-13T08:15:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "DA FS",
-     "paarung": "NEV/BW – Sachsen/Berlin",
-     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-     "halle": "Eissportzentrum Westfalen",
-     "koordinaten": [
-      51.49525,
-      7.458288
-     ],
-     "gespann": [
-      {
-       "name": "Heu, Alexander",
-       "slug": "heu-alexander",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T09:15:00+02:00|NEV/BW – Sachsen/Berlin",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-13T11:00:00+02:00",
      "treffpunkt": "2026-09-13T10:00:00+02:00",
@@ -12311,32 +12255,6 @@
   }
  ],
  "spiele": [
-  {
-   "beginn": "2026-09-13T09:15:00+02:00",
-   "treffpunkt": "2026-09-13T08:15:00+02:00",
-   "liga": "DA FS",
-   "paarung": "NEV/BW – Sachsen/Berlin",
-   "halle": "Eissportzentrum Westfalen",
-   "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Melchert, Philip",
-     "rolle": "SR",
-     "slug": "melchert-philip"
-    },
-    {
-     "name": "Heu, Alexander",
-     "rolle": "SR",
-     "slug": "heu-alexander"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-13T09:15:00+02:00|NEV/BW – Sachsen/Berlin",
-   "korrektur": null,
-   "manuell": false
-  },
   {
    "beginn": "2026-09-13T10:00:00+02:00",
    "treffpunkt": "2026-09-13T09:00:00+02:00",

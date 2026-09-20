@@ -1987,20 +1987,6 @@
   "titel": "SR · U17 LL · ESV Grizzlys Bergkamen – ESC Darmstadt",
   "treffpunkt": "2026-09-26T09:30:00+02:00"
  },
- "9cfe7945ba797dcc34bc1c8f12cd7a8aa85d577f@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-13T09:15:00+02:00",
-  "geaendert_am": null,
-  "id": "2026-09-13T09:15:00+02:00|NEV/BW – Sachsen/Berlin",
-  "inhalt": "4560dfcd2b44a55d41141b48676cf9a6c4bd4596",
-  "korrektur": null,
-  "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-  "sequence": 0,
-  "slug": "melchert-philip",
-  "stempel": "2026-09-13T05:36:11.362662+00:00",
-  "titel": "SR · DA FS · NEV/BW – Sachsen/Berlin",
-  "treffpunkt": "2026-09-13T08:15:00+02:00"
- },
  "9d23bf52118f3e94f016673a42282fd362d6fd0e@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-18T20:15:00+02:00",
@@ -2084,20 +2070,6 @@
   "stempel": "2026-09-18T11:30:38.419991+00:00",
   "titel": "SR · U7 Rot · Düsseldorfer EG",
   "treffpunkt": "2026-09-20T07:00:00+02:00"
- },
- "a4cf46cd5ad5acf94dcc54a77504450217e24700@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-13T09:15:00+02:00",
-  "geaendert_am": null,
-  "id": "2026-09-13T09:15:00+02:00|NEV/BW – Sachsen/Berlin",
-  "inhalt": "4560dfcd2b44a55d41141b48676cf9a6c4bd4596",
-  "korrektur": null,
-  "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-  "sequence": 0,
-  "slug": "heu-alexander",
-  "stempel": "2026-09-11T05:56:30.059077+00:00",
-  "titel": "SR · DA FS · NEV/BW – Sachsen/Berlin",
-  "treffpunkt": "2026-09-13T08:15:00+02:00"
  },
  "a55c082927808c877de3eaf7cb1f5f0617cd5665@esrw.de": {
   "aenderung": "Ansetzung",
