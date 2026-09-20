@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:bb97307bcb928a46e8d53e49f55b2450ae9b1f5a@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260913T143000Z
-DTEND:20260913T180000Z
-SUMMARY:U15 RLB · Kölner Junghaie 1b – Iserlohner EC 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
-  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Kölnarena 2\nA
- dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Starke\, Matthias\
- n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
-GEO:50.937979;6.98935
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
- r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
- .937979,6.98935
-END:VEVENT
-BEGIN:VEVENT
 UID:74b6fb257decc5b0568d320b3d299c9aa5d448c5@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z
@@ -947,12 +926,6 @@ GEO:50.937979;6.98935
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
  r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
  .937979,6.98935
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U13 RLB · Kölner Junghaie 1b 
- – EV Duisburg
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:da3b207daed19a7779f536c266d4caafad8df29b@esrw.de

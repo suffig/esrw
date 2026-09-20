@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 95,
+ "spiele_gesamt": 94,
  "saison": "2026/27",
  "archiv_spiele": 170,
  "rollen": {
@@ -3887,34 +3887,6 @@
     "letzte": "2026-09-14"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-13T17:30:00+02:00",
-     "treffpunkt": "2026-09-13T16:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U15 RLB",
-     "paarung": "Kölner Junghaie 1b – Iserlohner EC 1b",
-     "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
-     "halle": "Kölnarena 2",
-     "koordinaten": [
-      50.937979,
-      6.98935
-     ],
-     "gespann": [
-      {
-       "name": "Starke, Matthias",
-       "slug": "starke-matthias",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T17:30:00+02:00|Kölner Junghaie 1b – Iserlohner EC 1b",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-14T18:15:00+02:00",
      "treffpunkt": "2026-09-14T17:15:00+02:00",
@@ -9007,7 +8979,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T17:30:00+02:00|Kölner Junghaie 1b – EV Duisburg",
@@ -9630,34 +9602,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-13T17:30:00+02:00",
-     "treffpunkt": "2026-09-13T16:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U15 RLB",
-     "paarung": "Kölner Junghaie 1b – Iserlohner EC 1b",
-     "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
-     "halle": "Kölnarena 2",
-     "koordinaten": [
-      50.937979,
-      6.98935
-     ],
-     "gespann": [
-      {
-       "name": "Hoffmann, Jan",
-       "slug": "hoffmann-jan",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T17:30:00+02:00|Kölner Junghaie 1b – Iserlohner EC 1b",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-18T20:15:00+02:00",
      "treffpunkt": "2026-09-18T19:15:00+02:00",
      "rolle": "SR",
@@ -9734,7 +9678,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T17:30:00+02:00|Kölner Junghaie 1b – EV Duisburg",
@@ -11359,32 +11303,6 @@
  ],
  "spiele": [
   {
-   "beginn": "2026-09-13T17:30:00+02:00",
-   "treffpunkt": "2026-09-13T16:30:00+02:00",
-   "liga": "U15 RLB",
-   "paarung": "Kölner Junghaie 1b – Iserlohner EC 1b",
-   "halle": "Kölnarena 2",
-   "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Hoffmann, Jan",
-     "rolle": "SR",
-     "slug": "hoffmann-jan"
-    },
-    {
-     "name": "Starke, Matthias",
-     "rolle": "SR",
-     "slug": "starke-matthias"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-13T17:30:00+02:00|Kölner Junghaie 1b – Iserlohner EC 1b",
-   "korrektur": null,
-   "manuell": false
-  },
-  {
    "beginn": "2026-09-13T18:00:00+02:00",
    "treffpunkt": "2026-09-13T17:00:00+02:00",
    "liga": "U17 FS",
@@ -12527,7 +12445,7 @@
      "slug": "schoeche-gian-carlo"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-20T17:30:00+02:00|Kölner Junghaie 1b – EV Duisburg",
    "korrektur": null,
    "manuell": false
