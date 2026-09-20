@@ -349,20 +349,6 @@
   "titel": "SR · U15 RLA · Düsseldorfer EG – Iserlohner EC",
   "treffpunkt": "2026-09-20T13:00:00+02:00"
  },
- "1dfbc514661f7ce32774a621c490b145fbd3f759@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-13T08:00:00+02:00",
-  "geaendert_am": null,
-  "id": "2026-09-13T08:00:00+02:00|Iserlohner EC – Iserlohn",
-  "inhalt": "1edfc0a68d0a11b978cd41c93462b0cef870f8a3",
-  "korrektur": null,
-  "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
-  "sequence": 0,
-  "slug": "garbsch-rene",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U9 RL · Iserlohner EC – Iserlohn",
-  "treffpunkt": "2026-09-13T07:00:00+02:00"
- },
  "1e071d1ac8e345cdbd98e0900e085ce6cbaba8cc@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-15T19:00:00+02:00",
@@ -2603,20 +2589,6 @@
   "titel": "SR · U17 I · Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld",
   "treffpunkt": "2026-09-20T10:00:00+02:00"
  },
- "c6de2d11307842b699247d23e80c24f52f3684f2@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-13T08:00:00+02:00",
-  "geaendert_am": null,
-  "id": "2026-09-13T08:00:00+02:00|Iserlohner EC – Iserlohn",
-  "inhalt": "1edfc0a68d0a11b978cd41c93462b0cef870f8a3",
-  "korrektur": null,
-  "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
-  "sequence": 0,
-  "slug": "marks-marcel",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U9 RL · Iserlohner EC – Iserlohn",
-  "treffpunkt": "2026-09-13T07:00:00+02:00"
- },
  "c75b929047c9603c6f88549688f54838ea81b065@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-19T12:30:00+02:00",
@@ -2686,20 +2658,6 @@
   "stempel": "2026-09-17T17:30:38.957160+00:00",
   "titel": "SR · U13 RLA · Krefelder EV – Düsseldorfer EG",
   "treffpunkt": "2026-09-27T16:00:00+02:00"
- },
- "ce557fae9c6496c443ec68774a2e44948df32338@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-13T08:00:00+02:00",
-  "geaendert_am": null,
-  "id": "2026-09-13T08:00:00+02:00|Düsseldorfer EG – Brehmstraße",
-  "inhalt": "aea82ec1685407f89e747ea6aa9fc378b75e8754",
-  "korrektur": null,
-  "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
-  "sequence": 0,
-  "slug": "krawinkel-markus",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U9 RL · Düsseldorfer EG – Brehmstraße",
-  "treffpunkt": "2026-09-13T07:00:00+02:00"
  },
  "d006299a53eeae132b4ca95765690562c4e83805@esrw.de": {
   "aenderung": "Halle (vorher Eissporthalle Moers)",
@@ -3106,20 +3064,6 @@
   "stempel": "2026-09-11T15:00:47.546895+00:00",
   "titel": "SR · BL FS · EHC Essen Ruhr – Herner EV 1b",
   "treffpunkt": "2026-09-18T19:00:00+02:00"
- },
- "ea7ae2bb5c51ebaadbcd937f936eb4cade92536a@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-13T08:00:00+02:00",
-  "geaendert_am": null,
-  "id": "2026-09-13T08:00:00+02:00|Düsseldorfer EG – Brehmstraße",
-  "inhalt": "aea82ec1685407f89e747ea6aa9fc378b75e8754",
-  "korrektur": null,
-  "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
-  "sequence": 0,
-  "slug": "schlueter-thomas",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U9 RL · Düsseldorfer EG – Brehmstraße",
-  "treffpunkt": "2026-09-13T07:00:00+02:00"
  },
  "ea7eab95e5f195345e8882fa573998bd4b5b1f51@esrw.de": {
   "aenderung": null,

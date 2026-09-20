@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 112,
+ "spiele_gesamt": 110,
  "saison": "2026/27",
  "archiv_spiele": 170,
  "rollen": {
@@ -735,7 +735,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T08:00:00+02:00|Düsseldorfer EG",
@@ -1937,34 +1937,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-13T08:00:00+02:00",
-     "treffpunkt": "2026-09-13T07:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U9 RL",
-     "paarung": "Iserlohner EC – Iserlohn",
-     "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
-     "halle": "Eissporthalle am Seilersee",
-     "koordinaten": [
-      51.384598,
-      7.713829
-     ],
-     "gespann": [
-      {
-       "name": "Marks, Marcel",
-       "slug": "marks-marcel",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T08:00:00+02:00|Iserlohner EC – Iserlohn",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-13T18:30:00+02:00",
      "treffpunkt": "2026-09-13T17:30:00+02:00",
      "rolle": "SR",
@@ -2102,7 +2074,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": "Ansetzung",
      "hinweis": null,
      "id": "2026-09-20T08:00:00+02:00|Iserlohner EC 1b",
@@ -4924,7 +4896,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T08:00:00+02:00|Düsseldorfer EG",
@@ -5190,34 +5162,6 @@
     "letzte": "2026-09-27"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-13T08:00:00+02:00",
-     "treffpunkt": "2026-09-13T07:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U9 RL",
-     "paarung": "Düsseldorfer EG – Brehmstraße",
-     "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
-     "halle": "Eishalle Brehmstraße",
-     "koordinaten": [
-      51.242557,
-      6.802144
-     ],
-     "gespann": [
-      {
-       "name": "Schlüter, Thomas",
-       "slug": "schlueter-thomas",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T08:00:00+02:00|Düsseldorfer EG – Brehmstraße",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-20T10:00:00+02:00",
      "treffpunkt": "2026-09-20T09:00:00+02:00",
@@ -6502,34 +6446,6 @@
     "letzte": "2026-09-27"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-13T08:00:00+02:00",
-     "treffpunkt": "2026-09-13T07:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U9 RL",
-     "paarung": "Iserlohner EC – Iserlohn",
-     "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
-     "halle": "Eissporthalle am Seilersee",
-     "koordinaten": [
-      51.384598,
-      7.713829
-     ],
-     "gespann": [
-      {
-       "name": "Garbsch, René",
-       "slug": "garbsch-rene",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T08:00:00+02:00|Iserlohner EC – Iserlohn",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-18T19:30:00+02:00",
      "treffpunkt": "2026-09-18T18:30:00+02:00",
@@ -8828,34 +8744,6 @@
     "letzte": "2026-09-26"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-13T08:00:00+02:00",
-     "treffpunkt": "2026-09-13T07:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U9 RL",
-     "paarung": "Düsseldorfer EG – Brehmstraße",
-     "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
-     "halle": "Eishalle Brehmstraße",
-     "koordinaten": [
-      51.242557,
-      6.802144
-     ],
-     "gespann": [
-      {
-       "name": "Krawinkel, Markus",
-       "slug": "krawinkel-markus",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T08:00:00+02:00|Düsseldorfer EG – Brehmstraße",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-13T18:30:00+02:00",
      "treffpunkt": "2026-09-13T17:30:00+02:00",
@@ -11870,7 +11758,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": "Ansetzung",
      "hinweis": null,
      "id": "2026-09-20T08:00:00+02:00|Iserlohner EC 1b",
@@ -12423,58 +12311,6 @@
   }
  ],
  "spiele": [
-  {
-   "beginn": "2026-09-13T08:00:00+02:00",
-   "treffpunkt": "2026-09-13T07:00:00+02:00",
-   "liga": "U9 RL",
-   "paarung": "Düsseldorfer EG – Brehmstraße",
-   "halle": "Eishalle Brehmstraße",
-   "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Krawinkel, Markus",
-     "rolle": "SR",
-     "slug": "krawinkel-markus"
-    },
-    {
-     "name": "Schlüter, Thomas",
-     "rolle": "SR",
-     "slug": "schlueter-thomas"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-13T08:00:00+02:00|Düsseldorfer EG – Brehmstraße",
-   "korrektur": null,
-   "manuell": false
-  },
-  {
-   "beginn": "2026-09-13T08:00:00+02:00",
-   "treffpunkt": "2026-09-13T07:00:00+02:00",
-   "liga": "U9 RL",
-   "paarung": "Iserlohner EC – Iserlohn",
-   "halle": "Eissporthalle am Seilersee",
-   "ort": "Eissporthalle am Seilersee, Seeuferstraße 25, 58636 Iserlohn",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Marks, Marcel",
-     "rolle": "SR",
-     "slug": "marks-marcel"
-    },
-    {
-     "name": "Garbsch, René",
-     "rolle": "SR",
-     "slug": "garbsch-rene"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-13T08:00:00+02:00|Iserlohner EC – Iserlohn",
-   "korrektur": null,
-   "manuell": false
-  },
   {
    "beginn": "2026-09-13T09:15:00+02:00",
    "treffpunkt": "2026-09-13T08:15:00+02:00",
@@ -13639,7 +13475,7 @@
      "slug": "vorgeitz-benny"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-20T08:00:00+02:00|Iserlohner EC 1b",
    "korrektur": null,
    "manuell": false
@@ -13665,7 +13501,7 @@
      "slug": "klemm-julian"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-20T08:00:00+02:00|Düsseldorfer EG",
    "korrektur": null,
    "manuell": false
