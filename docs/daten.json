@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 103,
+ "spiele_gesamt": 101,
  "saison": "2026/27",
  "archiv_spiele": 170,
  "rollen": {
@@ -1029,7 +1029,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T12:30:00+02:00|Herforder EV – Lippe Hockey Hamm",
@@ -2952,7 +2952,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T12:30:00+02:00|Dinslakener Kobras – EHC Troisdorf 1b",
@@ -6131,7 +6131,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T12:30:00+02:00|Herforder EV – Lippe Hockey Hamm",
@@ -7154,34 +7154,6 @@
     "letzte": "2026-09-27"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-13T12:30:00+02:00",
-     "treffpunkt": "2026-09-13T11:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U17 FS",
-     "paarung": "Dinslakener Kobras – Düsseldorfer EG U15",
-     "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
-     "halle": "Eissporthalle Dinslaken",
-     "koordinaten": [
-      51.574578,
-      6.735361
-     ],
-     "gespann": [
-      {
-       "name": "Vorgeitz, Benny",
-       "slug": "vorgeitz-benny",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T12:30:00+02:00|Dinslakener Kobras – Düsseldorfer EG U15",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-19T13:30:00+02:00",
      "treffpunkt": "2026-09-19T12:30:00+02:00",
@@ -10133,34 +10105,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-13T12:30:00+02:00",
-     "treffpunkt": "2026-09-13T11:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U15 LL",
-     "paarung": "Herforder EV – Eisadler Dortmund Herford",
-     "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-     "halle": "Eishalle Im Kleinen Felde",
-     "koordinaten": [
-      52.114893,
-      8.652028
-     ],
-     "gespann": [
-      {
-       "name": "Zynda, Jayden",
-       "slug": "zynda-jayden",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T12:30:00+02:00|Herforder EV – Eisadler Dortmund Herford",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-25T19:30:00+02:00",
      "treffpunkt": "2026-09-25T18:30:00+02:00",
      "rolle": "SR",
@@ -11125,7 +11069,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T12:30:00+02:00|Dinslakener Kobras – EHC Troisdorf 1b",
@@ -11258,34 +11202,6 @@
     "letzte": "2026-09-20"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-13T12:30:00+02:00",
-     "treffpunkt": "2026-09-13T11:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U17 FS",
-     "paarung": "Dinslakener Kobras – Düsseldorfer EG U15",
-     "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
-     "halle": "Eissporthalle Dinslaken",
-     "koordinaten": [
-      51.574578,
-      6.735361
-     ],
-     "gespann": [
-      {
-       "name": "Pacalaj, Erik",
-       "slug": "pacalaj-erik",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T12:30:00+02:00|Dinslakener Kobras – Düsseldorfer EG U15",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-19T13:30:00+02:00",
      "treffpunkt": "2026-09-19T12:30:00+02:00",
@@ -11563,34 +11479,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-13T12:30:00+02:00",
-     "treffpunkt": "2026-09-13T11:30:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U15 LL",
-     "paarung": "Herforder EV – Eisadler Dortmund Herford",
-     "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-     "halle": "Eishalle Im Kleinen Felde",
-     "koordinaten": [
-      52.114893,
-      8.652028
-     ],
-     "gespann": [
-      {
-       "name": "Steeg, Cedric",
-       "slug": "steeg-cedric",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T12:30:00+02:00|Herforder EV – Eisadler Dortmund Herford",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-25T19:30:00+02:00",
      "treffpunkt": "2026-09-25T18:30:00+02:00",
      "rolle": "SR",
@@ -11860,58 +11748,6 @@
   }
  ],
  "spiele": [
-  {
-   "beginn": "2026-09-13T12:30:00+02:00",
-   "treffpunkt": "2026-09-13T11:30:00+02:00",
-   "liga": "U17 FS",
-   "paarung": "Dinslakener Kobras – Düsseldorfer EG U15",
-   "halle": "Eissporthalle Dinslaken",
-   "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Pacalaj, Erik",
-     "rolle": "SR",
-     "slug": "pacalaj-erik"
-    },
-    {
-     "name": "Vorgeitz, Benny",
-     "rolle": "SR",
-     "slug": "vorgeitz-benny"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-13T12:30:00+02:00|Dinslakener Kobras – Düsseldorfer EG U15",
-   "korrektur": null,
-   "manuell": false
-  },
-  {
-   "beginn": "2026-09-13T12:30:00+02:00",
-   "treffpunkt": "2026-09-13T11:30:00+02:00",
-   "liga": "U15 LL",
-   "paarung": "Herforder EV – Eisadler Dortmund Herford",
-   "halle": "Eishalle Im Kleinen Felde",
-   "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Steeg, Cedric",
-     "rolle": "SR",
-     "slug": "steeg-cedric"
-    },
-    {
-     "name": "Zynda, Jayden",
-     "rolle": "SR",
-     "slug": "zynda-jayden"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-13T12:30:00+02:00|Herforder EV – Eisadler Dortmund Herford",
-   "korrektur": null,
-   "manuell": false
-  },
   {
    "beginn": "2026-09-13T13:00:00+02:00",
    "treffpunkt": "2026-09-13T12:00:00+02:00",
@@ -13029,7 +12865,7 @@
      "slug": "victor-tobias"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-20T12:30:00+02:00|Dinslakener Kobras – EHC Troisdorf 1b",
    "korrektur": null,
    "manuell": false
@@ -13055,7 +12891,7 @@
      "slug": "malik-orlando"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-20T12:30:00+02:00|Herforder EV – Lippe Hockey Hamm",
    "korrektur": null,
    "manuell": false
