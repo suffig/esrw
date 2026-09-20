@@ -4678,7 +4678,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T09:30:00+02:00|Herner EV – EV Duisburg",
@@ -6467,7 +6467,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T09:30:00+02:00|Herner EV – EV Duisburg",
@@ -13445,7 +13445,7 @@
      "slug": "marks-marcel"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-20T09:30:00+02:00|Herner EV – EV Duisburg",
    "korrektur": null,
    "manuell": false
