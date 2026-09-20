@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 101,
+ "spiele_gesamt": 100,
  "saison": "2026/27",
  "archiv_spiele": 170,
  "rollen": {
@@ -9466,34 +9466,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-13T13:00:00+02:00",
-     "treffpunkt": "2026-09-13T12:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "DA FS",
-     "paarung": "Spiel um Platz 3",
-     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-     "halle": "Eissportzentrum Westfalen",
-     "koordinaten": [
-      51.49525,
-      7.458288
-     ],
-     "gespann": [
-      {
-       "name": "Warnke, Christoph",
-       "slug": "warnke-christoph",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": "Ansetzung",
-     "hinweis": null,
-     "id": "2026-09-13T13:00:00+02:00|Spiel um Platz 3",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-13T15:00:00+02:00",
      "treffpunkt": "2026-09-13T14:00:00+02:00",
      "rolle": "SR",
@@ -11341,34 +11313,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-13T13:00:00+02:00",
-     "treffpunkt": "2026-09-13T12:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "DA FS",
-     "paarung": "Spiel um Platz 3",
-     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-     "halle": "Eissportzentrum Westfalen",
-     "koordinaten": [
-      51.49525,
-      7.458288
-     ],
-     "gespann": [
-      {
-       "name": "Skalecki, Martin",
-       "slug": "skalecki-martin",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": "Ansetzung",
-     "hinweis": null,
-     "id": "2026-09-13T13:00:00+02:00|Spiel um Platz 3",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-13T15:00:00+02:00",
      "treffpunkt": "2026-09-13T14:00:00+02:00",
      "rolle": "SR",
@@ -11748,32 +11692,6 @@
   }
  ],
  "spiele": [
-  {
-   "beginn": "2026-09-13T13:00:00+02:00",
-   "treffpunkt": "2026-09-13T12:00:00+02:00",
-   "liga": "DA FS",
-   "paarung": "Spiel um Platz 3",
-   "halle": "Eissportzentrum Westfalen",
-   "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Skalecki, Martin",
-     "rolle": "SR",
-     "slug": "skalecki-martin"
-    },
-    {
-     "name": "Warnke, Christoph",
-     "rolle": "SR",
-     "slug": "warnke-christoph"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-13T13:00:00+02:00|Spiel um Platz 3",
-   "korrektur": null,
-   "manuell": false
-  },
   {
    "beginn": "2026-09-13T14:00:00+02:00",
    "treffpunkt": "2026-09-13T13:00:00+02:00",

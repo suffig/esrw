@@ -1091,20 +1091,6 @@
   "titel": "SR · U13 LL · EHC Troisdorf 1b – Mädchen W.I.N. 1 Troisdorf",
   "treffpunkt": "2026-09-13T14:00:00+02:00"
  },
- "5eb60b64f78f76924c9932d87bbb3ac8be2006c7@esrw.de": {
-  "aenderung": "Ansetzung",
-  "beginn": "2026-09-13T13:00:00+02:00",
-  "geaendert_am": "2026-09-15",
-  "id": "2026-09-13T13:00:00+02:00|Spiel um Platz 3",
-  "inhalt": "32c810ad14b3df5d6eb29d22454ccf937463de58",
-  "korrektur": null,
-  "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-  "sequence": 1,
-  "slug": "skalecki-martin",
-  "stempel": "2026-09-15T15:27:41.584000+00:00",
-  "titel": "SR · DA FS · Spiel um Platz 3",
-  "treffpunkt": "2026-09-13T12:00:00+02:00"
- },
  "5f453ac78ac46bf6942c23d01ce1f89b826406a6@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-20T17:30:00+02:00",
@@ -1930,20 +1916,6 @@
   "stempel": "2026-09-18T11:30:38.419991+00:00",
   "titel": "SR · U7 Rot · Düsseldorfer EG",
   "treffpunkt": "2026-09-20T07:00:00+02:00"
- },
- "a55c082927808c877de3eaf7cb1f5f0617cd5665@esrw.de": {
-  "aenderung": "Ansetzung",
-  "beginn": "2026-09-13T13:00:00+02:00",
-  "geaendert_am": "2026-09-15",
-  "id": "2026-09-13T13:00:00+02:00|Spiel um Platz 3",
-  "inhalt": "32c810ad14b3df5d6eb29d22454ccf937463de58",
-  "korrektur": null,
-  "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-  "sequence": 1,
-  "slug": "warnke-christoph",
-  "stempel": "2026-09-15T15:27:41.584000+00:00",
-  "titel": "SR · DA FS · Spiel um Platz 3",
-  "treffpunkt": "2026-09-13T12:00:00+02:00"
  },
  "a718edea24939b7203aa42c25c1d46ed72a739fb@esrw.de": {
   "aenderung": null,
