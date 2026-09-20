@@ -181,20 +181,6 @@
   "titel": "SR · U13 RLB · Herner EV – Iserlohner EC 1b",
   "treffpunkt": "2026-09-26T07:30:00+02:00"
  },
- "140c854178c9e76acdac78457a1d9b28d193aacc@esrw.de": {
-  "aenderung": "Ansetzung",
-  "beginn": "2026-09-13T15:00:00+02:00",
-  "geaendert_am": "2026-09-15",
-  "id": "2026-09-13T15:00:00+02:00|Finale",
-  "inhalt": "e2e027cac9f2dfc0db7903daefa8a03014023000",
-  "korrektur": null,
-  "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-  "sequence": 1,
-  "slug": "warnke-christoph",
-  "stempel": "2026-09-15T15:27:41.584000+00:00",
-  "titel": "SR · DA FS · Finale",
-  "treffpunkt": "2026-09-13T14:00:00+02:00"
- },
  "15fa6eb352fbd496dcad72d8e2e9bd3c350ca68d@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-20T10:00:00+02:00",
@@ -909,20 +895,6 @@
   "titel": "SR · U17 I · Krefelder EV – EHC GA Wolfsburg YAYLA Krefeld",
   "treffpunkt": "2026-09-19T15:30:00+02:00"
  },
- "4e54cea7aa09089df179ce75197a97350c143d73@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-13T15:00:00+02:00",
-  "geaendert_am": null,
-  "id": "2026-09-13T15:00:00+02:00|EHC Troisdorf 1b – Mädchen W.I.N. 1 Troisdorf",
-  "inhalt": "060b976ea919045217c268815684642e68408354",
-  "korrektur": null,
-  "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-  "sequence": 0,
-  "slug": "hindley-david",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U13 LL · EHC Troisdorf 1b – Mädchen W.I.N. 1 Troisdorf",
-  "treffpunkt": "2026-09-13T14:00:00+02:00"
- },
  "55103fb7a2af27e6c175e54435b365986def0dcd@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-19T12:30:00+02:00",
@@ -1048,20 +1020,6 @@
   "stempel": "2026-09-17T17:30:38.957160+00:00",
   "titel": "SR · U13 RLA · Düsseldorfer EG – Iserlohner EC",
   "treffpunkt": "2026-09-26T15:30:00+02:00"
- },
- "5e2c66f37f7c4ea0f5246b0715460c9ddd0ab3f0@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-13T15:00:00+02:00",
-  "geaendert_am": null,
-  "id": "2026-09-13T15:00:00+02:00|EHC Troisdorf 1b – Mädchen W.I.N. 1 Troisdorf",
-  "inhalt": "060b976ea919045217c268815684642e68408354",
-  "korrektur": null,
-  "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-  "sequence": 0,
-  "slug": "hofer-carsten",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U13 LL · EHC Troisdorf 1b – Mädchen W.I.N. 1 Troisdorf",
-  "treffpunkt": "2026-09-13T14:00:00+02:00"
  },
  "5f453ac78ac46bf6942c23d01ce1f89b826406a6@esrw.de": {
   "aenderung": null,
@@ -2434,20 +2392,6 @@
   "stempel": "2026-09-11T15:00:47.546895+00:00",
   "titel": "SR · U13 LL · Dinslakener Kobras – EHC Troisdorf 1b",
   "treffpunkt": "2026-09-20T11:30:00+02:00"
- },
- "d38d62cc941c90144a526ea4b95c1a0ab698cb7d@esrw.de": {
-  "aenderung": "Ansetzung",
-  "beginn": "2026-09-13T15:00:00+02:00",
-  "geaendert_am": "2026-09-15",
-  "id": "2026-09-13T15:00:00+02:00|Finale",
-  "inhalt": "e2e027cac9f2dfc0db7903daefa8a03014023000",
-  "korrektur": null,
-  "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-  "sequence": 1,
-  "slug": "skalecki-martin",
-  "stempel": "2026-09-15T15:27:41.584000+00:00",
-  "titel": "SR · DA FS · Finale",
-  "treffpunkt": "2026-09-13T14:00:00+02:00"
  },
  "d516df8df13368f44633597b83c3529383537b72@esrw.de": {
   "aenderung": null,

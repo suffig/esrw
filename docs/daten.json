@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 98,
+ "spiele_gesamt": 96,
  "saison": "2026/27",
  "archiv_spiele": 170,
  "rollen": {
@@ -3513,34 +3513,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-13T15:00:00+02:00",
-     "treffpunkt": "2026-09-13T14:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U13 LL",
-     "paarung": "EHC Troisdorf 1b – Mädchen W.I.N. 1 Troisdorf",
-     "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-     "halle": "ICEDOME Troisdorf",
-     "koordinaten": [
-      50.811945,
-      7.109233
-     ],
-     "gespann": [
-      {
-       "name": "Hofer, Carsten",
-       "slug": "hofer-carsten",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T15:00:00+02:00|EHC Troisdorf 1b – Mädchen W.I.N. 1 Troisdorf",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-20T13:30:00+02:00",
      "treffpunkt": "2026-09-20T12:30:00+02:00",
      "rolle": "SR",
@@ -3707,34 +3679,6 @@
     "letzte": "2026-09-26"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-13T15:00:00+02:00",
-     "treffpunkt": "2026-09-13T14:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U13 LL",
-     "paarung": "EHC Troisdorf 1b – Mädchen W.I.N. 1 Troisdorf",
-     "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-     "halle": "ICEDOME Troisdorf",
-     "koordinaten": [
-      50.811945,
-      7.109233
-     ],
-     "gespann": [
-      {
-       "name": "Hindley, David",
-       "slug": "hindley-david",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T15:00:00+02:00|EHC Troisdorf 1b – Mädchen W.I.N. 1 Troisdorf",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-18T20:15:00+02:00",
      "treffpunkt": "2026-09-18T19:15:00+02:00",
@@ -9382,34 +9326,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-13T15:00:00+02:00",
-     "treffpunkt": "2026-09-13T14:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "DA FS",
-     "paarung": "Finale",
-     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-     "halle": "Eissportzentrum Westfalen",
-     "koordinaten": [
-      51.49525,
-      7.458288
-     ],
-     "gespann": [
-      {
-       "name": "Warnke, Christoph",
-       "slug": "warnke-christoph",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": "Ansetzung",
-     "hinweis": null,
-     "id": "2026-09-13T15:00:00+02:00|Finale",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-26T09:30:00+02:00",
      "treffpunkt": "2026-09-26T08:30:00+02:00",
      "rolle": "SR",
@@ -11149,88 +11065,6 @@
    ]
   },
   {
-   "slug": "warnke-christoph",
-   "name": "Warnke, Christoph",
-   "varianten": [
-    "Warnke, Christoph"
-   ],
-   "statistik": {
-    "gesamt": 3,
-    "saison": 3,
-    "rollen": {
-     "SR": 3
-    },
-    "ligen": [
-     [
-      "DA FS",
-      2
-     ],
-     [
-      "BL FS",
-      1
-     ]
-    ],
-    "hallen": [
-     [
-      "Eissportzentrum Westfalen",
-      2
-     ],
-     [
-      "Emscher-Lippe-Halle Gelsenkirchen",
-      1
-     ]
-    ],
-    "partner": [
-     [
-      "Skalecki, Martin",
-      2
-     ],
-     [
-      "Müller, Lars",
-      1
-     ]
-    ],
-    "je_saison": [
-     [
-      "2026/27",
-      3
-     ]
-    ],
-    "erste": "2026-09-11",
-    "letzte": "2026-09-13"
-   },
-   "spiele": [
-    {
-     "beginn": "2026-09-13T15:00:00+02:00",
-     "treffpunkt": "2026-09-13T14:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "DA FS",
-     "paarung": "Finale",
-     "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-     "halle": "Eissportzentrum Westfalen",
-     "koordinaten": [
-      51.49525,
-      7.458288
-     ],
-     "gespann": [
-      {
-       "name": "Skalecki, Martin",
-       "slug": "skalecki-martin",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": "Ansetzung",
-     "hinweis": null,
-     "id": "2026-09-13T15:00:00+02:00|Finale",
-     "korrektur": null,
-     "manuell": false
-    }
-   ]
-  },
-  {
    "slug": "zynda-jayden",
    "name": "Zynda, Jayden",
    "varianten": [
@@ -11580,58 +11414,6 @@
   }
  ],
  "spiele": [
-  {
-   "beginn": "2026-09-13T15:00:00+02:00",
-   "treffpunkt": "2026-09-13T14:00:00+02:00",
-   "liga": "DA FS",
-   "paarung": "Finale",
-   "halle": "Eissportzentrum Westfalen",
-   "ort": "Eissportzentrum Westfalen, Strobelallee 33, 44139 Dortmund",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Skalecki, Martin",
-     "rolle": "SR",
-     "slug": "skalecki-martin"
-    },
-    {
-     "name": "Warnke, Christoph",
-     "rolle": "SR",
-     "slug": "warnke-christoph"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-13T15:00:00+02:00|Finale",
-   "korrektur": null,
-   "manuell": false
-  },
-  {
-   "beginn": "2026-09-13T15:00:00+02:00",
-   "treffpunkt": "2026-09-13T14:00:00+02:00",
-   "liga": "U13 LL",
-   "paarung": "EHC Troisdorf 1b – Mädchen W.I.N. 1 Troisdorf",
-   "halle": "ICEDOME Troisdorf",
-   "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Hindley, David",
-     "rolle": "SR",
-     "slug": "hindley-david"
-    },
-    {
-     "name": "Hofer, Carsten",
-     "rolle": "SR",
-     "slug": "hofer-carsten"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-13T15:00:00+02:00|EHC Troisdorf 1b – Mädchen W.I.N. 1 Troisdorf",
-   "korrektur": null,
-   "manuell": false
-  },
   {
    "beginn": "2026-09-13T17:00:00+02:00",
    "treffpunkt": "2026-09-13T16:00:00+02:00",
