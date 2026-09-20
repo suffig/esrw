@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 94,
+ "spiele_gesamt": 93,
  "saison": "2026/27",
  "archiv_spiele": 170,
  "rollen": {
@@ -773,34 +773,6 @@
     "letzte": "2026-09-25"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-13T18:00:00+02:00",
-     "treffpunkt": "2026-09-13T17:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U17 FS",
-     "paarung": "EHC Troisdorf – Eisadler Dortmund",
-     "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-     "halle": "ICEDOME Troisdorf",
-     "koordinaten": [
-      50.811945,
-      7.109233
-     ],
-     "gespann": [
-      {
-       "name": "Rieneck, Maximilian",
-       "slug": "rieneck-maximilian",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T18:00:00+02:00|EHC Troisdorf – Eisadler Dortmund",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-25T19:30:00+02:00",
      "treffpunkt": "2026-09-25T18:30:00+02:00",
@@ -8044,34 +8016,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-13T18:00:00+02:00",
-     "treffpunkt": "2026-09-13T17:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U17 FS",
-     "paarung": "EHC Troisdorf – Eisadler Dortmund",
-     "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-     "halle": "ICEDOME Troisdorf",
-     "koordinaten": [
-      50.811945,
-      7.109233
-     ],
-     "gespann": [
-      {
-       "name": "Braun, Benjamin",
-       "slug": "braun-benjamin",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T18:00:00+02:00|EHC Troisdorf – Eisadler Dortmund",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-27T09:30:00+02:00",
      "treffpunkt": "2026-09-27T08:30:00+02:00",
      "rolle": "SR",
@@ -11302,32 +11246,6 @@
   }
  ],
  "spiele": [
-  {
-   "beginn": "2026-09-13T18:00:00+02:00",
-   "treffpunkt": "2026-09-13T17:00:00+02:00",
-   "liga": "U17 FS",
-   "paarung": "EHC Troisdorf – Eisadler Dortmund",
-   "halle": "ICEDOME Troisdorf",
-   "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Braun, Benjamin",
-     "rolle": "SR",
-     "slug": "braun-benjamin"
-    },
-    {
-     "name": "Rieneck, Maximilian",
-     "rolle": "SR",
-     "slug": "rieneck-maximilian"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-13T18:00:00+02:00|EHC Troisdorf – Eisadler Dortmund",
-   "korrektur": null,
-   "manuell": false
-  },
   {
    "beginn": "2026-09-13T18:30:00+02:00",
    "treffpunkt": "2026-09-13T17:30:00+02:00",
