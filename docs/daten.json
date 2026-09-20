@@ -1818,7 +1818,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T13:30:00+02:00|Eisadler Dortmund – EHC Troisdorf",
@@ -3589,7 +3589,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T13:30:00+02:00|Eisadler Dortmund – EHC Troisdorf",
@@ -12835,7 +12835,7 @@
      "slug": "hindley-david"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-20T13:30:00+02:00|Eisadler Dortmund – EHC Troisdorf",
    "korrektur": null,
    "manuell": false
