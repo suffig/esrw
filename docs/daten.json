@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 100,
+ "spiele_gesamt": 99,
  "saison": "2026/27",
  "archiv_spiele": 170,
  "rollen": {
@@ -2302,7 +2302,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T14:00:00+02:00|Düsseldorfer EG – Iserlohner EC",
@@ -3845,7 +3845,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": "Ansetzung",
      "hinweis": null,
      "id": "2026-09-20T14:00:00+02:00|Krefelder EV 1b",
@@ -5511,7 +5511,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T14:00:00+02:00|Düsseldorfer EG – Iserlohner EC",
@@ -7617,34 +7617,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-13T14:00:00+02:00",
-     "treffpunkt": "2026-09-13T13:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U17 I",
-     "paarung": "Düsseldorfer EG – Iserlohner EC",
-     "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
-     "halle": "Eishalle Brehmstraße",
-     "koordinaten": [
-      51.242557,
-      6.802144
-     ],
-     "gespann": [
-      {
-       "name": "Stocker, Quirin",
-       "slug": "stocker-quirin",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T14:00:00+02:00|Düsseldorfer EG – Iserlohner EC",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-26T20:30:00+02:00",
      "treffpunkt": "2026-09-26T19:30:00+02:00",
      "rolle": "HSR",
@@ -8510,7 +8482,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": "Ansetzung",
      "hinweis": null,
      "id": "2026-09-20T14:00:00+02:00|Krefelder EV 1b",
@@ -10510,34 +10482,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-13T14:00:00+02:00",
-     "treffpunkt": "2026-09-13T13:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U17 I",
-     "paarung": "Düsseldorfer EG – Iserlohner EC",
-     "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
-     "halle": "Eishalle Brehmstraße",
-     "koordinaten": [
-      51.242557,
-      6.802144
-     ],
-     "gespann": [
-      {
-       "name": "Priebsch, Jan Philipp",
-       "slug": "priebsch-jan-philipp",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T14:00:00+02:00|Düsseldorfer EG – Iserlohner EC",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-20T18:30:00+02:00",
      "treffpunkt": "2026-09-20T17:30:00+02:00",
      "rolle": "HSR",
@@ -11693,32 +11637,6 @@
  ],
  "spiele": [
   {
-   "beginn": "2026-09-13T14:00:00+02:00",
-   "treffpunkt": "2026-09-13T13:00:00+02:00",
-   "liga": "U17 I",
-   "paarung": "Düsseldorfer EG – Iserlohner EC",
-   "halle": "Eishalle Brehmstraße",
-   "ort": "Eishalle Brehmstraße, Brehmstraße 27a, 40239 Düsseldorf",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Priebsch, Jan Philipp",
-     "rolle": "SR",
-     "slug": "priebsch-jan-philipp"
-    },
-    {
-     "name": "Stocker, Quirin",
-     "rolle": "SR",
-     "slug": "stocker-quirin"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-13T14:00:00+02:00|Düsseldorfer EG – Iserlohner EC",
-   "korrektur": null,
-   "manuell": false
-  },
-  {
    "beginn": "2026-09-13T14:45:00+02:00",
    "treffpunkt": "2026-09-13T13:45:00+02:00",
    "liga": "U11 RL",
@@ -12861,7 +12779,7 @@
      "slug": "schlueter-thomas"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-20T14:00:00+02:00|Krefelder EV 1b",
    "korrektur": null,
    "manuell": false
@@ -12887,7 +12805,7 @@
      "slug": "leibfried-raphael"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-20T14:00:00+02:00|Düsseldorfer EG – Iserlohner EC",
    "korrektur": null,
    "manuell": false
