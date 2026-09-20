@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:89ae15f1c8178da36a163ce001b5543e5413fad9@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260913T070000Z
-DTEND:20260913T103000Z
-SUMMARY:SR · U11 LL Gelb · EHC Essen Ruhr – Essen
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
-  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Gelb\nHalle: Eissporthal
- le Essen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Strohmenger\
- , Svenja\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Essen-West\, Curtiusstr. 2\, 45144 Essen
-GEO:51.454179;6.976731
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
- Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
- n-West":geo:51.454179,6.976731
-END:VEVENT
-BEGIN:VEVENT
 UID:9aa6a100761ee5ded5b280c5776ab4b999009cc8@esrw.de
 SEQUENCE:0
 DTSTAMP:20260911T150047Z

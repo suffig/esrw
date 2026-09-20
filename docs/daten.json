@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 109,
+ "spiele_gesamt": 105,
  "saison": "2026/27",
  "archiv_spiele": 170,
  "rollen": {
@@ -1001,7 +1001,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T10:00:00+02:00|Herforder EV – KEC \"Die Haie\" 1c",
@@ -5160,7 +5160,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T10:00:00+02:00|EV Duisburg – SCC Adler Berlin",
@@ -6245,7 +6245,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T10:00:00+02:00|Herforder EV – KEC \"Die Haie\" 1c",
@@ -6605,34 +6605,6 @@
     "letzte": "2026-09-20"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-13T10:00:00+02:00",
-     "treffpunkt": "2026-09-13T09:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U11 LL Gelb",
-     "paarung": "EHC Essen Ruhr – Essen",
-     "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
-     "halle": "Eissporthalle Essen-West",
-     "koordinaten": [
-      51.454179,
-      6.976731
-     ],
-     "gespann": [
-      {
-       "name": "Strohmenger, Svenja",
-       "slug": "strohmenger-svenja",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T10:00:00+02:00|EHC Essen Ruhr – Essen",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-19T16:00:00+02:00",
      "treffpunkt": "2026-09-19T15:00:00+02:00",
@@ -7435,7 +7407,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T10:00:00+02:00|EV Duisburg – SCC Adler Berlin",
@@ -7688,34 +7660,6 @@
     "letzte": "2026-09-27"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-13T10:00:00+02:00",
-     "treffpunkt": "2026-09-13T09:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U13 FS",
-     "paarung": "Krefelder EV 1b – Löwen Frankfurt 1b",
-     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-     "halle": "Rheinlandhalle Krefeld",
-     "koordinaten": [
-      51.339877,
-      6.540168
-     ],
-     "gespann": [
-      {
-       "name": "Reuter, Rick",
-       "slug": "reuter-rick",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T10:00:00+02:00|Krefelder EV 1b – Löwen Frankfurt 1b",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-20T11:00:00+02:00",
      "treffpunkt": "2026-09-20T10:00:00+02:00",
@@ -8065,7 +8009,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T10:00:00+02:00|EV Duisburg – SCC Adler Berlin",
@@ -8395,34 +8339,6 @@
     "letzte": "2026-09-27"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-13T10:00:00+02:00",
-     "treffpunkt": "2026-09-13T09:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U13 FS",
-     "paarung": "Krefelder EV 1b – Löwen Frankfurt 1b",
-     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-     "halle": "Rheinlandhalle Krefeld",
-     "koordinaten": [
-      51.339877,
-      6.540168
-     ],
-     "gespann": [
-      {
-       "name": "Pluschkell, Julian",
-       "slug": "pluschkell-julian",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T10:00:00+02:00|Krefelder EV 1b – Löwen Frankfurt 1b",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-25T20:15:00+02:00",
      "treffpunkt": "2026-09-25T19:15:00+02:00",
@@ -9371,34 +9287,6 @@
     "letzte": "2026-09-26"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-13T10:00:00+02:00",
-     "treffpunkt": "2026-09-13T09:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U17 II",
-     "paarung": "EV Duisburg – SCC Adler Berlin",
-     "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
-     "halle": "PreZero Rheinlandhalle Duisburg",
-     "koordinaten": [
-      51.405718,
-      6.780082
-     ],
-     "gespann": [
-      {
-       "name": "Strube, Julia",
-       "slug": "strube-julia",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T10:00:00+02:00|EV Duisburg – SCC Adler Berlin",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-18T19:30:00+02:00",
      "treffpunkt": "2026-09-18T18:30:00+02:00",
@@ -10416,34 +10304,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-13T10:00:00+02:00",
-     "treffpunkt": "2026-09-13T09:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U13 RLB",
-     "paarung": "Herforder EV – Iserlohner EC 1b",
-     "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-     "halle": "Eishalle Im Kleinen Felde",
-     "koordinaten": [
-      52.114893,
-      8.652028
-     ],
-     "gespann": [
-      {
-       "name": "Zynda, Jayden",
-       "slug": "zynda-jayden",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T10:00:00+02:00|Herforder EV – Iserlohner EC 1b",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-13T12:30:00+02:00",
      "treffpunkt": "2026-09-13T11:30:00+02:00",
      "rolle": "SR",
@@ -11094,34 +10954,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-13T10:00:00+02:00",
-     "treffpunkt": "2026-09-13T09:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U11 LL Gelb",
-     "paarung": "EHC Essen Ruhr – Essen",
-     "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
-     "halle": "Eissporthalle Essen-West",
-     "koordinaten": [
-      51.454179,
-      6.976731
-     ],
-     "gespann": [
-      {
-       "name": "Meißner, Nils",
-       "slug": "meissner-nils",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T10:00:00+02:00|EHC Essen Ruhr – Essen",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-20T16:30:00+02:00",
      "treffpunkt": "2026-09-20T15:30:00+02:00",
      "rolle": "SR",
@@ -11219,34 +11051,6 @@
     "letzte": "2026-09-27"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-13T10:00:00+02:00",
-     "treffpunkt": "2026-09-13T09:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U17 II",
-     "paarung": "EV Duisburg – SCC Adler Berlin",
-     "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
-     "halle": "PreZero Rheinlandhalle Duisburg",
-     "koordinaten": [
-      51.405718,
-      6.780082
-     ],
-     "gespann": [
-      {
-       "name": "Schöche, Gian-Carlo",
-       "slug": "schoeche-gian-carlo",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T10:00:00+02:00|EV Duisburg – SCC Adler Berlin",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-18T20:00:00+02:00",
      "treffpunkt": "2026-09-18T19:00:00+02:00",
@@ -11930,34 +11734,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-13T10:00:00+02:00",
-     "treffpunkt": "2026-09-13T09:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U13 RLB",
-     "paarung": "Herforder EV – Iserlohner EC 1b",
-     "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-     "halle": "Eishalle Im Kleinen Felde",
-     "koordinaten": [
-      52.114893,
-      8.652028
-     ],
-     "gespann": [
-      {
-       "name": "Steeg, Cedric",
-       "slug": "steeg-cedric",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T10:00:00+02:00|Herforder EV – Iserlohner EC 1b",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-13T12:30:00+02:00",
      "treffpunkt": "2026-09-13T11:30:00+02:00",
      "rolle": "SR",
@@ -12255,110 +12031,6 @@
   }
  ],
  "spiele": [
-  {
-   "beginn": "2026-09-13T10:00:00+02:00",
-   "treffpunkt": "2026-09-13T09:00:00+02:00",
-   "liga": "U13 FS",
-   "paarung": "Krefelder EV 1b – Löwen Frankfurt 1b",
-   "halle": "Rheinlandhalle Krefeld",
-   "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Pluschkell, Julian",
-     "rolle": "SR",
-     "slug": "pluschkell-julian"
-    },
-    {
-     "name": "Reuter, Rick",
-     "rolle": "SR",
-     "slug": "reuter-rick"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-13T10:00:00+02:00|Krefelder EV 1b – Löwen Frankfurt 1b",
-   "korrektur": null,
-   "manuell": false
-  },
-  {
-   "beginn": "2026-09-13T10:00:00+02:00",
-   "treffpunkt": "2026-09-13T09:00:00+02:00",
-   "liga": "U17 II",
-   "paarung": "EV Duisburg – SCC Adler Berlin",
-   "halle": "PreZero Rheinlandhalle Duisburg",
-   "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Schöche, Gian-Carlo",
-     "rolle": "SR",
-     "slug": "schoeche-gian-carlo"
-    },
-    {
-     "name": "Strube, Julia",
-     "rolle": "SR",
-     "slug": "strube-julia"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-13T10:00:00+02:00|EV Duisburg – SCC Adler Berlin",
-   "korrektur": null,
-   "manuell": false
-  },
-  {
-   "beginn": "2026-09-13T10:00:00+02:00",
-   "treffpunkt": "2026-09-13T09:00:00+02:00",
-   "liga": "U13 RLB",
-   "paarung": "Herforder EV – Iserlohner EC 1b",
-   "halle": "Eishalle Im Kleinen Felde",
-   "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Steeg, Cedric",
-     "rolle": "SR",
-     "slug": "steeg-cedric"
-    },
-    {
-     "name": "Zynda, Jayden",
-     "rolle": "SR",
-     "slug": "zynda-jayden"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-13T10:00:00+02:00|Herforder EV – Iserlohner EC 1b",
-   "korrektur": null,
-   "manuell": false
-  },
-  {
-   "beginn": "2026-09-13T10:00:00+02:00",
-   "treffpunkt": "2026-09-13T09:00:00+02:00",
-   "liga": "U11 LL Gelb",
-   "paarung": "EHC Essen Ruhr – Essen",
-   "halle": "Eissporthalle Essen-West",
-   "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Meißner, Nils",
-     "rolle": "SR",
-     "slug": "meissner-nils"
-    },
-    {
-     "name": "Strohmenger, Svenja",
-     "rolle": "SR",
-     "slug": "strohmenger-svenja"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-13T10:00:00+02:00|EHC Essen Ruhr – Essen",
-   "korrektur": null,
-   "manuell": false
-  },
   {
    "beginn": "2026-09-13T11:00:00+02:00",
    "treffpunkt": "2026-09-13T10:00:00+02:00",
@@ -13476,7 +13148,7 @@
      "slug": "pacalaj-erik"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-20T10:00:00+02:00|EV Duisburg – SCC Adler Berlin",
    "korrektur": null,
    "manuell": false
@@ -13502,7 +13174,7 @@
      "slug": "malik-orlando"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-20T10:00:00+02:00|Herforder EV – KEC \"Die Haie\" 1c",
    "korrektur": null,
    "manuell": false

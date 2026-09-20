@@ -265,20 +265,6 @@
   "titel": "SR · Frauen BZL · ESV Grizzlys Bergkamen – Herforder EV",
   "treffpunkt": "2026-09-26T16:30:00+02:00"
  },
- "1930073ac570123514faefde5ba6edb45dc7813d@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-13T10:00:00+02:00",
-  "geaendert_am": null,
-  "id": "2026-09-13T10:00:00+02:00|Herforder EV – Iserlohner EC 1b",
-  "inhalt": "e73f64f987af9c0956a97c013b983376203d9b19",
-  "korrektur": null,
-  "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-  "sequence": 0,
-  "slug": "zynda-jayden",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U13 RLB · Herforder EV – Iserlohner EC 1b",
-  "treffpunkt": "2026-09-13T09:00:00+02:00"
- },
  "19743d45859bf14692c9f71cea286a71ab184531@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-26T16:45:00+02:00",
@@ -320,20 +306,6 @@
   "stempel": "2026-09-15T15:27:41.584000+00:00",
   "titel": "SR · U11 LL Rot · Iserlohner EC 1b",
   "treffpunkt": "2026-09-20T07:00:00+02:00"
- },
- "1b8b62bb3163bae28f7251efd13bb51038aa1750@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-13T10:00:00+02:00",
-  "geaendert_am": null,
-  "id": "2026-09-13T10:00:00+02:00|Krefelder EV 1b – Löwen Frankfurt 1b",
-  "inhalt": "477a306801352a08d2ccbe6b092491da0fa768f9",
-  "korrektur": null,
-  "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-  "sequence": 0,
-  "slug": "reuter-rick",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U13 FS · Krefelder EV 1b – Löwen Frankfurt 1b",
-  "treffpunkt": "2026-09-13T09:00:00+02:00"
  },
  "1c1f0f073cb243b06cbdf2f85ee4ffaccf191d0e@esrw.de": {
   "aenderung": null,
@@ -432,20 +404,6 @@
   "stempel": "2026-09-11T15:00:47.546895+00:00",
   "titel": "LSR · DNL III · EV Duisburg – SCC Adler Berlin",
   "treffpunkt": "2026-09-20T09:00:00+02:00"
- },
- "2300b01c81573b1c2b91b68edde21df9933a22b0@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-13T10:00:00+02:00",
-  "geaendert_am": null,
-  "id": "2026-09-13T10:00:00+02:00|EHC Essen Ruhr – Essen",
-  "inhalt": "5070cb21535a9001e2c4d5bd53ec40e2cf3d539e",
-  "korrektur": null,
-  "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
-  "sequence": 0,
-  "slug": "strohmenger-svenja",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U11 LL Gelb · EHC Essen Ruhr – Essen",
-  "treffpunkt": "2026-09-13T09:00:00+02:00"
  },
  "24bc70868feb39f5b030e5051db7bb7fc6b60c4c@esrw.de": {
   "aenderung": null,
@@ -1231,20 +1189,6 @@
   "titel": "SR · U9 RL · Krefelder EV",
   "treffpunkt": "2026-09-26T15:45:00+02:00"
  },
- "64ec43b417f183c9857fe8e47d36152ff2969539@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-13T10:00:00+02:00",
-  "geaendert_am": null,
-  "id": "2026-09-13T10:00:00+02:00|Krefelder EV 1b – Löwen Frankfurt 1b",
-  "inhalt": "477a306801352a08d2ccbe6b092491da0fa768f9",
-  "korrektur": null,
-  "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-  "sequence": 0,
-  "slug": "pluschkell-julian",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U13 FS · Krefelder EV 1b – Löwen Frankfurt 1b",
-  "treffpunkt": "2026-09-13T09:00:00+02:00"
- },
  "6519729f3e35a22c2a34ea27698973d711ae793b@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-18T20:15:00+02:00",
@@ -1748,20 +1692,6 @@
   "stempel": "2026-09-11T15:00:47.546895+00:00",
   "titel": "SR · U13 LL · EV Duisburg 1b – Ratinger Ice Aliens",
   "treffpunkt": "2026-09-18T18:30:00+02:00"
- },
- "89ae15f1c8178da36a163ce001b5543e5413fad9@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-13T10:00:00+02:00",
-  "geaendert_am": null,
-  "id": "2026-09-13T10:00:00+02:00|EHC Essen Ruhr – Essen",
-  "inhalt": "5070cb21535a9001e2c4d5bd53ec40e2cf3d539e",
-  "korrektur": null,
-  "ort": "Eissporthalle Essen-West, Curtiusstr. 2, 45144 Essen",
-  "sequence": 0,
-  "slug": "meissner-nils",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U11 LL Gelb · EHC Essen Ruhr – Essen",
-  "treffpunkt": "2026-09-13T09:00:00+02:00"
  },
  "8b0dabb97c43659b005939efac33bc9e05381a8e@esrw.de": {
   "aenderung": null,
@@ -2533,20 +2463,6 @@
   "titel": "SR · U11 LL Blau · Kölner Junghaie 1c",
   "treffpunkt": "2026-09-27T10:30:00+02:00"
  },
- "c5f493bb6c55268dd6213346d98e20d4bff3b164@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-13T10:00:00+02:00",
-  "geaendert_am": null,
-  "id": "2026-09-13T10:00:00+02:00|EV Duisburg – SCC Adler Berlin",
-  "inhalt": "1a68f4bcc97deff62e10dcc04341353d5e209408",
-  "korrektur": null,
-  "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
-  "sequence": 0,
-  "slug": "schoeche-gian-carlo",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U17 II · EV Duisburg – SCC Adler Berlin",
-  "treffpunkt": "2026-09-13T09:00:00+02:00"
- },
  "c67f48bcece2f21cd6dffcb3546d8be1ad4eee48@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-20T11:00:00+02:00",
@@ -2701,20 +2617,6 @@
   "titel": "SR · DA FS · Finale",
   "treffpunkt": "2026-09-13T14:00:00+02:00"
  },
- "d48a4b806600aaa5233a48ca023f005a32523bb5@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-13T10:00:00+02:00",
-  "geaendert_am": null,
-  "id": "2026-09-13T10:00:00+02:00|Herforder EV – Iserlohner EC 1b",
-  "inhalt": "e73f64f987af9c0956a97c013b983376203d9b19",
-  "korrektur": null,
-  "ort": "Eishalle Im Kleinen Felde, Im Kleinen Felde, 32051 Herford",
-  "sequence": 0,
-  "slug": "steeg-cedric",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U13 RLB · Herforder EV – Iserlohner EC 1b",
-  "treffpunkt": "2026-09-13T09:00:00+02:00"
- },
  "d516df8df13368f44633597b83c3529383537b72@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-18T20:00:00+02:00",
@@ -2784,20 +2686,6 @@
   "stempel": "2026-09-18T17:32:02.289283+00:00",
   "titel": "LSR · RL FS · ESV Grizzlys Bergkamen – Eisadler Dortmund",
   "treffpunkt": "2026-09-20T17:30:00+02:00"
- },
- "dbeb5417849cd8a4c25f6fad4127c89b8be54876@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-13T10:00:00+02:00",
-  "geaendert_am": null,
-  "id": "2026-09-13T10:00:00+02:00|EV Duisburg – SCC Adler Berlin",
-  "inhalt": "1a68f4bcc97deff62e10dcc04341353d5e209408",
-  "korrektur": null,
-  "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
-  "sequence": 0,
-  "slug": "strube-julia",
-  "stempel": "2026-09-09T17:01:29.853290+00:00",
-  "titel": "SR · U17 II · EV Duisburg – SCC Adler Berlin",
-  "treffpunkt": "2026-09-13T09:00:00+02:00"
  },
  "dcb355b8149eaa76c678641c6cd35b2e68555196@esrw.de": {
   "aenderung": null,
