@@ -6405,7 +6405,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T16:30:00+02:00|Herner EV – Düsseldorfer EG 1b",
@@ -10523,7 +10523,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T16:30:00+02:00|Herner EV – Düsseldorfer EG 1b",
@@ -12557,7 +12557,7 @@
      "slug": "strohmenger-svenja"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-20T16:30:00+02:00|Herner EV – Düsseldorfer EG 1b",
    "korrektur": null,
    "manuell": false
