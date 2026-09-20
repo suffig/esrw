@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 92,
+ "spiele_gesamt": 91,
  "saison": "2026/27",
  "archiv_spiele": 170,
  "rollen": {
@@ -1279,7 +1279,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T19:00:00+02:00|Eisadler Dortmund 1b – EHC Troisdorf",
@@ -4922,7 +4922,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T19:00:00+02:00|Eisadler Dortmund 1b – EHC Troisdorf",
@@ -5490,7 +5490,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T19:00:00+02:00|Dinslakener Kobras – UNIS Flyers Heerenveen",
@@ -5564,34 +5564,6 @@
     "letzte": "2026-09-20"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-13T19:00:00+02:00",
-     "treffpunkt": "2026-09-13T18:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "LL FS",
-     "paarung": "Dinslakener Kobras 1b – EHC Essen Ruhr",
-     "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
-     "halle": "Eissporthalle Dinslaken",
-     "koordinaten": [
-      51.574578,
-      6.735361
-     ],
-     "gespann": [
-      {
-       "name": "Schmidt, Waldemar",
-       "slug": "schmidt-waldemar",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T19:00:00+02:00|Dinslakener Kobras 1b – EHC Essen Ruhr",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-18T20:15:00+02:00",
      "treffpunkt": "2026-09-18T19:15:00+02:00",
@@ -7563,7 +7535,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T19:00:00+02:00|Dinslakener Kobras – UNIS Flyers Heerenveen",
@@ -8490,34 +8462,6 @@
     "letzte": "2026-09-27"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-13T19:00:00+02:00",
-     "treffpunkt": "2026-09-13T18:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "LL FS",
-     "paarung": "Dinslakener Kobras 1b – EHC Essen Ruhr",
-     "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
-     "halle": "Eissporthalle Dinslaken",
-     "koordinaten": [
-      51.574578,
-      6.735361
-     ],
-     "gespann": [
-      {
-       "name": "Lindemans, Pepe",
-       "slug": "lindemans-pepe",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-13T19:00:00+02:00|Dinslakener Kobras 1b – EHC Essen Ruhr",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-09-19T13:30:00+02:00",
      "treffpunkt": "2026-09-19T12:30:00+02:00",
@@ -9970,7 +9914,7 @@
       }
      ],
      "halle_erkannt": true,
-     "vergangen": false,
+     "vergangen": true,
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-20T19:00:00+02:00|Dinslakener Kobras – UNIS Flyers Heerenveen",
@@ -11191,32 +11135,6 @@
  ],
  "spiele": [
   {
-   "beginn": "2026-09-13T19:00:00+02:00",
-   "treffpunkt": "2026-09-13T18:00:00+02:00",
-   "liga": "LL FS",
-   "paarung": "Dinslakener Kobras 1b – EHC Essen Ruhr",
-   "halle": "Eissporthalle Dinslaken",
-   "ort": "Eissporthalle Dinslaken, Am Stadtbad 1, 46537 Dinslaken",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Lindemans, Pepe",
-     "rolle": "SR",
-     "slug": "lindemans-pepe"
-    },
-    {
-     "name": "Schmidt, Waldemar",
-     "rolle": "SR",
-     "slug": "schmidt-waldemar"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-13T19:00:00+02:00|Dinslakener Kobras 1b – EHC Essen Ruhr",
-   "korrektur": null,
-   "manuell": false
-  },
-  {
    "beginn": "2026-09-14T18:15:00+02:00",
    "treffpunkt": "2026-09-14T17:15:00+02:00",
    "liga": "U14 NRW",
@@ -12364,7 +12282,7 @@
      "slug": "krueger-martin"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-20T19:00:00+02:00|Eisadler Dortmund 1b – EHC Troisdorf",
    "korrektur": null,
    "manuell": false
@@ -12395,7 +12313,7 @@
      "slug": "stockenschneider-lars"
     }
    ],
-   "vergangen": false,
+   "vergangen": true,
    "id": "2026-09-20T19:00:00+02:00|Dinslakener Kobras – UNIS Flyers Heerenveen",
    "korrektur": null,
    "manuell": false

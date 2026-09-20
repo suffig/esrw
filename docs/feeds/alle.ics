@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:e852316a6a1e98239db17f5d4b2bd73fa0c92c46@esrw.de
-SEQUENCE:0
-DTSTAMP:20260909T170129Z
-LAST-MODIFIED:20260909T170129Z
-DTSTART:20260913T160000Z
-DTEND:20260913T193000Z
-SUMMARY:LL FS · Dinslakener Kobras 1b – EHC Essen Ruhr
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
-  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: LL FS\nHalle: Eissporthalle Din
- slaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Schmidt\, Walde
- mar\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
-GEO:51.574578;6.735361
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
- m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
- inslaken":geo:51.574578,6.735361
-END:VEVENT
-BEGIN:VEVENT
 UID:2ac243f3019748859fca30dd98440766b72403b7@esrw.de
 SEQUENCE:0
 DTSTAMP:20260910T122148Z
@@ -948,12 +927,6 @@ GEO:51.49525;7.458288
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
   Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
  rum Westfalen":geo:51.49525,7.458288
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LL FS · Eisadler Dortmund 1b 
- – EHC Troisdorf
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:30ce28dca8f5bcc9a5e1bfc1e3e4070305a14715@esrw.de
@@ -976,12 +949,6 @@ GEO:51.574578;6.735361
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
  m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
  inslaken":geo:51.574578,6.735361
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - RL FS · Dinslakener Kobras – 
- UNIS Flyers Heerenveen
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:2f58f866a0fcf6e53008e8b1d426517516a285b5@esrw.de
