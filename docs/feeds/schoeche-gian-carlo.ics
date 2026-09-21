@@ -123,4 +123,58 @@ DESCRIPTION:In einer Stunde an der Halle - LSR · U20 FS · Neusser EV –
  Ratinger Ice Aliens
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:15607b51003a015fad2ca71eed0433c6ac1989a4@esrw.de
+SEQUENCE:0
+DTSTAMP:20260921T153038Z
+LAST-MODIFIED:20260921T153038Z
+DTSTART:20261003T133000Z
+DTEND:20261003T170000Z
+SUMMARY:SR · U13 RLA · Kölner Junghaie – Iserlohner EC
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
+  15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLA\nHalle: Kölnarena 2\nA
+ dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Rieneck\, Maximili
+ an\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLA · Kölner Junghai
+ e – Iserlohner EC
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:9a9175c2a1d632305a5ffebcd404cb9ffcecde8b@esrw.de
+SEQUENCE:0
+DTSTAMP:20260921T153038Z
+LAST-MODIFIED:20260921T153038Z
+DTSTART:20261003T164500Z
+DTEND:20261003T201500Z
+SUMMARY:SR · U15 RLA · Kölner Junghaie – Iserlohner EC
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:45 Uhr\nTreffpunkt:
+  18:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Kölnarena 2\nA
+ dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Rieneck\, Maximili
+ an\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA · Kölner Junghai
+ e – Iserlohner EC
+END:VALARM
+END:VEVENT
 END:VCALENDAR

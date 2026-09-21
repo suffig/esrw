@@ -34,4 +34,84 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB · Herner EV – E
  HC Troisdorf
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:47a9331f86a3b681c619b3830e8865834116717c@esrw.de
+SEQUENCE:0
+DTSTAMP:20260921T153038Z
+LAST-MODIFIED:20260921T153038Z
+DTSTART:20261003T133000Z
+DTEND:20261003T170000Z
+SUMMARY:SR · U13 RLA · Kölner Junghaie – Iserlohner EC
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
+  15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLA\nHalle: Kölnarena 2\nA
+ dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Schöche\, Gian-Ca
+ rlo\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLA · Kölner Junghai
+ e – Iserlohner EC
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:56381b0f3ece1eca17067d4ea03e7b4237a1ec01@esrw.de
+SEQUENCE:0
+DTSTAMP:20260921T153038Z
+LAST-MODIFIED:20260921T153038Z
+DTSTART:20261003T164500Z
+DTEND:20261003T201500Z
+SUMMARY:SR · U15 RLA · Kölner Junghaie – Iserlohner EC
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:45 Uhr\nTreffpunkt:
+  18:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Kölnarena 2\nA
+ dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Schöche\, Gian-Ca
+ rlo\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA · Kölner Junghai
+ e – Iserlohner EC
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:63986a54ffaeca97f0157945137087f841642da0@esrw.de
+SEQUENCE:0
+DTSTAMP:20260921T153038Z
+LAST-MODIFIED:20260921T153038Z
+DTSTART:20261004T063000Z
+DTEND:20261004T100000Z
+SUMMARY:SR · U11 LL Rot · Herner EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
+  08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Rot\nHalle: Gysenberghal
+ le Herne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Kalischke\, Ch
+ ristian (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Gysenberghalle Herne\, Am Revierpark 22\, 44627 Herne
+GEO:51.532602;7.254372
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
+ evierpark 22, 44627 Herne";X-APPLE-RADIUS=100;X-TITLE="Gysenberghalle Hern
+ e":geo:51.532602,7.254372
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Rot · Herner EV
+END:VALARM
+END:VEVENT
 END:VCALENDAR

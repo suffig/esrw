@@ -170,4 +170,54 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL · ESV Grizzlys Ber
  gkamen – Ratinger Ice Aliens
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:1969ad0dbc2ed9d06a1bb4d0aeed68f163c67f8b@esrw.de
+SEQUENCE:0
+DTSTAMP:20260921T153038Z
+LAST-MODIFIED:20260921T153038Z
+DTSTART:20261002T170000Z
+DTEND:20261002T203000Z
+SUMMARY:LSR · RL FS · Eisadler Dortmund – ESV Grizzlys Bergkamen
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissportzentrum W
+ estfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Priebsch\, J
+ an Philipp (HSR) / Strube\, Julia (LSR)\n\nQuelle: https://www.esrw.de/ein
+ teilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · RL FS · Eisadler Dortmun
+ d – ESV Grizzlys Bergkamen
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:1c3e08b017b844ca0b7489c0056dc79f2197224a@esrw.de
+SEQUENCE:0
+DTSTAMP:20260921T153038Z
+LAST-MODIFIED:20260921T153038Z
+DTSTART:20261003T061500Z
+DTEND:20261003T094500Z
+SUMMARY:SR · U9 LL Lila · SpG EHC Gelsenkirchen – Herner EV 1b -
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:15 Uhr\nTreffpunkt:
+  08:15 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Lila\n!! Halle nicht auto
+ matisch erkannt - bitte selbst pruefen !!\nGespann: Heu\, Alexander\n\nQue
+ lle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Lila · SpG EHC Gels
+ enkirchen – Herner EV 1b -
+END:VALARM
+END:VEVENT
 END:VCALENDAR

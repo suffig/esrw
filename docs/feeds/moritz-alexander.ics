@@ -34,4 +34,85 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL · EHC Troisdorf
  – Dinslakener Kobras
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:a1e2f9bebc9df566eea7b2ff0d8081f93a4f70cb@esrw.de
+SEQUENCE:0
+DTSTAMP:20260921T153038Z
+LAST-MODIFIED:20260921T153038Z
+DTSTART:20261002T171500Z
+DTEND:20261002T204500Z
+SUMMARY:SR · U15 RLB · EHC Troisdorf – Düsseldorfer EG 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
+  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: ICEDOME Troisdo
+ rf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Finke\, G
+ udrun\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
+GEO:50.811945;7.109233
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
+ rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
+ isdorf":geo:50.811945,7.109233
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB · EHC Troisdorf 
+ – Düsseldorfer EG 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:79e523d7d313f325511139797896f3520cb34b6e@esrw.de
+SEQUENCE:0
+DTSTAMP:20260921T153038Z
+LAST-MODIFIED:20260921T153038Z
+DTSTART:20261003T070000Z
+DTEND:20261003T103000Z
+SUMMARY:SR · U13 LL · EHC Troisdorf 1b – EHC Die Bären Neuwied
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: ICEDOME Troisdor
+ f\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Hoffmann\,
+  Jan\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
+GEO:50.811945;7.109233
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
+ rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
+ isdorf":geo:50.811945,7.109233
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL · EHC Troisdorf 1b
+  – EHC Die Bären Neuwied
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:27cac2524cba6c3d544e1dd8453db2ea4e39aebd@esrw.de
+SEQUENCE:0
+DTSTAMP:20260921T153038Z
+LAST-MODIFIED:20260921T153038Z
+DTSTART:20261004T150000Z
+DTEND:20261004T183000Z
+SUMMARY:SR · U13 RLB · EHC Troisdorf – Herner EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
+  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: ICEDOME Troisdo
+ rf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Hauerwaas
+ \, Gabriel\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
+GEO:50.811945;7.109233
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
+ rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
+ isdorf":geo:50.811945,7.109233
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB · EHC Troisdorf 
+ – Herner EV
+END:VALARM
+END:VEVENT
 END:VCALENDAR

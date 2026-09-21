@@ -120,4 +120,27 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL · ESV Grizzlys Ber
  gkamen – Ratinger Ice Aliens
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:c8957fe49bd698d4907c7e914d4a34d4039dafe0@esrw.de
+SEQUENCE:0
+DTSTAMP:20260921T153038Z
+LAST-MODIFIED:20260921T153038Z
+DTSTART:20261003T073000Z
+DTEND:20261003T110000Z
+SUMMARY:SR · U15 LL · SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats 
+ – Dinslakener Kobras
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
+  09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\n!! Halle nicht automati
+ sch erkannt - bitte selbst pruefen !!\nGespann: Zynda\, Jayden\n\nQuelle: 
+ https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL · SpG ESV Grizzlys
+  Bergkamen / ESC Rheine Young Cats – Dinslakener Kobras
+END:VALARM
+END:VEVENT
 END:VCALENDAR

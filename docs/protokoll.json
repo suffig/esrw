@@ -213,5 +213,985 @@
   "slug": "stocker-quirin",
   "stand": "2026-09-21T10:15:25.440709+00:00",
   "text": "So 27.09. 20:00 Uhr – SR · BZ FS · Neusser EV 1b – EHC Essen"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissportzentrum Westfalen",
+  "kennung": "2026-10-03T13:30:00+02:00|Eisadler Dortmund – SpG EHC Gelsenkirchen / Herner EV 1b",
+  "name": "Honselmann, Tom (N)",
+  "slug": "honselmann-tom",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 13:30 Uhr – SR · U15 LL · Eisadler Dortmund – SpG EHC Gelsenkirchen / Herner EV 1b"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Bergkamen",
+  "kennung": "2026-10-04T09:00:00+02:00|ESV Grizzlys Bergkamen – EHC Die Bären Neuwied",
+  "name": "Honselmann, Tom (N)",
+  "slug": "honselmann-tom",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 09:00 Uhr – SR · U13 LL · ESV Grizzlys Bergkamen – EHC Die Bären Neuwied"
+ },
+ {
+  "art": "neu",
+  "kennung": "2026-10-03T10:30:00+02:00|SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats – Dinslakener Kobras",
+  "name": "Zynda, Jayden",
+  "slug": "zynda-jayden",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 10:30 Uhr – SR · U15 LL · SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats – Dinslakener Kobras"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle am Seilersee",
+  "kennung": "2026-10-04T08:00:00+02:00|Iserlohner EC 1b – Krefelder EV 1b",
+  "name": "Zynda, Jayden",
+  "slug": "zynda-jayden",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 08:00 Uhr – SR · U13 RLB · Iserlohner EC 1b – Krefelder EV 1b"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissportzentrum Westfalen",
+  "kennung": "2026-10-02T20:00:00+02:00|Eisadler Dortmund – ESV Grizzlys Bergkamen",
+  "name": "Strube, Julia",
+  "slug": "strube-julia",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Fr 02.10. 20:00 Uhr – LSR · RL FS · Eisadler Dortmund – ESV Grizzlys Bergkamen"
+ },
+ {
+  "art": "neu",
+  "halle": "Kölnarena 2",
+  "kennung": "2026-10-03T16:30:00+02:00|Kölner Junghaie – Iserlohner EC",
+  "name": "Rieneck, Maximilian",
+  "slug": "rieneck-maximilian",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 16:30 Uhr – SR · U13 RLA · Kölner Junghaie – Iserlohner EC"
+ },
+ {
+  "art": "neu",
+  "halle": "Kölnarena 2",
+  "kennung": "2026-10-03T19:45:00+02:00|Kölner Junghaie – Iserlohner EC",
+  "name": "Rieneck, Maximilian",
+  "slug": "rieneck-maximilian",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 19:45 Uhr – SR · U15 RLA · Kölner Junghaie – Iserlohner EC"
+ },
+ {
+  "art": "neu",
+  "halle": "Gysenberghalle Herne",
+  "kennung": "2026-10-04T09:30:00+02:00|Herner EV",
+  "name": "Rieneck, Maximilian",
+  "slug": "rieneck-maximilian",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 09:30 Uhr – SR · U11 LL Rot · Herner EV"
+ },
+ {
+  "art": "neu",
+  "halle": "ICEDOME Troisdorf",
+  "kennung": "2026-10-02T20:15:00+02:00|EHC Troisdorf – Düsseldorfer EG 1b",
+  "name": "Finke, Gudrun",
+  "slug": "finke-gudrun",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Fr 02.10. 20:15 Uhr – SR · U15 RLB · EHC Troisdorf – Düsseldorfer EG 1b"
+ },
+ {
+  "art": "neu",
+  "halle": "HELINET Eissportarena Hamm",
+  "kennung": "2026-10-02T20:00:00+02:00|Lippe Hockey Hamm – EHC Troisdorf",
+  "name": "Kissing, Andreas",
+  "slug": "kissing-andreas",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Fr 02.10. 20:00 Uhr – SR · U17 RL · Lippe Hockey Hamm – EHC Troisdorf"
+ },
+ {
+  "art": "neu",
+  "halle": "PreZero Rheinlandhalle Duisburg",
+  "kennung": "2026-10-04T10:00:00+02:00|EV Duisburg 1b – Herforder EV",
+  "name": "Pacalaj, Erik",
+  "slug": "pacalaj-erik",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 10:00 Uhr – SR · U15 LL · EV Duisburg 1b – Herforder EV"
+ },
+ {
+  "art": "neu",
+  "halle": "Eishalle Im Kleinen Felde",
+  "kennung": "2026-10-02T20:00:00+02:00|Herforder EV – Ratinger Ice Aliens",
+  "name": "Berger, Eugen",
+  "slug": "berger-eugen",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Fr 02.10. 20:00 Uhr – SR · U20 RL · Herforder EV – Ratinger Ice Aliens"
+ },
+ {
+  "art": "neu",
+  "halle": "Eishalle Im Kleinen Felde",
+  "kennung": "2026-10-03T08:00:00+02:00|Herforder EV – Herner EV",
+  "name": "Berger, Eugen",
+  "slug": "berger-eugen",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 08:00 Uhr – SR · U17 RL · Herforder EV – Herner EV"
+ },
+ {
+  "art": "neu",
+  "halle": "Eishalle Im Kleinen Felde",
+  "kennung": "2026-10-03T11:30:00+02:00|Herforder EV – EHC Die Bären Neuwied",
+  "name": "Berger, Eugen",
+  "slug": "berger-eugen",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 11:30 Uhr – SR · U15 LL · Herforder EV – EHC Die Bären Neuwied"
+ },
+ {
+  "art": "neu",
+  "halle": "Eishalle Brehmstraße",
+  "kennung": "2026-10-03T13:30:00+02:00|Düsseldorfer EG – Krefelder EV",
+  "name": "Heffler, Philipp",
+  "slug": "heffler-philipp",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 13:30 Uhr – SR · U15 RLA · Düsseldorfer EG – Krefelder EV"
+ },
+ {
+  "art": "neu",
+  "halle": "Eishalle Brehmstraße",
+  "kennung": "2026-10-03T16:30:00+02:00|Düsseldorfer EG – ESC Dresden",
+  "name": "Heffler, Philipp",
+  "slug": "heffler-philipp",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 16:30 Uhr – SR · U17 I · Düsseldorfer EG – ESC Dresden"
+ },
+ {
+  "art": "neu",
+  "halle": "Rheinlandhalle Krefeld",
+  "kennung": "2026-10-03T13:30:00+02:00|Krefelder EV – Düsseldorfer EG YAYLA Krefeld",
+  "name": "Reuter, Fynn",
+  "slug": "reuter-fynn",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 13:30 Uhr – SR · U13 RLA · Krefelder EV – Düsseldorfer EG YAYLA Krefeld"
+ },
+ {
+  "art": "neu",
+  "halle": "Rheinlandhalle Krefeld",
+  "kennung": "2026-10-03T16:30:00+02:00|Krefelder EV – ES Weißwasser YAYLA Krefeld",
+  "name": "Reuter, Fynn",
+  "slug": "reuter-fynn",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 16:30 Uhr – SR · U17 I · Krefelder EV – ES Weißwasser YAYLA Krefeld"
+ },
+ {
+  "art": "neu",
+  "kennung": "2026-10-04T19:30:00+02:00|Grefrather EG – Neusser EV",
+  "name": "Reuter, Fynn",
+  "slug": "reuter-fynn",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 19:30 Uhr – LSR · RL FS · Grefrather EG – Neusser EV"
+ },
+ {
+  "art": "neu",
+  "kennung": "2026-10-04T18:15:00+02:00|GSC Moers – Jadehaie Sande",
+  "name": "Scholz, Udo",
+  "slug": "scholz-udo",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 18:15 Uhr – LSR · RL FS · GSC Moers – Jadehaie Sande"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Dinslaken",
+  "kennung": "2026-10-02T20:15:00+02:00|Dinslakener Kobras 1b – EHC Troisdorf",
+  "name": "Störmann, Manuel",
+  "slug": "stoermann-manuel",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Fr 02.10. 20:15 Uhr – SR · Senioren LL · Dinslakener Kobras 1b – EHC Troisdorf"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Dinslaken",
+  "kennung": "2026-10-04T12:30:00+02:00|Dinslakener Kobras – Eisadler Dortmund",
+  "name": "Störmann, Manuel",
+  "slug": "stoermann-manuel",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 12:30 Uhr – SR · U13 LL · Dinslakener Kobras – Eisadler Dortmund"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Dinslaken",
+  "kennung": "2026-10-04T12:30:00+02:00|Dinslakener Kobras – Eisadler Dortmund",
+  "name": "Baum, Fabian (N)",
+  "slug": "baum-fabian",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 12:30 Uhr – SR · U13 LL · Dinslakener Kobras – Eisadler Dortmund"
+ },
+ {
+  "art": "neu",
+  "halle": "ICEDOME Troisdorf",
+  "kennung": "2026-10-03T10:00:00+02:00|EHC Troisdorf 1b – EHC Die Bären Neuwied",
+  "name": "Hoffmann, Jan",
+  "slug": "hoffmann-jan",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 10:00 Uhr – SR · U13 LL · EHC Troisdorf 1b – EHC Die Bären Neuwied"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Bergisch Gladbach",
+  "kennung": "2026-10-02T20:00:00+02:00|ESV Bergisch Gladbach – Eisadler Dortmund",
+  "name": "Schlüter, Thomas",
+  "slug": "schlueter-thomas",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Fr 02.10. 20:00 Uhr – SR · Frauen LL · ESV Bergisch Gladbach – Eisadler Dortmund"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Neuss",
+  "kennung": "2026-10-03T20:30:00+02:00|Neusser EV – Herforder EV",
+  "name": "Schlüter, Thomas",
+  "slug": "schlueter-thomas",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 20:30 Uhr – HSR · U20 RL · Neusser EV – Herforder EV"
+ },
+ {
+  "art": "neu",
+  "halle": "Eishalle Brehmstraße",
+  "kennung": "2026-10-04T14:00:00+02:00|Düsseldorfer EG 1b – Krefelder EV 1b",
+  "name": "Schlüter, Thomas",
+  "slug": "schlueter-thomas",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 14:00 Uhr – SR · U15 RLB · Düsseldorfer EG 1b – Krefelder EV 1b"
+ },
+ {
+  "art": "neu",
+  "kennung": "2026-10-04T19:30:00+02:00|Grefrather EG – Neusser EV",
+  "name": "Schrörs, Marvin",
+  "slug": "schroers-marvin",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 19:30 Uhr – HSR · RL FS · Grefrather EG – Neusser EV"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Dinslaken",
+  "kennung": "2026-10-04T19:00:00+02:00|Dinslakener Kobras – Ratinger Ice Aliens",
+  "name": "Menzel, Joey-Max",
+  "slug": "menzel-joey-max",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 19:00 Uhr – LSR · Senioren RLW · Dinslakener Kobras – Ratinger Ice Aliens"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Neuss",
+  "kennung": "2026-10-03T18:00:00+02:00|Neusser EV – EHC Essen Ruhr",
+  "name": "Quint, Sascha",
+  "slug": "quint-sascha",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 18:00 Uhr – SR · U13 LL · Neusser EV – EHC Essen Ruhr"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Neuss",
+  "kennung": "2026-10-03T20:30:00+02:00|Neusser EV – Herforder EV",
+  "name": "Quint, Sascha",
+  "slug": "quint-sascha",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 20:30 Uhr – LSR · U20 RL · Neusser EV – Herforder EV"
+ },
+ {
+  "art": "neu",
+  "halle": "Kölnarena 2",
+  "kennung": "2026-10-04T12:00:00+02:00|Kölner Junghaie – Iserlohner EC",
+  "name": "Quint, Sascha",
+  "slug": "quint-sascha",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 12:00 Uhr – SR · U17 I · Kölner Junghaie – Iserlohner EC"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissportzentrum Westfalen",
+  "kennung": "2026-10-04T19:00:00+02:00|Eisadler Dortmund – TuS Wiehl",
+  "name": "Warnke, Christoph",
+  "slug": "warnke-christoph",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 19:00 Uhr – LSR · U20 RL · Eisadler Dortmund – TuS Wiehl"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Essen-West",
+  "kennung": "2026-10-04T10:15:00+02:00|EHC Essen Ruhr – Lippe Hockey Hamm",
+  "name": "Budzynski, Mika (N)",
+  "slug": "budzynski-mika",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 10:15 Uhr – SR · U15 LL · EHC Essen Ruhr – Lippe Hockey Hamm"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Dinslaken",
+  "kennung": "2026-10-04T19:00:00+02:00|Dinslakener Kobras – Ratinger Ice Aliens",
+  "name": "Krüger, Martin",
+  "slug": "krueger-martin",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 19:00 Uhr – LSR · Senioren RLW · Dinslakener Kobras – Ratinger Ice Aliens"
+ },
+ {
+  "art": "neu",
+  "kennung": "2026-10-04T18:15:00+02:00|GSC Moers – Jadehaie Sande",
+  "name": "Stocker, Quirin",
+  "slug": "stocker-quirin",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 18:15 Uhr – HSR · RL FS · GSC Moers – Jadehaie Sande"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Essen-West",
+  "kennung": "2026-10-02T20:00:00+02:00|EHC Essen Ruhr – EC Bergisch Land",
+  "name": "Engler, Gerhard",
+  "slug": "engler-gerhard",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Fr 02.10. 20:00 Uhr – SR · BL FS · EHC Essen Ruhr – EC Bergisch Land"
+ },
+ {
+  "art": "neu",
+  "kennung": "2026-10-04T19:30:00+02:00|Grefrather EG – Neusser EV",
+  "name": "Engler, Gerhard",
+  "slug": "engler-gerhard",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 19:30 Uhr – LSR · RL FS · Grefrather EG – Neusser EV"
+ },
+ {
+  "art": "neu",
+  "halle": "ICEDOME Troisdorf",
+  "kennung": "2026-10-04T18:00:00+02:00|EHC Troisdorf – Herner EV",
+  "name": "Hauerwaas, Gabriel",
+  "slug": "hauerwaas-gabriel",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 18:00 Uhr – SR · U13 RLB · EHC Troisdorf – Herner EV"
+ },
+ {
+  "art": "neu",
+  "halle": "ICEDOME Troisdorf",
+  "kennung": "2026-10-02T20:15:00+02:00|EHC Troisdorf – Düsseldorfer EG 1b",
+  "name": "Moritz, Alexander",
+  "slug": "moritz-alexander",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Fr 02.10. 20:15 Uhr – SR · U15 RLB · EHC Troisdorf – Düsseldorfer EG 1b"
+ },
+ {
+  "art": "neu",
+  "halle": "ICEDOME Troisdorf",
+  "kennung": "2026-10-03T10:00:00+02:00|EHC Troisdorf 1b – EHC Die Bären Neuwied",
+  "name": "Moritz, Alexander",
+  "slug": "moritz-alexander",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 10:00 Uhr – SR · U13 LL · EHC Troisdorf 1b – EHC Die Bären Neuwied"
+ },
+ {
+  "art": "neu",
+  "halle": "ICEDOME Troisdorf",
+  "kennung": "2026-10-04T18:00:00+02:00|EHC Troisdorf – Herner EV",
+  "name": "Moritz, Alexander",
+  "slug": "moritz-alexander",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 18:00 Uhr – SR · U13 RLB · EHC Troisdorf – Herner EV"
+ },
+ {
+  "art": "neu",
+  "halle": "Kölnarena 2",
+  "kennung": "2026-10-03T16:30:00+02:00|Kölner Junghaie – Iserlohner EC",
+  "name": "Schöche, Gian-Carlo",
+  "slug": "schoeche-gian-carlo",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 16:30 Uhr – SR · U13 RLA · Kölner Junghaie – Iserlohner EC"
+ },
+ {
+  "art": "neu",
+  "halle": "Kölnarena 2",
+  "kennung": "2026-10-03T19:45:00+02:00|Kölner Junghaie – Iserlohner EC",
+  "name": "Schöche, Gian-Carlo",
+  "slug": "schoeche-gian-carlo",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 19:45 Uhr – SR · U15 RLA · Kölner Junghaie – Iserlohner EC"
+ },
+ {
+  "art": "neu",
+  "halle": "HELINET Eissportarena Hamm",
+  "kennung": "2026-10-03T09:00:00+02:00|Lippe Hockey Hamm – EC Bergisch Land",
+  "name": "Steeg, Cedric",
+  "slug": "steeg-cedric",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 09:00 Uhr – SR · U13 LL · Lippe Hockey Hamm – EC Bergisch Land"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Bergkamen",
+  "kennung": "2026-10-03T17:30:00+02:00|ESV Grizzlys Bergkamen – EC Bergisch Land",
+  "name": "Steeg, Cedric",
+  "slug": "steeg-cedric",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 17:30 Uhr – SR · U20 LL · ESV Grizzlys Bergkamen – EC Bergisch Land"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissportzentrum Westfalen",
+  "kennung": "2026-10-04T19:00:00+02:00|Eisadler Dortmund – TuS Wiehl",
+  "name": "Steeg, Cedric",
+  "slug": "steeg-cedric",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 19:00 Uhr – HSR · U20 RL · Eisadler Dortmund – TuS Wiehl"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Solingen",
+  "kennung": "2026-10-04T19:00:00+02:00|EC Bergisch Land – EHV NRW U15w",
+  "name": "Hartmann, Marius",
+  "slug": "hartmann-marius",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 19:00 Uhr – SR · Frauen Pokal Gr.A · EC Bergisch Land – EHV NRW U15w"
+ },
+ {
+  "art": "neu",
+  "halle": "Rheinlandhalle Krefeld",
+  "kennung": "2026-10-04T11:00:00+02:00|Krefelder EV – ES Weißwasser YAYLA Krefeld",
+  "name": "Pluschkell, Julian",
+  "slug": "pluschkell-julian",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 11:00 Uhr – SR · U17 I · Krefelder EV – ES Weißwasser YAYLA Krefeld"
+ },
+ {
+  "art": "neu",
+  "halle": "Rheinlandhalle Krefeld",
+  "kennung": "2026-10-04T17:00:00+02:00|Krefelder EV",
+  "name": "Pluschkell, Julian",
+  "slug": "pluschkell-julian",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 17:00 Uhr – SR · U11 RL · Krefelder EV"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Solingen",
+  "kennung": "2026-10-02T20:15:00+02:00|EC Bergisch Land – Eisadler Dortmund 1b",
+  "name": "Henkels, André",
+  "slug": "henkels-andre",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Fr 02.10. 20:15 Uhr – SR · U15 BZL · EC Bergisch Land – Eisadler Dortmund 1b"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Essen-West",
+  "kennung": "2026-10-03T12:15:00+02:00|EHC Essen Ruhr",
+  "name": "Henkels, André",
+  "slug": "henkels-andre",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 12:15 Uhr – SR · U9 LL Blau · EHC Essen Ruhr"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Solingen",
+  "kennung": "2026-10-04T19:00:00+02:00|EC Bergisch Land – EHV NRW U15w",
+  "name": "Henkels, André",
+  "slug": "henkels-andre",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 19:00 Uhr – SR · Frauen Pokal Gr.A · EC Bergisch Land – EHV NRW U15w"
+ },
+ {
+  "art": "neu",
+  "halle": "PreZero Rheinlandhalle Duisburg",
+  "kennung": "2026-10-04T10:00:00+02:00|EV Duisburg 1b – Herforder EV",
+  "name": "Marks, Marcel",
+  "slug": "marks-marcel",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 10:00 Uhr – SR · U15 LL · EV Duisburg 1b – Herforder EV"
+ },
+ {
+  "art": "neu",
+  "halle": "HELINET Eissportarena Hamm",
+  "kennung": "2026-10-02T20:00:00+02:00|Lippe Hockey Hamm – EHC Troisdorf",
+  "name": "Zynda, Nick",
+  "slug": "zynda-nick",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Fr 02.10. 20:00 Uhr – SR · U17 RL · Lippe Hockey Hamm – EHC Troisdorf"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissportzentrum Westfalen",
+  "kennung": "2026-10-03T13:30:00+02:00|Eisadler Dortmund – SpG EHC Gelsenkirchen / Herner EV 1b",
+  "name": "Zynda, Nick",
+  "slug": "zynda-nick",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 13:30 Uhr – SR · U15 LL · Eisadler Dortmund – SpG EHC Gelsenkirchen / Herner EV 1b"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle am Seilersee",
+  "kennung": "2026-10-04T08:00:00+02:00|Iserlohner EC 1b – Krefelder EV 1b",
+  "name": "Zynda, Nick",
+  "slug": "zynda-nick",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 08:00 Uhr – SR · U13 RLB · Iserlohner EC 1b – Krefelder EV 1b"
+ },
+ {
+  "art": "neu",
+  "halle": "Eishalle Brehmstraße",
+  "kennung": "2026-10-03T11:00:00+02:00|Düsseldorfer EG – ESC Dresden",
+  "name": "Dietrich, Jonas",
+  "slug": "dietrich-jonas",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 11:00 Uhr – SR · U17 I · Düsseldorfer EG – ESC Dresden"
+ },
+ {
+  "art": "neu",
+  "halle": "Eishalle Brehmstraße",
+  "kennung": "2026-10-04T08:00:00+02:00|Düsseldorfer EG 1b",
+  "name": "Dietrich, Jonas",
+  "slug": "dietrich-jonas",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 08:00 Uhr – SR · U9 LL Rot · Düsseldorfer EG 1b"
+ },
+ {
+  "art": "neu",
+  "halle": "HELINET Eissportarena Hamm",
+  "kennung": "2026-10-03T09:00:00+02:00|Lippe Hockey Hamm – EC Bergisch Land",
+  "name": "Kalischke, Christian (N)",
+  "slug": "kalischke-christian",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 09:00 Uhr – SR · U13 LL · Lippe Hockey Hamm – EC Bergisch Land"
+ },
+ {
+  "art": "neu",
+  "halle": "Gysenberghalle Herne",
+  "kennung": "2026-10-04T09:30:00+02:00|Herner EV",
+  "name": "Kalischke, Christian (N)",
+  "slug": "kalischke-christian",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 09:30 Uhr – SR · U11 LL Rot · Herner EV"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Dinslaken",
+  "kennung": "2026-10-02T20:15:00+02:00|Dinslakener Kobras 1b – EHC Troisdorf",
+  "name": "Vorgeitz, Benny",
+  "slug": "vorgeitz-benny",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Fr 02.10. 20:15 Uhr – SR · Senioren LL · Dinslakener Kobras 1b – EHC Troisdorf"
+ },
+ {
+  "art": "neu",
+  "kennung": "2026-10-03T10:30:00+02:00|SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats – Dinslakener Kobras",
+  "name": "Brücker, Tobias",
+  "slug": "bruecker-tobias",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 10:30 Uhr – SR · U15 LL · SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats – Dinslakener Kobras"
+ },
+ {
+  "art": "neu",
+  "halle": "PreZero Rheinlandhalle Duisburg",
+  "kennung": "2026-10-03T16:00:00+02:00|EV Duisburg – EJ Kassel",
+  "name": "Melchert, Philip",
+  "slug": "melchert-philip",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 16:00 Uhr – SR · U13 RLB · EV Duisburg – EJ Kassel"
+ },
+ {
+  "art": "neu",
+  "halle": "Gysenberghalle Herne",
+  "kennung": "2026-10-04T16:30:00+02:00|Herner EV – EJ Kassel",
+  "name": "Melchert, Philip",
+  "slug": "melchert-philip",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 16:30 Uhr – SR · U15 RLB · Herner EV – EJ Kassel"
+ },
+ {
+  "art": "neu",
+  "halle": "PreZero Rheinlandhalle Duisburg",
+  "kennung": "2026-10-03T16:00:00+02:00|EV Duisburg – EJ Kassel",
+  "name": "Victor, Tobias (N)",
+  "slug": "victor-tobias",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 16:00 Uhr – SR · U13 RLB · EV Duisburg – EJ Kassel"
+ },
+ {
+  "art": "neu",
+  "kennung": "2026-10-03T09:15:00+02:00|SpG EHC Gelsenkirchen – Herner EV 1b -",
+  "name": "Heu, Alexander",
+  "slug": "heu-alexander",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 09:15 Uhr – SR · U9 LL Lila · SpG EHC Gelsenkirchen – Herner EV 1b -"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Bergkamen",
+  "kennung": "2026-10-04T09:00:00+02:00|ESV Grizzlys Bergkamen – EHC Die Bären Neuwied",
+  "name": "Heu, Alexander",
+  "slug": "heu-alexander",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 09:00 Uhr – SR · U13 LL · ESV Grizzlys Bergkamen – EHC Die Bären Neuwied"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Dinslaken",
+  "kennung": "2026-10-03T12:30:00+02:00|Dinslakener Kobras – FASS Berlin",
+  "name": "Hofer, Carsten",
+  "slug": "hofer-carsten",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 12:30 Uhr – SR · DFEL2 Nord · Dinslakener Kobras – FASS Berlin"
+ },
+ {
+  "art": "neu",
+  "halle": "Eishalle Brehmstraße",
+  "kennung": "2026-10-04T14:00:00+02:00|Düsseldorfer EG 1b – Krefelder EV 1b",
+  "name": "Hofer, Carsten",
+  "slug": "hofer-carsten",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 14:00 Uhr – SR · U15 RLB · Düsseldorfer EG 1b – Krefelder EV 1b"
+ },
+ {
+  "art": "neu",
+  "halle": "Gysenberghalle Herne",
+  "kennung": "2026-10-04T16:30:00+02:00|Herner EV – EJ Kassel",
+  "name": "Kuriata, Florian-Nikita",
+  "slug": "kuriata-florian-nikita",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 16:30 Uhr – SR · U15 RLB · Herner EV – EJ Kassel"
+ },
+ {
+  "art": "neu",
+  "halle": "Kölnarena 2",
+  "kennung": "2026-10-04T14:45:00+02:00|Kölner Junghaie 1b – EJ Kassel",
+  "name": "Starke, Matthias",
+  "slug": "starke-matthias",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 14:45 Uhr – SR · U13 RLB · Kölner Junghaie 1b – EJ Kassel"
+ },
+ {
+  "art": "neu",
+  "halle": "Kölnarena 2",
+  "kennung": "2026-10-04T17:30:00+02:00|Kölner Junghaie – Iserlohner EC",
+  "name": "Starke, Matthias",
+  "slug": "starke-matthias",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 17:30 Uhr – SR · U15 RLA · Kölner Junghaie – Iserlohner EC"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Essen-West",
+  "kennung": "2026-10-04T10:15:00+02:00|EHC Essen Ruhr – Lippe Hockey Hamm",
+  "name": "Hindley, David",
+  "slug": "hindley-david",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 10:15 Uhr – SR · U15 LL · EHC Essen Ruhr – Lippe Hockey Hamm"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Neuss",
+  "kennung": "2026-10-03T18:00:00+02:00|Neusser EV – EHC Essen Ruhr",
+  "name": "Schmidt, Waldemar",
+  "slug": "schmidt-waldemar",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 18:00 Uhr – SR · U13 LL · Neusser EV – EHC Essen Ruhr"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Neuss",
+  "kennung": "2026-10-03T20:30:00+02:00|Neusser EV – Herforder EV",
+  "name": "Schmidt, Waldemar",
+  "slug": "schmidt-waldemar",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 20:30 Uhr – LSR · U20 RL · Neusser EV – Herforder EV"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissportzentrum Westfalen",
+  "kennung": "2026-10-02T20:00:00+02:00|Eisadler Dortmund – ESV Grizzlys Bergkamen",
+  "name": "Priebsch, Jan Philipp",
+  "slug": "priebsch-jan-philipp",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Fr 02.10. 20:00 Uhr – HSR · RL FS · Eisadler Dortmund – ESV Grizzlys Bergkamen"
+ },
+ {
+  "art": "neu",
+  "halle": "Eishalle Brehmstraße",
+  "kennung": "2026-10-03T13:30:00+02:00|Düsseldorfer EG – Krefelder EV",
+  "name": "Scholz, Arien",
+  "slug": "scholz-arien",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 13:30 Uhr – SR · U15 RLA · Düsseldorfer EG – Krefelder EV"
+ },
+ {
+  "art": "neu",
+  "halle": "Eishalle Brehmstraße",
+  "kennung": "2026-10-03T16:30:00+02:00|Düsseldorfer EG – ESC Dresden",
+  "name": "Scholz, Arien",
+  "slug": "scholz-arien",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 16:30 Uhr – SR · U17 I · Düsseldorfer EG – ESC Dresden"
+ },
+ {
+  "art": "neu",
+  "halle": "Kölnarena 2",
+  "kennung": "2026-10-04T12:00:00+02:00|Kölner Junghaie – Iserlohner EC",
+  "name": "Scholz, Arien",
+  "slug": "scholz-arien",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 12:00 Uhr – SR · U17 I · Kölner Junghaie – Iserlohner EC"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Bergkamen",
+  "kennung": "2026-10-03T17:30:00+02:00|ESV Grizzlys Bergkamen – EC Bergisch Land",
+  "name": "Skalecki, Martin",
+  "slug": "skalecki-martin",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 17:30 Uhr – SR · U20 LL · ESV Grizzlys Bergkamen – EC Bergisch Land"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Bergkamen",
+  "kennung": "2026-10-04T18:30:00+02:00|ESV Grizzlys Bergkamen 1c – EHC Troisdorf 1b",
+  "name": "Skalecki, Martin",
+  "slug": "skalecki-martin",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 18:30 Uhr – SR · Senioren BZL · ESV Grizzlys Bergkamen 1c – EHC Troisdorf 1b"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Solingen",
+  "kennung": "2026-10-02T20:15:00+02:00|EC Bergisch Land – Eisadler Dortmund 1b",
+  "name": "Braun, Benjamin",
+  "slug": "braun-benjamin",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Fr 02.10. 20:15 Uhr – SR · U15 BZL · EC Bergisch Land – Eisadler Dortmund 1b"
+ },
+ {
+  "art": "neu",
+  "halle": "Rheinlandhalle Krefeld",
+  "kennung": "2026-10-04T17:00:00+02:00|Krefelder EV",
+  "name": "Braun, Benjamin",
+  "slug": "braun-benjamin",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 17:00 Uhr – SR · U11 RL · Krefelder EV"
+ },
+ {
+  "art": "neu",
+  "halle": "Rheinlandhalle Krefeld",
+  "kennung": "2026-10-03T13:30:00+02:00|Krefelder EV – Düsseldorfer EG YAYLA Krefeld",
+  "name": "Licau, Sebastian",
+  "slug": "licau-sebastian",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 13:30 Uhr – SR · U13 RLA · Krefelder EV – Düsseldorfer EG YAYLA Krefeld"
+ },
+ {
+  "art": "neu",
+  "halle": "Rheinlandhalle Krefeld",
+  "kennung": "2026-10-03T16:30:00+02:00|Krefelder EV – ES Weißwasser YAYLA Krefeld",
+  "name": "Licau, Sebastian",
+  "slug": "licau-sebastian",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 16:30 Uhr – SR · U17 I · Krefelder EV – ES Weißwasser YAYLA Krefeld"
+ },
+ {
+  "art": "neu",
+  "halle": "Kölnarena 2",
+  "kennung": "2026-10-04T14:45:00+02:00|Kölner Junghaie 1b – EJ Kassel",
+  "name": "Licau, Sebastian",
+  "slug": "licau-sebastian",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 14:45 Uhr – SR · U13 RLB · Kölner Junghaie 1b – EJ Kassel"
+ },
+ {
+  "art": "neu",
+  "halle": "Kölnarena 2",
+  "kennung": "2026-10-04T17:30:00+02:00|Kölner Junghaie – Iserlohner EC",
+  "name": "Licau, Sebastian",
+  "slug": "licau-sebastian",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 17:30 Uhr – SR · U15 RLA · Kölner Junghaie – Iserlohner EC"
+ },
+ {
+  "art": "neu",
+  "halle": "Rheinlandhalle Krefeld",
+  "kennung": "2026-10-04T11:00:00+02:00|Krefelder EV – ES Weißwasser YAYLA Krefeld",
+  "name": "Hornig, Matthias",
+  "slug": "hornig-matthias",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 11:00 Uhr – SR · U17 I · Krefelder EV – ES Weißwasser YAYLA Krefeld"
+ },
+ {
+  "art": "neu",
+  "halle": "Emscher-Lippe-Halle Gelsenkirchen",
+  "kennung": "2026-10-04T17:30:00+02:00|EHC Gelsenkirchen – Neusser EV 1b",
+  "name": "Krawinkel, Markus",
+  "slug": "krawinkel-markus",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 17:30 Uhr – SR · BL FS · EHC Gelsenkirchen – Neusser EV 1b"
+ },
+ {
+  "art": "neu",
+  "halle": "Eishalle Im Kleinen Felde",
+  "kennung": "2026-10-02T20:00:00+02:00|Herforder EV – Ratinger Ice Aliens",
+  "name": "Müller, Lars",
+  "slug": "mueller-lars",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Fr 02.10. 20:00 Uhr – SR · U20 RL · Herforder EV – Ratinger Ice Aliens"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle am Seilersee",
+  "kennung": "2026-10-03T12:20:00+02:00|Iserlohner EC – Kölner Junghaie",
+  "name": "Müller, Lars",
+  "slug": "mueller-lars",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 12:20 Uhr – SR · U17 I · Iserlohner EC – Kölner Junghaie"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissportzentrum Möhnesee",
+  "kennung": "2026-10-04T18:45:00+02:00|Soester EG – EHC Essen Ruhr",
+  "name": "Müller, Lars",
+  "slug": "mueller-lars",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 18:45 Uhr – SR · LL FS · Soester EG – EHC Essen Ruhr"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Dinslaken",
+  "kennung": "2026-10-03T12:30:00+02:00|Dinslakener Kobras – FASS Berlin",
+  "name": "Heyer, Christoph (N)",
+  "slug": "heyer-christoph",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 12:30 Uhr – SR · DFEL2 Nord · Dinslakener Kobras – FASS Berlin"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Dinslaken",
+  "kennung": "2026-10-04T19:00:00+02:00|Dinslakener Kobras – Ratinger Ice Aliens",
+  "name": "Perlitz, Christian",
+  "slug": "perlitz-christian",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 19:00 Uhr – HSR · Senioren RLW · Dinslakener Kobras – Ratinger Ice Aliens"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissportzentrum Westfalen",
+  "kennung": "2026-10-02T20:00:00+02:00|Eisadler Dortmund – ESV Grizzlys Bergkamen",
+  "name": "Malik, Orlando",
+  "slug": "malik-orlando",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Fr 02.10. 20:00 Uhr – LSR · RL FS · Eisadler Dortmund – ESV Grizzlys Bergkamen"
+ },
+ {
+  "art": "neu",
+  "kennung": "2026-10-03T09:15:00+02:00|SpG EHC Gelsenkirchen – Herner EV 1b -",
+  "name": "Malik, Orlando",
+  "slug": "malik-orlando",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 09:15 Uhr – SR · U9 LL Lila · SpG EHC Gelsenkirchen – Herner EV 1b -"
+ },
+ {
+  "art": "neu",
+  "halle": "Emscher-Lippe-Halle Gelsenkirchen",
+  "kennung": "2026-10-04T17:30:00+02:00|EHC Gelsenkirchen – Neusser EV 1b",
+  "name": "Heffler, Zsolt",
+  "slug": "heffler-zsolt",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 17:30 Uhr – SR · BL FS · EHC Gelsenkirchen – Neusser EV 1b"
+ },
+ {
+  "art": "neu",
+  "halle": "Eishalle Im Kleinen Felde",
+  "kennung": "2026-10-03T08:00:00+02:00|Herforder EV – Herner EV",
+  "name": "Keller, Alexander",
+  "slug": "keller-alexander",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 08:00 Uhr – SR · U17 RL · Herforder EV – Herner EV"
+ },
+ {
+  "art": "neu",
+  "halle": "Eishalle Im Kleinen Felde",
+  "kennung": "2026-10-03T11:30:00+02:00|Herforder EV – EHC Die Bären Neuwied",
+  "name": "Keller, Alexander",
+  "slug": "keller-alexander",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 11:30 Uhr – SR · U15 LL · Herforder EV – EHC Die Bären Neuwied"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Bergkamen",
+  "kennung": "2026-10-04T18:30:00+02:00|ESV Grizzlys Bergkamen 1c – EHC Troisdorf 1b",
+  "name": "Keller, Alexander",
+  "slug": "keller-alexander",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 18:30 Uhr – SR · Senioren BZL · ESV Grizzlys Bergkamen 1c – EHC Troisdorf 1b"
+ },
+ {
+  "art": "neu",
+  "halle": "Eishalle Brehmstraße",
+  "kennung": "2026-10-03T11:00:00+02:00|Düsseldorfer EG – ESC Dresden",
+  "name": "van Himbeeck, Frederic",
+  "slug": "van-himbeeck-frederic",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 11:00 Uhr – SR · U17 I · Düsseldorfer EG – ESC Dresden"
+ },
+ {
+  "art": "neu",
+  "halle": "Eishalle Brehmstraße",
+  "kennung": "2026-10-04T08:00:00+02:00|Düsseldorfer EG 1b",
+  "name": "van Himbeeck, Frederic",
+  "slug": "van-himbeeck-frederic",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 08:00 Uhr – SR · U9 LL Rot · Düsseldorfer EG 1b"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Essen-West",
+  "kennung": "2026-10-02T20:00:00+02:00|EHC Essen Ruhr – EC Bergisch Land",
+  "name": "Fenke, Matthias",
+  "slug": "fenke-matthias",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Fr 02.10. 20:00 Uhr – SR · BL FS · EHC Essen Ruhr – EC Bergisch Land"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Essen-West",
+  "kennung": "2026-10-03T12:15:00+02:00|EHC Essen Ruhr",
+  "name": "Fenke, Matthias",
+  "slug": "fenke-matthias",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 12:15 Uhr – SR · U9 LL Blau · EHC Essen Ruhr"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissportzentrum Westfalen",
+  "kennung": "2026-10-04T19:00:00+02:00|Eisadler Dortmund – TuS Wiehl",
+  "name": "Fenke, Matthias",
+  "slug": "fenke-matthias",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 19:00 Uhr – LSR · U20 RL · Eisadler Dortmund – TuS Wiehl"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Bergisch Gladbach",
+  "kennung": "2026-10-02T20:00:00+02:00|ESV Bergisch Gladbach – Eisadler Dortmund",
+  "name": "Solbach, Carsten",
+  "slug": "solbach-carsten",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Fr 02.10. 20:00 Uhr – SR · Frauen LL · ESV Bergisch Gladbach – Eisadler Dortmund"
+ },
+ {
+  "art": "neu",
+  "kennung": "2026-10-04T18:15:00+02:00|GSC Moers – Jadehaie Sande",
+  "name": "Solbach, Carsten",
+  "slug": "solbach-carsten",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 18:15 Uhr – LSR · RL FS · GSC Moers – Jadehaie Sande"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle am Seilersee",
+  "kennung": "2026-10-03T12:20:00+02:00|Iserlohner EC – Kölner Junghaie",
+  "name": "Garbsch, René",
+  "slug": "garbsch-rene",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "Sa 03.10. 12:20 Uhr – SR · U17 I · Iserlohner EC – Kölner Junghaie"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissportzentrum Möhnesee",
+  "kennung": "2026-10-04T18:45:00+02:00|Soester EG – EHC Essen Ruhr",
+  "name": "Garbsch, René",
+  "slug": "garbsch-rene",
+  "stand": "2026-09-21T15:30:38.777709+00:00",
+  "text": "So 04.10. 18:45 Uhr – SR · LL FS · Soester EG – EHC Essen Ruhr"
  }
 ]

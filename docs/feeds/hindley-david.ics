@@ -82,4 +82,31 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Blau · Kölner Jun
  ghaie 1c
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:8f5ab8bca781f4f91645ac31751cf062cfdc6dcb@esrw.de
+SEQUENCE:0
+DTSTAMP:20260921T153038Z
+LAST-MODIFIED:20260921T153038Z
+DTSTART:20261004T071500Z
+DTEND:20261004T104500Z
+SUMMARY:SR · U15 LL · EHC Essen Ruhr – Lippe Hockey Hamm
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:15 Uhr\nTreffpunkt:
+  09:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Es
+ sen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Budzynski\, Mika 
+ (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Essen-West\, Curtiusstr. 2\, 45144 Essen
+GEO:51.454179;6.976731
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
+ Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
+ n-West":geo:51.454179,6.976731
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL · EHC Essen Ruhr 
+ – Lippe Hockey Hamm
+END:VALARM
+END:VEVENT
 END:VCALENDAR
