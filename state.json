@@ -1987,20 +1987,6 @@
   "titel": "SR · U9 LL Lila · SpG EHC Gelsenkirchen – Herner EV 1b -",
   "treffpunkt": "2026-10-03T08:15:00+02:00"
  },
- "75984cea56ac42525301eced7513c9c749fd3687@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-27T18:00:00+02:00",
-  "geaendert_am": null,
-  "id": "2026-09-27T18:00:00+02:00|EHC Troisdorf 1b – EC Bergisch Land",
-  "inhalt": "3b8d393a75295678e2c1923cb340b62299a880d5",
-  "korrektur": null,
-  "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-  "sequence": 0,
-  "slug": "beckford-emanuel",
-  "stempel": "2026-09-17T17:30:38.957160+00:00",
-  "titel": "SR · U13 LL · EHC Troisdorf 1b – EC Bergisch Land",
-  "treffpunkt": "2026-09-27T17:00:00+02:00"
- },
  "75b68d0c48ccd9159a6a6b4c0dd653906aed4c05@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-25T20:00:00+02:00",
@@ -2266,6 +2252,20 @@
   "stempel": "2026-09-21T15:30:38.777709+00:00",
   "titel": "HSR · U20 RL · Neusser EV – Herforder EV",
   "treffpunkt": "2026-10-03T19:30:00+02:00"
+ },
+ "80d016bc86ebae7226e897c31a33a2d4031e553d@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-27T18:00:00+02:00",
+  "geaendert_am": null,
+  "id": "2026-09-27T18:00:00+02:00|EHC Troisdorf 1b – EC Bergisch Land",
+  "inhalt": "3b8d393a75295678e2c1923cb340b62299a880d5",
+  "korrektur": null,
+  "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
+  "sequence": 0,
+  "slug": "hauerwaas-gabriel",
+  "stempel": "2026-09-21T15:45:26.728969+00:00",
+  "titel": "SR · U13 LL · EHC Troisdorf 1b – EC Bergisch Land",
+  "treffpunkt": "2026-09-27T17:00:00+02:00"
  },
  "81ad5cc909d987008d3a1ae756115b71ba801d2c@esrw.de": {
   "aenderung": null,

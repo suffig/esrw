@@ -204,11 +204,11 @@
       1
      ],
      [
-      "U13 RLB",
+      "U13 LL",
       1
      ],
      [
-      "U13 LL",
+      "U13 RLB",
       1
      ]
     ],
@@ -218,11 +218,11 @@
       1
      ],
      [
-      "Gysenberghalle Herne",
+      "Eissporthalle Dinslaken",
       1
      ],
      [
-      "Eissporthalle Dinslaken",
+      "Gysenberghalle Herne",
       1
      ]
     ],
@@ -232,11 +232,11 @@
       1
      ],
      [
-      "Heu, Alexander",
+      "Störmann, Manuel",
       1
      ],
      [
-      "Störmann, Manuel",
+      "Heu, Alexander",
       1
      ]
     ],
@@ -343,10 +343,10 @@
     "Beckford, Emanuel"
    ],
    "statistik": {
-    "gesamt": 4,
-    "saison": 4,
+    "gesamt": 3,
+    "saison": 3,
     "rollen": {
-     "SR": 3,
+     "SR": 2,
      "LSR": 1
     },
     "ligen": [
@@ -361,10 +361,6 @@
      [
       "BZ FS",
       1
-     ],
-     [
-      "U13 LL",
-      1
      ]
     ],
     "hallen": [
@@ -374,10 +370,6 @@
      ],
      [
       "Rheinlandhalle Krefeld",
-      1
-     ],
-     [
-      "ICEDOME Troisdorf",
       1
      ]
     ],
@@ -397,16 +389,12 @@
      [
       "Stocker, Quirin",
       1
-     ],
-     [
-      "Starke, Matthias",
-      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      4
+      3
      ]
     ],
     "erste": "2026-09-13",
@@ -447,34 +435,6 @@
      "manuell": false
     },
     {
-     "beginn": "2026-09-27T18:00:00+02:00",
-     "treffpunkt": "2026-09-27T17:00:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U13 LL",
-     "paarung": "EHC Troisdorf 1b – EC Bergisch Land",
-     "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
-     "halle": "ICEDOME Troisdorf",
-     "koordinaten": [
-      50.811945,
-      7.109233
-     ],
-     "gespann": [
-      {
-       "name": "Starke, Matthias",
-       "slug": "starke-matthias",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": false,
-     "aenderung": null,
-     "hinweis": "Danach Neusser EV 1b – EHC Essen in Eissporthalle Neuss – nur 120 Min bis zum nächsten Anstoß",
-     "id": "2026-09-27T18:00:00+02:00|EHC Troisdorf 1b – EC Bergisch Land",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-27T20:00:00+02:00",
      "treffpunkt": "2026-09-27T19:00:00+02:00",
      "rolle": "SR",
@@ -497,7 +457,7 @@
      "halle_erkannt": true,
      "vergangen": false,
      "aenderung": null,
-     "hinweis": "Davor EHC Troisdorf 1b – EC Bergisch Land in ICEDOME Troisdorf – nur 120 Min nach dem vorigen Anstoß",
+     "hinweis": null,
      "id": "2026-09-27T20:00:00+02:00|Neusser EV 1b – EHC Essen",
      "korrektur": null,
      "manuell": false
@@ -518,19 +478,19 @@
     },
     "ligen": [
      [
-      "U13 RLB",
-      3
-     ],
-     [
       "U17 RL",
       3
      ],
      [
-      "U20 FS",
+      "U13 RLB",
+      3
+     ],
+     [
+      "U20 RL",
       1
      ],
      [
-      "U15 FS",
+      "U20 FS",
       1
      ]
     ],
@@ -562,7 +522,7 @@
       2
      ],
      [
-      "Menzel, Joey-Max",
+      "Müller, Lars",
       1
      ]
     ],
@@ -1313,15 +1273,15 @@
     ],
     "partner": [
      [
+      "Hindley, David",
+      1
+     ],
+     [
       "Schlüter, Thomas",
       1
      ],
      [
       "Klemm, Julian",
-      1
-     ],
-     [
-      "Hindley, David",
       1
      ]
     ],
@@ -1833,15 +1793,15 @@
     },
     "ligen": [
      [
+      "BL FS",
+      1
+     ],
+     [
       "DFEL2 Nord",
       1
      ],
      [
       "LL FS",
-      1
-     ],
-     [
-      "BL FS",
       1
      ],
      [
@@ -1851,29 +1811,29 @@
     ],
     "hallen": [
      [
+      "Eissporthalle Essen-West",
+      1
+     ],
+     [
       "Kölnarena 2",
       1
      ],
      [
       "ICEDOME Troisdorf",
       1
-     ],
-     [
-      "Eissporthalle Essen-West",
-      1
      ]
     ],
     "partner": [
+     [
+      "Fenke, Matthias",
+      1
+     ],
      [
       "Hauerwaas, Gabriel",
       1
      ],
      [
       "Krawinkel, Markus",
-      1
-     ],
-     [
-      "Fenke, Matthias",
       1
      ],
      [
@@ -1993,16 +1953,16 @@
     "gesamt": 4,
     "saison": 4,
     "rollen": {
-     "SR": 3,
-     "LSR": 1
+     "LSR": 1,
+     "SR": 3
     },
     "ligen": [
      [
-      "U13 FS",
+      "U20 RL",
       1
      ],
      [
-      "BL FS",
+      "U13 FS",
       1
      ],
      [
@@ -2010,7 +1970,7 @@
       1
      ],
      [
-      "U20 RL",
+      "BL FS",
       1
      ]
     ],
@@ -2020,21 +1980,25 @@
       2
      ],
      [
-      "Kölnarena 2",
+      "Eissportzentrum Westfalen",
       1
      ],
      [
-      "Eissportzentrum Westfalen",
+      "Kölnarena 2",
       1
      ]
     ],
     "partner": [
      [
-      "Bocklemünd, Cid",
+      "Steeg, Cedric",
       1
      ],
      [
-      "Engler, Gerhard",
+      "Warnke, Christoph",
+      1
+     ],
+     [
+      "Bocklemünd, Cid",
       1
      ],
      [
@@ -2042,11 +2006,7 @@
       1
      ],
      [
-      "Steeg, Cedric",
-      1
-     ],
-     [
-      "Warnke, Christoph",
+      "Engler, Gerhard",
       1
      ]
     ],
@@ -2954,11 +2914,11 @@
       1
      ],
      [
-      "U13 RLB",
+      "Frauen Pokal Gr.A",
       1
      ],
      [
-      "DEFL 2 FS",
+      "U13 RLB",
       1
      ]
     ],
@@ -2972,11 +2932,11 @@
       1
      ],
      [
-      "PreZero Rheinlandhalle Duisburg",
+      "Eissporthalle Solingen",
       1
      ],
      [
-      "Eishalle Brehmstraße",
+      "PreZero Rheinlandhalle Duisburg",
       1
      ]
     ],
@@ -2994,11 +2954,11 @@
       1
      ],
      [
-      "Marks, Marcel",
+      "Henkels, André",
       1
      ],
      [
-      "Vorgeitz, Benny",
+      "Marks, Marcel",
       1
      ]
     ],
@@ -3138,33 +3098,33 @@
     "Hauerwaas, Gabriel"
    ],
    "statistik": {
-    "gesamt": 6,
-    "saison": 6,
+    "gesamt": 7,
+    "saison": 7,
     "rollen": {
-     "SR": 6
+     "SR": 7
     },
     "ligen": [
+     [
+      "U13 LL",
+      2
+     ],
+     [
+      "U13 RLB",
+      1
+     ],
      [
       "U15 RLB",
       1
      ],
      [
-      "U13 LL",
-      1
-     ],
-     [
       "U17 II",
-      1
-     ],
-     [
-      "DFEL2 Nord",
       1
      ]
     ],
     "hallen": [
      [
       "ICEDOME Troisdorf",
-      3
+      4
      ],
      [
       "Kölnarena 2",
@@ -3181,6 +3141,10 @@
       2
      ],
      [
+      "Moritz, Alexander",
+      1
+     ],
+     [
       "Schöche, Gian-Carlo",
       1
      ],
@@ -3189,18 +3153,14 @@
       1
      ],
      [
-      "Hoffmann, Jan",
-      1
-     ],
-     [
-      "Moritz, Alexander",
+      "Starke, Matthias",
       1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      6
+      7
      ]
     ],
     "erste": "2026-09-04",
@@ -3260,6 +3220,34 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-09-26T19:15:00+02:00|KEC \"Die Haie\" – FASS Berlin",
+     "korrektur": null,
+     "manuell": false
+    },
+    {
+     "beginn": "2026-09-27T18:00:00+02:00",
+     "treffpunkt": "2026-09-27T17:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "U13 LL",
+     "paarung": "EHC Troisdorf 1b – EC Bergisch Land",
+     "ort": "ICEDOME Troisdorf, Uckendorfer Straße 135, 53844 Troisdorf",
+     "halle": "ICEDOME Troisdorf",
+     "koordinaten": [
+      50.811945,
+      7.109233
+     ],
+     "gespann": [
+      {
+       "name": "Starke, Matthias",
+       "slug": "starke-matthias",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null,
+     "id": "2026-09-27T18:00:00+02:00|EHC Troisdorf 1b – EC Bergisch Land",
      "korrektur": null,
      "manuell": false
     },
@@ -3347,11 +3335,11 @@
       3
      ],
      [
-      "Schmidt, Waldemar",
+      "Scholz, Arien",
       2
      ],
      [
-      "Scholz, Arien",
+      "Schmidt, Waldemar",
       2
      ],
      [
@@ -3569,7 +3557,7 @@
       1
      ],
      [
-      "U13 FS",
+      "BL FS",
       1
      ]
     ],
@@ -3854,19 +3842,19 @@
     },
     "ligen": [
      [
+      "Frauen Pokal Gr.A",
+      1
+     ],
+     [
       "U9 LL Gelb",
       1
      ],
      [
-      "LL FS",
+      "U9 LL Blau",
       1
      ],
      [
       "U15 BZL",
-      1
-     ],
-     [
-      "U9 LL Blau",
       1
      ]
     ],
@@ -3886,15 +3874,11 @@
     ],
     "partner": [
      [
+      "Hartmann, Marius",
+      1
+     ],
+     [
       "Somplatzki, Torben",
-      1
-     ],
-     [
-      "Reuter, Fynn",
-      1
-     ],
-     [
-      "Braun, Benjamin",
       1
      ],
      [
@@ -3902,7 +3886,11 @@
       1
      ],
      [
-      "Hartmann, Marius",
+      "Braun, Benjamin",
+      1
+     ],
+     [
+      "Reuter, Fynn",
       1
      ]
     ],
@@ -4085,7 +4073,7 @@
       1
      ],
      [
-      "U13 RLB",
+      "U13 LL",
       1
      ]
     ],
@@ -4125,7 +4113,7 @@
       1
      ],
      [
-      "Galeske, Jonas",
+      "Honselmann, Tom (N)",
       1
      ]
     ],
@@ -4423,11 +4411,11 @@
       2
      ],
      [
-      "U11 LL Blau",
+      "U15 LL",
       1
      ],
      [
-      "U17 FS",
+      "U11 LL Blau",
       1
      ]
     ],
@@ -4437,15 +4425,15 @@
       3
      ],
      [
+      "Eissporthalle Essen-West",
+      1
+     ],
+     [
       "ICEDOME Troisdorf",
       1
      ],
      [
       "Kölnarena 2",
-      1
-     ],
-     [
-      "Eissporthalle Neuss",
       1
      ]
     ],
@@ -4453,6 +4441,10 @@
      [
       "Zynda, Jayden",
       2
+     ],
+     [
+      "Budzynski, Mika (N)",
+      1
      ],
      [
       "Hofer, Carsten",
@@ -4464,10 +4456,6 @@
      ],
      [
       "Victor, Tobias (N)",
-      1
-     ],
-     [
-      "Galeske, Jonas",
       1
      ]
     ],
@@ -4614,11 +4602,11 @@
       2
      ],
      [
-      "RL FS",
+      "U15 RLB",
       2
      ],
      [
-      "U15 RLB",
+      "RL FS",
       2
      ],
      [
@@ -4926,6 +4914,10 @@
     },
     "ligen": [
      [
+      "U13 LL",
+      1
+     ],
+     [
       "U11 RL",
       1
      ],
@@ -4935,10 +4927,6 @@
      ],
      [
       "U15 RLB",
-      1
-     ],
-     [
-      "U13 LL",
       1
      ]
     ],
@@ -4954,6 +4942,10 @@
     ],
     "partner": [
      [
+      "Moritz, Alexander",
+      1
+     ],
+     [
       "Heffler, Philipp",
       1
      ],
@@ -4963,10 +4955,6 @@
      ],
      [
       "Starke, Matthias",
-      1
-     ],
-     [
-      "Moritz, Alexander",
       1
      ]
     ],
@@ -5062,7 +5050,7 @@
     ],
     "hallen": [
      [
-      "HELINET Eissportarena Hamm",
+      "Eissporthalle Bergkamen",
       1
      ],
      [
@@ -5070,13 +5058,13 @@
       1
      ],
      [
-      "Eissporthalle Bergkamen",
+      "HELINET Eissportarena Hamm",
       1
      ]
     ],
     "partner": [
      [
-      "Klemm, Julian",
+      "Heu, Alexander",
       1
      ],
      [
@@ -5084,7 +5072,7 @@
       1
      ],
      [
-      "Heu, Alexander",
+      "Klemm, Julian",
       1
      ]
     ],
@@ -5322,31 +5310,31 @@
     },
     "ligen": [
      [
-      "U15 LL",
+      "U17 I",
       1
      ],
      [
-      "U17 I",
+      "U15 LL",
       1
      ]
     ],
     "hallen": [
      [
-      "Eissporthalle Dinslaken",
+      "Rheinlandhalle Krefeld",
       1
      ],
      [
-      "Rheinlandhalle Krefeld",
+      "Eissporthalle Dinslaken",
       1
      ]
     ],
     "partner": [
      [
-      "Kuriata, Florian-Nikita",
+      "Pluschkell, Julian",
       1
      ],
      [
-      "Pluschkell, Julian",
+      "Kuriata, Florian-Nikita",
       1
      ]
     ],
@@ -5432,11 +5420,11 @@
     },
     "ligen": [
      [
-      "U15 RLB",
+      "U13 LL",
       1
      ],
      [
-      "U13 LL",
+      "U15 RLB",
       1
      ],
      [
@@ -5446,11 +5434,11 @@
     ],
     "hallen": [
      [
-      "PreZero Rheinlandhalle Duisburg",
+      "HELINET Eissportarena Hamm",
       1
      ],
      [
-      "HELINET Eissportarena Hamm",
+      "PreZero Rheinlandhalle Duisburg",
       1
      ],
      [
@@ -5460,11 +5448,11 @@
     ],
     "partner": [
      [
-      "Hofer, Carsten",
+      "Steeg, Cedric",
       1
      ],
      [
-      "Steeg, Cedric",
+      "Hofer, Carsten",
       1
      ],
      [
@@ -5586,15 +5574,15 @@
       2
      ],
      [
+      "Senioren BZL",
+      1
+     ],
+     [
       "U13 RLB",
       1
      ],
      [
       "U15 LL",
-      1
-     ],
-     [
-      "Senioren BZL",
       1
      ]
     ],
@@ -6271,15 +6259,15 @@
       1
      ],
      [
+      "BL FS",
+      1
+     ],
+     [
       "U11 LL Blau",
       1
      ],
      [
       "DNL III",
-      1
-     ],
-     [
-      "LL FS",
       1
      ]
     ],
@@ -6289,15 +6277,15 @@
       1
      ],
      [
+      "Emscher-Lippe-Halle Gelsenkirchen",
+      1
+     ],
+     [
       "Kölnarena 2",
       1
      ],
      [
       "PreZero Rheinlandhalle Duisburg",
-      1
-     ],
-     [
-      "ICEDOME Troisdorf",
       1
      ]
     ],
@@ -6311,15 +6299,15 @@
       1
      ],
      [
+      "Heffler, Zsolt",
+      1
+     ],
+     [
       "Hindley, David",
       1
      ],
      [
       "Pacalaj, Erik",
-      1
-     ],
-     [
-      "Engler, Gerhard",
       1
      ]
     ],
@@ -6480,11 +6468,11 @@
       1
      ],
      [
-      "U15 FS",
+      "Senioren RLW",
       1
      ],
      [
-      "Senioren RLW",
+      "U15 FS",
       1
      ]
     ],
@@ -6512,15 +6500,15 @@
       1
      ],
      [
-      "Reuter, Fynn",
-      1
-     ],
-     [
       "Perlitz, Christian",
       1
      ],
      [
       "Menzel, Joey-Max",
+      1
+     ],
+     [
+      "Reuter, Fynn",
       1
      ]
     ],
@@ -7087,8 +7075,8 @@
     "gesamt": 7,
     "saison": 7,
     "rollen": {
-     "HSR": 3,
-     "SR": 4
+     "SR": 4,
+     "HSR": 3
     },
     "ligen": [
      [
@@ -7096,7 +7084,7 @@
       2
      ],
      [
-      "RL FS",
+      "U17 I",
       1
      ],
      [
@@ -7104,17 +7092,17 @@
       1
      ],
      [
-      "U17 I",
+      "U13 RLB",
       1
      ]
     ],
     "hallen": [
      [
-      "PreZero Rheinlandhalle Duisburg",
+      "Rheinlandhalle Krefeld",
       2
      ],
      [
-      "Rheinlandhalle Krefeld",
+      "PreZero Rheinlandhalle Duisburg",
       2
      ],
      [
@@ -7128,15 +7116,15 @@
     ],
     "partner": [
      [
+      "Reuter, Fynn",
+      2
+     ],
+     [
       "Musga, Maurice",
       2
      ],
      [
       "Hornig, Marius",
-      2
-     ],
-     [
-      "Reuter, Fynn",
       2
      ],
      [
@@ -7839,7 +7827,7 @@
       1
      ],
      [
-      "U13 RLB",
+      "U15 LL",
       1
      ]
     ],
@@ -7867,6 +7855,10 @@
       1
      ],
      [
+      "Pacalaj, Erik",
+      1
+     ],
+     [
       "Schmidt, Waldemar",
       1
      ],
@@ -7876,10 +7868,6 @@
      ],
      [
       "Scholz, Arien",
-      1
-     ],
-     [
-      "Hartmann, Marius",
       1
      ]
     ],
@@ -8375,40 +8363,40 @@
     "gesamt": 2,
     "saison": 2,
     "rollen": {
-     "SR": 1,
-     "LSR": 1
+     "LSR": 1,
+     "SR": 1
     },
     "ligen": [
      [
-      "U15 RLA",
+      "Senioren RLW",
       1
      ],
      [
-      "Senioren RLW",
+      "U15 RLA",
       1
      ]
     ],
     "hallen": [
      [
-      "Rheinlandhalle Krefeld",
+      "Eissporthalle Dinslaken",
       1
      ],
      [
-      "Eissporthalle Dinslaken",
+      "Rheinlandhalle Krefeld",
       1
      ]
     ],
     "partner": [
-     [
-      "Berger, Eugen",
-      1
-     ],
      [
       "Perlitz, Christian",
       1
      ],
      [
       "Krüger, Martin",
+      1
+     ],
+     [
+      "Berger, Eugen",
       1
      ]
     ],
@@ -8475,15 +8463,15 @@
       2
      ],
      [
+      "U13 RLB",
+      1
+     ],
+     [
       "U17 RL",
       1
      ],
      [
       "BL FS",
-      1
-     ],
-     [
-      "U13 RLA",
       1
      ]
     ],
@@ -8507,15 +8495,15 @@
       2
      ],
      [
+      "Hauerwaas, Gabriel",
+      1
+     ],
+     [
       "Schöche, Gian-Carlo",
       1
      ],
      [
       "Hoffmann, Jan",
-      1
-     ],
-     [
-      "Hauerwaas, Gabriel",
       1
      ]
     ],
@@ -8666,11 +8654,11 @@
       2
      ],
      [
-      "U17 FS",
+      "U20 RL",
       1
      ],
      [
-      "U20 RL",
+      "LL FS",
       1
      ]
     ],
@@ -8680,15 +8668,15 @@
       2
      ],
      [
+      "Eishalle Im Kleinen Felde",
+      1
+     ],
+     [
       "Emscher-Lippe-Halle Gelsenkirchen",
       1
      ],
      [
       "Eissporthalle Essen-West",
-      1
-     ],
-     [
-      "Gysenberghalle Herne",
       1
      ]
     ],
@@ -8702,15 +8690,15 @@
       1
      ],
      [
+      "Berger, Eugen",
+      1
+     ],
+     [
       "Warnke, Christoph",
       1
      ],
      [
       "Hartmann, Marius",
-      1
-     ],
-     [
-      "Schmidt, Waldemar",
       1
      ]
     ],
@@ -9089,11 +9077,11 @@
       2
      ],
      [
-      "U20 FS",
+      "U15 LL",
       1
      ],
      [
-      "U17 FS",
+      "U20 FS",
       1
      ]
     ],
@@ -9125,15 +9113,15 @@
       2
      ],
      [
+      "Marks, Marcel",
+      1
+     ],
+     [
       "Vorgeitz, Benny",
       1
      ],
      [
       "Steeg, Cedric",
-      1
-     ],
-     [
-      "Schmidt, Waldemar",
       1
      ]
     ],
@@ -9337,10 +9325,14 @@
     "gesamt": 3,
     "saison": 3,
     "rollen": {
-     "SR": 1,
-     "HSR": 2
+     "HSR": 2,
+     "SR": 1
     },
     "ligen": [
+     [
+      "Senioren RLW",
+      1
+     ],
      [
       "U17 I",
       1
@@ -9348,13 +9340,13 @@
      [
       "RL FS",
       1
-     ],
-     [
-      "Senioren RLW",
-      1
      ]
     ],
     "hallen": [
+     [
+      "Eissporthalle Dinslaken",
+      1
+     ],
      [
       "Rheinlandhalle Krefeld",
       1
@@ -9362,13 +9354,17 @@
      [
       "Eissporthalle Essen-West",
       1
-     ],
-     [
-      "Eissporthalle Dinslaken",
-      1
      ]
     ],
     "partner": [
+     [
+      "Krüger, Martin",
+      1
+     ],
+     [
+      "Menzel, Joey-Max",
+      1
+     ],
      [
       "Giesen, Tom",
       1
@@ -9379,14 +9375,6 @@
      ],
      [
       "Garcia Nieto, Dario",
-      1
-     ],
-     [
-      "Krüger, Martin",
-      1
-     ],
-     [
-      "Menzel, Joey-Max",
       1
      ]
     ],
@@ -9540,7 +9528,7 @@
       1
      ],
      [
-      "U13 FS",
+      "U11 RL",
       1
      ]
     ],
@@ -9568,6 +9556,10 @@
       2
      ],
      [
+      "Hornig, Matthias",
+      1
+     ],
+     [
       "Garbsch, René",
       1
      ],
@@ -9576,11 +9568,7 @@
       1
      ],
      [
-      "Reuter, Rick",
-      1
-     ],
-     [
-      "Caelers, Fabian",
+      "Braun, Benjamin",
       1
      ]
     ],
@@ -9759,11 +9747,11 @@
       1
      ],
      [
-      "U15 RLA",
+      "RL FS",
       1
      ],
      [
-      "RL FS",
+      "U15 RLA",
       1
      ]
     ],
@@ -9777,11 +9765,11 @@
       1
      ],
      [
-      "Eissporthalle am Seilersee",
+      "Eissportzentrum Westfalen",
       1
      ],
      [
-      "Eissportzentrum Westfalen",
+      "Eissporthalle am Seilersee",
       1
      ]
     ],
@@ -9799,11 +9787,11 @@
       1
      ],
      [
-      "Licau, Alexander",
+      "Strube, Julia",
       1
      ],
      [
-      "Strube, Julia",
+      "Malik, Orlando",
       1
      ]
     ],
@@ -9932,19 +9920,23 @@
       2
      ],
      [
+      "U13 LL",
+      1
+     ],
+     [
       "U17 II",
       1
      ],
      [
-      "U13 RLA",
-      1
-     ],
-     [
-      "U15 RLA",
+      "U17 I",
       1
      ]
     ],
     "hallen": [
+     [
+      "Eissporthalle Neuss",
+      2
+     ],
      [
       "PreZero Rheinlandhalle Duisburg",
       2
@@ -9956,13 +9948,13 @@
      [
       "Eissporthalle Dinslaken",
       2
-     ],
-     [
-      "Eissporthalle Neuss",
-      2
      ]
     ],
     "partner": [
+     [
+      "Schmidt, Waldemar",
+      2
+     ],
      [
       "Kiefer, Dennis",
       2
@@ -9972,15 +9964,11 @@
       2
      ],
      [
-      "Schmidt, Waldemar",
-      2
-     ],
-     [
       "Strube, Julia",
       1
      ],
      [
-      "Pacalaj, Erik",
+      "Scholz, Arien",
       1
      ]
     ],
@@ -10259,15 +10247,15 @@
       2
      ],
      [
+      "U13 RLA",
+      1
+     ],
+     [
       "U15 FS",
       1
      ],
      [
       "LL FS",
-      1
-     ],
-     [
-      "U13 RLA",
       1
      ]
     ],
@@ -11296,11 +11284,11 @@
       1
      ],
      [
-      "LL FS",
+      "U13 LL",
       1
      ],
      [
-      "U9 RL",
+      "LL FS",
       1
      ]
     ],
@@ -11314,21 +11302,21 @@
       2
      ],
      [
-      "Rheinlandhalle Krefeld",
+      "Eissporthalle Neuss",
       2
      ],
      [
-      "Eissporthalle Neuss",
+      "Rheinlandhalle Krefeld",
       2
      ]
     ],
     "partner": [
      [
-      "Heffler, Philipp",
+      "Quint, Sascha",
       2
      ],
      [
-      "Quint, Sascha",
+      "Heffler, Philipp",
       2
      ],
      [
@@ -11877,11 +11865,11 @@
     },
     "ligen": [
      [
-      "RL FS",
+      "U17 I",
       2
      ],
      [
-      "U17 I",
+      "RL FS",
       2
      ],
      [
@@ -11907,7 +11895,7 @@
       1
      ],
      [
-      "PreZero Rheinlandhalle Duisburg",
+      "Kölnarena 2",
       1
      ]
     ],
@@ -11925,11 +11913,11 @@
       1
      ],
      [
-      "Marks, Marcel",
+      "Quint, Sascha",
       1
      ],
      [
-      "Pernt, Hendrik",
+      "Marks, Marcel",
       1
      ]
     ],
@@ -12264,15 +12252,15 @@
     ],
     "hallen": [
      [
+      "Eissporthalle Bergkamen",
+      2
+     ],
+     [
       "Eishalle Im Kleinen Felde",
       2
      ],
      [
       "Eissportzentrum Westfalen",
-      2
-     ],
-     [
-      "Eissporthalle Bergkamen",
       2
      ],
      [
@@ -12290,15 +12278,15 @@
       2
      ],
      [
+      "Keller, Alexander",
+      1
+     ],
+     [
       "Stockenschneider, Lars",
       1
      ],
      [
       "Garbsch, René",
-      1
-     ],
-     [
-      "Steeg, Cedric",
       1
      ]
     ],
@@ -12441,6 +12429,10 @@
     },
     "ligen": [
      [
+      "RL FS",
+      1
+     ],
+     [
       "U20 FS",
       1
      ],
@@ -12450,10 +12442,6 @@
      ],
      [
       "U9 RL",
-      1
-     ],
-     [
-      "Frauen LL",
       1
      ]
     ],
@@ -12481,19 +12469,19 @@
       2
      ],
      [
+      "Stocker, Quirin",
+      1
+     ],
+     [
+      "Scholz, Udo",
+      1
+     ],
+     [
       "Priebsch, Jan Philipp",
       1
      ],
      [
       "Schöche, Gian-Carlo",
-      1
-     ],
-     [
-      "Melchert, Philip",
-      1
-     ],
-     [
-      "Stocker, Quirin",
       1
      ]
     ],
@@ -12752,7 +12740,7 @@
       1
      ],
      [
-      "U13 LL",
+      "U15 RLA",
       1
      ]
     ],
@@ -12780,7 +12768,7 @@
       1
      ],
      [
-      "Beckford, Emanuel",
+      "Hauerwaas, Gabriel",
       1
      ],
      [
@@ -12897,8 +12885,8 @@
      ],
      "gespann": [
       {
-       "name": "Beckford, Emanuel",
-       "slug": "beckford-emanuel",
+       "name": "Hauerwaas, Gabriel",
+       "slug": "hauerwaas-gabriel",
        "rolle": "SR"
       }
      ],
@@ -12978,24 +12966,24 @@
     "gesamt": 10,
     "saison": 10,
     "rollen": {
-     "HSR": 2,
-     "SR": 8
+     "SR": 8,
+     "HSR": 2
     },
     "ligen": [
+     [
+      "U13 LL",
+      1
+     ],
+     [
+      "U20 RL",
+      1
+     ],
      [
       "RL FS",
       1
      ],
      [
       "U17 RL",
-      1
-     ],
-     [
-      "U15 RLA",
-      1
-     ],
-     [
-      "U15 LL",
       1
      ]
     ],
@@ -13005,11 +12993,11 @@
       3
      ],
      [
-      "Eissporthalle Bergkamen",
+      "HELINET Eissportarena Hamm",
       2
      ],
      [
-      "HELINET Eissportarena Hamm",
+      "Eissporthalle Bergkamen",
       2
      ],
      [
@@ -13023,19 +13011,19 @@
       3
      ],
      [
+      "Kalischke, Christian (N)",
+      1
+     ],
+     [
+      "Fenke, Matthias",
+      1
+     ],
+     [
+      "Warnke, Christoph",
+      1
+     ],
+     [
       "Schmidt, Waldemar",
-      1
-     ],
-     [
-      "Pacalaj, Erik",
-      1
-     ],
-     [
-      "Zynda, Nick",
-      1
-     ],
-     [
-      "Galeske, Jonas",
       1
      ]
     ],
@@ -13553,15 +13541,15 @@
       1
      ],
      [
+      "Scholz, Udo",
+      1
+     ],
+     [
+      "Solbach, Carsten",
+      1
+     ],
+     [
       "Heffler, Philipp",
-      1
-     ],
-     [
-      "Priebsch, Jan Philipp",
-      1
-     ],
-     [
-      "Beckford, Emanuel",
       1
      ]
     ],
@@ -13686,11 +13674,11 @@
       1
      ],
      [
-      "Senioren LL",
+      "U13 LL",
       1
      ],
      [
-      "U13 LL",
+      "Senioren LL",
       1
      ]
     ],
@@ -13706,11 +13694,11 @@
       1
      ],
      [
-      "Vorgeitz, Benny",
+      "Baum, Fabian (N)",
       1
      ],
      [
-      "Baum, Fabian (N)",
+      "Vorgeitz, Benny",
       1
      ]
     ],
@@ -13915,15 +13903,15 @@
       2
      ],
      [
+      "RL FS",
+      1
+     ],
+     [
       "U15 RLB",
       1
      ],
      [
       "BL FS",
-      1
-     ],
-     [
-      "RL FS",
       1
      ]
     ],
@@ -13933,15 +13921,15 @@
       2
      ],
      [
+      "Eissportzentrum Westfalen",
+      1
+     ],
+     [
       "Gysenberghalle Herne",
       1
      ],
      [
       "Eissporthalle Essen-West",
-      1
-     ],
-     [
-      "Eissportzentrum Westfalen",
       1
      ]
     ],
@@ -13951,19 +13939,19 @@
       1
      ],
      [
+      "Priebsch, Jan Philipp",
+      1
+     ],
+     [
+      "Malik, Orlando",
+      1
+     ],
+     [
       "Rieneck, Maximilian",
       1
      ],
      [
       "Schlüter, Thomas",
-      1
-     ],
-     [
-      "Schöche, Gian-Carlo",
-      1
-     ],
-     [
-      "Priebsch, Jan Philipp",
       1
      ]
     ],
@@ -14224,11 +14212,11 @@
       3
      ],
      [
-      "U7 Blau",
+      "U13 RLB",
       1
      ],
      [
-      "U13 RLB",
+      "U7 Blau",
       1
      ]
     ],
@@ -14260,15 +14248,15 @@
       1
      ],
      [
+      "Melchert, Philip",
+      1
+     ],
+     [
       "Reuter, Rick",
       1
      ],
      [
       "Marks, Marcel",
-      1
-     ],
-     [
-      "Melchert, Philip",
       1
      ]
     ],
@@ -14446,11 +14434,11 @@
       1
      ],
      [
-      "DEFL 2 FS",
+      "Senioren LL",
       1
      ],
      [
-      "U11 LL Rot",
+      "DEFL 2 FS",
       1
      ]
     ],
@@ -14478,11 +14466,11 @@
       1
      ],
      [
-      "Hartmann, Marius",
+      "Störmann, Manuel",
       1
      ],
      [
-      "Störmann, Manuel",
+      "Hartmann, Marius",
       1
      ]
     ],
@@ -14620,8 +14608,8 @@
     "gesamt": 4,
     "saison": 4,
     "rollen": {
-     "SR": 3,
-     "LSR": 1
+     "LSR": 1,
+     "SR": 3
     },
     "ligen": [
      [
@@ -14629,11 +14617,11 @@
       2
      ],
      [
-      "BL FS",
+      "U20 RL",
       1
      ],
      [
-      "U20 RL",
+      "BL FS",
       1
      ]
     ],
@@ -14653,15 +14641,15 @@
       2
      ],
      [
-      "Müller, Lars",
-      1
-     ],
-     [
       "Steeg, Cedric",
       1
      ],
      [
       "Fenke, Matthias",
+      1
+     ],
+     [
+      "Müller, Lars",
       1
      ]
     ],
@@ -15015,15 +15003,15 @@
       2
      ],
      [
+      "Honselmann, Tom (N)",
+      1
+     ],
+     [
       "Steeg, Cedric",
       1
      ],
      [
       "Kissing, Andreas",
-      1
-     ],
-     [
-      "Honselmann, Tom (N)",
       1
      ]
     ],
@@ -17510,9 +17498,9 @@
    "system": 2,
    "besetzung": [
     {
-     "name": "Beckford, Emanuel",
+     "name": "Hauerwaas, Gabriel",
      "rolle": "SR",
-     "slug": "beckford-emanuel"
+     "slug": "hauerwaas-gabriel"
     },
     {
      "name": "Starke, Matthias",

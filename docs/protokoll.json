@@ -1193,5 +1193,23 @@
   "slug": "garbsch-rene",
   "stand": "2026-09-21T15:30:38.777709+00:00",
   "text": "So 04.10. 18:45 Uhr – SR · LL FS · Soester EG – EHC Essen Ruhr"
+ },
+ {
+  "art": "neu",
+  "halle": "ICEDOME Troisdorf",
+  "kennung": "2026-09-27T18:00:00+02:00|EHC Troisdorf 1b – EC Bergisch Land",
+  "name": "Hauerwaas, Gabriel",
+  "slug": "hauerwaas-gabriel",
+  "stand": "2026-09-21T15:45:26.728969+00:00",
+  "text": "So 27.09. 18:00 Uhr – SR · U13 LL · EHC Troisdorf 1b – EC Bergisch Land"
+ },
+ {
+  "art": "entfallen",
+  "halle": "ICEDOME Troisdorf",
+  "kennung": "2026-09-27T18:00:00+02:00|EHC Troisdorf 1b – EC Bergisch Land",
+  "name": "Beckford, Emanuel",
+  "slug": "beckford-emanuel",
+  "stand": "2026-09-21T15:45:26.728969+00:00",
+  "text": "So 27.09. 18:00 Uhr – SR · U13 LL · EHC Troisdorf 1b – EC Bergisch Land"
  }
 ]
