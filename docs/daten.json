@@ -2,9 +2,9 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 91,
+ "spiele_gesamt": 92,
  "saison": "2026/27",
- "archiv_spiele": 171,
+ "archiv_spiele": 172,
  "rollen": {
   "SR": "Schiedsrichter",
   "HSR": "Hauptschiedsrichter",
@@ -303,10 +303,10 @@
     "Beckford, Emanuel"
    ],
    "statistik": {
-    "gesamt": 3,
-    "saison": 3,
+    "gesamt": 4,
+    "saison": 4,
     "rollen": {
-     "SR": 2,
+     "SR": 3,
      "LSR": 1
     },
     "ligen": [
@@ -321,15 +321,19 @@
      [
       "U13 LL",
       1
+     ],
+     [
+      "BZ FS",
+      1
      ]
     ],
     "hallen": [
      [
-      "Rheinlandhalle Krefeld",
-      1
+      "Eissporthalle Neuss",
+      2
      ],
      [
-      "Eissporthalle Neuss",
+      "Rheinlandhalle Krefeld",
       1
      ],
      [
@@ -353,12 +357,16 @@
      [
       "Starke, Matthias",
       1
+     ],
+     [
+      "Stocker, Quirin",
+      1
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      3
+      4
      ]
     ],
     "erste": "2026-09-13",
@@ -421,8 +429,36 @@
      "halle_erkannt": true,
      "vergangen": false,
      "aenderung": null,
-     "hinweis": null,
+     "hinweis": "Danach Neusser EV 1b – EHC Essen in Eissporthalle Neuss – nur 120 Min bis zum nächsten Anstoß",
      "id": "2026-09-27T18:00:00+02:00|EHC Troisdorf 1b – EC Bergisch Land",
+     "korrektur": null,
+     "manuell": false
+    },
+    {
+     "beginn": "2026-09-27T20:00:00+02:00",
+     "treffpunkt": "2026-09-27T19:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "BZ FS",
+     "paarung": "Neusser EV 1b – EHC Essen",
+     "ort": "Eissporthalle Neuss, Jakob-Koch-Straße 1, 41466 Neuss",
+     "halle": "Eissporthalle Neuss",
+     "koordinaten": [
+      51.175806,
+      6.680258
+     ],
+     "gespann": [
+      {
+       "name": "Stocker, Quirin",
+       "slug": "stocker-quirin",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": "Davor EHC Troisdorf 1b – EC Bergisch Land in ICEDOME Troisdorf – nur 120 Min nach dem vorigen Anstoß",
+     "id": "2026-09-27T20:00:00+02:00|Neusser EV 1b – EHC Essen",
      "korrektur": null,
      "manuell": false
     }
@@ -9999,11 +10035,11 @@
     "Stocker, Quirin"
    ],
    "statistik": {
-    "gesamt": 4,
-    "saison": 4,
+    "gesamt": 5,
+    "saison": 5,
     "rollen": {
      "HSR": 2,
-     "SR": 2
+     "SR": 3
     },
     "ligen": [
      [
@@ -10016,6 +10052,10 @@
      ],
      [
       "U17 I",
+      1
+     ],
+     [
+      "BZ FS",
       1
      ]
     ],
@@ -10062,11 +10102,11 @@
     "je_saison": [
      [
       "2026/27",
-      4
+      5
      ]
     ],
     "erste": "2026-09-04",
-    "letzte": "2026-09-20"
+    "letzte": "2026-09-27"
    },
    "spiele": [
     {
@@ -10099,6 +10139,34 @@
      "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-09-20T18:30:00+02:00|ESV Grizzlys Bergkamen – Eisadler Dortmund",
+     "korrektur": null,
+     "manuell": false
+    },
+    {
+     "beginn": "2026-09-27T20:00:00+02:00",
+     "treffpunkt": "2026-09-27T19:00:00+02:00",
+     "rolle": "SR",
+     "system": 2,
+     "liga": "BZ FS",
+     "paarung": "Neusser EV 1b – EHC Essen",
+     "ort": "Eissporthalle Neuss, Jakob-Koch-Straße 1, 41466 Neuss",
+     "halle": "Eissporthalle Neuss",
+     "koordinaten": [
+      51.175806,
+      6.680258
+     ],
+     "gespann": [
+      {
+       "name": "Beckford, Emanuel",
+       "slug": "beckford-emanuel",
+       "rolle": "SR"
+      }
+     ],
+     "halle_erkannt": true,
+     "vergangen": false,
+     "aenderung": null,
+     "hinweis": null,
+     "id": "2026-09-27T20:00:00+02:00|Neusser EV 1b – EHC Essen",
      "korrektur": null,
      "manuell": false
     }
@@ -13600,6 +13668,32 @@
    ],
    "vergangen": false,
    "id": "2026-09-27T19:00:00+02:00|Eisadler Dortmund – Harzer Falken",
+   "korrektur": null,
+   "manuell": false
+  },
+  {
+   "beginn": "2026-09-27T20:00:00+02:00",
+   "treffpunkt": "2026-09-27T19:00:00+02:00",
+   "liga": "BZ FS",
+   "paarung": "Neusser EV 1b – EHC Essen",
+   "halle": "Eissporthalle Neuss",
+   "ort": "Eissporthalle Neuss, Jakob-Koch-Straße 1, 41466 Neuss",
+   "halle_erkannt": true,
+   "system": 2,
+   "besetzung": [
+    {
+     "name": "Beckford, Emanuel",
+     "rolle": "SR",
+     "slug": "beckford-emanuel"
+    },
+    {
+     "name": "Stocker, Quirin",
+     "rolle": "SR",
+     "slug": "stocker-quirin"
+    }
+   ],
+   "vergangen": false,
+   "id": "2026-09-27T20:00:00+02:00|Neusser EV 1b – EHC Essen",
    "korrektur": null,
    "manuell": false
   }

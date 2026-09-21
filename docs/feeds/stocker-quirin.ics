@@ -29,4 +29,31 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
  äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
  ergkamen":geo:51.602578,7.626858
 END:VEVENT
+BEGIN:VEVENT
+UID:349e57c5e715a81bc3c049f571f83d99b41b43da@esrw.de
+SEQUENCE:0
+DTSTAMP:20260921T101525Z
+LAST-MODIFIED:20260921T101525Z
+DTSTART:20260927T170000Z
+DTEND:20260927T203000Z
+SUMMARY:SR · BZ FS · Neusser EV 1b – EHC Essen
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: BZ FS\nHalle: Eissporthalle Neu
+ ss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Beckford\, Emanu
+ el\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
+GEO:51.175806;6.680258
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
+ -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
+ uss":geo:51.175806,6.680258
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · BZ FS · Neusser EV 1b –
+  EHC Essen
+END:VALARM
+END:VEVENT
 END:VCALENDAR

@@ -37,10 +37,12 @@ LAST-MODIFIED:20260917T173038Z
 DTSTART:20260927T150000Z
 DTEND:20260927T183000Z
 SUMMARY:SR · U13 LL · EHC Troisdorf 1b – EC Bergisch Land
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
-  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: ICEDOME Troisdor
- f\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Starke\, M
- atthias\n\nQuelle: https://www.esrw.de/einteilungen.html
+DESCRIPTION:!! Danach Neusser EV 1b – EHC Essen in Eissporthalle Neuss 
+ – nur 120 Min bis zum nächsten Anstoß !!\n\nRolle: Schiedsrichter (SR)
+ \nSpielbeginn: 18:00 Uhr\nTreffpunkt: 17:00 Uhr (60 Min vor Spielbeginn)\n
+ Liga: U13 LL\nHalle: ICEDOME Troisdorf\nAdresse: Uckendorfer Straße 135\,
+  53844 Troisdorf\nGespann: Starke\, Matthias\n\nQuelle: https://www.esrw.d
+ e/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -54,6 +56,35 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL · EHC Troisdorf 1b
   – EC Bergisch Land
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:3beb9ef08df223c5b6cdc14f6f529dede4278c31@esrw.de
+SEQUENCE:0
+DTSTAMP:20260921T101525Z
+LAST-MODIFIED:20260921T101525Z
+DTSTART:20260927T170000Z
+DTEND:20260927T203000Z
+SUMMARY:SR · BZ FS · Neusser EV 1b – EHC Essen
+DESCRIPTION:!! Davor EHC Troisdorf 1b – EC Bergisch Land in ICEDOME Trois
+ dorf – nur 120 Min nach dem vorigen Anstoß !!\n\nRolle: Schiedsrichter 
+ (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt: 19:00 Uhr (60 Min vor Spielbegin
+ n)\nLiga: BZ FS\nHalle: Eissporthalle Neuss\nAdresse: Jakob-Koch-Straße 1
+ \, 41466 Neuss\nGespann: Stocker\, Quirin\n\nQuelle: https://www.esrw.de/e
+ inteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
+GEO:51.175806;6.680258
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
+ -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
+ uss":geo:51.175806,6.680258
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · BZ FS · Neusser EV 1b –
+  EHC Essen
 END:VALARM
 END:VEVENT
 END:VCALENDAR

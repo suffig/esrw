@@ -195,5 +195,23 @@
   "slug": "hornig-marius",
   "stand": "2026-09-21T09:45:26.528804+00:00",
   "text": "Fr 25.09. 19:00 Uhr – SR · U17 I · Krefelder EV – Düsseldorfer EG"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Neuss",
+  "kennung": "2026-09-27T20:00:00+02:00|Neusser EV 1b – EHC Essen",
+  "name": "Beckford, Emanuel",
+  "slug": "beckford-emanuel",
+  "stand": "2026-09-21T10:15:25.440709+00:00",
+  "text": "So 27.09. 20:00 Uhr – SR · BZ FS · Neusser EV 1b – EHC Essen"
+ },
+ {
+  "art": "neu",
+  "halle": "Eissporthalle Neuss",
+  "kennung": "2026-09-27T20:00:00+02:00|Neusser EV 1b – EHC Essen",
+  "name": "Stocker, Quirin",
+  "slug": "stocker-quirin",
+  "stand": "2026-09-21T10:15:25.440709+00:00",
+  "text": "So 27.09. 20:00 Uhr – SR · BZ FS · Neusser EV 1b – EHC Essen"
  }
 ]
