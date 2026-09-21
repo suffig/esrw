@@ -1211,5 +1211,105 @@
   "slug": "beckford-emanuel",
   "stand": "2026-09-21T15:45:26.728969+00:00",
   "text": "So 27.09. 18:00 Uhr – SR · U13 LL · EHC Troisdorf 1b – EC Bergisch Land"
+ },
+ {
+  "art": "geaendert",
+  "felder": [],
+  "kennung": "2026-10-04T19:30:00+02:00|Grefrather EG – Neusser EV",
+  "name": "Schrörs, Marvin",
+  "slug": "schroers-marvin",
+  "stand": "2026-09-21T17:15:26.043204+00:00",
+  "text": "So 04.10. 19:30 Uhr – HSR · RL FS · Grefrather EG – Neusser EV",
+  "was": "Angaben angepasst"
+ },
+ {
+  "art": "geaendert",
+  "felder": [],
+  "kennung": "2026-10-04T19:30:00+02:00|Grefrather EG – Neusser EV",
+  "name": "Engler, Gerhard",
+  "slug": "engler-gerhard",
+  "stand": "2026-09-21T17:15:26.043204+00:00",
+  "text": "So 04.10. 19:30 Uhr – LSR · RL FS · Grefrather EG – Neusser EV",
+  "was": "Angaben angepasst"
+ },
+ {
+  "art": "geaendert",
+  "felder": [],
+  "kennung": "2026-10-03T10:30:00+02:00|SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats – Dinslakener Kobras",
+  "name": "Zynda, Jayden",
+  "slug": "zynda-jayden",
+  "stand": "2026-09-21T17:15:26.043204+00:00",
+  "text": "Sa 03.10. 10:30 Uhr – SR · U15 LL · SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats – Dinslakener Kobras",
+  "was": "Angaben angepasst"
+ },
+ {
+  "art": "geaendert",
+  "felder": [],
+  "kennung": "2026-10-03T10:30:00+02:00|SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats – Dinslakener Kobras",
+  "name": "Brücker, Tobias",
+  "slug": "bruecker-tobias",
+  "stand": "2026-09-21T17:15:26.043204+00:00",
+  "text": "Sa 03.10. 10:30 Uhr – SR · U15 LL · SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats – Dinslakener Kobras",
+  "was": "Angaben angepasst"
+ },
+ {
+  "art": "geaendert",
+  "felder": [],
+  "kennung": "2026-10-03T09:15:00+02:00|SpG EHC Gelsenkirchen – Herner EV 1b -",
+  "name": "Malik, Orlando",
+  "slug": "malik-orlando",
+  "stand": "2026-09-21T17:15:26.043204+00:00",
+  "text": "Sa 03.10. 09:15 Uhr – SR · U9 LL Lila · SpG EHC Gelsenkirchen – Herner EV 1b -",
+  "was": "Angaben angepasst"
+ },
+ {
+  "art": "geaendert",
+  "felder": [],
+  "kennung": "2026-10-04T18:15:00+02:00|GSC Moers – Jadehaie Sande",
+  "name": "Stocker, Quirin",
+  "slug": "stocker-quirin",
+  "stand": "2026-09-21T17:15:26.043204+00:00",
+  "text": "So 04.10. 18:15 Uhr – HSR · RL FS · GSC Moers – Jadehaie Sande",
+  "was": "Angaben angepasst"
+ },
+ {
+  "art": "geaendert",
+  "felder": [],
+  "kennung": "2026-10-04T18:15:00+02:00|GSC Moers – Jadehaie Sande",
+  "name": "Solbach, Carsten",
+  "slug": "solbach-carsten",
+  "stand": "2026-09-21T17:15:26.043204+00:00",
+  "text": "So 04.10. 18:15 Uhr – LSR · RL FS · GSC Moers – Jadehaie Sande",
+  "was": "Angaben angepasst"
+ },
+ {
+  "art": "geaendert",
+  "felder": [],
+  "kennung": "2026-10-04T19:30:00+02:00|Grefrather EG – Neusser EV",
+  "name": "Reuter, Fynn",
+  "slug": "reuter-fynn",
+  "stand": "2026-09-21T17:15:26.043204+00:00",
+  "text": "So 04.10. 19:30 Uhr – LSR · RL FS · Grefrather EG – Neusser EV",
+  "was": "Angaben angepasst"
+ },
+ {
+  "art": "geaendert",
+  "felder": [],
+  "kennung": "2026-10-04T18:15:00+02:00|GSC Moers – Jadehaie Sande",
+  "name": "Scholz, Udo",
+  "slug": "scholz-udo",
+  "stand": "2026-09-21T17:15:26.043204+00:00",
+  "text": "So 04.10. 18:15 Uhr – LSR · RL FS · GSC Moers – Jadehaie Sande",
+  "was": "Angaben angepasst"
+ },
+ {
+  "art": "geaendert",
+  "felder": [],
+  "kennung": "2026-10-03T09:15:00+02:00|SpG EHC Gelsenkirchen – Herner EV 1b -",
+  "name": "Heu, Alexander",
+  "slug": "heu-alexander",
+  "stand": "2026-09-21T17:15:26.043204+00:00",
+  "text": "Sa 03.10. 09:15 Uhr – SR · U9 LL Lila · SpG EHC Gelsenkirchen – Herner EV 1b -",
+  "was": "Angaben angepasst"
  }
 ]

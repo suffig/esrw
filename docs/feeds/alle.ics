@@ -2506,18 +2506,25 @@ END:VEVENT
 BEGIN:VEVENT
 UID:eae5cad48c9e14f0fa97bb86554d8b8591eae02f@esrw.de
 SEQUENCE:0
-DTSTAMP:20260921T153038Z
-LAST-MODIFIED:20260921T153038Z
+DTSTAMP:20260921T171526Z
+LAST-MODIFIED:20260921T171526Z
 DTSTART:20261003T061500Z
 DTEND:20261003T094500Z
-SUMMARY:U9 LL Lila · SpG EHC Gelsenkirchen – Herner EV 1b -
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:15 Uhr\nTreffpunkt:
-  08:15 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Lila\n!! Halle nicht auto
- matisch erkannt - bitte selbst pruefen !!\nGespann: Malik\, Orlando\n\nQue
- lle: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ U9 LL Lila · SpG EHC Gelsenkirchen – Herner EV 1b -
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
+ elbeginn: 09:15 Uhr\nTreffpunkt: 08:15 Uhr (60 Min vor Spielbeginn)\nLiga:
+  U9 LL Lila\nHalle: Emscher-Lippe-Halle Gelsenkirchen\nAdresse: Adenaueral
+ lee 118\, 45891 Gelsenkirchen\nGespann: Malik\, Orlando\n\nQuelle: https:/
+ /www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Emscher-Lippe-Halle Gelsenkirchen\, Adenauerallee 118\, 45891 Gels
+ enkirchen
+GEO:51.553483;7.073102
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Emscher-Lippe-Halle Gelsen
+ kirchen, Adenauerallee 118, 45891 Gelsenkirchen";X-APPLE-RADIUS=100;X-TITL
+ E="Emscher-Lippe-Halle Gelsenkirchen":geo:51.553483,7.073102
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
@@ -2555,19 +2562,25 @@ END:VEVENT
 BEGIN:VEVENT
 UID:21149444abc9d3fceeb529b966df84259faf4cde@esrw.de
 SEQUENCE:0
-DTSTAMP:20260921T153038Z
-LAST-MODIFIED:20260921T153038Z
+DTSTAMP:20260921T171526Z
+LAST-MODIFIED:20260921T171526Z
 DTSTART:20261003T073000Z
 DTEND:20261003T110000Z
-SUMMARY:U15 LL · SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats – Di
- nslakener Kobras
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
-  09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\n!! Halle nicht automati
- sch erkannt - bitte selbst pruefen !!\nGespann: Zynda\, Jayden\n\nQuelle: 
- https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ U15 LL · SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats 
+ – Dinslakener Kobras
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
+ elbeginn: 10:30 Uhr\nTreffpunkt: 09:30 Uhr (60 Min vor Spielbeginn)\nLiga:
+  U15 LL\nHalle: Eissporthalle Bergkamen\nAdresse: Häupenweg 29\, 59192 Be
+ rgkamen\nGespann: Zynda\, Jayden\n\nQuelle: https://www.esrw.de/einteilung
+ en.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
@@ -3443,18 +3456,24 @@ END:VEVENT
 BEGIN:VEVENT
 UID:e568538c112106f5955b64db97d6a9ed57db83b4@esrw.de
 SEQUENCE:0
-DTSTAMP:20260921T153038Z
-LAST-MODIFIED:20260921T153038Z
+DTSTAMP:20260921T171526Z
+LAST-MODIFIED:20260921T171526Z
 DTSTART:20261004T151500Z
 DTEND:20261004T184500Z
-SUMMARY:RL FS · GSC Moers – Jadehaie Sande
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:15 Uhr\nTreffpunkt:
-  17:15 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\n!! Halle nicht automatis
- ch erkannt - bitte selbst pruefen !!\nGespann: Stocker\, Quirin (HSR) / So
- lbach\, Carsten (LSR)\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ RL FS · GSC Moers – Jadehaie Sande
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Linienrichter (LSR)\nSpi
+ elbeginn: 18:15 Uhr\nTreffpunkt: 17:15 Uhr (60 Min vor Spielbeginn)\nLiga:
+  RL FS\nHalle: Eissporthalle Moers\nAdresse: Filderstraße 140\, 47447 Moe
+ rs\nGespann: Stocker\, Quirin (HSR) / Solbach\, Carsten (LSR)\n\nQuelle: h
+ ttps://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
+GEO:51.43973;6.6198
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
+ rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
+ ":geo:51.43973,6.6198
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
@@ -3604,18 +3623,24 @@ END:VEVENT
 BEGIN:VEVENT
 UID:103dda39513efa2fb0be7009e244c258515718fc@esrw.de
 SEQUENCE:0
-DTSTAMP:20260921T153038Z
-LAST-MODIFIED:20260921T153038Z
+DTSTAMP:20260921T171526Z
+LAST-MODIFIED:20260921T171526Z
 DTSTART:20261004T163000Z
 DTEND:20261004T200000Z
-SUMMARY:RL FS · Grefrather EG – Neusser EV
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
-  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\n!! Halle nicht automatis
- ch erkannt - bitte selbst pruefen !!\nGespann: Schrörs\, Marvin (HSR) / R
- euter\, Fynn (LSR)\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ RL FS · Grefrather EG – Neusser EV
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Linienrichter (LSR)\nSpi
+ elbeginn: 19:30 Uhr\nTreffpunkt: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga:
+  RL FS\nHalle: Eissportzentrum Grefrath\nAdresse: Stadionstraße 161\, 479
+ 29 Grefrath\nGespann: Schrörs\, Marvin (HSR) / Reuter\, Fynn (LSR)\n\nQue
+ lle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Eissportzentrum Grefrath\, Stadionstraße 161\, 47929 Grefrath
+GEO:51.348547;6.341019
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath, 
+ Stadionstraße 161, 47929 Grefrath";X-APPLE-RADIUS=100;X-TITLE="Eissportze
+ ntrum Grefrath":geo:51.348547,6.341019
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H

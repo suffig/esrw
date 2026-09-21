@@ -1045,7 +1045,7 @@
      ],
      [
       "Eissporthalle Bergkamen",
-      1
+      2
      ]
     ],
     "partner": [
@@ -1219,9 +1219,12 @@
      "system": 2,
      "liga": "U15 LL",
      "paarung": "SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats – Dinslakener Kobras",
-     "ort": "",
-     "halle": "",
-     "koordinaten": null,
+     "ort": "Eissporthalle Bergkamen, Häupenweg 29, 59192 Bergkamen",
+     "halle": "Eissporthalle Bergkamen",
+     "koordinaten": [
+      51.602578,
+      7.626858
+     ],
      "gespann": [
       {
        "name": "Zynda, Jayden",
@@ -1229,9 +1232,9 @@
        "rolle": "SR"
       }
      ],
-     "halle_erkannt": false,
+     "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-10-03T10:30:00+02:00|SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats – Dinslakener Kobras",
      "korrektur": null,
@@ -1821,6 +1824,10 @@
      [
       "ICEDOME Troisdorf",
       1
+     ],
+     [
+      "Eissportzentrum Grefrath",
+      1
      ]
     ],
     "partner": [
@@ -1918,9 +1925,12 @@
      "system": 3,
      "liga": "RL FS",
      "paarung": "Grefrather EG – Neusser EV",
-     "ort": "",
-     "halle": "",
-     "koordinaten": null,
+     "ort": "Eissportzentrum Grefrath, Stadionstraße 161, 47929 Grefrath",
+     "halle": "Eissportzentrum Grefrath",
+     "koordinaten": [
+      51.348547,
+      6.341019
+     ],
      "gespann": [
       {
        "name": "Schrörs, Marvin",
@@ -1933,9 +1943,9 @@
        "rolle": "LSR"
       }
      ],
-     "halle_erkannt": false,
+     "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-10-04T19:30:00+02:00|Grefrather EG – Neusser EV",
      "korrektur": null,
@@ -4063,7 +4073,7 @@
       1
      ],
      [
-      "Gysenberghalle Herne",
+      "Emscher-Lippe-Halle Gelsenkirchen",
       1
      ]
     ],
@@ -4167,9 +4177,12 @@
      "system": 2,
      "liga": "U9 LL Lila",
      "paarung": "SpG EHC Gelsenkirchen – Herner EV 1b -",
-     "ort": "",
-     "halle": "",
-     "koordinaten": null,
+     "ort": "Emscher-Lippe-Halle Gelsenkirchen, Adenauerallee 118, 45891 Gelsenkirchen",
+     "halle": "Emscher-Lippe-Halle Gelsenkirchen",
+     "koordinaten": [
+      51.553483,
+      7.073102
+     ],
      "gespann": [
       {
        "name": "Malik, Orlando",
@@ -4177,9 +4190,9 @@
        "rolle": "SR"
       }
      ],
-     "halle_erkannt": false,
+     "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-10-03T09:15:00+02:00|SpG EHC Gelsenkirchen – Herner EV 1b -",
      "korrektur": null,
@@ -7725,9 +7738,12 @@
      "system": 2,
      "liga": "U9 LL Lila",
      "paarung": "SpG EHC Gelsenkirchen – Herner EV 1b -",
-     "ort": "",
-     "halle": "",
-     "koordinaten": null,
+     "ort": "Emscher-Lippe-Halle Gelsenkirchen, Adenauerallee 118, 45891 Gelsenkirchen",
+     "halle": "Emscher-Lippe-Halle Gelsenkirchen",
+     "koordinaten": [
+      51.553483,
+      7.073102
+     ],
      "gespann": [
       {
        "name": "Heu, Alexander",
@@ -7735,9 +7751,9 @@
        "rolle": "SR"
       }
      ],
-     "halle_erkannt": false,
+     "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-10-03T09:15:00+02:00|SpG EHC Gelsenkirchen – Herner EV 1b -",
      "korrektur": null,
@@ -10215,6 +10231,10 @@
      [
       "Eissporthalle Solingen",
       1
+     ],
+     [
+      "Eissportzentrum Grefrath",
+      1
      ]
     ],
     "partner": [
@@ -10368,9 +10388,12 @@
      "system": 3,
      "liga": "RL FS",
      "paarung": "Grefrather EG – Neusser EV",
-     "ort": "",
-     "halle": "",
-     "koordinaten": null,
+     "ort": "Eissportzentrum Grefrath, Stadionstraße 161, 47929 Grefrath",
+     "halle": "Eissportzentrum Grefrath",
+     "koordinaten": [
+      51.348547,
+      6.341019
+     ],
      "gespann": [
       {
        "name": "Schrörs, Marvin",
@@ -10383,9 +10406,9 @@
        "rolle": "LSR"
       }
      ],
-     "halle_erkannt": false,
+     "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-10-04T19:30:00+02:00|Grefrather EG – Neusser EV",
      "korrektur": null,
@@ -12040,7 +12063,12 @@
       1
      ]
     ],
-    "hallen": [],
+    "hallen": [
+     [
+      "Eissporthalle Moers",
+      1
+     ]
+    ],
     "partner": [
      [
       "Stocker, Quirin",
@@ -12068,9 +12096,12 @@
      "system": 3,
      "liga": "RL FS",
      "paarung": "GSC Moers – Jadehaie Sande",
-     "ort": "",
-     "halle": "",
-     "koordinaten": null,
+     "ort": "Eissporthalle Moers, Filderstraße 140, 47447 Moers",
+     "halle": "Eissporthalle Moers",
+     "koordinaten": [
+      51.43973,
+      6.6198
+     ],
      "gespann": [
       {
        "name": "Stocker, Quirin",
@@ -12083,9 +12114,9 @@
        "rolle": "LSR"
       }
      ],
-     "halle_erkannt": false,
+     "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-10-04T18:15:00+02:00|GSC Moers – Jadehaie Sande",
      "korrektur": null,
@@ -12111,7 +12142,12 @@
       1
      ]
     ],
-    "hallen": [],
+    "hallen": [
+     [
+      "Eissportzentrum Grefrath",
+      1
+     ]
+    ],
     "partner": [
      [
       "Reuter, Fynn",
@@ -12139,9 +12175,12 @@
      "system": 3,
      "liga": "RL FS",
      "paarung": "Grefrather EG – Neusser EV",
-     "ort": "",
-     "halle": "",
-     "koordinaten": null,
+     "ort": "Eissportzentrum Grefrath, Stadionstraße 161, 47929 Grefrath",
+     "halle": "Eissportzentrum Grefrath",
+     "koordinaten": [
+      51.348547,
+      6.341019
+     ],
      "gespann": [
       {
        "name": "Reuter, Fynn",
@@ -12154,9 +12193,9 @@
        "rolle": "LSR"
       }
      ],
-     "halle_erkannt": false,
+     "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-10-04T19:30:00+02:00|Grefrather EG – Neusser EV",
      "korrektur": null,
@@ -12391,6 +12430,10 @@
     ],
     "hallen": [
      [
+      "Eissporthalle Moers",
+      1
+     ],
+     [
       "Eissporthalle Neuss",
       1
      ],
@@ -12400,10 +12443,6 @@
      ],
      [
       "ICEDOME Troisdorf",
-      1
-     ],
-     [
-      "Eissporthalle Bergisch Gladbach",
       1
      ]
     ],
@@ -12563,9 +12602,12 @@
      "system": 3,
      "liga": "RL FS",
      "paarung": "GSC Moers – Jadehaie Sande",
-     "ort": "",
-     "halle": "",
-     "koordinaten": null,
+     "ort": "Eissporthalle Moers, Filderstraße 140, 47447 Moers",
+     "halle": "Eissporthalle Moers",
+     "koordinaten": [
+      51.43973,
+      6.6198
+     ],
      "gespann": [
       {
        "name": "Stocker, Quirin",
@@ -12578,9 +12620,9 @@
        "rolle": "LSR"
       }
      ],
-     "halle_erkannt": false,
+     "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-10-04T18:15:00+02:00|GSC Moers – Jadehaie Sande",
      "korrektur": null,
@@ -13463,15 +13505,15 @@
       1
      ],
      [
+      "Eissporthalle Moers",
+      1
+     ],
+     [
       "PreZero Rheinlandhalle Duisburg",
       1
      ],
      [
       "Eishalle Brehmstraße",
-      1
-     ],
-     [
-      "Eissporthalle Neuss",
       1
      ]
     ],
@@ -13575,9 +13617,12 @@
      "system": 3,
      "liga": "RL FS",
      "paarung": "GSC Moers – Jadehaie Sande",
-     "ort": "",
-     "halle": "",
-     "koordinaten": null,
+     "ort": "Eissporthalle Moers, Filderstraße 140, 47447 Moers",
+     "halle": "Eissporthalle Moers",
+     "koordinaten": [
+      51.43973,
+      6.6198
+     ],
      "gespann": [
       {
        "name": "Scholz, Udo",
@@ -13590,9 +13635,9 @@
        "rolle": "LSR"
       }
      ],
-     "halle_erkannt": false,
+     "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-10-04T18:15:00+02:00|GSC Moers – Jadehaie Sande",
      "korrektur": null,
@@ -14682,12 +14727,12 @@
       3
      ],
      [
-      "Eissportzentrum Westfalen",
+      "Eissporthalle Bergkamen",
       2
      ],
      [
-      "Eissporthalle Bergkamen",
-      1
+      "Eissportzentrum Westfalen",
+      2
      ]
     ],
     "partner": [
@@ -14841,9 +14886,12 @@
      "system": 2,
      "liga": "U15 LL",
      "paarung": "SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats – Dinslakener Kobras",
-     "ort": "",
-     "halle": "",
-     "koordinaten": null,
+     "ort": "Eissporthalle Bergkamen, Häupenweg 29, 59192 Bergkamen",
+     "halle": "Eissporthalle Bergkamen",
+     "koordinaten": [
+      51.602578,
+      7.626858
+     ],
      "gespann": [
       {
        "name": "Brücker, Tobias",
@@ -14851,9 +14899,9 @@
        "rolle": "SR"
       }
      ],
-     "halle_erkannt": false,
+     "halle_erkannt": true,
      "vergangen": false,
-     "aenderung": null,
+     "aenderung": "Angaben angepasst",
      "hinweis": null,
      "id": "2026-10-03T10:30:00+02:00|SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats – Dinslakener Kobras",
      "korrektur": null,
@@ -17887,9 +17935,9 @@
    "treffpunkt": "2026-10-03T08:15:00+02:00",
    "liga": "U9 LL Lila",
    "paarung": "SpG EHC Gelsenkirchen – Herner EV 1b -",
-   "halle": "",
-   "ort": "",
-   "halle_erkannt": false,
+   "halle": "Emscher-Lippe-Halle Gelsenkirchen",
+   "ort": "Emscher-Lippe-Halle Gelsenkirchen, Adenauerallee 118, 45891 Gelsenkirchen",
+   "halle_erkannt": true,
    "system": 2,
    "besetzung": [
     {
@@ -17939,9 +17987,9 @@
    "treffpunkt": "2026-10-03T09:30:00+02:00",
    "liga": "U15 LL",
    "paarung": "SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats – Dinslakener Kobras",
-   "halle": "",
-   "ort": "",
-   "halle_erkannt": false,
+   "halle": "Eissporthalle Bergkamen",
+   "ort": "Eissporthalle Bergkamen, Häupenweg 29, 59192 Bergkamen",
+   "halle_erkannt": true,
    "system": 2,
    "besetzung": [
     {
@@ -18802,9 +18850,9 @@
    "treffpunkt": "2026-10-04T17:15:00+02:00",
    "liga": "RL FS",
    "paarung": "GSC Moers – Jadehaie Sande",
-   "halle": "",
-   "ort": "",
-   "halle_erkannt": false,
+   "halle": "Eissporthalle Moers",
+   "ort": "Eissporthalle Moers, Filderstraße 140, 47447 Moers",
+   "halle_erkannt": true,
    "system": 3,
    "besetzung": [
     {
@@ -18973,9 +19021,9 @@
    "treffpunkt": "2026-10-04T18:30:00+02:00",
    "liga": "RL FS",
    "paarung": "Grefrather EG – Neusser EV",
-   "halle": "",
-   "ort": "",
-   "halle_erkannt": false,
+   "halle": "Eissportzentrum Grefrath",
+   "ort": "Eissportzentrum Grefrath, Stadionstraße 161, 47929 Grefrath",
+   "halle_erkannt": true,
    "system": 3,
    "besetzung": [
     {

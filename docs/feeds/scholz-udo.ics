@@ -9,19 +9,25 @@ REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
 UID:f294b9ae0002812b270c48e463b2d345cb7e52d2@esrw.de
-SEQUENCE:0
-DTSTAMP:20260921T153038Z
-LAST-MODIFIED:20260921T153038Z
+SEQUENCE:1
+DTSTAMP:20260921T171526Z
+LAST-MODIFIED:20260921T171526Z
 DTSTART:20261004T151500Z
 DTEND:20261004T184500Z
-SUMMARY:LSR · RL FS · GSC Moers – Jadehaie Sande
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:15 Uhr\nTreffpunkt:
-  17:15 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\n!! Halle nicht automatis
- ch erkannt - bitte selbst pruefen !!\nGespann: Stocker\, Quirin (HSR) / So
- lbach\, Carsten (LSR)\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ LSR · RL FS · GSC Moers – Jadehaie Sande
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Linienrichter (LSR)\nSpi
+ elbeginn: 18:15 Uhr\nTreffpunkt: 17:15 Uhr (60 Min vor Spielbeginn)\nLiga:
+  RL FS\nHalle: Eissporthalle Moers\nAdresse: Filderstraße 140\, 47447 Moe
+ rs\nGespann: Stocker\, Quirin (HSR) / Solbach\, Carsten (LSR)\n\nQuelle: h
+ ttps://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
+GEO:51.43973;6.6198
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
+ rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
+ ":geo:51.43973,6.6198
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H

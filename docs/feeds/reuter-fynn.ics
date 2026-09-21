@@ -111,19 +111,25 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:eb5c8030b75128656de5748fc18199018431c008@esrw.de
-SEQUENCE:0
-DTSTAMP:20260921T153038Z
-LAST-MODIFIED:20260921T153038Z
+SEQUENCE:1
+DTSTAMP:20260921T171526Z
+LAST-MODIFIED:20260921T171526Z
 DTSTART:20261004T163000Z
 DTEND:20261004T200000Z
-SUMMARY:LSR · RL FS · Grefrather EG – Neusser EV
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
-  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\n!! Halle nicht automatis
- ch erkannt - bitte selbst pruefen !!\nGespann: Schrörs\, Marvin (HSR) / E
- ngler\, Gerhard (LSR)\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ LSR · RL FS · Grefrather EG – Neusser EV
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Linienrichter (LSR)\nSpi
+ elbeginn: 19:30 Uhr\nTreffpunkt: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga:
+  RL FS\nHalle: Eissportzentrum Grefrath\nAdresse: Stadionstraße 161\, 479
+ 29 Grefrath\nGespann: Schrörs\, Marvin (HSR) / Engler\, Gerhard (LSR)\n\n
+ Quelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Eissportzentrum Grefrath\, Stadionstraße 161\, 47929 Grefrath
+GEO:51.348547;6.341019
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath, 
+ Stadionstraße 161, 47929 Grefrath";X-APPLE-RADIUS=100;X-TITLE="Eissportze
+ ntrum Grefrath":geo:51.348547,6.341019
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
