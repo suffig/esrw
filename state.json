@@ -461,6 +461,20 @@
   "titel": "LSR · U20 FS · Neusser EV – Ratinger Ice Aliens",
   "treffpunkt": "2026-09-26T19:30:00+02:00"
  },
+ "2986aeaa369b1a3dbbf314ffdef2d502712433fc@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-25T19:00:00+02:00",
+  "geaendert_am": null,
+  "id": "2026-09-25T19:00:00+02:00|Krefelder EV – Düsseldorfer EG Yayla Arena !!!",
+  "inhalt": "c95ebac53891ad8bfd8ac534ca394fdd6bc46eb5",
+  "korrektur": null,
+  "ort": "Yayla Arena Krefeld, Westparkstraße 111, 47803 Krefeld",
+  "sequence": 0,
+  "slug": "hornig-marius",
+  "stempel": "2026-09-21T09:45:26.528804+00:00",
+  "titel": "SR · U17 I · Krefelder EV – Düsseldorfer EG Yayla Arena !!!",
+  "treffpunkt": "2026-09-25T18:00:00+02:00"
+ },
  "2a4488da7a635764b66075010d42239fa364e9ee@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-27T12:00:00+02:00",
@@ -474,20 +488,6 @@
   "stempel": "2026-09-17T17:30:38.957160+00:00",
   "titel": "SR · U15 RLA · Iserlohner EC – Düsseldorfer EG",
   "treffpunkt": "2026-09-27T11:00:00+02:00"
- },
- "2add4c154a198eb5bb5a786936473e48a1832170@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-25T19:00:00+02:00",
-  "geaendert_am": null,
-  "id": "2026-09-25T19:00:00+02:00|Krefelder EV – Düsseldorfer EG",
-  "inhalt": "bdca3475b993e28539ee52cce88ffb29fdf56427",
-  "korrektur": null,
-  "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-  "sequence": 0,
-  "slug": "hornig-marius",
-  "stempel": "2026-09-17T17:30:38.957160+00:00",
-  "titel": "SR · U17 I · Krefelder EV – Düsseldorfer EG",
-  "treffpunkt": "2026-09-25T18:00:00+02:00"
  },
  "2c50a24681b12c5f8d6d842116b7b7b2548fbbe4@esrw.de": {
   "aenderung": null,
@@ -684,6 +684,20 @@
   "stempel": "2026-09-17T17:30:38.957160+00:00",
   "titel": "SR · U17 RL · Lippe Hockey Hamm – Eisadler Dortmund",
   "treffpunkt": "2026-09-25T18:30:00+02:00"
+ },
+ "3cb8710d5077ce3252f4277996e5d267a0224606@esrw.de": {
+  "aenderung": null,
+  "beginn": "2026-09-25T19:00:00+02:00",
+  "geaendert_am": null,
+  "id": "2026-09-25T19:00:00+02:00|Krefelder EV – Düsseldorfer EG Yayla Arena !!!",
+  "inhalt": "c95ebac53891ad8bfd8ac534ca394fdd6bc46eb5",
+  "korrektur": null,
+  "ort": "Yayla Arena Krefeld, Westparkstraße 111, 47803 Krefeld",
+  "sequence": 0,
+  "slug": "pluschkell-julian",
+  "stempel": "2026-09-21T09:45:26.528804+00:00",
+  "titel": "SR · U17 I · Krefelder EV – Düsseldorfer EG Yayla Arena !!!",
+  "treffpunkt": "2026-09-25T18:00:00+02:00"
  },
  "3d7745eb6e6cb367b94c5ae18963711412e5e6a4@esrw.de": {
   "aenderung": "Halle (vorher Eissporthalle Bergisch Gladbach)",
@@ -1160,20 +1174,6 @@
   "stempel": "2026-09-18T17:32:02.289283+00:00",
   "titel": "HSR · RL FS · ESV Grizzlys Bergkamen – Eisadler Dortmund",
   "treffpunkt": "2026-09-20T17:30:00+02:00"
- },
- "7523530137b4c3f8abc95eb6ae9b7b4cd28cabd3@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-25T19:00:00+02:00",
-  "geaendert_am": null,
-  "id": "2026-09-25T19:00:00+02:00|Krefelder EV – Düsseldorfer EG",
-  "inhalt": "bdca3475b993e28539ee52cce88ffb29fdf56427",
-  "korrektur": null,
-  "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-  "sequence": 0,
-  "slug": "pluschkell-julian",
-  "stempel": "2026-09-17T17:30:38.957160+00:00",
-  "titel": "SR · U17 I · Krefelder EV – Düsseldorfer EG",
-  "treffpunkt": "2026-09-25T18:00:00+02:00"
  },
  "75984cea56ac42525301eced7513c9c749fd3687@esrw.de": {
   "aenderung": null,

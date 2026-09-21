@@ -29,30 +29,30 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
  le Krefeld":geo:51.339877,6.540168
 END:VEVENT
 BEGIN:VEVENT
-UID:7523530137b4c3f8abc95eb6ae9b7b4cd28cabd3@esrw.de
+UID:3cb8710d5077ce3252f4277996e5d267a0224606@esrw.de
 SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
+DTSTAMP:20260921T094526Z
+LAST-MODIFIED:20260921T094526Z
 DTSTART:20260925T160000Z
 DTEND:20260925T193000Z
-SUMMARY:SR · U17 I · Krefelder EV – Düsseldorfer EG
+SUMMARY:SR · U17 I · Krefelder EV – Düsseldorfer EG Yayla Arena !!!
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
-  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Rheinlandhalle Kr
- efeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Hornig\, Mar
- ius\n\nQuelle: https://www.esrw.de/einteilungen.html
+  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Yayla Arena Krefe
+ ld\nAdresse: Westparkstraße 111\, 47803 Krefeld\nGespann: Hornig\, Marius
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
-GEO:51.339877;6.540168
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
- stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
- le Krefeld":geo:51.339877,6.540168
+LOCATION:Yayla Arena Krefeld\, Westparkstraße 111\, 47803 Krefeld
+GEO:51.340907;6.540218
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Yayla Arena Krefeld, Westp
+ arkstraße 111, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Yayla Arena Kre
+ feld":geo:51.340907,6.540218
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · U17 I · Krefelder EV – 
- Düsseldorfer EG
+ Düsseldorfer EG Yayla Arena !!!
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

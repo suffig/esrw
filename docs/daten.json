@@ -4,7 +4,7 @@
  "vorlauf_minuten": 60,
  "spiele_gesamt": 91,
  "saison": "2026/27",
- "archiv_spiele": 170,
+ "archiv_spiele": 171,
  "rollen": {
   "SR": "Schiedsrichter",
   "HSR": "Hauptschiedsrichter",
@@ -3938,11 +3938,11 @@
     "Hornig, Marius"
    ],
    "statistik": {
-    "gesamt": 3,
-    "saison": 3,
+    "gesamt": 4,
+    "saison": 4,
     "rollen": {
      "LSR": 2,
-     "SR": 1
+     "SR": 2
     },
     "ligen": [
      [
@@ -3951,7 +3951,7 @@
      ],
      [
       "U17 I",
-      1
+      2
      ]
     ],
     "hallen": [
@@ -3961,6 +3961,10 @@
      ],
      [
       "Rheinlandhalle Krefeld",
+      1
+     ],
+     [
+      "Yayla Arena Krefeld",
       1
      ]
     ],
@@ -3975,13 +3979,13 @@
      ],
      [
       "Pluschkell, Julian",
-      1
+      2
      ]
     ],
     "je_saison": [
      [
       "2026/27",
-      3
+      4
      ]
     ],
     "erste": "2026-09-15",
@@ -4027,12 +4031,12 @@
      "rolle": "SR",
      "system": 2,
      "liga": "U17 I",
-     "paarung": "Krefelder EV – Düsseldorfer EG",
-     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-     "halle": "Rheinlandhalle Krefeld",
+     "paarung": "Krefelder EV – Düsseldorfer EG Yayla Arena !!!",
+     "ort": "Yayla Arena Krefeld, Westparkstraße 111, 47803 Krefeld",
+     "halle": "Yayla Arena Krefeld",
      "koordinaten": [
-      51.339877,
-      6.540168
+      51.340907,
+      6.540218
      ],
      "gespann": [
       {
@@ -4045,7 +4049,7 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null,
-     "id": "2026-09-25T19:00:00+02:00|Krefelder EV – Düsseldorfer EG",
+     "id": "2026-09-25T19:00:00+02:00|Krefelder EV – Düsseldorfer EG Yayla Arena !!!",
      "korrektur": null,
      "manuell": false
     }
@@ -7112,15 +7116,15 @@
     "Pluschkell, Julian"
    ],
    "statistik": {
-    "gesamt": 5,
-    "saison": 5,
+    "gesamt": 6,
+    "saison": 6,
     "rollen": {
-     "SR": 5
+     "SR": 6
     },
     "ligen": [
      [
       "U17 I",
-      2
+      3
      ],
      [
       "U15 RLB",
@@ -7147,19 +7151,23 @@
      [
       "Gysenberghalle Herne",
       1
+     ],
+     [
+      "Yayla Arena Krefeld",
+      1
      ]
     ],
     "partner": [
+     [
+      "Hornig, Marius",
+      2
+     ],
      [
       "Garbsch, René",
       1
      ],
      [
       "Schlüter, Thomas",
-      1
-     ],
-     [
-      "Hornig, Marius",
       1
      ],
      [
@@ -7174,7 +7182,7 @@
     "je_saison": [
      [
       "2026/27",
-      5
+      6
      ]
     ],
     "erste": "2026-09-04",
@@ -7215,12 +7223,12 @@
      "rolle": "SR",
      "system": 2,
      "liga": "U17 I",
-     "paarung": "Krefelder EV – Düsseldorfer EG",
-     "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
-     "halle": "Rheinlandhalle Krefeld",
+     "paarung": "Krefelder EV – Düsseldorfer EG Yayla Arena !!!",
+     "ort": "Yayla Arena Krefeld, Westparkstraße 111, 47803 Krefeld",
+     "halle": "Yayla Arena Krefeld",
      "koordinaten": [
-      51.339877,
-      6.540168
+      51.340907,
+      6.540218
      ],
      "gespann": [
       {
@@ -7233,7 +7241,7 @@
      "vergangen": false,
      "aenderung": null,
      "hinweis": null,
-     "id": "2026-09-25T19:00:00+02:00|Krefelder EV – Düsseldorfer EG",
+     "id": "2026-09-25T19:00:00+02:00|Krefelder EV – Düsseldorfer EG Yayla Arena !!!",
      "korrektur": null,
      "manuell": false
     },
@@ -12353,9 +12361,9 @@
    "beginn": "2026-09-25T19:00:00+02:00",
    "treffpunkt": "2026-09-25T18:00:00+02:00",
    "liga": "U17 I",
-   "paarung": "Krefelder EV – Düsseldorfer EG",
-   "halle": "Rheinlandhalle Krefeld",
-   "ort": "Rheinlandhalle Krefeld, Westparkstraße 126, 47803 Krefeld",
+   "paarung": "Krefelder EV – Düsseldorfer EG Yayla Arena !!!",
+   "halle": "Yayla Arena Krefeld",
+   "ort": "Yayla Arena Krefeld, Westparkstraße 111, 47803 Krefeld",
    "halle_erkannt": true,
    "system": 2,
    "besetzung": [
@@ -12371,7 +12379,7 @@
     }
    ],
    "vergangen": false,
-   "id": "2026-09-25T19:00:00+02:00|Krefelder EV – Düsseldorfer EG",
+   "id": "2026-09-25T19:00:00+02:00|Krefelder EV – Düsseldorfer EG Yayla Arena !!!",
    "korrektur": null,
    "manuell": false
   },

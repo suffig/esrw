@@ -159,5 +159,41 @@
   "slug": "klemm-julian",
   "stand": "2026-09-18T17:32:02.289283+00:00",
   "text": "Sa 26.09. 10:30 Uhr – SR · U17 LL · ESV Grizzlys Bergkamen – ESC Darmstadt (Angaben angepasst)"
+ },
+ {
+  "art": "neu",
+  "halle": "Yayla Arena Krefeld",
+  "kennung": "2026-09-25T19:00:00+02:00|Krefelder EV – Düsseldorfer EG Yayla Arena !!!",
+  "name": "Pluschkell, Julian",
+  "slug": "pluschkell-julian",
+  "stand": "2026-09-21T09:45:26.528804+00:00",
+  "text": "Fr 25.09. 19:00 Uhr – SR · U17 I · Krefelder EV – Düsseldorfer EG Yayla Arena !!!"
+ },
+ {
+  "art": "entfallen",
+  "halle": "Rheinlandhalle Krefeld",
+  "kennung": "2026-09-25T19:00:00+02:00|Krefelder EV – Düsseldorfer EG",
+  "name": "Pluschkell, Julian",
+  "slug": "pluschkell-julian",
+  "stand": "2026-09-21T09:45:26.528804+00:00",
+  "text": "Fr 25.09. 19:00 Uhr – SR · U17 I · Krefelder EV – Düsseldorfer EG"
+ },
+ {
+  "art": "neu",
+  "halle": "Yayla Arena Krefeld",
+  "kennung": "2026-09-25T19:00:00+02:00|Krefelder EV – Düsseldorfer EG Yayla Arena !!!",
+  "name": "Hornig, Marius",
+  "slug": "hornig-marius",
+  "stand": "2026-09-21T09:45:26.528804+00:00",
+  "text": "Fr 25.09. 19:00 Uhr – SR · U17 I · Krefelder EV – Düsseldorfer EG Yayla Arena !!!"
+ },
+ {
+  "art": "entfallen",
+  "halle": "Rheinlandhalle Krefeld",
+  "kennung": "2026-09-25T19:00:00+02:00|Krefelder EV – Düsseldorfer EG",
+  "name": "Hornig, Marius",
+  "slug": "hornig-marius",
+  "stand": "2026-09-21T09:45:26.528804+00:00",
+  "text": "Fr 25.09. 19:00 Uhr – SR · U17 I · Krefelder EV – Düsseldorfer EG"
  }
 ]
