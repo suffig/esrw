@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 144,
+ "spiele_gesamt": 143,
  "saison": "2026/27",
  "archiv_spiele": 225,
  "rollen": {
@@ -3168,34 +3168,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-14T18:15:00+02:00",
-     "treffpunkt": "2026-09-14T17:15:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U14 NRW",
-     "paarung": "NRW U14 – Kölner Junghaie U15",
-     "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
-     "halle": "Kölnarena 2",
-     "koordinaten": [
-      50.937979,
-      6.98935
-     ],
-     "gespann": [
-      {
-       "name": "Hoffmann, Jan",
-       "slug": "hoffmann-jan",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-14T18:15:00+02:00|NRW U14 – Kölner Junghaie U15",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-26T19:15:00+02:00",
      "treffpunkt": "2026-09-26T18:15:00+02:00",
      "rolle": "SR",
@@ -4968,34 +4940,6 @@
     "letzte": "2026-10-03"
    },
    "spiele": [
-    {
-     "beginn": "2026-09-14T18:15:00+02:00",
-     "treffpunkt": "2026-09-14T17:15:00+02:00",
-     "rolle": "SR",
-     "system": 2,
-     "liga": "U14 NRW",
-     "paarung": "NRW U14 – Kölner Junghaie U15",
-     "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
-     "halle": "Kölnarena 2",
-     "koordinaten": [
-      50.937979,
-      6.98935
-     ],
-     "gespann": [
-      {
-       "name": "Hauerwaas, Gabriel",
-       "slug": "hauerwaas-gabriel",
-       "rolle": "SR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-14T18:15:00+02:00|NRW U14 – Kölner Junghaie U15",
-     "korrektur": null,
-     "manuell": false
-    },
     {
      "beginn": "2026-10-03T10:00:00+02:00",
      "treffpunkt": "2026-10-03T09:00:00+02:00",
@@ -15197,32 +15141,6 @@
   }
  ],
  "spiele": [
-  {
-   "beginn": "2026-09-14T18:15:00+02:00",
-   "treffpunkt": "2026-09-14T17:15:00+02:00",
-   "liga": "U14 NRW",
-   "paarung": "NRW U14 – Kölner Junghaie U15",
-   "halle": "Kölnarena 2",
-   "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
-   "halle_erkannt": true,
-   "system": 2,
-   "besetzung": [
-    {
-     "name": "Hauerwaas, Gabriel",
-     "rolle": "SR",
-     "slug": "hauerwaas-gabriel"
-    },
-    {
-     "name": "Hoffmann, Jan",
-     "rolle": "SR",
-     "slug": "hoffmann-jan"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-14T18:15:00+02:00|NRW U14 – Kölner Junghaie U15",
-   "korrektur": null,
-   "manuell": false
-  },
   {
    "beginn": "2026-09-15T19:00:00+02:00",
    "treffpunkt": "2026-09-15T18:00:00+02:00",

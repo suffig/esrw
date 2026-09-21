@@ -531,20 +531,6 @@
   "titel": "SR · U13 RLB · Herner EV – Iserlohner EC 1b",
   "treffpunkt": "2026-09-26T07:30:00+02:00"
  },
- "1f0dfe62bbfe8be178dc1e974ce50b13858bd4ff@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-14T18:15:00+02:00",
-  "geaendert_am": null,
-  "id": "2026-09-14T18:15:00+02:00|NRW U14 – Kölner Junghaie U15",
-  "inhalt": "d33456b993842c4e2cfa4dbf5282e312c0b82b9f",
-  "korrektur": null,
-  "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
-  "sequence": 0,
-  "slug": "hoffmann-jan",
-  "stempel": "2026-09-10T12:21:48.988708+00:00",
-  "titel": "SR · U14 NRW · NRW U14 – Kölner Junghaie U15",
-  "treffpunkt": "2026-09-14T17:15:00+02:00"
- },
  "1f2cd20012e9ed5a2281df4be191592529083c34@esrw.de": {
   "aenderung": null,
   "beginn": "2026-09-25T20:00:00+02:00",
@@ -2280,20 +2266,6 @@
   "stempel": "2026-09-21T15:30:38.777709+00:00",
   "titel": "SR · U15 LL · SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats – Dinslakener Kobras",
   "treffpunkt": "2026-10-03T09:30:00+02:00"
- },
- "83a57295d9d47505ad7fb43c68b7fc38acad428e@esrw.de": {
-  "aenderung": null,
-  "beginn": "2026-09-14T18:15:00+02:00",
-  "geaendert_am": null,
-  "id": "2026-09-14T18:15:00+02:00|NRW U14 – Kölner Junghaie U15",
-  "inhalt": "d33456b993842c4e2cfa4dbf5282e312c0b82b9f",
-  "korrektur": null,
-  "ort": "Kölnarena 2, Gummersbacher Straße 4, 50679 Köln",
-  "sequence": 0,
-  "slug": "hauerwaas-gabriel",
-  "stempel": "2026-09-10T12:21:48.988708+00:00",
-  "titel": "SR · U14 NRW · NRW U14 – Kölner Junghaie U15",
-  "treffpunkt": "2026-09-14T17:15:00+02:00"
  },
  "83f8014f9e17ebfb912944c8b42ab3f08963eb38@esrw.de": {
   "aenderung": null,
