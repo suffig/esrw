@@ -236,6 +236,35 @@
     setTimeout(function () { var f = el("suche"); f.focus(); f.select(); window.scrollTo({ top: 0 }); }, 150);
   });
   el("avatar").addEventListener("click", function () { location.hash = profil && profil.slug ? "mehr" : ""; if (!(profil && profil.slug)) zeigeAuswahl(false); });
+  // Admin-Modus: nur fuer Admins sichtbar, schaltet die Betreiber-Funktionen
+  // in der Oberflaeche an und aus (Rechte bleiben davon unberuehrt)
+  function adminModusAn() { return lesen("adminaus") !== "1"; }
+  function adminKnopfStand() {
+    var k = el("adminmodus"); if (!k) return;
+    var an = adminModusAn();
+    k.classList.toggle("aktiv", an);
+    k.title = an ? "Admin-Modus an – antippen zum Ausschalten" : "Admin-Modus aus – antippen zum Einschalten";
+    k.setAttribute("aria-pressed", an ? "true" : "false");
+    document.documentElement.classList.toggle("admin-aus", !an);
+  }
+  function adminKnopfZeigen() {
+    if (!sitzungVorhanden()) { el("adminmodus").classList.add("versteckt"); return; }
+    ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
+      .then(function (st) { return st.eingerichtet && st.session && window.Mitglieder.adminRecht ? window.Mitglieder.adminRecht() : false; })
+      .then(function (ja) { el("adminmodus").classList.toggle("versteckt", !ja); adminKnopfStand(); }).catch(function () {});
+  }
+  el("adminmodus").addEventListener("click", function () {
+    var neu = !adminModusAn();
+    schreiben("adminaus", neu ? null : "1");
+    adminKnopfStand();
+    toast(neu ? "Admin-Modus an – Betreiber-Funktionen sichtbar." : "Admin-Modus aus – App wie für alle anderen.", "gut");
+    zaehlerHolen(); ausHash();
+  });
+  document.addEventListener("mg-sitzung", function () { adminKnopfZeigen(); });
+  // Tipp auf den Reiter, auf dem man schon steht: nach oben scrollen
+  Array.prototype.forEach.call(document.querySelectorAll(".leiste button"), function (b) {
+    b.addEventListener("click", function () { if (b.classList.contains("aktiv")) window.scrollTo({ top: 0, behavior: "smooth" }); });
+  });
   el("thema").addEventListener("click", function () {
     var t = lesen("thema");
     var dunkel = t === "dark" || (!t && window.matchMedia("(prefers-color-scheme: dark)").matches);
@@ -2005,6 +2034,30 @@
     box.classList.remove("versteckt");
   }
 
+  // Admin-Modus auch in den Einstellungen (nur fuer Admins sichtbar)
+  function adminZeileRendern() {
+    var box = el("adminzeile"); if (!box) return;
+    box.innerHTML = ""; box.classList.add("versteckt");
+    if (!sitzungVorhanden()) return;
+    ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
+      .then(function (st) { return st.eingerichtet && st.session && window.Mitglieder.adminRecht ? window.Mitglieder.adminRecht() : false; })
+      .then(function (ja) {
+        if (!ja) return;
+        var h3 = document.createElement("h3"); h3.className = "abschnitt"; h3.textContent = "Betreiber";
+        var sm = document.createElement("small"); sm.textContent = "Admin-Funktionen ein- oder ausblenden – die Rechte bleiben"; h3.appendChild(sm);
+        box.appendChild(h3);
+        var karte = document.createElement("div"); karte.className = "karte einstellungen-liste";
+        var l = document.createElement("label"); var t = document.createElement("span");
+        var b = document.createElement("b"); b.textContent = "Admin-Modus"; b.style.display = "block";
+        var s2 = document.createElement("small"); s2.textContent = "Admin-Reiter, „Korrigieren“, Funktionen, alle Spiele im Archiv"; s2.style.color = "var(--dim)"; s2.style.fontWeight = "500";
+        t.appendChild(b); t.appendChild(s2);
+        var c = document.createElement("input"); c.type = "checkbox"; c.checked = adminModusAn();
+        c.addEventListener("change", function () { schreiben("adminaus", c.checked ? null : "1"); adminKnopfStand(); zaehlerHolen(); toast(c.checked ? "Admin-Modus an." : "Admin-Modus aus.", "gut"); });
+        l.appendChild(t); l.appendChild(c); karte.appendChild(l); box.appendChild(karte);
+        box.classList.remove("versteckt");
+      }).catch(function () {});
+  }
+
   // Die letzten Push-Nachrichten (der Service Worker legt sie in IndexedDB ab)
   function pushVerlaufLesen() {
     return new Promise(function (ok) {
@@ -2696,7 +2749,7 @@
   }
   function zeigeEinstellungen() {
     ansicht("einstellungen"); aktuell = null; window.scrollTo(0, 0);
-    bereicheRendern(); startBausteineRendern(); pushVerlaufRendern();
+    bereicheRendern(); startBausteineRendern(); pushVerlaufRendern(); adminZeileRendern();
     var kb = el("konto-bereich"); kb.innerHTML = "";
     if (!sitzungVorhanden()) {
       var k = document.createElement("a"); k.href = "#mitglieder"; k.className = "hinweis"; k.style.display = "flex"; k.style.textDecoration = "none"; k.style.color = "inherit"; k.style.marginBottom = "12px";
@@ -3290,7 +3343,7 @@
       // landet ein Direktlink auf "Tausch" beim ersten Besuch faelschlich auf "abgeschaltet"
       var geroutet = false, routen = function () { if (geroutet) return; geroutet = true; ausHash(); tourWennNeu(); };
       funktionenLaden().then(routen); setTimeout(routen, 1500);
-      betreiberLaden(true).then(function () { korrekturenLaden(true); }); zeigeInstallHinweis(); zeigeNeu(); filterHoehe(); netzAnzeigen();
+      betreiberLaden(true).then(function () { korrekturenLaden(true); }); zeigeInstallHinweis(); zeigeNeu(); filterHoehe(); netzAnzeigen(); adminKnopfZeigen();
       setTimeout(zaehlerHolen, 1500);
     })
     .catch(function () { el("stand").className = "stand alt"; el("stand").textContent = "Daten konnten nicht geladen werden."; });

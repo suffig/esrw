@@ -718,6 +718,37 @@
   .tour-punkte i { width:7px; height:7px; border-radius:50%; background:var(--linie); }
   .tour-punkte i.aktiv { background:var(--akzent); width:18px; border-radius:4px; }
   @media (prefers-reduced-motion: reduce) { .tour-karte { animation:none; } }
+  /* Runde 12: Admin-Modus, Typografie (Ziffern, Trennung, ruhigere Grossbuchstaben) */
+  /* Kopf: Titel darf schrumpfen, Knoepfe bleiben rechts - sonst deckt der
+     Admin-Schalter auf schmalen Geraeten das "ESRW" zu */
+  .kopf > .marke { flex:1 1 auto; min-width:0; }
+  .kopf h1 { overflow:hidden; text-overflow:ellipsis; }
+  .kopf .stand { max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .kopf-knoepfe { flex:none; }
+  @media (max-width: 420px) {
+    .kopf .rund, .avatar-knopf { width:38px; height:38px; }
+    .kopf-knoepfe { gap:6px; }
+    .kopf h1 { font-size:1.05rem; }
+  }
+  #adminmodus { color:var(--dim); }
+  #adminmodus.aktiv { background:var(--rot); color:#fff; box-shadow:0 0 0 2px var(--karte), 0 0 0 4px color-mix(in srgb, var(--rot) 35%, transparent); }
+  html.admin-aus .nur-admin { display:none !important; }
+  /* Zahlen laufen nicht mehr - gleiche Breite fuer Uhrzeiten, Betraege, Tabellen */
+  .spiel .wann, .spiel .zeit, .zeile .zeit, .zahl.karte b, .mg-betrag-kurz, .mg-saldo .zahl b, .mg-kal .tag,
+  .jahresblatt td, .jahresblatt th, .stand, .held .zeit, .spiel-kopf .zeit, .archiv-liste .datum, .fortschritt + .meta {
+    font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1; }
+  /* Lange Vereinsnamen duerfen trennen statt zu ueberlaufen */
+  .paarung, .spiel .inhalt b, .archiv-liste .text b, .protokoll .zeile span, .kollege .zeile b, .fahrt .wer b, .termin-heute .titel {
+    hyphens:auto; -webkit-hyphens:auto; overflow-wrap:anywhere; }
+  /* Grossbuchstaben-Zeilen etwas ruhiger, Titel enger */
+  .wann, .protokoll-tag, .archiv-monat, .menue-gruppe, .tour-schritt, .mg-kal .wt { letter-spacing:.06em; }
+  h1, h2, h3, .held .zeit, .spiel-kopf .zeit { letter-spacing:-.02em; }
+  .seitentitel h2 { line-height:1.15; }
+  .meta, small { line-height:1.45; }
+  .karte p, .melde p, .leer, .tour-karte p { max-width:62ch; }
+  .tour-karte p, .leer { hyphens:auto; -webkit-hyphens:auto; }
+  .leer { margin-left:auto; margin-right:auto; }
+  .rolle { font-variant-numeric:tabular-nums; }
   /* Runde 11: Ladebalken, kompakter Spielplan-Kopf, Archiv-Chips, Schnellzugriff */
   .ladebalken { position:fixed; top:0; left:0; right:0; height:3px; z-index:70; pointer-events:none; overflow:hidden; }
   .ladebalken i { display:block; height:100%; width:40%; background:var(--rot); border-radius:0 3px 3px 0; transform:translateX(-45%); opacity:0; transition:opacity .2s; }
@@ -1272,6 +1303,7 @@
     <svg class="i"><use href="#i-moon"/></svg>
   </button>
   <span class="kopf-knoepfe">
+    <button type="button" class="rund versteckt" id="adminmodus" title="Admin-Modus" aria-label="Admin-Modus umschalten" aria-pressed="true"><svg class="i"><use href="#i-shield"/></svg></button>
     <button type="button" class="rund" id="suche-knopf" title="Spielplan durchsuchen" aria-label="Suchen"><svg class="i"><use href="#i-suche"/></svg></button>
     <button type="button" class="avatar-knopf leer" id="avatar" title="Profil und mehr" aria-label="Profil und mehr">?</button>
   </span>
@@ -1453,6 +1485,7 @@
     <div class="karte einstellungen-liste" id="start-bausteine"></div>
     <h3 class="abschnitt">Bereiche<small>Was du nicht brauchst, blendest du für dich aus – nur auf deinen Geräten</small></h3>
     <div class="karte einstellungen-liste" id="bereiche"></div>
+    <div id="adminzeile" class="versteckt"></div>
     <div id="push-verlauf" class="versteckt"></div>
   </section>
 
@@ -1589,6 +1622,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=51"></script>
+<script src="app.js?v=52"></script>
 </body>
 </html>

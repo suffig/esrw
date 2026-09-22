@@ -1288,6 +1288,24 @@ Spielseite). Mehrfachauswahl: Verpflegung 14 € setzen/entfernen, CSV.
 * **Tastatur am Desktop:** `/` Suche, `?` Anleitung, `1–5` Reiter, `←/→`
   Woche/Monat, `Esc` leert Felder bzw. schließt.
 
+### 10.6w Admin-Modus zum Abschalten, Typografie
+
+* **Admin-Modus:** Admins haben oben im Kopf einen Schild-Knopf (rot = an).
+  Ausgeschaltet verhält sich die App wie für jeden anderen Schiedsrichter:
+  kein Admin-Reiter, keine „Korrigieren (Admin)“-Karte auf der Spielseite,
+  kein Admin-Eintrag unter „Mehr“, kein „Alle Spiele aller Kollegen“ im
+  Archiv, keine Hinweise auf wartende Konten, kein Ankündigungs-Formular.
+  Die Rechte in der Datenbank bleiben unverändert – es ist nur die
+  Oberfläche. Der Schalter steht auch unter Einstellungen → Betreiber und
+  gilt je Gerät.
+* **Typografie:** Uhrzeiten, Beträge und Tabellen haben jetzt gleich breite
+  Ziffern (springen beim Tippen nicht mehr), lange Vereins- und Hallennamen
+  werden getrennt statt abgeschnitten, Großbuchstaben-Zeilen und Überschriften
+  laufen ruhiger, Fließtext hat eine angenehme Zeilenlänge.
+* **Kopfzeile** passt auch mit drei Knöpfen auf schmale Geräte (Titel kürzt
+  sich, Knöpfe werden etwas kleiner).
+* **Tipp auf den aktiven Reiter** unten scrollt nach oben.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –
