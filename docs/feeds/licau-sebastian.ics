@@ -8,29 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:1e071d1ac8e345cdbd98e0900e085ce6cbaba8cc@esrw.de
-SEQUENCE:0
-DTSTAMP:20260915T060043Z
-LAST-MODIFIED:20260915T060043Z
-DTSTART:20260915T160000Z
-DTEND:20260915T193000Z
-SUMMARY:HSR · DNL III FS · EV Duisburg – EV Duisburg OL
-DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 19:00 Uhr\nTreff
- punkt: 18:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III FS\nHalle: PreZer
- o Rheinlandhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\
- nGespann: Musga\, Maurice (LSR) / Hornig\, Marius (LSR)\n\nQuelle: https:/
- /www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
- sburg
-GEO:51.405718;6.780082
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
- sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
- reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
-END:VEVENT
-BEGIN:VEVENT
 UID:cb59679ad48f394d1d970beb80a3f61ca4cde1e9@esrw.de
 SEQUENCE:0
 DTSTAMP:20260914T193036Z

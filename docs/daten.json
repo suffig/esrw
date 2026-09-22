@@ -2,7 +2,7 @@
  "titel": "Einteilungen ESRW",
  "quelle": "https://www.esrw.de/einteilungen.html",
  "vorlauf_minuten": 60,
- "spiele_gesamt": 143,
+ "spiele_gesamt": 142,
  "saison": "2026/27",
  "archiv_spiele": 225,
  "rollen": {
@@ -5191,39 +5191,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-15T19:00:00+02:00",
-     "treffpunkt": "2026-09-15T18:00:00+02:00",
-     "rolle": "LSR",
-     "system": 3,
-     "liga": "DNL III FS",
-     "paarung": "EV Duisburg – EV Duisburg OL",
-     "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
-     "halle": "PreZero Rheinlandhalle Duisburg",
-     "koordinaten": [
-      51.405718,
-      6.780082
-     ],
-     "gespann": [
-      {
-       "name": "Licau, Sebastian",
-       "slug": "licau-sebastian",
-       "rolle": "HSR"
-      },
-      {
-       "name": "Musga, Maurice",
-       "slug": "musga-maurice",
-       "rolle": "LSR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-15T19:00:00+02:00|EV Duisburg – EV Duisburg OL",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-25T19:00:00+02:00",
      "treffpunkt": "2026-09-25T18:00:00+02:00",
      "rolle": "SR",
@@ -7104,39 +7071,6 @@
    },
    "spiele": [
     {
-     "beginn": "2026-09-15T19:00:00+02:00",
-     "treffpunkt": "2026-09-15T18:00:00+02:00",
-     "rolle": "HSR",
-     "system": 3,
-     "liga": "DNL III FS",
-     "paarung": "EV Duisburg – EV Duisburg OL",
-     "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
-     "halle": "PreZero Rheinlandhalle Duisburg",
-     "koordinaten": [
-      51.405718,
-      6.780082
-     ],
-     "gespann": [
-      {
-       "name": "Musga, Maurice",
-       "slug": "musga-maurice",
-       "rolle": "LSR"
-      },
-      {
-       "name": "Hornig, Marius",
-       "slug": "hornig-marius",
-       "rolle": "LSR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-15T19:00:00+02:00|EV Duisburg – EV Duisburg OL",
-     "korrektur": null,
-     "manuell": false
-    },
-    {
      "beginn": "2026-09-20T19:00:00+02:00",
      "treffpunkt": "2026-09-20T18:00:00+02:00",
      "rolle": "HSR",
@@ -8847,98 +8781,6 @@
      "aenderung": null,
      "hinweis": null,
      "id": "2026-10-04T18:45:00+02:00|Soester EG – EHC Essen Ruhr",
-     "korrektur": null,
-     "manuell": false
-    }
-   ]
-  },
-  {
-   "slug": "musga-maurice",
-   "name": "Musga, Maurice",
-   "varianten": [
-    "Musga, Maurice"
-   ],
-   "statistik": {
-    "gesamt": 3,
-    "saison": 3,
-    "rollen": {
-     "LSR": 2,
-     "SR": 1
-    },
-    "ligen": [
-     [
-      "DNL III FS",
-      2
-     ],
-     [
-      "U17 I",
-      1
-     ]
-    ],
-    "hallen": [
-     [
-      "PreZero Rheinlandhalle Duisburg",
-      2
-     ],
-     [
-      "Eishalle Brehmstraße",
-      1
-     ]
-    ],
-    "partner": [
-     [
-      "Licau, Sebastian",
-      2
-     ],
-     [
-      "Hornig, Marius",
-      2
-     ],
-     [
-      "Butt, Caroline",
-      1
-     ]
-    ],
-    "je_saison": [
-     [
-      "2026/27",
-      3
-     ]
-    ],
-    "erste": "2026-09-05",
-    "letzte": "2026-09-15"
-   },
-   "spiele": [
-    {
-     "beginn": "2026-09-15T19:00:00+02:00",
-     "treffpunkt": "2026-09-15T18:00:00+02:00",
-     "rolle": "LSR",
-     "system": 3,
-     "liga": "DNL III FS",
-     "paarung": "EV Duisburg – EV Duisburg OL",
-     "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
-     "halle": "PreZero Rheinlandhalle Duisburg",
-     "koordinaten": [
-      51.405718,
-      6.780082
-     ],
-     "gespann": [
-      {
-       "name": "Licau, Sebastian",
-       "slug": "licau-sebastian",
-       "rolle": "HSR"
-      },
-      {
-       "name": "Hornig, Marius",
-       "slug": "hornig-marius",
-       "rolle": "LSR"
-      }
-     ],
-     "halle_erkannt": true,
-     "vergangen": true,
-     "aenderung": null,
-     "hinweis": null,
-     "id": "2026-09-15T19:00:00+02:00|EV Duisburg – EV Duisburg OL",
      "korrektur": null,
      "manuell": false
     }
@@ -15189,37 +15031,6 @@
   }
  ],
  "spiele": [
-  {
-   "beginn": "2026-09-15T19:00:00+02:00",
-   "treffpunkt": "2026-09-15T18:00:00+02:00",
-   "liga": "DNL III FS",
-   "paarung": "EV Duisburg – EV Duisburg OL",
-   "halle": "PreZero Rheinlandhalle Duisburg",
-   "ort": "PreZero Rheinlandhalle Duisburg, Margaretenstr. 17-19, 47055 Duisburg",
-   "halle_erkannt": true,
-   "system": 3,
-   "besetzung": [
-    {
-     "name": "Licau, Sebastian",
-     "rolle": "HSR",
-     "slug": "licau-sebastian"
-    },
-    {
-     "name": "Musga, Maurice",
-     "rolle": "LSR",
-     "slug": "musga-maurice"
-    },
-    {
-     "name": "Hornig, Marius",
-     "rolle": "LSR",
-     "slug": "hornig-marius"
-    }
-   ],
-   "vergangen": true,
-   "id": "2026-09-15T19:00:00+02:00|EV Duisburg – EV Duisburg OL",
-   "korrektur": null,
-   "manuell": false
-  },
   {
    "beginn": "2026-09-16T19:30:00+02:00",
    "treffpunkt": "2026-09-16T18:30:00+02:00",

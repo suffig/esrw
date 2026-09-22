@@ -8,29 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:5211db93a4a23b492fee61c237aeb41efd10fd39@esrw.de
-SEQUENCE:0
-DTSTAMP:20260915T060043Z
-LAST-MODIFIED:20260915T060043Z
-DTSTART:20260915T160000Z
-DTEND:20260915T193000Z
-SUMMARY:DNL III FS · EV Duisburg – EV Duisburg OL
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
-  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III FS\nHalle: PreZero Rhei
- nlandhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespa
- nn: Licau\, Sebastian (HSR) / Musga\, Maurice (LSR)\n\nQuelle: https://www
- .esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
- sburg
-GEO:51.405718;6.780082
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
- sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
- reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
-END:VEVENT
-BEGIN:VEVENT
 UID:0be5edd926de70b13b34b54eec5019582ab51934@esrw.de
 SEQUENCE:0
 DTSTAMP:20260909T170129Z
