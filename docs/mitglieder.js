@@ -990,7 +990,7 @@ window.Mitglieder = (function () {
       km: alt.km != null ? alt.km : null, km_satz: profil.km_satz != null ? profil.km_satz : null,
       verguetung: alt.verguetung != null ? alt.verguetung : null,
       auslagen: alt.auslagen != null ? alt.auslagen : null,
-      bezahlt: !!alt.bezahlt, abgerechnet: !!alt.abgerechnet, ausgefallen: !!alt.ausgefallen, uebergreifend: !!alt.uebergreifend,
+      ausgefallen: !!alt.ausgefallen, uebergreifend: !!alt.uebergreifend,
       notiz: alt.notiz || null
     }, alt.id ? { id: alt.id } : {}, alt.belege !== undefined ? { belege: alt.belege } : {},
        // Neue Spalten (v14) nur mitschicken, wenn sie gebraucht werden - sonst
@@ -1009,12 +1009,10 @@ window.Mitglieder = (function () {
     }, 600);
   }
 
-  // Ein Status je Spiel: "abgerechnet" (frueher getrennt "abgerechnet" und
-  // "bezahlt" - beides meint dasselbe: erledigt). Beide Spalten laufen gleich.
-  function erledigt(e) { return !!(e && (e.bezahlt || e.abgerechnet)); }
-  function erledigtSetzen(sp, wert) { speichereEinsatz(sp, { bezahlt: !!wert, abgerechnet: !!wert }); }
+  // Die Abrechnung ist eine private Aufstellung - es gibt keinen Status
+  // "offen/abgerechnet" mehr; zaehlt nur, ob Vergütung und km erfasst sind.
   function summen(spiele, filter) {
-    var s = { spiele: 0, km: 0, fahrt: 0, verg: 0, ausl: 0, offen: 0, offenBetrag: 0, verpf: 0 };
+    var s = { spiele: 0, km: 0, fahrt: 0, verg: 0, ausl: 0, verpf: 0 };
     spiele.forEach(function (sp) {
       if (filter && !filter(sp)) return;
       var e = einsaetze[sp.kennung];
@@ -1024,7 +1022,7 @@ window.Mitglieder = (function () {
       s.fahrt += fahrtkosten(e);
       var b = betragFuer(sp, e).betrag || 0;
       s.verg += b; s.ausl += e.auslagen || 0; s.verpf += e.verpflegung || 0;
-      if (!erledigt(e) && b > 0) { s.offen++; s.offenBetrag += b; }
+
     });
     return s;
   }
@@ -1120,8 +1118,7 @@ window.Mitglieder = (function () {
     var kurz = wurzel.querySelector('[data-kennung="' + spiel.kennung.replace(/"/g, "") + '"] .mg-betrag-kurz');
     if (kurz) kurz.textContent = b.betrag != null ? euro(b.betrag) + (e.km != null ? " · " + e.km + " km" : "") : "Betrag fehlt";
     var karte = wurzel.querySelector('[data-kennung="' + spiel.kennung.replace(/"/g, "") + '"]');
-    if (karte) karte.classList.toggle("bezahlt", erledigt(e));
-    var pill = karte && karte.querySelector(".mg-status"); if (pill) { pill.textContent = erledigt(e) ? "abgerechnet ✓" : "offen"; pill.classList.toggle("fertig", erledigt(e)); }
+    if (karte) karte.classList.toggle("erfasst", b.betrag != null);
   }
 
   function betragText(spiel, e, b) {
@@ -1153,7 +1150,7 @@ window.Mitglieder = (function () {
     var box = h("div", { class: "fahrtenbuch jahresblatt" }, [
       h("h3", { class: "abschnitt", text: "Schiedsrichter-Einnahmen und -Kosten " + jahr + " · " + (profil.name || "") }),
       h("p", { class: "meta", text: "Einnahmen: Vergütung nach ESRW-Gebührenordnung. Kosten: " + (einfach ? "Entfernungspauschale (einfache Strecke, " + euro(profil.satz_einfach != null ? profil.satz_einfach : 0.38) + "/km)" : "Reisekosten (gefahrene km, " + euro(profil.satz_hinrueck != null ? profil.satz_hinrueck : 0.30) + "/km)") + ", Verpflegungsmehraufwand (14 € ab 8 Std.), Auslagen laut Beleg. Saldo: " + euro(s.verg - s.fahrt - s.verpf - s.ausl) + ". Erstellt " + new Date().toLocaleDateString("de-DE") + " – Aufstellung, keine Steuerberatung." }),
-      liste.length ? h("div", { style: "overflow-x:auto" }, [tabelle]) : h("p", { class: "leer", text: "Keine abgerechneten Spiele in " + jahr + "." })
+      liste.length ? h("div", { style: "overflow-x:auto" }, [tabelle]) : h("p", { class: "leer", text: "Keine erfassten Spiele in " + jahr + "." })
     ]);
     inhalt.appendChild(h("div", { class: "zweit fahrtenbuch" }, [
       h("button", { type: "button", text: "Drucken / PDF", onclick: function () {
@@ -1536,8 +1533,6 @@ window.Mitglieder = (function () {
     var ausl = h("input", { type: "number", step: "0.5", min: "0", inputmode: "decimal",
       value: e.auslagen != null ? e.auslagen : "", placeholder: "€",
       onchange: function (ev) { speichereEinsatz(sp, { auslagen: zahl(ev.target.value) }); } });
-    var abg = h("input", { type: "checkbox", title: "abgerechnet", onchange: function (ev) { erledigtSetzen(sp, ev.target.checked); } });
-    abg.checked = erledigt(e);
     var ausf = h("input", { type: "checkbox", onchange: function (ev) { speichereEinsatz(sp, { ausgefallen: ev.target.checked }); } });
     ausf.checked = !!e.ausgefallen;
     var ueb = h("input", { type: "checkbox", onchange: function (ev) { speichereEinsatz(sp, { uebergreifend: ev.target.checked }); } });
@@ -1548,14 +1543,13 @@ window.Mitglieder = (function () {
       onchange: function (ev) { speichereEinsatz(sp, { verpflegung: zahl(ev.target.value) }); } });
 
     var b = betragFuer(sp, e);
-    var status = h("button", { type: "button", class: "mg-status" + (erledigt(e) ? " fertig" : ""), title: "Antippen: Status wechseln", text: erledigt(e) ? "abgerechnet ✓" : "offen", onclick: function () { var neu = !erledigt(einsaetze[sp.kennung] || {}); abg.checked = neu; erledigtSetzen(sp, neu); } });
     // Beleg-Foto direkt aus der Zeile: Kamera oeffnet sich, Bild wird verkleinert hochgeladen
     var foto = h("input", { type: "file", accept: "image/*", capture: "environment", style: "display:none", onchange: function (ev) { var f = ev.target.files && ev.target.files[0]; if (f) belegHochladen(sp, f, zeile); ev.target.value = ""; } });
     var fotoKnopf = h("button", { type: "button", class: "mg-foto", title: "Beleg fotografieren", onclick: function () { foto.click(); } }, [ikone("i-kamera"), h("span", { class: "mg-beleg-zahl" + ((e.belege || []).length ? "" : " versteckt"), text: String((e.belege || []).length || "") })]);
     var details = h("div", { class: "mg-details versteckt" });
     var wahl = h("input", { type: "checkbox", class: "check mg-wahl" }); wahl.checked = !!auswahl[sp.kennung];
     wahl.addEventListener("change", function () { if (wahl.checked) auswahl[sp.kennung] = sp; else delete auswahl[sp.kennung]; zeile.classList.toggle("gewaehlt", wahl.checked); auswahlLeiste(); });
-    var zeile = h("div", { class: "spiel karte mg-eintrag" + (vergangen ? "" : " war") + (erledigt(e) ? " bezahlt" : "") + (auswahl[sp.kennung] ? " gewaehlt" : ""), "data-kennung": sp.kennung.replace(/"/g, "") }, [
+    var zeile = h("div", { class: "spiel karte mg-eintrag" + (vergangen ? "" : " war") + (b.betrag != null ? " erfasst" : "") + (auswahl[sp.kennung] ? " gewaehlt" : ""), "data-kennung": sp.kennung.replace(/"/g, "") }, [
       h("div", { class: "mg-kopf", onclick: function (ev) { if (ev.target.closest("input, button, a, label")) return; if (auswahlModus) { wahl.checked = !wahl.checked; wahl.dispatchEvent(new Event("change")); return; } details.classList.toggle("versteckt"); zeile.classList.toggle("offen", !details.classList.contains("versteckt")); } }, [
         h("div", { class: "mg-wahlfeld" + (auswahlModus ? "" : " versteckt") }, [wahl]),
         h("div", { class: "kopfzeile" }, [

@@ -1188,7 +1188,8 @@
   .mg-summe .mg-betrag-kurz { font-weight:800; color:var(--text); }
   .mg-summe .mg-auf { margin-left:auto; color:var(--akzent); font-weight:700; }
   .mg-eintrag.offen .mg-auf { display:none; }
-  .mg-eintrag.bezahlt .mg-betrag-kurz { color:var(--gut); }
+  .mg-eintrag.erfasst .mg-betrag-kurz { color:var(--gut); }
+  .mg-eintrag:not(.erfasst):not(.war) .mg-betrag-kurz { color:var(--rot); font-weight:700; }
   .mg-details { margin-top:4px; }
   .monat.mini .zelle { aspect-ratio:auto; min-height:38px; padding:4px 0; font-size:.78rem; }
   .monat.mini .zelle.nein { background:var(--warn-bg); color:var(--warn); border-color:transparent; }
@@ -1564,6 +1565,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=49"></script>
+<script src="app.js?v=50"></script>
 </body>
 </html>

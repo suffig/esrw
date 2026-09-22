@@ -2027,6 +2027,7 @@
 
   function ansicht(name) {
     ["auswahl", "detail", "plan", "mitglieder", "halle", "status", "spiel", "mehr", "einstellungen", "karte", "statseite", "aenderungen", "mitfahren", "archiv"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
+    if (name !== "plan" && typeof filterBlatt === "function" && !el("plan-filter-blatt").classList.contains("versteckt")) filterBlatt(false);
     var reiter = (location.hash.split("/")[1] || "");
     if (name !== "auswahl" && name !== "detail") { el("onboarding").classList.add("versteckt"); el("onboarding-kurz").classList.add("versteckt"); el("neu").classList.add("versteckt"); }
     else if (name === "detail" && el("neu")._offen) el("neu").classList.remove("versteckt");
@@ -3108,7 +3109,7 @@
       s.appendChild(document.createTextNode("Stand " + relativ));
       var mehr = document.createElement("span"); mehr.className = "stand-mehr"; mehr.textContent = " · " + zahlen; s.appendChild(mehr);
       s.title = "Letzter Lauf: " + stand.toLocaleString("de-DE") + " · " + zahlen;
-      if (alter > 6) { s.className = "stand alt"; s.appendChild(document.createTextNode(" – lange nicht aktualisiert")); }
+      if (alter > 6) { s.className = "stand alt"; var w = document.createElement("span"); w.className = "stand-mehr"; w.textContent = " – lange nicht aktualisiert"; s.appendChild(w); }
     } else s.textContent = zahlen;
   }
   function neuLaden() {
