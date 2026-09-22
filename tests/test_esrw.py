@@ -388,11 +388,35 @@ def test_saisonarchiv():
             E.BASIS = alt_basis
 
 
+def test_korrektur_uid():
+    """Eine Korrektur verschiebt Anstoss und Halle - Kennung und UID bleiben,
+    damit im Kalender kein zweiter Termin entsteht."""
+    print("\nKorrektur: Kennung bleibt")
+    cfg = {"vorlauf_minuten": 60, "spieldauer_minuten": 150, "quelle": "http://x", "ausgabe_verzeichnis": "docs"}
+    venues = E.lade("venues.json")
+    start = datetime(2026, 11, 7, 18, 30, tzinfo=timezone(timedelta(hours=1)))
+    spiel = {"start": start, "begegnung": "U15 FS: EHC Essen Ruhr - Herner EV",
+             "besetzung": {"HSR": [], "(L)SR": ["Muster, Max"]}}
+    jetzt = datetime(2026, 11, 1, tzinfo=timezone.utc)
+    ohne, u1 = E.sammle_personen([dict(spiel)], cfg, venues, jetzt)
+    app_id = u1[0]["id"]
+    korr = {app_id: {"beginn": "2026-11-07T20:00:00+01:00", "halle": "Eissporthalle Dinslaken"}}
+    mit, u2 = E.sammle_personen([dict(spiel)], cfg, venues, jetzt, korrekturen=korr)
+    pruefe(u1[0]["kennung"] == u2[0]["kennung"], "Kennung bleibt trotz Korrektur gleich")
+    pruefe(u2[0]["id"] == app_id, "App-Kennung bleibt gleich")
+    pruefe(u2[0]["anstoss"].hour == 20 and u2[0]["halle_name"] == "Eissporthalle Dinslaken", "Korrektur greift",
+           str((u2[0]["anstoss"], u2[0]["halle_name"])))
+    t1 = ohne[0]["termine"][0]
+    t2 = mit[0]["termine"][0]
+    pruefe(t1["kennung"] == t2["kennung"], "Termin-Kennung (Basis der UID) bleibt gleich")
+
+
 def main():
     print("Regressionstest esrw_ical")
     for test in (test_parsen, test_hallen, test_namen, test_rollen, test_aliase,
                  test_konflikte, test_hash_migration, test_ausgaben, test_faltung,
-                 test_escape, test_ics, test_saison, test_aenderungstext, test_saisonarchiv):
+                 test_escape, test_ics, test_saison, test_aenderungstext, test_saisonarchiv,
+                 test_korrektur_uid):
         test()
     print("\n" + "-" * 58)
     if FEHLER:

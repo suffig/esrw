@@ -805,3 +805,13 @@ alter table public.ankuendigungen add column if not exists an_slugs text[];
 drop policy if exists "Ankuendigungen lesen" on public.ankuendigungen;
 create policy "Ankuendigungen lesen" on public.ankuendigungen for select to authenticated
   using (public.ist_freigeschaltet() and (an_slugs is null or public.mein_slug() = any (an_slugs) or public.ist_admin()));
+
+-- ======================================================================
+-- v18: Aufraeumen - Abrechnung kennt keinen Status mehr
+-- ======================================================================
+-- "bezahlt"/"abgerechnet" waren dasselbe und werden nicht mehr geschrieben.
+-- Wer die alten Werte noch braucht, exportiert vorher die Tabelle.
+alter table public.einsaetze drop column if exists bezahlt;
+alter table public.einsaetze drop column if exists abgerechnet;
+-- Alte Push-Schluessel der Monatsende-Erinnerung (heisst jetzt "steuer|<Jahr>")
+delete from public.push_gesendet where schluessel like 'abrechnung|%';

@@ -718,6 +718,24 @@
   .tour-punkte i { width:7px; height:7px; border-radius:50%; background:var(--linie); }
   .tour-punkte i.aktiv { background:var(--akzent); width:18px; border-radius:4px; }
   @media (prefers-reduced-motion: reduce) { .tour-karte { animation:none; } }
+  /* Runde 11: Ladebalken, kompakter Spielplan-Kopf, Archiv-Chips, Schnellzugriff */
+  .ladebalken { position:fixed; top:0; left:0; right:0; height:3px; z-index:70; pointer-events:none; overflow:hidden; }
+  .ladebalken i { display:block; height:100%; width:40%; background:var(--rot); border-radius:0 3px 3px 0; transform:translateX(-45%); opacity:0; transition:opacity .2s; }
+  .ladebalken.laeuft i { opacity:1; animation:ladeLauf 1.1s ease-in-out infinite; }
+  @keyframes ladeLauf { 0% { transform:translateX(-45%); } 100% { transform:translateX(260%); } }
+  @media (prefers-reduced-motion: reduce) { .ladebalken.laeuft i { animation:none; transform:none; width:100%; opacity:.5; } }
+  .plan-suchzeile { margin-bottom:6px; }
+  #plan-suche-knopf { padding-left:10px; padding-right:10px; }
+  #plan-suche-knopf svg.i { margin:0; }
+  .archiv-chips { margin:2px 0 6px; }
+  .archiv-chips .chip.leise { background:transparent; border:1px dashed var(--linie); color:var(--dim); }
+  .archiv-chips .textknopf { flex:none; }
+  .schnellzugriff a.zuletzt svg.i { color:var(--rot); }
+  .wochenansicht .zeile-wer .chip { font-size:0; padding:2px; gap:0; }
+  .wochenansicht .zeile-wer .chip .avatar { width:22px; height:22px; font-size:.62rem; }
+  .wochenansicht .zeile-wer .chip b { display:none; }
+  .wochenansicht .zeile { padding:7px 0; }
+  .wochenansicht .zeile-wer { gap:4px; }
   /* Feinschliff-Runde: Kacheln, Formulare, Extras-Abschnitte, Zeilen-Links */
   .zahlen { grid-template-columns:repeat(auto-fit, minmax(70px, 1fr)); }
   @media (max-width: 420px) { .mg-form .mg-felder.mg-zwei { grid-template-columns:1fr; } }
@@ -1285,13 +1303,16 @@
   <section id="plan" class="versteckt">
     <div class="seitentitel"><h2>Spielplan</h2><p>Alle Spiele von esrw.de – Tipp auf ein Spiel für Details.</p></div>
     <div class="filterleiste">
-      <label for="plan-filter" class="versteckt">Spielplan filtern</label>
-      <input type="search" id="plan-filter" placeholder="Verein, Halle, Liga oder Name …"
-             autocomplete="off" autocorrect="off" spellcheck="false">
+      <div class="plan-suchzeile versteckt" id="plan-suchzeile">
+        <label for="plan-filter" class="versteckt">Spielplan filtern</label>
+        <input type="search" id="plan-filter" placeholder="Verein, Halle, Liga oder Name …"
+               autocomplete="off" autocorrect="off" spellcheck="false">
+      </div>
       <div class="schalterzeile">
         <span class="modus" id="plan-modus" role="tablist">
           <button type="button" data-modus="karten" class="aktiv">Karten</button><button type="button" data-modus="liste">Liste</button><button type="button" data-modus="woche">Woche</button><button type="button" data-modus="monat">Monat</button>
         </span>
+        <button type="button" class="filterknopf" id="plan-suche-knopf" title="Suchen" aria-label="Spielplan durchsuchen"><svg class="i"><use href="#i-suche"/></svg></button>
         <button type="button" class="filterknopf" id="plan-filter-knopf"><svg class="i"><use href="#i-list"/></svg> Filter <span class="zaehler versteckt" id="plan-filter-zahl"></span></button>
         <button type="button" class="textknopf" id="plan-heute">Heute ↓</button>
         <span class="schalter" id="plan-zaehler"></span>
@@ -1432,6 +1453,7 @@
     <div class="karte einstellungen-liste" id="start-bausteine"></div>
     <h3 class="abschnitt">Bereiche<small>Was du nicht brauchst, blendest du für dich aus – nur auf deinen Geräten</small></h3>
     <div class="karte einstellungen-liste" id="bereiche"></div>
+    <div id="push-verlauf" class="versteckt"></div>
   </section>
 
   <!-- Hallenkarte -->
@@ -1487,6 +1509,7 @@
         <select id="archiv-person" class="versteckt"><option value="">Alle Kollegen</option></select>
       </div>
     </div>
+    <div class="ligen schnell archiv-chips" id="archiv-chips"></div>
     <div class="zahlen archiv-zahlen" id="archiv-zahlen"></div>
     <div id="archiv-liste"></div>
   </section>
@@ -1537,6 +1560,7 @@
   </footer>
 </main>
 
+<div class="ladebalken" id="ladebalken" aria-hidden="true"><i></i></div>
 <div class="blatt-hintergrund versteckt" id="blatt-hintergrund"></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div class="tour versteckt" id="tour" role="dialog" aria-modal="true" aria-labelledby="tour-titel">
@@ -1565,6 +1589,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=50"></script>
+<script src="app.js?v=51"></script>
 </body>
 </html>

@@ -5,7 +5,7 @@
  * Parkhaus, Zug - kommt die zuletzt gespeicherte Fassung zum Zug.
  */
 
-const VERSION = "v45";
+const VERSION = "v46";
 const CACHE = "einteilungen-" + VERSION;
 
 // Wird beim ersten Besuch gespeichert, damit die App auch dann startet,
@@ -52,6 +52,31 @@ self.addEventListener("activate", (e) => {
 // Echtes Push vom Workflow (push_senden.py): Nutzlast ist JSON mit
 // titel, text, url. Ohne Nutzlast (Test aus den Browser-Werkzeugen) kommt
 // eine allgemeine Meldung.
+// Die letzten zehn Meldungen merken, damit man sie in der App nachlesen kann
+function verlaufMerken(daten) {
+  return new Promise((ok) => {
+    if (!self.indexedDB) return ok();
+    const a = indexedDB.open("esrw-push", 1);
+    a.onupgradeneeded = () => { try { a.result.createObjectStore("nachrichten", { keyPath: "zeit" }); } catch (e) {} };
+    a.onerror = () => ok();
+    a.onsuccess = () => {
+      const db = a.result;
+      try {
+        const laden = db.transaction("nachrichten", "readwrite").objectStore("nachrichten");
+        laden.put({ zeit: Date.now(), titel: daten.titel, text: daten.text, url: daten.url });
+        const alle = laden.getAllKeys();
+        alle.onsuccess = () => {
+          const keys = (alle.result || []).sort((x, y) => y - x).slice(10);
+          const weg = db.transaction("nachrichten", "readwrite").objectStore("nachrichten");
+          keys.forEach((k) => weg.delete(k));
+          setTimeout(() => { db.close(); ok(); }, 50);
+        };
+        alle.onerror = () => { db.close(); ok(); };
+      } catch (e) { ok(); }
+    };
+  });
+}
+
 self.addEventListener("push", (e) => {
   let daten = { titel: "Einteilungen", text: "Es gibt Neues.", url: "./" };
   try { if (e.data) daten = Object.assign(daten, e.data.json()); } catch (err) {
@@ -59,11 +84,11 @@ self.addEventListener("push", (e) => {
   }
   // Mit Adresse gibt es einen Route-Knopf (Android zeigt ihn, iOS nicht)
   const aktionen = daten.ort ? [{ action: "route", title: "Route" }, { action: "oeffnen", title: "Öffnen" }] : [];
-  e.waitUntil(self.registration.showNotification(daten.titel, {
+  e.waitUntil(verlaufMerken(daten).then(() => self.registration.showNotification(daten.titel, {
     body: daten.text, icon: "icon-192.png", badge: "icon-192.png",
     tag: daten.tag || "einteilung", renotify: true, actions: aktionen,
     data: { url: daten.url, ort: daten.ort || null }
-  }));
+  })));
 });
 
 // Tippt jemand auf die Mitteilung, soll die App nach vorn kommen statt

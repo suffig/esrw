@@ -332,17 +332,30 @@
   // Ob der Feed erreichbar und aktuell ist. Was das Handy daraus macht, sieht
   // die Seite nicht - das steht nur im Kalender-Konto des Geraets.
   var feedGeprueft = {};
-  function feedPruefen(p) {
+  function feedPruefen(p, erzwingen) {
     var ziel = el("feed-pruefung");
-    if (feedGeprueft[p.slug]) { ziel.textContent = feedGeprueft[p.slug]; return; }
+    if (feedGeprueft[p.slug] && !erzwingen) { ziel.textContent = feedGeprueft[p.slug]; feedKnopf(p); return; }
     ziel.textContent = "Prüfe den Kalender-Link …";
-    fetch(feedUrl(p.slug, location.protocol) + "?" + Date.now()).then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); }).then(function (t) {
+    // Ohne Cache-Buster: genau die Adresse, die auch das Handy abruft
+    fetch(feedUrl(p.slug, location.protocol), { cache: erzwingen ? "reload" : "default" }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); }).then(function (t) {
       var n = (t.match(/BEGIN:VEVENT/g) || []).length, stempel = (t.match(/DTSTAMP:(\d{8}T\d{6}Z)/) || [])[1];
-      var wann = stempel ? new Date(stempel.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/, "$1-$2-$3T$4:$5:$6Z")).toLocaleString("de-DE", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }) : "?";
-      feedGeprueft[p.slug] = "Kalender-Link geprüft ✓ · " + n + (n === 1 ? " Termin" : " Termine") + " · letzte Änderung " + wann +
-        ". Ob dein Handy ihn abruft, zeigt nur das Handy: Einstellungen → Kalender → Accounts → Abo (Aktualisieren: stündlich).";
+      var wann = stempel ? new Date(stempel.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/, "$1-$2-$3T$4:$5:$6Z")) : null;
+      var kommend = (personMit(p.slug) || { spiele: [] }).spiele.filter(function (s) { return !s.vergangen; }).length;
+      var ok = n >= kommend;
+      feedGeprueft[p.slug] = (ok ? "Kalender-Link geprüft ✓ · " : "Achtung: Der Kalender-Link zeigt weniger Termine als die App · ")
+        + n + (n === 1 ? " Termin" : " Termine") + " im Abo, " + kommend + " kommende in der App"
+        + (wann ? " · Stand " + wann.toLocaleString("de-DE", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }) : "")
+        + ". Wann dein Handy zuletzt abgerufen hat, zeigt nur das Handy: Einstellungen → Apps → Kalender → Accounts → Abo (Aktualisieren: stündlich).";
       ziel.textContent = feedGeprueft[p.slug];
-    }).catch(function () { ziel.textContent = "Kalender-Link gerade nicht erreichbar – ohne Netz normal, sonst bitte später noch einmal."; });
+      feedKnopf(p);
+    }).catch(function () { ziel.textContent = "Kalender-Link gerade nicht erreichbar – ohne Netz normal, sonst bitte später noch einmal."; feedKnopf(p); });
+  }
+  function feedKnopf(p) {
+    var ziel = el("feed-pruefung");
+    if (ziel.querySelector("button")) return;
+    var b = document.createElement("button"); b.type = "button"; b.className = "textknopf"; b.style.marginLeft = "6px"; b.textContent = "Neu prüfen";
+    b.addEventListener("click", function () { delete feedGeprueft[p.slug]; feedPruefen(p, true); });
+    ziel.appendChild(b);
   }
   function einstellungenLaden(nurAnwenden) {
     el("karten-app").value = lesen("karten") || "auto";
@@ -1985,8 +1998,49 @@
       funktion("statistik") ? ["#statistik", "i-users", "Statistik"] : null,
       ["#einstellungen", "i-key", "Einstellungen"]
     ].filter(Boolean);
-    eintraege.forEach(function (e) { var a = document.createElement("a"); a.href = e[0]; a.appendChild(ikone(e[1])); a.appendChild(document.createTextNode(e[2])); box.appendChild(a); });
+    var zuletzt = [];
+    try { zuletzt = JSON.parse(lesen("zuletzt-ziele") || "[]"); } catch (e) {}
+    eintraege.sort(function (a, b) { var ia = zuletzt.indexOf(a[0]), ib = zuletzt.indexOf(b[0]); return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib); });
+    eintraege.forEach(function (e) { var a = document.createElement("a"); a.href = e[0]; if (zuletzt.indexOf(e[0]) >= 0 && zuletzt.indexOf(e[0]) < 3) a.classList.add("zuletzt"); a.appendChild(ikone(e[1])); a.appendChild(document.createTextNode(e[2])); box.appendChild(a); });
     box.classList.remove("versteckt");
+  }
+
+  // Die letzten Push-Nachrichten (der Service Worker legt sie in IndexedDB ab)
+  function pushVerlaufLesen() {
+    return new Promise(function (ok) {
+      if (!window.indexedDB) return ok([]);
+      var a = indexedDB.open("esrw-push", 1);
+      a.onupgradeneeded = function () { try { a.result.createObjectStore("nachrichten", { keyPath: "zeit" }); } catch (e) {} };
+      a.onerror = function () { ok([]); };
+      a.onsuccess = function () {
+        var db = a.result;
+        try {
+          var t = db.transaction("nachrichten", "readonly").objectStore("nachrichten").getAll();
+          t.onsuccess = function () { ok((t.result || []).sort(function (x, y) { return y.zeit - x.zeit; }).slice(0, 10)); db.close(); };
+          t.onerror = function () { ok([]); db.close(); };
+        } catch (e) { ok([]); }
+      };
+    });
+  }
+  function pushVerlaufRendern() {
+    var box = el("push-verlauf"); if (!box) return;
+    box.innerHTML = ""; box.classList.add("versteckt");
+    pushVerlaufLesen().then(function (liste) {
+      if (!liste.length) return;
+      var h3 = document.createElement("h3"); h3.className = "abschnitt"; h3.textContent = "Zuletzt gemeldet";
+      var sm = document.createElement("small"); sm.textContent = "die letzten Push-Nachrichten auf diesem Gerät"; h3.appendChild(sm);
+      box.appendChild(h3);
+      var k = document.createElement("div"); k.className = "karte protokoll";
+      liste.forEach(function (n) {
+        var z = document.createElement(n.url ? "a" : "div"); z.className = "zeile"; if (n.url) z.href = String(n.url).replace(/^\.\//, "");
+        var t = document.createElement("span"); t.style.minWidth = "0";
+        var b = document.createElement("b"); b.textContent = n.titel || "Mitteilung"; t.appendChild(b);
+        var s2 = document.createElement("small"); s2.textContent = (n.text || "").slice(0, 120) + " · " + new Date(n.zeit).toLocaleString("de-DE", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }); t.appendChild(s2);
+        z.appendChild(t); k.appendChild(z);
+      });
+      box.appendChild(k);
+      box.classList.remove("versteckt");
+    });
   }
 
   // Fremdes Profil: gemeinsame Spiele, Kontakt, Mitfahrt anfragen
@@ -2316,6 +2370,7 @@
       fuellen("archiv-liga", Object.keys(ligen).sort().map(function (x) { return [x, x + " (" + ligen[x] + ")"]; }), "Alle Ligen");
       fuellen("archiv-halle", Object.keys(hallen).sort(function (a, b) { return a.localeCompare(b, "de"); }).map(function (x) { return [x, x]; }), "Alle Hallen");
       if (alle) fuellen("archiv-person", Object.keys(personen).map(function (x) { return [x, personen[x]]; }).sort(function (a, b) { return a[1].localeCompare(b[1], "de"); }), "Alle Kollegen");
+      archivChips();
       archivRendern();
     });
   }
@@ -2336,6 +2391,54 @@
     var titel = treffer.length + " Spiele" + (wer && personMit(wer) ? " · " + personMit(wer).name : "");
     if (navigator.share) navigator.share({ title: titel, text: titel + "\n" + text }).catch(function () {});
     else if (navigator.clipboard) navigator.clipboard.writeText(titel + "\n" + text).then(function () { toast("Liste kopiert.", "gut"); }).catch(function () {});
+  }
+  function archivFilterStand() {
+    return { q: el("archiv-suche").value.trim(), s: el("archiv-saison").value, l: el("archiv-liga").value, r: el("archiv-rolle").value, h: el("archiv-halle").value };
+  }
+  function archivFilterSetzen(f) {
+    el("archiv-suche").value = f.q || ""; el("archiv-saison").value = f.s || ""; el("archiv-liga").value = f.l || "";
+    el("archiv-rolle").value = f.r || ""; el("archiv-halle").value = f.h || "";
+    archivRendern();
+  }
+  function archivChips() {
+    var box = el("archiv-chips"); box.innerHTML = "";
+    var vorlagen = []; try { vorlagen = JSON.parse(lesen("archiv-filter") || "[]"); } catch (e) {}
+    var suchen = []; try { suchen = JSON.parse(lesen("archiv-suchen") || "[]"); } catch (e) {}
+    vorlagen.forEach(function (v) {
+      var c = document.createElement("span"); c.className = "chip"; c.textContent = v.name;
+      c.title = "Antippen: anwenden · lange drücken: löschen";
+      c.addEventListener("click", function () { archivFilterSetzen(v.f); });
+      var weg = null, t = null;
+      c.addEventListener("contextmenu", function (ev) { ev.preventDefault(); loeschen(); });
+      c.addEventListener("touchstart", function () { t = setTimeout(loeschen, 600); }, { passive: true });
+      ["touchend", "touchmove"].forEach(function (e2) { c.addEventListener(e2, function () { clearTimeout(t); }, { passive: true }); });
+      function loeschen() {
+        if (!confirm("Filter „" + v.name + "“ löschen?")) return;
+        schreiben("archiv-filter", JSON.stringify(vorlagen.filter(function (x) { return x !== v; }))); archivChips();
+      }
+      void weg; box.appendChild(c);
+    });
+    suchen.forEach(function (q) {
+      var c = document.createElement("span"); c.className = "chip leise"; c.textContent = "„" + q + "“";
+      c.addEventListener("click", function () { el("archiv-suche").value = q; archivRendern(); });
+      box.appendChild(c);
+    });
+    var neu = document.createElement("button"); neu.type = "button"; neu.className = "textknopf"; neu.textContent = "+ Filter merken";
+    neu.addEventListener("click", function () {
+      var f = archivFilterStand();
+      if (!f.q && !f.s && !f.l && !f.r && !f.h) { toast("Erst filtern, dann merken.", ""); return; }
+      var name = prompt("Name für diesen Filter:", [f.l, f.r, f.s, f.q].filter(Boolean).join(" ") || "Mein Filter");
+      if (!name) return;
+      vorlagen.push({ name: name.slice(0, 30), f: f });
+      schreiben("archiv-filter", JSON.stringify(vorlagen.slice(-8))); archivChips(); toast("Filter gemerkt.", "gut");
+    });
+    box.appendChild(neu);
+  }
+  function archivSucheMerken(q) {
+    q = (q || "").trim(); if (q.length < 3) return;
+    var l = []; try { l = JSON.parse(lesen("archiv-suchen") || "[]"); } catch (e) {}
+    l = [q].concat(l.filter(function (x) { return x !== q; })).slice(0, 3);
+    schreiben("archiv-suchen", JSON.stringify(l)); archivChips();
   }
   function archivRendern() {
     var liste = el("archiv-liste"); liste.innerHTML = "";
@@ -2593,7 +2696,7 @@
   }
   function zeigeEinstellungen() {
     ansicht("einstellungen"); aktuell = null; window.scrollTo(0, 0);
-    bereicheRendern(); startBausteineRendern();
+    bereicheRendern(); startBausteineRendern(); pushVerlaufRendern();
     var kb = el("konto-bereich"); kb.innerHTML = "";
     if (!sitzungVorhanden()) {
       var k = document.createElement("a"); k.href = "#mitglieder"; k.className = "hinweis"; k.style.display = "flex"; k.style.textDecoration = "none"; k.style.color = "inherit"; k.style.marginBottom = "12px";
@@ -2965,6 +3068,7 @@
   el("aenderungen-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
   el("archiv-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
   ["archiv-suche", "archiv-saison", "archiv-liga", "archiv-rolle", "archiv-halle", "archiv-person"].forEach(function (id) { el(id).addEventListener(id === "archiv-suche" ? "input" : "change", function () { archivRendern(); }); });
+  el("archiv-suche").addEventListener("change", function () { archivSucheMerken(el("archiv-suche").value); });
   el("archiv-alle").addEventListener("change", function () { el("archiv-person").classList.toggle("versteckt", !el("archiv-alle").checked); zeigeArchiv(el("archiv-alle").checked ? "alle" : ""); });
   el("mitfahren-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
   el("tab-tausch").addEventListener("click", function () { location.hash = "mitglieder/tausch"; });
@@ -2999,6 +3103,14 @@
       [30, 300, 900].forEach(function (ms, i) { setTimeout(function () { if (sprungZiel === null && i) return; if (document.documentElement.scrollHeight - window.innerHeight >= ziel - 4 || i === 2) { window.scrollTo(0, ziel); sprungZiel = null; } }, ms); });
     }
   });
+  // Welche Ziele zuletzt benutzt wurden - der Schnellzugriff sortiert danach
+  window.addEventListener("hashchange", function () {
+    var h = location.hash; if (!h || h.indexOf("#spiel/") === 0 || h === "#") return;
+    var basis = h.split("/").slice(0, 2).join("/");
+    var l = []; try { l = JSON.parse(lesen("zuletzt-ziele") || "[]"); } catch (e) {}
+    l = [basis].concat(l.filter(function (x) { return x !== basis; })).slice(0, 6);
+    schreiben("zuletzt-ziele", JSON.stringify(l));
+  });
   window.addEventListener("hashchange", ausHash);
   // Das Blatt liegt im Markup in der Filterleiste; deren backdrop-filter wuerde ein
   // position:fixed-Kind einfangen (verschwommen, falsch positioniert) - also an den Body haengen
@@ -3010,6 +3122,15 @@
     filterHoehe();
   }
   el("plan-filter-knopf").addEventListener("click", function () { filterBlatt(el("plan-filter-blatt").classList.contains("versteckt")); });
+  // Suchfeld im Spielplan spart Platz: nur auf Wunsch (oder wenn etwas drinsteht)
+  function planSucheZeigen(an) {
+    var z = el("plan-suchzeile"); z.classList.toggle("versteckt", !an);
+    el("plan-suche-knopf").classList.toggle("aktiv", !!an);
+    if (an) setTimeout(function () { el("plan-filter").focus(); }, 30);
+    filterHoehe();
+  }
+  el("plan-suche-knopf").addEventListener("click", function () { planSucheZeigen(el("plan-suchzeile").classList.contains("versteckt")); });
+  el("plan-filter").addEventListener("blur", function () { if (!el("plan-filter").value.trim()) planSucheZeigen(false); });
   el("plan-filter-zu").addEventListener("click", function () { filterBlatt(false); });
   el("blatt-hintergrund").addEventListener("click", function () { filterBlatt(false); });
   document.addEventListener("keydown", function (ev) { if (ev.key === "Escape" && !el("plan-filter-blatt").classList.contains("versteckt")) filterBlatt(false); });
@@ -3077,6 +3198,29 @@
   }
   window.addEventListener("resize", filterHoehe);
 
+  // Tastatur am Desktop: / Suche, 1-5 Reiter, Pfeile Woche/Monat, Esc schliesst
+  document.addEventListener("keydown", function (ev) {
+    if (ev.metaKey || ev.ctrlKey || ev.altKey) return;
+    var t = ev.target, tippt = t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.tagName === "SELECT" || t.isContentEditable);
+    if (ev.key === "Escape") {
+      if (!el("tour").classList.contains("versteckt")) return;           // Tour hat eigenen Escape
+      if (!el("plan-filter-blatt").classList.contains("versteckt")) return; // Blatt ebenso
+      if (tippt && t.value !== undefined && t.value !== "") { t.value = ""; t.dispatchEvent(new Event("input", { bubbles: true })); return; }
+      if (tippt) t.blur();
+      return;
+    }
+    if (tippt) return;
+    if (ev.key === "/") { ev.preventDefault(); location.hash = "suche"; setTimeout(function () { el("suche").focus(); }, 60); return; }
+    if (ev.key === "?") { ev.preventDefault(); location.hash = "anleitung"; return; }
+    var reiter = { "1": "tab-meine", "2": "tab-plan", "3": "tab-tausch", "4": "tab-abrechnung", "5": "tab-mitglieder" }[ev.key];
+    if (reiter) { var k = el(reiter); if (k && getComputedStyle(k).display !== "none") { ev.preventDefault(); k.click(); } return; }
+    if ((ev.key === "ArrowLeft" || ev.key === "ArrowRight") && !el("plan").classList.contains("versteckt")) {
+      var vor = ev.key === "ArrowRight", modus = planModus();
+      if (modus === "woche" && planWocheStart) { ev.preventDefault(); planWocheStart = new Date(planWocheStart.getTime() + (vor ? 7 : -7) * 86400000); zeigeWochenansicht(); }
+      else if (modus === "monat" && planMonatStart) { ev.preventDefault(); planMonatStart = new Date(planMonatStart.getFullYear(), planMonatStart.getMonth() + (vor ? 1 : -1), 1); planTag = null; zeigeMonat(); }
+    }
+  });
+
   // Hinweis, die Seite als App abzulegen: iOS zeigt keinen eigenen Dialog,
   // Android liefert ein beforeinstallprompt-Ereignis, das wir aufheben.
   var installEreignis = null;
@@ -3096,7 +3240,18 @@
     el("install-weg").onclick = function () { schreiben("install-weg", "1"); box.classList.add("versteckt"); };
   }
 
-  function hole(name) { return fetch(name + "?" + Date.now()).then(function (r) { if (!r.ok) throw 0; return r.json(); }); }
+  var ladeZaehler = 0;
+  function ladeAnzeige(an) {
+    ladeZaehler = Math.max(0, ladeZaehler + (an ? 1 : -1));
+    var b = el("ladebalken"); if (!b) return;
+    b.classList.toggle("laeuft", ladeZaehler > 0);
+  }
+  window.ladeAnzeige = ladeAnzeige;
+  function hole(name) {
+    ladeAnzeige(true);
+    return fetch(name + "?" + Date.now()).then(function (r) { if (!r.ok) throw 0; return r.json(); })
+      .then(function (d) { ladeAnzeige(false); return d; }, function (e) { ladeAnzeige(false); throw e; });
+  }
   var letzterLauf = null;
   function standAnzeigen(d, lauf) {
     letzterLauf = lauf;

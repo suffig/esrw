@@ -1581,8 +1581,11 @@ window.Mitglieder = (function () {
       h("div", { class: "mg-belege" }),
       h("div", { class: "meta mg-betrag", text: betragText(sp, e, b) }),
       sp.privat ? h("div", { class: "zweit" }, [h("button", { type: "button", style: "color:var(--rot)", text: "Eintrag löschen", onclick: function () {
-        if (!confirm("Dieses selbst eingetragene Spiel samt Abrechnung löschen?")) return;
-        sb.from("einsaetze").delete().eq("user_id", session.user.id).eq("kennung", sp.kennung).then(function () { delete einsaetze[sp.kennung]; rendereAbrechnung(); });
+        if (!confirm("Dieses selbst eingetragene Spiel samt Abrechnung und Belegen löschen?")) return;
+        var belege = (einsaetze[sp.kennung] || {}).belege || [];
+        (belege.length ? sb.storage.from("belege").remove(belege) : Promise.resolve()).catch(function () {})
+          .then(function () { return sb.from("einsaetze").delete().eq("user_id", session.user.id).eq("kennung", sp.kennung); })
+          .then(function () { delete einsaetze[sp.kennung]; rendereAbrechnung(); });
       } })]) : null
     ].forEach(function (x) { if (x) details.appendChild(x); });
 

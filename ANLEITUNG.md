@@ -1264,6 +1264,30 @@ Spielseite). Mehrfachauswahl: Verpflegung 14 € setzen/entfernen, CSV.
   (Stapelkontext der klebenden Filterleiste) – das Blatt hängt jetzt direkt
   am Seitenkörper und liegt sauber oben.
 
+### 10.6v Runde 11: Aufräumen, Ladebalken, Archiv-Filter, Push-Verlauf, Tastatur
+
+* **Schema v18:** Die Spalten `einsaetze.bezahlt` und `einsaetze.abgerechnet`
+  werden gelöscht (kein Status mehr), alte Push-Schlüssel der
+  Monatsende-Erinnerung ebenfalls. Vorher ggf. die Tabelle exportieren.
+* **Belege:** Beim Löschen eines selbst eingetragenen Spiels werden auch die
+  hochgeladenen Belege aus dem Speicher entfernt.
+* **Kalender:** Eine Korrektur des Betreibers ändert die Termin-Kennung nicht
+  – im Kalender bleibt es derselbe Termin (Regressionstest dafür). Ein von
+  esrw.de verschobenes Spiel ersetzt den alten Eintrag, weil der Feed immer
+  vollständig ist.
+* **Spielplan:** Das Suchfeld sitzt hinter der Lupe und klappt bei Bedarf auf;
+  in der Wochenansicht nur noch Avatare statt voller Namen.
+* **Ladebalken** oben statt springender Platzhalter bei kurzen Nachladungen.
+* **Schnellzugriff** sortiert die zuletzt benutzten Ziele nach vorn (rot).
+* **Archiv:** Filter merken („+ Filter merken“, antippen wendet an, langes
+  Drücken löscht) und die letzten drei Suchbegriffe als Chips.
+* **Kalender-Abo:** „Neu prüfen“ holt den Feed ohne Cache und vergleicht die
+  Zahl der Termine mit der App.
+* **Push-Verlauf:** Die letzten zehn Meldungen stehen unter Einstellungen
+  („Zuletzt gemeldet“); der Service Worker legt sie in IndexedDB ab.
+* **Tastatur am Desktop:** `/` Suche, `?` Anleitung, `1–5` Reiter, `←/→`
+  Woche/Monat, `Esc` leert Felder bzw. schließt.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

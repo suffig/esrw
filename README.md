@@ -308,6 +308,10 @@ Jahres-CSV und Jahresblatt je Kalenderjahr; Push bei Mitfahrt-Gesuch/
 -Angebot an Kollegen auf dem Weg; abends „Spiel abrechnen?“ mit Direktsprung;
 Abrechnung offline mit Warteschlange.
 
+**Runde 11 (Schema v18)**: Status-Spalten der Abrechnung entfernt, Belege
+werden mitgelöscht, Ladebalken, Spielplan-Suche hinter der Lupe, Archiv-Filter
+merken, Push-Verlauf, Kalender-Abo prüfen, Tastaturkürzel am Desktop.
+
 **Archiv-Seite & Änderungen mit Details**: Mehr → Archiv (alle Saisons,
 Filter, Admin sieht alle); Änderungen zeigen Feld vorher → nachher, Spielseite
 mit Änderungsverlauf.
