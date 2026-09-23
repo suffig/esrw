@@ -320,6 +320,13 @@ packt daten.json, abrechnung.csv, notizen.txt und alle Belege im Browser
 zusammen; Kartenkacheln im Dunkelmodus abgedunkelt; „Am Spieltag groß“ macht
 die Kopfkarte am Spieltag bildschirmfüllend; Tipp auf die Stand-Pille lädt neu.
 
+**Feinschliff (Runde 16)**: Kopfzeile mit Abstand zur Statusleiste und ohne
+abgeschnittenes „ESRW“, Ligen nur noch im Filter (mit Anzahl), Filter mit ✕
+und großem „Fertig“-Knopf, Halle als antippbare Zeile statt Link,
+Hallenkarte blau/grau mit Legende und ohne Ausreißer-Zoom, „Zusammen fahren“
+mit Bilanz und Eingabefeld statt Systemdialog, Steuerjahre als Zeilenliste,
+Schnellzugriff standardmäßig aus.
+
 **Änderungen mit Filter, Gespannwechsel, wählbare Leiste**: Das Protokoll
 merkt sich das Gespann und zeigt Wechsel als „vorher X → jetzt Y“ (ohne Push,
 damit ein nach und nach gefülltes Gespann nicht dauernd meldet). Die

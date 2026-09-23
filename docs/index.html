@@ -598,7 +598,7 @@
   footer { margin-top:34px; padding-top:16px; border-top:1px solid var(--linie); color:var(--dim); font-size:.8rem; }
 
   /* Kurze Rueckmeldung ueber der Leiste, damit sie auch beim Scrollen sichtbar ist */
-  .toast { position:fixed; left:50%; bottom:calc(84px + env(safe-area-inset-bottom)); transform:translateX(-50%) translateY(8px);
+  .toast { position:fixed; z-index:70; left:50%; bottom:calc(84px + env(safe-area-inset-bottom)); transform:translateX(-50%) translateY(8px);
            z-index:20; max-width:min(92vw, 520px); background:var(--text); color:var(--bg); padding:10px 16px; border-radius:12px;
            font-size:.9rem; font-weight:700; box-shadow:0 6px 20px rgba(0,0,0,.25); opacity:0; pointer-events:none;
            transition:opacity .18s, transform .18s; }
@@ -718,6 +718,48 @@
   .tour-punkte i { width:7px; height:7px; border-radius:50%; background:var(--linie); }
   .tour-punkte i.aktiv { background:var(--akzent); width:18px; border-radius:4px; }
   @media (prefers-reduced-motion: reduce) { .tour-karte { animation:none; } }
+  /* Runde 16: Kopfzeile unter der Insel, Filter-Blatt, Hallenzeile, Summen */
+  /* iPhone mit Insel: der Titel braucht Luft nach oben, sonst schneidet die
+     Statusleiste ihn an (die Seite laeuft wegen viewport-fit=cover darunter).
+     Die schmale Ansicht weiter unten setzt denselben Abstand noch einmal. */
+  /* Filter-Blatt: schliessen soll man sofort sehen - Griff, Kreuz, grosser Knopf */
+  .blatt-griff { cursor:pointer; padding:0; }
+  .blatt-kopf .rund { width:34px; height:34px; }
+  .blatt-fertig { position:sticky; bottom:0; margin:10px -16px -16px; padding:10px 16px calc(12px + env(safe-area-inset-bottom));
+                  background:linear-gradient(to top, var(--karte) 72%, transparent); }
+  .blatt-fertig button { width:100%; min-height:48px; border-radius:14px; border:0; background:var(--akzent); color:var(--akzent-text);
+                         font:inherit; font-weight:800; font-size:1rem; cursor:pointer; }
+  .blatt h5 { margin:12px 0 6px; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); }
+  .blatt .ligen { display:flex; flex-wrap:wrap; gap:6px; }
+  .blatt .ligen .chip { cursor:pointer; }
+  /* Zeile zur Halle: kein nackter Link mehr, sondern eine Reihe zum Antippen */
+  .reihe-knopf { display:flex; align-items:center; gap:10px; width:100%; margin-top:10px; padding:11px 12px; border:1px solid var(--linie);
+                 border-radius:14px; background:var(--bg); color:inherit; text-decoration:none; font:inherit; font-weight:700; text-align:left; }
+  .reihe-knopf svg.i { color:var(--akzent); }
+  .reihe-knopf > span { min-width:0; flex:1; }
+  .reihe-knopf small { display:block; color:var(--dim); font-weight:600; font-size:.76rem; }
+  .reihe-knopf .pfeil { color:var(--dim); font-weight:800; }
+  .reihe-knopf:active { background:var(--akzent-hell); }
+  /* Summen als Zeilen statt als Kachelraster - da passt auch "Fahrtkosten" hin */
+  .summenliste { padding:12px 14px; }
+  .summenliste .kopfzahl { display:flex; align-items:baseline; justify-content:space-between; gap:10px; padding-bottom:8px; border-bottom:1px solid var(--linie); }
+  .summenliste .kopfzahl b { font-size:1.5rem; font-weight:800; letter-spacing:-.02em; font-variant-numeric:tabular-nums; }
+  .summenliste .kopfzahl span { color:var(--dim); font-size:.8rem; font-weight:700; }
+  .summenliste .reihe-zahl { display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding:7px 0; border-bottom:1px solid var(--linie); font-size:.92rem; }
+  .summenliste .reihe-zahl:last-child { border-bottom:0; }
+  .summenliste .reihe-zahl span { color:var(--dim); font-weight:600; min-width:0; }
+  .summenliste .reihe-zahl b { font-weight:800; font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .summenliste .reihe-zahl.tippbar { cursor:pointer; }
+  /* Kachelzahlen duerfen notfalls kleiner werden, statt ueberzulaufen */
+  .zahl b { font-size:clamp(.95rem, 4vw, 1.35rem); overflow-wrap:anywhere; }
+  .zahl span { display:block; line-height:1.25; }
+  .mitfahr-form { display:flex; gap:6px; margin-top:8px; }
+  .mitfahr-form input { flex:1; min-width:0; font:inherit; padding:9px 10px; border-radius:12px; border:1px solid var(--linie); background:var(--bg); color:var(--text); }
+  .fahrt .meins { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:8px; }
+  /* Kartenlegende */
+  .karten-legende { display:flex; flex-wrap:wrap; gap:10px 16px; margin:10px 2px 0; font-size:.78rem; color:var(--dim); font-weight:600; }
+  .karten-legende span { display:inline-flex; align-items:center; gap:6px; }
+  .karten-legende i { width:11px; height:11px; border-radius:50%; display:inline-block; border:2px solid #fff; box-shadow:0 0 0 1px var(--linie); }
   /* Runde 15: Aenderungen mit Filter, Leiste unten waehlbar, Seitenkoepfe */
   /* Kopf einer Unterseite: Zeichen, Titel, Zweck - in jeder Seite gleich */
   .kopf-i { width:42px; height:42px; border-radius:14px; background:var(--akzent-hell); color:var(--akzent);
@@ -985,7 +1027,7 @@
     .leiste button { min-height:54px; gap:4px; padding:6px 2px 4px; }
     .leiste button svg.i { width:1.5rem; height:1.5rem; }
     .leiste button.aktiv svg.i { padding:4px 14px; border-radius:99px; }
-    .kopf { padding-top:max(6px, env(safe-area-inset-top)); }
+    .kopf { padding-top:calc(env(safe-area-inset-top) + 14px); }
     .profilzeile.karte { padding:12px 14px; }
     .spiel-kopf .zeit { font-size:1.7rem; }
     .tour-karte { padding:20px 16px 16px; }
@@ -1334,6 +1376,17 @@
   .spiel.zeit-links .wann { background:var(--liga-bg, var(--bg)); color:var(--liga-fg, inherit); }
   .spiel.zeit-links .wann b { color:inherit; opacity:.75; }
   .gruppe-anfrage { margin-top:6px; }
+  /* ---- Runde 16, Nachtrag: gewinnt gegen alle Schichten darueber ----
+     Auf schmalen Geraeten blieb vom Titel "Einteilungen ESRW" nur
+     "Einteilungen ESR" uebrig - das rote ESRW lief unter den Knoepfen durch.
+     Dort steht jetzt nur "Einteilungen"; die Marke traegt das Logo daneben. */
+  @media (max-width: 480px) {
+    .kopf h1::after { content:none !important; }
+    .kopf h1 { font-size:1.2rem; }
+    .kopf .rund { width:38px; height:38px; }
+    .marke .logo { width:40px; height:40px; }
+    .kopf { padding-top:calc(env(safe-area-inset-top) + 14px); }
+  }
 </style>
 </head>
 <body>
@@ -1424,16 +1477,18 @@
       </div>
       <div class="filterblatt karte blatt versteckt" id="plan-filter-blatt">
         <div class="blatt-griff" aria-hidden="true"></div>
-        <div class="blatt-kopf"><b>Filter</b><button type="button" class="textknopf" id="plan-filter-zu">Fertig</button></div>
+        <div class="blatt-kopf"><b>Filter</b><button type="button" class="rund" id="plan-filter-zu" aria-label="Filter schließen">✕</button></div>
+        <h5>Anzeigen</h5>
         <label class="schalter"><input type="checkbox" id="plan-vergangene"> vergangene Spiele</label>
         <label class="schalter"><input type="checkbox" id="plan-offen"> nur unbesetzte</label>
         <label class="schalter versteckt" id="plan-hallen-label"><input type="checkbox" id="plan-hallen"> meine Hallen</label>
         <label class="schalter versteckt" id="plan-meine-label"><input type="checkbox" id="plan-meine"> nur meine Spiele</label>
+        <h5 id="plan-ligen-titel">Ligen</h5>
         <div class="ligen" id="plan-ligen"></div>
-        <div class="zweit"><button type="button" id="plan-filter-leeren">Zurücksetzen</button><button type="button" id="plan-teilen">Teilen</button><button type="button" id="plan-drucken">Drucken</button></div>
+        <div class="zweit" style="margin-top:12px"><button type="button" id="plan-filter-leeren">Zurücksetzen</button><button type="button" id="plan-teilen">Teilen</button><button type="button" id="plan-drucken">Drucken</button></div>
+        <div class="blatt-fertig"><button type="button" id="plan-filter-fertig">Fertig</button></div>
       </div>
     </div>
-    <div class="ligen schnell ligen-schnell" id="plan-ligen-schnell"></div>
     <div class="ligen schnell" id="plan-schnell">
       <span class="chip" data-schnell="wochenende">Dieses Wochenende</span><span class="chip" data-schnell="woche">Nächste 7 Tage</span><span class="chip" data-schnell="abends">Abends</span><span class="chip" data-schnell="frueh">Vormittags</span>
     </div>
@@ -1578,7 +1633,7 @@
       <button class="textknopf zurueck" id="karte-zurueck"><svg class="i"><use href="#i-back"/></svg>Zurück</button>
     </div>
     <div id="karte-div" class="karte"></div>
-    <p class="meta" style="margin-top:8px">Blau: Halle mit eigenem Spiel · Grau: übrige Hallen · Tipp auf einen Punkt zeigt Name und Spiele. Kartendaten © OpenStreetMap.</p>
+    <p class="meta" style="margin-top:8px">Tipp auf einen Punkt zeigt Name, Spiele und den Weg zur Hallen-Seite. Kartendaten © OpenStreetMap.</p>
   </section>
 
   <!-- Statistik (eigene Seite) -->
@@ -1705,6 +1760,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=55"></script>
+<script src="app.js?v=56"></script>
 </body>
 </html>

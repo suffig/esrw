@@ -1379,6 +1379,46 @@ Spielseite). Mehrfachauswahl: Verpflegung 14 € setzen/entfernen, CSV.
   Hallenkarte und Einstellungen haben oben ein Symbol, den Titel und eine
   Zeile, was die Seite kann – man sieht auf einen Blick, wo man ist.
 
+### 10.6aa Kopfzeile, Filter, Halle, Karte, Steuerjahre
+
+* **Kopfzeile auf dem iPhone**: Der Titel stand zu dicht unter der
+  Statusleiste und das rote „ESRW“ lief auf schmalen Geräten unter die
+  Knöpfe. Jetzt steht oben mehr Luft (Sicherheitsabstand plus 14 Pixel), und
+  auf dem Handy heißt der Titel schlicht „Einteilungen“ – die Marke trägt
+  das Logo daneben.
+* **Filter im Spielplan**: Die Ligen stehen nur noch im Filter (mit Anzahl je
+  Liga und „Alle“ zum Zurücksetzen) – der Chip-Streifen über der Liste ist
+  weg. Die Zahlen zeigen, was die übrigen Filter übrig lassen.
+* **Filter schließen**: ✕ oben rechts, ein großer Knopf unten („Fertig · 12
+  Spiele zeigen“, mit der Zahl der Treffer), Tipp auf den Griff, Tipp neben
+  das Blatt, Wischen nach unten oder Esc.
+* **Schnellzugriff unter der Kopfkarte**: Standardmäßig aus – die Leiste
+  unten und „Mehr“ decken das ab. Wer ihn anlässt, sieht dort nur noch, was
+  nicht ohnehin unten in der Leiste steht (Einstellungen → Startseite).
+* **Halle auf der Spielseite**: Statt eines Links eine Zeile zum Antippen
+  mit Ortszeichen, Hallenname, Zweitzeile („3 Hinweise von Kollegen, Route
+  und alle Spiele dort“) und Pfeil. Dieselbe Zeile führt bei „Zusammen
+  fahren“ zur Spielseite.
+* **Hallenkarte**: Eigene Spiele **blau**, Hallen mit Spielen von Kollegen
+  grau, Hallen ohne kommende Spiele hell, zu Hause orange – mit Legende
+  unter der Karte. Ein einzelnes weit entferntes Auswärtsspiel (Berlin) zieht
+  den Ausschnitt nicht mehr auf halb Europa. Im Popup gibt es jetzt auch
+  „Route“.
+* **Zusammen fahren**: Der Hinweis auf die Heimatadresse steht einmal oben
+  statt in jeder Karte, darüber eine Zeile mit der Bilanz („3 Spiele in 14
+  Tagen · 2 Einträge von Kollegen · 1 auf deinem Weg“). „Plätze anbieten“
+  und „Mitfahrt suchen“ öffnen ein Feld in der Karte statt eines
+  Systemdialogs; ein zweiter Tipp zieht den Eintrag zurück.
+* **Steuerjahre**: Die sieben Kacheln sind Zeilen geworden – oben der Saldo,
+  darunter Vergütung, Fahrtkosten, Strecke, Verpflegungsmehraufwand und
+  Auslagen. Damit bricht keine Beschriftung mehr um und nichts überlappt.
+* **Änderungen**: zusätzlich nach einem bestimmten Kollegen filterbar (wenn
+  „Alle Kollegen“ gewählt ist).
+* **Kleinigkeiten**: Ein zweiter Tipp auf den Platz, auf dem man schon steht,
+  scrollt nach oben. Enter im Suchfeld des Spielplans schließt die Tastatur.
+  Meldungen liegen jetzt über der Anleitung, und ein abgebrochener Abruf
+  (Funkloch, Tab im Hintergrund) gilt nicht mehr als Fehler zum Melden.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

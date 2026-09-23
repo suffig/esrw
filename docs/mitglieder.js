@@ -1032,20 +1032,29 @@ window.Mitglieder = (function () {
     return s;
   }
 
+  // Summen als Zeilen: auf dem Handy passt "Fahrtkosten" neben den Betrag,
+  // im Kachelraster brach die Beschriftung um und lief ineinander.
   function summenBox(titel, s, monate) {
     var box = h("div", {}, [h("h3", { class: "abschnitt", text: titel })]);
-    var z = h("div", { class: "zahlen mg-summen" });
     var einfach = (profil.km_modell || "einfach") === "einfach";
-    [["Spiele erfasst", s.spiele, function () { nurOffene = false; rendereAbrechnung(); }],
-     [einfach ? "km einfach" : "km gefahren", Math.round(einfach ? s.km : s.km * 2) + " km"],
-     ["Fahrtkosten", euro(s.fahrt)], ["Vergütung", euro(s.verg)],
-     ["Auslagen", euro(s.ausl)], ["Verpflegung", euro(s.verpf)], ["Saldo", euro(s.verg - s.fahrt - s.verpf - s.ausl)]
+    var karte = h("div", { class: "karte summenliste" });
+    karte.appendChild(h("div", { class: "kopfzahl" }, [
+      h("b", { text: euro(s.verg - s.fahrt - s.verpf - s.ausl) }),
+      h("span", { text: "Saldo · " + s.spiele + (s.spiele === 1 ? " Spiel" : " Spiele") })
+    ]));
+    [["Vergütung", euro(s.verg)],
+     ["Fahrtkosten", euro(s.fahrt)],
+     [einfach ? "Strecke (einfach)" : "Strecke (hin und zurück)", Math.round(einfach ? s.km : s.km * 2) + " km"],
+     ["Verpflegungsmehraufwand", euro(s.verpf)],
+     ["Auslagen", euro(s.ausl)]
     ].forEach(function (p) {
-      var k = h("div", { class: "zahl karte" + (p[2] ? " tippbar" : "") }, [h("b", { text: String(p[1]) }), h("span", { text: p[0] })]);
-      if (p[2]) { k.style.cursor = "pointer"; k.title = "Antippen: Filter"; k.addEventListener("click", p[2]); }
-      z.appendChild(k);
+      karte.appendChild(h("div", { class: "reihe-zahl" }, [h("span", { text: p[0] }), h("b", { text: String(p[1]) })]));
     });
-    box.appendChild(z);
+    var z = h("div", { class: "reihe-zahl tippbar" }, [h("span", { text: "Spiele mit Betrag" }), h("b", { text: String(s.spiele) })]);
+    z.title = "Antippen: alle Spiele zeigen";
+    z.addEventListener("click", function () { nurOffene = false; rendereAbrechnung(); });
+    karte.appendChild(z);
+    box.appendChild(karte);
     if (monate) box.appendChild(monatsBalken(monate));
     return box;
   }

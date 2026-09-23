@@ -562,8 +562,21 @@
       t.onclick = null;
     };
   }
-  window.addEventListener("error", function (e) { fehlerZeigen((e.message || "unbekannt") + (e.filename ? " (" + e.filename.split("/").pop() + ":" + e.lineno + ")" : "")); });
-  window.addEventListener("unhandledrejection", function (e) { var r = e.reason; fehlerZeigen(r && r.message ? r.message : String(r)); });
+  // Ein abgebrochener Abruf (Funkloch, Tab im Hintergrund, Wechsel ins WLAN)
+  // ist kein Fehler zum Melden - dafuer gibt es den Offline-Streifen.
+  function netzproblem(text) {
+    return !navigator.onLine || /Failed to fetch|Load failed|NetworkError|network error|aborted|The operation was aborted/i.test(text || "");
+  }
+  window.addEventListener("error", function (e) {
+    var t = (e.message || "unbekannt") + (e.filename ? " (" + e.filename.split("/").pop() + ":" + e.lineno + ")" : "");
+    if (netzproblem(e.message)) return;
+    fehlerZeigen(t);
+  });
+  window.addEventListener("unhandledrejection", function (e) {
+    var r = e.reason, t = r && r.message ? r.message : String(r);
+    if (netzproblem(t)) return;
+    fehlerZeigen(t);
+  });
 
   function initialen(name) {
     var t = name.split(",");
@@ -907,7 +920,17 @@
       var oh = document.createElement("div"); oh.className = "hinweis offiziell"; oh.style.marginTop = "8px"; oh.appendChild(ikone("i-pin"));
       var os = document.createElement("span"); var ob = document.createElement("span"); ob.className = "offiziell-badge"; ob.textContent = "Offiziell"; os.appendChild(ob); os.appendChild(document.createTextNode(t)); oh.appendChild(os); ort.appendChild(oh);
     });
-    if (s.halle) { var hz = document.createElement("div"); hz.className = "meta"; hz.style.marginTop = "6px"; var hl = document.createElement("a"); hl.href = "#halle/" + hallenSlug(s.halle); hl.textContent = (funktion("hallen") ? "Hallen-Hinweise, Route" : "Route") + " und alle Spiele dort ›"; hz.appendChild(hl); ort.appendChild(hz); ort._hinweisZeile = hz; }
+    if (s.halle) {
+      // Kein nackter Link mehr: eine Reihe zum Antippen, mit Zeichen und Pfeil
+      var hz = document.createElement("a"); hz.className = "reihe-knopf"; hz.href = "#halle/" + hallenSlug(s.halle);
+      hz.appendChild(ikone("i-pin"));
+      var ht = document.createElement("span");
+      var hb = document.createElement("b"); hb.textContent = s.halle; ht.appendChild(hb);
+      var hs = document.createElement("small"); hs.textContent = funktion("hallen") ? "Hinweise, Route und alle Spiele dort" : "Route und alle Spiele dort";
+      ht.appendChild(hs); hz.appendChild(ht);
+      var hp = document.createElement("span"); hp.className = "pfeil"; hp.textContent = "›"; hz.appendChild(hp);
+      ort.appendChild(hz); ort._hinweisZeile = hz; ort._hinweisText = hs;
+    }
     if (meins && s.halle) {
       ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.abfahrt(s.halle) : null; })
         .then(function (sk) { if (!sk || !sk.minuten) return; var ab = new Date(treff.getTime() - sk.minuten * 60000);
@@ -956,7 +979,7 @@
           });
         }
         var n = window.Mitglieder.hinweisAnzahl(s.halle);
-        if (ort._hinweisZeile && n) ort._hinweisZeile.firstChild.textContent = n + (n === 1 ? " Hallen-Hinweis" : " Hallen-Hinweise") + ", Route und alle Spiele dort ›";
+        if (ort._hinweisText && n) ort._hinweisText.textContent = n + (n === 1 ? " Hinweis" : " Hinweise") + " von Kollegen, Route und alle Spiele dort";
       });
     }).catch(function () {});
 
@@ -1581,9 +1604,14 @@
     if (/FRAUEN|DAMEN|DEFL|DFEL/.test(L)) return "Frauen";
     var t = L.split(/[\s:]+/)[0]; return t || "?";
   }
+  // Ligen stehen nur noch im Filter-Blatt: eine Reihe Chips mit Anzahl, davor
+  // "Alle" zum Zuruecksetzen. Gezaehlt wird ueber alle Spiele des Zeitraums,
+  // nicht ueber die schon gefilterten - sonst verschwinden die Zahlen.
   function zeigeLigen(spiele) {
-    var ziel = el("plan-ligen"), zaehler = {};
+    var ziel = el("plan-ligen"); if (!ziel) return;
+    var zaehler = {};
     spiele.forEach(function (s) { var g = ligaGruppe(s.liga); zaehler[g] = (zaehler[g] || 0) + 1; });
+    Object.keys(ligenWahl).forEach(function (g) { if (!zaehler[g]) zaehler[g] = 0; });
     var gruppen = Object.keys(zaehler).sort(function (a, b) {
       var ua = /^U\d+$/.test(a), ub = /^U\d+$/.test(b);
       if (ua && ub) return parseInt(a.slice(1), 10) - parseInt(b.slice(1), 10);
@@ -1591,26 +1619,32 @@
       return a.localeCompare(b);
     });
     ziel.innerHTML = "";
-    var schnell = el("plan-ligen-schnell"); if (schnell) schnell.innerHTML = "";
-    if (gruppen.length < 2) return;
+    var titel = el("plan-ligen-titel");
+    if (gruppen.length < 2) { ziel.classList.add("versteckt"); if (titel) titel.classList.add("versteckt"); return; }
+    ziel.classList.remove("versteckt"); if (titel) titel.classList.remove("versteckt");
+    var alle = document.createElement("span");
+    alle.className = "chip" + (Object.keys(ligenWahl).length ? "" : " aktiv");
+    alle.textContent = "Alle " + spiele.length;
+    alle.addEventListener("click", function () { ligenWahl = {}; zeigePlan(); });
+    ziel.appendChild(alle);
     gruppen.forEach(function (g) {
-      [ziel, schnell].forEach(function (z) {
-        if (!z) return;
-        var c = document.createElement("span"); c.className = "chip" + (ligenWahl[g] ? " aktiv" : ""); c.textContent = g + (z === schnell ? " " + zaehler[g] : "");
-        if (z === schnell) { var lf = ligaFarbe(g); c.style.borderLeftColor = lf.punkt; }
-        c.addEventListener("click", function () { if (ligenWahl[g]) delete ligenWahl[g]; else ligenWahl[g] = 1; zeigePlan(); });
-        z.appendChild(c);
-      });
+      var c = document.createElement("span"); c.className = "chip" + (ligenWahl[g] ? " aktiv" : "");
+      c.textContent = g + " " + zaehler[g];
+      var lf = ligaFarbe(g); if (lf && lf.punkt) c.style.borderLeftColor = lf.punkt;
+      c.addEventListener("click", function () { if (ligenWahl[g]) delete ligenWahl[g]; else ligenWahl[g] = 1; zeigePlan(); });
+      ziel.appendChild(c);
     });
   }
-  function planGefiltert(fuerMonat) {
+  // ohneLigen: fuer die Zahlen an den Liga-Chips - sie sollen zeigen, was die
+  // uebrigen Filter uebrig lassen, nicht was nach der Ligawahl bleibt.
+  function planGefiltert(fuerMonat, ohneLigen) {
     var f = ohneZeichen(el("plan-filter").value);
     var mitVergangenen = el("plan-vergangene").checked || fuerMonat;
     var nurOffen = el("plan-offen").checked;
     var hallen = meineHallen();
     var nurMeine = hallen && el("plan-hallen").checked;
     var nurIch = profil && profil.slug && el("plan-meine").checked;
-    var ligen = Object.keys(ligenWahl).length ? ligenWahl : null;
+    var ligen = !ohneLigen && Object.keys(ligenWahl).length ? ligenWahl : null;
     var heute = new Date(); heute.setHours(0, 0, 0, 0);
     var wochenende = null;
     if (schnellWahl === "wochenende") {
@@ -1755,7 +1789,7 @@
     Array.prototype.forEach.call(el("plan-modus").querySelectorAll("button"), function (b) { b.classList.toggle("aktiv", b.getAttribute("data-modus") === modus); });
     el("plan-hallen-label").classList.toggle("versteckt", !meineHallen());
     el("plan-meine-label").classList.toggle("versteckt", !(profil && profil.slug));
-    zeigeLigen(daten.spiele || []);
+    zeigeLigen(planGefiltert(planModus() === "monat", true));
     filterHoehe();
     var ziel = el("plan-liste");
     ziel.innerHTML = "";
@@ -1789,6 +1823,8 @@
       ziel.appendChild(kompakt ? planZeile(s, beginn) : planKarte(s, beginn));
     });
     el("plan-zaehler").textContent = treffer !== gesamt ? treffer + " von " + gesamt + " Spielen" : gesamt + (gesamt === 1 ? " Spiel" : " Spiele");
+    var fk = el("plan-filter-fertig");
+    if (fk) fk.textContent = "Fertig \u00b7 " + treffer + (treffer === 1 ? " Spiel" : " Spiele") + " zeigen";
     if (!treffer) ziel.appendChild(leerZustand(f || treffer !== gesamt ? "Nichts gefunden." : "Keine kommenden Spiele."));
   }
   function besetzungOder(s, ziel) {
@@ -2084,6 +2120,7 @@
     var aus = {}; try { aus = JSON.parse(lesen("schnell-aus") || "{}") || {}; } catch (e) {}
     SCHNELL_ZIELE.forEach(function (e) {
       if (e[3] && !funktion(e[3])) return;
+      if (inLeiste(e[0])) return;
       var l = document.createElement("label"); var t = document.createElement("span");
       var b = document.createElement("b"); b.textContent = e[2]; b.style.display = "block"; t.appendChild(b);
       var c = document.createElement("input"); c.type = "checkbox"; c.checked = !aus[e[0]];
@@ -2142,11 +2179,19 @@
   }
 
   // Schnellzugriff unter der Kopfkarte: die Kernfunktionen mit einem Tipp
+  // Was unten in der Leiste steht, muss hier nicht noch einmal stehen.
+  function inLeiste(ziel) {
+    var z = String(ziel).replace(/^#/, "");
+    if (z === "plan" || z === "mehr" || z === "") return true;
+    if (z === "mitglieder/abrechnung" && funktion("abrechnung")) return true;
+    return z === (el("tab-tausch") && el("tab-tausch")._ziel);
+  }
   function zeigeSchnellzugriff(p, meins) {
     var box = el("schnellzugriff"); box.innerHTML = "";
     if (!meins || !startEinstellung("schnell")) { box.classList.add("versteckt"); return; }
     var aus = {}; try { aus = JSON.parse(lesen("schnell-aus") || "{}") || {}; } catch (e) {}
-    var eintraege = SCHNELL_ZIELE.filter(function (e) { return (!e[3] || funktion(e[3])) && !aus[e[0]]; });
+    var eintraege = SCHNELL_ZIELE.filter(function (e) { return (!e[3] || funktion(e[3])) && !aus[e[0]] && !inLeiste(e[0]); });
+    if (!eintraege.length) { box.classList.add("versteckt"); return; }
     var zuletzt = [];
     try { zuletzt = JSON.parse(lesen("zuletzt-ziele") || "[]"); } catch (e) {}
     eintraege.sort(function (a, b) { var ia = zuletzt.indexOf(a[0]), ib = zuletzt.indexOf(b[0]); return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib); });
@@ -2403,6 +2448,29 @@
       liste.innerHTML = "";
       if (!r || !r[0]) { liste.appendChild(leerZustand("Mitfahrten gibt es nach der Freischaltung durch den Betreiber.", { label: "Wohnort schon mal teilen", href: "#einstellungen" })); return; }
       var mitfahrten = r[0], heim = r[1];
+      // Der Hinweis auf die Heimatadresse stand bisher in jeder Karte - einmal
+      // oben reicht, sonst liest ihn niemand mehr.
+      if (!heim) {
+        var hw = document.createElement("a"); hw.className = "hinweis"; hw.href = "#einstellungen";
+        hw.style.display = "flex"; hw.style.textDecoration = "none"; hw.style.color = "inherit";
+        hw.appendChild(ikone("i-route"));
+        var hwt = document.createElement("span");
+        hwt.innerHTML = "<b>Heimatadresse eintragen</b> – dann siehst du, wer auf deinem Weg zur Halle liegt ›";
+        hw.appendChild(hwt); liste.appendChild(hw);
+      }
+      // Kurze Bilanz oben: wie viele Spiele, Angebote und Treffer auf dem Weg
+      var zahlAngebote = 0, zahlWeg = 0;
+      gruppen.forEach(function (g) {
+        var a = {}; g.dort.forEach(function (x) { (mitfahrten[kennungVon(x)] || []).forEach(function (m) { if (m.slug !== profil.slug) a[m.slug] = m; }); });
+        zahlAngebote += Object.keys(a).length;
+        var v = window.Mitglieder.vorschlaegeFuer(g.s, g.leute.map(function (k) { return k.slug; }));
+        zahlWeg += Object.keys(v || {}).length;
+      });
+      var bilanz = document.createElement("p"); bilanz.className = "meta"; bilanz.style.margin = "0 0 10px";
+      bilanz.textContent = gruppen.length + (gruppen.length === 1 ? " Spiel" : " Spiele") + " in 14 Tagen · "
+        + zahlAngebote + (zahlAngebote === 1 ? " Eintrag von Kollegen" : " Einträge von Kollegen")
+        + (zahlWeg ? " · " + zahlWeg + " auf deinem Weg" : "");
+      liste.appendChild(bilanz);
       gruppen.forEach(function (g) {
         var s = g.s, d = new Date(s.beginn), box = document.createElement("div"); box.className = "karte fahrt";
         var hh = document.createElement("h4"); hh.appendChild(ikone("i-pin")); hh.appendChild(document.createTextNode((s.halle || "Halle unbekannt") + " · " + datumKurz(d) + " " + uhr(d)));
@@ -2414,7 +2482,6 @@
         var angebote = {}; g.dort.forEach(function (x) { (mitfahrten[kennungVon(x)] || []).forEach(function (m) { angebote[m.slug] = m; }); });
         var meinEintrag = angebote[profil.slug] || null;
         var vorschlaege = window.Mitglieder.vorschlaegeFuer(s, g.leute.map(function (k) { return k.slug; }));
-        if (!heim) { var hh0 = document.createElement("p"); hh0.className = "meta"; hh0.style.margin = "0 0 4px"; hh0.innerHTML = "Heimatadresse unter <a href=\"#einstellungen\">Einstellungen → Profil</a> eintragen, dann siehst du, wer auf deinem Weg liegt."; box.appendChild(hh0); }
         if (!g.leute.length) { var l0 = document.createElement("p"); l0.className = "meta"; l0.textContent = "Sonst niemand aus der Liste an dem Tag dort."; box.appendChild(l0); }
         g.leute.sort(function (a, b) { return ((vorschlaege[b.slug] ? 2 : 0) + (b.gespann ? 1 : 0)) - ((vorschlaege[a.slug] ? 2 : 0) + (a.gespann ? 1 : 0)) || a.name.localeCompare(b.name, "de"); }).forEach(function (k) {
           var z = document.createElement("div"); z.className = "wer";
@@ -2429,21 +2496,45 @@
           else { var p1 = document.createElement("a"); p1.className = "textknopf"; p1.href = "#" + k.slug; p1.textContent = "Profil ›"; rechts.appendChild(p1); }
           z.appendChild(rechts); box.appendChild(z);
         });
-        // Mein Status
+        // Mein Eintrag: zwei Knoepfe, darunter das Feld fuer den Zusatz -
+        // kein Systemdialog mehr, der auf dem Handy den Text verschluckt.
         var mein = document.createElement("div"); mein.className = "meins";
-        var lbl = document.createElement("span"); lbl.className = "meta"; lbl.textContent = "Ich:"; mein.appendChild(lbl);
-        [["biete", "biete Plätze"], ["suche", "suche Mitfahrt"]].forEach(function (o) {
-          var bt = document.createElement("button"); bt.type = "button"; bt.className = "anfrage" + (meinEintrag && meinEintrag.art === o[0] ? " aktiv" : ""); bt.textContent = o[1];
+        var lbl = document.createElement("span"); lbl.className = "meta";
+        lbl.textContent = meinEintrag ? (meinEintrag.art === "suche" ? "Du suchst mit:" : "Du bietest an:") : "Ich:";
+        mein.appendChild(lbl);
+        var form = document.createElement("div"); form.className = "mitfahr-form versteckt";
+        function speichern(art, text) {
+          window.Mitglieder.mitfahrtSetzen(s, art, text || undefined).then(function (ok) {
+            if (ok) { toast(art ? "Gespeichert – Kollegen sehen es hier und auf ihrer Spielkarte." : "Zurückgezogen.", "gut"); zeigeMitfahren(); }
+          });
+        }
+        [["biete", "Plätze anbieten", "z. B. ab Essen, 2 Plätze frei"], ["suche", "Mitfahrt suchen", "z. B. ab Bochum Hbf"]].forEach(function (o) {
+          var an = meinEintrag && meinEintrag.art === o[0];
+          var bt = document.createElement("button"); bt.type = "button"; bt.className = "anfrage" + (an ? " aktiv" : "");
+          bt.textContent = an ? o[1].split(" ")[0] + " ✓" : o[1];
           bt.addEventListener("click", function () {
-            var neu = meinEintrag && meinEintrag.art === o[0] ? null : o[0];
-            var text = neu ? prompt(neu === "biete" ? "Kurz für die Kollegen (z. B. „ab Essen, 2 Plätze frei“):" : "Kurz für die Kollegen (z. B. „ab Bochum Hbf“):", meinEintrag ? meinEintrag.text : "") : null;
-            if (neu && text === null) return;
-            window.Mitglieder.mitfahrtSetzen(s, neu, text || undefined).then(function (ok) { if (ok) { toast(neu ? "Gespeichert – Kollegen sehen es hier und auf ihrer Spielkarte." : "Zurückgezogen.", "gut"); zeigeMitfahren(); } });
+            if (an) { speichern(null); return; }
+            form.innerHTML = ""; form.classList.remove("versteckt");
+            var i = document.createElement("input"); i.type = "text"; i.maxLength = 80; i.placeholder = o[2];
+            i.value = meinEintrag ? meinEintrag.text || "" : "";
+            var sp = document.createElement("button"); sp.type = "button"; sp.className = "anfrage aktiv"; sp.textContent = "Speichern";
+            sp.addEventListener("click", function () { speichern(o[0], i.value.trim()); });
+            i.addEventListener("keydown", function (ev) { if (ev.key === "Enter") sp.click(); });
+            form.appendChild(i); form.appendChild(sp);
+            i.focus();
           });
           mein.appendChild(bt);
         });
-        var sl = document.createElement("a"); sl.className = "textknopf"; sl.href = "#spiel/" + encodeURIComponent(kennungVon(s)); sl.textContent = "Spielseite ›"; mein.appendChild(sl);
         box.appendChild(mein);
+        if (meinEintrag && meinEintrag.text) { var mt = document.createElement("p"); mt.className = "meta"; mt.style.margin = "4px 0 0"; mt.textContent = "„" + meinEintrag.text + "“"; box.appendChild(mt); }
+        box.appendChild(form);
+        var sl = document.createElement("a"); sl.className = "reihe-knopf"; sl.href = "#spiel/" + encodeURIComponent(kennungVon(s));
+        sl.appendChild(ikone("i-list"));
+        var slt = document.createElement("span"); var slb = document.createElement("b"); slb.textContent = "Zur Spielseite"; slt.appendChild(slb);
+        var sls = document.createElement("small"); sls.textContent = "Route, Gespann, Checkliste und Notizen"; slt.appendChild(sls);
+        sl.appendChild(slt);
+        var slp = document.createElement("span"); slp.className = "pfeil"; slp.textContent = "›"; sl.appendChild(slp);
+        box.appendChild(sl);
         liste.appendChild(box);
       });
       // Karte: Hallen der naechsten Spiele, Zuhause
@@ -2455,7 +2546,7 @@
         kd.innerHTML = "";
         var m = L.map(kd, { scrollWheelZoom: false }); mitfahrKarte = m;
         L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "© OpenStreetMap" }).addTo(m);
-        var akzent = "#e30613", alle = [];
+        var akzent = "#1d5a99", alle = [];
         var jeHalle = {}; punkte.forEach(function (s) { (jeHalle[s.halle] = jeHalle[s.halle] || []).push(s); });
         Object.keys(jeHalle).forEach(function (name) {
           var k = daten.hallen[name]; alle.push([k[0], k[1]]);
@@ -2473,8 +2564,13 @@
           L.circleMarker([w.lat, w.lon], { radius: 6, color: "#fff", fillColor: "#6b7280", fillOpacity: .9, weight: 2 }).addTo(m).bindPopup(k.name + (w.ort ? " · " + w.ort : "") + "<br><small>Wohnort geteilt, auf ~1 km gerundet</small>");
           alle.push([w.lat, w.lon]);
         }); });
-        if (alle.length > 1) m.fitBounds(alle, { padding: [24, 24], maxZoom: 11 }); else if (alle.length) m.setView(alle[0], 10);
-        setTimeout(function () { m.invalidateSize(); }, 200);
+        function einpassen2() {
+          m.invalidateSize();
+          var kern = kernPunkte(alle);
+          if (kern.length > 1) m.fitBounds(kern, { padding: [24, 24], maxZoom: 11 }); else if (alle.length) m.setView(alle[0], 10);
+        }
+        einpassen2();
+        setTimeout(einpassen2, 250);
       }).catch(function () { kd.classList.add("versteckt"); });
     }).catch(function () { if (liste._lauf === lauf) { liste.innerHTML = ""; liste.appendChild(leerZustand("Mitfahrten konnten nicht geladen werden.")); } });
   }
@@ -2689,7 +2785,7 @@
   var aendFilter = null, aendDaten = null, aendGesehen = 0;
   function aendFilterLesen() {
     if (aendFilter) return aendFilter;
-    aendFilter = { wer: "meine", art: "alle", tage: 14, sort: "neu", suche: "" };
+    aendFilter = { wer: "meine", art: "alle", tage: 14, sort: "neu", suche: "", person: "" };
     try { var g = JSON.parse(lesen("aenderungen-filter") || "{}"); Object.keys(g || {}).forEach(function (k) { if (k in aendFilter) aendFilter[k] = g[k]; }); } catch (e) {}
     aendFilter.suche = "";
     if (!(profil && profil.slug)) aendFilter.wer = "alle";
@@ -2697,7 +2793,7 @@
   }
   function aendFilterMerken() {
     var f = aendFilterLesen();
-    schreiben("aenderungen-filter", JSON.stringify({ wer: f.wer, art: f.art, tage: f.tage, sort: f.sort }));
+    schreiben("aenderungen-filter", JSON.stringify({ wer: f.wer, art: f.art, tage: f.tage, sort: f.sort, person: f.person || "" }));
   }
   function aendArt(e) { return e.art === "korrektur" || e.art === "abgesagt" || e.art === "angelegt" ? "betreiber" : e.art; }
 
@@ -2757,6 +2853,7 @@
     return (aendDaten || []).filter(function (e) {
       if (new Date(e.zeit).getTime() < grenze) return false;
       if (f.wer === "meine" && !aendMeins(e)) return false;
+      if (f.wer === "alle" && f.person && e.slug !== f.person) return false;
       if (!ohneArt && f.art !== "alle" && aendArt(e) !== f.art) return false;
       if (suche) {
         var heu = (e.titel + " " + (e.wer || "") + " " + (e.was || "") + " " +
@@ -2805,6 +2902,18 @@
     zeile.appendChild(wahl(f.tage, [[1, "24 Stunden"], [3, "3 Tage"], [7, "7 Tage"], [14, "14 Tage"]], function (v) { f.tage = parseInt(v, 10); }));
     zeile.appendChild(wahl(f.sort, [["neu", "Neueste zuerst"], ["alt", "Älteste zuerst"], ["spieltag", "Nach Spieltag"]], function (v) { f.sort = v; }));
     kopf.appendChild(zeile);
+    // Bei "Alle Kollegen": auf eine Person eingrenzen
+    if (f.wer === "alle") {
+      var namen = {};
+      (aendDaten || []).forEach(function (e) { if (e.slug && e.wer) namen[e.slug] = e.wer; });
+      var slugs = Object.keys(namen).sort(function (a, b) { return namen[a].localeCompare(namen[b], "de"); });
+      if (slugs.length > 1) {
+        var wz = document.createElement("div"); wz.className = "filterzeile";
+        wz.appendChild(wahl(f.person || "", [["", "Alle Kollegen"]].concat(slugs.map(function (sl) { return [sl, namen[sl]]; })),
+          function (v) { f.person = v; }));
+        kopf.appendChild(wz);
+      }
+    }
     var such = document.createElement("div"); such.className = "filterzeile";
     var si = document.createElement("input"); si.type = "search"; si.placeholder = "Name, Halle, Verein, Liga …"; si.value = f.suche; si.className = "aend-suche";
     si.addEventListener("input", function () { f.suche = si.value; aendZahlen(); aendRendern(); });
@@ -2850,7 +2959,7 @@
       var alles = (aendDaten || []).length;
       ziel.appendChild(leerZustand(
         alles ? "Mit diesen Filtern ist nichts dabei." : "In den letzten 14 Tagen hat sich nichts geändert.",
-        alles ? { label: "Filter zurücksetzen", fn: function () { aendFilter = { wer: profil && profil.slug ? "meine" : "alle", art: "alle", tage: 14, sort: "neu", suche: "" }; aendFilterMerken(); aendKopfBauen(); aendRendern(); } }
+        alles ? { label: "Filter zurücksetzen", fn: function () { aendFilter = { wer: profil && profil.slug ? "meine" : "alle", art: "alle", tage: 14, sort: "neu", suche: "", person: "" }; aendFilterMerken(); aendKopfBauen(); aendRendern(); } }
               : { label: "Zum Spielplan", href: "#plan" }));
       return;
     }
@@ -3157,18 +3266,25 @@
       var anzahl = {};
       (daten.spiele || []).forEach(function (s) { if (!s.vergangen && s.halle) anzahl[s.halle] = (anzahl[s.halle] || 0) + 1; });
       var punkte = [];
-      var akzent = "#e30613";
+      // Blau: da hast du Spiele. Grau: Halle mit Spielen von Kollegen.
+      // Hell: Halle ohne kommende Spiele. Orange: zu Hause.
+      var MEIN = "#1d5a99", ANDERE = "#6b7280", LEER = "#c3c8d2";
       Object.keys(daten.hallen || {}).forEach(function (name) {
         var k = daten.hallen[name]; if (!k) return;
-        var mein = !!meine[name];
-        var c = L.circleMarker([k[0], k[1]], { radius: mein ? 10 : 7, color: mein ? akzent : "#6b7280", fillColor: mein ? akzent : "#9ca3af", fillOpacity: .85, weight: 2 }).addTo(m);
+        var mein = !!meine[name], belegt = !!anzahl[name];
+        var farbe = mein ? MEIN : belegt ? ANDERE : LEER;
+        var c = L.circleMarker([k[0], k[1]], { radius: mein ? 10 : belegt ? 7 : 5, color: "#ffffff", fillColor: farbe, fillOpacity: .95, weight: 2 }).addTo(m);
         var inhalt = document.createElement("div");
         var b = document.createElement("b"); b.textContent = name; inhalt.appendChild(b);
         var p = document.createElement("div"); p.textContent = (anzahl[name] || 0) + " kommende Spiele" + (mein ? " · " + meine[name] + " eigene" : ""); inhalt.appendChild(p);
         var a = document.createElement("a"); a.href = "#halle/" + hallenSlug(name); a.textContent = "Hallen-Seite ›"; inhalt.appendChild(a);
+        var adr = (daten.adressen || {})[name];
+        var rl = document.createElement("a"); rl.href = kartenLink(adr || name); rl.target = "_blank"; rl.rel = "noopener";
+        rl.textContent = "Route ›"; rl.style.marginLeft = "10px"; inhalt.appendChild(rl);
         c.bindPopup(inhalt);
         punkte.push([k[0], k[1]]);
       });
+      kartenLegende(MEIN, ANDERE, LEER);
       function fertig(heim) {
         if (heim) {
           var hm = L.circleMarker([heim.lat, heim.lon], { radius: 8, color: "#fff", fillColor: "#d97706", fillOpacity: 1, weight: 3 }).addTo(m).bindPopup("Zuhause");
@@ -3176,11 +3292,19 @@
           punkte.push([heim.lat, heim.lon]);
           el("karte-unter").textContent = "Ringe: 25 und 50 km von zu Hause";
         }
-        // Nah ranzoomen: mit Heimat nur Hallen im Umkreis von 120 km, sonst alle
-        var nah = heim ? punkte.filter(function (pt) { return kmZwischen(pt, [heim.lat, heim.lon]) <= 120; }) : punkte;
+        // Nah ranzoomen: mit Heimat die Hallen im Umkreis von 120 km, sonst der
+        // Kern der Hallen. Ohne das zieht ein einzelnes Auswaertsspiel (Berlin)
+        // den Ausschnitt auf halb Europa.
+        var nah = heim ? punkte.filter(function (pt) { return kmZwischen(pt, [heim.lat, heim.lon]) <= 120; }) : kernPunkte(punkte);
         if (nah.length < 2) nah = punkte;
-        if (nah.length) m.fitBounds(nah, { padding: [24, 24], maxZoom: 11 }); else m.setView([51.4, 7.3], 8);
-        setTimeout(function () { m.invalidateSize(); }, 200);
+        // Erst Groesse melden, dann einpassen - sonst rechnet Leaflet mit einem
+        // Kasten von 0 Pixeln und zeigt halb Europa.
+        function einpassen() {
+          m.invalidateSize();
+          if (nah.length) m.fitBounds(nah, { padding: [24, 24], maxZoom: 11 }); else m.setView([51.4, 7.3], 8);
+        }
+        einpassen();
+        setTimeout(einpassen, 250);
       }
       if (sitzungVorhanden()) ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
         .then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.heimat() : null; }).then(fertig).catch(function () { fertig(null); });
@@ -3392,7 +3516,7 @@
   // gewaehlten Namen stellen, damit niemand zweimal gefragt wird.
   var START_BAUSTEINE = [
     ["ruhig", "Nur nächstes Spiel", "ganz ruhige Startseite: Kopfkarte und deine Spiele, sonst nichts", false],
-    ["schnell", "Schnellzugriff", "eine Reihe Knöpfe unter der Kopfkarte: Abrechnung, Archiv, Zusammen fahren, Änderungen …", true],
+    ["schnell", "Schnellzugriff", "eine Reihe Knöpfe unter der Kopfkarte – ohne das, was unten schon in der Leiste steht", false],
     ["vollbild", "Am Spieltag groß", "ist heute ein Spiel, füllt die Kopfkarte den Bildschirm – der Rest kommt auf Tipp", false],
     ["einrichtung", "„Alles eingerichtet?“", "zeigt fehlende Schritte (Kalender, Push, Heimatadresse, Wohnort, Obmann) mit Direktlink", true],
     ["danach", "„Danach“ auf der Karte oben", "das übernächste Spiel in einer Zeile", false],
@@ -3529,16 +3653,24 @@
     var fertig = function () { toast("Link kopiert ✓", "gut"); knopf.textContent = "Kopiert ✓"; setTimeout(function () { knopf.textContent = "Link kopieren"; }, 2000); };
     if (navigator.clipboard) navigator.clipboard.writeText(url).then(fertig, function () { prompt("Link:", url); }); else prompt("Link:", url);
   });
-  el("tab-plan").addEventListener("click", function () { location.hash = "plan"; });
+  // Wie auf dem iPhone ueblich: ein zweiter Tipp auf den Platz, auf dem man
+  // schon steht, scrollt die Seite nach oben.
+  function tabTipp(knopf, fn) {
+    knopf.addEventListener("click", function () {
+      if (knopf.classList.contains("aktiv") && window.scrollY > 40) { window.scrollTo({ top: 0, behavior: "smooth" }); return; }
+      fn();
+    });
+  }
+  tabTipp(el("tab-plan"), function () { location.hash = "plan"; });
   el("aenderungen-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
   el("archiv-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
   ["archiv-suche", "archiv-saison", "archiv-liga", "archiv-rolle", "archiv-halle", "archiv-person"].forEach(function (id) { el(id).addEventListener(id === "archiv-suche" ? "input" : "change", function () { archivRendern(); }); });
   el("archiv-suche").addEventListener("change", function () { archivSucheMerken(el("archiv-suche").value); });
   el("archiv-alle").addEventListener("change", function () { el("archiv-person").classList.toggle("versteckt", !el("archiv-alle").checked); zeigeArchiv(el("archiv-alle").checked ? "alle" : ""); });
   el("mitfahren-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
-  el("tab-tausch").addEventListener("click", function () { location.hash = el("tab-tausch")._ziel || "mitglieder/tausch"; });
-  el("tab-abrechnung").addEventListener("click", function () { location.hash = "mitglieder/abrechnung"; });
-  el("tab-mitglieder").addEventListener("click", function () { location.hash = "mehr"; });
+  tabTipp(el("tab-tausch"), function () { location.hash = el("tab-tausch")._ziel || "mitglieder/tausch"; });
+  tabTipp(el("tab-abrechnung"), function () { location.hash = "mitglieder/abrechnung"; });
+  tabTipp(el("tab-mitglieder"), function () { location.hash = "mehr"; });
   el("spiel-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = ""; });
   el("einstellungen-zurueck").addEventListener("click", function () { location.hash = "mehr"; });
   el("stat-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = ""; });
@@ -3596,7 +3728,10 @@
   }
   el("plan-suche-knopf").addEventListener("click", function () { planSucheZeigen(el("plan-suchzeile").classList.contains("versteckt")); });
   el("plan-filter").addEventListener("blur", function () { if (!el("plan-filter").value.trim()) planSucheZeigen(false); });
+  el("plan-filter").addEventListener("keydown", function (ev) { if (ev.key === "Enter") { ev.preventDefault(); el("plan-filter").blur(); } });
   el("plan-filter-zu").addEventListener("click", function () { filterBlatt(false); });
+  el("plan-filter-fertig").addEventListener("click", function () { filterBlatt(false); });
+  el("plan-filter-blatt").querySelector(".blatt-griff").addEventListener("click", function () { filterBlatt(false); });
   el("blatt-hintergrund").addEventListener("click", function () { filterBlatt(false); });
   document.addEventListener("keydown", function (ev) { if (ev.key === "Escape" && !el("plan-filter-blatt").classList.contains("versteckt")) filterBlatt(false); });
   // Blatt nach unten wischen schliesst
@@ -3657,6 +3792,27 @@
   }
   document.addEventListener("visibilitychange", function () { if (document.visibilityState === "visible" && daten) neuLaden(); });
 
+  // Der Kern einer Punktwolke: alles im Umkreis von 150 km um die Mitte.
+  // Einzelne weit entfernte Hallen bleiben sichtbar, bestimmen aber nicht,
+  // wie weit die Karte herauszoomt.
+  function kernPunkte(punkte) {
+    if (punkte.length < 3) return punkte;
+    function mitte(i) { var w = punkte.map(function (p) { return p[i]; }).sort(function (a, b) { return a - b; }); return w[Math.floor(w.length / 2)]; }
+    var m = [mitte(0), mitte(1)];
+    var kern = punkte.filter(function (p) { return kmZwischen(p, m) <= 150; });
+    return kern.length >= 2 ? kern : punkte;
+  }
+  // Legende unter der Hallenkarte - sonst raet man, was die Punkte bedeuten
+  function kartenLegende(mein, andere, leer) {
+    var alt = el("karte").querySelector(".karten-legende"); if (alt) alt.remove();
+    var box = document.createElement("div"); box.className = "karten-legende";
+    [[mein, "deine Spiele"], [andere, "Spiele von Kollegen"], [leer, "keine Spiele"], ["#d97706", "zu Hause"]].forEach(function (p) {
+      var s = document.createElement("span"); var i = document.createElement("i"); i.style.background = p[0];
+      s.appendChild(i); s.appendChild(document.createTextNode(p[1])); box.appendChild(s);
+    });
+    var k = el("karte-div");
+    if (k && k.parentNode) k.parentNode.insertBefore(box, k.nextSibling); else el("karte").appendChild(box);
+  }
   function filterHoehe() {
     var f = document.querySelector("#plan .filterleiste");
     if (f) document.documentElement.style.setProperty("--filter-hoehe", f.offsetHeight + "px");
