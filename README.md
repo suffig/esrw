@@ -320,6 +320,13 @@ packt daten.json, abrechnung.csv, notizen.txt und alle Belege im Browser
 zusammen; Kartenkacheln im Dunkelmodus abgedunkelt; „Am Spieltag groß“ macht
 die Kopfkarte am Spieltag bildschirmfüllend; Tipp auf die Stand-Pille lädt neu.
 
+**ESRW App unter www.esrw.app**: neuer Name in Titel, Manifest und auf dem
+Startbildschirm. Vereinsadressen pflegt der Admin an einer Stelle (mit
+Vorschlagsliste aus dem EHV-Verzeichnis), die Schiedsrichternummer steht in
+Klammern hinter dem Namen auf der Rechnung, und zu jedem Spiel lässt sich
+die zugehörige Rechnung neu erzeugen. Telefonliste mit Anrufen, WhatsApp
+und Kopieren.
+
 **Rechnung als freies Formular**: ein Blatt mit Empfänger, bis zu drei
 Paarungen, Datum, Ort, Klasse, Pauschale, Zuschuss und § 19 – alles
 überschreibbar, mit oder ohne Spiel aus der Liste. Eigene Daten und

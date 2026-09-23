@@ -1,29 +1,28 @@
 {
   "_hinweis": "Einstellungen fuer alle erzeugten Feeds. 'eigene_namen' wird nur fuer die ntfy-Push-Nachricht gebraucht - fuer die Kalender selbst muss hier niemand eingetragen werden, es bekommt jeder auf der Seite genannte Schiedsrichter automatisch einen Feed.",
-
-  "titel": "Einteilungen ESRW",
+  "titel": "ESRW App",
   "quelle": "https://www.esrw.de/einteilungen.html",
   "quelle_vergangene": "https://www.esrw.de/vergangene-einteilungen.html",
   "vergangene_tage": 30,
-
   "vorlauf_minuten": 60,
   "spieldauer_minuten": 150,
-
   "_erinnerungen": "Relativ zum Terminbeginn, und der ist der Treffpunkt (eine Stunde vor Spielbeginn). '-PT1H' meldet sich also eine Stunde vor dem Treffpunkt. Den Abfahrtszeitpunkt rechnet iOS selbst aus, siehe ANLEITUNG.md Schritt 5. Falls das bei dir nicht greift, hier eine feste Zeile ergaenzen, z.B. { \"wann\": \"-PT45M\", \"text\": \"Losfahren\" }.",
-
   "erinnerungen": [
-    { "wann": "-PT1H", "text": "In einer Stunde an der Halle" }
+    {
+      "wann": "-PT1H",
+      "text": "In einer Stunde an der Halle"
+    }
   ],
-
   "kalender_name_muster": "Einteilungen – {name}",
   "ausgabe_verzeichnis": "docs",
-
   "eigene_namen": [
     "Melchert, Philip"
   ],
-
   "_gleiche_personen": "Schreibweisen, die derselbe Mensch sind - etwa weil der Obmann den Vornamen mal so, mal so schreibt. Die erste Schreibweise jeder Gruppe gilt als die richtige und erscheint auf der Webseite. Gross-/Kleinschreibung, Komma und Reihenfolge sind ohnehin egal, hier geht es um echte Buchstabenunterschiede.",
   "gleiche_personen": [
-    ["Melchert, Philip", "Melchert, Philipp"]
+    [
+      "Melchert, Philip",
+      "Melchert, Philipp"
+    ]
   ]
 }

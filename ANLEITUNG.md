@@ -654,10 +654,13 @@ bestehende Konten in die Tabelle.
 
 Links **Authentication** → **URL Configuration**:
 
-* **Site URL**: `https://suffig.github.io/esrw/`
-* **Redirect URLs** → **Add URL**: `https://suffig.github.io/esrw/**`
+* **Site URL**: `https://www.esrw.app/`
+* **Redirect URLs** → **Add URL**: `https://www.esrw.app/**`
 
 Ohne das landen Bestätigungslinks aus der E-Mail auf einer leeren Seite.
+**Nach einem Domainwechsel muss das hier nachgezogen werden** – sonst
+zeigen die Links noch auf die alte Adresse. Die alte Adresse darf ruhig
+zusätzlich in den Redirect URLs stehen, solange noch Links unterwegs sind.
 
 Unter **Authentication → Providers → Email** kannst du entscheiden, ob neue
 Konten die E-Mail bestätigen müssen (**Confirm email**). Für einen
@@ -1627,6 +1630,42 @@ nur umbrechend.
 **Anmeldeseite.** Ohne Konto sieht man den Anmeldeblock und darunter drei
 Schritte: **1. Konto anlegen · 2. E-Mail bestätigen · 3. Freischaltung
 abwarten.** Mehr steht dort nicht.
+
+### 10.6ag Neuer Name, neue Adresse, Vereinsadressen, Rechnungsfeinschliff
+
+* **Die App heißt „ESRW App“** – Titel, Startbildschirm-Name und
+  Browser-Tab. Der rote Zusatz hinter „Einteilungen“ entfällt damit.
+* **Adresse**: `www.esrw.app`. Wichtig: In Supabase unter
+  **Authentication → URL Configuration** Site URL und Redirect URLs auf die
+  neue Adresse setzen (siehe 10.3), sonst laufen Bestätigungs- und
+  Passwortlinks ins Leere.
+* **Vereinsadressen** (Admin → Vereinsadressen): eine Liste aller
+  Heimvereine aus dem Spielplan, je Verein Name, Straße und Ort. Einmal
+  eingetragen, nutzen sie alle Kollegen. Drei Wege: einzeln aufklappen und
+  tippen, „Liste einfügen“ für viele auf einmal (`Verein; Straße; PLZ Ort`)
+  oder **„Vorschläge aus dem EHV-Verzeichnis einlesen“** – 24 Anschriften
+  aus `ehv-nrw.de/club/clublist/`, geschrieben nur dort, wo noch nichts
+  steht. Bitte vor dem ersten Versand prüfen: manche Vereine geben die
+  Anschrift eines Vorstandsmitglieds an.
+* **Schiedsrichternummer** gehört jetzt zu den Rechnungsdaten (Konto →
+  Rechnungsdaten oder im Rechnungsblatt). Sie steht auf der Rechnung in
+  Klammern hinter dem Namen: „Melchert, Philip (12345)“.
+* **Rechnungsdaten im Konto**: Anschrift, Verein, Schiedsrichternummer,
+  Steuernummer, § 19 und der Nummernkreis stehen unter Einstellungen →
+  Konto, nicht nur im Rechnungsblatt.
+* **Rechnungsblatt aufgeräumt**: Empfänger, Spiele und Angaben sind drei
+  Gruppen zum Aufklappen; zugeklappt steht in der Kopfzeile, was drinsteht
+  („Empfänger · Herner EV“).
+* **Rechnung am Spiel**: In der Abrechnung steht unter einem Spiel, zu dem
+  schon eine Rechnung gehört, „Rechnung 2026-007 laden“ – das PDF entsteht
+  aus den gemerkten Feldern neu, es liegt nirgends als Datei herum
+  (ein paar hundert Zeichen je Rechnung, Schema v22).
+* **Zuschuss 20 %** füllt sich von allein, wenn das Spiel nach der Ordnung
+  zu früh oder zu spät beginnt; darunter steht, ab wann das gilt.
+* **Telefonliste** (Admin): zeigt jetzt auch die Nummern, die Kollegen
+  selbst freigegeben haben, und je Zeile **Anrufen · WhatsApp · Kopieren**.
+  Das Eingabefeld bricht auf dem Handy sauber um.
+* **Leiste unten**: Die Beschriftungen stehen mittig unter den Zeichen.
 
 ### 10.7 Freischaltung neuer Konten
 

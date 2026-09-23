@@ -917,3 +917,10 @@ create policy "Admin pflegt Tresor" on public.tresor for all    to authenticated
 -- hinterlegen - beim naechsten Lauf werden die Dateien damit geschrieben.
 -- Die App merkt am fehlgeschlagenen Entschluesseln, dass sie den neuen
 -- Schluessel holen muss.
+
+-- ======================================================================
+-- v22: Rechnungen merken sich ihre Felder
+-- ======================================================================
+-- Damit sich dasselbe PDF jederzeit neu bauen laesst, ohne es irgendwo
+-- abzulegen: ein paar hundert Zeichen je Rechnung statt einer Datei.
+alter table public.rechnungen add column if not exists felder jsonb;

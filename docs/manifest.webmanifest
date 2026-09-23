@@ -1,7 +1,7 @@
 {
-  "name": "Einteilungen ESRW",
-  "short_name": "Einteilungen",
-  "description": "Schiedsrichter-Einteilungen mit Hallenadresse und Treffpunkt, als Kalender zum Abonnieren.",
+  "name": "ESRW App",
+  "short_name": "ESRW App",
+  "description": "Einteilungen, Abrechnung und Rechnungen fuer Schiedsrichter des ESRW.",
   "lang": "de",
   "start_url": "./",
   "scope": "./",
@@ -10,13 +10,58 @@
   "background_color": "#0c0d10",
   "theme_color": "#0c0d10",
   "shortcuts": [
-    { "name": "Spielplan", "short_name": "Spielplan", "url": "./#plan", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
-    { "name": "Tauschbörse", "short_name": "Tausch", "url": "./#mitglieder/tausch", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] },
-    { "name": "Abrechnung", "short_name": "Abrechnung", "url": "./#mitglieder/abrechnung", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] }
+    {
+      "name": "Spielplan",
+      "short_name": "Spielplan",
+      "url": "./#plan",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Tauschbörse",
+      "short_name": "Tausch",
+      "url": "./#mitglieder/tausch",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Abrechnung",
+      "short_name": "Abrechnung",
+      "url": "./#mitglieder/abrechnung",
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
   ],
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }

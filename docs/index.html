@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://tile.openstreetmap.org; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://router.project-osrm.org https://nominatim.openstreetmap.org https://api.open-meteo.com; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
-<title>Einteilungen im Kalender</title>
+<title>ESRW App</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" href="icon-192.png" type="image/png">
 <meta name="theme-color" content="#f1f1f3" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#08080a" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Einteilungen">
+<meta name="apple-mobile-web-app-title" content="ESRW App">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="description" content="Schiedsrichter-Einteilungen mit Hallenadresse und Treffpunkt, als Kalender zum Abonnieren.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1231,7 +1231,7 @@
   .marke { display:flex; align-items:center; gap:12px; min-width:0; }
   .marke .logo { width:44px; height:44px; border-radius:12px; box-shadow:var(--schatten); flex:none; }
   .kopf h1 { font-size:1.25rem; }
-  .kopf h1::after { content:" ESRW"; color:var(--rot); font-weight:800; }
+  /* Der Name heisst jetzt "ESRW App" - der rote Zusatz am Titel entfaellt. */
   .leiste .punkt.zahl, .zaehler, .mg-untertabs .zaehler, .filterknopf .zaehler { background:var(--rot); color:#fff; }
   .mg-untertabs button.aktiv .zaehler { background:#fff; color:var(--rot); }
   .held { background:linear-gradient(135deg, var(--held-1) 0%, var(--held-2) 100%); position:relative; }
@@ -1391,6 +1391,28 @@
   .rechnung-zeile b { display:block; font-weight:700; font-size:.9rem; }
   .rechnung-zeile small { color:var(--dim); }
   .rechnung-wahl { max-height:270px; overflow:auto; border:1px solid var(--linie); border-radius:14px; padding:0 12px; }
+  /* ---- Runde 21: Name, Leiste, Telefonliste ---- */
+  .rechnung-gruppe { border-top:1px solid var(--linie); padding-top:8px; margin-top:8px; }
+  .rechnung-gruppe:first-of-type { border-top:0; margin-top:0; padding-top:0; }
+  .rechnung-gruppe > summary b { font-size:.78rem; text-transform:uppercase; letter-spacing:.07em; color:var(--dim); display:block; }
+  .rechnung-gruppe > summary small { color:var(--text); font-weight:600; overflow-wrap:anywhere; }
+  /* Die Beschriftungen unter den Zeichen standen bei zwei Woertern linksbuendig */
+  .leiste button { text-align:center; justify-content:center; line-height:1.15; }
+  .leiste button svg.i { display:block; margin:0 auto; }
+  /* Eingabezeilen im Adminbereich: auf dem Handy untereinander statt gequetscht */
+  .mg-zeile { display:flex; gap:8px; flex-wrap:wrap; }
+  /* Muss die aeltere Regel ".mg-zeile input { flex:1 }" schlagen, sonst
+     quetschen sich Auswahl und Nummernfeld auf dem Handy in eine Zeile. */
+  .mg-zeile > *, .mg-zeile > input, .mg-zeile > select { flex:1 1 12em; min-width:0; width:auto; }
+  /* Telefonliste: Nummer, dann die drei Wege dahin */
+  .telefon-zeile { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:9px 0; border-top:1px solid var(--linie); flex-wrap:wrap; }
+  .telefon-zeile:first-of-type { border-top:0; }
+  .telefon-zeile > span:first-child { min-width:0; flex:1 1 10em; }
+  .telefon-zeile b { display:block; }
+  .telefon-zeile small { color:var(--dim); display:block; font-variant-numeric:tabular-nums; }
+  .telefon-wege { display:flex; gap:6px; flex:none; }
+  .telefon-wege a, .telefon-wege button { font-size:.78rem; padding:6px 10px; border-radius:99px; border:1px solid var(--linie);
+                                          background:var(--bg); color:var(--text); text-decoration:none; font-weight:700; cursor:pointer; }
   /* ---- Runde 20: Rechnungsblatt, Adminseite, Anmeldung ---- */
   .rechnungsblatt > * { margin-bottom:10px; }
   .rechnungsblatt > details > summary { font-weight:700; }
@@ -1417,8 +1439,9 @@
   .schritte b { display:block; font-size:.95rem; }
   .schritte small { color:var(--dim); }
   @media (min-width: 900px) {
-    .rechnung-karte { display:grid; grid-template-columns:1fr 1fr; gap:0 18px; }
-    .rechnung-karte h4, .rechnung-karte .summenliste, .rechnung-karte .zweit, .rechnung-karte .schalter, .rechnung-karte > p { grid-column:1 / -1; }
+    /* Am Rechner die Felder einer Gruppe nebeneinander */
+    .rechnung-gruppe > .rechnung-feld { display:inline-block; width:calc(50% - 6px); vertical-align:top; }
+    .rechnung-gruppe > .rechnung-feld:nth-of-type(odd) { margin-right:8px; }
   }
   /* ---- Runde 16, Nachtrag: gewinnt gegen alle Schichten darueber ----
      Auf schmalen Geraeten blieb vom Titel "Einteilungen ESRW" nur
@@ -1465,7 +1488,7 @@
   <div class="marke">
     <img src="logo-96.png" alt="" width="44" height="44" class="logo">
     <div>
-      <h1 id="titel">Einteilungen</h1>
+      <h1 id="titel">ESRW App</h1>
       <p class="stand" id="stand">wird geladen …</p>
     </div>
   </div>
@@ -1821,6 +1844,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=62"></script>
+<script src="app.js?v=63"></script>
 </body>
 </html>

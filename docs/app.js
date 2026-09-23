@@ -4092,7 +4092,7 @@
     return Promise.all([hole("daten.json"), hole("stand.json").catch(function () { return null; })])
     .then(function (b) {
       daten = b[0]; profil = profilLesen();
-      document.title = daten.titel; el("titel").textContent = (daten.titel || "Einteilungen").replace(/\s*ESRW\s*$/, ""); el("quelle").href = daten.quelle;
+      document.title = daten.titel || "ESRW App"; el("titel").textContent = daten.titel || "ESRW App"; el("quelle").href = daten.quelle;
       standAnzeigen(daten, b[1]);
       el("fuss").textContent = "Termine beginnen " + daten.vorlauf_minuten + " Minuten vor Spielbeginn, damit du rechtzeitig an der Halle bist.";
       einstellungenLaden(); filterLaden(); avatarKopf(); zeigeListe("");
