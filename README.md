@@ -320,6 +320,13 @@ packt daten.json, abrechnung.csv, notizen.txt und alle Belege im Browser
 zusammen; Kartenkacheln im Dunkelmodus abgedunkelt; „Am Spieltag groß“ macht
 die Kopfkarte am Spieltag bildschirmfüllend; Tipp auf die Stand-Pille lädt neu.
 
+**Rechnung als freies Formular**: ein Blatt mit Empfänger, bis zu drei
+Paarungen, Datum, Ort, Klasse, Pauschale, Zuschuss und § 19 – alles
+überschreibbar, mit oder ohne Spiel aus der Liste. Eigene Daten und
+Rechnungsnummer kommen aus dem Konto. Adminseite: eine Leiste, ein Bereich,
+Zahl der wartenden Konten am Knopf. Anmeldeseite: Anmelden plus drei
+Schritte (Konto, E-Mail bestätigen, Freischaltung).
+
 **Rechnung direkt vom Spiel**: Spielseite → „Rechnung schreiben“ (oder
 Wischen an der Spielkarte) merkt das Spiel vor und füllt Datum, Spielort und
 Spielklasse; Pauschale, Zuschuss und Umsatzsteuer lassen sich vor dem PDF

@@ -1597,6 +1597,37 @@ die App kommt mit beidem zurecht. Es ist dann nur nichts geschützt.
 * **Nach dem Erstellen** steht die Rechnung oben im Blatt mit
   „Nochmal laden“ – falls der Download auf dem iPhone untergegangen ist.
 
+### 10.6af Rechnung als ein Formular, Adminseite aufgeräumt, Anmeldung mit drei Schritten
+
+**Rechnung.** Das Blatt ist jetzt ein einziges Formular, das man frei
+ausfüllen kann – die Spiele aus der Liste sind nur eine Abkürzung:
+
+* Oben steht in einer Zeile, wer Rechnungssteller ist („Rechnungssteller:
+  Melchert, Philip“). Ein Tipp klappt die eigenen Daten auf, die im Konto
+  liegen.
+* „Spiel aus deiner Liste übernehmen“ ist zugeklappt, sobald etwas gewählt
+  ist. Übernommen werden Verein, Datum, Spielort, Spielklasse, die Paarung
+  und der Betrag.
+* Darunter das Formular selbst: Empfänger, bis zu drei Paarungen (Heim – Gast
+  als eigene Felder), Datum, Spielort, Spielklasse, Pauschale, Zuschuss und
+  der Schalter für § 19. **Alles überschreibbar**, auch ganz ohne Spiel aus
+  der Liste – für Turniere, Lehrgänge oder Nachträge.
+* Was man tippt, bleibt stehen, auch wenn man danach noch ein Spiel
+  dazunimmt. „Formular leeren“ setzt zurück.
+* Der Knopf sagt, welche Nummer entsteht: „Rechnung 2026-005 als PDF“.
+  Danach liegt sie oben mit „Nochmal laden“, und „Zuletzt geschrieben“ ist
+  eine zugeklappte Liste.
+
+**Adminseite.** Statt fünf Karten untereinander gibt es oben eine Leiste
+(Freischaltung · Funktionen · Spiel anlegen · Hallen & Vereine ·
+Telefonliste) und darunter genau einen Bereich. An „Freischaltung“ steht die
+Zahl der wartenden Konten. Auf dem Handy wie am Rechner dieselbe Ansicht,
+nur umbrechend.
+
+**Anmeldeseite.** Ohne Konto sieht man den Anmeldeblock und darunter drei
+Schritte: **1. Konto anlegen · 2. E-Mail bestätigen · 3. Freischaltung
+abwarten.** Mehr steht dort nicht.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

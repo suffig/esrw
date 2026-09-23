@@ -519,19 +519,24 @@ window.Mitglieder = (function () {
 
     wurzel.appendChild(h("div", { class: "anmelde-kopf" }, [
       h("div", { class: "avatar-gross" }, [ikone("i-lock")]),
-      h("h2", { text: modus === "registrieren" ? "Konto anlegen" : "Mitgliederbereich" }),
-      h("p", { text: "Tauschbörse, Abrechnung, Ankündigungen, Push – für Schiedsrichter des ESRW." })
+      h("h2", { text: modus === "registrieren" ? "Konto anlegen" : "Einteilungen ESRW" }),
+      h("p", { text: "Die Einteilungen, deine Abrechnung und Push – für Schiedsrichter des ESRW." })
     ]));
+    wurzel.appendChild(h("div", { class: "melde karte" }, [form, erneutSenden, wechsel]));
+    // Drei Schritte, mehr muss hier nicht stehen.
     wurzel.appendChild(h("div", { class: "melde karte" }, [
-      form, erneutSenden, wechsel,
-      h("p", { class: "meta", text: "Konto und Daten liegen bei Supabase" +
-        (sb && sb._attrappe ? " – hier gerade als Attrappe im Browser, nichts geht raus." : ". Jeder sieht nur seine eigenen Einträge; Tauschbörse und Verfügbarkeiten sehen alle Mitglieder.") })
-    ]));
-    wurzel.appendChild(h("div", { class: "melde karte" }, [
-      h("h4", { text: "Was gibt es hier?" }),
-      h("p", { text: "Abrechnung mit Strecken und Gebührenordnung, Belege, CSV für die Steuer · " +
-        "Tauschbörse für Spiele, die du abgeben musst · Tage, an denen du nicht kannst oder gern pfeifen würdest · " +
-        "echte Push-Nachrichten bei neuen Einteilungen." })
+      h("h4", { text: "In drei Schritten dabei" }),
+      h("ol", { class: "schritte" }, [
+        h("li", {}, [h("span", {}, [h("b", { text: "Konto anlegen" }),
+          h("small", { text: "E-Mail und ein Passwort – dauert eine Minute." })])]),
+        h("li", {}, [h("span", {}, [h("b", { text: "E-Mail bestätigen" }),
+          h("small", { text: "Wir schicken dir einen Link. Antippen genügt, danach bist du angemeldet." })])]),
+        h("li", {}, [h("span", {}, [h("b", { text: "Freischaltung abwarten" }),
+          h("small", { text: "Der Betreiber gibt dich frei – dann siehst du Einteilungen, Abrechnung und alles Weitere." })])])
+      ]),
+      h("p", { class: "meta", style: "margin:10px 0 0", text: sb && sb._attrappe
+        ? "Gerade als Attrappe im Browser – nichts geht raus."
+        : "Konto und Daten liegen bei Supabase. Jeder sieht nur seine eigenen Einträge." })
     ]));
   }
 
@@ -1150,7 +1155,7 @@ window.Mitglieder = (function () {
   // die Vereinsadressen teilen sich alle Freigeschalteten, und die
   // geschriebenen Rechnungen liegen in "rechnungen" - damit die Nummern
   // fortlaufen und man spaeter nachsehen kann.
-  var rechnungGeladen = null, rechnungWahl = {}, vereinAdressen = null, rechnungListe = null, rechnungFertig = null;
+  var rechnungGeladen = null, rechnungWahl = {}, vereinAdressen = null, rechnungListe = null, rechnungFertig = null, rechnungForm = null;
   function rechnungenLaden() {
     if (rechnungListe) return Promise.resolve(rechnungListe);
     return sb.from("rechnungen").select("nummer,datum,verein,betrag,kennungen").order("datum", { ascending: false }).limit(20)
@@ -1221,6 +1226,39 @@ window.Mitglieder = (function () {
       .sort(function (a, b) { return a.beginn < b.beginn ? 1 : -1; }).slice(0, 80);
   }
 
+  // Alles, was auf dem Formular steht, liegt hier - damit ein Neuzeichnen
+  // (Haken gesetzt, Spiel dazu) nichts von Hand Eingetragenem wegwirft.
+  function rechnungFormLeer() {
+    return { verein: "", name: "", strasse: "", plz_ort: "",
+             zeilen: [["", ""], ["", ""], ["", ""]],
+             datum: new Date().toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" }),
+             ort: "", klasse: "", pauschale: "", zuschlag: "", klein: null, kennungen: [] };
+  }
+  // Aus der Auswahl ableiten, was ableitbar ist - von Hand Geaendertes am
+  // Empfaenger bleibt stehen, solange der Verein derselbe ist.
+  function rechnungFormAusWahl() {
+    var f = rechnungForm || rechnungFormLeer();
+    var gewaehlt = Object.keys(rechnungWahl).map(function (k) { return rechnungWahl[k]; })
+      .sort(function (a, b) { return a.beginn < b.beginn ? -1 : 1; });
+    if (!gewaehlt.length) { f.kennungen = []; return f; }
+    var verein = heimVereinVon(gewaehlt[0]);
+    if (f.verein !== verein) { f.verein = verein; f.name = verein; f.strasse = ""; f.plz_ort = ""; f._adresseHolen = true; }
+    f.zeilen = [0, 1, 2].map(function (i) {
+      var sp = gewaehlt[i];
+      return sp ? [heimVereinVon(sp), gastVereinVon(sp)] : (f.zeilen[i] && !f.kennungen.length ? f.zeilen[i] : ["", ""]);
+    });
+    var d0 = new Date(gewaehlt[0].beginn);
+    f.datum = d0.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" });
+    f.ort = gewaehlt[0].halle || "";
+    f.klasse = gewaehlt[0].liga || "";
+    var p = 0, z = 0;
+    gewaehlt.forEach(function (sp) { var b = rechnungBetrag(sp); p += (b.betrag || 0) - (b.zeit || 0); z += b.zeit || 0; });
+    f.pauschale = (Math.round(p * 100) / 100).toFixed(2);
+    f.zuschlag = z ? (Math.round(z * 100) / 100).toFixed(2) : "";
+    f.kennungen = gewaehlt.map(function (sp) { return sp.kennung; });
+    return f;
+  }
+
   // Von aussen (Spielseite, Abrechnungsliste): dieses Spiel vormerken und das
   // Rechnungsblatt oeffnen.
   function rechnungSprung(kennung) {
@@ -1228,6 +1266,7 @@ window.Mitglieder = (function () {
       var sp = alleSpiele().filter(function (x) { return x.kennung === kennung; })[0];
       if (!sp) { meldung("Spiel nicht gefunden.", "warn"); return false; }
       rechnungWahl = {}; rechnungWahl[kennung] = sp;
+      rechnungForm = rechnungFormAusWahl();
       abrechnungPanel = "rechnung";
       rendereAbrechnung();
       setTimeout(function () {
@@ -1239,62 +1278,41 @@ window.Mitglieder = (function () {
   }
 
   function rechnungPanel() {
-    var box = h("div", {});
-    var daten = rechnungDaten();
-    // Gerade geschrieben: der Ladeweg auf dem iPhone ist nicht immer zu
-    // sehen - hier liegt die Rechnung noch einmal zum Mitnehmen.
+    var box = h("div", { class: "rechnungsblatt" });
+    var stamm = rechnungDaten();
+    if (!rechnungForm) rechnungForm = rechnungFormAusWahl();
+    var f = rechnungForm;
+    if (f.klein === null) f.klein = stamm.klein !== false;
+
+    // ---- gerade fertig --------------------------------------------------
     if (rechnungFertig) {
-      var f = rechnungFertig;
-      box.appendChild(h("div", { class: "hinweis gut", style: "margin-bottom:12px" }, [
-        h("span", {}, [h("b", { text: "Rechnung " + f.nummer + " ist fertig." }),
-          h("small", { style: "display:block", text: f.name })]),
-        h("button", { type: "button", class: "anfrage", text: "Nochmal laden", onclick: function () { pdfHerunterladen(f.blob, f.name); } })
+      var fertig = rechnungFertig;
+      box.appendChild(h("div", { class: "hinweis gut" }, [
+        h("span", {}, [h("b", { text: "Rechnung " + fertig.nummer + " ist fertig." }),
+          h("small", { style: "display:block", text: fertig.name })]),
+        h("button", { type: "button", class: "anfrage", text: "Nochmal laden", onclick: function () { pdfHerunterladen(fertig.blob, fertig.name); } })
       ]));
     }
-    var meine = rechnungSpiele();
 
-    // ---- 1. Meine Daten ------------------------------------------------
-    var fName = h("input", { type: "text", value: daten.name || (profil && profil.name) || "", placeholder: "Nachname, Vorname" });
-    var fStr = h("input", { type: "text", value: daten.strasse || "", placeholder: "Straße und Nr." });
-    var fOrt = h("input", { type: "text", value: daten.plz_ort || "", placeholder: "PLZ und Ort" });
-    var fVer = h("input", { type: "text", value: daten.verein || "ESRW", placeholder: "Verein" });
-    var fSt = h("input", { type: "text", value: daten.steuernummer || "", placeholder: "Steuernummer" });
-    var fKlein = h("input", { type: "checkbox" }); fKlein.checked = daten.klein !== false;
-    var fPraefix = h("input", { type: "text", value: daten.praefix || (new Date().getFullYear() + "-"), placeholder: "2026-", style: "width:7em" });
-    var fNummer = h("input", { type: "number", min: "1", value: String(daten.nummer || 1), style: "width:6em" });
-    function stammdatenSammeln() {
-      return { name: fName.value.trim(), strasse: fStr.value.trim(), plz_ort: fOrt.value.trim(),
-               verein: fVer.value.trim(), steuernummer: fSt.value.trim(), klein: fKlein.checked,
-               praefix: fPraefix.value.trim(), nummer: parseInt(fNummer.value, 10) || 1 };
-    }
-    var daten1 = h("details", { class: "tausch" }, [h("summary", { text: daten.name ? "Meine Daten ✓ · " + daten.name : "Meine Daten – einmal ausfüllen" })]);
-    daten1.open = !daten.name;
-    daten1.appendChild(h("div", { class: "mg-form" }, [
-      h("p", { class: "meta", style: "margin:0", text: "Steht auf jeder Rechnung als Rechnungssteller. Liegt im Konto, gilt auf allen Geräten." }),
-      h("label", { text: "Name" }), fName,
-      h("label", { text: "Straße und Nr." }), fStr,
-      h("label", { text: "PLZ und Ort" }), fOrt,
-      h("label", { text: "Verein" }), fVer,
-      h("label", { text: "Steuernummer" }), fSt,
-      h("label", { class: "schalter", style: "margin-top:8px" }, [fKlein, " Kleinunternehmer nach § 19 UStG (keine Umsatzsteuer)"]),
-      h("label", { text: "Rechnungsnummer" }),
-      h("div", { class: "zweit" }, [fPraefix, fNummer]),
-      h("button", { type: "button", class: "haupt", text: "Daten merken", onclick: function () {
-        rechnungDatenSpeichern(stammdatenSammeln()).then(function (ok) {
-          kurzMeldung(ok ? "Gemerkt ✓ – gilt auf allen Geräten." : "Konnte nicht gespeichert werden.", ok ? "gut" : "warn");
-          if (ok) { abrechnungPanel = "rechnung"; rendereAbrechnung(); }
-        });
-      } })
-    ]));
-    box.appendChild(daten1);
+    // ---- Rechnungssteller (aus dem Konto) --------------------------------
+    var stammZeile = h("details", { class: "tausch" }, [
+      h("summary", {}, [stamm.name ? "Rechnungssteller: " + stamm.name : "Rechnungssteller fehlt – hier eintragen"])
+    ]);
+    stammZeile.open = !stamm.name;
+    stammZeile.appendChild(stammdatenFormular(function () { abrechnungPanel = "rechnung"; rendereAbrechnung(); }));
+    box.appendChild(stammZeile);
 
-    // ---- 2. Spiele waehlen ---------------------------------------------
-    box.appendChild(h("h4", { style: "margin:14px 0 4px", text: "Spiele auf die Rechnung (bis zu drei)" }));
-    box.appendChild(h("p", { class: "meta", style: "margin:0 0 8px", text: "Ein Formular je Verein und Spieltag. Kommende Spiele gehen auch – der Betrag kommt dann aus der Gebührenordnung." }));
+    // ---- Spiel uebernehmen ----------------------------------------------
+    var liste = rechnungSpiele();
     var wahlBox = h("div", { class: "rechnung-wahl" });
-    if (!meine.length) wahlBox.appendChild(h("p", { class: "meta", text: "Kein Spiel gefunden, zu dem sich ein Betrag ermitteln lässt." }));
+    var offen = h("details", { class: "tausch" }, [
+      h("summary", { text: f.kennungen.length ? f.kennungen.length + (f.kennungen.length === 1 ? " Spiel übernommen" : " Spiele übernommen") : "Spiel aus deiner Liste übernehmen" })
+    ]);
+    offen.open = !f.kennungen.length;
+    offen.appendChild(h("p", { class: "meta", style: "margin:0 0 6px", text: "Bis zu drei Spiele, ein Verein, ein Tag. Kommende Spiele gehen auch – der Betrag kommt dann aus der Gebührenordnung." }));
+    if (!liste.length) wahlBox.appendChild(h("p", { class: "meta", text: "Kein Spiel gefunden, zu dem sich ein Betrag ermitteln lässt." }));
     var jetzt = Date.now();
-    meine.slice(0, 25).forEach(function (sp) {
+    liste.slice(0, 25).forEach(function (sp) {
       var b = rechnungBetrag(sp), d = new Date(sp.beginn);
       var c = h("input", { type: "checkbox" });
       c.checked = !!rechnungWahl[sp.kennung];
@@ -1303,6 +1321,7 @@ window.Mitglieder = (function () {
           if (Object.keys(rechnungWahl).length >= 3) { c.checked = false; kurzMeldung("Mehr als drei Spiele passen nicht auf das Formular.", "warn"); return; }
           rechnungWahl[sp.kennung] = sp;
         } else delete rechnungWahl[sp.kennung];
+        rechnungForm = rechnungFormAusWahl();
         abrechnungPanel = "rechnung"; rendereAbrechnung();
       });
       var zusatz = euro(b.betrag) + (b.geschaetzt ? " · nach Ordnung" : "") + (d.getTime() > jetzt ? " · kommt noch" : "");
@@ -1313,134 +1332,166 @@ window.Mitglieder = (function () {
       l._kennung = sp.kennung;
       wahlBox.appendChild(l);
     });
-    box.appendChild(wahlBox);
+    offen.appendChild(wahlBox);
+    box.appendChild(offen);
 
-    var gewaehlt = Object.keys(rechnungWahl).map(function (k) { return rechnungWahl[k]; })
-      .sort(function (a, b) { return a.beginn < b.beginn ? -1 : 1; });
+    // Doppelansetzung: die uebrigen Spiele desselben Tages beim selben Verein
+    if (f.kennungen.length && f.kennungen.length < 3) {
+      var erstes = rechnungWahl[f.kennungen[0]];
+      var tag = new Date(erstes.beginn).toDateString();
+      var dazu = liste.filter(function (sp) {
+        return !rechnungWahl[sp.kennung] && new Date(sp.beginn).toDateString() === tag && heimVereinVon(sp) === f.verein;
+      }).slice(0, 3 - f.kennungen.length);
+      if (dazu.length) box.appendChild(h("p", { class: "meta", style: "margin:6px 0 0" }, [
+        h("button", { type: "button", class: "textknopf",
+          text: "+ " + dazu.length + (dazu.length === 1 ? " weiteres Spiel" : " weitere Spiele") + " an dem Tag dazunehmen",
+          onclick: function () { dazu.forEach(function (sp) { rechnungWahl[sp.kennung] = sp; }); rechnungForm = rechnungFormAusWahl(); abrechnungPanel = "rechnung"; rendereAbrechnung(); } })]));
+      var vereine = {}, tage = {};
+      f.kennungen.forEach(function (k) { var sp = rechnungWahl[k]; vereine[heimVereinVon(sp)] = 1; tage[new Date(sp.beginn).toDateString()] = 1; });
+      if (Object.keys(vereine).length > 1 || Object.keys(tage).length > 1) {
+        box.appendChild(h("div", { class: "hinweis warn", style: "margin-top:8px" }, [
+          h("span", { text: Object.keys(vereine).length > 1
+            ? "Die Spiele gehen an verschiedene Vereine – dafür braucht es je Verein eine eigene Rechnung."
+            : "Die Spiele sind an verschiedenen Tagen – das Formular hat nur ein Datumsfeld." })]));
+      }
+    }
 
-    // Schon geschriebene Rechnungen: markieren und unten auflisten
-    rechnungenLaden().then(function (liste) {
-      if (!liste.length || !wahlBox.isConnected) return;
+    // ---- Das Formular ----------------------------------------------------
+    function feld(schluessel, beschriftung, art) {
+      var i = h("input", { type: art || "text", value: f[schluessel] || "" });
+      if (art === "number") { i.step = "0.01"; i.min = "0"; }
+      i.addEventListener("input", function () { f[schluessel] = i.value; if (art === "number") rechne(); });
+      return h("label", { class: "rechnung-feld" }, [h("span", { text: beschriftung }), i]);
+    }
+    var summe = h("div", { class: "kopfzahl" }, [h("b", { text: "–" }), h("span", { text: "Gesamtbetrag" })]);
+    var ustZeile = h("div", { class: "reihe-zahl" }, [h("span", { text: "" }), h("b", { text: "" })]);
+    function betraege() {
+      var p = parseFloat(String(f.pauschale).replace(",", ".")) || 0;
+      var z = parseFloat(String(f.zuschlag).replace(",", ".")) || 0;
+      var ust = f.klein ? 0 : (p + z) * 0.19;
+      return { pauschale: p, zuschlag: z, ust: ust, gesamt: p + z + ust, klein: f.klein };
+    }
+    function rechne() {
+      var b = betraege();
+      summe.firstChild.textContent = euro(b.gesamt);
+      ustZeile.firstChild.textContent = b.klein ? "Umsatzsteuer (Kleinunternehmer § 19)" : "+ 19 % Umsatzsteuer";
+      ustZeile.lastChild.textContent = b.klein ? "—" : euro(b.ust);
+    }
+
+    var karte = h("div", { class: "karte rechnung-karte" });
+    karte.appendChild(h("h4", { text: "Rechnungsempfänger" }));
+    ["name", "strasse", "plz_ort"].forEach(function (k, i) {
+      karte.appendChild(feld(k, ["Verein", "Straße und Nr.", "PLZ und Ort"][i]));
+    });
+    if (f._adresseHolen) {
+      f._adresseHolen = false;
+      vereinAdressenLaden().then(function (map) {
+        var a = map[f.verein];
+        if (!a) return;
+        if (a.name) f.name = a.name;
+        f.strasse = a.strasse || ""; f.plz_ort = a.plz_ort || "";
+        if (box.isConnected) { abrechnungPanel = "rechnung"; rendereAbrechnung(); }
+      });
+    }
+    karte.appendChild(h("p", { class: "meta", style: "margin:2px 0 10px" }, [
+      h("button", { type: "button", class: "textknopf", text: "Adresse für alle Kollegen merken", onclick: function () {
+        if (!f.verein) { meldung("Erst ein Spiel übernehmen – daraus kommt der Verein.", "warn"); return; }
+        speichern(sb.from("vereine_adressen").upsert({ verein: f.verein, name: f.name, strasse: f.strasse, plz_ort: f.plz_ort,
+                                                       angelegt_von: session.user.id, geaendert: new Date().toISOString() }))
+          .then(function (r) {
+            if (r && r.error) { meldung(fehlerText(r.error), "warn"); return; }
+            vereinAdressen = null; kurzMeldung("Gemerkt ✓ – Kollegen sehen die Adresse auch.", "gut");
+          });
+      } })]));
+
+    karte.appendChild(h("h4", { style: "margin-top:14px", text: "Spiele auf dem Formular" }));
+    f.zeilen.forEach(function (zeile, i) {
+      var heim = h("input", { type: "text", value: zeile[0], placeholder: "Heim" });
+      var gast = h("input", { type: "text", value: zeile[1], placeholder: "Gast" });
+      heim.addEventListener("input", function () { f.zeilen[i][0] = heim.value; });
+      gast.addEventListener("input", function () { f.zeilen[i][1] = gast.value; });
+      karte.appendChild(h("div", { class: "rechnung-paarung" }, [heim, h("span", { text: "–" }), gast]));
+    });
+
+    karte.appendChild(h("h4", { style: "margin-top:14px", text: "Angaben" }));
+    karte.appendChild(feld("datum", "Datum"));
+    karte.appendChild(feld("ort", "Spielort"));
+    karte.appendChild(feld("klasse", "Spielklasse"));
+    karte.appendChild(feld("pauschale", "Pauschale (€)", "number"));
+    karte.appendChild(feld("zuschlag", "Zuschuss 20 % (€)", "number"));
+    var kleinSchalter = h("input", { type: "checkbox" }); kleinSchalter.checked = !!f.klein;
+    kleinSchalter.addEventListener("change", function () { f.klein = kleinSchalter.checked; rechne(); });
+    karte.appendChild(h("label", { class: "schalter", style: "margin-top:6px" }, [kleinSchalter, " Kleinunternehmer nach § 19 UStG (keine Umsatzsteuer)"]));
+    karte.appendChild(h("div", { class: "karte summenliste", style: "margin-top:12px" }, [summe, ustZeile]));
+    rechne();
+
+    var nummer = (stamm.praefix || new Date().getFullYear() + "-") + String(stamm.nummer || 1).padStart(3, "0");
+    karte.appendChild(h("div", { class: "zweit", style: "margin-top:12px" }, [
+      h("button", { type: "button", class: "haupt", text: "Rechnung " + nummer + " als PDF", onclick: function () {
+        if (!stamm.name || !stamm.strasse || !stamm.plz_ort) { meldung("Bitte oben erst deine eigenen Daten eintragen.", "warn"); stammZeile.open = true; return; }
+        if (!f.name) { meldung("Der Rechnungsempfänger fehlt.", "warn"); return; }
+        rechnungErzeugen(stamm, f, betraege(), nummer);
+      } }),
+      h("button", { type: "button", text: "Formular leeren", onclick: function () {
+        rechnungWahl = {}; rechnungForm = rechnungFormLeer(); rechnungFertig = null;
+        abrechnungPanel = "rechnung"; rendereAbrechnung();
+      } })
+    ]));
+    box.appendChild(karte);
+
+    // ---- Zuletzt geschrieben --------------------------------------------
+    rechnungenLaden().then(function (liste2) {
+      if (!liste2.length || !box.isConnected || box.querySelector(".rechnung-verlauf")) return;
       var drin = {};
-      liste.forEach(function (rg) { (rg.kennungen || []).forEach(function (k) { drin[k] = rg.nummer; }); });
+      liste2.forEach(function (rg) { (rg.kennungen || []).forEach(function (k) { drin[k] = rg.nummer; }); });
       Array.prototype.forEach.call(wahlBox.querySelectorAll(".rechnung-zeile"), function (z) {
         var k = z._kennung; if (!k || !drin[k]) return;
         var sm = z.querySelector("small"); if (sm) sm.textContent += " · Rechnung " + drin[k] + " ✓";
       });
-      if (box.querySelector(".rechnung-verlauf")) return;
-      var vb = h("div", { class: "rechnung-verlauf" }, [h("h4", { style: "margin:16px 0 4px", text: "Zuletzt geschrieben" })]);
+      var vb = h("details", { class: "tausch rechnung-verlauf" }, [h("summary", { text: "Zuletzt geschrieben (" + liste2.length + ")" })]);
       var k2 = h("div", { class: "karte protokoll" });
-      liste.slice(0, 5).forEach(function (rg) {
+      liste2.slice(0, 8).forEach(function (rg) {
         k2.appendChild(h("div", { class: "zeile" }, [h("span", { class: "art", text: rg.nummer }),
           h("span", {}, [h("b", { text: rg.verein || "" }),
             h("small", { text: new Date(rg.datum).toLocaleDateString("de-DE") + " · " + euro(rg.betrag || 0) })])]));
       });
       vb.appendChild(k2); box.appendChild(vb);
     });
+    return box;
+  }
 
-    if (!gewaehlt.length) return box;
-
-    // Doppelansetzungen: die uebrigen Spiele desselben Tages beim selben
-    // Verein mit einem Tipp dazunehmen - das ist der haeufigste Fall.
-    (function () {
-      if (gewaehlt.length >= 3) return;
-      var tag = new Date(gewaehlt[0].beginn).toDateString(), ver = heimVereinVon(gewaehlt[0]);
-      var dazu = meine.filter(function (sp) {
-        return !rechnungWahl[sp.kennung] && new Date(sp.beginn).toDateString() === tag && heimVereinVon(sp) === ver;
-      }).slice(0, 3 - gewaehlt.length);
-      if (!dazu.length) return;
-      box.appendChild(h("p", { class: "meta", style: "margin:8px 0 0" }, [
-        h("button", { type: "button", class: "textknopf", text: "+ " + dazu.length + (dazu.length === 1 ? " weiteres Spiel" : " weitere Spiele") + " an dem Tag bei " + ver + " dazunehmen",
-          onclick: function () { dazu.forEach(function (sp) { rechnungWahl[sp.kennung] = sp; }); abrechnungPanel = "rechnung"; rendereAbrechnung(); } })]));
-    })();
-
-    // Das Formular gilt je Verein und Spieltag
-    var vereine = {}, tage = {};
-    gewaehlt.forEach(function (sp) { vereine[heimVereinVon(sp)] = 1; tage[new Date(sp.beginn).toDateString()] = 1; });
-    if (Object.keys(vereine).length > 1 || Object.keys(tage).length > 1) {
-      box.appendChild(h("div", { class: "hinweis warn", style: "margin-top:10px" }, [
-        h("span", { text: Object.keys(vereine).length > 1
-          ? "Die Spiele gehen an verschiedene Vereine – dafür braucht es je Verein eine eigene Rechnung."
-          : "Die Spiele sind an verschiedenen Tagen – das Formular hat nur ein Datumsfeld." })]));
-    }
-
-    // ---- 3. Empfaenger --------------------------------------------------
-    var verein = heimVereinVon(gewaehlt[0]);
-    var vName = h("input", { type: "text", value: verein, placeholder: "Verein" });
-    var vStr = h("input", { type: "text", value: "", placeholder: "Straße und Nr." });
-    var vOrt = h("input", { type: "text", value: "", placeholder: "PLZ und Ort" });
-    vereinAdressenLaden().then(function (map) {
-      var a = map[verein]; if (!a || !vName.isConnected) return;
-      if (a.name) vName.value = a.name;
-      vStr.value = a.strasse || ""; vOrt.value = a.plz_ort || "";
-    });
-    box.appendChild(h("h4", { style: "margin:14px 0 4px", text: "Rechnungsempfänger" }));
-    box.appendChild(h("p", { class: "meta", style: "margin:0 0 6px", text: "Adressen teilen sich alle Kollegen – einmal eintragen genügt." }));
-    box.appendChild(h("div", { class: "mg-form" }, [
-      vName, vStr, vOrt,
-      h("button", { type: "button", class: "mg-neben", text: "Adresse für alle merken", onclick: function () {
-        speichern(sb.from("vereine_adressen").upsert({ verein: verein, name: vName.value.trim(), strasse: vStr.value.trim(),
-                                                       plz_ort: vOrt.value.trim(), angelegt_von: session.user.id, geaendert: new Date().toISOString() }))
-          .then(function (r) {
-            if (r && r.error) { meldung(fehlerText(r.error), "warn"); return; }
-            vereinAdressen = null; kurzMeldung("Gemerkt ✓ – Kollegen sehen die Adresse auch.", "gut");
+  // Die eigenen Daten stehen an zwei Stellen (Rechnungsblatt und Konto) -
+  // deshalb einmal gebaut.
+  function stammdatenFormular(fertig) {
+    var d = rechnungDaten();
+    var fName = h("input", { type: "text", value: d.name || (profil && profil.name) || "", placeholder: "Nachname, Vorname" });
+    var fStr = h("input", { type: "text", value: d.strasse || "", placeholder: "Straße und Nr." });
+    var fOrt = h("input", { type: "text", value: d.plz_ort || "", placeholder: "PLZ und Ort" });
+    var fVer = h("input", { type: "text", value: d.verein || "ESRW", placeholder: "Verein" });
+    var fSt = h("input", { type: "text", value: d.steuernummer || "", placeholder: "Steuernummer" });
+    var fKlein = h("input", { type: "checkbox" }); fKlein.checked = d.klein !== false;
+    var fPraefix = h("input", { type: "text", value: d.praefix || (new Date().getFullYear() + "-"), style: "width:7em" });
+    var fNummer = h("input", { type: "number", min: "1", value: String(d.nummer || 1), style: "width:6em" });
+    return h("div", { class: "mg-form" }, [
+      h("p", { class: "meta", style: "margin:0", text: "Steht als Rechnungssteller auf jeder Rechnung. Liegt im Konto, gilt auf allen Geräten." }),
+      h("label", { text: "Name" }), fName,
+      h("label", { text: "Straße und Nr." }), fStr,
+      h("label", { text: "PLZ und Ort" }), fOrt,
+      h("label", { text: "Verein" }), fVer,
+      h("label", { text: "Steuernummer" }), fSt,
+      h("label", { class: "schalter", style: "margin-top:8px" }, [fKlein, " Kleinunternehmer nach § 19 UStG"]),
+      h("label", { text: "Nächste Rechnungsnummer" }),
+      h("div", { class: "zweit" }, [fPraefix, fNummer]),
+      h("button", { type: "button", class: "haupt", text: "Daten merken", onclick: function () {
+        rechnungDatenSpeichern({ name: fName.value.trim(), strasse: fStr.value.trim(), plz_ort: fOrt.value.trim(),
+                                 verein: fVer.value.trim(), steuernummer: fSt.value.trim(), klein: fKlein.checked,
+                                 praefix: fPraefix.value.trim(), nummer: parseInt(fNummer.value, 10) || 1 })
+          .then(function (ok) {
+            kurzMeldung(ok ? "Gemerkt ✓ – gilt auf allen Geräten." : "Konnte nicht gespeichert werden.", ok ? "gut" : "warn");
+            if (ok && fertig) fertig();
           });
       } })
-    ]));
-
-    // ---- 4. Angaben auf dem Formular ------------------------------------
-    var d0 = new Date(gewaehlt[0].beginn);
-    var eDatum = h("input", { type: "text", value: d0.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" }) });
-    var eOrt = h("input", { type: "text", value: gewaehlt[0].halle || "" });
-    var eKlasse = h("input", { type: "text", value: gewaehlt[0].liga || "" });
-    var pauschale = 0, zuschlag = 0;
-    gewaehlt.forEach(function (sp) {
-      var b = rechnungBetrag(sp);
-      pauschale += (b.betrag || 0) - (b.zeit || 0);
-      zuschlag += b.zeit || 0;
-    });
-    var ePausch = h("input", { type: "number", step: "0.01", min: "0", value: (Math.round(pauschale * 100) / 100).toFixed(2) });
-    var eZuschl = h("input", { type: "number", step: "0.01", min: "0", value: (Math.round(zuschlag * 100) / 100).toFixed(2) });
-    var summeZeile = h("div", { class: "kopfzahl" }, [h("b", { text: "–" }), h("span", { text: "Gesamtbetrag" })]);
-    var ustZeile = h("div", { class: "reihe-zahl" }, [h("span", { text: "" }), h("b", { text: "" })]);
-    function rechne() {
-      var p = parseFloat(String(ePausch.value).replace(",", ".")) || 0;
-      var z = parseFloat(String(eZuschl.value).replace(",", ".")) || 0;
-      var klein = fKlein.checked;
-      var ust = klein ? 0 : (p + z) * 0.19;
-      summeZeile.firstChild.textContent = euro(p + z + ust);
-      ustZeile.firstChild.textContent = klein ? "Umsatzsteuer (Kleinunternehmer § 19)" : "+ 19 % Umsatzsteuer";
-      ustZeile.lastChild.textContent = klein ? "—" : euro(ust);
-      return { pauschale: p, zuschlag: z, ust: ust, gesamt: p + z + ust, klein: klein };
-    }
-    [ePausch, eZuschl].forEach(function (i) { i.addEventListener("input", rechne); });
-    fKlein.addEventListener("change", rechne);
-
-    box.appendChild(h("h4", { style: "margin:14px 0 4px", text: "Angaben auf dem Formular" }));
-    box.appendChild(h("div", { class: "mg-form" }, [
-      h("label", { text: "Datum" }), eDatum,
-      h("label", { text: "Spielort" }), eOrt,
-      h("label", { text: "Spielklasse" }), eKlasse,
-      h("label", { text: "Pauschale (€)" }), ePausch,
-      h("label", { text: "Zuschuss 20 % (€) – bei Spielbeginn ab 21:46 oder bis 9:14 Uhr" }), eZuschl
-    ]));
-    box.appendChild(h("div", { class: "karte summenliste", style: "margin-top:12px" }, [summeZeile, ustZeile]));
-    rechne();
-
-    // ---- 5. Erzeugen ----------------------------------------------------
-    var nummer = (fPraefix.value.trim() || "") + String(fNummer.value || 1).padStart(3, "0");
-    box.appendChild(h("p", { class: "meta", style: "margin:10px 0 6px", text: "Rechnungsnummer " + nummer }));
-    box.appendChild(h("div", { class: "zweit" }, [
-      h("button", { type: "button", class: "haupt", text: "Rechnung als PDF", onclick: function () {
-        var st = stammdatenSammeln();
-        if (!st.name || !st.strasse || !st.plz_ort) { meldung("Bitte oben erst deine Daten ausfüllen.", "warn"); daten1.open = true; return; }
-        rechnungErzeugen(st, { verein: verein, name: vName.value.trim(), strasse: vStr.value.trim(), plz_ort: vOrt.value.trim() },
-                         gewaehlt, rechne(), nummer,
-                         { datum: eDatum.value.trim(), ort: eOrt.value.trim(), klasse: eKlasse.value.trim() });
-      } }),
-      h("button", { type: "button", text: "Auswahl leeren", onclick: function () { rechnungWahl = {}; rendereAbrechnung(); } })
-    ]));
-    return box;
+    ]);
   }
 
   // Ein Supabase-Aufruf ist kein echtes Promise (kein .catch) - das hier
@@ -1450,22 +1501,22 @@ window.Mitglieder = (function () {
     return Promise.resolve().then(function () { return aufruf; }).catch(function (e) { return { error: e }; });
   }
 
-  function rechnungErzeugen(st, verein, spiele1, betraege, nummer, formular) {
+  function rechnungErzeugen(stamm, f, betraege, nummer) {
     kurzMeldung("Rechnung wird gebaut …", "");
     ladeRechnung().then(function (R) {
       var werte = {
         "undefined": nummer,
-        "Rechnungssteller Schiedsrichter": st.name,
-        "Straße und Nr": st.strasse,
-        "PLZ und Ort 1": st.plz_ort,
-        "PLZ und Ort 2": st.verein,
-        "Steuernummer": st.steuernummer,
-        "Rechnungsempfänger Verein": verein.name || verein.verein,
-        "Straße und Nr_2": verein.strasse,
-        "PLZ und Ort": verein.plz_ort,
-        "4": formular.datum,
-        "Spielort": formular.ort,
-        "Dropdown3": formular.klasse,
+        "Rechnungssteller Schiedsrichter": stamm.name,
+        "Straße und Nr": stamm.strasse,
+        "PLZ und Ort 1": stamm.plz_ort,
+        "PLZ und Ort 2": stamm.verein,
+        "Steuernummer": stamm.steuernummer,
+        "Rechnungsempfänger Verein": f.name,
+        "Straße und Nr_2": f.strasse,
+        "PLZ und Ort": f.plz_ort,
+        "4": f.datum,
+        "Spielort": f.ort,
+        "Dropdown3": f.klasse,
         "€": { text: euroZahl(betraege.pauschale), ausrichtung: "rechts" },
         "€_4": { text: euroZahl(betraege.gesamt), ausrichtung: "rechts" }
       };
@@ -1473,23 +1524,24 @@ window.Mitglieder = (function () {
       if (betraege.klein) werte._kreuz = "Kleinunternehmer nach  19 UStG";
       else werte["€_3"] = { text: euroZahl(betraege.ust), ausrichtung: "rechts" };
       var reihen = [["1", "undefined_2"], ["2", "undefined_3"], ["3", "undefined_4"]];
-      spiele1.slice(0, 3).forEach(function (sp, i) {
-        werte[reihen[i][0]] = heimVereinVon(sp);
-        werte[reihen[i][1]] = gastVereinVon(sp);
+      (f.zeilen || []).slice(0, 3).forEach(function (z, i) {
+        if (z[0]) werte[reihen[i][0]] = z[0];
+        if (z[1]) werte[reihen[i][1]] = z[1];
       });
       return R.bauen(werte).then(function (blob) {
-        var name = "Abrechnung_" + nummer.replace(/[^\w-]+/g, "_") + "_" + (verein.verein || "Verein").replace(/[^\w]+/g, "") + ".pdf";
+        var name = "Abrechnung_" + nummer.replace(/[^\w-]+/g, "_") + "_" + (f.verein || f.name || "Verein").replace(/[^\w]+/g, "") + ".pdf";
         pdfHerunterladen(blob, name);
         // Ab hier ist die Rechnung fertig - was jetzt schiefgeht, darf sie
         // nicht mehr in Frage stellen.
-        var neu = {}; Object.keys(st).forEach(function (k) { neu[k] = st[k]; });
-        neu.nummer = (parseInt(st.nummer, 10) || 1) + 1;
-        rechnungWahl = {}; rechnungListe = null;
+        var neu = {}; Object.keys(stamm).forEach(function (k) { neu[k] = stamm[k]; });
+        neu.nummer = (parseInt(stamm.nummer, 10) || 1) + 1;
+        var wann = new Date();
+        if (f.kennungen && f.kennungen.length && rechnungWahl[f.kennungen[0]]) wann = new Date(rechnungWahl[f.kennungen[0]].beginn);
+        rechnungWahl = {}; rechnungListe = null; rechnungForm = rechnungFormLeer();
         return speichern(sb.from("rechnungen").insert({
-          user_id: session.user.id, nummer: nummer,
-          datum: new Date(spiele1[0].beginn).toISOString().slice(0, 10),
-          verein: verein.verein, betrag: Math.round(betraege.gesamt * 100) / 100,
-          kennungen: spiele1.map(function (x) { return x.kennung; })
+          user_id: session.user.id, nummer: nummer, datum: wann.toISOString().slice(0, 10),
+          verein: f.verein || f.name, betrag: Math.round(betraege.gesamt * 100) / 100,
+          kennungen: f.kennungen || []
         })).then(function () { return rechnungDatenSpeichern(neu); })
           .then(function () {
             rechnungFertig = { blob: blob, name: name, nummer: nummer };
@@ -2865,22 +2917,44 @@ window.Mitglieder = (function () {
 
   // ---- Admin: neue Konten freischalten
 
+  // Adminseite: eine Leiste oben, darunter genau ein Bereich. Vorher standen
+  // fuenf Karten untereinander - auf dem Handy eine endlose Rolle.
+  var adminBereich = "freischaltung";
   function zeigeAdmin() {
-    var sbox = h("div", { class: "melde karte" }, [h("h4", {}, [ikone("i-cal"), " Spiel anlegen"]), skelett(1)]);
-    inhalt.appendChild(sbox);
-    spielAnlegenRendern(sbox);
-    var hbox = h("div", { class: "melde karte" }, [h("h4", {}, [ikone("i-pin"), " Hallen und Vereine"]), skelett(1)]);
-    inhalt.appendChild(hbox);
-    hallenPflegeRendern(hbox);
-    var tbox = h("div", { class: "melde karte" }, [h("h4", {}, [ikone("i-users"), " Telefonliste"]), skelett(1)]);
-    inhalt.appendChild(tbox);
-    telefonlisteRendern(tbox);
-    var fbox = h("div", { class: "melde karte" }, [h("h4", {}, [ikone("i-check"), " Funktionen"]), skelett(1)]);
-    inhalt.appendChild(fbox);
-    funktionenRendern(fbox);
-    var box = h("div", { class: "melde karte" }, [h("h4", { text: "Freischaltung" }), skelett(1)]);
+    var BEREICHE = [
+      ["freischaltung", "Freischaltung", "i-check", adminRendern],
+      ["funktionen", "Funktionen", "i-shield", funktionenRendern],
+      ["spiel", "Spiel anlegen", "i-cal", spielAnlegenRendern],
+      ["hallen", "Hallen & Vereine", "i-pin", hallenPflegeRendern],
+      ["telefon", "Telefonliste", "i-users", telefonlisteRendern]
+    ];
+    if (!BEREICHE.filter(function (b) { return b[0] === adminBereich; }).length) adminBereich = BEREICHE[0][0];
+
+    inhalt.appendChild(h("p", { class: "meta admin-kopf", text: "Betreiber-Werkzeuge. Was du hier änderst, sehen alle." }));
+    var leiste = h("div", { class: "admin-leiste" });
+    var zaehlKnopf = null;
+    BEREICHE.forEach(function (b) {
+      var k = h("button", { type: "button", class: "filterknopf" + (adminBereich === b[0] ? " aktiv" : ""), onclick: function () {
+        adminBereich = b[0]; zeigeReiter("admin");
+      } }, [ikone(b[2]), " " + b[1]]);
+      if (b[0] === "freischaltung") zaehlKnopf = k;
+      leiste.appendChild(k);
+    });
+    inhalt.appendChild(leiste);
+
+    // Wartende Konten stehen als Zahl am Knopf - dafuer muss man nicht
+    // erst hineinschauen.
+    sb.from("profile").select("id,freigeschaltet,admin").eq("freigeschaltet", false).then(function (r) {
+      var n = (r.data || []).filter(function (p) { return !p.admin; }).length;
+      if (!n || !zaehlKnopf || !zaehlKnopf.isConnected) return;
+      zaehlKnopf.appendChild(h("i", { text: String(n) }));
+    }).catch(function () {});
+
+    var box = h("div", { class: "melde karte" }, [skelett(1)]);
     inhalt.appendChild(box);
-    adminRendern(box);
+    var gewaehlt = BEREICHE.filter(function (b) { return b[0] === adminBereich; })[0];
+    gewaehlt[3](box);
+
     inhalt.appendChild(h("p", { class: "meta mg-fuss", text: "Freigeschaltete sehen Tauschbörse, Verfügbarkeiten, Hallen-Hinweise, Kontakte und Mitfahrten. " +
       "Admins können außerdem freischalten und weitere Admins ernennen. Das eigene Admin-Recht lässt sich hier nicht entfernen – dafür SQL im Supabase-Dashboard." }));
   }

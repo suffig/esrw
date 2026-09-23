@@ -1391,6 +1391,35 @@
   .rechnung-zeile b { display:block; font-weight:700; font-size:.9rem; }
   .rechnung-zeile small { color:var(--dim); }
   .rechnung-wahl { max-height:270px; overflow:auto; border:1px solid var(--linie); border-radius:14px; padding:0 12px; }
+  /* ---- Runde 20: Rechnungsblatt, Adminseite, Anmeldung ---- */
+  .rechnungsblatt > * { margin-bottom:10px; }
+  .rechnungsblatt > details > summary { font-weight:700; }
+  .rechnung-karte { padding:14px; }
+  .rechnung-karte h4 { margin:0 0 8px; font-size:.78rem; text-transform:uppercase; letter-spacing:.07em; color:var(--dim); }
+  .rechnung-feld { display:block; margin-bottom:8px; }
+  .rechnung-feld > span { display:block; font-size:.76rem; color:var(--dim); font-weight:600; margin-bottom:3px; }
+  .rechnung-feld input { width:100%; font:inherit; padding:10px 12px; border-radius:12px; border:1px solid var(--linie); background:var(--bg); color:var(--text); }
+  .rechnung-paarung { display:grid; grid-template-columns:1fr auto 1fr; gap:6px; align-items:center; margin-bottom:6px; }
+  .rechnung-paarung input { width:100%; min-width:0; font:inherit; padding:9px 10px; border-radius:12px; border:1px solid var(--linie); background:var(--bg); color:var(--text); }
+  .rechnung-paarung span { color:var(--dim); font-weight:800; }
+  /* Adminseite: eine Leiste, ein Bereich - wie in der Abrechnung */
+  .admin-leiste { display:flex; gap:6px; overflow-x:auto; padding:2px 0 10px; scrollbar-width:none; }
+  .admin-leiste::-webkit-scrollbar { display:none; }
+  .admin-leiste .filterknopf { flex:none; }
+  .admin-leiste .filterknopf i { font-style:normal; margin-left:6px; background:var(--rot); color:#fff; border-radius:99px; padding:1px 6px; font-size:.68rem; font-weight:800; }
+  .admin-kopf { margin:0 0 10px; }
+  /* Anmeldung: drei Schritte, sonst nichts */
+  .schritte { list-style:none; margin:0; padding:0; counter-reset:schritt; }
+  .schritte li { counter-increment:schritt; display:flex; gap:12px; align-items:flex-start; padding:10px 0; border-top:1px solid var(--linie); }
+  .schritte li:first-child { border-top:0; }
+  .schritte li::before { content:counter(schritt); flex:none; width:26px; height:26px; border-radius:50%; background:var(--akzent); color:var(--akzent-text);
+                         font-weight:800; font-size:.82rem; display:flex; align-items:center; justify-content:center; }
+  .schritte b { display:block; font-size:.95rem; }
+  .schritte small { color:var(--dim); }
+  @media (min-width: 900px) {
+    .rechnung-karte { display:grid; grid-template-columns:1fr 1fr; gap:0 18px; }
+    .rechnung-karte h4, .rechnung-karte .summenliste, .rechnung-karte .zweit, .rechnung-karte .schalter, .rechnung-karte > p { grid-column:1 / -1; }
+  }
   /* ---- Runde 16, Nachtrag: gewinnt gegen alle Schichten darueber ----
      Auf schmalen Geraeten blieb vom Titel "Einteilungen ESRW" nur
      "Einteilungen ESR" uebrig - das rote ESRW lief unter den Knoepfen durch.
@@ -1792,6 +1821,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=61"></script>
+<script src="app.js?v=62"></script>
 </body>
 </html>
