@@ -1306,6 +1306,21 @@ Spielseite). Mehrfachauswahl: Verpflegung 14 € setzen/entfernen, CSV.
   sich, Knöpfe werden etwas kleiner).
 * **Tipp auf den aktiven Reiter** unten scrollt nach oben.
 
+### 10.6x Übersicht: Sprungleisten, Kachel-Zahlen, Schnellzugriff wählbar
+
+* **Sprungleiste** auf langen Seiten: Die Spielseite bekommt oben Chips zu
+  ihren Karten (Halle, Gespann, Checkliste, Fahrgemeinschaft, Weiteres …),
+  die Einstellungen zu ihren Abschnitten (Konto, App, Startseite,
+  Schnellzugriff, Bereiche, Betreiber, Gemeldet). Ein Tipp scrollt hin.
+* **Zahlen auf den „Mehr“-Kacheln**: Archiv („6 Spiele“), Statistik („4 in
+  2026/27“), Änderungen („2 Änderungen“ in 14 Tagen), Zusammen fahren
+  („3 in 14 Tagen“) – man sieht sofort, wo etwas liegt.
+* **Schnellzugriff wählbar**: Unter Einstellungen → Schnellzugriff legt man
+  fest, welche Knöpfe unter der Kopfkarte stehen (auch Verfügbarkeit, Info,
+  Hallenkarte); die Auswahl wandert mit dem Konto auf alle Geräte.
+* **Suche merkt sich die letzten vier Begriffe** (Chips über der Liste,
+  „leeren“ entfernt sie).
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

@@ -718,6 +718,14 @@
   .tour-punkte i { width:7px; height:7px; border-radius:50%; background:var(--linie); }
   .tour-punkte i.aktiv { background:var(--akzent); width:18px; border-radius:4px; }
   @media (prefers-reduced-motion: reduce) { .tour-karte { animation:none; } }
+  /* Runde 13: Sprungleisten, Kachel-Zahlen, Suchverlauf */
+  .sprungleiste { display:flex; gap:6px; overflow-x:auto; padding:2px 0 8px; margin:0 0 4px; scrollbar-width:none; }
+  .sprungleiste::-webkit-scrollbar { display:none; }
+  .sprungleiste .chip { flex:none; background:var(--karte); border:1px solid var(--linie); font-weight:700; cursor:pointer; font-family:inherit; }
+  .kachel-zahl { position:absolute; top:10px; right:10px; font-size:.68rem; font-weight:800; color:var(--dim); background:var(--bg); border-radius:99px; padding:3px 8px; }
+  .menue a { position:relative; }
+  .such-verlauf { margin:0 0 8px; }
+  .such-verlauf .chip { cursor:pointer; font-family:inherit; }
   /* Runde 12: Admin-Modus, Typografie (Ziffern, Trennung, ruhigere Grossbuchstaben) */
   /* Kopf: Titel darf schrumpfen, Knoepfe bleiben rechts - sonst deckt der
      Admin-Schalter auf schmalen Geraeten das "ESRW" zu */
@@ -1375,6 +1383,7 @@
     <p class="frage" id="frage">Wer bist du?</p>
     <p class="meta" id="frage-unter">Wähle deinen Namen – danach siehst du deine Spiele, kannst den Kalender abonnieren und Mitteilungen bekommen.</p>
     <div class="zuletzt versteckt" id="zuletzt"></div>
+    <div class="ligen schnell such-verlauf versteckt" id="such-verlauf"></div>
     <label for="suche" class="versteckt">Name suchen</label>
     <input type="search" id="suche" placeholder="Namen suchen …"
            autocomplete="off" autocorrect="off" spellcheck="false">
@@ -1455,6 +1464,7 @@
       <span><b id="spiel-titel"></b><small id="spiel-unter"></small></span>
       <button class="textknopf zurueck" id="spiel-zurueck"><svg class="i"><use href="#i-back"/></svg>Zurück</button>
     </div>
+    <div class="sprungleiste versteckt" id="spiel-sprung"></div>
     <div id="spiel-kopf"></div>
     <div id="spiel-inhalt"></div>
   </section>
@@ -1471,6 +1481,7 @@
       <span><b>Einstellungen</b><small>Konto, App, Startseite</small></span>
       <button class="textknopf zurueck" id="einstellungen-zurueck"><svg class="i"><use href="#i-back"/></svg>Zurück</button>
     </div>
+    <div class="sprungleiste versteckt" id="einstellungen-sprung"></div>
     <div id="konto-bereich"></div>
     <h3 class="abschnitt">App<small>gilt für dieses Gerät – mit Konto auf allen</small></h3>
     <div class="karte einstellungen-liste">
@@ -1483,6 +1494,8 @@
     </div>
     <h3 class="abschnitt">Startseite<small>Was auf „Start“ steht – Profil, nächstes Spiel und deine Spiele immer</small></h3>
     <div class="karte einstellungen-liste" id="start-bausteine"></div>
+    <h3 class="abschnitt">Schnellzugriff<small>Welche Knöpfe unter der Kopfkarte stehen</small></h3>
+    <div class="karte einstellungen-liste" id="schnell-wahl"></div>
     <h3 class="abschnitt">Bereiche<small>Was du nicht brauchst, blendest du für dich aus – nur auf deinen Geräten</small></h3>
     <div class="karte einstellungen-liste" id="bereiche"></div>
     <div id="adminzeile" class="versteckt"></div>
@@ -1622,6 +1635,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=52"></script>
+<script src="app.js?v=53"></script>
 </body>
 </html>
