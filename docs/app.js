@@ -268,7 +268,7 @@
     toast(neu ? "Admin-Modus an – Betreiber-Funktionen sichtbar." : "Admin-Modus aus – App wie für alle anderen.", "gut");
     zaehlerHolen(); ausHash();
   });
-  document.addEventListener("mg-sitzung", function () { adminKnopfZeigen(); tabDritterAnwenden(); ausHash(); });
+  document.addEventListener("mg-sitzung", function () { adminKnopfZeigen(); tabDritterAnwenden(); if (daten) ausHash(); });
   // Tipp auf den Reiter, auf dem man schon steht: nach oben scrollen
   Array.prototype.forEach.call(document.querySelectorAll(".leiste button"), function (b) {
     b.addEventListener("click", function () { if (b.classList.contains("aktiv")) window.scrollTo({ top: 0, behavior: "smooth" }); });
@@ -2378,7 +2378,10 @@
     }
     return mitgliederGeladen;
   }
-  function mitgliederKontext() { return { daten: daten, slug: profil && profil.slug, personMit: personMit, hole: hole, ikone: ikone, funktion: funktion, funktionen: FUNKTIONEN, einstellungenSync: einstellungenSync, lesen: lesen, schreiben: schreiben }; }
+  // Leeres Geruest statt null: der Mitgliederbereich soll auch dann seinen
+  // Anmeldeschirm zeichnen koennen, wenn noch keine Daten geladen sind.
+  var LEER = { personen: [], spiele: [], hallen: {}, adressen: {}, hallen_hinweise: {}, saison: "", titel: "Einteilungen" };
+  function mitgliederKontext() { return { daten: daten || LEER, slug: profil && profil.slug, personMit: personMit, hole: hole, ikone: ikone, funktion: funktion, funktionen: FUNKTIONEN, einstellungenSync: einstellungenSync, lesen: lesen, schreiben: schreiben }; }
   function zeigeMitglieder(reiter) {
     aktuell = null; ansicht("mitglieder");
     ladeMitglieder().then(function (M) { M.oeffnen(el("mitglieder"), mitgliederKontext(), reiter); })
@@ -3512,6 +3515,9 @@
   window.addEventListener("resize", kalenderSpalte);
 
   function ausHash() {
+    // Ohne geladene Daten gibt es nur den Anmeldeschirm. Steht er schon da,
+    // bleibt er stehen - sonst ginge beim Tippen die Eingabe verloren.
+    if (!daten) { if (el("mitglieder").classList.contains("versteckt")) anmeldeschirm(); return; }
     var slug = location.hash.replace(/^#/, "");
     var gesperrt = { "mitglieder/tausch": "tausch", "mitglieder/frei": "frei", "mitglieder/abrechnung": "abrechnung", "mitglieder/info": "info", "mitglieder/notizen": "notizen", "karte": "hallen", "statistik": "statistik" };
     var schl = gesperrt[slug] || (slug.indexOf("statistik/") === 0 ? "statistik" : null);
@@ -4083,19 +4089,24 @@
       setTimeout(zaehlerHolen, 1500);
     })
     .catch(function (e) {
-      if (!sitzungVorhanden()) { anmeldeschirm(); return; }
+      anmeldeschirm((e && e.message) || "Daten konnten nicht geladen werden.");
       el("stand").className = "stand alt";
-      el("stand").textContent = (e && e.message) || "Daten konnten nicht geladen werden.";
     });
   }
   // Fusszeile: der Gesamtkalender heisst mit Schluessel anders
   feedBereit("alle").then(function (m) { if (m && el("alle")) { el("alle").href = "feeds/" + m + ".ics"; el("alle").textContent = "Kalender aller Spiele"; } });
   if (sitzungVorhanden()) startLaden(); else anmeldeschirm();
   // An- und Abmelden: einmal sauber neu aufbauen, statt halbe Zustaende zu flicken
+  // Nur ein echter Wechsel (an -> aus oder aus -> an) baut die App neu auf.
+  // Beim Start meldet der Mitgliederbereich die wiederhergestellte Sitzung -
+  // das ist kein Wechsel, sonst laedt die Seite sich endlos selbst neu.
+  var angemeldetStand = sitzungVorhanden();
   document.addEventListener("mg-sitzung", function (e) {
     var an = !!(e.detail && e.detail.angemeldet);
-    if (an && !daten) location.reload();
-    if (!an && daten) { try { localStorage.removeItem("tresor"); } catch (x) {} location.reload(); }
+    if (an === angemeldetStand) return;
+    angemeldetStand = an;
+    if (!an) { try { localStorage.removeItem("tresor"); } catch (x) {} }
+    location.reload();
   });
 
   if ("serviceWorker" in navigator && location.protocol !== "file:") {
