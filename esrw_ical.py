@@ -1287,7 +1287,11 @@ def verarbeite_aenderungen(personen, alt, stand, eigene_slugs):
                 protokoll.append(eintrag)
     grenze = (stand - timedelta(days=14)).isoformat()
     protokoll = [e for e in protokoll if e.get("stand", "") >= grenze][-2000:]
-    if push or not os.path.exists(os.path.join(BASIS, protokoll_pfad)):
+    voll = os.path.join(BASIS, protokoll_pfad)
+    # Auch schreiben, wenn nur die Klartextfassung dasteht: so wandert sie
+    # beim ersten Lauf mit Schluessel in den Tresor, auch ohne Aenderungen.
+    umzug = bool(SCHLUESSEL) and os.path.exists(voll)
+    if push or umzug or not (os.path.exists(voll) or os.path.exists(voll + ".bin")):
         schreibe(protokoll_pfad, protokoll)
 
     return neu_state, neue, geaendert, entfallen
