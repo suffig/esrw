@@ -388,6 +388,31 @@ def test_saisonarchiv():
             E.BASIS = alt_basis
 
 
+def test_gespannwechsel():
+    """Wechselt ein Kollege, steht das als vorher/nachher im Protokoll -
+    aber nur, wenn das Gedaechtnis das alte Gespann schon kannte."""
+    print("\nGespannwechsel")
+    jetzt = {"treffpunkt": datetime(2026, 9, 10, 17, 0, tzinfo=timezone.utc),
+             "anstoss": datetime(2026, 9, 10, 18, 0, tzinfo=timezone.utc),
+             "ort": "Halle A, Weg 1", "titel": "HSR \u00b7 Spiel",
+             "gespann": [{"name": "Neu, Nina", "slug": "neu-nina", "rolle": "SR"}]}
+    basis = {"treffpunkt": "2026-09-10T17:00:00+00:00", "beginn": "2026-09-10T18:00:00+00:00",
+             "ort": "Halle A, Weg 1", "titel": "HSR \u00b7 Spiel"}
+    ohne = dict(basis)
+    pruefe(E.gespann_wechsel(ohne, jetzt) == ("", ""), "ohne Gedaechtnis kein Wechsel")
+    alt = dict(basis, gespann="SR:Alt, Anton")
+    raus, rein = E.gespann_wechsel(alt, jetzt)
+    pruefe(raus == "Alt, Anton (SR)" and rein == "Neu, Nina (SR)", "Wechsel mit vorher/nachher", str((raus, rein)))
+    gleich = dict(basis, gespann=E.gespann_kurz(jetzt))
+    pruefe(E.gespann_wechsel(gleich, jetzt) == ("", ""), "gleiches Gespann meldet nichts")
+    dazu = dict(basis, gespann="")
+    pruefe(E.gespann_wechsel(dazu, jetzt) == ("", "Neu, Nina (SR)"), "Kollege kommt dazu")
+    felder = E.aenderungs_details(alt, jetzt)
+    pruefe(any(f["feld"] == "Gespann" and f["vorher"] == "Alt, Anton (SR)" for f in felder),
+           "Gespann steht in den Details", str(felder))
+    pruefe("Gespann" in E.beschreibe_aenderung(alt, jetzt), "Kurztext nennt das Gespann")
+
+
 def test_korrektur_uid():
     """Eine Korrektur verschiebt Anstoss und Halle - Kennung und UID bleiben,
     damit im Kalender kein zweiter Termin entsteht."""
@@ -416,7 +441,7 @@ def main():
     for test in (test_parsen, test_hallen, test_namen, test_rollen, test_aliase,
                  test_konflikte, test_hash_migration, test_ausgaben, test_faltung,
                  test_escape, test_ics, test_saison, test_aenderungstext, test_saisonarchiv,
-                 test_korrektur_uid):
+                 test_korrektur_uid, test_gespannwechsel):
         test()
     print("\n" + "-" * 58)
     if FEHLER:

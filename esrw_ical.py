@@ -985,6 +985,41 @@ def inhalt_hash(titel, ort, treffpunkt_iso, rolle):
         _ohne_rolle(titel), ort, treffpunkt_iso, rolle)).encode("utf-8")).hexdigest()
 
 
+def gespann_kurz(termin):
+    """Das Gespann als kurze Zeile fuers Gedaechtnis: 'HSR:Muster, Max|SR:...'.
+    Sortiert, damit eine andere Reihenfolge auf esrw.de nicht als Wechsel
+    zaehlt. Der eigene Name steht nicht drin - nur die Kollegen."""
+    return "|".join(sorted(
+        "%s:%s" % (g.get("rolle") or "?", g.get("name") or "")
+        for g in (termin.get("gespann") or []) if g.get("name")))
+
+
+def _gespann_namen(teile):
+    """'HSR:Muster, Max' -> 'Muster, Max (HSR)' - so liest es sich in der App."""
+    aus = []
+    for t in teile:
+        rolle, _, name = t.partition(":")
+        aus.append("%s (%s)" % (name, rolle) if rolle and rolle != "?" else name)
+    return ", ".join(aus)
+
+
+def gespann_wechsel(vorher, jetzt):
+    """Wer ist raus, wer ist neu dabei? Gibt (raus, rein) als Klartext zurueck.
+    Kennt das Gedaechtnis das Gespann noch nicht (erster Lauf nach dem
+    Update), wird nichts gemeldet - sonst waere jedes Spiel einmal geaendert."""
+    alt = vorher.get("gespann")
+    if alt is None:
+        return "", ""
+    neu = gespann_kurz(jetzt)
+    if alt == neu:
+        return "", ""
+    alte = [t for t in alt.split("|") if t]
+    neue = [t for t in neu.split("|") if t]
+    raus = [t for t in alte if t not in neue]
+    rein = [t for t in neue if t not in alte]
+    return _gespann_namen(raus), _gespann_namen(rein)
+
+
 def aenderungs_details(vorher, jetzt):
     """Was genau sich geaendert hat: Feld, vorher, nachher - fuers Protokoll."""
     details = []
@@ -1007,6 +1042,9 @@ def aenderungs_details(vorher, jetzt):
         details.append({"feld": "Rolle", "vorher": alte_rolle, "nachher": neue_rolle})
     if vorher.get("titel") and _ohne_rolle(vorher["titel"]) != _ohne_rolle(jetzt["titel"]):
         details.append({"feld": "Ansetzung", "vorher": _ohne_rolle(vorher["titel"]), "nachher": _ohne_rolle(jetzt["titel"])})
+    raus, rein = gespann_wechsel(vorher, jetzt)
+    if raus or rein:
+        details.append({"feld": "Gespann", "vorher": raus or "noch offen", "nachher": rein or "niemand mehr"})
     return details
 
 
@@ -1026,14 +1064,44 @@ def beschreibe_aenderung(vorher, jetzt):
         teile.append("Rolle (vorher %s)" % alte_rolle)
     if vorher.get("titel") and _ohne_rolle(vorher["titel"]) != _ohne_rolle(jetzt["titel"]):
         teile.append("Ansetzung")
+    raus, rein = gespann_wechsel(vorher, jetzt)
+    if raus or rein:
+        teile.append("Gespann (vorher %s)" % raus if raus else "Gespann (jetzt mit %s)" % rein)
     return ", ".join(teile) or "Angaben angepasst"
+
+
+def _alte_markierung(vorher, jetzt, heute):
+    """Eine frische Aenderung bleibt MARKIERUNG_TAGE lang sichtbar, auch wenn
+    sich in diesem Lauf nichts mehr getan hat. Gibt das Datum zurueck - oder
+    None, wenn die Markierung abgelaufen ist."""
+    geaendert_am = vorher.get("geaendert_am")
+    if not geaendert_am:
+        return None
+    try:
+        alter = (heute - datetime.fromisoformat(geaendert_am).date()).days
+    except ValueError:
+        return None
+    if alter > MARKIERUNG_TAGE:
+        return None
+    jetzt["aenderung"] = vorher.get("aenderung", "Angaben angepasst")
+    return geaendert_am
+
+
+def _wechsel_text(termin):
+    """Kurztext fuer einen reinen Gespannwechsel."""
+    raus, rein = termin.get("gespann_wechsel") or ("", "")
+    if raus and rein:
+        return "Gespann: %s statt %s" % (rein, raus)
+    if rein:
+        return "Gespann: %s dazu" % rein
+    return "Gespann: %s nicht mehr dabei" % raus
 
 
 def verarbeite_aenderungen(personen, alt, stand, eigene_slugs):
     """Vergibt SEQUENCE, markiert frische Aenderungen und meldet, was fuer
     die eigenen Namen neu, geaendert oder entfallen ist."""
     neu_state, neue, geaendert, entfallen = {}, [], [], []
-    alle_neu, alle_geaendert, alle_entfallen = {}, {}, {}
+    alle_neu, alle_geaendert, alle_entfallen, alle_gespann = {}, {}, {}, {}
     heute = stand.date()
 
     for p in personen:
@@ -1061,6 +1129,8 @@ def verarbeite_aenderungen(personen, alt, stand, eigene_slugs):
                                             vorher.get("treffpunkt", ""), alte_rolle)
 
             korrektur_neu = (t.get("korrektur") or None) != (vorher.get("korrektur") or None) if vorher else False
+            raus, rein = gespann_wechsel(vorher, t) if vorher is not None else ("", "")
+            t["gespann_wechsel"] = (raus, rein)
             if vorher is None:
                 t["sequence"] = 0
                 if not t["vergangen"] and alt:
@@ -1084,6 +1154,15 @@ def verarbeite_aenderungen(personen, alt, stand, eigene_slugs):
                     alle_geaendert.setdefault(p["slug"], []).append(t)
                     if ist_eigen:
                         geaendert.append(t)
+            elif raus or rein:
+                # Nur das Gespann hat gewechselt: der Kalender bekommt die neue
+                # Beschreibung (SEQUENCE hoch), die App zeigt es unter
+                # Aenderungen - aber es gibt keinen Push. Sonst meldet sich das
+                # Handy, sobald esrw.de einen Kollegen nachtraegt.
+                t["sequence"] = vorher.get("sequence", 0) + 1
+                geaendert_am = _alte_markierung(vorher, t, heute)
+                if not t["vergangen"]:
+                    alle_gespann.setdefault(p["slug"], []).append(t)
             else:
                 t["sequence"] = vorher.get("sequence", 0)
                 geaendert_am = vorher.get("geaendert_am")
@@ -1094,15 +1173,7 @@ def verarbeite_aenderungen(personen, alt, stand, eigene_slugs):
                 except (KeyError, TypeError, ValueError):
                     pass
                 # Aenderung eine Woche lang sichtbar lassen
-                if geaendert_am:
-                    try:
-                        alter = (heute - datetime.fromisoformat(geaendert_am).date()).days
-                        if alter <= MARKIERUNG_TAGE:
-                            t["aenderung"] = vorher.get("aenderung", "Angaben angepasst")
-                        else:
-                            geaendert_am = None
-                    except ValueError:
-                        geaendert_am = None
+                geaendert_am = _alte_markierung(vorher, t, heute)
 
             neu_state[t["uid"]] = {
                 "inhalt": inhalt,
@@ -1116,6 +1187,7 @@ def verarbeite_aenderungen(personen, alt, stand, eigene_slugs):
                 "aenderung": t.get("aenderung"),
                 "stempel": t["stempel"].isoformat(),
                 "korrektur": t.get("korrektur") or None,
+                "gespann": gespann_kurz(t),
                 "id": t.get("id"),
             }
 
@@ -1136,7 +1208,7 @@ def verarbeite_aenderungen(personen, alt, stand, eigene_slugs):
     # Fuer den Push-Versand (push_senden.py, laeuft im Workflow danach):
     # je Person, was sich getan hat. Liegt nicht in docs/, wird nicht committet.
     push = {}
-    for slug in set(alle_neu) | set(alle_geaendert) | set(alle_entfallen):
+    for slug in set(alle_neu) | set(alle_geaendert) | set(alle_entfallen) | set(alle_gespann):
         push[slug] = {
             "neu": ["%s Uhr – %s" % (kurz_datum(t["anstoss"]), t["titel"]) for t in alle_neu.get(slug, [])],
             "geaendert": ["%s Uhr – %s (%s)" % (kurz_datum(t["anstoss"]), t["titel"], t.get("aenderung", ""))
@@ -1149,6 +1221,12 @@ def verarbeite_aenderungen(personen, alt, stand, eigene_slugs):
                 "geaendert": [{"kennung": t.get("id"), "text": "%s Uhr – %s" % (kurz_datum(t["anstoss"]), t["titel"]), "was": t.get("aenderung", ""),
                                "felder": t.get("aenderung_details") or [], "korrektur": bool(t.get("korrektur"))} for t in alle_geaendert.get(slug, [])],
                 "entfallen": [{"kennung": e.get("id") or (e.get("beginn", "") + "|" + _ohne_rolle(e.get("titel", "")).split(" · ", 1)[-1]), "text": "%s Uhr – %s" % (kurz_datum(datetime.fromisoformat(e["beginn"])), e.get("titel", "")), "halle": (e.get("ort") or "").split(",")[0]} for e in alle_entfallen.get(slug, [])],
+                # Gespannwechsel stehen nur im Protokoll (App), nicht im Push.
+                "gespann": [{"kennung": t.get("id"), "text": "%s Uhr \u2013 %s" % (kurz_datum(t["anstoss"]), t["titel"]),
+                             "was": _wechsel_text(t),
+                             "felder": [{"feld": "Gespann", "vorher": t["gespann_wechsel"][0] or "noch offen",
+                                         "nachher": t["gespann_wechsel"][1] or "niemand mehr"}]}
+                            for t in alle_gespann.get(slug, [])],
             },
         }
     schreibe("aenderungen.json", {"stand": stand.isoformat(), "personen": push})

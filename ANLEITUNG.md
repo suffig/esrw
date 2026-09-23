@@ -1351,6 +1351,34 @@ Spielseite). Mehrfachauswahl: Verpflegung 14 € setzen/entfernen, CSV.
 * **Stand-Pille aktualisiert**: Ein Tipp auf „Stand vor … Min.“ im Kopf lädt
   die Einteilungen neu.
 
+### 10.6z Änderungen mit Filter und Gespannwechsel, Leiste unten wählbar
+
+* **Gespannwechsel werden mitgeschrieben.** Tauscht esrw.de einen Kollegen
+  aus, steht das jetzt im Protokoll – „Gespann: Alt, Anton (SR) → Neu, Nina
+  (SR)“ –, ebenso wenn jemand dazukommt oder wegfällt. Zu sehen unter
+  Änderungen und im Änderungsverlauf auf der Spielseite. **Push gibt es dafür
+  bewusst nicht**: sonst meldet sich das Handy jedes Mal, wenn der Ansetzer
+  ein Gespann nach und nach füllt. Im Kalender steht das Gespann trotzdem
+  frisch, weil der Termin eine neue Fassung bekommt.
+* **Filter auf der Änderungsseite**: Meine Spiele / Alle Kollegen, dazu eine
+  Leiste mit Art und Anzahl (Alles, Neu, Geändert, Gespann, Abgesetzt,
+  Betreiber). Was es gerade nicht gibt, steht auch nicht da.
+* **Zeitraum und Sortierung**: 24 Stunden, 3, 7 oder 14 Tage; sortiert nach
+  Neueste zuerst, Älteste zuerst oder nach Spieltag (das nächste Spiel oben,
+  Vergangenes danach). Die Einstellung bleibt bis zum nächsten Besuch stehen.
+* **Suchfeld** über Name, Halle, Verein, Liga und die geänderten Felder;
+  „Teilen“ (bzw. „Kopieren“) gibt genau die gefilterte Liste als Text weiter.
+* **Neu seit deinem letzten Besuch**: frische Einträge sind hinterlegt, oben
+  steht, wie viele es sind, und die Kachel unter „Mehr“ zeigt „3 neu“ in Rot.
+* **Leiste unten wählbar** (Einstellungen → Leiste unten): Der dritte Platz
+  gehörte fest der Tauschbörse – die bei vielen aus ist. Jetzt steht dort, was
+  man wählt: Änderungen, Archiv, Mitfahren, Info, Verfügbar, Statistik,
+  Hallen oder Notizen. Start, Spielplan, Abrechnung und Mehr bleiben. Die
+  Wahl wandert über das Konto auf alle Geräte.
+* **Seitenköpfe mit Zeichen**: Änderungen, Archiv, Zusammen fahren,
+  Hallenkarte und Einstellungen haben oben ein Symbol, den Titel und eine
+  Zeile, was die Seite kann – man sieht auf einen Blick, wo man ist.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

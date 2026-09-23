@@ -678,7 +678,7 @@
   .profilzeile .avatar-gross { width:42px; height:42px; border-radius:50%; background:var(--akzent); color:#fff; font-weight:800; display:inline-flex; align-items:center; justify-content:center; flex:none; font-size:.9rem; }
   .profilzeile > span:first-child { display:flex; align-items:center; gap:10px; min-width:0; }
   .profilzeile > span:first-child > span { min-width:0; }
-  .profilzeile > span:first-child:not(:has(.avatar-gross)) { display:block; }
+  .profilzeile > span:first-child:not(:has(.avatar-gross)):not(:has(.kopf-i)) { display:block; }
   /* Jahresblatt (Steuer) */
   .jahresblatt table { width:100%; border-collapse:collapse; font-size:.8rem; }
   .jahresblatt th, .jahresblatt td { padding:5px 6px; border-bottom:1px solid var(--linie); text-align:left; vertical-align:top; }
@@ -718,6 +718,28 @@
   .tour-punkte i { width:7px; height:7px; border-radius:50%; background:var(--linie); }
   .tour-punkte i.aktiv { background:var(--akzent); width:18px; border-radius:4px; }
   @media (prefers-reduced-motion: reduce) { .tour-karte { animation:none; } }
+  /* Runde 15: Aenderungen mit Filter, Leiste unten waehlbar, Seitenkoepfe */
+  /* Kopf einer Unterseite: Zeichen, Titel, Zweck - in jeder Seite gleich */
+  .kopf-i { width:42px; height:42px; border-radius:14px; background:var(--akzent-hell); color:var(--akzent);
+            display:inline-flex; align-items:center; justify-content:center; flex:none; }
+  .kopf-i svg.i { width:1.3rem; height:1.3rem; }
+  /* Filterband: Chips scrollen quer, darunter Zeitraum/Sortierung und Suche */
+  .filterchips { display:flex; gap:6px; overflow-x:auto; padding:0 0 8px; scrollbar-width:none; }
+  .filterchips::-webkit-scrollbar { display:none; }
+  .filterchips .filterknopf { flex:none; }
+  .filterchips .filterknopf i { font-style:normal; font-size:.68rem; font-weight:800; background:var(--bg); color:var(--dim); border-radius:99px; padding:1px 6px; }
+  .filterchips .filterknopf.aktiv i { background:var(--akzent); color:var(--akzent-text); }
+  .filterzeile { display:flex; gap:8px; margin-bottom:8px; }
+  .filterzeile select, .filterzeile input { flex:1; min-width:0; font:inherit; padding:9px 10px; border-radius:12px;
+                                            border:1px solid var(--linie); background:var(--karte); color:var(--text); }
+  .aend-neu-hinweis { margin:2px 0 8px; font-size:.8rem; font-weight:700; color:var(--akzent); }
+  .protokoll .zeile.frisch { background:var(--akzent-hell); }
+  .protokoll .art.gespann { background:var(--sr-bg); color:var(--sr); }
+  .protokoll .art.angelegt, .protokoll .art.korrektur { background:var(--hsr-bg); color:var(--hsr); }
+  .kachel-zahl.frisch { background:var(--rot); color:#fff; }
+  /* Leiste unten: der aktive Platz bekommt einen Strich - sonst sieht man auf
+     kleinen Bildschirmen kaum, wo man ist */
+  .leiste button.aktiv { font-weight:800; }
   /* Runde 14: Reihenfolge, Gespann-Verlauf, Vollbild am Spieltag, dunkle Karte */
   .ordnung-zeile { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:8px 0; border-top:1px solid var(--linie); font-weight:600; }
   .ordnung-zeile:first-child { border-top:0; }
@@ -1015,10 +1037,10 @@
   .archiv-liste .zeile .text b { display:block; font-weight:700; }
   .archiv-liste .zeile .text small { display:block; color:var(--dim); }
   /* Aenderungsprotokoll: Vorher -> Nachher */
-  .protokoll .felder { display:block; margin-top:3px; }
-  .protokoll .felder span { display:inline-block; font-size:.78rem; background:var(--akzent-hell); color:var(--text); border-radius:8px; padding:2px 7px; margin:2px 4px 0 0; }
-  .protokoll .felder span b { font-weight:800; }
-  .protokoll .felder span s { color:var(--dim); }
+  .protokoll .felder, .verlauf .felder { display:block; margin-top:3px; }
+  .protokoll .felder span, .verlauf .felder span { display:inline-block; font-size:.78rem; background:var(--akzent-hell); color:var(--text); border-radius:8px; padding:2px 7px; margin:2px 4px 0 0; }
+  .protokoll .felder span b, .verlauf .felder span b { font-weight:800; }
+  .protokoll .felder span s, .verlauf .felder span s { color:var(--dim); }
   .verlauf { margin-top:6px; }
   .verlauf .eintrag { font-size:.85rem; padding:6px 0; border-top:1px solid var(--linie); }
   .verlauf .eintrag:first-child { border-top:0; }
@@ -1062,7 +1084,10 @@
   #konto-bereich .melde.karte { margin-bottom:12px; }
   .mg-monat .abgeschlossen { color:var(--gut, #1a7f37); font-weight:700; font-size:.82rem; }
   /* Abgeschaltete Funktionen (Admin -> Funktionen) */
-  html.ohne-tausch #tab-tausch, html.ohne-abrechnung #tab-abrechnung { display:none !important; }
+  /* Der dritte Platz haengt nicht mehr an der Tauschboerse - er zeigt, was
+     in den Einstellungen gewaehlt ist. Nur die Abrechnung verschwindet noch,
+     wenn der Betreiber sie abschaltet. */
+  html.ohne-abrechnung #tab-abrechnung { display:none !important; }
   #uebersicht .termine-karte { display:block; }
   #uebersicht .termine-karte .zahl { text-align:left; }
   #uebersicht .hinweis { text-decoration:none; color:inherit; margin-top:8px; }
@@ -1518,7 +1543,7 @@
   <!-- Einstellungen -->
   <section id="einstellungen" class="versteckt">
     <div class="profilzeile karte">
-      <span><b>Einstellungen</b><small>Konto, App, Startseite</small></span>
+      <span><span class="kopf-i"><svg class="i"><use href="#i-key"/></svg></span><span><b>Einstellungen</b><small>Konto, App, Startseite, Leiste</small></span></span>
       <button class="textknopf zurueck" id="einstellungen-zurueck"><svg class="i"><use href="#i-back"/></svg>Zurück</button>
     </div>
     <div class="sprungleiste versteckt" id="einstellungen-sprung"></div>
@@ -1538,6 +1563,8 @@
     <div class="karte einstellungen-liste" id="start-ordnung"></div>
     <h3 class="abschnitt">Schnellzugriff<small>Welche Knöpfe unter der Kopfkarte stehen</small></h3>
     <div class="karte einstellungen-liste" id="schnell-wahl"></div>
+    <h3 class="abschnitt">Leiste unten<small>Was auf dem dritten Platz steht – Start, Spielplan, Abrechnung und Mehr bleiben</small></h3>
+    <div class="karte einstellungen-liste" id="tab-wahl"></div>
     <h3 class="abschnitt">Bereiche<small>Was du nicht brauchst, blendest du für dich aus – nur auf deinen Geräten</small></h3>
     <div class="karte einstellungen-liste" id="bereiche"></div>
     <div id="adminzeile" class="versteckt"></div>
@@ -1547,7 +1574,7 @@
   <!-- Hallenkarte -->
   <section id="karte" class="versteckt">
     <div class="profilzeile karte">
-      <span><b>Hallenkarte</b><small id="karte-unter">alle Hallen aus den Einteilungen</small></span>
+      <span><span class="kopf-i"><svg class="i"><use href="#i-pin"/></svg></span><span><b>Hallenkarte</b><small id="karte-unter">alle Hallen aus den Einteilungen</small></span></span>
       <button class="textknopf zurueck" id="karte-zurueck"><svg class="i"><use href="#i-back"/></svg>Zurück</button>
     </div>
     <div id="karte-div" class="karte"></div>
@@ -1571,7 +1598,7 @@
   <!-- Zusammen fahren -->
   <section id="mitfahren" class="versteckt">
     <div class="profilzeile karte">
-      <span><b>Zusammen fahren</b><small>Wer fährt wohin – Mitfahrt anbieten oder suchen</small></span>
+      <span><span class="kopf-i"><svg class="i"><use href="#i-route"/></svg></span><span><b>Zusammen fahren</b><small>Wer fährt wohin – Mitfahrt anbieten oder suchen</small></span></span>
       <button class="textknopf zurueck" id="mitfahren-zurueck"><svg class="i"><use href="#i-back"/></svg>Zurück</button>
     </div>
     <div id="mitfahren-karte" class="karte versteckt" style="height:260px"></div>
@@ -1581,7 +1608,7 @@
   <!-- Archiv: alle Spiele einer Person, filterbar -->
   <section id="archiv" class="versteckt">
     <div class="profilzeile karte">
-      <span><b>Archiv</b><small id="archiv-unter">alle deine Spiele, alle Saisons</small></span>
+      <span><span class="kopf-i"><svg class="i"><use href="#i-clock"/></svg></span><span><b>Archiv</b><small id="archiv-unter">alle deine Spiele, alle Saisons</small></span></span>
       <button class="textknopf zurueck" id="archiv-zurueck"><svg class="i"><use href="#i-back"/></svg>Zurück</button>
     </div>
     <div class="karte archiv-filter">
@@ -1605,9 +1632,10 @@
   <!-- Aenderungsprotokoll -->
   <section id="aenderungen" class="versteckt">
     <div class="profilzeile karte">
-      <span><b>Änderungen</b><small>die letzten 14 Tage – Einteilungen, Korrekturen, angelegte Spiele</small></span>
+      <span><span class="kopf-i"><svg class="i"><use href="#i-bell"/></svg></span><span><b>Änderungen</b><small>Was sich getan hat – mit Vorher und Nachher</small></span></span>
       <button class="textknopf zurueck" id="aenderungen-zurueck"><svg class="i"><use href="#i-back"/></svg>Zurück</button>
     </div>
+    <div id="aenderungen-kopf"></div>
     <div id="aenderungen-liste"></div>
   </section>
 
@@ -1677,6 +1705,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=54"></script>
+<script src="app.js?v=55"></script>
 </body>
 </html>

@@ -74,6 +74,7 @@
     var vorher = JSON.stringify(funktionenLesen());
     funktionenStand = obj || {}; schreiben("funktionen", JSON.stringify(funktionenStand));
     FUNKTIONEN.forEach(function (f) { document.documentElement.classList.toggle("ohne-" + f[0], !funktion(f[0])); });
+    if (el("tab-tausch")) tabDritterAnwenden();
     if (neuZeichnen && vorher !== JSON.stringify(funktionenStand) && typeof ausHash === "function" && daten) ausHash();
   }
   function funktionenLaden() {
@@ -989,8 +990,8 @@
       var vb = karteAbschnitt("Änderungsverlauf"); var vl = document.createElement("div"); vl.className = "verlauf";
       meine.sort(function (a, b) { return a.stand < b.stand ? 1 : -1; }).forEach(function (e) {
         var z = document.createElement("div"); z.className = "eintrag";
-        var namen = { neu: "Neu eingeteilt", geaendert: "Geändert", entfallen: "Abgesetzt" };
-        var kopf = document.createElement("b"); kopf.textContent = (namen[e.art] || e.art) + (e.name ? " · " + e.name : "") + (e.quelle ? " · " + e.quelle : ""); z.appendChild(kopf);
+        var namen = { neu: "Neu eingeteilt", geaendert: "Geändert", gespann: "Gespann gewechselt", entfallen: "Abgesetzt" };
+        var kopf = document.createElement("b"); kopf.textContent = (namen[e.art] || AEND_NAMEN[e.art] || e.art) + (e.name ? " · " + e.name : "") + (e.quelle ? " · " + e.quelle : ""); z.appendChild(kopf);
         if (e.felder && e.felder.length) { var fl = document.createElement("span"); fl.className = "felder"; e.felder.forEach(function (f) { var sp = document.createElement("span"); var s1 = document.createElement("s"); s1.textContent = f.vorher; var b1 = document.createElement("b"); b1.textContent = f.nachher; sp.appendChild(document.createTextNode(f.feld + ": ")); sp.appendChild(s1); sp.appendChild(document.createTextNode(" → ")); sp.appendChild(b1); fl.appendChild(sp); }); z.appendChild(fl); }
         else if (e.was) { var w = document.createElement("div"); w.textContent = e.was; z.appendChild(w); }
         var d2 = new Date(e.stand); var sm = document.createElement("small"); sm.textContent = datumKurz(d2) + " " + uhr(d2) + " Uhr"; z.appendChild(sm);
@@ -2018,6 +2019,52 @@
     if (!stillesNachladen && sprungZiel === null) window.scrollTo(0, 0);
   }
 
+  // Der dritte Platz in der Leiste unten gehoert dem, was man wirklich
+  // braucht - Tausch ist bei vielen aus. Auswahl steht in den Einstellungen
+  // und wandert ueber das Konto mit.
+  var TAB_ZIELE = [
+    ["mitglieder/tausch", "i-swap", "Tausch", "tausch"],
+    ["aenderungen", "i-bell", "Änderungen"],
+    ["archiv", "i-clock", "Archiv"],
+    ["mitfahren", "i-route", "Mitfahren", "gespann"],
+    ["mitglieder/info", "i-bell", "Info", "info"],
+    ["mitglieder/frei", "i-cal", "Verfügbar", "frei"],
+    ["statistik", "i-users", "Statistik", "statistik"],
+    ["karte", "i-pin", "Hallen", "hallen"],
+    ["mitglieder/notizen", "i-note", "Notizen", "notizen"]
+  ];
+  function tabDritter() {
+    var w = lesen("tab3");
+    var gewaehlt = w && TAB_ZIELE.filter(function (t) { return t[0] === w; })[0];
+    if (gewaehlt && (!gewaehlt[3] || funktion(gewaehlt[3]))) return gewaehlt;
+    return funktion("tausch") ? TAB_ZIELE[0] : TAB_ZIELE[1];
+  }
+  function tabDritterAnwenden() {
+    var b = el("tab-tausch"); if (!b) return;
+    var t = tabDritter();
+    b._ziel = t[0];
+    b.innerHTML = "";
+    b.appendChild(ikone(t[1]));
+    b.appendChild(document.createTextNode(t[2]));
+    b.title = t[2];
+  }
+  function tabWahlRendern() {
+    var box = el("tab-wahl"); if (!box) return;
+    box.innerHTML = "";
+    var jetzt = tabDritter();
+    TAB_ZIELE.forEach(function (t) {
+      if (t[3] && !funktion(t[3])) return;
+      var l = document.createElement("label");
+      var s = document.createElement("span"); var b = document.createElement("b"); b.textContent = t[2]; b.style.display = "block"; s.appendChild(b);
+      var r = document.createElement("input"); r.type = "radio"; r.name = "tab3"; r.checked = jetzt[0] === t[0];
+      r.addEventListener("change", function () {
+        schreiben("tab3", t[0]); einstellungenSync(); tabDritterAnwenden(); ansicht(letzteAnsicht);
+        toast("„" + t[2] + "“ steht jetzt unten in der Leiste.", "gut");
+      });
+      l.appendChild(s); l.appendChild(r); box.appendChild(l);
+    });
+  }
+
   var SCHNELL_ZIELE = [
     ["#plan", "i-list", "Spielplan"],
     ["#mitglieder/abrechnung", "i-euro", "Abrechnung", "abrechnung"],
@@ -2205,7 +2252,9 @@
       }).catch(function () {});
   }
 
+  var letzteAnsicht = "auswahl";
   function ansicht(name) {
+    letzteAnsicht = name;
     ["auswahl", "detail", "plan", "mitglieder", "halle", "status", "spiel", "mehr", "einstellungen", "karte", "statseite", "aenderungen", "mitfahren", "archiv"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
     if (name !== "plan" && typeof filterBlatt === "function" && !el("plan-filter-blatt").classList.contains("versteckt")) filterBlatt(false);
     var reiter = (location.hash.split("/")[1] || "");
@@ -2213,9 +2262,12 @@
     else if (name === "detail" && el("neu")._offen) el("neu").classList.remove("versteckt");
     el("tab-meine").classList.toggle("aktiv", name === "auswahl" || name === "detail" || name === "spiel" || name === "statseite");
     el("tab-plan").classList.toggle("aktiv", name === "plan" || name === "halle");
-    el("tab-tausch").classList.toggle("aktiv", name === "mitglieder" && reiter === "tausch");
+    // Dritter Tab: passt sein Ziel gerade zur Ansicht?
+    var drei = (el("tab-tausch")._ziel || "").split("/");
+    var dreiAktiv = drei[0] === "mitglieder" ? (name === "mitglieder" && reiter === (drei[1] || "")) : name === (drei[0] === "statistik" ? "statseite" : drei[0]);
+    el("tab-tausch").classList.toggle("aktiv", !!dreiAktiv);
     el("tab-abrechnung").classList.toggle("aktiv", name === "mitglieder" && reiter === "abrechnung");
-    el("tab-mitglieder").classList.toggle("aktiv", name === "mehr" || name === "einstellungen" || name === "karte" || name === "status" || (name === "mitglieder" && reiter !== "tausch" && reiter !== "abrechnung"));
+    el("tab-mitglieder").classList.toggle("aktiv", !dreiAktiv && (name === "mehr" || name === "einstellungen" || name === "karte" || name === "status" || (name === "mitglieder" && reiter !== "tausch" && reiter !== "abrechnung")));
     Array.prototype.forEach.call(document.querySelectorAll(".leiste button"), function (b) {
       if (b.classList.contains("aktiv")) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
     });
@@ -2630,60 +2682,235 @@
   }
 
   // ------------------------------------------------ Aenderungsprotokoll
-  var aenderungenMeine = null;
+  // Filter, Sortierung und Suche liegen im Geraet - sie sollen beim naechsten
+  // Besuch noch stehen, gehoeren aber nicht ins Konto.
+  var AEND_NAMEN = { neu: "Neu", geaendert: "Geändert", gespann: "Gespann", entfallen: "Abgesetzt", korrektur: "Korrektur", abgesagt: "Abgesagt", angelegt: "Angelegt" };
+  var AEND_ARTEN = [["alle", "Alles"], ["neu", "Neu"], ["geaendert", "Geändert"], ["gespann", "Gespann"], ["entfallen", "Abgesetzt"], ["betreiber", "Betreiber"]];
+  var aendFilter = null, aendDaten = null, aendGesehen = 0;
+  function aendFilterLesen() {
+    if (aendFilter) return aendFilter;
+    aendFilter = { wer: "meine", art: "alle", tage: 14, sort: "neu", suche: "" };
+    try { var g = JSON.parse(lesen("aenderungen-filter") || "{}"); Object.keys(g || {}).forEach(function (k) { if (k in aendFilter) aendFilter[k] = g[k]; }); } catch (e) {}
+    aendFilter.suche = "";
+    if (!(profil && profil.slug)) aendFilter.wer = "alle";
+    return aendFilter;
+  }
+  function aendFilterMerken() {
+    var f = aendFilterLesen();
+    schreiben("aenderungen-filter", JSON.stringify({ wer: f.wer, art: f.art, tage: f.tage, sort: f.sort }));
+  }
+  function aendArt(e) { return e.art === "korrektur" || e.art === "abgesagt" || e.art === "angelegt" ? "betreiber" : e.art; }
+
   function zeigeAenderungen() {
     ansicht("aenderungen"); aktuell = null; window.scrollTo(0, 0);
-    var ziel = el("aenderungen-liste"); ziel.innerHTML = "";
-    if (aenderungenMeine === null) aenderungenMeine = !!(profil && profil.slug);
-    if (profil && profil.slug) {
-      var chips = document.createElement("div"); chips.className = "schnell"; chips.style.marginBottom = "10px";
-      [["Meine", true], ["Alle Kollegen", false]].forEach(function (c) { var b = document.createElement("button"); b.type = "button"; b.className = "filterknopf" + (aenderungenMeine === c[1] ? " aktiv" : ""); b.textContent = c[0]; b.addEventListener("click", function () { aenderungenMeine = c[1]; zeigeAenderungen(); }); chips.appendChild(b); });
-      ziel.appendChild(chips);
-    }
-    ziel.appendChild(skelettKarte(90));
+    var f = aendFilterLesen();
+    aendGesehen = parseInt(lesen("aenderungen-gesehen") || "0", 10) || 0;
+    aendKopfBauen();
+    var ziel = el("aenderungen-liste"); ziel.innerHTML = ""; ziel.appendChild(skelettKarte(90));
     Promise.all([hole("protokoll.json").catch(function () { return []; }), supabaseRest("spiel_korrekturen?select=kennung,halle,beginn,treffpunkt,hinweis,abgesagt,von,geaendert").catch(function () { return []; })])
       .then(function (r) {
         var eintraege = [];
+        function spielZu(kennung) { return kennung ? (daten.spiele || []).filter(function (x) { return kennungVon(x) === kennung; })[0] : null; }
         (r[0] || []).forEach(function (e) {
-          var s = e.kennung && (daten.spiele || []).filter(function (x) { return kennungVon(x) === e.kennung; })[0];
-          eintraege.push({ zeit: e.stand, art: e.art, titel: e.text, unter: e.name + (e.quelle ? " · " + e.quelle : "") + (e.art === "neu" && e.halle ? " · " + e.halle : ""), felder: e.felder || null, was: e.was || null, href: s ? "#spiel/" + encodeURIComponent(kennungVon(s)) : "#" + e.slug, slug: e.slug });
+          var s = spielZu(e.kennung);
+          eintraege.push({ zeit: e.stand, art: e.art, titel: e.text, wer: e.name, quelle: e.quelle || "",
+            halle: e.art === "neu" ? (e.halle || "") : "", felder: e.felder || null, was: e.was || null,
+            href: s ? "#spiel/" + encodeURIComponent(kennungVon(s)) : "#" + e.slug, slug: e.slug,
+            spiel: s ? new Date(s.beginn).getTime() : spielZeitAus(e.kennung) });
         });
         (r[1] || []).forEach(function (k) {
-          var s = (daten.spiele || []).filter(function (x) { return kennungVon(x) === k.kennung; })[0];
+          var s = spielZu(k.kennung);
           var teile = []; if (k.abgesagt) teile.push("abgesagt"); if (k.halle) teile.push("Halle: " + k.halle); if (k.beginn) teile.push("Anstoß " + uhr(new Date(k.beginn)) + " Uhr"); if (k.treffpunkt) teile.push("Treffpunkt " + uhr(new Date(k.treffpunkt)) + " Uhr"); if (k.hinweis) teile.push(k.hinweis);
           var d = s ? new Date(s.beginn) : (k.beginn ? new Date(k.beginn) : null);
-          eintraege.push({ zeit: k.geaendert, art: k.abgesagt ? "abgesagt" : "korrektur", titel: (s ? datumKurz(d) + " " + uhr(d) + " · " + (s.liga ? s.liga + ": " : "") + s.paarung : k.kennung.split("|")[1] || k.kennung) + " – " + teile.join(", "), unter: "Betreiber" + (k.von ? " (" + k.von + ")" : ""), href: s ? "#spiel/" + encodeURIComponent(kennungVon(s)) : null });
+          eintraege.push({ zeit: k.geaendert, art: k.abgesagt ? "abgesagt" : "korrektur",
+            titel: (s ? datumKurz(d) + " " + uhr(d) + " · " + (s.liga ? s.liga + ": " : "") + s.paarung : k.kennung.split("|")[1] || k.kennung) + " – " + teile.join(", "),
+            wer: "Betreiber" + (k.von ? " (" + k.von + ")" : ""), href: s ? "#spiel/" + encodeURIComponent(kennungVon(s)) : null,
+            spiel: d ? d.getTime() : 0 });
         });
         betreiber.spiele.forEach(function (z) {
           var d = new Date(z.beginn);
-          eintraege.push({ zeit: z.angelegt, art: "angelegt", titel: datumKurz(d) + " " + uhr(d) + " · " + (z.liga ? z.liga + ": " : "") + z.paarung + (z.halle ? " · " + z.halle : ""), unter: "Betreiber" + (z.von ? " (" + z.von + ")" : "") + (z.besetzung && z.besetzung.length ? " · " + z.besetzung.map(function (b) { return b.name; }).join(", ") : ""), href: "#spiel/" + encodeURIComponent("m:" + z.id) });
+          eintraege.push({ zeit: z.angelegt, art: "angelegt", titel: datumKurz(d) + " " + uhr(d) + " · " + (z.liga ? z.liga + ": " : "") + z.paarung + (z.halle ? " · " + z.halle : ""),
+            wer: "Betreiber" + (z.von ? " (" + z.von + ")" : ""), was: z.besetzung && z.besetzung.length ? "Gespann: " + z.besetzung.map(function (b) { return b.name; }).join(", ") : "",
+            href: "#spiel/" + encodeURIComponent("m:" + z.id), spiel: d.getTime() });
         });
-        var grenze = Date.now() - 14 * 86400000;
-        eintraege = eintraege.filter(function (e) { return e.zeit && new Date(e.zeit).getTime() >= grenze; });
-        if (aenderungenMeine && profil && profil.slug) eintraege = eintraege.filter(function (e) {
-          if (e.slug) return e.slug === profil.slug;
-          var kz = e.href && e.href.indexOf("#spiel/") === 0 ? decodeURIComponent(e.href.slice(7)) : null, sp = kz && (daten.spiele || []).filter(function (x) { return kennungVon(x) === kz; })[0];
-          return !!(sp && (sp.besetzung || []).some(function (b) { return b.slug === profil.slug; }));
-        });
-        eintraege.sort(function (a, b) { return a.zeit < b.zeit ? 1 : -1; });
-        var sk = ziel.querySelector(".skelett-karte"); if (sk) sk.remove();
-        if (!eintraege.length) { ziel.appendChild(leerZustand(aenderungenMeine ? "Bei deinen Spielen hat sich in 14 Tagen nichts geändert." : "In den letzten 14 Tagen hat sich nichts geändert.", aenderungenMeine ? { label: "Alle Kollegen zeigen", fn: function () { aenderungenMeine = false; zeigeAenderungen(); } } : { label: "Zum Spielplan", href: "#plan" })); return; }
-        var tag = null, box = null, namen = { neu: "Neu", geaendert: "Geändert", entfallen: "Abgesetzt", korrektur: "Korrektur", abgesagt: "Abgesagt", angelegt: "Angelegt" };
-        eintraege.forEach(function (e) {
-          var d = new Date(e.zeit), t = d.toDateString();
-          if (t !== tag) { tag = t; var hh = document.createElement("div"); hh.className = "protokoll-tag"; hh.textContent = tagTitel(d)[0] + " · " + datumKurz(d); ziel.appendChild(hh); box = document.createElement("div"); box.className = "karte protokoll"; ziel.appendChild(box); }
-          var z = document.createElement(e.href ? "a" : "div"); z.className = "zeile"; if (e.href) z.href = e.href;
-          var art = document.createElement("span"); art.className = "art " + e.art; art.textContent = namen[e.art] || e.art; z.appendChild(art);
-          var txt = document.createElement("span"); txt.style.minWidth = "0"; txt.appendChild(document.createTextNode(e.titel));
-          if (e.felder && e.felder.length) {
-            var fl = document.createElement("span"); fl.className = "felder";
-            e.felder.forEach(function (f) { var sp = document.createElement("span"); var s1 = document.createElement("s"); s1.textContent = f.vorher; var b1 = document.createElement("b"); b1.textContent = f.nachher; sp.appendChild(document.createTextNode(f.feld + ": ")); sp.appendChild(s1); sp.appendChild(document.createTextNode(" → ")); sp.appendChild(b1); fl.appendChild(sp); });
-            txt.appendChild(fl);
-          } else if (e.was) { var w1 = document.createElement("span"); w1.className = "felder"; var w2 = document.createElement("span"); w2.textContent = e.was; w1.appendChild(w2); txt.appendChild(w1); }
-          var sm = document.createElement("small"); sm.textContent = e.unter + " · " + uhr(d) + " Uhr"; txt.appendChild(sm); z.appendChild(txt);
-          box.appendChild(z);
-        });
+        eintraege = eintraege.filter(function (e) { return !!e.zeit; });
+        aendDaten = eintraege;
+        aendKopfBauen(); aendRendern();
+        // Erst nach dem Rendern merken, damit "neu seit dem letzten Besuch"
+        // diesmal noch zu sehen ist.
+        schreiben("aenderungen-gesehen", String(Date.now()));
       });
+  }
+  // Ohne Spiel in den Daten: die Kennung faengt mit dem Datum an
+  function spielZeitAus(kennung) { var t = kennung && Date.parse(String(kennung).split("|")[0]); return t || 0; }
+
+  function aendMeins(e) {
+    if (!(profil && profil.slug)) return true;
+    if (e.slug) return e.slug === profil.slug;
+    var kz = e.href && e.href.indexOf("#spiel/") === 0 ? decodeURIComponent(e.href.slice(7)) : null;
+    var sp = kz && (daten.spiele || []).filter(function (x) { return kennungVon(x) === kz; })[0];
+    return !!(sp && (sp.besetzung || []).some(function (b) { return b.slug === profil.slug; }));
+  }
+  function aendGefiltert(ohneArt) {
+    var f = aendFilterLesen(), grenze = Date.now() - f.tage * 86400000;
+    var suche = f.suche.trim().toLowerCase();
+    return (aendDaten || []).filter(function (e) {
+      if (new Date(e.zeit).getTime() < grenze) return false;
+      if (f.wer === "meine" && !aendMeins(e)) return false;
+      if (!ohneArt && f.art !== "alle" && aendArt(e) !== f.art) return false;
+      if (suche) {
+        var heu = (e.titel + " " + (e.wer || "") + " " + (e.was || "") + " " +
+          (e.felder || []).map(function (x) { return x.feld + " " + x.vorher + " " + x.nachher; }).join(" ")).toLowerCase();
+        if (heu.indexOf(suche) < 0) return false;
+      }
+      return true;
+    });
+  }
+
+  function aendKopfBauen() {
+    var kopf = el("aenderungen-kopf"); if (!kopf) return;
+    var f = aendFilterLesen();
+    kopf.innerHTML = "";
+    // Wer: nur sinnvoll, wenn ein Profil gewaehlt ist
+    if (profil && profil.slug) {
+      var wer = document.createElement("div"); wer.className = "filterchips";
+      [["meine", "Meine Spiele"], ["alle", "Alle Kollegen"]].forEach(function (c) {
+        var b = document.createElement("button"); b.type = "button"; b.className = "filterknopf" + (f.wer === c[0] ? " aktiv" : ""); b.textContent = c[1];
+        b.addEventListener("click", function () { f.wer = c[0]; aendFilterMerken(); aendKopfBauen(); aendRendern(); });
+        wer.appendChild(b);
+      });
+      kopf.appendChild(wer);
+    }
+    // Art mit Zahlen - was es nicht gibt, steht auch nicht da
+    var zahlen = {}; aendGefiltert(true).forEach(function (e) { var a = aendArt(e); zahlen[a] = (zahlen[a] || 0) + 1; zahlen.alle = (zahlen.alle || 0) + 1; });
+    var arten = document.createElement("div"); arten.className = "filterchips";
+    AEND_ARTEN.forEach(function (a) {
+      if (!zahlen[a[0]] && a[0] !== "alle" && f.art !== a[0]) return;
+      var b = document.createElement("button"); b.type = "button"; b.className = "filterknopf" + (f.art === a[0] ? " aktiv" : "");
+      b.appendChild(document.createTextNode(a[1]));
+      var z = document.createElement("i"); z.textContent = zahlen[a[0]] || 0; b.appendChild(z);
+      b._art = a[0];
+      b.addEventListener("click", function () { f.art = a[0]; aendFilterMerken(); aendKopfBauen(); aendRendern(); });
+      arten.appendChild(b);
+    });
+    kopf.appendChild(arten);
+    // Zeitraum, Sortierung, Suche
+    var zeile = document.createElement("div"); zeile.className = "filterzeile";
+    function wahl(wert, punkte, fn) {
+      var s = document.createElement("select");
+      punkte.forEach(function (p) { var o = document.createElement("option"); o.value = String(p[0]); o.textContent = p[1]; if (String(p[0]) === String(wert)) o.selected = true; s.appendChild(o); });
+      s.addEventListener("change", function () { fn(s.value); aendFilterMerken(); aendKopfBauen(); aendRendern(); });
+      return s;
+    }
+    zeile.appendChild(wahl(f.tage, [[1, "24 Stunden"], [3, "3 Tage"], [7, "7 Tage"], [14, "14 Tage"]], function (v) { f.tage = parseInt(v, 10); }));
+    zeile.appendChild(wahl(f.sort, [["neu", "Neueste zuerst"], ["alt", "Älteste zuerst"], ["spieltag", "Nach Spieltag"]], function (v) { f.sort = v; }));
+    kopf.appendChild(zeile);
+    var such = document.createElement("div"); such.className = "filterzeile";
+    var si = document.createElement("input"); si.type = "search"; si.placeholder = "Name, Halle, Verein, Liga …"; si.value = f.suche; si.className = "aend-suche";
+    si.addEventListener("input", function () { f.suche = si.value; aendZahlen(); aendRendern(); });
+    such.appendChild(si);
+    // Was gerade gefiltert ist, laesst sich weitergeben - fuer die Gruppe oder
+    // den Obmann, ohne Screenshot.
+    var kn = document.createElement("button"); kn.type = "button"; kn.className = "filterknopf"; kn.style.flex = "none";
+    kn.textContent = navigator.share ? "Teilen" : "Kopieren";
+    kn.addEventListener("click", aendTeilen);
+    such.appendChild(kn);
+    kopf.appendChild(such);
+  }
+
+  // Tagesueberschrift: "Heute", "Gestern" oder das Datum - aber nie beides
+  function tagKopf(d) { var t = tagTitel(d); return t[1] ? t[0] + " · " + datumKurz(d) : t[0]; }
+  function aendTeilen() {
+    var liste = aendGefiltert(false);
+    if (!liste.length) { toast("Nichts zum Weitergeben.", "warn"); return; }
+    var text = liste.map(function (e) {
+      var d = new Date(e.zeit);
+      var was = e.felder && e.felder.length
+        ? e.felder.map(function (x) { return x.feld + ": " + x.vorher + " → " + x.nachher; }).join(", ")
+        : (e.was || "");
+      return (AEND_NAMEN[e.art] || e.art) + " · " + e.titel + (was ? "\n   " + was : "") + "\n   " + datumKurz(d) + " " + uhr(d) + " Uhr";
+    }).join("\n");
+    var titel = liste.length + (liste.length === 1 ? " Änderung" : " Änderungen");
+    if (navigator.share) navigator.share({ title: titel, text: titel + "\n" + text }).catch(function () {});
+    else if (navigator.clipboard) navigator.clipboard.writeText(titel + "\n" + text).then(function () { toast("Liste kopiert ✓", "gut"); }).catch(function () {});
+  }
+  function aendZahlen() {
+    var kopf = el("aenderungen-kopf"); if (!kopf) return;
+    var zahlen = {}; aendGefiltert(true).forEach(function (e) { var a = aendArt(e); zahlen[a] = (zahlen[a] || 0) + 1; zahlen.alle = (zahlen.alle || 0) + 1; });
+    Array.prototype.forEach.call(kopf.querySelectorAll(".filterknopf"), function (b) {
+      var i = b.querySelector("i"); if (i && b._art) i.textContent = zahlen[b._art] || 0;
+    });
+  }
+  function aendRendern() {
+    var ziel = el("aenderungen-liste"); if (!ziel) return;
+    var f = aendFilterLesen();
+    ziel.innerHTML = "";
+    var liste = aendGefiltert(false);
+    if (!liste.length) {
+      var alles = (aendDaten || []).length;
+      ziel.appendChild(leerZustand(
+        alles ? "Mit diesen Filtern ist nichts dabei." : "In den letzten 14 Tagen hat sich nichts geändert.",
+        alles ? { label: "Filter zurücksetzen", fn: function () { aendFilter = { wer: profil && profil.slug ? "meine" : "alle", art: "alle", tage: 14, sort: "neu", suche: "" }; aendFilterMerken(); aendKopfBauen(); aendRendern(); } }
+              : { label: "Zum Spielplan", href: "#plan" }));
+      return;
+    }
+    // Nach Spieltag: was noch kommt zuerst (naechstes Spiel oben), Vergangenes
+    // danach - und ohne erkennbaren Spieltag ganz unten.
+    if (f.sort === "spieltag") liste.sort(function (a, b) {
+      var jetzt = Date.now(), av = a.spiel || 0, bv = b.spiel || 0;
+      var ar = av ? (av >= jetzt ? 0 : 1) : 2, br = bv ? (bv >= jetzt ? 0 : 1) : 2;
+      if (ar !== br) return ar - br;
+      if (ar === 0) return av - bv;
+      return bv - av || (a.zeit < b.zeit ? 1 : -1);
+    });
+    else liste.sort(function (a, b) { return f.sort === "alt" ? (a.zeit < b.zeit ? -1 : 1) : (a.zeit < b.zeit ? 1 : -1); });
+    var neue = liste.filter(function (e) { return aendGesehen && new Date(e.zeit).getTime() > aendGesehen; }).length;
+    if (neue) {
+      var hin = document.createElement("div"); hin.className = "aend-neu-hinweis";
+      hin.textContent = neue === 1 ? "1 Eintrag ist neu seit deinem letzten Besuch" : neue + " Einträge sind neu seit deinem letzten Besuch";
+      ziel.appendChild(hin);
+    }
+    var gruppe = null, box = null;
+    liste.forEach(function (e) {
+      var d = new Date(e.zeit);
+      var titel, schluessel;
+      if (f.sort === "spieltag") {
+        var sd = e.spiel ? new Date(e.spiel) : null;
+        schluessel = sd ? sd.toDateString() : "ohne";
+        titel = sd ? "Spieltag " + tagKopf(sd) : "Ohne Spieltag";
+      } else { schluessel = d.toDateString(); titel = tagKopf(d); }
+      if (schluessel !== gruppe) {
+        gruppe = schluessel;
+        var hh = document.createElement("div"); hh.className = "protokoll-tag"; hh.textContent = titel; ziel.appendChild(hh);
+        box = document.createElement("div"); box.className = "karte protokoll"; ziel.appendChild(box);
+      }
+      box.appendChild(aendZeile(e, d));
+    });
+  }
+
+  function aendZeile(e, d) {
+    var z = document.createElement(e.href ? "a" : "div"); z.className = "zeile";
+    if (e.href) z.href = e.href;
+    if (aendGesehen && d.getTime() > aendGesehen) z.classList.add("frisch");
+    var art = document.createElement("span"); art.className = "art " + e.art; art.textContent = AEND_NAMEN[e.art] || e.art; z.appendChild(art);
+    var txt = document.createElement("span"); txt.style.minWidth = "0";
+    txt.appendChild(document.createTextNode(e.titel));
+    if (e.felder && e.felder.length) {
+      var fl = document.createElement("span"); fl.className = "felder";
+      e.felder.forEach(function (f) {
+        var sp = document.createElement("span");
+        var s1 = document.createElement("s"); s1.textContent = f.vorher;
+        var b1 = document.createElement("b"); b1.textContent = f.nachher;
+        sp.appendChild(document.createTextNode(f.feld + ": "));
+        sp.appendChild(s1); sp.appendChild(document.createTextNode(" → ")); sp.appendChild(b1);
+        fl.appendChild(sp);
+      });
+      txt.appendChild(fl);
+    } else if (e.was) { var w1 = document.createElement("span"); w1.className = "felder"; var w2 = document.createElement("span"); w2.textContent = e.was; w1.appendChild(w2); txt.appendChild(w1); }
+    var sm = document.createElement("small");
+    sm.textContent = [e.wer, e.quelle, e.halle, uhr(d) + " Uhr"].filter(Boolean).join(" · ");
+    txt.appendChild(sm); z.appendChild(txt);
+    return z;
   }
   function skelettKarte(hoehe) { var d = document.createElement("div"); d.className = "skelett-karte"; d.style.height = hoehe + "px"; return d; }
 
@@ -2871,13 +3098,23 @@
         return !(profil && profil.slug) || e.slug === profil.slug;
       }).length;
       setze("#aenderungen", meine ? meine + (meine === 1 ? " Änderung" : " Änderungen") : "");
+      // Was seit dem letzten Besuch dazugekommen ist, faellt auf
+      var gesehen = parseInt(lesen("aenderungen-gesehen") || "0", 10) || 0;
+      if (!gesehen) return;
+      var frisch = (pl || []).filter(function (e) {
+        if (!e.stand || new Date(e.stand).getTime() <= gesehen) return false;
+        return !(profil && profil.slug) || e.slug === profil.slug;
+      }).length;
+      var a = Array.prototype.filter.call(liste.querySelectorAll("a"), function (x) { return x._ziel === "#aenderungen"; })[0];
+      var p = a && a.querySelector(".kachel-zahl");
+      if (frisch && p) { p.textContent = frisch + " neu"; p.classList.add("frisch"); }
     }).catch(function () {});
   }
 
   function zeigeEinstellungen() {
     ansicht("einstellungen"); aktuell = null; window.scrollTo(0, 0);
-    bereicheRendern(); startBausteineRendern(); startOrdnungRendern(); schnellWahlRendern(); pushVerlaufRendern(); adminZeileRendern();
-    setTimeout(function () { sprungleiste("einstellungen-sprung", "einstellungen", [["konto-bereich", "Konto"], ["karten-app", "App"], ["start-bausteine", "Startseite"], ["start-ordnung", "Reihenfolge"], ["schnell-wahl", "Schnellzugriff"], ["bereiche", "Bereiche"], ["adminzeile", "Betreiber"], ["push-verlauf", "Gemeldet"]]); }, 400);
+    bereicheRendern(); startBausteineRendern(); startOrdnungRendern(); schnellWahlRendern(); tabWahlRendern(); pushVerlaufRendern(); adminZeileRendern();
+    setTimeout(function () { sprungleiste("einstellungen-sprung", "einstellungen", [["konto-bereich", "Konto"], ["karten-app", "App"], ["start-bausteine", "Startseite"], ["start-ordnung", "Reihenfolge"], ["schnell-wahl", "Schnellzugriff"], ["tab-wahl", "Leiste"], ["bereiche", "Bereiche"], ["adminzeile", "Betreiber"], ["push-verlauf", "Gemeldet"]]); }, 400);
     var kb = el("konto-bereich"); kb.innerHTML = "";
     if (!sitzungVorhanden()) {
       var k = document.createElement("a"); k.href = "#mitglieder"; k.className = "hinweis"; k.style.display = "flex"; k.style.textDecoration = "none"; k.style.color = "inherit"; k.style.marginBottom = "12px";
@@ -3233,7 +3470,7 @@
     });
   }
   function einstellungenSammeln() {
-    return { karten: lesen("karten") || null, schrift: lesen("schrift") || null, akzent: lesen("akzent") || null, kompakt: lesen("kompakt") || null, ziel: lesen("ziel") || null, start: lesen("start") || null, bereiche: lesen("bereiche") || null, pushwoche: lesen("pushwoche") || null, pushabrechnung: lesen("pushabrechnung") || null, "schnell-aus": lesen("schnell-aus") || null, "start-ordnung": lesen("start-ordnung") || null };
+    return { karten: lesen("karten") || null, schrift: lesen("schrift") || null, akzent: lesen("akzent") || null, kompakt: lesen("kompakt") || null, ziel: lesen("ziel") || null, start: lesen("start") || null, bereiche: lesen("bereiche") || null, pushwoche: lesen("pushwoche") || null, pushabrechnung: lesen("pushabrechnung") || null, "schnell-aus": lesen("schnell-aus") || null, "start-ordnung": lesen("start-ordnung") || null, tab3: lesen("tab3") || null };
   }
   var syncTimer = null;
   function einstellungenSync() {
@@ -3246,7 +3483,7 @@
   function einstellungenAnwenden(e) {
     if (!e) return;
     var geaendert = false;
-    ["karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche", "pushwoche", "pushabrechnung", "schnell-aus", "start-ordnung"].forEach(function (k) { if ((lesen(k) || null) !== (e[k] || null)) { schreiben(k, e[k] || null); geaendert = true; } });
+    ["karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche", "pushwoche", "pushabrechnung", "schnell-aus", "start-ordnung", "tab3"].forEach(function (k) { if ((lesen(k) || null) !== (e[k] || null)) { schreiben(k, e[k] || null); geaendert = true; } });
     if (geaendert) { einstellungenLaden(true); themaAnwenden(); funktionenAnwenden(funktionenLesen()); toast("Einstellungen vom Konto übernommen", ""); if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true); }
   }
   document.addEventListener("mg-profil", function (e) {
@@ -3299,7 +3536,7 @@
   el("archiv-suche").addEventListener("change", function () { archivSucheMerken(el("archiv-suche").value); });
   el("archiv-alle").addEventListener("change", function () { el("archiv-person").classList.toggle("versteckt", !el("archiv-alle").checked); zeigeArchiv(el("archiv-alle").checked ? "alle" : ""); });
   el("mitfahren-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
-  el("tab-tausch").addEventListener("click", function () { location.hash = "mitglieder/tausch"; });
+  el("tab-tausch").addEventListener("click", function () { location.hash = el("tab-tausch")._ziel || "mitglieder/tausch"; });
   el("tab-abrechnung").addEventListener("click", function () { location.hash = "mitglieder/abrechnung"; });
   el("tab-mitglieder").addEventListener("click", function () { location.hash = "mehr"; });
   el("spiel-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = ""; });

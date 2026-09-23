@@ -320,6 +320,14 @@ packt daten.json, abrechnung.csv, notizen.txt und alle Belege im Browser
 zusammen; Kartenkacheln im Dunkelmodus abgedunkelt; „Am Spieltag groß“ macht
 die Kopfkarte am Spieltag bildschirmfüllend; Tipp auf die Stand-Pille lädt neu.
 
+**Änderungen mit Filter, Gespannwechsel, wählbare Leiste**: Das Protokoll
+merkt sich das Gespann und zeigt Wechsel als „vorher X → jetzt Y“ (ohne Push,
+damit ein nach und nach gefülltes Gespann nicht dauernd meldet). Die
+Änderungsseite filtert nach Wer, Art (mit Anzahl), Zeitraum und Suchtext,
+sortiert nach neu, alt oder Spieltag, markiert alles seit dem letzten Besuch
+und gibt die gefilterte Liste als Text weiter. Der dritte Platz in der Leiste
+unten ist unter Einstellungen → Leiste unten frei wählbar.
+
 **Archiv-Seite & Änderungen mit Details**: Mehr → Archiv (alle Saisons,
 Filter, Admin sieht alle); Änderungen zeigen Feld vorher → nachher, Spielseite
 mit Änderungsverlauf.
