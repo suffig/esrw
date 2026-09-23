@@ -5,7 +5,7 @@
  * Parkhaus, Zug - kommt die zuletzt gespeicherte Fassung zum Zug.
  */
 
-const VERSION = "v53";
+const VERSION = "v54";
 const CACHE = "einteilungen-" + VERSION;
 
 // Wird beim ersten Besuch gespeichert, damit die App auch dann startet,
@@ -13,9 +13,13 @@ const CACHE = "einteilungen-" + VERSION;
 const GRUNDGERUEST = [
   "./",
   "./index.html",
+  // Die Daten liegen verschluesselt (Tresor); die Klartext-Namen bleiben
+  // fuer den Fall, dass noch kein Schluessel eingerichtet ist.
+  "./daten.json.bin",
+  "./archiv.json.bin",
   "./daten.json",
-  "./stand.json",
   "./archiv.json",
+  "./stand.json",
   "./app.js",
   "./mitglieder.js",
   "./rechnung.js",

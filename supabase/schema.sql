@@ -886,3 +886,34 @@ create policy "Archiv lesen" on public.spiele_archiv for select to authenticated
 --
 -- Erwartet mit anon: funktionen, spiel_korrekturen, spiele_manuell,
 -- hallen_extra, vereine_extra, hallen_notizen (nur offiziell).
+
+-- ======================================================================
+-- v21: Tresor - Schluessel fuer die verschluesselten Daten
+-- ======================================================================
+-- Die Dateien in docs/ (daten.json, archiv.json, protokoll.json, die
+-- Saison-Dateien) liegen nur noch als .bin dort: AES-256-GCM. Den
+-- Schluessel bekommt die App hier - und diese Tabelle liest nur, wer
+-- freigeschaltet ist. Ohne Anmeldung ist an den Daten nichts zu holen,
+-- auch nicht ueber die Adresse der Datei.
+--
+-- Einen Schluessel erzeugen:   python tresor.py --neu
+-- Denselben Wert eintragen als GitHub-Secret DATEN_SCHLUESSEL und hier:
+create table if not exists public.tresor (
+  id         integer primary key default 1,
+  schluessel text not null,
+  geaendert  timestamptz not null default now(),
+  constraint tresor_nur_eine_zeile check (id = 1)
+);
+alter table public.tresor enable row level security;
+drop policy if exists "Tresor lesen"  on public.tresor;
+drop policy if exists "Admin pflegt Tresor" on public.tresor;
+create policy "Tresor lesen"        on public.tresor for select to authenticated using (public.ist_freigeschaltet());
+create policy "Admin pflegt Tresor" on public.tresor for all    to authenticated using (public.ist_admin()) with check (public.ist_admin());
+
+-- insert into public.tresor (id, schluessel) values (1, 'HIER_DER_WERT')
+--   on conflict (id) do update set schluessel = excluded.schluessel, geaendert = now();
+--
+-- Schluessel wechseln: neuen Wert erzeugen, hier eintragen, als Secret
+-- hinterlegen - beim naechsten Lauf werden die Dateien damit geschrieben.
+-- Die App merkt am fehlgeschlagenen Entschluesseln, dass sie den neuen
+-- Schluessel holen muss.

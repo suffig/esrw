@@ -20,6 +20,7 @@ Nur Standardbibliothek, keine Installation noetig.
 
 import argparse
 import hashlib
+import tresor
 import html
 import json
 import os
@@ -54,17 +55,45 @@ MARKIERUNG_TAGE = 7
 
 # ---------------------------------------------------------------- Hilfsmittel
 
+# Daten mit Namen und Einteilungen liegen verschluesselt; ohne Schluessel
+# (Umgebungsvariable DATEN_SCHLUESSEL) laeuft alles wie frueher im Klartext.
+SCHLUESSEL = tresor.schluessel()
+# Diese Dateien sind persoenlich - sie gehen in den Tresor.
+GEHEIM = {"state.json", "historie.json", "aenderungen.json",
+          os.path.join("docs", "protokoll.json"), os.path.join("docs", "daten.json"),
+          os.path.join("docs", "archiv.json")}
+
+
+def _geheim(pfad):
+    p = pfad.replace("/", os.sep)
+    return p in GEHEIM or (p.startswith(os.path.join("docs", "archiv") + os.sep) and p.endswith(".json")
+                           and not p.endswith("index.json"))
+
+
 def lade(pfad, standard=None):
     voll = os.path.join(BASIS, pfad)
+    if _geheim(pfad):
+        wert = tresor.json_lesen(voll, SCHLUESSEL, None)
+        if wert is not None:
+            return wert
+        if standard is not None:
+            return standard
+        raise FileNotFoundError(pfad)
     if standard is not None and not os.path.exists(voll):
         return standard
     with open(voll, encoding="utf-8") as f:
         return json.load(f)
 
 
-def schreibe(pfad, inhalt):
-    with open(os.path.join(BASIS, pfad), "w", encoding="utf-8") as f:
-        json.dump(inhalt, f, ensure_ascii=False, indent=1, sort_keys=True)
+def schreibe(pfad, inhalt, **json_args):
+    voll = os.path.join(BASIS, pfad)
+    if not json_args:
+        json_args = {"indent": 1, "sort_keys": True}
+    if _geheim(pfad):
+        tresor.json_schreiben(voll, inhalt, SCHLUESSEL, **json_args)
+        return
+    with open(voll, "w", encoding="utf-8") as f:
+        json.dump(inhalt, f, ensure_ascii=False, **json_args)
 
 
 def hole(url, versuche=3):
@@ -415,11 +444,11 @@ def saisonarchiv_laden():
     if not os.path.isdir(ordner):
         return alt
     for name in sorted(os.listdir(ordner)):
-        if not name.endswith(".json") or name == "index.json":
+        if name == "index.json" or not (name.endswith(".json") or name.endswith(".json.bin")):
             continue
         try:
-            with open(os.path.join(ordner, name), encoding="utf-8") as f:
-                inhalt = json.load(f)
+            inhalt = tresor.json_lesen(os.path.join(ordner, name[:-4] if name.endswith(".bin") else name),
+                                       SCHLUESSEL, None) or {}
         except (OSError, ValueError):
             continue
         for z in inhalt.get("spiele", []):
@@ -453,32 +482,41 @@ def saisonarchiv_einfrieren(historie, personen, stand):
     for saison, eintraege in je_saison.items():
         pfad = os.path.join(BASIS, saison_datei(saison))
         vorhanden = {}
-        if os.path.exists(pfad):
-            try:
-                with open(pfad, encoding="utf-8") as f:
-                    vorhanden = {z[0] + "|" + z[2]: z for z in json.load(f).get("spiele", [])}
-            except (OSError, ValueError):
-                vorhanden = {}
+        try:
+            inhalt = tresor.json_lesen(pfad, SCHLUESSEL, None) or {}
+            vorhanden = {z[0] + "|" + z[2]: z for z in inhalt.get("spiele", [])}
+        except (OSError, ValueError):
+            vorhanden = {}
         for kennung, e in eintraege:
             bes = [[n, schluessel_slug.get(personen_schluessel(n)) or slug_aus(n), r]
                    for n, r in rollen_fuer(e.get("besetzung") or {})]
             vorhanden[e["beginn"] + "|" + e.get("paarung", "")] = [e["beginn"], e.get("liga", ""), e.get("paarung", ""), e.get("halle", ""), bes]
             del historie[kennung]
         zeilen = sorted(vorhanden.values(), key=lambda z: z[0])
-        with open(pfad, "w", encoding="utf-8") as f:
-            json.dump({"saison": saison, "stand": stand.isoformat(), "spiele": zeilen}, f, ensure_ascii=False, separators=(",", ":"))
+        tresor.json_schreiben(pfad, {"saison": saison, "stand": stand.isoformat(), "spiele": zeilen},
+                              SCHLUESSEL, separators=(",", ":"))
         print("Saison %s eingefroren: %d Spiele -> %s" % (saison, len(zeilen), saison_datei(saison)))
     # Index aller Saison-Dateien fuer die Webseite
     index = []
     for name in sorted(os.listdir(ordner), reverse=True):
-        if not name.endswith(".json") or name == "index.json":
+        if name == "index.json" or not (name.endswith(".json") or name.endswith(".json.bin")):
             continue
+        roh = os.path.join(ordner, name[:-4] if name.endswith(".bin") else name)
         try:
-            with open(os.path.join(ordner, name), encoding="utf-8") as f:
-                inhalt = json.load(f)
-            index.append({"saison": inhalt.get("saison"), "datei": "archiv/" + name, "spiele": len(inhalt.get("spiele", []))})
+            inhalt = tresor.json_lesen(roh, SCHLUESSEL, None) or {}
+            index.append({"saison": inhalt.get("saison"),
+                          "datei": "archiv/" + os.path.basename(roh),
+                          "spiele": len(inhalt.get("spiele", []))})
         except (OSError, ValueError):
             continue
+    # Falls aus einer Umstellung noch beide Fassungen herumliegen: je Saison
+    # nur ein Eintrag, die erste gewinnt.
+    gesehen, sauber = set(), []
+    for i in index:
+        if i["saison"] in gesehen:
+            continue
+        gesehen.add(i["saison"]); sauber.append(i)
+    index = sauber
     with open(os.path.join(ordner, "index.json"), "w", encoding="utf-8") as f:
         json.dump(index, f, ensure_ascii=False)
     return index
@@ -1386,16 +1424,22 @@ def main():
     feeds = os.path.join(ziel, "feeds")
     os.makedirs(feeds, exist_ok=True)
 
+    # Ein Kalender kann nicht entschluesseln - deshalb bekommen die
+    # Kalenderdateien mit Schluessel unratbare Namen (wie die privaten
+    # Adressen bei Google Kalender). Die App rechnet denselben Namen aus.
+    def feed_name(zweck, slug):
+        return (tresor.marke(SCHLUESSEL, "feed:" + zweck) if SCHLUESSEL else slug) + ".ics"
+
     # Feeds, die es nicht mehr gibt, entfernen - sonst bleiben veraltete
     # Kalender fuer Leute stehen, die gar nicht mehr eingeteilt werden.
-    gewollt = {"%s.ics" % p["slug"] for p in personen} | {"alle.ics"}
+    gewollt = {feed_name(p["slug"], p["slug"]) for p in personen} | {feed_name("alle", "alle")}
     for datei in os.listdir(feeds):
         if datei.endswith(".ics") and datei not in gewollt:
             os.remove(os.path.join(feeds, datei))
 
     muster = cfg.get("kalender_name_muster", "Einteilungen – {name}")
     for p in personen:
-        with open(os.path.join(feeds, "%s.ics" % p["slug"]), "w",
+        with open(os.path.join(feeds, feed_name(p["slug"], p["slug"])), "w",
                   encoding="utf-8", newline="") as f:
             f.write(baue_ics(p["termine"], muster.format(name=p["name"]), cfg, stand))
 
@@ -1412,7 +1456,7 @@ def main():
             kopie["sequence"] = 0
             gesamt.append(kopie)
     gesamt.sort(key=lambda t: t["treffpunkt"])
-    with open(os.path.join(feeds, "alle.ics"), "w", encoding="utf-8", newline="") as f:
+    with open(os.path.join(feeds, feed_name("alle", "alle")), "w", encoding="utf-8", newline="") as f:
         f.write(baue_ics(gesamt, "Alle Spiele (ESRW)", cfg, stand))
 
     name_von = {p["schluessel"]: p["name"] for p in personen}
@@ -1489,8 +1533,7 @@ def main():
         } for s in uebersicht],
         "hallen_hinweise": hallen_hinweise,
     }
-    with open(os.path.join(ziel, "daten.json"), "w", encoding="utf-8") as f:
-        json.dump(daten, f, ensure_ascii=False, indent=1)
+    schreibe(os.path.join(cfg["ausgabe_verzeichnis"], "daten.json"), daten, indent=1)
 
     # Saisonliste je Person aus dem Archiv - getrennt von daten.json, weil sie
     # ueber die Saison waechst und nur beim Aufklappen gebraucht wird.
@@ -1501,10 +1544,10 @@ def main():
             archiv[p["slug"]] = sorted(s["spiele_saison"],
                                        key=lambda x: x["beginn"], reverse=True)
     saisons = sorted({e["saison"] for liste in archiv.values() for e in liste} | {i["saison"] for i in saison_index if i.get("saison")}, reverse=True)
-    with open(os.path.join(ziel, "archiv.json"), "w", encoding="utf-8") as f:
-        json.dump({"saison": saison, "saisons": saisons, "personen": archiv,
-                   "dateien": {i["saison"]: i["datei"] for i in saison_index if i.get("saison")}},
-                  f, ensure_ascii=False, separators=(",", ":"))
+    schreibe(os.path.join(cfg["ausgabe_verzeichnis"], "archiv.json"),
+             {"saison": saison, "saisons": saisons, "personen": archiv,
+              "dateien": {i["saison"]: i["datei"] for i in saison_index if i.get("saison")}},
+             separators=(",", ":"))
 
     # Der Zeitpunkt des Laufs steht bewusst in einer eigenen, winzigen Datei.
     # Sonst gaebe es allein deswegen bei jedem Lauf eine Aenderung an der

@@ -320,6 +320,15 @@ packt daten.json, abrechnung.csv, notizen.txt und alle Belege im Browser
 zusammen; Kartenkacheln im Dunkelmodus abgedunkelt; „Am Spieltag groß“ macht
 die Kopfkarte am Spieltag bildschirmfüllend; Tipp auf die Stand-Pille lädt neu.
 
+**Tresor (Schema v21)**: Ohne Anmeldung zeigt die App nur den
+Anmeldeschirm. Die Daten in `docs/` liegen verschlüsselt (AES-256-GCM,
+`daten.json.bin` & Co.); den Schlüssel gibt Supabase nur freigeschalteten
+Mitgliedern (Tabelle `tresor`), die App entschlüsselt im Browser. Die
+Kalenderdateien tragen einen aus dem Schlüssel abgeleiteten, unratbaren
+Namen. Einrichten: `python tresor.py --neu`, Wert als GitHub-Secret
+`DATEN_SCHLUESSEL` und in die Tabelle `tresor` – Details in ANLEITUNG.md
+(10.6ad). Ohne Schlüssel läuft alles wie vorher im Klartext weiter.
+
 **Nur mit Konto (Schema v20)**: Ohne Anmeldung gibt es nur Spielplan,
 Startseite einer Person samt Spiel- und Hallenseite und „Mehr“ als Einstieg.
 Archiv, Statistik, Änderungen, Zusammen fahren, Hallenkarte und der

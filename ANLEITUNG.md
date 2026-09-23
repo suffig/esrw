@@ -1503,6 +1503,75 @@ die Datenbank: `protokoll.json` und das Archiv wandern in Tabellen mit
 denselben Regeln, die Kalenderdateien bekommen je Person einen Schlüssel in
 der Adresse. Das ist ein eigener Umbau – sag Bescheid, wenn er kommen soll.
 
+### 10.6ad Alles nur noch mit Konto – und die Daten im Tresor (Schema v21)
+
+Bisher hat die App nur *angezeigt*, dass etwas Mitgliedern vorbehalten ist.
+Die Dateien dahinter lagen offen auf GitHub Pages. Jetzt nicht mehr:
+
+**1. Ohne Anmeldung passiert nichts.** Wer die Seite öffnet, sieht den
+Anmeldeschirm – keine Startseite, keinen Spielplan, keine Leiste unten. Es
+werden gar keine Daten geladen.
+
+**2. Die Daten liegen verschlüsselt.** `daten.json`, `archiv.json`,
+`protokoll.json`, die Saison-Dateien unter `docs/archiv/` sowie die
+Gedächtnisdateien `state.json` und `historie.json` werden als `.bin`
+geschrieben: AES-256-GCM, ein Schlüssel für alles. Wer die Adresse einer
+Datei kennt, bekommt Kauderwelsch.
+
+**3. Den Schlüssel gibt Supabase heraus** – aus der Tabelle `tresor`, und
+die liest nur, wer freigeschaltet ist. Die App holt ihn nach der Anmeldung,
+merkt ihn sich auf dem Gerät und entschlüsselt damit im Browser. Beim
+Abmelden wird er wieder gelöscht.
+
+**4. Die Kalenderdateien bekommen unratbare Namen.** Ein Kalender kann nicht
+entschlüsseln, also heißt die Datei nicht mehr `feeds/melchert-philip.ics`,
+sondern `feeds/3b9bd9a6….ics` – abgeleitet aus dem Schlüssel (HMAC), wie die
+privaten Kalenderadressen bei Google. Die App rechnet denselben Namen aus
+und zeigt ihn beim Abonnieren an.
+
+#### Was du einmal tun musst
+
+1. **Schlüssel erzeugen** (auf deinem Rechner, nicht in einem Chat):
+
+       python tresor.py --neu
+
+2. Den Wert als **GitHub-Secret** hinterlegen: Repository → Settings →
+   Secrets and variables → Actions → New repository secret,
+   Name `DATEN_SCHLUESSEL`.
+3. Denselben Wert in **Supabase** eintragen (SQL-Editor), nachdem
+   `supabase/schema.sql` gelaufen ist:
+
+       insert into public.tresor (id, schluessel) values (1, 'DER_WERT')
+         on conflict (id) do update set schluessel = excluded.schluessel, geaendert = now();
+
+4. Den Workflow einmal von Hand starten. Danach stehen in `docs/` nur noch
+   `.bin`-Dateien; die alten Klartextdateien löscht das Skript selbst.
+5. **Allen Kollegen sagen, dass sie den Kalender neu abonnieren müssen** –
+   die alte Adresse gibt es nicht mehr. Die neue steht wie immer auf der
+   Startseite unter „Im Kalender abonnieren“.
+
+Solange kein Schlüssel gesetzt ist, läuft alles wie bisher weiter (Klartext);
+die App kommt mit beidem zurecht. Es ist dann nur nichts geschützt.
+
+#### Was dabei offen bleibt
+
+* **Die Vergangenheit.** Alles, was bis heute im Repository steht, bleibt in
+  der Git-Historie lesbar – auch wenn die aktuellen Dateien verschlüsselt
+  sind. Wer das schließen will, muss die Historie bereinigen
+  (`git filter-repo --invert-paths --path docs/daten.json …` und
+  `git push --force`) oder das Repository neu aufsetzen. Das ist ein
+  Eingriff, der Forks und Zwischenspeicher nicht erreicht.
+* **Die Kalenderdateien** sind Klartext – sie müssen es sein. Geschützt sind
+  sie nur durch die unratbare Adresse. Wer sie weitergibt, gibt den
+  Kalender weiter.
+* **Der Schlüssel liegt auf jedem angemeldeten Gerät** (im Browserspeicher).
+  Wer ein Gerät verliert und sichergehen will: Schlüssel wechseln (neuen
+  erzeugen, in Secret und Tabelle eintragen, Workflow starten). Die App holt
+  sich den neuen automatisch, sobald das Entschlüsseln scheitert.
+* **`docs/supabase.json`** enthält weiterhin die öffentliche anon-Kennung –
+  so ist sie gedacht. Sie darf nur, was die Regeln in `supabase/schema.sql`
+  erlauben, und das ist ohne Anmeldung fast nichts.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

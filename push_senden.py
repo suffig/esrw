@@ -37,6 +37,8 @@ import urllib.parse
 import urllib.request
 from datetime import datetime, timedelta, timezone
 
+import tresor
+
 try:
     from zoneinfo import ZoneInfo
     BERLIN = ZoneInfo("Europe/Berlin")
@@ -60,11 +62,14 @@ def api(url, schluessel, pfad, methode="GET", daten=None, prefer="return=minimal
 
 
 def lade_json(name, standard):
+    """Liest eine Datei - verschluesselt (.bin) oder im Klartext. Den
+    Schluessel liefert die Umgebung (DATEN_SCHLUESSEL), siehe tresor.py."""
     pfad = os.path.join(BASIS, name)
-    if not os.path.exists(pfad):
-        return standard
-    with open(pfad, encoding="utf-8") as f:
-        return json.load(f)
+    try:
+        wert = tresor.json_lesen(pfad, tresor.schluessel(), None)
+    except Exception:
+        wert = None
+    return standard if wert is None else wert
 
 
 def uhr(iso):

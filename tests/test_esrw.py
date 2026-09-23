@@ -467,12 +467,60 @@ def test_rechnungsvorlage():
     pruefe(p.get("seite") and p.get("root") and p.get("maxObj"), "Objektnummern notiert")
 
 
+def test_tresor():
+    """Verschluesselt geschrieben, verschluesselt gelesen - und ohne
+    Schluessel bleibt es Klartext. Geprueft an einer Wegwerfdatei unter
+    docs/archiv, weil dort dieselbe Regel gilt wie fuer daten.json."""
+    print("\nTresor")
+    import base64, importlib
+    try:
+        import tresor
+    except ImportError:
+        pruefe(False, "tresor.py vorhanden")
+        return
+    try:
+        tresor.verschluesseln(b"x", b"0" * 32)
+    except ImportError:
+        print("  --   Paket 'cryptography' fehlt, Test uebersprungen")
+        return
+    wurzel = os.path.dirname(HIER)
+    probe = os.path.join(wurzel, "docs", "archiv", "0000-00.json")
+    alt = os.environ.get("DATEN_SCHLUESSEL")
+    try:
+        os.environ["DATEN_SCHLUESSEL"] = base64.b64encode(b"T" * 32).decode()
+        importlib.reload(esrw_ical_modul())
+        E2 = esrw_ical_modul()
+        inhalt = {"saison": "0000/00", "spiele": [["2000-01-01T00:00:00+01:00", "L", "A - B", "H", []]]}
+        E2.schreibe(os.path.join("docs", "archiv", "0000-00.json"), inhalt)
+        pruefe(os.path.exists(probe + ".bin"), "verschluesselte Datei entsteht")
+        pruefe(not os.path.exists(probe), "Klartext bleibt nicht liegen")
+        roh = open(probe + ".bin", "rb").read()
+        pruefe(roh.startswith(b"ESRW1"), "Kennung stimmt")
+        pruefe(b"A - B" not in roh, "die Paarung steht nicht lesbar drin")
+        zurueck = E2.lade(os.path.join("docs", "archiv", "0000-00.json"), None)
+        pruefe(zurueck == inhalt, "gelesen wie geschrieben")
+    finally:
+        for p in (probe, probe + ".bin"):
+            if os.path.exists(p):
+                os.remove(p)
+        if alt is None:
+            os.environ.pop("DATEN_SCHLUESSEL", None)
+        else:
+            os.environ["DATEN_SCHLUESSEL"] = alt
+        importlib.reload(esrw_ical_modul())
+
+
+def esrw_ical_modul():
+    return sys.modules["esrw_ical"]
+
+
 def main():
     print("Regressionstest esrw_ical")
     for test in (test_parsen, test_hallen, test_namen, test_rollen, test_aliase,
                  test_konflikte, test_hash_migration, test_ausgaben, test_faltung,
                  test_escape, test_ics, test_saison, test_aenderungstext, test_saisonarchiv,
-                 test_korrektur_uid, test_gespannwechsel, test_rechnungsvorlage):
+                 test_korrektur_uid, test_gespannwechsel, test_rechnungsvorlage,
+                 test_tresor):
         test()
     print("\n" + "-" * 58)
     if FEHLER:

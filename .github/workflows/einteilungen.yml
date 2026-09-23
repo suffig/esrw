@@ -59,6 +59,10 @@ jobs:
 
       # Laeuft ohne Netz gegen die eingefrorene Beispielseite. Schlaegt an,
       # wenn eine Aenderung am Skript das Auslesen kaputt gemacht hat.
+      # Fuer den Tresor: die Daten in docs/ werden verschluesselt abgelegt.
+      - name: Pakete
+        run: pip install --quiet cryptography
+
       - name: Regressionstest
         run: python tests/test_esrw.py
 
@@ -69,6 +73,9 @@ jobs:
           # Korrekturen, manuelle Spiele, Hallen vom Betreiber (Supabase)
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          # Schluessel fuer die verschluesselten Daten (python tresor.py --neu).
+          # Fehlt er, wird wie frueher Klartext geschrieben - dann liegt alles offen.
+          DATEN_SCHLUESSEL: ${{ secrets.DATEN_SCHLUESSEL }}
           # Legt bei Aenderungen eine Meldung fuer den naechsten Schritt ab
           MELDUNG_DATEI: meldung.txt
         run: python esrw_ical.py
@@ -85,6 +92,7 @@ jobs:
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
           VAPID_PRIVATE: ${{ secrets.VAPID_PRIVATE }}
           VAPID_KONTAKT: ${{ secrets.VAPID_KONTAKT }}
+          DATEN_SCHLUESSEL: ${{ secrets.DATEN_SCHLUESSEL }}
         run: |
           if [ -z "$VAPID_PRIVATE" ]; then echo "Push nicht eingerichtet."; exit 0; fi
           pip install --quiet pywebpush
@@ -109,7 +117,9 @@ jobs:
         run: |
           git config user.name  "esrw-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A docs state.json historie.json
+          # -A ohne Pfadliste: docs/ und die Gedaechtnisdateien, egal ob sie
+          # gerade als .json oder als .json.bin (Tresor) dastehen.
+          git add -A
           if git diff --staged --quiet; then
             echo "Keine Aenderungen."
           else

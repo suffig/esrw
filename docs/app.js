@@ -301,7 +301,10 @@
   function suchtextVon(s) { return ohneZeichen(s) + " " + ausgeschrieben(s); }
   function uhr(d) { return d.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" }); }
   function datumKurz(d) { return wochentag[d.getDay()] + ". " + d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }); }
-  function feedUrl(slug, protokoll) { return protokoll + "//" + basis.replace(/^https?:\/\//, "") + "feeds/" + slug + ".ics"; }
+  function feedUrl(slug, protokoll) {
+    var name = tresorMarken[slug] || slug;
+    return protokoll + "//" + basis.replace(/^https?:\/\//, "") + "feeds/" + name + ".ics";
+  }
   function personMit(slug) { return daten.personen.filter(function (p) { return p.slug === slug; })[0]; }
   function tagVon(iso) { return new Date(iso).toDateString(); }
   function mitIkone(name, text, klasse) {
@@ -374,7 +377,7 @@
     if (feedGeprueft[p.slug] && !erzwingen) { ziel.textContent = feedGeprueft[p.slug]; feedKnopf(p); return; }
     ziel.textContent = "Prüfe den Kalender-Link …";
     // Ohne Cache-Buster: genau die Adresse, die auch das Handy abruft
-    fetch(feedUrl(p.slug, location.protocol), { cache: erzwingen ? "reload" : "default" }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); }).then(function (t) {
+    feedBereit(p.slug).then(function () { return fetch(feedUrl(p.slug, location.protocol), { cache: erzwingen ? "reload" : "default" }); }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); }).then(function (t) {
       var n = (t.match(/BEGIN:VEVENT/g) || []).length, stempel = (t.match(/DTSTAMP:(\d{8}T\d{6}Z)/) || [])[1];
       var wann = stempel ? new Date(stempel.replace(/(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z/, "$1-$2-$3T$4:$5:$6Z")) : null;
       var kommend = (personMit(p.slug) || { spiele: [] }).spiele.filter(function (s) { return !s.vergangen; }).length;
@@ -2022,8 +2025,11 @@
     if (haupt) { if (meins) haupt.insertBefore(pz, el("start-anpassen")); else haupt.insertBefore(pz, haupt.firstChild); }
     zeigeKollege(p, meins);
     pinKnopf(p); kalenderSpalte();
-    el("abo").href = feedUrl(p.slug, "webcal:");
-    el("laden").onclick = function () { location.href = feedUrl(p.slug, location.protocol); };
+    // Die Adresse der Kalenderdatei haengt am Schluessel - erst ausrechnen
+    feedBereit(p.slug).then(function () {
+      el("abo").href = feedUrl(p.slug, "webcal:");
+      el("laden").onclick = function () { location.href = feedUrl(p.slug, location.protocol); };
+    });
     zeigeHeld(p);
     zeigeSchnellzugriff(p, meins);
     zeigeEinrichtung(p, meins);
@@ -3924,11 +3930,101 @@
     b.classList.toggle("laeuft", ladeZaehler > 0);
   }
   window.ladeAnzeige = ladeAnzeige;
+  function holeKlartext(name) {
+    return fetch(name + "?" + Date.now()).then(function (r) { if (!r.ok) throw 0; return r.json(); });
+  }
   function hole(name) {
     ladeAnzeige(true);
-    return fetch(name + "?" + Date.now()).then(function (r) { if (!r.ok) throw 0; return r.json(); })
-      .then(function (d) { ladeAnzeige(false); return d; }, function (e) { ladeAnzeige(false); throw e; });
+    var lauf = imTresor(name) ? holeTresor(name) : holeKlartext(name);
+    return lauf.then(function (d) { ladeAnzeige(false); return d; }, function (e) { ladeAnzeige(false); throw e; });
   }
+  // Erst den Tresor versuchen, dann - falls die Umstellung noch nicht gelaufen
+  // ist - die alte Klartextdatei.
+  function holeTresor(name) {
+    return tresorAufschliessen().then(function (k) {
+      if (!k) return holeKlartext(name).catch(function () {
+        // Kein Schluessel und kein Klartext: das Konto ist noch nicht
+        // freigeschaltet - das soll die App auch so sagen.
+        throw new Error(sitzungVorhanden()
+          ? "Dein Konto ist noch nicht freigeschaltet - der Betreiber macht das von Hand."
+          : "Bitte anmelden.");
+      });
+      return fetch(name + ".bin?" + Date.now()).then(function (r) {
+        if (!r.ok) return holeKlartext(name);
+        return r.arrayBuffer()
+          .then(tresorOeffnen)
+          .then(function (t) { return JSON.parse(t); })
+          .catch(function () {
+            // Schluessel gewechselt? Einmal frisch holen, dann aufgeben.
+            schreiben("tresor", null); tresorKey = null; tresorHmac = null; tresorMarken = {};
+            return tresorAufschliessen(true).then(function (k2) {
+              if (!k2) throw new Error("Daten sind verschlüsselt - Freischaltung abwarten.");
+              return fetch(name + ".bin?" + Date.now()).then(function (r2) { return r2.arrayBuffer(); })
+                .then(tresorOeffnen).then(function (t) { return JSON.parse(t); });
+            });
+          });
+      });
+    });
+  }
+  // ================================================================
+  // Tresor: die Daten in docs/ sind verschluesselt
+  // ================================================================
+  // daten.json, archiv.json, protokoll.json und die Saison-Dateien liegen
+  // als .bin auf dem Server - AES-256-GCM. Den Schluessel gibt Supabase nur
+  // freigeschalteten Mitgliedern heraus (Tabelle "tresor"). Damit nuetzt die
+  // Adresse einer Datei allein niemandem etwas.
+  var tresorKey = null, tresorHmac = null, tresorMarken = {}, tresorLauf = null;
+  var TRESOR_DATEIEN = { "daten.json": 1, "archiv.json": 1, "protokoll.json": 1 };
+  function imTresor(name) { return !!TRESOR_DATEIEN[name] || String(name).indexOf("archiv/") === 0; }
+
+  function schluesselSetzen(b64) {
+    var roh = Uint8Array.from(atob(b64), function (c) { return c.charCodeAt(0); });
+    return Promise.all([
+      crypto.subtle.importKey("raw", roh, { name: "AES-GCM" }, false, ["decrypt"]),
+      crypto.subtle.importKey("raw", roh, { name: "HMAC", hash: "SHA-256" }, false, ["sign"])
+    ]).then(function (k) { tresorKey = k[0]; tresorHmac = k[1]; return tresorKey; });
+  }
+  function tresorAufschliessen(nochmal) {
+    if (tresorKey && !nochmal) return Promise.resolve(tresorKey);
+    if (tresorLauf && !nochmal) return tresorLauf;
+    var gemerkt = nochmal ? null : lesen("tresor");
+    tresorLauf = (gemerkt ? Promise.resolve(gemerkt) : holeSchluessel())
+      .then(function (b64) {
+        if (!b64) { tresorLauf = null; return null; }
+        schreiben("tresor", b64);
+        return schluesselSetzen(b64);
+      })
+      .catch(function () { tresorLauf = null; return null; });
+    return tresorLauf;
+  }
+  // Der Schluessel kommt ueber den angemeldeten Zugang - der anonyme
+  // Schluessel darf die Tabelle nicht lesen.
+  function holeSchluessel() {
+    if (!sitzungVorhanden()) return Promise.resolve(null);
+    return ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
+      .then(function (st) { return st && st.session && window.Mitglieder.tresorSchluessel ? window.Mitglieder.tresorSchluessel() : null; })
+      .catch(function () { return null; });
+  }
+  function tresorOeffnen(buf) {
+    var b = new Uint8Array(buf);
+    var kopf = String.fromCharCode(b[0], b[1], b[2], b[3], b[4]);
+    if (b.length < 18 || kopf !== "ESRW1") return Promise.reject(new Error("keine Tresordatei"));
+    return crypto.subtle.decrypt({ name: "AES-GCM", iv: b.slice(5, 17) }, tresorKey, b.slice(17))
+      .then(function (p) { return new TextDecoder().decode(p); });
+  }
+  // Name der Kalenderdatei: derselbe HMAC wie in tresor.py
+  function feedMarke(zweck) {
+    if (tresorMarken[zweck]) return Promise.resolve(tresorMarken[zweck]);
+    if (!tresorHmac) return Promise.resolve(null);
+    return crypto.subtle.sign("HMAC", tresorHmac, new TextEncoder().encode("feed:" + zweck))
+      .then(function (sig) {
+        var hex = Array.prototype.map.call(new Uint8Array(sig), function (x) { return ("0" + x.toString(16)).slice(-2); }).join("");
+        tresorMarken[zweck] = hex.slice(0, 32);
+        return tresorMarken[zweck];
+      });
+  }
+  function feedBereit(slug) { return tresorAufschliessen().then(function () { return feedMarke(slug); }); }
+
   var letzterLauf = null;
   function standAnzeigen(d, lauf) {
     letzterLauf = lauf;
@@ -3956,7 +4052,23 @@
       }).catch(function () {});
   }
 
-  Promise.all([hole("daten.json"), hole("stand.json").catch(function () { return null; })])
+  // ----------------------------------------------------------------
+  // Ohne Anmeldung passiert hier gar nichts: keine Daten, keine Seiten.
+  // Die Einteilungen liegen verschluesselt auf dem Server, und der
+  // Schluessel kommt erst nach der Anmeldung aus Supabase.
+  // ----------------------------------------------------------------
+  function anmeldeschirm(grund) {
+    document.documentElement.classList.add("abgemeldet");
+    aktuell = null; daten = null;
+    ansicht("mitglieder");
+    if (grund) toast(grund, "warn");
+    ladeMitglieder().then(function (M) { M.oeffnen(el("mitglieder"), mitgliederKontext(), null); })
+      .catch(function (e) { el("mitglieder").textContent = "Anmeldung konnte nicht geladen werden: " + e.message; });
+    el("stand").textContent = "nur für Mitglieder";
+  }
+  function startLaden() {
+    document.documentElement.classList.remove("abgemeldet");
+    return Promise.all([hole("daten.json"), hole("stand.json").catch(function () { return null; })])
     .then(function (b) {
       daten = b[0]; profil = profilLesen();
       document.title = daten.titel; el("titel").textContent = (daten.titel || "Einteilungen").replace(/\s*ESRW\s*$/, ""); el("quelle").href = daten.quelle;
@@ -3970,7 +4082,21 @@
       betreiberLaden(true).then(function () { korrekturenLaden(true); }); zeigeInstallHinweis(); zeigeNeu(); filterHoehe(); netzAnzeigen(); adminKnopfZeigen();
       setTimeout(zaehlerHolen, 1500);
     })
-    .catch(function () { el("stand").className = "stand alt"; el("stand").textContent = "Daten konnten nicht geladen werden."; });
+    .catch(function (e) {
+      if (!sitzungVorhanden()) { anmeldeschirm(); return; }
+      el("stand").className = "stand alt";
+      el("stand").textContent = (e && e.message) || "Daten konnten nicht geladen werden.";
+    });
+  }
+  // Fusszeile: der Gesamtkalender heisst mit Schluessel anders
+  feedBereit("alle").then(function (m) { if (m && el("alle")) { el("alle").href = "feeds/" + m + ".ics"; el("alle").textContent = "Kalender aller Spiele"; } });
+  if (sitzungVorhanden()) startLaden(); else anmeldeschirm();
+  // An- und Abmelden: einmal sauber neu aufbauen, statt halbe Zustaende zu flicken
+  document.addEventListener("mg-sitzung", function (e) {
+    var an = !!(e.detail && e.detail.angemeldet);
+    if (an && !daten) location.reload();
+    if (!an && daten) { try { localStorage.removeItem("tresor"); } catch (x) {} location.reload(); }
+  });
 
   if ("serviceWorker" in navigator && location.protocol !== "file:") {
     var hatteController = !!navigator.serviceWorker.controller;

@@ -3,5 +3,6 @@ __pycache__/
 meldung.txt
 rumpf.txt
 aenderungen.json
+aenderungen.json.bin
 vapid_privat.txt
 .claude/

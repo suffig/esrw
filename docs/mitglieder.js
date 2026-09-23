@@ -579,7 +579,25 @@ window.Mitglieder = (function () {
   }
 
   function abmelden() {
-    sb.auth.signOut().then(function () { session = null; profil = null; profilVersprechen = null; einsaetze = {}; zeigeAnmeldung(); });
+    sb.auth.signOut().then(function () {
+      session = null; profil = null; profilVersprechen = null; einsaetze = {};
+      // Den gemerkten Schluessel mitnehmen - sonst liesse sich der Tresor auf
+      // diesem Geraet auch ohne Anmeldung weiter oeffnen.
+      try { localStorage.removeItem("tresor"); } catch (e) {}
+      zeigeAnmeldung();
+    });
+  }
+
+  // Schluessel fuer die verschluesselten Dateien in docs/. Die Tabelle
+  // "tresor" liest nur, wer freigeschaltet ist - die Regeln stehen in
+  // supabase/schema.sql, nicht hier.
+  function tresorSchluessel() {
+    return bereit().then(function () {
+      if (!sb || !session) return null;
+      return sb.from("tresor").select("schluessel").eq("id", 1).limit(1)
+        .then(function (r) { return (r.data && r.data[0] && r.data[0].schluessel) || null; })
+        .catch(function () { return null; });
+    }).catch(function () { return null; });
   }
 
   // Kopf mit Name und Unterreitern; der Inhalt darunter wechselt.
@@ -3486,6 +3504,6 @@ window.Mitglieder = (function () {
            sperrenAm: sperrenAm, gesuchAnlegen: gesuchAnlegen, offeneAbrechnungen: offeneAbrechnungen,
            extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat, obmann: obmann, termine: termine,
            einstellungenSpeichern: einstellungenSpeichern, radar: radar, angebotMachen: angebotMachen,
-           kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl, kontoRendern: kontoRendern, kontaktVon: kontaktVon, istAdmin: istAdmin, adminRecht: adminRecht, korrekturSpeichern: korrekturSpeichern, spielManuellLoeschen: spielManuellLoeschen,
+           kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl, kontoRendern: kontoRendern, kontaktVon: kontaktVon, istAdmin: istAdmin, adminRecht: adminRecht, tresorSchluessel: tresorSchluessel, korrekturSpeichern: korrekturSpeichern, spielManuellLoeschen: spielManuellLoeschen,
            mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, telefonVon: telefonVon, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb, wohnortEigen: wohnortEigen };
 })();
