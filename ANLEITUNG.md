@@ -1419,6 +1419,42 @@ Spielseite). Mehrfachauswahl: Verpflegung 14 € setzen/entfernen, CSV.
   Meldungen liegen jetzt über der Anleitung, und ein abgebrochener Abruf
   (Funkloch, Tab im Hintergrund) gilt nicht mehr als Fehler zum Melden.
 
+### 10.6ab Gebührenabrechnung als fertiges PDF (Schema v19)
+
+Das Blanko-Formular des EHV NRW („Schiedsrichter-Gebührenabrechnung“) füllt
+die App jetzt selbst aus. **Abrechnung → Rechnung**:
+
+1. **Meine Daten** – einmal ausfüllen: Name, Straße, PLZ und Ort, Verein,
+   Steuernummer, Kleinunternehmer nach § 19 UStG ja/nein und der Kreis für
+   die Rechnungsnummer („2026-“ + laufende Nummer). Das liegt im Konto und
+   gilt damit auf allen Geräten.
+2. **Spiele wählen** – bis zu drei Spiele; mehr Zeilen hat das Formular
+   nicht. Auf ein Formular gehören Spiele desselben Vereins am selben Tag;
+   die App warnt, wenn die Auswahl das mischt. Schneller geht es über
+   „Auf die Rechnung“ in den Details eines Spiels.
+3. **Rechnungsempfänger** – Verein, Straße, PLZ und Ort. Einmal eingetragen,
+   teilt sich die Adresse mit allen freigeschalteten Kollegen (Tabelle
+   `vereine_adressen`) – der Nächste muss sie nicht suchen.
+4. **Beträge** – Pauschale, 20 %-Zuschuss (bei Spielbeginn ab 21:46 oder bis
+   9:14 Uhr) und Umsatzsteuer rechnet die App aus den erfassten Vergütungen.
+   Bei Kleinunternehmern wird statt der Steuer das Kästchen angekreuzt.
+5. **„Rechnung als PDF“** – fertig ausgefüllt zum Ausdrucken, Unterschreiben
+   und Abgeben. Die Nummer zählt danach hoch, und die Rechnung steht unter
+   „Zuletzt geschrieben“ (Tabelle `rechnungen`); schon abgerechnete Spiele
+   sind in der Auswahl mit ihrer Rechnungsnummer markiert.
+
+Das PDF entsteht im Browser: `docs/abrechnung/blanko.pdf` ist das Formular
+ohne Formularfelder, `docs/rechnung.js` hängt einen zweiten Inhaltsstrom mit
+dem Text an. Nichts geht an Dritte, und es funktioniert auch offline.
+Eine neue Blanko-Fassung baut `python abrechnung_vorlage.py <datei.pdf>` ein.
+
+**Neu in der Datenbank (v19):** `vereine_adressen` (alle Freigeschalteten
+lesen und pflegen) und `rechnungen` (nur für einen selbst). Dafür einmal
+`supabase/schema.sql` im SQL-Editor laufen lassen.
+
+**Außerdem in dieser Runde:** Bei den Liga-Filtern stehen Name und Anzahl in
+getrennten Feldern („U15 │ 34“), damit man beides auseinanderhält.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

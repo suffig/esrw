@@ -9,6 +9,7 @@ Auslesen kaputt macht.
 Kein pytest noetig. Rueckgabewert ungleich 0, wenn etwas nicht stimmt.
 """
 
+import json
 import os
 import sys
 from datetime import datetime, timedelta, timezone
@@ -436,12 +437,42 @@ def test_korrektur_uid():
     pruefe(t1["kennung"] == t2["kennung"], "Termin-Kennung (Basis der UID) bleibt gleich")
 
 
+def test_rechnungsvorlage():
+    """Die Vorlage fuer die Gebuehrenabrechnung muss zur App passen:
+    klassische xref-Tabelle (sonst kann der Browser nichts anhaengen) und
+    die Feldnamen, die docs/rechnung.js ausfuellt."""
+    print("\nVorlage Gebuehrenabrechnung")
+    wurzel = os.path.dirname(HIER)
+    pdf = os.path.join(wurzel, "docs", "abrechnung", "blanko.pdf")
+    plan = os.path.join(wurzel, "docs", "abrechnung", "vorlage.json")
+    if not (os.path.exists(pdf) and os.path.exists(plan)):
+        pruefe(False, "Vorlage vorhanden", "(docs/abrechnung fehlt)")
+        return
+    with open(plan, encoding="utf-8") as f:
+        p = json.load(f)
+    with open(pdf, "rb") as f:
+        roh = f.read()
+    pruefe(roh.startswith(b"%PDF"), "blanko.pdf ist ein PDF")
+    pruefe(b"\nxref" in roh, "klassische xref-Tabelle (der Browser haengt an)")
+    pruefe(b"/AcroForm" not in roh, "keine Formularfelder mehr drin")
+    pruefe(p.get("startxref") and roh[p["startxref"]:p["startxref"] + 4] == b"xref",
+           "startxref zeigt auf die Tabelle", str(p.get("startxref")))
+    gebraucht = ["undefined", "Rechnungssteller Schiedsrichter", "Rechnungsempf\u00e4nger Verein",
+                 "Stra\u00dfe und Nr", "Stra\u00dfe und Nr_2", "PLZ und Ort", "PLZ und Ort 1",
+                 "PLZ und Ort 2", "Steuernummer", "1", "2", "3", "4", "undefined_2",
+                 "undefined_3", "undefined_4", "Spielort", "Dropdown3",
+                 "\u20ac", "\u20ac_2", "\u20ac_3", "\u20ac_4", "Kleinunternehmer nach  19 UStG"]
+    fehlt = [f for f in gebraucht if f not in (p.get("felder") or {})]
+    pruefe(not fehlt, "alle Felder, die die App ausfuellt, sind bekannt", str(fehlt))
+    pruefe(p.get("seite") and p.get("root") and p.get("maxObj"), "Objektnummern notiert")
+
+
 def main():
     print("Regressionstest esrw_ical")
     for test in (test_parsen, test_hallen, test_namen, test_rollen, test_aliase,
                  test_konflikte, test_hash_migration, test_ausgaben, test_faltung,
                  test_escape, test_ics, test_saison, test_aenderungstext, test_saisonarchiv,
-                 test_korrektur_uid, test_gespannwechsel):
+                 test_korrektur_uid, test_gespannwechsel, test_rechnungsvorlage):
         test()
     print("\n" + "-" * 58)
     if FEHLER:

@@ -1376,6 +1376,17 @@
   .spiel.zeit-links .wann { background:var(--liga-bg, var(--bg)); color:var(--liga-fg, inherit); }
   .spiel.zeit-links .wann b { color:inherit; opacity:.75; }
   .gruppe-anfrage { margin-top:6px; }
+  /* ---- Runde 17: Liga-Chips, Rechnung ---- */
+  .liga-chip { display:inline-flex; align-items:center; gap:0; padding:0 0 0 11px; overflow:hidden; }
+  .liga-chip .liga-name { padding:5px 0; font-weight:700; }
+  .liga-chip .liga-zahl { font-style:normal; margin-left:9px; padding:5px 9px; background:var(--bg); color:var(--dim);
+                          font-size:.74rem; font-weight:800; border-left:1px solid var(--linie); align-self:stretch; display:flex; align-items:center; }
+  .liga-chip.aktiv .liga-zahl { background:var(--akzent); color:var(--akzent-text); border-left-color:transparent; }
+  .rechnung-zeile { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:9px 0; border-top:1px solid var(--linie); }
+  .rechnung-wahl .rechnung-zeile:first-child { border-top:0; }
+  .rechnung-zeile b { display:block; font-weight:700; font-size:.9rem; }
+  .rechnung-zeile small { color:var(--dim); }
+  .rechnung-wahl { max-height:270px; overflow:auto; border:1px solid var(--linie); border-radius:14px; padding:0 12px; }
   /* ---- Runde 16, Nachtrag: gewinnt gegen alle Schichten darueber ----
      Auf schmalen Geraeten blieb vom Titel "Einteilungen ESRW" nur
      "Einteilungen ESR" uebrig - das rote ESRW lief unter den Knoepfen durch.
@@ -1760,6 +1771,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=56"></script>
+<script src="app.js?v=57"></script>
 </body>
 </html>

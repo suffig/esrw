@@ -320,6 +320,15 @@ packt daten.json, abrechnung.csv, notizen.txt und alle Belege im Browser
 zusammen; Kartenkacheln im Dunkelmodus abgedunkelt; „Am Spieltag groß“ macht
 die Kopfkarte am Spieltag bildschirmfüllend; Tipp auf die Stand-Pille lädt neu.
 
+**Gebührenabrechnung als PDF (Schema v19)**: Abrechnung → Rechnung füllt das
+Blanko-Formular des EHV NRW aus – eigene Daten einmal im Konto, Vereins-
+adressen teilen sich alle Kollegen (`vereine_adressen`), bis zu drei Spiele
+je Formular, Pauschale, 20 %-Zuschuss und Umsatzsteuer (oder Kreuz bei § 19)
+automatisch, fortlaufende Rechnungsnummer und eine Liste der geschriebenen
+Rechnungen (`rechnungen`). Das PDF entsteht im Browser (docs/rechnung.js
+hängt einen Inhaltsstrom an docs/abrechnung/blanko.pdf), ohne Dienst von
+außen und offline. Neue Blanko-Fassung: `python abrechnung_vorlage.py`.
+
 **Feinschliff (Runde 16)**: Kopfzeile mit Abstand zur Statusleiste und ohne
 abgeschnittenes „ESRW“, Ligen nur noch im Filter (mit Anzahl), Filter mit ✕
 und großem „Fertig“-Knopf, Halle als antippbare Zeile statt Link,

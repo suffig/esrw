@@ -1622,17 +1622,21 @@
     var titel = el("plan-ligen-titel");
     if (gruppen.length < 2) { ziel.classList.add("versteckt"); if (titel) titel.classList.add("versteckt"); return; }
     ziel.classList.remove("versteckt"); if (titel) titel.classList.remove("versteckt");
-    var alle = document.createElement("span");
-    alle.className = "chip" + (Object.keys(ligenWahl).length ? "" : " aktiv");
-    alle.textContent = "Alle " + spiele.length;
-    alle.addEventListener("click", function () { ligenWahl = {}; zeigePlan(); });
-    ziel.appendChild(alle);
+    // Name und Anzahl klar getrennt: die Zahl sitzt in einer eigenen Blase
+    function ligaChip(name, zahl, aktiv, fn, farbe) {
+      var c = document.createElement("span"); c.className = "chip liga-chip" + (aktiv ? " aktiv" : "");
+      var t = document.createElement("span"); t.className = "liga-name"; t.textContent = name; c.appendChild(t);
+      var z = document.createElement("i"); z.className = "liga-zahl"; z.textContent = zahl; c.appendChild(z);
+      if (farbe) c.style.borderLeftColor = farbe;
+      c.addEventListener("click", fn);
+      return c;
+    }
+    ziel.appendChild(ligaChip("Alle", spiele.length, !Object.keys(ligenWahl).length, function () { ligenWahl = {}; zeigePlan(); }));
     gruppen.forEach(function (g) {
-      var c = document.createElement("span"); c.className = "chip" + (ligenWahl[g] ? " aktiv" : "");
-      c.textContent = g + " " + zaehler[g];
-      var lf = ligaFarbe(g); if (lf && lf.punkt) c.style.borderLeftColor = lf.punkt;
-      c.addEventListener("click", function () { if (ligenWahl[g]) delete ligenWahl[g]; else ligenWahl[g] = 1; zeigePlan(); });
-      ziel.appendChild(c);
+      var lf = ligaFarbe(g);
+      ziel.appendChild(ligaChip(g, zaehler[g], !!ligenWahl[g], function () {
+        if (ligenWahl[g]) delete ligenWahl[g]; else ligenWahl[g] = 1; zeigePlan();
+      }, lf && lf.punkt));
     });
   }
   // ohneLigen: fuer die Zahlen an den Liga-Chips - sie sollen zeigen, was die

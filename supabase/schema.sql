@@ -815,3 +815,41 @@ alter table public.einsaetze drop column if exists bezahlt;
 alter table public.einsaetze drop column if exists abgerechnet;
 -- Alte Push-Schluessel der Monatsende-Erinnerung (heisst jetzt "steuer|<Jahr>")
 delete from public.push_gesendet where schluessel like 'abrechnung|%';
+
+-- ======================================================================
+-- v19: Rechnungen (Gebuehrenabrechnung als PDF)
+-- ======================================================================
+-- Vereinsadressen teilen sich alle Freigeschalteten: wer eine Adresse
+-- eintraegt, erspart sie allen anderen. Geaendert wird selten, darum reicht
+-- ein Eintrag je Verein.
+create table if not exists public.vereine_adressen (
+  verein      text primary key,
+  name        text,
+  strasse     text,
+  plz_ort     text,
+  angelegt_von uuid references auth.users(id) on delete set null,
+  geaendert   timestamptz not null default now()
+);
+alter table public.vereine_adressen enable row level security;
+drop policy if exists "Vereinsadressen lesen"  on public.vereine_adressen;
+drop policy if exists "Vereinsadressen pflegen" on public.vereine_adressen;
+create policy "Vereinsadressen lesen"   on public.vereine_adressen for select to authenticated using (public.ist_freigeschaltet());
+create policy "Vereinsadressen pflegen" on public.vereine_adressen for all    to authenticated using (public.ist_freigeschaltet()) with check (public.ist_freigeschaltet());
+
+-- Geschriebene Rechnungen: nur fuer einen selbst, damit die Nummern
+-- fortlaufen und man spaeter nachsehen kann, was wann abgerechnet wurde.
+create table if not exists public.rechnungen (
+  id         bigserial primary key,
+  user_id    uuid not null references auth.users(id) on delete cascade,
+  nummer     text not null,
+  datum      date not null default current_date,
+  verein     text,
+  betrag     numeric(8,2),
+  kennungen  text[],
+  angelegt   timestamptz not null default now()
+);
+create index if not exists rechnungen_user_idx on public.rechnungen (user_id, datum desc);
+alter table public.rechnungen enable row level security;
+drop policy if exists "eigene Rechnungen" on public.rechnungen;
+create policy "eigene Rechnungen" on public.rechnungen for all to authenticated
+  using (auth.uid() = user_id) with check (auth.uid() = user_id);
