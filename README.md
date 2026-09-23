@@ -320,6 +320,13 @@ packt daten.json, abrechnung.csv, notizen.txt und alle Belege im Browser
 zusammen; Kartenkacheln im Dunkelmodus abgedunkelt; „Am Spieltag groß“ macht
 die Kopfkarte am Spieltag bildschirmfüllend; Tipp auf die Stand-Pille lädt neu.
 
+**Rechnung direkt vom Spiel**: Spielseite → „Rechnung schreiben“ (oder
+Wischen an der Spielkarte) merkt das Spiel vor und füllt Datum, Spielort und
+Spielklasse; Pauschale, Zuschuss und Umsatzsteuer lassen sich vor dem PDF
+ändern. Kommende Spiele gehen auch – der Betrag kommt dann aus der
+Gebührenordnung. Stammdaten, Rechnungsnummer und Vereinsadressen kommen wie
+gehabt aus dem Konto bzw. der geteilten Tabelle.
+
 **Tresor (Schema v21)**: Ohne Anmeldung zeigt die App nur den
 Anmeldeschirm. Die Daten in `docs/` liegen verschlüsselt (AES-256-GCM,
 `daten.json.bin` & Co.); den Schlüssel gibt Supabase nur freigeschalteten

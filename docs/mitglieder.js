@@ -1150,7 +1150,7 @@ window.Mitglieder = (function () {
   // die Vereinsadressen teilen sich alle Freigeschalteten, und die
   // geschriebenen Rechnungen liegen in "rechnungen" - damit die Nummern
   // fortlaufen und man spaeter nachsehen kann.
-  var rechnungGeladen = null, rechnungWahl = {}, vereinAdressen = null, rechnungListe = null;
+  var rechnungGeladen = null, rechnungWahl = {}, vereinAdressen = null, rechnungListe = null, rechnungFertig = null;
   function rechnungenLaden() {
     if (rechnungListe) return Promise.resolve(rechnungListe);
     return sb.from("rechnungen").select("nummer,datum,verein,betrag,kennungen").order("datum", { ascending: false }).limit(20)
@@ -1200,13 +1200,58 @@ window.Mitglieder = (function () {
   }
   function euroZahl(n) { return (Math.round(n * 100) / 100).toFixed(2).replace(".", ","); }
 
+  // Betrag fuer die Rechnung: aus der eigenen Abrechnung, sonst nach der
+  // Gebuehrenordnung geschaetzt - damit sich auch kommende Spiele abrechnen
+  // lassen, bevor man sie erfasst hat.
+  function rechnungBetrag(sp) {
+    var e = einsaetze[sp.kennung];
+    if (e) {
+      var b = betragFuer(sp, e);
+      if (b.betrag != null) { b.geschaetzt = false; return b; }
+    }
+    var g = grundgebuehr(sp);
+    if (g == null) return null;
+    var zeit = zeitzuschlag(sp) && gebuehren && gebuehren.zuschlag_zeit
+      ? g * ((gebuehren.zuschlag_zeit.prozent || 0) / 100) : 0;
+    return { grund: g, zeit: zeit, ueber: 0, ausfall: 0, betrag: g + zeit, geschaetzt: true };
+  }
+
+  function rechnungSpiele() {
+    return alleSpiele().filter(function (sp) { return rechnungBetrag(sp) != null; })
+      .sort(function (a, b) { return a.beginn < b.beginn ? 1 : -1; }).slice(0, 80);
+  }
+
+  // Von aussen (Spielseite, Abrechnungsliste): dieses Spiel vormerken und das
+  // Rechnungsblatt oeffnen.
+  function rechnungSprung(kennung) {
+    return ladeArchiv().then(function () {
+      var sp = alleSpiele().filter(function (x) { return x.kennung === kennung; })[0];
+      if (!sp) { meldung("Spiel nicht gefunden.", "warn"); return false; }
+      rechnungWahl = {}; rechnungWahl[kennung] = sp;
+      abrechnungPanel = "rechnung";
+      rendereAbrechnung();
+      setTimeout(function () {
+        var p = wurzel.querySelector(".mg-panel");
+        if (p) p.scrollIntoView({ block: "start", behavior: "smooth" });
+      }, 250);
+      return true;
+    });
+  }
+
   function rechnungPanel() {
     var box = h("div", {});
     var daten = rechnungDaten();
-    var meine = alleSpiele().filter(function (sp) {
-      var e = einsaetze[sp.kennung];
-      return e && betragFuer(sp, e).betrag != null && new Date(sp.beginn) <= new Date();
-    }).sort(function (a, b) { return a.beginn < b.beginn ? 1 : -1; }).slice(0, 60);
+    // Gerade geschrieben: der Ladeweg auf dem iPhone ist nicht immer zu
+    // sehen - hier liegt die Rechnung noch einmal zum Mitnehmen.
+    if (rechnungFertig) {
+      var f = rechnungFertig;
+      box.appendChild(h("div", { class: "hinweis gut", style: "margin-bottom:12px" }, [
+        h("span", {}, [h("b", { text: "Rechnung " + f.nummer + " ist fertig." }),
+          h("small", { style: "display:block", text: f.name })]),
+        h("button", { type: "button", class: "anfrage", text: "Nochmal laden", onclick: function () { pdfHerunterladen(f.blob, f.name); } })
+      ]));
+    }
+    var meine = rechnungSpiele();
 
     // ---- 1. Meine Daten ------------------------------------------------
     var fName = h("input", { type: "text", value: daten.name || (profil && profil.name) || "", placeholder: "Nachname, Vorname" });
@@ -1222,9 +1267,10 @@ window.Mitglieder = (function () {
                verein: fVer.value.trim(), steuernummer: fSt.value.trim(), klein: fKlein.checked,
                praefix: fPraefix.value.trim(), nummer: parseInt(fNummer.value, 10) || 1 };
     }
-    var daten1 = h("details", { class: "tausch" }, [h("summary", { text: daten.name ? "Meine Daten ✓" : "Meine Daten – einmal ausfüllen" })]);
+    var daten1 = h("details", { class: "tausch" }, [h("summary", { text: daten.name ? "Meine Daten ✓ · " + daten.name : "Meine Daten – einmal ausfüllen" })]);
     daten1.open = !daten.name;
     daten1.appendChild(h("div", { class: "mg-form" }, [
+      h("p", { class: "meta", style: "margin:0", text: "Steht auf jeder Rechnung als Rechnungssteller. Liegt im Konto, gilt auf allen Geräten." }),
       h("label", { text: "Name" }), fName,
       h("label", { text: "Straße und Nr." }), fStr,
       h("label", { text: "PLZ und Ort" }), fOrt,
@@ -1236,7 +1282,7 @@ window.Mitglieder = (function () {
       h("button", { type: "button", class: "haupt", text: "Daten merken", onclick: function () {
         rechnungDatenSpeichern(stammdatenSammeln()).then(function (ok) {
           kurzMeldung(ok ? "Gemerkt ✓ – gilt auf allen Geräten." : "Konnte nicht gespeichert werden.", ok ? "gut" : "warn");
-          if (ok) daten1.open = false;
+          if (ok) { abrechnungPanel = "rechnung"; rendereAbrechnung(); }
         });
       } })
     ]));
@@ -1244,24 +1290,25 @@ window.Mitglieder = (function () {
 
     // ---- 2. Spiele waehlen ---------------------------------------------
     box.appendChild(h("h4", { style: "margin:14px 0 4px", text: "Spiele auf die Rechnung (bis zu drei)" }));
-    box.appendChild(h("p", { class: "meta", style: "margin:0 0 8px", text: "Ein Formular je Verein und Spieltag – so will es die Gebührenordnung." }));
+    box.appendChild(h("p", { class: "meta", style: "margin:0 0 8px", text: "Ein Formular je Verein und Spieltag. Kommende Spiele gehen auch – der Betrag kommt dann aus der Gebührenordnung." }));
     var wahlBox = h("div", { class: "rechnung-wahl" });
-    if (!meine.length) wahlBox.appendChild(h("p", { class: "meta", text: "Noch kein Spiel mit Betrag erfasst." }));
-    meine.slice(0, 20).forEach(function (sp) {
-      var e = einsaetze[sp.kennung], b = betragFuer(sp, e), d = new Date(sp.beginn);
+    if (!meine.length) wahlBox.appendChild(h("p", { class: "meta", text: "Kein Spiel gefunden, zu dem sich ein Betrag ermitteln lässt." }));
+    var jetzt = Date.now();
+    meine.slice(0, 25).forEach(function (sp) {
+      var b = rechnungBetrag(sp), d = new Date(sp.beginn);
       var c = h("input", { type: "checkbox" });
       c.checked = !!rechnungWahl[sp.kennung];
       c.addEventListener("change", function () {
         if (c.checked) {
-          var n = Object.keys(rechnungWahl).length;
-          if (n >= 3) { c.checked = false; kurzMeldung("Mehr als drei Spiele passen nicht auf das Formular.", "warn"); return; }
+          if (Object.keys(rechnungWahl).length >= 3) { c.checked = false; kurzMeldung("Mehr als drei Spiele passen nicht auf das Formular.", "warn"); return; }
           rechnungWahl[sp.kennung] = sp;
         } else delete rechnungWahl[sp.kennung];
         abrechnungPanel = "rechnung"; rendereAbrechnung();
       });
+      var zusatz = euro(b.betrag) + (b.geschaetzt ? " · nach Ordnung" : "") + (d.getTime() > jetzt ? " · kommt noch" : "");
       var l = h("label", { class: "rechnung-zeile" }, [
         h("span", {}, [h("b", { text: datumLang(d) + " · " + (sp.liga ? sp.liga + ": " : "") + sp.paarung }),
-                       h("small", { text: (sp.halle || "") + " · " + euro(b.betrag) })]),
+                       h("small", { text: (sp.halle || "") + " · " + zusatz })]),
         c]);
       l._kennung = sp.kennung;
       wahlBox.appendChild(l);
@@ -1270,33 +1317,51 @@ window.Mitglieder = (function () {
 
     var gewaehlt = Object.keys(rechnungWahl).map(function (k) { return rechnungWahl[k]; })
       .sort(function (a, b) { return a.beginn < b.beginn ? -1 : 1; });
-    // Schon geschriebene Rechnungen: in der Liste markieren, unten auflisten
+
+    // Schon geschriebene Rechnungen: markieren und unten auflisten
     rechnungenLaden().then(function (liste) {
       if (!liste.length || !wahlBox.isConnected) return;
       var drin = {};
       liste.forEach(function (rg) { (rg.kennungen || []).forEach(function (k) { drin[k] = rg.nummer; }); });
       Array.prototype.forEach.call(wahlBox.querySelectorAll(".rechnung-zeile"), function (z) {
         var k = z._kennung; if (!k || !drin[k]) return;
-        var s = z.querySelector("small"); if (s) s.textContent += " \u00b7 Rechnung " + drin[k] + " \u2713";
+        var sm = z.querySelector("small"); if (sm) sm.textContent += " · Rechnung " + drin[k] + " ✓";
       });
-      var alt = box.querySelector(".rechnung-verlauf"); if (alt) alt.remove();
+      if (box.querySelector(".rechnung-verlauf")) return;
       var vb = h("div", { class: "rechnung-verlauf" }, [h("h4", { style: "margin:16px 0 4px", text: "Zuletzt geschrieben" })]);
       var k2 = h("div", { class: "karte protokoll" });
       liste.slice(0, 5).forEach(function (rg) {
-        k2.appendChild(h("div", { class: "zeile" }, [h("span", { class: "art" , text: rg.nummer }),
-          h("span", {}, [h("b", { text: rg.verein || "" }), h("small", { text: new Date(rg.datum).toLocaleDateString("de-DE") + " \u00b7 " + euro(rg.betrag || 0) })])]));
+        k2.appendChild(h("div", { class: "zeile" }, [h("span", { class: "art", text: rg.nummer }),
+          h("span", {}, [h("b", { text: rg.verein || "" }),
+            h("small", { text: new Date(rg.datum).toLocaleDateString("de-DE") + " · " + euro(rg.betrag || 0) })])]));
       });
       vb.appendChild(k2); box.appendChild(vb);
     });
+
     if (!gewaehlt.length) return box;
-    // Das Formular gilt je Verein und Spieltag - gemischte Auswahl geht schief
+
+    // Doppelansetzungen: die uebrigen Spiele desselben Tages beim selben
+    // Verein mit einem Tipp dazunehmen - das ist der haeufigste Fall.
+    (function () {
+      if (gewaehlt.length >= 3) return;
+      var tag = new Date(gewaehlt[0].beginn).toDateString(), ver = heimVereinVon(gewaehlt[0]);
+      var dazu = meine.filter(function (sp) {
+        return !rechnungWahl[sp.kennung] && new Date(sp.beginn).toDateString() === tag && heimVereinVon(sp) === ver;
+      }).slice(0, 3 - gewaehlt.length);
+      if (!dazu.length) return;
+      box.appendChild(h("p", { class: "meta", style: "margin:8px 0 0" }, [
+        h("button", { type: "button", class: "textknopf", text: "+ " + dazu.length + (dazu.length === 1 ? " weiteres Spiel" : " weitere Spiele") + " an dem Tag bei " + ver + " dazunehmen",
+          onclick: function () { dazu.forEach(function (sp) { rechnungWahl[sp.kennung] = sp; }); abrechnungPanel = "rechnung"; rendereAbrechnung(); } })]));
+    })();
+
+    // Das Formular gilt je Verein und Spieltag
     var vereine = {}, tage = {};
     gewaehlt.forEach(function (sp) { vereine[heimVereinVon(sp)] = 1; tage[new Date(sp.beginn).toDateString()] = 1; });
     if (Object.keys(vereine).length > 1 || Object.keys(tage).length > 1) {
       box.appendChild(h("div", { class: "hinweis warn", style: "margin-top:10px" }, [
         h("span", { text: Object.keys(vereine).length > 1
-          ? "Die Spiele gehen an verschiedene Vereine \u2013 dafür braucht es je Verein eine eigene Rechnung."
-          : "Die Spiele sind an verschiedenen Tagen \u2013 das Formular hat nur ein Datumsfeld." })]));
+          ? "Die Spiele gehen an verschiedene Vereine – dafür braucht es je Verein eine eigene Rechnung."
+          : "Die Spiele sind an verschiedenen Tagen – das Formular hat nur ein Datumsfeld." })]));
     }
 
     // ---- 3. Empfaenger --------------------------------------------------
@@ -1305,7 +1370,7 @@ window.Mitglieder = (function () {
     var vStr = h("input", { type: "text", value: "", placeholder: "Straße und Nr." });
     var vOrt = h("input", { type: "text", value: "", placeholder: "PLZ und Ort" });
     vereinAdressenLaden().then(function (map) {
-      var a = map[verein]; if (!a) return;
+      var a = map[verein]; if (!a || !vName.isConnected) return;
       if (a.name) vName.value = a.name;
       vStr.value = a.strasse || ""; vOrt.value = a.plz_ort || "";
     });
@@ -1314,31 +1379,53 @@ window.Mitglieder = (function () {
     box.appendChild(h("div", { class: "mg-form" }, [
       vName, vStr, vOrt,
       h("button", { type: "button", class: "mg-neben", text: "Adresse für alle merken", onclick: function () {
-        sb.from("vereine_adressen").upsert({ verein: verein, name: vName.value.trim(), strasse: vStr.value.trim(), plz_ort: vOrt.value.trim(), angelegt_von: session.user.id, geaendert: new Date().toISOString() })
+        speichern(sb.from("vereine_adressen").upsert({ verein: verein, name: vName.value.trim(), strasse: vStr.value.trim(),
+                                                       plz_ort: vOrt.value.trim(), angelegt_von: session.user.id, geaendert: new Date().toISOString() }))
           .then(function (r) {
-            if (r.error) { meldung(fehlerText(r.error), "warn"); return; }
+            if (r && r.error) { meldung(fehlerText(r.error), "warn"); return; }
             vereinAdressen = null; kurzMeldung("Gemerkt ✓ – Kollegen sehen die Adresse auch.", "gut");
           });
       } })
     ]));
 
-    // ---- 4. Betraege ----------------------------------------------------
+    // ---- 4. Angaben auf dem Formular ------------------------------------
+    var d0 = new Date(gewaehlt[0].beginn);
+    var eDatum = h("input", { type: "text", value: d0.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" }) });
+    var eOrt = h("input", { type: "text", value: gewaehlt[0].halle || "" });
+    var eKlasse = h("input", { type: "text", value: gewaehlt[0].liga || "" });
     var pauschale = 0, zuschlag = 0;
     gewaehlt.forEach(function (sp) {
-      var b = betragFuer(sp, einsaetze[sp.kennung]);
+      var b = rechnungBetrag(sp);
       pauschale += (b.betrag || 0) - (b.zeit || 0);
       zuschlag += b.zeit || 0;
     });
-    var klein = fKlein.checked;
-    var ust = klein ? 0 : (pauschale + zuschlag) * 0.19;
-    var gesamt = pauschale + zuschlag + ust;
-    var summen1 = h("div", { class: "karte summenliste", style: "margin-top:12px" }, [
-      h("div", { class: "kopfzahl" }, [h("b", { text: euro(gesamt) }), h("span", { text: "Gesamtbetrag" })]),
-      h("div", { class: "reihe-zahl" }, [h("span", { text: "Pauschale" }), h("b", { text: euro(pauschale) })]),
-      zuschlag ? h("div", { class: "reihe-zahl" }, [h("span", { text: "+ 20 % Zuschuss (späte oder frühe Spiele)" }), h("b", { text: euro(zuschlag) })]) : null,
-      h("div", { class: "reihe-zahl" }, [h("span", { text: klein ? "Umsatzsteuer (Kleinunternehmer § 19)" : "+ 19 % Umsatzsteuer" }), h("b", { text: klein ? "—" : euro(ust) })])
-    ]);
-    box.appendChild(summen1);
+    var ePausch = h("input", { type: "number", step: "0.01", min: "0", value: (Math.round(pauschale * 100) / 100).toFixed(2) });
+    var eZuschl = h("input", { type: "number", step: "0.01", min: "0", value: (Math.round(zuschlag * 100) / 100).toFixed(2) });
+    var summeZeile = h("div", { class: "kopfzahl" }, [h("b", { text: "–" }), h("span", { text: "Gesamtbetrag" })]);
+    var ustZeile = h("div", { class: "reihe-zahl" }, [h("span", { text: "" }), h("b", { text: "" })]);
+    function rechne() {
+      var p = parseFloat(String(ePausch.value).replace(",", ".")) || 0;
+      var z = parseFloat(String(eZuschl.value).replace(",", ".")) || 0;
+      var klein = fKlein.checked;
+      var ust = klein ? 0 : (p + z) * 0.19;
+      summeZeile.firstChild.textContent = euro(p + z + ust);
+      ustZeile.firstChild.textContent = klein ? "Umsatzsteuer (Kleinunternehmer § 19)" : "+ 19 % Umsatzsteuer";
+      ustZeile.lastChild.textContent = klein ? "—" : euro(ust);
+      return { pauschale: p, zuschlag: z, ust: ust, gesamt: p + z + ust, klein: klein };
+    }
+    [ePausch, eZuschl].forEach(function (i) { i.addEventListener("input", rechne); });
+    fKlein.addEventListener("change", rechne);
+
+    box.appendChild(h("h4", { style: "margin:14px 0 4px", text: "Angaben auf dem Formular" }));
+    box.appendChild(h("div", { class: "mg-form" }, [
+      h("label", { text: "Datum" }), eDatum,
+      h("label", { text: "Spielort" }), eOrt,
+      h("label", { text: "Spielklasse" }), eKlasse,
+      h("label", { text: "Pauschale (€)" }), ePausch,
+      h("label", { text: "Zuschuss 20 % (€) – bei Spielbeginn ab 21:46 oder bis 9:14 Uhr" }), eZuschl
+    ]));
+    box.appendChild(h("div", { class: "karte summenliste", style: "margin-top:12px" }, [summeZeile, ustZeile]));
+    rechne();
 
     // ---- 5. Erzeugen ----------------------------------------------------
     var nummer = (fPraefix.value.trim() || "") + String(fNummer.value || 1).padStart(3, "0");
@@ -1348,17 +1435,24 @@ window.Mitglieder = (function () {
         var st = stammdatenSammeln();
         if (!st.name || !st.strasse || !st.plz_ort) { meldung("Bitte oben erst deine Daten ausfüllen.", "warn"); daten1.open = true; return; }
         rechnungErzeugen(st, { verein: verein, name: vName.value.trim(), strasse: vStr.value.trim(), plz_ort: vOrt.value.trim() },
-                         gewaehlt, { pauschale: pauschale, zuschlag: zuschlag, ust: ust, gesamt: gesamt, klein: klein }, nummer);
+                         gewaehlt, rechne(), nummer,
+                         { datum: eDatum.value.trim(), ort: eOrt.value.trim(), klasse: eKlasse.value.trim() });
       } }),
       h("button", { type: "button", text: "Auswahl leeren", onclick: function () { rechnungWahl = {}; rendereAbrechnung(); } })
     ]));
     return box;
   }
 
-  function rechnungErzeugen(st, verein, spiele1, betraege, nummer) {
+  // Ein Supabase-Aufruf ist kein echtes Promise (kein .catch) - das hier
+  // macht eines daraus, damit ein Fehler beim Notieren nicht die fertige
+  // Rechnung kaputtmacht.
+  function speichern(aufruf) {
+    return Promise.resolve().then(function () { return aufruf; }).catch(function (e) { return { error: e }; });
+  }
+
+  function rechnungErzeugen(st, verein, spiele1, betraege, nummer, formular) {
     kurzMeldung("Rechnung wird gebaut …", "");
     ladeRechnung().then(function (R) {
-      var d = new Date(spiele1[0].beginn);
       var werte = {
         "undefined": nummer,
         "Rechnungssteller Schiedsrichter": st.name,
@@ -1369,9 +1463,9 @@ window.Mitglieder = (function () {
         "Rechnungsempfänger Verein": verein.name || verein.verein,
         "Straße und Nr_2": verein.strasse,
         "PLZ und Ort": verein.plz_ort,
-        "4": d.toLocaleDateString("de-DE"),
-        "Spielort": spiele1[0].halle || "",
-        "Dropdown3": spiele1[0].liga || "",
+        "4": formular.datum,
+        "Spielort": formular.ort,
+        "Dropdown3": formular.klasse,
         "€": { text: euroZahl(betraege.pauschale), ausrichtung: "rechts" },
         "€_4": { text: euroZahl(betraege.gesamt), ausrichtung: "rechts" }
       };
@@ -1385,20 +1479,31 @@ window.Mitglieder = (function () {
       });
       return R.bauen(werte).then(function (blob) {
         var name = "Abrechnung_" + nummer.replace(/[^\w-]+/g, "_") + "_" + (verein.verein || "Verein").replace(/[^\w]+/g, "") + ".pdf";
-        var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name;
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
-        setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
-        kurzMeldung("Rechnung " + nummer + " fertig ✓", "gut");
-        // Nummer hochzaehlen und die Rechnung notieren
+        pdfHerunterladen(blob, name);
+        // Ab hier ist die Rechnung fertig - was jetzt schiefgeht, darf sie
+        // nicht mehr in Frage stellen.
         var neu = {}; Object.keys(st).forEach(function (k) { neu[k] = st[k]; });
         neu.nummer = (parseInt(st.nummer, 10) || 1) + 1;
-        rechnungDatenSpeichern(neu);
-        sb.from("rechnungen").insert({ user_id: session.user.id, nummer: nummer, datum: new Date(spiele1[0].beginn).toISOString().slice(0, 10),
-                                       verein: verein.verein, betrag: Math.round(betraege.gesamt * 100) / 100,
-                                       kennungen: spiele1.map(function (x) { return x.kennung; }) }).catch(function () {});
         rechnungWahl = {}; rechnungListe = null;
+        return speichern(sb.from("rechnungen").insert({
+          user_id: session.user.id, nummer: nummer,
+          datum: new Date(spiele1[0].beginn).toISOString().slice(0, 10),
+          verein: verein.verein, betrag: Math.round(betraege.gesamt * 100) / 100,
+          kennungen: spiele1.map(function (x) { return x.kennung; })
+        })).then(function () { return rechnungDatenSpeichern(neu); })
+          .then(function () {
+            rechnungFertig = { blob: blob, name: name, nummer: nummer };
+            kurzMeldung("Rechnung " + nummer + " fertig ✓", "gut");
+            abrechnungPanel = "rechnung"; rendereAbrechnung();
+          });
       });
     }).catch(function (e) { meldung("Rechnung fehlgeschlagen: " + (e && e.message ? e.message : e), "warn"); });
+  }
+
+  function pdfHerunterladen(blob, name) {
+    var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
   }
 
   function aktualisiereZeile(spiel) {
@@ -3504,6 +3609,6 @@ window.Mitglieder = (function () {
            sperrenAm: sperrenAm, gesuchAnlegen: gesuchAnlegen, offeneAbrechnungen: offeneAbrechnungen,
            extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat, obmann: obmann, termine: termine,
            einstellungenSpeichern: einstellungenSpeichern, radar: radar, angebotMachen: angebotMachen,
-           kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl, kontoRendern: kontoRendern, kontaktVon: kontaktVon, istAdmin: istAdmin, adminRecht: adminRecht, tresorSchluessel: tresorSchluessel, korrekturSpeichern: korrekturSpeichern, spielManuellLoeschen: spielManuellLoeschen,
+           kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl, kontoRendern: kontoRendern, kontaktVon: kontaktVon, istAdmin: istAdmin, adminRecht: adminRecht, tresorSchluessel: tresorSchluessel, rechnungSprung: rechnungSprung, korrekturSpeichern: korrekturSpeichern, spielManuellLoeschen: spielManuellLoeschen,
            mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, telefonVon: telefonVon, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb, wohnortEigen: wohnortEigen };
 })();

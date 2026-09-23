@@ -491,7 +491,7 @@
     if (!("ontouchstart" in window)) return;
     var meins = !!(profil && profil.slug && ((s.besetzung || []).some(function (b) { return b.slug === profil.slug; }) || s.rolle));
     var linksAktion = s.ort ? { text: "Route", icon: "i-route", tu: function () { window.open(kartenLink(s.ort), "_blank", "noopener"); } } : null;
-    var rechtsAktion = meins && s.vergangen && funktion("abrechnung") ? { text: "Abrechnen", icon: "i-euro", tu: function () { location.hash = "abrechnen/" + encodeURIComponent(kennungVon(s)); } }
+    var rechtsAktion = meins && funktion("abrechnung") ? { text: s.vergangen ? "Abrechnen" : "Rechnung", icon: "i-euro", tu: function () { location.hash = (s.vergangen ? "abrechnen/" : "rechnung/") + encodeURIComponent(kennungVon(s)); } }
                      : meins && funktion("notizen") ? { text: "Notiz", icon: "i-note", tu: function () { location.hash = "spiel/" + encodeURIComponent(kennungVon(s)); } }
                      : { text: "Details", icon: "i-list", tu: function () { location.hash = "spiel/" + encodeURIComponent(kennungVon(s)); } };
     var l = document.createElement("div"); l.className = "wisch links"; if (linksAktion) { l.appendChild(ikone(linksAktion.icon)); l.appendChild(document.createTextNode(linksAktion.text)); }
@@ -992,7 +992,16 @@
     }
     if (meins) {
       var ab = karteAbschnitt("Weiteres");
-      if (funktion("abrechnung")) { var l = document.createElement("a"); l.className = "zeile-link"; l.href = "#abrechnen/" + encodeURIComponent(kennungVon(s)); l.appendChild(ikone("i-euro")); l.appendChild(document.createTextNode("Zur Abrechnung dieses Spiels")); ab.appendChild(l); }
+      if (funktion("abrechnung")) {
+        var l = document.createElement("a"); l.className = "zeile-link"; l.href = "#abrechnen/" + encodeURIComponent(kennungVon(s));
+        l.appendChild(ikone("i-euro")); l.appendChild(document.createTextNode("Zur Abrechnung dieses Spiels")); ab.appendChild(l);
+        // Direkt zur Gebuehrenabrechnung fuer genau dieses Spiel: die Angaben
+        // kommen aus dem Konto, aendern kann man sie vorher trotzdem.
+        var rl = document.createElement("a"); rl.className = "zeile-link"; rl.href = "#rechnung/" + encodeURIComponent(kennungVon(s));
+        rl.appendChild(ikone("i-note"));
+        rl.appendChild(document.createTextNode("Rechnung schreiben (PDF fürs Formular)"));
+        ab.appendChild(rl);
+      }
       if (!s.vergangen) {
         var mailZeile = document.createElement("div");
         var mail = document.createElement("a"); mail.className = "zeile-link"; mail.href = "#"; mail.appendChild(ikone("i-bell")); mail.appendChild(document.createTextNode("Obmann anschreiben (Absage / Frage)"));
@@ -3530,6 +3539,12 @@
     if (slug === "mitglieder/konto") { location.hash = "einstellungen"; return; }
     if (slug === "aenderungen") { zeigeAenderungen(); return; }
     if (slug === "archiv" || slug.indexOf("archiv/") === 0) { zeigeArchiv(slug.split("/")[1] || ""); return; }
+    if (slug.indexOf("rechnung/") === 0) {
+      var rk = decodeURIComponent(slug.slice(9));
+      ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
+        .then(function () { return window.Mitglieder.rechnungSprung(rk); }).catch(function () {});
+      location.hash = "mitglieder/abrechnung"; return;
+    }
     if (slug.indexOf("abrechnen/") === 0) { var kz = decodeURIComponent(slug.slice(10)); ladeMitglieder().then(function (M) { M.abrechnungSprung(kz); }).catch(function () {}); location.hash = "mitglieder/abrechnung"; return; }
     if (slug === "mitfahren") { if (!funktion("gespann")) { location.hash = "mehr"; return; } zeigeMitfahren(); return; }
     if (slug === "anleitung") { location.hash = "mehr"; tourOeffnen("alles"); return; }

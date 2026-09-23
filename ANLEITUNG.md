@@ -1572,6 +1572,31 @@ die App kommt mit beidem zurecht. Es ist dann nur nichts geschützt.
   so ist sie gedacht. Sie darf nur, was die Regeln in `supabase/schema.sql`
   erlauben, und das ist ohne Anmeldung fast nichts.
 
+### 10.6ae Rechnung: Fehler behoben, kommende Spiele, direkt vom Spiel
+
+* **Der Fehler nach dem Erstellen ist weg.** Die fertige Rechnung wurde
+  heruntergeladen, danach kam trotzdem „Rechnung fehlgeschlagen“ – und die
+  Auswahl blieb hängen. Ursache: Ein Supabase-Aufruf ist kein echtes
+  Versprechen, `.catch` gibt es darauf nicht. Das Notieren der Rechnung
+  läuft jetzt über einen eigenen kleinen Umweg, und was nach dem Download
+  noch schiefgeht, stellt die fertige Rechnung nicht mehr in Frage.
+* **Kommende Spiele gehen auch.** Ist noch kein Betrag erfasst, nimmt die
+  App die Gebührenordnung (samt 20 %-Zuschuss bei früher oder später
+  Anspielzeit). In der Liste steht dann „nach Ordnung · kommt noch“.
+* **Direkt vom Spiel aus**: Auf der Spielseite unter „Weiteres“ gibt es
+  **„Rechnung schreiben (PDF fürs Formular)“**; auf den Spielkarten liegt
+  dieselbe Aktion hinterm Wischen nach rechts. Das Spiel ist dann schon
+  vorgemerkt, Datum, Spielort und Spielklasse stehen drin.
+* **Vorher bearbeiten**: Datum, Spielort, Spielklasse, Pauschale und
+  Zuschuss stehen als Felder da und lassen sich ändern, bevor das PDF
+  entsteht. Gesamtbetrag und Umsatzsteuer rechnen beim Tippen mit. Alles
+  andere – Name, Anschrift, Verein, Steuernummer, Kleinunternehmer,
+  Rechnungsnummer – kommt aus dem Konto und gilt auf allen Geräten.
+* **Doppelansetzung**: Ist ein Spiel gewählt, bietet die App die übrigen
+  Spiele desselben Tages beim selben Verein mit einem Tipp dazu an.
+* **Nach dem Erstellen** steht die Rechnung oben im Blatt mit
+  „Nochmal laden“ – falls der Download auf dem iPhone untergegangen ist.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –
