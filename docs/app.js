@@ -268,7 +268,7 @@
     toast(neu ? "Admin-Modus an – Betreiber-Funktionen sichtbar." : "Admin-Modus aus – App wie für alle anderen.", "gut");
     zaehlerHolen(); ausHash();
   });
-  document.addEventListener("mg-sitzung", function () { adminKnopfZeigen(); });
+  document.addEventListener("mg-sitzung", function () { adminKnopfZeigen(); tabDritterAnwenden(); ausHash(); });
   // Tipp auf den Reiter, auf dem man schon steht: nach oben scrollen
   Array.prototype.forEach.call(document.querySelectorAll(".leiste button"), function (b) {
     b.addEventListener("click", function () { if (b.classList.contains("aktiv")) window.scrollTo({ top: 0, behavior: "smooth" }); });
@@ -1006,7 +1006,7 @@
       }
     }
     // Aenderungsverlauf aus dem Protokoll (14 Tage): was wurde wann geaendert
-    hole("protokoll.json").then(function (pl) {
+    if (sitzungVorhanden()) hole("protokoll.json").then(function (pl) {
       if (inhalt._lauf !== lauf) return;
       var meine = (pl || []).filter(function (e) { return e.kennung && e.kennung === kennungVon(s); });
       if (!meine.length) return;
@@ -2076,17 +2076,31 @@
   function tabDritter() {
     var w = lesen("tab3");
     var gewaehlt = w && TAB_ZIELE.filter(function (t) { return t[0] === w; })[0];
-    if (gewaehlt && (!gewaehlt[3] || funktion(gewaehlt[3]))) return gewaehlt;
+    if (gewaehlt && (!gewaehlt[3] || funktion(gewaehlt[3])) && !gesperrtFuerMich(gewaehlt[0])) return gewaehlt;
+    if (!sitzungVorhanden()) return ["plan", "i-list", "Spielplan"];
     return funktion("tausch") ? TAB_ZIELE[0] : TAB_ZIELE[1];
   }
   function tabDritterAnwenden() {
     var b = el("tab-tausch"); if (!b) return;
-    var t = tabDritter();
-    b._ziel = t[0];
-    b.innerHTML = "";
-    b.appendChild(ikone(t[1]));
-    b.appendChild(document.createTextNode(t[2]));
-    b.title = t[2];
+    // Ohne Konto bleibt der dritte Platz leer - sonst staende dort ein
+    // zweites Mal "Spielplan".
+    if (!sitzungVorhanden()) { b.classList.add("versteckt"); b._ziel = ""; }
+    else {
+      b.classList.remove("versteckt");
+      var t = tabDritter();
+      b._ziel = t[0];
+      b.innerHTML = "";
+      b.appendChild(ikone(t[1]));
+      b.appendChild(document.createTextNode(t[2]));
+      b.title = t[2];
+    }
+    // Vierter Platz: ohne Konto fuehrt er zur Anmeldung, nicht zur Abrechnung
+    var ab = el("tab-abrechnung"); if (!ab) return;
+    var an = sitzungVorhanden();
+    ab._ziel = an ? "mitglieder/abrechnung" : "mitglieder";
+    ab.innerHTML = "";
+    ab.appendChild(ikone(an ? "i-euro" : "i-lock"));
+    ab.appendChild(document.createTextNode(an ? "Abrechnung" : "Anmelden"));
   }
   function tabWahlRendern() {
     var box = el("tab-wahl"); if (!box) return;
@@ -2094,6 +2108,7 @@
     var jetzt = tabDritter();
     TAB_ZIELE.forEach(function (t) {
       if (t[3] && !funktion(t[3])) return;
+      if (gesperrtFuerMich(t[0])) return;
       var l = document.createElement("label");
       var s = document.createElement("span"); var b = document.createElement("b"); b.textContent = t[2]; b.style.display = "block"; s.appendChild(b);
       var r = document.createElement("input"); r.type = "radio"; r.name = "tab3"; r.checked = jetzt[0] === t[0];
@@ -2124,7 +2139,7 @@
     var aus = {}; try { aus = JSON.parse(lesen("schnell-aus") || "{}") || {}; } catch (e) {}
     SCHNELL_ZIELE.forEach(function (e) {
       if (e[3] && !funktion(e[3])) return;
-      if (inLeiste(e[0])) return;
+      if (inLeiste(e[0]) || gesperrtFuerMich(e[0])) return;
       var l = document.createElement("label"); var t = document.createElement("span");
       var b = document.createElement("b"); b.textContent = e[2]; b.style.display = "block"; t.appendChild(b);
       var c = document.createElement("input"); c.type = "checkbox"; c.checked = !aus[e[0]];
@@ -2194,7 +2209,7 @@
     var box = el("schnellzugriff"); box.innerHTML = "";
     if (!meins || !startEinstellung("schnell")) { box.classList.add("versteckt"); return; }
     var aus = {}; try { aus = JSON.parse(lesen("schnell-aus") || "{}") || {}; } catch (e) {}
-    var eintraege = SCHNELL_ZIELE.filter(function (e) { return (!e[3] || funktion(e[3])) && !aus[e[0]] && !inLeiste(e[0]); });
+    var eintraege = SCHNELL_ZIELE.filter(function (e) { return (!e[3] || funktion(e[3])) && !aus[e[0]] && !inLeiste(e[0]) && !gesperrtFuerMich(e[0]); });
     if (!eintraege.length) { box.classList.add("versteckt"); return; }
     var zuletzt = [];
     try { zuletzt = JSON.parse(lesen("zuletzt-ziele") || "[]"); } catch (e) {}
@@ -2304,7 +2319,7 @@
   var letzteAnsicht = "auswahl";
   function ansicht(name) {
     letzteAnsicht = name;
-    ["auswahl", "detail", "plan", "mitglieder", "halle", "status", "spiel", "mehr", "einstellungen", "karte", "statseite", "aenderungen", "mitfahren", "archiv"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
+    ["auswahl", "detail", "plan", "mitglieder", "halle", "status", "spiel", "mehr", "einstellungen", "karte", "statseite", "aenderungen", "mitfahren", "archiv", "gesperrt"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
     if (name !== "plan" && typeof filterBlatt === "function" && !el("plan-filter-blatt").classList.contains("versteckt")) filterBlatt(false);
     var reiter = (location.hash.split("/")[1] || "");
     if (name !== "auswahl" && name !== "detail") { el("onboarding").classList.add("versteckt"); el("onboarding-kurz").classList.add("versteckt"); el("neu").classList.add("versteckt"); }
@@ -3084,6 +3099,19 @@
     return Object.keys(diagnose).map(function (k) { return k + ": " + diagnose[k]; }).join("\n");
   }
   var diagnose = {};
+  // Sperrseite: sagt, was fehlt, und fuehrt zur Anmeldung - kein stilles
+  // Umleiten, sonst sucht man den Fehler bei sich.
+  var GESPERRT_NAMEN = { archiv: ["Archiv", "alle deine Spiele über alle Saisons, mit Filtern und Export"],
+    statistik: ["Statistik", "Saison, Ligen, Hallen, Partner und dein Saisonziel"],
+    aenderungen: ["Änderungen", "was sich zuletzt getan hat, mit Vorher und Nachher"],
+    mitfahren: ["Zusammen fahren", "wer wohin fährt – Mitfahrt anbieten oder suchen"],
+    karte: ["Hallenkarte", "alle Hallen auf der Karte"] };
+  function zeigeSperre(slug) {
+    ansicht("gesperrt"); aktuell = null; window.scrollTo(0, 0);
+    var n = GESPERRT_NAMEN[String(slug).split("/")[0]] || ["Dieser Bereich", "nur für Mitglieder"];
+    el("gesperrt-titel").textContent = n[0];
+    el("gesperrt-text").textContent = n[1];
+  }
   function zeigeStatus() {
     ansicht("status"); aktuell = null;
     var liste = el("status-liste"); liste.innerHTML = "";
@@ -3142,7 +3170,8 @@
       ["#status", "i-check", "Diagnose", "Für die Fehlersuche"]
     ];
     var links = {};
-    eintraege = eintraege.filter(Boolean).filter(function (e, i, a) { return e.length > 1 || (a[i + 1] && a[i + 1].length > 1); });
+    eintraege = eintraege.filter(Boolean).filter(function (e) { return e.length === 1 || !gesperrtFuerMich(e[0]); });
+    eintraege = eintraege.filter(function (e, i, a) { return e.length > 1 || (a[i + 1] && a[i + 1].length > 1); });
     if (!sitzungVorhanden()) eintraege.unshift(["#mitglieder", "i-lock", "Anmelden", "Konto anlegen oder anmelden – für " + [funktion("tausch") ? "Tausch" : "", funktion("abrechnung") ? "Abrechnung" : "", funktion("info") ? "Info" : "", "Notizen"].filter(Boolean).join(", ")]);
     eintraege.forEach(function (e) {
       if (e.length === 1) { var g = document.createElement("div"); g.className = "menue-gruppe"; g.textContent = e[0]; liste.appendChild(g); return; }
@@ -3204,6 +3233,7 @@
       var bald = ich.spiele.filter(function (s) { return !s.vergangen && new Date(s.beginn).getTime() <= bis; }).length;
       setze("#mitfahren", bald ? bald + " in 14 Tagen" : "");
     }
+    if (!sitzungVorhanden()) return;
     hole("protokoll.json").then(function (pl) {
       var grenze = Date.now() - 14 * 86400000;
       var meine = (pl || []).filter(function (e) {
@@ -3480,6 +3510,7 @@
     var gesperrt = { "mitglieder/tausch": "tausch", "mitglieder/frei": "frei", "mitglieder/abrechnung": "abrechnung", "mitglieder/info": "info", "mitglieder/notizen": "notizen", "karte": "hallen", "statistik": "statistik" };
     var schl = gesperrt[slug] || (slug.indexOf("statistik/") === 0 ? "statistik" : null);
     if (schl && !funktion(schl)) { toast("Zurzeit abgeschaltet: " + FUNKTIONEN.filter(function (f) { return f[0] === schl; })[0][1] + ".", "warn"); location.hash = slug.indexOf("mitglieder") === 0 ? "mitglieder" : "mehr"; return; }
+    if (gesperrtFuerMich(slug)) { zeigeSperre(slug); return; }
     if (slug === "status") { zeigeStatus(); return; }
     if (slug.indexOf("statistik") === 0) { zeigeStatSeite(slug.split("/")[1] || (profil && profil.slug) || ""); return; }
     if (slug === "mehr") { zeigeMehr(); return; }
@@ -3638,6 +3669,26 @@
     p.title = n ? (z.gesuche || 0) + " offene Gesuche" + (z.wartend ? ", " + z.wartend + " warten auf Freischaltung" : "") : "angemeldet";
     b.appendChild(p);
   }
+  // Ohne Konto sind nur die Namensauswahl, die Startseite einer Person, der
+  // Spielplan und die Detailseiten dazu (Spiel, Halle) zu sehen. Alles
+  // andere - Archiv, Statistik, Aenderungen, Zusammen fahren, Hallenkarte
+  // und der ganze Mitgliederbereich - erst nach der Anmeldung.
+  // Das ist die Anzeige; die Daten selbst schuetzen die Regeln in Supabase.
+  var NUR_MITGLIEDER = { archiv: 1, statistik: 1, aenderungen: 1, mitfahren: 1, karte: 1 };
+  function nurFuerMitglieder(ziel) {
+    var slug = String(ziel || "").replace(/^#/, "").split("/")[0];
+    return !!NUR_MITGLIEDER[slug];
+  }
+  // Fuer die Menues zaehlen auch die Unterseiten des Mitgliederbereichs dazu -
+  // "Notizen" oder "Info" anzubieten, wenn daraus nur ein Anmeldefenster wird,
+  // fuehrt in die Irre. Die Seite selbst bleibt erreichbar: dort steht das
+  // Anmeldeformular.
+  function gesperrtFuerMich(ziel) {
+    if (sitzungVorhanden()) return false;
+    var s = String(ziel || "").replace(/^#/, "");
+    if (nurFuerMitglieder(s)) return true;
+    return s.indexOf("mitglieder/") === 0;
+  }
   function sitzungVorhanden() {
     try {
       for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); if (/^sb-.*-auth-token$/.test(k) || k === "mock_session") return true; }
@@ -3666,6 +3717,7 @@
     });
   }
   tabTipp(el("tab-plan"), function () { location.hash = "plan"; });
+  el("gesperrt-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = ""; });
   el("aenderungen-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
   el("archiv-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
   ["archiv-suche", "archiv-saison", "archiv-liga", "archiv-rolle", "archiv-halle", "archiv-person"].forEach(function (id) { el(id).addEventListener(id === "archiv-suche" ? "input" : "change", function () { archivRendern(); }); });
@@ -3673,7 +3725,7 @@
   el("archiv-alle").addEventListener("change", function () { el("archiv-person").classList.toggle("versteckt", !el("archiv-alle").checked); zeigeArchiv(el("archiv-alle").checked ? "alle" : ""); });
   el("mitfahren-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
   tabTipp(el("tab-tausch"), function () { location.hash = el("tab-tausch")._ziel || "mitglieder/tausch"; });
-  tabTipp(el("tab-abrechnung"), function () { location.hash = "mitglieder/abrechnung"; });
+  tabTipp(el("tab-abrechnung"), function () { location.hash = el("tab-abrechnung")._ziel || "mitglieder/abrechnung"; });
   tabTipp(el("tab-mitglieder"), function () { location.hash = "mehr"; });
   el("spiel-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = ""; });
   el("einstellungen-zurueck").addEventListener("click", function () { location.hash = "mehr"; });

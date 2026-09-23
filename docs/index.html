@@ -1705,6 +1705,23 @@
     <div id="aenderungen-liste"></div>
   </section>
 
+  <!-- Nur fuer Mitglieder -->
+  <section id="gesperrt" class="versteckt">
+    <div class="profilzeile karte">
+      <span><span class="kopf-i"><svg class="i"><use href="#i-lock"/></svg></span><span><b>Nur für Mitglieder</b><small>anmelden oder Konto anlegen</small></span></span>
+      <button class="textknopf zurueck" id="gesperrt-zurueck"><svg class="i"><use href="#i-back"/></svg>Zurück</button>
+    </div>
+    <div class="karte melde">
+      <h4 id="gesperrt-titel">Dieser Bereich</h4>
+      <p id="gesperrt-text" class="meta"></p>
+      <p class="meta">Offen ohne Konto sind der <b>Spielplan</b> und die <b>Startseite</b> mit deinem Namen. Alles andere – Archiv, Statistik, Änderungen, Zusammen fahren, Hallenkarte, Abrechnung, Notizen, Info – gibt es nach der Anmeldung. Ein Konto ist kostenlos; der Betreiber schaltet dich frei.</p>
+      <div class="zweit">
+        <a class="anfrage" href="#mitglieder">Anmelden oder Konto anlegen</a>
+        <a class="mg-neben" href="#plan" style="text-decoration:none;text-align:center">Zum Spielplan</a>
+      </div>
+    </div>
+  </section>
+
   <section id="status" class="versteckt">
     <div class="profilzeile karte">
       <span><b>Diagnose</b><small>für die Fehlersuche – nichts davon geht irgendwohin</small></span>
@@ -1771,6 +1788,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=57"></script>
+<script src="app.js?v=58"></script>
 </body>
 </html>

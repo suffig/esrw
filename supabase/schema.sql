@@ -853,3 +853,36 @@ alter table public.rechnungen enable row level security;
 drop policy if exists "eigene Rechnungen" on public.rechnungen;
 create policy "eigene Rechnungen" on public.rechnungen for all to authenticated
   using (auth.uid() = user_id) with check (auth.uid() = user_id);
+
+-- ======================================================================
+-- v20: Zugang - was ohne Konto sichtbar ist, und was nicht
+-- ======================================================================
+-- In der App sind ohne Anmeldung nur noch der Spielplan und die Startseite
+-- einer Person zu sehen. Die Anzeige allein schuetzt nichts, darum hier die
+-- Regeln dazu. Grundsatz:
+--
+--   * Ohne Anmeldung (Rolle anon) darf nur gelesen werden, was ohnehin auf
+--     esrw.de steht: Schalter der Funktionen, Korrekturen und selbst
+--     angelegte Spiele, Hallen und Vereine, offizielle Hallenhinweise.
+--   * Angemeldet, aber noch nicht freigeschaltet: nur die eigenen Sachen.
+--   * Freigeschaltet: dazu das, was die Gruppe teilt (Tausch, Hallenwiki,
+--     Kontakte, Mitfahrten, Wohnorte, Telefonliste, Vereinsadressen).
+--
+-- Das Spielearchiv war bisher fuer jedes angemeldete Konto vollstaendig
+-- lesbar. Jetzt gilt: freigeschaltet sieht alles, wer noch wartet, sieht
+-- nur die eigenen Spiele.
+drop policy if exists "Archiv lesen" on public.spiele_archiv;
+create policy "Archiv lesen" on public.spiele_archiv for select to authenticated
+  using (public.ist_freigeschaltet() or public.mein_slug() = any (slugs));
+
+-- Zur Kontrolle: diese Abfrage zeigt, wer was lesen darf. Sollte hier eine
+-- Tabelle mit persoenlichen Daten und Rolle "anon" auftauchen, ist etwas
+-- falsch.
+--
+--   select schemaname, tablename, policyname, roles, cmd
+--     from pg_policies
+--    where schemaname = 'public' and cmd in ('SELECT', 'ALL')
+--    order by tablename, policyname;
+--
+-- Erwartet mit anon: funktionen, spiel_korrekturen, spiele_manuell,
+-- hallen_extra, vereine_extra, hallen_notizen (nur offiziell).

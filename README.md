@@ -320,6 +320,16 @@ packt daten.json, abrechnung.csv, notizen.txt und alle Belege im Browser
 zusammen; Kartenkacheln im Dunkelmodus abgedunkelt; „Am Spieltag groß“ macht
 die Kopfkarte am Spieltag bildschirmfüllend; Tipp auf die Stand-Pille lädt neu.
 
+**Nur mit Konto (Schema v20)**: Ohne Anmeldung gibt es nur Spielplan,
+Startseite einer Person samt Spiel- und Hallenseite und „Mehr“ als Einstieg.
+Archiv, Statistik, Änderungen, Zusammen fahren, Hallenkarte und der
+Mitgliederbereich führen auf eine Seite, die zur Anmeldung leitet; in den
+Menüs stehen sie gar nicht. Geschützt sind die Daten aber durch die
+RLS-Regeln in `supabase/schema.sql` (anon liest nur, was ohnehin auf esrw.de
+steht; ohne Freischaltung nur eigene Zeilen) – die Dateien in `docs/`
+(daten.json, archiv.json, protokoll.json, feeds/) bleiben öffentlich, weil
+Spielplan, Startseite und Kalender-Abo ohne Konto laufen sollen.
+
 **Gebührenabrechnung als PDF (Schema v19)**: Abrechnung → Rechnung füllt das
 Blanko-Formular des EHV NRW aus – eigene Daten einmal im Konto, Vereins-
 adressen teilen sich alle Kollegen (`vereine_adressen`), bis zu drei Spiele

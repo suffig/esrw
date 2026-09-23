@@ -1455,6 +1455,54 @@ lesen und pflegen) und `rechnungen` (nur für einen selbst). Dafür einmal
 **Außerdem in dieser Runde:** Bei den Liga-Filtern stehen Name und Anzahl in
 getrennten Feldern („U15 │ 34“), damit man beides auseinanderhält.
 
+### 10.6ac Nur noch mit Konto (Schema v20)
+
+Ohne Anmeldung zeigt die App nur noch:
+
+* den **Spielplan** mit allen Spielen, Filtern, Woche und Monat,
+* die **Startseite** einer Person (Namen wählen, nächstes Spiel, eigene
+  Spiele, Kalender abonnieren) und die Seiten, die direkt daraus aufgehen:
+  **Spielseite** und **Hallenseite**,
+* „Mehr“ als Einstieg (Anmelden, Einstellungen fürs Gerät, Anleitung,
+  Diagnose).
+
+**Archiv, Statistik, Änderungen, Zusammen fahren, Hallenkarte** und der
+ganze Mitgliederbereich (Abrechnung, Notizen, Info, Tausch, Verfügbarkeit,
+Admin) brauchen ein Konto. Wer sie ohne Anmeldung aufruft, landet auf einer
+Seite, die sagt, worum es geht, und direkt zur Anmeldung führt – statt auf
+einer leeren Seite. In den Menüs (Mehr, Schnellzugriff, Leiste unten)
+tauchen gesperrte Ziele gar nicht erst auf; der dritte Platz in der Leiste
+bleibt ohne Konto leer, der vierte heißt dann „Anmelden“.
+
+**Was die Anzeige nicht kann.** Ein Riegel in der App ist bequem, aber kein
+Schloss: Die Seite liegt auf GitHub Pages, und die Dateien, aus denen sie
+sich bedient, kann jeder abrufen, der die Adresse kennt –
+`daten.json` (alle Spiele, Namen, Hallen), `archiv.json`, `protokoll.json`
+und die Kalenderdateien unter `feeds/`. Das muss so sein, solange Spielplan,
+Startseite und Kalender-Abo ohne Konto funktionieren sollen: dieselben
+Dateien speisen beides.
+
+Wirklich geschützt ist alles, was in **Supabase** liegt – Abrechnung,
+Notizen, Belege, Kontakte, Telefonliste, Gespann-Notizen, Mitfahrten,
+Wohnorte, Ankündigungen, Vereinsadressen, Rechnungen. Dafür sorgen die
+Zugriffsregeln (RLS) in `supabase/schema.sql`, nicht die App:
+
+* **ohne Anmeldung** ist nur lesbar, was ohnehin auf esrw.de steht:
+  Funktionsschalter, Korrekturen, selbst angelegte Spiele, Hallen und
+  Vereine, offizielle Hallenhinweise;
+* **angemeldet, aber noch nicht freigeschaltet**: nur die eigenen Sachen;
+* **freigeschaltet**: dazu das, was die Gruppe teilt.
+
+Neu in v20: Das **Spielearchiv** in der Datenbank war bisher für jedes
+angemeldete Konto vollständig lesbar. Jetzt sieht es nur, wer
+freigeschaltet ist – wer noch wartet, sieht darin ausschließlich die
+eigenen Spiele. Dafür einmal `supabase/schema.sql` einspielen.
+
+Wenn auch die Dateien nicht mehr offen liegen sollen, führt der Weg über
+die Datenbank: `protokoll.json` und das Archiv wandern in Tabellen mit
+denselben Regeln, die Kalenderdateien bekommen je Person einen Schlüssel in
+der Adresse. Das ist ein eigener Umbau – sag Bescheid, wenn er kommen soll.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –
