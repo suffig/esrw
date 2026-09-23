@@ -35,12 +35,11 @@ DTSTAMP:20260915T152741Z
 LAST-MODIFIED:20260915T152741Z
 DTSTART:20260919T070000Z
 DTEND:20260919T103000Z
-SUMMARY:⚠ SR · U9 RL · EHC Troisdorf
-DESCRIPTION:Geändert: Ansetzung\n\nRolle: Schiedsrichter (SR)\nSpielbeginn
- : 10:00 Uhr\nTreffpunkt: 09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\n
- Halle: ICEDOME Troisdorf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdo
- rf\nGespann: Solbach\, Carsten\n\nQuelle: https://www.esrw.de/einteilungen
- .html
+SUMMARY:SR · U9 RL · EHC Troisdorf
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: ICEDOME Troisdorf
+ \nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Solbach\, C
+ arsten\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -57,12 +56,11 @@ DTSTAMP:20260915T152741Z
 LAST-MODIFIED:20260915T152741Z
 DTSTART:20260920T110000Z
 DTEND:20260920T143000Z
-SUMMARY:⚠ SR · U9 LL Rot · Krefelder EV 1b
-DESCRIPTION:Geändert: Ansetzung\n\nRolle: Schiedsrichter (SR)\nSpielbeginn
- : 14:00 Uhr\nTreffpunkt: 13:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL R
- ot\nHalle: Rheinlandhalle Krefeld\nAdresse: Westparkstraße 126\, 47803 Kr
- efeld\nGespann: Hofer\, Carsten\n\nQuelle: https://www.esrw.de/einteilunge
- n.html
+SUMMARY:SR · U9 LL Rot · Krefelder EV 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:00 Uhr\nTreffpunkt:
+  13:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Rot\nHalle: Rheinlandhall
+ e Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Hofer\, 
+ Carsten\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

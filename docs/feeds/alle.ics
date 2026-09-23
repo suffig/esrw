@@ -186,12 +186,11 @@ DTSTAMP:20260915T152741Z
 LAST-MODIFIED:20260915T152741Z
 DTSTART:20260919T070000Z
 DTEND:20260919T103000Z
-SUMMARY:⚠ U9 RL · EHC Troisdorf
-DESCRIPTION:Geändert: Ansetzung\n\nRolle: Schiedsrichter (SR)\nSpielbeginn
- : 10:00 Uhr\nTreffpunkt: 09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\n
- Halle: ICEDOME Troisdorf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdo
- rf\nGespann: Solbach\, Carsten\n\nQuelle: https://www.esrw.de/einteilungen
- .html
+SUMMARY:U9 RL · EHC Troisdorf
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: ICEDOME Troisdorf
+ \nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Solbach\, C
+ arsten\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -230,12 +229,11 @@ DTSTAMP:20260915T152741Z
 LAST-MODIFIED:20260915T152741Z
 DTSTART:20260919T091500Z
 DTEND:20260919T124500Z
-SUMMARY:⚠ U11 RL · Iserlohner EC
-DESCRIPTION:Geändert: Ansetzung\n\nRolle: Schiedsrichter (SR)\nSpielbeginn
- : 12:15 Uhr\nTreffpunkt: 11:15 Uhr (60 Min vor Spielbeginn)\nLiga: U11 RL\
- nHalle: Eissporthalle am Seilersee\nAdresse: Seeuferstraße 25\, 58636 Ise
- rlohn\nGespann: Malik\, Orlando\n\nQuelle: https://www.esrw.de/einteilunge
- n.html
+SUMMARY:U11 RL · Iserlohner EC
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:15 Uhr\nTreffpunkt:
+  11:15 Uhr (60 Min vor Spielbeginn)\nLiga: U11 RL\nHalle: Eissporthalle am
+  Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Malik\, 
+ Orlando\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -507,12 +505,11 @@ DTSTAMP:20260915T152741Z
 LAST-MODIFIED:20260915T152741Z
 DTSTART:20260920T050000Z
 DTEND:20260920T083000Z
-SUMMARY:⚠ U11 LL Rot · Iserlohner EC 1b
-DESCRIPTION:Geändert: Ansetzung\n\nRolle: Schiedsrichter (SR)\nSpielbeginn
- : 08:00 Uhr\nTreffpunkt: 07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL 
- Rot\nHalle: Eissporthalle am Seilersee\nAdresse: Seeuferstraße 25\, 58636
-  Iserlohn\nGespann: Vorgeitz\, Benny\n\nQuelle: https://www.esrw.de/eintei
- lungen.html
+SUMMARY:U11 LL Rot · Iserlohner EC 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Rot\nHalle: Eissporthall
+ e am Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Vorg
+ eitz\, Benny\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -721,12 +718,11 @@ DTSTAMP:20260915T152741Z
 LAST-MODIFIED:20260915T152741Z
 DTSTART:20260920T110000Z
 DTEND:20260920T143000Z
-SUMMARY:⚠ U9 LL Rot · Krefelder EV 1b
-DESCRIPTION:Geändert: Ansetzung\n\nRolle: Schiedsrichter (SR)\nSpielbeginn
- : 14:00 Uhr\nTreffpunkt: 13:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL R
- ot\nHalle: Rheinlandhalle Krefeld\nAdresse: Westparkstraße 126\, 47803 Kr
- efeld\nGespann: Schlüter\, Thomas\n\nQuelle: https://www.esrw.de/einteilu
- ngen.html
+SUMMARY:U9 LL Rot · Krefelder EV 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:00 Uhr\nTreffpunkt:
+  13:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Rot\nHalle: Rheinlandhall
+ e Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Schlüte
+ r\, Thomas\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

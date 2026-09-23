@@ -224,9 +224,9 @@
   "treffpunkt": "2026-09-26T09:00:00+02:00"
  },
  "11f4b41e5991e0776d589b8ba7a9d21a222a92e3@esrw.de": {
-  "aenderung": "Ansetzung",
+  "aenderung": null,
   "beginn": "2026-09-19T12:15:00+02:00",
-  "geaendert_am": "2026-09-15",
+  "geaendert_am": null,
   "id": "2026-09-19T12:15:00+02:00|Iserlohner EC",
   "inhalt": "7e3d85df35845c0f633fe998f6d8323d3c2ea718",
   "korrektur": null,
@@ -406,9 +406,9 @@
   "treffpunkt": "2026-10-02T19:15:00+02:00"
  },
  "1a87cb0864d10c49c05502b7b429f88b7e799c08@esrw.de": {
-  "aenderung": "Ansetzung",
+  "aenderung": null,
   "beginn": "2026-09-20T08:00:00+02:00",
-  "geaendert_am": "2026-09-15",
+  "geaendert_am": null,
   "id": "2026-09-20T08:00:00+02:00|Iserlohner EC 1b",
   "inhalt": "b922182fe40c65ffd223f96ccbfc52fc32373b67",
   "korrektur": null,
@@ -420,9 +420,9 @@
   "treffpunkt": "2026-09-20T07:00:00+02:00"
  },
  "1ad65c29bc6e1cfc8cf86ffb2761d486f799e3d9@esrw.de": {
-  "aenderung": "Ansetzung",
+  "aenderung": null,
   "beginn": "2026-09-20T08:00:00+02:00",
-  "geaendert_am": "2026-09-15",
+  "geaendert_am": null,
   "id": "2026-09-20T08:00:00+02:00|Iserlohner EC 1b",
   "inhalt": "b922182fe40c65ffd223f96ccbfc52fc32373b67",
   "korrektur": null,
@@ -1512,9 +1512,9 @@
   "treffpunkt": "2026-09-26T10:30:00+02:00"
  },
  "5877c2a909f061eac40ef9f0d0f86698a1ad2e81@esrw.de": {
-  "aenderung": "Ansetzung",
+  "aenderung": null,
   "beginn": "2026-09-20T14:00:00+02:00",
-  "geaendert_am": "2026-09-15",
+  "geaendert_am": null,
   "id": "2026-09-20T14:00:00+02:00|Krefelder EV 1b",
   "inhalt": "ca4a618bb721fc4ebb5f1bae6d8331fb43a3b1f4",
   "korrektur": null,
@@ -2072,9 +2072,9 @@
   "treffpunkt": "2026-09-20T09:00:00+02:00"
  },
  "7aaadd8b299dcc1adc96761f8915acb30f0faf4a@esrw.de": {
-  "aenderung": "Ansetzung",
+  "aenderung": null,
   "beginn": "2026-09-19T10:00:00+02:00",
-  "geaendert_am": "2026-09-15",
+  "geaendert_am": null,
   "id": "2026-09-19T10:00:00+02:00|EHC Troisdorf",
   "inhalt": "8fd92c11b08b9fea33607ee5f163ddb2a400dafa",
   "korrektur": null,
@@ -3402,9 +3402,9 @@
   "treffpunkt": "2026-09-20T18:00:00+02:00"
  },
  "cb1812902cc6122829efa0d1bcbde944c88e271c@esrw.de": {
-  "aenderung": "Ansetzung",
+  "aenderung": null,
   "beginn": "2026-09-20T14:00:00+02:00",
-  "geaendert_am": "2026-09-15",
+  "geaendert_am": null,
   "id": "2026-09-20T14:00:00+02:00|Krefelder EV 1b",
   "inhalt": "ca4a618bb721fc4ebb5f1bae6d8331fb43a3b1f4",
   "korrektur": null,
@@ -3668,9 +3668,9 @@
   "treffpunkt": "2026-09-27T08:30:00+02:00"
  },
  "df815118049cd019abeb4e3a22e1828fc1a72cc8@esrw.de": {
-  "aenderung": "Ansetzung",
+  "aenderung": null,
   "beginn": "2026-09-19T12:15:00+02:00",
-  "geaendert_am": "2026-09-15",
+  "geaendert_am": null,
   "id": "2026-09-19T12:15:00+02:00|Iserlohner EC",
   "inhalt": "7e3d85df35845c0f633fe998f6d8323d3c2ea718",
   "korrektur": null,
@@ -3710,9 +3710,9 @@
   "treffpunkt": "2026-09-27T07:00:00+02:00"
  },
  "e07b56242d97f229670a09e27b75283706b2b9d4@esrw.de": {
-  "aenderung": "Ansetzung",
+  "aenderung": null,
   "beginn": "2026-09-19T10:00:00+02:00",
-  "geaendert_am": "2026-09-15",
+  "geaendert_am": null,
   "id": "2026-09-19T10:00:00+02:00|EHC Troisdorf",
   "inhalt": "8fd92c11b08b9fea33607ee5f163ddb2a400dafa",
   "korrektur": null,
