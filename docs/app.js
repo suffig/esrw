@@ -231,6 +231,13 @@
     if (profil && profil.name) { b.textContent = initialen(profil.name); b.classList.remove("leer"); b.style.background = farbeFuer(profil.slug); }
     else { b.textContent = "?"; b.classList.add("leer"); b.style.background = ""; }
   }
+  // Tipp auf die Stand-Anzeige holt frische Daten
+  el("stand").addEventListener("click", function () {
+    if (!navigator.onLine) { toast("Offline – es gibt gerade nichts Neues zu holen.", "warn"); return; }
+    el("stand").classList.add("laedt");
+    neuLaden().then(function () { el("stand").classList.remove("laedt"); toast("Aktualisiert.", "gut"); })
+      .catch(function () { el("stand").classList.remove("laedt"); toast("Aktualisieren hat nicht geklappt.", "warn"); });
+  });
   el("suche-knopf").addEventListener("click", function () {
     location.hash = "suche";
     setTimeout(function () { var f = el("suche"); f.focus(); f.select(); window.scrollTo({ top: 0 }); }, 150);
@@ -471,6 +478,8 @@
     if (!name) { var sp = document.createElement("span"); sp.textContent = "Halle unbekannt"; return sp; }
     var a = document.createElement("a"); a.className = "hallenlink"; a.href = "#halle/" + hallenSlug(name); a.textContent = name; return a;
   }
+
+  function heuteSchluessel(s) { return new Date(s.beginn).toDateString(); }
 
   // Wischen auf einer Spielkarte: nach rechts Route, nach links Abrechnen (eigenes,
   // vergangenes Spiel) bzw. Spielseite. Kurze Vibration, wenn ausgeloest.
@@ -1231,6 +1240,9 @@
     var h = document.createElement("div"); h.className = "held";
     var heuteModus = diff === 0 && new Date(s.beginn).getTime() + 3 * 3600000 > Date.now();
     if (heuteModus) h.classList.add("heute");
+    // "Am Spieltag gross": Kopfkarte fuellt den Bildschirm, der Rest kommt auf Tipp
+    var vollbild = heuteModus && startEinstellung("vollbild") && !!(profil && profil.slug === p.slug) && lesen("vollbild-zu") !== heuteSchluessel(s);
+    el("detail").classList.toggle("start-vollbild", vollbild);
     var w = document.createElement("div"); w.className = "wann"; w.textContent = wann + " · " + datumKurz(d); h.appendChild(w);
     h.appendChild(rolleBadge(s.rolle, "rolle"));
     var z = document.createElement("div"); z.className = "zeit"; z.textContent = uhr(d) + " Uhr"; h.appendChild(z);
@@ -1248,6 +1260,12 @@
       ak.appendChild(ge);
     }
     h.appendChild(ak);
+    if (vollbild) {
+      // ganz unten in der Karte, damit der Daumen ihn erreicht
+      var mehr = document.createElement("button"); mehr.type = "button"; mehr.className = "vollbild-mehr"; mehr.textContent = "Alles anzeigen ↓";
+      mehr.addEventListener("click", function (ev) { ev.stopPropagation(); schreiben("vollbild-zu", heuteSchluessel(s)); el("detail").classList.remove("start-vollbild"); mehr.remove(); });
+      h.appendChild(mehr);
+    }
     var meins = !!(profil && profil.slug === p.slug);
     // Heute: Countdown bis Abfahrt/Treffpunkt, Kollegen anrufen, Checkliste direkt darunter
     var heuteBox = el("heute"); heuteBox.innerHTML = "";
@@ -1989,7 +2007,7 @@
       ziel.appendChild(box);
     }
     if (!profil || profil.slug !== p.slug) zuletztMerken(p.slug);
-    zeigeMeldeKarte(); kalenderBoxStand(); onboardingStand(); zeigePins(p);
+    zeigeMeldeKarte(); kalenderBoxStand(); onboardingStand(); zeigePins(p); startOrdnungAnwenden();
     el("kalender-box").classList.toggle("versteckt", !startEinstellung("kalender") && lesen("abo-geklickt") === "1");
     el("start-anpassen").classList.toggle("versteckt", !meins);
     el("abfahrt-ics").classList.add("versteckt");
@@ -2858,8 +2876,8 @@
 
   function zeigeEinstellungen() {
     ansicht("einstellungen"); aktuell = null; window.scrollTo(0, 0);
-    bereicheRendern(); startBausteineRendern(); schnellWahlRendern(); pushVerlaufRendern(); adminZeileRendern();
-    setTimeout(function () { sprungleiste("einstellungen-sprung", "einstellungen", [["konto-bereich", "Konto"], ["karten-app", "App"], ["start-bausteine", "Startseite"], ["schnell-wahl", "Schnellzugriff"], ["bereiche", "Bereiche"], ["adminzeile", "Betreiber"], ["push-verlauf", "Gemeldet"]]); }, 400);
+    bereicheRendern(); startBausteineRendern(); startOrdnungRendern(); schnellWahlRendern(); pushVerlaufRendern(); adminZeileRendern();
+    setTimeout(function () { sprungleiste("einstellungen-sprung", "einstellungen", [["konto-bereich", "Konto"], ["karten-app", "App"], ["start-bausteine", "Startseite"], ["start-ordnung", "Reihenfolge"], ["schnell-wahl", "Schnellzugriff"], ["bereiche", "Bereiche"], ["adminzeile", "Betreiber"], ["push-verlauf", "Gemeldet"]]); }, 400);
     var kb = el("konto-bereich"); kb.innerHTML = "";
     if (!sitzungVorhanden()) {
       var k = document.createElement("a"); k.href = "#mitglieder"; k.className = "hinweis"; k.style.display = "flex"; k.style.textDecoration = "none"; k.style.color = "inherit"; k.style.marginBottom = "12px";
@@ -3138,6 +3156,7 @@
   var START_BAUSTEINE = [
     ["ruhig", "Nur nächstes Spiel", "ganz ruhige Startseite: Kopfkarte und deine Spiele, sonst nichts", false],
     ["schnell", "Schnellzugriff", "eine Reihe Knöpfe unter der Kopfkarte: Abrechnung, Archiv, Zusammen fahren, Änderungen …", true],
+    ["vollbild", "Am Spieltag groß", "ist heute ein Spiel, füllt die Kopfkarte den Bildschirm – der Rest kommt auf Tipp", false],
     ["einrichtung", "„Alles eingerichtet?“", "zeigt fehlende Schritte (Kalender, Push, Heimatadresse, Wohnort, Obmann) mit Direktlink", true],
     ["danach", "„Danach“ auf der Karte oben", "das übernächste Spiel in einer Zeile", false],
     ["wetter", "Wetter auf der Karte oben", "zum Treffpunkt, mit Glättehinweis", true, "wetter"],
@@ -3152,6 +3171,51 @@
   function startEinstellung(k) {
     try { var st = JSON.parse(lesen("start") || "{}"); if (st[k] !== undefined) return !!st[k]; } catch (e) {}
     var std = START_BAUSTEINE.filter(function (b) { return b[0] === k; })[0]; return std ? std[3] : true;
+  }
+  // Reihenfolge der Bloecke auf Start (die uebrigen sitzen fest in der Kopfkarte)
+  var START_ORDNUNG = ["schnellzugriff", "einrichtung", "pins", "uebersicht", "radar", "nachtrag", "spiele", "kalender-box"];
+  var START_NAMEN = { schnellzugriff: "Schnellzugriff", einrichtung: "„Alles eingerichtet?“", pins: "Angepinnte Kollegen", uebersicht: "Kacheln und Termine", radar: "Vertretungs-Radar", nachtrag: "Hinweis zur Abrechnung", spiele: "Deine Spiele", "kalender-box": "Kalender-Karte" };
+  function startOrdnung() {
+    var o = []; try { o = JSON.parse(lesen("start-ordnung") || "[]") || []; } catch (e) {}
+    o = o.filter(function (x) { return START_ORDNUNG.indexOf(x) >= 0; });
+    START_ORDNUNG.forEach(function (x) { if (o.indexOf(x) < 0) o.push(x); });
+    return o;
+  }
+  function startOrdnungAnwenden() {
+    var haupt = el("detail").querySelector(".spalte-haupt"); if (!haupt) return;
+    var anker = el("start-anpassen");
+    startOrdnung().forEach(function (id) {
+      var e = el(id);
+      if (e && e.parentNode === haupt) haupt.insertBefore(e, anker);
+    });
+    // Profilzeile bleibt ganz unten
+    var pz = haupt.querySelector(":scope > .profilzeile");
+    if (pz && profil && aktuell && profil.slug === aktuell.slug) haupt.insertBefore(pz, anker);
+  }
+  function startOrdnungRendern() {
+    var box = el("start-ordnung"); if (!box) return; box.innerHTML = "";
+    var o = startOrdnung();
+    o.forEach(function (id, i) {
+      var z = document.createElement("div"); z.className = "ordnung-zeile";
+      var t = document.createElement("span"); t.textContent = START_NAMEN[id] || id; z.appendChild(t);
+      var kn = document.createElement("span"); kn.className = "knoepfe";
+      [["↑", -1], ["↓", 1]].forEach(function (p) {
+        var b = document.createElement("button"); b.type = "button"; b.className = "rund klein"; b.textContent = p[0];
+        b.setAttribute("aria-label", (p[1] < 0 ? "nach oben" : "nach unten") + ": " + (START_NAMEN[id] || id));
+        b.disabled = (p[1] < 0 && i === 0) || (p[1] > 0 && i === o.length - 1);
+        b.addEventListener("click", function () {
+          var neu = o.slice(), j = i + p[1];
+          neu.splice(j, 0, neu.splice(i, 1)[0]);
+          schreiben("start-ordnung", JSON.stringify(neu)); einstellungenSync(); startOrdnungRendern();
+          if (aktuell && !el("detail").classList.contains("versteckt")) startOrdnungAnwenden();
+        });
+        kn.appendChild(b);
+      });
+      z.appendChild(kn); box.appendChild(z);
+    });
+    var zur = document.createElement("button"); zur.type = "button"; zur.className = "textknopf"; zur.textContent = "Standard-Reihenfolge";
+    zur.addEventListener("click", function () { schreiben("start-ordnung", null); einstellungenSync(); startOrdnungRendern(); if (aktuell) startOrdnungAnwenden(); });
+    box.appendChild(zur);
   }
   function startBausteineRendern() {
     var box = el("start-bausteine"); if (!box) return; box.innerHTML = "";
@@ -3169,7 +3233,7 @@
     });
   }
   function einstellungenSammeln() {
-    return { karten: lesen("karten") || null, schrift: lesen("schrift") || null, akzent: lesen("akzent") || null, kompakt: lesen("kompakt") || null, ziel: lesen("ziel") || null, start: lesen("start") || null, bereiche: lesen("bereiche") || null, pushwoche: lesen("pushwoche") || null, pushabrechnung: lesen("pushabrechnung") || null, "schnell-aus": lesen("schnell-aus") || null };
+    return { karten: lesen("karten") || null, schrift: lesen("schrift") || null, akzent: lesen("akzent") || null, kompakt: lesen("kompakt") || null, ziel: lesen("ziel") || null, start: lesen("start") || null, bereiche: lesen("bereiche") || null, pushwoche: lesen("pushwoche") || null, pushabrechnung: lesen("pushabrechnung") || null, "schnell-aus": lesen("schnell-aus") || null, "start-ordnung": lesen("start-ordnung") || null };
   }
   var syncTimer = null;
   function einstellungenSync() {
@@ -3182,7 +3246,7 @@
   function einstellungenAnwenden(e) {
     if (!e) return;
     var geaendert = false;
-    ["karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche", "pushwoche", "pushabrechnung", "schnell-aus"].forEach(function (k) { if ((lesen(k) || null) !== (e[k] || null)) { schreiben(k, e[k] || null); geaendert = true; } });
+    ["karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche", "pushwoche", "pushabrechnung", "schnell-aus", "start-ordnung"].forEach(function (k) { if ((lesen(k) || null) !== (e[k] || null)) { schreiben(k, e[k] || null); geaendert = true; } });
     if (geaendert) { einstellungenLaden(true); themaAnwenden(); funktionenAnwenden(funktionenLesen()); toast("Einstellungen vom Konto übernommen", ""); if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true); }
   }
   document.addEventListener("mg-profil", function (e) {

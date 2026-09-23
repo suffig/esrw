@@ -312,6 +312,14 @@ Abrechnung offline mit Warteschlange.
 werden mitgelöscht, Ladebalken, Spielplan-Suche hinter der Lupe, Archiv-Filter
 merken, Push-Verlauf, Kalender-Abo prüfen, Tastaturkürzel am Desktop.
 
+**Start sortierbar, Gespann-Verlauf, ZIP-Export**: Einstellungen →
+„Reihenfolge auf Start“ schiebt die Bausteine mit ↑/↓ (Kopfkarte bleibt oben,
+Profilzeile unten, synchron über das Konto); Gespann-Notizen als Chat-Verlauf
+mit Zeitstempel und roter Markierung für Neues; „Alles als ZIP (mit Belegen)“
+packt daten.json, abrechnung.csv, notizen.txt und alle Belege im Browser
+zusammen; Kartenkacheln im Dunkelmodus abgedunkelt; „Am Spieltag groß“ macht
+die Kopfkarte am Spieltag bildschirmfüllend; Tipp auf die Stand-Pille lädt neu.
+
 **Archiv-Seite & Änderungen mit Details**: Mehr → Archiv (alle Saisons,
 Filter, Admin sieht alle); Änderungen zeigen Feld vorher → nachher, Spielseite
 mit Änderungsverlauf.

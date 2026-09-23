@@ -1321,6 +1321,36 @@ Spielseite). Mehrfachauswahl: Verpflegung 14 € setzen/entfernen, CSV.
 * **Suche merkt sich die letzten vier Begriffe** (Chips über der Liste,
   „leeren“ entfernt sie).
 
+### 10.6y Startseite sortierbar, Gespann-Verlauf, ZIP-Export, dunkle Karte
+
+* **Reihenfolge auf Start selbst festlegen**: Einstellungen → „Reihenfolge auf
+  Start“ listet die Bausteine (Schnellzugriff, „Alles eingerichtet?“,
+  Angepinnte Kollegen, Kacheln und Termine, Vertretungs-Radar, Hinweis zur
+  Abrechnung, Deine Spiele, Kalender-Karte). Mit ↑ und ↓ schiebt man sie an
+  die gewünschte Stelle, „Standard-Reihenfolge“ setzt zurück. Die Kopfkarte
+  mit dem nächsten Spiel bleibt immer oben, die Profilzeile immer unten. Die
+  Reihenfolge liegt im Konto und gilt damit auf allen Geräten.
+* **Gespann-Notizen als Verlauf**: Auf der Spielseite stehen die Nachrichten
+  jetzt als kleiner Chat – eigene rechts, fremde links mit Namen und
+  Zeitstempel. Was seit dem letzten Öffnen dazugekommen ist, bekommt einen
+  roten Rand, und die Zeile über den Extras zählt mit („3 Gespann-Notizen
+  (2 neu)“). Gelesen wird beim Aufklappen vermerkt, gerätelokal.
+* **Alles als ZIP exportieren**: Einstellungen → Daten → „Alles als ZIP (mit
+  Belegen)“ packt `daten.json` (alle Tabellen deines Kontos),
+  `abrechnung.csv` (alle Saisons mit km, Fahrtkosten, Verpflegung, Auslagen,
+  Vergütung), `notizen.txt` und jeden hochgeladenen Beleg unter `belege/` in
+  eine Datei. Das ZIP entsteht im Browser, es geht nichts an Dritte.
+  „Nur JSON“ bleibt für den schnellen Blick.
+* **Dunkle Hallenkarte**: Im Dunkelmodus werden die Kartenkacheln (Hallenkarte
+  und „Zusammen fahren“) abgedunkelt, Popups und der Quellenhinweis bekommen
+  die dunklen Farben. Im Hellmodus bleibt alles unverändert.
+* **„Am Spieltag groß“** (Einstellungen → Startseite): Ist heute ein Spiel,
+  füllt die Kopfkarte den Bildschirm – Uhrzeit, Paarung, Halle, Route und
+  Gespann, sonst nichts. „Alles anzeigen ↓“ holt den Rest zurück, für diesen
+  Spieltag gemerkt. Auf breiten Bildschirmen bleibt die normale Ansicht.
+* **Stand-Pille aktualisiert**: Ein Tipp auf „Stand vor … Min.“ im Kopf lädt
+  die Einteilungen neu.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

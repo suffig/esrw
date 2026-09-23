@@ -1984,7 +1984,8 @@ window.Mitglieder = (function () {
       h("p", { text: "Alles, was du hier einträgst, liegt in deinem Supabase-Konto und ist nur für dich lesbar – außer Gesuche, Angebote, Verfügbarkeiten, Hallen-Hinweise, Mitfahrten und eine freigegebene Handynummer, die alle Mitglieder sehen. " +
         "Abrechnung als CSV gibt es im Reiter Abrechnung." }),
       h("div", { class: "zweit" }, [
-        h("button", { type: "button", text: "Alle meine Daten (JSON)", onclick: datenExport }),
+        h("button", { type: "button", text: "Alles als ZIP (mit Belegen)", onclick: datenExportZip }),
+        h("button", { type: "button", text: "Nur JSON", onclick: datenExport }),
         h("button", { type: "button", text: "Abmelden", onclick: function () { abmelden(); if (seite) kontoNeu(); } }),
         h("button", { type: "button", style: "color:var(--warn)", text: "Konto löschen", onclick: kontoLoeschen })
       ])
@@ -2277,7 +2278,11 @@ window.Mitglieder = (function () {
     if (!mitGespann) mitfahrten = [];
 
     var teile = [];
-    if (istIch && mitGespann) teile.push(kommentare.length ? kommentare.length + (kommentare.length === 1 ? " Gespann-Notiz" : " Gespann-Notizen") : "Gespann-Notiz");
+    if (istIch && mitGespann) {
+      var bis = 0; try { bis = parseInt(localStorage.getItem("gespann-gelesen:" + kennung) || "0", 10) || 0; } catch (e) {}
+      var ungelesen = kommentare.filter(function (k) { return k.user_id !== session.user.id && new Date(k.angelegt).getTime() > bis; }).length;
+      teile.push(kommentare.length ? kommentare.length + (kommentare.length === 1 ? " Gespann-Notiz" : " Gespann-Notizen") + (ungelesen ? " (" + ungelesen + " neu)" : "") : "Gespann-Notiz");
+    }
     if (mitHallen) teile.push(hinweise.length ? hinweise.length + (hinweise.length === 1 ? " Hallen-Hinweis" : " Hallen-Hinweise") : "Halle");
     if (kontakte.length) teile.push(kontakte.length + " Kontakt" + (kontakte.length === 1 ? "" : "e"));
     if (mitfahrten.length) teile.push(mitfahrten.length + " Mitfahrt");
@@ -2364,13 +2369,23 @@ window.Mitglieder = (function () {
       if (istIch && mitGespann) {
         innen.appendChild(h("h4", { text: "Gespann-Notizen (sehen nur die Kollegen im Spiel)" }));
         if (!kommentare.length) innen.appendChild(h("p", { class: "meta", text: "Noch nichts – „Ich bringe die Pucks“, „Parke hinten“, „Bin 10 Min. später“. Die Kollegen bekommen Push." }));
+        // Verlauf wie ein kleiner Chat: eigene Nachrichten rechts, neue markiert
+        var gelesenBis = 0; try { gelesenBis = parseInt(localStorage.getItem("gespann-gelesen:" + kennung) || "0", 10) || 0; } catch (e) {}
+        var verlauf = h("div", { class: "gespann-verlauf" });
         kommentare.forEach(function (k) {
-          innen.appendChild(h("div", { class: "kandidat" }, [h("div", { text: k.text }),
-            h("div", { class: "meta" }, [k.name + " · " + new Date(k.angelegt).toLocaleString("de-DE", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }),
-              k.user_id === session.user.id ? h("button", { type: "button", class: "textknopf", style: "margin-left:8px", text: "löschen", onclick: function () {
+          var meins = k.user_id === session.user.id, zeit = new Date(k.angelegt);
+          var neu = !meins && zeit.getTime() > gelesenBis;
+          var b = h("div", { class: "blase" + (meins ? " ich" : "") + (neu ? " neu" : "") }, [
+            meins ? null : h("b", { text: (k.name || "").split(",")[0] }),
+            h("div", { text: k.text }),
+            h("div", { class: "zeit" }, [zeit.toLocaleString("de-DE", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }),
+              meins ? h("button", { type: "button", class: "textknopf", style: "margin-left:8px", text: "löschen", onclick: function () {
                 sb.from("spielkommentare").delete().eq("id", k.id).then(function () { delete cache.geladen["k|" + kennung]; extrasLaden([spiel]).then(function () { spielExtras(spiel, ziel, istIch); var d = ziel.querySelector("details"); if (d) d.open = true; }); });
-              } }) : null])]));
+              } }) : null])]);
+          verlauf.appendChild(b);
         });
+        innen.appendChild(verlauf);
+        try { if (kommentare.length) localStorage.setItem("gespann-gelesen:" + kennung, String(Date.now())); } catch (e) {}
         var ki = h("input", { type: "text", placeholder: "Nachricht ans Gespann …", maxlength: "300" });
         innen.appendChild(h("div", { class: "mg-form" }, [ki, h("button", { type: "button", class: "anfrage", text: "Ans Gespann schicken", onclick: function () {
           var t = ki.value.trim(); if (!t) return;
@@ -2758,6 +2773,91 @@ window.Mitglieder = (function () {
   }
 
   // ---- Datenexport und Konto loeschen
+
+  // Kleiner ZIP-Schreiber (ohne Komprimierung) - reicht fuer den Datenexport
+  function crc32(bytes) {
+    var c, tabelle = crc32._t;
+    if (!tabelle) {
+      tabelle = crc32._t = [];
+      for (var n = 0; n < 256; n++) { c = n; for (var k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; tabelle[n] = c >>> 0; }
+    }
+    var crc = 0xFFFFFFFF;
+    for (var i = 0; i < bytes.length; i++) crc = (crc >>> 8) ^ tabelle[(crc ^ bytes[i]) & 0xFF];
+    return (crc ^ 0xFFFFFFFF) >>> 0;
+  }
+  function zipBauen(dateien) {
+    // dateien: [{ name, bytes }]
+    var teile = [], zentral = [], versatz = 0;
+    function u16(n) { return [n & 255, (n >> 8) & 255]; }
+    function u32(n) { return [n & 255, (n >> 8) & 255, (n >> 16) & 255, (n >>> 24) & 255]; }
+    dateien.forEach(function (d) {
+      var name = new TextEncoder().encode(d.name), crc = crc32(d.bytes), len = d.bytes.length;
+      var kopf = [].concat(u32(0x04034b50), u16(20), u16(0), u16(0), u16(0), u16(0), u32(crc), u32(len), u32(len), u16(name.length), u16(0));
+      teile.push(new Uint8Array(kopf), name, d.bytes);
+      zentral.push({ name: name, crc: crc, len: len, versatz: versatz });
+      versatz += kopf.length + name.length + len;
+    });
+    var zStart = versatz, zBytes = [];
+    zentral.forEach(function (z) {
+      var kopf = [].concat(u32(0x02014b50), u16(20), u16(20), u16(0), u16(0), u16(0), u16(0), u32(z.crc), u32(z.len), u32(z.len),
+                          u16(z.name.length), u16(0), u16(0), u16(0), u16(0), u32(0), u32(z.versatz));
+      zBytes.push(new Uint8Array(kopf), z.name);
+      versatz += kopf.length + z.name.length;
+    });
+    var ende = new Uint8Array([].concat(u32(0x06054b50), u16(0), u16(0), u16(zentral.length), u16(zentral.length), u32(versatz - zStart), u32(zStart), u16(0)));
+    return new Blob(teile.concat(zBytes, [ende]), { type: "application/zip" });
+  }
+  function datenExportZip() {
+    var uid = session.user.id;
+    kurzMeldung("Sammle deine Daten …", "");
+    var tabellen = [["einsaetze", "user_id"], ["spielnotizen", "user_id"], ["gesuche", "user_id"], ["angebote", "user_id"],
+                    ["sperren", "user_id"], ["hallen_notizen", "user_id"], ["kontakte", "user_id"], ["mitfahrten", "user_id"], ["push_abos", "user_id"], ["spielkommentare", "user_id"]];
+    var aus = { exportiert: new Date().toISOString(), email: session.user.email, profil: profil };
+    var dateien = [];
+    function text(name, inhalt) { dateien.push({ name: name, bytes: new TextEncoder().encode(inhalt) }); }
+    return Promise.all(tabellen.map(function (t) {
+      return sb.from(t[0]).select("*").eq(t[1], uid).then(function (r) { aus[t[0]] = r.error ? { fehler: r.error.message } : r.data; }).catch(function () {});
+    })).then(function () {
+      text("daten.json", JSON.stringify(aus, null, 2));
+      // Abrechnung als CSV (alle Saisons)
+      var alle = alleSpiele();
+      var zeilen = [["Datum", "Uhrzeit", "Saison", "Liga", "Begegnung", "Halle", "Rolle", "km", "Fahrtkosten", "Verpflegung", "Auslagen", "Vergütung", "Notiz"]];
+      alle.slice().reverse().forEach(function (sp) {
+        var e = einsaetze[sp.kennung]; if (!e) return;
+        var d = new Date(sp.beginn), b = betragFuer(sp, e);
+        var dez = function (n) { return n == null ? "" : String(Math.round(n * 100) / 100).replace(".", ","); };
+        zeilen.push([d.toLocaleDateString("de-DE"), uhr(d), sp.saison || "", sp.liga || "", sp.paarung || "", sp.halle || "", sp.rolle || "",
+                     dez(e.km), dez(fahrtkosten(e)), dez(e.verpflegung), dez(e.auslagen), dez(b.betrag), e.notiz || ""]);
+      });
+      text("abrechnung.csv", "\ufeff" + zeilen.map(function (z) { return z.map(function (f) { return '"' + String(f).replace(/"/g, '""') + '"'; }).join(";"); }).join("\r\n"));
+      // Notizen als lesbare Textdatei
+      var notizen = (aus.spielnotizen || []).map(function (n) { return (n.kennung || "").split("|")[0].slice(0, 16).replace("T", " ") + " – " + (n.kennung || "").split("|")[1] + "\n" + (n.text || "") + "\n"; }).join("\n");
+      if (notizen) text("notizen.txt", notizen);
+      // Belege herunterladen (signierte Links, nacheinander)
+      var belege = [];
+      (aus.einsaetze || []).forEach(function (e) { (e.belege || []).forEach(function (pfad) { belege.push(pfad); }); });
+      if (!belege.length) return;
+      kurzMeldung("Lade " + belege.length + (belege.length === 1 ? " Beleg" : " Belege") + " …", "");
+      return belege.reduce(function (p, pfad) {
+        return p.then(function () {
+          return sb.storage.from("belege").createSignedUrl(pfad, 300).then(function (r) {
+            if (!r.data || !r.data.signedUrl) return;
+            return fetch(r.data.signedUrl).then(function (a) { return a.arrayBuffer(); }).then(function (buf) {
+              // Ordner mit in den Namen, sonst ueberschreiben sich gleichnamige Belege
+              dateien.push({ name: "belege/" + pfad.split("/").slice(-2).join("_"), bytes: new Uint8Array(buf) });
+            });
+          }).catch(function () {});
+        });
+      }, Promise.resolve());
+    }).then(function () {
+      var blob = zipBauen(dateien);
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(blob); a.download = "einteilungen_" + (profil.slug || "konto") + "_" + new Date().toISOString().slice(0, 10) + ".zip";
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+      kurzMeldung("Export fertig ✓ (" + dateien.length + " Dateien)", "gut");
+    }).catch(function (e) { meldung("Export fehlgeschlagen: " + fehlerText(e), "warn"); });
+  }
 
   function datenExport() {
     var uid = session.user.id;

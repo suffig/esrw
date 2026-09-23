@@ -718,6 +718,46 @@
   .tour-punkte i { width:7px; height:7px; border-radius:50%; background:var(--linie); }
   .tour-punkte i.aktiv { background:var(--akzent); width:18px; border-radius:4px; }
   @media (prefers-reduced-motion: reduce) { .tour-karte { animation:none; } }
+  /* Runde 14: Reihenfolge, Gespann-Verlauf, Vollbild am Spieltag, dunkle Karte */
+  .ordnung-zeile { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:8px 0; border-top:1px solid var(--linie); font-weight:600; }
+  .ordnung-zeile:first-child { border-top:0; }
+  .ordnung-zeile .knoepfe { display:flex; gap:6px; flex:none; }
+  /* Daumengroesse: die Pfeile sind das einzige Bedienelement der Zeile */
+  .ordnung-zeile .rund.klein { width:42px; height:42px; }
+  .ordnung-zeile > span:first-child { min-width:0; overflow-wrap:anywhere; }
+  .rund.klein { width:34px; height:34px; font-size:1rem; font-weight:800; }
+  .rund.klein[disabled] { opacity:.35; }
+  .gespann-verlauf { display:flex; flex-direction:column; gap:8px; margin:6px 0 10px; }
+  .gespann-verlauf .blase { background:var(--bg); border:1px solid var(--linie); border-radius:14px 14px 14px 4px; padding:8px 11px; max-width:85%; font-size:.92rem; }
+  .gespann-verlauf .blase.ich { align-self:flex-end; border-radius:14px 14px 4px 14px; background:var(--akzent-hell); }
+  .gespann-verlauf .blase.neu { border-color:var(--rot); box-shadow:0 0 0 2px var(--rot-hell); }
+  .gespann-verlauf .blase b { display:block; font-size:.76rem; color:var(--dim); }
+  .gespann-verlauf .blase .zeit { font-size:.7rem; color:var(--dim); margin-top:3px; }
+  /* "Am Spieltag gross": alles ausser der Kopfkarte wartet hinter einem Tipp.
+     Nur auf schmalen Geraeten - auf dem Desktop bleibt die zweite Spalte sinnvoll. */
+  @media (max-width: 899px) {
+    #detail.start-vollbild .spalte-haupt > *:not(#held):not(#heute) { display:none !important; }
+    #detail.start-vollbild .spalten > *:not(.spalte-haupt) { display:none !important; }
+    #detail.start-vollbild #held .held { min-height:calc(100dvh - 210px); display:flex; flex-direction:column; justify-content:center; }
+    #detail.start-vollbild #held .held .zeit { font-size:2.9rem; }
+    #detail.start-vollbild #held .held .paarung { font-size:1.15rem; }
+    #detail.start-vollbild #heute { margin-top:10px; }
+  }
+  .vollbild-mehr { margin-top:18px; align-self:center; background:rgba(255,255,255,.18); color:#fff; border:1px solid rgba(255,255,255,.35); border-radius:99px; padding:9px 16px; font:inherit; font-weight:800; cursor:pointer; }
+  /* Karten im Dunkelmodus abdunkeln (OSM hat keine dunklen Kacheln).
+     Einmal fuer "Dunkel erzwungen", einmal fuer die Systemeinstellung. */
+  :root[data-theme="dark"] .leaflet-tile-pane { filter:invert(1) hue-rotate(180deg) brightness(.92) contrast(.9) saturate(.8); }
+  :root[data-theme="dark"] .leaflet-control-attribution { background:rgba(20,20,23,.8) !important; color:var(--dim) !important; }
+  :root[data-theme="dark"] .leaflet-control-attribution a { color:var(--akzent) !important; }
+  :root[data-theme="dark"] .leaflet-popup-content-wrapper, :root[data-theme="dark"] .leaflet-popup-tip { background:var(--karte); color:var(--text); }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .leaflet-tile-pane { filter:invert(1) hue-rotate(180deg) brightness(.92) contrast(.9) saturate(.8); }
+    :root:not([data-theme="light"]) .leaflet-control-attribution { background:rgba(20,20,23,.8) !important; color:var(--dim) !important; }
+    :root:not([data-theme="light"]) .leaflet-control-attribution a { color:var(--akzent) !important; }
+    :root:not([data-theme="light"]) .leaflet-popup-content-wrapper, :root:not([data-theme="light"]) .leaflet-popup-tip { background:var(--karte); color:var(--text); }
+  }
+  .stand.laedt { opacity:.6; }
+  .stand { cursor:pointer; }
   /* Runde 13: Sprungleisten, Kachel-Zahlen, Suchverlauf */
   .sprungleiste { display:flex; gap:6px; overflow-x:auto; padding:2px 0 8px; margin:0 0 4px; scrollbar-width:none; }
   .sprungleiste::-webkit-scrollbar { display:none; }
@@ -1494,6 +1534,8 @@
     </div>
     <h3 class="abschnitt">Startseite<small>Was auf „Start“ steht – Profil, nächstes Spiel und deine Spiele immer</small></h3>
     <div class="karte einstellungen-liste" id="start-bausteine"></div>
+    <h3 class="abschnitt">Reihenfolge auf Start<small>Was zuerst kommt – Kopfkarte bleibt immer oben</small></h3>
+    <div class="karte einstellungen-liste" id="start-ordnung"></div>
     <h3 class="abschnitt">Schnellzugriff<small>Welche Knöpfe unter der Kopfkarte stehen</small></h3>
     <div class="karte einstellungen-liste" id="schnell-wahl"></div>
     <h3 class="abschnitt">Bereiche<small>Was du nicht brauchst, blendest du für dich aus – nur auf deinen Geräten</small></h3>
@@ -1635,6 +1677,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=53"></script>
+<script src="app.js?v=54"></script>
 </body>
 </html>
