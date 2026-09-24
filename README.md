@@ -320,6 +320,11 @@ packt daten.json, abrechnung.csv, notizen.txt und alle Belege im Browser
 zusammen; Kartenkacheln im Dunkelmodus abgedunkelt; „Am Spieltag groß“ macht
 die Kopfkarte am Spieltag bildschirmfüllend; Tipp auf die Stand-Pille lädt neu.
 
+**Adresse mit Vorschlagsliste**: Straße und Hausnummer tippen, aus der
+aufklappenden Liste wählen – Schreibweise, PLZ, Ort und Koordinaten kommen
+aus OpenStreetMap. Kennt die Karte die Hausnummer nicht, bleibt die
+eingetippte stehen. Gilt im Profil und bei den Vereinsanschriften.
+
 **Ein Profil für alles**: Name, Anschrift, Handynummer, Freigaben und
 Rechnungsdaten stehen an einer Stelle (Zeichen oben rechts); Abrechnung,
 Rechnung und die Kollegenliste bedienen sich dort. Kollegen, mit denen man

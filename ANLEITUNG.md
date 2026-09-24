@@ -1830,6 +1830,27 @@ bringt zwei Abschnitte mit (v25 und v26).
   in `spiel_korrekturen` nur die Marke `geloescht`, und unter „X Spiele
   ausgeblendet" holst du sie mit einem Tipp zurück.
 
+### 10.6al Adresse mit Vorschlagsliste
+
+* **Im Profil** tippst du Straße, Hausnummer und Ort – nach einer halben
+  Sekunde klappt darunter eine **Vorschlagsliste** auf, wie man sie aus
+  Bestellformularen kennt. Ein Tipp auf den Vorschlag übernimmt die
+  Adresse samt richtiger Schreibweise, **Postleitzahl und Ort**, und die
+  Koordinaten für die Streckenberechnung kommen gleich mit. Gespeichert
+  wird nur, was aus der Liste kam – frei getippt geht nicht mehr, und ohne
+  Hausnummer auch nicht.
+* **Wenn OpenStreetMap die Hausnummer nicht kennt** (das kommt vor, die
+  Daten sind ehrenamtlich gepflegt), wird die Straße aus der Karte
+  genommen und **deine eingetippte Hausnummer behalten**; darunter steht
+  dann „PLZ und Ort aus der Karte, Hausnummer aus deiner Eingabe". Damit
+  stimmen Schreibweise, PLZ und Ort in jedem Fall.
+* **Dieselbe Liste bei den Vereinsanschriften** (Admin → Vereine, auch
+  beim Anlegen): Ein Tipp füllt Straße **und** PLZ/Ort.
+* Gefragt wird wie bisher Nominatim (OpenStreetMap) – derselbe Dienst, der
+  vorher hinter „Adresse suchen" steckte. Abgeschickt wird erst nach einer
+  halben Sekunde Ruhe und ab fünf Zeichen, damit nicht bei jedem
+  Tastendruck eine Anfrage rausgeht.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

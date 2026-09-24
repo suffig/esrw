@@ -1520,6 +1520,19 @@
                  padding:2px 7px; border-radius:99px; margin-right:6px; vertical-align:2px; }
   .merkzeichen.gut  { background:var(--gut-bg);  color:var(--gut); }
   .merkzeichen.warn { background:var(--warn-bg); color:var(--warn); }
+  /* Adressfeld mit Vorschlagsliste - wie im Bestellformular */
+  .adress-feld { position:relative; }
+  .adress-feld > input { width:100%; box-sizing:border-box; }
+  .adress-liste { position:absolute; left:0; right:0; top:calc(100% + 4px); z-index:40; max-height:260px; overflow:auto;
+                  background:var(--karte); border:1px solid var(--linie); border-radius:14px; box-shadow:var(--schatten); }
+  .adress-vorschlag { display:block; width:100%; text-align:left; background:none; border:0; border-top:1px solid var(--linie);
+                      padding:10px 12px; font:inherit; color:var(--text); cursor:pointer; }
+  .adress-vorschlag:first-child { border-top:0; }
+  .adress-vorschlag:hover, .adress-vorschlag:focus { background:var(--akzent-hell); outline:none; }
+  .adress-vorschlag b { display:block; font-size:.92rem; }
+  .adress-vorschlag small { color:var(--dim); }
+  .adress-leer { padding:10px 12px; color:var(--dim); font-size:.88rem; }
+  .adress-hinweis { margin:4px 0 0; }
   .zweit-klein { display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end; align-items:center; }
   .zweit-klein button { font-size:.8rem; }
   .trenner { border:0; border-top:1px solid var(--linie); margin:14px 0; }
@@ -1931,6 +1944,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=67"></script>
+<script src="app.js?v=68"></script>
 </body>
 </html>

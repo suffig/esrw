@@ -739,6 +739,134 @@ window.Mitglieder = (function () {
 
   // --------------------------------------------------------- Einrichtung
 
+  // ---- Adressfeld mit Vorschlagsliste
+  //
+  // Tippen, aus der Liste waehlen - so stimmen Strasse, Hausnummer, PLZ und
+  // Ort immer, und die Koordinaten fuer die Streckenberechnung kommen
+  // gleich mit. Gefragt wird Nominatim (OpenStreetMap), derselbe Dienst wie
+  // bisher; abgeschickt wird erst nach einer halben Sekunde Ruhe und ab
+  // fuenf Zeichen, damit nicht bei jedem Tastendruck eine Anfrage rausgeht.
+  function adressTeile(t) {
+    var a = t.address || {};
+    var ort = a.city || a.town || a.village || a.hamlet || a.municipality || a.suburb || "";
+    var strasse = [a.road || a.pedestrian || a.footway || "", a.house_number || ""].filter(Boolean).join(" ");
+    var plzOrt = [a.postcode || "", ort].filter(Boolean).join(" ");
+    if (!strasse && t.name) strasse = t.name;
+    return { strasse: strasse.trim(), plz_ort: plzOrt.trim(), hausnummer: a.house_number || "",
+             ganz: [strasse.trim(), plzOrt.trim()].filter(Boolean).join(", "),
+             lat: parseFloat(t.lat), lon: parseFloat(t.lon) };
+  }
+  // Eine Hausnummer aus dem Getippten holen: ein bis vier Ziffern mit
+  // optionalem Buchstaben - eine Postleitzahl (fuenf Ziffern) faellt raus.
+  function hausnummerAus(text) {
+    var m = String(text || "").match(/(?:^|[\s,])(\d{1,4}\s?[a-zA-Z]?)(?=[\s,]|$)/);
+    return m ? m[1].replace(/\s+/g, "") : "";
+  }
+  function adressFeld(werte) {
+    werte = werte || {};
+    var feld = h("input", { type: "text", value: werte.wert || "", autocomplete: "off",
+      placeholder: werte.platzhalter || "Straße und Hausnummer, dann Ort – z. B. „Curtiusstr. 25 Essen“" });
+    feld.setAttribute("autocorrect", "off"); feld.setAttribute("spellcheck", "false");
+    var liste = h("div", { class: "adress-liste versteckt" });
+    var hinweis = h("p", { class: "meta adress-hinweis", text: werte.wert ? "übernommen ✓" : "" });
+    var stand = { lat: werte.lat != null ? werte.lat : null, lon: werte.lon != null ? werte.lon : null,
+                  gewaehlt: werte.lat != null, teile: null, start: werte.wert || "" };
+    var timer = null, letzte = null;
+
+    function schliessen() { liste.classList.add("versteckt"); leeren(liste); }
+    function waehlen(t) {
+      var teil = adressTeile(t);
+      var eigene = hausnummerAus(feld.value);
+      var ausEingabe = false;
+      if (!teil.hausnummer && eigene) {
+        teil.hausnummer = eigene; ausEingabe = true;
+        teil.strasse = (teil.strasse + " " + eigene).trim();
+        teil.ganz = [teil.strasse, teil.plz_ort].filter(Boolean).join(", ");
+      }
+      feld.value = teil.ganz;
+      stand.lat = teil.lat; stand.lon = teil.lon; stand.gewaehlt = true; stand.teile = teil;
+      hinweis.className = teil.hausnummer ? "meta adress-hinweis" : "achtung adress-hinweis";
+      hinweis.textContent = !teil.hausnummer
+        ? "Es fehlt die Hausnummer – bitte mit Hausnummer eingeben und noch einmal wählen."
+        : ausEingabe ? "Übernommen ✓ – PLZ und Ort aus der Karte, Hausnummer aus deiner Eingabe."
+                     : "Übernommen ✓";
+      schliessen();
+      if (werte.gewaehlt) werte.gewaehlt(teil);
+    }
+    function zeigen(treffer) {
+      leeren(liste);
+      if (!treffer.length) {
+        liste.appendChild(h("div", { class: "adress-leer", text: "Nichts gefunden – Straße, Hausnummer und Ort eingeben." }));
+        liste.classList.remove("versteckt");
+        return;
+      }
+      // Nominatim liefert lange Strassen in mehreren Stuecken - einmal reicht
+      var gesehen = {};
+      treffer = treffer.filter(function (t) {
+        var k = adressTeile(t).ganz || t.display_name;
+        if (gesehen[k]) return false;
+        gesehen[k] = 1; return true;
+      });
+      treffer.forEach(function (t) {
+        var teil = adressTeile(t);
+        var e = h("button", { type: "button", class: "adress-vorschlag", onclick: function () { waehlen(t); } }, [
+          h("b", { text: teil.strasse || t.display_name.split(",")[0] }),
+          h("small", { text: teil.plz_ort || t.display_name.split(",").slice(1, 4).join(",").trim() })
+        ]);
+        liste.appendChild(e);
+      });
+      liste.classList.remove("versteckt");
+    }
+    function suchen() {
+      var q = feld.value.trim();
+      if (q.length < 5) { schliessen(); return; }
+      if (q === letzte) return;
+      letzte = q;
+      hinweis.className = "meta adress-hinweis"; hinweis.textContent = "suche …";
+      fetch("https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=6"
+            + "&accept-language=de&countrycodes=de,nl,be&q=" + encodeURIComponent(q))
+        .then(function (r) { return r.json(); })
+        .then(function (t) {
+          hinweis.textContent = stand.gewaehlt ? "übernommen ✓" : "aus der Liste wählen";
+          zeigen(t || []);
+        })
+        .catch(function () { hinweis.textContent = "Adresssuche gerade nicht erreichbar – später noch einmal."; });
+    }
+
+    feld.addEventListener("input", function () {
+      stand.gewaehlt = false; stand.lat = stand.lon = null;
+      hinweis.className = "meta adress-hinweis";
+      hinweis.textContent = feld.value.trim().length < 5 ? "" : "…";
+      clearTimeout(timer); timer = setTimeout(suchen, 500);
+    });
+    feld.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { schliessen(); return; }
+      if (e.key === "Enter") { e.preventDefault(); clearTimeout(timer); suchen(); return; }
+      if (e.key !== "ArrowDown") return;
+      var erst = liste.querySelector(".adress-vorschlag");
+      if (erst) { e.preventDefault(); erst.focus(); }
+    });
+    liste.addEventListener("keydown", function (e) {
+      var knoepfe = Array.prototype.slice.call(liste.querySelectorAll(".adress-vorschlag"));
+      var i = knoepfe.indexOf(document.activeElement);
+      if (e.key === "ArrowDown" && i < knoepfe.length - 1) { e.preventDefault(); knoepfe[i + 1].focus(); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); (i > 0 ? knoepfe[i - 1] : feld).focus(); }
+      else if (e.key === "Escape") { schliessen(); feld.focus(); }
+    });
+    // Tippt jemand daneben, geht die Liste zu. Der Horcher raeumt sich
+    // selbst ab, sobald das Feld nicht mehr auf der Seite steht.
+    function daneben(e) {
+      if (!box.isConnected) { document.removeEventListener("click", daneben); return; }
+      if (!liste.classList.contains("versteckt") && !box.contains(e.target)) schliessen();
+    }
+    document.addEventListener("click", daneben);
+    var box = h("div", { class: "adress-feld" }, [feld, liste, hinweis]);
+    return { box: box, feld: feld, stand: stand,
+             // "gueltig" ist, was aus der Liste kam - oder unveraendert von frueher
+             gueltig: function () { return stand.gewaehlt || (feld.value.trim() && feld.value.trim() === stand.start); },
+             leer: function () { return !feld.value.trim(); } };
+  }
+
   function zeigeEinrichtung(zurueck) {
     var seite = zurueck === "seite";
     var ziel = seite ? kontoZiel : zurueck && inhalt ? inhalt : wurzel;
@@ -754,9 +882,8 @@ window.Mitglieder = (function () {
         auswahl.appendChild(o);
       });
     });
-    var heimat = h("input", { type: "text", placeholder: "Straße Hausnummer, PLZ Ort", value: p.heimat || "", autocomplete: "street-address" });
-    var koord = h("span", { class: "meta", text: p.heimat_lat ? "gefunden ✓" : "" });
-    var lat = p.heimat_lat || null, lon = p.heimat_lon || null, adresseGeaendert = false;
+    var adresse = adressFeld({ wert: p.heimat || "", lat: p.heimat_lat, lon: p.heimat_lon });
+    var heimat = adresse.feld;
     var teilen = h("input", { type: "checkbox" });
     sb.from("wohnorte").select("user_id").eq("user_id", session.user.id).maybeSingle().then(function (r) { teilen.checked = !!(r.data); }).catch(function () {});
     // Nummer und Anschrift fuer die Kollegen stehen in derselben Maske -
@@ -772,8 +899,6 @@ window.Mitglieder = (function () {
       telHinweis.value = kontaktStand.hinweis || "";
       adresseZeigen.checked = !!kontaktStand.anschrift;
     });
-    heimat.addEventListener("input", function () { adresseGeaendert = true; lat = lon = null; koord.textContent = "noch nicht gesucht"; });
-
     var modell = h("select", { class: "mg-select" }, [
       h("option", { value: "einfach", text: "Entfernungspauschale – einfache Strecke, volle km" }),
       h("option", { value: "hinrueck", text: "Reisekosten – gefahrene km, hin und zurück" })
@@ -785,47 +910,45 @@ window.Mitglieder = (function () {
     var satzHinrueck = h("input", { type: "number", step: "0.01", min: "0",
       value: p.satz_hinrueck != null ? p.satz_hinrueck : (kmStd.satz_hinrueck || 0.30) });
 
-    var suchen = h("button", { type: "button", class: "mg-neben", text: "Adresse suchen", onclick: function () {
-      var q = heimat.value.trim();
-      if (!q) return;
-      koord.textContent = "suche …";
-      fetch("https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=de,nl,be&q=" + encodeURIComponent(q))
-        .then(function (r) { return r.json(); })
-        .then(function (t) {
-          if (!t.length) { koord.textContent = "nicht gefunden – genauer eingeben (Straße, Hausnummer, Ort)"; lat = lon = null; return; }
-          lat = parseFloat(t[0].lat); lon = parseFloat(t[0].lon);
-          koord.textContent = "gefunden: " + t[0].display_name.split(",").slice(0, 3).join(",");
-        })
-        .catch(function () { koord.textContent = "Suche nicht erreichbar"; });
-    } });
-
     var speichernKnopf = h("button", { type: "submit", class: "mg-haupt", text: "Speichern" });
     var form = h("form", { class: "mg-form", onsubmit: function (e) {
       e.preventDefault();
       if (!auswahl.value) { meldung("Bitte deinen Namen wählen.", "warn"); return; }
-      if (heimat.value.trim() && lat == null) { meldung("Bitte erst „Adresse suchen“ drücken, damit die Strecke berechnet werden kann.", "warn"); return; }
+      if (!adresse.leer() && !adresse.gueltig()) {
+        meldung("Bitte die Adresse aus der Vorschlagsliste wählen – dann stimmen Hausnummer, PLZ und Ort.", "warn");
+        heimat.focus(); return;
+      }
+      if (!adresse.leer() && !hausnummerAus(heimat.value)) {
+        meldung("Bitte die Hausnummer mit angeben – daraus wird die Strecke zur Halle berechnet.", "warn");
+        heimat.focus(); return;
+      }
       speichernKnopf.disabled = true;
       var person = ctx.personMit(auswahl.value)
         || (namenListe || []).filter(function (x) { return x.slug === auswahl.value; })[0]
         || { slug: auswahl.value, name: auswahl.options[auswahl.selectedIndex].text };
       var zeile = { id: session.user.id, slug: auswahl.value, name: person ? person.name : auswahl.value,
                     email: session.user.email || null,
-                    heimat: heimat.value.trim() || null, heimat_lat: lat, heimat_lon: lon,
+                    heimat: heimat.value.trim() || null,
+                    heimat_lat: adresse.stand.lat != null ? adresse.stand.lat : p.heimat_lat || null,
+                    heimat_lon: adresse.stand.lon != null ? adresse.stand.lon : p.heimat_lon || null,
                     km_modell: modell.value,
                     satz_einfach: zahl(satzEinfach.value) != null ? zahl(satzEinfach.value) : 0.38,
                     satz_hinrueck: zahl(satzHinrueck.value) != null ? zahl(satzHinrueck.value) : 0.30,
                     km_satz: modell.value === "einfach" ? zahl(satzEinfach.value) : zahl(satzHinrueck.value),
                     obmann_email: obmann.value.trim() || null,
                     // Neue Adresse -> alte Strecken sind wertlos
-                    strecken: adresseGeaendert ? {} : (p.strecken || {}) };
+                    // Neue Adresse -> alte Strecken sind wertlos
+                    strecken: heimat.value.trim() === (p.heimat || "") ? (p.strecken || {}) : {} };
       sb.from("profile").upsert(zeile).then(function (r) {
         speichernKnopf.disabled = false;
         if (r.error) { meldung("Speichern fehlgeschlagen: " + fehlerText(r.error), "warn"); return; }
         profil = Object.assign({}, profil || {}, zeile);
         // Wohnort fuer Fahrgemeinschaften: nur Ort und Lage auf ~1 km gerundet
-        if (teilen.checked && lat != null && lon != null) {
+        if (teilen.checked && zeile.heimat_lat != null && zeile.heimat_lon != null) {
           var ort = (heimat.value.split(",").pop() || "").replace(/\d{5}/, "").trim() || null;
-          sb.from("wohnorte").upsert({ user_id: session.user.id, slug: zeile.slug, ort: ort, lat: Math.round(lat * 100) / 100, lon: Math.round(lon * 100) / 100, geaendert: new Date().toISOString() }, { onConflict: "user_id" })
+          sb.from("wohnorte").upsert({ user_id: session.user.id, slug: zeile.slug, ort: ort,
+                                       lat: Math.round(zeile.heimat_lat * 100) / 100, lon: Math.round(zeile.heimat_lon * 100) / 100,
+                                       geaendert: new Date().toISOString() }, { onConflict: "user_id" })
             .then(function (r2) { if (r2.error) meldung(fehlerText(r2.error) + (/wohnorte/.test(r2.error.message || "") ? " – schema.sql (v15) ausführen." : ""), "warn"); });
         } else sb.from("wohnorte").delete().eq("user_id", session.user.id).then(function () {}).catch(function () {});
         // Nummer und Anschrift fuer die Kollegen: eine Zeile, aus demselben Formular
@@ -853,7 +976,7 @@ window.Mitglieder = (function () {
       zurueck ? h("p", { class: "meta", style: "margin:0 0 8px", text: "Alles an einer Stelle: Name, Anschrift, Nummer. Abrechnung, Rechnung und die Liste der Kollegen nehmen sich die Angaben von hier." }) : null,
       h("label", { text: "Dein Name auf esrw.de" }), auswahl,
       h("label", { text: "Heimatadresse – Startpunkt für die Strecke zur Halle" }),
-      h("div", { class: "mg-zeile" }, [heimat, suchen]), koord,
+      adresse.box,
       h("label", { class: "mg-check", style: "margin-top:8px" }, [teilen, " Wohnort für Fahrgemeinschaften teilen – Kollegen sehen nur den Ort und die Lage auf etwa einen Kilometer, keine Adresse. Dann schlägt „Zusammen fahren“ vor, wer auf dem Weg liegt."]),
       h("label", { class: "mg-check", style: "margin-top:4px" }, [adresseZeigen, " Anschrift im Reiter „Kollegen“ zeigen – damit Kollegen wissen, wo du wohnst. Ohne Haken sieht sie niemand."]),
       h("label", { text: "Handynummer für die Kollegen (freiwillig, jederzeit löschbar)" }), telefon,
@@ -3785,7 +3908,13 @@ window.Mitglieder = (function () {
     return t;
   }
   function vereinSpeichern(verein, werte, alt) {
-    var zeile = { verein: verein, name: werte.name || verein, strasse: werte.strasse || "", plz_ort: werte.plz_ort || "",
+    // Aus der Vorschlagsliste kommt "Strasse 1, 12345 Ort" in einem Stueck
+    var str = String(werte.strasse || ""), ort = String(werte.plz_ort || "");
+    if (str.indexOf(",") > 0) {
+      var t = anschriftTeile(str);
+      str = t.strasse; if (!ort) ort = t.plz_ort;
+    }
+    var zeile = { verein: verein, name: werte.name || verein, strasse: str, plz_ort: ort,
                   von: profil && (profil.name || profil.slug), angelegt_von: session.user.id,
                   geaendert: new Date().toISOString() };
     if (werte.verifiziert !== undefined) {
@@ -3808,11 +3937,14 @@ window.Mitglieder = (function () {
     // Verein von Hand anlegen - fuer alles, was nicht im Spielplan steht
     var nVerein = h("input", { type: "text", placeholder: "Verein, wie er im Spielplan steht" });
     var nName = h("input", { type: "text", placeholder: "Name auf der Rechnung (optional)" });
-    var nStr = h("input", { type: "text", placeholder: "Straße und Nr." });
     var nOrt = h("input", { type: "text", placeholder: "PLZ und Ort" });
+    // Adresse aus der Liste waehlen - PLZ und Ort fuellen sich dann selbst
+    var nAdr = adressFeld({ platzhalter: "Straße und Hausnummer …",
+      gewaehlt: function (teil) { if (teil.plz_ort) nOrt.value = teil.plz_ort; } });
+    var nStr = nAdr.feld;
     box.appendChild(h("details", { class: "tausch" }, [
       h("summary", { text: "+ Verein anlegen" }),
-      h("div", { class: "mg-form" }, [nVerein, nName, nStr, nOrt,
+      h("div", { class: "mg-form" }, [nVerein, nName, nAdr.box, nOrt,
         h("button", { type: "button", class: "anfrage", text: "Anlegen", onclick: function () {
           var v = nVerein.value.trim();
           if (!v) { meldung("Bitte den Vereinsnamen eintragen.", "warn"); return; }
@@ -3898,15 +4030,17 @@ window.Mitglieder = (function () {
         var det = h("details", { class: "tausch" }, [h("summary", {}, [kopfText])]);
         var fSchl = h("input", { type: "text", value: v, placeholder: "Verein im Spielplan" });
         var fName = h("input", { type: "text", value: a.name || v, placeholder: "Name auf der Rechnung" });
-        var fStr = h("input", { type: "text", value: a.strasse || "", placeholder: "Straße und Nr." });
         var fOrt = h("input", { type: "text", value: a.plz_ort || "", placeholder: "PLZ und Ort" });
+        var fAdr = adressFeld({ wert: a.strasse || "", platzhalter: "Straße und Hausnummer …",
+          gewaehlt: function (teil) { if (teil.plz_ort) fOrt.value = teil.plz_ort; } });
+        var fStr = fAdr.feld;
         det.appendChild(h("div", { class: "mg-form" }, [
           h("label", { text: "Name im Spielplan" }), fSchl,
           h("p", { class: "meta", style: "margin:-2px 0 6px", text: imPlan[v]
             ? "Steht so im Spielplan – daran wird die Adresse erkannt. Ändern nur, wenn der Spielplan anders schreibt."
             : "Kommt im Spielplan nicht vor – selbst angelegt." }),
           h("label", { text: "Name auf der Rechnung" }), fName,
-          h("label", { text: "Anschrift" }), fStr, fOrt,
+          h("label", { text: "Anschrift" }), fAdr.box, fOrt,
           h("div", { class: "zweit", style: "margin-top:8px" }, [
             h("button", { type: "button", class: "haupt", text: "Speichern", onclick: function () {
               var schl = fSchl.value.trim();
