@@ -320,6 +320,16 @@ packt daten.json, abrechnung.csv, notizen.txt und alle Belege im Browser
 zusammen; Kartenkacheln im Dunkelmodus abgedunkelt; „Am Spieltag groß“ macht
 die Kopfkarte am Spieltag bildschirmfüllend; Tipp auf die Stand-Pille lädt neu.
 
+**Telefonliste für alle, Rechnung in vier Schritten**: Der Reiter
+„Kollegen“ zeigt jedem freigeschalteten Mitglied die Nummern – mit Suche und
+Anrufen · WhatsApp · Kopieren, betreute und selbst freigegebene zusammen.
+Ändern darf sie nur der Betreiber (Admin → Telefonliste). Das Rechnungsblatt
+führt in vier nummerierten Schritten durch Spiele, Empfänger, Angaben und
+Beträge, schlägt die laufende Nummer aus dem Spieljahr und den bisherigen
+Rechnungen vor (überschreibbar, mit Warnung bei Dopplung) und lässt
+geschriebene Rechnungen direkt neu laden. Vereine sind im Adminbereich
+vollständig pflegbar: anlegen, umbenennen, Anschrift ändern, löschen.
+
 **ESRW App unter www.esrw.app**: neuer Name in Titel, Manifest und auf dem
 Startbildschirm. Vereinsadressen pflegt der Admin an einer Stelle (mit
 Vorschlagsliste aus dem EHV-Verzeichnis), die Schiedsrichternummer steht in

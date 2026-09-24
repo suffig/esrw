@@ -1667,6 +1667,42 @@ abwarten.** Mehr steht dort nicht.
   Das Eingabefeld bricht auf dem Handy sauber um.
 * **Leiste unten**: Die Beschriftungen stehen mittig unter den Zeichen.
 
+### 10.6ah Telefonliste für alle, Rechnungsnummer aus den Spielen, Vereine
+
+* **Reiter „Kollegen“**: Die Telefonliste steht jetzt allen
+  freigeschalteten Mitgliedern offen – mit Suchfeld und je Zeile
+  **Anrufen · WhatsApp · Kopieren**. Gezeigt wird beides zusammen: was der
+  Betreiber gepflegt hat und was Kollegen selbst freigegeben haben; die
+  selbst freigegebene Nummer geht vor. Die eigene Nummer gibt man gleich
+  dort frei („Meine eigene Nummer“).
+  **Ändern kann die Liste weiterhin nur der Betreiber** (Admin →
+  Telefonliste, dort jetzt mit Suche, „Ändern“ und „Löschen“ je Zeile).
+  Das erzwingt die Datenbank: `telefonliste` darf nur schreiben, wer Admin
+  ist, und nur lesen, wer freigeschaltet ist. Abschaltbar unter
+  Admin → Funktionen („Telefonliste“).
+* **Rechnungsnummer kommt aus den Spielen**: Die laufende Nummer wird
+  vorgeschlagen – Jahreszahl aus dem Spiel (ein Spiel im Dezember gehört in
+  dessen Jahr), dahinter die nächste freie Zahl aus deinen bisherigen
+  Rechnungen. Sie steht als **eigenes Feld im Rechnungsblatt** und lässt
+  sich überschreiben; ist eine Nummer schon vergeben, steht es darunter.
+  „Vorschlag wieder übernehmen“ setzt sie zurück.
+* **Rechnungsblatt in vier Schritten**: Spiele → Empfänger → Angaben →
+  Beträge. Jeder Schritt trägt eine Nummer, ein Haken zeigt, was
+  vollständig ist; aufgeklappt ist immer der erste offene Schritt, steht
+  alles, bleibt die Karte zu und man sieht die ganze Rechnung auf einen
+  Blick. Über der Karte stehen „Deine Daten“ aus dem Konto, darunter –
+  falls nötig – „Es fehlt noch: …“. Die geschriebenen Rechnungen stehen
+  unten und lassen sich dort mit einem Tipp noch einmal als PDF laden.
+* **Adresse auch für „1b“**: Ein Spiel von „Iserlohner EC 1b“ nimmt die
+  Anschrift von „Iserlohner EC“ – sie steht nur einmal in der Liste.
+* **Vereine im Adminbereich** (Admin → Vereine, vorher
+  „Vereinsadressen“): Vereine lassen sich jetzt **anlegen, umbenennen und
+  löschen**, nicht nur ergänzen. Je Verein: Name im Spielplan (daran wird
+  die Adresse erkannt), Name auf der Rechnung, Straße, PLZ und Ort. Dazu
+  ein Suchfeld und die Zahl, bei wie vielen Vereinen etwas fehlt. Vereine,
+  die im Spielplan gar nicht vorkommen (Turniere, Lehrgänge), legst du
+  unter „+ Verein anlegen“ selbst an.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

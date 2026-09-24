@@ -36,7 +36,8 @@
     ["statistik", "Statistik", "Saison, Archiv, Saisonziel, Saison-Bild", true],
     ["checkliste", "Spieltag-Checkliste", "auf der Spielseite", true],
     ["wetter", "Wetter", "auf Start und der Spielseite", true],
-    ["push", "Push-Mitteilungen", "Geräte anmelden, Erinnerungen, Testnachricht", true]
+    ["push", "Push-Mitteilungen", "Geräte anmelden, Erinnerungen, Testnachricht", true],
+    ["telefon", "Telefonliste", "Nummern der Kollegen im Reiter „Kollegen“", true]
   ];
   var funktionenStand = null;
   function funktionenLesen() {

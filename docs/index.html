@@ -1454,6 +1454,25 @@
     .marke .logo { width:40px; height:40px; }
     .kopf { padding-top:calc(env(safe-area-inset-top) + 14px); }
   }
+  /* ---- Runde 22: Schritte im Rechnungsblatt, Suchfelder, Vereine ---- */
+  .rechnung-gruppe > summary, .rechnung-steller > summary { display:flex; gap:10px; align-items:flex-start; }
+  .rechnung-gruppe > summary > span:last-child,
+  .rechnung-steller > summary > span:last-child { min-width:0; flex:1 1 auto; }
+  .rechnung-steller > summary b { display:block; font-size:.95rem; }
+  .rechnung-steller > summary small { display:block; color:var(--dim); font-weight:600; overflow-wrap:anywhere; }
+  .schritt-nr { flex:none; width:24px; height:24px; border-radius:50%; border:1px solid var(--linie); background:var(--bg);
+                color:var(--dim); font-weight:800; font-size:.8rem; line-height:1; display:flex; align-items:center; justify-content:center; }
+  .schritt-nr.fertig { background:var(--gut-bg); color:var(--gut); border-color:transparent; }
+  .schritt-nr.fehlt  { background:var(--warn-bg); color:var(--warn); border-color:transparent; }
+  /* Suchfeld ueber langen Listen (Telefonliste, Vereine) */
+  .mg-suche { width:100%; font:inherit; padding:10px 12px; border-radius:12px; border:1px solid var(--linie);
+              background:var(--bg); color:var(--text); margin:0 0 8px; }
+  .verein-liste > details { border-top:1px solid var(--linie); }
+  .verein-liste > details:first-child { border-top:0; }
+  .rechnung-verlauf .telefon-zeile b { font-variant-numeric:tabular-nums; }
+  /* Im Adminbereich stehen zwei Knoepfe mehr in der Zeile - sie duerfen
+     umbrechen, sonst steht "Loeschen" halb ausserhalb der Karte. */
+  .telefon-wege { flex:1 1 auto; flex-wrap:wrap; justify-content:flex-end; }
 </style>
 </head>
 <body>
@@ -1844,6 +1863,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=63"></script>
+<script src="app.js?v=64"></script>
 </body>
 </html>
