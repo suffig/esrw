@@ -143,8 +143,14 @@
     s.korrektur = { halle: k.halle || null, beginn: k.beginn || null, treffpunkt: k.treffpunkt || null, hinweis: k.hinweis || null, abgesagt: !!k.abgesagt, _app: true };
     s.vergangen = new Date(s.beginn) < Date.now();
   }
+  // Spiele, die es nie gab: ausgefallen, standen aber weiter auf esrw.de.
+  // Der Betreiber setzt die Marke, die Zeile in der Datenbank bleibt stehen -
+  // in der App ist das Spiel weg, auch in Abrechnung und Archiv.
+  function istGeloescht(s) { var k = korrekturen[kennungVon(s)]; return !!(k && k.geloescht); }
   function korrekturenAnwenden() {
     if (!daten) return;
+    daten.spiele = (daten.spiele || []).filter(function (s) { return !istGeloescht(s); });
+    (daten.personen || []).forEach(function (p) { p.spiele = (p.spiele || []).filter(function (s) { return !istGeloescht(s); }); });
     (daten.spiele || []).forEach(korrekturAnwendenAuf);
     (daten.personen || []).forEach(function (p) { p.spiele.forEach(korrekturAnwendenAuf); p.spiele.sort(function (a, b) { return a.beginn < b.beginn ? -1 : a.beginn > b.beginn ? 1 : 0; }); });
     (daten.spiele || []).sort(function (a, b) { return a.beginn < b.beginn ? -1 : a.beginn > b.beginn ? 1 : 0; });
@@ -154,7 +160,7 @@
       cfg = cfg || {};
       if (cfg.mock) { try { return JSON.parse(localStorage.getItem("mock_spiel_korrekturen") || "[]"); } catch (e) { return []; } }
       if (!cfg.url || !cfg.anon_key) return null;
-      return fetch(cfg.url.replace(/\/$/, "") + "/rest/v1/spiel_korrekturen?select=kennung,halle,beginn,treffpunkt,hinweis,abgesagt,von,geaendert", { headers: { apikey: cfg.anon_key, Authorization: "Bearer " + cfg.anon_key } })
+      return fetch(cfg.url.replace(/\/$/, "") + "/rest/v1/spiel_korrekturen?select=*", { headers: { apikey: cfg.anon_key, Authorization: "Bearer " + cfg.anon_key } })
         .then(function (r) { return r.ok ? r.json() : null; });
     }).then(function (zeilen) {
       if (!zeilen) return false;
@@ -269,7 +275,13 @@
     location.hash = "suche";
     setTimeout(function () { var f = el("suche"); f.focus(); f.select(); window.scrollTo({ top: 0 }); }, 150);
   });
-  el("avatar").addEventListener("click", function () { location.hash = profil && profil.slug ? "mehr" : ""; if (!(profil && profil.slug)) zeigeAuswahl(false); });
+  // Oben rechts: das eigene Profil - dort stehen Name, Anschrift, Nummer
+  // und die Rechnungsdaten an einer Stelle.
+  el("avatar").addEventListener("click", function () {
+    if (sitzungVorhanden()) { location.hash = "mitglieder/profil"; return; }
+    location.hash = profil && profil.slug ? "mehr" : "";
+    if (!(profil && profil.slug)) zeigeAuswahl(false);
+  });
   // Admin-Modus: nur fuer Admins sichtbar, schaltet die Betreiber-Funktionen
   // in der Oberflaeche an und aus (Rechte bleiben davon unberuehrt)
   function adminModusAn() { return lesen("adminaus") !== "1"; }
@@ -3166,6 +3178,30 @@
   function tourWennNeu() {
     if (!el("tour").classList.contains("versteckt")) return;
     if (!lesen("tour-start") && !(profil && profil.slug)) setTimeout(function () { if (lesen("tour-start")) return; tourOeffnen("start"); }, 700);
+  }
+  // Nach der Registrierung: auf die Startseite, mit einem Wort dazu, was
+  // noch fehlt. Sonst landet man in einem Bereich, der noch leer ist.
+  document.addEventListener("mg-wartet", function () {
+    location.hash = "";
+    // Erst nach dem Aufbau der Startseite einhaengen - sonst raeumt sie den
+    // Hinweis gleich wieder weg.
+    setTimeout(wartehinweisZeigen, 250);
+  });
+  function wartehinweisZeigen() {
+    // Die Startseite ist der Bereich "detail" mit der Hauptspalte darin
+    var ziel = document.querySelector("#detail .spalte-haupt"); if (!ziel) return;
+    var alt = el("wartehinweis"); if (alt) alt.remove();
+    var d = document.createElement("div");
+    d.className = "hinweis warn"; d.id = "wartehinweis";
+    d.appendChild(ikone("i-lock"));
+    var t = document.createElement("span");
+    var b = document.createElement("b"); b.textContent = "Dein Konto steht.";
+    t.appendChild(b);
+    t.appendChild(document.createTextNode(" Jetzt schaltet der Betreiber dich frei – danach siehst du Einteilungen, Kollegen und Tausch. "
+      + "Abrechnung und Notizen kannst du schon benutzen."));
+    d.appendChild(t);
+    ziel.insertBefore(d, ziel.firstChild);
+    window.scrollTo(0, 0);
   }
   document.addEventListener("mg-neu-konto", function () { if (!lesen("tour-konto")) setTimeout(function () { tourOeffnen("konto"); }, 600); });
   document.addEventListener("mg-profil", function () { if (!lesen("tour-konto") && sitzungVorhanden() && el("tour").classList.contains("versteckt")) setTimeout(function () { if (!lesen("tour-konto")) tourOeffnen("konto"); }, 900); });

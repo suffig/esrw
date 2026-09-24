@@ -320,6 +320,16 @@ packt daten.json, abrechnung.csv, notizen.txt und alle Belege im Browser
 zusammen; Kartenkacheln im Dunkelmodus abgedunkelt; „Am Spieltag groß“ macht
 die Kopfkarte am Spieltag bildschirmfüllend; Tipp auf die Stand-Pille lädt neu.
 
+**Ein Profil für alles**: Name, Anschrift, Handynummer, Freigaben und
+Rechnungsdaten stehen an einer Stelle (Zeichen oben rechts); Abrechnung,
+Rechnung und die Kollegenliste bedienen sich dort. Kollegen, mit denen man
+pfeift, stehen in der Liste oben. Der Betreiber sieht in der Freischaltung
+den Stand jedes Kontos, kann Einträge entfernen und Konten per Einladung
+vorbereiten. Den Namen wählt man schon bei der Registrierung; danach führt
+die App auf die Startseite und sagt, dass die Freischaltung noch fehlt.
+Ausgefallene Spiele melden die Kollegen unter Abrechnung, der Betreiber
+blendet sie aus – in der Datenbank bleiben sie stehen.
+
 **Einfach ist der Standard**: Die App startet in der einfachen Ansicht;
 das Auge in der Kopfzeile schaltet um. Unten in der Leiste steht
 „Kollegen" – die Telefonliste mit Anschriften, Aktionen als Zeichen

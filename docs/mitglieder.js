@@ -138,6 +138,32 @@ window.Mitglieder = (function () {
     return box;
   }
   function frei() { return !!(sb && sb._attrappe) || !!(profil && (profil.freigeschaltet || profil.admin)); }
+  // Namen fuer Registrierung und Namenswahl. Aus den Daten, solange der
+  // Tresor offen ist - und sonst aus der schlichten Liste in der Datenbank
+  // (schema.sql v26), die auch ein frisches Konto lesen darf.
+  var namenListe = null;
+  function personenNamen() {
+    var aus = (ctx.daten && ctx.daten.personen) || [];
+    if (aus.length) return Promise.resolve(aus);
+    if (namenListe) return Promise.resolve(namenListe);
+    return speichern(sb.from("personen_liste").select("slug,name").order("name")).then(function (r) {
+      namenListe = ((r && r.data) || []).map(function (z) { return { slug: z.slug, name: z.name }; });
+      return namenListe;
+    });
+  }
+  // Der Betreiber haelt die Liste nebenbei aktuell - er hat die Daten offen.
+  function namenAbgleichen() {
+    var personen = (ctx.daten && ctx.daten.personen) || [];
+    if (!personen.length || !istAdminAn()) return;
+    var marke = personen.length + ":" + personen[personen.length - 1].slug;
+    if (ctx.lesen && ctx.lesen("namen-stand") === marke) return;
+    speichern(sb.from("personen_liste").upsert(personen.map(function (p) {
+      return { slug: p.slug, name: p.name, geaendert: new Date().toISOString() };
+    }), { onConflict: "slug" })).then(function (r) {
+      if (r && r.error) return;
+      if (ctx.schreiben) ctx.schreiben("namen-stand", marke);
+    });
+  }
   // Admin-Modus: wer Admin ist, kann die Zusatzfunktionen oben abschalten und
   // die App wie ein normaler Schiedsrichter benutzen. Rechte bleiben, nur die
   // Oberflaeche ist ruhiger.
@@ -459,11 +485,20 @@ window.Mitglieder = (function () {
                           autocomplete: modus === "registrieren" ? "new-password" : "current-password", minlength: "8" });
     var knopf = h("button", { type: "submit", class: "mg-haupt",
       text: modus === "registrieren" ? "Konto anlegen" : modus === "vergessen" ? "Link schicken" : "Anmelden" });
+    // Den Namen gleich hier waehlen: nach der Bestaetigungsmail steht er
+    // schon im Profil, aendern laesst er sich spaeter jederzeit im Profil.
+    var nameWahl = modus === "registrieren" ? h("select", { class: "mg-select" },
+      [h("option", { value: "", text: "– dein Name auf esrw.de –" })]) : null;
+    if (nameWahl) personenNamen().then(function (liste) {
+      liste.forEach(function (x) { nameWahl.appendChild(h("option", { value: x.slug, text: x.name })); });
+      if (!liste.length) nameWahl.parentNode && nameWahl.remove();
+    });
 
     var form = h("form", { class: "mg-form", onsubmit: function (e) {
       e.preventDefault();
       knopf.disabled = true;
       var p = { email: email.value.trim(), password: pw.value };
+      if (nameWahl && nameWahl.value && ctx.schreiben) ctx.schreiben("wunsch-slug", nameWahl.value);
       var lauf;
       if (modus === "registrieren") {
         lauf = sb.auth.signUp({ email: p.email, password: p.password,
@@ -495,6 +530,8 @@ window.Mitglieder = (function () {
       h("h4", { text: modus === "registrieren" ? "Konto anlegen" : modus === "vergessen" ? "Passwort vergessen" : "Anmelden" }),
       email,
       modus === "vergessen" ? null : pw,
+      nameWahl,
+      nameWahl ? h("p", { class: "meta", style: "margin:-2px 0 6px", text: "Später jederzeit im Profil änderbar." }) : null,
       knopf
     ]);
 
@@ -572,12 +609,35 @@ window.Mitglieder = (function () {
 
   // --------------------------------------------------------- Nach Login
 
+  // Frisch registriert: noch nicht freigeschaltet, also auf die Startseite
+  // und dort sagen, worauf man wartet.
+  function wartehinweis() {
+    if (frei()) return false;
+    document.dispatchEvent(new CustomEvent("mg-wartet", { detail: { name: (profil && profil.name) || "" } }));
+    return true;
+  }
   function nachLogin() {
     angezeigt = "bereich";
     leeren(wurzel);
     wurzel.appendChild(skelett(3));
     return ladeProfil()
       .then(function () {
+        // Bei der Registrierung gewaehlter Name: einmal ins Profil schreiben
+        var wunsch = ctx.lesen ? ctx.lesen("wunsch-slug") : null;
+        if (wunsch && !(profil && profil.slug)) {
+          var person = ctx.personMit(wunsch);
+          return speichern(sb.from("profile").upsert({ id: session.user.id, slug: wunsch,
+              name: person ? person.name : wunsch, email: session.user.email || null }))
+            .then(function () {
+              if (ctx.schreiben) ctx.schreiben("wunsch-slug", null);
+              profil = profil || {};
+              profil.id = session.user.id; profil.slug = wunsch; profil.name = person ? person.name : wunsch;
+              document.dispatchEvent(new CustomEvent("mg-profil", { detail: { slug: profil.slug, name: profil.name } }));
+              document.dispatchEvent(new CustomEvent("mg-neu-konto", { detail: { slug: profil.slug } }));
+              if (wartehinweis()) return null;
+              return ladeEinsaetze().then(function () { rahmen(); zeigeReiter(reiter); });
+            });
+        }
         if (!profil || !profil.slug) return zeigeEinrichtung();
         document.dispatchEvent(new CustomEvent("mg-profil", { detail: { slug: profil.slug, name: profil.name, einstellungen: profil.einstellungen || null } }));
         return ladeEinsaetze().then(function () { rahmen(); zeigeReiter(reiter); });
@@ -670,6 +730,7 @@ window.Mitglieder = (function () {
     else if (name === "notizen") zeigeNotizen();
     else if (name === "info") zeigeInfo();
     else if (name === "kollegen") zeigeTelefonbuch();
+    else if (name === "profil") zeigeEinrichtung(true);
     else if (name === "admin" && istAdminAn()) zeigeAdmin();
     else if (name === "konto") zeigeKonto();
     else if (verfuegbareReiter.length && verfuegbareReiter[0] !== name) zeigeReiter(verfuegbareReiter[0]);
@@ -684,18 +745,33 @@ window.Mitglieder = (function () {
     leeren(ziel);
     var p = profil || {};
     var kmStd = (gebuehren && gebuehren.kilometer) || {};
-    var auswahl = h("select", { class: "mg-select" },
-      [h("option", { value: "", text: "– bitte wählen –" })].concat(
-        ctx.daten.personen.map(function (x) {
-          var o = h("option", { value: x.slug, text: x.name });
-          if ((p.slug || ctx.slug) === x.slug) o.selected = true;
-          return o;
-        })));
+    var auswahl = h("select", { class: "mg-select" }, [h("option", { value: "", text: "– bitte wählen –" })]);
+    personenNamen().then(function (liste) {
+      var soll = p.slug || (ctx.lesen && ctx.lesen("wunsch-slug")) || ctx.slug;
+      liste.forEach(function (x) {
+        var o = h("option", { value: x.slug, text: x.name });
+        if (soll === x.slug) o.selected = true;
+        auswahl.appendChild(o);
+      });
+    });
     var heimat = h("input", { type: "text", placeholder: "Straße Hausnummer, PLZ Ort", value: p.heimat || "", autocomplete: "street-address" });
     var koord = h("span", { class: "meta", text: p.heimat_lat ? "gefunden ✓" : "" });
     var lat = p.heimat_lat || null, lon = p.heimat_lon || null, adresseGeaendert = false;
     var teilen = h("input", { type: "checkbox" });
     sb.from("wohnorte").select("user_id").eq("user_id", session.user.id).maybeSingle().then(function (r) { teilen.checked = !!(r.data); }).catch(function () {});
+    // Nummer und Anschrift fuer die Kollegen stehen in derselben Maske -
+    // sonst pflegt man dieselbe Adresse an zwei Stellen.
+    var telefon = h("input", { type: "tel", placeholder: "z. B. 0171 2345678", autocomplete: "tel" });
+    var telHinweis = h("input", { type: "text", placeholder: "Hinweis (optional), z. B. „lieber WhatsApp“", maxlength: "80" });
+    var adresseZeigen = h("input", { type: "checkbox" });
+    var kontaktStand = null;
+    speichern(sb.from("kontakte").select("*").eq("user_id", session.user.id).maybeSingle()).then(function (r) {
+      kontaktStand = (r && r.data) || null;
+      if (!kontaktStand) return;
+      telefon.value = kontaktStand.telefon || "";
+      telHinweis.value = kontaktStand.hinweis || "";
+      adresseZeigen.checked = !!kontaktStand.anschrift;
+    });
     heimat.addEventListener("input", function () { adresseGeaendert = true; lat = lon = null; koord.textContent = "noch nicht gesucht"; });
 
     var modell = h("select", { class: "mg-select" }, [
@@ -723,13 +799,15 @@ window.Mitglieder = (function () {
         .catch(function () { koord.textContent = "Suche nicht erreichbar"; });
     } });
 
-    var speichern = h("button", { type: "submit", class: "mg-haupt", text: "Speichern" });
+    var speichernKnopf = h("button", { type: "submit", class: "mg-haupt", text: "Speichern" });
     var form = h("form", { class: "mg-form", onsubmit: function (e) {
       e.preventDefault();
       if (!auswahl.value) { meldung("Bitte deinen Namen wählen.", "warn"); return; }
       if (heimat.value.trim() && lat == null) { meldung("Bitte erst „Adresse suchen“ drücken, damit die Strecke berechnet werden kann.", "warn"); return; }
-      speichern.disabled = true;
-      var person = ctx.personMit(auswahl.value);
+      speichernKnopf.disabled = true;
+      var person = ctx.personMit(auswahl.value)
+        || (namenListe || []).filter(function (x) { return x.slug === auswahl.value; })[0]
+        || { slug: auswahl.value, name: auswahl.options[auswahl.selectedIndex].text };
       var zeile = { id: session.user.id, slug: auswahl.value, name: person ? person.name : auswahl.value,
                     email: session.user.email || null,
                     heimat: heimat.value.trim() || null, heimat_lat: lat, heimat_lon: lon,
@@ -741,7 +819,7 @@ window.Mitglieder = (function () {
                     // Neue Adresse -> alte Strecken sind wertlos
                     strecken: adresseGeaendert ? {} : (p.strecken || {}) };
       sb.from("profile").upsert(zeile).then(function (r) {
-        speichern.disabled = false;
+        speichernKnopf.disabled = false;
         if (r.error) { meldung("Speichern fehlgeschlagen: " + fehlerText(r.error), "warn"); return; }
         profil = Object.assign({}, profil || {}, zeile);
         // Wohnort fuer Fahrgemeinschaften: nur Ort und Lage auf ~1 km gerundet
@@ -750,18 +828,36 @@ window.Mitglieder = (function () {
           sb.from("wohnorte").upsert({ user_id: session.user.id, slug: zeile.slug, ort: ort, lat: Math.round(lat * 100) / 100, lon: Math.round(lon * 100) / 100, geaendert: new Date().toISOString() }, { onConflict: "user_id" })
             .then(function (r2) { if (r2.error) meldung(fehlerText(r2.error) + (/wohnorte/.test(r2.error.message || "") ? " – schema.sql (v15) ausführen." : ""), "warn"); });
         } else sb.from("wohnorte").delete().eq("user_id", session.user.id).then(function () {}).catch(function () {});
+        // Nummer und Anschrift fuer die Kollegen: eine Zeile, aus demselben Formular
+        var nr = telefon.value.trim();
+        if (nr) {
+          speichern(sb.from("kontakte").upsert({ user_id: session.user.id, slug: zeile.slug, name: zeile.name, telefon: nr,
+                                                 anschrift: adresseZeigen.checked ? (zeile.heimat || null) : null,
+                                                 hinweis: telHinweis.value.trim() || null }, { onConflict: "user_id" }))
+            .then(function (r3) { if (r3 && r3.error) meldung(fehlerText(r3.error) + (/anschrift/.test(r3.error.message || "") ? " – schema.sql (v24) ausführen." : ""), "warn"); });
+        } else if (kontaktStand) {
+          speichern(sb.from("kontakte").delete().eq("user_id", session.user.id));
+        }
+        cache.kontakte = {}; cache.geladen.telefon = 0;
         document.dispatchEvent(new CustomEvent("mg-profil", { detail: { slug: profil.slug, name: profil.name } }));
         meldung("Gespeichert.", "gut");
-        if (!zurueck) document.dispatchEvent(new CustomEvent("mg-neu-konto", { detail: { slug: profil.slug } }));
+        if (!zurueck) {
+          document.dispatchEvent(new CustomEvent("mg-neu-konto", { detail: { slug: profil.slug } }));
+          if (wartehinweis()) return;
+        }
         if (seite) { ladeEinsaetze().catch(function () {}); kontoNeu(); return; }
         ladeEinsaetze().then(function () { rahmen(); zeigeReiter(zurueck ? "konto" : "abrechnung"); });
       });
     } }, [
-      h("h4", { text: zurueck ? "Profil" : "Wer bist du?" }),
+      h("h4", { text: zurueck ? "Mein Profil" : "Wer bist du?" }),
+      zurueck ? h("p", { class: "meta", style: "margin:0 0 8px", text: "Alles an einer Stelle: Name, Anschrift, Nummer. Abrechnung, Rechnung und die Liste der Kollegen nehmen sich die Angaben von hier." }) : null,
       h("label", { text: "Dein Name auf esrw.de" }), auswahl,
       h("label", { text: "Heimatadresse – Startpunkt für die Strecke zur Halle" }),
       h("div", { class: "mg-zeile" }, [heimat, suchen]), koord,
       h("label", { class: "mg-check", style: "margin-top:8px" }, [teilen, " Wohnort für Fahrgemeinschaften teilen – Kollegen sehen nur den Ort und die Lage auf etwa einen Kilometer, keine Adresse. Dann schlägt „Zusammen fahren“ vor, wer auf dem Weg liegt."]),
+      h("label", { class: "mg-check", style: "margin-top:4px" }, [adresseZeigen, " Anschrift im Reiter „Kollegen“ zeigen – damit Kollegen wissen, wo du wohnst. Ohne Haken sieht sie niemand."]),
+      h("label", { text: "Handynummer für die Kollegen (freiwillig, jederzeit löschbar)" }), telefon,
+      telHinweis,
       h("label", { text: "E-Mail des Obmanns (für „Monat per E-Mail“ in der Abrechnung, optional)" }), obmann,
       h("label", { text: "Kilometermodell" }), modell,
       h("div", { class: "mg-felder mg-zwei" }, [
@@ -773,10 +869,19 @@ window.Mitglieder = (function () {
         "passt, sagt dir dein Steuerberater – die Sätze lassen sich jederzeit ändern." }),
       h("p", { class: "meta", text: "Die Adresse liegt in deinem Profil bei Supabase und ist für niemanden sonst " +
         "lesbar. Für die Streckenberechnung gehen nur Koordinaten an den Routendienst (OSRM), keine Adresse." }),
-      speichern,
+      speichernKnopf,
       zurueck ? h("button", { type: "button", class: "mg-neben", text: "Zurück", onclick: function () { if (seite) kontoNeu(); else zeigeReiter("konto"); } }) : null
     ]);
     ziel.appendChild(h("div", { class: "melde karte" }, [form]));
+    // Was nur die Rechnung braucht, steht darunter - aber auf derselben Seite.
+    if (zurueck && fn("abrechnung")) {
+      var rd = rechnungDaten();
+      var rdBox = h("details", { class: "melde karte tausch" }, [
+        h("summary", {}, [rd.verein || rd.sr_nummer ? "Rechnungsdaten ✓ · " + (rd.verein || "") + (rd.sr_nummer ? " (" + rd.sr_nummer + ")" : "") : "Rechnungsdaten – Verein, Schiedsrichternummer, Nummernkreis"])
+      ]);
+      rdBox.appendChild(stammdatenFormular(function () { zeigeReiter("profil"); }));
+      ziel.appendChild(rdBox);
+    }
   }
 
   // ------------------------------------------------------------ Strecken
@@ -1185,9 +1290,26 @@ window.Mitglieder = (function () {
     }
     return rechnungGeladen;
   }
+  // Anschrift aus dem Profil in Strasse und "PLZ Ort" zerlegen: im Profil
+  // steht eine Zeile ("Musterweg 1, 45127 Essen"), die Rechnung hat zwei Felder.
+  function anschriftTeile(text) {
+    var t = String(text || "").split(",");
+    if (t.length < 2) return { strasse: String(text || "").trim(), plz_ort: "" };
+    return { strasse: t.slice(0, -1).join(",").trim(), plz_ort: t[t.length - 1].trim() };
+  }
+  // Rechnungsdaten kommen aus dem Profil - Name und Anschrift stehen nur
+  // dort, damit sie nicht an zwei Stellen gepflegt werden muessen. Nur was
+  // die Rechnung zusaetzlich braucht (Verein, Nummern, Kleinunternehmer),
+  // liegt in den Einstellungen.
   function rechnungDaten() {
     var e = (profil && profil.einstellungen) || {};
-    return e.rechnung || {};
+    var r = {}; Object.keys(e.rechnung || {}).forEach(function (k) { r[k] = e.rechnung[k]; });
+    if (!r.name) r.name = (profil && profil.name) || "";
+    if (!r.strasse && !r.plz_ort) {
+      var a = anschriftTeile(profil && profil.heimat);
+      r.strasse = a.strasse; r.plz_ort = a.plz_ort;
+    }
+    return r;
   }
   function rechnungDatenSpeichern(obj) {
     var e = {}; var alt = (profil && profil.einstellungen) || {};
@@ -1593,22 +1715,22 @@ window.Mitglieder = (function () {
 
   // Die eigenen Daten stehen an zwei Stellen (Rechnungsblatt und Konto) -
   // deshalb einmal gebaut.
+  // Auf dem Rechnungsblatt steht nur noch, was die Rechnung zusaetzlich
+  // braucht. Name und Anschrift kommen aus dem Profil - eine Stelle, ein Wert.
   function stammdatenFormular(fertig) {
     var d = rechnungDaten();
-    var fName = h("input", { type: "text", value: d.name || (profil && profil.name) || "", placeholder: "Nachname, Vorname" });
-    var fStr = h("input", { type: "text", value: d.strasse || "", placeholder: "Straße und Nr." });
-    var fOrt = h("input", { type: "text", value: d.plz_ort || "", placeholder: "PLZ und Ort" });
     var fVer = h("input", { type: "text", value: d.verein || "ESRW", placeholder: "Verein" });
     var fNr = h("input", { type: "text", value: d.sr_nummer || "", placeholder: "z. B. 12345 – steht in Klammern hinter deinem Namen" });
     var fSt = h("input", { type: "text", value: d.steuernummer || "", placeholder: "Steuernummer" });
     var fKlein = h("input", { type: "checkbox" }); fKlein.checked = d.klein !== false;
     var fPraefix = h("input", { type: "text", value: d.praefix || (new Date().getFullYear() + "-"), style: "width:7em" });
     var fNummer = h("input", { type: "number", min: "1", value: String(d.nummer || 1), style: "width:6em" });
+    var fehlt = !d.name || !d.strasse || !d.plz_ort;
     return h("div", { class: "mg-form" }, [
-      h("p", { class: "meta", style: "margin:0", text: "Steht als Rechnungssteller auf jeder Rechnung. Liegt im Konto, gilt auf allen Geräten." }),
-      h("label", { text: "Name" }), fName,
-      h("label", { text: "Straße und Nr." }), fStr,
-      h("label", { text: "PLZ und Ort" }), fOrt,
+      h("p", { class: fehlt ? "achtung" : "meta", style: "margin:0" },
+        [fehlt ? "Name und Anschrift fehlen – sie stehen im Profil." : "Rechnungssteller: " + d.name + (d.strasse ? ", " + d.strasse + ", " + d.plz_ort : ""), " ",
+         h("button", { type: "button", class: "textknopf", text: "Im Profil ändern",
+           onclick: function () { zeigeReiter("profil"); } })]),
       h("label", { text: "Verein" }), fVer,
       h("label", { text: "Schiedsrichternummer" }), fNr,
       h("label", { text: "Steuernummer" }), fSt,
@@ -1616,7 +1738,8 @@ window.Mitglieder = (function () {
       h("label", { text: "Nächste Rechnungsnummer" }),
       h("div", { class: "zweit" }, [fPraefix, fNummer]),
       h("button", { type: "button", class: "haupt", text: "Daten merken", onclick: function () {
-        rechnungDatenSpeichern({ name: fName.value.trim(), strasse: fStr.value.trim(), plz_ort: fOrt.value.trim(),
+        var alt = rechnungDaten();
+        rechnungDatenSpeichern({ name: alt.name, strasse: alt.strasse, plz_ort: alt.plz_ort,
                                  verein: fVer.value.trim(), sr_nummer: fNr.value.trim(), steuernummer: fSt.value.trim(),
                                  klein: fKlein.checked, praefix: fPraefix.value.trim(), nummer: parseInt(fNummer.value, 10) || 1 })
           .then(function (ok) {
@@ -1690,6 +1813,46 @@ window.Mitglieder = (function () {
           });
       });
     }).catch(function (e) { meldung("Rechnung fehlgeschlagen: " + (e && e.message ? e.message : e), "warn"); });
+  }
+
+  // Spiel steht auf esrw.de, hat aber nie stattgefunden: melden. Der
+  // Betreiber entscheidet - geloescht wird nichts, das Spiel verschwindet
+  // nur aus der App.
+  var meldungenEigen = null;
+  function meldungenLaden() {
+    if (meldungenEigen) return Promise.resolve(meldungenEigen);
+    return speichern(sb.from("spiel_meldungen").select("kennung,user_id")).then(function (r) {
+      meldungenEigen = ((r && r.data) || []).filter(function (m) { return m.user_id === session.user.id; })
+        .map(function (m) { return m.kennung; });
+      return meldungenEigen;
+    });
+  }
+  function ausfallZeile(sp) {
+    if (sp.privat) return null;
+    var box = h("div", { class: "zweit" });
+    meldungenLaden().then(function (liste) {
+      if (!box.isConnected) return;
+      var schon = liste.indexOf(sp.kennung) >= 0;
+      leeren(box);
+      box.appendChild(h("button", { type: "button", class: schon ? "mg-neben" : "", disabled: schon ? "" : null,
+        text: schon ? "Als ausgefallen gemeldet ✓" : "Spiel ist ausgefallen", onclick: function () {
+          if (!confirm("„" + sp.paarung + "“ dem Betreiber als ausgefallen melden?\n\n" +
+                       "Er prüft es und blendet das Spiel dann für alle aus.")) return;
+          var grund = prompt("Kurz warum (optional):", "") || null;
+          speichern(sb.from("spiel_meldungen").insert({ user_id: session.user.id, slug: profil.slug,
+            name: profil.name || profil.slug, kennung: sp.kennung, beginn: sp.beginn, paarung: sp.paarung, grund: grund }))
+            .then(function (r) {
+              if (r && r.error) { meldung(fehlerText(r.error) + (/spiel_meldungen/.test(r.error.message || "") ? " – schema.sql (v25) ausführen." : ""), "warn"); return; }
+              meldungenEigen = null; kurzMeldung("Gemeldet ✓ – der Betreiber sieht es im Adminbereich.", "gut");
+              meldungenLaden().then(function () { if (box.isConnected) ausfallErneuern(box, sp); });
+            });
+        } }));
+    });
+    return box;
+  }
+  function ausfallErneuern(box, sp) {
+    var neu = ausfallZeile(sp);
+    if (neu && box.parentNode) box.parentNode.replaceChild(neu, box);
   }
 
   // Die Zeile unter einem Spiel in der Abrechnung: vormerken oder die
@@ -2244,6 +2407,7 @@ window.Mitglieder = (function () {
       // Direkt von hier auf die Gebuehrenabrechnung - und, wenn es schon
       // eine gibt, dieselbe Rechnung noch einmal als PDF.
       rechnungZeile(sp),
+      ausfallZeile(sp),
       sp.privat ? h("div", { class: "zweit" }, [h("button", { type: "button", style: "color:var(--rot)", text: "Eintrag löschen", onclick: function () {
         if (!confirm("Dieses selbst eingetragene Spiel samt Abrechnung und Belegen löschen?")) return;
         var belege = (einsaetze[sp.kennung] || {}).belege || [];
@@ -2603,29 +2767,15 @@ window.Mitglieder = (function () {
     inhalt.appendChild(ueber);
     kontoUebersicht(ueber);
     inhalt.appendChild(h("div", { class: "melde karte" }, [
-      h("h4", { text: "Profil" }),
-      h("p", { text: "Name auf esrw.de, Heimatadresse (für Strecken und Abfahrt), Obmann-Adresse, Kilometermodell und Sätze." }),
+      h("h4", { text: "Mein Profil" }),
+      h("p", { text: "Name, Anschrift, Handynummer, Kilometermodell und die Rechnungsdaten – alles an einer Stelle. Auch über das Zeichen oben rechts erreichbar." }),
       h("button", { type: "button", class: "haupt", text: "Profil bearbeiten", onclick: function () { zeigeEinrichtung(seite ? "seite" : true); } })
     ]));
-    // Anschrift, Verein, Schiedsrichternummer: stehen auf jeder Rechnung und
-    // gehoeren deshalb ins Konto, nicht nur ins Rechnungsblatt.
-    if (fn("abrechnung")) {
-      var rd = rechnungDaten();
-      var rdBox = h("details", { class: "melde karte tausch" }, [
-        h("summary", {}, [rd.name ? "Rechnungsdaten ✓ · " + rd.name + (rd.sr_nummer ? " (" + rd.sr_nummer + ")" : "") : "Rechnungsdaten – für die Gebührenabrechnung"])
-      ]);
-      rdBox.appendChild(stammdatenFormular(function () { kontoNeu(); }));
-      inhalt.appendChild(rdBox);
-    }
+    // Rechnungsdaten stehen im Profil - hier nur der Weg dorthin.
     if (fn("push")) {
       var pushBox = h("div", { class: "melde karte" }, [h("h4", {}, [ikone("i-bell"), " Push-Benachrichtigungen ", h("span", { class: "status", text: "" })]), h("p", { text: "prüfe …" })]);
       inhalt.appendChild(pushBox);
       pushRendern(pushBox);
-    }
-    if (fn("gespann")) {
-      var kontaktBox = h("div", { class: "melde karte" }, [h("h4", { text: "Handynummer für Gespannkollegen" }), h("p", { text: "lade …" })]);
-      inhalt.appendChild(kontaktBox);
-      kontaktRendern(kontaktBox);
     }
 
     var neueMail = h("input", { type: "email", placeholder: "neue@adresse.de", autocomplete: "email" });
@@ -2817,7 +2967,7 @@ window.Mitglieder = (function () {
       .then(function () { kurzMeldung("Push ist aus.", ""); }).catch(function () {});
   }
 
-  // ---- Gespann-Kontakt: freiwillig freigegebene Nummer (Tabelle kontakte)
+  // ---- Telefonlink (tel: und wa.me) fuer Kollegenkarten
 
   function telefonLink(nr) {
     var ziffern = String(nr).replace(/[^\d+]/g, "");
@@ -2843,8 +2993,23 @@ window.Mitglieder = (function () {
                fehler: a.error || null };
     });
   }
+  // Mit wem pfeift man? Aus den eigenen Spielen des laufenden Jahres -
+  // diese Kollegen braucht man am haeufigsten, sie stehen oben.
+  function gespannSlugs() {
+    var aus = {}, meins = profil && profil.slug;
+    if (!meins) return aus;
+    var von = Date.now() - 150 * 86400000, bis = Date.now() + 150 * 86400000;
+    ((ctx.daten && ctx.daten.spiele) || []).forEach(function (s) {
+      var t = new Date(s.beginn).getTime();
+      if (t < von || t > bis) return;
+      var bes = s.besetzung || [];
+      if (!bes.filter(function (b) { return b.slug === meins; }).length) return;
+      bes.forEach(function (b) { if (b.slug && b.slug !== meins) aus[b.slug] = (aus[b.slug] || 0) + 1; });
+    });
+    return aus;
+  }
   // Selbst freigegebene Nummer geht vor der Betreiberliste.
-  function telefonbuchZeilen(d) {
+  function telefonbuchZeilen(d, gespann) {
     var aus = {}, personen = (ctx.daten && ctx.daten.personen) || [];
     function name(slug, ersatz) {
       var p = personen.filter(function (x) { return x.slug === slug; })[0];
@@ -2860,8 +3025,12 @@ window.Mitglieder = (function () {
                       anschrift: k.anschrift || alt.anschrift || "", hinweis: k.hinweis || "",
                       eigen: true, inListe: !!alt.inListe, betreiber: alt.telefon || null };
     });
-    return Object.keys(aus).map(function (k) { return aus[k]; })
-      .sort(function (a, b) { return String(a.name).localeCompare(String(b.name), "de"); });
+    var liste = Object.keys(aus).map(function (k) { return aus[k]; });
+    if (gespann) liste.forEach(function (z) { z.gespann = gespann[z.slug] || 0; });
+    return liste.sort(function (a, b) {
+      if ((b.gespann || 0) !== (a.gespann || 0)) return (b.gespann || 0) - (a.gespann || 0);
+      return String(a.name).localeCompare(String(b.name), "de");
+    });
   }
   // Zeichen statt Woerter: auf dem Handy passen drei Knoepfe neben die
   // Nummer, "Anrufen WhatsApp Kopieren" tut das nicht.
@@ -2905,7 +3074,9 @@ window.Mitglieder = (function () {
   function telefonZeile(z, zusatz) {
     var karte = h("div", { class: "telefon-zeile" });
     var kopf = h("div", { class: "kontakt-kopf" }, [h("b", { text: z.name })]);
-    if (z.eigen) kopf.appendChild(h("small", { class: "kontakt-marke", text: "selbst freigegeben" }));
+    if (z.gespann) kopf.appendChild(h("small", { class: "kontakt-marke",
+      text: z.gespann === 1 ? "1 Spiel zusammen" : z.gespann + " Spiele zusammen" }));
+    else if (z.eigen) kopf.appendChild(h("small", { class: "kontakt-marke", text: "selbst freigegeben" }));
     karte.appendChild(kopf);
     if (z.hinweis) karte.appendChild(h("small", { class: "meta", text: z.hinweis }));
     if (z.telefon) karte.appendChild(h("div", { class: "kontakt-wert" }, [
@@ -2929,15 +3100,9 @@ window.Mitglieder = (function () {
     karte.appendChild(liste);
     inhalt.appendChild(karte);
 
-    if (fn("gespann")) {
-      var eigenBox = h("div", {}, [h("p", { class: "meta", text: "lade …" })]);
-      var eigen = h("details", { class: "melde karte tausch" }, [
-        h("summary", { text: "Meine Nummer und Anschrift" }), eigenBox]);
-      eigen.addEventListener("toggle", function () {
-        if (eigen.open && !eigen._geladen) { eigen._geladen = true; kontaktRendern(eigenBox); }
-      });
-      inhalt.appendChild(eigen);
-    }
+    if (fn("gespann")) inhalt.appendChild(h("p", { class: "meta mg-fuss" }, [
+      "Deine eigene Nummer und Anschrift stehen im Profil. ",
+      h("button", { type: "button", class: "textknopf", text: "Profil öffnen", onclick: function () { zeigeReiter("profil"); } })]));
     if (istAdminAn()) inhalt.appendChild(h("p", { class: "meta mg-fuss" }, [
       "Ändern kann die Liste nur der Betreiber. ",
       h("button", { type: "button", class: "textknopf", text: "Liste pflegen",
@@ -2953,7 +3118,8 @@ window.Mitglieder = (function () {
         liste.appendChild(h("p", { class: "achtung", text: "Telefonliste nicht ladbar: " + fehlerText(d.fehler) }));
         return;
       }
-      var alle = telefonbuchZeilen(d);
+      var gespann = gespannSlugs();
+      var alle = telefonbuchZeilen(d, gespann);
       var gesamt = ((ctx.daten && ctx.daten.personen) || []).length;
       var mitNr = alle.filter(function (z) { return z.telefon; }).length;
       var mitAdr = alle.filter(function (z) { return z.anschrift; }).length;
@@ -2970,36 +3136,23 @@ window.Mitglieder = (function () {
           liste.appendChild(h("p", { class: "leer", text: alle.length ? "Niemand gefunden." : "Noch keine Nummern eingetragen." }));
           return;
         }
+        // Gespann zuerst, mit einer Zwischenzeile - danach der Rest
+        var mit = treffer.filter(function (z) { return z.gespann; });
+        if (mit.length && !q) {
+          liste.appendChild(h("p", { class: "listen-kopf", text: "Mit dir im Gespann" }));
+          mit.forEach(function (z) { liste.appendChild(telefonZeile(z)); });
+          var rest = treffer.filter(function (z) { return !z.gespann; });
+          if (rest.length) {
+            liste.appendChild(h("p", { class: "listen-kopf", text: "Alle anderen" }));
+            rest.forEach(function (z) { liste.appendChild(telefonZeile(z)); });
+          }
+          return;
+        }
         treffer.forEach(function (z) { liste.appendChild(telefonZeile(z)); });
       }
       suche.addEventListener("input", zeichne);
       zeichne();
     });
-  }
-
-  function kontaktRendern(box) {
-    sb.from("kontakte").select("*").eq("user_id", session.user.id).maybeSingle().then(function (r) {
-      var k = r.data;
-      leeren(box);
-      var telefon = h("input", { type: "tel", placeholder: "z. B. 0171 2345678", value: k ? k.telefon : "", autocomplete: "tel" });
-      var anschrift = h("input", { type: "text", placeholder: "Anschrift (optional), z. B. „Musterweg 1, 45127 Essen“", value: k && k.anschrift ? k.anschrift : "", autocomplete: "street-address", maxlength: "120" });
-      var hinweis = h("input", { type: "text", placeholder: "Hinweis (optional), z. B. „lieber WhatsApp“", value: k && k.hinweis ? k.hinweis : "", maxlength: "80" });
-      var speichern = h("button", { type: "button", class: "haupt", text: k ? "Aktualisieren" : "Freigeben", onclick: function () {
-        var nr = telefon.value.trim();
-        if (!nr) { meldung("Bitte eine Nummer eintragen.", "warn"); return; }
-        sb.from("kontakte").upsert({ user_id: session.user.id, slug: profil.slug, name: profil.name || profil.slug, telefon: nr,
-                                     anschrift: anschrift.value.trim() || null, hinweis: hinweis.value.trim() || null }, { onConflict: "user_id" })
-          .then(function (r2) { if (r2.error) { meldung(fehlerText(r2.error) + (/anschrift/.test(r2.error.message || "") ? " – schema.sql (v24) ausführen." : ""), "warn"); return; } cache.kontakte = {}; kurzMeldung("Freigegeben ✓", "gut"); kontaktRendern(box); });
-      } });
-      box.appendChild(h("h4", { text: "Meine Nummer und Anschrift" }));
-      box.appendChild(h("p", { text: (k ? "Freigegeben. " : "") + "Wer die Nummer freigibt, bekommt auf der Spielkarte bei den Kollegen „Anrufen“ und „WhatsApp“ – und umgekehrt. " +
-        "Die Anschrift ist freiwillig und steht nur im Reiter „Kollegen“. Beides sehen nur freigeschaltete Mitglieder, beides ist jederzeit zurückziehbar." }));
-      box.appendChild(h("div", { class: "mg-form" }, [telefon, anschrift, hinweis]));
-      box.appendChild(speichern);
-      if (k) box.appendChild(h("button", { type: "button", class: "mg-neben", style: "margin-top:8px;width:100%", text: "Nummer zurückziehen", onclick: function () {
-        sb.from("kontakte").delete().eq("user_id", session.user.id).then(function () { cache.kontakte = {}; kurzMeldung("Zurückgezogen.", ""); kontaktRendern(box); });
-      } }));
-    }).catch(function (e) { leeren(box); box.appendChild(h("p", { class: "achtung", text: fehlerText(e) })); });
   }
 
   // ---- Extras je Spielkarte: Hallen-Wiki, Kontakte, Fahrgemeinschaft, Notiz
@@ -3337,6 +3490,62 @@ window.Mitglieder = (function () {
     if (!session || !profil || !profil.admin) return Promise.resolve(false);
     return sb.from("spiele_manuell").delete().eq("id", id).then(function (r) { if (r.error) { meldung(fehlerText(r.error), "warn"); return false; } document.dispatchEvent(new CustomEvent("mg-betreiber")); return true; });
   }
+  // Admin: gemeldete Ausfaelle. "Ausblenden" setzt die Marke in
+  // spiel_korrekturen - die Zeile bleibt, das Spiel ist aus der App raus.
+  function meldungenRendern(box) {
+    var alt = box.querySelector(".ausfall-meldungen");
+    if (alt) alt.remove();
+    var kasten = h("div", { class: "ausfall-meldungen" });
+    box.insertBefore(kasten, box.firstChild);
+    Promise.all([
+      speichern(sb.from("spiel_meldungen").select("*").order("angelegt", { ascending: false })),
+      speichern(sb.from("spiel_korrekturen").select("kennung,geloescht,von").eq("geloescht", true))
+    ]).then(function (rr) {
+      var meldungen = (rr[0] && rr[0].data) || [];
+      var raus = (rr[1] && rr[1].data) || [];
+      leeren(kasten);
+      if (!meldungen.length && !raus.length) return;
+      kasten.appendChild(h("h4", { text: "Gemeldete Ausfälle" }));
+      if (!meldungen.length) kasten.appendChild(h("p", { class: "meta", text: "Nichts Neues gemeldet." }));
+      meldungen.forEach(function (m) {
+        kasten.appendChild(h("div", { class: "sperre" }, [
+          h("span", {}, [h("b", { text: m.paarung || m.kennung }),
+            h("small", { class: "meta", style: "display:block", text: (m.beginn ? new Date(m.beginn).toLocaleDateString("de-DE") + " · " : "")
+              + "gemeldet von " + (m.name || "?") + (m.grund ? " · " + m.grund : "") })]),
+          h("span", { class: "zweit-klein" }, [
+            h("button", { type: "button", class: "anfrage", text: "Ausblenden", onclick: function () {
+              speichern(sb.from("spiel_korrekturen").upsert({ kennung: m.kennung, geloescht: true,
+                von: profil.name || profil.slug, geaendert: new Date().toISOString() }, { onConflict: "kennung" }))
+                .then(function (r) {
+                  if (r && r.error) { meldung(fehlerText(r.error) + " – schema.sql (v25) ausführen.", "warn"); return; }
+                  return speichern(sb.from("spiel_meldungen").delete().eq("kennung", m.kennung)).then(function () {
+                    kurzMeldung("Ausgeblendet ✓ – beim nächsten Laden ist es bei allen weg.", "gut");
+                    document.dispatchEvent(new CustomEvent("mg-betreiber"));
+                    meldungenRendern(box);
+                  });
+                });
+            } }),
+            h("button", { type: "button", class: "textknopf", text: "verwerfen", onclick: function () {
+              speichern(sb.from("spiel_meldungen").delete().eq("kennung", m.kennung)).then(function () { meldungenRendern(box); });
+            } })])]));
+      });
+      if (raus.length) {
+        var det = h("details", { class: "tausch" }, [h("summary", { text: raus.length + (raus.length === 1 ? " Spiel ausgeblendet" : " Spiele ausgeblendet") })]);
+        raus.forEach(function (k) {
+          det.appendChild(h("div", { class: "sperre" }, [
+            h("span", {}, [h("b", { text: k.kennung.split("|").slice(1).join("|") || k.kennung }),
+              h("small", { class: "meta", style: "display:block", text: "von " + (k.von || "?") })]),
+            h("button", { type: "button", class: "textknopf", text: "wieder zeigen", onclick: function () {
+              speichern(sb.from("spiel_korrekturen").update({ geloescht: false }).eq("kennung", k.kennung))
+                .then(function () { document.dispatchEvent(new CustomEvent("mg-betreiber")); meldungenRendern(box); });
+            } })]));
+        });
+        kasten.appendChild(det);
+      }
+      kasten.appendChild(h("hr", { class: "trenner" }));
+    });
+  }
+
   function spielAnlegenRendern(box) {
     function lokal(d) { function z(n) { return ("0" + n).slice(-2); } return d.getFullYear() + "-" + z(d.getMonth() + 1) + "-" + z(d.getDate()) + "T" + z(d.getHours()) + ":" + z(d.getMinutes()); }
     var liga = h("input", { type: "text", placeholder: "Liga, z. B. „U15 FS“ (optional)", maxlength: "40" });
@@ -3382,6 +3591,7 @@ window.Mitglieder = (function () {
     sb.from("spiele_manuell").select("id,beginn,liga,paarung,halle,besetzung").order("beginn").then(function (r) {
       leeren(box); box.appendChild(h("h4", {}, [ikone("i-cal"), " Spiel anlegen"]));
       box.appendChild(form);
+      meldungenRendern(box);
       var liste = (r.data || []).filter(function (z) { return new Date(z.beginn) > new Date(Date.now() - 86400000); });
       if (liste.length) {
         var det = h("details", { class: "tausch", style: "margin-top:10px" }, [h("summary", { text: liste.length + (liste.length === 1 ? " angelegtes Spiel" : " angelegte Spiele") })]);
@@ -3796,57 +4006,143 @@ window.Mitglieder = (function () {
     });
   }
 
+  // Admin -> Freischaltung: wer wartet, wer dabei ist, wer eingeladen wurde.
+  //
+  // Ein Konto kann der Betreiber nicht selbst anlegen - das Passwort gehoert
+  // dem Kollegen, und die Einladung ueber die API braeuchte den geheimen
+  // Schluessel. Darum die Einladung: Adresse (und Name) vormerken, wer sich
+  // damit registriert, ist sofort dabei.
   function adminRendern(box) {
-    sb.from("profile").select("id,name,slug,email,freigeschaltet,admin").order("name").then(function (r) {
+    namenAbgleichen();
+    function neu() { adminRendern(box); }
+    function zeile(p, knoepfe, marken) {
+      var kopf = h("span", {}, [h("b", { text: p.name || p.slug || "(ohne Namen)" }),
+        h("small", { class: "meta", style: "display:block", text: p.email || "" })]);
+      (marken || []).forEach(function (m) { kopf.insertBefore(h("span", { class: "merkzeichen " + m[1], text: m[0] }), kopf.firstChild); });
+      return h("div", { class: "sperre" }, [kopf, h("span", { class: "zweit-klein" }, knoepfe.filter(Boolean))]);
+    }
+    function mailAendern(p) {
+      var neuMail = prompt("E-Mail im Verzeichnis ändern.\n\nAchtung: Das ändert nur den Eintrag hier (Anzeige und Einladungen). " +
+        "Die Adresse zum Anmelden ändert der Kollege selbst unter Konto – oder du im Supabase-Dashboard.", p.email || "");
+      if (neuMail === null) return;
+      speichern(sb.from("profile").update({ email: neuMail.trim() || null }).eq("id", p.id)).then(function (r) {
+        if (r && r.error) { meldung(fehlerText(r.error), "warn"); return; }
+        kurzMeldung("Eintrag geändert ✓", "gut"); neu();
+      });
+    }
+    function entfernen(p) {
+      if (!confirm("Konto von " + (p.name || p.email || "diesem Kollegen") + " entfernen?\n\n" +
+                   "Die Profilzeile mit allen Einstellungen wird gelöscht. Der Zugang selbst bleibt bestehen, " +
+                   "bis du ihn im Supabase-Dashboard löschst – meldet sich der Kollege wieder an, taucht er als neue Registrierung auf.")) return;
+      speichern(sb.from("profile").delete().eq("id", p.id)).then(function (r) {
+        if (r && r.error) { meldung(fehlerText(r.error) + " – schema.sql (v25) ausführen.", "warn"); return; }
+        kurzMeldung("Entfernt.", ""); neu();
+      });
+    }
+
+    Promise.all([
+      speichern(sb.from("profile").select("id,name,slug,email,freigeschaltet,admin,geaendert").order("name")),
+      speichern(sb.from("einladungen").select("*").order("angelegt", { ascending: false }))
+    ]).then(function (rr) {
+      var r = rr[0] || {};
       if (r.error) throw r.error;
       var alle = r.data || [];
+      var einladungen = (rr[1] && rr[1].data) || [];
+      var offeneEin = einladungen.filter(function (e) { return !e.eingeloest_am; });
       var offen = alle.filter(function (p) { return !p.freigeschaltet && !p.admin; });
       leeren(box);
       box.appendChild(h("h4", { text: "Freischaltung" }));
-      box.appendChild(h("p", { text: alle.length + " Konten, " + offen.length + " warten. „(ohne Namen)“ heißt: registriert, aber in der App noch keinen Namen gewählt – freischalten geht trotzdem." }));
+      box.appendChild(h("p", { class: "meta", text: alle.length + " Konten · " + offen.length + (offen.length === 1 ? " wartet" : " warten")
+        + (offeneEin.length ? " · " + offeneEin.length + " eingeladen, noch nicht registriert" : "") + "." }));
+
+      // ---- wer wartet
       if (!offen.length) box.appendChild(h("p", { class: "meta", text: "Niemand wartet." }));
       offen.forEach(function (p) {
-        box.appendChild(h("div", { class: "sperre" }, [
-          h("span", {}, [h("b", { text: p.name || p.slug || "(ohne Namen)" }), h("small", { class: "meta", style: "display:block", text: p.email || "" })]),
+        var marken = [["wartet", "warn"]];
+        if (!p.slug) marken.push(["ohne Namen", "warn"]);
+        box.appendChild(zeile(p, [
           h("button", { type: "button", class: "anfrage", text: "Freischalten", onclick: function () {
-            sb.from("profile").update({ freigeschaltet: true }).eq("id", p.id).then(function (r2) {
-              if (r2.error) { meldung(fehlerText(r2.error), "warn"); return; }
-              kurzMeldung((p.name || "Konto") + " freigeschaltet ✓", "gut"); adminRendern(box);
+            speichern(sb.from("profile").update({ freigeschaltet: true }).eq("id", p.id)).then(function (r2) {
+              if (r2 && r2.error) { meldung(fehlerText(r2.error), "warn"); return; }
+              kurzMeldung((p.name || "Konto") + " freigeschaltet ✓", "gut"); neu();
             });
-          } })
-        ]));
+          } }),
+          h("button", { type: "button", class: "textknopf", text: "E-Mail", onclick: function () { mailAendern(p); } }),
+          h("button", { type: "button", class: "textknopf", style: "color:var(--rot)", text: "Entfernen", onclick: function () { entfernen(p); } })
+        ], marken));
       });
+
+      // ---- Einladung vorbereiten
+      var eMail = h("input", { type: "email", placeholder: "E-Mail des Kollegen", autocomplete: "off" });
+      var eName = h("select", { class: "mg-select" }, [h("option", { value: "", text: "– Name (optional) –" })]
+        .concat((ctx.daten.personen || []).map(function (x) { return h("option", { value: x.slug, text: x.name }); })));
+      var eFrei = h("input", { type: "checkbox" }); eFrei.checked = true;
+      var eAdmin = h("input", { type: "checkbox" });
+      var einlBox = h("details", { class: "tausch", style: "margin-top:8px" }, [
+        h("summary", { text: "Konto vorbereiten (Einladung)" }),
+        h("div", { class: "mg-form" }, [
+          h("p", { class: "meta", style: "margin:0", text: "Trag die Adresse des Kollegen ein. Registriert er sich damit, ist er sofort dabei – "
+            + "mit dem hinterlegten Namen und ohne dass du noch einmal freischalten musst. Das Passwort vergibt er selbst; "
+            + "ein Konto ohne ihn anzulegen geht nicht, dafür müsste der geheime Schlüssel in der App liegen." }),
+          eMail, eName,
+          h("label", { class: "schalter" }, [eFrei, " sofort freischalten"]),
+          h("label", { class: "schalter" }, [eAdmin, " gleich zum Admin machen"]),
+          h("button", { type: "button", class: "anfrage", text: "Einladung anlegen", onclick: function () {
+            var adr = eMail.value.trim().toLowerCase();
+            if (!adr || adr.indexOf("@") < 0) { meldung("Bitte eine E-Mail-Adresse eintragen.", "warn"); return; }
+            var person = eName.value ? ctx.personMit(eName.value) : null;
+            speichern(sb.from("einladungen").upsert({ email: adr, slug: eName.value || null,
+              name: person ? person.name : null, freischalten: eFrei.checked, admin: eAdmin.checked,
+              von: profil.name || profil.slug, eingeloest_am: null }, { onConflict: "email" }))
+              .then(function (r2) {
+                if (r2 && r2.error) { meldung(fehlerText(r2.error) + " – schema.sql (v25) ausführen.", "warn"); return; }
+                eMail.value = ""; kurzMeldung("Eingeladen ✓ – der Kollege registriert sich mit dieser Adresse.", "gut"); neu();
+              });
+          } })])
+      ]);
+      offeneEin.forEach(function (e) {
+        einlBox.appendChild(h("div", { class: "sperre" }, [
+          h("span", {}, [h("b", { text: e.email }),
+            h("small", { class: "meta", style: "display:block", text: (e.name || "ohne Namen") + (e.admin ? " · Admin" : e.freischalten ? " · sofort frei" : "") })]),
+          h("button", { type: "button", class: "textknopf", style: "color:var(--rot)", text: "löschen", onclick: function () {
+            speichern(sb.from("einladungen").delete().eq("email", e.email)).then(function () { neu(); });
+          } })]));
+      });
+      box.appendChild(einlBox);
+
+      // ---- dabei
       var freie = alle.filter(function (p) { return p.freigeschaltet && !p.admin; });
       if (freie.length) {
         var det = h("details", { class: "tausch" }, [h("summary", { text: freie.length + " freigeschaltet" })]);
         freie.forEach(function (p) {
-          det.appendChild(h("div", { class: "sperre" }, [
-            h("span", {}, [h("b", { text: p.name || p.slug || "(ohne Namen)" }), h("small", { class: "meta", style: "display:block", text: p.email || "" })]),
-            h("span", {}, [
-              h("button", { type: "button", class: "textknopf", text: "Admin", title: "Zum Admin machen", onclick: function () {
-                if (!confirm((p.name || p.email) + " zum Admin machen? Kann dann freischalten und Admins ernennen.")) return;
-                sb.from("profile").update({ admin: true }).eq("id", p.id).then(function (r2) { if (r2.error) meldung(fehlerText(r2.error), "warn"); adminRendern(box); });
-              } }), " · ",
-              h("button", { type: "button", class: "textknopf", text: "sperren", onclick: function () {
-                sb.from("profile").update({ freigeschaltet: false }).eq("id", p.id).then(function () { adminRendern(box); });
-              } })
-            ])
-          ]));
+          det.appendChild(zeile(p, [
+            h("button", { type: "button", class: "textknopf", text: "Admin", title: "Zum Admin machen", onclick: function () {
+              if (!confirm((p.name || p.email) + " zum Admin machen? Kann dann freischalten und Admins ernennen.")) return;
+              speichern(sb.from("profile").update({ admin: true }).eq("id", p.id)).then(function (r2) { if (r2 && r2.error) meldung(fehlerText(r2.error), "warn"); neu(); });
+            } }),
+            h("button", { type: "button", class: "textknopf", text: "sperren", onclick: function () {
+              speichern(sb.from("profile").update({ freigeschaltet: false }).eq("id", p.id)).then(function () { neu(); });
+            } }),
+            h("button", { type: "button", class: "textknopf", text: "E-Mail", onclick: function () { mailAendern(p); } }),
+            h("button", { type: "button", class: "textknopf", style: "color:var(--rot)", text: "Entfernen", onclick: function () { entfernen(p); } })
+          ], p.slug ? null : [["ohne Namen", "warn"]]));
         });
         box.appendChild(det);
       }
+
+      // ---- Admins
       var admins = alle.filter(function (p) { return p.admin; });
       var adet = h("details", { class: "tausch" }, [h("summary", { text: admins.length + (admins.length === 1 ? " Admin" : " Admins") })]);
       admins.forEach(function (p) {
-        adet.appendChild(h("div", { class: "sperre" }, [
-          h("span", {}, [h("b", { text: (p.name || p.slug || "(ohne Namen)") + (p.id === session.user.id ? " (du)" : "") }), h("small", { class: "meta", style: "display:block", text: p.email || "" })]),
-          p.id === session.user.id ? null : h("button", { type: "button", class: "textknopf", text: "Admin entfernen", onclick: function () {
+        adet.appendChild(zeile({ id: p.id, name: (p.name || p.slug || "(ohne Namen)") + (p.id === session.user.id ? " (du)" : ""), email: p.email },
+          [p.id === session.user.id ? null : h("button", { type: "button", class: "textknopf", text: "Admin entfernen", onclick: function () {
             if (!confirm((p.name || p.email) + " das Admin-Recht nehmen?")) return;
-            sb.from("profile").update({ admin: false, freigeschaltet: true }).eq("id", p.id).then(function () { adminRendern(box); });
-          } })
-        ]));
+            speichern(sb.from("profile").update({ admin: false, freigeschaltet: true }).eq("id", p.id)).then(function () { neu(); });
+          } })]));
       });
       box.appendChild(adet);
+      box.appendChild(h("p", { class: "meta mg-fuss", text: "„Entfernen“ löscht die Profilzeile, nicht den Zugang selbst – "
+        + "den löscht nur das Supabase-Dashboard (Authentication → Users). Dasselbe gilt für die Adresse zum Anmelden." }));
       zaehler().then(zaehlerAnzeigen);
     }).catch(function (e) { leeren(box); box.appendChild(h("p", { class: "achtung", text: fehlerText(e) })); });
   }

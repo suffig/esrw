@@ -1005,3 +1005,111 @@ $$;
 drop trigger if exists vereinsadresse_schutz on public.vereine_adressen;
 create trigger vereinsadresse_schutz before insert or update on public.vereine_adressen
   for each row execute function public.vereinsadresse_schutz();
+
+-- ======================================================================
+-- v25: Einladungen, ausgefallene Spiele, Konten entfernen
+-- ======================================================================
+-- Ein Konto kann der Betreiber nicht selbst anlegen - das Passwort gehoert
+-- dem Kollegen, und die Einladung per API braeuchte den geheimen
+-- service_role-Schluessel, der nicht in die App gehoert. Stattdessen legt
+-- er die Einladung vor: Wer sich mit dieser Adresse registriert, ist
+-- sofort freigeschaltet und traegt den hinterlegten Namen.
+create table if not exists public.einladungen (
+  email        text primary key,
+  slug         text,
+  name         text,
+  freischalten boolean not null default true,
+  admin        boolean not null default false,
+  von          text,
+  angelegt     timestamptz not null default now(),
+  eingeloest_am timestamptz
+);
+alter table public.einladungen enable row level security;
+drop policy if exists "Admin pflegt Einladungen" on public.einladungen;
+create policy "Admin pflegt Einladungen" on public.einladungen for all to authenticated
+  using (public.ist_admin()) with check (public.ist_admin());
+
+-- Der Trigger vom Kontoanlegen holt die Einladung ab. Er laeuft als
+-- security definer, sieht die Tabelle also auch ohne Regel fuer den neuen
+-- Nutzer.
+create or replace function public.neues_konto()
+returns trigger language plpgsql security definer set search_path = public as $$
+declare e public.einladungen%rowtype;
+begin
+  select * into e from public.einladungen where lower(email) = lower(new.email);
+  insert into public.profile (id, email, slug, name, freigeschaltet, admin)
+    values (new.id, new.email, e.slug, e.name,
+            coalesce(e.freischalten, false), coalesce(e.admin, false))
+    on conflict (id) do update set email = excluded.email,
+      slug  = coalesce(public.profile.slug, excluded.slug),
+      name  = coalesce(public.profile.name, excluded.name),
+      freigeschaltet = public.profile.freigeschaltet or excluded.freigeschaltet,
+      admin = public.profile.admin or excluded.admin;
+  if e.email is not null then
+    update public.einladungen set eingeloest_am = now() where email = e.email;
+  end if;
+  return new;
+end;
+$$;
+drop trigger if exists konto_angelegt on auth.users;
+create trigger konto_angelegt after insert or update of email on auth.users
+  for each row execute function public.neues_konto();
+
+-- Ein Konto ganz loeschen kann nur das Auth-System (Dashboard). Der
+-- Betreiber kann aber die Profilzeile entfernen: damit ist das Konto
+-- wieder unbekannt, sieht nichts mehr und taucht als neue Registrierung
+-- wieder auf, sobald sich jemand damit anmeldet.
+drop policy if exists "Admin entfernt Profile" on public.profile;
+create policy "Admin entfernt Profile" on public.profile for delete to authenticated
+  using (public.ist_admin() and auth.uid() <> id);
+
+-- Spiele, die auf esrw.de stehen, aber ausgefallen sind: Kollegen melden
+-- sie, der Betreiber entscheidet. Geloescht wird nichts - das Spiel
+-- bekommt in spiel_korrekturen die Marke "geloescht" und verschwindet
+-- damit aus der App.
+alter table public.spiel_korrekturen add column if not exists geloescht boolean not null default false;
+
+create table if not exists public.spiel_meldungen (
+  id       uuid primary key default gen_random_uuid(),
+  user_id  uuid not null references auth.users (id) on delete cascade,
+  slug     text,
+  name     text,
+  kennung  text not null,
+  beginn   timestamptz,
+  paarung  text,
+  grund    text,
+  angelegt timestamptz not null default now(),
+  unique (user_id, kennung)
+);
+alter table public.spiel_meldungen enable row level security;
+drop policy if exists "Meldungen lesen"    on public.spiel_meldungen;
+drop policy if exists "eigene Meldung"     on public.spiel_meldungen;
+drop policy if exists "Meldung wegraeumen" on public.spiel_meldungen;
+create policy "Meldungen lesen"    on public.spiel_meldungen for select to authenticated
+  using (public.ist_freigeschaltet());
+create policy "eigene Meldung"     on public.spiel_meldungen for insert to authenticated
+  with check (auth.uid() = user_id and public.ist_freigeschaltet());
+create policy "Meldung wegraeumen" on public.spiel_meldungen for delete to authenticated
+  using (auth.uid() = user_id or public.ist_admin());
+
+
+-- ======================================================================
+-- v26: Namensliste fuer die Registrierung
+-- ======================================================================
+-- Die Einteilungen liegen verschluesselt, und den Schluessel bekommt nur,
+-- wer freigeschaltet ist. Wer sich gerade erst registriert, kann seinen
+-- Namen also gar nicht aus den Daten waehlen - und der Betreiber sieht in
+-- der Freischaltung nur "(ohne Namen)". Darum diese eine Tabelle: nur
+-- Slug und Name, sonst nichts. Dieselben Namen stehen oeffentlich auf
+-- esrw.de; Einteilungen, Hallen und Zeiten bleiben im Tresor.
+create table if not exists public.personen_liste (
+  slug      text primary key,
+  name      text not null,
+  geaendert timestamptz not null default now()
+);
+alter table public.personen_liste enable row level security;
+drop policy if exists "Namen lesen"       on public.personen_liste;
+drop policy if exists "Admin pflegt Namen" on public.personen_liste;
+create policy "Namen lesen"        on public.personen_liste for select to anon, authenticated using (true);
+create policy "Admin pflegt Namen" on public.personen_liste for all to authenticated
+  using (public.ist_admin()) with check (public.ist_admin());

@@ -1778,6 +1778,58 @@ abwarten.** Mehr steht dort nicht.
   `vereine_adressen.verifiziert/von/geprueft_am`, dazu die neuen
   Schreibregeln und der Trigger `vereinsadresse_schutz`.
 
+### 10.6ak Ein Profil für alles, Einladungen, ausgefallene Spiele (Schema v25 und v26)
+
+**Bitte `supabase/schema.sql` einmal im SQL-Editor ausführen** – diese Runde
+bringt zwei Abschnitte mit (v25 und v26).
+
+* **Mein Profil – eine Stelle für alles.** Das Zeichen oben rechts führt
+  dorthin (oder Einstellungen → Mein Profil). Dort stehen Name,
+  Heimatadresse, Handynummer, die beiden Freigaben (Wohnort für
+  Fahrgemeinschaften, Anschrift für die Kollegen), Kilometermodell und
+  darunter die Rechnungsdaten. **Name und Anschrift auf der Rechnung kommen
+  von hier** – im Rechnungsblatt steht nur noch, was die Rechnung
+  zusätzlich braucht (Verein, Schiedsrichternummer, Steuernummer, § 19,
+  Nummernkreis). Die getrennte Karte „Handynummer für Gespannkollegen" im
+  Konto entfällt.
+* **Kollegen, mit denen du pfeifst, stehen oben** – unter „Mit dir im
+  Gespann", mit der Zahl der gemeinsamen Spiele; darunter „Alle anderen".
+* **Freischaltung zeigt den Stand**: je Konto die Zeichen „wartet" und
+  „ohne Namen", dazu drei Knöpfe – **Freischalten**, **E-Mail** und
+  **Entfernen**.
+  * *E-Mail* ändert den Eintrag im Verzeichnis (Anzeige, Einladungen).
+    **Die Adresse zum Anmelden ändert das nicht** – die ändert der Kollege
+    selbst unter Konto oder du im Supabase-Dashboard.
+  * *Entfernen* löscht die Profilzeile mit allen Einstellungen. Der Zugang
+    selbst bleibt, bis du ihn im Dashboard löschst (Authentication →
+    Users); meldet sich der Kollege wieder an, steht er als neue
+    Registrierung in der Liste.
+* **Konto vorbereiten (Einladung)**: Adresse des Kollegen eintragen,
+  optional Name, „sofort freischalten" und „gleich Admin". Registriert er
+  sich mit dieser Adresse, ist er sofort dabei – mit dem hinterlegten
+  Namen. **Ein Konto ganz ohne ihn anlegen geht nicht**: das Passwort
+  gehört ihm, und der dafür nötige geheime Schlüssel gehört nicht in eine
+  App, die im Browser läuft.
+* **Name schon bei der Registrierung**: Im Formular „Konto anlegen" steht
+  die Namensliste. Nach dem Bestätigungslink steht der Name im Profil,
+  die App geht auf die **Startseite** und sagt dort, dass die
+  Freischaltung noch fehlt. Ändern lässt sich der Name jederzeit im Profil.
+  * Dafür gibt es die neue Tabelle `personen_liste` (v26): **nur Slug und
+    Name**, lesbar auch ohne Anmeldung. Grund: Die Einteilungen liegen
+    verschlüsselt, und den Schlüssel bekommt nur, wer freigeschaltet ist –
+    ein frisches Konto könnte seinen Namen sonst nirgends finden, und du
+    sähest in der Freischaltung nur „(ohne Namen)". Dieselben Namen stehen
+    öffentlich auf esrw.de; Zeiten, Hallen und Einteilungen bleiben im
+    Tresor. Die Liste hält sich selbst aktuell, sobald ein Admin die
+    Freischaltung öffnet.
+* **Ausgefallene Spiele**: Unter Abrechnung steht bei jedem Spiel
+  **„Spiel ist ausgefallen"**. Die Meldung (mit kurzer Begründung) landet
+  unter **Admin → Spiel anlegen** in „Gemeldete Ausfälle". Dort
+  **Ausblenden** – das Spiel verschwindet für alle aus Spielplan,
+  Abrechnung und Startseite. **Gelöscht wird nichts**: Die Zeile bekommt
+  in `spiel_korrekturen` nur die Marke `geloescht`, und unter „X Spiele
+  ausgeblendet" holst du sie mit einem Tipp zurück.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –
