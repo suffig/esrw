@@ -320,6 +320,11 @@ packt daten.json, abrechnung.csv, notizen.txt und alle Belege im Browser
 zusammen; Kartenkacheln im Dunkelmodus abgedunkelt; „Am Spieltag groß“ macht
 die Kopfkarte am Spieltag bildschirmfüllend; Tipp auf die Stand-Pille lädt neu.
 
+**Registrierung mit Namenspflicht**: Wer ein Konto anlegt, wählt seinen
+Namen aus der Liste – er fährt am Konto mit und steht damit sofort in der
+Freischaltung. Dort sieht der Betreiber, seit wann jemand wartet, kann
+alten Konten einen Namen zuordnen und Konten per Einladung vorbereiten.
+
 **Adresse mit Vorschlagsliste**: Straße und Hausnummer tippen, aus der
 aufklappenden Liste wählen – Schreibweise, PLZ, Ort und Koordinaten kommen
 aus OpenStreetMap. Kennt die Karte die Hausnummer nicht, bleibt die

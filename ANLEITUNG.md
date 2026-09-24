@@ -1851,6 +1851,38 @@ bringt zwei Abschnitte mit (v25 und v26).
   halben Sekunde Ruhe und ab fünf Zeichen, damit nicht bei jedem
   Tastendruck eine Anfrage rausgeht.
 
+### 10.6am Registrierung mit Namenspflicht, Trigger repariert (Schema v27)
+
+**Wichtig: `supabase/schema.sql` noch einmal ausführen.** Der Trigger aus
+v25, der beim Anlegen eines Kontos die Profilzeile schreibt, enthielt eine
+in PostgreSQL unzulässige Schreibweise (`on conflict do update set spalte =
+public.profile.spalte` – dort gilt der unqualifizierte Tabellenname). Beim
+Registrieren wäre er gescheitert, und mit ihm die Registrierung
+(„Database error saving new user"). v27 ersetzt ihn: erst anlegen, dann
+aktualisieren.
+
+* **Der Name ist bei der Registrierung Pflicht.** Im Formular „Konto
+  anlegen" steht die Namensliste; ohne Auswahl wird das Konto nicht
+  angelegt. So steht in der Freischaltung nie wieder „(ohne Namen)" –
+  E-Mail-Adressen sind nicht immer eindeutig.
+  * Der Name **fährt am Konto mit** (als Metadatum beim `signUp`) und wird
+    vom Trigger ins Profil geschrieben. Er steht also auch dann in der
+    Liste, wenn der Bestätigungslink auf einem anderen Gerät geöffnet
+    wird. Ändern lässt er sich jederzeit im Profil.
+  * Reihenfolge, wenn mehreres vorliegt: was schon im Profil steht, dann
+    die Einladung des Betreibers, dann die eigene Wahl.
+  * Ist die Namenstabelle (v26) noch nicht eingespielt, entfällt das Feld –
+    sonst käme niemand mehr durch die Registrierung.
+* **Alte Konten ohne Namen** kannst du in der Freischaltung selbst
+  zuordnen: unter der Zeile steht „– Name zuordnen –".
+* **Freischaltung zeigt jetzt, seit wann jemand wartet** („registriert vor
+  3 Tagen"), älteste zuerst; Einladungen zeigen, seit wann sie offen sind.
+* **Einladung auf eine Adresse, die es schon gibt**, wird abgelehnt – mit
+  dem Hinweis, dass eine Einladung an bestehenden Konten nichts ändert
+  (der Trigger greift nur beim Anlegen). Dann einfach oben freischalten.
+* **Anmeldeformular**: Beschriftungen über den Feldern und ein Auge im
+  Passwortfeld.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

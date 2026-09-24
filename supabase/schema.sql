@@ -1113,3 +1113,58 @@ drop policy if exists "Admin pflegt Namen" on public.personen_liste;
 create policy "Namen lesen"        on public.personen_liste for select to anon, authenticated using (true);
 create policy "Admin pflegt Namen" on public.personen_liste for all to authenticated
   using (public.ist_admin()) with check (public.ist_admin());
+
+
+-- ======================================================================
+-- v27: Kontoanlegen - Name aus der Registrierung, sichere Schreibweise
+-- ======================================================================
+-- Ersetzt die Fassung aus v25. Zwei Gruende:
+--
+-- 1. In "on conflict do update" spricht man die vorhandene Zeile mit dem
+--    unqualifizierten Tabellennamen an. "public.profile.slug" ist dort
+--    nicht erlaubt - der Trigger waere beim Registrieren gescheitert, und
+--    mit ihm die Registrierung. Jetzt: erst anlegen, dann aktualisieren.
+-- 2. Den Namen waehlt man schon im Registrierungsformular. Er faehrt als
+--    Metadatum am Konto mit (options.data beim signUp) und steht damit in
+--    der Freischaltungsliste, auch wenn der Bestaetigungslink auf einem
+--    anderen Geraet geoeffnet wird.
+--
+-- Reihenfolge, wenn mehreres vorliegt: was schon im Profil steht, dann die
+-- Einladung des Betreibers, dann die eigene Wahl.
+create or replace function public.neues_konto()
+returns trigger language plpgsql security definer set search_path = public as $$
+declare
+  e       public.einladungen%rowtype;
+  m_slug  text;
+  m_name  text;
+begin
+  select * into e from public.einladungen where lower(email) = lower(new.email);
+  m_slug := nullif(new.raw_user_meta_data ->> 'slug', '');
+  m_name := nullif(new.raw_user_meta_data ->> 'name', '');
+
+  insert into public.profile (id, email) values (new.id, new.email)
+    on conflict (id) do nothing;
+
+  update public.profile p
+     set email          = new.email,
+         slug           = coalesce(p.slug, e.slug, m_slug),
+         name           = coalesce(p.name, e.name, m_name),
+         freigeschaltet = p.freigeschaltet or coalesce(e.freischalten, false),
+         admin          = p.admin or coalesce(e.admin, false)
+   where p.id = new.id;
+
+  if e.email is not null then
+    update public.einladungen set eingeloest_am = now() where email = e.email;
+  end if;
+  return new;
+end;
+$$;
+drop trigger if exists konto_angelegt on auth.users;
+create trigger konto_angelegt after insert or update of email on auth.users
+  for each row execute function public.neues_konto();
+
+-- Bestehende Konten ohne Namen nachtragen, soweit eine Einladung vorliegt
+update public.profile p
+   set slug = coalesce(p.slug, e.slug), name = coalesce(p.name, e.name)
+  from public.einladungen e
+ where lower(e.email) = lower(p.email) and p.slug is null;

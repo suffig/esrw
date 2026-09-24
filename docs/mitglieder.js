@@ -88,6 +88,18 @@ window.Mitglieder = (function () {
 
   function uhr(d) { return d.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" }); }
   function datum(d) { return WT[d.getDay()] + ". " + d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }); }
+  // "heute", "gestern", "vor 3 Tagen" - fuer Listen, in denen das genaue
+  // Datum nicht interessiert, das Alter aber schon.
+  function seitText(iso) {
+    if (!iso) return "";
+    var t = Math.floor((Date.now() - new Date(iso).getTime()) / 86400000);
+    if (t < 0) return "";
+    if (t === 0) return "heute";
+    if (t === 1) return "gestern";
+    if (t < 14) return "vor " + t + " Tagen";
+    if (t < 60) return "vor " + Math.round(t / 7) + " Wochen";
+    return "vor " + Math.round(t / 30) + " Monaten";
+  }
   function datumLang(d) { return WT[d.getDay()] + ". " + d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" }); }
   function isoTag(d) {
     return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2);
@@ -483,26 +495,51 @@ window.Mitglieder = (function () {
     var email = h("input", { type: "email", placeholder: "E-Mail", autocomplete: "email", required: "" });
     var pw = h("input", { type: "password", placeholder: "Passwort (mind. 8 Zeichen)",
                           autocomplete: modus === "registrieren" ? "new-password" : "current-password", minlength: "8" });
+    // Auge im Feld: auf dem Handy vertippt man sich sonst dauernd
+    var pwAuge = h("button", { type: "button", class: "pw-auge", title: "Passwort anzeigen", onclick: function () {
+      var zu = pw.type === "password";
+      pw.type = zu ? "text" : "password";
+      pwAuge.classList.toggle("an", zu);
+      pwAuge.title = zu ? "Passwort verbergen" : "Passwort anzeigen";
+      pw.focus();
+    } }, [ikone("i-auge")]);
+    pwAuge.setAttribute("aria-label", "Passwort anzeigen");
+    var pwFeld = h("div", { class: "pw-feld" }, [pw, pwAuge]);
     var knopf = h("button", { type: "submit", class: "mg-haupt",
       text: modus === "registrieren" ? "Konto anlegen" : modus === "vergessen" ? "Link schicken" : "Anmelden" });
     // Den Namen gleich hier waehlen: nach der Bestaetigungsmail steht er
     // schon im Profil, aendern laesst er sich spaeter jederzeit im Profil.
     var nameWahl = modus === "registrieren" ? h("select", { class: "mg-select" },
       [h("option", { value: "", text: "– dein Name auf esrw.de –" })]) : null;
+    var namenDa = false;
     if (nameWahl) personenNamen().then(function (liste) {
+      namenDa = liste.length > 0;
       liste.forEach(function (x) { nameWahl.appendChild(h("option", { value: x.slug, text: x.name })); });
-      if (!liste.length) nameWahl.parentNode && nameWahl.remove();
+      // Ohne Liste (Namenstabelle noch nicht eingespielt) waere die Pflicht
+      // eine Sackgasse - dann faellt das Feld weg.
+      if (!namenDa && nameWahl.parentNode) nameWahl.parentNode.removeChild(nameWahl);
     });
 
     var form = h("form", { class: "mg-form", onsubmit: function (e) {
       e.preventDefault();
       knopf.disabled = true;
       var p = { email: email.value.trim(), password: pw.value };
+      if (modus === "registrieren" && namenDa && !nameWahl.value) {
+        knopf.disabled = false;
+        meldung("Bitte deinen Namen aus der Liste wählen – daran erkennt der Betreiber dich.", "warn");
+        nameWahl.focus();
+        return;
+      }
+      var wunschName = nameWahl && nameWahl.value
+        ? (nameWahl.options[nameWahl.selectedIndex].text || "") : "";
       if (nameWahl && nameWahl.value && ctx.schreiben) ctx.schreiben("wunsch-slug", nameWahl.value);
       var lauf;
       if (modus === "registrieren") {
+        // Der Name faehrt am Konto mit: so steht er in der Freischaltung,
+        // auch wenn der Bestaetigungslink auf einem anderen Geraet aufgeht.
         lauf = sb.auth.signUp({ email: p.email, password: p.password,
-          options: { emailRedirectTo: rueckkehr() } });
+          options: { emailRedirectTo: rueckkehr(),
+                     data: nameWahl && nameWahl.value ? { slug: nameWahl.value, name: wunschName } : undefined } });
       } else if (modus === "vergessen") {
         lauf = sb.auth.resetPasswordForEmail(p.email, { redirectTo: rueckkehr() });
       } else {
@@ -520,7 +557,8 @@ window.Mitglieder = (function () {
         if (modus === "registrieren" && !(r.data && r.data.session)) {
           var schonDa = r.data && r.data.user && r.data.user.identities && r.data.user.identities.length === 0;
           if (schonDa) { meldung("Für diese E-Mail gibt es schon ein Konto – bitte anmelden oder „Passwort vergessen“.", "warn"); zeigeAnmeldung("anmelden"); return; }
-          zeigeMailHinweis("Fast geschafft", p.email, "Darin ist ein Link „E-Mail bestätigen“. Nach dem Antippen bist du hier angemeldet und wählst deinen Namen. Der Betreiber schaltet dich danach für die gemeinsamen Funktionen frei.");
+          zeigeMailHinweis("Fast geschafft", p.email, "Darin ist ein Link „E-Mail bestätigen“. Nach dem Antippen bist du angemeldet"
+            + (wunschName ? " – als " + wunschName : "") + ". Der Betreiber schaltet dich danach für die gemeinsamen Funktionen frei.");
           return;
         }
         session = r.data.session;
@@ -528,10 +566,14 @@ window.Mitglieder = (function () {
       }).catch(function (e) { knopf.disabled = false; meldung(String(e.message || e), "warn"); });
     } }, [
       h("h4", { text: modus === "registrieren" ? "Konto anlegen" : modus === "vergessen" ? "Passwort vergessen" : "Anmelden" }),
+      h("label", { class: "anmelde-label", text: "E-Mail-Adresse" }),
       email,
-      modus === "vergessen" ? null : pw,
+      modus === "vergessen" ? null : h("label", { class: "anmelde-label", text: "Passwort" }),
+      modus === "vergessen" ? null : pwFeld,
+      nameWahl ? h("label", { class: "anmelde-label", text: "Dein Name auf esrw.de" }) : null,
       nameWahl,
-      nameWahl ? h("p", { class: "meta", style: "margin:-2px 0 6px", text: "Später jederzeit im Profil änderbar." }) : null,
+      nameWahl ? h("p", { class: "meta", style: "margin:-2px 0 6px",
+        text: "Pflicht – daran erkennt der Betreiber dich (E-Mail-Adressen sind nicht immer eindeutig). Später im Profil änderbar." }) : null,
       knopf
     ]);
 
@@ -4155,6 +4197,25 @@ window.Mitglieder = (function () {
       (marken || []).forEach(function (m) { kopf.insertBefore(h("span", { class: "merkzeichen " + m[1], text: m[0] }), kopf.firstChild); });
       return h("div", { class: "sperre" }, [kopf, h("span", { class: "zweit-klein" }, knoepfe.filter(Boolean))]);
     }
+    // Alte Konten ohne Namen (vor der Pflicht bei der Registrierung) kann
+    // der Betreiber hier selbst zuordnen - sonst steht dort ewig "(ohne Namen)".
+    function nameZuordnen(p, zeileEl) {
+      var wahl = h("select", { class: "mg-select", style: "margin-top:6px" }, [h("option", { value: "", text: "– Name zuordnen –" })]);
+      personenNamen().then(function (liste) {
+        liste.forEach(function (x) { wahl.appendChild(h("option", { value: x.slug, text: x.name })); });
+      });
+      wahl.addEventListener("change", function () {
+        if (!wahl.value) return;
+        var name = wahl.options[wahl.selectedIndex].text;
+        wahl.disabled = true;
+        speichern(sb.from("profile").update({ slug: wahl.value, name: name }).eq("id", p.id)).then(function (r) {
+          wahl.disabled = false;
+          if (r && r.error) { meldung(fehlerText(r.error), "warn"); return; }
+          kurzMeldung(name + " zugeordnet ✓", "gut"); neu();
+        });
+      });
+      zeileEl.appendChild(wahl);
+    }
     function mailAendern(p) {
       var neuMail = prompt("E-Mail im Verzeichnis ändern.\n\nAchtung: Das ändert nur den Eintrag hier (Anzeige und Einladungen). " +
         "Die Adresse zum Anmelden ändert der Kollege selbst unter Konto – oder du im Supabase-Dashboard.", p.email || "");
@@ -4175,7 +4236,7 @@ window.Mitglieder = (function () {
     }
 
     Promise.all([
-      speichern(sb.from("profile").select("id,name,slug,email,freigeschaltet,admin,geaendert").order("name")),
+      speichern(sb.from("profile").select("id,name,slug,email,freigeschaltet,admin,angelegt,geaendert").order("name")),
       speichern(sb.from("einladungen").select("*").order("angelegt", { ascending: false }))
     ]).then(function (rr) {
       var r = rr[0] || {};
@@ -4191,10 +4252,12 @@ window.Mitglieder = (function () {
 
       // ---- wer wartet
       if (!offen.length) box.appendChild(h("p", { class: "meta", text: "Niemand wartet." }));
+      offen.sort(function (a, b) { return String(a.angelegt || "") < String(b.angelegt || "") ? -1 : 1; });
       offen.forEach(function (p) {
         var marken = [["wartet", "warn"]];
         if (!p.slug) marken.push(["ohne Namen", "warn"]);
-        box.appendChild(zeile(p, [
+        if (p.angelegt) p = Object.assign({}, p, { email: (p.email || "") + " · registriert " + seitText(p.angelegt) });
+        var z = zeile(p, [
           h("button", { type: "button", class: "anfrage", text: "Freischalten", onclick: function () {
             speichern(sb.from("profile").update({ freigeschaltet: true }).eq("id", p.id)).then(function (r2) {
               if (r2 && r2.error) { meldung(fehlerText(r2.error), "warn"); return; }
@@ -4203,7 +4266,9 @@ window.Mitglieder = (function () {
           } }),
           h("button", { type: "button", class: "textknopf", text: "E-Mail", onclick: function () { mailAendern(p); } }),
           h("button", { type: "button", class: "textknopf", style: "color:var(--rot)", text: "Entfernen", onclick: function () { entfernen(p); } })
-        ], marken));
+        ], marken);
+        box.appendChild(z);
+        if (!p.slug) nameZuordnen(p, z);
       });
 
       // ---- Einladung vorbereiten
@@ -4224,6 +4289,14 @@ window.Mitglieder = (function () {
           h("button", { type: "button", class: "anfrage", text: "Einladung anlegen", onclick: function () {
             var adr = eMail.value.trim().toLowerCase();
             if (!adr || adr.indexOf("@") < 0) { meldung("Bitte eine E-Mail-Adresse eintragen.", "warn"); return; }
+            // Gibt es das Konto schon, aendert eine Einladung nichts mehr -
+            // der Trigger greift nur beim Anlegen.
+            var schon = alle.filter(function (x) { return String(x.email || "").toLowerCase() === adr; })[0];
+            if (schon) {
+              meldung("Mit dieser Adresse gibt es schon ein Konto (" + (schon.name || "ohne Namen")
+                + "). Eine Einladung ändert daran nichts – bitte oben freischalten.", "warn");
+              return;
+            }
             var person = eName.value ? ctx.personMit(eName.value) : null;
             speichern(sb.from("einladungen").upsert({ email: adr, slug: eName.value || null,
               name: person ? person.name : null, freischalten: eFrei.checked, admin: eAdmin.checked,
@@ -4237,7 +4310,9 @@ window.Mitglieder = (function () {
       offeneEin.forEach(function (e) {
         einlBox.appendChild(h("div", { class: "sperre" }, [
           h("span", {}, [h("b", { text: e.email }),
-            h("small", { class: "meta", style: "display:block", text: (e.name || "ohne Namen") + (e.admin ? " · Admin" : e.freischalten ? " · sofort frei" : "") })]),
+            h("small", { class: "meta", style: "display:block", text: (e.name || "ohne Namen")
+              + (e.admin ? " · Admin" : e.freischalten ? " · sofort frei" : "")
+              + (e.angelegt ? " · eingeladen " + seitText(e.angelegt) : "") })]),
           h("button", { type: "button", class: "textknopf", style: "color:var(--rot)", text: "löschen", onclick: function () {
             speichern(sb.from("einladungen").delete().eq("email", e.email)).then(function () { neu(); });
           } })]));
