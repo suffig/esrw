@@ -1703,6 +1703,41 @@ abwarten.** Mehr steht dort nicht.
   die im Spielplan gar nicht vorkommen (Turniere, Lehrgänge), legst du
   unter „+ Verein anlegen“ selbst an.
 
+### 10.6ai Einfache Ansicht, aufgeräumte Menüs (Schema v23)
+
+* **Einfache Ansicht**: ein Schalter für alle, nicht nur für Admins –
+  **Einstellungen → App → „Einfache Ansicht"** oder oben auf „Mehr" die
+  beiden Knöpfe **Einfach / Alles**. Es wird nichts abgeschaltet und
+  nichts gelöscht: Statistik, Verfügbarkeit, Anleitung und Diagnose
+  rutschen unter **„Selten gebraucht"** (ein Tipp auf die Überschrift
+  klappt sie aus), und die Einstellungsseite verliert ihre Sprungleiste.
+  Der Schalter gilt fürs Gerät und wandert über das Konto auf die anderen.
+  Davon unabhängig gibt es weiterhin den **Admin-Modus** (roter Schild
+  oben): der macht die App so ruhig, wie ein Kollege ohne Adminrechte sie
+  sieht. Und unter **Einstellungen → Bereiche** blendest du einzelne
+  Funktionen ganz für dich aus.
+* **Abrechnung mit vier Knöpfen** statt sieben: Kalender, Rechnung,
+  Steuerjahre und **„Weitere …"** (Abrechnungsart, Werkzeuge, Spiel
+  eintragen, wie gerechnet wird). In der einfachen Ansicht wandern die
+  Steuerjahre mit unter „Weitere". Die Leiste bricht jetzt um, statt nach
+  rechts zu verschwinden.
+* **Reiter im Mitgliederbereich brechen um**: „Kollegen" und „Admin"
+  standen auf dem Handy außerhalb des Bildes. Dasselbe im Adminbereich –
+  alle sechs Bereiche auf einen Blick.
+* **„Kollegen" steht jetzt auch unter „Mehr"** (Gemeinsam), nicht nur als
+  Reiter im Mitgliederbereich.
+* **Beim Reiterwechsel** springt die Seite wieder nach oben, statt mitten
+  im neuen Inhalt zu landen.
+* **Schema v23 – bitte einmal einspielen**: Die Änderungsregel für
+  Hallen-Hinweise stammte aus v4 und deckte die ganze Zeile ab, also auch
+  die Spalte `offiziell`, die erst v13 dazugebracht hat. Damit konnte
+  jedes freigeschaltete Mitglied seinen eigenen Hinweis als „offiziell"
+  markieren – und offizielle Hinweise sind ohne Anmeldung lesbar. Ein
+  Trigger (`hallennotiz_schutz`, nach dem Muster von `profil_schutz`)
+  hält die Spalte jetzt fest, solange kein Admin schreibt; den Text darf
+  der Verfasser weiter ändern. `supabase/schema.sql` einmal im SQL-Editor
+  ausführen.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

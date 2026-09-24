@@ -22,6 +22,13 @@
   function lesen(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function schreiben(k, v) { try { v === null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (e) {} }
 
+  // Einfache Ansicht: dieselbe App, nur weniger auf einmal. Was selten
+  // gebraucht wird, steht dann eine Ebene tiefer statt in der ersten Reihe -
+  // nichts verschwindet, nichts wird abgeschaltet. Der Schalter gilt fuer
+  // das Geraet und wandert mit dem Konto auf die anderen.
+  function einfachAn() { return lesen("einfach") === "1"; }
+  function einfachAnwenden() { document.documentElement.classList.toggle("einfach", einfachAn()); }
+
   // ------------------------------------------------ Funktionen (Schalter)
   // Der Betreiber schaltet unter Admin -> Funktionen an und ab; die Tabelle
   // "funktionen" darf jeder lesen. Fehlt eine Zeile, gilt der Standard hier.
@@ -401,6 +408,16 @@
   function einstellungenLaden(nurAnwenden) {
     el("karten-app").value = lesen("karten") || "auto";
     if (!nurAnwenden) el("karten-app").addEventListener("change", function (e) { schreiben("karten", e.target.value === "auto" ? null : e.target.value); if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true); toast("Karten-App: " + e.target.options[e.target.selectedIndex].text, ""); einstellungenSync(); });
+    einfachAnwenden();
+    if (el("einfach")) {
+      el("einfach").checked = einfachAn();
+      if (!nurAnwenden) el("einfach").addEventListener("change", function (e) {
+        schreiben("einfach", e.target.checked ? "1" : null);
+        einfachAnwenden(); einstellungenSync();
+        toast(e.target.checked ? "Einfache Ansicht an \u2013 Selteneres steht unter \u201eSelten gebraucht\u201c."
+                               : "Alles wieder in der ersten Reihe.", "gut");
+      });
+    }
     var k = lesen("kompakt") === "1"; el("kompakt").checked = k; document.body.classList.toggle("kompakt", k);
     if (!nurAnwenden) el("kompakt").addEventListener("change", function (e) { schreiben("kompakt", e.target.checked ? "1" : null); document.body.classList.toggle("kompakt", e.target.checked); einstellungenSync(); });
     function schriftSetzen(stufe) {
@@ -3168,39 +3185,83 @@
     window.scrollTo(0, 0);
   }
 
+  // Selten gebraucht: steht in der einfachen Ansicht zugeklappt am Ende.
+  var MEHR_SELTEN = { "#statistik": 1, "#mitglieder/frei": 1, "#anleitung": 1, "#status": 1 };
   function zeigeMehr() {
     ansicht("mehr"); aktuell = null;
     var liste = el("mehr-liste"); liste.innerHTML = "";
     var eintraege = [
-      ["Für dich"],
+      ["F\u00fcr dich"],
       ["#archiv", "i-clock", "Archiv", "Alle deine Spiele, alle Saisons, mit Filtern und Export"],
       funktion("statistik") ? ["#statistik", "i-users", "Statistik", "Saison, Ligen, Hallen, Partner, Saisonziel"] : null,
-      ["#aenderungen", "i-list", "Änderungen", "Was sich in 14 Tagen getan hat – mit Vorher/Nachher"],
+      ["#aenderungen", "i-list", "\u00c4nderungen", "Was sich in 14 Tagen getan hat \u2013 mit Vorher/Nachher"],
       funktion("notizen") ? ["#mitglieder/notizen", "i-note", "Notizen", "Private Spielnotizen"] : null,
       ["Gemeinsam"],
-      funktion("gespann") ? ["#mitfahren", "i-route", "Zusammen fahren", "Wer fährt wohin – auf dem Weg, bieten, suchen"] : null,
-      funktion("info") ? ["#mitglieder/info", "i-bell", "Info", "Ankündigungen und Termine", "info"] : null,
-      funktion("frei") ? ["#mitglieder/frei", "i-cal", "Verfügbarkeit", "Wann du nicht kannst oder gern pfeifst"] : null,
+      funktion("gespann") ? ["#mitfahren", "i-route", "Zusammen fahren", "Wer f\u00e4hrt wohin \u2013 auf dem Weg, bieten, suchen"] : null,
+      funktion("telefon") ? ["#mitglieder/kollegen", "i-users", "Kollegen", "Telefonliste \u2013 anrufen, WhatsApp, kopieren"] : null,
+      funktion("info") ? ["#mitglieder/info", "i-bell", "Info", "Ank\u00fcndigungen und Termine", "info"] : null,
+      funktion("frei") ? ["#mitglieder/frei", "i-cal", "Verf\u00fcgbarkeit", "Wann du nicht kannst oder gern pfeifst"] : null,
       funktion("hallen") ? ["#karte", "i-pin", "Hallenkarte", "Alle Hallen auf der Karte"] : null,
       ["Konto und App"],
       ["#einstellungen", "i-key", "Einstellungen", "Konto, Push, Startseite, Schrift, Farbe"],
-      ["#mitglieder/admin", "i-shield", "Admin", "Freischaltung, Ankündigungen", "wartend", true],
-      ["#anleitung", "i-mehr", "Anleitung", "Kalender, Push, Konto – Schritt für Schritt"],
-      ["#status", "i-check", "Diagnose", "Für die Fehlersuche"]
+      ["#mitglieder/admin", "i-shield", "Admin", "Freischaltung, Ank\u00fcndigungen", "wartend", true],
+      ["#anleitung", "i-mehr", "Anleitung", "Kalender, Push, Konto \u2013 Schritt f\u00fcr Schritt"],
+      ["#status", "i-check", "Diagnose", "F\u00fcr die Fehlersuche"]
     ];
-    var links = {};
+    var links = {}, selten = [];
     eintraege = eintraege.filter(Boolean).filter(function (e) { return e.length === 1 || !gesperrtFuerMich(e[0]); });
+    if (einfachAn()) eintraege = eintraege.filter(function (e) {
+      if (e.length > 1 && MEHR_SELTEN[e[0]]) { selten.push(e); return false; }
+      return true;
+    });
     eintraege = eintraege.filter(function (e, i, a) { return e.length > 1 || (a[i + 1] && a[i + 1].length > 1); });
-    if (!sitzungVorhanden()) eintraege.unshift(["#mitglieder", "i-lock", "Anmelden", "Konto anlegen oder anmelden – für " + [funktion("tausch") ? "Tausch" : "", funktion("abrechnung") ? "Abrechnung" : "", funktion("info") ? "Info" : "", "Notizen"].filter(Boolean).join(", ")]);
-    eintraege.forEach(function (e) {
-      if (e.length === 1) { var g = document.createElement("div"); g.className = "menue-gruppe"; g.textContent = e[0]; liste.appendChild(g); return; }
+    if (!sitzungVorhanden()) eintraege.unshift(["#mitglieder", "i-lock", "Anmelden", "Konto anlegen oder anmelden \u2013 f\u00fcr " + [funktion("tausch") ? "Tausch" : "", funktion("abrechnung") ? "Abrechnung" : "", funktion("info") ? "Info" : "", "Notizen"].filter(Boolean).join(", ")]);
+
+    function kachel(e) {
       var a = document.createElement("a"); a.href = e[0]; a.appendChild(ikone(e[1]));
       var sp = document.createElement("span"); sp.textContent = e[2]; var sm = document.createElement("small"); sm.textContent = e[3]; sp.appendChild(sm); a.appendChild(sp);
       if (e[4]) { var z = document.createElement("span"); z.className = "zaehler versteckt"; a.appendChild(z); links[e[4]] = z; }
-      if (e[5]) a.classList.add("versteckt");
-      liste.appendChild(a); if (e[5]) a._nurAdmin = true;
+      if (e[5]) { a.classList.add("versteckt"); a._nurAdmin = true; }
       a._ziel = e[0];
+      return a;
+    }
+    eintraege.forEach(function (e) {
+      if (e.length === 1) { var g = document.createElement("div"); g.className = "menue-gruppe"; g.textContent = e[0]; liste.appendChild(g); return; }
+      liste.appendChild(kachel(e));
     });
+    if (selten.length) {
+      var kopf = document.createElement("button");
+      kopf.type = "button"; kopf.className = "menue-gruppe menue-mehr";
+      kopf.textContent = "Selten gebraucht (" + selten.length + ")";
+      liste.appendChild(kopf);
+      var kacheln = selten.map(function (e) { var a = kachel(e); a.classList.add("versteckt"); liste.appendChild(a); return a; });
+      kopf.addEventListener("click", function () {
+        var auf = kacheln[0].classList.contains("versteckt");
+        kacheln.forEach(function (a) { a.classList.toggle("versteckt", !auf); });
+        kopf.classList.toggle("offen", auf);
+      });
+    }
+
+    // Umschalter oben: einfache Ansicht oder alles
+    var wahl = el("mehr-ansicht");
+    if (wahl) {
+      wahl.innerHTML = "";
+      [["Einfach", true], ["Alles", false]].forEach(function (w) {
+        var b = document.createElement("button"); b.type = "button";
+        b.className = "filterknopf" + (einfachAn() === w[1] ? " aktiv" : "");
+        b.textContent = w[0];
+        b.addEventListener("click", function () {
+          if (einfachAn() === w[1]) return;
+          schreiben("einfach", w[1] ? "1" : null);
+          einfachAnwenden(); einstellungenSync();
+          if (el("einfach")) el("einfach").checked = w[1];
+          zeigeMehr();
+          toast(w[1] ? "Einfache Ansicht an." : "Alles wieder in der ersten Reihe.", "gut");
+        });
+        wahl.appendChild(b);
+      });
+    }
+
     mehrZahlen(liste);
     if (sitzungVorhanden()) ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
       .then(function (st) { if (st.eingerichtet && st.session) return window.Mitglieder.zaehler(); })
@@ -3657,7 +3718,7 @@
     });
   }
   function einstellungenSammeln() {
-    return { karten: lesen("karten") || null, schrift: lesen("schrift") || null, akzent: lesen("akzent") || null, kompakt: lesen("kompakt") || null, ziel: lesen("ziel") || null, start: lesen("start") || null, bereiche: lesen("bereiche") || null, pushwoche: lesen("pushwoche") || null, pushabrechnung: lesen("pushabrechnung") || null, "schnell-aus": lesen("schnell-aus") || null, "start-ordnung": lesen("start-ordnung") || null, tab3: lesen("tab3") || null };
+    return { einfach: lesen("einfach") || null, karten: lesen("karten") || null, schrift: lesen("schrift") || null, akzent: lesen("akzent") || null, kompakt: lesen("kompakt") || null, ziel: lesen("ziel") || null, start: lesen("start") || null, bereiche: lesen("bereiche") || null, pushwoche: lesen("pushwoche") || null, pushabrechnung: lesen("pushabrechnung") || null, "schnell-aus": lesen("schnell-aus") || null, "start-ordnung": lesen("start-ordnung") || null, tab3: lesen("tab3") || null };
   }
   var syncTimer = null;
   function einstellungenSync() {
@@ -3670,8 +3731,8 @@
   function einstellungenAnwenden(e) {
     if (!e) return;
     var geaendert = false;
-    ["karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche", "pushwoche", "pushabrechnung", "schnell-aus", "start-ordnung", "tab3"].forEach(function (k) { if ((lesen(k) || null) !== (e[k] || null)) { schreiben(k, e[k] || null); geaendert = true; } });
-    if (geaendert) { einstellungenLaden(true); themaAnwenden(); funktionenAnwenden(funktionenLesen()); toast("Einstellungen vom Konto übernommen", ""); if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true); }
+    ["einfach", "karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche", "pushwoche", "pushabrechnung", "schnell-aus", "start-ordnung", "tab3"].forEach(function (k) { if ((lesen(k) || null) !== (e[k] || null)) { schreiben(k, e[k] || null); geaendert = true; } });
+    if (geaendert) { einstellungenLaden(true); themaAnwenden(); einfachAnwenden(); funktionenAnwenden(funktionenLesen()); toast("Einstellungen vom Konto übernommen", ""); if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true); }
   }
   document.addEventListener("mg-profil", function (e) {
     if (e.detail && e.detail.einstellungen) einstellungenAnwenden(e.detail.einstellungen);

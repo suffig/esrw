@@ -1473,6 +1473,27 @@
   /* Im Adminbereich stehen zwei Knoepfe mehr in der Zeile - sie duerfen
      umbrechen, sonst steht "Loeschen" halb ausserhalb der Karte. */
   .telefon-wege { flex:1 1 auto; flex-wrap:wrap; justify-content:flex-end; }
+  /* ---- Runde 23: einfache Ansicht, Menues ---- */
+  .mehr-ansicht { display:flex; gap:6px; margin:0 0 10px; }
+  /* "Selten gebraucht": eine Ueberschrift zum Antippen. Die Kacheln bleiben
+     Geschwister im Raster - in einem <details> wuerden sie einspaltig stehen. */
+  .menue-mehr { font:inherit; background:none; border:0; cursor:pointer; text-align:left; width:100%;
+                display:flex; align-items:center; justify-content:space-between; }
+  .menue-mehr::after { content:"\203a"; transform:rotate(90deg); color:var(--dim); font-size:1.1rem; line-height:1; }
+  .menue-mehr.offen::after { transform:rotate(-90deg); }
+  /* Vier Knoepfe passen umgebrochen aufs Handy - zur Seite geschoben hat
+     sie niemand gefunden. */
+  .mg-leiste { flex-wrap:wrap; overflow-x:visible; }
+  .mg-untertabs { flex-wrap:wrap; overflow-x:visible; padding-right:0;
+                  -webkit-mask-image:none; mask-image:none; row-gap:8px; }
+  .sperre .mg-untertabs { flex-wrap:nowrap; }
+  /* In der einfachen Ansicht braucht die Einstellungsseite keine
+     Sprungleiste - es ist ohnehin nur eine Seite zum Durchscrollen. */
+  .einfach .sprungleiste { display:none; }
+  /* Zweizeilige Beschriftung in den Einstellungen (wie unter "Bereiche") */
+  .einstellungen-liste label > span > small { display:block; color:var(--dim); font-weight:500; }
+  /* Adminbereich: die sechs Knoepfe lieber umbrechen als wegscrollen */
+  .admin-leiste { flex-wrap:wrap; overflow-x:visible; }
 </style>
 </head>
 <body>
@@ -1678,6 +1699,7 @@
   <!-- Mehr: alles, was nicht in die Leiste passt -->
   <section id="mehr" class="versteckt">
     <div class="seitentitel"><h2>Mehr</h2><p>Alles, was nicht in die Leiste passt.</p></div>
+    <div class="mehr-ansicht" id="mehr-ansicht"></div>
     <div class="menue karte" id="mehr-liste"></div>
   </section>
 
@@ -1691,6 +1713,7 @@
     <div id="konto-bereich"></div>
     <h3 class="abschnitt">App<small>gilt für dieses Gerät – mit Konto auf allen</small></h3>
     <div class="karte einstellungen-liste">
+      <label><span><b>Einfache Ansicht</b><small>Weniger auf einmal – Selteneres steht eine Ebene tiefer</small></span><input type="checkbox" id="einfach"></label>
       <label>Karten-App <select id="karten-app"><option value="auto">automatisch</option><option value="apple">Apple Karten</option><option value="google">Google Maps</option></select></label>
       <label>Schrift <span class="stufen" id="schrift"><button type="button" data-stufe="klein">A−</button><button type="button" data-stufe="normal">A</button><button type="button" data-stufe="gross">A+</button></span></label>
       <label>Farbe <span class="farben" id="akzent"><button type="button" data-akzent="logo" style="background:linear-gradient(135deg,#15161a 55%,#e30613 55%)" aria-label="Schwarz-Rot (Logo)"></button><button type="button" data-akzent="blau" style="background:#0f3d6e" aria-label="Blau"></button><button type="button" data-akzent="gruen" style="background:#1d6b3f" aria-label="Grün"></button><button type="button" data-akzent="rot" style="background:#a12a2a" aria-label="Rot"></button><button type="button" data-akzent="orange" style="background:#b55a12" aria-label="Orange"></button></span></label>
@@ -1863,6 +1886,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=64"></script>
+<script src="app.js?v=65"></script>
 </body>
 </html>

@@ -924,3 +924,32 @@ create policy "Admin pflegt Tresor" on public.tresor for all    to authenticated
 -- Damit sich dasselbe PDF jederzeit neu bauen laesst, ohne es irgendwo
 -- abzulegen: ein paar hundert Zeichen je Rechnung statt einer Datei.
 alter table public.rechnungen add column if not exists felder jsonb;
+
+-- ======================================================================
+-- v23: "offiziell" bei Hallen-Hinweisen bleibt beim Betreiber
+-- ======================================================================
+-- Die Aenderungsregel aus v4 ("eigene Hallenhinweise aendern") deckt die
+-- ganze Zeile ab - auch die Spalte "offiziell", die erst v13 dazugebracht
+-- hat. Mehrere Regeln fuer denselben Befehl gelten mit ODER, die Regel
+-- "Admin markiert Hinweise" bremst also niemanden. Damit konnte jedes
+-- freigeschaltete Mitglied seinen eigenen Hinweis als offiziell markieren -
+-- und offizielle Hinweise darf jeder lesen, auch ohne Anmeldung. Ein
+-- Trigger nach dem Muster von profil_schutz haelt die Spalte fest,
+-- solange kein Admin schreibt; den Text darf der Verfasser weiter aendern.
+create or replace function public.hallennotiz_schutz()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  -- auth.uid() ist null im SQL Editor und fuer service_role - die duerfen alles
+  if auth.uid() is not null and not public.ist_admin() then
+    if tg_op = 'UPDATE' then
+      new.offiziell := old.offiziell;
+    else
+      new.offiziell := false;
+    end if;
+  end if;
+  return new;
+end;
+$$;
+drop trigger if exists hallennotiz_schutz on public.hallen_notizen;
+create trigger hallennotiz_schutz before insert or update on public.hallen_notizen
+  for each row execute function public.hallennotiz_schutz();

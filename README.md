@@ -320,6 +320,12 @@ packt daten.json, abrechnung.csv, notizen.txt und alle Belege im Browser
 zusammen; Kartenkacheln im Dunkelmodus abgedunkelt; „Am Spieltag groß“ macht
 die Kopfkarte am Spieltag bildschirmfüllend; Tipp auf die Stand-Pille lädt neu.
 
+**Einfache Ansicht**: ein Schalter (Einstellungen → App, oder oben auf
+„Mehr") legt Selteneres eine Ebene tiefer unter „Selten gebraucht", ohne
+etwas abzuschalten. Dazu aufgeräumte Menüs: die Abrechnung hat vier Knöpfe
+statt sieben, die Reiterleisten brechen um statt nach rechts zu
+verschwinden, und „Kollegen" steht auch unter „Mehr".
+
 **Telefonliste für alle, Rechnung in vier Schritten**: Der Reiter
 „Kollegen“ zeigt jedem freigeschalteten Mitglied die Nummern – mit Suche und
 Anrufen · WhatsApp · Kopieren, betreute und selbst freigegebene zusammen.

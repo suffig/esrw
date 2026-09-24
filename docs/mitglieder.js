@@ -145,6 +145,8 @@ window.Mitglieder = (function () {
   function istAdminAn() { return !!(profil && profil.admin && adminModus()); }
   // Funktion vom Betreiber eingeschaltet? (Schalter kommen aus app.js)
   function fn(k) { return ctx && ctx.funktion ? ctx.funktion(k) : true; }
+  // Einfache Ansicht (Schalter in den Einstellungen, siehe app.js)
+  function einfach() { return !!(ctx && ctx.lesen && ctx.lesen("einfach") === "1"); }
   var REITER_FUNKTION = { abrechnung: "abrechnung", info: "info", tausch: "tausch", frei: "frei", notizen: "notizen", kollegen: "telefon" };
 
   // --------------------------------------------------------- Attrappe
@@ -645,6 +647,8 @@ window.Mitglieder = (function () {
       if (aktiv && b.scrollIntoView) try { b.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" }); } catch (e) {}
     });
     leeren(inhalt);
+    // Nach dem Wechsel oben anfangen - sonst landet man mitten im neuen Reiter
+    if (window.scrollY > 260) window.scrollTo({ top: 0, behavior: "smooth" });
     if (REITER_FUNKTION[name] && !fn(REITER_FUNKTION[name])) {
       inhalt.appendChild(h("p", { class: "leer", text: "Diese Funktion ist zurzeit abgeschaltet." + (istAdminAn() ? " Einschalten: Admin → Funktionen." : "") }));
       return;
@@ -2021,8 +2025,25 @@ window.Mitglieder = (function () {
     var leiste = h("div", { class: "mg-leiste" });
     panelInhalt.kalender = function () { return abrechnungKalender(spiele); };
     panelInhalt.rechnung = rechnungPanel;
-    [["kalender", "Kalender"], ["rechnung", "Rechnung"], ["detail", "Steuerjahre"], ["art", "Abrechnungsart"], ["werkzeuge", "Werkzeuge"], ["eintragen", "+ Spiel"], ["regeln", "Regeln"]].forEach(function (p) {
-      leiste.appendChild(h("button", { type: "button", class: "filterknopf" + (abrechnungPanel === p[0] ? " aktiv" : ""), text: p[1], onclick: function () { abrechnungPanel = abrechnungPanel === p[0] ? null : p[0]; rendereAbrechnung(); } }));
+    // Sieben Knoepfe nebeneinander hat niemand gelesen: vorne steht, was
+    // staendig gebraucht wird, der Rest liegt unter "Weitere".
+    var WEITERE = [["art", "Abrechnungsart"], ["werkzeuge", "Werkzeuge"], ["eintragen", "+ Spiel eintragen"], ["regeln", "Wie gerechnet wird"]];
+    if (!einfach()) WEITERE.unshift(["detail", "Steuerjahre"]);
+    panelInhalt.weiteres = function () {
+      return h("div", { class: "mg-form" }, [
+        h("p", { class: "meta", style: "margin:0 0 8px", text: "Seltener gebraucht \u2013 einmal antippen:" })
+      ].concat(WEITERE.map(function (p) {
+        return h("button", { type: "button", class: "mg-neben", style: "width:100%;text-align:left",
+          text: p[1], onclick: function () { abrechnungPanel = p[0]; rendereAbrechnung(); } });
+      })));
+    };
+    var KNOEPFE = [["kalender", "Kalender"], ["rechnung", "Rechnung"]];
+    if (!einfach()) KNOEPFE.push(["detail", "Steuerjahre"]);
+    KNOEPFE.push(["weiteres", "Weitere \u2026"]);
+    KNOEPFE.forEach(function (p) {
+      var offen = abrechnungPanel === p[0]
+        || (p[0] === "weiteres" && WEITERE.filter(function (w) { return w[0] === abrechnungPanel; }).length);
+      leiste.appendChild(h("button", { type: "button", class: "filterknopf" + (offen ? " aktiv" : ""), text: p[1], onclick: function () { abrechnungPanel = abrechnungPanel === p[0] ? null : p[0]; rendereAbrechnung(); } }));
     });
     inhalt.appendChild(leiste);
     if (abrechnungPanel && panelInhalt[abrechnungPanel]) {
