@@ -953,3 +953,55 @@ $$;
 drop trigger if exists hallennotiz_schutz on public.hallen_notizen;
 create trigger hallennotiz_schutz before insert or update on public.hallen_notizen
   for each row execute function public.hallennotiz_schutz();
+
+-- ======================================================================
+-- v24: Anschriften der Kollegen, geprüfte Vereinsadressen
+-- ======================================================================
+-- Wer seine Nummer freigibt, darf auch seine Anschrift dazulegen - beides
+-- freiwillig, beides jederzeit wieder loeschbar. Die vom Betreiber
+-- gepflegte Liste bekommt dasselbe Feld.
+alter table public.kontakte     add column if not exists anschrift text;
+alter table public.telefonliste add column if not exists anschrift text;
+
+-- Vereinsadressen sind Vorschlaege, bis ein Admin sie geprueft hat.
+-- Danach stehen sie fest: aendern und loeschen darf sie nur noch der
+-- Betreiber. So kann eine falsche Anschrift nicht stillschweigend eine
+-- gepruefte ueberschreiben, und trotzdem kann jeder Kollege eine
+-- Anschrift beisteuern.
+alter table public.vereine_adressen add column if not exists verifiziert boolean not null default false;
+alter table public.vereine_adressen add column if not exists von text;
+alter table public.vereine_adressen add column if not exists geprueft_am timestamptz;
+
+drop policy if exists "Vereinsadressen pflegen"  on public.vereine_adressen;
+drop policy if exists "Vereinsadressen anlegen"  on public.vereine_adressen;
+drop policy if exists "Vereinsadressen aendern"  on public.vereine_adressen;
+drop policy if exists "Vereinsadressen loeschen" on public.vereine_adressen;
+create policy "Vereinsadressen anlegen"  on public.vereine_adressen for insert to authenticated
+  with check (public.ist_freigeschaltet());
+create policy "Vereinsadressen aendern"  on public.vereine_adressen for update to authenticated
+  using (public.ist_admin() or (public.ist_freigeschaltet() and not verifiziert))
+  with check (public.ist_admin() or public.ist_freigeschaltet());
+create policy "Vereinsadressen loeschen" on public.vereine_adressen for delete to authenticated
+  using (public.ist_admin() or (public.ist_freigeschaltet() and not verifiziert));
+
+-- "verifiziert" setzt nur der Betreiber - wie bei profil_schutz und
+-- hallennotiz_schutz haelt ein Trigger die Spalte fest.
+create or replace function public.vereinsadresse_schutz()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  if auth.uid() is not null and not public.ist_admin() then
+    if tg_op = 'UPDATE' then
+      new.verifiziert := old.verifiziert;
+      new.geprueft_am := old.geprueft_am;
+    else
+      new.verifiziert := false;
+      new.geprueft_am := null;
+    end if;
+  end if;
+  new.geaendert := now();
+  return new;
+end;
+$$;
+drop trigger if exists vereinsadresse_schutz on public.vereine_adressen;
+create trigger vereinsadresse_schutz before insert or update on public.vereine_adressen
+  for each row execute function public.vereinsadresse_schutz();

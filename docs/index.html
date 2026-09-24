@@ -1490,6 +1490,38 @@
   /* In der einfachen Ansicht braucht die Einstellungsseite keine
      Sprungleiste - es ist ohnehin nur eine Seite zum Durchscrollen. */
   .einfach .sprungleiste { display:none; }
+  /* Kopfzeile: derselbe Stil wie der Admin-Schild, nur in der Akzentfarbe */
+  #einfachmodus { color:var(--dim); }
+  #einfachmodus.aktiv { background:var(--akzent); color:var(--akzent-text); }
+  /* Feineinstellungen: in der einfachen Ansicht erst auf Wunsch */
+  .fein-knopf { display:none; width:100%; margin:12px 0 0; }
+  .einfach .fein-knopf { display:block; }
+  .einfach .fein { display:none; }
+  .einfach.fein-an .fein { display:block; }
+  /* Spielplan: Woche und Monat sind die Kuer */
+  .einfach #plan-modus button[data-modus="woche"],
+  .einfach #plan-modus button[data-modus="monat"] { display:none; }
+  /* Kollegen: eine Kachel je Person, Nummer und Anschrift mit Zeichen */
+  .telefon-zeile { display:block; }
+  .kontakt-kopf { display:flex; align-items:baseline; justify-content:space-between; gap:8px; }
+  .kontakt-kopf b { display:block; }
+  .kontakt-marke { flex:none; color:var(--dim); font-size:.72rem; }
+  .kontakt-wert { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:6px; }
+  .kontakt-wert > span:first-child { min-width:0; overflow-wrap:anywhere; color:var(--dim); font-size:.9rem;
+                                     font-variant-numeric:tabular-nums; }
+  .kontakt-admin { border-top:1px dashed var(--linie); padding-top:6px; }
+  .ikon-knopf { display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; flex:none;
+                border-radius:50%; border:1px solid var(--linie); background:var(--bg); color:var(--akzent);
+                cursor:pointer; text-decoration:none; }
+  .ikon-knopf svg.i { width:1.05rem; height:1.05rem; }
+  .ikon-knopf:active { transform:scale(.94); }
+  /* Abzeichen an Vereinsadressen: Vorschlag oder geprueft */
+  .merkzeichen { display:inline-block; font-size:.66rem; font-weight:800; text-transform:uppercase; letter-spacing:.05em;
+                 padding:2px 7px; border-radius:99px; margin-right:6px; vertical-align:2px; }
+  .merkzeichen.gut  { background:var(--gut-bg);  color:var(--gut); }
+  .merkzeichen.warn { background:var(--warn-bg); color:var(--warn); }
+  #plan-aenderungen { text-decoration:none; }
+  #plan-aenderungen .zaehler { background:var(--rot); color:#fff; border-radius:99px; font-size:.68rem; padding:1px 6px; font-weight:800; }
   /* Zweizeilige Beschriftung in den Einstellungen (wie unter "Bereiche") */
   .einstellungen-liste label > span > small { display:block; color:var(--dim); font-weight:500; }
   /* Adminbereich: die sechs Knoepfe lieber umbrechen als wegscrollen */
@@ -1504,6 +1536,10 @@
   <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.2c2.8.2 5 2 5 4.8"/></symbol>
   <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
   <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="18" r="1" fill="currentColor"/></symbol>
+  <symbol id="i-auge" viewBox="0 0 24 24"><path d="M2.5 12S6 6.2 12 6.2 21.5 12 21.5 12 18 17.8 12 17.8 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-telefon" viewBox="0 0 24 24"><path d="M7 3.5h3l1.5 4-2 1.5a12 12 0 0 0 5.5 5.5l1.5-2 4 1.5v3c0 1-.8 1.8-1.8 1.7C11.4 18.9 5.1 12.6 4.3 5.3 4.2 4.3 5 3.5 6 3.5Z"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M20.5 11.5c0 4.1-3.8 7.4-8.5 7.4-1 0-2-.2-2.9-.5L4 20l1.4-3.6C4.2 15.1 3.5 13.4 3.5 11.5c0-4.1 3.8-7.4 8.5-7.4s8.5 3.3 8.5 7.4Z"/></symbol>
+  <symbol id="i-kopieren" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M15 6.5V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h.5"/></symbol>
   <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 20c0-3.6 3.4-6 7.5-6s7.5 2.4 7.5 6"/></symbol>
   <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
   <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.2 16.5 15.8 7.5"/></symbol>
@@ -1537,6 +1573,7 @@
   </button>
   <span class="kopf-knoepfe">
     <button type="button" class="rund versteckt" id="adminmodus" title="Admin-Modus" aria-label="Admin-Modus umschalten" aria-pressed="true"><svg class="i"><use href="#i-shield"/></svg></button>
+    <button type="button" class="rund" id="einfachmodus" title="Einfache Ansicht" aria-label="Einfache Ansicht umschalten" aria-pressed="true"><svg class="i"><use href="#i-auge"/></svg></button>
     <button type="button" class="rund" id="suche-knopf" title="Spielplan durchsuchen" aria-label="Suchen"><svg class="i"><use href="#i-suche"/></svg></button>
     <button type="button" class="avatar-knopf leer" id="avatar" title="Profil und mehr" aria-label="Profil und mehr">?</button>
   </span>
@@ -1579,6 +1616,7 @@
         </span>
         <button type="button" class="filterknopf" id="plan-suche-knopf" title="Suchen" aria-label="Spielplan durchsuchen"><svg class="i"><use href="#i-suche"/></svg></button>
         <button type="button" class="filterknopf" id="plan-filter-knopf"><svg class="i"><use href="#i-list"/></svg> Filter <span class="zaehler versteckt" id="plan-filter-zahl"></span></button>
+        <a class="filterknopf" id="plan-aenderungen" href="#aenderungen"><svg class="i"><use href="#i-bell"/></svg> Änderungen <span class="zaehler versteckt" id="plan-aend-zahl"></span></a>
         <button type="button" class="textknopf" id="plan-heute">Heute ↓</button>
         <span class="schalter" id="plan-zaehler"></span>
       </div>
@@ -1721,16 +1759,17 @@
       <label>Kompakte Ansicht <input type="checkbox" id="kompakt"></label>
       <label>Saisonziel <input type="number" id="ziel" min="1" max="200" placeholder="z. B. 40" style="width:6em"> Spiele</label>
     </div>
-    <h3 class="abschnitt">Startseite<small>Was auf „Start“ steht – Profil, nächstes Spiel und deine Spiele immer</small></h3>
-    <div class="karte einstellungen-liste" id="start-bausteine"></div>
-    <h3 class="abschnitt">Reihenfolge auf Start<small>Was zuerst kommt – Kopfkarte bleibt immer oben</small></h3>
-    <div class="karte einstellungen-liste" id="start-ordnung"></div>
-    <h3 class="abschnitt">Schnellzugriff<small>Welche Knöpfe unter der Kopfkarte stehen</small></h3>
-    <div class="karte einstellungen-liste" id="schnell-wahl"></div>
-    <h3 class="abschnitt">Leiste unten<small>Was auf dem dritten Platz steht – Start, Spielplan, Abrechnung und Mehr bleiben</small></h3>
-    <div class="karte einstellungen-liste" id="tab-wahl"></div>
-    <h3 class="abschnitt">Bereiche<small>Was du nicht brauchst, blendest du für dich aus – nur auf deinen Geräten</small></h3>
-    <div class="karte einstellungen-liste" id="bereiche"></div>
+    <button type="button" class="mg-neben fein-knopf" id="fein-knopf">Mehr einstellen …</button>
+    <h3 class="abschnitt fein">Startseite<small>Was auf „Start“ steht – Profil, nächstes Spiel und deine Spiele immer</small></h3>
+    <div class="karte einstellungen-liste fein" id="start-bausteine"></div>
+    <h3 class="abschnitt fein">Reihenfolge auf Start<small>Was zuerst kommt – Kopfkarte bleibt immer oben</small></h3>
+    <div class="karte einstellungen-liste fein" id="start-ordnung"></div>
+    <h3 class="abschnitt fein">Schnellzugriff<small>Welche Knöpfe unter der Kopfkarte stehen</small></h3>
+    <div class="karte einstellungen-liste fein" id="schnell-wahl"></div>
+    <h3 class="abschnitt fein">Leiste unten<small>Was auf dem dritten Platz steht – Start, Spielplan, Abrechnung und Mehr bleiben</small></h3>
+    <div class="karte einstellungen-liste fein" id="tab-wahl"></div>
+    <h3 class="abschnitt fein">Bereiche<small>Was du nicht brauchst, blendest du für dich aus – nur auf deinen Geräten</small></h3>
+    <div class="karte einstellungen-liste fein" id="bereiche"></div>
     <div id="adminzeile" class="versteckt"></div>
     <div id="push-verlauf" class="versteckt"></div>
   </section>
@@ -1886,6 +1925,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=65"></script>
+<script src="app.js?v=66"></script>
 </body>
 </html>

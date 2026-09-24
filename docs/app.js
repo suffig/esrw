@@ -26,8 +26,26 @@
   // gebraucht wird, steht dann eine Ebene tiefer statt in der ersten Reihe -
   // nichts verschwindet, nichts wird abgeschaltet. Der Schalter gilt fuer
   // das Geraet und wandert mit dem Konto auf die anderen.
-  function einfachAn() { return lesen("einfach") === "1"; }
-  function einfachAnwenden() { document.documentElement.classList.toggle("einfach", einfachAn()); }
+  // Voreingestellt ist die einfache Ansicht: "0" heisst ausdruecklich aus,
+  // alles andere (auch ein frisches Geraet) heisst an.
+  function einfachAn() { return lesen("einfach") !== "0"; }
+  function einfachAnwenden() {
+    document.documentElement.classList.toggle("einfach", einfachAn());
+    var k = el("einfachmodus");
+    if (k) {
+      k.classList.toggle("aktiv", einfachAn());
+      k.setAttribute("aria-pressed", einfachAn() ? "true" : "false");
+      k.title = einfachAn() ? "Einfache Ansicht \u2013 antippen zeigt alles" : "Alles sichtbar \u2013 antippen vereinfacht";
+    }
+    if (el("einfach")) el("einfach").checked = einfachAn();
+  }
+  function einfachSetzen(an, still) {
+    if (einfachAn() === !!an) return;
+    schreiben("einfach", an ? null : "0");
+    einfachAnwenden(); einstellungenSync();
+    if (!el("mehr").classList.contains("versteckt")) zeigeMehr();
+    if (!still) toast(an ? "Einfache Ansicht \u2013 Selteneres steht eine Ebene tiefer." : "Jetzt ist alles sichtbar.", "gut");
+  }
 
   // ------------------------------------------------ Funktionen (Schalter)
   // Der Betreiber schaltet unter Admin -> Funktionen an und ab; die Tabelle
@@ -269,6 +287,11 @@
       .then(function (st) { return st.eingerichtet && st.session && window.Mitglieder.adminRecht ? window.Mitglieder.adminRecht() : false; })
       .then(function (ja) { el("adminmodus").classList.toggle("versteckt", !ja); adminKnopfStand(); }).catch(function () {});
   }
+  if (el("einfachmodus")) el("einfachmodus").addEventListener("click", function () { einfachSetzen(!einfachAn()); });
+  if (el("fein-knopf")) el("fein-knopf").addEventListener("click", function () {
+    var auf = document.documentElement.classList.toggle("fein-an");
+    el("fein-knopf").textContent = auf ? "Feineinstellungen ausblenden" : "Mehr einstellen \u2026";
+  });
   el("adminmodus").addEventListener("click", function () {
     var neu = !adminModusAn();
     schreiben("adminaus", neu ? null : "1");
@@ -411,12 +434,7 @@
     einfachAnwenden();
     if (el("einfach")) {
       el("einfach").checked = einfachAn();
-      if (!nurAnwenden) el("einfach").addEventListener("change", function (e) {
-        schreiben("einfach", e.target.checked ? "1" : null);
-        einfachAnwenden(); einstellungenSync();
-        toast(e.target.checked ? "Einfache Ansicht an \u2013 Selteneres steht unter \u201eSelten gebraucht\u201c."
-                               : "Alles wieder in der ersten Reihe.", "gut");
-      });
+      if (!nurAnwenden) el("einfach").addEventListener("change", function (e) { einfachSetzen(e.target.checked); });
     }
     var k = lesen("kompakt") === "1"; el("kompakt").checked = k; document.body.classList.toggle("kompakt", k);
     if (!nurAnwenden) el("kompakt").addEventListener("change", function (e) { schreiben("kompakt", e.target.checked ? "1" : null); document.body.classList.toggle("kompakt", e.target.checked); einstellungenSync(); });
@@ -1817,8 +1835,26 @@
     el("plan-filter-knopf").classList.toggle("aktiv", n > 0);
     return n;
   }
+  // Neue Aenderungen als Zahl am Knopf im Spielplan - dort steht jetzt,
+  // was frueher einen eigenen Platz in der Leiste hatte.
+  function aenderungenKnopf() {
+    var k = el("plan-aenderungen"); if (!k) return;
+    k.classList.toggle("versteckt", gesperrtFuerMich("#aenderungen"));
+    var z = el("plan-aend-zahl"); if (!z || !sitzungVorhanden()) return;
+    hole("protokoll.json").then(function (pl) {
+      var gesehen = parseInt(lesen("aenderungen-gesehen") || "0", 10) || 0;
+      var frisch = (pl || []).filter(function (e) {
+        if (!e.stand || new Date(e.stand).getTime() <= gesehen) return false;
+        return !(profil && profil.slug) || e.slug === profil.slug;
+      }).length;
+      z.textContent = frisch > 9 ? "9+" : String(frisch);
+      z.classList.toggle("versteckt", !frisch);
+    }).catch(function () {});
+  }
+
   function zeigePlan() {
     filterAktiv();
+    aenderungenKnopf();
     var modus = planModus();
     Array.prototype.forEach.call(el("plan-modus").querySelectorAll("button"), function (b) { b.classList.toggle("aktiv", b.getAttribute("data-modus") === modus); });
     el("plan-hallen-label").classList.toggle("versteckt", !meineHallen());
@@ -2096,6 +2132,7 @@
   // braucht - Tausch ist bei vielen aus. Auswahl steht in den Einstellungen
   // und wandert ueber das Konto mit.
   var TAB_ZIELE = [
+    ["mitglieder/kollegen", "i-users", "Kollegen", "telefon"],
     ["mitglieder/tausch", "i-swap", "Tausch", "tausch"],
     ["aenderungen", "i-bell", "Änderungen"],
     ["archiv", "i-clock", "Archiv"],
@@ -2111,7 +2148,9 @@
     var gewaehlt = w && TAB_ZIELE.filter(function (t) { return t[0] === w; })[0];
     if (gewaehlt && (!gewaehlt[3] || funktion(gewaehlt[3])) && !gesperrtFuerMich(gewaehlt[0])) return gewaehlt;
     if (!sitzungVorhanden()) return ["plan", "i-list", "Spielplan"];
-    return funktion("tausch") ? TAB_ZIELE[0] : TAB_ZIELE[1];
+    // Standard: die Kollegen. Aenderungen stehen jetzt am Spielplan.
+    if (funktion("telefon")) return TAB_ZIELE[0];
+    return funktion("tausch") ? TAB_ZIELE[1] : TAB_ZIELE[2];
   }
   function tabDritterAnwenden() {
     var b = el("tab-tausch"); if (!b) return;
@@ -3250,14 +3289,7 @@
         var b = document.createElement("button"); b.type = "button";
         b.className = "filterknopf" + (einfachAn() === w[1] ? " aktiv" : "");
         b.textContent = w[0];
-        b.addEventListener("click", function () {
-          if (einfachAn() === w[1]) return;
-          schreiben("einfach", w[1] ? "1" : null);
-          einfachAnwenden(); einstellungenSync();
-          if (el("einfach")) el("einfach").checked = w[1];
-          zeigeMehr();
-          toast(w[1] ? "Einfache Ansicht an." : "Alles wieder in der ersten Reihe.", "gut");
-        });
+        b.addEventListener("click", function () { einfachSetzen(w[1]); });
         wahl.appendChild(b);
       });
     }

@@ -146,7 +146,7 @@ window.Mitglieder = (function () {
   // Funktion vom Betreiber eingeschaltet? (Schalter kommen aus app.js)
   function fn(k) { return ctx && ctx.funktion ? ctx.funktion(k) : true; }
   // Einfache Ansicht (Schalter in den Einstellungen, siehe app.js)
-  function einfach() { return !!(ctx && ctx.lesen && ctx.lesen("einfach") === "1"); }
+  function einfach() { return !(ctx && ctx.lesen && ctx.lesen("einfach") === "0"); }
   var REITER_FUNKTION = { abrechnung: "abrechnung", info: "info", tausch: "tausch", frei: "frei", notizen: "notizen", kollegen: "telefon" };
 
   // --------------------------------------------------------- Attrappe
@@ -625,6 +625,12 @@ window.Mitglieder = (function () {
     var reiterListe = [["abrechnung", "Abrechnung", "i-euro"], ["info", "Info", "i-bell"], ["tausch", "Tausch", "i-swap"], ["frei", "Verfügbar", "i-cal"], ["notizen", "Notizen", "i-note"], ["kollegen", "Kollegen", "i-users"]]
       .filter(function (t) { return !REITER_FUNKTION[t[0]] || fn(REITER_FUNKTION[t[0]]); });
     verfuegbareReiter = reiterListe.map(function (t) { return t[0]; });
+    // Einfache Ansicht: nur das Taegliche. Tausch, Verfuegbarkeit und
+    // Notizen stehen weiter unter "Mehr" und sind direkt erreichbar.
+    if (einfach()) {
+      var KERN = { abrechnung: 1, info: 1, kollegen: 1 };
+      reiterListe = reiterListe.filter(function (t) { return KERN[t[0]] || t[0] === reiter; });
+    }
     if (istAdminAn()) reiterListe.push(["admin", "Admin", "i-shield"]);
     reiterListe.forEach(function (t) {
       leiste.appendChild(h("button", { type: "button", "data-reiter": t[0], onclick: function () { zeigeReiter(t[0]); } }, [ikone(t[2]), t[1], h("span", { class: "zaehler versteckt" })]));
@@ -1191,7 +1197,7 @@ window.Mitglieder = (function () {
   }
   function vereinAdressenLaden() {
     if (vereinAdressen) return Promise.resolve(vereinAdressen);
-    return sb.from("vereine_adressen").select("verein,name,strasse,plz_ort").then(function (r) {
+    return sb.from("vereine_adressen").select("*").then(function (r) {
       vereinAdressen = {};
       (r.data || []).forEach(function (v) { vereinAdressen[v.verein] = v; });
       return vereinAdressen;
@@ -1449,16 +1455,32 @@ window.Mitglieder = (function () {
         if (box.isConnected) nochmal();
       });
     }
-    g2.appendChild(h("p", { class: "meta", style: "margin:2px 0 6px" }, [
-      h("button", { type: "button", class: "textknopf", text: "Adresse für alle Kollegen merken", onclick: function () {
-        if (!f.verein) { meldung("Erst ein Spiel übernehmen – daraus kommt der Verein.", "warn"); return; }
-        speichern(sb.from("vereine_adressen").upsert({ verein: f.verein, name: f.name, strasse: f.strasse, plz_ort: f.plz_ort,
-                                                       angelegt_von: session.user.id, geaendert: new Date().toISOString() }))
-          .then(function (r) {
-            if (r && r.error) { meldung(fehlerText(r.error), "warn"); return; }
-            vereinAdressen = null; kurzMeldung("Gemerkt ✓ – Kollegen sehen die Adresse auch.", "gut");
-          });
-      } })]));
+    var adressZeile = h("p", { class: "meta", style: "margin:2px 0 6px" });
+    g2.appendChild(adressZeile);
+    vereinAdressenLaden().then(function (map) {
+      if (!adressZeile.isConnected) return;
+      var a = (map[f.verein] || map[vereinHaupt(f.verein)] || {});
+      leeren(adressZeile);
+      if (a.verifiziert) {
+        adressZeile.appendChild(h("span", { class: "merkzeichen gut", text: "geprüft" }));
+        adressZeile.appendChild(h("span", { text: " Diese Anschrift hat der Betreiber bestätigt." }));
+        return;
+      }
+      adressZeile.appendChild(h("button", { type: "button", class: "textknopf",
+        text: a.strasse ? "Anschrift für alle Kollegen ändern" : "Anschrift für alle Kollegen vorschlagen",
+        onclick: function () {
+          if (!f.verein) { meldung("Erst ein Spiel übernehmen – daraus kommt der Verein.", "warn"); return; }
+          if (!f.strasse && !f.plz_ort) { meldung("Erst die Anschrift ausfüllen.", "warn"); return; }
+          vereinSpeichern(vereinHaupt(f.verein), { name: f.name, strasse: f.strasse, plz_ort: f.plz_ort })
+            .then(function (ok) {
+              if (!ok) return;
+              vereinAdressen = null;
+              kurzMeldung(istAdminAn() ? "Gespeichert ✓ – Kollegen sehen sie auch."
+                                       : "Vorschlag gespeichert ✓ – der Betreiber prüft ihn.", "gut");
+            });
+        } }));
+      if (a.strasse && a.von) adressZeile.appendChild(h("small", { style: "display:block", text: "Vorschlag von " + a.von + " – noch nicht geprüft." }));
+    });
 
     // ---- Schritt 3: Angaben ---------------------------------------------
     var g3 = gruppe(3, "Angaben", [f.nummer, f.datum, f.ort, f.klasse].filter(Boolean).join(" · "), hatAngaben);
@@ -2813,8 +2835,8 @@ window.Mitglieder = (function () {
   // deshalb steht die Pflege im Adminbereich und hier nur die Ansicht.
   function telefonbuchLaden() {
     return Promise.all([
-      speichern(sb.from("telefonliste").select("slug,name,telefon").order("name")),
-      speichern(sb.from("kontakte").select("slug,name,telefon,hinweis"))
+      speichern(sb.from("telefonliste").select("*").order("name")),
+      speichern(sb.from("kontakte").select("*"))
     ]).then(function (rr) {
       var a = rr[0] || {}, b = rr[1] || {};
       return { liste: (a.data || []), selbst: (b.data || []).filter(function (k) { return k.telefon; }),
@@ -2829,43 +2851,79 @@ window.Mitglieder = (function () {
       return (p && p.name) || ersatz || slug;
     }
     d.liste.forEach(function (z) {
-      aus[z.slug] = { slug: z.slug, name: name(z.slug, z.name), telefon: z.telefon, eigen: false, inListe: true };
+      aus[z.slug] = { slug: z.slug, name: name(z.slug, z.name), telefon: z.telefon, anschrift: z.anschrift || "",
+                      eigen: false, inListe: true };
     });
     d.selbst.forEach(function (k) {
-      var alt = aus[k.slug];
-      aus[k.slug] = { slug: k.slug, name: name(k.slug, k.name), telefon: k.telefon, hinweis: k.hinweis || "",
-                      eigen: true, inListe: !!(alt && alt.inListe), betreiber: alt ? alt.telefon : null };
+      var alt = aus[k.slug] || {};
+      aus[k.slug] = { slug: k.slug, name: name(k.slug, k.name), telefon: k.telefon || alt.telefon || "",
+                      anschrift: k.anschrift || alt.anschrift || "", hinweis: k.hinweis || "",
+                      eigen: true, inListe: !!alt.inListe, betreiber: alt.telefon || null };
     });
     return Object.keys(aus).map(function (k) { return aus[k]; })
       .sort(function (a, b) { return String(a.name).localeCompare(String(b.name), "de"); });
   }
+  // Zeichen statt Woerter: auf dem Handy passen drei Knoepfe neben die
+  // Nummer, "Anrufen WhatsApp Kopieren" tut das nicht.
+  function ikonKnopf(zeichen, was, tun) {
+    var b = h("button", { type: "button", class: "ikon-knopf", title: was, onclick: tun }, [ikone(zeichen)]);
+    b.setAttribute("aria-label", was);
+    return b;
+  }
+  function ikonLink(zeichen, was, ziel, extern) {
+    var a = h("a", { class: "ikon-knopf", href: ziel, title: was }, [ikone(zeichen)]);
+    if (extern) { a.target = "_blank"; a.rel = "noopener"; }
+    a.setAttribute("aria-label", was);
+    return a;
+  }
+  function kopieren(text, was) {
+    if (navigator.clipboard) navigator.clipboard.writeText(text).then(function () { kurzMeldung(was + " kopiert ✓", "gut"); });
+    else prompt(was + ":", text);
+  }
+  // Karte: die App-Einstellung des Kollegen entscheidet, wo die Adresse aufgeht
+  function kartenLink(adresse) {
+    var q = encodeURIComponent(adresse);
+    var w = ctx && ctx.lesen ? ctx.lesen("karten") : null;
+    if (w === "apple" || (!w && /iPhone|iPad|Macintosh/.test(navigator.userAgent))) return "http://maps.apple.com/?q=" + q;
+    return "https://www.google.com/maps/search/?api=1&query=" + q;
+  }
   function telefonWege(nr) {
     var l = telefonLink(nr);
     return [
-      h("a", { href: l.tel, text: "Anrufen" }),
-      h("a", { href: l.wa, target: "_blank", rel: "noopener", text: "WhatsApp" }),
-      h("button", { type: "button", text: "Kopieren", onclick: function () {
-        if (navigator.clipboard) navigator.clipboard.writeText(nr).then(function () { kurzMeldung("Nummer kopiert ✓", "gut"); });
-        else prompt("Nummer:", nr);
-      } })
+      ikonLink("i-telefon", "Anrufen", l.tel),
+      ikonLink("i-chat", "WhatsApp", l.wa, true),
+      ikonKnopf("i-kopieren", "Nummer kopieren", function () { kopieren(nr, "Nummer"); })
     ];
   }
+  function anschriftWege(adresse) {
+    return [
+      ikonLink("i-pin", "Auf der Karte zeigen", kartenLink(adresse), true),
+      ikonKnopf("i-kopieren", "Anschrift kopieren", function () { kopieren(adresse, "Anschrift"); })
+    ];
+  }
+  // Eine Kachel je Kollege: Nummer und Anschrift, jede mit ihren Knoepfen.
   function telefonZeile(z, zusatz) {
-    var wege = h("span", { class: "telefon-wege" }, telefonWege(z.telefon));
-    (zusatz || []).forEach(function (k) { wege.appendChild(k); });
-    var unten = z.telefon + (z.eigen ? " · selbst freigegeben" : "") + (z.hinweis ? " · " + z.hinweis : "");
-    return h("div", { class: "telefon-zeile" }, [
-      h("span", {}, [h("b", { text: z.name }), h("small", { text: unten })]),
-      wege]);
+    var karte = h("div", { class: "telefon-zeile" });
+    var kopf = h("div", { class: "kontakt-kopf" }, [h("b", { text: z.name })]);
+    if (z.eigen) kopf.appendChild(h("small", { class: "kontakt-marke", text: "selbst freigegeben" }));
+    karte.appendChild(kopf);
+    if (z.hinweis) karte.appendChild(h("small", { class: "meta", text: z.hinweis }));
+    if (z.telefon) karte.appendChild(h("div", { class: "kontakt-wert" }, [
+      h("span", { text: z.telefon }), h("span", { class: "telefon-wege" }, telefonWege(z.telefon))]));
+    if (z.anschrift) karte.appendChild(h("div", { class: "kontakt-wert" }, [
+      h("span", { text: z.anschrift }), h("span", { class: "telefon-wege" }, anschriftWege(z.anschrift))]));
+    if (!z.telefon && !z.anschrift) karte.appendChild(h("small", { class: "meta", text: "keine Angaben" }));
+    if (zusatz && zusatz.length) karte.appendChild(h("div", { class: "kontakt-wert kontakt-admin" }, [h("span", {}), h("span", { class: "telefon-wege" }, zusatz)]));
+    return karte;
   }
 
   // Reiter "Kollegen": die Liste, wie jeder Freigeschaltete sie sieht.
   function zeigeTelefonbuch() {
     var karte = h("div", { class: "melde karte" });
     var kopf = h("p", { class: "meta", style: "margin:0 0 8px", text: "lade …" });
-    var suche = h("input", { type: "search", class: "mg-suche", placeholder: "Name suchen …" });
+    var suche = h("input", { type: "search", class: "mg-suche", placeholder: "Name oder Ort suchen …" });
     var liste = h("div", { class: "telefon-liste" }, [skelett(2)]);
-    karte.appendChild(h("h4", {}, [ikone("i-users"), " Telefonliste"]));
+    karte.appendChild(h("h4", {}, [ikone("i-users"), " Kollegen"]));
     karte.appendChild(kopf);
     karte.appendChild(suche);
     karte.appendChild(liste);
@@ -2874,7 +2932,7 @@ window.Mitglieder = (function () {
     if (fn("gespann")) {
       var eigenBox = h("div", {}, [h("p", { class: "meta", text: "lade …" })]);
       var eigen = h("details", { class: "melde karte tausch" }, [
-        h("summary", { text: "Meine eigene Nummer" }), eigenBox]);
+        h("summary", { text: "Meine Nummer und Anschrift" }), eigenBox]);
       eigen.addEventListener("toggle", function () {
         if (eigen.open && !eigen._geladen) { eigen._geladen = true; kontaktRendern(eigenBox); }
       });
@@ -2885,7 +2943,7 @@ window.Mitglieder = (function () {
       h("button", { type: "button", class: "textknopf", text: "Liste pflegen",
         onclick: function () { adminBereich = "telefon"; zeigeReiter("admin"); } })]));
     else inhalt.appendChild(h("p", { class: "meta mg-fuss",
-      text: "Die Liste pflegt der Betreiber. Deine eigene Nummer gibst du selbst frei – sie geht dann vor." }));
+      text: "Die Liste pflegt der Betreiber. Deine eigenen Angaben gibst du selbst frei – sie gehen dann vor." }));
 
     telefonbuchLaden().then(function (d) {
       if (!karte.isConnected) return;
@@ -2897,11 +2955,16 @@ window.Mitglieder = (function () {
       }
       var alle = telefonbuchZeilen(d);
       var gesamt = ((ctx.daten && ctx.daten.personen) || []).length;
-      kopf.textContent = alle.length + (alle.length === 1 ? " Nummer" : " Nummern")
-        + (gesamt ? " von " + gesamt + " Kollegen" : "") + ". Antippen: anrufen, WhatsApp oder kopieren.";
+      var mitNr = alle.filter(function (z) { return z.telefon; }).length;
+      var mitAdr = alle.filter(function (z) { return z.anschrift; }).length;
+      kopf.textContent = mitNr + (mitNr === 1 ? " Nummer" : " Nummern")
+        + (mitAdr ? ", " + mitAdr + (mitAdr === 1 ? " Anschrift" : " Anschriften") : "")
+        + (gesamt ? " von " + gesamt + " Kollegen" : "") + ".";
       function zeichne() {
         var q = suche.value.trim().toLowerCase();
-        var treffer = alle.filter(function (z) { return !q || String(z.name).toLowerCase().indexOf(q) >= 0; });
+        var treffer = alle.filter(function (z) {
+          return !q || (z.name + " " + (z.anschrift || "")).toLowerCase().indexOf(q) >= 0;
+        });
         leeren(liste);
         if (!treffer.length) {
           liste.appendChild(h("p", { class: "leer", text: alle.length ? "Niemand gefunden." : "Noch keine Nummern eingetragen." }));
@@ -2919,17 +2982,19 @@ window.Mitglieder = (function () {
       var k = r.data;
       leeren(box);
       var telefon = h("input", { type: "tel", placeholder: "z. B. 0171 2345678", value: k ? k.telefon : "", autocomplete: "tel" });
+      var anschrift = h("input", { type: "text", placeholder: "Anschrift (optional), z. B. „Musterweg 1, 45127 Essen“", value: k && k.anschrift ? k.anschrift : "", autocomplete: "street-address", maxlength: "120" });
       var hinweis = h("input", { type: "text", placeholder: "Hinweis (optional), z. B. „lieber WhatsApp“", value: k && k.hinweis ? k.hinweis : "", maxlength: "80" });
       var speichern = h("button", { type: "button", class: "haupt", text: k ? "Aktualisieren" : "Freigeben", onclick: function () {
         var nr = telefon.value.trim();
         if (!nr) { meldung("Bitte eine Nummer eintragen.", "warn"); return; }
-        sb.from("kontakte").upsert({ user_id: session.user.id, slug: profil.slug, name: profil.name || profil.slug, telefon: nr, hinweis: hinweis.value.trim() || null }, { onConflict: "user_id" })
-          .then(function (r2) { if (r2.error) { meldung(fehlerText(r2.error), "warn"); return; } cache.kontakte = {}; kurzMeldung("Nummer freigegeben ✓", "gut"); kontaktRendern(box); });
+        sb.from("kontakte").upsert({ user_id: session.user.id, slug: profil.slug, name: profil.name || profil.slug, telefon: nr,
+                                     anschrift: anschrift.value.trim() || null, hinweis: hinweis.value.trim() || null }, { onConflict: "user_id" })
+          .then(function (r2) { if (r2.error) { meldung(fehlerText(r2.error) + (/anschrift/.test(r2.error.message || "") ? " – schema.sql (v24) ausführen." : ""), "warn"); return; } cache.kontakte = {}; kurzMeldung("Freigegeben ✓", "gut"); kontaktRendern(box); });
       } });
-      box.appendChild(h("h4", { text: "Handynummer für Gespannkollegen" }));
-      box.appendChild(h("p", { text: (k ? "Freigegeben. " : "") + "Wer sie freigibt, bekommt auf der Spielkarte bei den Kollegen „Anrufen“ und „WhatsApp“ – und umgekehrt. " +
-        "Sichtbar für alle angemeldeten Mitglieder, jederzeit zurückziehbar." }));
-      box.appendChild(h("div", { class: "mg-form" }, [telefon, hinweis]));
+      box.appendChild(h("h4", { text: "Meine Nummer und Anschrift" }));
+      box.appendChild(h("p", { text: (k ? "Freigegeben. " : "") + "Wer die Nummer freigibt, bekommt auf der Spielkarte bei den Kollegen „Anrufen“ und „WhatsApp“ – und umgekehrt. " +
+        "Die Anschrift ist freiwillig und steht nur im Reiter „Kollegen“. Beides sehen nur freigeschaltete Mitglieder, beides ist jederzeit zurückziehbar." }));
+      box.appendChild(h("div", { class: "mg-form" }, [telefon, anschrift, hinweis]));
       box.appendChild(speichern);
       if (k) box.appendChild(h("button", { type: "button", class: "mg-neben", style: "margin-top:8px;width:100%", text: "Nummer zurückziehen", onclick: function () {
         sb.from("kontakte").delete().eq("user_id", session.user.id).then(function () { cache.kontakte = {}; kurzMeldung("Zurückgezogen.", ""); kontaktRendern(box); });
@@ -3416,15 +3481,18 @@ window.Mitglieder = (function () {
     var ta = h("textarea", { rows: "4", placeholder: "Je Zeile: Nachname, Vorname; 0171 1234567\noder: Vorname Nachname; +49 …" });
     var einzelName = h("select", { class: "mg-select" }, [h("option", { value: "", text: "– Kollege –" })].concat(personen.map(function (p) { return h("option", { value: p.slug, text: p.name }); })));
     var einzelNr = h("input", { type: "tel", placeholder: "Nummer" });
+    var einzelAdr = h("input", { type: "text", placeholder: "Anschrift (optional)", maxlength: "120" });
     var formBox = h("div", { class: "mg-form" }, [
       h("div", { class: "mg-zeile" }, [einzelName, einzelNr]),
-      h("button", { type: "button", class: "anfrage", text: "Nummer speichern", onclick: function () {
-        if (!einzelName.value || !einzelNr.value.trim()) { meldung("Kollege und Nummer wählen.", "warn"); return; }
+      einzelAdr,
+      h("button", { type: "button", class: "anfrage", text: "Speichern", onclick: function () {
+        if (!einzelName.value || !(einzelNr.value.trim() || einzelAdr.value.trim())) { meldung("Kollege und Nummer oder Anschrift wählen.", "warn"); return; }
         var p = personen.filter(function (x) { return x.slug === einzelName.value; })[0];
         speichern(sb.from("telefonliste").upsert({ slug: einzelName.value, name: p ? p.name : einzelName.value,
-                                                   telefon: einzelNr.value.trim(), von: profil.name || profil.slug }, { onConflict: "slug" }))
+                                                   telefon: einzelNr.value.trim(), anschrift: einzelAdr.value.trim() || null,
+                                                   von: profil.name || profil.slug }, { onConflict: "slug" }))
           .then(function (r2) {
-            if (r2 && r2.error) { meldung(fehlerText(r2.error) + (/telefonliste/.test(r2.error.message || "") ? " – schema.sql (v14) ausführen." : ""), "warn"); return; }
+            if (r2 && r2.error) { meldung(fehlerText(r2.error) + (/telefonliste|anschrift/.test(r2.error.message || "") ? " – schema.sql (v24) ausführen." : ""), "warn"); return; }
             kurzMeldung("Gespeichert ✓", "gut"); neu();
           });
       } })]);
@@ -3442,7 +3510,7 @@ window.Mitglieder = (function () {
         text: d.liste.length + (d.liste.length === 1 ? " Nummer" : " Nummern") + " vom Betreiber"
           + (d.selbst.length ? ", dazu " + d.selbst.length + " selbst freigegeben" : "")
           + ". Alle angemeldeten Kollegen sehen die Liste im Reiter „Kollegen“; ändern kannst nur du. "
-          + "Eine selbst freigegebene Nummer geht vor." }));
+          + "Eigene Angaben der Kollegen gehen vor. Die Anschrift ist freiwillig und steht nur dort." }));
       box.appendChild(formBox);
       box.appendChild(h("details", { class: "tausch", style: "margin-top:8px" }, [h("summary", { text: "Liste einfügen (mehrere auf einmal)" }), h("div", { class: "mg-form" }, [ta, h("button", { type: "button", class: "anfrage", text: "Einlesen", onclick: function () {
         var zeilen = ta.value.split(/\n/).map(function (z) { return z.trim(); }).filter(Boolean), ok = [], unklar = [];
@@ -3464,6 +3532,7 @@ window.Mitglieder = (function () {
           var extra = [];
           extra.push(h("button", { type: "button", text: "Ändern", onclick: function () {
             einzelName.value = z.slug; einzelNr.value = z.inListe ? (z.betreiber || z.telefon) : z.telefon;
+            einzelAdr.value = z.anschrift || "";
             formBox.scrollIntoView({ block: "center", behavior: "smooth" });
             einzelNr.focus();
           } }));
@@ -3496,11 +3565,25 @@ window.Mitglieder = (function () {
   }
   // Ein Verein: anlegen, umbenennen, Anschrift aendern, loeschen. Der
   // Schluessel ist der Name aus dem Spielplan - daran haengt die Zuordnung.
+  // Geprüfte Anschriften lässt die Datenbank nur noch den Betreiber ändern
+  // (Regel und Trigger in schema.sql v24). Die Meldung sagt das auch so.
+  function vereinFehler(e) {
+    var t = fehlerText(e);
+    if (/verifiziert|row-level|policy|permission/i.test(t))
+      return "Diese Anschrift ist schon geprüft – ändern darf sie nur der Betreiber.";
+    if (/verifiziert|column/i.test(t)) return t + " – schema.sql (v24) ausführen.";
+    return t;
+  }
   function vereinSpeichern(verein, werte, alt) {
     var zeile = { verein: verein, name: werte.name || verein, strasse: werte.strasse || "", plz_ort: werte.plz_ort || "",
-                  angelegt_von: session.user.id, geaendert: new Date().toISOString() };
+                  von: profil && (profil.name || profil.slug), angelegt_von: session.user.id,
+                  geaendert: new Date().toISOString() };
+    if (werte.verifiziert !== undefined) {
+      zeile.verifiziert = !!werte.verifiziert;
+      zeile.geprueft_am = werte.verifiziert ? new Date().toISOString() : null;
+    }
     return speichern(sb.from("vereine_adressen").upsert(zeile, { onConflict: "verein" })).then(function (r) {
-      if (r && r.error) { meldung(fehlerText(r.error), "warn"); return false; }
+      if (r && r.error) { meldung(vereinFehler(r.error), "warn"); return false; }
       if (!alt || alt === verein) return true;
       return speichern(sb.from("vereine_adressen").delete().eq("verein", alt)).then(function () { return true; });
     });
@@ -3509,8 +3592,8 @@ window.Mitglieder = (function () {
     function neu() { vereinAdressen = null; leeren(box); vereinsAdressenRendern(box); }
     leeren(box); box.appendChild(h("h4", {}, [ikone("i-pin"), " Vereine"]));
     box.appendChild(h("p", { class: "meta", style: "margin:0 0 8px", text:
-      "Name und Anschrift stehen auf der Gebührenabrechnung. Alle freigeschalteten Kollegen sehen und nutzen sie. "
-      + "Welche Halle zu einem Verein gehört, steht unter „Hallen & Vereine“." }));
+      "Name und Anschrift stehen auf der Gebührenabrechnung. Kollegen können Anschriften vorschlagen; "
+      + "bestätigte lassen sich nur noch hier ändern. Welche Halle zu einem Verein gehört, steht unter „Hallen & Vereine“." }));
 
     // Verein von Hand anlegen - fuer alles, was nicht im Spielplan steht
     var nVerein = h("input", { type: "text", placeholder: "Verein, wie er im Spielplan steht" });
@@ -3573,6 +3656,7 @@ window.Mitglieder = (function () {
     var suche = h("input", { type: "search", class: "mg-suche", placeholder: "Verein suchen …" });
     box.appendChild(suche);
     var zaehlZeile = h("p", { class: "meta", style: "margin:8px 0 6px", text: "" });
+    var nurOffenAn = false;
     box.appendChild(zaehlZeile);
     var innen = h("div", { class: "verein-liste" }, [skelett(1)]);
     box.appendChild(innen);
@@ -3584,15 +3668,24 @@ window.Mitglieder = (function () {
       Object.keys(map).forEach(function (v) { if (!imPlan[v]) liste.push(v); });
       liste.sort(function (a, b) { return a.localeCompare(b, "de"); });
       var ohne = liste.filter(function (v) { return !map[v]; }).length;
+      var offen = liste.filter(function (v) { return map[v] && map[v].strasse && !map[v].verifiziert; }).length;
       zaehlZeile.textContent = "Anschrift hinterlegt bei " + (liste.length - ohne) + " von " + liste.length + " Vereinen"
-        + (ohne ? " – " + ohne + (ohne === 1 ? " fehlt" : " fehlen") + " noch" : "") + ".";
+        + (ohne ? ", " + ohne + " ohne" : "") + (offen ? ", " + offen + " zu prüfen" : "") + ".";
+      var nurOffen = h("label", { class: "schalter", style: "margin:0 0 8px" }, [
+        (function () { var c = h("input", { type: "checkbox" }); c.addEventListener("change", function () { nurOffenAn = c.checked; zeichne(); }); return c; })(),
+        " nur ungeprüfte Vorschläge"]);
+      if (offen) zaehlZeile.parentNode.insertBefore(nurOffen, zaehlZeile.nextSibling);
 
       function eintrag(v) {
         var a = map[v] || {};
-        var det = h("details", { class: "tausch" }, [h("summary", {}, [h("span", {}, [
+        var stand = a.verifiziert ? ["geprüft", "gut"] : a.strasse ? ["Vorschlag", "warn"] : null;
+        var kopfText = h("span", {}, [
           h("b", { text: a.name || v }),
           h("small", { style: "display:block;color:" + (a.strasse ? "var(--dim)" : "var(--warn)"),
-                       text: a.strasse ? a.strasse + ", " + (a.plz_ort || "") : "keine Adresse" })])])]);
+                       text: (a.strasse ? a.strasse + ", " + (a.plz_ort || "") : "keine Adresse")
+                             + (a.von && !a.verifiziert ? " · von " + a.von : "") })]);
+        if (stand) kopfText.insertBefore(h("span", { class: "merkzeichen " + stand[1], text: stand[0] }), kopfText.firstChild);
+        var det = h("details", { class: "tausch" }, [h("summary", {}, [kopfText])]);
         var fSchl = h("input", { type: "text", value: v, placeholder: "Verein im Spielplan" });
         var fName = h("input", { type: "text", value: a.name || v, placeholder: "Name auf der Rechnung" });
         var fStr = h("input", { type: "text", value: a.strasse || "", placeholder: "Straße und Nr." });
@@ -3615,18 +3708,26 @@ window.Mitglieder = (function () {
               if (!map[v]) { meldung("Zu diesem Verein ist nichts gespeichert.", "warn"); return; }
               if (!confirm("Adresse von " + (a.name || v) + " löschen? Der Verein bleibt im Spielplan.")) return;
               speichern(sb.from("vereine_adressen").delete().eq("verein", v)).then(function (r) {
-                if (r && r.error) { meldung(fehlerText(r.error), "warn"); return; }
+                if (r && r.error) { meldung(vereinFehler(r.error), "warn"); return; }
                 kurzMeldung("Gelöscht.", ""); neu();
               });
-            } })])
+            } })]),
+          a.strasse ? h("button", { type: "button", class: "anfrage", style: "margin-top:8px;width:100%",
+            text: a.verifiziert ? "Prüfung zurücknehmen (wieder änderbar)" : "Anschrift bestätigen",
+            onclick: function () {
+              vereinSpeichern(v, { name: fName.value.trim() || v, strasse: fStr.value.trim(), plz_ort: fOrt.value.trim(),
+                                   verifiziert: !a.verifiziert })
+                .then(function (ok) { if (ok) { kurzMeldung(a.verifiziert ? "Wieder änderbar." : "Geprüft ✓ – Kollegen können sie jetzt nicht mehr ändern.", "gut"); neu(); } });
+            } }) : h("p", { class: "meta", style: "margin:8px 0 0", text: "Erst eine Anschrift eintragen, dann lässt sie sich bestätigen." })
         ]));
         return det;
       }
       function zeichne() {
         var q = suche.value.trim().toLowerCase();
         var treffer = liste.filter(function (v) {
-          if (!q) return true;
           var a = map[v] || {};
+          if (nurOffenAn && !(a.strasse && !a.verifiziert)) return false;
+          if (!q) return true;
           return (v + " " + (a.name || "") + " " + (a.plz_ort || "")).toLowerCase().indexOf(q) >= 0;
         });
         leeren(innen);

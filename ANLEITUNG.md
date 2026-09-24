@@ -1738,6 +1738,46 @@ abwarten.** Mehr steht dort nicht.
   der Verfasser weiter ändern. `supabase/schema.sql` einmal im SQL-Editor
   ausführen.
 
+### 10.6aj Einfache Ansicht als Standard, Kollegen in der Leiste, geprüfte Anschriften (Schema v24)
+
+* **Die einfache Ansicht ist jetzt voreingestellt** – auch für alle, die
+  die App schon haben. Umschalten geht mit einem Tipp auf das **Auge in
+  der Kopfzeile** (leuchtet, solange die einfache Ansicht an ist);
+  daneben weiterhin über „Mehr" oder Einstellungen → App. In der
+  einfachen Ansicht:
+  * „Mehr" legt Statistik, Verfügbarkeit, Anleitung und Diagnose unter
+    **Selten gebraucht**,
+  * der Mitgliederbereich zeigt nur **Abrechnung, Info, Kollegen**
+    (und Admin) – Tausch, Verfügbarkeit und Notizen stehen weiter unter
+    „Mehr" und sind direkt erreichbar,
+  * die Abrechnung hat drei Knöpfe (Kalender, Rechnung, Weitere …),
+  * der Spielplan zeigt Karten und Liste, nicht Woche und Monat,
+  * die Einstellungen zeigen erst das Nötige, der Rest liegt hinter
+    **„Mehr einstellen …"**.
+* **„Kollegen" steht unten in der Leiste** (dritter Platz, vorher
+  „Änderungen"). Die **Änderungen** stehen jetzt am **Spielplan** – der
+  Knopf neben „Heute ↓" trägt die Zahl der neuen Einträge. Über
+  Einstellungen → Leiste unten lässt sich der dritte Platz wie gehabt
+  anders belegen.
+* **Kollegen zeigt Nummer und Anschrift**, beides mit Zeichen statt
+  ausgeschriebenen Wörtern: Hörer = anrufen, Sprechblase = WhatsApp,
+  zwei Blätter = kopieren, Nadel = auf der Karte zeigen. Gesucht wird
+  nach Name oder Ort.
+* **Die eigene Anschrift** trägt jeder selbst unter „Meine Nummer und
+  Anschrift" ein (freiwillig, jederzeit zurückziehbar); der Betreiber
+  kann sie unter Admin → Telefonliste auch für andere pflegen.
+* **Vereinsanschriften sind Vorschläge**: Jeder freigeschaltete Kollege
+  kann im Rechnungsblatt eine Anschrift für alle hinterlegen. Sie trägt
+  dann das Zeichen **Vorschlag** und den Namen dessen, der sie eingetragen
+  hat. Unter **Admin → Vereine** steht bei jedem Verein **„Anschrift
+  bestätigen"**; danach ist sie **geprüft** und lässt sich nur noch vom
+  Betreiber ändern – das erzwingt die Datenbank, nicht die App. Der Haken
+  „nur ungeprüfte Vorschläge" zeigt, was noch zu tun ist.
+* **Schema v24 – bitte einmal einspielen**: neue Spalten
+  `kontakte.anschrift`, `telefonliste.anschrift`,
+  `vereine_adressen.verifiziert/von/geprueft_am`, dazu die neuen
+  Schreibregeln und der Trigger `vereinsadresse_schutz`.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

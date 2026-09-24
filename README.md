@@ -320,6 +320,13 @@ packt daten.json, abrechnung.csv, notizen.txt und alle Belege im Browser
 zusammen; Kartenkacheln im Dunkelmodus abgedunkelt; „Am Spieltag groß“ macht
 die Kopfkarte am Spieltag bildschirmfüllend; Tipp auf die Stand-Pille lädt neu.
 
+**Einfach ist der Standard**: Die App startet in der einfachen Ansicht;
+das Auge in der Kopfzeile schaltet um. Unten in der Leiste steht
+„Kollegen" – die Telefonliste mit Anschriften, Aktionen als Zeichen
+(anrufen, WhatsApp, kopieren, Karte). Die Änderungen sind an den
+Spielplan gewandert. Vereinsanschriften dürfen alle vorschlagen, der
+Betreiber bestätigt sie; bestätigte sind festgeschrieben.
+
 **Einfache Ansicht**: ein Schalter (Einstellungen → App, oder oben auf
 „Mehr") legt Selteneres eine Ebene tiefer unter „Selten gebraucht", ohne
 etwas abzuschalten. Dazu aufgeräumte Menüs: die Abrechnung hat vier Knöpfe
