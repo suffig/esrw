@@ -28,12 +28,6 @@ GEO:51.574578;6.735361
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
  m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
  inslaken":geo:51.574578,6.735361
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · RL FS · Dinslakener Kobr
- as – ESV Grizzlys Bergkamen
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:d610361d088d8fefab37efdf24f19c1f96ddcd2b@esrw.de

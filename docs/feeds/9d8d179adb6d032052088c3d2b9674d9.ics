@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:9d23bf52118f3e94f016673a42282fd362d6fd0e@esrw.de
-SEQUENCE:0
-DTSTAMP:20260911T150047Z
-LAST-MODIFIED:20260911T150047Z
-DTSTART:20260918T171500Z
-DTEND:20260918T204500Z
-SUMMARY:HSR · RL FS · Dinslakener Kobras – Grefrather EG
-DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:15 Uhr\nTreff
- punkt: 19:15 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthal
- le Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Hofer\, C
- arsten (LSR) / Lindemans\, Pepe (LSR)\n\nQuelle: https://www.esrw.de/einte
- ilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
-GEO:51.574578;6.735361
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
- m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
- inslaken":geo:51.574578,6.735361
-END:VEVENT
-BEGIN:VEVENT
 UID:c67f48bcece2f21cd6dffcb3546d8be1ad4eee48@esrw.de
 SEQUENCE:0
 DTSTAMP:20260911T150047Z
