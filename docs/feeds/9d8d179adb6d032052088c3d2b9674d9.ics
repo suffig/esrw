@@ -92,12 +92,6 @@ GEO:51.242557;6.802144
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
  hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
  hmstraße":geo:51.242557,6.802144
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - HSR · RL FS · Ratinger Ice Ali
- ens – Grefrather EG
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:fdf5bc6f88cb374bca9e73f5b3a1f521e73aaa37@esrw.de
