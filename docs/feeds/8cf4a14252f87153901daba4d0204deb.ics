@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:605fd4800e815a40811623e85fd4949e240f2d40@esrw.de
-SEQUENCE:0
-DTSTAMP:20260911T150047Z
-LAST-MODIFIED:20260911T150047Z
-DTSTART:20260918T170000Z
-DTEND:20260918T203000Z
-SUMMARY:LSR · RL FS · Eisadler Dortmund – Bulldogs de Liege
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
-  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissportzentrum W
- estfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Müller\, La
- rs (HSR) / Garbsch\, René (LSR)\n\nQuelle: https://www.esrw.de/einteilung
- en.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
-GEO:51.49525;7.458288
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
-  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
- rum Westfalen":geo:51.49525,7.458288
-END:VEVENT
-BEGIN:VEVENT
 UID:df815118049cd019abeb4e3a22e1828fc1a72cc8@esrw.de
 SEQUENCE:1
 DTSTAMP:20260915T152741Z
@@ -113,12 +91,6 @@ GEO:51.454179;6.976731
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
  Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
  n-West":geo:51.454179,6.976731
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · BL FS · EHC Essen Ruhr 
- – Dinslakener Kobras 1b
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:2cf2f2c2286de519baa758f73ff4c19e158993c8@esrw.de
