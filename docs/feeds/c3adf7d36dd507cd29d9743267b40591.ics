@@ -964,12 +964,6 @@ GEO:51.602578;7.626858
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
  äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
  ergkamen":geo:51.602578,7.626858
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - Frauen BZL · ESV Grizzlys Bergk
- amen – Herforder EV
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:5a1d05bcc2ff0daaa3d66228c676b30a007db7d9@esrw.de
