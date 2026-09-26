@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:55103fb7a2af27e6c175e54435b365986def0dcd@esrw.de
-SEQUENCE:0
-DTSTAMP:20260917T153036Z
-LAST-MODIFIED:20260917T153036Z
-DTSTART:20260919T093000Z
-DTEND:20260919T130000Z
-SUMMARY:SR · DA FS · Dinslakener Kobras – Mechelen
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
-  11:30 Uhr (60 Min vor Spielbeginn)\nLiga: DA FS\nHalle: Eissporthalle Din
- slaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Kuriata\, Flori
- an-Nikita\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
-GEO:51.574578;6.735361
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
- m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
- inslaken":geo:51.574578,6.735361
-END:VEVENT
-BEGIN:VEVENT
 UID:6fda6909f9b5160e65bd740715822778a570646a@esrw.de
 SEQUENCE:0
 DTSTAMP:20260921T153038Z
