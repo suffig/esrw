@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:d006299a53eeae132b4ca95765690562c4e83805@esrw.de
-SEQUENCE:2
-DTSTAMP:20260918T172506Z
-LAST-MODIFIED:20260918T172506Z
-DTSTART:20260919T073000Z
-DTEND:20260919T110000Z
-SUMMARY:SR · U15 LL · Lippe Hockey Hamm – SpG Neusser EV / GSC Moers
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
-  09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: HELINET Eissport
- arena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Honsel
- mann\, Tom (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:HELINET Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 Hamm
-GEO:51.686934;7.886138
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
- , Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="HELINET
-  Eissportarena Hamm":geo:51.686934,7.886138
-END:VEVENT
-BEGIN:VEVENT
 UID:a44eb54e228428b31df07c6ed3220fe0570dfbcc@esrw.de
 SEQUENCE:0
 DTSTAMP:20260918T113038Z
@@ -69,12 +48,6 @@ GEO:51.602578;7.626858
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
  äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
  ergkamen":geo:51.602578,7.626858
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL · ESV Grizzlys Ber
- gkamen – ESC Darmstadt
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:4ce5626111a8224a5d1cd21be233230254df4716@esrw.de
