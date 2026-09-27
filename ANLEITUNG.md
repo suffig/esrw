@@ -1883,36 +1883,37 @@ aktualisieren.
 * **Anmeldeformular**: Beschriftungen über den Feldern und ein Auge im
   Passwortfeld.
 
-### 10.6an Regeln, Strafenmatrix und Durchführungsbestimmungen
+### 10.6an Strafenmatrix und Durchführungsbestimmungen
 
-Neue Seite **Regeln** (unter „Mehr"), zwei Teile, beide **offline**
-verfügbar – sie liegen als kleine Dateien in der App und werden vom
-Service Worker mitgespeichert.
+Neue Seite **Regeln** (unter „Mehr"), zwei Teile, beide **offline** – sie
+liegen als kleine Dateien in der App und werden vom Service Worker
+mitgespeichert.
 
-* **Strafen**: die Strafenmatrix – Regelnummer, Stichwort und welche
-  Strafarten die Regel kennt (2, 2+2, 2 Bank, 5, 5+SD, SD, 10, MS, PS,
-  Tor, DM). Suchen nach Stichwort oder Nummer, filtern nach Strafart,
-  „alle Regeln" zeigt auch die ohne eigene Strafart. Darunter steht,
-  was die Zeichen heißen.
+* **Strafen**: die Strafentabelle des ESRW als Matrix. Links das Vergehen,
+  rechts je eine Spalte für **2, 2+2, 5, SPD, 5+SPD und MS**; ein Punkt
+  heisst „kommt in Frage". Die Kopfzeile bleibt beim Scrollen stehen.
+  Darüber das Suchfeld (Vergehen oder Hinweis) und die Filterknöpfe:
+  ein Tipp auf **MS** zeigt nur die Vergehen, die eine Matchstrafe
+  hergeben. Hinweise aus der Tabelle stehen klein unter dem Vergehen
+  („TW = einer vom Eis, beim Wechsel").
+  **Fighting** passt nicht in die Spalten – es steht als eigene Karte
+  darunter, nach Rollen sortiert (Initiator, Aggressor, Defender, Third
+  Player in, ausserhalb des Spiels, Teampersonal) samt „Dazu" (Helm,
+  Trikot, Sucker Punch). Ganz unten die Legende der Kürzel.
 * **Bestimmungen**: die Punkte aus den Durchführungsbestimmungen des
   EHV NRW, die Schiedsrichter betreffen – Anwesenheit, Ausrüstung,
   Spielbericht, Geld, Zuständigkeiten –, jeder mit der Fundstelle.
   Darunter die Original-Dokumente beim Verband zum Antippen.
 
-**Warum kein komplettes Regelbuch?** Im IIHF-Regelbuch steht
-ausdrücklich, dass das Hochladen und Verbreiten der Publikation nicht
-zulässig ist. In der App liegt deshalb nur das Gerüst – Nummer,
-Stichwort, Strafart –, das sind Fakten und kein Regeltext. Für den
-Wortlaut führt ein Link zum Regelbuch. Dasselbe gilt für die
-Durchführungsbestimmungen: kurze eigene Zusammenfassung, verbindlich
-ist das verlinkte PDF.
+**Woher die Strafen kommen:** aus `Strafen.xlsx`, der Tabelle des ESRW.
+Sie steht in `docs/strafen.json`. Ändert sich etwas, dort anpassen – oder
+die neue Tabelle schicken, dann baue ich sie ein. Das Regelbuch selbst
+liegt bewusst nicht in der App: es untersagt das Weiterverbreiten
+ausdrücklich.
 
-Die Daten liegen in `docs/strafen.json` und `docs/bestimmungen.json`.
-Ändert der Verband etwas, dort anpassen – oder Bescheid sagen.
-
-* **Kollegen**: Wer **demnächst** mit dir im Gespann steht, steht jetzt
-  ganz oben, das nächste gemeinsame Spiel zuerst („am Sa. 03.10.
-  zusammen"), darunter „Zuletzt zusammen" und dann alle anderen.
+* **Kollegen**: Wer **demnächst** mit dir im Gespann steht, steht ganz
+  oben, das nächste gemeinsame Spiel zuerst („am Sa. 03.10. zusammen"),
+  darunter „Zuletzt zusammen" und dann alle anderen.
 * **Kein Zoomen mehr am Handy**: Doppeltipp und Aufziehen mit zwei
   Fingern sind abgeschaltet (in der Seitenangabe und zusätzlich per
   Code, weil iOS die Angabe allein ignoriert). Die Schriftgröße

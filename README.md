@@ -320,12 +320,12 @@ packt daten.json, abrechnung.csv, notizen.txt und alle Belege im Browser
 zusammen; Kartenkacheln im Dunkelmodus abgedunkelt; „Am Spieltag groß“ macht
 die Kopfkarte am Spieltag bildschirmfüllend; Tipp auf die Stand-Pille lädt neu.
 
-**Regeln offline**: Die Seite „Regeln" bringt die Strafenmatrix
-(Regelnummer, Stichwort, Strafart – suchbar und nach Strafart filterbar)
-und die für Schiedsrichter wichtigen Punkte der Durchführungsbestimmungen
-mit Fundstelle und Link zum Original. Beides liegt in der App und
-funktioniert ohne Netz. Kein Regeltext: das Regelbuch selbst darf nicht
-weiterverbreitet werden, verlinkt ist es.
+**Regeln offline**: Die Seite „Regeln" zeigt die Strafentabelle des ESRW
+als Matrix – Vergehen links, je Spalte 2, 2+2, 5, SPD, 5+SPD und MS,
+suchbar und nach Strafart filterbar, Fighting mit seinen Rollen als eigene
+Karte. Dazu die für Schiedsrichter wichtigen Punkte der
+Durchführungsbestimmungen mit Fundstelle und Link zum Original. Beides
+liegt in der App und funktioniert ohne Netz.
 
 **Registrierung mit Namenspflicht**: Wer ein Konto anlegt, wählt seinen
 Namen aus der Liste – er fährt am Konto mit und steht damit sofort in der

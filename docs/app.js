@@ -3363,11 +3363,6 @@
   // eigene Zusammenstellungen - der Wortlaut steht in den verlinkten
   // Dokumenten, und die liegen beim Verband, nicht hier.
   var regelnDaten = null, bestimmungenDaten = null, regelnTeil = "strafen", regelArt = "";
-  function strafKlasse(code) {
-    if (code === "MS" || code === "5+SD" || code === "SD") return "strafmarke hart";
-    if (code === "5" || code === "10" || code === "PS") return "strafmarke schwer";
-    return "strafmarke";
-  }
   function zeigeRegeln() {
     ansicht("regeln"); aktuell = null;
     Array.prototype.forEach.call(el("regeln-modus").querySelectorAll("button"), function (b) {
@@ -3420,65 +3415,98 @@
     }
 
     el("regeln-unter").textContent = regelnDaten ? regelnDaten.stand : "Strafenmatrix";
-    if (!regelnDaten) { ziel.appendChild(hinweisKarte("Strafenmatrix nicht geladen.")); return; }
-    // Filterchips: zuerst alles, dann je Strafart
+    if (!regelnDaten) { ziel.appendChild(hinweisKarte("Strafen nicht geladen.")); return; }
+
+    // Filterchips: alles, dann je Strafart
+    var spalten = regelnDaten.spalten || [];
     (function () {
       var b = document.createElement("button"); b.type = "button";
-      b.className = "chip" + (regelArt === "*" ? " ich" : "");
-      b.textContent = "alle Regeln"; b.title = "Auch Regeln ohne eigene Strafart";
-      b.addEventListener("click", function () { regelArt = regelArt === "*" ? "" : "*"; regelnZeichnen(); });
+      b.className = "chip" + (regelArt ? "" : " ich");
+      b.textContent = "alle";
+      b.addEventListener("click", function () { regelArt = ""; regelnZeichnen(); });
       arten.appendChild(b);
     })();
-    Object.keys(regelnDaten.legende).forEach(function (code) {
+    spalten.forEach(function (sp) {
       var b = document.createElement("button"); b.type = "button";
-      b.className = "chip" + (regelArt === code ? " ich" : "");
-      b.textContent = code; b.title = regelnDaten.legende[code];
-      b.addEventListener("click", function () { regelArt = regelArt === code ? "" : code; regelnZeichnen(); });
+      b.className = "chip" + (regelArt === sp.code ? " ich" : "");
+      b.textContent = sp.code; b.title = sp.name;
+      b.addEventListener("click", function () { regelArt = regelArt === sp.code ? "" : sp.code; regelnZeichnen(); });
       arten.appendChild(b);
     });
+
     var q = ohneZeichen(el("regeln-filter").value);
-    var treffer = regelnDaten.regeln.filter(function (r) {
-      if (regelArt === "*") { /* alle */ }
-      else if (regelArt) { if (r.strafen.indexOf(regelArt) < 0) return false; }
-      else if (!r.strafen.length && !q) return false;
-      if (!q) return true;
-      return ohneZeichen(r.nr + " " + r.titel + " " + r.sektion).indexOf(q) >= 0;
+    var treffer = (regelnDaten.strafen || []).filter(function (r) {
+      if (regelArt && r.codes.indexOf(regelArt) < 0) return false;
+      return !q || ohneZeichen(r.name + " " + (r.info || "")).indexOf(q) >= 0;
     });
-    if (!treffer.length) { ziel.appendChild(hinweisKarte("Nichts gefunden.")); return; }
-    var karte = document.createElement("div"); karte.className = "karte";
-    var sektion = "";
-    treffer.forEach(function (r) {
-      if (r.sektion !== sektion) {
-        sektion = r.sektion;
-        var k = document.createElement("p"); k.className = "regeln-kopf"; k.textContent = sektion; karte.appendChild(k);
-      }
-      var z = document.createElement("div"); z.className = "regel-zeile";
-      var nr = document.createElement("span"); nr.className = "regel-nr"; nr.textContent = r.nr; z.appendChild(nr);
-      var mitte = document.createElement("span");
-      var b = document.createElement("b"); b.textContent = r.titel; mitte.appendChild(b);
-      if (r.strafen.length) {
-        var m = document.createElement("span"); m.className = "strafmarken";
-        r.strafen.forEach(function (code) {
-          var s = document.createElement("span"); s.className = strafKlasse(code);
-          s.textContent = code; s.title = regelnDaten.legende[code] || code;
-          m.appendChild(s);
+
+    // Die Matrix: eine Zeile je Vergehen, ein Punkt je moeglicher Strafe.
+    // Das Raster steht in einer CSS-Variablen, damit Kopf und Zeilen
+    // garantiert dieselben Spalten haben.
+    var karte = document.createElement("div");
+    karte.className = "karte strafen-matrix";
+    karte.style.setProperty("--spalten", spalten.length);
+    if (!treffer.length) {
+      ziel.appendChild(hinweisKarte("Nichts gefunden."));
+    } else {
+      var kopf = document.createElement("div"); kopf.className = "matrix-kopf";
+      var leer = document.createElement("span"); leer.textContent = treffer.length + " Vergehen"; kopf.appendChild(leer);
+      spalten.forEach(function (sp) {
+        var z = document.createElement("span"); z.className = "matrix-spalte" + (regelArt === sp.code ? " aktiv" : "");
+        z.textContent = sp.code; z.title = sp.name;
+        kopf.appendChild(z);
+      });
+      karte.appendChild(kopf);
+      treffer.forEach(function (r) {
+        var zeile = document.createElement("div"); zeile.className = "matrix-zeile";
+        var name = document.createElement("span"); name.className = "matrix-name";
+        var b = document.createElement("b"); b.textContent = r.name; name.appendChild(b);
+        if (r.info) { var sm = document.createElement("small"); sm.textContent = r.info; name.appendChild(sm); }
+        zeile.appendChild(name);
+        spalten.forEach(function (sp) {
+          var z = document.createElement("span");
+          var da = r.codes.indexOf(sp.code) >= 0;
+          z.className = "matrix-feld" + (da ? " da" : "") + (da && regelArt === sp.code ? " hervor" : "");
+          z.textContent = da ? "\u25cf" : "\u00b7";
+          if (da) z.title = r.name + ": " + sp.name;
+          zeile.appendChild(z);
         });
-        mitte.appendChild(m);
+        karte.appendChild(zeile);
+      });
+      ziel.appendChild(karte);
+    }
+
+    // Faustkampf passt nicht in die Spalten - eigene Karte
+    var fk = regelnDaten.faustkampf;
+    if (fk && !regelArt && !q) {
+      var fkarte = document.createElement("div"); fkarte.className = "karte";
+      var fh = document.createElement("h4"); fh.textContent = fk.name; fh.style.margin = "0 0 6px"; fkarte.appendChild(fh);
+      function rollenZeile(r) {
+        var d = document.createElement("div"); d.className = "rollen-zeile";
+        var w = document.createElement("span"); w.textContent = r.was; d.appendChild(w);
+        var st = document.createElement("b"); st.textContent = r.strafe; d.appendChild(st);
+        return d;
       }
-      z.appendChild(mitte);
-      karte.appendChild(z);
-    });
-    ziel.appendChild(karte);
+      (fk.rollen || []).forEach(function (r) { fkarte.appendChild(rollenZeile(r)); });
+      if ((fk.zusatz || []).length) {
+        var zt = document.createElement("p"); zt.className = "regeln-kopf"; zt.textContent = "Dazu";
+        fkarte.appendChild(zt);
+        fk.zusatz.forEach(function (r) { fkarte.appendChild(rollenZeile(r)); });
+      }
+      ziel.appendChild(fkarte);
+    }
+
+    // Legende
     var legende = document.createElement("div"); legende.className = "karte";
-    var lh = document.createElement("h4"); lh.textContent = "Was die Zeichen heissen"; lh.style.margin = "0 0 6px"; legende.appendChild(lh);
-    Object.keys(regelnDaten.legende).forEach(function (code) {
+    var lh = document.createElement("h4"); lh.textContent = "Was die Kürzel heissen"; lh.style.margin = "0 0 6px"; legende.appendChild(lh);
+    spalten.forEach(function (sp) {
       var d = document.createElement("div"); d.className = "bestimmung-punkt";
-      var s = document.createElement("span"); s.className = strafKlasse(code); s.textContent = code;
-      d.appendChild(s); d.appendChild(document.createTextNode(" " + regelnDaten.legende[code]));
+      var s2 = document.createElement("span"); s2.className = "strafmarke"; s2.textContent = sp.code;
+      d.appendChild(s2); d.appendChild(document.createTextNode(" " + sp.name));
       legende.appendChild(d);
     });
     ziel.appendChild(legende);
-    ziel.appendChild(hinweisKarte(regelnDaten._hinweis + " Wortlaut: iihf.com."));
+    ziel.appendChild(hinweisKarte(regelnDaten._hinweis));
   }
   function hinweisKarte(text) {
     var p = document.createElement("p"); p.className = "meta"; p.style.margin = "12px 4px"; p.textContent = text;

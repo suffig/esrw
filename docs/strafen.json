@@ -1,743 +1,283 @@
 {
- "_hinweis": "Geruest des IIHF-Regelbuchs: Nummer, Stichwort, Strafarten. Kein Regeltext - der Wortlaut steht im Regelbuch, das der Verband veroeffentlicht.",
- "stand": "IIHF Regelbuch 2026/27",
- "quelle": "https://www.iihf.com/en/statichub/2504/rule-book",
- "legende": {
-  "2": "Kleine Strafe",
-  "2+2": "Doppelte Kleine Strafe",
-  "2 Bank": "Kleine Bankstrafe",
-  "5": "Grosse Strafe",
-  "5+SD": "Grosse Strafe + Spieldauerdisziplinarstrafe",
-  "SD": "Spieldauerdisziplinarstrafe",
-  "10": "Disziplinarstrafe",
-  "MS": "Matchstrafe",
-  "PS": "Penaltyschuss",
-  "Tor": "Zuerkanntes Tor",
-  "DM": "Ergänzende disziplinarische Massnahmen"
- },
- "regeln": [
+ "_hinweis": "Strafen, wie sie der ESRW in der eigenen Tabelle fuehrt. Im Zweifel gilt das Regelbuch.",
+ "stand": "Strafentabelle ESRW",
+ "spalten": [
   {
-   "nr": "1",
-   "titel": "Stadion",
-   "sektion": "Spielbereich",
-   "strafen": []
+   "code": "2",
+   "name": "Kleine Strafe"
   },
   {
-   "nr": "2",
-   "titel": "Torpfosten und Netze",
-   "sektion": "Spielbereich",
-   "strafen": []
+   "code": "2+2",
+   "name": "Doppelte Kleine Strafe"
   },
   {
-   "nr": "3",
-   "titel": "Bänke",
-   "sektion": "Spielbereich",
-   "strafen": []
+   "code": "5",
+   "name": "Grosse Strafe"
   },
   {
-   "nr": "4",
-   "titel": "Signal und Zeitmessgeräte",
-   "sektion": "Spielbereich",
-   "strafen": []
+   "code": "SPD",
+   "name": "Spieldauer-Disziplinarstrafe"
   },
   {
-   "nr": "5",
-   "titel": "Mannschaften",
-   "sektion": "Mannschaften",
-   "strafen": []
+   "code": "5+SPD",
+   "name": "Grosse Strafe + Spieldauer"
   },
   {
-   "nr": "6",
-   "titel": "Kapitän und Assistenzkapitän",
-   "sektion": "Mannschaften",
-   "strafen": []
-  },
-  {
-   "nr": "7",
-   "titel": "Startaufstellung",
-   "sektion": "Mannschaften",
-   "strafen": []
-  },
-  {
-   "nr": "8",
-   "titel": "Verletzte Spieler",
-   "sektion": "Mannschaften",
-   "strafen": []
-  },
-  {
-   "nr": "9",
-   "titel": "Kleidung",
-   "sektion": "Ausrüstung",
-   "strafen": []
-  },
-  {
-   "nr": "10",
-   "titel": "Stöcke",
-   "sektion": "Ausrüstung",
-   "strafen": []
-  },
-  {
-   "nr": "11",
-   "titel": "Torhüterausrüstung",
-   "sektion": "Ausrüstung",
-   "strafen": []
-  },
-  {
-   "nr": "12",
-   "titel": "Unkorrekte Ausrüstung",
-   "sektion": "Ausrüstung",
-   "strafen": []
-  },
-  {
-   "nr": "13",
-   "titel": "Puck",
-   "sektion": "Ausrüstung",
-   "strafen": []
-  },
-  {
-   "nr": "14",
-   "titel": "Anpassung der Kleidung oder Ausrüstung",
-   "sektion": "Ausrüstung",
-   "strafen": []
-  },
-  {
-   "nr": "15",
-   "titel": "Aussprechen von Strafen",
-   "sektion": "Arten von Strafen",
-   "strafen": []
-  },
-  {
-   "nr": "16",
-   "titel": "Kleine Strafen",
-   "sektion": "Arten von Strafen",
-   "strafen": [
-    "2"
-   ]
-  },
-  {
-   "nr": "17",
-   "titel": "Kleine Bankstrafen",
-   "sektion": "Arten von Strafen",
-   "strafen": [
-    "2 Bank"
-   ]
-  },
-  {
-   "nr": "18",
-   "titel": "Doppelte Kleine Strafen",
-   "sektion": "Arten von Strafen",
-   "strafen": [
-    "2+2"
-   ]
-  },
-  {
-   "nr": "19",
-   "titel": "Zusammenfallende Strafen",
-   "sektion": "Arten von Strafen",
-   "strafen": []
-  },
-  {
-   "nr": "20",
-   "titel": "Grosse Strafen",
-   "sektion": "Arten von Strafen",
-   "strafen": [
-    "5"
-   ]
-  },
-  {
-   "nr": "21",
-   "titel": "Gefährliche Aktionen",
-   "sektion": "Arten von Strafen",
-   "strafen": [
-    "DM"
-   ]
-  },
-  {
-   "nr": "22",
-   "titel": "Disziplinarstrafen",
-   "sektion": "Arten von Strafen",
-   "strafen": [
-    "10"
-   ]
-  },
-  {
-   "nr": "23",
-   "titel": "Spieldauerdisziplinarstrafen",
-   "sektion": "Arten von Strafen",
-   "strafen": [
-    "SD",
-    "DM"
-   ]
-  },
-  {
-   "nr": "24",
-   "titel": "Penaltyschuss",
-   "sektion": "Arten von Strafen",
-   "strafen": [
-    "PS"
-   ]
-  },
-  {
-   "nr": "25",
-   "titel": "Zugesprochene Tore",
-   "sektion": "Arten von Strafen",
-   "strafen": []
-  },
-  {
-   "nr": "26",
-   "titel": "Aufgeschobene Strafen",
-   "sektion": "Arten von Strafen",
-   "strafen": []
-  },
-  {
-   "nr": "27",
-   "titel": "Strafen gegen den Torhüter",
-   "sektion": "Arten von Strafen",
-   "strafen": [
-    "2",
-    "5",
-    "SD",
-    "10"
-   ]
-  },
-  {
-   "nr": "28",
-   "titel": "Ergänzende Disziplinarische Massnahmen",
-   "sektion": "Arten von Strafen",
-   "strafen": []
-  },
-  {
-   "nr": "29",
-   "titel": "Schiesrichterzeichen",
-   "sektion": "Arten von Strafen",
-   "strafen": []
-  },
-  {
-   "nr": "30",
-   "titel": "Aufbietung der Offiziellen",
-   "sektion": "Offizielle",
-   "strafen": []
-  },
-  {
-   "nr": "31",
-   "titel": "Schiedsrichter",
-   "sektion": "Offizielle",
-   "strafen": []
-  },
-  {
-   "nr": "32",
-   "titel": "Linienrichter",
-   "sektion": "Offizielle",
-   "strafen": []
-  },
-  {
-   "nr": "33",
-   "titel": "Offizieller Punkterichter",
-   "sektion": "Offizielle",
-   "strafen": []
-  },
-  {
-   "nr": "34",
-   "titel": "Spielzeitnehmer",
-   "sektion": "Offizielle",
-   "strafen": []
-  },
-  {
-   "nr": "35",
-   "titel": "Strafzeitnehmer",
-   "sektion": "Offizielle",
-   "strafen": [
-    "PS"
-   ]
-  },
-  {
-   "nr": "36",
-   "titel": "Statistik Personal",
-   "sektion": "Offizielle",
-   "strafen": []
-  },
-  {
-   "nr": "37",
-   "titel": "Videoüberprüfung",
-   "sektion": "Offizielle",
-   "strafen": []
-  },
-  {
-   "nr": "38",
-   "titel": "Coach’s Challenge",
-   "sektion": "Offizielle",
-   "strafen": []
-  },
-  {
-   "nr": "39",
-   "titel": "Beschimpfung von Offiziellen",
-   "sektion": "Offizielle",
-   "strafen": [
-    "2",
-    "2 Bank",
-    "SD",
-    "10"
-   ]
-  },
-  {
-   "nr": "40",
-   "titel": "Physische Tätlichkeit gegen Offizielle",
-   "sektion": "Offizielle",
-   "strafen": [
-    "SD"
-   ]
-  },
-  {
-   "nr": "41",
-   "titel": "Bandencheck",
-   "sektion": "Körperliche Vergehen",
-   "strafen": [
-    "2",
-    "5",
-    "5+SD",
-    "DM"
-   ]
-  },
-  {
-   "nr": "42",
-   "titel": "Unerlaubter Körperangriff",
-   "sektion": "Körperliche Vergehen",
-   "strafen": [
-    "2",
-    "5",
-    "5+SD",
-    "DM"
-   ]
-  },
-  {
-   "nr": "43",
-   "titel": "Check von Hinten",
-   "sektion": "Körperliche Vergehen",
-   "strafen": [
-    "2",
-    "5+SD",
-    "DM"
-   ]
-  },
-  {
-   "nr": "44",
-   "titel": "Check gegen das Knie",
-   "sektion": "Körperliche Vergehen",
-   "strafen": [
-    "2",
-    "5+SD",
-    "DM"
-   ]
-  },
-  {
-   "nr": "45",
-   "titel": "Ellbogen Check",
-   "sektion": "Körperliche Vergehen",
-   "strafen": [
-    "2",
-    "5",
-    "5+SD",
-    "DM"
-   ]
-  },
-  {
-   "nr": "46",
-   "titel": "Faustkampf",
-   "sektion": "Körperliche Vergehen",
-   "strafen": [
-    "5+SD"
-   ]
-  },
-  {
-   "nr": "47",
-   "titel": "Kopfstoss",
-   "sektion": "Körperliche Vergehen",
-   "strafen": [
-    "2+2",
-    "5+SD",
-    "DM"
-   ]
-  },
-  {
-   "nr": "48",
-   "titel": "Illegaler Check gegen den Kopf und Nackenbereich",
-   "sektion": "Körperliche Vergehen",
-   "strafen": [
-    "2",
-    "5+SD",
-    "DM"
-   ]
-  },
-  {
-   "nr": "49",
-   "titel": "Kicken",
-   "sektion": "Körperliche Vergehen",
-   "strafen": [
-    "5+SD",
-    "DM"
-   ]
-  },
-  {
-   "nr": "50",
-   "titel": "Check mit dem Knie",
-   "sektion": "Körperliche Vergehen",
-   "strafen": [
-    "2",
-    "5+SD",
-    "DM"
-   ]
-  },
-  {
-   "nr": "51",
-   "titel": "Übertriebene Härte",
-   "sektion": "Körperliche Vergehen",
-   "strafen": [
-    "2",
-    "5+SD",
-    "DM"
-   ]
-  },
-  {
-   "nr": "52",
-   "titel": "Slew-Footing",
-   "sektion": "Körperliche Vergehen",
-   "strafen": [
-    "5+SD",
-    "DM"
-   ]
-  },
-  {
-   "nr": "53",
-   "titel": "Werfen von Ausrüstungen",
-   "sektion": "Körperliche Vergehen",
-   "strafen": [
-    "2",
-    "2 Bank",
-    "5+SD",
-    "SD",
-    "10",
-    "PS",
-    "DM"
-   ]
-  },
-  {
-   "nr": "54",
-   "titel": "Halten",
-   "sektion": "Destruktive Vergehen",
-   "strafen": [
-    "2",
-    "PS"
-   ]
-  },
-  {
-   "nr": "55",
-   "titel": "Haken",
-   "sektion": "Destruktive Vergehen",
-   "strafen": [
-    "2",
-    "5+SD",
-    "PS",
-    "DM"
-   ]
-  },
-  {
-   "nr": "56",
-   "titel": "Behinderung",
-   "sektion": "Destruktive Vergehen",
-   "strafen": [
-    "2",
-    "2 Bank",
-    "5",
-    "5+SD",
-    "PS",
-    "DM"
-   ]
-  },
-  {
-   "nr": "57",
-   "titel": "Beinstellen",
-   "sektion": "Destruktive Vergehen",
-   "strafen": [
-    "2",
-    "5",
-    "5+SD",
-    "PS",
-    "DM"
-   ]
-  },
-  {
-   "nr": "58",
-   "titel": "Stockendenstoss",
-   "sektion": "Stock Vergehen",
-   "strafen": [
-    "2+2",
-    "5+SD",
-    "DM"
-   ]
-  },
-  {
-   "nr": "59",
-   "titel": "Check mit dem Stock",
-   "sektion": "Stock Vergehen",
-   "strafen": [
-    "2",
-    "5+SD",
-    "DM"
-   ]
-  },
-  {
-   "nr": "60",
-   "titel": "Hoher Stock",
-   "sektion": "Stock Vergehen",
-   "strafen": [
-    "2",
-    "2+2",
-    "5+SD",
-    "DM"
-   ]
-  },
-  {
-   "nr": "61",
-   "titel": "Stockschlag",
-   "sektion": "Stock Vergehen",
-   "strafen": [
-    "2",
-    "5+SD",
-    "PS",
-    "DM"
-   ]
-  },
-  {
-   "nr": "62",
-   "titel": "Stockstich",
-   "sektion": "Stock Vergehen",
-   "strafen": [
-    "2+2",
-    "5+SD",
-    "DM"
-   ]
-  },
-  {
-   "nr": "63",
-   "titel": "Spielverzögerung",
-   "sektion": "Andere Vergehen",
-   "strafen": [
-    "2",
-    "2 Bank",
-    "PS"
-   ]
-  },
-  {
-   "nr": "64",
-   "titel": "Schwalbe / Beschönigen",
-   "sektion": "Andere Vergehen",
-   "strafen": [
-    "2",
-    "DM"
-   ]
-  },
-  {
-   "nr": "65",
-   "titel": "Ausrüstung",
-   "sektion": "Andere Vergehen",
-   "strafen": [
-    "2"
-   ]
-  },
-  {
-   "nr": "66",
-   "titel": "Spielverzicht (Forfait)",
-   "sektion": "Andere Vergehen",
-   "strafen": []
-  },
-  {
-   "nr": "67",
-   "titel": "Spielen des Pucks mit der Hand",
-   "sektion": "Andere Vergehen",
-   "strafen": [
-    "2",
-    "PS"
-   ]
-  },
-  {
-   "nr": "68",
-   "titel": "Illegale Auswechslung",
-   "sektion": "Andere Vergehen",
-   "strafen": [
-    "2 Bank",
-    "PS"
-   ]
-  },
-  {
-   "nr": "69",
-   "titel": "Behinderung am Torhüter",
-   "sektion": "Andere Vergehen",
-   "strafen": [
-    "DM"
-   ]
-  },
-  {
-   "nr": "70",
-   "titel": "Verlassen der Spieler- oder Strafbank",
-   "sektion": "Andere Vergehen",
-   "strafen": [
-    "2 Bank",
-    "SD",
-    "PS",
-    "DM"
-   ]
-  },
-  {
-   "nr": "71",
-   "titel": "Vorzeitiger Wechsel",
-   "sektion": "Andere Vergehen",
-   "strafen": []
-  },
-  {
-   "nr": "72",
-   "titel": "Verweigerung auf das Spielen des Pucks",
-   "sektion": "Andere Vergehen",
-   "strafen": []
-  },
-  {
-   "nr": "73",
-   "titel": "Weigerung, das Spiel zu Beginnen",
-   "sektion": "Andere Vergehen",
-   "strafen": []
-  },
-  {
-   "nr": "74",
-   "titel": "Zuviele Spieler auf dem Eis",
-   "sektion": "Andere Vergehen",
-   "strafen": [
-    "2 Bank"
-   ]
-  },
-  {
-   "nr": "75",
-   "titel": "Unsportliches Verhalten",
-   "sektion": "Andere Vergehen",
-   "strafen": [
-    "2",
-    "2 Bank",
-    "SD",
-    "10",
-    "DM"
-   ]
-  },
-  {
-   "nr": "76",
-   "titel": "Anspiele",
-   "sektion": "Spielfluss",
-   "strafen": []
-  },
-  {
-   "nr": "77",
-   "titel": "Spiel- und Pausenzeiten",
-   "sektion": "Spielfluss",
-   "strafen": []
-  },
-  {
-   "nr": "78",
-   "titel": "Tore",
-   "sektion": "Spielfluss",
-   "strafen": []
-  },
-  {
-   "nr": "79",
-   "titel": "Handpass",
-   "sektion": "Spielfluss",
-   "strafen": []
-  },
-  {
-   "nr": "80",
-   "titel": "Spielen des Pucks mit Hohem Stock",
-   "sektion": "Spielfluss",
-   "strafen": []
-  },
-  {
-   "nr": "81",
-   "titel": "Icing",
-   "sektion": "Spielfluss",
-   "strafen": []
-  },
-  {
-   "nr": "82",
-   "titel": "Spielerwechsel",
-   "sektion": "Spielfluss",
-   "strafen": []
-  },
-  {
-   "nr": "83",
-   "titel": "Abseits",
-   "sektion": "Spielfluss",
-   "strafen": []
-  },
-  {
-   "nr": "84",
-   "titel": "Tätigkeiten während der Verlängerung",
-   "sektion": "Spielfluss",
-   "strafen": [
-    "PS"
-   ]
-  },
-  {
-   "nr": "85",
-   "titel": "Puck ausserhalb des Spielfeldes",
-   "sektion": "Spielfluss",
-   "strafen": [
-    "2"
-   ]
-  },
-  {
-   "nr": "86",
-   "titel": "Beginn des Spiels und Drittel",
-   "sektion": "Spielfluss",
-   "strafen": [
-    "2 Bank"
-   ]
-  },
-  {
-   "nr": "87",
-   "titel": "Time-Out",
-   "sektion": "Spielfluss",
-   "strafen": []
-  },
-  {
-   "nr": "100",
-   "titel": "Fraueneishockey – Alterskategorien",
-   "sektion": "Fraueneishockey",
-   "strafen": []
-  },
-  {
-   "nr": "101",
-   "titel": "Fraueneishockey – Spezifische Spielregeln",
-   "sektion": "Fraueneishockey",
-   "strafen": []
-  },
-  {
-   "nr": "102",
-   "titel": "Fraueneishockey – Spezifische Ausrüstungsregeln",
-   "sektion": "Fraueneishockey",
-   "strafen": []
-  },
-  {
-   "nr": "200",
-   "titel": "Nachwuchseishockey der Männer – Alterskategorien",
-   "sektion": "Nachwuchseishockey",
-   "strafen": []
-  },
-  {
-   "nr": "201",
-   "titel": "Nachwuchseishockey der Männer – Spezifische Spielregeln",
-   "sektion": "Nachwuchseishockey",
-   "strafen": []
-  },
-  {
-   "nr": "202",
-   "titel": "Nachwuchseishockey der Männer – Spezifische Ausrüstungsregeln",
-   "sektion": "Nachwuchseishockey",
-   "strafen": []
+   "code": "MS",
+   "name": "Matchstrafe"
   }
- ]
+ ],
+ "strafen": [
+  {
+   "name": "Kleine Bankstrafe",
+   "codes": [
+    "2"
+   ],
+   "info": "keiner vom Eis"
+  },
+  {
+   "name": "Bandencheck",
+   "codes": [
+    "2",
+    "5",
+    "SPD",
+    "MS"
+   ],
+   "info": ""
+  },
+  {
+   "name": "Unerlaubter Körperangriff",
+   "codes": [
+    "2",
+    "5",
+    "SPD",
+    "MS"
+   ],
+   "info": ""
+  },
+  {
+   "name": "Check von Hinten",
+   "codes": [
+    "5+SPD",
+    "MS"
+   ],
+   "info": ""
+  },
+  {
+   "name": "Check gegen das Knie",
+   "codes": [
+    "2",
+    "5+SPD",
+    "MS"
+   ],
+   "info": ""
+  },
+  {
+   "name": "Ellbogencheck",
+   "codes": [
+    "2",
+    "5",
+    "SPD",
+    "MS"
+   ],
+   "info": ""
+  },
+  {
+   "name": "Kopfstoß",
+   "codes": [
+    "2+2",
+    "5+SPD",
+    "MS"
+   ],
+   "info": ""
+  },
+  {
+   "name": "Check gegen den Kopf",
+   "codes": [
+    "2",
+    "MS"
+   ],
+   "info": ""
+  },
+  {
+   "name": "Treten",
+   "codes": [
+    "MS"
+   ],
+   "info": ""
+  },
+  {
+   "name": "Check mit dem Knie",
+   "codes": [
+    "2",
+    "5+SPD",
+    "MS"
+   ],
+   "info": ""
+  },
+  {
+   "name": "Übertriebene Härte",
+   "codes": [
+    "2",
+    "MS"
+   ],
+   "info": "MS: TW mit Stockhand"
+  },
+  {
+   "name": "Slew-Footing",
+   "codes": [
+    "MS"
+   ],
+   "info": ""
+  },
+  {
+   "name": "Halten (des Stockes)",
+   "codes": [
+    "2"
+   ],
+   "info": ""
+  },
+  {
+   "name": "Haken",
+   "codes": [
+    "2",
+    "5",
+    "SPD"
+   ],
+   "info": ""
+  },
+  {
+   "name": "Behinderung",
+   "codes": [
+    "2",
+    "5",
+    "SPD",
+    "MS"
+   ],
+   "info": ""
+  },
+  {
+   "name": "Beinstellen",
+   "codes": [
+    "2",
+    "5",
+    "SPD",
+    "MS"
+   ],
+   "info": ""
+  },
+  {
+   "name": "Stockendenstoß",
+   "codes": [
+    "2+2",
+    "5+SPD",
+    "MS"
+   ],
+   "info": ""
+  },
+  {
+   "name": "Cross-Check",
+   "codes": [
+    "2",
+    "5+SPD",
+    "MS"
+   ],
+   "info": ""
+  },
+  {
+   "name": "Hoher Stock",
+   "codes": [
+    "2",
+    "2+2",
+    "MS"
+   ],
+   "info": ""
+  },
+  {
+   "name": "Stockschlag",
+   "codes": [
+    "2",
+    "5+SPD",
+    "MS"
+   ],
+   "info": ""
+  },
+  {
+   "name": "Stockstich",
+   "codes": [
+    "2+2",
+    "5+SPD",
+    "MS"
+   ],
+   "info": ""
+  },
+  {
+   "name": "Spielverzögerung",
+   "codes": [
+    "2"
+   ],
+   "info": "TW = einer vom Eis, beim Wechsel · VT = kein Wechsel"
+  },
+  {
+   "name": "Schwalbe / Diving",
+   "codes": [
+    "2"
+   ],
+   "info": ""
+  },
+  {
+   "name": "Zu viele Spieler",
+   "codes": [
+    "2"
+   ],
+   "info": ""
+  }
+ ],
+ "faustkampf": {
+  "name": "Fighting / Kämpfen",
+  "rollen": [
+   {
+    "was": "Initiator",
+    "strafe": "2+5 oder 2+5+SPD"
+   },
+   {
+    "was": "Aggressor",
+    "strafe": "2+5+SPD"
+   },
+   {
+    "was": "Initiator + Aggressor",
+    "strafe": "2+2+5+SPD"
+   },
+   {
+    "was": "Defender",
+    "strafe": "5"
+   },
+   {
+    "was": "Third Player in",
+    "strafe": "SPD"
+   },
+   {
+    "was": "Außerhalb des Spiels",
+    "strafe": "5+SPD"
+   },
+   {
+    "was": "Teampersonal",
+    "strafe": "SPD"
+   }
+  ],
+  "zusatz": [
+   {
+    "was": "Helme aktiv abnehmen",
+    "strafe": "2"
+   },
+   {
+    "was": "Trikot ausziehen",
+    "strafe": "2"
+   },
+   {
+    "was": "Sucker Punch",
+    "strafe": "MS"
+   }
+  ]
+ }
 }

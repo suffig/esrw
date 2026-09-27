@@ -1520,6 +1520,28 @@
                  padding:2px 7px; border-radius:99px; margin-right:6px; vertical-align:2px; }
   .merkzeichen.gut  { background:var(--gut-bg);  color:var(--gut); }
   .merkzeichen.warn { background:var(--warn-bg); color:var(--warn); }
+  /* Strafenmatrix: Name links, je Strafart eine Spalte mit Punkt */
+  .strafen-matrix { padding:10px 12px; }
+  .matrix-kopf, .matrix-zeile { display:grid; grid-template-columns:minmax(0,1fr) repeat(var(--spalten,6), 1.85rem);
+                                align-items:center; gap:1px; }
+  @media (min-width: 560px) {
+    .matrix-kopf, .matrix-zeile { grid-template-columns:minmax(0,1fr) repeat(var(--spalten,6), 3rem); gap:4px; }
+  }
+  .matrix-kopf { position:sticky; top:0; z-index:2; background:var(--karte); padding:4px 0 6px;
+                 border-bottom:1px solid var(--linie); }
+  .matrix-kopf > span:first-child { font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--dim); font-weight:800; }
+  .matrix-spalte { text-align:center; font-size:.6rem; font-weight:800; color:var(--dim); line-height:1.1;
+                   word-break:keep-all; overflow-wrap:normal; letter-spacing:-.02em; }
+  .matrix-spalte.aktiv { color:var(--akzent); }
+  .matrix-zeile { padding:7px 0; border-top:1px solid var(--linie); }
+  .matrix-name b { display:block; font-size:.88rem; line-height:1.25; hyphens:auto; }
+  .matrix-name small { display:block; color:var(--dim); font-size:.74rem; margin-top:2px; }
+  .matrix-feld { text-align:center; color:var(--linie); font-size:1.1rem; line-height:1; }
+  .matrix-feld.da { color:var(--akzent); }
+  .matrix-feld.hervor { color:var(--gut); }
+  .rollen-zeile { display:flex; justify-content:space-between; gap:10px; padding:8px 0; border-top:1px solid var(--linie); }
+  .rollen-zeile:first-of-type { border-top:0; }
+  .rollen-zeile b { flex:none; font-variant-numeric:tabular-nums; }
   /* Regeln: eine Zeile je Regel, Strafarten als Zeichen */
   /* Der Hinweis zum naechsten gemeinsamen Spiel steht unter dem Namen -
      daneben zerbricht er auf dem Handy den Namen. */
@@ -1528,17 +1550,8 @@
   .regeln-arten { display:flex; gap:6px; overflow-x:auto; padding:2px 0 8px; scrollbar-width:none; }
   .regeln-arten::-webkit-scrollbar { display:none; }
   .regeln-arten .chip { flex:none; cursor:pointer; font-family:inherit; }
-  .regel-zeile { display:flex; align-items:flex-start; gap:10px; padding:11px 0; border-top:1px solid var(--linie); }
-  .regel-zeile:first-child { border-top:0; }
-  .regel-nr { flex:none; min-width:2.2em; font-weight:800; color:var(--dim); font-variant-numeric:tabular-nums; }
-  .regel-zeile > span:nth-child(2) { flex:1 1 auto; min-width:0; }
-  .regel-zeile b { display:block; font-size:.95rem; }
-  .regel-zeile small { color:var(--dim); }
-  .strafmarken { display:flex; gap:4px; flex-wrap:wrap; margin-top:4px; }
   .strafmarke { font-size:.7rem; font-weight:800; padding:2px 7px; border-radius:99px;
                 background:var(--akzent-hell); color:var(--akzent); white-space:nowrap; }
-  .strafmarke.schwer { background:var(--warn-bg); color:var(--warn); }
-  .strafmarke.hart { background:var(--rot-bg, var(--warn-bg)); color:var(--rot); }
   .regeln-kopf { margin:14px 0 2px; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); font-weight:800; }
   .bestimmung-punkt { padding:10px 0; border-top:1px solid var(--linie); }
   .bestimmung-punkt:first-child { border-top:0; }
@@ -1844,7 +1857,7 @@
       </div>
       <div class="plan-suchzeile" id="regeln-suchzeile">
         <label for="regeln-filter" class="versteckt">Regeln durchsuchen</label>
-        <input type="search" id="regeln-filter" placeholder="Stichwort oder Regelnummer …" autocomplete="off" spellcheck="false">
+        <input type="search" id="regeln-filter" placeholder="Vergehen suchen …" autocomplete="off" spellcheck="false">
       </div>
       <div class="regeln-arten" id="regeln-arten"></div>
     </div>
@@ -2002,6 +2015,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=70"></script>
+<script src="app.js?v=71"></script>
 </body>
 </html>
