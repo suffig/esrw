@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src https://fonts.gstatic.com; img-src 'self' data: blob: https://tile.openstreetmap.org; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://router.project-osrm.org https://nominatim.openstreetmap.org https://api.open-meteo.com; manifest-src 'self'; worker-src 'self'; base-uri 'self'; form-action 'self'; object-src 'none'">
 <title>ESRW App</title>
 <link rel="manifest" href="manifest.webmanifest">
@@ -1520,6 +1520,34 @@
                  padding:2px 7px; border-radius:99px; margin-right:6px; vertical-align:2px; }
   .merkzeichen.gut  { background:var(--gut-bg);  color:var(--gut); }
   .merkzeichen.warn { background:var(--warn-bg); color:var(--warn); }
+  /* Regeln: eine Zeile je Regel, Strafarten als Zeichen */
+  /* Der Hinweis zum naechsten gemeinsamen Spiel steht unter dem Namen -
+     daneben zerbricht er auf dem Handy den Namen. */
+  .kontakt-kopf { display:block; }
+  .kontakt-marke { display:block; margin-top:2px; }
+  .regeln-arten { display:flex; gap:6px; overflow-x:auto; padding:2px 0 8px; scrollbar-width:none; }
+  .regeln-arten::-webkit-scrollbar { display:none; }
+  .regeln-arten .chip { flex:none; cursor:pointer; font-family:inherit; }
+  .regel-zeile { display:flex; align-items:flex-start; gap:10px; padding:11px 0; border-top:1px solid var(--linie); }
+  .regel-zeile:first-child { border-top:0; }
+  .regel-nr { flex:none; min-width:2.2em; font-weight:800; color:var(--dim); font-variant-numeric:tabular-nums; }
+  .regel-zeile > span:nth-child(2) { flex:1 1 auto; min-width:0; }
+  .regel-zeile b { display:block; font-size:.95rem; }
+  .regel-zeile small { color:var(--dim); }
+  .strafmarken { display:flex; gap:4px; flex-wrap:wrap; margin-top:4px; }
+  .strafmarke { font-size:.7rem; font-weight:800; padding:2px 7px; border-radius:99px;
+                background:var(--akzent-hell); color:var(--akzent); white-space:nowrap; }
+  .strafmarke.schwer { background:var(--warn-bg); color:var(--warn); }
+  .strafmarke.hart { background:var(--rot-bg, var(--warn-bg)); color:var(--rot); }
+  .regeln-kopf { margin:14px 0 2px; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); font-weight:800; }
+  .bestimmung-punkt { padding:10px 0; border-top:1px solid var(--linie); }
+  .bestimmung-punkt:first-child { border-top:0; }
+  .bestimmung-punkt small { display:block; color:var(--dim); margin-top:3px; }
+  .dok-liste a { display:flex; align-items:center; gap:10px; padding:11px 0; border-top:1px solid var(--linie);
+                 color:inherit; text-decoration:none; font-weight:700; }
+  .dok-liste a:first-child { border-top:0; }
+  .dok-liste small { color:var(--dim); font-weight:500; display:block; }
+  .dok-liste a::after { content:"\2197"; margin-left:auto; color:var(--dim); }
   /* Anmeldung: Beschriftungen und das Auge im Passwortfeld */
   .anmelde-label { display:block; font-size:.78rem; color:var(--dim); font-weight:700; margin:10px 0 3px; }
   .pw-feld { position:relative; }
@@ -1802,6 +1830,27 @@
     <div id="push-verlauf" class="versteckt"></div>
   </section>
 
+  <!-- Regeln: Strafenmatrix und Durchfuehrungsbestimmungen -->
+  <section id="regeln" class="versteckt">
+    <div class="profilzeile karte">
+      <span><span class="kopf-i"><svg class="i"><use href="#i-note"/></svg></span><span><b>Regeln</b><small id="regeln-unter">Strafenmatrix und Bestimmungen</small></span></span>
+      <button class="textknopf zurueck" id="regeln-zurueck"><svg class="i"><use href="#i-back"/></svg>Zurück</button>
+    </div>
+    <div class="filterleiste">
+      <div class="schalterzeile">
+        <span class="modus" id="regeln-modus" role="tablist">
+          <button type="button" data-teil="strafen" class="aktiv">Strafen</button><button type="button" data-teil="bestimmungen">Bestimmungen</button>
+        </span>
+      </div>
+      <div class="plan-suchzeile" id="regeln-suchzeile">
+        <label for="regeln-filter" class="versteckt">Regeln durchsuchen</label>
+        <input type="search" id="regeln-filter" placeholder="Stichwort oder Regelnummer …" autocomplete="off" spellcheck="false">
+      </div>
+      <div class="regeln-arten" id="regeln-arten"></div>
+    </div>
+    <div id="regeln-liste"></div>
+  </section>
+
   <!-- Hallenkarte -->
   <section id="karte" class="versteckt">
     <div class="profilzeile karte">
@@ -1953,6 +2002,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=69"></script>
+<script src="app.js?v=70"></script>
 </body>
 </html>

@@ -1883,6 +1883,41 @@ aktualisieren.
 * **Anmeldeformular**: Beschriftungen über den Feldern und ein Auge im
   Passwortfeld.
 
+### 10.6an Regeln, Strafenmatrix und Durchführungsbestimmungen
+
+Neue Seite **Regeln** (unter „Mehr"), zwei Teile, beide **offline**
+verfügbar – sie liegen als kleine Dateien in der App und werden vom
+Service Worker mitgespeichert.
+
+* **Strafen**: die Strafenmatrix – Regelnummer, Stichwort und welche
+  Strafarten die Regel kennt (2, 2+2, 2 Bank, 5, 5+SD, SD, 10, MS, PS,
+  Tor, DM). Suchen nach Stichwort oder Nummer, filtern nach Strafart,
+  „alle Regeln" zeigt auch die ohne eigene Strafart. Darunter steht,
+  was die Zeichen heißen.
+* **Bestimmungen**: die Punkte aus den Durchführungsbestimmungen des
+  EHV NRW, die Schiedsrichter betreffen – Anwesenheit, Ausrüstung,
+  Spielbericht, Geld, Zuständigkeiten –, jeder mit der Fundstelle.
+  Darunter die Original-Dokumente beim Verband zum Antippen.
+
+**Warum kein komplettes Regelbuch?** Im IIHF-Regelbuch steht
+ausdrücklich, dass das Hochladen und Verbreiten der Publikation nicht
+zulässig ist. In der App liegt deshalb nur das Gerüst – Nummer,
+Stichwort, Strafart –, das sind Fakten und kein Regeltext. Für den
+Wortlaut führt ein Link zum Regelbuch. Dasselbe gilt für die
+Durchführungsbestimmungen: kurze eigene Zusammenfassung, verbindlich
+ist das verlinkte PDF.
+
+Die Daten liegen in `docs/strafen.json` und `docs/bestimmungen.json`.
+Ändert der Verband etwas, dort anpassen – oder Bescheid sagen.
+
+* **Kollegen**: Wer **demnächst** mit dir im Gespann steht, steht jetzt
+  ganz oben, das nächste gemeinsame Spiel zuerst („am Sa. 03.10.
+  zusammen"), darunter „Zuletzt zusammen" und dann alle anderen.
+* **Kein Zoomen mehr am Handy**: Doppeltipp und Aufziehen mit zwei
+  Fingern sind abgeschaltet (in der Seitenangabe und zusätzlich per
+  Code, weil iOS die Angabe allein ignoriert). Die Schriftgröße
+  verstellst du weiter unter Einstellungen → App → Schrift.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

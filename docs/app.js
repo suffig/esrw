@@ -277,6 +277,20 @@
   });
   // Oben rechts: das eigene Profil - dort stehen Name, Anschrift, Nummer
   // und die Rechnungsdaten an einer Stelle.
+  // Zoomen aus: die Angabe im <meta> ignoriert iOS seit Jahren, also hier
+  // noch einmal - Doppeltipp und Aufziehen mit zwei Fingern abfangen.
+  ["gesturestart", "gesturechange", "gestureend"].forEach(function (n) {
+    document.addEventListener(n, function (e) { e.preventDefault(); }, { passive: false });
+  });
+  (function () {
+    var letzter = 0;
+    document.addEventListener("touchend", function (e) {
+      var jetzt = Date.now();
+      if (jetzt - letzter < 320) e.preventDefault();
+      letzter = jetzt;
+    }, { passive: false });
+  })();
+
   el("avatar").addEventListener("click", function () {
     if (sitzungVorhanden()) { location.hash = "mitglieder/profil"; return; }
     location.hash = profil && profil.slug ? "mehr" : "";
@@ -2403,7 +2417,7 @@
   var letzteAnsicht = "auswahl";
   function ansicht(name) {
     letzteAnsicht = name;
-    ["auswahl", "detail", "plan", "mitglieder", "halle", "status", "spiel", "mehr", "einstellungen", "karte", "statseite", "aenderungen", "mitfahren", "archiv", "gesperrt"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
+    ["auswahl", "detail", "plan", "mitglieder", "halle", "status", "spiel", "mehr", "einstellungen", "karte", "statseite", "aenderungen", "mitfahren", "archiv", "regeln", "gesperrt"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
     if (name !== "plan" && typeof filterBlatt === "function" && !el("plan-filter-blatt").classList.contains("versteckt")) filterBlatt(false);
     var reiter = (location.hash.split("/")[1] || "");
     if (name !== "auswahl" && name !== "detail") { el("onboarding").classList.add("versteckt"); el("onboarding-kurz").classList.add("versteckt"); el("neu").classList.add("versteckt"); }
@@ -2415,7 +2429,7 @@
     var dreiAktiv = drei[0] === "mitglieder" ? (name === "mitglieder" && reiter === (drei[1] || "")) : name === (drei[0] === "statistik" ? "statseite" : drei[0]);
     el("tab-tausch").classList.toggle("aktiv", !!dreiAktiv);
     el("tab-abrechnung").classList.toggle("aktiv", name === "mitglieder" && reiter === "abrechnung");
-    el("tab-mitglieder").classList.toggle("aktiv", !dreiAktiv && (name === "mehr" || name === "einstellungen" || name === "karte" || name === "status" || (name === "mitglieder" && reiter !== "tausch" && reiter !== "abrechnung")));
+    el("tab-mitglieder").classList.toggle("aktiv", !dreiAktiv && (name === "mehr" || name === "einstellungen" || name === "karte" || name === "status" || name === "regeln" || (name === "mitglieder" && reiter !== "tausch" && reiter !== "abrechnung")));
     Array.prototype.forEach.call(document.querySelectorAll(".leiste button"), function (b) {
       if (b.classList.contains("aktiv")) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
     });
@@ -3271,6 +3285,7 @@
       funktion("statistik") ? ["#statistik", "i-users", "Statistik", "Saison, Ligen, Hallen, Partner, Saisonziel"] : null,
       ["#aenderungen", "i-list", "\u00c4nderungen", "Was sich in 14 Tagen getan hat \u2013 mit Vorher/Nachher"],
       funktion("notizen") ? ["#mitglieder/notizen", "i-note", "Notizen", "Private Spielnotizen"] : null,
+      ["#regeln", "i-note", "Regeln", "Strafenmatrix und Durchführungsbestimmungen – auch offline"],
       ["Gemeinsam"],
       funktion("gespann") ? ["#mitfahren", "i-route", "Zusammen fahren", "Wer f\u00e4hrt wohin \u2013 auf dem Weg, bieten, suchen"] : null,
       funktion("telefon") ? ["#mitglieder/kollegen", "i-users", "Kollegen", "Telefonliste \u2013 anrufen, WhatsApp, kopieren"] : null,
@@ -3340,6 +3355,136 @@
       }).catch(function () {});
     window.scrollTo(0, 0);
   }
+  // ---------------------------------------------------------- Regeln
+  //
+  // Zwei Nachschlagewerke fuer die Bande: die Strafenmatrix (Regelnummer,
+  // Stichwort, welche Strafarten die Regel kennt) und die Punkte aus den
+  // Durchfuehrungsbestimmungen, die Schiedsrichter betreffen. Beides sind
+  // eigene Zusammenstellungen - der Wortlaut steht in den verlinkten
+  // Dokumenten, und die liegen beim Verband, nicht hier.
+  var regelnDaten = null, bestimmungenDaten = null, regelnTeil = "strafen", regelArt = "";
+  function strafKlasse(code) {
+    if (code === "MS" || code === "5+SD" || code === "SD") return "strafmarke hart";
+    if (code === "5" || code === "10" || code === "PS") return "strafmarke schwer";
+    return "strafmarke";
+  }
+  function zeigeRegeln() {
+    ansicht("regeln"); aktuell = null;
+    Array.prototype.forEach.call(el("regeln-modus").querySelectorAll("button"), function (b) {
+      b.classList.toggle("aktiv", b.getAttribute("data-teil") === regelnTeil);
+      if (b._an) return;
+      b._an = true;
+      b.addEventListener("click", function () { regelnTeil = b.getAttribute("data-teil"); regelArt = ""; zeigeRegeln(); });
+    });
+    var suche = el("regeln-filter");
+    if (!suche._an) { suche._an = true; suche.addEventListener("input", regelnZeichnen); }
+    el("regeln-suchzeile").classList.toggle("versteckt", regelnTeil !== "strafen");
+    el("regeln-arten").classList.toggle("versteckt", regelnTeil !== "strafen");
+    Promise.all([
+      regelnDaten ? Promise.resolve(regelnDaten) : hole("strafen.json").catch(function () { return null; }),
+      bestimmungenDaten ? Promise.resolve(bestimmungenDaten) : hole("bestimmungen.json").catch(function () { return null; })
+    ]).then(function (r) {
+      regelnDaten = r[0] || regelnDaten; bestimmungenDaten = r[1] || bestimmungenDaten;
+      regelnZeichnen();
+    });
+    window.scrollTo(0, 0);
+  }
+  function regelnZeichnen() {
+    var ziel = el("regeln-liste"); ziel.innerHTML = "";
+    var arten = el("regeln-arten"); arten.innerHTML = "";
+    if (regelnTeil === "bestimmungen") {
+      el("regeln-unter").textContent = bestimmungenDaten ? "EHV NRW, Stand " + bestimmungenDaten.stand : "Bestimmungen";
+      if (!bestimmungenDaten) { ziel.appendChild(hinweisKarte("Bestimmungen nicht geladen.")); return; }
+      bestimmungenDaten.bereiche.forEach(function (b) {
+        var k = document.createElement("div"); k.className = "karte";
+        var h = document.createElement("h4"); h.textContent = b.titel; h.style.margin = "0 0 6px"; k.appendChild(h);
+        b.punkte.forEach(function (p) {
+          var d = document.createElement("div"); d.className = "bestimmung-punkt";
+          d.appendChild(document.createTextNode(p.text));
+          var s = document.createElement("small"); s.textContent = p.quelle; d.appendChild(s);
+          k.appendChild(d);
+        });
+        ziel.appendChild(k);
+      });
+      var dk = document.createElement("div"); dk.className = "karte dok-liste";
+      var dh = document.createElement("h4"); dh.textContent = "Die Dokumente beim Verband"; dh.style.margin = "0 0 6px"; dk.appendChild(dh);
+      bestimmungenDaten.dokumente.forEach(function (d) {
+        var a = document.createElement("a"); a.href = d.url; a.target = "_blank"; a.rel = "noopener";
+        var sp = document.createElement("span"); sp.textContent = d.titel;
+        var sm = document.createElement("small"); sm.textContent = "Stand " + d.stand; sp.appendChild(sm);
+        a.appendChild(sp); dk.appendChild(a);
+      });
+      ziel.appendChild(dk);
+      ziel.appendChild(hinweisKarte(bestimmungenDaten._hinweis));
+      return;
+    }
+
+    el("regeln-unter").textContent = regelnDaten ? regelnDaten.stand : "Strafenmatrix";
+    if (!regelnDaten) { ziel.appendChild(hinweisKarte("Strafenmatrix nicht geladen.")); return; }
+    // Filterchips: zuerst alles, dann je Strafart
+    (function () {
+      var b = document.createElement("button"); b.type = "button";
+      b.className = "chip" + (regelArt === "*" ? " ich" : "");
+      b.textContent = "alle Regeln"; b.title = "Auch Regeln ohne eigene Strafart";
+      b.addEventListener("click", function () { regelArt = regelArt === "*" ? "" : "*"; regelnZeichnen(); });
+      arten.appendChild(b);
+    })();
+    Object.keys(regelnDaten.legende).forEach(function (code) {
+      var b = document.createElement("button"); b.type = "button";
+      b.className = "chip" + (regelArt === code ? " ich" : "");
+      b.textContent = code; b.title = regelnDaten.legende[code];
+      b.addEventListener("click", function () { regelArt = regelArt === code ? "" : code; regelnZeichnen(); });
+      arten.appendChild(b);
+    });
+    var q = ohneZeichen(el("regeln-filter").value);
+    var treffer = regelnDaten.regeln.filter(function (r) {
+      if (regelArt === "*") { /* alle */ }
+      else if (regelArt) { if (r.strafen.indexOf(regelArt) < 0) return false; }
+      else if (!r.strafen.length && !q) return false;
+      if (!q) return true;
+      return ohneZeichen(r.nr + " " + r.titel + " " + r.sektion).indexOf(q) >= 0;
+    });
+    if (!treffer.length) { ziel.appendChild(hinweisKarte("Nichts gefunden.")); return; }
+    var karte = document.createElement("div"); karte.className = "karte";
+    var sektion = "";
+    treffer.forEach(function (r) {
+      if (r.sektion !== sektion) {
+        sektion = r.sektion;
+        var k = document.createElement("p"); k.className = "regeln-kopf"; k.textContent = sektion; karte.appendChild(k);
+      }
+      var z = document.createElement("div"); z.className = "regel-zeile";
+      var nr = document.createElement("span"); nr.className = "regel-nr"; nr.textContent = r.nr; z.appendChild(nr);
+      var mitte = document.createElement("span");
+      var b = document.createElement("b"); b.textContent = r.titel; mitte.appendChild(b);
+      if (r.strafen.length) {
+        var m = document.createElement("span"); m.className = "strafmarken";
+        r.strafen.forEach(function (code) {
+          var s = document.createElement("span"); s.className = strafKlasse(code);
+          s.textContent = code; s.title = regelnDaten.legende[code] || code;
+          m.appendChild(s);
+        });
+        mitte.appendChild(m);
+      }
+      z.appendChild(mitte);
+      karte.appendChild(z);
+    });
+    ziel.appendChild(karte);
+    var legende = document.createElement("div"); legende.className = "karte";
+    var lh = document.createElement("h4"); lh.textContent = "Was die Zeichen heissen"; lh.style.margin = "0 0 6px"; legende.appendChild(lh);
+    Object.keys(regelnDaten.legende).forEach(function (code) {
+      var d = document.createElement("div"); d.className = "bestimmung-punkt";
+      var s = document.createElement("span"); s.className = strafKlasse(code); s.textContent = code;
+      d.appendChild(s); d.appendChild(document.createTextNode(" " + regelnDaten.legende[code]));
+      legende.appendChild(d);
+    });
+    ziel.appendChild(legende);
+    ziel.appendChild(hinweisKarte(regelnDaten._hinweis + " Wortlaut: iihf.com."));
+  }
+  function hinweisKarte(text) {
+    var p = document.createElement("p"); p.className = "meta"; p.style.margin = "12px 4px"; p.textContent = text;
+    return p;
+  }
+
   // Sprungleiste: Chips, die zu den Abschnitten einer langen Seite springen
   function sprungleiste(leisteId, bereichId, punkte) {
     var leiste = el(leisteId); if (!leiste) return;
@@ -3680,6 +3825,7 @@
     if (slug === "anleitung") { location.hash = "mehr"; tourOeffnen("alles"); return; }
     if (slug === "suche") { zeigeAuswahl("suche"); return; }
     if (slug === "karte") { zeigeKarte(); return; }
+    if (slug === "regeln") { zeigeRegeln(); return; }
     if (slug.indexOf("spiel/") === 0) { zeigeSpiel(decodeURIComponent(slug.slice(6))); return; }
     if (slug.indexOf("halle/") === 0) { zeigeHalle(slug.slice(6)); return; }
     if (slug === "plan") { aktuell = null; ansicht("plan"); zeigePlan(); if (sprungZiel === null) window.scrollTo(0, 0); return; }
@@ -3876,6 +4022,7 @@
   tabTipp(el("tab-plan"), function () { location.hash = "plan"; });
   el("gesperrt-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = ""; });
   el("aenderungen-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
+  el("regeln-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
   el("archiv-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
   ["archiv-suche", "archiv-saison", "archiv-liga", "archiv-rolle", "archiv-halle", "archiv-person"].forEach(function (id) { el(id).addEventListener(id === "archiv-suche" ? "input" : "change", function () { archivRendern(); }); });
   el("archiv-suche").addEventListener("change", function () { archivSucheMerken(el("archiv-suche").value); });

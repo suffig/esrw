@@ -3163,13 +3163,20 @@ window.Mitglieder = (function () {
   function gespannSlugs() {
     var aus = {}, meins = profil && profil.slug;
     if (!meins) return aus;
-    var von = Date.now() - 150 * 86400000, bis = Date.now() + 150 * 86400000;
+    var jetzt = Date.now(), von = jetzt - 150 * 86400000, bis = jetzt + 250 * 86400000;
     ((ctx.daten && ctx.daten.spiele) || []).forEach(function (s) {
       var t = new Date(s.beginn).getTime();
       if (t < von || t > bis) return;
       var bes = s.besetzung || [];
       if (!bes.filter(function (b) { return b.slug === meins; }).length) return;
-      bes.forEach(function (b) { if (b.slug && b.slug !== meins) aus[b.slug] = (aus[b.slug] || 0) + 1; });
+      bes.forEach(function (b) {
+        if (!b.slug || b.slug === meins) return;
+        var e = aus[b.slug] || (aus[b.slug] = { kommt: 0, war: 0, naechstes: null });
+        if (t >= jetzt) {
+          e.kommt++;
+          if (!e.naechstes || t < e.naechstes) e.naechstes = t;
+        } else e.war++;
+      });
     });
     return aus;
   }
@@ -3191,9 +3198,18 @@ window.Mitglieder = (function () {
                       eigen: true, inListe: !!alt.inListe, betreiber: alt.telefon || null };
     });
     var liste = Object.keys(aus).map(function (k) { return aus[k]; });
-    if (gespann) liste.forEach(function (z) { z.gespann = gespann[z.slug] || 0; });
+    // Wer demnaechst mit einem auf dem Eis steht, steht oben - danach, wer
+    // zuletzt dabei war, danach der Rest.
+    if (gespann) liste.forEach(function (z) {
+      var g = gespann[z.slug] || {};
+      z.kommt = g.kommt || 0; z.war = g.war || 0; z.naechstes = g.naechstes || null;
+      z.gespann = z.kommt * 1000 + z.war;
+    });
+    // Das naechste gemeinsame Spiel zuerst - danach, wer zuletzt dabei war.
     return liste.sort(function (a, b) {
-      if ((b.gespann || 0) !== (a.gespann || 0)) return (b.gespann || 0) - (a.gespann || 0);
+      if (!!b.kommt !== !!a.kommt) return (b.kommt ? 1 : 0) - (a.kommt ? 1 : 0);
+      if (a.naechstes && b.naechstes && a.naechstes !== b.naechstes) return a.naechstes - b.naechstes;
+      if ((b.war || 0) !== (a.war || 0)) return (b.war || 0) - (a.war || 0);
       return String(a.name).localeCompare(String(b.name), "de");
     });
   }
@@ -3239,8 +3255,11 @@ window.Mitglieder = (function () {
   function telefonZeile(z, zusatz) {
     var karte = h("div", { class: "telefon-zeile" });
     var kopf = h("div", { class: "kontakt-kopf" }, [h("b", { text: z.name })]);
-    if (z.gespann) kopf.appendChild(h("small", { class: "kontakt-marke",
-      text: z.gespann === 1 ? "1 Spiel zusammen" : z.gespann + " Spiele zusammen" }));
+    if (z.kommt) kopf.appendChild(h("small", { class: "kontakt-marke",
+      text: (z.naechstes ? "am " + datumLang(new Date(z.naechstes)).replace(/(\d{2}\.\d{2})\.\d{4}/, "$1.") + " zusammen" : "kommt zusammen")
+        + (z.kommt > 1 ? " · noch " + (z.kommt - 1) + " weitere" : "") }));
+    else if (z.war) kopf.appendChild(h("small", { class: "kontakt-marke",
+      text: z.war === 1 ? "1 Spiel zusammen" : z.war + " Spiele zusammen" }));
     else if (z.eigen) kopf.appendChild(h("small", { class: "kontakt-marke", text: "selbst freigegeben" }));
     karte.appendChild(kopf);
     if (z.hinweis) karte.appendChild(h("small", { class: "meta", text: z.hinweis }));
@@ -3302,11 +3321,18 @@ window.Mitglieder = (function () {
           return;
         }
         // Gespann zuerst, mit einer Zwischenzeile - danach der Rest
-        var mit = treffer.filter(function (z) { return z.gespann; });
-        if (mit.length && !q) {
-          liste.appendChild(h("p", { class: "listen-kopf", text: "Mit dir im Gespann" }));
-          mit.forEach(function (z) { liste.appendChild(telefonZeile(z)); });
-          var rest = treffer.filter(function (z) { return !z.gespann; });
+        var kommt = treffer.filter(function (z) { return z.kommt; });
+        var war = treffer.filter(function (z) { return !z.kommt && z.war; });
+        var rest = treffer.filter(function (z) { return !z.kommt && !z.war; });
+        if ((kommt.length || war.length) && !q) {
+          if (kommt.length) {
+            liste.appendChild(h("p", { class: "listen-kopf", text: "Demnächst mit dir im Gespann" }));
+            kommt.forEach(function (z) { liste.appendChild(telefonZeile(z)); });
+          }
+          if (war.length) {
+            liste.appendChild(h("p", { class: "listen-kopf", text: "Zuletzt zusammen" }));
+            war.forEach(function (z) { liste.appendChild(telefonZeile(z)); });
+          }
           if (rest.length) {
             liste.appendChild(h("p", { class: "listen-kopf", text: "Alle anderen" }));
             rest.forEach(function (z) { liste.appendChild(telefonZeile(z)); });

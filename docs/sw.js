@@ -5,7 +5,7 @@
  * Parkhaus, Zug - kommt die zuletzt gespeicherte Fassung zum Zug.
  */
 
-const VERSION = "v64";
+const VERSION = "v65";
 const CACHE = "einteilungen-" + VERSION;
 
 // Wird beim ersten Besuch gespeichert, damit die App auch dann startet,
@@ -27,6 +27,8 @@ const GRUNDGERUEST = [
   "./abrechnung/blanko.pdf",
   "./supabase.json",
   "./gebuehren.json",
+  "./strafen.json",
+  "./bestimmungen.json",
   "./push.json",
   "./manifest.webmanifest",
   "./icon-192.png",

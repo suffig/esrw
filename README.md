@@ -320,6 +320,13 @@ packt daten.json, abrechnung.csv, notizen.txt und alle Belege im Browser
 zusammen; Kartenkacheln im Dunkelmodus abgedunkelt; „Am Spieltag groß“ macht
 die Kopfkarte am Spieltag bildschirmfüllend; Tipp auf die Stand-Pille lädt neu.
 
+**Regeln offline**: Die Seite „Regeln" bringt die Strafenmatrix
+(Regelnummer, Stichwort, Strafart – suchbar und nach Strafart filterbar)
+und die für Schiedsrichter wichtigen Punkte der Durchführungsbestimmungen
+mit Fundstelle und Link zum Original. Beides liegt in der App und
+funktioniert ohne Netz. Kein Regeltext: das Regelbuch selbst darf nicht
+weiterverbreitet werden, verlinkt ist es.
+
 **Registrierung mit Namenspflicht**: Wer ein Konto anlegt, wählt seinen
 Namen aus der Liste – er fährt am Konto mit und steht damit sofort in der
 Freischaltung. Dort sieht der Betreiber, seit wann jemand wartet, kann
