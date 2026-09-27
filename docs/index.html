@@ -1520,7 +1520,29 @@
                  padding:2px 7px; border-radius:99px; margin-right:6px; vertical-align:2px; }
   .merkzeichen.gut  { background:var(--gut-bg);  color:var(--gut); }
   .merkzeichen.warn { background:var(--warn-bg); color:var(--warn); }
-  /* Strafenmatrix: Name links, je Strafart eine Spalte mit Punkt */
+  /* Strafenmatrix: Name links, je Strafart eine Spalte mit Punkt.
+     Die Farbe geht von gruen (leicht) nach rot (schwer) - so sieht man
+     mit einem Blick, wie hart es werden kann. */
+  :root {
+    --straf-2:#1d8a4a; --straf-22:#0f7f8c; --straf-5:#c27803; --straf-spd:#7c4dbe;
+    --straf-5spd:#d35400; --straf-ms:#c02626;
+  }
+  :root[data-theme="dark"] {
+    --straf-2:#5fd18f; --straf-22:#4fc9d8; --straf-5:#f0b35a; --straf-spd:#b48cf0;
+    --straf-5spd:#ff9557; --straf-ms:#ff7b7b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --straf-2:#5fd18f; --straf-22:#4fc9d8; --straf-5:#f0b35a; --straf-spd:#b48cf0;
+      --straf-5spd:#ff9557; --straf-ms:#ff7b7b;
+    }
+  }
+  .farbe-2 { --straf:var(--straf-2); }
+  .farbe-22 { --straf:var(--straf-22); }
+  .farbe-5 { --straf:var(--straf-5); }
+  .farbe-spd { --straf:var(--straf-spd); }
+  .farbe-5spd { --straf:var(--straf-5spd); }
+  .farbe-ms { --straf:var(--straf-ms); }
   .strafen-matrix { padding:10px 12px; }
   .matrix-kopf, .matrix-zeile { display:grid; grid-template-columns:minmax(0,1fr) repeat(var(--spalten,6), 1.85rem);
                                 align-items:center; gap:1px; }
@@ -1532,13 +1554,13 @@
   .matrix-kopf > span:first-child { font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--dim); font-weight:800; }
   .matrix-spalte { text-align:center; font-size:.6rem; font-weight:800; color:var(--dim); line-height:1.1;
                    word-break:keep-all; overflow-wrap:normal; letter-spacing:-.02em; }
-  .matrix-spalte.aktiv { color:var(--akzent); }
+  .matrix-spalte { color:var(--straf, var(--dim)); }
+  .matrix-spalte.aktiv { text-decoration:underline; text-underline-offset:3px; }
   .matrix-zeile { padding:7px 0; border-top:1px solid var(--linie); }
   .matrix-name b { display:block; font-size:.88rem; line-height:1.25; hyphens:auto; }
   .matrix-name small { display:block; color:var(--dim); font-size:.74rem; margin-top:2px; }
-  .matrix-feld { text-align:center; color:var(--linie); font-size:1.1rem; line-height:1; }
-  .matrix-feld.da { color:var(--akzent); }
-  .matrix-feld.hervor { color:var(--gut); }
+  .matrix-feld { text-align:center; color:var(--linie); font-size:1rem; line-height:1; }
+  .matrix-feld.da { color:var(--straf); font-size:1.15rem; text-shadow:0 0 10px color-mix(in srgb, var(--straf) 45%, transparent); }
   .rollen-zeile { display:flex; justify-content:space-between; gap:10px; padding:8px 0; border-top:1px solid var(--linie); }
   .rollen-zeile:first-of-type { border-top:0; }
   .rollen-zeile b { flex:none; font-variant-numeric:tabular-nums; }
@@ -1549,9 +1571,14 @@
   .kontakt-marke { display:block; margin-top:2px; }
   .regeln-arten { display:flex; gap:6px; overflow-x:auto; padding:2px 0 8px; scrollbar-width:none; }
   .regeln-arten::-webkit-scrollbar { display:none; }
-  .regeln-arten .chip { flex:none; cursor:pointer; font-family:inherit; }
-  .strafmarke { font-size:.7rem; font-weight:800; padding:2px 7px; border-radius:99px;
-                background:var(--akzent-hell); color:var(--akzent); white-space:nowrap; }
+  .regeln-arten .chip { flex:none; cursor:pointer; font-family:inherit; font-weight:800;
+                        color:var(--straf, var(--text)); border-color:color-mix(in srgb, var(--straf, var(--linie)) 40%, var(--linie)); }
+  .regeln-arten .chip.ich { background:color-mix(in srgb, var(--straf, var(--akzent)) 16%, transparent);
+                            border-color:var(--straf, var(--akzent)); }
+  .strafmarke { font-size:.7rem; font-weight:800; padding:2px 7px; border-radius:99px; white-space:nowrap;
+                background:color-mix(in srgb, var(--straf, var(--akzent)) 18%, transparent);
+                color:var(--straf, var(--akzent)); }
+  .rollen-strafe { color:var(--straf, var(--text)); }
   .regeln-kopf { margin:14px 0 2px; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); font-weight:800; }
   .bestimmung-punkt { padding:10px 0; border-top:1px solid var(--linie); }
   .bestimmung-punkt:first-child { border-top:0; }
@@ -1835,7 +1862,7 @@
     <div class="karte einstellungen-liste fein" id="start-ordnung"></div>
     <h3 class="abschnitt fein">Schnellzugriff<small>Welche Knöpfe unter der Kopfkarte stehen</small></h3>
     <div class="karte einstellungen-liste fein" id="schnell-wahl"></div>
-    <h3 class="abschnitt fein">Leiste unten<small>Was auf dem dritten Platz steht – Start, Spielplan, Abrechnung und Mehr bleiben</small></h3>
+    <h3 class="abschnitt fein">Leiste unten<small>Die drei mittleren Plätze frei belegen – „Start“ und „Mehr“ bleiben</small></h3>
     <div class="karte einstellungen-liste fein" id="tab-wahl"></div>
     <h3 class="abschnitt fein">Bereiche<small>Was du nicht brauchst, blendest du für dich aus – nur auf deinen Geräten</small></h3>
     <div class="karte einstellungen-liste fein" id="bereiche"></div>
@@ -2015,6 +2042,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=71"></script>
+<script src="app.js?v=72"></script>
 </body>
 </html>

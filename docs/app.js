@@ -2158,9 +2158,12 @@
   // braucht - Tausch ist bei vielen aus. Auswahl steht in den Einstellungen
   // und wandert ueber das Konto mit.
   var TAB_ZIELE = [
+    ["plan", "i-list", "Spielplan"],
+    ["mitglieder/abrechnung", "i-euro", "Abrechnung", "abrechnung"],
     ["mitglieder/kollegen", "i-users", "Kollegen", "telefon"],
     ["mitglieder/tausch", "i-swap", "Tausch", "tausch"],
     ["aenderungen", "i-bell", "Änderungen"],
+    ["regeln", "i-note", "Regeln"],
     ["archiv", "i-clock", "Archiv"],
     ["mitfahren", "i-route", "Mitfahren", "gespann"],
     ["mitglieder/info", "i-bell", "Info", "info"],
@@ -2169,53 +2172,102 @@
     ["karte", "i-pin", "Hallen", "hallen"],
     ["mitglieder/notizen", "i-note", "Notizen", "notizen"]
   ];
-  function tabDritter() {
-    var w = lesen("tab3");
-    var gewaehlt = w && TAB_ZIELE.filter(function (t) { return t[0] === w; })[0];
-    if (gewaehlt && (!gewaehlt[3] || funktion(gewaehlt[3])) && !gesperrtFuerMich(gewaehlt[0])) return gewaehlt;
-    if (!sitzungVorhanden()) return ["plan", "i-list", "Spielplan"];
-    // Standard: die Kollegen. Aenderungen stehen jetzt am Spielplan.
-    if (funktion("telefon")) return TAB_ZIELE[0];
-    return funktion("tausch") ? TAB_ZIELE[1] : TAB_ZIELE[2];
+  // Die drei mittleren Plaetze belegt jeder selbst. "Start" und "Mehr"
+  // bleiben, wo sie sind - sonst findet niemand mehr zurueck.
+  var PLAETZE = [
+    { knopf: "tab-plan", schluessel: "tab2", standard: "plan" },
+    { knopf: "tab-tausch", schluessel: "tab3", standard: "" },
+    { knopf: "tab-abrechnung", schluessel: "tab4", standard: "mitglieder/abrechnung" }
+  ];
+  function tabZiel(slug) {
+    return TAB_ZIELE.filter(function (t) { return t[0] === slug; })[0] || null;
   }
-  function tabDritterAnwenden() {
-    var b = el("tab-tausch"); if (!b) return;
-    // Ohne Konto bleibt der dritte Platz leer - sonst staende dort ein
-    // zweites Mal "Spielplan".
-    if (!sitzungVorhanden()) { b.classList.add("versteckt"); b._ziel = ""; }
-    else {
+  // Was auf dem freien Platz steht, wenn nichts gewaehlt ist
+  function tabStandardDrei() {
+    if (funktion("telefon")) return tabZiel("mitglieder/kollegen");
+    if (funktion("tausch")) return tabZiel("mitglieder/tausch");
+    return tabZiel("aenderungen");
+  }
+  function tabFuerPlatz(p) {
+    var w = lesen(p.schluessel);
+    var gewaehlt = w && tabZiel(w);
+    if (gewaehlt && (!gewaehlt[3] || funktion(gewaehlt[3])) && !gesperrtFuerMich(gewaehlt[0])) return gewaehlt;
+    if (p.standard) {
+      var std = tabZiel(p.standard);
+      if (std && (!std[3] || funktion(std[3])) && !gesperrtFuerMich(std[0])) return std;
+    }
+    if (p.schluessel === "tab3") {
+      var d = tabStandardDrei();
+      if (d && !gesperrtFuerMich(d[0])) return d;
+    }
+    return null;
+  }
+  function tabDritter() { return tabFuerPlatz(PLAETZE[1]) || ["plan", "i-list", "Spielplan"]; }
+  function tabsAnwenden() {
+    PLAETZE.forEach(function (p) {
+      var b = el(p.knopf); if (!b) return;
+      var t = tabFuerPlatz(p);
+      // Ohne Konto bleibt der Spielplan; der vierte Platz fuehrt zur Anmeldung
+      if (!sitzungVorhanden()) {
+        if (p.schluessel === "tab2") t = tabZiel("plan");
+        else if (p.schluessel === "tab4") t = ["mitglieder", "i-lock", "Anmelden"];
+        else t = null;
+      }
+      if (!t) { b.classList.add("versteckt"); b._ziel = ""; return; }
       b.classList.remove("versteckt");
-      var t = tabDritter();
       b._ziel = t[0];
       b.innerHTML = "";
       b.appendChild(ikone(t[1]));
       b.appendChild(document.createTextNode(t[2]));
       b.title = t[2];
-    }
-    // Vierter Platz: ohne Konto fuehrt er zur Anmeldung, nicht zur Abrechnung
-    var ab = el("tab-abrechnung"); if (!ab) return;
-    var an = sitzungVorhanden();
-    ab._ziel = an ? "mitglieder/abrechnung" : "mitglieder";
-    ab.innerHTML = "";
-    ab.appendChild(ikone(an ? "i-euro" : "i-lock"));
-    ab.appendChild(document.createTextNode(an ? "Abrechnung" : "Anmelden"));
+    });
+  }
+  function tabDritterAnwenden() { tabsAnwenden(); }
+  // Passt das Ziel eines Platzes zur gerade gezeigten Ansicht?
+  function tabZielAktiv(ziel, name, reiter) {
+    var t = String(ziel || "").split("/");
+    if (!t[0]) return false;
+    if (t[0] === "mitglieder") return name === "mitglieder" && reiter === (t[1] || "");
+    if (t[0] === "statistik") return name === "statseite";
+    if (t[0] === "plan") return name === "plan" || name === "halle";
+    return name === t[0];
   }
   function tabWahlRendern() {
     var box = el("tab-wahl"); if (!box) return;
     box.innerHTML = "";
-    var jetzt = tabDritter();
-    TAB_ZIELE.forEach(function (t) {
-      if (t[3] && !funktion(t[3])) return;
-      if (gesperrtFuerMich(t[0])) return;
-      var l = document.createElement("label");
-      var s = document.createElement("span"); var b = document.createElement("b"); b.textContent = t[2]; b.style.display = "block"; s.appendChild(b);
-      var r = document.createElement("input"); r.type = "radio"; r.name = "tab3"; r.checked = jetzt[0] === t[0];
-      r.addEventListener("change", function () {
-        schreiben("tab3", t[0]); einstellungenSync(); tabDritterAnwenden(); ansicht(letzteAnsicht);
-        toast("„" + t[2] + "“ steht jetzt unten in der Leiste.", "gut");
+    var namen = { tab2: "Zweiter Platz", tab3: "Dritter Platz", tab4: "Vierter Platz" };
+    PLAETZE.forEach(function (p) {
+      var jetzt = tabFuerPlatz(p);
+      var kopf = document.createElement("p");
+      kopf.className = "listen-kopf"; kopf.style.margin = "10px 0 2px";
+      kopf.textContent = namen[p.schluessel];
+      box.appendChild(kopf);
+      var wahl = document.createElement("select");
+      wahl.className = "mg-select"; wahl.style.width = "100%";
+      TAB_ZIELE.forEach(function (t) {
+        if (t[3] && !funktion(t[3])) return;
+        if (gesperrtFuerMich(t[0])) return;
+        var o = document.createElement("option");
+        o.value = t[0]; o.textContent = t[2];
+        if (jetzt && jetzt[0] === t[0]) o.selected = true;
+        wahl.appendChild(o);
       });
-      l.appendChild(s); l.appendChild(r); box.appendChild(l);
+      wahl.addEventListener("change", function () {
+        schreiben(p.schluessel, wahl.value);
+        einstellungenSync(); tabsAnwenden(); ansicht(letzteAnsicht); tabWahlRendern();
+        toast("„" + wahl.options[wahl.selectedIndex].text + "“ steht jetzt unten in der Leiste.", "gut");
+      });
+      box.appendChild(wahl);
     });
+    var zurueck = document.createElement("button");
+    zurueck.type = "button"; zurueck.className = "mg-neben"; zurueck.style.marginTop = "12px";
+    zurueck.textContent = "Wieder wie voreingestellt";
+    zurueck.addEventListener("click", function () {
+      PLAETZE.forEach(function (p) { schreiben(p.schluessel, null); });
+      einstellungenSync(); tabsAnwenden(); ansicht(letzteAnsicht); tabWahlRendern();
+      toast("Leiste zurückgesetzt.", "gut");
+    });
+    box.appendChild(zurueck);
   }
 
   var SCHNELL_ZIELE = [
@@ -2229,6 +2281,7 @@
     ["#mitglieder/frei", "i-cal", "Verfügbar", "frei"],
     ["#mitglieder/info", "i-bell", "Info", "info"],
     ["#karte", "i-pin", "Hallenkarte", "hallen"],
+    ["#regeln", "i-note", "Regeln"],
     ["#einstellungen", "i-key", "Einstellungen"]
   ];
   function schnellWahlRendern() {
@@ -2299,9 +2352,8 @@
   // Was unten in der Leiste steht, muss hier nicht noch einmal stehen.
   function inLeiste(ziel) {
     var z = String(ziel).replace(/^#/, "");
-    if (z === "plan" || z === "mehr" || z === "") return true;
-    if (z === "mitglieder/abrechnung" && funktion("abrechnung")) return true;
-    return z === (el("tab-tausch") && el("tab-tausch")._ziel);
+    if (z === "mehr" || z === "") return true;
+    return PLAETZE.filter(function (p) { var b = el(p.knopf); return b && b._ziel === z; }).length > 0;
   }
   function zeigeSchnellzugriff(p, meins) {
     var box = el("schnellzugriff"); box.innerHTML = "";
@@ -2423,13 +2475,16 @@
     if (name !== "auswahl" && name !== "detail") { el("onboarding").classList.add("versteckt"); el("onboarding-kurz").classList.add("versteckt"); el("neu").classList.add("versteckt"); }
     else if (name === "detail" && el("neu")._offen) el("neu").classList.remove("versteckt");
     el("tab-meine").classList.toggle("aktiv", name === "auswahl" || name === "detail" || name === "spiel" || name === "statseite");
-    el("tab-plan").classList.toggle("aktiv", name === "plan" || name === "halle");
-    // Dritter Tab: passt sein Ziel gerade zur Ansicht?
-    var drei = (el("tab-tausch")._ziel || "").split("/");
-    var dreiAktiv = drei[0] === "mitglieder" ? (name === "mitglieder" && reiter === (drei[1] || "")) : name === (drei[0] === "statistik" ? "statseite" : drei[0]);
-    el("tab-tausch").classList.toggle("aktiv", !!dreiAktiv);
-    el("tab-abrechnung").classList.toggle("aktiv", name === "mitglieder" && reiter === "abrechnung");
-    el("tab-mitglieder").classList.toggle("aktiv", !dreiAktiv && (name === "mehr" || name === "einstellungen" || name === "karte" || name === "status" || name === "regeln" || (name === "mitglieder" && reiter !== "tausch" && reiter !== "abrechnung")));
+    // Die drei mittleren Plaetze: aktiv ist, wessen Ziel gerade offen ist
+    var einer = false;
+    PLAETZE.forEach(function (p) {
+      var b = el(p.knopf); if (!b) return;
+      var an = tabZielAktiv(b._ziel, name, reiter);
+      b.classList.toggle("aktiv", an);
+      if (an) einer = true;
+    });
+    el("tab-mitglieder").classList.toggle("aktiv", !einer && (name === "mehr" || name === "einstellungen"
+      || name === "karte" || name === "status" || name === "regeln" || name === "mitglieder"));
     Array.prototype.forEach.call(document.querySelectorAll(".leiste button"), function (b) {
       if (b.classList.contains("aktiv")) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
     });
@@ -3363,6 +3418,11 @@
   // eigene Zusammenstellungen - der Wortlaut steht in den verlinkten
   // Dokumenten, und die liegen beim Verband, nicht hier.
   var regelnDaten = null, bestimmungenDaten = null, regelnTeil = "strafen", regelArt = "";
+  // Jede Strafart hat ihre Farbe - von Gruen (2) bis Rot (MS). Die Klasse
+  // kommt aus dem Kuerzel: "5+SPD" -> "farbe-5spd".
+  function strafFarbe(code) {
+    return "farbe-" + String(code).toLowerCase().replace(/\+/g, "").replace(/[^a-z0-9]/g, "");
+  }
   function zeigeRegeln() {
     ansicht("regeln"); aktuell = null;
     Array.prototype.forEach.call(el("regeln-modus").querySelectorAll("button"), function (b) {
@@ -3428,7 +3488,7 @@
     })();
     spalten.forEach(function (sp) {
       var b = document.createElement("button"); b.type = "button";
-      b.className = "chip" + (regelArt === sp.code ? " ich" : "");
+      b.className = "chip " + strafFarbe(sp.code) + (regelArt === sp.code ? " ich" : "");
       b.textContent = sp.code; b.title = sp.name;
       b.addEventListener("click", function () { regelArt = regelArt === sp.code ? "" : sp.code; regelnZeichnen(); });
       arten.appendChild(b);
@@ -3452,7 +3512,8 @@
       var kopf = document.createElement("div"); kopf.className = "matrix-kopf";
       var leer = document.createElement("span"); leer.textContent = treffer.length + " Vergehen"; kopf.appendChild(leer);
       spalten.forEach(function (sp) {
-        var z = document.createElement("span"); z.className = "matrix-spalte" + (regelArt === sp.code ? " aktiv" : "");
+        var z = document.createElement("span");
+        z.className = "matrix-spalte " + strafFarbe(sp.code) + (regelArt === sp.code ? " aktiv" : "");
         z.textContent = sp.code; z.title = sp.name;
         kopf.appendChild(z);
       });
@@ -3466,7 +3527,7 @@
         spalten.forEach(function (sp) {
           var z = document.createElement("span");
           var da = r.codes.indexOf(sp.code) >= 0;
-          z.className = "matrix-feld" + (da ? " da" : "") + (da && regelArt === sp.code ? " hervor" : "");
+          z.className = "matrix-feld" + (da ? " da " + strafFarbe(sp.code) : "");
           z.textContent = da ? "\u25cf" : "\u00b7";
           if (da) z.title = r.name + ": " + sp.name;
           zeile.appendChild(z);
@@ -3484,7 +3545,12 @@
       function rollenZeile(r) {
         var d = document.createElement("div"); d.className = "rollen-zeile";
         var w = document.createElement("span"); w.textContent = r.was; d.appendChild(w);
-        var st = document.createElement("b"); st.textContent = r.strafe; d.appendChild(st);
+        var st = document.createElement("b"); st.className = "rollen-strafe"; st.textContent = r.strafe;
+        if (/MS/.test(r.strafe)) st.classList.add("farbe-ms");
+        else if (/SPD/.test(r.strafe)) st.classList.add("farbe-5spd");
+        else if (/5/.test(r.strafe)) st.classList.add("farbe-5");
+        else st.classList.add("farbe-2");
+        d.appendChild(st);
         return d;
       }
       (fk.rollen || []).forEach(function (r) { fkarte.appendChild(rollenZeile(r)); });
@@ -3501,7 +3567,7 @@
     var lh = document.createElement("h4"); lh.textContent = "Was die Kürzel heissen"; lh.style.margin = "0 0 6px"; legende.appendChild(lh);
     spalten.forEach(function (sp) {
       var d = document.createElement("div"); d.className = "bestimmung-punkt";
-      var s2 = document.createElement("span"); s2.className = "strafmarke"; s2.textContent = sp.code;
+      var s2 = document.createElement("span"); s2.className = "strafmarke " + strafFarbe(sp.code); s2.textContent = sp.code;
       d.appendChild(s2); d.appendChild(document.createTextNode(" " + sp.name));
       legende.appendChild(d);
     });
@@ -3960,7 +4026,8 @@
     });
   }
   function einstellungenSammeln() {
-    return { einfach: lesen("einfach") || null, karten: lesen("karten") || null, schrift: lesen("schrift") || null, akzent: lesen("akzent") || null, kompakt: lesen("kompakt") || null, ziel: lesen("ziel") || null, start: lesen("start") || null, bereiche: lesen("bereiche") || null, pushwoche: lesen("pushwoche") || null, pushabrechnung: lesen("pushabrechnung") || null, "schnell-aus": lesen("schnell-aus") || null, "start-ordnung": lesen("start-ordnung") || null, tab3: lesen("tab3") || null };
+    return { einfach: lesen("einfach") || null, karten: lesen("karten") || null, schrift: lesen("schrift") || null, akzent: lesen("akzent") || null, kompakt: lesen("kompakt") || null, ziel: lesen("ziel") || null, start: lesen("start") || null, bereiche: lesen("bereiche") || null, pushwoche: lesen("pushwoche") || null, pushabrechnung: lesen("pushabrechnung") || null, "schnell-aus": lesen("schnell-aus") || null, "start-ordnung": lesen("start-ordnung") || null,
+             tab2: lesen("tab2") || null, tab3: lesen("tab3") || null, tab4: lesen("tab4") || null };
   }
   var syncTimer = null;
   function einstellungenSync() {
@@ -3973,8 +4040,8 @@
   function einstellungenAnwenden(e) {
     if (!e) return;
     var geaendert = false;
-    ["einfach", "karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche", "pushwoche", "pushabrechnung", "schnell-aus", "start-ordnung", "tab3"].forEach(function (k) { if ((lesen(k) || null) !== (e[k] || null)) { schreiben(k, e[k] || null); geaendert = true; } });
-    if (geaendert) { einstellungenLaden(true); themaAnwenden(); einfachAnwenden(); funktionenAnwenden(funktionenLesen()); toast("Einstellungen vom Konto übernommen", ""); if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true); }
+    ["einfach", "karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche", "pushwoche", "pushabrechnung", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4"].forEach(function (k) { if ((lesen(k) || null) !== (e[k] || null)) { schreiben(k, e[k] || null); geaendert = true; } });
+    if (geaendert) { einstellungenLaden(true); themaAnwenden(); einfachAnwenden(); tabsAnwenden(); funktionenAnwenden(funktionenLesen()); toast("Einstellungen vom Konto übernommen", ""); if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true); }
   }
   document.addEventListener("mg-profil", function (e) {
     if (e.detail && e.detail.einstellungen) einstellungenAnwenden(e.detail.einstellungen);
@@ -4047,7 +4114,7 @@
       fn();
     });
   }
-  tabTipp(el("tab-plan"), function () { location.hash = "plan"; });
+  tabTipp(el("tab-plan"), function () { location.hash = el("tab-plan")._ziel || "plan"; });
   el("gesperrt-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = ""; });
   el("aenderungen-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
   el("regeln-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
@@ -4384,6 +4451,9 @@
   // Schluessel kommt erst nach der Anmeldung aus Supabase.
   // ----------------------------------------------------------------
   function anmeldeschirm(grund) {
+    // Auch hier die Leiste setzen - ohne Konto fuehrt der vierte Platz
+    // zur Anmeldung, der dritte bleibt leer.
+    tabsAnwenden();
     document.documentElement.classList.add("abgemeldet");
     aktuell = null; daten = null;
     ansicht("mitglieder");

@@ -1919,6 +1919,26 @@ ausdrücklich.
   Code, weil iOS die Angabe allein ignoriert). Die Schriftgröße
   verstellst du weiter unter Einstellungen → App → Schrift.
 
+### 10.6ao Farben in der Strafenmatrix, Leiste unten frei belegbar
+
+* **Die Punkte sind jetzt farbig** – von Grün nach Rot, je härter die
+  Strafe: **2** grün, **2+2** türkis, **5** gelb, **SPD** violett,
+  **5+SPD** orange, **MS** rot. Spaltenköpfe, Filterknöpfe, Legende und
+  die Strafen beim Faustkampf tragen dieselben Farben. Ein Blick auf die
+  Zeile genügt: steht rechts ein roter Punkt, kann es eine Matchstrafe
+  geben.
+* **Die Leiste unten belegt jeder selbst**: Einstellungen → Leiste unten,
+  drei Auswahlfelder für den **zweiten, dritten und vierten Platz**
+  (vorher nur der dritte). Zur Wahl stehen Spielplan, Abrechnung,
+  Kollegen, Tausch, Änderungen, Regeln, Archiv, Mitfahren, Info,
+  Verfügbar, Statistik, Hallen und Notizen. „Start" und „Mehr" bleiben,
+  wo sie sind – sonst findet man nicht mehr zurück. **„Wieder wie
+  voreingestellt"** stellt Spielplan / Kollegen / Abrechnung her.
+  Die Auswahl wandert über das Konto auf die anderen Geräte.
+* Der **Schnellzugriff** auf der Startseite lässt jetzt genau das weg,
+  was unten in der Leiste steht – egal wie du sie belegt hast. Und
+  **Regeln** ist dort neu wählbar.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –
