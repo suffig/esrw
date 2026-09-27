@@ -932,14 +932,74 @@ window.Mitglieder = (function () {
     // sonst pflegt man dieselbe Adresse an zwei Stellen.
     var telefon = h("input", { type: "tel", placeholder: "z. B. 0171 2345678", autocomplete: "tel" });
     var telHinweis = h("input", { type: "text", placeholder: "Hinweis (optional), z. B. „lieber WhatsApp“", maxlength: "80" });
+    var bildZeigen = h("input", { type: "checkbox" });
+    var telefonZeigen = h("input", { type: "checkbox" });
     var adresseZeigen = h("input", { type: "checkbox" });
+    var rufname = h("input", { type: "text", placeholder: "z. B. Phil", maxlength: "30", value: p.rufname || "" });
+
+    // Bild: liegt im eigenen Profil, die Kollegen sehen es nur mit Haken
+    var bildStand = p.bild || null;
+    var bildVorschau = bildZeichen(p.name || "", null, bildStand, "avatar-gross");
+    var bildWahl = h("input", { type: "file", accept: "image/*", class: "versteckt" });
+    var bildWeg = h("button", { type: "button", class: "textknopf", text: "Bild entfernen",
+      style: bildStand ? "" : "display:none" });
+    function bildSetzen(url) {
+      bildStand = url || null;
+      bildVorschau.style.backgroundImage = url ? "url(" + url + ")" : "";
+      bildVorschau.classList.toggle("mit-bild", !!url);
+      bildVorschau.textContent = url ? "" : initialenVon(p.name || (auswahl.options[auswahl.selectedIndex] || {}).text || "");
+      bildWeg.style.display = url ? "" : "none";
+      bildZeigen.disabled = !url;
+      if (!url) bildZeigen.checked = false;
+      vorschauNeu();
+    }
+    bildWahl.addEventListener("change", function () {
+      var f = bildWahl.files && bildWahl.files[0];
+      if (!f) return;
+      bildVerkleinern(f).then(function (url) {
+        bildSetzen(url); bildZeigen.checked = true; vorschauNeu();
+        kurzMeldung("Bild übernommen, jetzt noch speichern.", "gut");
+      }).catch(function (e) { meldung(e.message || "Bild konnte nicht gelesen werden.", "warn"); });
+      bildWahl.value = "";
+    });
+    bildWeg.addEventListener("click", function () { bildSetzen(null); });
+
+    // "So sehen dich die Kollegen" - damit die Schalter nicht geraten werden
+    var vorschau = h("div", { class: "telefon-liste profil-vorschau" });
+    function vorschauNeu() {
+      leeren(vorschau);
+      var zeigtBild = bildZeigen.checked && bildStand;
+      var zeigtTel = telefonZeigen.checked && telefon.value.trim();
+      var zeigtAdr = adresseZeigen.checked && heimat.value.trim();
+      if (!zeigtBild && !zeigtTel && !zeigtAdr) {
+        vorschau.appendChild(h("p", { class: "meta", style: "margin:0",
+          text: "Die Kollegen sehen von dir nur deinen Namen aus der Einteilung." }));
+        return;
+      }
+      vorschau.appendChild(telefonZeile({
+        slug: auswahl.value, name: (auswahl.options[auswahl.selectedIndex] || {}).text || p.name || "Du",
+        rufname: rufname.value.trim() || null,
+        bild: zeigtBild ? bildStand : null,
+        telefon: zeigtTel ? telefon.value.trim() : "",
+        anschrift: zeigtAdr ? heimat.value.trim() : "",
+        hinweis: zeigtTel ? telHinweis.value.trim() : "", eigen: true
+      }));
+    }
+    [bildZeigen, telefonZeigen, adresseZeigen].forEach(function (s) { s.addEventListener("change", vorschauNeu); });
+    [rufname, telefon, telHinweis].forEach(function (f) { f.addEventListener("input", vorschauNeu); });
+
     var kontaktStand = null;
     speichern(sb.from("kontakte").select("*").eq("user_id", session.user.id).maybeSingle()).then(function (r) {
       kontaktStand = (r && r.data) || null;
-      if (!kontaktStand) return;
+      bildZeigen.disabled = !bildStand;
+      if (!kontaktStand) { vorschauNeu(); return; }
       telefon.value = kontaktStand.telefon || "";
       telHinweis.value = kontaktStand.hinweis || "";
       adresseZeigen.checked = !!kontaktStand.anschrift;
+      telefonZeigen.checked = !!kontaktStand.telefon;
+      bildZeigen.checked = !!kontaktStand.bild;
+      if (!rufname.value) rufname.value = kontaktStand.rufname || "";
+      vorschauNeu();
     });
     var modell = h("select", { class: "mg-select" }, [
       h("option", { value: "einfach", text: "Entfernungspauschale, einfache Strecke, volle km" }),
@@ -978,6 +1038,8 @@ window.Mitglieder = (function () {
                     satz_hinrueck: zahl(satzHinrueck.value) != null ? zahl(satzHinrueck.value) : 0.30,
                     km_satz: modell.value === "einfach" ? zahl(satzEinfach.value) : zahl(satzHinrueck.value),
                     obmann_email: obmann.value.trim() || null,
+                    bild: bildStand,
+                    rufname: rufname.value.trim() || null,
                     // Neue Adresse -> alte Strecken sind wertlos
                     // Neue Adresse -> alte Strecken sind wertlos
                     strecken: heimat.value.trim() === (p.heimat || "") ? (p.strecken || {}) : {} };
@@ -995,15 +1057,25 @@ window.Mitglieder = (function () {
         } else sb.from("wohnorte").delete().eq("user_id", session.user.id).then(function () {}).catch(function () {});
         // Nummer und Anschrift fuer die Kollegen: eine Zeile, aus demselben Formular
         var nr = telefon.value.trim();
-        if (nr) {
-          speichern(sb.from("kontakte").upsert({ user_id: session.user.id, slug: zeile.slug, name: zeile.name, telefon: nr,
-                                                 anschrift: adresseZeigen.checked ? (zeile.heimat || null) : null,
-                                                 hinweis: telHinweis.value.trim() || null }, { onConflict: "user_id" }))
-            .then(function (r3) { if (r3 && r3.error) meldung(fehlerText(r3.error) + (/anschrift/.test(r3.error.message || "") ? ", schema.sql (v24) ausführen." : ""), "warn"); });
+        var zeigtBild = bildZeigen.checked && bildStand;
+        var zeigtTel = telefonZeigen.checked && nr;
+        var zeigtAdr = adresseZeigen.checked && zeile.heimat;
+        if (zeigtBild || zeigtTel || zeigtAdr) {
+          speichern(sb.from("kontakte").upsert({ user_id: session.user.id, slug: zeile.slug, name: zeile.name,
+                                                 telefon: zeigtTel ? nr : null,
+                                                 anschrift: zeigtAdr ? zeile.heimat : null,
+                                                 bild: zeigtBild ? bildStand : null,
+                                                 rufname: rufname.value.trim() || null,
+                                                 hinweis: zeigtTel ? (telHinweis.value.trim() || null) : null }, { onConflict: "user_id" }))
+            .then(function (r3) {
+              if (r3 && r3.error) meldung(fehlerText(r3.error) + (/bild|rufname|null value/.test(r3.error.message || "") ? ", schema.sql (v29) ausführen." : ""), "warn");
+            });
         } else if (kontaktStand) {
           speichern(sb.from("kontakte").delete().eq("user_id", session.user.id));
         }
         cache.kontakte = {}; cache.geladen.telefon = 0;
+        bilderCache = null; try { localStorage.removeItem("bilder"); } catch (e) {}
+        document.dispatchEvent(new CustomEvent("mg-bild", { detail: { bild: bildStand } }));
         document.dispatchEvent(new CustomEvent("mg-profil", { detail: { slug: profil.slug, name: profil.name } }));
         meldung("Gespeichert.", "gut");
         if (!zurueck) {
@@ -1017,12 +1089,29 @@ window.Mitglieder = (function () {
       h("h4", { text: zurueck ? "Mein Profil" : "Wer bist du?" }),
       zurueck ? h("p", { class: "meta", style: "margin:0 0 8px", text: "Alles an einer Stelle: Name, Anschrift, Nummer. Abrechnung, Rechnung und die Liste der Kollegen nehmen sich die Angaben von hier." }) : null,
       h("label", { text: "Dein Name auf esrw.de" }), auswahl,
+      h("div", { class: "profil-bildzeile" }, [
+        bildVorschau,
+        h("div", {}, [
+          h("button", { type: "button", class: "mg-neben", text: bildStand ? "Bild ändern" : "Bild wählen",
+                        onclick: function () { bildWahl.click(); } }),
+          bildWeg,
+          h("small", { class: "meta", style: "display:block;margin-top:4px",
+                       text: "Wird auf 128 Pixel verkleinert und liegt in deinem Profil." })
+        ]),
+        bildWahl
+      ]),
+      h("label", { text: "Rufname, wie dich die Kollegen ansprechen (optional)" }), rufname,
       h("label", { text: "Heimatadresse, Startpunkt für die Strecke zur Halle" }),
       adresse.box,
       h("label", { class: "mg-check", style: "margin-top:8px" }, [teilen, " Wohnort für Fahrgemeinschaften teilen. Kollegen sehen nur den Ort und die Lage auf etwa einen Kilometer, keine Adresse. Dann schlägt „Zusammen fahren“ vor, wer auf dem Weg liegt."]),
-      h("label", { class: "mg-check", style: "margin-top:4px" }, [adresseZeigen, " Anschrift im Reiter „Kollegen“ zeigen, damit Kollegen wissen, wo du wohnst. Ohne Haken sieht sie niemand."]),
       h("label", { text: "Handynummer für die Kollegen (freiwillig, jederzeit löschbar)" }), telefon,
       telHinweis,
+      h("p", { class: "regeln-kopf", style: "margin:14px 0 2px", text: "Was die Kollegen sehen" }),
+      h("label", { class: "mg-check" }, [bildZeigen, " Profilbild zeigen"]),
+      h("label", { class: "mg-check", style: "margin-top:4px" }, [telefonZeigen, " Handynummer zeigen"]),
+      h("label", { class: "mg-check", style: "margin-top:4px" }, [adresseZeigen, " Anschrift zeigen"]),
+      h("p", { class: "meta", style: "margin:8px 0 4px", text: "Nur Freigeschaltete sehen das, und nur, was hier angehakt ist. So sieht es aus:" }),
+      vorschau,
       h("label", { text: "E-Mail des Obmanns (für „Monat per E-Mail“ in der Abrechnung, optional)" }), obmann,
       h("label", { text: "Kilometermodell" }), modell,
       h("div", { class: "mg-felder mg-zwei" }, [
@@ -3218,6 +3307,7 @@ window.Mitglieder = (function () {
       var alt = aus[k.slug] || {};
       aus[k.slug] = { slug: k.slug, name: name(k.slug, k.name), telefon: k.telefon || alt.telefon || "",
                       anschrift: k.anschrift || alt.anschrift || "", hinweis: k.hinweis || "",
+                      bild: k.bild || null, rufname: k.rufname || null,
                       eigen: true, inListe: !!alt.inListe, betreiber: alt.telefon || null };
     });
     var liste = Object.keys(aus).map(function (k) { return aus[k]; });
@@ -3277,7 +3367,9 @@ window.Mitglieder = (function () {
   // Eine Kachel je Kollege: Nummer und Anschrift, jede mit ihren Knoepfen.
   function telefonZeile(z, zusatz) {
     var karte = h("div", { class: "telefon-zeile" });
-    var kopf = h("div", { class: "kontakt-kopf" }, [h("b", { text: z.name })]);
+    var titel = z.rufname ? z.name + " (" + z.rufname + ")" : z.name;
+    var kopf = h("div", { class: "kontakt-kopf" }, [
+      bildZeichen(z.name, z.slug, z.bild, "avatar-klein"), h("b", { text: titel })]);
     if (z.kommt) kopf.appendChild(h("small", { class: "kontakt-marke",
       text: (z.naechstes ? "am " + datumLang(new Date(z.naechstes)).replace(/(\d{2}\.\d{2})\.\d{4}/, "$1.") + " zusammen" : "kommt zusammen")
         + (z.kommt > 1 ? " · noch " + (z.kommt - 1) + " weitere" : "") }));
@@ -3290,7 +3382,7 @@ window.Mitglieder = (function () {
       h("span", { text: z.telefon }), h("span", { class: "telefon-wege" }, telefonWege(z.telefon))]));
     if (z.anschrift) karte.appendChild(h("div", { class: "kontakt-wert" }, [
       h("span", { text: z.anschrift }), h("span", { class: "telefon-wege" }, anschriftWege(z.anschrift))]));
-    if (!z.telefon && !z.anschrift) karte.appendChild(h("small", { class: "meta", text: "keine Angaben" }));
+    if (!z.telefon && !z.anschrift) karte.appendChild(h("small", { class: "meta", text: z.bild ? "nur das Bild freigegeben" : "keine Angaben" }));
     if (zusatz && zusatz.length) karte.appendChild(h("div", { class: "kontakt-wert kontakt-admin" }, [h("span", {}), h("span", { class: "telefon-wege" }, zusatz)]));
     return karte;
   }
@@ -4878,6 +4970,66 @@ window.Mitglieder = (function () {
       .then(function (r) { return (r && !r.error && r.data && r.data.length) ? r.data : null; });
   }
 
+  // Bild klein rechnen, bevor es in die Datenbank geht: quadratisch auf
+  // 128 Pixel, als JPEG. Aus vier Megabyte vom Handy werden so ein paar
+  // Kilobyte - das laedt auch im Hallenfunkloch.
+  function bildVerkleinern(datei) {
+    return new Promise(function (fertig, schiefgegangen) {
+      if (!datei || !/^image\//.test(datei.type)) { schiefgegangen(new Error("Das ist kein Bild.")); return; }
+      var leser = new FileReader();
+      leser.onerror = function () { schiefgegangen(new Error("Bild konnte nicht gelesen werden.")); };
+      leser.onload = function () {
+        var bild = new Image();
+        bild.onerror = function () { schiefgegangen(new Error("Bild konnte nicht gelesen werden.")); };
+        bild.onload = function () {
+          var kante = 128;
+          var flaeche = document.createElement("canvas");
+          flaeche.width = kante; flaeche.height = kante;
+          var stift = flaeche.getContext("2d");
+          var seite = Math.min(bild.width, bild.height);
+          stift.drawImage(bild, (bild.width - seite) / 2, (bild.height - seite) / 2, seite, seite, 0, 0, kante, kante);
+          var guete = 0.72, url = flaeche.toDataURL("image/jpeg", guete);
+          while (url.length > 24000 && guete > 0.35) { guete -= 0.1; url = flaeche.toDataURL("image/jpeg", guete); }
+          fertig(url);
+        };
+        bild.src = leser.result;
+      };
+      leser.readAsDataURL(datei);
+    });
+  }
+
+  // Zeichen fuer eine Person: das Bild, sonst die Anfangsbuchstaben
+  function bildZeichen(name, slug, bild, klasse) {
+    var e = h("span", { class: klasse || "avatar-gross" });
+    if (slug) e.setAttribute("data-slug", slug);
+    if (bild) { e.style.backgroundImage = "url(" + bild + ")"; e.classList.add("mit-bild"); e.textContent = ""; }
+    else e.textContent = initialenVon(name);
+    return e;
+  }
+  function initialenVon(name) {
+    var t = (name || "?").split(",");
+    return (((t[1] || "").trim()[0] || "") + ((t[0] || "").trim()[0] || "")).toUpperCase() || "?";
+  }
+
+  // Bilder aller Kollegen, die eines freigegeben haben. Liegt zusaetzlich
+  // im Speicher des Geraets, damit die Liste sofort steht und offline auch.
+  var bilderCache = null;
+  function bilder() {
+    if (bilderCache) return Promise.resolve(bilderCache);
+    try { bilderCache = JSON.parse(localStorage.getItem("bilder") || "null"); } catch (e) {}
+    var lauf = speichern(sb.from("kontakte").select("slug,bild,rufname")).then(function (r) {
+      if (!r || r.error || !r.data) return bilderCache || {};
+      var aus = {};
+      r.data.forEach(function (z) { if (z.bild || z.rufname) aus[z.slug] = { bild: z.bild || null, rufname: z.rufname || null }; });
+      bilderCache = aus;
+      try { localStorage.setItem("bilder", JSON.stringify(aus)); } catch (e) {}
+      return aus;
+    });
+    return bilderCache ? Promise.resolve(bilderCache) : lauf;
+  }
+  function bildVon(slug) { return (bilderCache && bilderCache[slug] && bilderCache[slug].bild) || null; }
+  function rufnameVon(slug) { return (bilderCache && bilderCache[slug] && bilderCache[slug].rufname) || null; }
+
   function telefonVon(slug) { var k = nummerVon(slug); if (!k) return null; var l = telefonLink(k.telefon); return { telefon: k.telefon, tel: l.tel, wa: l.wa }; }
   function mitfahrtSetzen(spiel, art, text) {
     if (!session || !profil) return Promise.resolve(false);
@@ -4936,5 +5088,5 @@ window.Mitglieder = (function () {
            extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat, obmann: obmann, termine: termine,
            einstellungenSpeichern: einstellungenSpeichern, radar: radar, angebotMachen: angebotMachen,
            kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl, kontoRendern: kontoRendern, kontaktVon: kontaktVon, istAdmin: istAdmin, adminRecht: adminRecht, tresorSchluessel: tresorSchluessel, rechnungSprung: rechnungSprung, korrekturSpeichern: korrekturSpeichern, spielManuellLoeschen: spielManuellLoeschen,
-           mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, telefonVon: telefonVon, spielzeiten: spielzeiten, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb, wohnortEigen: wohnortEigen };
+           mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, telefonVon: telefonVon, spielzeiten: spielzeiten, bilder: bilder, bildVon: bildVon, rufnameVon: rufnameVon, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb, wohnortEigen: wohnortEigen };
 })();

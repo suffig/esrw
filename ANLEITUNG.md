@@ -2129,6 +2129,46 @@ Dazu drei Dinge, die die Seite brauchbarer machen:
 * **Die Suche findet auch Spielzeiten.** „Landesliga" oder „U11" führen
   jetzt direkt in den Reiter, genau wie Strafen und Bestimmungen.
 
+### 10.6av Profilbild, Strafrechner als eigene Seite (Schema v29)
+
+**Vorher `supabase/schema.sql` bis v29 einspielen.** Der Abschnitt legt
+die Spalten für Bild und Rufname an und erlaubt eine leere Telefonnummer -
+wer nur ein Bild zeigen will, soll dafür keine Nummer hinterlegen müssen.
+
+* **Der Strafrechner hat eine eigene Seite.** Auf der Regelseite stand er
+  den 24 Vergehen im Weg. Er liegt jetzt unter **Mehr → Strafrechner**,
+  lässt sich wie jedes andere Ziel auf einen der drei mittleren Plätze in
+  der Leiste unten legen und steht im Schnellzugriff. Die Karten der
+  Regelseite haben ausserdem endlich Abstand zueinander, vorher klebten
+  sie aneinander.
+
+* **Profilbild.** Unter **Mein Profil** ein Bild wählen: die App schneidet
+  es quadratisch zu, rechnet es auf 128 Pixel herunter und speichert es
+  als JPEG - aus vier Megabyte vom Handy werden ein paar Kilobyte. Das
+  Bild erscheint in deiner Kopfzeile, auf deiner Seite, im Gespann auf den
+  Spielkarten und bei den Kollegen. Es liegt zweimal: die eigene Fassung
+  im Profil (nur für dich lesbar, bleibt auch erhalten, wenn du es gerade
+  nicht zeigst) und die freigegebene Fassung in der Kontaktzeile.
+
+* **Sichtbarkeit einzeln.** Statt eines Hakens für die Anschrift gibt es
+  jetzt drei Schalter unter **„Was die Kollegen sehen"**: Profilbild,
+  Handynummer, Anschrift. Darunter steht eine Vorschau der Zeile, so wie
+  die Kollegen sie sehen - inklusive dem Fall, dass sie gar nichts sehen.
+  Nur Freigeschaltete sehen überhaupt etwas.
+
+* **Rufname**: wie dich die Kollegen ansprechen („Phil"). Steht in Klammern
+  hinter dem Namen in der Kollegenliste; für Rechnungen bleibt der
+  offizielle Name aus der Einteilung.
+
+* **Woche teilen**: unter deinen Spielen ein Knopf, der die nächsten sieben
+  Tage als kurzen Text ins Teilen-Fenster legt - Datum, Uhrzeit, Liga,
+  Paarung, Halle, Treffpunkt. Ohne Teilen-Fenster wird kopiert.
+
+* **Abends dunkel**: in den Einstellungen unter **Aussehen** jetzt vier
+  Möglichkeiten - System, Hell, Dunkel und **Abends**. „Abends" schaltet
+  von 19 bis 7 Uhr auf dunkel, egal was das Telefon eingestellt hat, und
+  wechselt auch, während die App offen liegt.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

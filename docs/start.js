@@ -39,10 +39,18 @@
   var farbe = "hsl(" + h + ", 45%, 42%)";
 
   document.getElementById("person").textContent = p.name;
+  var eigenesBild = null;
+  try { eigenesBild = localStorage.getItem("mein-bild"); } catch (e) {}
+  function zeichen(e) {
+    e.textContent = kurz; e.style.background = farbe;
+    if (!eigenesBild) return;
+    e.style.backgroundImage = "url(" + eigenesBild + ")";
+    e.classList.add("mit-bild");
+  }
   var av = document.getElementById("person-avatar");
-  av.textContent = kurz; av.style.background = farbe;
+  zeichen(av);
   var kopf = document.getElementById("avatar");
-  kopf.textContent = kurz; kopf.classList.remove("leer"); kopf.style.background = farbe;
+  kopf.classList.remove("leer"); zeichen(kopf);
 
   var detail = document.getElementById("detail");
   detail.classList.add("start-laedt");

@@ -1196,3 +1196,20 @@ drop policy if exists "Admin pflegt Zeiten" on public.spielzeiten;
 create policy "Spielzeiten lesen"   on public.spielzeiten for select to authenticated using (true);
 create policy "Admin pflegt Zeiten" on public.spielzeiten for all    to authenticated
   using (public.ist_admin()) with check (public.ist_admin());
+
+
+-- ======================================================================
+-- v29: Profilbild, Rufname, Sichtbarkeit je Angabe
+-- ======================================================================
+-- Das Bild liegt zweimal: in "profile" die eigene Fassung (nur fuer einen
+-- selbst lesbar, bleibt erhalten, auch wenn man es gerade nicht zeigt) und
+-- in "kontakte" die Fassung, die die freigeschalteten Kollegen sehen. Die
+-- Bilder sind klein gerechnet (128 Pixel, JPEG), darum reicht eine Spalte.
+--
+-- "telefon" darf jetzt leer sein: wer nur ein Bild oder die Anschrift
+-- zeigen moechte, soll dafuer keine Nummer hinterlegen muessen.
+alter table public.profile  add column if not exists bild    text;
+alter table public.profile  add column if not exists rufname text;
+alter table public.kontakte add column if not exists bild    text;
+alter table public.kontakte add column if not exists rufname text;
+alter table public.kontakte alter column telefon drop not null;

@@ -252,14 +252,40 @@
 
   // ----------------------------------------------------------------- Thema
 
+  // "abend": von 19 bis 7 Uhr dunkel, egal was das Handy eingestellt hat.
+  // In der Halle ist es abends dunkel, das Telefon weiss davon nichts.
+  var ABEND_VON = 19, ABEND_BIS = 7;
+  function abendDunkel() {
+    var st = new Date().getHours();
+    return st >= ABEND_VON || st < ABEND_BIS;
+  }
   function themaAnwenden() {
     var t = lesen("thema");
-    if (t === "dark" || t === "light") document.documentElement.setAttribute("data-theme", t);
+    var gewaehlt = t === "abend" ? (abendDunkel() ? "dark" : "light") : t;
+    if (gewaehlt === "dark" || gewaehlt === "light") document.documentElement.setAttribute("data-theme", gewaehlt);
     else document.documentElement.removeAttribute("data-theme");
-    var dunkel = t === "dark" || (!t && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    var dunkel = gewaehlt === "dark" || (!gewaehlt && window.matchMedia("(prefers-color-scheme: dark)").matches);
     el("thema").querySelector("use").setAttribute("href", dunkel ? "#i-sun" : "#i-moon");
+    var wahl = el("thema-wahl");
+    if (wahl) Array.prototype.forEach.call(wahl.querySelectorAll("button"), function (b) {
+      b.classList.toggle("aktiv", (b.getAttribute("data-thema") || "") === (t || ""));
+    });
   }
-  el("thema2").addEventListener("click", function () { el("thema").click(); });
+  // Der Wechsel soll auch kommen, wenn die App offen liegen bleibt
+  setInterval(function () { if (lesen("thema") === "abend") themaAnwenden(); }, 120000);
+  document.addEventListener("visibilitychange", function () { if (!document.hidden) themaAnwenden(); });
+  (function () {
+    var wahl = el("thema-wahl");
+    if (!wahl) return;
+    Array.prototype.forEach.call(wahl.querySelectorAll("button"), function (b) {
+      b.addEventListener("click", function () {
+        var w = b.getAttribute("data-thema");
+        schreiben("thema", w || null);
+        themaAnwenden();
+        if (w === "abend") toast("Abends dunkel, ab " + ABEND_VON + " Uhr bis " + ABEND_BIS + " Uhr.", "gut");
+      });
+    });
+  })();
   // Auf schmalen Geraeten ist neben Knoepfen und Zeichen kein Platz fuer
   // "Einteilungen ESRW". Statt ihn abzuschneiden, steht dort die Kurzform.
   function titelAnpassen() {
@@ -275,10 +301,37 @@
   // Die Schrift kommt nach - vorher misst der Browser die falsche Breite
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(titelAnpassen);
 
+  // Profilbilder der Kollegen. Sie stehen in der Datenbank, kommen also
+  // erst nach dem Anmelden - deshalb erst Buchstaben, dann nachtragen.
+  var bilder = {};
+  function bildFuer(slug) { return (bilder[slug] && bilder[slug].bild) || null; }
+  function bildAnwenden(e, slug) {
+    var b = bildFuer(slug);
+    if (!b) return;
+    e.style.backgroundImage = "url(" + b + ")";
+    e.classList.add("mit-bild");
+  }
+  function bilderAnwenden() {
+    Array.prototype.forEach.call(document.querySelectorAll("[data-slug]"), function (e) {
+      bildAnwenden(e, e.getAttribute("data-slug"));
+    });
+    avatarKopf();
+  }
+  function bilderLaden() {
+    if (!sitzungVorhanden()) return;
+    ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
+      .then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.bilder() : null; })
+      .then(function (b) { if (!b) return; bilder = b; bilderAnwenden(); })
+      .catch(function () {});
+  }
+
   function avatarKopf() {
     var b = el("avatar");
     if (profil && profil.name) { b.textContent = initialen(profil.name); b.classList.remove("leer"); b.style.background = farbeFuer(profil.slug); }
     else { b.textContent = "?"; b.classList.add("leer"); b.style.background = ""; }
+    var eigen = (profil && bildFuer(profil.slug)) || lesen("mein-bild");
+    b.classList.toggle("mit-bild", !!eigen);
+    b.style.backgroundImage = eigen ? "url(" + eigen + ")" : "";
   }
   // Tipp auf die Stand-Anzeige holt frische Daten
   el("stand").addEventListener("click", function () {
@@ -348,7 +401,8 @@
   });
   el("thema").addEventListener("click", function () {
     var t = lesen("thema");
-    var dunkel = t === "dark" || (!t && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    var dunkel = t === "abend" ? abendDunkel()
+      : t === "dark" || (!t && window.matchMedia("(prefers-color-scheme: dark)").matches);
     schreiben("thema", dunkel ? "light" : "dark");
     themaAnwenden();
   });
@@ -1385,7 +1439,9 @@
     e.className = "chip" + (profil && person.slug === profil.slug ? " ich" : "") + (klasseExtra ? " " + klasseExtra : "");
     if (person.slug) e.href = "#" + person.slug;
     var av = document.createElement("i"); av.className = "avatar"; av.textContent = initialen(person.name);
-    av.style.background = farbeFuer(person.slug || person.name); e.appendChild(av);
+    av.style.background = farbeFuer(person.slug || person.name);
+    if (person.slug) { av.setAttribute("data-slug", person.slug); bildAnwenden(av, person.slug); }
+    e.appendChild(av);
     e.appendChild(document.createTextNode(person.name));
     if (mitRolle && person.rolle) {
       var b = document.createElement("b"); b.className = person.rolle; b.textContent = person.rolle;
@@ -2205,7 +2261,11 @@
     aktuell = p;
     ansicht("detail");
     el("person").textContent = p.name;
-    el("person-avatar").textContent = initialen(p.name); el("person-avatar").style.background = farbeFuer(p.slug);
+    var pav = el("person-avatar");
+    pav.textContent = initialen(p.name); pav.style.background = farbeFuer(p.slug);
+    pav.setAttribute("data-slug", p.slug);
+    pav.classList.remove("mit-bild"); pav.style.backgroundImage = "";
+    bildAnwenden(pav, p.slug);
     avatarKopf();
     var meins = !!(profil && profil.slug === p.slug);
     el("detail").classList.toggle("start-ruhig", meins && startEinstellung("ruhig"));
@@ -2241,6 +2301,16 @@
         { label: "Spielplan ansehen", href: "#plan" }));
     }
     else kommend.forEach(function (s, i) { var k = karte(s, p); k.style.setProperty("--i", Math.min(i, 8)); ziel.appendChild(k); });
+    // Die naechsten sieben Tage weiterschicken - steht bei den Spielen,
+    // damit man es findet, wenn man gerade danach schaut.
+    if (istIch && wocheText()) {
+      var wz = document.createElement("p"); wz.className = "meta woche-teilen";
+      var wk = document.createElement("button"); wk.type = "button"; wk.className = "textknopf";
+      wk.appendChild(ikone("i-kopieren"));
+      wk.appendChild(document.createTextNode(navigator.share ? " Woche teilen" : " Woche kopieren"));
+      wk.addEventListener("click", wocheTeilen);
+      wz.appendChild(wk); ziel.appendChild(wz);
+    }
     if (gewesen.length && startEinstellung("vergangene")) {
       var box = document.createElement("details"); box.className = "karte zuletzt-box";
       var sum = document.createElement("summary"); sum.className = "abschnitt"; sum.textContent = "Vergangene Spiele (" + gewesen.length + ")"; box.appendChild(sum);
@@ -2273,6 +2343,7 @@
     ["mitglieder/tausch", "i-swap", "Tausch", "tausch"],
     ["aenderungen", "i-bell", "Änderungen"],
     ["regeln", "i-buch", "Regeln"],
+    ["rechner", "i-rechner", "Strafrechner"],
     ["archiv", "i-clock", "Archiv"],
     ["mitfahren", "i-route", "Mitfahren", "gespann"],
     ["mitglieder/info", "i-info", "Info", "info"],
@@ -2391,6 +2462,8 @@
     ["#mitglieder/info", "i-info", "Info", "info"],
     ["#karte", "i-pin", "Hallenkarte", "hallen"],
     ["#regeln", "i-buch", "Regeln"],
+    ["#rechner", "i-rechner", "Strafrechner"],
+    ["#woche-teilen", "i-kopieren", "Woche teilen"],
     ["#einstellungen", "i-key", "Einstellungen"]
   ];
   function schnellWahlRendern() {
@@ -2464,6 +2537,34 @@
     if (z === "mehr" || z === "") return true;
     return PLAETZE.filter(function (p) { var b = el(p.knopf); return b && b._ziel === z; }).length > 0;
   }
+  // Die naechsten sieben Tage als kurzer Text - fuer die Fahrgemeinschaft
+  // oder zu Hause. Teilen muss direkt aus dem Tipp kommen, sonst laesst
+  // das Handy das Teilen-Fenster nicht zu.
+  function wocheText() {
+    if (!profil || !profil.slug || !daten) return "";
+    var p = personMit(profil.slug);
+    if (!p) return "";
+    var jetzt = new Date(), bis = new Date(jetzt.getTime() + 7 * 86400000);
+    var liste = (p.spiele || []).filter(function (s) {
+      var d = new Date(s.beginn);
+      return !s.vergangen && d >= jetzt && d <= bis && !istGeloescht(s);
+    });
+    if (!liste.length) return "";
+    return "Meine Woche:\n" + liste.map(function (s) {
+      var d = new Date(s.beginn);
+      return "\u2022 " + datumKurz(d) + " " + uhr(d) + " Uhr, " + (s.liga ? s.liga + ": " : "") + s.paarung
+        + (s.halle ? "\n  " + s.halle : "")
+        + "\n  Treffpunkt " + uhr(new Date(s.treffpunkt)) + " Uhr";
+    }).join("\n");
+  }
+  function wocheTeilen() {
+    var text = wocheText();
+    if (!text) { toast("In den nächsten sieben Tagen steht nichts an.", "warn"); return; }
+    if (navigator.share) navigator.share({ text: text }).catch(function () {});
+    else if (navigator.clipboard) navigator.clipboard.writeText(text).then(function () { toast("Woche kopiert ✓", "gut"); });
+    else toast("Teilen geht auf diesem Gerät nicht.", "warn");
+  }
+
   function zeigeSchnellzugriff(p, meins) {
     var box = el("schnellzugriff"); box.innerHTML = "";
     if (!meins || !startEinstellung("schnell")) { box.classList.add("versteckt"); return; }
@@ -2473,7 +2574,16 @@
     var zuletzt = [];
     try { zuletzt = JSON.parse(lesen("zuletzt-ziele") || "[]"); } catch (e) {}
     eintraege.sort(function (a, b) { var ia = zuletzt.indexOf(a[0]), ib = zuletzt.indexOf(b[0]); return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib); });
-    eintraege.forEach(function (e) { var a = document.createElement("a"); a.href = e[0]; if (zuletzt.indexOf(e[0]) >= 0 && zuletzt.indexOf(e[0]) < 3) a.classList.add("zuletzt"); a.appendChild(ikone(e[1])); a.appendChild(document.createTextNode(e[2])); box.appendChild(a); });
+    eintraege.forEach(function (e) {
+      // "Woche teilen" ist kein Ziel, sondern eine Tat - deshalb ein Knopf
+      var tat = e[0] === "#woche-teilen";
+      var a = document.createElement(tat ? "button" : "a");
+      if (tat) { a.type = "button"; a.addEventListener("click", wocheTeilen); }
+      else a.href = e[0];
+      if (zuletzt.indexOf(e[0]) >= 0 && zuletzt.indexOf(e[0]) < 3) a.classList.add("zuletzt");
+      a.appendChild(ikone(e[1])); a.appendChild(document.createTextNode(e[2]));
+      box.appendChild(a);
+    });
     box.classList.remove("versteckt");
   }
 
@@ -2579,7 +2689,7 @@
   function ansicht(name) {
     letzteAnsicht = name;
     el("detail").classList.remove("start-laedt");
-    ["auswahl", "detail", "plan", "mitglieder", "halle", "status", "spiel", "mehr", "einstellungen", "karte", "statseite", "aenderungen", "mitfahren", "archiv", "regeln", "gesperrt"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
+    ["auswahl", "detail", "plan", "mitglieder", "halle", "status", "spiel", "mehr", "einstellungen", "karte", "statseite", "aenderungen", "mitfahren", "archiv", "regeln", "rechner", "gesperrt"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
     if (name !== "plan" && typeof filterBlatt === "function" && !el("plan-filter-blatt").classList.contains("versteckt")) filterBlatt(false);
     var reiter = (location.hash.split("/")[1] || "");
     if (name !== "auswahl" && name !== "detail") { el("onboarding").classList.add("versteckt"); el("onboarding-kurz").classList.add("versteckt"); el("neu").classList.add("versteckt"); }
@@ -2594,7 +2704,7 @@
       if (an) einer = true;
     });
     el("tab-mitglieder").classList.toggle("aktiv", !einer && (name === "mehr" || name === "einstellungen"
-      || name === "karte" || name === "status" || name === "regeln" || name === "mitglieder"));
+      || name === "karte" || name === "status" || name === "regeln" || name === "rechner" || name === "mitglieder"));
     Array.prototype.forEach.call(document.querySelectorAll(".leiste button"), function (b) {
       if (b.classList.contains("aktiv")) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current");
     });
@@ -3451,6 +3561,7 @@
       ["#aenderungen", "i-list", "\u00c4nderungen", "Was sich in 14 Tagen getan hat \u2013 mit Vorher/Nachher"],
       funktion("notizen") ? ["#mitglieder/notizen", "i-note", "Notizen", "Private Spielnotizen"] : null,
       ["#regeln", "i-buch", "Regeln", "Strafenmatrix, Spielzeiten und Bestimmungen, auch offline"],
+      ["#rechner", "i-rechner", "Strafrechner", "Wer sitzt, wer spielt: die Stärke auf dem Eis"],
       ["Gemeinsam"],
       funktion("gespann") ? ["#mitfahren", "i-route", "Zusammen fahren", "Wer f\u00e4hrt wohin \u2013 auf dem Weg, bieten, suchen"] : null,
       funktion("telefon") ? ["#mitglieder/kollegen", "i-users", "Kollegen", "Telefonliste \u2013 anrufen, WhatsApp, kopieren"] : null,
@@ -3614,16 +3725,8 @@
   }
 
   function strafrechnerKarte() {
-    var d = document.createElement("details");
-    d.className = "karte bestimmung-block";
-    d.open = rechner.offen;
-    d.addEventListener("toggle", function () { rechner.offen = d.open; });
-    var sm = document.createElement("summary");
-    var sp = document.createElement("span");
-    var sb2 = document.createElement("b"); sb2.textContent = "Strafrechner"; sp.appendChild(sb2);
-    var ss = document.createElement("small"); ss.textContent = "Stärke auf dem Eis"; sp.appendChild(ss);
-    sm.appendChild(sp); d.appendChild(sm);
-
+    var d = document.createElement("div");
+    d.className = "karte rechner-karte";
     var koerper = document.createElement("div");
     d.appendChild(koerper);
 
@@ -3758,6 +3861,22 @@
     });
   }
 
+  // Der Rechner hat eine eigene Seite - auf der Regelseite stand er den
+  // 24 Vergehen im Weg, und in der Leiste unten ist er schneller da.
+  function zeigeRechner() {
+    ansicht("rechner"); aktuell = null;
+    var ziel = el("rechner-inhalt"); ziel.innerHTML = "";
+    if (!regelnDaten) {
+      hole("strafen.json").then(function (d) { regelnDaten = d; if (!el("rechner").classList.contains("versteckt")) zeigeRechner(); }).catch(function () {});
+    }
+    ziel.appendChild(strafrechnerKarte());
+    ziel.appendChild(hinweisKarte("Gerechnet nach Regel 19.4: erst so viele Grosse Strafen streichen wie möglich, dann die Kleinen. Auf dem Eis bleiben nie weniger als drei Feldspieler."));
+    var zu = document.createElement("p"); zu.className = "meta";
+    var a = document.createElement("a"); a.href = "#regeln"; a.textContent = "Zur Strafentabelle ›";
+    zu.appendChild(a); ziel.appendChild(zu);
+    window.scrollTo(0, 0);
+  }
+
   function regelnZeichnen() {
     var ziel = el("regeln-liste"); ziel.innerHTML = "";
     var arten = el("regeln-arten"); arten.innerHTML = "";
@@ -3889,7 +4008,6 @@
     });
 
     var q = ohneZeichen(el("regeln-filter").value);
-    if (!q) ziel.appendChild(strafrechnerKarte());
     var treffer = (regelnDaten.strafen || []).filter(function (r) {
       if (regelArt && r.codes.indexOf(regelArt) < 0) return false;
       return !q || ohneZeichen(r.name + " " + (r.info || "")).indexOf(q) >= 0;
@@ -4341,6 +4459,7 @@
     if (slug === "suche") { zeigeAuswahl("suche"); return; }
     if (slug === "karte") { zeigeKarte(); return; }
     if (slug === "regeln") { zeigeRegeln(); return; }
+    if (slug === "rechner") { zeigeRechner(); return; }
     if (slug.indexOf("spiel/") === 0) { zeigeSpiel(decodeURIComponent(slug.slice(6))); return; }
     if (slug.indexOf("halle/") === 0) { zeigeHalle(slug.slice(6)); return; }
     if (slug === "plan") { aktuell = null; ansicht("plan"); zeigePlan(); if (sprungZiel === null) window.scrollTo(0, 0); return; }
@@ -4464,6 +4583,14 @@
     ["einfach", "karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche", "pushwoche", "pushabrechnung", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4"].forEach(function (k) { if ((lesen(k) || null) !== (e[k] || null)) { schreiben(k, e[k] || null); geaendert = true; } });
     if (geaendert) { einstellungenLaden(true); themaAnwenden(); einfachAnwenden(); tabsAnwenden(); funktionenAnwenden(funktionenLesen()); toast("Einstellungen vom Konto übernommen", ""); if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true); }
   }
+  // Das eigene Bild liegt zusaetzlich auf dem Geraet, damit die Kopfzeile
+  // beim naechsten Start sofort stimmt - start.js liest es von dort.
+  document.addEventListener("mg-bild", function (e) {
+    var b = e.detail && e.detail.bild;
+    schreiben("mein-bild", b || null);
+    if (b && profil) { bilder[profil.slug] = { bild: b }; }
+    avatarKopf();
+  });
   document.addEventListener("mg-profil", function (e) {
     if (e.detail && e.detail.einstellungen) einstellungenAnwenden(e.detail.einstellungen);
     else if (e.detail && sitzungVorhanden()) einstellungenSync();
@@ -4539,6 +4666,7 @@
   el("gesperrt-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = ""; });
   el("aenderungen-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
   el("regeln-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
+  el("rechner-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
   el("archiv-zurueck").addEventListener("click", function () { if (history.length > 1) history.back(); else location.hash = "mehr"; });
   ["archiv-suche", "archiv-saison", "archiv-liga", "archiv-rolle", "archiv-halle", "archiv-person"].forEach(function (id) { el(id).addEventListener(id === "archiv-suche" ? "input" : "change", function () { archivRendern(); }); });
   el("archiv-suche").addEventListener("change", function () { archivSucheMerken(el("archiv-suche").value); });
@@ -4974,6 +5102,7 @@
       funktionenLaden().then(routen); setTimeout(routen, 1500);
       betreiberLaden(true).then(function () { korrekturenLaden(true); }); zeigeInstallHinweis(); zeigeNeu(); filterHoehe(); netzAnzeigen(); adminKnopfZeigen();
       setTimeout(zaehlerHolen, 1500);
+      setTimeout(bilderLaden, 1200);
     })
     .catch(function (e) {
       anmeldeschirm((e && e.message) || "Daten konnten nicht geladen werden.");

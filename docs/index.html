@@ -311,8 +311,9 @@
   .mg-status.kommt { background:var(--akzent-hell); color:var(--dim); cursor:default; }
   .schnellzugriff { display:flex; gap:8px; overflow-x:auto; padding:2px 0 8px; margin:0 0 6px; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
   .schnellzugriff::-webkit-scrollbar { display:none; }
-  .schnellzugriff a { flex:none; display:flex; flex-direction:column; align-items:center; gap:5px; min-width:64px; padding:8px 6px; border-radius:14px; background:var(--karte); box-shadow:var(--schatten); color:var(--text); text-decoration:none; font-size:.68rem; font-weight:700; }
-  .schnellzugriff a svg.i { width:22px; height:22px; color:var(--akzent); }
+  .schnellzugriff button { border:0; font-family:inherit; cursor:pointer; }
+  .schnellzugriff a, .schnellzugriff button { flex:none; display:flex; flex-direction:column; align-items:center; gap:5px; min-width:64px; padding:8px 6px; border-radius:14px; background:var(--karte); box-shadow:var(--schatten); color:var(--text); text-decoration:none; font-size:.68rem; font-weight:700; }
+  .schnellzugriff a svg.i, .schnellzugriff button svg.i { width:22px; height:22px; color:var(--akzent); }
   .schnellzugriff a .punkt { position:absolute; }
   #detail.start-ruhig #schnellzugriff { display:none; }
   .mg-monat b { font-size:.9rem; font-weight:800; }
@@ -878,7 +879,7 @@
   .archiv-chips { margin:2px 0 6px; }
   .archiv-chips .chip.leise { background:transparent; border:1px dashed var(--linie); color:var(--dim); }
   .archiv-chips .textknopf { flex:none; }
-  .schnellzugriff a.zuletzt svg.i { color:var(--rot); }
+  .schnellzugriff a.zuletzt svg.i, .schnellzugriff button.zuletzt svg.i { color:var(--rot); }
   .wochenansicht .zeile-wer .chip { font-size:0; padding:2px; gap:0; }
   .wochenansicht .zeile-wer .chip .avatar { width:22px; height:22px; font-size:.62rem; }
   .wochenansicht .zeile-wer .chip b { display:none; }
@@ -1631,6 +1632,24 @@
   .zeiten-wert span { flex:0 0 40%; color:var(--dim); font-size:.8rem; font-weight:700; }
   .zeiten-wert b { flex:1; font-size:.9rem; }
   .zeiten-hinweis { display:block; color:var(--dim); margin-top:5px; line-height:1.45; }
+  /* Die Karten der Regelseite klebten aneinander */
+  #regeln-liste, #rechner-inhalt { display:flex; flex-direction:column; gap:12px; }
+  .rechner-karte { padding:12px 14px; }
+  /* Profilbild: ueberall dasselbe runde Zeichen, mit Bild statt Buchstaben */
+  .mit-bild { background-size:cover; background-position:center; color:transparent !important; text-indent:-999px; overflow:hidden; }
+  .avatar-klein { display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px;
+                  border-radius:50%; background:var(--akzent); color:#fff; font-weight:800; font-size:.76rem;
+                  flex:none; margin-right:9px; }
+  .kontakt-kopf { display:flex; align-items:center; gap:0; }
+  .kontakt-kopf > b { min-width:0; overflow-wrap:anywhere; }
+  .kontakt-marke { margin-left:43px; }
+  .profil-bildzeile { display:flex; align-items:center; gap:14px; margin:10px 0 4px; }
+  .profil-bildzeile .avatar-gross { width:64px; height:64px; border-radius:50%; background:var(--akzent);
+                                    color:#fff; font-weight:800; font-size:1.1rem; flex:none;
+                                    display:inline-flex; align-items:center; justify-content:center; }
+  .profil-vorschau { border:1px dashed var(--linie); border-radius:var(--radius); padding:10px 12px; }
+  .avatar-knopf.mit-bild { border:0; }
+  #regeln-liste > .meta, #rechner-inhalt > .meta { margin:0 4px; }
   /* --- Nachtrag Runde 36: Ueberschneidungen --- */
   /* Kopfzeile: der Block mit Titel und Stand muss mitschrumpfen duerfen.
      Ohne min-width:0 behaelt er seine Textbreite und schiebt sich unter
@@ -1731,6 +1750,7 @@
 <body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-rechner" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/><path d="M8 16h.01"/><path d="M12 16h.01"/><path d="M16 16h.01"/></symbol>
   <symbol id="i-buch" viewBox="0 0 24 24"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/><path d="M12 6v12"/></symbol>
   <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 7.6v.6"/></symbol>
   <symbol id="i-balken" viewBox="0 0 24 24"><path d="M4 20h16"/><path d="M7 20v-6"/><path d="M12 20V7"/><path d="M17 20v-9"/></symbol>
@@ -1967,7 +1987,7 @@
       <label>Karten-App <select id="karten-app"><option value="auto">automatisch</option><option value="apple">Apple Karten</option><option value="google">Google Maps</option></select></label>
       <label>Schrift <span class="stufen" id="schrift"><button type="button" data-stufe="klein">A−</button><button type="button" data-stufe="normal">A</button><button type="button" data-stufe="gross">A+</button></span></label>
       <label>Farbe <span class="farben" id="akzent"><button type="button" data-akzent="logo" style="background:linear-gradient(135deg,#15161a 55%,#e30613 55%)" aria-label="Schwarz-Rot (Logo)"></button><button type="button" data-akzent="blau" style="background:#0f3d6e" aria-label="Blau"></button><button type="button" data-akzent="gruen" style="background:#1d6b3f" aria-label="Grün"></button><button type="button" data-akzent="rot" style="background:#a12a2a" aria-label="Rot"></button><button type="button" data-akzent="orange" style="background:#b55a12" aria-label="Orange"></button></span></label>
-      <label>Hell / Dunkel <button type="button" class="mg-neben" id="thema2">umschalten</button></label>
+      <label>Aussehen <span class="stufen" id="thema-wahl"><button type="button" data-thema="">System</button><button type="button" data-thema="light">Hell</button><button type="button" data-thema="dark">Dunkel</button><button type="button" data-thema="abend">Abends</button></span></label>
       <label>Kompakte Ansicht <input type="checkbox" id="kompakt"></label>
       <label>Saisonziel <input type="number" id="ziel" min="1" max="200" placeholder="z. B. 40" style="width:6em"> Spiele</label>
     </div>
@@ -2005,6 +2025,14 @@
       <div class="regeln-arten" id="regeln-arten"></div>
     </div>
     <div id="regeln-liste"></div>
+  </section>
+
+  <section id="rechner" class="versteckt">
+    <div class="profilzeile karte">
+      <span><span class="kopf-i"><svg class="i"><use href="#i-rechner"/></svg></span><span><b>Strafrechner</b><small>Stärke auf dem Eis</small></span></span>
+      <button class="textknopf zurueck" id="rechner-zurueck"><svg class="i"><use href="#i-back"/></svg>Zurück</button>
+    </div>
+    <div id="rechner-inhalt"></div>
   </section>
 
   <!-- Hallenkarte -->
@@ -2158,6 +2186,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=78"></script>
+<script src="app.js?v=79"></script>
 </body>
 </html>
