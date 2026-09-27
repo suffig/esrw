@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:25f274c12f0a8b545f87ce843d19c79ad1c9fc0a@esrw.de
-SEQUENCE:0
-DTSTAMP:20260911T150047Z
-LAST-MODIFIED:20260911T150047Z
-DTSTART:20260920T063000Z
-DTEND:20260920T100000Z
-SUMMARY:U15 RLB · Herner EV – EV Duisburg
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
-  08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Gysenberghalle 
- Herne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Marks\, Marcel\n\
- nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Gysenberghalle Herne\, Am Revierpark 22\, 44627 Herne
-GEO:51.532602;7.254372
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
- evierpark 22, 44627 Herne";X-APPLE-RADIUS=100;X-TITLE="Gysenberghalle Hern
- e":geo:51.532602,7.254372
-END:VEVENT
-BEGIN:VEVENT
 UID:e0e9054db5637a4e665c8ba6454c980c9046e79e@esrw.de
 SEQUENCE:0
 DTSTAMP:20260911T150047Z
@@ -1049,12 +1028,6 @@ GEO:51.532602;7.254372
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
  evierpark 22, 44627 Herne";X-APPLE-RADIUS=100;X-TITLE="Gysenberghalle Hern
  e":geo:51.532602,7.254372
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U15 RLB · Herner EV – EHC Tro
- isdorf
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:1f82b9f80f24ac634fe06d5f91b630e8118b6e87@esrw.de
