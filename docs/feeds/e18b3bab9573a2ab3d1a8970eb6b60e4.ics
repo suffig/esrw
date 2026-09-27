@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:cb59679ad48f394d1d970beb80a3f61ca4cde1e9@esrw.de
-SEQUENCE:0
-DTSTAMP:20260914T193036Z
-LAST-MODIFIED:20260914T193036Z
-DTSTART:20260920T160000Z
-DTEND:20260920T193000Z
-SUMMARY:HSR · RL FS · Dinslakener Kobras – UNIS Flyers Heerenveen
-DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 19:00 Uhr\nTreff
- punkt: 18:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthal
- le Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Quint\, S
- ascha (LSR) / Stockenschneider\, Lars (LSR)\n\nQuelle: https://www.esrw.de
- /einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
-GEO:51.574578;6.735361
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
- m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
- inslaken":geo:51.574578,6.735361
-END:VEVENT
-BEGIN:VEVENT
 UID:8a2295f649a7fb12057207754518e2cec1ad83b5@esrw.de
 SEQUENCE:0
 DTSTAMP:20260921T153038Z

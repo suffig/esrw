@@ -27,12 +27,6 @@ GEO:51.165932;7.086769
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
  ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
  le Solingen":geo:51.165932,7.086769
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · LL FS · EC Bergisch Land 
- – Dinslakener Kobras
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:277aa721aff4cb82dcbed60171078708f72d73f2@esrw.de

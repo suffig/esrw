@@ -8,49 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:81acf4e44705e8a37a92bf1f46b0f1cdf7336d44@esrw.de
-SEQUENCE:0
-DTSTAMP:20260911T150047Z
-LAST-MODIFIED:20260911T150047Z
-DTSTART:20260920T160000Z
-DTEND:20260920T193000Z
-SUMMARY:LL FS · Eisadler Dortmund 1b – EHC Troisdorf
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
-  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: LL FS\nHalle: Eissportzentrum W
- estfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Krüger\, Ma
- rtin\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
-GEO:51.49525;7.458288
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
-  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
- rum Westfalen":geo:51.49525,7.458288
-END:VEVENT
-BEGIN:VEVENT
-UID:30ce28dca8f5bcc9a5e1bfc1e3e4070305a14715@esrw.de
-SEQUENCE:0
-DTSTAMP:20260914T193036Z
-LAST-MODIFIED:20260914T193036Z
-DTSTART:20260920T160000Z
-DTEND:20260920T193000Z
-SUMMARY:RL FS · Dinslakener Kobras – UNIS Flyers Heerenveen
-DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 19:00 Uhr\nTreff
- punkt: 18:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthal
- le Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Quint\, S
- ascha (LSR) / Stockenschneider\, Lars (LSR)\n\nQuelle: https://www.esrw.de
- /einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
-GEO:51.574578;6.735361
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
- m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
- inslaken":geo:51.574578,6.735361
-END:VEVENT
-BEGIN:VEVENT
 UID:2f58f866a0fcf6e53008e8b1d426517516a285b5@esrw.de
 SEQUENCE:0
 DTSTAMP:20260918T172506Z
@@ -1007,12 +964,6 @@ GEO:51.574578;6.735361
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
  m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
  inslaken":geo:51.574578,6.735361
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U20 RL · Dinslakener Kobras –
-  EHC Troisdorf
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:5ab90cc2314a5cd3484b2049d963058259915156@esrw.de
@@ -1034,12 +985,6 @@ GEO:51.165932;7.086769
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
  ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
  le Solingen":geo:51.165932,7.086769
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LL FS · EC Bergisch Land – Di
- nslakener Kobras
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:28338ab1c473d7dcc7b1ffb67d3f98c6c3cd981f@esrw.de
@@ -1062,12 +1007,6 @@ GEO:51.49525;7.458288
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
   Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
  rum Westfalen":geo:51.49525,7.458288
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - RL FS · Eisadler Dortmund – H
- arzer Falken
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:146f0ed64e6cda7e9683d611985330e079d755f3@esrw.de
