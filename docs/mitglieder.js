@@ -725,7 +725,7 @@ window.Mitglieder = (function () {
     ]));
     if (!frei()) {
       var sofort = [fn("abrechnung") ? "Abrechnung" : "", fn("notizen") ? "Notizen" : "", fn("push") ? "Push" : ""].filter(Boolean);
-      var spaeter = [fn("tausch") ? "Tauschbörse" : "", fn("frei") ? "Verfügbarkeit" : "", fn("hallen") ? "Hallen-Hinweise" : "", fn("gespann") ? "Kontakte" : "", fn("info") ? "Ankündigungen" : ""].filter(Boolean);
+      var spaeter = [fn("tausch") ? "Tauschbörse" : "", fn("frei") ? "Verfügbarkeit" : "", fn("hallen") ? "Hallen-Hinweise" : "", fn("gespann") ? "Kontakte" : "", fn("mitfahren") ? "Zusammen fahren" : "", fn("info") ? "Ankündigungen" : ""].filter(Boolean);
       wurzel.appendChild(h("div", { class: "hinweis warn" }, [ikone("i-lock"),
         h("span", { text: "Dein Konto wartet auf die Freischaltung durch den Betreiber." + (sofort.length ? " " + sofort.join(", ") + (sofort.length === 1 ? " geht" : " gehen") + " schon" : "") + (spaeter.length ? "; " + spaeter.join(", ") + (spaeter.length === 1 ? " kommt" : " kommen") + " nach der Freischaltung." : ".") })]));
     }
@@ -3442,7 +3442,7 @@ window.Mitglieder = (function () {
     karte.appendChild(liste);
     inhalt.appendChild(karte);
 
-    if (fn("gespann")) inhalt.appendChild(h("p", { class: "meta mg-fuss" }, [
+    if (fn("mitfahren")) inhalt.appendChild(h("p", { class: "meta mg-fuss" }, [
       "Deine eigene Nummer und Anschrift stehen im Profil. ",
       h("button", { type: "button", class: "textknopf", text: "Profil öffnen", onclick: function () { zeigeReiter("profil"); } })]));
     if (istAdminAn()) inhalt.appendChild(h("p", { class: "meta mg-fuss" }, [
@@ -3598,10 +3598,11 @@ window.Mitglieder = (function () {
     var kommentare = cache.kommentare[kennung] || [];
     var kontakte = fn("gespann") ? (spiel.gespann || []).map(function (g) { return nummerVon(g.slug) ? { g: g, k: nummerVon(g.slug) } : null; }).filter(Boolean) : [];
     var mitHallen = !!spiel.halle && !ohneHalle && fn("hallen"), mitGespann = fn("gespann"), mitNotiz = istIch && fn("notizen");
-    if (!mitGespann) mitfahrten = [];
+    var mitChat = fn("chat"), mitMitfahrt = fn("mitfahren");
+    if (!mitMitfahrt) mitfahrten = [];
 
     var teile = [];
-    if (istIch && mitGespann) {
+    if (istIch && mitChat) {
       var bis = 0; try { bis = parseInt(localStorage.getItem("gespann-gelesen:" + kennung) || "0", 10) || 0; } catch (e) {}
       var ungelesen = kommentare.filter(function (k) { return k.user_id !== session.user.id && new Date(k.angelegt).getTime() > bis; }).length;
       teile.push(kommentare.length ? kommentare.length + (kommentare.length === 1 ? " Gespann-Notiz" : " Gespann-Notizen") + (ungelesen ? " (" + ungelesen + " neu)" : "") : "Gespann-Notiz");
@@ -3659,7 +3660,7 @@ window.Mitglieder = (function () {
       }
 
       // Fahrgemeinschaft
-      if (!spiel.vergangen && mitGespann) {
+      if (!spiel.vergangen && mitMitfahrt) {
         innen.appendChild(h("h4", { text: "Fahrgemeinschaft" }));
         var vorschlaege = wegVorschlaege(spiel, (spiel.gespann || []).map(function (g) { return g.slug; }));
         Object.keys(vorschlaege).forEach(function (s) {
@@ -3689,7 +3690,7 @@ window.Mitglieder = (function () {
       }
 
       // Gespann-Notizen: nur fuer die, die im Spiel stehen
-      if (istIch && mitGespann) {
+      if (istIch && mitChat) {
         innen.appendChild(h("h4", { text: "Gespann-Notizen (sehen nur die Kollegen im Spiel)" }));
         if (!kommentare.length) innen.appendChild(h("p", { class: "meta", text: "Noch nichts. „Ich bringe die Pucks“, „Parke hinten“, „Bin 10 Min. später“. Die Kollegen bekommen Push." }));
         // Verlauf wie ein kleiner Chat: eigene Nachrichten rechts, neue markiert

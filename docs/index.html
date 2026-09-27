@@ -570,7 +570,7 @@
   .ziel .balkenrahmen { height:10px; border-radius:5px; background:var(--linie); overflow:hidden; margin:8px 0 6px; }
   .ziel .balkenrahmen i { display:block; height:100%; background:var(--akzent); border-radius:5px; }
 
-  .leiste button { font-size:.64rem; padding:6px 2px; }
+  .leiste button { font-size:.64rem; padding:6px 3px; }
 
   /* Untere Leiste */
   .leiste { position:fixed; left:0; right:0; bottom:0; z-index:10;
@@ -687,7 +687,7 @@
   body.druck-fahrtenbuch .jahresblatt { display:block !important; }
   /* Zusammen fahren */
   #mitfahren-karte { padding:0; overflow:hidden; margin-bottom:12px; }
-  .fahrt { margin-bottom:12px; }
+  .fahrt { margin-bottom:12px; padding:12px 14px; }
   .fahrt h4 { margin:0 0 4px; display:flex; align-items:center; gap:8px; font-size:1rem; }
   .fahrt .wer { display:flex; justify-content:space-between; align-items:center; gap:8px; padding:8px 0; border-top:1px solid var(--linie); flex-wrap:wrap; }
   .fahrt .wer > span:first-child { min-width:0; }
@@ -696,7 +696,14 @@
   .fahrt .knoepfe { display:flex; gap:6px; flex-wrap:wrap; }
   .fahrt .status { font-size:.7rem; font-weight:800; text-transform:uppercase; letter-spacing:.06em; padding:2px 8px; border-radius:99px; background:var(--akzent-hell); color:var(--akzent); }
   .fahrt .status.suche { background:var(--rot-hell); color:var(--rot); }
-  .fahrt .meins { margin-top:8px; display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+  .fahrt .meins { margin-top:10px; padding-top:10px; border-top:1px solid var(--linie);
+                  display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
+  .fahrt .meins > .meta { flex-basis:100%; margin:0 0 2px; }
+  .fahrt > .meta { margin:0 0 8px !important; }
+  .fahrt .wer:first-of-type { border-top:1px solid var(--linie); }
+  .fahrt .reihe-knopf { margin-top:10px; }
+  /* Die Karte schob die Seite beim Aufbauen kurz auf die doppelte Breite */
+  #mitfahren-karte, #karte-karte { max-width:calc(100vw - 32px); }
   .fahrt .meins button.aktiv { background:var(--akzent); color:#fff; border-color:var(--akzent); }
   /* Anleitung (Tour) */
   .tour { position:fixed; inset:0; z-index:60; background:rgba(8,12,24,.55); backdrop-filter:blur(4px); display:flex; align-items:flex-end; justify-content:center; padding:16px; padding-bottom:calc(16px + env(safe-area-inset-bottom)); }
@@ -1635,6 +1642,23 @@
   /* Die Karten der Regelseite klebten aneinander */
   #regeln-liste, #rechner-inhalt { display:flex; flex-direction:column; gap:12px; }
   .rechner-karte { padding:12px 14px; }
+  /* Lange Ziele wie "Strafrechner" reichten sonst bis an den Nachbarn */
+  .leiste button .tab-text { display:block; max-width:100%; overflow:hidden; text-overflow:ellipsis;
+                             white-space:nowrap; text-align:center; }
+  /* Teilen ist ueberall dasselbe Zeichen */
+  .teilen-knopf svg.i, .knopf-zeichen svg.i { width:1.05rem; height:1.05rem; }
+  .knopf-zeichen { display:inline-flex; align-items:center; justify-content:center; gap:6px; }
+  .hallen-anschrift { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:0 0 10px; }
+  .nur-zeichen { padding-left:12px !important; padding-right:12px !important; }
+  /* Gemeinsame Spiele auf der Kollegenseite: Datum fett, Paarung darunter */
+  .zeile-lauf { display:flex; align-items:center; gap:10px; padding:10px 2px;
+                border-top:1px solid var(--linie); color:inherit; text-decoration:none; }
+  .zeile-lauf:first-of-type { border-top:0; }
+  .zeile-lauf > span:first-child { flex:1; min-width:0; }
+  .zeile-lauf b { display:block; font-size:.82rem; color:var(--dim); letter-spacing:.01em; }
+  .zeile-lauf .zeile-paarung { display:block; font-weight:700; line-height:1.3; margin-top:1px; }
+  .zeile-lauf small { display:block; color:var(--dim); font-size:.8rem; margin-top:2px; }
+  .zeile-lauf .pfeil { flex:none; color:var(--dim); font-size:1.2rem; }
   /* Profilbild: ueberall dasselbe runde Zeichen, mit Bild statt Buchstaben */
   .mit-bild { background-size:cover; background-position:center; color:transparent !important; text-indent:-999px; overflow:hidden; }
   .avatar-klein { display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px;
@@ -1750,6 +1774,7 @@
 <body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-teilen" viewBox="0 0 24 24"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.3 10.8 15.7 6.4"/><path d="m15.7 17.6-7.4-4.4"/></symbol>
   <symbol id="i-rechner" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/><path d="M8 16h.01"/><path d="M12 16h.01"/><path d="M16 16h.01"/></symbol>
   <symbol id="i-buch" viewBox="0 0 24 24"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/><path d="M12 6v12"/></symbol>
   <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 7.6v.6"/></symbol>
@@ -1981,14 +2006,18 @@
     </div>
     <div class="sprungleiste versteckt" id="einstellungen-sprung"></div>
     <div id="konto-bereich"></div>
-    <h3 class="abschnitt">App<small>gilt für dieses Gerät, mit Konto auf allen</small></h3>
+    <h3 class="abschnitt">Aussehen<small>gilt für dieses Gerät, mit Konto auf allen</small></h3>
     <div class="karte einstellungen-liste">
       <label><span><b>Einfache Ansicht</b><small>Weniger auf einmal, Selteneres steht eine Ebene tiefer</small></span><input type="checkbox" id="einfach"></label>
-      <label>Karten-App <select id="karten-app"><option value="auto">automatisch</option><option value="apple">Apple Karten</option><option value="google">Google Maps</option></select></label>
       <label>Schrift <span class="stufen" id="schrift"><button type="button" data-stufe="klein">A−</button><button type="button" data-stufe="normal">A</button><button type="button" data-stufe="gross">A+</button></span></label>
       <label>Farbe <span class="farben" id="akzent"><button type="button" data-akzent="logo" style="background:linear-gradient(135deg,#15161a 55%,#e30613 55%)" aria-label="Schwarz-Rot (Logo)"></button><button type="button" data-akzent="blau" style="background:#0f3d6e" aria-label="Blau"></button><button type="button" data-akzent="gruen" style="background:#1d6b3f" aria-label="Grün"></button><button type="button" data-akzent="rot" style="background:#a12a2a" aria-label="Rot"></button><button type="button" data-akzent="orange" style="background:#b55a12" aria-label="Orange"></button></span></label>
       <label>Aussehen <span class="stufen" id="thema-wahl"><button type="button" data-thema="">System</button><button type="button" data-thema="light">Hell</button><button type="button" data-thema="dark">Dunkel</button><button type="button" data-thema="abend">Abends</button></span></label>
       <label>Kompakte Ansicht <input type="checkbox" id="kompakt"></label>
+    </div>
+    <h3 class="abschnitt">Unterwegs<small>Route, Abfahrt und dein Ziel für die Saison</small></h3>
+    <div class="karte einstellungen-liste">
+      <label>Karten-App <select id="karten-app"><option value="auto">automatisch</option><option value="apple">Apple Karten</option><option value="google">Google Maps</option></select></label>
+      <label><span><b>Puffer für Verkehr</b><small>Der Routendienst rechnet ohne Stau. Der Aufschlag geht in die Abfahrtszeit ein.</small></span><span class="stufen" id="verkehr"><button type="button" data-puffer="0">0 %</button><button type="button" data-puffer="10">10 %</button><button type="button" data-puffer="20">20 %</button><button type="button" data-puffer="30">30 %</button></span></label>
       <label>Saisonziel <input type="number" id="ziel" min="1" max="200" placeholder="z. B. 40" style="width:6em"> Spiele</label>
     </div>
     <button type="button" class="mg-neben fein-knopf" id="fein-knopf">Mehr einstellen …</button>
@@ -2184,14 +2213,14 @@
 <button type="button" class="hoch versteckt" id="hoch" aria-label="Nach oben"><svg class="i"><use href="#i-back"/></svg></button>
 <nav class="leiste" id="tabs">
   <div>
-    <button type="button" id="tab-meine" class="aktiv"><svg class="i"><use href="#i-home"/></svg>Start</button>
+    <button type="button" id="tab-meine" class="aktiv"><svg class="i"><use href="#i-home"/></svg><span class="tab-text">Start</span></button>
     <button type="button" id="tab-plan"><svg class="i"><use href="#i-list"/></svg>Spielplan</button>
     <button type="button" id="tab-tausch"><svg class="i"><use href="#i-swap"/></svg>Tausch</button>
     <button type="button" id="tab-abrechnung"><svg class="i"><use href="#i-euro"/></svg>Abrechnung</button>
-    <button type="button" id="tab-mitglieder"><svg class="i"><use href="#i-mehr"/></svg>Mehr</button>
+    <button type="button" id="tab-mitglieder"><svg class="i"><use href="#i-mehr"/></svg><span class="tab-text">Mehr</span></button>
   </div>
 </nav>
 
-<script src="app.js?v=80"></script>
+<script src="app.js?v=84"></script>
 </body>
 </html>

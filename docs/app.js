@@ -57,7 +57,9 @@
     ["abrechnung", "Abrechnung", "km, Vergütung, Belege, Fahrtenbuch, Reiter unten", true],
     ["info", "Info und Termine", "Ankündigungen vom Betreiber, Termine auf Start", true],
     ["notizen", "Notizen", "private Spielnotizen", true],
-    ["gespann", "Gespann", "Gespann-Notizen, Handynummern, Fahrgemeinschaft", true],
+    ["gespann", "Gespann", "Handynummern der Kollegen im Spiel, Kontaktknöpfe auf der Spielseite", true],
+    ["chat", "Gespann-Chat", "Nachrichten ans Gespann auf der Spielseite, mit Push", true],
+    ["mitfahren", "Zusammen fahren", "Fahrgemeinschaften, Wohnort teilen, Reiter „Mitfahren“", true],
     ["hallen", "Hallen-Hinweise und Hallenkarte", "Parken, Kabinen, Karte aller Hallen", true],
     ["statistik", "Statistik", "Saison, Archiv, Saisonziel, Saison-Bild", true],
     ["checkliste", "Spieltag-Checkliste", "auf der Spielseite", true],
@@ -71,8 +73,13 @@
     try { funktionenStand = JSON.parse(lesen("funktionen") || "{}") || {}; } catch (e) { funktionenStand = {}; }
     return funktionenStand;
   }
+  // "chat" und "mitfahren" standen frueher zusammen unter "gespann". Solange
+  // der Betreiber sie nicht ausdruecklich setzt, gilt weiter, was fuer
+  // "gespann" eingestellt ist - sonst waeren sie nach dem Update ploetzlich an.
+  var ERBT_VON = { chat: "gespann", mitfahren: "gespann" };
   function funktionGlobal(k) {
     var f = funktionenLesen(); if (f[k] !== undefined) return !!f[k];
+    if (ERBT_VON[k] && f[ERBT_VON[k]] !== undefined) return !!f[ERBT_VON[k]];
     var d = FUNKTIONEN.filter(function (x) { return x[0] === k; })[0]; return d ? d[3] : true;
   }
   function bereichAus(k) { try { return !!(JSON.parse(lesen("bereiche") || "{}") || {})[k]; } catch (e) { return false; } }
@@ -551,6 +558,7 @@
     if (!nurAnwenden) Array.prototype.forEach.call(el("akzent").querySelectorAll("button"), function (b) {
       b.addEventListener("click", function () { var f = b.getAttribute("data-akzent"); schreiben("akzent", f === "logo" ? null : f); akzentSetzen(f); einstellungenSync(); });
     });
+    verkehrLaden(nurAnwenden);
     el("ziel").value = lesen("ziel") || "";
     startBausteineRendern();
     if (nurAnwenden) return;
@@ -596,8 +604,10 @@
       : "https://maps.apple.com/?daddr=" + encodeURIComponent(ort);
   }
   function kopierKnopf(text, was) {
-    var b = document.createElement("button"); b.type = "button"; b.className = "textknopf kopier"; b.textContent = "kopieren";
+    var b = document.createElement("button"); b.type = "button"; b.className = "textknopf kopier knopf-zeichen";
+    b.appendChild(ikone("i-kopieren"));
     b.title = (was || "Adresse") + " kopieren";
+    b.setAttribute("aria-label", b.title);
     b.addEventListener("click", function (ev) {
       ev.preventDefault(); ev.stopPropagation();
       if (navigator.clipboard) navigator.clipboard.writeText(text).then(function () { toast((was || "Adresse") + " kopiert ✓", "gut"); }, function () { prompt("Kopieren:", text); });
@@ -675,7 +685,10 @@
       (s.ort ? "\n" + s.ort + "\nRoute: " + kartenLink(s.ort) : "");
   }
   function teilenKnopf(s) {
-    var b = document.createElement("button"); b.type = "button"; b.className = "textknopf teilen-knopf"; b.textContent = "Teilen";
+    var b = document.createElement("button"); b.type = "button"; b.className = "textknopf teilen-knopf";
+    b.appendChild(ikone("i-teilen"));
+    b.title = navigator.share ? "Spiel teilen" : "Spiel kopieren";
+    b.setAttribute("aria-label", b.title);
     b.addEventListener("click", function (ev) {
       ev.preventDefault(); ev.stopPropagation();
       var text = spielText(s);
@@ -1096,7 +1109,7 @@
     if (pillen.childNodes.length) h.appendChild(pillen);
     var ak = document.createElement("div"); ak.className = "aktionen";
     if (s.ort) { var r = document.createElement("a"); r.href = kartenLink(s.ort); r.target = "_blank"; r.rel = "noopener"; r.appendChild(ikone("i-route")); r.appendChild(document.createTextNode("Route")); ak.appendChild(r); }
-    var tb = teilenKnopf(s); tb.className = ""; tb.textContent = "Teilen"; ak.appendChild(tb);
+    var tb = teilenKnopf(s); tb.className = "knopf-zeichen nur-zeichen"; ak.appendChild(tb);
     var kb = document.createElement("button"); kb.type = "button"; kb.appendChild(ikone("i-cal")); kb.appendChild(document.createTextNode("In Kalender"));
     kb.title = "Nur dieses Spiel als Kalenderdatei"; kb.addEventListener("click", function () { einzelIcs(s); }); ak.appendChild(kb);
     h.appendChild(ak);
@@ -1108,9 +1121,15 @@
     function karteAbschnitt(titel) { var k = document.createElement("div"); k.className = "karte abschnitt-karte"; if (titel) { var hh = document.createElement("h4"); if (symbole[titel]) hh.appendChild(ikone(symbole[titel])); hh.appendChild(document.createTextNode(titel)); k.appendChild(hh); } inhalt.appendChild(k); return k; }
 
     var ort = karteAbschnitt("Halle");
-    var oz = document.createElement("div"); oz.appendChild(hallenLink(s.halle));
-    if (s.ort) { oz.appendChild(document.createTextNode(" · ")); var ad = document.createElement("span"); ad.className = "meta"; ad.style.display = "inline"; ad.textContent = s.ort.indexOf(s.halle + ", ") === 0 ? s.ort.slice(s.halle.length + 2) : s.ort; oz.appendChild(ad); oz.appendChild(document.createTextNode(" ")); oz.appendChild(kopierKnopf(s.ort)); }
-    ort.appendChild(oz);
+    // Der Name stand hier als Link und gleich darunter noch einmal als Reihe -
+    // zweimal derselbe Weg. Hier bleibt nur die Anschrift zum Kopieren.
+    if (s.ort) {
+      var oz = document.createElement("div"); oz.className = "meta hallen-anschrift";
+      var ad = document.createElement("span");
+      ad.textContent = s.ort.indexOf(s.halle + ", ") === 0 ? s.ort.slice(s.halle.length + 2) : s.ort;
+      oz.appendChild(ad); oz.appendChild(kopierKnopf(s.ort));
+      ort.appendChild(oz);
+    }
     var koord = daten.hallen && daten.hallen[s.halle];
     if (koord && !s.vergangen && funktion("wetter")) ort.appendChild(wetterZeile(koord, treff, "Wetter zum Treffpunkt"));
     ((daten.hallen_hinweise || {})[s.halle] || []).forEach(function (t) {
@@ -1130,8 +1149,8 @@
     }
     if (meins && s.halle) {
       ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.abfahrt(s.halle) : null; })
-        .then(function (sk) { if (!sk || !sk.minuten) return; var ab = new Date(treff.getTime() - sk.minuten * 60000);
-          var zz = document.createElement("div"); zz.className = "meta"; zz.style.marginTop = "6px"; zz.textContent = "Abfahrt ca. " + uhr(ab) + " Uhr · " + sk.minuten + " Min., " + sk.km + " km ohne Verkehr"; ort.appendChild(zz); }).catch(function () {});
+        .then(function (roh) { if (!roh || !roh.minuten) return; var sk = mitPuffer(roh); var ab = new Date(treff.getTime() - sk.minuten * 60000);
+          var zz = document.createElement("div"); zz.className = "meta"; zz.style.marginTop = "6px"; zz.textContent = "Abfahrt ca. " + uhr(ab) + " Uhr · " + sk.minuten + " Min., " + sk.km + " km, " + verkehrText(); ort.appendChild(zz); }).catch(function () {});
     }
     if (s.hinweis) { var hw = document.createElement("div"); hw.className = "achtung"; hw.textContent = "⚠ " + s.hinweis; ort.appendChild(hw); }
     if (s.aenderung) { var ae = document.createElement("div"); ae.className = "geaendert"; ae.textContent = "⚠ Geändert: " + s.aenderung; ort.appendChild(ae); }
@@ -1158,8 +1177,8 @@
       if (!st.eingerichtet || !st.session) {
         var p = document.createElement("p"); p.className = "meta"; p.style.margin = "0";
         var a = document.createElement("a"); a.href = "#mitglieder"; a.textContent = "Anmelden"; p.appendChild(a);
-        p.appendChild(document.createTextNode(" für " + [funktion("hallen") ? "Hallen-Hinweise" : "", funktion("gespann") ? "Kontakte und Fahrgemeinschaft" : "", funktion("notizen") ? "Notizen" : ""].filter(Boolean).join(", ") + "."));
-        if (!funktion("hallen") && !funktion("gespann") && !funktion("notizen")) { ex.classList.add("versteckt"); return; }
+        p.appendChild(document.createTextNode(" für " + [funktion("hallen") ? "Hallen-Hinweise" : "", funktion("gespann") ? "Kontakte" : "", funktion("chat") ? "Gespann-Chat" : "", funktion("mitfahren") ? "Fahrgemeinschaft" : "", funktion("notizen") ? "Notizen" : ""].filter(Boolean).join(", ") + "."));
+        if (!funktion("hallen") && !funktion("gespann") && !funktion("chat") && !funktion("mitfahren") && !funktion("notizen")) { ex.classList.add("versteckt"); return; }
         ex.classList.remove("versteckt"); ex.appendChild(p); return;
       }
       return window.Mitglieder.extrasLaden([s]).then(function (ok) {
@@ -1576,12 +1595,13 @@
       ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) {
         if (!st.eingerichtet || !st.session) return null;
         return window.Mitglieder.abfahrt(s.halle);
-      }).then(function (st) {
-        if (!st || !st.minuten || !h.isConnected) return;
+      }).then(function (roh) {
+        if (!roh || !roh.minuten || !h.isConnected) return;
+        var st = mitPuffer(roh);
         var ab = new Date(new Date(s.treffpunkt).getTime() - st.minuten * 60000);
         if (h._abfahrtSetzen) h._abfahrtSetzen(ab);
         var z = document.createElement("div"); z.className = "abfahrt"; z.appendChild(ikone("i-route"));
-        z.appendChild(document.createTextNode("Abfahrt ca. " + uhr(ab) + " Uhr · " + st.minuten + " Min., " + st.km + " km ohne Verkehr"));
+        z.appendChild(document.createTextNode("Abfahrt ca. " + uhr(ab) + " Uhr · " + st.minuten + " Min., " + st.km + " km, " + verkehrText()));
         h.appendChild(z);
       }).catch(function () {});
     }
@@ -2160,7 +2180,7 @@
     ziel.appendChild(fuss);
     if (s.gesamt) {
       var rk = document.createElement("button"); rk.type = "button"; rk.className = "mg-neben rueckblick-knopf"; rk.style.width = "100%";
-      rk.textContent = "Meine Saison als Bild teilen";
+      rk.className = "knopf-zeichen"; rk.appendChild(ikone("i-teilen")); rk.appendChild(document.createTextNode("Meine Saison als Bild teilen"));
       rk.addEventListener("click", function () { rueckblickBild(p, rk); });
       ziel.appendChild(rk);
     }
@@ -2306,7 +2326,8 @@
     if (istIch && wocheText()) {
       var wz = document.createElement("p"); wz.className = "meta woche-teilen";
       var wk = document.createElement("button"); wk.type = "button"; wk.className = "textknopf";
-      wk.appendChild(ikone("i-kopieren"));
+      wk.className = "textknopf knopf-zeichen";
+      wk.appendChild(ikone("i-teilen"));
       wk.appendChild(document.createTextNode(navigator.share ? " Woche teilen" : " Woche kopieren"));
       wk.addEventListener("click", wocheTeilen);
       wz.appendChild(wk); ziel.appendChild(wz);
@@ -2345,7 +2366,7 @@
     ["regeln", "i-buch", "Regeln"],
     ["rechner", "i-rechner", "Strafrechner"],
     ["archiv", "i-clock", "Archiv"],
-    ["mitfahren", "i-route", "Mitfahren", "gespann"],
+    ["mitfahren", "i-route", "Mitfahren", "mitfahren"],
     ["mitglieder/info", "i-info", "Info", "info"],
     ["mitglieder/frei", "i-cal", "Verfügbar", "frei"],
     ["statistik", "i-balken", "Statistik", "statistik"],
@@ -2398,7 +2419,8 @@
       b._ziel = t[0];
       b.innerHTML = "";
       b.appendChild(ikone(t[1]));
-      b.appendChild(document.createTextNode(t[2]));
+      var lt = document.createElement("span"); lt.className = "tab-text"; lt.textContent = t[2];
+      b.appendChild(lt);
       b.title = t[2];
     });
   }
@@ -2454,7 +2476,7 @@
     ["#plan", "i-list", "Spielplan"],
     ["#mitglieder/abrechnung", "i-euro", "Abrechnung", "abrechnung"],
     ["#archiv", "i-clock", "Archiv"],
-    ["#mitfahren", "i-route", "Mitfahren", "gespann"],
+    ["#mitfahren", "i-route", "Mitfahren", "mitfahren"],
     ["#aenderungen", "i-bell", "Änderungen"],
     ["#mitglieder/tausch", "i-swap", "Tausch", "tausch"],
     ["#statistik", "i-balken", "Statistik", "statistik"],
@@ -2463,7 +2485,7 @@
     ["#karte", "i-pin", "Hallenkarte", "hallen"],
     ["#regeln", "i-buch", "Regeln"],
     ["#rechner", "i-rechner", "Strafrechner"],
-    ["#woche-teilen", "i-kopieren", "Woche teilen"],
+    ["#woche-teilen", "i-teilen", "Woche teilen"],
     ["#einstellungen", "i-key", "Einstellungen"]
   ];
   function schnellWahlRendern() {
@@ -2508,7 +2530,7 @@
     }).then(function (r) {
       if (!r || box._lauf !== lauf) return;
       if (funktion("abrechnung")) punkte.push({ ok: !!r[0], titel: "Heimatadresse", text: "für Strecken, Abfahrtszeit, km in der Abrechnung", href: "#einstellungen" });
-      if (funktion("gespann")) punkte.push({ ok: !!r[2], titel: "Wohnort teilen (freiwillig)", text: "damit „Zusammen fahren“ vorschlagen kann", href: "#einstellungen" });
+      if (funktion("mitfahren")) punkte.push({ ok: !!r[2], titel: "Wohnort teilen (freiwillig)", text: "damit „Zusammen fahren“ vorschlagen kann", href: "#einstellungen" });
       rendern();
     }).catch(function () { rendern(); });
     function rendern() {
@@ -2660,13 +2682,21 @@
     var meta = document.createElement("p"); meta.className = "meta"; meta.style.margin = "0 0 4px";
     meta.textContent = gemeinsam.length ? (kommend.length ? kommend.length + (kommend.length === 1 ? " gemeinsames Spiel" : " gemeinsame Spiele") + " demnächst" : "Zurzeit kein gemeinsames Spiel") + (gewesen ? " · " + gewesen + " im Datenfenster gepfiffen" : "") : "Noch kein gemeinsames Spiel im Datenfenster.";
     box.appendChild(meta);
+    // Das Datumsraster der ".zeile" passt hier nicht - der Titel landete in
+    // der schmalen Datumsspalte und brach mitten im Namen um.
     kommend.slice(0, 4).forEach(function (s) {
-      var d = new Date(s.beginn), a = document.createElement("a"); a.className = "zeile"; a.href = "#spiel/" + encodeURIComponent(kennungVon(s));
-      var l = document.createElement("span"); var b = document.createElement("b"); b.textContent = datumKurz(d) + " " + uhr(d) + " · " + (s.liga ? s.liga + " " : "") + s.paarung; l.appendChild(b);
-      var sm = document.createElement("small"); sm.textContent = s.halle || ""; l.appendChild(sm); a.appendChild(l);
-      var r = document.createElement("span"); r.className = "meta"; r.textContent = "›"; a.appendChild(r); box.appendChild(a);
+      var d = new Date(s.beginn), a = document.createElement("a"); a.className = "zeile-lauf"; a.href = "#spiel/" + encodeURIComponent(kennungVon(s));
+      var l = document.createElement("span");
+      var b = document.createElement("b"); b.textContent = datumKurz(d) + " · " + uhr(d) + " Uhr"; l.appendChild(b);
+      var pa = document.createElement("span"); pa.className = "zeile-paarung";
+      pa.textContent = (s.liga ? s.liga + ": " : "") + s.paarung; l.appendChild(pa);
+      if (s.halle) { var sm = document.createElement("small"); sm.textContent = s.halle; l.appendChild(sm); }
+      a.appendChild(l);
+      var r = document.createElement("span"); r.className = "pfeil"; r.textContent = "›"; a.appendChild(r);
+      box.appendChild(a);
     });
-    var zw = document.createElement("div"); zw.className = "zweit"; box.appendChild(zw);
+    // Erst anlegen, wenn wirklich Knoepfe kommen - sonst klaffte hier eine Luecke
+    var zw = document.createElement("div"); zw.className = "zweit versteckt"; box.appendChild(zw);
     var pz = el("detail").querySelector(".spalte-haupt > .profilzeile");
     pz.parentNode.insertBefore(box, pz.nextSibling);
     if (!sitzungVorhanden() || !funktion("gespann")) { var m2 = document.createElement("p"); m2.className = "meta"; m2.style.margin = "8px 0 0"; m2.textContent = sitzungVorhanden() ? "" : "Angemeldet siehst du hier die Handynummer, wenn sie freigegeben ist."; if (m2.textContent) box.appendChild(m2); return; }
@@ -2674,12 +2704,16 @@
       .then(function (k) {
         if (!box.isConnected) return;
         if (!k) { var m3 = document.createElement("p"); m3.className = "meta"; m3.style.margin = "8px 0 0"; m3.textContent = "Keine Handynummer freigegeben."; box.appendChild(m3); return; }
-        var a1 = document.createElement("a"); a1.className = "anfrage"; a1.href = k.tel; a1.textContent = "Anrufen"; zw.appendChild(a1);
-        var a2 = document.createElement("a"); a2.className = "anfrage"; a2.href = k.wa; a2.target = "_blank"; a2.rel = "noopener"; a2.textContent = "WhatsApp"; zw.appendChild(a2);
+        zw.classList.remove("versteckt");
+        var a1 = document.createElement("a"); a1.className = "anfrage knopf-zeichen"; a1.href = k.tel;
+        a1.appendChild(ikone("i-telefon")); a1.appendChild(document.createTextNode("Anrufen")); zw.appendChild(a1);
+        var a2 = document.createElement("a"); a2.className = "anfrage knopf-zeichen"; a2.href = k.wa; a2.target = "_blank"; a2.rel = "noopener";
+        a2.appendChild(ikone("i-chat")); a2.appendChild(document.createTextNode("WhatsApp")); zw.appendChild(a2);
         if (kommend.length) {
           var s = kommend[0], d = new Date(s.beginn);
           var text = "Hallo " + (p.name.split(",")[1] || "").trim() + ", fahren wir am " + datumKurz(d) + " zusammen zum Spiel " + s.paarung + " (" + (s.halle || "") + ", Treffpunkt " + uhr(new Date(s.treffpunkt)) + " Uhr)? Viele Grüße, " + ((profil.name || "").split(",")[1] || profil.name || "").trim();
-          var a3 = document.createElement("a"); a3.className = "anfrage"; a3.href = k.wa.split("?")[0] + "?text=" + encodeURIComponent(text); a3.target = "_blank"; a3.rel = "noopener"; a3.textContent = "Mitfahrt anfragen"; zw.appendChild(a3);
+          var a3 = document.createElement("a"); a3.className = "anfrage zweit knopf-zeichen"; a3.href = k.wa.split("?")[0] + "?text=" + encodeURIComponent(text); a3.target = "_blank"; a3.rel = "noopener";
+          a3.appendChild(ikone("i-route")); a3.appendChild(document.createTextNode("Mitfahrt anfragen")); zw.appendChild(a3);
         }
         var m4 = document.createElement("p"); m4.className = "meta"; m4.style.margin = "8px 0 0"; m4.textContent = k.telefon + (k.hinweis ? " · " + k.hinweis : ""); box.appendChild(m4);
       }).catch(function () {});
@@ -2797,7 +2831,7 @@
       window.Mitglieder.abfahrt(name).then(function (sk) {
         if (!sk || !sk.minuten) return;
         var h = document.createElement("div"); h.className = "hinweis gut"; h.appendChild(ikone("i-route"));
-        var sp2 = document.createElement("span"); sp2.textContent = "Von zu Hause: " + sk.km + " km, ca. " + sk.minuten + " Min. ohne Verkehr."; h.appendChild(sp2); st.appendChild(h);
+        var sp2 = document.createElement("span"); sp2.textContent = "Von zu Hause: " + sk.km + " km, ca. " + mitPuffer(sk).minuten + " Min. (" + verkehrText() + ")."; h.appendChild(sp2); st.appendChild(h);
       });
       if (funktion("hallen")) window.Mitglieder.hallenHinweise(name, hw);
     }).catch(function () {});
@@ -3150,7 +3184,10 @@
     // Export der gefilterten Liste
     var ex = document.createElement("div"); ex.className = "zweit"; ex.style.margin = "8px 0 0";
     var c1 = document.createElement("button"); c1.type = "button"; c1.textContent = "CSV"; c1.addEventListener("click", function () { archivCsv(treffer, wer); }); ex.appendChild(c1);
-    var c2 = document.createElement("button"); c2.type = "button"; c2.textContent = navigator.share ? "Liste teilen" : "Liste kopieren"; c2.addEventListener("click", function () { archivTeilen(treffer, wer); }); ex.appendChild(c2);
+    var c2 = document.createElement("button"); c2.type = "button"; c2.className = "knopf-zeichen";
+    c2.appendChild(ikone("i-teilen"));
+    c2.appendChild(document.createTextNode(navigator.share ? "Liste teilen" : "Liste kopieren"));
+    c2.addEventListener("click", function () { archivTeilen(treffer, wer); }); ex.appendChild(c2);
     liste.appendChild(ex);
     if (!treffer.length) { liste.appendChild(leerZustand(archivStand.spiele.length ? "Nichts passt zu den Filtern." : "Noch keine Spiele im Archiv.")); return; }
     var monat = null, box = null, n = 0;
@@ -3316,7 +3353,9 @@
     // Was gerade gefiltert ist, laesst sich weitergeben - fuer die Gruppe oder
     // den Obmann, ohne Screenshot.
     var kn = document.createElement("button"); kn.type = "button"; kn.className = "filterknopf"; kn.style.flex = "none";
-    kn.textContent = navigator.share ? "Teilen" : "Kopieren";
+    kn.className = "knopf-zeichen"; kn.innerHTML = "";
+    kn.appendChild(ikone("i-teilen"));
+    kn.appendChild(document.createTextNode(navigator.share ? "Teilen" : "Kopieren"));
     kn.addEventListener("click", aendTeilen);
     such.appendChild(kn);
     kopf.appendChild(such);
@@ -3563,7 +3602,7 @@
       ["#regeln", "i-buch", "Regeln", "Strafenmatrix, Spielzeiten und Bestimmungen, auch offline"],
       ["#rechner", "i-rechner", "Strafrechner", "Wer sitzt, wer spielt: die Stärke auf dem Eis"],
       ["Gemeinsam"],
-      funktion("gespann") ? ["#mitfahren", "i-route", "Zusammen fahren", "Wer f\u00e4hrt wohin \u2013 auf dem Weg, bieten, suchen"] : null,
+      funktion("mitfahren") ? ["#mitfahren", "i-route", "Zusammen fahren", "Wer f\u00e4hrt wohin \u2013 auf dem Weg, bieten, suchen"] : null,
       funktion("telefon") ? ["#mitglieder/kollegen", "i-users", "Kollegen", "Telefonliste \u2013 anrufen, WhatsApp, kopieren"] : null,
       funktion("info") ? ["#mitglieder/info", "i-info", "Info", "Ank\u00fcndigungen und Termine", "info"] : null,
       funktion("frei") ? ["#mitglieder/frei", "i-cal", "Verf\u00fcgbarkeit", "Wann du nicht kannst oder gern pfeifst"] : null,
@@ -4183,7 +4222,7 @@
   function zeigeEinstellungen() {
     ansicht("einstellungen"); aktuell = null; window.scrollTo(0, 0);
     bereicheRendern(); startBausteineRendern(); startOrdnungRendern(); schnellWahlRendern(); tabWahlRendern(); pushVerlaufRendern(); adminZeileRendern();
-    setTimeout(function () { sprungleiste("einstellungen-sprung", "einstellungen", [["konto-bereich", "Konto"], ["karten-app", "App"], ["start-bausteine", "Startseite"], ["start-ordnung", "Reihenfolge"], ["schnell-wahl", "Schnellzugriff"], ["tab-wahl", "Leiste"], ["bereiche", "Bereiche"], ["adminzeile", "Betreiber"], ["push-verlauf", "Gemeldet"]]); }, 400);
+    setTimeout(function () { sprungleiste("einstellungen-sprung", "einstellungen", [["konto-bereich", "Konto"], ["einfach", "Aussehen"], ["karten-app", "Unterwegs"], ["start-bausteine", "Startseite"], ["start-ordnung", "Reihenfolge"], ["schnell-wahl", "Schnellzugriff"], ["tab-wahl", "Leiste"], ["bereiche", "Bereiche"], ["sicherung-raus", "Sicherung"], ["adminzeile", "Betreiber"]]); }, 400);
     var kb = el("konto-bereich"); kb.innerHTML = "";
     if (!sitzungVorhanden()) {
       var k = document.createElement("a"); k.href = "#mitglieder"; k.className = "hinweis"; k.style.display = "flex"; k.style.textDecoration = "none"; k.style.color = "inherit"; k.style.marginBottom = "12px";
@@ -4294,12 +4333,13 @@
   }
   function icsEvent(s, sk) {
     var treff = new Date(s.treffpunkt), ende = new Date(new Date(s.beginn).getTime() + (daten.spieldauer_minuten || 150) * 60000);
-    var puffer = sk && sk.minuten ? sk.minuten + 10 : null, zeilen = [];
+    var gepuffert = mitPuffer(sk);
+    var puffer = gepuffert && gepuffert.minuten ? gepuffert.minuten + 10 : null, zeilen = [];
     zeilen.push("BEGIN:VEVENT", "UID:abfahrt-" + icsZeit(treff) + "-" + s.paarung.replace(/[^a-z0-9]/gi, "").slice(0, 30) + "@einteilungen",
       "DTSTAMP:" + icsZeit(new Date()), "DTSTART:" + icsZeit(treff), "DTEND:" + icsZeit(ende),
       "SUMMARY:" + icsText((s.rolle ? s.rolle + " · " : "") + (s.liga ? s.liga + ": " : "") + s.paarung),
       "LOCATION:" + icsText(s.ort || s.halle || ""),
-      "DESCRIPTION:" + icsText("Treffpunkt " + uhr(treff) + " Uhr, Spielbeginn " + uhr(new Date(s.beginn)) + " Uhr" + (puffer ? "\nAbfahrt ca. " + uhr(new Date(treff.getTime() - (puffer - 10) * 60000)) + " Uhr (" + sk.km + " km, " + sk.minuten + " Min. ohne Verkehr)" : "")));
+      "DESCRIPTION:" + icsText("Treffpunkt " + uhr(treff) + " Uhr, Spielbeginn " + uhr(new Date(s.beginn)) + " Uhr" + (puffer ? "\nAbfahrt ca. " + uhr(new Date(treff.getTime() - (puffer - 10) * 60000)) + " Uhr (" + sk.km + " km, " + gepuffert.minuten + " Min., " + verkehrText() + ")" : "")));
     if (puffer) zeilen.push("BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsText("Losfahren: " + s.paarung + " (" + sk.km + " km)"), "TRIGGER:-PT" + puffer + "M", "END:VALARM");
     zeilen.push("BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:In einer Stunde an der Halle", "TRIGGER:-PT1H", "END:VALARM", "END:VEVENT");
     return zeilen;
@@ -4454,7 +4494,7 @@
       location.hash = "mitglieder/abrechnung"; return;
     }
     if (slug.indexOf("abrechnen/") === 0) { var kz = decodeURIComponent(slug.slice(10)); ladeMitglieder().then(function (M) { M.abrechnungSprung(kz); }).catch(function () {}); location.hash = "mitglieder/abrechnung"; return; }
-    if (slug === "mitfahren") { if (!funktion("gespann")) { location.hash = "mehr"; return; } zeigeMitfahren(); return; }
+    if (slug === "mitfahren") { if (!funktion("mitfahren")) { location.hash = "mehr"; return; } zeigeMitfahren(); return; }
     if (slug === "anleitung") { location.hash = "mehr"; tourOeffnen("alles"); return; }
     if (slug === "suche") { zeigeAuswahl("suche"); return; }
     if (slug === "karte") { zeigeKarte(); return; }
@@ -4568,7 +4608,7 @@
   // Sicherung: alles, was nur hier liegt und nach einem verlorenen Konto
   // oder einem neuen Handy sonst neu getippt werden muesste.
   var SICHER_SCHLUESSEL = ["einfach", "karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche",
-    "pushwoche", "pushabrechnung", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4", "thema", "funktionen"];
+    "pushwoche", "pushabrechnung", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4", "thema", "funktionen", "verkehr"];
   function sicherungBauen() {
     var app = {};
     SICHER_SCHLUESSEL.forEach(function (k) { var w = lesen(k); if (w !== null && w !== undefined) app[k] = w; });
@@ -4620,8 +4660,42 @@
     });
   })();
 
+  // Der Routendienst rechnet ohne Verkehr - eine Live-Auskunft gibt es
+  // nur gegen Geld. Statt zu tun, als wuessten wir es, gibt es einen
+  // Aufschlag, den jeder fuer seine Gegend selbst einstellt.
+  function verkehrPuffer() {
+    var v = parseInt(lesen("verkehr") || "0", 10);
+    return isNaN(v) || v < 0 || v > 60 ? 0 : v;
+  }
+  function mitPuffer(sk) {
+    if (!sk || !sk.minuten) return sk;
+    var p = verkehrPuffer();
+    if (!p) return sk;
+    return { minuten: Math.round(sk.minuten * (1 + p / 100)), km: sk.km, art: sk.art };
+  }
+  function verkehrText() {
+    var p = verkehrPuffer();
+    return p ? "inkl. " + p + " % Puffer" : "ohne Verkehr";
+  }
+  function verkehrLaden(nurAnwenden) {
+    var box = el("verkehr"); if (!box) return;
+    var jetzt = String(verkehrPuffer());
+    Array.prototype.forEach.call(box.querySelectorAll("button"), function (b) {
+      b.classList.toggle("aktiv", b.getAttribute("data-puffer") === jetzt);
+      if (nurAnwenden || b._an) return;
+      b._an = true;
+      b.addEventListener("click", function () {
+        var w = b.getAttribute("data-puffer");
+        schreiben("verkehr", w === "0" ? null : w);
+        verkehrLaden(true); einstellungenSync();
+        if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true);
+        toast(w === "0" ? "Ohne Puffer, reine Fahrzeit." : "Abfahrt " + w + " % früher.", "gut");
+      });
+    });
+  }
+
   function einstellungenSammeln() {
-    return { einfach: lesen("einfach") || null, karten: lesen("karten") || null, schrift: lesen("schrift") || null, akzent: lesen("akzent") || null, kompakt: lesen("kompakt") || null, ziel: lesen("ziel") || null, start: lesen("start") || null, bereiche: lesen("bereiche") || null, pushwoche: lesen("pushwoche") || null, pushabrechnung: lesen("pushabrechnung") || null, "schnell-aus": lesen("schnell-aus") || null, "start-ordnung": lesen("start-ordnung") || null,
+    return { verkehr: lesen("verkehr") || null, einfach: lesen("einfach") || null, karten: lesen("karten") || null, schrift: lesen("schrift") || null, akzent: lesen("akzent") || null, kompakt: lesen("kompakt") || null, ziel: lesen("ziel") || null, start: lesen("start") || null, bereiche: lesen("bereiche") || null, pushwoche: lesen("pushwoche") || null, pushabrechnung: lesen("pushabrechnung") || null, "schnell-aus": lesen("schnell-aus") || null, "start-ordnung": lesen("start-ordnung") || null,
              tab2: lesen("tab2") || null, tab3: lesen("tab3") || null, tab4: lesen("tab4") || null };
   }
   var syncTimer = null;
@@ -4635,7 +4709,7 @@
   function einstellungenAnwenden(e) {
     if (!e) return;
     var geaendert = false;
-    ["einfach", "karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche", "pushwoche", "pushabrechnung", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4"].forEach(function (k) { if ((lesen(k) || null) !== (e[k] || null)) { schreiben(k, e[k] || null); geaendert = true; } });
+    ["einfach", "karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche", "pushwoche", "pushabrechnung", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4", "verkehr"].forEach(function (k) { if ((lesen(k) || null) !== (e[k] || null)) { schreiben(k, e[k] || null); geaendert = true; } });
     if (geaendert) { einstellungenLaden(true); themaAnwenden(); einfachAnwenden(); tabsAnwenden(); funktionenAnwenden(funktionenLesen()); toast("Einstellungen vom Konto übernommen", ""); if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true); }
   }
   // Das eigene Bild liegt zusaetzlich auf dem Geraet, damit die Kopfzeile

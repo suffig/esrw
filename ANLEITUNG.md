@@ -2205,6 +2205,56 @@ Dazu neu:
   nummer, fragt die App nach, statt eine Rechnung zu bauen, die der
   Verein zurückschickt.
 
+### 10.6ax Acht Kleinigkeiten: Kollegenseite, Halle, Leiste, Teilen, Verkehr
+
+* **„Du und …" auf der Kollegenseite.** Die Zeile benutzte das Raster der
+  Spielliste (schmale Datumsspalte, breiter Rest) - der Titel landete in
+  der schmalen Spalte und brach mitten im Vereinsnamen um. Jetzt eine
+  eigene Zeile: Datum und Uhrzeit klein darüber, Paarung fett, Halle
+  darunter, Pfeil rechts. Die leere Knopfleiste, die eine Lücke gerissen
+  hat, erscheint erst, wenn wirklich Knöpfe kommen; Anrufen und WhatsApp
+  haben Zeichen.
+
+* **Verkehr.** Eine echte Live-Auskunft gibt es nur gegen Geld, der
+  Routendienst (OSRM) rechnet ohne Stau. Statt so zu tun, als wüssten wir
+  es besser, gibt es unter **Einstellungen → Unterwegs** einen **Puffer
+  für Verkehr** (0, 10, 20 oder 30 Prozent). Der Aufschlag geht in die
+  Abfahrtszeit auf der Startkarte, auf der Spielseite, in der Hallenkarte
+  und in die Kalenderdatei ein; statt „ohne Verkehr" steht dann „inkl.
+  20 % Puffer".
+
+* **Gespann-Chat und Zusammen fahren einzeln abschaltbar.** Beides hing am
+  Schalter „Gespann". Unter **Admin → Funktionen** stehen jetzt drei:
+  *Gespann* (Handynummern der Kollegen im Spiel), *Gespann-Chat* und
+  *Zusammen fahren*. Solange du die neuen nicht ausdrücklich setzt, gilt
+  weiter, was für „Gespann" eingestellt ist - nach dem Update ändert sich
+  also nichts von allein.
+
+* **Halle nur noch einmal verlinkt.** Auf der Spielseite stand der
+  Hallenname als Link und direkt darunter noch einmal als Reihe mit
+  Pfeil - zweimal derselbe Weg. Oben bleibt jetzt die Anschrift mit einem
+  Zeichen zum Kopieren, darunter die eine Reihe zur Hallenseite.
+
+* **Leiste unten.** Lange Ziele wie „Strafrechner" reichten bis an den
+  Nachbarn. Die Beschriftung sitzt jetzt in einem eigenen Feld, bleibt
+  mittig und wird notfalls gekürzt statt überzulaufen.
+
+* **Teilen ist überall dasselbe Zeichen** (die drei verbundenen Punkte):
+  auf der Spielkarte, im Spielkopf, im Archiv, bei der Saison und bei
+  „Woche teilen". Kopieren ebenso - vorher stand dort das Wort
+  „kopieren" mitten in der Adresse.
+
+* **Zusammen fahren** hatte gar keinen Innenabstand, Text und Knöpfe
+  klebten am Kartenrand. Jetzt Rand, eine Trennlinie über dem eigenen
+  Eintrag, „Ich:" in eigener Zeile. Die Karte oben schob die Seite beim
+  Aufbauen kurz auf die doppelte Breite; sie ist jetzt fest auf die
+  Fensterbreite begrenzt.
+
+* **Einstellungen sortiert.** Aus der einen Karte „App" sind zwei
+  geworden: **Aussehen** (einfache Ansicht, Schrift, Farbe, Hell/Dunkel,
+  kompakt) und **Unterwegs** (Karten-App, Puffer für Verkehr,
+  Saisonziel). Die Sprungleiste oben nennt beide und die Sicherung.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –
