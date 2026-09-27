@@ -724,7 +724,7 @@ window.Mitglieder = (function () {
         h("span", { text: "Dein Konto wartet auf die Freischaltung durch den Betreiber." + (sofort.length ? " " + sofort.join(", ") + (sofort.length === 1 ? " geht" : " gehen") + " schon" : "") + (spaeter.length ? "; " + spaeter.join(", ") + (spaeter.length === 1 ? " kommt" : " kommen") + " nach der Freischaltung." : ".") })]));
     }
     var leiste = h("div", { class: "mg-untertabs" });
-    var reiterListe = [["abrechnung", "Abrechnung", "i-euro"], ["info", "Info", "i-bell"], ["tausch", "Tausch", "i-swap"], ["frei", "Verfügbar", "i-cal"], ["notizen", "Notizen", "i-note"], ["kollegen", "Kollegen", "i-users"]]
+    var reiterListe = [["abrechnung", "Abrechnung", "i-euro"], ["info", "Info", "i-info"], ["tausch", "Tausch", "i-swap"], ["frei", "Verfügbar", "i-cal"], ["notizen", "Notizen", "i-note"], ["kollegen", "Kollegen", "i-users"]]
       .filter(function (t) { return !REITER_FUNKTION[t[0]] || fn(REITER_FUNKTION[t[0]]); });
     verfuegbareReiter = reiterListe.map(function (t) { return t[0]; });
     // Einfache Ansicht: nur das Taegliche. Tausch, Verfuegbarkeit und
@@ -3666,7 +3666,8 @@ window.Mitglieder = (function () {
       ["spiel", "Spiel anlegen", "i-cal", spielAnlegenRendern],
       ["hallen", "Hallen & Vereine", "i-pin", hallenPflegeRendern],
       ["adressen", "Vereine", "i-note", vereinsAdressenRendern],
-      ["telefon", "Telefonliste", "i-users", telefonlisteRendern]
+      ["telefon", "Telefonliste", "i-users", telefonlisteRendern],
+      ["zeiten", "Spielzeiten", "i-clock", spielzeitenRendern]
     ];
     if (!BEREICHE.filter(function (b) { return b[0] === adminBereich; }).length) adminBereich = BEREICHE[0][0];
 
@@ -4171,6 +4172,87 @@ window.Mitglieder = (function () {
       }
       suche.addEventListener("input", zeichne);
       zeichne();
+    });
+  }
+
+  // Admin -> Spielzeiten: was an der Bande zaehlt. Eine Startfassung liegt
+  // als Datei in der App und laesst sich mit einem Tipp uebernehmen.
+  function spielzeitenRendern(box) {
+    function neu() { leeren(box); spielzeitenRendern(box); }
+    leeren(box);
+    box.appendChild(h("h4", {}, [ikone("i-clock"), " Spielzeiten"]));
+    box.appendChild(h("p", { class: "meta", style: "margin:0 0 8px", text:
+      "Drittel, Pausen, Verlängerung und Penaltyschießen je Liga. Alle angemeldeten Kollegen sehen sie unter Regeln, "
+      + "ändern kannst nur du. Leere Felder tauchen in der App nicht auf." }));
+
+    var felder = [["liga", "Liga (Name, eindeutig)"], ["gruppe", "Gruppe, etwa Herren oder Nachwuchs"],
+                  ["spielzeit", "Spielzeit"], ["pause", "Pause"], ["verlaengerung", "Verlängerung"],
+                  ["penalty", "Penaltyschießen"], ["hinweis", "Hinweis"], ["quelle", "Fundstelle"]];
+
+    function formular(zeile, fertig) {
+      var ein = {};
+      var kasten = h("div", { class: "mg-form" });
+      felder.forEach(function (f) {
+        ein[f[0]] = h("input", { type: "text", value: (zeile && zeile[f[0]]) || "", placeholder: f[1] });
+        kasten.appendChild(h("label", { class: "meta", text: f[1] }));
+        kasten.appendChild(ein[f[0]]);
+      });
+      kasten.appendChild(h("button", { type: "button", class: "anfrage", text: "Speichern", onclick: function () {
+        var werte = { reihenfolge: (zeile && zeile.reihenfolge) || 100, geaendert: new Date().toISOString() };
+        felder.forEach(function (f) { werte[f[0]] = ein[f[0]].value.trim() || null; });
+        if (!werte.liga) { meldung("Die Liga braucht einen Namen.", "warn"); return; }
+        speichern(sb.from("spielzeiten").upsert(werte, { onConflict: "liga" })).then(function (r) {
+          if (r && r.error) { meldung(fehlerText(r.error) + (/spielzeiten/.test(r.error.message || "") ? ", schema.sql (v28) ausführen." : ""), "warn"); return null; }
+          if (zeile && zeile.liga && zeile.liga !== werte.liga) return speichern(sb.from("spielzeiten").delete().eq("liga", zeile.liga));
+          return true;
+        }).then(function (ok) { if (ok) { kurzMeldung("Gespeichert ✓", "gut"); if (fertig) fertig(); } });
+      } }));
+      return kasten;
+    }
+
+    box.appendChild(h("details", { class: "tausch" }, [
+      h("summary", { text: "Liga anlegen" }), formular(null, neu)]));
+
+    box.appendChild(h("p", { class: "meta", style: "margin:8px 0" }, [
+      h("button", { type: "button", class: "textknopf", text: "Startfassung aus der App übernehmen", onclick: function () {
+        holeJson("spielzeiten.json", null).then(function (d) {
+          if (!d || !d.ligen) { meldung("Startfassung nicht gefunden.", "warn"); return; }
+          if (!confirm(d.ligen.length + " Ligen übernehmen? Einträge mit gleichem Namen werden überschrieben.")) return;
+          var reihen = d.ligen.map(function (l, i) {
+            return { liga: l.liga, gruppe: l.gruppe || null, spielzeit: l.spielzeit || null, pause: l.pause || null,
+                     verlaengerung: l.verlaengerung || null, penalty: l.penalty || null, hinweis: l.hinweis || null,
+                     quelle: l.quelle || null, reihenfolge: (i + 1) * 10, geaendert: new Date().toISOString() };
+          });
+          speichern(sb.from("spielzeiten").upsert(reihen, { onConflict: "liga" })).then(function (r) {
+            if (r && r.error) { meldung(fehlerText(r.error) + ", schema.sql (v28) ausführen.", "warn"); return; }
+            kurzMeldung(reihen.length + " Ligen übernommen ✓", "gut"); neu();
+          });
+        });
+      } })]));
+
+    var innen = h("div", {}, [skelett(1)]);
+    box.appendChild(innen);
+    speichern(sb.from("spielzeiten").select("*").order("reihenfolge").order("liga")).then(function (r) {
+      if (!box.isConnected) return;
+      leeren(innen);
+      if (r && r.error) {
+        innen.appendChild(h("p", { class: "achtung", text: "Tabelle spielzeiten fehlt, schema.sql (v28) ausführen. " + fehlerText(r.error) }));
+        return;
+      }
+      var liste = (r && r.data) || [];
+      if (!liste.length) { innen.appendChild(h("p", { class: "leer", text: "Noch nichts eingetragen. Oben die Startfassung übernehmen." })); return; }
+      liste.forEach(function (z) {
+        var det = h("details", { class: "tausch", style: "margin-top:6px" }, [h("summary", {}, [h("span", {}, [
+          h("b", { text: z.liga }),
+          h("small", { style: "display:block;color:var(--dim)", text: [z.gruppe, z.spielzeit].filter(Boolean).join(" · ") || "ohne Angaben" })])])]);
+        det.appendChild(formular(z, neu));
+        det.appendChild(h("p", { class: "meta", style: "margin:6px 0 0" }, [
+          h("button", { type: "button", class: "textknopf", text: "Liga löschen", onclick: function () {
+            if (!confirm(z.liga + " löschen?")) return;
+            speichern(sb.from("spielzeiten").delete().eq("liga", z.liga)).then(function () { kurzMeldung("Gelöscht.", ""); neu(); });
+          } })]));
+        innen.appendChild(det);
+      });
     });
   }
 
@@ -4790,6 +4872,12 @@ window.Mitglieder = (function () {
   function wohnortEigen() {
     return bereit().then(function (st) { if (!st.eingerichtet || !session) return null; return sb.from("wohnorte").select("user_id").eq("user_id", session.user.id).maybeSingle().then(function (r) { return !!r.data; }); }).catch(function () { return null; });
   }
+  function spielzeiten() {
+    if (!sb || !session) return Promise.resolve(null);
+    return speichern(sb.from("spielzeiten").select("*").order("reihenfolge").order("liga"))
+      .then(function (r) { return (r && !r.error && r.data && r.data.length) ? r.data : null; });
+  }
+
   function telefonVon(slug) { var k = nummerVon(slug); if (!k) return null; var l = telefonLink(k.telefon); return { telefon: k.telefon, tel: l.tel, wa: l.wa }; }
   function mitfahrtSetzen(spiel, art, text) {
     if (!session || !profil) return Promise.resolve(false);
@@ -4848,5 +4936,5 @@ window.Mitglieder = (function () {
            extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat, obmann: obmann, termine: termine,
            einstellungenSpeichern: einstellungenSpeichern, radar: radar, angebotMachen: angebotMachen,
            kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl, kontoRendern: kontoRendern, kontaktVon: kontaktVon, istAdmin: istAdmin, adminRecht: adminRecht, tresorSchluessel: tresorSchluessel, rechnungSprung: rechnungSprung, korrekturSpeichern: korrekturSpeichern, spielManuellLoeschen: spielManuellLoeschen,
-           mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, telefonVon: telefonVon, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb, wohnortEigen: wohnortEigen };
+           mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, telefonVon: telefonVon, spielzeiten: spielzeiten, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb, wohnortEigen: wohnortEigen };
 })();

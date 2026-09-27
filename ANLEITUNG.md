@@ -1995,6 +1995,49 @@ ausdrücklich.
   Für etwas, das sofort ankommen muss, bleibt das Telefon die bessere
   Wahl.
 
+### 10.6ar Spielzeiten je Liga, Strafrechner, Ziehen zum Aktualisieren (Schema v28)
+
+* **Spielzeiten je Liga** stehen unter Regeln im mittleren Reiter:
+  Spielzeit, Pause, Verlängerung und Penaltyschießen, gruppiert nach
+  Herren, Frauen und Nachwuchs, dazu eine Karte „Für alle Spiele" mit
+  Drittelpausen, Uhrende, Verlängerung und Penaltyschießen. Die Angaben
+  stammen aus den Durchführungsbestimmungen des EHV NRW; wo sie im
+  Anhang stehen, sagt die Fundstelle unter jedem Eintrag.
+
+  Gepflegt wird die Liste im **Adminbereich → Spielzeiten**: Ligen
+  anlegen, ändern, löschen. Der Knopf **„Startfassung aus der App
+  übernehmen"** schreibt die neun Ligen aus `docs/spielzeiten.json` in
+  die Datenbank, danach ist alles ohne Neuveröffentlichung änderbar.
+  Was leer bleibt, taucht in der App nicht auf. Dafür ist
+  **`supabase/schema.sql` bis v28 einzuspielen** – Tabelle
+  `spielzeiten`, lesen darf jeder Angemeldete, schreiben nur der
+  Betreiber. Ohne die Tabelle zeigt die App die Datei aus der App, also
+  auch offline.
+
+* **Strafrechner** über der Strafenmatrix, zugeklappt. Die Strafen einer
+  Unterbrechung je Mannschaft antippen (2, 2+2, 5, 5+SPD, MS, SPD, 10),
+  dazu die Zahl der schon laufenden Strafen. Heraus kommt die Stärke auf
+  dem Eis („4 gegen 5"), was auf die Strafzeituhr kommt, und die Sätze
+  dazu: was sich aufhebt und sofort ersetzt wird (Regel 19.4), wann die
+  dritte Strafe erst später anläuft (Regel 26), wann aus Kleiner und
+  Grosser Strafe eine Differenz von drei oder einer Minute wird (Regel
+  19.3), und wer die fünf Minuten bei Matchstrafe absitzt. Gerechnet
+  wird nach dem Regelbuch: erst so viele Grosse Strafen streichen wie
+  möglich, dann die Kleinen; nie weniger als drei Feldspieler.
+
+* **Ziehen zum Aktualisieren** auf Start, Spielplan, Archiv und
+  Änderungen. Ganz oben nach unten ziehen, ein Band erscheint, ab etwa
+  einem halben Zentimeter steht „Loslassen, dann wird geladen". Danach
+  kommt derselbe Stand wie beim Tippen auf die Standzeile.
+
+* **Eigene Zeichen** für Regeln (Buch), Info (i im Kreis) und Statistik
+  (Balken). Vorher teilten sie sich Symbole mit Notizen, Änderungen und
+  Kollegen, was in der frei belegbaren Leiste unten verwirrend war.
+
+* **„Neu in der App"** zeigt wieder etwas: die Karte auf der Startseite
+  listet, was seit der letzten Fassung dazugekommen ist, und
+  verschwindet mit „Verstanden".
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

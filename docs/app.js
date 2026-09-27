@@ -6,12 +6,13 @@
   var basis = location.href.split("#")[0].split("?")[0].replace(/index\.html$/, "").replace(/\/?$/, "/");
 
   // Wird einmal je Fassung gezeigt, damit die Kollegen neue Funktionen finden.
-  var NEUIGKEITEN = { version: "2026-09-19", punkte: [
-    "Neues Logo und Design in Schwarz-Weiß-Rot, Schalter statt Häkchen, Wischen auf Spielkarten",
-    "Abrechnung: private Aufstellung fürs Finanzamt, mit Steuerjahren, Jahresblatt, Verpflegung, km hin und zurück und eigenen Spielen",
-    "Archiv aller Saisons mit Filtern, Änderungen mit Vorher/Nachher, Zusammen fahren mit „auf dem Weg“",
-    "Start: Schnellzugriff, „Alles eingerichtet?“, Termin-Karte; Einstellungen mit Konto und Bereichen",
-    "Anleitung unter Mehr → Anleitung, Offline-Abrechnung mit Nachreichen"
+  var NEUIGKEITEN = { version: "2026-09-27", punkte: [
+    "Regeln: Strafenmatrix, Spielzeiten je Liga und die Bestimmungen des EHV NRW, alles auch offline",
+    "Strafrechner: Strafen antippen, die Stärke auf dem Eis steht sofort da",
+    "Einfacher Modus als Voreinstellung, die Leiste unten belegst du selbst",
+    "Kollegen mit Telefon und Anschrift, Profil einmal ausfüllen für Abrechnung und Rechnung",
+    "Suche über alles, Spieltag-Modus, Gespann-Chat und Push bei jeder Änderung von esrw.de",
+    "Ziehen zum Aktualisieren auf Start und Spielplan"
   ] };
   var daten = null, aktuell = null, profil = null;
   var el = function (id) { return document.getElementById(id); };
@@ -362,7 +363,8 @@
     var name = tresorMarken[slug] || slug;
     return protokoll + "//" + basis.replace(/^https?:\/\//, "") + "feeds/" + name + ".ics";
   }
-  function personMit(slug) { return daten.personen.filter(function (p) { return p.slug === slug; })[0]; }
+  // Kann vor dem ersten Laden gefragt werden - dann gibt es noch niemanden
+  function personMit(slug) { return daten && daten.personen ? daten.personen.filter(function (p) { return p.slug === slug; })[0] : null; }
   function tagVon(iso) { return new Date(iso).toDateString(); }
   function mitIkone(name, text, klasse) {
     var d = document.createElement("div");
@@ -2225,12 +2227,12 @@
     ["mitglieder/kollegen", "i-users", "Kollegen", "telefon"],
     ["mitglieder/tausch", "i-swap", "Tausch", "tausch"],
     ["aenderungen", "i-bell", "Änderungen"],
-    ["regeln", "i-note", "Regeln"],
+    ["regeln", "i-buch", "Regeln"],
     ["archiv", "i-clock", "Archiv"],
     ["mitfahren", "i-route", "Mitfahren", "gespann"],
-    ["mitglieder/info", "i-bell", "Info", "info"],
+    ["mitglieder/info", "i-info", "Info", "info"],
     ["mitglieder/frei", "i-cal", "Verfügbar", "frei"],
-    ["statistik", "i-users", "Statistik", "statistik"],
+    ["statistik", "i-balken", "Statistik", "statistik"],
     ["karte", "i-pin", "Hallen", "hallen"],
     ["mitglieder/notizen", "i-note", "Notizen", "notizen"]
   ];
@@ -2339,11 +2341,11 @@
     ["#mitfahren", "i-route", "Mitfahren", "gespann"],
     ["#aenderungen", "i-bell", "Änderungen"],
     ["#mitglieder/tausch", "i-swap", "Tausch", "tausch"],
-    ["#statistik", "i-users", "Statistik", "statistik"],
+    ["#statistik", "i-balken", "Statistik", "statistik"],
     ["#mitglieder/frei", "i-cal", "Verfügbar", "frei"],
-    ["#mitglieder/info", "i-bell", "Info", "info"],
+    ["#mitglieder/info", "i-info", "Info", "info"],
     ["#karte", "i-pin", "Hallenkarte", "hallen"],
-    ["#regeln", "i-note", "Regeln"],
+    ["#regeln", "i-buch", "Regeln"],
     ["#einstellungen", "i-key", "Einstellungen"]
   ];
   function schnellWahlRendern() {
@@ -3399,14 +3401,14 @@
     var eintraege = [
       ["F\u00fcr dich"],
       ["#archiv", "i-clock", "Archiv", "Alle deine Spiele, alle Saisons, mit Filtern und Export"],
-      funktion("statistik") ? ["#statistik", "i-users", "Statistik", "Saison, Ligen, Hallen, Partner, Saisonziel"] : null,
+      funktion("statistik") ? ["#statistik", "i-balken", "Statistik", "Saison, Ligen, Hallen, Partner, Saisonziel"] : null,
       ["#aenderungen", "i-list", "\u00c4nderungen", "Was sich in 14 Tagen getan hat \u2013 mit Vorher/Nachher"],
       funktion("notizen") ? ["#mitglieder/notizen", "i-note", "Notizen", "Private Spielnotizen"] : null,
-      ["#regeln", "i-note", "Regeln", "Strafenmatrix und Durchführungsbestimmungen, auch offline"],
+      ["#regeln", "i-buch", "Regeln", "Strafenmatrix, Spielzeiten und Bestimmungen, auch offline"],
       ["Gemeinsam"],
       funktion("gespann") ? ["#mitfahren", "i-route", "Zusammen fahren", "Wer f\u00e4hrt wohin \u2013 auf dem Weg, bieten, suchen"] : null,
       funktion("telefon") ? ["#mitglieder/kollegen", "i-users", "Kollegen", "Telefonliste \u2013 anrufen, WhatsApp, kopieren"] : null,
-      funktion("info") ? ["#mitglieder/info", "i-bell", "Info", "Ank\u00fcndigungen und Termine", "info"] : null,
+      funktion("info") ? ["#mitglieder/info", "i-info", "Info", "Ank\u00fcndigungen und Termine", "info"] : null,
       funktion("frei") ? ["#mitglieder/frei", "i-cal", "Verf\u00fcgbarkeit", "Wann du nicht kannst oder gern pfeifst"] : null,
       funktion("hallen") ? ["#karte", "i-pin", "Hallenkarte", "Alle Hallen auf der Karte"] : null,
       ["Konto und App"],
@@ -3479,7 +3481,7 @@
   // Durchfuehrungsbestimmungen, die Schiedsrichter betreffen. Beides sind
   // eigene Zusammenstellungen - der Wortlaut steht in den verlinkten
   // Dokumenten, und die liegen beim Verband, nicht hier.
-  var regelnDaten = null, bestimmungenDaten = null, regelnTeil = "strafen", regelArt = "";
+  var regelnDaten = null, bestimmungenDaten = null, zeitenDaten = null, regelnTeil = "strafen", regelArt = "";
   // Die Suche oben faengt damit an, was sie schon geladen hat; sonst holt sie nach.
   // Jede Strafart hat ihre Farbe - von Gruen (2) bis Rot (MS). Die Klasse
   // kommt aus dem Kuerzel: "5+SPD" -> "farbe-5spd".
@@ -3500,16 +3502,256 @@
     el("regeln-arten").classList.toggle("versteckt", regelnTeil !== "strafen");
     Promise.all([
       regelnDaten ? Promise.resolve(regelnDaten) : hole("strafen.json").catch(function () { return null; }),
-      bestimmungenDaten ? Promise.resolve(bestimmungenDaten) : hole("bestimmungen.json").catch(function () { return null; })
+      bestimmungenDaten ? Promise.resolve(bestimmungenDaten) : hole("bestimmungen.json").catch(function () { return null; }),
+      zeitenDaten ? Promise.resolve(zeitenDaten) : zeitenLaden()
     ]).then(function (r) {
       regelnDaten = r[0] || regelnDaten; bestimmungenDaten = r[1] || bestimmungenDaten;
+      zeitenDaten = r[2] || zeitenDaten;
       regelnZeichnen();
     });
     window.scrollTo(0, 0);
   }
+  // Spielzeiten: der Betreiber pflegt sie in der Datenbank, die Datei in
+  // der App ist Startfassung und Rueckfalloption (auch offline).
+  function zeitenLaden() {
+    var ausDatei = hole("spielzeiten.json").catch(function () { return null; });
+    if (!sitzungVorhanden()) return ausDatei;
+    return ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
+      .then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.spielzeiten() : null; })
+      .then(function (reihen) {
+        return ausDatei.then(function (d) {
+          if (!d) d = { ligen: [], allgemein: [] };
+          if (reihen && reihen.length) {
+            d = { _hinweis: d._hinweis, stand: d.stand, quelle: d.quelle, allgemein: d.allgemein, ligen: reihen };
+          }
+          return d;
+        });
+      }).catch(function () { return ausDatei; });
+  }
+
+  // Strafrechner: was bleibt bei mehreren Strafen auf dem Eis? Regel 19.4
+  // gibt die Reihenfolge vor - erst Grosse streichen, dann Kleine. Was sich
+  // aufhebt, wird sofort ersetzt und zaehlt nicht fuer die Staerke.
+  var rechner = { a: [], b: [], laufA: 0, laufB: 0, offen: false };
+  var R_ARTEN = [
+    { k: "2", t: "Kleine Strafe", e: [2] },
+    { k: "2+2", t: "Doppelte kleine", e: [2, 2] },
+    { k: "5", t: "Grosse Strafe", e: [5] },
+    { k: "5+SPD", t: "Grosse mit Spieldauer", e: [5], mit: true },
+    { k: "MS", t: "Matchstrafe", e: [5], mit: true },
+    { k: "SPD", t: "Spieldauer", e: [] },
+    { k: "10", t: "Disziplinar", e: [] }
+  ];
+  function rArt(k) { return R_ARTEN.filter(function (x) { return x.k === k; })[0] || R_ARTEN[0]; }
+
+  function rechnerErgebnis() {
+    function zaehlen(liste) {
+      var z = { gross: 0, klein: 0 };
+      liste.forEach(function (k) { rArt(k).e.forEach(function (m) { if (m === 5) z.gross++; else z.klein++; }); });
+      return z;
+    }
+    var A2 = zaehlen(rechner.a), B2 = zaehlen(rechner.b);
+    var wegGross = Math.min(A2.gross, B2.gross), wegKlein = Math.min(A2.klein, B2.klein);
+    A2.gross -= wegGross; B2.gross -= wegGross; A2.klein -= wegKlein; B2.klein -= wegKlein;
+    function uhr(z) {
+      var l = [];
+      for (var i = 0; i < z.klein; i++) l.push("2 Min");
+      for (var j = 0; j < z.gross; j++) l.push("5 Min");
+      return l;
+    }
+    var sichtA = rechner.laufA + A2.gross + A2.klein, sichtB = rechner.laufB + B2.gross + B2.klein;
+    return {
+      a: A2, b: B2, uhrA: uhr(A2), uhrB: uhr(B2), sichtA: sichtA, sichtB: sichtB,
+      wegGross: wegGross, wegKlein: wegKlein,
+      staerkeA: 5 - Math.min(2, sichtA), staerkeB: 5 - Math.min(2, sichtB)
+    };
+  }
+
+  function strafrechnerKarte() {
+    var d = document.createElement("details");
+    d.className = "karte bestimmung-block";
+    d.open = rechner.offen;
+    d.addEventListener("toggle", function () { rechner.offen = d.open; });
+    var sm = document.createElement("summary");
+    var sp = document.createElement("span");
+    var sb2 = document.createElement("b"); sb2.textContent = "Strafrechner"; sp.appendChild(sb2);
+    var ss = document.createElement("small"); ss.textContent = "Stärke auf dem Eis"; sp.appendChild(ss);
+    sm.appendChild(sp); d.appendChild(sm);
+
+    var koerper = document.createElement("div");
+    d.appendChild(koerper);
+
+    function team(name, schluessel, laufSchluessel) {
+      var kasten = document.createElement("div"); kasten.className = "rechner-team";
+      var t = document.createElement("b"); t.textContent = name; kasten.appendChild(t);
+
+      var chips = document.createElement("div"); chips.className = "rechner-chips";
+      R_ARTEN.forEach(function (art) {
+        var b = document.createElement("button"); b.type = "button";
+        b.className = "chip " + strafFarbe(art.k);
+        b.textContent = "+ " + art.k; b.title = art.t;
+        b.addEventListener("click", function () { rechner[schluessel].push(art.k); zeichne(); });
+        chips.appendChild(b);
+      });
+      kasten.appendChild(chips);
+
+      var gewaehlt = document.createElement("div"); gewaehlt.className = "rechner-gewaehlt";
+      if (!rechner[schluessel].length) {
+        var leer = document.createElement("small"); leer.textContent = "keine Strafe in dieser Unterbrechung";
+        gewaehlt.appendChild(leer);
+      }
+      rechner[schluessel].forEach(function (k, i) {
+        var b = document.createElement("button"); b.type = "button";
+        b.className = "chip ich " + strafFarbe(k);
+        b.textContent = k + " \u00d7"; b.title = rArt(k).t + " entfernen";
+        b.addEventListener("click", function () { rechner[schluessel].splice(i, 1); zeichne(); });
+        gewaehlt.appendChild(b);
+      });
+      kasten.appendChild(gewaehlt);
+
+      var lauf = document.createElement("div"); lauf.className = "rechner-lauf";
+      var lt = document.createElement("span"); lt.textContent = "läuft schon"; lauf.appendChild(lt);
+      function schritt(zeichen, wert) {
+        var b = document.createElement("button"); b.type = "button"; b.className = "schrittknopf";
+        b.textContent = zeichen;
+        b.addEventListener("click", function () {
+          rechner[laufSchluessel] = Math.max(0, Math.min(3, rechner[laufSchluessel] + wert)); zeichne();
+        });
+        return b;
+      }
+      lauf.appendChild(schritt("\u2212", -1));
+      var z = document.createElement("b"); z.textContent = String(rechner[laufSchluessel]); lauf.appendChild(z);
+      lauf.appendChild(schritt("+", 1));
+      kasten.appendChild(lauf);
+      return kasten;
+    }
+
+    function zeichne() {
+      while (koerper.firstChild) koerper.removeChild(koerper.firstChild);
+      var hinweis = document.createElement("p"); hinweis.className = "meta"; hinweis.style.margin = "0 0 8px";
+      hinweis.textContent = "Strafen aus einer Unterbrechung antippen, dazu die Strafen, die schon laufen.";
+      koerper.appendChild(hinweis);
+      koerper.appendChild(team("Heim", "a", "laufA"));
+      koerper.appendChild(team("Gast", "b", "laufB"));
+
+      var e = rechnerErgebnis();
+      var erg = document.createElement("div"); erg.className = "rechner-ergebnis";
+      var gross = document.createElement("b"); gross.className = "rechner-staerke";
+      gross.textContent = e.staerkeA + " gegen " + e.staerkeB;
+      erg.appendChild(gross);
+      var wer = document.createElement("small");
+      wer.textContent = e.staerkeA === e.staerkeB ? "gleiche Stärke" :
+        (e.staerkeA > e.staerkeB ? "Heim in Überzahl" : "Gast in Überzahl");
+      erg.appendChild(wer);
+
+      [["Heim", e.uhrA, rechner.laufA], ["Gast", e.uhrB, rechner.laufB]].forEach(function (paar) {
+        var z = document.createElement("div"); z.className = "zeiten-wert";
+        var k = document.createElement("span"); k.textContent = paar[0] + " auf die Uhr"; z.appendChild(k);
+        var v = document.createElement("b");
+        v.textContent = paar[1].length ? paar[1].join(" + ") : "nichts Neues";
+        if (paar[2]) v.textContent += " (dazu " + paar[2] + " laufend)";
+        z.appendChild(v);
+        erg.appendChild(z);
+      });
+      koerper.appendChild(erg);
+
+      var saetze = [];
+      if (e.wegGross + e.wegKlein) {
+        var weg = e.wegGross + e.wegKlein;
+        saetze.push((weg === 1 ? "Je eine Strafe hebt sich auf" : "Je " + weg + " Strafen heben sich auf")
+          + ". Die Spieler sitzen ab, ersetzt wird sofort, die Stärke bleibt gleich (Regel 19.4).");
+      }
+      if (e.sichtA > 2 || e.sichtB > 2) {
+        saetze.push("Eine Mannschaft hat drei Strafen. Die dritte läuft erst an, wenn eine der beiden ersten "
+          + "abgelaufen ist, auf dem Eis bleiben nie weniger als drei Feldspieler (Regel 26).");
+      }
+      if ((e.a.klein && e.b.gross) || (e.b.klein && e.a.gross)) {
+        saetze.push("In den letzten fünf Minuten und in der Verlängerung wird die Differenz aus Kleiner und "
+          + "Grosser Strafe sofort als Grosse Strafe über drei oder eine Minute angesagt (Regel 19.3).");
+      }
+      if (rechner.a.concat(rechner.b).some(function (k) { return rArt(k).mit; })) {
+        saetze.push("Bei Matchstrafe und Grosser Strafe mit Spieldauer sitzt ein Mitspieler die fünf Minuten ab.");
+      }
+      if (rechner.a.concat(rechner.b).some(function (k) { return k === "SPD" || k === "10"; })) {
+        saetze.push("Spieldauer und Disziplinarstrafe stehen nicht auf der Strafzeituhr, die Mannschaft ist "
+          + "dadurch nicht in Unterzahl.");
+      }
+      saetze.forEach(function (t) {
+        var p2 = document.createElement("small"); p2.className = "zeiten-hinweis"; p2.textContent = t;
+        koerper.appendChild(p2);
+      });
+
+      if (rechner.a.length || rechner.b.length || rechner.laufA || rechner.laufB) {
+        var zurueck = document.createElement("button"); zurueck.type = "button"; zurueck.className = "textknopf";
+        zurueck.style.marginTop = "8px";
+        zurueck.textContent = "Zurücksetzen";
+        zurueck.addEventListener("click", function () {
+          rechner.a = []; rechner.b = []; rechner.laufA = 0; rechner.laufB = 0; zeichne();
+        });
+        koerper.appendChild(zurueck);
+      }
+    }
+    zeichne();
+    return d;
+  }
+
   function regelnZeichnen() {
     var ziel = el("regeln-liste"); ziel.innerHTML = "";
     var arten = el("regeln-arten"); arten.innerHTML = "";
+    if (regelnTeil === "zeiten") {
+      el("regeln-unter").textContent = zeitenDaten ? "Spielzeiten, " + (zeitenDaten.stand || "") : "Spielzeiten";
+      if (!zeitenDaten) { ziel.appendChild(hinweisKarte("Spielzeiten nicht geladen.")); return; }
+      var gruppen = [];
+      (zeitenDaten.ligen || []).forEach(function (l) {
+        var g = gruppen.filter(function (x) { return x.titel === (l.gruppe || "Ligen"); })[0];
+        if (!g) { g = { titel: l.gruppe || "Ligen", zeilen: [] }; gruppen.push(g); }
+        g.zeilen.push(l);
+      });
+      gruppen.forEach(function (g, nr) {
+        var d = document.createElement("details"); d.className = "karte bestimmung-block";
+        if (!nr) d.open = true;
+        var sm = document.createElement("summary");
+        var t = document.createElement("span");
+        var b = document.createElement("b"); b.textContent = g.titel; t.appendChild(b);
+        var anz = document.createElement("small"); anz.textContent = g.zeilen.length + (g.zeilen.length === 1 ? " Liga" : " Ligen"); t.appendChild(anz);
+        sm.appendChild(t); d.appendChild(sm);
+        g.zeilen.forEach(function (l) {
+          var z = document.createElement("div"); z.className = "zeiten-zeile";
+          var kopf = document.createElement("b"); kopf.textContent = l.liga; z.appendChild(kopf);
+          [["Spielzeit", l.spielzeit], ["Pause", l.pause], ["Verlängerung", l.verlaengerung],
+           ["Penaltys", l.penalty]].forEach(function (paar) {
+            if (!paar[1]) return;
+            var r = document.createElement("div"); r.className = "zeiten-wert";
+            var k = document.createElement("span"); k.textContent = paar[0]; r.appendChild(k);
+            var v = document.createElement("b"); v.textContent = paar[1]; r.appendChild(v);
+            z.appendChild(r);
+          });
+          if (l.hinweis) { var hw = document.createElement("small"); hw.className = "zeiten-hinweis"; hw.textContent = l.hinweis; z.appendChild(hw); }
+          if (l.quelle) { var q = document.createElement("small"); q.className = "fundstelle"; q.textContent = l.quelle; z.appendChild(q); }
+          d.appendChild(z);
+        });
+        ziel.appendChild(d);
+      });
+      if ((zeitenDaten.allgemein || []).length) {
+        var ad = document.createElement("details"); ad.className = "karte bestimmung-block";
+        var asm = document.createElement("summary");
+        var at = document.createElement("span");
+        var ab = document.createElement("b"); ab.textContent = "Für alle Spiele"; at.appendChild(ab);
+        var aa = document.createElement("small"); aa.textContent = zeitenDaten.allgemein.length + " Punkte"; at.appendChild(aa);
+        asm.appendChild(at); ad.appendChild(asm);
+        zeitenDaten.allgemein.forEach(function (p2) {
+          var z = document.createElement("div"); z.className = "bestimmung-punkt";
+          var tb = document.createElement("b"); tb.textContent = p2.titel; tb.style.display = "block"; z.appendChild(tb);
+          var tx = document.createElement("span"); tx.textContent = p2.text; z.appendChild(tx);
+          var q = document.createElement("small"); q.className = "fundstelle"; q.textContent = p2.quelle; z.appendChild(q);
+          ad.appendChild(z);
+        });
+        ziel.appendChild(ad);
+      }
+      ziel.appendChild(hinweisKarte(zeitenDaten._hinweis || ""));
+      return;
+    }
+
     if (regelnTeil === "bestimmungen") {
       el("regeln-unter").textContent = bestimmungenDaten ? "EHV NRW, Stand " + bestimmungenDaten.stand : "Bestimmungen";
       if (!bestimmungenDaten) { ziel.appendChild(hinweisKarte("Bestimmungen nicht geladen.")); return; }
@@ -3573,6 +3815,7 @@
     });
 
     var q = ohneZeichen(el("regeln-filter").value);
+    if (!q) ziel.appendChild(strafrechnerKarte());
     var treffer = (regelnDaten.strafen || []).filter(function (r) {
       if (regelArt && r.codes.indexOf(regelArt) < 0) return false;
       return !q || ohneZeichen(r.name + " " + (r.info || "")).indexOf(q) >= 0;
@@ -4511,6 +4754,53 @@
       if (alter > 6) { s.className = "stand alt"; var w = document.createElement("span"); w.className = "stand-mehr"; w.textContent = ", lange nicht aktualisiert"; s.appendChild(w); }
     } else s.textContent = zahlen;
   }
+  // Ziehen zum Aktualisieren: nur ganz oben und nur in den Listen. Der
+  // Griff bleibt passiv, damit das Rollen nicht ruckelt.
+  function ziehenEinrichten() {
+    var band = el("ziehen");
+    if (!band || !("ontouchstart" in window)) return;
+    var start = -1, weg = 0, laeuft = false;
+    function erlaubt() {
+      if (laeuft || window.scrollY > 4) return false;
+      return ["detail", "plan", "auswahl", "archiv", "aenderungen"].some(function (id) {
+        var k = el(id); return k && !k.classList.contains("versteckt");
+      });
+    }
+    document.addEventListener("touchstart", function (e) {
+      start = (e.touches.length === 1 && erlaubt()) ? e.touches[0].clientY : -1;
+      weg = 0;
+    }, { passive: true });
+    document.addEventListener("touchmove", function (e) {
+      if (start < 0) return;
+      var roh = e.touches[0].clientY - start;
+      if (roh <= 0) { weg = 0; band.style.transform = ""; band.classList.remove("da", "bereit"); return; }
+      weg = Math.min(roh * 0.5, 90);
+      band.classList.add("da");
+      band.classList.toggle("bereit", weg >= 55);
+      band.style.transform = "translateY(" + weg + "px)";
+      band.textContent = weg >= 55 ? "Loslassen, dann wird geladen" : "Zum Aktualisieren ziehen";
+    }, { passive: true });
+    document.addEventListener("touchend", function () {
+      if (start < 0) return;
+      var los = weg >= 55;
+      start = -1; weg = 0;
+      band.style.transform = "";
+      if (!los) { band.classList.remove("da", "bereit"); return; }
+      laeuft = true;
+      band.classList.remove("bereit");
+      band.style.transform = "translateY(0)";
+      band.textContent = "Wird geladen \u2026";
+      neuLaden().then(function () {
+        laeuft = false;
+        band.style.transform = "";
+        band.classList.remove("da", "bereit");
+        band.textContent = "Zum Aktualisieren ziehen";
+        toast("Aktualisiert", "gut");
+      });
+    }, { passive: true });
+  }
+  ziehenEinrichten();
+
   function neuLaden() {
     return Promise.all([hole("daten.json"), hole("stand.json").catch(function () { return null; })])
       .then(function (b) {

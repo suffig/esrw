@@ -1168,3 +1168,31 @@ update public.profile p
    set slug = coalesce(p.slug, e.slug), name = coalesce(p.name, e.name)
   from public.einladungen e
  where lower(e.email) = lower(p.email) and p.slug is null;
+
+
+-- ======================================================================
+-- v28: Spielzeiten und Modi je Liga
+-- ======================================================================
+-- Zum Nachschlagen an der Bande: Drittellaengen, Pausen, Verlaengerung,
+-- Penaltyschiessen und Besonderheiten je Liga. Lesen darf jeder
+-- Angemeldete, pflegen nur der Betreiber. Eine Startfassung liegt als
+-- Datei in der App (docs/spielzeiten.json); von dort laesst sie sich im
+-- Adminbereich uebernehmen.
+create table if not exists public.spielzeiten (
+  liga          text primary key,
+  gruppe        text,
+  spielzeit     text,
+  pause         text,
+  verlaengerung text,
+  penalty       text,
+  hinweis       text,
+  quelle        text,
+  reihenfolge   int  not null default 100,
+  geaendert     timestamptz not null default now()
+);
+alter table public.spielzeiten enable row level security;
+drop policy if exists "Spielzeiten lesen"  on public.spielzeiten;
+drop policy if exists "Admin pflegt Zeiten" on public.spielzeiten;
+create policy "Spielzeiten lesen"   on public.spielzeiten for select to authenticated using (true);
+create policy "Admin pflegt Zeiten" on public.spielzeiten for all    to authenticated
+  using (public.ist_admin()) with check (public.ist_admin());

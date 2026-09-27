@@ -1,0 +1,129 @@
+{
+ "_hinweis": "Spielzeiten und Modi, zusammengetragen aus den Durchführungsbestimmungen des EHV NRW. Was hier fehlt, steht im jeweiligen Anhang. Der Betreiber pflegt die Liste im Adminbereich.",
+ "stand": "Saison 2026/27",
+ "quelle": "https://ehv-nrw.de/documents/list/",
+ "allgemein": [
+  {
+   "titel": "Drittelpausen",
+   "text": "15 Minuten zwischen den Dritteln. In U15 und U13 lassen sie sich im Einvernehmen auf 5 Minuten verkürzen, dann ohne Eisaufbereitung. Zustimmung beider Mannschaftsführer und der Schiedsrichter, vor Spielbeginn festlegen und im Spielbericht vermerken.",
+   "quelle": "Allgemein, 2.1.16"
+  },
+  {
+   "titel": "Ende eines Drittels",
+   "text": "Die Uhr läuft bis einschließlich 19:59. Zeigt sie 20:00, ist das Drittel vorbei. Läuft sie rückwärts, endet das Drittel mit Ablauf der Sekunde 1.",
+   "quelle": "Allgemein, 2.1.18"
+  },
+  {
+   "titel": "Ansage vor dem Drittel",
+   "text": "Drei Minuten vor Ende der Pause informiert der Hauptzeitnehmer Schiedsrichter und Mannschaften, hörbar oder sichtbar.",
+   "quelle": "Allgemein, 2.1.16"
+  },
+  {
+   "titel": "Verlängerung",
+   "text": "Wo eine vorgesehen ist: 5 Minuten, 3 gegen 3 Feldspieler, kein Seitenwechsel, keine Eisaufbereitung. Laufende Strafen aus der regulären Zeit laufen weiter. Fällt kein Tor, folgt das Penaltyschießen.",
+   "quelle": "Allgemein, 2.2.3"
+  },
+  {
+   "titel": "Penaltyschießen",
+   "text": "Drei unterschiedliche Schützen je Mannschaft, abwechselnd, die Heimmannschaft beginnt. Wer eine Spielstrafe verbüßt, darf nicht antreten, der Torhüter darf jedes Mal gewechselt werden. Danach paarweise Sudden Death, dort beginnt die Auswärtsmannschaft und ein Schütze darf mehrfach ran.",
+   "quelle": "Allgemein, 2.2.4"
+  },
+  {
+   "titel": "Best-of-Two",
+   "text": "Das erste Spiel endet nach 3 x 20 Minuten, auch unentschieden, ohne Verlängerung und ohne Penaltyschießen. Im zweiten Spiel entscheidet bei gleicher Punktzahl und Tordifferenz ein Penaltyschießen.",
+   "quelle": "Allgemein, 2.2.5"
+  }
+ ],
+ "ligen": [
+  {
+   "gruppe": "Herren",
+   "liga": "Regionalliga West",
+   "spielzeit": "3 x 20 Minuten",
+   "pause": "15 Minuten",
+   "verlaengerung": "5 Minuten, 3 gegen 3",
+   "penalty": "3 Schützen, dann Sudden Death",
+   "hinweis": "",
+   "quelle": "Anhang 3, 3.2.1"
+  },
+  {
+   "gruppe": "Herren",
+   "liga": "Landesliga NRW",
+   "spielzeit": "3 x 20 Minuten",
+   "pause": "15 Minuten",
+   "verlaengerung": "5 Minuten, 3 gegen 3",
+   "penalty": "3 Schützen, dann Sudden Death",
+   "hinweis": "",
+   "quelle": "Anhang 3, 3.2.1"
+  },
+  {
+   "gruppe": "Herren",
+   "liga": "Bezirksliga NRW",
+   "spielzeit": "3 x 20 Minuten",
+   "pause": "15 Minuten",
+   "verlaengerung": "5 Minuten, 3 gegen 3",
+   "penalty": "3 Schützen, dann Sudden Death",
+   "hinweis": "",
+   "quelle": "Anhang 3, 3.2.1"
+  },
+  {
+   "gruppe": "Frauen",
+   "liga": "Frauen 2. Liga Nord, Landesliga, Bezirksliga",
+   "spielzeit": "",
+   "pause": "15 Minuten",
+   "verlaengerung": "",
+   "penalty": "3 Schützen, dann Sudden Death",
+   "hinweis": "Spielzeit und Verlängerung stehen in Anhang 2; bitte dort nachsehen und hier eintragen.",
+   "quelle": "Anhang 2"
+  },
+  {
+   "gruppe": "Nachwuchs",
+   "liga": "U20, U17, U15, U13",
+   "spielzeit": "",
+   "pause": "15 Minuten, in U15 und U13 auf 5 Minuten verkürzbar",
+   "verlaengerung": "",
+   "penalty": "3 Schützen, dann Sudden Death",
+   "hinweis": "Spielzeiten je Altersklasse stehen in Anhang 4; bitte dort nachsehen und hier eintragen. Kein Body-Check bis U13, Zahnschutzpflicht ab U15.",
+   "quelle": "Anhang 4, 3.9 und 3.10"
+  },
+  {
+   "gruppe": "Nachwuchs",
+   "liga": "U11 (Kleinfeld quer, Turnier)",
+   "spielzeit": "Je Spiel 1 x 18 Minuten oder 21 Minuten durchlaufend, drei Spiele je Turnier",
+   "pause": "5 Minuten zwischen Spiel 1, 2 und 3",
+   "verlaengerung": "keine",
+   "penalty": "keines",
+   "hinweis": "Aufwärmen 5 Minuten auf dem Eis, ohne Puck. Trainerbesprechung 45 Minuten vor Turnierbeginn.",
+   "quelle": "Anhang 7, 2.2.3"
+  },
+  {
+   "gruppe": "Nachwuchs",
+   "liga": "U9 Regionalliga",
+   "spielzeit": "1. Halbzeit 18 Minuten, 2. Halbzeit 18 oder 21 Minuten",
+   "pause": "",
+   "verlaengerung": "keine",
+   "penalty": "keines",
+   "hinweis": "",
+   "quelle": "Anhang 8"
+  },
+  {
+   "gruppe": "Nachwuchs",
+   "liga": "U9 Landesliga",
+   "spielzeit": "1. Halbzeit 18 Minuten, 2. Halbzeit 15 oder 18 Minuten",
+   "pause": "",
+   "verlaengerung": "keine",
+   "penalty": "keines",
+   "hinweis": "",
+   "quelle": "Anhang 8"
+  },
+  {
+   "gruppe": "Nachwuchs",
+   "liga": "U7",
+   "spielzeit": "Halbzeiten zu 15 Minuten möglich",
+   "pause": "",
+   "verlaengerung": "keine",
+   "penalty": "keines",
+   "hinweis": "Aufwärmen 5 Minuten ohne Puck, Spiele starten zeitgleich auf beiden Feldern. Genaues in Anhang 8.",
+   "quelle": "Anhang 8"
+  }
+ ]
+}

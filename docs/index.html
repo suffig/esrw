@@ -1606,6 +1606,35 @@
   .bestimmung-punkt:first-child { border-top:0; }
   .bestimmung-punkt > span { display:block; }
   .bestimmung-punkt small { display:block; color:var(--dim); margin-top:3px; }
+  /* Ziehen zum Aktualisieren: das Band haengt oben und kommt beim Ziehen mit */
+  .ziehen { position:fixed; top:0; left:0; right:0; z-index:60; padding:10px 14px; text-align:center;
+            font-size:.8rem; font-weight:800; color:var(--akzent); background:var(--akzent-hell);
+            opacity:0; transform:translateY(-10px); pointer-events:none; transition:opacity .15s; }
+  .ziehen.da { opacity:1; }
+  .ziehen.bereit { color:var(--gut); background:var(--gut-bg); }
+  /* Spielzeiten: je Liga eine Zeile, darunter die Werte als Paare */
+  .zeiten-zeile { padding:11px 0; border-top:1px solid var(--linie); }
+  .zeiten-zeile:first-of-type { border-top:0; }
+  .zeiten-zeile > b { display:block; margin-bottom:6px; }
+  .zeiten-wert { display:flex; align-items:baseline; gap:10px; padding:3px 0; }
+  .zeiten-wert span { flex:0 0 40%; color:var(--dim); font-size:.8rem; font-weight:700; }
+  .zeiten-wert b { flex:1; font-size:.9rem; }
+  .zeiten-hinweis { display:block; color:var(--dim); margin-top:5px; line-height:1.45; }
+  /* Strafrechner: je Mannschaft ein Block, darunter das Ergebnis */
+  .rechner-team { padding:10px 0; border-top:1px solid var(--linie); }
+  .rechner-team > b { display:block; margin-bottom:6px; font-size:.9rem; }
+  .rechner-chips, .rechner-gewaehlt { display:flex; flex-wrap:wrap; gap:6px; }
+  .rechner-gewaehlt { margin-top:7px; min-height:26px; align-items:center; }
+  .rechner-gewaehlt small { color:var(--dim); }
+  .rechner-lauf { display:flex; align-items:center; gap:10px; margin-top:9px; }
+  .rechner-lauf span { color:var(--dim); font-size:.8rem; font-weight:700; }
+  .rechner-lauf > b { min-width:1.2em; text-align:center; }
+  .schrittknopf { width:30px; height:30px; border-radius:9px; border:1px solid var(--linie);
+                  background:var(--karte); color:inherit; font:inherit; font-weight:800; cursor:pointer; }
+  .rechner-ergebnis { margin-top:12px; padding:12px 14px; border-radius:14px; background:var(--akzent-hell); }
+  .rechner-staerke { display:block; font-size:1.5rem; letter-spacing:-.02em; color:var(--akzent); }
+  .rechner-ergebnis > small { display:block; color:var(--dim); margin-bottom:6px; }
+  .rechner-ergebnis .zeiten-wert span { flex:0 0 46%; }
   .dok-liste a { display:flex; align-items:center; gap:10px; padding:11px 0; border-top:1px solid var(--linie);
                  color:inherit; text-decoration:none; font-weight:700; }
   .dok-liste a:first-child { border-top:0; }
@@ -1650,6 +1679,9 @@
 <body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-buch" viewBox="0 0 24 24"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/><path d="M12 6v12"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 7.6v.6"/></symbol>
+  <symbol id="i-balken" viewBox="0 0 24 24"><path d="M4 20h16"/><path d="M7 20v-6"/><path d="M12 20V7"/><path d="M17 20v-9"/></symbol>
   <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
   <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6-5.3-6-11a6 6 0 0 1 12 0c0 5.7-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/></symbol>
   <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.2c2.8.2 5 2 5 4.8"/></symbol>
@@ -1699,6 +1731,7 @@
 </header>
 
 <main>
+  <div class="ziehen" id="ziehen" aria-hidden="true">Zum Aktualisieren ziehen</div>
   <div class="offline versteckt" id="offline"><svg class="i"><use href="#i-bell"/></svg><span id="offline-text">Offline, gespeicherter Stand</span></div>
   <div class="neu karte versteckt" id="neu">
     <div class="kopfzeile"><b>Neu in der App</b><button type="button" class="textknopf" id="neu-weg">Verstanden</button></div>
@@ -1896,13 +1929,13 @@
   <!-- Regeln: Strafenmatrix und Durchfuehrungsbestimmungen -->
   <section id="regeln" class="versteckt">
     <div class="profilzeile karte">
-      <span><span class="kopf-i"><svg class="i"><use href="#i-note"/></svg></span><span><b>Regeln</b><small id="regeln-unter">Strafenmatrix und Bestimmungen</small></span></span>
+      <span><span class="kopf-i"><svg class="i"><use href="#i-buch"/></svg></span><span><b>Regeln</b><small id="regeln-unter">Strafenmatrix und Bestimmungen</small></span></span>
       <button class="textknopf zurueck" id="regeln-zurueck"><svg class="i"><use href="#i-back"/></svg>Zurück</button>
     </div>
     <div class="filterleiste">
       <div class="schalterzeile">
         <span class="modus" id="regeln-modus" role="tablist">
-          <button type="button" data-teil="strafen" class="aktiv">Strafen</button><button type="button" data-teil="bestimmungen">Bestimmungen</button>
+          <button type="button" data-teil="strafen" class="aktiv">Strafen</button><button type="button" data-teil="zeiten">Spielzeiten</button><button type="button" data-teil="bestimmungen">Bestimmungen</button>
         </span>
       </div>
       <div class="plan-suchzeile" id="regeln-suchzeile">
@@ -2065,6 +2098,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=74"></script>
+<script src="app.js?v=75"></script>
 </body>
 </html>
