@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:cb1812902cc6122829efa0d1bcbde944c88e271c@esrw.de
-SEQUENCE:1
-DTSTAMP:20260915T152741Z
-LAST-MODIFIED:20260915T152741Z
-DTSTART:20260920T110000Z
-DTEND:20260920T143000Z
-SUMMARY:SR · U9 LL Rot · Krefelder EV 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:00 Uhr\nTreffpunkt:
-  13:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Rot\nHalle: Rheinlandhall
- e Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Schlüte
- r\, Thomas\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
-GEO:51.339877;6.540168
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
- stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
- le Krefeld":geo:51.339877,6.540168
-END:VEVENT
-BEGIN:VEVENT
 UID:18bba3cbe4df19156ac685dc7c72291fa498605e@esrw.de
 SEQUENCE:0
 DTSTAMP:20260911T150047Z
