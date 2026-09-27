@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:2f58f866a0fcf6e53008e8b1d426517516a285b5@esrw.de
-SEQUENCE:0
-DTSTAMP:20260918T172506Z
-LAST-MODIFIED:20260918T172506Z
-DTSTART:20260920T170000Z
-DTEND:20260920T203000Z
-SUMMARY:RL FS · Neusser EV – ESV Bergisch Gladbach
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
-  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthalle Neu
- ss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Kyei-Nimako\, De
- nis (HSR) / Lindemans\, Pepe (LSR)\n\nQuelle: https://www.esrw.de/einteilu
- ngen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
-GEO:51.175806;6.680258
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
- -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
- uss":geo:51.175806,6.680258
-END:VEVENT
-BEGIN:VEVENT
 UID:e65ba687fa5ec053be56482fc29c302b8973e017@esrw.de
 SEQUENCE:0
 DTSTAMP:20260921T094526Z
@@ -1028,12 +1006,6 @@ GEO:51.175806;6.680258
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
  -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
  uss":geo:51.175806,6.680258
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - BZ FS · Neusser EV 1b – EHC E
- ssen
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:e12872a56ee4a91f8997c063777f0e89f6b591a9@esrw.de
