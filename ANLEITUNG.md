@@ -2038,6 +2038,24 @@ ausdrücklich.
   listet, was seit der letzten Fassung dazugekommen ist, und
   verschwindet mit „Verstanden".
 
+### 10.6as Kein Aufblitzen der Namensliste beim Start
+
+Wer die App vom Home-Bildschirm startete, sah einen Wimpernschlag lang
+die Liste aller Kollegen („Wer bist du?“), bevor das eigene Profil
+stand. Grund: die Auswahl war der Bereich, der im HTML von Anfang an
+sichtbar war, und die Einteilungen liegen verschlüsselt - bis der
+Schlüssel da und die Datei entschlüsselt ist, vergeht ein Moment.
+
+Jetzt entscheidet ein kurzes Skript direkt im HTML, noch bevor das Bild
+zum ersten Mal steht:
+
+* **Konto und Profil vorhanden** → sofort die eigene Seite, mit Namen und
+  Zeichen aus dem Speicher; die Karten darunter sind so lange
+  Platzhalter. Nur wenn die Adresse auch auf die eigene Seite zeigt –
+  wer mit  startet, sieht keine falsche Zwischenstufe.
+* **Konto, aber noch kein Profil** → die Namensliste wie bisher.
+* **Kein Konto** → gar nichts, der Anmeldeschirm kommt ohnehin sofort.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

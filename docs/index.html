@@ -1606,6 +1606,12 @@
   .bestimmung-punkt:first-child { border-top:0; }
   .bestimmung-punkt > span { display:block; }
   .bestimmung-punkt small { display:block; color:var(--dim); margin-top:3px; }
+  /* Erster Moment nach dem Start: der eigene Name steht schon da, der Rest
+     wartet als Platzhalter, bis die Einteilungen entschluesselt sind. */
+  .start-platz { display:none; }
+  #detail.start-laedt .start-platz { display:block; }
+  #detail.start-laedt .spalte-haupt > *:not(.profilzeile):not(.start-platz) { display:none !important; }
+  #detail.start-laedt .spalten > *:not(.spalte-haupt) { display:none !important; }
   /* Ziehen zum Aktualisieren: das Band haengt oben und kommt beim Ziehen mit */
   .ziehen { position:fixed; top:0; left:0; right:0; z-index:60; padding:10px 14px; text-align:center;
             font-size:.8rem; font-weight:800; color:var(--akzent); background:var(--akzent-hell);
@@ -1796,7 +1802,7 @@
   </section>
 
   <!-- Namensauswahl -->
-  <section id="auswahl">
+  <section id="auswahl" class="versteckt">
     <p class="frage" id="frage">Wer bist du?</p>
     <p class="meta" id="frage-unter">Wähle deinen Namen. Danach siehst du deine Spiele, kannst den Kalender abonnieren und Mitteilungen bekommen.</p>
     <div class="zuletzt versteckt" id="zuletzt"></div>
@@ -1819,6 +1825,8 @@
       <span><span class="avatar-gross" id="person-avatar"></span><span><b id="person"></b><small id="profil-hinweis">dein Profil</small></span></span>
       <span><button class="textknopf versteckt" id="pin">Anpinnen</button> <button class="textknopf versteckt" id="uebernehmen">Als mein Profil</button> <button class="textknopf" id="wechseln">Wechseln</button></span>
     </div>
+
+    <div class="start-platz" id="start-platz"><div class="karte skelett-karte"></div><div class="karte skelett-karte"></div></div>
 
     <div class="pins versteckt" id="pins"></div>
     <div class="woche start-woche" id="start-woche"></div>
@@ -1874,6 +1882,45 @@
     <div class="spalte-seite" id="spalte-seite"></div>
     </div>
   </section>
+
+  <script>
+    // Beim Start stand einen Wimpernschlag lang die Namensliste aller
+    // Kollegen da, bis die Daten entschluesselt waren. Wer schon ein Profil
+    // hat, sieht stattdessen sofort seine eigene Seite - Name und Zeichen
+    // kommen aus dem Speicher, der Rest ist Platzhalter.
+    (function () {
+      var auswahl = document.getElementById("auswahl");
+      function zeigeAuswahl() { auswahl.classList.remove("versteckt"); }
+      var sitzung = false;
+      try {
+        for (var i = 0; i < localStorage.length; i++) {
+          var k = localStorage.key(i);
+          if (/^sb-.*-auth-token$/.test(k) || k === "mock_session") { sitzung = true; break; }
+        }
+      } catch (e) {}
+      var p = null;
+      try { p = JSON.parse(localStorage.getItem("profil") || "null"); } catch (e) {}
+      if (!sitzung) return;
+      if (!p || !p.slug || !p.name) { zeigeAuswahl(); return; }
+      // Nur wenn die Adresse auch auf die eigene Seite zeigt - sonst wartet
+      // der Bildschirm leer, statt kurz das Falsche zu zeigen.
+      var ziel = location.hash.replace(/^#/, "");
+      if (ziel && ziel !== "meine" && ziel !== p.slug) return;
+      var t = p.name.split(",");
+      var kurz = (((t[1] || "").trim()[0] || "") + ((t[0] || "").trim()[0] || "")).toUpperCase() || "?";
+      var h = 0;
+      for (var j = 0; j < p.slug.length; j++) h = (h * 31 + p.slug.charCodeAt(j)) % 360;
+      var farbe = "hsl(" + h + ", 45%, 42%)";
+      document.getElementById("person").textContent = p.name;
+      var av = document.getElementById("person-avatar");
+      av.textContent = kurz; av.style.background = farbe;
+      var kopf = document.getElementById("avatar");
+      kopf.textContent = kurz; kopf.classList.remove("leer"); kopf.style.background = farbe;
+      var detail = document.getElementById("detail");
+      detail.classList.add("start-laedt");
+      detail.classList.remove("versteckt");
+    })();
+  </script>
 
   <!-- Spiel-Detailseite -->
   <section id="spiel" class="versteckt">
@@ -2098,6 +2145,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=75"></script>
+<script src="app.js?v=76"></script>
 </body>
 </html>
