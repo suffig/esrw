@@ -1631,6 +1631,47 @@
   .zeiten-wert span { flex:0 0 40%; color:var(--dim); font-size:.8rem; font-weight:700; }
   .zeiten-wert b { flex:1; font-size:.9rem; }
   .zeiten-hinweis { display:block; color:var(--dim); margin-top:5px; line-height:1.45; }
+  /* --- Nachtrag Runde 36: Ueberschneidungen --- */
+  /* Kopfzeile: der Block mit Titel und Stand muss mitschrumpfen duerfen.
+     Ohne min-width:0 behaelt er seine Textbreite und schiebt sich unter
+     die runden Knoepfe - der Titel stand quer ueber dem Admin-Schalter. */
+  .kopf .marke > div { min-width:0; }
+  @media (max-width: 430px) {
+    .kopf-knoepfe { gap:5px; }
+    .kopf .rund, .kopf .avatar-knopf { width:36px; height:36px; }
+    .kopf h1 { font-size:1rem; }
+    .kopf .stand { font-size:.7rem; padding:2px 8px; }
+    /* Sieben Strafarten in eine Zeile, sonst haengt "MS" halb im Rand */
+    .regeln-arten { gap:5px; }
+    .regeln-arten .chip { padding:4px 8px; font-size:.78rem; }
+  }
+  @media (max-width: 360px) {
+    /* Ganz schmal passen sieben Chips nicht in eine Zeile - dann umbrechen */
+    .regeln-arten { flex-wrap:wrap; overflow-x:visible; }
+    .regeln-arten .chip { padding:4px 7px; font-size:.75rem; }
+  }
+  /* Strafenmatrix: "5+SPD" war genauso breit wie seine Spalte und stand
+     deshalb auf den Nachbarn. Etwas schmaler, dafuer mit Luft dazwischen. */
+  .matrix-kopf, .matrix-zeile { grid-template-columns:minmax(0,1fr) repeat(var(--spalten,6), 1.95rem); gap:2px; }
+  .matrix-spalte { font-size:.58rem; }
+  /* Eine Zeile antippen erklaert die Punkte in Worten - auf dem Handy gibt
+     es keinen Mauszeiger, der den Titel zeigt. */
+  .matrix-zeile { cursor:pointer; }
+  .matrix-zeile.offen { background:var(--akzent-hell); }
+  .matrix-info { display:flex; flex-wrap:wrap; gap:6px; padding:0 0 10px; }
+  .matrix-info small { flex-basis:100%; color:var(--dim); margin-top:2px; }
+  /* Die eigenen Karten der Regelseite hatten gar keinen Innenabstand -
+     Text und Strafmass klebten am Kartenrand. */
+  .regel-karte { padding:12px 14px; }
+  .legende-zeile { display:flex; align-items:baseline; gap:10px; padding:8px 0; border-top:1px solid var(--linie); }
+  .legende-zeile:first-of-type { border-top:0; }
+  .legende-zeile .strafmarke { flex:none; }
+  /* Fundstelle ist eine Marke, kein Balken ueber die ganze Breite */
+  .bestimmung-punkt .fundstelle, .zeiten-zeile .fundstelle { display:inline-block; width:auto; }
+  /* Die Liga des naechsten Spiels wird in den Spielzeiten hervorgehoben */
+  .zeiten-zeile.meine { border-left:3px solid var(--akzent); padding-left:10px; margin-left:-13px; }
+  .zeiten-marke { display:inline-block; margin-left:8px; font-size:.68rem; font-weight:800;
+                  color:var(--akzent); background:var(--akzent-hell); border-radius:99px; padding:2px 8px; }
   /* Strafrechner: je Mannschaft ein Block, darunter das Ergebnis */
   .rechner-team { padding:10px 0; border-top:1px solid var(--linie); }
   .rechner-team > b { display:block; margin-bottom:6px; font-size:.9rem; }
@@ -2117,6 +2158,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=77"></script>
+<script src="app.js?v=78"></script>
 </body>
 </html>

@@ -2087,6 +2087,48 @@ zum ersten Mal steht:
   Seite zeigt „Zurzeit keine Einteilung, zuletzt im Einsatz am …", ihr
   Kalender bleibt bestehen und ist einfach leer, bis wieder etwas kommt.
 
+### 10.6au Regelseite aufgeräumt, Zeile antippen, eigene Liga
+
+Auf dem Handy stand einiges übereinander. Behoben:
+
+* **Die Kopfzeile.** Der Block mit Titel und Stand behielt seine
+  Textbreite und schob sich unter die runden Knöpfe, der Name lag quer
+  über dem Admin-Schalter. Er darf jetzt mitschrumpfen (`min-width:0`),
+  die Knöpfe sind auf schmalen Geräten etwas kleiner, und passt
+  „Einteilungen ESRW" trotzdem nicht, steht dort die Kurzform **ESRW**
+  statt eines abgeschnittenen Wortes. Gemessen wird erst, wenn die
+  Schrift geladen ist, sonst rechnet der Browser mit der falschen Breite.
+
+* **Die Strafarten-Chips** hingen mit „MS" halb im Rand. Sie sind jetzt
+  etwas kompakter und passen in eine Zeile; unter 360 px brechen sie um.
+
+* **Die Spaltenköpfe der Matrix.** „5+SPD" war auf das Pixel genau so
+  breit wie seine Spalte und stand deshalb auf den Nachbarn. Die Spalten
+  sind etwas breiter, haben Abstand zueinander, die Kürzel eine Spur
+  kleiner.
+
+* **Faustkampf- und Legendenkarte hatten gar keinen Innenabstand** -
+  Text und Strafmaß klebten am Kartenrand. In der Legende machte
+  ausserdem eine geerbte Regel aus dem farbigen Kürzel einen Balken über
+  die ganze Breite; dasselbe galt für die Fundstellen unter den
+  Bestimmungen. Beide sind wieder Marken.
+
+Dazu drei Dinge, die die Seite brauchbarer machen:
+
+* **Eine Zeile antippen erklärt die Punkte in Worten.** Am Handy gibt es
+  keinen Mauszeiger, der den Titel eines Punktes zeigt - ein Tipp auf
+  „Bandencheck" schreibt jetzt darunter „2 · Kleine Strafe", „5 · Grosse
+  Strafe" und so weiter, farbig wie die Punkte. Noch einmal tippen
+  schliesst es. Geht auch mit der Tastatur.
+
+* **Die Spielzeiten öffnen sich bei deiner Liga.** Die Gruppe, in der
+  die Liga deines nächsten Spiels steht, ist offen, und der Eintrag ist
+  mit **„dein nächstes Spiel"** markiert. An der Bande nachschlagen heisst
+  damit: Reiter auf, fertig.
+
+* **Die Suche findet auch Spielzeiten.** „Landesliga" oder „U11" führen
+  jetzt direkt in den Reiter, genau wie Strafen und Bestimmungen.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –
