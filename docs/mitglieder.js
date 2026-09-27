@@ -42,7 +42,7 @@ window.Mitglieder = (function () {
   }
   function ankunftText(a) {
     var m = (a.error_description || a.error || "").toLowerCase();
-    if (/expired|invalid/.test(m)) return "Der Link aus der E-Mail ist abgelaufen oder wurde schon benutzt. Melde dich einfach an – falls das nicht geht, unten „Bestätigungsmail erneut senden“.";
+    if (/expired|invalid/.test(m)) return "Der Link aus der E-Mail ist abgelaufen oder wurde schon benutzt. Melde dich einfach an. Falls das nicht geht, unten „Bestätigungsmail erneut senden“.";
     if (m) return "Der Link hat nicht funktioniert: " + (a.error_description || a.error);
     return null;
   }
@@ -377,7 +377,7 @@ window.Mitglieder = (function () {
           if (!s) { profil = null; profilVersprechen = null; einsaetze = {}; if (wurzel) zeigeAnmeldung(); }
           else if (!vorher && wurzel && angezeigt === "anmeldung" && !passwortNeu) nachLogin();
           if (s && !vorher && ankunft && (ankunft.type === "signup" || ankunft.type === "email" || ankunft.code)) {
-            kurzMeldung("E-Mail bestätigt – willkommen!", "gut"); ankunft = null;
+            kurzMeldung("E-Mail bestätigt, willkommen!", "gut"); ankunft = null;
           }
           document.dispatchEvent(new CustomEvent("mg-sitzung", { detail: { angemeldet: !!s } }));
         });
@@ -403,7 +403,7 @@ window.Mitglieder = (function () {
   function warteschlange() { return lokalLesen("mg_queue", {}); }
   function inWarteschlange(zeile) {
     var q = warteschlange(); q[zeile.kennung] = zeile; lokalSchreiben("mg_queue", q);
-    kurzMeldung("Offline gespeichert – wird nachgereicht, sobald Netz da ist.", "");
+    kurzMeldung("Offline gespeichert, es geht raus, sobald wieder Netz da ist.", "");
   }
   var nachreichenLaeuft = false;
   function nachreichen() {
@@ -433,7 +433,7 @@ window.Mitglieder = (function () {
       .catch(function (e) {
         profilVersprechen = null;   // naechster Versuch darf neu laden
         var alt = lokalLesen("mg_profil_cache", null);
-        if (netzFehler(e) && alt && alt.id === session.user.id) { profil = alt; kurzMeldung("Offline – Stand vom letzten Mal.", ""); return profil; }
+        if (netzFehler(e) && alt && alt.id === session.user.id) { profil = alt; kurzMeldung("Offline, Stand vom letzten Mal.", ""); return profil; }
         throw e;
       });
     return profilVersprechen;
@@ -462,7 +462,7 @@ window.Mitglieder = (function () {
       h("h4", { text: "Mitgliederbereich noch nicht eingerichtet" }),
       h("p", { text: "Hier kommen Konto, Abrechnung, Tauschbörse und Push hin. Dafür muss der " +
         "Betreiber einmal ein Supabase-Projekt anlegen und die Zugangsdaten in " +
-        "supabase.json eintragen – Schritt 10 in der Anleitung." })
+        "supabase.json eintragen, Schritt 10 in der Anleitung." })
     ]));
   }
 
@@ -510,7 +510,7 @@ window.Mitglieder = (function () {
     // Den Namen gleich hier waehlen: nach der Bestaetigungsmail steht er
     // schon im Profil, aendern laesst er sich spaeter jederzeit im Profil.
     var nameWahl = modus === "registrieren" ? h("select", { class: "mg-select" },
-      [h("option", { value: "", text: "– dein Name auf esrw.de –" })]) : null;
+      [h("option", { value: "", text: "dein Name auf esrw.de" })]) : null;
     var namenDa = false;
     if (nameWahl) personenNamen().then(function (liste) {
       namenDa = liste.length > 0;
@@ -526,7 +526,7 @@ window.Mitglieder = (function () {
       var p = { email: email.value.trim(), password: pw.value };
       if (modus === "registrieren" && namenDa && !nameWahl.value) {
         knopf.disabled = false;
-        meldung("Bitte deinen Namen aus der Liste wählen – daran erkennt der Betreiber dich.", "warn");
+        meldung("Bitte den eigenen Namen aus der Liste wählen, daran erkennt der Betreiber dich.", "warn");
         nameWahl.focus();
         return;
       }
@@ -553,12 +553,12 @@ window.Mitglieder = (function () {
           if (modus === "anmelden" && /not confirmed|invalid login/i.test(r.error.message || "")) erneutSenden.classList.remove("versteckt");
           return;
         }
-        if (modus === "vergessen") { zeigeMailHinweis("Passwort zurücksetzen", p.email, "Darin ist ein Link „Neues Passwort setzen“. Er bringt dich hierher zurück, du gibst ein neues Passwort ein – fertig."); return; }
+        if (modus === "vergessen") { zeigeMailHinweis("Passwort zurücksetzen", p.email, "Darin ist ein Link „Neues Passwort setzen“. Er bringt dich hierher zurück, du gibst ein neues Passwort ein, fertig."); return; }
         if (modus === "registrieren" && !(r.data && r.data.session)) {
           var schonDa = r.data && r.data.user && r.data.user.identities && r.data.user.identities.length === 0;
-          if (schonDa) { meldung("Für diese E-Mail gibt es schon ein Konto – bitte anmelden oder „Passwort vergessen“.", "warn"); zeigeAnmeldung("anmelden"); return; }
+          if (schonDa) { meldung("Für diese E-Mail gibt es schon ein Konto. Bitte anmelden oder „Passwort vergessen“.", "warn"); zeigeAnmeldung("anmelden"); return; }
           zeigeMailHinweis("Fast geschafft", p.email, "Darin ist ein Link „E-Mail bestätigen“. Nach dem Antippen bist du angemeldet"
-            + (wunschName ? " – als " + wunschName : "") + ". Der Betreiber schaltet dich danach für die gemeinsamen Funktionen frei.");
+            + (wunschName ? " als " + wunschName : "") + ". Der Betreiber schaltet dich danach für die gemeinsamen Funktionen frei.");
           return;
         }
         session = r.data.session;
@@ -573,7 +573,7 @@ window.Mitglieder = (function () {
       nameWahl ? h("label", { class: "anmelde-label", text: "Dein Name auf esrw.de" }) : null,
       nameWahl,
       nameWahl ? h("p", { class: "meta", style: "margin:-2px 0 6px",
-        text: "Pflicht – daran erkennt der Betreiber dich (E-Mail-Adressen sind nicht immer eindeutig). Später im Profil änderbar." }) : null,
+        text: "Pflicht, daran erkennt der Betreiber dich. E-Mail-Adressen sind nicht immer eindeutig. Später im Profil änderbar." }) : null,
       knopf
     ]);
 
@@ -601,7 +601,7 @@ window.Mitglieder = (function () {
     wurzel.appendChild(h("div", { class: "anmelde-kopf" }, [
       h("div", { class: "avatar-gross" }, [ikone("i-lock")]),
       h("h2", { text: modus === "registrieren" ? "Konto anlegen" : "Einteilungen ESRW" }),
-      h("p", { text: "Die Einteilungen, deine Abrechnung und Push – für Schiedsrichter des ESRW." })
+      h("p", { text: "Die Einteilungen, deine Abrechnung und Push, für Schiedsrichter des ESRW." })
     ]));
     wurzel.appendChild(h("div", { class: "melde karte" }, [form, erneutSenden, wechsel]));
     // Drei Schritte, mehr muss hier nicht stehen.
@@ -609,14 +609,14 @@ window.Mitglieder = (function () {
       h("h4", { text: "In drei Schritten dabei" }),
       h("ol", { class: "schritte" }, [
         h("li", {}, [h("span", {}, [h("b", { text: "Konto anlegen" }),
-          h("small", { text: "E-Mail und ein Passwort – dauert eine Minute." })])]),
+          h("small", { text: "E-Mail und ein Passwort, dauert eine Minute." })])]),
         h("li", {}, [h("span", {}, [h("b", { text: "E-Mail bestätigen" }),
           h("small", { text: "Wir schicken dir einen Link. Antippen genügt, danach bist du angemeldet." })])]),
         h("li", {}, [h("span", {}, [h("b", { text: "Freischaltung abwarten" }),
-          h("small", { text: "Der Betreiber gibt dich frei – dann siehst du Einteilungen, Abrechnung und alles Weitere." })])])
+          h("small", { text: "Der Betreiber gibt dich frei, dann siehst du Einteilungen, Abrechnung und alles Weitere." })])])
       ]),
       h("p", { class: "meta", style: "margin:10px 0 0", text: sb && sb._attrappe
-        ? "Gerade als Attrappe im Browser – nichts geht raus."
+        ? "Gerade als Attrappe im Browser, nichts geht raus."
         : "Konto und Daten liegen bei Supabase. Jeder sieht nur seine eigenen Einträge." })
     ]));
   }
@@ -637,15 +637,15 @@ window.Mitglieder = (function () {
   function fehlerText(err) {
     var m = (err && err.message) || "";
     if (/invalid login/i.test(m)) return "E-Mail oder Passwort stimmt nicht. Falls du das Konto gerade erst angelegt hast: erst den Link in der Bestätigungsmail antippen.";
-    if (/already registered|gibt es schon/i.test(m)) return "Für diese E-Mail gibt es schon ein Konto – anmelden oder „Passwort vergessen“.";
-    if (/email not confirmed/i.test(m)) return "Das Konto ist noch nicht bestätigt – bitte den Link in der E-Mail antippen (unten kannst du sie erneut anfordern).";
+    if (/already registered|gibt es schon/i.test(m)) return "Für diese E-Mail gibt es schon ein Konto. Anmelden oder „Passwort vergessen“.";
+    if (/email not confirmed/i.test(m)) return "Das Konto ist noch nicht bestätigt. Bitte den Link in der E-Mail antippen (unten kannst du sie erneut anfordern).";
     if (/signup.*disabled|signups not allowed/i.test(m)) return "Registrierung ist beim Betreiber abgeschaltet.";
-    if (/over_email_send_rate_limit|rate limit exceeded/i.test(m)) return "Zu viele E-Mails in kurzer Zeit – bitte ein paar Minuten warten.";
+    if (/over_email_send_rate_limit|rate limit exceeded/i.test(m)) return "Zu viele E-Mails in kurzer Zeit, bitte ein paar Minuten warten.";
     if (/same password|different from the old/i.test(m)) return "Das neue Passwort muss sich vom alten unterscheiden.";
-    if (/weak|pwned|leaked|easy to guess/i.test(m)) return "Das Passwort ist zu unsicher oder aus einem bekannten Datenleck – bitte ein anderes wählen.";
+    if (/weak|pwned|leaked|easy to guess/i.test(m)) return "Das Passwort ist zu unsicher oder aus einem bekannten Datenleck. Bitte ein anderes wählen.";
     if (/password/i.test(m) && /short|least/i.test(m)) return "Das Passwort ist zu kurz.";
-    if (/rate limit/i.test(m)) return "Zu viele Versuche – kurz warten.";
-    if (/does not exist|schema cache/i.test(m)) return "Die Datenbank kennt eine Tabelle noch nicht – bitte supabase/schema.sql erneut ausführen (Anleitung Schritt 10).";
+    if (/rate limit/i.test(m)) return "Zu viele Versuche, kurz warten.";
+    if (/does not exist|schema cache/i.test(m)) return "Die Datenbank kennt eine Tabelle noch nicht. Bitte supabase/schema.sql erneut ausführen (Anleitung Schritt 10).";
     return m || "Unbekannter Fehler.";
   }
 
@@ -807,7 +807,7 @@ window.Mitglieder = (function () {
   function adressFeld(werte) {
     werte = werte || {};
     var feld = h("input", { type: "text", value: werte.wert || "", autocomplete: "off",
-      placeholder: werte.platzhalter || "Straße und Hausnummer, dann Ort – z. B. „Curtiusstr. 25 Essen“" });
+      placeholder: werte.platzhalter || "Straße und Hausnummer, dann Ort, z. B. „Curtiusstr. 25 Essen“" });
     feld.setAttribute("autocorrect", "off"); feld.setAttribute("spellcheck", "false");
     var liste = h("div", { class: "adress-liste versteckt" });
     var hinweis = h("p", { class: "meta adress-hinweis", text: werte.wert ? "übernommen ✓" : "" });
@@ -829,8 +829,8 @@ window.Mitglieder = (function () {
       stand.lat = teil.lat; stand.lon = teil.lon; stand.gewaehlt = true; stand.teile = teil;
       hinweis.className = teil.hausnummer ? "meta adress-hinweis" : "achtung adress-hinweis";
       hinweis.textContent = !teil.hausnummer
-        ? "Es fehlt die Hausnummer – bitte mit Hausnummer eingeben und noch einmal wählen."
-        : ausEingabe ? "Übernommen ✓ – PLZ und Ort aus der Karte, Hausnummer aus deiner Eingabe."
+        ? "Es fehlt die Hausnummer. Bitte mit Hausnummer eingeben und noch einmal wählen."
+        : ausEingabe ? "Übernommen ✓ PLZ und Ort aus der Karte, Hausnummer aus deiner Eingabe."
                      : "Übernommen ✓";
       schliessen();
       if (werte.gewaehlt) werte.gewaehlt(teil);
@@ -838,7 +838,7 @@ window.Mitglieder = (function () {
     function zeigen(treffer) {
       leeren(liste);
       if (!treffer.length) {
-        liste.appendChild(h("div", { class: "adress-leer", text: "Nichts gefunden – Straße, Hausnummer und Ort eingeben." }));
+        liste.appendChild(h("div", { class: "adress-leer", text: "Nichts gefunden. Bitte Straße, Hausnummer und Ort eingeben." }));
         liste.classList.remove("versteckt");
         return;
       }
@@ -872,7 +872,7 @@ window.Mitglieder = (function () {
           hinweis.textContent = stand.gewaehlt ? "übernommen ✓" : "aus der Liste wählen";
           zeigen(t || []);
         })
-        .catch(function () { hinweis.textContent = "Adresssuche gerade nicht erreichbar – später noch einmal."; });
+        .catch(function () { hinweis.textContent = "Adresssuche gerade nicht erreichbar, bitte später noch einmal."; });
     }
 
     feld.addEventListener("input", function () {
@@ -915,7 +915,7 @@ window.Mitglieder = (function () {
     leeren(ziel);
     var p = profil || {};
     var kmStd = (gebuehren && gebuehren.kilometer) || {};
-    var auswahl = h("select", { class: "mg-select" }, [h("option", { value: "", text: "– bitte wählen –" })]);
+    var auswahl = h("select", { class: "mg-select" }, [h("option", { value: "", text: "bitte wählen" })]);
     personenNamen().then(function (liste) {
       var soll = p.slug || (ctx.lesen && ctx.lesen("wunsch-slug")) || ctx.slug;
       liste.forEach(function (x) {
@@ -942,8 +942,8 @@ window.Mitglieder = (function () {
       adresseZeigen.checked = !!kontaktStand.anschrift;
     });
     var modell = h("select", { class: "mg-select" }, [
-      h("option", { value: "einfach", text: "Entfernungspauschale – einfache Strecke, volle km" }),
-      h("option", { value: "hinrueck", text: "Reisekosten – gefahrene km, hin und zurück" })
+      h("option", { value: "einfach", text: "Entfernungspauschale, einfache Strecke, volle km" }),
+      h("option", { value: "hinrueck", text: "Reisekosten, gefahrene km, hin und zurück" })
     ]);
     modell.value = p.km_modell || "einfach";
     var satzEinfach = h("input", { type: "number", step: "0.01", min: "0",
@@ -957,11 +957,11 @@ window.Mitglieder = (function () {
       e.preventDefault();
       if (!auswahl.value) { meldung("Bitte deinen Namen wählen.", "warn"); return; }
       if (!adresse.leer() && !adresse.gueltig()) {
-        meldung("Bitte die Adresse aus der Vorschlagsliste wählen – dann stimmen Hausnummer, PLZ und Ort.", "warn");
+        meldung("Bitte die Adresse aus der Vorschlagsliste wählen, dann stimmen Hausnummer, PLZ und Ort.", "warn");
         heimat.focus(); return;
       }
       if (!adresse.leer() && !hausnummerAus(heimat.value)) {
-        meldung("Bitte die Hausnummer mit angeben – daraus wird die Strecke zur Halle berechnet.", "warn");
+        meldung("Bitte die Hausnummer mit angeben, daraus wird die Strecke zur Halle berechnet.", "warn");
         heimat.focus(); return;
       }
       speichernKnopf.disabled = true;
@@ -991,7 +991,7 @@ window.Mitglieder = (function () {
           sb.from("wohnorte").upsert({ user_id: session.user.id, slug: zeile.slug, ort: ort,
                                        lat: Math.round(zeile.heimat_lat * 100) / 100, lon: Math.round(zeile.heimat_lon * 100) / 100,
                                        geaendert: new Date().toISOString() }, { onConflict: "user_id" })
-            .then(function (r2) { if (r2.error) meldung(fehlerText(r2.error) + (/wohnorte/.test(r2.error.message || "") ? " – schema.sql (v15) ausführen." : ""), "warn"); });
+            .then(function (r2) { if (r2.error) meldung(fehlerText(r2.error) + (/wohnorte/.test(r2.error.message || "") ? ", schema.sql (v15) ausführen." : ""), "warn"); });
         } else sb.from("wohnorte").delete().eq("user_id", session.user.id).then(function () {}).catch(function () {});
         // Nummer und Anschrift fuer die Kollegen: eine Zeile, aus demselben Formular
         var nr = telefon.value.trim();
@@ -999,7 +999,7 @@ window.Mitglieder = (function () {
           speichern(sb.from("kontakte").upsert({ user_id: session.user.id, slug: zeile.slug, name: zeile.name, telefon: nr,
                                                  anschrift: adresseZeigen.checked ? (zeile.heimat || null) : null,
                                                  hinweis: telHinweis.value.trim() || null }, { onConflict: "user_id" }))
-            .then(function (r3) { if (r3 && r3.error) meldung(fehlerText(r3.error) + (/anschrift/.test(r3.error.message || "") ? " – schema.sql (v24) ausführen." : ""), "warn"); });
+            .then(function (r3) { if (r3 && r3.error) meldung(fehlerText(r3.error) + (/anschrift/.test(r3.error.message || "") ? ", schema.sql (v24) ausführen." : ""), "warn"); });
         } else if (kontaktStand) {
           speichern(sb.from("kontakte").delete().eq("user_id", session.user.id));
         }
@@ -1017,10 +1017,10 @@ window.Mitglieder = (function () {
       h("h4", { text: zurueck ? "Mein Profil" : "Wer bist du?" }),
       zurueck ? h("p", { class: "meta", style: "margin:0 0 8px", text: "Alles an einer Stelle: Name, Anschrift, Nummer. Abrechnung, Rechnung und die Liste der Kollegen nehmen sich die Angaben von hier." }) : null,
       h("label", { text: "Dein Name auf esrw.de" }), auswahl,
-      h("label", { text: "Heimatadresse – Startpunkt für die Strecke zur Halle" }),
+      h("label", { text: "Heimatadresse, Startpunkt für die Strecke zur Halle" }),
       adresse.box,
-      h("label", { class: "mg-check", style: "margin-top:8px" }, [teilen, " Wohnort für Fahrgemeinschaften teilen – Kollegen sehen nur den Ort und die Lage auf etwa einen Kilometer, keine Adresse. Dann schlägt „Zusammen fahren“ vor, wer auf dem Weg liegt."]),
-      h("label", { class: "mg-check", style: "margin-top:4px" }, [adresseZeigen, " Anschrift im Reiter „Kollegen“ zeigen – damit Kollegen wissen, wo du wohnst. Ohne Haken sieht sie niemand."]),
+      h("label", { class: "mg-check", style: "margin-top:8px" }, [teilen, " Wohnort für Fahrgemeinschaften teilen. Kollegen sehen nur den Ort und die Lage auf etwa einen Kilometer, keine Adresse. Dann schlägt „Zusammen fahren“ vor, wer auf dem Weg liegt."]),
+      h("label", { class: "mg-check", style: "margin-top:4px" }, [adresseZeigen, " Anschrift im Reiter „Kollegen“ zeigen, damit Kollegen wissen, wo du wohnst. Ohne Haken sieht sie niemand."]),
       h("label", { text: "Handynummer für die Kollegen (freiwillig, jederzeit löschbar)" }), telefon,
       telHinweis,
       h("label", { text: "E-Mail des Obmanns (für „Monat per E-Mail“ in der Abrechnung, optional)" }), obmann,
@@ -1031,7 +1031,7 @@ window.Mitglieder = (function () {
       ]),
       h("p", { class: "meta", text: "Voreinstellung: Entfernungspauschale 0,38 € ab dem ersten vollen Kilometer " +
         "(gilt seit 01.01.2026), Reisekosten 0,30 € je gefahrenem km. Welches Modell für dich " +
-        "passt, sagt dir dein Steuerberater – die Sätze lassen sich jederzeit ändern." }),
+        "passt, sagt dir dein Steuerberater, die Sätze lassen sich jederzeit ändern." }),
       h("p", { class: "meta", text: "Die Adresse liegt in deinem Profil bei Supabase und ist für niemanden sonst " +
         "lesbar. Für die Streckenberechnung gehen nur Koordinaten an den Routendienst (OSRM), keine Adresse." }),
       speichernKnopf,
@@ -1042,7 +1042,7 @@ window.Mitglieder = (function () {
     if (zurueck && fn("abrechnung")) {
       var rd = rechnungDaten();
       var rdBox = h("details", { class: "melde karte tausch" }, [
-        h("summary", {}, [rd.verein || rd.sr_nummer ? "Rechnungsdaten ✓ · " + (rd.verein || "") + (rd.sr_nummer ? " (" + rd.sr_nummer + ")" : "") : "Rechnungsdaten – Verein, Schiedsrichternummer, Nummernkreis"])
+        h("summary", {}, [rd.verein || rd.sr_nummer ? "Rechnungsdaten ✓ · " + (rd.verein || "") + (rd.sr_nummer ? " (" + rd.sr_nummer + ")" : "") : "Rechnungsdaten: Verein, Schiedsrichternummer, Nummernkreis"])
       ]);
       rdBox.appendChild(stammdatenFormular(function () { zeigeReiter("profil"); }));
       ziel.appendChild(rdBox);
@@ -1617,6 +1617,29 @@ window.Mitglieder = (function () {
       ]));
     }
 
+    // Woran man leicht nicht denkt: vergangene Spiele, zu denen noch keine
+    // Rechnung geschrieben ist. Steht oben, mit einem Tipp zum aeltesten.
+    rechnungenLaden().then(function (geschrieben) {
+      if (!box.isConnected || box.querySelector(".rechnung-offen")) return;
+      var drin = {};
+      geschrieben.forEach(function (rg) { (rg.kennungen || []).forEach(function (k) { drin[k] = 1; }); });
+      var jetzt = Date.now();
+      var offen = rechnungSpiele().filter(function (sp) {
+        return new Date(sp.beginn).getTime() < jetzt && !drin[sp.kennung] && !rechnungWahl[sp.kennung];
+      });
+      if (!offen.length) return;
+      var aelt = offen[offen.length - 1];
+      box.insertBefore(h("div", { class: "hinweis warn rechnung-offen" }, [
+        h("span", {}, [
+          h("b", { text: offen.length === 1 ? "Ein vergangenes Spiel hat noch keine Rechnung."
+                                            : offen.length + " vergangene Spiele haben noch keine Rechnung." }),
+          h("small", { style: "display:block", text: "Am längsten offen: " + datumLang(new Date(aelt.beginn)) + ", " + aelt.paarung })]),
+        h("button", { type: "button", class: "anfrage", text: "Übernehmen", onclick: function () {
+          rechnungWahl = {}; rechnungWahl[aelt.kennung] = aelt;
+          rechnungForm = rechnungFormAusWahl(); nochmal();
+        } })]), box.firstChild);
+    });
+
     // ---- Was fehlt noch? ------------------------------------------------
     function betraege() {
       var p = parseFloat(String(f.pauschale).replace(",", ".")) || 0;
@@ -1638,7 +1661,7 @@ window.Mitglieder = (function () {
       h("summary", {}, [h("span", { class: "schritt-nr" + (stammOk ? " fertig" : " fehlt"), text: stammOk ? "✓" : "!" }),
         h("span", {}, [h("b", { text: "Deine Daten" }),
           h("small", { text: stammOk ? stamm.name + (stamm.sr_nummer ? " (" + stamm.sr_nummer + ")" : "") + " · " + stamm.plz_ort
-                                     : "fehlen noch – hier eintragen" })])])
+                                     : "fehlen noch, hier eintragen" })])])
     ]);
     stammZeile.open = !stammOk;
     stammZeile.appendChild(stammdatenFormular(function () { nochmal(); }));
@@ -1667,9 +1690,9 @@ window.Mitglieder = (function () {
     // ---- Schritt 1: Spiele ----------------------------------------------
     // Bei Turnieren und Lehrgaengen gibt es keinen Gast - dann nur den Heimverein.
     var paarungen = f.zeilen.filter(function (z) { return z[0] || z[1]; })
-      .map(function (z) { return z[1] ? (z[0] || "?") + " – " + z[1] : (z[0] || "?"); });
+      .map(function (z) { return z[1] ? (z[0] || "?") + " gegen " + z[1] : (z[0] || "?"); });
     var g1 = gruppe(1, "Spiele", paarungen.length ? paarungen.join(" · ") : "noch keins gewählt", hatSpiele);
-    g1.appendChild(h("p", { class: "meta", style: "margin:0 0 6px", text: "Bis zu drei Spiele, ein Verein, ein Tag. Kommende Spiele gehen auch – der Betrag kommt dann aus der Gebührenordnung." }));
+    g1.appendChild(h("p", { class: "meta", style: "margin:0 0 6px", text: "Bis zu drei Spiele, ein Verein, ein Tag. Kommende Spiele gehen auch, der Betrag kommt dann aus der Gebührenordnung." }));
     var liste = rechnungSpiele();
     var wahlBox = h("div", { class: "rechnung-wahl" });
     if (!liste.length) wahlBox.appendChild(h("p", { class: "meta", text: "Kein Spiel gefunden, zu dem sich ein Betrag ermitteln lässt." }));
@@ -1712,8 +1735,8 @@ window.Mitglieder = (function () {
       if (Object.keys(vereine).length > 1 || Object.keys(tage).length > 1) {
         g1.appendChild(h("div", { class: "hinweis warn", style: "margin-top:8px" }, [
           h("span", { text: Object.keys(vereine).length > 1
-            ? "Die Spiele gehen an verschiedene Vereine – dafür braucht es je Verein eine eigene Rechnung."
-            : "Die Spiele sind an verschiedenen Tagen – das Formular hat nur ein Datumsfeld." })]));
+            ? "Die Spiele gehen an verschiedene Vereine. Dann braucht es je Verein eine eigene Rechnung."
+            : "Die Spiele sind an verschiedenen Tagen, das Formular hat aber nur ein Datumsfeld." })]));
       }
     }
     g1.appendChild(h("p", { class: "meta", style: "margin:12px 0 4px", text: "So stehen sie auf dem Formular:" }));
@@ -1722,7 +1745,7 @@ window.Mitglieder = (function () {
       var gast = h("input", { type: "text", value: zeile[1], placeholder: "Gast" });
       heim.addEventListener("input", function () { f.zeilen[i][0] = heim.value; });
       gast.addEventListener("input", function () { f.zeilen[i][1] = gast.value; });
-      g1.appendChild(h("div", { class: "rechnung-paarung" }, [heim, h("span", { text: "–" }), gast]));
+      g1.appendChild(h("div", { class: "rechnung-paarung" }, [heim, h("span", { text: "gegen" }), gast]));
     });
 
     // ---- Schritt 2: Empfaenger ------------------------------------------
@@ -1756,17 +1779,17 @@ window.Mitglieder = (function () {
       adressZeile.appendChild(h("button", { type: "button", class: "textknopf",
         text: a.strasse ? "Anschrift für alle Kollegen ändern" : "Anschrift für alle Kollegen vorschlagen",
         onclick: function () {
-          if (!f.verein) { meldung("Erst ein Spiel übernehmen – daraus kommt der Verein.", "warn"); return; }
+          if (!f.verein) { meldung("Erst ein Spiel übernehmen, daraus kommt der Verein.", "warn"); return; }
           if (!f.strasse && !f.plz_ort) { meldung("Erst die Anschrift ausfüllen.", "warn"); return; }
           vereinSpeichern(vereinHaupt(f.verein), { name: f.name, strasse: f.strasse, plz_ort: f.plz_ort })
             .then(function (ok) {
               if (!ok) return;
               vereinAdressen = null;
-              kurzMeldung(istAdminAn() ? "Gespeichert ✓ – Kollegen sehen sie auch."
-                                       : "Vorschlag gespeichert ✓ – der Betreiber prüft ihn.", "gut");
+              kurzMeldung(istAdminAn() ? "Gespeichert ✓ Kollegen sehen sie auch."
+                                       : "Vorschlag gespeichert ✓ Der Betreiber prüft ihn.", "gut");
             });
         } }));
-      if (a.strasse && a.von) adressZeile.appendChild(h("small", { style: "display:block", text: "Vorschlag von " + a.von + " – noch nicht geprüft." }));
+      if (a.strasse && a.von) adressZeile.appendChild(h("small", { style: "display:block", text: "Vorschlag von " + a.von + ", noch nicht geprüft." }));
     });
 
     // ---- Schritt 3: Angaben ---------------------------------------------
@@ -1797,13 +1820,13 @@ window.Mitglieder = (function () {
     g3.appendChild(feld("klasse", "Spielklasse"));
 
     // ---- Schritt 4: Betraege --------------------------------------------
-    var summe = h("div", { class: "kopfzahl" }, [h("b", { text: "–" }), h("span", { text: "Gesamtbetrag" })]);
+    var summe = h("div", { class: "kopfzahl" }, [h("b", { text: "0,00 €" }), h("span", { text: "Gesamtbetrag" })]);
     var ustZeile = h("div", { class: "reihe-zahl" }, [h("span", { text: "" }), h("b", { text: "" })]);
     function rechne() {
       var b = betraege();
       summe.firstChild.textContent = euro(b.gesamt);
       ustZeile.firstChild.textContent = b.klein ? "Umsatzsteuer (Kleinunternehmer § 19)" : "+ 19 % Umsatzsteuer";
-      ustZeile.lastChild.textContent = b.klein ? "—" : euro(b.ust);
+      ustZeile.lastChild.textContent = b.klein ? "keine" : euro(b.ust);
     }
     var g4 = gruppe(4, "Beträge", hatBetrag ? euro(betraege().gesamt) + (f.klein ? " · ohne USt." : " · mit 19 % USt.") : "noch kein Betrag", hatBetrag);
     g4.appendChild(feld("pauschale", "Pauschale (€)", "number"));
@@ -1885,7 +1908,7 @@ window.Mitglieder = (function () {
   function stammdatenFormular(fertig) {
     var d = rechnungDaten();
     var fVer = h("input", { type: "text", value: d.verein || "ESRW", placeholder: "Verein" });
-    var fNr = h("input", { type: "text", value: d.sr_nummer || "", placeholder: "z. B. 12345 – steht in Klammern hinter deinem Namen" });
+    var fNr = h("input", { type: "text", value: d.sr_nummer || "", placeholder: "z. B. 12345, steht in Klammern hinter deinem Namen" });
     var fSt = h("input", { type: "text", value: d.steuernummer || "", placeholder: "Steuernummer" });
     var fKlein = h("input", { type: "checkbox" }); fKlein.checked = d.klein !== false;
     var fPraefix = h("input", { type: "text", value: d.praefix || (new Date().getFullYear() + "-"), style: "width:7em" });
@@ -1893,7 +1916,7 @@ window.Mitglieder = (function () {
     var fehlt = !d.name || !d.strasse || !d.plz_ort;
     return h("div", { class: "mg-form" }, [
       h("p", { class: fehlt ? "achtung" : "meta", style: "margin:0" },
-        [fehlt ? "Name und Anschrift fehlen – sie stehen im Profil." : "Rechnungssteller: " + d.name + (d.strasse ? ", " + d.strasse + ", " + d.plz_ort : ""), " ",
+        [fehlt ? "Name und Anschrift fehlen, sie stehen im Profil." : "Rechnungssteller: " + d.name + (d.strasse ? ", " + d.strasse + ", " + d.plz_ort : ""), " ",
          h("button", { type: "button", class: "textknopf", text: "Im Profil ändern",
            onclick: function () { zeigeReiter("profil"); } })]),
       h("label", { text: "Verein" }), fVer,
@@ -1908,7 +1931,7 @@ window.Mitglieder = (function () {
                                  verein: fVer.value.trim(), sr_nummer: fNr.value.trim(), steuernummer: fSt.value.trim(),
                                  klein: fKlein.checked, praefix: fPraefix.value.trim(), nummer: parseInt(fNummer.value, 10) || 1 })
           .then(function (ok) {
-            kurzMeldung(ok ? "Gemerkt ✓ – gilt auf allen Geräten." : "Konnte nicht gespeichert werden.", ok ? "gut" : "warn");
+            kurzMeldung(ok ? "Gemerkt ✓ Gilt auf allen Geräten." : "Konnte nicht gespeichert werden.", ok ? "gut" : "warn");
             if (ok && fertig) fertig();
           });
       } })
@@ -2007,8 +2030,8 @@ window.Mitglieder = (function () {
           speichern(sb.from("spiel_meldungen").insert({ user_id: session.user.id, slug: profil.slug,
             name: profil.name || profil.slug, kennung: sp.kennung, beginn: sp.beginn, paarung: sp.paarung, grund: grund }))
             .then(function (r) {
-              if (r && r.error) { meldung(fehlerText(r.error) + (/spiel_meldungen/.test(r.error.message || "") ? " – schema.sql (v25) ausführen." : ""), "warn"); return; }
-              meldungenEigen = null; kurzMeldung("Gemeldet ✓ – der Betreiber sieht es im Adminbereich.", "gut");
+              if (r && r.error) { meldung(fehlerText(r.error) + (/spiel_meldungen/.test(r.error.message || "") ? ", schema.sql (v25) ausführen." : ""), "warn"); return; }
+              meldungenEigen = null; kurzMeldung("Gemeldet ✓ Der Betreiber sieht es im Adminbereich.", "gut");
               meldungenLaden().then(function () { if (box.isConnected) ausfallErneuern(box, sp); });
             });
         } }));
@@ -2027,7 +2050,7 @@ window.Mitglieder = (function () {
       h("button", { type: "button", text: "Auf die Rechnung", onclick: function () {
         rechnungWahl[sp.kennung] = sp; rechnungForm = rechnungFormAusWahl();
         abrechnungPanel = "rechnung"; rendereAbrechnung();
-        kurzMeldung("Vorgemerkt – unten unter „Rechnung“.", "gut");
+        kurzMeldung("Vorgemerkt, steht unten unter „Rechnung“.", "gut");
       } })
     ]);
     rechnungenLaden().then(function (liste) {
@@ -2043,7 +2066,7 @@ window.Mitglieder = (function () {
   // Aus einer notierten Rechnung dasselbe PDF noch einmal bauen.
   function rechnungNochmal(rg) {
     var f = rg.felder;
-    if (!f) { meldung("Diese Rechnung stammt aus einer alten Fassung – bitte neu ausfüllen.", "warn"); return; }
+    if (!f) { meldung("Diese Rechnung stammt aus einer alten Fassung, bitte neu ausfüllen.", "warn"); return; }
     var stamm = rechnungDaten();
     var b = { pauschale: Number(f.pauschale) || 0, zuschlag: Number(f.zuschlag) || 0, klein: !!f.klein };
     b.ust = b.klein ? 0 : (b.pauschale + b.zuschlag) * 0.19;
@@ -2093,7 +2116,7 @@ window.Mitglieder = (function () {
   }
 
   function betragText(spiel, e, b) {
-    if (b.betrag == null) return "Betrag: – (Vergütung eintragen)";
+    if (b.betrag == null) return "Betrag fehlt (Vergütung eintragen)";
     var teile = ["Betrag " + euro(b.betrag)];
     if (b.zeit) teile.push("+20 % Uhrzeit");
     if (b.ueber) teile.push("+" + euro(b.ueber) + " übergreifend");
@@ -2114,13 +2137,13 @@ window.Mitglieder = (function () {
       var e = einsaetze[sp.kennung], b = betragFuer(sp, e), d = new Date(sp.beginn), kmW = e.km != null ? (einfach ? Math.floor(e.km) : e.km * 2) : null, f = fahrtkosten(e);
       s.km += kmW || 0; s.fahrt += f; s.verg += b.betrag || 0; s.ausl += e.auslagen || 0; s.verpf += e.verpflegung || 0;
       tb.appendChild(h("tr", {}, [h("td", { text: d.toLocaleDateString("de-DE") }), h("td", { text: (sp.liga ? sp.liga + " " : "") + sp.paarung + (sp.halle ? " · " + sp.halle : "") + " (" + (sp.rolle || "SR") + ")" + (e.ausgefallen ? " · ausgefallen" : "") }),
-        h("td", { class: "zahl", text: kmW != null ? String(Math.round(kmW * 10) / 10).replace(".", ",") : "–" }), h("td", { class: "zahl", text: euro(f) }), h("td", { class: "zahl", text: e.verpflegung ? euro(e.verpflegung) : "–" }), h("td", { class: "zahl", text: e.auslagen ? euro(e.auslagen) : "–" }), h("td", { class: "zahl", text: b.betrag != null ? euro(b.betrag) : "–" })]));
+        h("td", { class: "zahl", text: kmW != null ? String(Math.round(kmW * 10) / 10).replace(".", ",") : "0" }), h("td", { class: "zahl", text: euro(f) }), h("td", { class: "zahl", text: e.verpflegung ? euro(e.verpflegung) : "" }), h("td", { class: "zahl", text: e.auslagen ? euro(e.auslagen) : "" }), h("td", { class: "zahl", text: b.betrag != null ? euro(b.betrag) : "" })]));
     });
     tb.appendChild(h("tr", {}, [h("td", {}, [h("b", { text: liste.length + " Spiele" })]), h("td", {}), h("td", { class: "zahl" }, [h("b", { text: String(Math.round(s.km)) })]), h("td", { class: "zahl" }, [h("b", { text: euro(s.fahrt) })]), h("td", { class: "zahl" }, [h("b", { text: euro(s.verpf) })]), h("td", { class: "zahl" }, [h("b", { text: euro(s.ausl) })]), h("td", { class: "zahl" }, [h("b", { text: euro(s.verg) })])]));
     tabelle.appendChild(tb);
     var box = h("div", { class: "fahrtenbuch jahresblatt" }, [
       h("h3", { class: "abschnitt", text: "Schiedsrichter-Einnahmen und -Kosten " + jahr + " · " + (profil.name || "") }),
-      h("p", { class: "meta", text: "Einnahmen: Vergütung nach ESRW-Gebührenordnung. Kosten: " + (einfach ? "Entfernungspauschale (einfache Strecke, " + euro(profil.satz_einfach != null ? profil.satz_einfach : 0.38) + "/km)" : "Reisekosten (gefahrene km, " + euro(profil.satz_hinrueck != null ? profil.satz_hinrueck : 0.30) + "/km)") + ", Verpflegungsmehraufwand (14 € ab 8 Std.), Auslagen laut Beleg. Saldo: " + euro(s.verg - s.fahrt - s.verpf - s.ausl) + ". Erstellt " + new Date().toLocaleDateString("de-DE") + " – Aufstellung, keine Steuerberatung." }),
+      h("p", { class: "meta", text: "Einnahmen: Vergütung nach ESRW-Gebührenordnung. Kosten: " + (einfach ? "Entfernungspauschale (einfache Strecke, " + euro(profil.satz_einfach != null ? profil.satz_einfach : 0.38) + "/km)" : "Reisekosten (gefahrene km, " + euro(profil.satz_hinrueck != null ? profil.satz_hinrueck : 0.30) + "/km)") + ", Verpflegungsmehraufwand (14 € ab 8 Std.), Auslagen laut Beleg. Saldo: " + euro(s.verg - s.fahrt - s.verpf - s.ausl) + ". Erstellt " + new Date().toLocaleDateString("de-DE") + ". Aufstellung, keine Steuerberatung." }),
       liste.length ? h("div", { style: "overflow-x:auto" }, [tabelle]) : h("p", { class: "leer", text: "Keine erfassten Spiele in " + jahr + "." })
     ]);
     inhalt.appendChild(h("div", { class: "zweit fahrtenbuch" }, [
@@ -2187,7 +2210,7 @@ window.Mitglieder = (function () {
       speichereEinsatz(sp, Object.assign({ km: v && v.art === "route" ? v.km : null, verguetung: g }, vp != null ? { verpflegung: vp } : {}));
       n++;
     });
-    if (n) kurzMeldung(n + (n === 1 ? " Spiel" : " Spiele") + " automatisch vorbelegt – prüfen, ggf. Auslagen und Belege ergänzen.", "gut");
+    if (n) kurzMeldung(n + (n === 1 ? " Spiel" : " Spiele") + " automatisch vorbelegt. Bitte prüfen und Auslagen oder Belege ergänzen.", "gut");
   }
 
   // Monatsraster mit Betraegen je Tag; Tipp oeffnet die Zeile
@@ -2230,8 +2253,8 @@ window.Mitglieder = (function () {
     var einfach = (profil.km_modell || "einfach") === "einfach";
     var modus = profil.verpflegung_modus || "aus";
     var kmWahl = h("select", { class: "mg-select" }, [
-      h("option", { value: "einfach", text: "Einfache Strecke – Entfernungspauschale " + (profil.satz_einfach != null ? profil.satz_einfach : 0.38).toFixed(2).replace(".", ",") + " €/km (Arbeitnehmer)" }),
-      h("option", { value: "hinrueck", text: "Hin und zurück – " + (profil.satz_hinrueck != null ? profil.satz_hinrueck : 0.30).toFixed(2).replace(".", ",") + " €/km gefahren (Selbstständige)" })]);
+      h("option", { value: "einfach", text: "Einfache Strecke, Entfernungspauschale " + (profil.satz_einfach != null ? profil.satz_einfach : 0.38).toFixed(2).replace(".", ",") + " €/km (Arbeitnehmer)" }),
+      h("option", { value: "hinrueck", text: "Hin und zurück, " + (profil.satz_hinrueck != null ? profil.satz_hinrueck : 0.30).toFixed(2).replace(".", ",") + " €/km gefahren (Selbstständige)" })]);
     kmWahl.value = einfach ? "einfach" : "hinrueck";
     var vWahl = h("select", { class: "mg-select" }, [
       h("option", { value: "aus", text: "Verpflegungsmehraufwand: aus" }),
@@ -2240,16 +2263,16 @@ window.Mitglieder = (function () {
     vWahl.value = modus;
     function speichern(aenderung, nachher) {
       sb.from("profile").upsert(Object.assign({ id: session.user.id }, aenderung)).then(function (r) {
-        if (r.error) { meldung(fehlerText(r.error) + (/verpflegung_modus/.test(r.error.message || "") ? " – schema.sql (v14) ausführen." : ""), "warn"); return; }
+        if (r.error) { meldung(fehlerText(r.error) + (/verpflegung_modus/.test(r.error.message || "") ? ", schema.sql (v14) ausführen." : ""), "warn"); return; }
         profil = Object.assign({}, profil, aenderung); if (nachher) nachher(); rendereAbrechnung();
       });
     }
-    kmWahl.addEventListener("change", function () { speichern({ km_modell: kmWahl.value, km_satz: kmWahl.value === "einfach" ? (profil.satz_einfach != null ? profil.satz_einfach : 0.38) : (profil.satz_hinrueck != null ? profil.satz_hinrueck : 0.30) }, function () { kurzMeldung(kmWahl.value === "einfach" ? "Einfache Strecke ✓" : "Hin und zurück ✓ – km werden doppelt gerechnet.", "gut"); }); });
+    kmWahl.addEventListener("change", function () { speichern({ km_modell: kmWahl.value, km_satz: kmWahl.value === "einfach" ? (profil.satz_einfach != null ? profil.satz_einfach : 0.38) : (profil.satz_hinrueck != null ? profil.satz_hinrueck : 0.30) }, function () { kurzMeldung(kmWahl.value === "einfach" ? "Einfache Strecke ✓" : "Hin und zurück ✓ km werden doppelt gerechnet.", "gut"); }); });
     vWahl.addEventListener("change", function () {
       speichern({ verpflegung_modus: vWahl.value }, function () {
         // Alle Spiele der Saison nach dem neuen Modus setzen (nur vergangene)
         var n = 0; spiele.forEach(function (sp) { if (!einsaetze[sp.kennung] || new Date(sp.beginn) > new Date()) return; speichereEinsatz(sp, { verpflegung: verpflegungVorschlag(sp) }); n++; });
-        kurzMeldung(vWahl.value === "aus" ? "Verpflegung aus – Beträge entfernt." : n + " Spiele neu berechnet.", "gut");
+        kurzMeldung(vWahl.value === "aus" ? "Verpflegung aus, Beträge entfernt." : n + " Spiele neu berechnet.", "gut");
       });
     });
     return h("div", { class: "mg-form" }, [
@@ -2265,7 +2288,7 @@ window.Mitglieder = (function () {
     var beginn = h("input", { type: "datetime-local" }); beginn.value = lokal(new Date());
     var liga = h("input", { type: "text", placeholder: "Liga (optional)", maxlength: "40" });
     var paarung = h("input", { type: "text", placeholder: "Begegnung, z. B. „EHC Essen – Herne“ oder „Lehrgang“", maxlength: "120" });
-    var halle = h("select", { class: "mg-select" }, [h("option", { value: "", text: "– Halle (optional) –" })].concat(Object.keys(ctx.daten.adressen || {}).sort(function (a, b) { return a.localeCompare(b, "de"); }).map(function (n) { return h("option", { value: n, text: n }); })));
+    var halle = h("select", { class: "mg-select" }, [h("option", { value: "", text: "Halle (optional)" })].concat(Object.keys(ctx.daten.adressen || {}).sort(function (a, b) { return a.localeCompare(b, "de"); }).map(function (n) { return h("option", { value: n, text: n }); })));
     var rolle = h("select", { class: "mg-select" }, [["SR", "SR (2er-System)"], ["HSR", "HSR"], ["LSR", "LSR"]].map(function (x) { return h("option", { value: x[0], text: x[1] }); }));
     var speichern = h("button", { type: "button", class: "anfrage", text: "Eintragen", onclick: function () {
       var p = paarung.value.trim(); if (!p || !beginn.value) { meldung("Begegnung und Datum sind Pflicht.", "warn"); return; }
@@ -2274,11 +2297,11 @@ window.Mitglieder = (function () {
       var g = grundgebuehr(sp), v = kmVorschlag(sp);
       einsaetze[kennung] = { privat: true };
       speichereEinsatz(sp, { privat: true, km: v && v.art === "route" ? v.km : null, verguetung: g, verpflegung: verpflegungVorschlag(sp) });
-      kurzMeldung("Eingetragen ✓ – nur für dich und deine Abrechnung.", "gut");
+      kurzMeldung("Eingetragen ✓ Nur für dich und deine Abrechnung.", "gut");
       abrechnungPanel = null; setTimeout(rendereAbrechnung, 700);
     } });
     return h("div", { class: "melde karte", style: "margin:8px 0" }, [h("h4", { text: "Spiel selbst eintragen" }),
-      h("p", { class: "meta", text: "Für Spiele, die nicht auf esrw.de stehen (andere Verbände, Turniere, Freundschaftsspiele). Nur du siehst es – in deiner Abrechnung, mit km, Vergütung und Verpflegung." }),
+      h("p", { class: "meta", text: "Für Spiele, die nicht auf esrw.de stehen (andere Verbände, Turniere, Freundschaftsspiele). Nur du siehst es, in deiner Abrechnung, mit km, Vergütung und Verpflegung." }),
       h("div", { class: "mg-form" }, [h("div", { class: "mg-felder mg-zwei" }, [h("label", {}, ["Datum und Anstoß", beginn]), h("label", {}, ["Liga", liga])]), paarung, halle, rolle, h("div", { class: "zweit" }, [speichern, h("button", { type: "button", class: "mg-neben", text: "Abbrechen", onclick: zurueck })])])]);
   }
 
@@ -2356,7 +2379,7 @@ window.Mitglieder = (function () {
       art: function () { return abrechnungEinstellungen(spiele); },
       werkzeuge: function () {
         return h("div", {}, [
-          h("p", { class: "meta", style: "margin:0 0 8px", text: "Vergangene Spiele bekommen km und Vergütung von selbst – die Knöpfe füllen nur, was noch fehlt." }),
+          h("p", { class: "meta", style: "margin:0 0 8px", text: "Vergangene Spiele bekommen km und Vergütung von selbst. Die Knöpfe füllen nur, was noch fehlt." }),
           h("div", { class: "zweit" }, [strecken, gebuehr,
             h("button", { type: "button", text: "CSV der Saison", onclick: function () { csvExport(spiele); } }),
             h("button", { type: "button", text: "Fahrtenbuch", onclick: function () { zeigeFahrtenbuch(); } }),
@@ -2528,7 +2551,7 @@ window.Mitglieder = (function () {
     ueb.checked = !!e.uebergreifend;
     var notiz = h("input", { type: "text", value: e.notiz || "", placeholder: "Notiz",
       onchange: function (ev) { speichereEinsatz(sp, { notiz: ev.target.value.trim() || null }); } });
-    var verpf = h("input", { type: "number", step: "0.5", min: "0", inputmode: "decimal", value: e.verpflegung != null ? e.verpflegung : "", placeholder: (profil.verpflegung_modus || "aus") === "aus" ? "–" : "14",
+    var verpf = h("input", { type: "number", step: "0.5", min: "0", inputmode: "decimal", value: e.verpflegung != null ? e.verpflegung : "", placeholder: (profil.verpflegung_modus || "aus") === "aus" ? "" : "14",
       onchange: function (ev) { speichereEinsatz(sp, { verpflegung: zahl(ev.target.value) }); } });
 
     var b = betragFuer(sp, e);
@@ -2663,7 +2686,7 @@ window.Mitglieder = (function () {
         return Promise.all(erledigen.map(function (g) {
           g.status = "erledigt";
           return sb.from("gesuche").update({ status: "erledigt", erledigt_am: new Date().toISOString() }).eq("id", g.id);
-        })).then(function () { kurzMeldung("Auf esrw.de steht schon jemand anderes – " + erledigen.length + " Gesuch(e) als erledigt markiert.", "gut"); return d; });
+        })).then(function () { kurzMeldung("Auf esrw.de steht schon jemand anderes, " + erledigen.length + " Gesuch(e) als erledigt markiert.", "gut"); return d; });
       }
       return d;
     }).then(function (d) {
@@ -2704,7 +2727,7 @@ window.Mitglieder = (function () {
         erledigt.forEach(function (g) { box.appendChild(gesuchKarte(g, d.angebote[g.id] || [])); });
         inhalt.appendChild(box);
       }
-      inhalt.appendChild(h("p", { class: "meta mg-fuss", text: "Die Tauschbörse ersetzt nicht die Absprache mit dem Obmann – " +
+      inhalt.appendChild(h("p", { class: "meta mg-fuss", text: "Die Tauschbörse ersetzt nicht die Absprache mit dem Obmann, " +
         "wer übernimmt, muss auf esrw.de eingeteilt werden. Sie zeigt nur, wer könnte." }));
     }).catch(function (e) { leeren(inhalt); inhalt.appendChild(h("p", { class: "achtung", text: "Tauschbörse nicht ladbar: " + fehlerText(e) })); });
   }
@@ -2719,14 +2742,14 @@ window.Mitglieder = (function () {
       ]),
       h("div", { class: "paarung" }, [h("a", { href: "#spiel/" + encodeURIComponent(g.kennung), style: "color:inherit;text-decoration:none", text: (g.liga ? g.liga + ": " : "") + (g.paarung || "") })]),
       h("div", { class: "meta", text: (g.halle || "Halle unbekannt") + " · Tipp auf den Namen öffnet das Spiel" }),
-      h("div", { class: "wer", text: (meins ? "Du suchst" : g.name + " sucht") + " Ersatz" + (g.text ? " – „" + g.text + "“" : "") })
+      h("div", { class: "wer", text: (meins ? "Du suchst" : g.name + " sucht") + " Ersatz" + (g.text ? ": „" + g.text + "“" : "") })
     ]);
     var ang = h("div", { class: "angebote" });
     if (g.status === "vereinbart") {
       ang.appendChild(h("div", { class: "hinweis gut", style: "margin:8px 0 0" }, [ikone("i-check"),
-        h("span", { text: "Vereinbart mit " + (g.vereinbart_name || "?") + " – der Obmann muss noch umteilen. Sobald esrw.de den neuen Namen zeigt, wird das Gesuch von selbst erledigt." })]));
+        h("span", { text: "Vereinbart mit " + (g.vereinbart_name || "?") + ". Der Obmann muss noch umteilen. Sobald esrw.de den neuen Namen zeigt, wird das Gesuch von selbst erledigt." })]));
     } else if (angebote.length) {
-      ang.appendChild(document.createTextNode(meins ? "Angebote – eins annehmen: " : "Könnte: "));
+      ang.appendChild(document.createTextNode(meins ? "Angebote, eins annehmen: " : "Könnte: "));
       angebote.forEach(function (a) {
         var chip = h("span", { text: a.name + (a.text ? " (" + a.text + ")" : "") });
         if (meins && g.status === "offen") {
@@ -2777,7 +2800,7 @@ window.Mitglieder = (function () {
     sb.from("gesuche").update({ status: "vereinbart", vereinbart_mit: a.user_id, vereinbart_name: a.name, vereinbart_gemeldet: false }).eq("id", g.id)
       .then(function (r) {
         if (r.error) { meldung(fehlerText(r.error), "warn"); return; }
-        kurzMeldung("Vereinbart ✓ – " + a.name + " bekommt Bescheid.", "gut");
+        kurzMeldung("Vereinbart ✓ " + a.name + " bekommt Bescheid.", "gut");
         obmannMail(g, a.name);
         zeigeTausch();
       });
@@ -2785,13 +2808,13 @@ window.Mitglieder = (function () {
 
   function obmannMail(g, neuerName) {
     var d = new Date(g.beginn);
-    var text = "Hallo,\n\nbitte das folgende Spiel umteilen:\n\n" + datum(d) + " " + uhr(d) + " Uhr – " + (g.liga ? g.liga + ": " : "") + g.paarung +
+    var text = "Hallo,\n\nbitte das folgende Spiel umteilen:\n\n" + datum(d) + " " + uhr(d) + " Uhr, " + (g.liga ? g.liga + ": " : "") + g.paarung +
       (g.halle ? "\n" + g.halle : "") + "\nRolle: " + (g.rolle || "SR") +
       "\n\nBisher: " + (profil.name || profil.slug) + "\nNeu: " + neuerName + "\n\nWir haben das untereinander abgesprochen.\n\nViele Grüße\n" +
       (profil.name ? profil.name.split(",").reverse().join(" ").trim() : "");
     var an = profil.obmann_email || "";
     location.href = "mailto:" + encodeURIComponent(an) + "?subject=" + encodeURIComponent("Umteilung " + datum(d) + " " + g.paarung) + "&body=" + encodeURIComponent(text);
-    if (!an) kurzMeldung("Obmann-Adresse fehlt – unter Konto → Einstellungen eintragen.", "");
+    if (!an) kurzMeldung("Obmann-Adresse fehlt, trag sie unter Konto → Einstellungen ein.", "");
   }
 
   // ------------------------------------------------------ Verfuegbarkeit
@@ -2844,7 +2867,7 @@ window.Mitglieder = (function () {
       var art = h("select", { class: "mg-select" }, [h("option", { value: "nein", text: "kann nicht" }), h("option", { value: "gern", text: "hätte gern ein Spiel" }), h("option", { value: "", text: "wieder frei" })]);
       inhalt.appendChild(h("div", { class: "melde karte" }, [h("div", { class: "mg-form" }, [
         h("h4", { text: "Zeitraum eintragen" }),
-        h("p", { class: "meta", style: "margin:0", text: "Urlaub, Prüfungen, Dienstreise: von – bis, alle Tage dazwischen. Ein einzelner Tag: nur „von“ ausfüllen." }),
+        h("p", { class: "meta", style: "margin:0", text: "Urlaub, Prüfungen, Dienstreise: von wann bis wann, alle Tage dazwischen. Ein einzelner Tag: nur „von“ ausfüllen." }),
         h("div", { class: "mg-felder" }, [h("label", {}, ["von", von]), h("label", {}, ["bis (optional)", bis])]),
         art,
         h("button", { type: "button", class: "mg-haupt", text: "Eintragen", onclick: function () {
@@ -2910,7 +2933,7 @@ window.Mitglieder = (function () {
     return h("div", { class: "sperre" }, [
       h("span", {}, [datumLang(d),
         spiele ? h("small", { class: "meta", text: " · " + spiele + (spiele === 1 ? " Spiel" : " Spiele") }) : null,
-        konflikt ? h("small", { class: "achtung", style: "display:block;margin-top:4px", text: "Du bist an dem Tag eingeteilt – Abmeldung läuft über den Obmann, hier landet nur der Hinweis für Kollegen." }) : null]),
+        konflikt ? h("small", { class: "achtung", style: "display:block;margin-top:4px", text: "Du bist an dem Tag eingeteilt. Die Abmeldung läuft über den Obmann, hier landet nur der Hinweis für Kollegen." }) : null]),
       knoepfe
     ]);
   }
@@ -2933,7 +2956,7 @@ window.Mitglieder = (function () {
     kontoUebersicht(ueber);
     inhalt.appendChild(h("div", { class: "melde karte" }, [
       h("h4", { text: "Mein Profil" }),
-      h("p", { text: "Name, Anschrift, Handynummer, Kilometermodell und die Rechnungsdaten – alles an einer Stelle. Auch über das Zeichen oben rechts erreichbar." }),
+      h("p", { text: "Name, Anschrift, Handynummer, Kilometermodell und die Rechnungsdaten, alles an einer Stelle. Auch über das Zeichen oben rechts erreichbar." }),
       h("button", { type: "button", class: "haupt", text: "Profil bearbeiten", onclick: function () { zeigeEinrichtung(seite ? "seite" : true); } })
     ]));
     // Rechnungsdaten stehen im Profil - hier nur der Weg dorthin.
@@ -2950,7 +2973,7 @@ window.Mitglieder = (function () {
       h("div", { class: "mg-form" }, [neueMail]),
       h("button", { type: "button", class: "haupt", text: "Adresse ändern", onclick: function () {
         var m = neueMail.value.trim(); if (!m || m.indexOf("@") < 1) { meldung("Bitte eine gültige Adresse.", "warn"); return; }
-        sb.auth.updateUser({ email: m }).then(function (r) { if (r.error) meldung(fehlerText(r.error), "warn"); else { neueMail.value = ""; meldung("Bestätigungsmails sind unterwegs – bitte beide Links antippen.", "gut"); } });
+        sb.auth.updateUser({ email: m }).then(function (r) { if (r.error) meldung(fehlerText(r.error), "warn"); else { neueMail.value = ""; meldung("Bestätigungsmails sind unterwegs, bitte beide Links antippen.", "gut"); } });
       } })
     ]));
     var pw = h("input", { type: "password", placeholder: "Neues Passwort (mind. 8 Zeichen)", autocomplete: "new-password", minlength: "8" });
@@ -2965,7 +2988,7 @@ window.Mitglieder = (function () {
 
     inhalt.appendChild(h("div", { class: "melde karte" }, [
       h("h4", { text: "Daten" }),
-      h("p", { text: "Alles, was du hier einträgst, liegt in deinem Supabase-Konto und ist nur für dich lesbar – außer Gesuche, Angebote, Verfügbarkeiten, Hallen-Hinweise, Mitfahrten und eine freigegebene Handynummer, die alle Mitglieder sehen. " +
+      h("p", { text: "Alles, was du hier einträgst, liegt in deinem Supabase-Konto und ist nur für dich lesbar. Ausgenommen sind Gesuche, Angebote, Verfügbarkeiten, Hallen-Hinweise, Mitfahrten und eine freigegebene Handynummer, die alle Mitglieder sehen. " +
         "Abrechnung als CSV gibt es im Reiter Abrechnung." }),
       h("div", { class: "zweit" }, [
         h("button", { type: "button", text: "Alles als ZIP (mit Belegen)", onclick: datenExportZip }),
@@ -2977,7 +3000,7 @@ window.Mitglieder = (function () {
   }
 
   function kontoUebersicht(box) {
-    var zeilen = [["Name", profil.name || profil.slug || "–"], ["E-Mail", session.user.email || "–"],
+    var zeilen = [["Name", profil.name || profil.slug || "?"], ["E-Mail", session.user.email || "?"],
                   ["Freischaltung", profil.admin ? (adminModus() ? "Admin" : "Admin (Modus aus)") : profil.freigeschaltet ? "freigeschaltet ✓" : "wartet auf den Betreiber"],
                   ["Heimatadresse", profil.heimat ? "hinterlegt ✓" : "fehlt (für Strecken und Abfahrt)"],
                   ["Obmann-E-Mail", profil.obmann_email || "fehlt (für Mails aus der App)"]];
@@ -3001,7 +3024,7 @@ window.Mitglieder = (function () {
             h("span", {}, [h("b", { text: (a.geraet || "Gerät") + (eigener && eigener === a.endpoint ? " (dieses)" : "") }), h("small", { class: "meta", style: "display:block", text: "seit " + new Date(a.angelegt).toLocaleDateString("de-DE") })]),
             h("span", {}, [
               h("button", { type: "button", class: "textknopf", text: "Test", title: "Test-Push vom Server (beim nächsten Lauf, bis 30 Min.)", onclick: function () {
-                sb.from("push_test").insert({ user_id: session.user.id, abo_id: a.id }).then(function (r2) { if (r2.error) meldung(fehlerText(r2.error), "warn"); else kurzMeldung("Test angefordert – kommt beim nächsten Lauf (bis 30 Min.).", "gut"); });
+                sb.from("push_test").insert({ user_id: session.user.id, abo_id: a.id }).then(function (r2) { if (r2.error) meldung(fehlerText(r2.error), "warn"); else kurzMeldung("Test angefordert, er kommt beim nächsten Lauf (bis 30 Min.).", "gut"); });
               } }), " · ",
               h("button", { type: "button", class: "textknopf", text: "abmelden", onclick: function () {
                 sb.from("push_abos").delete().eq("id", a.id).then(function () {
@@ -3073,7 +3096,7 @@ window.Mitglieder = (function () {
       if (lage === "an") {
         var alt = box.querySelector(".mg-woche"); if (alt) alt.remove();
         var w = h("input", { type: "checkbox" }); w.checked = !(ctx && ctx.lesen && ctx.lesen("pushwoche") === "0");
-        w.addEventListener("change", function () { if (ctx && ctx.schreiben) ctx.schreiben("pushwoche", w.checked ? null : "0"); if (ctx && ctx.einstellungenSync) ctx.einstellungenSync(); kurzMeldung(w.checked ? "Wochenvorschau an – kommt sonntags ab 18 Uhr." : "Wochenvorschau aus.", ""); });
+        w.addEventListener("change", function () { if (ctx && ctx.schreiben) ctx.schreiben("pushwoche", w.checked ? null : "0"); if (ctx && ctx.einstellungenSync) ctx.einstellungenSync(); kurzMeldung(w.checked ? "Wochenvorschau an, sie kommt sonntags ab 18 Uhr." : "Wochenvorschau aus.", ""); });
         box.appendChild(h("label", { class: "mg-check mg-woche", style: "display:flex;gap:8px;align-items:center;margin-top:10px" }, [w, " Sonntags die Vorschau auf deine Woche"]));
         var ab = h("input", { type: "checkbox" }); ab.checked = !(ctx && ctx.lesen && ctx.lesen("pushabrechnung") === "0");
         ab.addEventListener("change", function () { if (ctx && ctx.schreiben) ctx.schreiben("pushabrechnung", ab.checked ? null : "0"); if (ctx && ctx.einstellungenSync) ctx.einstellungenSync(); });
@@ -3082,7 +3105,7 @@ window.Mitglieder = (function () {
       if (lage === "an") box.appendChild(h("button", { type: "button", class: "mg-neben", style: "margin-top:8px;width:100%", text: "Testnachricht auf diesem Gerät", onclick: function () {
         navigator.serviceWorker.ready.then(function (reg) {
           return reg.showNotification("Einteilungen: Test", { body: "Wenn du das siehst, kommen Mitteilungen an. Echte Push-Nachrichten schickt der Server bei Änderungen.", icon: "icon-192.png", badge: "icon-192.png", tag: "test" });
-        }).then(function () { kurzMeldung("Testnachricht geschickt – sie erscheint oben oder in der Mitteilungszentrale.", "gut"); })
+        }).then(function () { kurzMeldung("Testnachricht geschickt, sie erscheint oben oder in der Mitteilungszentrale.", "gut"); })
           .catch(function (e) { meldung("Konnte nicht anzeigen: " + (e.message || e), "warn"); });
       } }));
     }
@@ -3095,7 +3118,7 @@ window.Mitglieder = (function () {
     navigator.serviceWorker.ready.then(function (reg) {
       return reg.pushManager.getSubscription().then(function (abo) {
         if (abo) {
-          setze("an", "Dieses Gerät bekommt eine Nachricht, wenn für " + (profil.name || "dich") + " eine Einteilung dazukommt, sich ändert oder wegfällt – auch bei geschlossener App.",
+          setze("an", "Dieses Gerät bekommt eine Nachricht, wenn für " + (profil.name || "dich") + " eine Einteilung dazukommt, sich ändert oder wegfällt, auch bei geschlossener App.",
                 "Push ausschalten", function () { pushAus(abo).then(function () { pushRendern(box); }); });
           // Abo sicherheitshalber (wieder) eintragen, falls die Zeile fehlt
           pushEintragen(abo).catch(function () {});
@@ -3107,7 +3130,7 @@ window.Mitglieder = (function () {
                 });
         }
       });
-    }).catch(function () { setze("nein", "Service Worker nicht bereit – Seite neu laden."); });
+    }).catch(function () { setze("nein", "Service Worker nicht bereit, bitte die Seite neu laden."); });
   }
 
   function pushEintragen(abo) {
@@ -3292,7 +3315,7 @@ window.Mitglieder = (function () {
       h("button", { type: "button", class: "textknopf", text: "Liste pflegen",
         onclick: function () { adminBereich = "telefon"; zeigeReiter("admin"); } })]));
     else inhalt.appendChild(h("p", { class: "meta mg-fuss",
-      text: "Die Liste pflegt der Betreiber. Deine eigenen Angaben gibst du selbst frei – sie gehen dann vor." }));
+      text: "Die Liste pflegt der Betreiber. Deine eigenen Angaben gibst du selbst frei, sie gehen dann vor." }));
 
     telefonbuchLaden().then(function (d) {
       if (!karte.isConnected) return;
@@ -3462,7 +3485,7 @@ window.Mitglieder = (function () {
       // Hallen-Wiki (auf der Spielseite steht der Link oben in der Hallen-Karte)
       if (mitHallen) {
         innen.appendChild(h("h4", { text: "Hallen-Hinweise · " + spiel.halle }));
-        if (!hinweise.length) innen.appendChild(h("p", { class: "meta", text: "Noch nichts eingetragen. Parken, Kabineneingang, Schlüssel, Kantine – was Kollegen wissen sollten." }));
+        if (!hinweise.length) innen.appendChild(h("p", { class: "meta", text: "Noch nichts eingetragen. Parken, Kabineneingang, Schlüssel, Kantine, was Kollegen wissen sollten." }));
         hinweise.slice().sort(function (a, b) { return (b.offiziell ? 1 : 0) - (a.offiziell ? 1 : 0); }).forEach(function (n) {
           function neuZeichnen() { leeren(innen); box.open = false; spielExtras(spiel, ziel, istIch); var d2 = ziel.querySelector("details"); if (d2) d2.open = true; }
           var z = h("div", { class: "kandidat" + (n.offiziell ? " offiziell" : "") }, [
@@ -3507,7 +3530,7 @@ window.Mitglieder = (function () {
         Object.keys(vorschlaege).forEach(function (s) {
           var g = (spiel.gespann || []).filter(function (x) { return x.slug === s; })[0], v = vorschlaege[s]; if (!g) return;
           innen.appendChild(h("p", { class: "meta", style: "margin:0 0 6px" }, [h("span", { class: "offiziell-badge", text: "auf dem Weg" }),
-            (v.richtung === "ich" ? g.name + " (" + (v.ort || "Wohnort geteilt") + ") liegt auf deinem Weg – Umweg ca. " + v.umweg + " km." : "Du liegst auf dem Weg von " + g.name + " (" + (v.ort || "Wohnort geteilt") + ") – Umweg für ihn ca. " + v.umweg + " km.")]));
+            (v.richtung === "ich" ? g.name + " (" + (v.ort || "Wohnort geteilt") + ") liegt auf deinem Weg, Umweg ca. " + v.umweg + " km." : "Du liegst auf dem Weg von " + g.name + " (" + (v.ort || "Wohnort geteilt") + "), Umweg für ihn ca. " + v.umweg + " km.")]));
         });
         mitfahrten.forEach(function (m) {
           var nr = nummerVon(m.slug), l = nr ? telefonLink(nr.telefon) : null;
@@ -3518,7 +3541,7 @@ window.Mitglieder = (function () {
           var mf = h("input", { type: "text", placeholder: "z. B. „Ich fahre ab Iserlohn, 2 Plätze frei“ oder „Suche Mitfahrt ab Essen“", value: meineMitfahrt ? meineMitfahrt.text : "", maxlength: "160" });
           function mitfahrtSpeichern(art) {
             var t = mf.value.trim() || (art === "suche" ? "Suche Mitfahrt" : "Biete Mitfahrt");
-            mitfahrtSetzen(spiel, art, t).then(function (ok) { if (!ok) return; kurzMeldung(art === "suche" ? "Gesucht ✓ – Kollegen sehen es auf ihrer Karte und unter „Zusammen fahren“." : "Angeboten ✓ – Kollegen sehen es auf ihrer Karte und unter „Zusammen fahren“.", "gut"); extrasLaden([spiel]).then(function () { spielExtras(spiel, ziel, istIch); }); });
+            mitfahrtSetzen(spiel, art, t).then(function (ok) { if (!ok) return; kurzMeldung(art === "suche" ? "Gesucht ✓ Kollegen sehen es auf ihrer Karte und unter „Zusammen fahren“." : "Angeboten ✓ Kollegen sehen es auf ihrer Karte und unter „Zusammen fahren“.", "gut"); extrasLaden([spiel]).then(function () { spielExtras(spiel, ziel, istIch); }); });
           }
           innen.appendChild(h("div", { class: "mg-form" }, [mf, h("div", { class: "zweit" }, [
             h("button", { type: "button", text: meineMitfahrt && meineMitfahrt.art !== "suche" ? "Angebot aktualisieren" : "Ich biete", onclick: function () { mitfahrtSpeichern("biete"); } }),
@@ -3533,7 +3556,7 @@ window.Mitglieder = (function () {
       // Gespann-Notizen: nur fuer die, die im Spiel stehen
       if (istIch && mitGespann) {
         innen.appendChild(h("h4", { text: "Gespann-Notizen (sehen nur die Kollegen im Spiel)" }));
-        if (!kommentare.length) innen.appendChild(h("p", { class: "meta", text: "Noch nichts – „Ich bringe die Pucks“, „Parke hinten“, „Bin 10 Min. später“. Die Kollegen bekommen Push." }));
+        if (!kommentare.length) innen.appendChild(h("p", { class: "meta", text: "Noch nichts. „Ich bringe die Pucks“, „Parke hinten“, „Bin 10 Min. später“. Die Kollegen bekommen Push." }));
         // Verlauf wie ein kleiner Chat: eigene Nachrichten rechts, neue markiert
         var gelesenBis = 0; try { gelesenBis = parseInt(localStorage.getItem("gespann-gelesen:" + kennung) || "0", 10) || 0; } catch (e) {}
         var verlauf = h("div", { class: "gespann-verlauf" });
@@ -3557,7 +3580,7 @@ window.Mitglieder = (function () {
           var slugs = (spiel.gespann || []).map(function (g) { return g.slug; }).filter(Boolean).concat([profil.slug]);
           sb.from("spielkommentare").insert({ user_id: session.user.id, slug: profil.slug, name: profil.name || profil.slug, kennung: kennung, beginn: spiel.beginn, paarung: spiel.paarung, gespann: slugs, text: t })
             .then(function (r) { if (r.error) { meldung(fehlerText(r.error), "warn"); return; }
-              kurzMeldung("Geschickt ✓ – Push geht beim nächsten Lauf raus.", "gut"); delete cache.geladen["k|" + kennung];
+              kurzMeldung("Geschickt ✓ Push geht beim nächsten Lauf raus.", "gut"); delete cache.geladen["k|" + kennung];
               extrasLaden([spiel]).then(function () { spielExtras(spiel, ziel, istIch); var d = ziel.querySelector("details"); if (d) d.open = true; }); });
         } })]));
       }
@@ -3673,7 +3696,7 @@ window.Mitglieder = (function () {
     gewaehlt[3](box);
 
     inhalt.appendChild(h("p", { class: "meta mg-fuss", text: "Freigeschaltete sehen Tauschbörse, Verfügbarkeiten, Hallen-Hinweise, Kontakte und Mitfahrten. " +
-      "Admins können außerdem freischalten und weitere Admins ernennen. Das eigene Admin-Recht lässt sich hier nicht entfernen – dafür SQL im Supabase-Dashboard." }));
+      "Admins können außerdem freischalten und weitere Admins ernennen. Das eigene Admin-Recht lässt sich hier nicht entfernen, das geht nur per SQL im Supabase-Dashboard." }));
   }
 
   // Admin -> Spiel anlegen: Spiele, die auf esrw.de fehlen
@@ -3708,9 +3731,9 @@ window.Mitglieder = (function () {
               speichern(sb.from("spiel_korrekturen").upsert({ kennung: m.kennung, geloescht: true,
                 von: profil.name || profil.slug, geaendert: new Date().toISOString() }, { onConflict: "kennung" }))
                 .then(function (r) {
-                  if (r && r.error) { meldung(fehlerText(r.error) + " – schema.sql (v25) ausführen.", "warn"); return; }
+                  if (r && r.error) { meldung(fehlerText(r.error) + ", schema.sql (v25) ausführen.", "warn"); return; }
                   return speichern(sb.from("spiel_meldungen").delete().eq("kennung", m.kennung)).then(function () {
-                    kurzMeldung("Ausgeblendet ✓ – beim nächsten Laden ist es bei allen weg.", "gut");
+                    kurzMeldung("Ausgeblendet ✓ Beim nächsten Laden ist es bei allen weg.", "gut");
                     document.dispatchEvent(new CustomEvent("mg-betreiber"));
                     meldungenRendern(box);
                   });
@@ -3744,13 +3767,13 @@ window.Mitglieder = (function () {
     var gast = h("input", { type: "text", placeholder: "Gast (leer bei Turnier/Lehrgang)", maxlength: "80" });
     var beginn = h("input", { type: "datetime-local" }); beginn.value = lokal(new Date(Date.now() + 7 * 86400000));
     var treff = h("input", { type: "datetime-local" });
-    var halle = h("select", { class: "mg-select" }, [h("option", { value: "", text: "– Halle wählen –" })].concat(Object.keys(ctx.daten.adressen || {}).sort(function (a, b) { return a.localeCompare(b, "de"); }).map(function (n) { return h("option", { value: n, text: n }); })));
+    var halle = h("select", { class: "mg-select" }, [h("option", { value: "", text: "Halle wählen" })].concat(Object.keys(ctx.daten.adressen || {}).sort(function (a, b) { return a.localeCompare(b, "de"); }).map(function (n) { return h("option", { value: n, text: n }); })));
     var hinweis = h("input", { type: "text", placeholder: "Hinweis für alle (optional)", maxlength: "200" });
     var namen = ctx.daten.personen.map(function (p) { return p.name; });
     var zeilen = [];
     var besetzungBox = h("div");
     function personZeile() {
-      var p = h("select", { class: "mg-select" }, [h("option", { value: "", text: "– Schiedsrichter –" })].concat(namen.map(function (n) { return h("option", { value: n, text: n }); })));
+      var p = h("select", { class: "mg-select" }, [h("option", { value: "", text: "Schiedsrichter" })].concat(namen.map(function (n) { return h("option", { value: n, text: n }); })));
       var r = h("select", { class: "mg-select" }, [["SR", "SR"], ["HSR", "HSR"], ["LSR", "LSR"]].map(function (x) { return h("option", { value: x[0], text: x[1] }); }));
       zeilen.push([p, r]); besetzungBox.appendChild(h("div", { class: "mg-besetzung" }, [p, r]));
     }
@@ -3764,14 +3787,14 @@ window.Mitglieder = (function () {
       sb.from("spiele_manuell").insert({ beginn: new Date(beginn.value).toISOString(), treffpunkt: treff.value ? new Date(treff.value).toISOString() : null, liga: liga.value.trim() || null, paarung: g ? hm + " – " + g : hm, halle: halle.value || null, hinweis: hinweis.value.trim() || null, besetzung: bes, von: profil.name || profil.slug }).select()
         .then(function (r) {
           speichern.disabled = false;
-          if (r.error) { meldung(fehlerText(r.error) + (/spiele_manuell/.test(r.error.message || "") ? " – schema.sql (v13) ausführen." : ""), "warn"); return; }
-          kurzMeldung("Spiel angelegt ✓ – in der App sofort, Kalender und Push beim nächsten Lauf.", "gut");
+          if (r.error) { meldung(fehlerText(r.error) + (/spiele_manuell/.test(r.error.message || "") ? ", schema.sql (v13) ausführen." : ""), "warn"); return; }
+          kurzMeldung("Spiel angelegt ✓ In der App sofort, Kalender und Push beim nächsten Lauf.", "gut");
           document.dispatchEvent(new CustomEvent("mg-betreiber"));
           leeren(box); box.appendChild(h("h4", {}, [ikone("i-cal"), " Spiel anlegen"])); spielAnlegenRendern(box);
         });
     } });
     var form = h("div", { class: "mg-form" }, [
-      h("p", { class: "meta", style: "margin:0 0 6px", text: "Für Spiele, die auf esrw.de fehlen – Freundschaftsspiele, Turniere, Lehrgänge. Die Schiedsrichter sehen es wie jedes andere Spiel (Kalender, Push, Abrechnung)." }),
+      h("p", { class: "meta", style: "margin:0 0 6px", text: "Für Spiele, die auf esrw.de fehlen: Freundschaftsspiele, Turniere, Lehrgänge. Die Schiedsrichter sehen es wie jedes andere Spiel (Kalender, Push, Abrechnung)." }),
       h("div", { class: "mg-felder mg-zwei" }, [h("label", {}, ["Liga", liga]), h("label", {}, ["Anstoß", beginn])]),
       h("div", { class: "mg-felder mg-zwei" }, [h("label", {}, ["Heim", heim]), h("label", {}, ["Gast", gast])]),
       h("label", { text: "Halle" }), halle,
@@ -3795,13 +3818,13 @@ window.Mitglieder = (function () {
         });
         box.appendChild(det);
       }
-    }).catch(function (e) { leeren(box); box.appendChild(h("h4", {}, [ikone("i-cal"), " Spiel anlegen"])); box.appendChild(form); box.appendChild(h("p", { class: "achtung", text: "Tabelle spiele_manuell fehlt – schema.sql (v13) ausführen. " + fehlerText(e) })); });
+    }).catch(function (e) { leeren(box); box.appendChild(h("h4", {}, [ikone("i-cal"), " Spiel anlegen"])); box.appendChild(form); box.appendChild(h("p", { class: "achtung", text: "Tabelle spiele_manuell fehlt, schema.sql (v13) ausführen. " + fehlerText(e) })); });
   }
 
   // Admin -> Hallen und Vereine: fehlende Zuordnungen ohne Commit nachtragen
   function hallenPflegeRendern(box) {
     var hallenNamen = Object.keys(ctx.daten.adressen || {}).sort(function (a, b) { return a.localeCompare(b, "de"); });
-    function hallenWahl() { return h("select", { class: "mg-select" }, [h("option", { value: "", text: "– Halle –" })].concat(hallenNamen.map(function (n) { return h("option", { value: n, text: n }); }))); }
+    function hallenWahl() { return h("select", { class: "mg-select" }, [h("option", { value: "", text: "Halle wählen" })].concat(hallenNamen.map(function (n) { return h("option", { value: n, text: n }); }))); }
     function neu() { leeren(box); box.appendChild(h("h4", {}, [ikone("i-pin"), " Hallen und Vereine"])); hallenPflegeRendern(box); }
     leeren(box); box.appendChild(h("h4", {}, [ikone("i-pin"), " Hallen und Vereine"]));
     box.appendChild(h("p", { class: "meta", style: "margin:0 0 6px", text: "Wenn eine Halle nicht erkannt wird: Verein einer Halle zuordnen oder eine neue Halle anlegen. Wirkt in der App sofort, in Kalendern und der Hallen-Erkennung beim nächsten Lauf." }));
@@ -3818,7 +3841,7 @@ window.Mitglieder = (function () {
           h("span", { style: "display:flex;gap:6px;align-items:center" }, [wahl, h("button", { type: "button", class: "anfrage", text: "Zuordnen", onclick: function () {
             if (!wahl.value) return;
             sb.from("vereine_extra").upsert({ verein: heim, halle: wahl.value, von: profil.name || profil.slug }, { onConflict: "verein" }).then(function (r) {
-              if (r.error) { meldung(fehlerText(r.error) + (/vereine_extra/.test(r.error.message || "") ? " – schema.sql (v13) ausführen." : ""), "warn"); return; }
+              if (r.error) { meldung(fehlerText(r.error) + (/vereine_extra/.test(r.error.message || "") ? ", schema.sql (v13) ausführen." : ""), "warn"); return; }
               kurzMeldung(heim + " → " + wahl.value + " ✓ (Kalender beim nächsten Lauf)", "gut"); neu();
             });
           } })])
@@ -3840,16 +3863,16 @@ window.Mitglieder = (function () {
     var suchen = h("button", { type: "button", class: "mg-neben", text: "Adresse suchen", onclick: function () {
       var q = hadresse.value.trim(); if (!q) return; koord.textContent = "suche …";
       fetch("https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=de,nl,be&q=" + encodeURIComponent(q)).then(function (r) { return r.json(); }).then(function (t) {
-        if (!t.length) { koord.textContent = "nicht gefunden – genauer eingeben"; lat = lon = null; return; }
+        if (!t.length) { koord.textContent = "nicht gefunden, bitte genauer eingeben"; lat = lon = null; return; }
         lat = parseFloat(t[0].lat); lon = parseFloat(t[0].lon); koord.textContent = "gefunden: " + t[0].display_name.split(",").slice(0, 3).join(",");
       }).catch(function () { koord.textContent = "Suche nicht erreichbar"; });
     } });
     box.appendChild(h("details", { class: "tausch", style: "margin-top:8px" }, [h("summary", { text: "Neue Halle anlegen" }),
       h("div", { class: "mg-form" }, [hname, h("div", { class: "mg-zeile" }, [hadresse, suchen]), koord, h("button", { type: "button", class: "anfrage", text: "Halle speichern", onclick: function () {
         var n = hname.value.trim(); if (!n) { meldung("Name fehlt.", "warn"); return; }
-        if (lat == null) { meldung("Erst die Adresse suchen lassen – ohne Koordinaten keine Karte, kein Wetter, keine Strecke.", "warn"); return; }
+        if (lat == null) { meldung("Erst die Adresse suchen lassen. Ohne Koordinaten gibt es keine Karte, kein Wetter und keine Strecke.", "warn"); return; }
         sb.from("hallen_extra").upsert({ name: n, adresse: hadresse.value.trim(), lat: lat, lon: lon, von: profil.name || profil.slug }, { onConflict: "name" }).then(function (r) {
-          if (r.error) { meldung(fehlerText(r.error) + (/hallen_extra/.test(r.error.message || "") ? " – schema.sql (v13) ausführen." : ""), "warn"); return; }
+          if (r.error) { meldung(fehlerText(r.error) + (/hallen_extra/.test(r.error.message || "") ? ", schema.sql (v13) ausführen." : ""), "warn"); return; }
           kurzMeldung("Halle angelegt ✓", "gut"); document.dispatchEvent(new CustomEvent("mg-betreiber")); setTimeout(neu, 800);
         });
       } })])]));
@@ -3880,7 +3903,7 @@ window.Mitglieder = (function () {
       return p.length === 1 ? p[0].slug : null;
     }
     var ta = h("textarea", { rows: "4", placeholder: "Je Zeile: Nachname, Vorname; 0171 1234567\noder: Vorname Nachname; +49 …" });
-    var einzelName = h("select", { class: "mg-select" }, [h("option", { value: "", text: "– Kollege –" })].concat(personen.map(function (p) { return h("option", { value: p.slug, text: p.name }); })));
+    var einzelName = h("select", { class: "mg-select" }, [h("option", { value: "", text: "Kollege" })].concat(personen.map(function (p) { return h("option", { value: p.slug, text: p.name }); })));
     var einzelNr = h("input", { type: "tel", placeholder: "Nummer" });
     var einzelAdr = h("input", { type: "text", placeholder: "Anschrift (optional)", maxlength: "120" });
     var formBox = h("div", { class: "mg-form" }, [
@@ -3893,7 +3916,7 @@ window.Mitglieder = (function () {
                                                    telefon: einzelNr.value.trim(), anschrift: einzelAdr.value.trim() || null,
                                                    von: profil.name || profil.slug }, { onConflict: "slug" }))
           .then(function (r2) {
-            if (r2 && r2.error) { meldung(fehlerText(r2.error) + (/telefonliste|anschrift/.test(r2.error.message || "") ? " – schema.sql (v24) ausführen." : ""), "warn"); return; }
+            if (r2 && r2.error) { meldung(fehlerText(r2.error) + (/telefonliste|anschrift/.test(r2.error.message || "") ? ", schema.sql (v24) ausführen." : ""), "warn"); return; }
             kurzMeldung("Gespeichert ✓", "gut"); neu();
           });
       } })]);
@@ -3903,7 +3926,7 @@ window.Mitglieder = (function () {
       if (!box.isConnected) return;
       leeren(box); kopf();
       if (d.fehler) {
-        box.appendChild(h("p", { class: "achtung", text: "Tabelle telefonliste fehlt – schema.sql (v14) ausführen. " + fehlerText(d.fehler) }));
+        box.appendChild(h("p", { class: "achtung", text: "Tabelle telefonliste fehlt, schema.sql (v14) ausführen. " + fehlerText(d.fehler) }));
         return;
       }
       var alle = telefonbuchZeilen(d);
@@ -3916,7 +3939,7 @@ window.Mitglieder = (function () {
       box.appendChild(h("details", { class: "tausch", style: "margin-top:8px" }, [h("summary", { text: "Liste einfügen (mehrere auf einmal)" }), h("div", { class: "mg-form" }, [ta, h("button", { type: "button", class: "anfrage", text: "Einlesen", onclick: function () {
         var zeilen = ta.value.split(/\n/).map(function (z) { return z.trim(); }).filter(Boolean), ok = [], unklar = [];
         zeilen.forEach(function (z) { var t = z.split(/[;\t]/); if (t.length < 2) { unklar.push(z); return; } var nr = t.slice(1).join(" ").trim(), slug = slugZu(t[0]); if (!slug || !nr) { unklar.push(z); return; } var p = personen.filter(function (x) { return x.slug === slug; })[0]; ok.push({ slug: slug, name: p ? p.name : t[0].trim(), telefon: nr, von: profil.name || profil.slug }); });
-        if (!ok.length) { meldung("Nichts erkannt – Format: Name; Nummer", "warn"); return; }
+        if (!ok.length) { meldung("Nichts erkannt. Format: Name; Nummer", "warn"); return; }
         speichern(sb.from("telefonliste").upsert(ok, { onConflict: "slug" })).then(function (r2) { if (r2 && r2.error) { meldung(fehlerText(r2.error), "warn"); return; } kurzMeldung(ok.length + " Nummern gespeichert" + (unklar.length ? ", " + unklar.length + " nicht zugeordnet: " + unklar.slice(0, 3).join(" | ") : ""), unklar.length ? "warn" : "gut"); neu(); });
       } })])]));
 
@@ -3971,8 +3994,8 @@ window.Mitglieder = (function () {
   function vereinFehler(e) {
     var t = fehlerText(e);
     if (/verifiziert|row-level|policy|permission/i.test(t))
-      return "Diese Anschrift ist schon geprüft – ändern darf sie nur der Betreiber.";
-    if (/verifiziert|column/i.test(t)) return t + " – schema.sql (v24) ausführen.";
+      return "Diese Anschrift ist schon geprüft, ändern darf sie nur der Betreiber.";
+    if (/verifiziert|column/i.test(t)) return t + ", schema.sql (v24) ausführen.";
     return t;
   }
   function vereinSpeichern(verein, werte, alt) {
@@ -4032,7 +4055,7 @@ window.Mitglieder = (function () {
           sammlung.push({ verein: t[0].trim(), name: t[0].trim(), strasse: t[1].trim(), plz_ort: t.slice(2).join(";").trim(),
                           angelegt_von: session.user.id, geaendert: new Date().toISOString() });
         });
-        if (!sammlung.length) { meldung("Nichts erkannt – Format: Verein; Straße; PLZ Ort", "warn"); return; }
+        if (!sammlung.length) { meldung("Nichts erkannt. Format: Verein; Straße; PLZ Ort", "warn"); return; }
         speichern(sb.from("vereine_adressen").upsert(sammlung, { onConflict: "verein" })).then(function (r) {
           if (r && r.error) { meldung(fehlerText(r.error), "warn"); return; }
           kurzMeldung(sammlung.length + " Adressen gespeichert" + (unklar.length ? ", " + unklar.length + " unklar" : "") + " ✓", "gut");
@@ -4056,7 +4079,7 @@ window.Mitglieder = (function () {
             });
             return speichern(sb.from("vereine_adressen").upsert(zeilen, { onConflict: "verein" })).then(function (r) {
               if (r && r.error) { meldung(fehlerText(r.error), "warn"); return; }
-              kurzMeldung(zeilen.length + " Adressen übernommen ✓ – bitte einmal prüfen.", "gut");
+              kurzMeldung(zeilen.length + " Adressen übernommen ✓ Bitte einmal prüfen.", "gut");
               neu();
             });
           });
@@ -4105,8 +4128,8 @@ window.Mitglieder = (function () {
         det.appendChild(h("div", { class: "mg-form" }, [
           h("label", { text: "Name im Spielplan" }), fSchl,
           h("p", { class: "meta", style: "margin:-2px 0 6px", text: imPlan[v]
-            ? "Steht so im Spielplan – daran wird die Adresse erkannt. Ändern nur, wenn der Spielplan anders schreibt."
-            : "Kommt im Spielplan nicht vor – selbst angelegt." }),
+            ? "Steht so im Spielplan, daran wird die Adresse erkannt. Ändern nur, wenn der Spielplan anders schreibt."
+            : "Kommt im Spielplan nicht vor, selbst angelegt." }),
           h("label", { text: "Name auf der Rechnung" }), fName,
           h("label", { text: "Anschrift" }), fAdr.box, fOrt,
           h("div", { class: "zweit", style: "margin-top:8px" }, [
@@ -4129,7 +4152,7 @@ window.Mitglieder = (function () {
             onclick: function () {
               vereinSpeichern(v, { name: fName.value.trim() || v, strasse: fStr.value.trim(), plz_ort: fOrt.value.trim(),
                                    verifiziert: !a.verifiziert })
-                .then(function (ok) { if (ok) { kurzMeldung(a.verifiziert ? "Wieder änderbar." : "Geprüft ✓ – Kollegen können sie jetzt nicht mehr ändern.", "gut"); neu(); } });
+                .then(function (ok) { if (ok) { kurzMeldung(a.verifiziert ? "Wieder änderbar." : "Geprüft ✓ Kollegen können sie jetzt nicht mehr ändern.", "gut"); neu(); } });
             } }) : h("p", { class: "meta", style: "margin:8px 0 0", text: "Erst eine Anschrift eintragen, dann lässt sie sich bestätigen." })
         ]));
         return det;
@@ -4179,7 +4202,7 @@ window.Mitglieder = (function () {
     }).catch(function (e) {
       leeren(box);
       box.appendChild(h("h4", {}, [ikone("i-check"), " Funktionen"]));
-      box.appendChild(h("p", { class: "achtung", text: "Tabelle „funktionen“ fehlt – bitte supabase/schema.sql (v10) einmal ausführen. " + fehlerText(e) }));
+      box.appendChild(h("p", { class: "achtung", text: "Tabelle „funktionen“ fehlt. Bitte supabase/schema.sql (v10) einmal ausführen. " + fehlerText(e) }));
     });
   }
 
@@ -4226,7 +4249,7 @@ window.Mitglieder = (function () {
     // Alte Konten ohne Namen (vor der Pflicht bei der Registrierung) kann
     // der Betreiber hier selbst zuordnen - sonst steht dort ewig "(ohne Namen)".
     function nameZuordnen(p, zeileEl) {
-      var wahl = h("select", { class: "mg-select", style: "margin-top:6px" }, [h("option", { value: "", text: "– Name zuordnen –" })]);
+      var wahl = h("select", { class: "mg-select", style: "margin-top:6px" }, [h("option", { value: "", text: "Name zuordnen" })]);
       personenNamen().then(function (liste) {
         liste.forEach(function (x) { wahl.appendChild(h("option", { value: x.slug, text: x.name })); });
       });
@@ -4244,7 +4267,7 @@ window.Mitglieder = (function () {
     }
     function mailAendern(p) {
       var neuMail = prompt("E-Mail im Verzeichnis ändern.\n\nAchtung: Das ändert nur den Eintrag hier (Anzeige und Einladungen). " +
-        "Die Adresse zum Anmelden ändert der Kollege selbst unter Konto – oder du im Supabase-Dashboard.", p.email || "");
+        "Die Adresse zum Anmelden ändert der Kollege selbst unter Konto, oder du im Supabase-Dashboard.", p.email || "");
       if (neuMail === null) return;
       speichern(sb.from("profile").update({ email: neuMail.trim() || null }).eq("id", p.id)).then(function (r) {
         if (r && r.error) { meldung(fehlerText(r.error), "warn"); return; }
@@ -4254,9 +4277,9 @@ window.Mitglieder = (function () {
     function entfernen(p) {
       if (!confirm("Konto von " + (p.name || p.email || "diesem Kollegen") + " entfernen?\n\n" +
                    "Die Profilzeile mit allen Einstellungen wird gelöscht. Der Zugang selbst bleibt bestehen, " +
-                   "bis du ihn im Supabase-Dashboard löschst – meldet sich der Kollege wieder an, taucht er als neue Registrierung auf.")) return;
+                   "bis du ihn im Supabase-Dashboard löschst. Meldet sich der Kollege wieder an, taucht er als neue Registrierung auf.")) return;
       speichern(sb.from("profile").delete().eq("id", p.id)).then(function (r) {
-        if (r && r.error) { meldung(fehlerText(r.error) + " – schema.sql (v25) ausführen.", "warn"); return; }
+        if (r && r.error) { meldung(fehlerText(r.error) + ", schema.sql (v25) ausführen.", "warn"); return; }
         kurzMeldung("Entfernt.", ""); neu();
       });
     }
@@ -4299,14 +4322,14 @@ window.Mitglieder = (function () {
 
       // ---- Einladung vorbereiten
       var eMail = h("input", { type: "email", placeholder: "E-Mail des Kollegen", autocomplete: "off" });
-      var eName = h("select", { class: "mg-select" }, [h("option", { value: "", text: "– Name (optional) –" })]
+      var eName = h("select", { class: "mg-select" }, [h("option", { value: "", text: "Name (optional)" })]
         .concat((ctx.daten.personen || []).map(function (x) { return h("option", { value: x.slug, text: x.name }); })));
       var eFrei = h("input", { type: "checkbox" }); eFrei.checked = true;
       var eAdmin = h("input", { type: "checkbox" });
       var einlBox = h("details", { class: "tausch", style: "margin-top:8px" }, [
         h("summary", { text: "Konto vorbereiten (Einladung)" }),
         h("div", { class: "mg-form" }, [
-          h("p", { class: "meta", style: "margin:0", text: "Trag die Adresse des Kollegen ein. Registriert er sich damit, ist er sofort dabei – "
+          h("p", { class: "meta", style: "margin:0", text: "Trag die Adresse des Kollegen ein. Registriert er sich damit, ist er sofort dabei, "
             + "mit dem hinterlegten Namen und ohne dass du noch einmal freischalten musst. Das Passwort vergibt er selbst; "
             + "ein Konto ohne ihn anzulegen geht nicht, dafür müsste der geheime Schlüssel in der App liegen." }),
           eMail, eName,
@@ -4320,7 +4343,7 @@ window.Mitglieder = (function () {
             var schon = alle.filter(function (x) { return String(x.email || "").toLowerCase() === adr; })[0];
             if (schon) {
               meldung("Mit dieser Adresse gibt es schon ein Konto (" + (schon.name || "ohne Namen")
-                + "). Eine Einladung ändert daran nichts – bitte oben freischalten.", "warn");
+                + "). Eine Einladung ändert daran nichts, bitte oben freischalten.", "warn");
               return;
             }
             var person = eName.value ? ctx.personMit(eName.value) : null;
@@ -4328,8 +4351,8 @@ window.Mitglieder = (function () {
               name: person ? person.name : null, freischalten: eFrei.checked, admin: eAdmin.checked,
               von: profil.name || profil.slug, eingeloest_am: null }, { onConflict: "email" }))
               .then(function (r2) {
-                if (r2 && r2.error) { meldung(fehlerText(r2.error) + " – schema.sql (v25) ausführen.", "warn"); return; }
-                eMail.value = ""; kurzMeldung("Eingeladen ✓ – der Kollege registriert sich mit dieser Adresse.", "gut"); neu();
+                if (r2 && r2.error) { meldung(fehlerText(r2.error) + ", schema.sql (v25) ausführen.", "warn"); return; }
+                eMail.value = ""; kurzMeldung("Eingeladen ✓ Der Kollege registriert sich mit dieser Adresse.", "gut"); neu();
               });
           } })])
       ]);
@@ -4376,7 +4399,7 @@ window.Mitglieder = (function () {
           } })]));
       });
       box.appendChild(adet);
-      box.appendChild(h("p", { class: "meta mg-fuss", text: "„Entfernen“ löscht die Profilzeile, nicht den Zugang selbst – "
+      box.appendChild(h("p", { class: "meta mg-fuss", text: "„Entfernen“ löscht die Profilzeile, nicht den Zugang selbst, "
         + "den löscht nur das Supabase-Dashboard (Authentication → Users). Dasselbe gilt für die Adresse zum Anmelden." }));
       zaehler().then(zaehlerAnzeigen);
     }).catch(function (e) { leeren(box); box.appendChild(h("p", { class: "achtung", text: fehlerText(e) })); });
@@ -4441,7 +4464,7 @@ window.Mitglieder = (function () {
       });
       text("abrechnung.csv", "\ufeff" + zeilen.map(function (z) { return z.map(function (f) { return '"' + String(f).replace(/"/g, '""') + '"'; }).join(";"); }).join("\r\n"));
       // Notizen als lesbare Textdatei
-      var notizen = (aus.spielnotizen || []).map(function (n) { return (n.kennung || "").split("|")[0].slice(0, 16).replace("T", " ") + " – " + (n.kennung || "").split("|")[1] + "\n" + (n.text || "") + "\n"; }).join("\n");
+      var notizen = (aus.spielnotizen || []).map(function (n) { return (n.kennung || "").split("|")[0].slice(0, 16).replace("T", " ") + ", " + (n.kennung || "").split("|")[1] + "\n" + (n.text || "") + "\n"; }).join("\n");
       if (notizen) text("notizen.txt", notizen);
       // Belege herunterladen (signierte Links, nacheinander)
       var belege = [];
@@ -4486,7 +4509,7 @@ window.Mitglieder = (function () {
   }
 
   function kontoLoeschen() {
-    var eingabe = prompt("Das löscht dein Konto mit Abrechnung, Belegen, Notizen und Push-Abos – endgültig. Zum Bestätigen LÖSCHEN eingeben:");
+    var eingabe = prompt("Das löscht dein Konto mit Abrechnung, Belegen, Notizen und Push-Abos, endgültig. Zum Bestätigen LÖSCHEN eingeben:");
     if (eingabe !== "LÖSCHEN") return;
     sb.rpc("konto_loeschen").then(function (r) {
       if (r.error) { meldung("Löschen fehlgeschlagen: " + fehlerText(r.error), "warn"); return; }
@@ -4524,7 +4547,7 @@ window.Mitglieder = (function () {
         var zeile = h("div", { class: "termin-antwort" });
         function setze(antwort) {
           sb.from("termin_antworten").upsert({ ankuendigung_id: a.id, user_id: session.user.id, slug: profil.slug, name: profil.name || profil.slug, antwort: antwort, geaendert: new Date().toISOString() }, { onConflict: "ankuendigung_id,user_id" })
-            .then(function (r3) { if (r3.error) { meldung(fehlerText(r3.error) + (/termin_antworten/.test(r3.error.message || "") ? " – schema.sql (v13) ausführen." : ""), "warn"); return; } kurzMeldung(antwort === "ja" ? "Zugesagt ✓" : "Abgesagt.", "gut"); zeigeInfo(); });
+            .then(function (r3) { if (r3.error) { meldung(fehlerText(r3.error) + (/termin_antworten/.test(r3.error.message || "") ? ", schema.sql (v13) ausführen." : ""), "warn"); return; } kurzMeldung(antwort === "ja" ? "Zugesagt ✓" : "Abgesagt.", "gut"); zeigeInfo(); });
         }
         zeile.appendChild(h("button", { type: "button", class: "anfrage" + (meine && meine.antwort === "ja" ? " aktiv" : ""), text: "Ich komme", onclick: function () { setze("ja"); } }));
         zeile.appendChild(h("button", { type: "button", class: "anfrage" + (meine && meine.antwort === "nein" ? " aktiv" : ""), text: "Komme nicht", onclick: function () { setze("nein"); } }));
@@ -4568,7 +4591,7 @@ window.Mitglieder = (function () {
 
   function ankuendigungFormular() {
     var titel = h("input", { type: "text", placeholder: "Überschrift", maxlength: "120" });
-    var text = h("textarea", { rows: "4", placeholder: "Text – Lehrgang, Regeltest, Sitzung, Hinweise …", maxlength: "4000" });
+    var text = h("textarea", { rows: "4", placeholder: "Text: Lehrgang, Regeltest, Sitzung, Hinweise …", maxlength: "4000" });
     var bis = h("input", { type: "date" });
     var termin = h("input", { type: "date" });
     var wichtig = h("input", { type: "checkbox" });
@@ -4591,8 +4614,8 @@ window.Mitglieder = (function () {
                                           wichtig: wichtig.checked, push: push.checked, bis: bis.value || null, termin: termin.value || null }, an ? { an_slugs: an } : {}))
         .then(function (r) {
           knopf.disabled = false;
-          if (r.error) { meldung(fehlerText(r.error) + (/an_slugs/.test(r.error.message || "") ? " – schema.sql (v17) ausführen." : ""), "warn"); return; }
-          kurzMeldung("Veröffentlicht ✓" + (push.checked ? " – Push folgt beim nächsten Lauf." : ""), "gut"); zeigeInfo();
+          if (r.error) { meldung(fehlerText(r.error) + (/an_slugs/.test(r.error.message || "") ? ", schema.sql (v17) ausführen." : ""), "warn"); return; }
+          kurzMeldung("Veröffentlicht ✓" + (push.checked ? ", Push folgt beim nächsten Lauf." : ""), "gut"); zeigeInfo();
         });
     } });
     return h("details", { class: "karte", style: "padding:0 14px; margin-bottom:12px" }, [
@@ -4627,13 +4650,13 @@ window.Mitglieder = (function () {
       "\n\nSumme Vergütung: " + euro(summe) + "\nKilometer (einfach): " + Math.round(km) + " km · Fahrtkosten: " + euro(fahrt) +
       "\n\nViele Grüße\n" + (profil.name ? profil.name.split(",").reverse().join(" ").trim() : "");
     var an = profil.obmann_email || "";
-    var mailto = "mailto:" + encodeURIComponent(an) + "?subject=" + encodeURIComponent("Abrechnung " + monat + " – " + (profil.name || "")) + "&body=" + encodeURIComponent(text);
+    var mailto = "mailto:" + encodeURIComponent(an) + "?subject=" + encodeURIComponent("Abrechnung " + monat + ", " + (profil.name || "")) + "&body=" + encodeURIComponent(text);
     if (mailto.length > 1800 && navigator.share) {
       navigator.share({ title: "Abrechnung " + monat, text: text }).catch(function () {});
     } else {
       location.href = mailto;
     }
-    if (!an) kurzMeldung("Empfänger fehlt – Obmann-Adresse unter Konto → Einstellungen eintragen, dann steht sie gleich drin.", "");
+    if (!an) kurzMeldung("Empfänger fehlt. Trag die Obmann-Adresse unter Konto → Einstellungen ein, dann steht sie gleich drin.", "");
   }
 
   // ---- Fahrtenbuch (Druckansicht fuer das Finanzamt)
@@ -4705,7 +4728,7 @@ window.Mitglieder = (function () {
       var liste = cache.hallen[halle] || [];
       var box = h("div", { class: "karte", style: "padding:12px 14px; margin-bottom:12px" });
       box.appendChild(h("h4", { style: "margin:0 0 6px; font-size:.95rem", text: "Hallen-Hinweise (" + liste.length + ")" }));
-      if (!liste.length) box.appendChild(h("p", { class: "meta", text: "Noch nichts eingetragen – Parken, Kabineneingang, Schlüssel, Kantine." }));
+      if (!liste.length) box.appendChild(h("p", { class: "meta", text: "Noch nichts eingetragen. Parken, Kabineneingang, Schlüssel, Kantine." }));
       liste.forEach(function (n) {
         box.appendChild(h("div", { class: "kandidat" }, [h("div", { text: n.text }), h("div", { class: "meta", text: n.name + " · " + new Date(n.angelegt).toLocaleDateString("de-DE") })]));
       });
@@ -4728,7 +4751,7 @@ window.Mitglieder = (function () {
     if (!session || !profil || !profil.admin) return Promise.resolve(false);
     var lauf = obj ? sb.from("spiel_korrekturen").upsert(Object.assign({ kennung: kennung, von: profil.name || profil.slug, geaendert: new Date().toISOString() }, obj), { onConflict: "kennung" })
                    : sb.from("spiel_korrekturen").delete().eq("kennung", kennung);
-    return lauf.then(function (r) { if (r.error) { meldung(fehlerText(r.error) + (/spiel_korrekturen/.test(r.error.message || "") ? " – schema.sql (v12) ausführen." : ""), "warn"); return false; } return true; })
+    return lauf.then(function (r) { if (r.error) { meldung(fehlerText(r.error) + (/spiel_korrekturen/.test(r.error.message || "") ? ", schema.sql (v12) ausführen." : ""), "warn"); return false; } return true; })
       .catch(function (e) { meldung(fehlerText(e), "warn"); return false; });
   }
   function kontaktVon(slug) {
@@ -4771,7 +4794,7 @@ window.Mitglieder = (function () {
     var kennung = kennungVon(spiel);
     var lauf = art ? sb.from("mitfahrten").upsert({ user_id: session.user.id, slug: profil.slug, name: profil.name || profil.slug, kennung: kennung, beginn: spiel.beginn, text: text || (art === "suche" ? "Suche Mitfahrt" : "Biete Mitfahrt"), art: art }, { onConflict: "user_id,kennung" })
                    : sb.from("mitfahrten").delete().eq("user_id", session.user.id).eq("kennung", kennung);
-    return lauf.then(function (r) { if (r.error) { meldung(fehlerText(r.error) + (/art/.test(r.error.message || "") ? " – schema.sql (v14) ausführen." : ""), "warn"); return false; } delete cache.geladen["k|" + kennung]; return true; });
+    return lauf.then(function (r) { if (r.error) { meldung(fehlerText(r.error) + (/art/.test(r.error.message || "") ? ", schema.sql (v14) ausführen." : ""), "warn"); return false; } delete cache.geladen["k|" + kennung]; return true; });
   }
   function termine() {
     return bereit().then(function (st) {

@@ -8,7 +8,7 @@
   // Wird einmal je Fassung gezeigt, damit die Kollegen neue Funktionen finden.
   var NEUIGKEITEN = { version: "2026-09-19", punkte: [
     "Neues Logo und Design in Schwarz-Weiß-Rot, Schalter statt Häkchen, Wischen auf Spielkarten",
-    "Abrechnung: private Aufstellung fürs Finanzamt – Steuerjahre, Jahresblatt, Verpflegung, km hin und zurück, eigene Spiele",
+    "Abrechnung: private Aufstellung fürs Finanzamt, mit Steuerjahren, Jahresblatt, Verpflegung, km hin und zurück und eigenen Spielen",
     "Archiv aller Saisons mit Filtern, Änderungen mit Vorher/Nachher, Zusammen fahren mit „auf dem Weg“",
     "Start: Schnellzugriff, „Alles eingerichtet?“, Termin-Karte; Einstellungen mit Konto und Bereichen",
     "Anleitung unter Mehr → Anleitung, Offline-Abrechnung mit Nachreichen"
@@ -266,7 +266,7 @@
   }
   // Tipp auf die Stand-Anzeige holt frische Daten
   el("stand").addEventListener("click", function () {
-    if (!navigator.onLine) { toast("Offline – es gibt gerade nichts Neues zu holen.", "warn"); return; }
+    if (!navigator.onLine) { toast("Offline, es gibt gerade nichts Neues zu holen.", "warn"); return; }
     el("stand").classList.add("laedt");
     neuLaden().then(function () { el("stand").classList.remove("laedt"); toast("Aktualisiert.", "gut"); })
       .catch(function () { el("stand").classList.remove("laedt"); toast("Aktualisieren hat nicht geklappt.", "warn"); });
@@ -303,7 +303,7 @@
     var k = el("adminmodus"); if (!k) return;
     var an = adminModusAn();
     k.classList.toggle("aktiv", an);
-    k.title = an ? "Admin-Modus an – antippen zum Ausschalten" : "Admin-Modus aus – antippen zum Einschalten";
+    k.title = an ? "Admin-Modus an, antippen schaltet ihn aus" : "Admin-Modus aus, antippen schaltet ihn ein";
     k.setAttribute("aria-pressed", an ? "true" : "false");
     document.documentElement.classList.toggle("admin-aus", !an);
   }
@@ -322,7 +322,7 @@
     var neu = !adminModusAn();
     schreiben("adminaus", neu ? null : "1");
     adminKnopfStand();
-    toast(neu ? "Admin-Modus an – Betreiber-Funktionen sichtbar." : "Admin-Modus aus – App wie für alle anderen.", "gut");
+    toast(neu ? "Admin-Modus an, die Betreiber-Funktionen sind sichtbar." : "Admin-Modus aus, die App sieht aus wie für alle anderen.", "gut");
     zaehlerHolen(); ausHash();
   });
   document.addEventListener("mg-sitzung", function () { adminKnopfZeigen(); tabDritterAnwenden(); if (daten) ausHash(); });
@@ -445,7 +445,7 @@
         + ". Wann dein Handy zuletzt abgerufen hat, zeigt nur das Handy: Einstellungen → Apps → Kalender → Accounts → Abo (Aktualisieren: stündlich).";
       ziel.textContent = feedGeprueft[p.slug];
       feedKnopf(p);
-    }).catch(function () { ziel.textContent = "Kalender-Link gerade nicht erreichbar – ohne Netz normal, sonst bitte später noch einmal."; feedKnopf(p); });
+    }).catch(function () { ziel.textContent = "Kalender-Link gerade nicht erreichbar. Ohne Netz ist das normal, sonst bitte später noch einmal."; feedKnopf(p); });
   }
   function feedKnopf(p) {
     var ziel = el("feed-pruefung");
@@ -504,9 +504,9 @@
     var s = el("stand");
     el("offline").classList.toggle("versteckt", !!navigator.onLine);
     if (!navigator.onLine) {
-      s.className = "stand alt"; s.textContent = "Offline – gespeicherter Stand" + (letzterStand ? " von " + letzterStand : "");
+      s.className = "stand alt"; s.textContent = "Offline, gespeicherter Stand" + (letzterStand ? " von " + letzterStand : "");
       var q = 0; try { q = Object.keys(JSON.parse(localStorage.getItem("mg_queue") || "{}")).length; } catch (e) {}
-      el("offline-text").textContent = "Offline – Stand von " + (letzterStand || "?") + ". Geht: Spielplan, Spielseiten, Kalender, Abrechnung (gespeicherter Stand). Braucht Netz: Push, Wetter, Tausch, Karte." + (q ? " " + q + (q === 1 ? " Änderung wartet" : " Änderungen warten") + " aufs Nachreichen." : "");
+      el("offline-text").textContent = "Offline, Stand von " + (letzterStand || "?") + ". Geht: Spielplan, Spielseiten, Kalender, Abrechnung (gespeicherter Stand). Braucht Netz: Push, Wetter, Tausch, Karte." + (q ? " " + q + (q === 1 ? " Änderung wartet" : " Änderungen warten") + " aufs Nachreichen." : "");
     }
     else if (daten) standAnzeigen(daten, letzterLauf);
   }
@@ -599,7 +599,7 @@
 
   function spielText(s) {
     var d = new Date(s.beginn);
-    return datumKurz(d) + " " + uhr(d) + " Uhr – " + (s.liga ? s.liga + ": " : "") + s.paarung +
+    return datumKurz(d) + " " + uhr(d) + " Uhr, " + (s.liga ? s.liga + ": " : "") + s.paarung +
       "\nTreffpunkt " + uhr(new Date(s.treffpunkt)) + " Uhr" + (s.halle ? ", " + s.halle : "") +
       (s.ort ? "\n" + s.ort + "\nRoute: " + kartenLink(s.ort) : "");
   }
@@ -743,7 +743,7 @@
       var n = p.spiele.filter(function (s) { return !s.vergangen; }).length;
       var anzahl = document.createElement("span");
       anzahl.className = "anzahl";
-      anzahl.textContent = n === 0 ? "–" : n + (n === 1 ? " Spiel" : " Spiele");
+      anzahl.textContent = n === 0 ? "0" : n + (n === 1 ? " Spiel" : " Spiele");
       b.appendChild(name); b.appendChild(anzahl);
       b.addEventListener("click", function () { if (suchModus) location.hash = p.slug; else profilSetzen(p); });
       li.appendChild(b);
@@ -825,7 +825,7 @@
     badgeSetzen(neu.length);
     if (stumm) return;
     var e = neu[0], d = new Date(e.beginn);
-    var zeile = datumKurz(d) + ", " + uhr(d) + " Uhr – " + e.paarung;
+    var zeile = datumKurz(d) + ", " + uhr(d) + " Uhr, " + e.paarung;
     melden(neu.length === 1 ? "Neue Einteilung" : neu.length + " neue Einteilungen",
            neu.length === 1 ? zeile : zeile + " und " + (neu.length - 1) + " weitere");
   }
@@ -869,7 +869,7 @@
     wo.appendChild(hallenLink(s.halle));
     if (s.system >= 3) wo.appendChild(document.createTextNode(" · " + s.system + "er-System"));
     d.appendChild(mitIkone("i-pin", wo));
-    if (!s.ort) { var w = document.createElement("div"); w.className = "achtung"; w.textContent = "Halle nicht automatisch erkannt – bitte selbst prüfen."; d.appendChild(w); }
+    if (!s.ort) { var w = document.createElement("div"); w.className = "achtung"; w.textContent = "Halle nicht automatisch erkannt, bitte selbst prüfen."; d.appendChild(w); }
 
     if (s.gespann && s.gespann.length) {
       var g = document.createElement("div"); g.className = "chips" + (fuer ? "" : " klein");
@@ -914,9 +914,9 @@
       var i = h.time.indexOf(stunde); if (i < 0) return null;
       var temp = h.temperature_2m[i], regen = h.precipitation[i] || 0, schnee = h.snowfall[i] || 0, code = h.weather_code[i];
       var text = Math.round(temp) + " °C, " + (WETTER_CODES[code] || "wechselhaft"), warnt = false;
-      if (schnee > 0) { text += " – Schnee, mehr Zeit einplanen"; warnt = true; }
-      else if (temp <= 2 && regen > 0) { text += " – Glättegefahr"; warnt = true; }
-      else if ([56, 57, 66, 67].indexOf(code) >= 0) { text += " – gefrierender Regen"; warnt = true; }
+      if (schnee > 0) { text += ", Schnee, mehr Zeit einplanen"; warnt = true; }
+      else if (temp <= 2 && regen > 0) { text += ", Glättegefahr"; warnt = true; }
+      else if ([56, 57, 66, 67].indexOf(code) >= 0) { text += ", gefrierender Regen"; warnt = true; }
       return { text: text, warnt: warnt };
     });
   }
@@ -1073,7 +1073,7 @@
             .then(function (an) {
               var text = "Hallo,\n\nes geht um mein Spiel:\n" + spielText(s) + "\n\n[Grund / Frage hier eintragen]\n\nViele Grüße\n" + (profil.name ? profil.name.split(",").reverse().join(" ").trim() : "");
               location.href = "mailto:" + encodeURIComponent(an || "") + "?subject=" + encodeURIComponent("Spiel " + datumKurz(d) + " " + s.paarung) + "&body=" + encodeURIComponent(text);
-              if (!an) toast("Obmann-Adresse fehlt – unter Konto → Einstellungen eintragen, dann steht sie gleich drin.", "");
+              if (!an) toast("Obmann-Adresse fehlt. Trag sie unter Konto → Einstellungen ein, dann steht sie gleich drin.", "");
             }).catch(function () {});
         });
         mailZeile.appendChild(mail); ab.appendChild(mailZeile);
@@ -1123,7 +1123,7 @@
     var form = document.createElement("div"); form.className = "mg-form";
     function feld(label, eingabe) { var l = document.createElement("label"); l.textContent = label; form.appendChild(l); form.appendChild(eingabe); return eingabe; }
     var halle = document.createElement("select"); halle.className = "mg-select";
-    var o0 = document.createElement("option"); o0.value = ""; o0.textContent = "– wie erkannt (" + ((s._orig && s._orig.halle) || s.halle || "unbekannt") + ") –"; halle.appendChild(o0);
+    var o0 = document.createElement("option"); o0.value = ""; o0.textContent = "wie erkannt (" + ((s._orig && s._orig.halle) || s.halle || "unbekannt") + ")"; halle.appendChild(o0);
     Object.keys(daten.adressen || {}).sort(function (a, b) { return a.localeCompare(b, "de"); }).forEach(function (n) { var o = document.createElement("option"); o.value = n; o.textContent = n; if (k.halle === n) o.selected = true; halle.appendChild(o); });
     feld("Halle", halle);
     var beginn = document.createElement("input"); beginn.type = "datetime-local"; beginn.value = lokalInput(k.beginn); feld("Anstoß (leer = " + uhr(new Date((s._orig && s._orig.beginn) || s.beginn)) + " Uhr)", beginn);
@@ -1140,7 +1140,7 @@
       speichern.disabled = true;
       window.Mitglieder.korrekturSpeichern(kennungVon(s), leer ? null : obj).then(function (ok) {
         speichern.disabled = false; if (!ok) return;
-        toast(leer ? "Korrektur entfernt." : "Korrektur gespeichert – alle sehen sie sofort.", "gut");
+        toast(leer ? "Korrektur entfernt." : "Korrektur gespeichert, alle sehen sie sofort.", "gut");
         korrekturenLaden(false).then(function () { zeigeSpiel(kennungVon(s)); });
       });
     });
@@ -1377,7 +1377,7 @@
         var txt;
         if (rest > 0) txt = "<b>" + (rest >= 60 ? Math.floor(rest / 60) + " Std. " + (rest % 60) + " Min." : rest + " Min.") + "</b> bis zur " + (abfahrtZeit ? "Abfahrt" : "Ankunft") + "<small>" + was + " " + uhr(ziel) + " Uhr · Spielbeginn " + uhr(d) + " Uhr</small>";
         else if (new Date(s.beginn) > Date.now()) txt = "<b>" + (abfahrtZeit ? "Jetzt losfahren" : "Jetzt hin") + "</b><small>Spielbeginn " + uhr(d) + " Uhr</small>";
-        else txt = "<b>Spiel läuft</b><small>seit " + uhr(d) + " Uhr – gutes Spiel!</small>";
+        else txt = "<b>Spiel läuft</b><small>seit " + uhr(d) + " Uhr, gutes Spiel!</small>";
         cdt.innerHTML = txt;
       }
       countdown(); h._timer = setInterval(countdown, 30000);
@@ -1530,7 +1530,7 @@
   }
   function anfragen(text) {
     if (navigator.share) navigator.share({ text: text }).catch(function () {});
-    else if (navigator.clipboard) navigator.clipboard.writeText(text).then(function () { alert("Anfrage kopiert – in WhatsApp o.ä. einfügen."); });
+    else if (navigator.clipboard) navigator.clipboard.writeText(text).then(function () { alert("Anfrage kopiert, jetzt in WhatsApp einfügen."); });
     else prompt("Anfrage:", text);
   }
   function kandidatZeile(k, spiel, ich, seinSpiel) {
@@ -1558,7 +1558,7 @@
       ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
         .then(function (st) {
           inhalt.innerHTML = "";
-          if (!st.eingerichtet) { inhalt.appendChild(leerZustand("Tauschoptionen gibt es im Mitgliederbereich – der ist noch nicht eingerichtet.")); return; }
+          if (!st.eingerichtet) { inhalt.appendChild(leerZustand("Tauschoptionen gibt es im Mitgliederbereich, der ist noch nicht eingerichtet.")); return; }
           if (!st.session) {
             var p1 = document.createElement("p"); p1.className = "meta";
             p1.appendChild(document.createTextNode("Tauschoptionen gibt es nur angemeldet. "));
@@ -1611,7 +1611,7 @@
       inhalt.appendChild(mehr2);
     }
     var fuss = document.createElement("p"); fuss.className = "meta";
-    fuss.textContent = "Vorschläge aus den Einteilungen der letzten 30 Tage und der kommenden Spiele, abzüglich Kollegen, die sich für den Tag abgemeldet haben. Urlaub und Lizenz kennt die Liste nicht – fragen musst du selbst.";
+    fuss.textContent = "Vorschläge aus den Einteilungen der letzten 30 Tage und der kommenden Spiele, abzüglich Kollegen, die sich für den Tag abgemeldet haben. Urlaub und Lizenz kennt die Liste nicht, fragen musst du selbst.";
     inhalt.appendChild(fuss);
   }
 
@@ -1643,7 +1643,7 @@
     var spiele = planGefiltert(true).filter(function (s) { var d = new Date(s.beginn); return d >= start && d < ende; });
     var kopf = document.createElement("div"); kopf.className = "wochenansicht-kopf";
     var z = document.createElement("button"); z.type = "button"; z.className = "rund"; z.textContent = "‹"; z.setAttribute("aria-label", "Vorwoche");
-    var t = document.createElement("b"); t.textContent = "KW " + kalenderwoche(start) + " · " + start.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }) + " – " + new Date(ende.getTime() - 86400000).toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" });
+    var t = document.createElement("b"); t.textContent = "KW " + kalenderwoche(start) + " · " + start.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }) + " bis " + new Date(ende.getTime() - 86400000).toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" });
     var v = document.createElement("button"); v.type = "button"; v.className = "rund"; v.textContent = "›"; v.setAttribute("aria-label", "Nächste Woche");
     z.addEventListener("click", function () { planWocheStart = new Date(start.getTime() - 7 * 86400000); zeigeWochenansicht(); });
     v.addEventListener("click", function () { planWocheStart = new Date(start.getTime() + 7 * 86400000); zeigeWochenansicht(); });
@@ -1658,7 +1658,7 @@
         var l = document.createElement("span"); l.textContent = wochentag[d.getDay()] + " " + d.getDate() + ".";
         var r = document.createElement("span"); r.textContent = liste.length ? liste.length + (liste.length === 1 ? " Spiel" : " Spiele") : "";
         tk.appendChild(l); tk.appendChild(r); box.appendChild(tk);
-        if (!liste.length) { var le = document.createElement("div"); le.className = "leerzeile"; le.textContent = "–"; box.appendChild(le); }
+        if (!liste.length) { var le = document.createElement("div"); le.className = "leerzeile"; le.textContent = "·"; box.appendChild(le); }
         liste.forEach(function (s) { box.appendChild(planZeile(s, new Date(s.beginn))); });
         raster.appendChild(box);
       })(i);
@@ -1997,7 +1997,7 @@
       ziel.appendChild(q);
     }
     var fuss = document.createElement("p"); fuss.className = "meta"; fuss.style.marginTop = "10px";
-    fuss.textContent = "Gezählt seit " + (s.erste || "?").split("-").reverse().join(".") + ". Das Archiv wächst mit jedem Lauf – esrw.de selbst zeigt nur wenige Tage.";
+    fuss.textContent = "Gezählt seit " + (s.erste || "?").split("-").reverse().join(".") + ". Das Archiv wächst mit jedem Lauf, esrw.de selbst zeigt nur wenige Tage.";
     ziel.appendChild(fuss);
     if (s.gesamt) {
       var rk = document.createElement("button"); rk.type = "button"; rk.className = "mg-neben rueckblick-knopf"; rk.style.width = "100%";
@@ -2033,7 +2033,7 @@
     kachel(80, 320, s.saison, "Spiele diese Saison");
     kachel(560, 320, s.gesamt, "Spiele im Archiv");
     kachel(80, 550, hsr, "als Hauptschiedsrichter");
-    kachel(560, 550, hsr + lsr ? Math.round(hsr / (hsr + lsr) * 100) + " %" : "–", "HSR-Anteil im 3er/4er");
+    kachel(560, 550, hsr + lsr ? Math.round(hsr / (hsr + lsr) * 100) + " %" : "?", "HSR-Anteil im 3er/4er");
     function zeile(y, titel, wert) {
       x.fillStyle = "rgba(255,255,255,.7)"; x.font = "600 28px " + schrift; x.fillText(titel, 80, y);
       x.fillStyle = "#fff"; x.font = "800 40px " + schrift; x.fillText(wert, 80, y + 50);
@@ -2051,7 +2051,7 @@
         var alt = knopf.parentNode.querySelector(".rueckblick-bild"); if (alt) alt.remove();
         var img = document.createElement("img"); img.className = "rueckblick-bild"; img.src = URL.createObjectURL(blob); img.alt = "Saison-Rückblick";
         knopf.parentNode.appendChild(img);
-        toast("Bild erzeugt – lange drücken zum Sichern.", "gut");
+        toast("Bild erzeugt, lange drücken zum Sichern.", "gut");
       }
     }, "image/png");
   }
@@ -2378,7 +2378,7 @@
       .then(function (ja) {
         if (!ja) return;
         var h3 = document.createElement("h3"); h3.className = "abschnitt"; h3.textContent = "Betreiber";
-        var sm = document.createElement("small"); sm.textContent = "Admin-Funktionen ein- oder ausblenden – die Rechte bleiben"; h3.appendChild(sm);
+        var sm = document.createElement("small"); sm.textContent = "Admin-Funktionen ein- oder ausblenden, die Rechte bleiben"; h3.appendChild(sm);
         box.appendChild(h3);
         var karte = document.createElement("div"); karte.className = "karte einstellungen-liste";
         var l = document.createElement("label"); var t = document.createElement("span");
@@ -2494,7 +2494,7 @@
     aktuell = null; ansicht("auswahl"); el("statistik").innerHTML = "";
     suchModus = wechsel === "suche";
     el("frage").textContent = suchModus ? "Suche" : wechsel ? "Profil wechseln" : "Wer bist du?";
-    el("frage-unter").textContent = suchModus ? "Kollegen, Hallen, Vereine, Spiele und Termine – tippen springt direkt hin." : wechsel ? "Der gewählte Name wird dein Profil auf diesem Gerät." : "Wähle deinen Namen – danach siehst du deine Spiele, kannst den Kalender abonnieren und Mitteilungen bekommen.";
+    el("frage-unter").textContent = suchModus ? "Kollegen, Hallen, Vereine, Spiele und Termine. Tippen springt direkt hin." : wechsel ? "Der gewählte Name wird dein Profil auf diesem Gerät." : "Wähle deinen Namen. Danach siehst du deine Spiele, kannst den Kalender abonnieren und Mitteilungen bekommen.";
     el("suche").placeholder = suchModus ? "Name, Halle, Verein, Spiel, Termin …" : "Namen suchen …";
     if (!suchModus) el("suche").value = "";
     zeigeListe(el("suche").value);
@@ -2630,7 +2630,7 @@
         hw.style.display = "flex"; hw.style.textDecoration = "none"; hw.style.color = "inherit";
         hw.appendChild(ikone("i-route"));
         var hwt = document.createElement("span");
-        hwt.innerHTML = "<b>Heimatadresse eintragen</b> – dann siehst du, wer auf deinem Weg zur Halle liegt ›";
+        hwt.innerHTML = "<b>Heimatadresse eintragen</b>, dann siehst du, wer auf deinem Weg zur Halle liegt ›";
         hw.appendChild(hwt); liste.appendChild(hw);
       }
       // Kurze Bilanz oben: wie viele Spiele, Angebote und Treffer auf dem Weg
@@ -2680,7 +2680,7 @@
         var form = document.createElement("div"); form.className = "mitfahr-form versteckt";
         function speichern(art, text) {
           window.Mitglieder.mitfahrtSetzen(s, art, text || undefined).then(function (ok) {
-            if (ok) { toast(art ? "Gespeichert – Kollegen sehen es hier und auf ihrer Spielkarte." : "Zurückgezogen.", "gut"); zeigeMitfahren(); }
+            if (ok) { toast(art ? "Gespeichert, Kollegen sehen es hier und auf ihrer Spielkarte." : "Zurückgezogen.", "gut"); zeigeMitfahren(); }
           });
         }
         [["biete", "Plätze anbieten", "z. B. ab Essen, 2 Plätze frei"], ["suche", "Mitfahrt suchen", "z. B. ab Bochum Hbf"]].forEach(function (o) {
@@ -2762,7 +2762,7 @@
     var liste = el("archiv-liste"); liste.innerHTML = ""; liste.appendChild(skelettKarte(120)); el("archiv-zahlen").innerHTML = "";
     el("archiv-alle").checked = alle; el("archiv-person").classList.toggle("versteckt", !alle);
     el("archiv-unter").textContent = alle ? "alle Spiele aller Kollegen" : slug ? "alle deine Spiele, alle Saisons" : "erst deinen Namen wählen";
-    if (!slug && !alle) { liste.innerHTML = ""; liste.appendChild(leerZustand("Wähle zuerst deinen Namen – dann stehen hier alle deine Spiele.", { label: "Namen wählen", fn: function () { zeigeAuswahl(false); location.hash = ""; } })); return; }
+    if (!slug && !alle) { liste.innerHTML = ""; liste.appendChild(leerZustand("Wähle zuerst deinen Namen, dann stehen hier alle deine Spiele.", { label: "Namen wählen", fn: function () { zeigeAuswahl(false); location.hash = ""; } })); return; }
     var lauf = archivStand.lauf = {};
     var karte = {};
     function merge(e) {
@@ -2994,7 +2994,7 @@
           var teile = []; if (k.abgesagt) teile.push("abgesagt"); if (k.halle) teile.push("Halle: " + k.halle); if (k.beginn) teile.push("Anstoß " + uhr(new Date(k.beginn)) + " Uhr"); if (k.treffpunkt) teile.push("Treffpunkt " + uhr(new Date(k.treffpunkt)) + " Uhr"); if (k.hinweis) teile.push(k.hinweis);
           var d = s ? new Date(s.beginn) : (k.beginn ? new Date(k.beginn) : null);
           eintraege.push({ zeit: k.geaendert, art: k.abgesagt ? "abgesagt" : "korrektur",
-            titel: (s ? datumKurz(d) + " " + uhr(d) + " · " + (s.liga ? s.liga + ": " : "") + s.paarung : k.kennung.split("|")[1] || k.kennung) + " – " + teile.join(", "),
+            titel: (s ? datumKurz(d) + " " + uhr(d) + " · " + (s.liga ? s.liga + ": " : "") + s.paarung : k.kennung.split("|")[1] || k.kennung) + ": " + teile.join(", "),
             wer: "Betreiber" + (k.von ? " (" + k.von + ")" : ""), href: s ? "#spiel/" + encodeURIComponent(kennungVon(s)) : null,
             spiel: d ? d.getTime() : 0 });
         });
@@ -3201,20 +3201,20 @@
   // ---------------------------------------------------------- Anleitung
   var TOUR = {
     start: [
-      ["i-home", "Willkommen bei den Einteilungen", "Diese App zeigt dir deine Schiedsrichter-Einteilungen von esrw.de – immer aktuell, mit Halle, Treffpunkt, Route und Gespann. Fünf kurze Schritte, dann bist du startklar."],
-      ["i-users", "1 · Deinen Namen wählen", "Tippe unten in der Liste auf deinen Namen. Das ist dein Profil auf diesem Gerät – „Start“ zeigt dann deine Spiele.\nKollegen ansehen geht jederzeit über die Lupe oben."],
+      ["i-home", "Willkommen bei den Einteilungen", "Diese App zeigt dir deine Schiedsrichter-Einteilungen von esrw.de, immer aktuell, mit Halle, Treffpunkt, Route und Gespann. Fünf kurze Schritte, dann bist du startklar."],
+      ["i-users", "1 · Deinen Namen wählen", "Tippe unten in der Liste auf deinen Namen. Das ist dein Profil auf diesem Gerät, „Start“ zeigt dann deine Spiele.\nKollegen ansehen geht jederzeit über die Lupe oben."],
       ["i-cal", "2 · Kalender abonnieren", "Auf „Start“ findest du die Kalender-Karte: „Im Kalender abonnieren“ legt ein Abo im iPhone-Kalender an. Neue oder geänderte Spiele kommen von allein aufs Handy, mit Wecker zum Treffpunkt.", "#", "Zur Startseite"],
       ["i-bell", "3 · Als App und Push", "Safari: Teilen → „Zum Home-Bildschirm“. Danach unter Einstellungen „Push einschalten“: dann meldet sich die App bei neuen und geänderten Einteilungen, am Spieltag und zur Abfahrt.", "#einstellungen", "Zu den Einstellungen"],
       ["i-key", "4 · Konto (freiwillig)", "Mit Konto gibt es Abrechnung (km und Vergütung automatisch), Notizen, Checkliste, Ankündigungen und Push auf allen Geräten. Der Betreiber schaltet dich frei.", "#mitglieder", "Konto anlegen"],
       ["i-mehr", "5 · Wo ist was", "Start: nächstes Spiel und deine Spiele · Spielplan: alle Spiele, Filter, Woche/Monat · Abrechnung · Mehr: Info, Statistik, Notizen, Einstellungen.\nDiese Anleitung findest du jederzeit unter Mehr → Anleitung."]
     ],
     konto: [
-      ["i-check", "Konto angelegt ✓", "Abrechnung, Notizen, Checkliste und Push gehen sofort. Tauschbörse, Verfügbarkeit, Hallen-Hinweise und Kontakte schaltet der Betreiber nach der Freischaltung frei – du bekommst das hier zu sehen."],
+      ["i-check", "Konto angelegt ✓", "Abrechnung, Notizen, Checkliste und Push gehen sofort. Tauschbörse, Verfügbarkeit, Hallen-Hinweise und Kontakte schaltet der Betreiber nach der Freischaltung frei. Du bekommst das hier zu sehen."],
       ["i-bell", "Push einschalten", "Unter Einstellungen → Push: Änderungen an deinen Spielen, Spieltag-Erinnerung mit Wetter, Abfahrt, Termine, Wochenvorschau. Die App muss dafür auf dem Home-Bildschirm liegen.", "#einstellungen", "Push einschalten"],
-      ["i-euro", "Abrechnung", "Vergangene Spiele bekommen km und Vergütung von selbst. Am Jahresende gibt es unter „Steuerjahre“ das Jahresblatt und die CSV fürs Finanzamt – gemeldet werden muss nichts. Belege, Fahrtenbuch und Werkzeuge in der Leiste.\nHeimatadresse dafür unter Einstellungen → Profil eintragen.", "#mitglieder/abrechnung", "Zur Abrechnung"],
+      ["i-euro", "Abrechnung", "Vergangene Spiele bekommen km und Vergütung von selbst. Am Jahresende gibt es unter „Steuerjahre“ das Jahresblatt und die CSV fürs Finanzamt. Melden musst du nichts. Belege, Fahrtenbuch und Werkzeuge in der Leiste.\nHeimatadresse dafür unter Einstellungen → Profil eintragen.", "#mitglieder/abrechnung", "Zur Abrechnung"],
       ["i-route", "Die Spielseite", "Ein Tipp auf ein Spiel: Route, Teilen, „In Kalender“, Wetter, Abfahrtszeit, Checkliste, Gespann-Notizen (mit Push an die Kollegen), Fahrgemeinschaft und deine private Notiz."],
-      ["i-swap", "Tausch und Verfügbarkeit", "Wenn freigeschaltet: Gesuche einstellen, Kollegen finden, die frei sind, Angebote annehmen. Unter Verfügbarkeit trägst du Sperrtage ein – der Radar auf Start zeigt passende offene Spiele."],
-      ["i-sun", "Alles anpassbar", "Einstellungen → Startseite: welche Bausteine auf „Start“ stehen. Bereiche, die du nicht brauchst, blendest du aus. Schrift, Farbe, Karten-App – alles wandert mit dem Konto auf jedes Gerät.", "#einstellungen", "Einstellungen öffnen"],
+      ["i-swap", "Tausch und Verfügbarkeit", "Wenn freigeschaltet: Gesuche einstellen, Kollegen finden, die frei sind, Angebote annehmen. Unter Verfügbarkeit trägst du Sperrtage ein. Der Radar auf Start zeigt dann passende offene Spiele."],
+      ["i-sun", "Alles anpassbar", "Einstellungen → Startseite: welche Bausteine auf „Start“ stehen. Bereiche, die du nicht brauchst, blendest du aus. Schrift, Farbe und Karten-App wandern mit dem Konto auf jedes Gerät.", "#einstellungen", "Einstellungen öffnen"],
       ["i-bell", "Info und Termine", "Ankündigungen vom Betreiber unter Mehr → Info. Termine (Lehrgang, Sitzung) kannst du zu- oder absagen; am Vortag kommt eine Erinnerung.", "#mitglieder/info", "Zu Info"]
     ]
   };
@@ -3266,7 +3266,7 @@
     var t = document.createElement("span");
     var b = document.createElement("b"); b.textContent = "Dein Konto steht.";
     t.appendChild(b);
-    t.appendChild(document.createTextNode(" Jetzt schaltet der Betreiber dich frei – danach siehst du Einteilungen, Kollegen und Tausch. "
+    t.appendChild(document.createTextNode(" Jetzt schaltet der Betreiber dich frei. Danach siehst du Einteilungen, Kollegen und Tausch. "
       + "Abrechnung und Notizen kannst du schon benutzen."));
     d.appendChild(t);
     ziel.insertBefore(d, ziel.firstChild);
@@ -3284,7 +3284,7 @@
   var GESPERRT_NAMEN = { archiv: ["Archiv", "alle deine Spiele über alle Saisons, mit Filtern und Export"],
     statistik: ["Statistik", "Saison, Ligen, Hallen, Partner und dein Saisonziel"],
     aenderungen: ["Änderungen", "was sich zuletzt getan hat, mit Vorher und Nachher"],
-    mitfahren: ["Zusammen fahren", "wer wohin fährt – Mitfahrt anbieten oder suchen"],
+    mitfahren: ["Zusammen fahren", "wer wohin fährt, Mitfahrt anbieten oder suchen"],
     karte: ["Hallenkarte", "alle Hallen auf der Karte"] };
   function zeigeSperre(slug) {
     ansicht("gesperrt"); aktuell = null; window.scrollTo(0, 0);
@@ -3340,7 +3340,7 @@
       funktion("statistik") ? ["#statistik", "i-users", "Statistik", "Saison, Ligen, Hallen, Partner, Saisonziel"] : null,
       ["#aenderungen", "i-list", "\u00c4nderungen", "Was sich in 14 Tagen getan hat \u2013 mit Vorher/Nachher"],
       funktion("notizen") ? ["#mitglieder/notizen", "i-note", "Notizen", "Private Spielnotizen"] : null,
-      ["#regeln", "i-note", "Regeln", "Strafenmatrix und Durchführungsbestimmungen – auch offline"],
+      ["#regeln", "i-note", "Regeln", "Strafenmatrix und Durchführungsbestimmungen, auch offline"],
       ["Gemeinsam"],
       funktion("gespann") ? ["#mitfahren", "i-route", "Zusammen fahren", "Wer f\u00e4hrt wohin \u2013 auf dem Weg, bieten, suchen"] : null,
       funktion("telefon") ? ["#mitglieder/kollegen", "i-users", "Kollegen", "Telefonliste \u2013 anrufen, WhatsApp, kopieren"] : null,
@@ -3648,7 +3648,7 @@
     var kb = el("konto-bereich"); kb.innerHTML = "";
     if (!sitzungVorhanden()) {
       var k = document.createElement("a"); k.href = "#mitglieder"; k.className = "hinweis"; k.style.display = "flex"; k.style.textDecoration = "none"; k.style.color = "inherit"; k.style.marginBottom = "12px";
-      k.appendChild(ikone("i-lock")); var t = document.createElement("span"); t.innerHTML = "<b>Konto</b> – anmelden oder anlegen für Abrechnung, Notizen und Push ›"; k.appendChild(t); kb.appendChild(k);
+      k.appendChild(ikone("i-lock")); var t = document.createElement("span"); t.innerHTML = "<b>Konto</b>: anmelden oder anlegen für Abrechnung, Notizen und Push ›"; k.appendChild(t); kb.appendChild(k);
       return;
     }
     ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) {
@@ -3750,7 +3750,7 @@
       var zeilen = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Einteilungen//Einzel//DE", "CALSCALE:GREGORIAN"];
       zeilen = zeilen.concat(icsEvent(s, sk)); zeilen.push("END:VCALENDAR");
       icsHerunterladen(zeilen, "spiel-" + s.beginn.slice(0, 10) + ".ics");
-      toast("Kalenderdatei erzeugt – öffnen und in den Kalender übernehmen.", "gut");
+      toast("Kalenderdatei erzeugt, öffnen und in den Kalender übernehmen.", "gut");
     });
   }
   function icsEvent(s, sk) {
@@ -3780,7 +3780,7 @@
       zeilen.push("END:VCALENDAR");
       icsHerunterladen(zeilen, "einteilungen-abfahrt.ics");
       knopf.disabled = false; knopf.textContent = "Kalenderdatei mit Abfahrtsalarm laden";
-      toast("Kalenderdatei erzeugt – beim Öffnen in einen eigenen Kalender importieren, sonst stehen die Spiele doppelt drin.", "gut");
+      toast("Kalenderdatei erzeugt. Beim Öffnen in einen eigenen Kalender importieren, sonst stehen die Spiele doppelt drin.", "gut");
     }).catch(function (e) { knopf.disabled = false; knopf.textContent = "Kalenderdatei mit Abfahrtsalarm laden"; toast("Nicht möglich: " + (e.message || e), "warn"); });
   }
 
@@ -3798,7 +3798,7 @@
     var zaehler = document.createElement("div"); zaehler.className = "meta";
     function aktualisieren() {
       var n = vorlage.filter(function (t) { return stand[t]; }).length;
-      fi.style.width = Math.round(n / vorlage.length * 100) + "%"; zaehler.textContent = n + " von " + vorlage.length + (n === vorlage.length ? " – alles gepackt ✓" : "");
+      fi.style.width = Math.round(n / vorlage.length * 100) + "%"; zaehler.textContent = n + " von " + vorlage.length + (n === vorlage.length ? ", alles gepackt ✓" : "");
       box.querySelector("h4").lastChild.textContent = "Spieltag-Checkliste " + n + "/" + vorlage.length;
     }
     wrap.appendChild(fort); wrap.appendChild(zaehler);
@@ -3814,7 +3814,7 @@
       var neu = prompt("Ein Punkt je Zeile:", vorlage.join("\n"));
       if (neu === null) return;
       var liste = neu.split("\n").map(function (x) { return x.trim(); }).filter(Boolean);
-      schreiben("check-vorlage", liste.length ? JSON.stringify(liste) : null); toast("Vorlage gespeichert – gilt für alle Spiele.", "gut");
+      schreiben("check-vorlage", liste.length ? JSON.stringify(liste) : null); toast("Vorlage gespeichert, gilt für alle Spiele.", "gut");
       box.innerHTML = ""; var hh = document.createElement("h4"); hh.appendChild(ikone("i-check")); hh.appendChild(document.createTextNode("Spieltag-Checkliste")); box.appendChild(hh); checkliste(box, s);
     });
     wrap.appendChild(bearb); box.appendChild(wrap); aktualisieren();
@@ -3834,11 +3834,11 @@
       kopf.appendChild(b); kopf.appendChild(q); box.appendChild(kopf);
       var rahmen = document.createElement("div"); rahmen.className = "balkenrahmen"; var i = document.createElement("i"); i.style.width = Math.min(100, Math.round(s.saison / zielWert * 100)) + "%"; rahmen.appendChild(i); box.appendChild(rahmen);
       var rest = zielWert - s.saison;
-      var t = document.createElement("div"); t.className = "meta"; t.textContent = rest > 0 ? "Noch " + rest + (rest === 1 ? " Spiel" : " Spiele") + " bis zum Ziel." : "Ziel erreicht – stark!"; box.appendChild(t);
+      var t = document.createElement("div"); t.className = "meta"; t.textContent = rest > 0 ? "Noch " + rest + (rest === 1 ? " Spiel" : " Spiele") + " bis zum Ziel." : "Ziel erreicht, stark!"; box.appendChild(t);
       ziel.appendChild(box);
     } else if (meins) {
       var hint = document.createElement("p"); hint.className = "meta"; hint.style.margin = "0 0 10px";
-      var a = document.createElement("a"); a.href = "#einstellungen"; a.textContent = "Saisonziel setzen"; hint.appendChild(a); hint.appendChild(document.createTextNode(" – dann steht hier der Fortschritt."));
+      var a = document.createElement("a"); a.href = "#einstellungen"; a.textContent = "Saisonziel setzen"; hint.appendChild(a); hint.appendChild(document.createTextNode(", dann steht hier der Fortschritt."));
       ziel.appendChild(hint);
     }
   }
@@ -3849,7 +3849,7 @@
     ansicht("statseite"); aktuell = p;
     el("stat-name").textContent = p.name; el("stat-avatar").textContent = initialen(p.name); el("stat-avatar").style.background = farbeFuer(p.slug);
     zeigeStatistik(p); zeigeSaison(p);
-    if (!p.statistik) el("statistik").appendChild(leerZustand("Noch keine Statistik – das Archiv füllt sich mit jedem Lauf."));
+    if (!p.statistik) el("statistik").appendChild(leerZustand("Noch keine Statistik, das Archiv füllt sich mit jedem Lauf."));
     if (sprungZiel === null) window.scrollTo(0, 0);
   }
 
@@ -3876,7 +3876,7 @@
     b.textContent = drin ? "Lospinnen" : "Anpinnen";
     b.onclick = function () {
       var l = pinsLesen().filter(function (s) { return s !== p.slug; });
-      if (!drin) { if (l.length >= 3) { toast("Höchstens drei Pins – erst einen lösen.", "warn"); return; } l.unshift(p.slug); }
+      if (!drin) { if (l.length >= 3) { toast("Höchstens drei Pins, erst einen lösen.", "warn"); return; } l.unshift(p.slug); }
       schreiben("pins", JSON.stringify(l)); pinKnopf(p);
       toast(drin ? "Pin gelöst." : p.name + " ist auf Start angepinnt.", "gut");
     };
@@ -3948,8 +3948,8 @@
   // gewaehlten Namen stellen, damit niemand zweimal gefragt wird.
   var START_BAUSTEINE = [
     ["ruhig", "Nur nächstes Spiel", "ganz ruhige Startseite: Kopfkarte und deine Spiele, sonst nichts", false],
-    ["schnell", "Schnellzugriff", "eine Reihe Knöpfe unter der Kopfkarte – ohne das, was unten schon in der Leiste steht", false],
-    ["vollbild", "Am Spieltag groß", "ist heute ein Spiel, füllt die Kopfkarte den Bildschirm – der Rest kommt auf Tipp", false],
+    ["schnell", "Schnellzugriff", "eine Reihe Knöpfe unter der Kopfkarte, ohne das, was unten schon in der Leiste steht", false],
+    ["vollbild", "Am Spieltag groß", "ist heute ein Spiel, füllt die Kopfkarte den Bildschirm, der Rest kommt auf Tipp", false],
     ["einrichtung", "„Alles eingerichtet?“", "zeigt fehlende Schritte (Kalender, Push, Heimatadresse, Wohnort, Obmann) mit Direktlink", true],
     ["danach", "„Danach“ auf der Karte oben", "das übernächste Spiel in einer Zeile", false],
     ["wetter", "Wetter auf der Karte oben", "zum Treffpunkt, mit Glättehinweis", true, "wetter"],
@@ -3958,7 +3958,7 @@
     ["termine", "Nächste Termine", "Ankündigungen mit Datum", true, "info"],
     ["radar", "Vertretungs-Radar", "offene Spiele und Gesuche in der Nähe (Login)", false, "tausch"],
     ["pins", "Angepinnte Kollegen", "Avatare unter dem Profil", true],
-    ["kalender", "Kalender-Karte", "Abo, Link, Mitteilungen – zugeklappt, wenn abonniert", true],
+    ["kalender", "Kalender-Karte", "Abo, Link und Mitteilungen, zugeklappt wenn abonniert", true],
     ["vergangene", "Vergangene Spiele", "eingeklappt unter deinen Spielen", true]
   ];
   function startEinstellung(k) {
@@ -4309,7 +4309,7 @@
     box.classList.remove("versteckt");
     el("install-text").textContent = ios
       ? "In Safari unten auf Teilen tippen, dann „Zum Home-Bildschirm“. Dann gibt es auch Mitteilungen."
-      : "Als App auf den Startbildschirm legen – startet schneller, kann Mitteilungen.";
+      : "Als App auf den Startbildschirm legen, startet schneller und kann Mitteilungen.";
     var knopf = el("install-knopf");
     knopf.classList.toggle("versteckt", !installEreignis);
     knopf.onclick = function () { if (installEreignis) { installEreignis.prompt(); installEreignis = null; box.classList.add("versteckt"); } };
@@ -4430,7 +4430,7 @@
       s.appendChild(document.createTextNode("Stand " + relativ));
       var mehr = document.createElement("span"); mehr.className = "stand-mehr"; mehr.textContent = " · " + zahlen; s.appendChild(mehr);
       s.title = "Letzter Lauf: " + stand.toLocaleString("de-DE") + " · " + zahlen;
-      if (alter > 6) { s.className = "stand alt"; var w = document.createElement("span"); w.className = "stand-mehr"; w.textContent = " – lange nicht aktualisiert"; s.appendChild(w); }
+      if (alter > 6) { s.className = "stand alt"; var w = document.createElement("span"); w.className = "stand-mehr"; w.textContent = ", lange nicht aktualisiert"; s.appendChild(w); }
     } else s.textContent = zahlen;
   }
   function neuLaden() {
@@ -4503,7 +4503,7 @@
     var hatteController = !!navigator.serviceWorker.controller;
     navigator.serviceWorker.addEventListener("controllerchange", function () {
       // Neue Fassung ist da - beim naechsten Laden aktiv; kurz sagen, statt dass sich Dinge still aendern
-      if (hatteController) toast("Neue Fassung geladen – einmal neu öffnen, dann ist alles frisch.", "gut");
+      if (hatteController) toast("Neue Fassung geladen, einmal neu öffnen, dann ist alles frisch.", "gut");
       hatteController = true;
     });
     window.addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function () {}); });

@@ -320,6 +320,10 @@ packt daten.json, abrechnung.csv, notizen.txt und alle Belege im Browser
 zusammen; Kartenkacheln im Dunkelmodus abgedunkelt; „Am Spieltag groß“ macht
 die Kopfkarte am Spieltag bildschirmfüllend; Tipp auf die Stand-Pille lädt neu.
 
+**Sprache**: Die Texte kommen ohne Gedankenstriche aus, Saetze statt
+Einschuebe. Im Rechnungsblatt erinnert eine Zeile an vergangene Spiele
+ohne Rechnung.
+
 **Leiste unten frei belegbar**: Die drei mittleren Plätze wählt jeder
 selbst (Einstellungen → Leiste unten); „Start" und „Mehr" bleiben fest.
 In der Strafenmatrix zeigen Farben die Härte – grün für 2 bis rot für MS.

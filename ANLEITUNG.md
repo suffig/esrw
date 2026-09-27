@@ -1939,6 +1939,23 @@ ausdrücklich.
   was unten in der Leiste steht – egal wie du sie belegt hast. Und
   **Regeln** ist dort neu wählbar.
 
+### 10.6ap Sprache aufgeraeumt, Erinnerung an offene Rechnungen
+
+* **Alle Texte der App durchgegangen**, von der Anmeldung bis zum
+  Adminbereich: Die Gedankenstriche sind raus. Wo einer stand, steht
+  jetzt ein Komma, ein Doppelpunkt, eine Klammer oder ein Punkt und ein
+  neuer Satz. Rund 250 Stellen in Oberflaeche, App-Logik,
+  Mitgliederbereich und den Datendateien.
+  * Stehen geblieben ist der Strich zwischen Heim und Gast in einer
+    Paarung. So schreibt es esrw.de, und die App zerlegt die Paarung
+    daran wieder.
+  * Platzhalter wie „– bitte wählen –" heissen jetzt schlicht
+    „bitte wählen", leere Betragsfelder zeigen nichts statt eines
+    Strichs.
+* **Erinnerung an offene Rechnungen**: Im Rechnungsblatt steht oben,
+  wenn vergangene Spiele noch keine Rechnung haben, dazu das am
+  längsten offene Spiel und ein Knopf, der es übernimmt.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

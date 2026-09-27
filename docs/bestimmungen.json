@@ -1,5 +1,5 @@
 {
- "_hinweis": "Kurzfassung der fuer Schiedsrichter wichtigen Punkte aus den Durchfuehrungsbestimmungen des EHV NRW - in eigenen Worten, ohne Gewaehr. Verbindlich ist der Wortlaut der Dokumente; sie sind unten verlinkt.",
+ "_hinweis": "Kurzfassung der fuer Schiedsrichter wichtigen Punkte aus den Durchfuehrungsbestimmungen des EHV NRW - in eigenen Worten und ohne Gewaehr. Verbindlich ist der Wortlaut der Dokumente, sie sind unten verlinkt.",
  "stand": "Saison 2026/27",
  "quelle": "https://ehv-nrw.de/documents/list/",
  "bereiche": [
@@ -8,16 +8,16 @@
    "punkte": [
     { "text": "Anwesend spätestens 60 Minuten vor dem offiziellen Spielbeginn und bis mindestens 30 Minuten nach Spielende.", "quelle": "Anhang 5, Ziff. 1" },
     { "text": "Einteilung sofort prüfen, sobald sie per E-Mail oder über das Schiedsrichter-Portal kommt; auf Veröffentlichungen im Internet achten.", "quelle": "Anhang 5, Ziff. 7" },
-    { "text": "Trainer weisen sich vor dem Spiel mit der Originallizenz aus und unterschreiben den Spielbericht. Fehlt die Lizenz oder kommt niemand, schreiben die Schiedsrichter einen Zusatzbericht – dafür wird eine Bearbeitungsgebühr fällig.", "quelle": "Allgemein, 2.1.7" },
+    { "text": "Trainer weisen sich vor dem Spiel mit der Originallizenz aus und unterschreiben den Spielbericht. Fehlt die Lizenz oder kommt niemand, schreiben die Schiedsrichter einen Zusatzbericht. Dafür wird eine Bearbeitungsgebühr fällig.", "quelle": "Allgemein, 2.1.7" },
     { "text": "Zufahrt bis ans Stadion und ein ausgewiesener Parkplatz stehen Schiedsrichtern, Beobachtern und der Verbandsaufsicht zu.", "quelle": "Allgemein, 2.1.20" },
-    { "text": "Schutzausrüstung nach dem Regelbuch. Ein schnittfester Hals- und Nackenschutz ist für alle Schiedsrichter in allen EHV-Kategorien Pflicht – so gewählt, dass er den Nacken möglichst weit abdeckt, und unverändert getragen.", "quelle": "Anhang 5, Ziff. 4" }
+    { "text": "Schutzausrüstung nach dem Regelbuch. Ein schnittfester Hals- und Nackenschutz ist für alle Schiedsrichter in allen EHV-Kategorien Pflicht. Er soll den Nacken möglichst weit abdecken und unverändert getragen werden.", "quelle": "Anhang 5, Ziff. 4" }
    ]
   },
   {
    "titel": "Während des Spiels",
    "punkte": [
     { "text": "Für das eigene Warmlaufen dürfen die Schiedsrichter die neutrale Zone freihalten, wenn die Mannschaften ihnen nicht genug Eis lassen. Jede Abweichung von der regulären Warmlaufzeit gehört in den Spielbericht.", "quelle": "Allgemein, 2.1.14" },
-    { "text": "Eine Drittelpause lässt sich auf fünf Minuten verkürzen – nur mit Zustimmung beider Mannschaftsführer und der Schiedsrichter, vor Spielbeginn festgelegt und im Spielbericht vermerkt.", "quelle": "Allgemein, 2.1.15" },
+    { "text": "Eine Drittelpause lässt sich auf fünf Minuten verkürzen, aber nur mit Zustimmung beider Mannschaftsführer und der Schiedsrichter, vor Spielbeginn festgelegt und im Spielbericht vermerkt.", "quelle": "Allgemein, 2.1.15" },
     { "text": "Drei Minuten vor Ende der Drittelpause informiert der Hauptzeitnehmer Schiedsrichter und Mannschaften hörbar oder sichtbar.", "quelle": "Allgemein, 2.1.15" },
     { "text": "U7 bis U13: jede Form übermäßig harten Körperspiels ist untersagt, insbesondere Body-Check und Check gegen die Laufrichtung. Geahndet wird nach IIHF-Regel 101.1.", "quelle": "Anhang 4, 3.10" },
     { "text": "U15 bis U20: Zahnschutz ist während des Spiels Pflicht.", "quelle": "Anhang 4, 3.10" },
@@ -29,17 +29,17 @@
    "punkte": [
     { "text": "Den Spielbericht verschickt der Punktrichter über E_GREP, sobald die Schiedsrichter ihn freigegeben haben.", "quelle": "Anhang 5, Ziff. 5" },
     { "text": "Bei technischer Störung kennzeichnet der Hauptschiedsrichter alle Papierdokumente; der Punktrichter schickt sie unverzüglich vollständig an die Geschäftsstelle.", "quelle": "Anhang 5, Ziff. 5" },
-    { "text": "U7, U9 und U11: den Versand übernimmt der gastgebende Verein – an den zuständigen Ligenleiter und die Geschäftsstelle.", "quelle": "Anhang 5, Ziff. 5" }
+    { "text": "U7, U9 und U11: den Versand übernimmt der gastgebende Verein, an den zuständigen Ligenleiter und die Geschäftsstelle.", "quelle": "Anhang 5, Ziff. 5" }
    ]
   },
   {
    "titel": "Geld",
    "punkte": [
-    { "text": "Die Pauschalen stehen in Anhang 5 und sind in dieser App hinterlegt – die Abrechnung rechnet damit. Es sind Bruttobeträge inklusive Mehrwertsteuer; sie decken Ausrüstungszuschuss, Fahrtkosten und Sonstiges ab.", "quelle": "Anhang 5, Ziff. 2 und 3.1" },
+    { "text": "Die Pauschalen stehen in Anhang 5 und sind in dieser App hinterlegt, die Abrechnung rechnet damit. Es sind Bruttobeträge inklusive Mehrwertsteuer; sie decken Ausrüstungszuschuss, Fahrtkosten und Sonstiges ab.", "quelle": "Anhang 5, Ziff. 2 und 3.1" },
     { "text": "Plus 20 Prozent, wenn der offizielle Spielbeginn bis einschließlich 09:14 Uhr oder ab einschließlich 21:46 Uhr liegt.", "quelle": "Anhang 5, Ziff. 3" },
-    { "text": "Landesverbandsübergreifender Einsatz in der Regionalliga West oder der Frauen 2. Liga Nord: plus 50 Euro je Schiedsrichter, im 2-Mann-System plus 75 Euro. Nur auf Anforderung, und es fahren mindestens zwei als Gespann.", "quelle": "Anhang 5, Ziff. 3" },
+    { "text": "Landesverbandsübergreifender Einsatz in der Regionalliga West oder der Frauen 2. Liga Nord: plus 50 Euro je Schiedsrichter, im 2-Mann-System plus 75 Euro. Das gibt es nur auf Anforderung, und es fahren mindestens zwei als Gespann.", "quelle": "Anhang 5, Ziff. 3" },
     { "text": "Leitet einer allein, weil der zweite nicht erschienen ist, bekommt er den 1,5-fachen Satz.", "quelle": "Anhang 5, Ziff. 3.3" },
-    { "text": "Im 3-Mann-System nur zu zweit (HSR und LSR oder zwei LSR): es gilt automatisch die Pauschale des 2-Mann-Systems.", "quelle": "Anhang 5, Ziff. 3.2" },
+    { "text": "Im 3-Mann-System nur zu zweit (HSR und LSR oder zwei LSR): dann gilt automatisch die Pauschale des 2-Mann-Systems.", "quelle": "Anhang 5, Ziff. 3.2" },
     { "text": "Springt ein Ersatz ein, teilen die Schiedsrichter die Pauschalen anteilig unter sich auf. Für den Heimverein entstehen keine Mehrkosten.", "quelle": "Anhang 5, Ziff. 3.4" },
     { "text": "Fällt das Spiel aus und die Schiedsrichter sind schon vor Ort: 50 Prozent der Gesamtkosten, zu gleichen Teilen (Fahrtkostenerstattung).", "quelle": "Anhang 5, Ziff. 3.5" },
     { "text": "Freundschaftsspiele: die Pauschale richtet sich nach der Ligazugehörigkeit des gastgebenden Vereins.", "quelle": "Anhang 5, Ziff. 3.6" }
@@ -56,23 +56,23 @@
   }
  ],
  "dokumente": [
-  { "titel": "Anhang 5 – Schiedsrichter", "stand": "23.07.2024", "wichtig": true,
+  { "titel": "Anhang 5: Schiedsrichter", "stand": "23.07.2024", "wichtig": true,
     "url": "https://ehv-nrw.de/media/uploads/document/Durchfuehrungsbestimmungen/2024_2025_duf%C3%BC_anhang_5.pdf" },
   { "titel": "Durchführungsbestimmungen Allgemein", "stand": "23.06.2026", "wichtig": true,
     "url": "https://ehv-nrw.de/media/uploads/document/Durchfuehrungsbestimmungen/2026-2027_dufue_allgemein.pdf" },
-  { "titel": "Anhang 1 – Abgaben und Gebühren", "stand": "23.06.2026",
+  { "titel": "Anhang 1: Abgaben und Gebühren", "stand": "23.06.2026",
     "url": "https://ehv-nrw.de/media/uploads/document/Durchfuehrungsbestimmungen/2025-2026_dufu-anhang_1.pdf" },
-  { "titel": "Anhang 2 – Frauen", "stand": "20.08.2026",
+  { "titel": "Anhang 2: Frauen", "stand": "20.08.2026",
     "url": "https://ehv-nrw.de/media/uploads/document/Durchfuehrungsbestimmungen/2026-2027_dufu-anhang_2.pdf" },
-  { "titel": "Anhang 3 – Herren", "stand": "01.08.2026",
+  { "titel": "Anhang 3: Herren", "stand": "01.08.2026",
     "url": "https://ehv-nrw.de/media/uploads/document/Durchfuehrungsbestimmungen/2026-2027_dufu-anhang_3_r.1.pdf" },
-  { "titel": "Anhang 4 – Nachwuchs", "stand": "14.08.2026",
+  { "titel": "Anhang 4: Nachwuchs", "stand": "14.08.2026",
     "url": "https://ehv-nrw.de/media/uploads/document/Durchfuehrungsbestimmungen/2026-2027_dufue_anhang_4_nachwuchs.pdf" },
-  { "titel": "Anhang 7 – U11", "stand": "14.08.2026",
+  { "titel": "Anhang 7: U11", "stand": "14.08.2026",
     "url": "https://ehv-nrw.de/media/uploads/document/Durchfuehrungsbestimmungen/2026-2027_dufue_anhang_7_u11.pdf" },
-  { "titel": "Anhang 8 – U7 / U9", "stand": "14.08.2026",
+  { "titel": "Anhang 8: U7 und U9", "stand": "14.08.2026",
     "url": "https://ehv-nrw.de/media/uploads/document/Durchfuehrungsbestimmungen/2026-2027_dufue_anhang_8_u7-u9.pdf" },
-  { "titel": "Anhang 10 – U9 Kleinfeldspielformen", "stand": "09.09.2026",
+  { "titel": "Anhang 10: U9 Kleinfeldspielformen", "stand": "09.09.2026",
     "url": "https://ehv-nrw.de/media/uploads/document/Durchfuehrungsbestimmungen/2025_2026_duf%C3%BC_anhang_10b.pdf" },
   { "titel": "Streaming und Aufzeichnung", "stand": "21.08.2026",
     "url": "https://ehv-nrw.de/media/uploads/document/Durchfuehrungsbestimmungen/2026-2029_dufu-streaming_aufzeichnung.pdf" },
