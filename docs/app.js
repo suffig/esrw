@@ -4565,6 +4565,61 @@
       l.appendChild(t); l.appendChild(c); box.appendChild(l);
     });
   }
+  // Sicherung: alles, was nur hier liegt und nach einem verlorenen Konto
+  // oder einem neuen Handy sonst neu getippt werden muesste.
+  var SICHER_SCHLUESSEL = ["einfach", "karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche",
+    "pushwoche", "pushabrechnung", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4", "thema", "funktionen"];
+  function sicherungBauen() {
+    var app = {};
+    SICHER_SCHLUESSEL.forEach(function (k) { var w = lesen(k); if (w !== null && w !== undefined) app[k] = w; });
+    var aus = { art: "esrw-sicherung", fassung: 1, stand: new Date().toISOString(), app: app,
+                profil: profil ? { slug: profil.slug, name: profil.name } : null };
+    try { aus.rechnung = JSON.parse(localStorage.getItem("mg_rechnung") || "null"); } catch (e) {}
+    return aus;
+  }
+  function sicherungLaden() {
+    var daten2 = sicherungBauen();
+    var text = JSON.stringify(daten2, null, 1);
+    var blob = new Blob([text], { type: "application/json" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "esrw-sicherung-" + new Date().toISOString().slice(0, 10) + ".json";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+    toast("Sicherung geladen.", "gut");
+  }
+  function sicherungEinlesen(datei) {
+    var leser = new FileReader();
+    leser.onerror = function () { toast("Datei nicht lesbar.", "warn"); };
+    leser.onload = function () {
+      var d = null;
+      try { d = JSON.parse(leser.result); } catch (e) {}
+      if (!d || d.art !== "esrw-sicherung") { toast("Das ist keine Sicherung dieser App.", "warn"); return; }
+      var wann = d.stand ? new Date(d.stand) : null;
+      if (!confirm("Sicherung" + (wann ? " vom " + datumKurz(wann) : "") + " einlesen? Deine jetzigen Einstellungen werden überschrieben.")) return;
+      Object.keys(d.app || {}).forEach(function (k) {
+        if (SICHER_SCHLUESSEL.indexOf(k) >= 0) schreiben(k, d.app[k]);
+      });
+      if (d.rechnung && window.Mitglieder && window.Mitglieder.rechnungEinlesen) window.Mitglieder.rechnungEinlesen(d.rechnung);
+      einstellungenLaden(true); themaAnwenden(); einfachAnwenden(); tabsAnwenden();
+      funktionenAnwenden(funktionenLesen()); einstellungenSync();
+      toast("Sicherung eingelesen.", "gut");
+      setTimeout(function () { location.reload(); }, 900);
+    };
+    leser.readAsText(datei);
+  }
+  (function () {
+    var raus = el("sicherung-raus"), rein = el("sicherung-rein"), feld = el("sicherung-datei");
+    if (!raus || !rein || !feld) return;
+    raus.addEventListener("click", sicherungLaden);
+    rein.addEventListener("click", function () { feld.click(); });
+    feld.addEventListener("change", function () {
+      var f = feld.files && feld.files[0];
+      if (f) sicherungEinlesen(f);
+      feld.value = "";
+    });
+  })();
+
   function einstellungenSammeln() {
     return { einfach: lesen("einfach") || null, karten: lesen("karten") || null, schrift: lesen("schrift") || null, akzent: lesen("akzent") || null, kompakt: lesen("kompakt") || null, ziel: lesen("ziel") || null, start: lesen("start") || null, bereiche: lesen("bereiche") || null, pushwoche: lesen("pushwoche") || null, pushabrechnung: lesen("pushabrechnung") || null, "schnell-aus": lesen("schnell-aus") || null, "start-ordnung": lesen("start-ordnung") || null,
              tab2: lesen("tab2") || null, tab3: lesen("tab3") || null, tab4: lesen("tab4") || null };

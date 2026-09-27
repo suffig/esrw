@@ -1213,3 +1213,21 @@ alter table public.profile  add column if not exists rufname text;
 alter table public.kontakte add column if not exists bild    text;
 alter table public.kontakte add column if not exists rufname text;
 alter table public.kontakte alter column telefon drop not null;
+
+
+-- ======================================================================
+-- v30: Rechnungsdaten in eine eigene Spalte
+-- ======================================================================
+-- Verein, Schiedsrichternummer, Steuernummer und Nummernkreis lagen bisher
+-- in "einstellungen" - demselben Feld, in das die App ihre Anzeige-
+-- Einstellungen schreibt. Die App schickte dabei immer das ganze Feld neu,
+-- ohne den Abschnitt "rechnung" zu kennen: ein Tipp auf Schriftgroesse
+-- oder Farbe hat die Rechnungsdaten geloescht. Deshalb eine eigene Spalte,
+-- die nur die Rechnungsmaske beschreibt.
+alter table public.profile add column if not exists rechnung jsonb;
+
+-- Einmalig das uebernehmen, was noch da ist.
+update public.profile
+   set rechnung = einstellungen -> 'rechnung'
+ where rechnung is null
+   and einstellungen ? 'rechnung';

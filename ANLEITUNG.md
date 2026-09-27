@@ -2169,6 +2169,42 @@ wer nur ein Bild zeigen will, soll dafür keine Nummer hinterlegen müssen.
   von 19 bis 7 Uhr auf dunkel, egal was das Telefon eingestellt hat, und
   wechselt auch, während die App offen liegt.
 
+### 10.6aw Rechnungsdaten bleiben stehen (Schema v30)
+
+**Das war ein Fehler in der App, kein Zufall.** Verein, Schiedsrichter-
+nummer, Steuernummer und Nummernkreis lagen in der Spalte
+`profile.einstellungen` - demselben Feld, in das die App ihre Anzeige-
+Einstellungen schreibt. Die App schickte dabei immer das ganze Feld neu
+(`einstellungenSammeln()` kennt nur Schrift, Farbe, Leiste und so weiter)
+und hat den Abschnitt `rechnung` dabei jedes Mal mit weggeschrieben. Ein
+Tipp auf Schriftgröße, Farbe, einfache Ansicht oder die Leiste unten hat
+also die Rechnungsdaten gelöscht - und nach einem Update tippt man dort
+eben herum.
+
+Behoben an drei Stellen:
+
+* **Eigene Spalte** `profile.rechnung` (Schema **v30**). Nur die
+  Rechnungsmaske schreibt dorthin, die Anzeige-Einstellungen können nicht
+  mehr drankommen. Der Abschnitt übernimmt einmalig, was noch im alten
+  Feld steht.
+* **Einstellungen werden ergänzt, nicht ersetzt.** `einstellungenSpeichern`
+  mischt jetzt in den vorhandenen Stand, statt ihn zu überschreiben - das
+  schützt auch alles, was später einmal dazukommt.
+* **Sicherung auf dem Gerät.** Jedes Speichern legt die Rechnungsdaten
+  zusätzlich lokal ab. Fehlt die Spalte beim nächsten Laden, trägt die App
+  sie von dort oder aus dem alten Feld automatisch nach.
+
+Dazu neu:
+
+* **Sicherung als Datei**, unter Einstellungen → „Mehr einstellen" →
+  **Sicherung**. „Laden" schreibt Einstellungen, Rechnungsdaten und die
+  Profilangaben in eine kleine JSON-Datei, „Datei wählen" spielt sie
+  zurück. Gedacht für den Wechsel aufs neue Handy und als Netz, falls
+  doch einmal etwas verschwindet.
+* **Warnung vor dem PDF**: fehlt die Schiedsrichter- oder die Steuer-
+  nummer, fragt die App nach, statt eine Rechnung zu bauen, die der
+  Verein zurückschickt.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

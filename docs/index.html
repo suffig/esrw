@@ -2002,6 +2002,12 @@
     <div class="karte einstellungen-liste fein" id="tab-wahl"></div>
     <h3 class="abschnitt fein">Bereiche<small>Was du nicht brauchst, blendest du für dich aus, nur auf deinen Geräten</small></h3>
     <div class="karte einstellungen-liste fein" id="bereiche"></div>
+    <h3 class="abschnitt fein">Sicherung<small>Einstellungen und Rechnungsdaten als Datei</small></h3>
+    <div class="karte einstellungen-liste fein">
+      <label><span><b>Sicherung laden</b><small>Einstellungen, Rechnungsdaten und Profilangaben als Datei</small></span><button type="button" class="mg-neben" id="sicherung-raus">Laden</button></label>
+      <label><span><b>Sicherung einlesen</b><small>Stellt wieder her, was in der Datei steht</small></span><button type="button" class="mg-neben" id="sicherung-rein">Datei wählen</button></label>
+      <input type="file" accept="application/json,.json" class="versteckt" id="sicherung-datei">
+    </div>
     <div id="adminzeile" class="versteckt"></div>
     <div id="push-verlauf" class="versteckt"></div>
   </section>
@@ -2186,6 +2192,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=79"></script>
+<script src="app.js?v=80"></script>
 </body>
 </html>

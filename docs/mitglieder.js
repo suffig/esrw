@@ -429,7 +429,13 @@ window.Mitglieder = (function () {
     if (profil && profil.id === session.user.id) return Promise.resolve(profil);
     if (profilVersprechen) return profilVersprechen;
     profilVersprechen = sb.from("profile").select("*").eq("id", session.user.id).maybeSingle()
-      .then(function (r) { if (r.error) throw r.error; profil = r.data; if (profil && !sb._attrappe) lokalSchreiben("mg_profil_cache", profil); return profil; })
+      .then(function (r) {
+        if (r.error) throw r.error;
+        profil = r.data;
+        if (profil && !sb._attrappe) lokalSchreiben("mg_profil_cache", profil);
+        try { rechnungRetten(); } catch (e2) {}
+        return profil;
+      })
       .catch(function (e) {
         profilVersprechen = null;   // naechster Versuch darf neu laden
         var alt = lokalLesen("mg_profil_cache", null);
@@ -1556,8 +1562,12 @@ window.Mitglieder = (function () {
   // die Rechnung zusaetzlich braucht (Verein, Nummern, Kleinunternehmer),
   // liegt in den Einstellungen.
   function rechnungDaten() {
+    // Reihenfolge: eigene Spalte (ab v30), altes Feld "einstellungen",
+    // Sicherung auf dem Geraet. Die Sicherung gibt es, weil die App die
+    // Daten frueher beim naechsten Tipp in den Einstellungen ueberschrieb.
     var e = (profil && profil.einstellungen) || {};
-    var r = {}; Object.keys(e.rechnung || {}).forEach(function (k) { r[k] = e.rechnung[k]; });
+    var quelle = (profil && profil.rechnung) || e.rechnung || lokalLesen("mg_rechnung", null) || {};
+    var r = {}; Object.keys(quelle).forEach(function (k) { r[k] = quelle[k]; });
     if (!r.name) r.name = (profil && profil.name) || "";
     if (!r.strasse && !r.plz_ort) {
       var a = anschriftTeile(profil && profil.heimat);
@@ -1566,10 +1576,33 @@ window.Mitglieder = (function () {
     return r;
   }
   function rechnungDatenSpeichern(obj) {
-    var e = {}; var alt = (profil && profil.einstellungen) || {};
-    Object.keys(alt).forEach(function (k) { e[k] = alt[k]; });
-    e.rechnung = obj;
-    return einstellungenSpeichern(e);
+    if (!session) return Promise.resolve(false);
+    lokalSchreiben("mg_rechnung", obj);
+    if (profil) profil.rechnung = obj;
+    return speichern(sb.from("profile").upsert({ id: session.user.id, rechnung: obj }))
+      .then(function (r) {
+        if (r && r.error) {
+          meldung(fehlerText(r.error) + (/rechnung/.test(r.error.message || "") ? ", schema.sql (v30) ausführen." : ""), "warn");
+          return false;
+        }
+        return true;
+      });
+  }
+
+  // Aus einer Sicherung zurueckspielen
+  function rechnungEinlesen(obj) {
+    if (!obj || typeof obj !== "object") return Promise.resolve(false);
+    return rechnungDatenSpeichern(obj);
+  }
+
+  // Einmalig nachziehen, was noch im alten Feld oder auf dem Geraet liegt.
+  // So sind die Daten wieder da, die der alte Fehler weggeschrieben hat.
+  function rechnungRetten() {
+    if (!session || !profil || profil.rechnung) return;
+    var alt = (profil.einstellungen && profil.einstellungen.rechnung) || lokalLesen("mg_rechnung", null);
+    if (!alt || !Object.keys(alt).length) return;
+    profil.rechnung = alt;
+    speichern(sb.from("profile").upsert({ id: session.user.id, rechnung: alt }));
   }
   function vereinAdressenLaden() {
     if (vereinAdressen) return Promise.resolve(vereinAdressen);
@@ -1944,6 +1977,11 @@ window.Mitglieder = (function () {
       if (!stamm.name || !stamm.strasse || !stamm.plz_ort) { meldung("Bitte oben erst deine eigenen Daten eintragen.", "warn"); stammZeile.open = true; stammZeile.scrollIntoView({ block: "center", behavior: "smooth" }); return; }
       if (!f.name) { meldung("Der Rechnungsempfänger fehlt.", "warn"); g2.open = true; g2.scrollIntoView({ block: "center", behavior: "smooth" }); return; }
       if (!f.nummer) { meldung("Die Rechnungsnummer fehlt.", "warn"); g3.open = true; return; }
+      // Ohne diese beiden schickt der Verein die Rechnung meist zurueck
+      var fehlt2 = [!stamm.sr_nummer ? "die Schiedsrichternummer" : "", !stamm.steuernummer ? "die Steuernummer" : ""].filter(Boolean);
+      if (fehlt2.length && !confirm("Es fehlt " + fehlt2.join(" und ") + ". Der Verein schickt die Rechnung dann meist zurück. Trotzdem erstellen?")) {
+        stammZeile.open = true; stammZeile.scrollIntoView({ block: "center", behavior: "smooth" }); return;
+      }
       rechnungErzeugen(stamm, f, betraege(), f.nummer);
     } });
     // Der Knopf traegt eine lange Beschriftung ("Rechnung 2026-004 als PDF") -
@@ -3133,10 +3171,15 @@ window.Mitglieder = (function () {
   }
 
   // ---- Einstellungen (Schrift, Farbe, Karten-App, kompakt) im Konto
+  // Die App schickt hier nur ihre Anzeige-Einstellungen. Alles andere im
+  // selben Feld bleibt stehen - frueher war es danach weg.
   function einstellungenSpeichern(obj) {
     if (!session || !profil) return Promise.resolve(false);
-    profil.einstellungen = obj;
-    return sb.from("profile").upsert({ id: session.user.id, einstellungen: obj }).then(function (r) { return !r.error; }).catch(function () { return false; });
+    var neu = {}, alt = profil.einstellungen || {};
+    Object.keys(alt).forEach(function (k) { neu[k] = alt[k]; });
+    Object.keys(obj || {}).forEach(function (k) { neu[k] = obj[k]; });
+    profil.einstellungen = neu;
+    return sb.from("profile").upsert({ id: session.user.id, einstellungen: neu }).then(function (r) { return !r.error; }).catch(function () { return false; });
   }
 
   // ---- Vertretungs-Radar: fremde offene Gesuche + eigene Sperrtage
@@ -5088,5 +5131,5 @@ window.Mitglieder = (function () {
            extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat, obmann: obmann, termine: termine,
            einstellungenSpeichern: einstellungenSpeichern, radar: radar, angebotMachen: angebotMachen,
            kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl, kontoRendern: kontoRendern, kontaktVon: kontaktVon, istAdmin: istAdmin, adminRecht: adminRecht, tresorSchluessel: tresorSchluessel, rechnungSprung: rechnungSprung, korrekturSpeichern: korrekturSpeichern, spielManuellLoeschen: spielManuellLoeschen,
-           mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, telefonVon: telefonVon, spielzeiten: spielzeiten, bilder: bilder, bildVon: bildVon, rufnameVon: rufnameVon, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb, wohnortEigen: wohnortEigen };
+           mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, telefonVon: telefonVon, spielzeiten: spielzeiten, rechnungEinlesen: rechnungEinlesen, bilder: bilder, bildVon: bildVon, rufnameVon: rufnameVon, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb, wohnortEigen: wohnortEigen };
 })();
