@@ -522,6 +522,37 @@ def saisonarchiv_einfrieren(historie, personen, stand):
     return index
 
 
+def ergaenze_ehemalige(personen, stats, bevorzugt=frozenset()):
+    """Traegt Kollegen nach, die gerade kein Spiel haben, aber schon eines
+    hatten. esrw.de zeigt nur die naechsten Tage - ohne diesen Schritt
+    faellt jeder aus der Namensliste, sobald seine Spiele durch sind, und
+    sein Kalender-Abo wird beim naechsten Lauf geloescht. Ueber die Saison
+    waechst die Liste so auf alle zusammen."""
+    da = {p["schluessel"] for p in personen}
+    vergeben = {p["slug"] for p in personen}
+    dazu = []
+    for schluessel, s in stats.items():
+        if schluessel in da or not s.get("schreibweisen"):
+            continue
+        name = waehle_schreibweise(s["schreibweisen"], bevorzugt)
+        slug = slug_aus(name)
+        # Gleicher Slug, andere Person: lieber weglassen als falsch verlinken
+        if not slug or slug in vergeben:
+            continue
+        vergeben.add(slug)
+        dazu.append({
+            "slug": slug,
+            "name": name,
+            "schluessel": schluessel,
+            "varianten": sorted(s["schreibweisen"]),
+            "termine": [],
+            "ehemals": True,
+        })
+    personen.extend(dazu)
+    personen.sort(key=lambda p: nkey(p["name"]))
+    return len(dazu)
+
+
 def statistik_aus_historie(historie, stand):
     """Zaehlt je Person die Einsaetze im gesamten Archiv."""
     jetzt_saison = saison_von(stand)
@@ -541,8 +572,10 @@ def statistik_aus_historie(historie, stand):
                 "gesamt": 0, "saison": 0, "rollen": Counter(),
                 "ligen": Counter(), "hallen": Counter(),
                 "partner": Counter(), "partner_namen": {}, "je_saison": Counter(),
-                "erste": None, "letzte": None, "spiele_saison": []})
+                "erste": None, "letzte": None, "spiele_saison": [],
+                "schreibweisen": Counter()})
             s["gesamt"] += 1
+            s["schreibweisen"][name] += 1
             s["je_saison"][saison] += 1
             if saison == jetzt_saison:
                 s["saison"] += 1
@@ -1400,6 +1433,9 @@ def main():
     historie_alle = dict(saisonarchiv_laden())
     historie_alle.update(historie)
     stats, saison = statistik_aus_historie(historie_alle, stand)
+    nachgetragen = ergaenze_ehemalige(personen, stats, bevorzugt)
+    if nachgetragen:
+        print("%d Kollege(n) ohne aktuelles Spiel aus dem Archiv nachgetragen." % nachgetragen)
     print("Archiv: %d Spiele insgesamt (%d neu, %d in Saison-Dateien), Saison %s."
           % (len(historie_alle), frisch, len(historie_alle) - len(historie), saison))
 
@@ -1498,6 +1534,7 @@ def main():
             "slug": p["slug"],
             "name": p["name"],
             "varianten": p["varianten"],
+            "ehemals": p.get("ehemals", False),
             "statistik": stat_fuer(p),
             "spiele": [{
                 "beginn": t["anstoss"].isoformat(),

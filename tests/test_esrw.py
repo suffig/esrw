@@ -11,6 +11,7 @@ Kein pytest noetig. Rueckgabewert ungleich 0, wenn etwas nicht stimmt.
 
 import json
 import os
+import re
 import sys
 from datetime import datetime, timedelta, timezone
 
@@ -389,6 +390,35 @@ def test_saisonarchiv():
             E.BASIS = alt_basis
 
 
+def test_ehemalige():
+    """Wer gerade kein Spiel hat, faellt trotzdem nicht aus der Liste -
+    sonst waere er in der App weg und sein Kalender-Abo gleich mit."""
+    print("\nKollegen ohne aktuelles Spiel")
+    E = esrw_ical_modul()
+    personen = [{"slug": "muster-max", "name": "Muster, Max",
+                 "schluessel": E.personen_schluessel("Muster, Max"),
+                 "varianten": ["Muster, Max"], "termine": [{}]}]
+    stats = {
+        E.personen_schluessel("Muster, Max"): {"schreibweisen": {"Muster, Max": 3}},
+        E.personen_schluessel("Alt, Anna"): {"schreibweisen": {"Alt, Anna": 2, "Alt, A.": 1}},
+    }
+    dazu = E.ergaenze_ehemalige(personen, stats)
+    slugs = [x["slug"] for x in personen]
+    pruefe(dazu == 1, "genau ein Kollege kommt dazu", str(dazu))
+    pruefe(slugs == ["alt-anna", "muster-max"], "alphabetisch einsortiert", str(slugs))
+    anna = [x for x in personen if x["slug"] == "alt-anna"][0]
+    pruefe(anna["termine"] == [] and anna["ehemals"] is True, "ohne Termine und als ehemalig gekennzeichnet")
+    pruefe(anna["name"] == "Alt, Anna", "haeufigste Schreibweise gewinnt", anna["name"])
+    # Zweiter Lauf traegt nichts doppelt ein
+    pruefe(E.ergaenze_ehemalige(personen, stats) == 0, "zweiter Lauf aendert nichts")
+    # Der Kalender bleibt bestehen, nur eben leer - sonst reisst das Abo ab
+    cfg = {"erinnerung_minuten": 60, "kalender_refresh": "PT1H"}
+    ics = E.baue_ics([], "Einteilungen - Alt, Anna", cfg,
+                     datetime(2026, 9, 27, 18, 0, tzinfo=timezone.utc))
+    pruefe(ics.startswith("BEGIN:VCALENDAR") and "VEVENT" not in ics,
+           "leerer Kalender bleibt ein gueltiger Kalender")
+
+
 def test_gespannwechsel():
     """Wechselt ein Kollege, steht das als vorher/nachher im Protokoll -
     aber nur, wenn das Gedaechtnis das alte Gespann schon kannte."""
@@ -435,6 +465,35 @@ def test_korrektur_uid():
     t1 = ohne[0]["termine"][0]
     t2 = mit[0]["termine"][0]
     pruefe(t1["kennung"] == t2["kennung"], "Termin-Kennung (Basis der UID) bleibt gleich")
+
+
+def test_csp():
+    """Die Seite erlaubt nur Skripte aus Dateien (Content-Security-Policy).
+    Ein Skript direkt in index.html wird vom Browser stillschweigend
+    verworfen - das faellt sonst erst auf, wenn etwas nicht funktioniert.
+    Ebenso muss jede Skriptdatei im Offline-Vorrat stehen."""
+    print("\nSeite und Sicherheitsregel")
+    wurzel = os.path.dirname(HIER)
+    seite = os.path.join(wurzel, "docs", "index.html")
+    sw = os.path.join(wurzel, "docs", "sw.js")
+    if not (os.path.exists(seite) and os.path.exists(sw)):
+        pruefe(False, "index.html und sw.js vorhanden")
+        return
+    with open(seite, encoding="utf-8") as f:
+        html = f.read()
+    with open(sw, encoding="utf-8") as f:
+        worker = f.read()
+    regel = re.search(r'Content-Security-Policy"[^>]*content="([^"]+)"', html)
+    pruefe(regel is not None, "Sicherheitsregel steht in der Seite")
+    erlaubt_inline = bool(regel) and "unsafe-inline" in (regel.group(1).split("script-src")[1].split(";")[0] if "script-src" in regel.group(1) else "")
+    inline = [m for m in re.findall(r"<script([^>]*)>", html) if "src=" not in m]
+    pruefe(erlaubt_inline or not inline, "kein Skript in der Seite selbst", str(inline))
+    dateien = re.findall(r'<script[^>]*src="([^"?]+)', html)
+    pruefe(bool(dateien), "Skripte kommen aus Dateien", str(dateien))
+    for d in dateien:
+        name = d.lstrip("./")
+        pruefe(os.path.exists(os.path.join(wurzel, "docs", name)), "%s liegt in docs/" % name)
+        pruefe('"./%s"' % name in worker, "%s steht im Offline-Vorrat" % name)
 
 
 def test_rechnungsvorlage():
@@ -519,7 +578,9 @@ def main():
     for test in (test_parsen, test_hallen, test_namen, test_rollen, test_aliase,
                  test_konflikte, test_hash_migration, test_ausgaben, test_faltung,
                  test_escape, test_ics, test_saison, test_aenderungstext, test_saisonarchiv,
-                 test_korrektur_uid, test_gespannwechsel, test_rechnungsvorlage,
+                 test_korrektur_uid, test_gespannwechsel, test_ehemalige,
+                 test_csp,
+                 test_rechnungsvorlage,
                  test_tresor):
         test()
     print("\n" + "-" * 58)

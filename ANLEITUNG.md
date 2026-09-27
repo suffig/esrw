@@ -2056,6 +2056,37 @@ zum ersten Mal steht:
 * **Konto, aber noch kein Profil** → die Namensliste wie bisher.
 * **Kein Konto** → gar nichts, der Anmeldeschirm kommt ohnehin sofort.
 
+### 10.6at Ladeanzeige, alle Kollegen bleiben in der Liste
+
+* **Der Start sagt jetzt, woran es liegt.** Unter dem eigenen Namen läuft
+  ein Balken mit fünf Stufen: Anmeldung prüfen, Schlüssel holen,
+  Einteilungen laden, Entschlüsseln, fast fertig. Ohne Netz steht dort
+  „Offline, gespeicherter Stand wird geladen", und dauert es länger als
+  acht Sekunden, sagt die Zeile das auch. Vorher standen da nur zwei
+  graue Kästen.
+
+* **Das Startskript lief auf der echten Seite gar nicht.** Die Seite
+  erlaubt über eine Sicherheitsregel (Content-Security-Policy) nur
+  Skripte aus Dateien; ein Skript, das direkt in `index.html` steht,
+  verwirft der Browser stillschweigend. Genau so war der Startbildschirm
+  aus 10.6as gebaut. Er liegt jetzt in **`docs/start.js`**, und der
+  Regressionstest prüft ab sofort, dass in `index.html` kein Skript mehr
+  direkt drinsteht und jede Skriptdatei im Offline-Vorrat des Service
+  Workers steht.
+
+* **Kollegen bleiben in der Liste, auch ohne aktuelles Spiel.** esrw.de
+  zeigt nur die nächsten Tage. Wer durch war, fiel bisher aus der
+  Namensliste, aus dem Spielplan und aus der Telefonliste - und sein
+  Kalender-Abo wurde beim nächsten Lauf gelöscht. `esrw_ical.py` trägt
+  jetzt aus dem Archiv alle nach, die schon einmal gepfiffen haben
+  (`ergaenze_ehemalige`). Über die Saison wächst die Liste so von selbst
+  auf alle zusammen.
+
+  In der Namensliste stehen sie unten unter **„Ohne aktuelles Spiel"**,
+  mit dem Datum des letzten Einsatzes statt einer nackten Null. Ihre
+  Seite zeigt „Zurzeit keine Einteilung, zuletzt im Einsatz am …", ihr
+  Kalender bleibt bestehen und ist einfach leer, bis wieder etwas kommt.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

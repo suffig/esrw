@@ -767,11 +767,19 @@
       suchGruppe(liste, "Kollegen");
     }
     var personenTreffer = 0;
-    daten.personen.forEach(function (p) {
+    // Die Liste waechst ueber die Saison auf alle Kollegen - wer gerade
+    // nichts hat, steht deshalb unten unter einer eigenen Ueberschrift.
+    var passend = daten.personen.filter(function (p) {
       var suchtext = suchtextVon(p.name + " " + (p.varianten || []).join(" "));
-      if (f && suchtext.indexOf(f) === -1) {
-        if (!suchtext.split(" ").some(function (t) { return t.indexOf(f) === 0; })) return;
-      }
+      if (!f) return true;
+      if (suchtext.indexOf(f) >= 0) return true;
+      return suchtext.split(" ").some(function (t) { return t.indexOf(f) === 0; });
+    });
+    var aktiv = passend.filter(function (p) { return p.spiele.some(function (s) { return !s.vergangen; }); });
+    var ruht = passend.filter(function (p) { return aktiv.indexOf(p) < 0; });
+    var ueberschrift = !suchModus && aktiv.length && ruht.length;
+    aktiv.concat(ruht).forEach(function (p, nr) {
+      if (ueberschrift && nr === aktiv.length) suchGruppe(liste, "Ohne aktuelles Spiel");
       treffer++; personenTreffer++;
       if (suchModus && f.length >= 2 && personenTreffer > 8) return;
       var li = document.createElement("li");
@@ -781,8 +789,12 @@
       name.textContent = p.name;
       var n = p.spiele.filter(function (s) { return !s.vergangen; }).length;
       var anzahl = document.createElement("span");
-      anzahl.className = "anzahl";
-      anzahl.textContent = n === 0 ? "0" : n + (n === 1 ? " Spiel" : " Spiele");
+      anzahl.className = "anzahl" + (n ? "" : " ruhig");
+      // Wer gerade nichts hat, bleibt in der Liste - dann sagt die Zeile,
+      // wann er zuletzt gepfiffen hat, statt nur eine nackte Null.
+      var zuletzt = !n && p.statistik && p.statistik.letzte;
+      anzahl.textContent = n ? n + (n === 1 ? " Spiel" : " Spiele")
+        : zuletzt ? "zuletzt " + zuletzt.split("-").reverse().join(".") : "kein Spiel";
       b.appendChild(name); b.appendChild(anzahl);
       b.addEventListener("click", function () { if (suchModus) location.hash = p.slug; else profilSetzen(p); });
       li.appendChild(b);
@@ -2194,7 +2206,13 @@
     var h = document.createElement("h3"); h.className = "abschnitt"; h.textContent = "Deine nächsten Spiele";
     var hs = document.createElement("small"); hs.textContent = "Tipp für Route, Tausch, Notiz"; h.appendChild(hs); ziel.appendChild(h);
     var istIch = !!(profil && profil.slug === p.slug);
-    if (!kommend.length) ziel.appendChild(leerZustand("Zurzeit keine Einteilung. Der Kalender füllt sich von allein.", { label: "Spielplan ansehen", href: "#plan" }));
+    if (!kommend.length) {
+      var zuletzt = p.statistik && p.statistik.letzte;
+      ziel.appendChild(leerZustand(p.spiele.length || !zuletzt
+        ? "Zurzeit keine Einteilung. Der Kalender füllt sich von allein."
+        : "Zurzeit keine Einteilung, zuletzt im Einsatz am " + zuletzt.split("-").reverse().join(".") + ".",
+        { label: "Spielplan ansehen", href: "#plan" }));
+    }
     else kommend.forEach(function (s, i) { var k = karte(s, p); k.style.setProperty("--i", Math.min(i, 8)); ziel.appendChild(k); });
     if (gewesen.length && startEinstellung("vergangene")) {
       var box = document.createElement("details"); box.className = "karte zuletzt-box";
@@ -4639,6 +4657,29 @@
   }
 
   var ladeZaehler = 0;
+  // Beim Start dauert es einen Moment, bis die Einteilungen da sind: erst
+  // der Schluessel aus der Datenbank, dann die Datei, dann das Entschluesseln.
+  // Solange sagt der Platzhalter, woran es gerade liegt.
+  var startStufen = ["Anmeldung prüfen", "Schlüssel holen", "Einteilungen laden", "Entschlüsseln", "Fast fertig"];
+  if (!navigator.onLine) {
+    var st = el("start-stufe-text");
+    if (st) st.textContent = "Offline, gespeicherter Stand wird geladen";
+  }
+  var startFertig = false;
+  function startStufe(nr) {
+    var d = el("detail");
+    if (startFertig || !d || !d.classList.contains("start-laedt")) return;
+    if (nr >= startStufen.length) startFertig = true;
+    var t = el("start-stufe-text"), b = el("start-fortschritt");
+    if (t) t.textContent = startStufen[nr - 1] || "";
+    if (b) b.style.width = Math.round(nr / startStufen.length * 100) + "%";
+  }
+  // Dauert es ungewoehnlich lange, lieber sagen warum, als still warten
+  setTimeout(function () {
+    var d = el("detail"), t = el("start-stufe-text");
+    if (d && d.classList.contains("start-laedt") && t) t.textContent = "Das dauert länger als sonst, die Verbindung ist langsam";
+  }, 8000);
+
   function ladeAnzeige(an) {
     ladeZaehler = Math.max(0, ladeZaehler + (an ? 1 : -1));
     var b = el("ladebalken"); if (!b) return;
@@ -4664,10 +4705,11 @@
           ? "Dein Konto ist noch nicht freigeschaltet - der Betreiber macht das von Hand."
           : "Bitte anmelden.");
       });
+      startStufe(3);
       return fetch(name + ".bin?" + Date.now()).then(function (r) {
         if (!r.ok) return holeKlartext(name);
         return r.arrayBuffer()
-          .then(tresorOeffnen)
+          .then(function (buf) { startStufe(4); return tresorOeffnen(buf); })
           .then(function (t) { return JSON.parse(t); })
           .catch(function () {
             // Schluessel gewechselt? Einmal frisch holen, dann aufgeben.
@@ -4716,8 +4758,12 @@
   // Schluessel darf die Tabelle nicht lesen.
   function holeSchluessel() {
     if (!sitzungVorhanden()) return Promise.resolve(null);
+    startStufe(1);
     return ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
-      .then(function (st) { return st && st.session && window.Mitglieder.tresorSchluessel ? window.Mitglieder.tresorSchluessel() : null; })
+      .then(function (st) {
+        startStufe(2);
+        return st && st.session && window.Mitglieder.tresorSchluessel ? window.Mitglieder.tresorSchluessel() : null;
+      })
       .catch(function () { return null; });
   }
   function tresorOeffnen(buf) {
@@ -4835,6 +4881,7 @@
     document.documentElement.classList.remove("abgemeldet");
     return Promise.all([hole("daten.json"), hole("stand.json").catch(function () { return null; })])
     .then(function (b) {
+      startStufe(5);
       daten = b[0]; profil = profilLesen();
       document.title = daten.titel || "ESRW App"; el("titel").textContent = daten.titel || "ESRW App"; el("quelle").href = daten.quelle;
       standAnzeigen(daten, b[1]);
