@@ -725,6 +725,43 @@
           suchGruppe(liste, "Termine"); el("nichts").classList.add("versteckt");
           tl.forEach(function (x) { suchEintrag(liste, x.titel, x.termin.split("-").reverse().join("."), function () { location.hash = "mitglieder/info"; }); });
         }).catch(function () {});
+      // Strafen und Bestimmungen liegen als Datei in der App, also auch offline
+      var nachladen = [];
+      if (!regelnDaten) nachladen.push(hole("strafen.json").then(function (d) { regelnDaten = d; }).catch(function () {}));
+      if (!bestimmungenDaten) nachladen.push(hole("bestimmungen.json").then(function (d) { bestimmungenDaten = d; }).catch(function () {}));
+      Promise.all(nachladen).then(function () {
+        if (liste._lauf !== lauf) return;
+        var st = ((regelnDaten && regelnDaten.strafen) || []).filter(function (r) {
+          return ohneZeichen(r.name + " " + (r.info || "")).indexOf(f) >= 0;
+        }).slice(0, 6);
+        if (st.length) {
+          suchGruppe(liste, "Strafen"); el("nichts").classList.add("versteckt");
+          st.forEach(function (r) {
+            suchEintrag(liste, r.name, r.codes.join(" \u00b7 ") || "ohne eigene Strafart", function () {
+              regelnTeil = "strafen"; regelArt = ""; location.hash = "regeln";
+              setTimeout(function () {
+                var i = el("regeln-filter"); if (!i) return;
+                i.value = r.name; i.dispatchEvent(new Event("input", { bubbles: true }));
+              }, 150);
+            });
+          });
+        }
+        var bs = [];
+        ((bestimmungenDaten && bestimmungenDaten.bereiche) || []).forEach(function (b) {
+          (b.punkte || []).forEach(function (pt) {
+            if (bs.length < 5 && ohneZeichen(pt.text + " " + (pt.quelle || "")).indexOf(f) >= 0) bs.push({ b: b, p: pt });
+          });
+        });
+        if (bs.length) {
+          suchGruppe(liste, "Bestimmungen"); el("nichts").classList.add("versteckt");
+          bs.forEach(function (x) {
+            var kurz = x.p.text.length > 68 ? x.p.text.slice(0, 68).replace(/\s\S*$/, "") + " \u2026" : x.p.text;
+            suchEintrag(liste, kurz, x.b.titel + " \u00b7 " + x.p.quelle, function () {
+              regelnTeil = "bestimmungen"; location.hash = "regeln";
+            });
+          });
+        }
+      });
       suchGruppe(liste, "Kollegen");
     }
     var personenTreffer = 0;
@@ -1339,8 +1376,15 @@
     var heuteModus = diff === 0 && new Date(s.beginn).getTime() + 3 * 3600000 > Date.now();
     if (heuteModus) h.classList.add("heute");
     // "Am Spieltag gross": Kopfkarte fuellt den Bildschirm, der Rest kommt auf Tipp
-    var vollbild = heuteModus && startEinstellung("vollbild") && !!(profil && profil.slug === p.slug) && lesen("vollbild-zu") !== heuteSchluessel(s);
+    // Spieltag-Modus: nur das Spiel, sonst nichts. Er geht am Spieltag von
+    // selbst an (wenn eingeschaltet) und laesst sich jederzeit beiderseits
+    // umschalten - der Zustand gilt nur fuer diesen Tag.
+    var schluessel = heuteSchluessel(s);
+    var vollbild = heuteModus && !!(profil && profil.slug === p.slug)
+      && (lesen("vollbild-an") === schluessel
+          || (startEinstellung("vollbild") && lesen("vollbild-zu") !== schluessel));
     el("detail").classList.toggle("start-vollbild", vollbild);
+    document.documentElement.classList.toggle("spieltag", vollbild);
     var w = document.createElement("div"); w.className = "wann"; w.textContent = wann + " · " + datumKurz(d); h.appendChild(w);
     h.appendChild(rolleBadge(s.rolle, "rolle"));
     var z = document.createElement("div"); z.className = "zeit"; z.textContent = uhr(d) + " Uhr"; h.appendChild(z);
@@ -1358,11 +1402,29 @@
       ak.appendChild(ge);
     }
     h.appendChild(ak);
-    if (vollbild) {
-      // ganz unten in der Karte, damit der Daumen ihn erreicht
-      var mehr = document.createElement("button"); mehr.type = "button"; mehr.className = "vollbild-mehr"; mehr.textContent = "Alles anzeigen ↓";
-      mehr.addEventListener("click", function (ev) { ev.stopPropagation(); schreiben("vollbild-zu", heuteSchluessel(s)); el("detail").classList.remove("start-vollbild"); mehr.remove(); });
-      h.appendChild(mehr);
+    if (heuteModus && !!(profil && profil.slug === p.slug)) {
+      // Ein Knopf, zwei Richtungen: rein in den Spieltag-Modus und wieder
+      // heraus. Die Karte wird dabei nicht neu aufgebaut.
+      var umschalter = document.createElement("button");
+      umschalter.type = "button";
+      function umschalterZeigen(an) {
+        umschalter.innerHTML = "";
+        umschalter.className = an ? "vollbild-mehr" : "spieltag-an";
+        if (!an) umschalter.appendChild(ikone("i-clock"));
+        umschalter.appendChild(document.createTextNode(an ? "Normale Ansicht \u2193" : "Spieltag-Modus"));
+      }
+      umschalterZeigen(vollbild);
+      umschalter.addEventListener("click", function (ev) {
+        ev.stopPropagation();
+        var an = !el("detail").classList.contains("start-vollbild");
+        el("detail").classList.toggle("start-vollbild", an);
+        document.documentElement.classList.toggle("spieltag", an);
+        schreiben("vollbild-an", an ? schluessel : null);
+        schreiben("vollbild-zu", an ? null : schluessel);
+        umschalterZeigen(an);
+        if (an) window.scrollTo(0, 0);
+      });
+      h.appendChild(umschalter);
     }
     var meins = !!(profil && profil.slug === p.slug);
     // Heute: Countdown bis Abfahrt/Treffpunkt, Kollegen anrufen, Checkliste direkt darunter
@@ -2494,8 +2556,8 @@
     aktuell = null; ansicht("auswahl"); el("statistik").innerHTML = "";
     suchModus = wechsel === "suche";
     el("frage").textContent = suchModus ? "Suche" : wechsel ? "Profil wechseln" : "Wer bist du?";
-    el("frage-unter").textContent = suchModus ? "Kollegen, Hallen, Vereine, Spiele und Termine. Tippen springt direkt hin." : wechsel ? "Der gewählte Name wird dein Profil auf diesem Gerät." : "Wähle deinen Namen. Danach siehst du deine Spiele, kannst den Kalender abonnieren und Mitteilungen bekommen.";
-    el("suche").placeholder = suchModus ? "Name, Halle, Verein, Spiel, Termin …" : "Namen suchen …";
+    el("frage-unter").textContent = suchModus ? "Kollegen, Hallen, Vereine, Spiele, Termine, Strafen und Bestimmungen. Tippen springt direkt hin." : wechsel ? "Der gewählte Name wird dein Profil auf diesem Gerät." : "Wähle deinen Namen. Danach siehst du deine Spiele, kannst den Kalender abonnieren und Mitteilungen bekommen.";
+    el("suche").placeholder = suchModus ? "Name, Halle, Verein, Spiel, Strafe …" : "Namen suchen …";
     if (!suchModus) el("suche").value = "";
     zeigeListe(el("suche").value);
     suchVerlaufRendern();
@@ -3418,6 +3480,7 @@
   // eigene Zusammenstellungen - der Wortlaut steht in den verlinkten
   // Dokumenten, und die liegen beim Verband, nicht hier.
   var regelnDaten = null, bestimmungenDaten = null, regelnTeil = "strafen", regelArt = "";
+  // Die Suche oben faengt damit an, was sie schon geladen hat; sonst holt sie nach.
   // Jede Strafart hat ihre Farbe - von Gruen (2) bis Rot (MS). Die Klasse
   // kommt aus dem Kuerzel: "5+SPD" -> "farbe-5spd".
   function strafFarbe(code) {
@@ -3450,23 +3513,38 @@
     if (regelnTeil === "bestimmungen") {
       el("regeln-unter").textContent = bestimmungenDaten ? "EHV NRW, Stand " + bestimmungenDaten.stand : "Bestimmungen";
       if (!bestimmungenDaten) { ziel.appendChild(hinweisKarte("Bestimmungen nicht geladen.")); return; }
-      bestimmungenDaten.bereiche.forEach(function (b) {
-        var k = document.createElement("div"); k.className = "karte";
-        var h = document.createElement("h4"); h.textContent = b.titel; h.style.margin = "0 0 6px"; k.appendChild(h);
-        b.punkte.forEach(function (p) {
-          var d = document.createElement("div"); d.className = "bestimmung-punkt";
-          d.appendChild(document.createTextNode(p.text));
-          var s = document.createElement("small"); s.textContent = p.quelle; d.appendChild(s);
-          k.appendChild(d);
+      // Ein Bereich je Karte, zugeklappt bis auf den ersten. Auf dem Handy
+      // ist die Seite sonst eine einzige lange Rolle.
+      bestimmungenDaten.bereiche.forEach(function (b, nr) {
+        var d = document.createElement("details");
+        d.className = "karte bestimmung-block";
+        if (!nr) d.open = true;
+        var sm = document.createElement("summary");
+        var t = document.createElement("span");
+        var bb = document.createElement("b"); bb.textContent = b.titel; t.appendChild(bb);
+        var anz = document.createElement("small");
+        anz.textContent = b.punkte.length + (b.punkte.length === 1 ? " Punkt" : " Punkte");
+        t.appendChild(anz);
+        sm.appendChild(t);
+        d.appendChild(sm);
+        b.punkte.forEach(function (p2) {
+          var z = document.createElement("div"); z.className = "bestimmung-punkt";
+          var text = document.createElement("span"); text.textContent = p2.text; z.appendChild(text);
+          var q = document.createElement("small"); q.className = "fundstelle"; q.textContent = p2.quelle; z.appendChild(q);
+          d.appendChild(z);
         });
-        ziel.appendChild(k);
+        ziel.appendChild(d);
       });
-      var dk = document.createElement("div"); dk.className = "karte dok-liste";
-      var dh = document.createElement("h4"); dh.textContent = "Die Dokumente beim Verband"; dh.style.margin = "0 0 6px"; dk.appendChild(dh);
-      bestimmungenDaten.dokumente.forEach(function (d) {
-        var a = document.createElement("a"); a.href = d.url; a.target = "_blank"; a.rel = "noopener";
-        var sp = document.createElement("span"); sp.textContent = d.titel;
-        var sm = document.createElement("small"); sm.textContent = "Stand " + d.stand; sp.appendChild(sm);
+      var dk = document.createElement("details"); dk.className = "karte dok-liste bestimmung-block";
+      var dsm = document.createElement("summary");
+      var dt = document.createElement("span");
+      var db = document.createElement("b"); db.textContent = "Die Dokumente beim Verband"; dt.appendChild(db);
+      var dz = document.createElement("small"); dz.textContent = bestimmungenDaten.dokumente.length + " PDFs"; dt.appendChild(dz);
+      dsm.appendChild(dt); dk.appendChild(dsm);
+      bestimmungenDaten.dokumente.forEach(function (dok) {
+        var a = document.createElement("a"); a.href = dok.url; a.target = "_blank"; a.rel = "noopener";
+        var sp = document.createElement("span"); sp.textContent = dok.titel;
+        var sm2 = document.createElement("small"); sm2.textContent = "Stand " + dok.stand; sp.appendChild(sm2);
         a.appendChild(sp); dk.appendChild(a);
       });
       ziel.appendChild(dk);

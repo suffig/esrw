@@ -1956,6 +1956,45 @@ ausdrücklich.
   wenn vergangene Spiele noch keine Rechnung haben, dazu das am
   längsten offene Spiel und ein Knopf, der es übernimmt.
 
+### 10.6aq Suche über alles, Spieltag-Modus, Bestimmungen zum Aufklappen
+
+* **Die Lupe oben findet jetzt auch Strafen und Bestimmungen.** Sie
+  durchsucht Kollegen, Hallen, Vereine, Spiele, Termine, die
+  Strafentabelle und die Punkte aus den Durchführungsbestimmungen. Ein
+  Tipp auf einen Strafen-Treffer springt in die Matrix und filtert sie
+  gleich auf das Vergehen, ein Tipp auf einen Bestimmungs-Treffer öffnet
+  den passenden Teil. Beides geht auch ohne Netz, die Dateien liegen in
+  der App.
+* **Spieltag-Modus mit Knopf in beide Richtungen.** Ist heute ein Spiel,
+  steht unter der Kopfkarte **„Spieltag-Modus"**: die Karte füllt den
+  Bildschirm, alles andere verschwindet, auch die Hinweiskarten über dem
+  Bereich. Zurück geht es mit **„Normale Ansicht ↓"** direkt darunter.
+  Der Zustand gilt für den Tag, und über Einstellungen → Startseite →
+  „Am Spieltag groß" lässt sich einstellen, ob der Modus von selbst
+  angeht.
+* **Bestimmungen zum Aufklappen**: ein Bereich je Karte (Vor dem Spiel,
+  Während des Spiels, Nach dem Spiel, Geld, Wer zuständig ist), mit der
+  Zahl der Punkte in der Kopfzeile. Der erste Bereich ist offen, der Rest
+  wartet auf einen Tipp. Die Fundstelle steht als kleines Kennzeichen
+  unter jedem Punkt, die Dokumentenliste ist ebenfalls eingeklappt.
+
+**Zu den Push-Wünschen:** Beides gibt es schon, hier steht, wo:
+
+* **Gespann-Nachrichten mit Push**: Auf jeder Spielseite gibt es unter
+  „Notiz ans Gespann" einen kleinen Verlauf. Wer etwas schreibt, löst
+  beim nächsten Lauf Push an die anderen im Gespann aus
+  (`push_senden.py`, Abschnitt „Gespann-Notizen").
+* **Push bei Änderungen von esrw.de**: Läuft seit Schritt 11. Jeder
+  bekommt, was ihn betrifft: neue Ansetzungen, Absetzungen und jede
+  Änderung an Halle, Anstoß oder Treffpunkt, auch wenn sie vom Betreiber
+  als Korrektur kommt. Verschickt wird beim nächsten Lauf.
+* **Ankündigung an alle**: Admin → Info → „Neue Ankündigung", Empfänger
+  „alle Mitglieder", eine Liga-Gruppe oder eine einzelne Person, dazu der
+  Haken „zusätzlich als Push aufs Handy". Darunter steht jetzt deutlich,
+  dass der Push beim nächsten Lauf rausgeht, also in bis zu 30 Minuten.
+  Für etwas, das sofort ankommen muss, bleibt das Telefon die bessere
+  Wahl.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

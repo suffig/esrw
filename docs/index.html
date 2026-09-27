@@ -806,6 +806,11 @@
     #detail.start-vollbild #held .held .zeit { font-size:2.9rem; }
     #detail.start-vollbild #held .held .paarung { font-size:1.15rem; }
     #detail.start-vollbild #heute { margin-top:10px; }
+    /* Die Karten ausserhalb des Bereichs gehoeren im Spieltag-Modus auch weg */
+    .spieltag #onboarding,
+    .spieltag #onboarding-kurz,
+    .spieltag #neu,
+    .spieltag #install { display:none !important; }
   }
   .vollbild-mehr { margin-top:18px; align-self:center; background:rgba(255,255,255,.18); color:#fff; border:1px solid rgba(255,255,255,.35); border-radius:99px; padding:9px 16px; font:inherit; font-weight:800; cursor:pointer; }
   /* Karten im Dunkelmodus abdunkeln (OSM hat keine dunklen Kacheln).
@@ -1580,8 +1585,26 @@
                 color:var(--straf, var(--akzent)); }
   .rollen-strafe { color:var(--straf, var(--text)); }
   .regeln-kopf { margin:14px 0 2px; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); font-weight:800; }
+  /* Spieltag-Modus: der Weg zurueck steht unter der Kopfkarte */
+  .spieltag-an { margin-top:14px; align-self:flex-start; display:inline-flex; align-items:center; gap:7px;
+                 background:rgba(255,255,255,.14); color:#fff; border:1px solid rgba(255,255,255,.3);
+                 border-radius:99px; padding:8px 14px; font:inherit; font-size:.85rem; font-weight:800; cursor:pointer; }
+  .spieltag-an svg.i { width:1rem; height:1rem; }
+  /* Bestimmungen: ein Bereich je Karte, zum Aufklappen */
+  .bestimmung-block { padding:6px 14px 10px; }
+  .bestimmung-block > summary { display:flex; align-items:baseline; gap:8px; justify-content:space-between;
+                                padding:10px 0; cursor:pointer; list-style:none; }
+  .bestimmung-block > summary::-webkit-details-marker { display:none; }
+  .bestimmung-block > summary b { font-size:1rem; }
+  .bestimmung-block > summary small { color:var(--dim); font-size:.76rem; white-space:nowrap; margin-left:8px; }
+  .bestimmung-block > summary::after { content:"\203a"; transform:rotate(90deg); color:var(--dim); font-size:1.2rem; line-height:1; }
+  .bestimmung-block[open] > summary::after { transform:rotate(-90deg); }
+  .bestimmung-block[open] > summary { border-bottom:1px solid var(--linie); }
+  .fundstelle { display:inline-block; margin-top:4px; font-size:.7rem; font-weight:800; letter-spacing:.03em;
+                background:var(--akzent-hell); color:var(--akzent); border-radius:99px; padding:2px 8px; }
   .bestimmung-punkt { padding:10px 0; border-top:1px solid var(--linie); }
   .bestimmung-punkt:first-child { border-top:0; }
+  .bestimmung-punkt > span { display:block; }
   .bestimmung-punkt small { display:block; color:var(--dim); margin-top:3px; }
   .dok-liste a { display:flex; align-items:center; gap:10px; padding:11px 0; border-top:1px solid var(--linie);
                  color:inherit; text-decoration:none; font-weight:700; }
@@ -2042,6 +2065,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=73"></script>
+<script src="app.js?v=74"></script>
 </body>
 </html>

@@ -4615,7 +4615,7 @@ window.Mitglieder = (function () {
         .then(function (r) {
           knopf.disabled = false;
           if (r.error) { meldung(fehlerText(r.error) + (/an_slugs/.test(r.error.message || "") ? ", schema.sql (v17) ausführen." : ""), "warn"); return; }
-          kurzMeldung("Veröffentlicht ✓" + (push.checked ? ", Push folgt beim nächsten Lauf." : ""), "gut"); zeigeInfo();
+          kurzMeldung("Veröffentlicht ✓" + (push.checked ? " Der Push geht beim nächsten Lauf raus, in bis zu 30 Minuten." : ""), "gut"); zeigeInfo();
         });
     } });
     return h("details", { class: "karte", style: "padding:0 14px; margin-bottom:12px" }, [
@@ -4626,7 +4626,9 @@ window.Mitglieder = (function () {
         h("p", { class: "meta", style: "margin:0", text: "Mit Termin erscheint die Ankündigung auf der Startseite unter „Nächste Termine“, und alle mit Push bekommen am Vortag eine Erinnerung." }),
         h("div", { class: "mg-schalter" }, [
           h("label", { class: "mg-check" }, [wichtig, " wichtig (hervorgehoben)"]),
-          h("label", { class: "mg-check" }, [push, " auch als Push an alle mit Push"])
+          h("label", { class: "mg-check" }, [push, " zusätzlich als Push aufs Handy"]),
+          h("p", { class: "meta", style: "margin:4px 0 0", text: "Der Push geht an alle Empfänger oben, die Push eingeschaltet haben. "
+            + "Verschickt wird er beim nächsten Lauf des Workflows, also in bis zu 30 Minuten. Für etwas, das sofort ankommen muss, ruf lieber an." })
         ]),
         knopf
       ])

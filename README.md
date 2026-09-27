@@ -320,6 +320,11 @@ packt daten.json, abrechnung.csv, notizen.txt und alle Belege im Browser
 zusammen; Kartenkacheln im Dunkelmodus abgedunkelt; „Am Spieltag groß“ macht
 die Kopfkarte am Spieltag bildschirmfüllend; Tipp auf die Stand-Pille lädt neu.
 
+**Suche über alles**: Die Lupe oben findet Kollegen, Hallen, Vereine,
+Spiele, Termine, Strafen und Bestimmungen und springt direkt hin. Am
+Spieltag schaltet ein Knopf unter der Kopfkarte in den Spieltag-Modus und
+wieder zurück.
+
 **Sprache**: Die Texte kommen ohne Gedankenstriche aus, Saetze statt
 Einschuebe. Im Rechnungsblatt erinnert eine Zeile an vergangene Spiele
 ohne Rechnung.
