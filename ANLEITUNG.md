@@ -2371,6 +2371,44 @@ Gefunden und behoben:
   für Spiel. Die Absprache mit dem Obmann ersetzt es nicht, das sagt der
   Hinweis auch.
 
+### 10.6bb Datenbank geprüft, alte Konten nachgezogen (Schema v33)
+
+**Der Abgleich mit der laufenden Datenbank:** alle 30 Tabellen sind da,
+und jede Spalte stimmt mit `schema.sql` überein, bis hinunter zu
+`spiel_korrekturen.besetzung` (v31) und `profile.rechnung` (v30). Was der
+Auszug aus dem Dashboard **nicht** zeigt, sind Funktionen, Trigger,
+Regeln und Indizes - deshalb findet man `profil_schutz` dort auch nicht.
+Am Ende von `schema.sql` stehen jetzt vier Abfragen, mit denen sich das
+prüfen lässt: Trigger am Profil, die beiden Funktionen, der eindeutige
+Index und die Liste der Konten ohne Namen.
+
+Wenn eine davon leer bleibt, ist v32 noch nicht gelaufen: `schema.sql`
+einmal von oben bis unten im SQL-Editor ausführen. Die Datei ist so
+gebaut, dass das jederzeit geht.
+
+**Alte Konten auf den Stand neuer bringen (v33).** Wer sich früh
+registriert hat, musste seinen Namen noch nicht angeben und stand danach
+als „ohne Namen" in der Liste. Die Datenbank kennt ihn aber: er steckt in
+allem, was seitdem angelegt wurde - Gesuchen, Sperrtagen, Mitfahrten,
+Gespann-Nachrichten, Hallen-Hinweisen, dem Kontakteintrag, dem Wohnort,
+den Termin-Antworten. v33 trägt ihn von dort nach, aber nur, wenn überall
+derselbe Name steht und ihn nicht schon ein anderes Konto hat. Dazu
+kommen E-Mail und Schreibweise. Wer übrig bleibt, wird wie bisher von
+Hand zugeordnet - Abfrage (d) zeigt, wer das ist.
+
+**Ein Name kann nur einmal vergeben werden, und das sieht man jetzt
+vorher:**
+
+* In der öffentlichen Namensliste steht neu ein Häkchen `vergeben`. Es
+  sagt nur, dass ein Name zu einem Konto gehört, sonst nichts. Gepflegt
+  wird es nebenbei, sobald der Betreiber die App offen hat.
+* Die **Registrierung** bietet vergebene Namen gar nicht mehr an, statt
+  sie stillschweigend zu verwerfen.
+* Die Zuordnung im **Adminbereich** zeigt ebenfalls nur freie Namen und
+  darunter, wie viele schon vergeben sind.
+* Versucht es doch jemand, sagt die App „Diesen Namen hat schon ein
+  anderes Konto" statt einer Fehlermeldung aus der Datenbank.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

@@ -1339,3 +1339,92 @@ $$;
 drop trigger if exists profil_schutz on public.profile;
 create trigger profil_schutz before insert or update on public.profile
   for each row execute function public.profil_schutz();
+
+
+-- ======================================================================
+-- v33: Alte Konten auf den Stand neuer bringen, dazu eine Selbstpruefung
+-- ======================================================================
+-- Wer sich frueh registriert hat, musste seinen Namen noch nicht angeben -
+-- er stand danach mit "ohne Namen" in der Freischaltungsliste, und
+-- Abrechnung wie Statistik fanden nichts. Seinen Namen kennt die
+-- Datenbank aber trotzdem: er steckt in allem, was er seitdem angelegt
+-- hat - Gesuchen, Sperrtagen, Mitfahrten, Gespann-Nachrichten,
+-- Hallen-Hinweisen, seinem Kontakteintrag, seinem Wohnort, seinen
+-- Termin-Antworten. Dieser Abschnitt traegt ihn von dort nach.
+--
+-- Vorsichtig: nur, wenn ueberall derselbe Name steht und ihn nicht schon
+-- ein anderes Konto hat. Bleibt jemand uebrig, ordnet der Betreiber ihn
+-- wie bisher von Hand zu (Admin -> Freischaltung -> "Name zuordnen").
+
+-- 1. E-Mail nachtragen, falls sie noch fehlt
+insert into public.profile (id, email)
+  select id, email from auth.users
+  on conflict (id) do update set email = coalesce(public.profile.email, excluded.email);
+
+-- 2. Namen aus den eigenen Eintraegen zurueckholen
+with kandidaten as (
+            select user_id, slug from public.gesuche          where slug is not null
+  union all select user_id, slug from public.sperren          where slug is not null
+  union all select user_id, slug from public.mitfahrten       where slug is not null
+  union all select user_id, slug from public.spielkommentare  where slug is not null
+  union all select user_id, slug from public.hallen_notizen   where slug is not null
+  union all select user_id, slug from public.kontakte         where slug is not null
+  union all select user_id, slug from public.wohnorte         where slug is not null
+  union all select user_id, slug from public.termin_antworten where slug is not null
+), eindeutig as (
+  select user_id, min(slug) as slug
+    from kandidaten
+   group by user_id
+  having count(distinct slug) = 1
+)
+update public.profile p
+   set slug = e.slug
+  from eindeutig e
+ where p.id = e.user_id
+   and p.slug is null
+   and not exists (select 1 from public.profile x where x.slug = e.slug and x.id <> p.id);
+
+-- 3. Schreibweise des Namens aus der Namensliste ergaenzen
+update public.profile p
+   set name = l.name
+  from public.personen_liste l
+ where p.slug = l.slug
+   and (p.name is null or p.name = '');
+
+-- 4. Der Kontakteintrag fuer die Kollegen zeigt denselben Namen
+update public.kontakte k
+   set name = p.name
+  from public.profile p
+ where k.user_id = p.id
+   and p.name is not null and p.name <> ''
+   and coalesce(k.name, '') <> p.name;
+
+-- 5. In der oeffentlichen Namensliste steht jetzt auch, welcher Name schon
+--    zu einem Konto gehoert. Nur das - kein Name, keine Adresse, nichts
+--    Persoenliches. Die Registrierung bietet vergebene Namen erst gar
+--    nicht mehr an, statt sie stillschweigend zu verwerfen. Gepflegt wird
+--    die Spalte vom Betreiber, sobald er die App offen hat.
+alter table public.personen_liste add column if not exists vergeben boolean not null default false;
+
+-- ----------------------------------------------------------------------
+-- Selbstpruefung. Die drei Abfragen sagen, ob v32 wirklich drin ist -
+-- Trigger, Funktion und Index stehen nicht in der Tabellenuebersicht des
+-- Dashboards, man sieht sie nur so.
+--
+-- (a) Trigger am Profil (erwartet: profil_schutz, profile_geaendert):
+--     select tgname from pg_trigger
+--      where tgrelid = 'public.profile'::regclass and not tgisinternal;
+--
+-- (b) Beide Funktionen vorhanden (erwartet: 2 Zeilen):
+--     select proname from pg_proc
+--      where pronamespace = 'public'::regnamespace
+--        and proname in ('profil_schutz', 'neues_konto');
+--
+-- (c) Ein Name nur einmal (erwartet: profile_slug_eindeutig):
+--     select indexname from pg_indexes
+--      where schemaname = 'public' and tablename = 'profile';
+--
+-- (d) Wer hat noch keinen Namen? Die ordnest du von Hand zu:
+--     select email, slug, name, freigeschaltet from public.profile
+--      where slug is null order by angelegt;
+-- ----------------------------------------------------------------------

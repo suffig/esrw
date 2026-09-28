@@ -158,22 +158,30 @@ window.Mitglieder = (function () {
     var aus = (ctx.daten && ctx.daten.personen) || [];
     if (aus.length) return Promise.resolve(aus);
     if (namenListe) return Promise.resolve(namenListe);
-    return speichern(sb.from("personen_liste").select("slug,name").order("name")).then(function (r) {
-      namenListe = ((r && r.data) || []).map(function (z) { return { slug: z.slug, name: z.name }; });
+    return speichern(sb.from("personen_liste").select("slug,name,vergeben").order("name")).then(function (r) {
+      namenListe = ((r && r.data) || []).map(function (z) { return { slug: z.slug, name: z.name, vergeben: !!z.vergeben }; });
       return namenListe;
     });
   }
   // Der Betreiber haelt die Liste nebenbei aktuell - er hat die Daten offen.
+  // Der Betreiber haelt die oeffentliche Namensliste nebenbei aktuell - er
+  // ist der Einzige, der alle Profile lesen darf. Mitgeschrieben wird auch,
+  // welcher Name schon zu einem Konto gehoert, damit die Registrierung ihn
+  // gar nicht erst anbietet.
   function namenAbgleichen() {
     var personen = (ctx.daten && ctx.daten.personen) || [];
     if (!personen.length || !istAdminAn()) return;
-    var marke = personen.length + ":" + personen[personen.length - 1].slug;
-    if (ctx.lesen && ctx.lesen("namen-stand") === marke) return;
-    speichern(sb.from("personen_liste").upsert(personen.map(function (p) {
-      return { slug: p.slug, name: p.name, geaendert: new Date().toISOString() };
-    }), { onConflict: "slug" })).then(function (r) {
-      if (r && r.error) return;
-      if (ctx.schreiben) ctx.schreiben("namen-stand", marke);
+    speichern(sb.from("profile").select("slug")).then(function (r) {
+      var belegt = {};
+      if (r && !r.error) (r.data || []).forEach(function (x) { if (x.slug) belegt[x.slug] = true; });
+      var marke = personen.length + ":" + personen[personen.length - 1].slug + ":" + Object.keys(belegt).length;
+      if (ctx.lesen && ctx.lesen("namen-stand") === marke) return;
+      return speichern(sb.from("personen_liste").upsert(personen.map(function (p) {
+        return { slug: p.slug, name: p.name, vergeben: !!belegt[p.slug], geaendert: new Date().toISOString() };
+      }), { onConflict: "slug" })).then(function (r2) {
+        if (r2 && r2.error) return;
+        if (ctx.schreiben) ctx.schreiben("namen-stand", marke);
+      });
     });
   }
   // Admin-Modus: wer Admin ist, kann die Zusatzfunktionen oben abschalten und
@@ -520,7 +528,9 @@ window.Mitglieder = (function () {
     var namenDa = false;
     if (nameWahl) personenNamen().then(function (liste) {
       namenDa = liste.length > 0;
-      liste.forEach(function (x) { nameWahl.appendChild(h("option", { value: x.slug, text: x.name })); });
+      // Ein Name gehoert genau einem Konto - vergebene stehen nicht zur Wahl
+      liste.filter(function (x) { return !x.vergeben; })
+        .forEach(function (x) { nameWahl.appendChild(h("option", { value: x.slug, text: x.name })); });
       // Ohne Liste (Namenstabelle noch nicht eingespielt) waere die Pflicht
       // eine Sackgasse - dann faellt das Feld weg.
       if (!namenDa && nameWahl.parentNode) nameWahl.parentNode.removeChild(nameWahl);
@@ -1057,7 +1067,14 @@ window.Mitglieder = (function () {
                     strecken: heimat.value.trim() === (p.heimat || "") ? (p.strecken || {}) : {} };
       sb.from("profile").upsert(zeile).then(function (r) {
         speichernKnopf.disabled = false;
-        if (r.error) { meldung("Speichern fehlgeschlagen: " + fehlerText(r.error), "warn"); return; }
+        if (r.error) {
+          // Seit Schema v32 gehoert ein Name genau einem Konto
+          var doppelt = /duplicate key|profile_slug_eindeutig|unique/i.test(r.error.message || "");
+          meldung(doppelt
+            ? "Diesen Namen hat schon ein anderes Konto. Wähle deinen eigenen, oder wende dich an den Betreiber."
+            : "Speichern fehlgeschlagen: " + fehlerText(r.error), "warn");
+          return;
+        }
         profil = Object.assign({}, profil || {}, zeile);
         // Wohnort fuer Fahrgemeinschaften: nur Ort und Lage auf ~1 km gerundet
         if (teilen.checked && zeile.heimat_lat != null && zeile.heimat_lon != null) {
@@ -4584,6 +4601,9 @@ window.Mitglieder = (function () {
   function adminRendern(box) {
     namenAbgleichen();
     function neu() { adminRendern(box); }
+    // Ein Name gehoert genau einem Konto (Schema v32) - zur Auswahl
+    // stehen deshalb nur die, die noch frei sind.
+    var vergeben = {};
     // Name oben mit einer Marke rechts, darunter E-Mail und seit wann,
     // Knoepfe in einer eigenen Zeile. Vorher standen Marken, Name und
     // E-Mail ineinander und die Knoepfe sassen irgendwo dazwischen.
@@ -4603,7 +4623,12 @@ window.Mitglieder = (function () {
     function nameZuordnen(p, zeileEl) {
       var wahl = h("select", { class: "mg-select", style: "margin-top:6px" }, [h("option", { value: "", text: "Name zuordnen" })]);
       personenNamen().then(function (liste) {
-        liste.forEach(function (x) { wahl.appendChild(h("option", { value: x.slug, text: x.name })); });
+        var frei = liste.filter(function (x) { return !vergeben[x.slug] || vergeben[x.slug] === p.id; });
+        frei.forEach(function (x) { wahl.appendChild(h("option", { value: x.slug, text: x.name })); });
+        if (frei.length < liste.length) {
+          wahl.appendChild(h("option", { value: "", disabled: true,
+            text: "— " + (liste.length - frei.length) + " schon vergeben —" }));
+        }
       });
       wahl.addEventListener("change", function () {
         if (!wahl.value) return;
@@ -4611,7 +4636,11 @@ window.Mitglieder = (function () {
         wahl.disabled = true;
         speichern(sb.from("profile").update({ slug: wahl.value, name: name }).eq("id", p.id)).then(function (r) {
           wahl.disabled = false;
-          if (r && r.error) { meldung(fehlerText(r.error), "warn"); return; }
+          if (r && r.error) {
+            var doppelt = /duplicate key|profile_slug_eindeutig|unique/i.test(r.error.message || "");
+            meldung(doppelt ? name + " gehört schon einem anderen Konto." : fehlerText(r.error), "warn");
+            return;
+          }
           kurzMeldung(name + " zugeordnet ✓", "gut"); neu();
         });
       });
@@ -4643,6 +4672,7 @@ window.Mitglieder = (function () {
       var r = rr[0] || {};
       if (r.error) throw r.error;
       var alle = r.data || [];
+      alle.forEach(function (x) { if (x.slug) vergeben[x.slug] = x.id; });
       var einladungen = (rr[1] && rr[1].data) || [];
       var offeneEin = einladungen.filter(function (e) { return !e.eingeloest_am; });
       var offen = alle.filter(function (p) { return !p.freigeschaltet && !p.admin; });
