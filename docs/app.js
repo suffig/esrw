@@ -65,7 +65,12 @@
     ["checkliste", "Spieltag-Checkliste", "auf der Spielseite", true],
     ["wetter", "Wetter", "auf Start und der Spielseite", true],
     ["push", "Push-Mitteilungen", "Geräte anmelden, Erinnerungen, Testnachricht", true],
-    ["telefon", "Telefonliste", "Nummern der Kollegen im Reiter „Kollegen“", true]
+    ["telefon", "Telefonliste", "Nummern der Kollegen im Reiter „Kollegen“", true],
+    ["regeln", "Regeln", "Strafentabelle, Spielzeiten, Durchführungsbestimmungen", true],
+    ["rechner", "Strafrechner", "Stärke auf dem Eis ausrechnen", true],
+    ["archiv", "Archiv", "alle Spiele aller Saisons mit Filtern", true],
+    ["obmann", "Obmann per E-Mail", "Obmann-Adresse im Profil, „Monat per E-Mail“, Absage-Mail", true],
+    ["bild", "Profilbilder", "eigenes Bild hochladen und Bilder der Kollegen sehen", true]
   ];
   var funktionenStand = null;
   function funktionenLesen() {
@@ -165,6 +170,19 @@
     gespannAnwenden();
     (daten.personen || []).forEach(function (p) { p.spiele.sort(function (a, b) { return a.beginn < b.beginn ? -1 : a.beginn > b.beginn ? 1 : 0; }); });
     (daten.spiele || []).sort(function (a, b) { return a.beginn < b.beginn ? -1 : a.beginn > b.beginn ? 1 : 0; });
+  }
+
+  // Archiv, Statistik und Abrechnung kommen aus Dateien, die der Workflow
+  // baut - die wissen von einer frischen Korrektur noch nichts. Bis zum
+  // naechsten Lauf blendet die App sie hier selbst ein.
+  function gespannKorrektur(kennung) {
+    var k = korrekturen[kennung];
+    return k && k.besetzung && k.besetzung.length ? k.besetzung : null;
+  }
+  function gespannGehoert(kennung, slug) {
+    var b = gespannKorrektur(kennung);
+    if (!b || !slug) return null;
+    return b.some(function (x) { return x.slug === slug; });
   }
 
   // Hat der Betreiber das Gespann geaendert, gilt seine Besetzung - auch
@@ -368,7 +386,7 @@
     avatarKopf();
   }
   function bilderLaden() {
-    if (!sitzungVorhanden()) return;
+    if (!sitzungVorhanden() || !funktion("bild")) return;
     ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
       .then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.bilder() : null; })
       .then(function (b) { if (!b) return; bilder = b; bilderAnwenden(); })
@@ -1160,10 +1178,14 @@
     kopf.appendChild(h);
 
     var inhalt = el("spiel-inhalt"); inhalt.innerHTML = "";
-    var symbole = { "Halle": "i-pin", "Gespann": "i-users", "Besetzung": "i-users", "Tauschoptionen": "i-swap", "Weiteres": "i-list", "Spieltag-Checkliste": "i-check", "Änderungsverlauf": "i-clock" };
+    var symbole = { "Anfahrt": "i-route", "Halle": "i-pin", "Gespann": "i-users", "Besetzung": "i-users", "Tauschoptionen": "i-swap", "Weiteres": "i-list", "Spieltag-Checkliste": "i-check", "Änderungsverlauf": "i-clock" };
     function karteAbschnitt(titel) { var k = document.createElement("div"); k.className = "karte abschnitt-karte"; if (titel) { var hh = document.createElement("h4"); if (symbole[titel]) hh.appendChild(ikone(symbole[titel])); hh.appendChild(document.createTextNode(titel)); k.appendChild(hh); } inhalt.appendChild(k); return k; }
 
-    var ort = karteAbschnitt("Halle");
+    // Alles zum Hinkommen in einer Karte: wann los, wie weit, wohin, wie das
+    // Wetter wird. Vorher stand die Abfahrt klein unter der Anschrift.
+    var ort = karteAbschnitt("Anfahrt");
+    var abfahrtZeile = document.createElement("div"); abfahrtZeile.className = "abfahrt-gross versteckt";
+    ort.appendChild(abfahrtZeile);
     // Der Name stand hier als Link und gleich darunter noch einmal als Reihe -
     // zweimal derselbe Weg. Hier bleibt nur die Anschrift zum Kopieren.
     if (s.ort) {
@@ -1192,8 +1214,17 @@
     }
     if (meins && s.halle) {
       ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.abfahrt(s.halle) : null; })
-        .then(function (roh) { if (!roh || !roh.minuten) return; var sk = mitPuffer(roh); var ab = new Date(treff.getTime() - sk.minuten * 60000);
-          var zz = document.createElement("div"); zz.className = "meta"; zz.style.marginTop = "6px"; zz.textContent = "Abfahrt ca. " + uhr(ab) + " Uhr · " + sk.minuten + " Min., " + sk.km + " km, " + verkehrText(); ort.appendChild(zz); }).catch(function () {});
+        .then(function (roh) {
+          if (!roh || !roh.minuten || !abfahrtZeile.isConnected) return;
+          var sk = mitPuffer(roh); var ab = new Date(treff.getTime() - sk.minuten * 60000);
+          abfahrtZeile.innerHTML = "";
+          abfahrtZeile.appendChild(ikone("i-route"));
+          var t1 = document.createElement("span");
+          var b1 = document.createElement("b"); b1.textContent = "Abfahrt ca. " + uhr(ab) + " Uhr"; t1.appendChild(b1);
+          var s1 = document.createElement("small"); s1.textContent = sk.minuten + " Min., " + sk.km + " km, " + verkehrText() + " · Treffpunkt " + uhr(treff) + " Uhr";
+          t1.appendChild(s1); abfahrtZeile.appendChild(t1);
+          abfahrtZeile.classList.remove("versteckt");
+        }).catch(function () {});
     }
     if (s.hinweis) { var hw = document.createElement("div"); hw.className = "achtung"; hw.textContent = "⚠ " + s.hinweis; ort.appendChild(hw); }
     if (s.aenderung) { var ae = document.createElement("div"); ae.className = "geaendert"; ae.textContent = "⚠ Geändert: " + s.aenderung; ort.appendChild(ae); }
@@ -1263,6 +1294,7 @@
         var mail = document.createElement("a"); mail.className = "zeile-link"; mail.href = "#"; mail.appendChild(ikone("i-bell")); mail.appendChild(document.createTextNode("Obmann anschreiben (Absage / Frage)"));
         mail.addEventListener("click", function (ev) {
           ev.preventDefault();
+          if (!funktion("obmann")) return;
           ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.obmann() : null; })
             .then(function (an) {
               var text = "Hallo,\n\nes geht um mein Spiel:\n" + spielText(s) + "\n\n[Grund / Frage hier eintragen]\n\nViele Grüße\n" + (profil.name ? profil.name.split(",").reverse().join(" ").trim() : "");
@@ -2424,9 +2456,10 @@
     var meins = !!(profil && profil.slug === p.slug);
     el("detail").classList.toggle("start-ruhig", meins && startEinstellung("ruhig"));
     el("profil-hinweis").textContent = meins ? "dein Profil" : "fremdes Profil";
-    el("uebernehmen").classList.toggle("versteckt", meins);
+    // Mit Konto gehoert das Profil zum Konto - dann gibt es nichts zu wechseln
+    el("uebernehmen").classList.toggle("versteckt", meins || kontoGebunden());
     el("uebernehmen").onclick = function () { profilSetzen(p); toast("„Start“ zeigt jetzt " + p.name, "gut"); };
-    el("wechseln").classList.toggle("versteckt", !meins);
+    el("wechseln").classList.toggle("versteckt", !meins || kontoGebunden());
     var pz = el("detail").querySelector(".spalte-haupt > .profilzeile"), haupt = pz && pz.parentNode;
     if (haupt) { if (meins) haupt.insertBefore(pz, el("start-anpassen")); else haupt.insertBefore(pz, haupt.firstChild); }
     zeigeKollege(p, meins);
@@ -2497,9 +2530,9 @@
     ["mitglieder/kollegen", "i-users", "Kollegen", "telefon"],
     ["mitglieder/tausch", "i-swap", "Tausch", "tausch"],
     ["aenderungen", "i-bell", "Änderungen"],
-    ["regeln", "i-buch", "Regeln"],
-    ["rechner", "i-rechner", "Strafrechner"],
-    ["archiv", "i-clock", "Archiv"],
+    ["regeln", "i-buch", "Regeln", "regeln"],
+    ["rechner", "i-rechner", "Strafrechner", "rechner"],
+    ["archiv", "i-clock", "Archiv", "archiv"],
     ["mitfahren", "i-route", "Mitfahren", "mitfahren"],
     ["mitglieder/info", "i-info", "Info", "info"],
     ["mitglieder/frei", "i-cal", "Verfügbar", "frei"],
@@ -2609,7 +2642,7 @@
   var SCHNELL_ZIELE = [
     ["#plan", "i-list", "Spielplan"],
     ["#mitglieder/abrechnung", "i-euro", "Abrechnung", "abrechnung"],
-    ["#archiv", "i-clock", "Archiv"],
+    ["#archiv", "i-clock", "Archiv", "archiv"],
     ["#mitfahren", "i-route", "Mitfahren", "mitfahren"],
     ["#aenderungen", "i-bell", "Änderungen"],
     ["#mitglieder/tausch", "i-swap", "Tausch", "tausch"],
@@ -2617,8 +2650,8 @@
     ["#mitglieder/frei", "i-cal", "Verfügbar", "frei"],
     ["#mitglieder/info", "i-info", "Info", "info"],
     ["#karte", "i-pin", "Hallenkarte", "hallen"],
-    ["#regeln", "i-buch", "Regeln"],
-    ["#rechner", "i-rechner", "Strafrechner"],
+    ["#regeln", "i-buch", "Regeln", "regeln"],
+    ["#rechner", "i-rechner", "Strafrechner", "rechner"],
     ["#woche-teilen", "i-teilen", "Woche teilen"],
     ["#einstellungen", "i-key", "Einstellungen"]
   ];
@@ -2916,7 +2949,7 @@
   // Leeres Geruest statt null: der Mitgliederbereich soll auch dann seinen
   // Anmeldeschirm zeichnen koennen, wenn noch keine Daten geladen sind.
   var LEER = { personen: [], spiele: [], hallen: {}, adressen: {}, hallen_hinweise: {}, saison: "", titel: "Einteilungen" };
-  function mitgliederKontext() { return { daten: daten || LEER, slug: profil && profil.slug, personMit: personMit, hole: hole, ikone: ikone, funktion: funktion, funktionen: FUNKTIONEN, einstellungenSync: einstellungenSync, lesen: lesen, schreiben: schreiben }; }
+  function mitgliederKontext() { return { gespannKorrektur: gespannKorrektur, gespannGehoert: gespannGehoert, daten: daten || LEER, slug: profil && profil.slug, personMit: personMit, hole: hole, ikone: ikone, funktion: funktion, funktionen: FUNKTIONEN, einstellungenSync: einstellungenSync, lesen: lesen, schreiben: schreiben }; }
   function zeigeMitglieder(reiter) {
     aktuell = null; ansicht("mitglieder");
     ladeMitglieder().then(function (M) { M.oeffnen(el("mitglieder"), mitgliederKontext(), reiter); })
@@ -3159,6 +3192,13 @@
       karte[k] = { kennung: k, beginn: e.beginn, liga: e.liga || alt.liga || "", paarung: e.paarung || alt.paarung || "", halle: e.halle || alt.halle || "", system: e.system || alt.system || 0,
                    besetzung: (e.besetzung && e.besetzung.length ? e.besetzung : alt.besetzung) || [], saison: e.saison || alt.saison || archivSaisonAus(e.beginn), manuell: e.manuell || alt.manuell || false };
     }
+    function archivKorrigieren() {
+      Object.keys(karte).forEach(function (k) {
+        var neu = gespannKorrektur(k);
+        if (neu) { karte[k].besetzung = neu; karte[k].system = neu.length; }
+        if (!alle && gespannGehoert(k, slug) === false) delete karte[k];
+      });
+    }
     // 1) Datenfenster
     (daten.spiele || []).forEach(function (s) {
       if (!alle && !(s.besetzung || []).some(function (b) { return b.slug === slug; })) return;
@@ -3198,6 +3238,7 @@
     else el("archiv-admin").classList.add("versteckt");
     Promise.all(laeufe).then(function () {
       if (archivStand.lauf !== lauf) return;
+      archivKorrigieren();
       archivStand.spiele = Object.keys(karte).map(function (k) { return karte[k]; }).sort(function (a, b) { return a.beginn < b.beginn ? 1 : -1; });
       archivStand.modus = modus;
       // Filterlisten fuellen
@@ -3733,8 +3774,8 @@
       funktion("statistik") ? ["#statistik", "i-balken", "Statistik", "Saison, Ligen, Hallen, Partner, Saisonziel"] : null,
       ["#aenderungen", "i-list", "\u00c4nderungen", "Was sich in 14 Tagen getan hat \u2013 mit Vorher/Nachher"],
       funktion("notizen") ? ["#mitglieder/notizen", "i-note", "Notizen", "Private Spielnotizen"] : null,
-      ["#regeln", "i-buch", "Regeln", "Strafenmatrix, Spielzeiten und Bestimmungen, auch offline"],
-      ["#rechner", "i-rechner", "Strafrechner", "Wer sitzt, wer spielt: die Stärke auf dem Eis"],
+      funktion("regeln") ? ["#regeln", "i-buch", "Regeln", "Strafenmatrix, Spielzeiten und Bestimmungen, auch offline"] : null,
+      funktion("rechner") ? ["#rechner", "i-rechner", "Strafrechner", "Wer sitzt, wer spielt: die Stärke auf dem Eis"] : null,
       ["Gemeinsam"],
       funktion("mitfahren") ? ["#mitfahren", "i-route", "Zusammen fahren", "Wer f\u00e4hrt wohin \u2013 auf dem Weg, bieten, suchen"] : null,
       funktion("telefon") ? ["#mitglieder/kollegen", "i-users", "Kollegen", "Telefonliste \u2013 anrufen, WhatsApp, kopieren"] : null,
@@ -4620,7 +4661,7 @@
     if (slug === "einstellungen") { zeigeEinstellungen(); return; }
     if (slug === "mitglieder/konto") { location.hash = "einstellungen"; return; }
     if (slug === "aenderungen") { zeigeAenderungen(); return; }
-    if (slug === "archiv" || slug.indexOf("archiv/") === 0) { zeigeArchiv(slug.split("/")[1] || ""); return; }
+    if (slug === "archiv" || slug.indexOf("archiv/") === 0) { if (!funktion("archiv")) { location.hash = "mehr"; return; } zeigeArchiv(slug.split("/")[1] || ""); return; }
     if (slug.indexOf("rechnung/") === 0) {
       var rk = decodeURIComponent(slug.slice(9));
       ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
@@ -4632,8 +4673,8 @@
     if (slug === "anleitung") { location.hash = "mehr"; tourOeffnen("alles"); return; }
     if (slug === "suche") { zeigeAuswahl("suche"); return; }
     if (slug === "karte") { zeigeKarte(); return; }
-    if (slug === "regeln") { zeigeRegeln(); return; }
-    if (slug === "rechner") { zeigeRechner(); return; }
+    if (slug === "regeln") { if (!funktion("regeln")) { location.hash = "mehr"; return; } zeigeRegeln(); return; }
+    if (slug === "rechner") { if (!funktion("rechner")) { location.hash = "mehr"; return; } zeigeRechner(); return; }
     if (slug.indexOf("spiel/") === 0) { zeigeSpiel(decodeURIComponent(slug.slice(6))); return; }
     if (slug.indexOf("halle/") === 0) { zeigeHalle(slug.slice(6)); return; }
     if (slug === "plan") { aktuell = null; ansicht("plan"); zeigePlan(); if (sprungZiel === null) window.scrollTo(0, 0); return; }
@@ -4854,7 +4895,11 @@
     if (b && profil) { bilder[profil.slug] = { bild: b }; }
     avatarKopf();
   });
+  // Steht im Konto ein Name, ist das Profil dieses Geraets daran gebunden.
+  var kontoName = null;
+  function kontoGebunden() { return !!(kontoName && sitzungVorhanden()); }
   document.addEventListener("mg-profil", function (e) {
+    if (e.detail && e.detail.slug) kontoName = e.detail.slug;
     if (e.detail && e.detail.einstellungen) einstellungenAnwenden(e.detail.einstellungen);
     else if (e.detail && sitzungVorhanden()) einstellungenSync();
     var slug = e.detail && e.detail.slug, p = slug && personMit(slug);

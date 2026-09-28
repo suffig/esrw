@@ -930,6 +930,10 @@ window.Mitglieder = (function () {
         auswahl.appendChild(o);
       });
     });
+    // Der Name wird einmal bei der Registrierung gewaehlt. Danach gehoert
+    // er zum Konto - sonst stimmen Abrechnung und Statistik nicht mehr.
+    // Die Datenbank haelt das ebenfalls fest (profil_schutz, Schema v32).
+    var fest = !!(p.slug && !p.admin);
     var adresse = adressFeld({ wert: p.heimat || "", lat: p.heimat_lat, lon: p.heimat_lon });
     var heimat = adresse.feld;
     var teilen = h("input", { type: "checkbox" });
@@ -983,7 +987,8 @@ window.Mitglieder = (function () {
         return;
       }
       vorschau.appendChild(telefonZeile({
-        slug: auswahl.value, name: (auswahl.options[auswahl.selectedIndex] || {}).text || p.name || "Du",
+        slug: fest ? p.slug : auswahl.value,
+        name: fest ? (p.name || "Du") : ((auswahl.options[auswahl.selectedIndex] || {}).text || p.name || "Du"),
         rufname: rufname.value.trim() || null,
         bild: zeigtBild ? bildStand : null,
         telefon: zeigtTel ? telefon.value.trim() : "",
@@ -1021,7 +1026,7 @@ window.Mitglieder = (function () {
     var speichernKnopf = h("button", { type: "submit", class: "mg-haupt", text: "Speichern" });
     var form = h("form", { class: "mg-form", onsubmit: function (e) {
       e.preventDefault();
-      if (!auswahl.value) { meldung("Bitte deinen Namen wählen.", "warn"); return; }
+      if (!fest && !auswahl.value) { meldung("Bitte deinen Namen wählen.", "warn"); return; }
       if (!adresse.leer() && !adresse.gueltig()) {
         meldung("Bitte die Adresse aus der Vorschlagsliste wählen, dann stimmen Hausnummer, PLZ und Ort.", "warn");
         heimat.focus(); return;
@@ -1031,10 +1036,11 @@ window.Mitglieder = (function () {
         heimat.focus(); return;
       }
       speichernKnopf.disabled = true;
-      var person = ctx.personMit(auswahl.value)
-        || (namenListe || []).filter(function (x) { return x.slug === auswahl.value; })[0]
-        || { slug: auswahl.value, name: auswahl.options[auswahl.selectedIndex].text };
-      var zeile = { id: session.user.id, slug: auswahl.value, name: person ? person.name : auswahl.value,
+      var gewaehlt = fest ? p.slug : auswahl.value;
+      var person = ctx.personMit(gewaehlt)
+        || (namenListe || []).filter(function (x) { return x.slug === gewaehlt; })[0]
+        || { slug: gewaehlt, name: fest ? (p.name || gewaehlt) : auswahl.options[auswahl.selectedIndex].text };
+      var zeile = { id: session.user.id, slug: gewaehlt, name: person ? person.name : gewaehlt,
                     email: session.user.email || null,
                     heimat: heimat.value.trim() || null,
                     heimat_lat: adresse.stand.lat != null ? adresse.stand.lat : p.heimat_lat || null,
@@ -1094,8 +1100,12 @@ window.Mitglieder = (function () {
     } }, [
       h("h4", { text: zurueck ? "Mein Profil" : "Wer bist du?" }),
       zurueck ? h("p", { class: "meta", style: "margin:0 0 8px", text: "Alles an einer Stelle: Name, Anschrift, Nummer. Abrechnung, Rechnung und die Liste der Kollegen nehmen sich die Angaben von hier." }) : null,
-      h("label", { text: "Dein Name auf esrw.de" }), auswahl,
-      h("div", { class: "profil-bildzeile" }, [
+      h("label", { text: "Dein Name auf esrw.de" }),
+      fest ? h("p", { class: "meta", style: "margin:0 0 4px" }, [
+        h("b", { text: p.name || p.slug }),
+        h("span", { text: " – dein Name gehört zu deinem Konto. Ändern kann ihn nur der Betreiber, "
+          + "damit Abrechnung und Statistik stimmen." })]) : auswahl,
+      fn("bild") ? h("div", { class: "profil-bildzeile" }, [
         bildVorschau,
         h("div", {}, [
           h("button", { type: "button", class: "mg-neben", text: bildStand ? "Bild ändern" : "Bild wählen",
@@ -1105,7 +1115,7 @@ window.Mitglieder = (function () {
                        text: "Wird auf 128 Pixel verkleinert und liegt in deinem Profil." })
         ]),
         bildWahl
-      ]),
+      ]) : null,
       h("label", { text: "Rufname, wie dich die Kollegen ansprechen (optional)" }), rufname,
       h("label", { text: "Heimatadresse, Startpunkt für die Strecke zur Halle" }),
       adresse.box,
@@ -1113,12 +1123,13 @@ window.Mitglieder = (function () {
       h("label", { text: "Handynummer für die Kollegen (freiwillig, jederzeit löschbar)" }), telefon,
       telHinweis,
       h("p", { class: "regeln-kopf", style: "margin:14px 0 2px", text: "Was die Kollegen sehen" }),
-      h("label", { class: "mg-check" }, [bildZeigen, " Profilbild zeigen"]),
+      fn("bild") ? h("label", { class: "mg-check" }, [bildZeigen, " Profilbild zeigen"]) : null,
       h("label", { class: "mg-check", style: "margin-top:4px" }, [telefonZeigen, " Handynummer zeigen"]),
       h("label", { class: "mg-check", style: "margin-top:4px" }, [adresseZeigen, " Anschrift zeigen"]),
       h("p", { class: "meta", style: "margin:8px 0 4px", text: "Nur Freigeschaltete sehen das, und nur, was hier angehakt ist. So sieht es aus:" }),
       vorschau,
-      h("label", { text: "E-Mail des Obmanns (für „Monat per E-Mail“ in der Abrechnung, optional)" }), obmann,
+      fn("obmann") ? h("label", { text: "E-Mail des Obmanns (für „Monat per E-Mail“ in der Abrechnung, optional)" }) : null,
+      fn("obmann") ? obmann : null,
       h("label", { text: "Kilometermodell" }), modell,
       h("div", { class: "mg-felder mg-zwei" }, [
         h("label", {}, ["€ je km, einfache Strecke", satzEinfach]),
@@ -1378,6 +1389,11 @@ window.Mitglieder = (function () {
       var alt = karte[kennungVon(s)];
       karte[kennungVon(s)] = { beginn: s.beginn, liga: s.liga, paarung: s.paarung, halle: s.halle, rolle: s.rolle, system: s.system,
                                saison: (alt && alt.saison) || ctx.daten.saison };
+    });
+    // Hat der Betreiber das Gespann geaendert, zaehlt das auch hier -
+    // Archiv und Datenbank wissen bis zum naechsten Lauf nichts davon.
+    if (ctx.gespannGehoert) Object.keys(karte).forEach(function (k) {
+      if (ctx.gespannGehoert(k, profil.slug) === false) delete karte[k];
     });
     return Object.keys(karte).map(function (k) { var s = karte[k]; s.kennung = k; return s; })
       .sort(function (a, b) { return a.beginn < b.beginn ? 1 : -1; });
@@ -2509,6 +2525,7 @@ window.Mitglieder = (function () {
           h("p", { class: "meta", style: "margin:0 0 8px", text: "Vergangene Spiele bekommen km und Vergütung von selbst. Die Knöpfe füllen nur, was noch fehlt." }),
           h("div", { class: "zweit" }, [strecken, gebuehr,
             h("button", { type: "button", text: "CSV der Saison", onclick: function () { csvExport(spiele); } }),
+            h("button", { type: "button", text: "Für die Steuer", title: "Jahresblatt und CSV je Steuerjahr", onclick: function () { zeigeFahrtenbuch(); } }),
             h("button", { type: "button", text: "Fahrtenbuch", onclick: function () { zeigeFahrtenbuch(); } }),
             h("button", { type: "button", text: "Drucken", onclick: function () { window.print(); } })])]);
       },
@@ -2896,7 +2913,7 @@ window.Mitglieder = (function () {
         sb.from("gesuche").update({ status: "erledigt" }).eq("id", g.id).then(function (r) { if (r.error) meldung(fehlerText(r.error), "warn"); zeigeTausch(); });
       } }));
       if (g.status === "vereinbart") {
-        knoepfe.appendChild(h("button", { type: "button", text: "Mail an Obmann erneut", onclick: function () { obmannMail(g, g.vereinbart_name); } }));
+        if (fn("obmann")) knoepfe.appendChild(h("button", { type: "button", text: "Mail an Obmann erneut", onclick: function () { obmannMail(g, g.vereinbart_name); } }));
         knoepfe.appendChild(h("button", { type: "button", text: "Doch nicht (wieder offen)", onclick: function () {
           sb.from("gesuche").update({ status: "offen", vereinbart_mit: null, vereinbart_name: null, vereinbart_gemeldet: false }).eq("id", g.id).then(function () { zeigeTausch(); });
         } }));
@@ -3130,7 +3147,7 @@ window.Mitglieder = (function () {
     var zeilen = [["Name", profil.name || profil.slug || "?"], ["E-Mail", session.user.email || "?"],
                   ["Freischaltung", profil.admin ? (adminModus() ? "Admin" : "Admin (Modus aus)") : profil.freigeschaltet ? "freigeschaltet ✓" : "wartet auf den Betreiber"],
                   ["Heimatadresse", profil.heimat ? "hinterlegt ✓" : "fehlt (für Strecken und Abfahrt)"],
-                  ["Obmann-E-Mail", profil.obmann_email || "fehlt (für Mails aus der App)"]];
+                  fn("obmann") ? ["Obmann-E-Mail", profil.obmann_email || "fehlt (für Mails aus der App)"] : null].filter(Boolean);
     function rendern() {
       leeren(box); box.appendChild(h("h4", { text: "Dein Konto" }));
       var liste = h("div", { class: "status-liste", style: "padding:0" });

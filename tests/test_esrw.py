@@ -487,6 +487,16 @@ def test_besetzung_korrektur():
     # Ohne Korrektur bleibt alles, wie es von esrw.de kommt
     spiel2 = {"start": beginn, "begegnung": spiel["begegnung"], "besetzung": {"HSR": [], "(L)SR": ["Alt, Anton"]}}
     pruefe(E.besetzung_korrigieren([spiel2], {}, venues) == 0, "ohne Korrektur aendert sich nichts")
+    # Rueckwirkend: das Archiv weiss nichts von esrw.de, also muss die
+    # Korrektur auch dort greifen - sonst steht das Spiel bei dem, der
+    # gar nicht mehr eingeteilt ist, weiter in Abrechnung und Statistik.
+    historie = {"x": {"beginn": beginn.isoformat(), "paarung": paarung,
+                      "besetzung": {"HSR": [], "(L)SR": ["Alt, Anton", "Alt, Berta"]}}}
+    n2 = E.historie_umbesetzen(historie, korr)
+    pruefe(n2 == 1, "ein Archiveintrag umbesetzt", str(n2))
+    pruefe(historie["x"]["besetzung"]["(L)SR"] == ["Neu, Nina", "Neu, Nils"],
+           "das Archiv kennt das neue Gespann", str(historie["x"]["besetzung"]))
+    pruefe(E.historie_umbesetzen(historie, korr) == 0, "zweiter Lauf aendert nichts mehr")
     # Drei Offizielle: HSR bleibt HSR
     korr3 = {kennung: {"besetzung": [{"name": "Chef, Carla", "rolle": "HSR"},
                                      {"name": "Linie, Lea", "rolle": "LSR"},

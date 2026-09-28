@@ -1667,6 +1667,12 @@
   .teilen-knopf svg.i, .knopf-zeichen svg.i { width:1.05rem; height:1.05rem; }
   .knopf-zeichen { display:inline-flex; align-items:center; justify-content:center; gap:6px; }
   .hallen-anschrift { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:0 0 10px; }
+  /* Anfahrt: wann losfahren, gross genug zum Lesen im Vorbeigehen */
+  .abfahrt-gross { display:flex; align-items:center; gap:10px; margin:0 0 10px; padding:10px 12px;
+                   border-radius:14px; background:var(--akzent-hell); color:var(--akzent); }
+  .abfahrt-gross svg.i { width:1.3rem; height:1.3rem; flex:none; }
+  .abfahrt-gross b { display:block; font-size:1rem; }
+  .abfahrt-gross small { display:block; color:var(--akzent); opacity:.85; font-weight:600; }
   .nur-zeichen { padding-left:12px !important; padding-right:12px !important; }
   /* Gemeinsame Spiele auf der Kollegenseite: Datum fett, Paarung darunter */
   .zeile-lauf { display:flex; align-items:center; gap:10px; padding:10px 2px;
@@ -2239,6 +2245,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=86"></script>
+<script src="app.js?v=87"></script>
 </body>
 </html>

@@ -2293,6 +2293,48 @@ Erst dann zählt wieder, was dort steht.
   rechts, darunter E-Mail und „registriert vor …", und die Knöpfe haben
   eine eigene Zeile.
 
+### 10.6az Name gehört zum Konto, Gespann auch rückwirkend (Schema v32)
+
+**Vorher `supabase/schema.sql` bis v32 einspielen.** Der Abschnitt löst
+doppelte Namen auf (der älteste Eintrag behält ihn, die anderen stehen
+beim Betreiber als „ohne Namen") und legt danach einen eindeutigen Index
+an.
+
+* **Der Name gehört zum Konto.** Bisher konnte jeder in seinem Profil
+  einen beliebigen Namen aus der Liste wählen und ihn jederzeit wechseln,
+  auch einen, der schon jemandem gehörte - damit stimmten Abrechnung und
+  Statistik nicht mehr. Jetzt: einmal bei der Registrierung wählen,
+  danach ändert ihn nur der Betreiber unter **Admin → Freischaltung**.
+  Das hält die Datenbank fest (`profil_schutz`), nicht nur die App; ein
+  Name kann außerdem nur einem Konto gehören. Mit Konto verschwinden
+  auch „Als mein Profil" und „Wechseln" - es gibt nichts mehr zu
+  wechseln.
+
+* **Gespann-Korrektur gilt jetzt auch rückwirkend.** Wer ein Spiel
+  umbesetzt, hat es bisher nur im Spielplan losbekommen: in **Archiv,
+  Statistik und Abrechnung** stand es weiter, auch bei dem, der gar nicht
+  mehr eingeteilt war. Grund: die drei kommen aus `historie.json`, und
+  esrw.de zeigt alte Spiele nicht mehr - sie werden also nie wieder
+  frisch gelesen. `historie_umbesetzen()` zieht die Korrektur jetzt durch
+  das Archiv, auch durch die eingefrorenen Saisons. Bis zum nächsten Lauf
+  blendet die App die betroffenen Spiele selbst aus.
+
+* **Mehr Schalter im Adminmenü**: Regeln, Strafrechner, Archiv,
+  Profilbilder und **Obmann per E-Mail** lassen sich jetzt ebenfalls
+  unter Admin → Funktionen abschalten. Aus bleibt aus: die Ziele
+  verschwinden aus der Leiste, aus „Mehr", aus dem Schnellzugriff, und
+  der direkte Weg über die Adresse führt zurück.
+
+* **Für die Steuer** gab es den Export schon, nur gut versteckt:
+  Abrechnung → Werkzeuge → **„Für die Steuer"** führt zum Jahresblatt je
+  Steuerjahr, dort stehen „Drucken / PDF" und **CSV** mit allen Spalten
+  (km, Fahrtkosten, Vergütung, Auslagen, Verpflegung, Belege).
+
+* **Anfahrt auf der Spielseite**: aus der Karte „Halle" ist **„Anfahrt"**
+  geworden. Ganz oben steht jetzt groß, wann du losfahren musst, darunter
+  Fahrzeit, Kilometer, Puffer und Treffpunkt; erst dann Anschrift und der
+  Weg zur Hallenseite.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

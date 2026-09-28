@@ -1244,3 +1244,98 @@ update public.profile
 -- Form: [{"name": "Muster, Max", "slug": "muster-max", "rolle": "SR"}, ...]
 -- Rolle ist "SR", "HSR" oder "LSR"; ab drei Offiziellen zaehlt sie.
 alter table public.spiel_korrekturen add column if not exists besetzung jsonb;
+
+
+-- ======================================================================
+-- v32: Ein Name gehoert genau einem Konto
+-- ======================================================================
+-- Bisher konnte jeder in seinem Profil einen beliebigen Namen aus der
+-- Liste waehlen und ihn spaeter wieder wechseln - auch einen, der schon
+-- jemandem gehoert. Damit stimmten Abrechnung und Statistik nicht mehr.
+--
+-- Ab hier gilt: den Namen waehlt man einmal bei der Registrierung, und
+-- danach aendert ihn nur der Betreiber (Admin -> Freischaltung).
+
+-- 1. Doppelte Namen aufloesen. Der aelteste Eintrag behaelt den Namen,
+--    die anderen stehen beim Betreiber als "ohne Namen" und werden von
+--    Hand zugeordnet.
+with doppelt as (
+  select id,
+         row_number() over (partition by slug order by angelegt nulls last, id) as nr
+    from public.profile
+   where slug is not null
+)
+update public.profile p
+   set slug = null, name = null
+  from doppelt d
+ where d.id = p.id and d.nr > 1;
+
+-- 2. Ab jetzt laesst die Datenbank keinen Namen zweimal zu.
+create unique index if not exists profile_slug_eindeutig
+  on public.profile (slug) where slug is not null;
+
+-- 3. Beim Registrieren nur einen freien Namen uebernehmen. Waere er
+--    vergeben, scheiterte sonst die ganze Registrierung am Index.
+create or replace function public.neues_konto()
+returns trigger language plpgsql security definer set search_path = public as $$
+declare
+  e       public.einladungen%rowtype;
+  m_slug  text;
+  m_name  text;
+  w_slug  text;
+  w_name  text;
+begin
+  select * into e from public.einladungen where lower(email) = lower(new.email);
+  m_slug := nullif(new.raw_user_meta_data ->> 'slug', '');
+  m_name := nullif(new.raw_user_meta_data ->> 'name', '');
+
+  insert into public.profile (id, email) values (new.id, new.email)
+    on conflict (id) do nothing;
+
+  -- Einladung des Betreibers geht vor der eigenen Wahl
+  w_slug := coalesce(e.slug, m_slug);
+  w_name := coalesce(e.name, m_name);
+  if w_slug is not null and exists (
+       select 1 from public.profile x where x.slug = w_slug and x.id <> new.id) then
+    w_slug := null; w_name := null;      -- schon vergeben: der Betreiber klaert das
+  end if;
+
+  update public.profile p
+     set email          = new.email,
+         slug           = coalesce(p.slug, w_slug),
+         name           = coalesce(p.name, w_name),
+         freigeschaltet = p.freigeschaltet or coalesce(e.freischalten, false),
+         admin          = p.admin or coalesce(e.admin, false)
+   where p.id = new.id;
+
+  if e.email is not null then
+    update public.einladungen set eingeloest_am = now() where email = e.email;
+  end if;
+  return new;
+end;
+$$;
+
+-- 4. Der Name bleibt, sobald er steht - aendern darf ihn nur der Betreiber.
+create or replace function public.profil_schutz()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  if auth.uid() is not null and not public.ist_admin() then
+    if tg_op = 'UPDATE' then
+      new.freigeschaltet := old.freigeschaltet;
+      new.admin := old.admin;
+      -- Einmal gewaehlt, gehoert der Name zum Konto
+      if old.slug is not null then
+        new.slug := old.slug;
+        new.name := old.name;
+      end if;
+    else
+      new.freigeschaltet := false;
+      new.admin := false;
+    end if;
+  end if;
+  return new;
+end;
+$$;
+drop trigger if exists profil_schutz on public.profile;
+create trigger profil_schutz before insert or update on public.profile
+  for each row execute function public.profil_schutz();

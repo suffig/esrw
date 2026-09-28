@@ -844,6 +844,39 @@ def betreiber_daten(cfg, venues):
     return manuell, hinweise
 
 
+def _besetzung_form(neu):
+    """Aus [{"name":…, "rolle":…}] die Form von esrw.de machen."""
+    hsr, lsr = [], []
+    for b in neu or []:
+        name = (b or {}).get("name")
+        if not name:
+            continue
+        (hsr if (b.get("rolle") == "HSR") else lsr).append(name)
+    if not hsr and not lsr:
+        return None
+    return {"HSR": hsr, "(L)SR": lsr}
+
+
+def historie_umbesetzen(historie, korrekturen):
+    """Eine Gespann-Korrektur gilt auch rueckwirkend.
+
+    esrw.de zeigt nur die naechsten Tage: ein Spiel von gestern wird nie
+    wieder frisch gelesen. Ohne diesen Schritt bliebe im Archiv, in der
+    Statistik und in der Abrechnung fuer immer das alte Gespann stehen -
+    auch bei dem, der gar nicht mehr eingeteilt ist."""
+    if not korrekturen:
+        return 0
+    geaendert = 0
+    for eintrag in historie.values():
+        k = korrekturen.get(str(eintrag.get("beginn", "")) + "|" + str(eintrag.get("paarung", "")))
+        neu = _besetzung_form((k or {}).get("besetzung"))
+        if not neu or eintrag.get("besetzung") == neu:
+            continue
+        eintrag["besetzung"] = neu
+        geaendert += 1
+    return geaendert
+
+
 def besetzung_korrigieren(spiele, korrekturen, venues):
     """Der Betreiber kann das Gespann in der App aendern. Diese Aenderung
     gewinnt gegen esrw.de - in den Feeds, im Push, im Archiv und in der
@@ -863,15 +896,10 @@ def besetzung_korrigieren(spiele, korrekturen, venues):
         neu = (k or {}).get("besetzung")
         if not neu:
             continue
-        hsr, lsr = [], []
-        for b in neu:
-            name = (b or {}).get("name")
-            if not name:
-                continue
-            (hsr if (b.get("rolle") == "HSR") else lsr).append(name)
-        if not hsr and not lsr:
+        form = _besetzung_form(neu)
+        if not form:
             continue
-        s["besetzung"] = {"HSR": hsr, "(L)SR": lsr}
+        s["besetzung"] = form
         geaendert += 1
     return geaendert
 
@@ -1465,8 +1493,12 @@ def main():
     frisch = ergaenze_historie(historie, spiele, venues, stand)
     # Abgeschlossene Saisons einfrieren (docs/archiv/), Arbeitsdatei bleibt klein
     saison_index = saisonarchiv_einfrieren(historie, personen, stand)
+    rueck = historie_umbesetzen(historie, korrekturen)
     historie_alle = dict(saisonarchiv_laden())
     historie_alle.update(historie)
+    rueck += historie_umbesetzen(historie_alle, korrekturen)
+    if rueck:
+        print("%d Archiveintrag/-eintraege mit dem Gespann vom Betreiber." % rueck)
     stats, saison = statistik_aus_historie(historie_alle, stand)
     nachgetragen = ergaenze_ehemalige(personen, stats, bevorzugt)
     if nachgetragen:
