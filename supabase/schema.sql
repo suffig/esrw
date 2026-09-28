@@ -1231,3 +1231,16 @@ update public.profile
    set rechnung = einstellungen -> 'rechnung'
  where rechnung is null
    and einstellungen ? 'rechnung';
+
+
+-- ======================================================================
+-- v31: Gespann je Spiel vom Betreiber
+-- ======================================================================
+-- Steht auf esrw.de das falsche Gespann, kann der Betreiber es in der App
+-- aendern. Die Aenderung liegt hier und gewinnt gegen jeden neuen Lauf -
+-- solange, bis er auf der Spielseite "Wieder von esrw.de" tippt, was
+-- dieses Feld wieder leert.
+--
+-- Form: [{"name": "Muster, Max", "slug": "muster-max", "rolle": "SR"}, ...]
+-- Rolle ist "SR", "HSR" oder "LSR"; ab drei Offiziellen zaehlt sie.
+alter table public.spiel_korrekturen add column if not exists besetzung jsonb;

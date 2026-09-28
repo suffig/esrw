@@ -704,6 +704,24 @@
   .fahrt .reihe-knopf { margin-top:10px; }
   /* Die Karte schob die Seite beim Aufbauen kurz auf die doppelte Breite */
   #mitfahren-karte, #karte-karte { max-width:calc(100vw - 32px); }
+  /* Die Kachel "Du und ..." hatte keinen Innenabstand, alles klebte am Rand */
+  .kollege { padding:12px 14px; }
+  .kollege .zweit { margin-top:12px; }
+  /* Gespann aendern: je Zeile Name, Rolle, Kreuz */
+  .gespann-form { display:flex; flex-direction:column; gap:6px; margin-bottom:4px; }
+  .gespann-zeile { display:flex; gap:6px; align-items:center; }
+  .gespann-zeile .mg-select { flex:1; min-width:0; }
+  .gespann-zeile .gespann-rolle { flex:0 0 5.4em; }
+  .gespann-zeile .textknopf { flex:none; font-size:1.1rem; line-height:1; padding:4px 8px; }
+  /* Freischaltung: Marke rechts, Angaben untereinander, Knoepfe in eigener Zeile */
+  .konto-zeile { padding:12px 0; border-top:1px solid var(--linie); }
+  .konto-zeile:first-of-type { border-top:0; }
+  .konto-kopf { display:flex; align-items:baseline; gap:8px; justify-content:space-between; }
+  .konto-kopf b { min-width:0; overflow-wrap:anywhere; }
+  .konto-kopf .merkzeichen { flex:none; }
+  .konto-zeile small { display:block; color:var(--dim); margin-top:2px; overflow-wrap:anywhere; }
+  .konto-zeile .zweit-klein { justify-content:flex-start; margin-top:8px; }
+  .konto-zeile .mg-select { margin-top:8px; width:100%; }
   .fahrt .meins button.aktiv { background:var(--akzent); color:#fff; border-color:var(--akzent); }
   /* Anleitung (Tour) */
   .tour { position:fixed; inset:0; z-index:60; background:rgba(8,12,24,.55); backdrop-filter:blur(4px); display:flex; align-items:flex-end; justify-content:center; padding:16px; padding-bottom:calc(16px + env(safe-area-inset-bottom)); }
@@ -2221,6 +2239,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=84"></script>
+<script src="app.js?v=86"></script>
 </body>
 </html>

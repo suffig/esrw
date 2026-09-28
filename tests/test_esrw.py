@@ -467,6 +467,35 @@ def test_korrektur_uid():
     pruefe(t1["kennung"] == t2["kennung"], "Termin-Kennung (Basis der UID) bleibt gleich")
 
 
+def test_besetzung_korrektur():
+    """Aendert der Betreiber das Gespann, gewinnt das gegen esrw.de -
+    sonst waere die Korrektur beim naechsten Lauf wieder weg."""
+    print("\nGespann vom Betreiber")
+    E = esrw_ical_modul()
+    venues = json.load(open(os.path.join(os.path.dirname(HIER), "venues.json"), encoding="utf-8"))
+    beginn = datetime(2026, 10, 4, 18, 0, tzinfo=timezone.utc)
+    spiel = {"start": beginn, "begegnung": "U15 LL: EHC Essen Ruhr - Herforder EV",
+             "besetzung": {"HSR": [], "(L)SR": ["Alt, Anton", "Alt, Berta"]}}
+    halle, heim, gast, _ = E.finde_halle(spiel["begegnung"], venues)
+    paarung = "%s – %s" % (heim, gast) if gast else heim
+    kennung = beginn.isoformat() + "|" + paarung
+    korr = {kennung: {"besetzung": [{"name": "Neu, Nina", "rolle": "SR"}, {"name": "Neu, Nils", "rolle": "SR"}]}}
+    n = E.besetzung_korrigieren([spiel], korr, venues)
+    pruefe(n == 1, "ein Spiel umbesetzt", str(n))
+    pruefe(E.rollen_fuer(spiel["besetzung"]) == [("Neu, Nina", "SR"), ("Neu, Nils", "SR")],
+           "das neue Gespann steht drin", str(spiel["besetzung"]))
+    # Ohne Korrektur bleibt alles, wie es von esrw.de kommt
+    spiel2 = {"start": beginn, "begegnung": spiel["begegnung"], "besetzung": {"HSR": [], "(L)SR": ["Alt, Anton"]}}
+    pruefe(E.besetzung_korrigieren([spiel2], {}, venues) == 0, "ohne Korrektur aendert sich nichts")
+    # Drei Offizielle: HSR bleibt HSR
+    korr3 = {kennung: {"besetzung": [{"name": "Chef, Carla", "rolle": "HSR"},
+                                     {"name": "Linie, Lea", "rolle": "LSR"},
+                                     {"name": "Linie, Leo", "rolle": "LSR"}]}}
+    spiel3 = {"start": beginn, "begegnung": spiel["begegnung"], "besetzung": {"HSR": [], "(L)SR": []}}
+    E.besetzung_korrigieren([spiel3], korr3, venues)
+    pruefe(E.rollen_fuer(spiel3["besetzung"])[0] == ("Chef, Carla", "HSR"), "HSR bleibt HSR", str(E.rollen_fuer(spiel3["besetzung"])))
+
+
 def test_csp():
     """Die Seite erlaubt nur Skripte aus Dateien (Content-Security-Policy).
     Ein Skript direkt in index.html wird vom Browser stillschweigend
@@ -579,7 +608,7 @@ def main():
                  test_konflikte, test_hash_migration, test_ausgaben, test_faltung,
                  test_escape, test_ics, test_saison, test_aenderungstext, test_saisonarchiv,
                  test_korrektur_uid, test_gespannwechsel, test_ehemalige,
-                 test_csp,
+                 test_besetzung_korrektur, test_csp,
                  test_rechnungsvorlage,
                  test_tresor):
         test()

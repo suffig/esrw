@@ -3803,7 +3803,8 @@ window.Mitglieder = (function () {
       ["hallen", "Hallen & Vereine", "i-pin", hallenPflegeRendern],
       ["adressen", "Vereine", "i-note", vereinsAdressenRendern],
       ["telefon", "Telefonliste", "i-users", telefonlisteRendern],
-      ["zeiten", "Spielzeiten", "i-clock", spielzeitenRendern]
+      ["zeiten", "Spielzeiten", "i-clock", spielzeitenRendern],
+      ["korrekturen", "Korrekturen", "i-note", korrekturenRendern]
     ];
     if (!BEREICHE.filter(function (b) { return b[0] === adminBereich; }).length) adminBereich = BEREICHE[0][0];
 
@@ -4311,6 +4312,66 @@ window.Mitglieder = (function () {
     });
   }
 
+  // Admin -> Korrekturen: alles, was du an Spielen von Hand geaendert hast.
+  // Auf der Spielseite sieht man immer nur eines - hier steht, was insgesamt
+  // von esrw.de abweicht, damit nichts vergessen liegen bleibt.
+  function korrekturenRendern(box) {
+    function neu() { leeren(box); korrekturenRendern(box); }
+    leeren(box);
+    box.appendChild(h("h4", {}, [ikone("i-note"), " Korrekturen"]));
+    box.appendChild(h("p", { class: "meta", style: "margin:0 0 8px", text:
+      "Was du an einzelnen Spielen geändert hast: Halle, Anstoß, Treffpunkt, Hinweis, Absage, Gespann. "
+      + "Das gilt auch nach dem nächsten Lauf von esrw.de, bis du es hier oder auf der Spielseite verwirfst." }));
+    var innen = h("div", {}, [skelett(1)]);
+    box.appendChild(innen);
+    speichern(sb.from("spiel_korrekturen").select("*").order("kennung")).then(function (r) {
+      if (!box.isConnected) return;
+      leeren(innen);
+      if (r && r.error) { innen.appendChild(h("p", { class: "achtung", text: fehlerText(r.error) })); return; }
+      var liste = (r && r.data) || [];
+      if (!liste.length) { innen.appendChild(h("p", { class: "leer", text: "Nichts geändert, alles kommt von esrw.de." })); return; }
+      liste.forEach(function (k) {
+        var teile = [];
+        if (k.abgesagt) teile.push("abgesagt");
+        if (k.halle) teile.push("Halle: " + k.halle);
+        if (k.beginn) teile.push("Anstoß geändert");
+        if (k.treffpunkt) teile.push("Treffpunkt geändert");
+        if (k.hinweis) teile.push("Hinweis");
+        if (k.besetzung && k.besetzung.length) {
+          teile.push("Gespann: " + k.besetzung.map(function (b) { return (b.name || "").split(",")[0]; }).join(", "));
+        }
+        if (k.geloescht) teile.push("gelöscht");
+        var t = String(k.kennung || "").split("|");
+        var wann = t[0] ? new Date(t[0]) : null;
+        var z = h("div", { class: "konto-zeile" }, [
+          h("div", { class: "konto-kopf" }, [
+            h("b", { text: t[1] || k.kennung }),
+            teile.length ? h("span", { class: "merkzeichen gut", text: teile.length + (teile.length === 1 ? " Änderung" : " Änderungen") }) : null
+          ]),
+          h("small", { text: (wann && !isNaN(wann) ? datumLang(wann).replace(/(\d{2}\.\d{2})\.\d{4}/, "$1.") + " · " : "") + (teile.join(" · ") || "ohne Inhalt") }),
+          k.von ? h("small", { text: "von " + k.von }) : null,
+          h("span", { class: "zweit-klein" }, [
+            h("a", { class: "textknopf", href: "#spiel/" + encodeURIComponent(k.kennung), text: "Zum Spiel" }),
+            k.besetzung && k.besetzung.length ? h("button", { type: "button", class: "textknopf", text: "Gespann freigeben", onclick: function () {
+              speichern(sb.from("spiel_korrekturen").update({ besetzung: null }).eq("kennung", k.kennung)).then(function (r2) {
+                if (r2 && r2.error) { meldung(fehlerText(r2.error), "warn"); return; }
+                kurzMeldung("Freigegeben, esrw.de gilt wieder.", "gut"); neu();
+              });
+            } }) : null,
+            h("button", { type: "button", class: "textknopf", style: "color:var(--rot)", text: "Ganz verwerfen", onclick: function () {
+              if (!confirm("Alle Änderungen an „" + (t[1] || k.kennung) + "“ verwerfen?")) return;
+              speichern(sb.from("spiel_korrekturen").delete().eq("kennung", k.kennung)).then(function (r2) {
+                if (r2 && r2.error) { meldung(fehlerText(r2.error), "warn"); return; }
+                kurzMeldung("Verworfen.", ""); neu();
+              });
+            } })
+          ])
+        ]);
+        innen.appendChild(z);
+      });
+    });
+  }
+
   // Admin -> Spielzeiten: was an der Bande zaehlt. Eine Startfassung liegt
   // als Datei in der App und laesst sich mit einem Tipp uebernehmen.
   function spielzeitenRendern(box) {
@@ -4458,11 +4519,19 @@ window.Mitglieder = (function () {
   function adminRendern(box) {
     namenAbgleichen();
     function neu() { adminRendern(box); }
-    function zeile(p, knoepfe, marken) {
-      var kopf = h("span", {}, [h("b", { text: p.name || p.slug || "(ohne Namen)" }),
-        h("small", { class: "meta", style: "display:block", text: p.email || "" })]);
-      (marken || []).forEach(function (m) { kopf.insertBefore(h("span", { class: "merkzeichen " + m[1], text: m[0] }), kopf.firstChild); });
-      return h("div", { class: "sperre" }, [kopf, h("span", { class: "zweit-klein" }, knoepfe.filter(Boolean))]);
+    // Name oben mit einer Marke rechts, darunter E-Mail und seit wann,
+    // Knoepfe in einer eigenen Zeile. Vorher standen Marken, Name und
+    // E-Mail ineinander und die Knoepfe sassen irgendwo dazwischen.
+    function zeile(p, knoepfe, marken, zusatz) {
+      var kopf = h("div", { class: "konto-kopf" }, [
+        h("b", { text: p.name || "Noch kein Name gewählt" }),
+        (marken || []).length ? h("span", { class: "merkzeichen " + marken[0][1], text: marken[0][0] }) : null
+      ]);
+      var z = h("div", { class: "konto-zeile" }, [kopf]);
+      if (p.email) z.appendChild(h("small", { text: p.email }));
+      if (zusatz) z.appendChild(h("small", { text: zusatz }));
+      z.appendChild(h("span", { class: "zweit-klein" }, knoepfe.filter(Boolean)));
+      return z;
     }
     // Alte Konten ohne Namen (vor der Pflicht bei der Registrierung) kann
     // der Betreiber hier selbst zuordnen - sonst steht dort ewig "(ohne Namen)".
@@ -4521,9 +4590,8 @@ window.Mitglieder = (function () {
       if (!offen.length) box.appendChild(h("p", { class: "meta", text: "Niemand wartet." }));
       offen.sort(function (a, b) { return String(a.angelegt || "") < String(b.angelegt || "") ? -1 : 1; });
       offen.forEach(function (p) {
-        var marken = [["wartet", "warn"]];
-        if (!p.slug) marken.push(["ohne Namen", "warn"]);
-        if (p.angelegt) p = Object.assign({}, p, { email: (p.email || "") + " · registriert " + seitText(p.angelegt) });
+        var marken = [[p.slug ? "wartet" : "wartet, ohne Namen", "warn"]];
+        var wann = p.angelegt ? "registriert " + seitText(p.angelegt) : "";
         var z = zeile(p, [
           h("button", { type: "button", class: "anfrage", text: "Freischalten", onclick: function () {
             speichern(sb.from("profile").update({ freigeschaltet: true }).eq("id", p.id)).then(function (r2) {
@@ -4533,7 +4601,7 @@ window.Mitglieder = (function () {
           } }),
           h("button", { type: "button", class: "textknopf", text: "E-Mail", onclick: function () { mailAendern(p); } }),
           h("button", { type: "button", class: "textknopf", style: "color:var(--rot)", text: "Entfernen", onclick: function () { entfernen(p); } })
-        ], marken);
+        ], marken, wann);
         box.appendChild(z);
         if (!p.slug) nameZuordnen(p, z);
       });

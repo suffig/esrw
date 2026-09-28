@@ -149,6 +149,7 @@
       if (s._orig.koordinaten !== undefined) s.koordinaten = daten.hallen && daten.hallen[k.halle];
     } else { s.halle = s._orig.halle; s.ort = s._orig.ort; if (s._orig.koordinaten !== undefined) s.koordinaten = s._orig.koordinaten; }
     s.korrektur = { halle: k.halle || null, beginn: k.beginn || null, treffpunkt: k.treffpunkt || null, hinweis: k.hinweis || null, abgesagt: !!k.abgesagt, _app: true };
+    if (!k.halle && !k.beginn && !k.treffpunkt && !k.hinweis && !k.abgesagt && !(k.besetzung && k.besetzung.length)) s.korrektur = null;
     s.vergangen = new Date(s.beginn) < Date.now();
   }
   // Spiele, die es nie gab: ausgefallen, standen aber weiter auf esrw.de.
@@ -160,8 +161,49 @@
     daten.spiele = (daten.spiele || []).filter(function (s) { return !istGeloescht(s); });
     (daten.personen || []).forEach(function (p) { p.spiele = (p.spiele || []).filter(function (s) { return !istGeloescht(s); }); });
     (daten.spiele || []).forEach(korrekturAnwendenAuf);
-    (daten.personen || []).forEach(function (p) { p.spiele.forEach(korrekturAnwendenAuf); p.spiele.sort(function (a, b) { return a.beginn < b.beginn ? -1 : a.beginn > b.beginn ? 1 : 0; }); });
+    (daten.personen || []).forEach(function (p) { p.spiele.forEach(korrekturAnwendenAuf); });
+    gespannAnwenden();
+    (daten.personen || []).forEach(function (p) { p.spiele.sort(function (a, b) { return a.beginn < b.beginn ? -1 : a.beginn > b.beginn ? 1 : 0; }); });
     (daten.spiele || []).sort(function (a, b) { return a.beginn < b.beginn ? -1 : a.beginn > b.beginn ? 1 : 0; });
+  }
+
+  // Hat der Betreiber das Gespann geaendert, gilt seine Besetzung - auch
+  // wenn esrw.de beim naechsten Lauf wieder etwas anderes meldet. Wer
+  // rausfaellt, verliert das Spiel, wer dazukommt, bekommt es.
+  function gespannAnwenden() {
+    if (!daten) return;
+    var betroffen = [];
+    (daten.spiele || []).forEach(function (s) {
+      var k = korrekturen[kennungVon(s)];
+      var neu = k && k.besetzung && k.besetzung.length ? k.besetzung : null;
+      if (!neu && !s._origBesetzung) return;
+      if (!s._origBesetzung) s._origBesetzung = s.besetzung || [];
+      s.besetzung = neu
+        ? neu.filter(function (b) { return b && b.name; }).map(function (b) {
+            return { name: b.name, slug: b.slug || null, rolle: b.rolle || "SR" };
+          })
+        : s._origBesetzung;
+      s.system = s.besetzung.length;
+      s.gespannBetreiber = !!neu;
+      betroffen.push(s);
+    });
+    if (!betroffen.length) return;
+    betroffen.forEach(function (s) {
+      var kennung = kennungVon(s);
+      (daten.personen || []).forEach(function (p) {
+        p.spiele = (p.spiele || []).filter(function (x) { return kennungVon(x) !== kennung; });
+      });
+      s.besetzung.forEach(function (b) {
+        if (!b.slug) return;
+        var p = personMit(b.slug); if (!p) return;
+        p.spiele.push(Object.assign({}, s, {
+          rolle: b.rolle,
+          koordinaten: (daten.hallen || {})[s.halle] || null,
+          gespann: s.besetzung.filter(function (x) { return x !== b; })
+            .map(function (x) { return { name: x.name, slug: x.slug, rolle: x.rolle }; })
+        }));
+      });
+    });
   }
   function korrekturenLaden(neuZeichnen) {
     return hole("supabase.json").then(function (cfg) {
@@ -247,6 +289,7 @@
     if (k.beginn) teile.push("Anstoß " + uhr(new Date(s.beginn)) + " Uhr");
     if (k.treffpunkt) teile.push("Treffpunkt " + uhr(new Date(s.treffpunkt)) + " Uhr");
     if (k.hinweis) teile.push(k.hinweis);
+    if (s.gespannBetreiber) teile.push("Gespann geändert");
     z.textContent = (s.manuell ? "✎ Vom Betreiber angelegt" : "✎ Vom Betreiber korrigiert") + (teile.length ? ": " + teile.join(" · ") : "");
     return z;
   }
@@ -1280,6 +1323,7 @@
     var beginn = document.createElement("input"); beginn.type = "datetime-local"; beginn.value = lokalInput(k.beginn); feld("Anstoß (leer = " + uhr(new Date((s._orig && s._orig.beginn) || s.beginn)) + " Uhr)", beginn);
     var treff = document.createElement("input"); treff.type = "datetime-local"; treff.value = lokalInput(k.treffpunkt); feld("Treffpunkt (leer = " + (daten.vorlauf_minuten || 60) + " Min. vor Anstoß)", treff);
     var hinweis = document.createElement("input"); hinweis.type = "text"; hinweis.maxLength = 200; hinweis.placeholder = "z. B. „Nebenhalle, Eingang hinten“"; hinweis.value = k.hinweis || ""; feld("Hinweis für alle", hinweis);
+    gespannFormular(s, form);
     var abgesagt = document.createElement("input"); abgesagt.type = "checkbox"; abgesagt.checked = !!k.abgesagt;
     var al = document.createElement("label"); al.className = "mg-check"; al.appendChild(abgesagt); al.appendChild(document.createTextNode(" Spiel abgesagt")); form.appendChild(al);
     box.appendChild(form);
@@ -1304,6 +1348,96 @@
       window.Mitglieder.korrekturSpeichern(kennungVon(s), null).then(function (ok) { if (!ok) return; toast("Korrektur entfernt.", "gut"); korrekturenLaden(false).then(function () { zeigeSpiel(kennungVon(s)); }); });
     }); zw.appendChild(weg); }
     box.appendChild(zw);
+  }
+
+  // Gespann aendern: die Zeilen stehen im selben Formular wie Halle und
+  // Anstoss, werden aber getrennt gespeichert - eine Korrektur an der
+  // Uhrzeit soll das Gespann nicht anfassen und umgekehrt.
+  function gespannFormular(s, form) {
+    var kor = korrekturen[kennungVon(s)] || {};
+    var vomBetreiber = !!(kor.besetzung && kor.besetzung.length);
+    var lbl = document.createElement("label");
+    lbl.textContent = "Gespann";
+    if (vomBetreiber) { var mk = document.createElement("span"); mk.className = "merkzeichen gut"; mk.style.marginLeft = "8px"; mk.textContent = "vom Betreiber"; lbl.appendChild(mk); }
+    form.appendChild(lbl);
+
+    var stand = (vomBetreiber ? kor.besetzung : (s._origBesetzung || s.besetzung || []))
+      .map(function (b) { return { slug: b.slug || null, name: b.name, rolle: b.rolle || "SR" }; });
+    var liste = document.createElement("div"); liste.className = "gespann-form";
+    form.appendChild(liste);
+
+    function zeichnen() {
+      liste.innerHTML = "";
+      stand.forEach(function (b, i) {
+        var z = document.createElement("div"); z.className = "gespann-zeile";
+        var wahl = document.createElement("select"); wahl.className = "mg-select";
+        var leer = document.createElement("option"); leer.value = ""; leer.textContent = "Kollege wählen";
+        wahl.appendChild(leer);
+        (daten.personen || []).forEach(function (p) {
+          var o = document.createElement("option"); o.value = p.slug; o.textContent = p.name;
+          if (b.slug === p.slug) o.selected = true;
+          wahl.appendChild(o);
+        });
+        if (!b.slug && b.name) { var fremd = document.createElement("option"); fremd.value = "_fremd"; fremd.textContent = b.name; fremd.selected = true; wahl.appendChild(fremd); }
+        wahl.addEventListener("change", function () {
+          var p = personMit(wahl.value);
+          stand[i] = { slug: p ? p.slug : null, name: p ? p.name : (wahl.value === "_fremd" ? b.name : ""), rolle: stand[i].rolle };
+        });
+        z.appendChild(wahl);
+        var rolle = document.createElement("select"); rolle.className = "mg-select gespann-rolle";
+        [["SR", "SR"], ["HSR", "HSR"], ["LSR", "LSR"]].forEach(function (r) {
+          var o = document.createElement("option"); o.value = r[0]; o.textContent = r[1];
+          if (b.rolle === r[0]) o.selected = true; rolle.appendChild(o);
+        });
+        rolle.addEventListener("change", function () { stand[i].rolle = rolle.value; });
+        z.appendChild(rolle);
+        var weg = document.createElement("button"); weg.type = "button"; weg.className = "textknopf";
+        weg.textContent = "\u00d7"; weg.title = "Zeile entfernen";
+        weg.addEventListener("click", function () { stand.splice(i, 1); zeichnen(); });
+        z.appendChild(weg);
+        liste.appendChild(z);
+      });
+      var dazu = document.createElement("button"); dazu.type = "button"; dazu.className = "textknopf";
+      dazu.textContent = "+ Schiedsrichter";
+      dazu.addEventListener("click", function () { stand.push({ slug: null, name: "", rolle: stand.length >= 2 ? "LSR" : "SR" }); zeichnen(); });
+      liste.appendChild(dazu);
+
+      var zw = document.createElement("div"); zw.className = "zweit"; zw.style.marginTop = "6px";
+      var sp = document.createElement("button"); sp.type = "button"; sp.className = "anfrage";
+      sp.textContent = "Gespann speichern";
+      sp.addEventListener("click", function () {
+        var fertig = stand.filter(function (b) { return b.slug || b.name; });
+        if (!fertig.length) { toast("Mindestens ein Schiedsrichter.", "warn"); return; }
+        sp.disabled = true;
+        window.Mitglieder.korrekturSpeichern(kennungVon(s), { besetzung: fertig }).then(function (ok) {
+          sp.disabled = false; if (!ok) return;
+          toast("Gespann gespeichert. Es gilt auch nach dem nächsten Lauf von esrw.de.", "gut");
+          korrekturenLaden(false).then(function () { zeigeSpiel(kennungVon(s)); });
+        });
+      });
+      zw.appendChild(sp);
+      if (vomBetreiber) {
+        var zurueck = document.createElement("button"); zurueck.type = "button";
+        zurueck.textContent = "Wieder von esrw.de";
+        zurueck.title = "Deine Besetzung verwerfen, ab dem nächsten Lauf gilt wieder esrw.de";
+        zurueck.addEventListener("click", function () {
+          if (!confirm("Dein Gespann verwerfen? Ab dem nächsten Lauf gilt wieder, was auf esrw.de steht.")) return;
+          window.Mitglieder.korrekturSpeichern(kennungVon(s), { besetzung: null }).then(function (ok) {
+            if (!ok) return;
+            toast("Freigegeben, esrw.de gilt wieder.", "gut");
+            korrekturenLaden(false).then(function () { zeigeSpiel(kennungVon(s)); });
+          });
+        });
+        zw.appendChild(zurueck);
+      }
+      liste.appendChild(zw);
+      var hin = document.createElement("p"); hin.className = "meta"; hin.style.margin = "6px 0 0";
+      hin.textContent = vomBetreiber
+        ? "Diese Besetzung gilt, auch wenn esrw.de etwas anderes meldet."
+        : "Gespeichert gilt dein Gespann dauerhaft, bis du es wieder freigibst.";
+      liste.appendChild(hin);
+    }
+    zeichnen();
   }
 
   // -------------------------------------------------------- Dashboard-Kacheln

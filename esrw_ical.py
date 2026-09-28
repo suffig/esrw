@@ -734,7 +734,7 @@ def tabelle_laden(cfg, pfad):
 
 def korrekturen_laden(cfg):
     """Korrekturen des Betreibers je Spiel (Tabelle spiel_korrekturen)."""
-    zeilen = tabelle_laden(cfg, "spiel_korrekturen?select=kennung,halle,beginn,treffpunkt,hinweis,abgesagt")
+    zeilen = tabelle_laden(cfg, "spiel_korrekturen?select=kennung,halle,beginn,treffpunkt,hinweis,abgesagt,besetzung")
     return {z["kennung"]: z for z in zeilen if z.get("kennung")}
 
 
@@ -842,6 +842,38 @@ def betreiber_daten(cfg, venues):
         print("Vom Betreiber: %d Hallen, %d Vereine, %d Spiele, %d Hallen-Hinweise."
               % (n_hallen, n_vereine, len(manuell), sum(len(v) for v in hinweise.values())))
     return manuell, hinweise
+
+
+def besetzung_korrigieren(spiele, korrekturen, venues):
+    """Der Betreiber kann das Gespann in der App aendern. Diese Aenderung
+    gewinnt gegen esrw.de - in den Feeds, im Push, im Archiv und in der
+    Statistik. Sie bleibt, bis er sie auf der Spielseite wieder freigibt.
+
+    Wird hier gemacht und nicht erst in sammle_personen, damit auch das
+    Archiv (historie.json) das richtige Gespann bekommt."""
+    if not korrekturen:
+        return 0
+    geaendert = 0
+    for s in spiele:
+        if s.get("manuell"):
+            continue
+        _halle, heim, gast, _sicher = finde_halle(s["begegnung"], venues)
+        paarung = "%s – %s" % (heim, gast) if gast else heim
+        k = korrekturen.get(s["start"].isoformat() + "|" + paarung)
+        neu = (k or {}).get("besetzung")
+        if not neu:
+            continue
+        hsr, lsr = [], []
+        for b in neu:
+            name = (b or {}).get("name")
+            if not name:
+                continue
+            (hsr if (b.get("rolle") == "HSR") else lsr).append(name)
+        if not hsr and not lsr:
+            continue
+        s["besetzung"] = {"HSR": hsr, "(L)SR": lsr}
+        geaendert += 1
+    return geaendert
 
 
 def sammle_personen(spiele, cfg, venues, jetzt, bevorzugt=frozenset(), gebuehren=None, korrekturen=None, hallen_hinweise=None):
@@ -1403,6 +1435,9 @@ def main():
         print("%d Korrektur(en) vom Betreiber." % len(korrekturen))
     manuell, hallen_hinweise = betreiber_daten(cfg, venues)
     spiele += manuell
+    umbesetzt = besetzung_korrigieren(spiele, korrekturen, venues)
+    if umbesetzt:
+        print("%d Spiel(e) mit Gespann vom Betreiber." % umbesetzt)
     personen, uebersicht = sammle_personen(spiele, cfg, venues, stand, bevorzugt, gebuehren, korrekturen, hallen_hinweise)
     print("%d Personen." % len(personen))
 

@@ -2255,6 +2255,44 @@ Dazu neu:
   kompakt) und **Unterwegs** (Karten-App, Puffer für Verkehr,
   Saisonziel). Die Sprungleiste oben nennt beide und die Sicherung.
 
+### 10.6ay Gespann vom Betreiber (Schema v31)
+
+**Vorher `supabase/schema.sql` bis v31 einspielen.**
+
+Steht auf esrw.de das falsche Gespann, kannst du es selbst ändern:
+Spielseite öffnen, unten im Betreiber-Formular steht jetzt **Gespann**.
+Je Zeile ein Kollege und seine Rolle (SR, HSR, LSR), dazu
+„+ Schiedsrichter" und ein Kreuz zum Entfernen. **Gespann speichern** -
+fertig.
+
+**Die Änderung überlebt jeden neuen Lauf.** Sie liegt in
+`spiel_korrekturen.besetzung` und wird in `esrw_ical.py` angewendet,
+bevor irgendetwas gerechnet wird - also in den Kalendern, im Push, im
+Archiv und in der Statistik. Wer rausfällt, verliert das Spiel; wer
+dazukommt, bekommt es, in der App sofort und im Kalender beim nächsten
+Lauf. Den Push darüber verschickt der normale Abgleich („neu
+eingeteilt" / „abgesetzt").
+
+Zurück zu esrw.de geht nur ausdrücklich: auf der Spielseite der Knopf
+**„Wieder von esrw.de"** (oder im Adminbereich „Gespann freigeben").
+Erst dann zählt wieder, was dort steht.
+
+* **Neu: Adminbereich → Korrekturen.** Eine Liste aller Spiele, die von
+  esrw.de abweichen - Halle, Anstoß, Treffpunkt, Hinweis, Absage,
+  Gespann - mit Sprung zum Spiel, „Gespann freigeben" und „Ganz
+  verwerfen". Auf der Spielseite sieht man immer nur eines; hier steht,
+  was insgesamt offen ist.
+
+* **„Du und …" auf der Kollegenseite** hatte wie die Fahrtkarten gar
+  keinen Innenabstand, Überschrift und Zeilen klebten am Kartenrand.
+  Jetzt hat sie Rand wie jede andere Karte.
+
+* **Die Freischaltungsliste** war kaum lesbar: Marken, Name und E-Mail
+  liefen in einer Zeile ineinander, das Datum klebte an der Adresse, die
+  Knöpfe sassen dazwischen. Jetzt steht der Name oben mit der Marke
+  rechts, darunter E-Mail und „registriert vor …", und die Knöpfe haben
+  eine eigene Zeile.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –
