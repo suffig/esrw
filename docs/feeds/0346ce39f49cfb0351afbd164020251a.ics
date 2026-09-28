@@ -31,16 +31,17 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
 END:VEVENT
 BEGIN:VEVENT
 UID:2ef8b0ba89dc41c544c436f7059a662e94b4300e@esrw.de
-SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
+SEQUENCE:1
+DTSTAMP:20260928T183038Z
+LAST-MODIFIED:20260928T183038Z
 DTSTART:20260927T071500Z
 DTEND:20260927T104500Z
-SUMMARY:SR · U15 LL · EHC Essen Ruhr – Herforder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:15 Uhr\nTreffpunkt:
-  09:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Es
- sen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Melchert\, Philip
- \n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ SR · U15 LL · EHC Essen Ruhr – Herforder EV
+DESCRIPTION:Geändert: Korrektur vom Betreiber: Gespann (vorher Melchert\, 
+ Philip (SR))\n\n\nRolle: Schiedsrichter (SR)\nSpielbeginn: 10:15 Uhr\nTref
+ fpunkt: 09:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporth
+ alle Essen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Schmidt\, 
+ Waldemar\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
