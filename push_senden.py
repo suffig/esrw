@@ -510,7 +510,7 @@ def main():
         print("Push: nichts zu melden.")
         return 0
 
-    gesendet_n, tot, neu_gemerkt = 0, 0, []
+    gesendet_n, tot, fehler_n, neu_gemerkt = 0, 0, 0, []
     for abo in abos:
         for schluessel, nutzlast in nachrichten.get(abo["user_id"], []):
             try:
@@ -532,9 +532,11 @@ def main():
                         pass
                     tot += 1
                     break
+                fehler_n += 1
                 print("Push an %s fehlgeschlagen: %s" % (abo["user_id"][:8], e), file=sys.stderr)
             except Exception as e:
                 # Netzfehler o.ae. - ein einzelnes Abo darf den Lauf nicht abbrechen
+                fehler_n += 1
                 print("Push an %s nicht moeglich: %s" % (abo["user_id"][:8], str(e)[:120]), file=sys.stderr)
 
     if ank:
@@ -559,7 +561,18 @@ def main():
         api(url, service, "push_gesendet?gesendet=lt." + urllib.parse.quote(alt) + "&schluessel=not.like.steuer*", "DELETE")
     except Exception:
         pass
-    print("Push: %d gesendet, %d tote Abos entfernt." % (gesendet_n, tot))
+    # Eine Zeile je Lauf, damit der Betreiber in der App sieht, ob etwas
+    # ankommt. Nur Zahlen, keine Namen. Aeltere Zeilen raeumt der Lauf weg.
+    try:
+        api(url, service, "push_lauf", "POST",
+            {"geraete": len(abos), "gesendet": gesendet_n, "tot": tot, "fehler": fehler_n,
+             "hinweis": None if gesendet_n or not nachrichten else "nichts zu senden"},
+            prefer="return=minimal")
+        weg = (jetzt - timedelta(days=30)).astimezone(timezone.utc).isoformat()
+        api(url, service, "push_lauf?zeitpunkt=lt." + urllib.parse.quote(weg), "DELETE")
+    except Exception as e:
+        print("Push: Lauf nicht protokolliert: %s" % str(e)[:120], file=sys.stderr)
+    print("Push: %d gesendet, %d tote Abos entfernt, %d Fehler." % (gesendet_n, tot, fehler_n))
     return 0
 
 

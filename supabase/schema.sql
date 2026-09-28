@@ -1517,3 +1517,110 @@ $$;
 drop trigger if exists konto_angelegt on auth.users;
 create trigger konto_angelegt after insert or update of email on auth.users
   for each row execute function public.neues_konto();
+
+
+-- ======================================================================
+-- v35: Kommen die Push-Nachrichten an?
+-- ======================================================================
+-- Bisher stand das nur im Protokoll des Workflows, und dort schaut
+-- niemand nach. push_senden.py schreibt jetzt nach jedem Lauf eine Zeile
+-- mit Zahlen - keine Namen, keine Adressen, nur wie viele Geraete
+-- angemeldet waren, wie viele Nachrichten rausgingen, wie viele Abos
+-- tot waren (App geloescht, Berechtigung entzogen) und wie oft es
+-- schiefging. Lesen darf das nur der Betreiber.
+--
+-- Die Tabelle haelt sich selbst klein: beim Schreiben raeumt der Lauf
+-- alles weg, was aelter als 30 Tage ist.
+create table if not exists public.push_lauf (
+  id        bigserial primary key,
+  zeitpunkt timestamptz not null default now(),
+  geraete   integer not null default 0,
+  gesendet  integer not null default 0,
+  tot       integer not null default 0,
+  fehler    integer not null default 0,
+  hinweis   text
+);
+create index if not exists push_lauf_zeit on public.push_lauf (zeitpunkt desc);
+alter table public.push_lauf enable row level security;
+drop policy if exists "Admin liest Push-Laeufe" on public.push_lauf;
+create policy "Admin liest Push-Laeufe" on public.push_lauf for select to authenticated
+  using (public.ist_admin());
+
+
+-- ======================================================================
+-- v36: Durchsicht der Zugriffsregeln
+-- ======================================================================
+-- Einmal alle Tabellen gegeneinander gelesen. Vier Stellen waren offen,
+-- eine war zu eng. Der Rest ist so, wie er sein soll.
+
+-- 1. Der Namensschutz aus v32 liess sich umgehen: wer seine eigene
+--    Profilzeile loescht und neu anlegt, faengt bei "slug is null" an und
+--    darf sich dann einen anderen Namen nehmen. Die App loescht das eigene
+--    Profil nie - das Konto raeumt konto_loeschen() ab (security definer,
+--    loescht in auth.users, der Rest faellt per Kaskade), und Zeilen
+--    anderer entfernt der Betreiber. Die Regel braucht es also nicht.
+drop policy if exists "eigenes Profil loeschen" on public.profile;
+
+-- 2. Offizielle Hallen-Hinweise blieben fuer ihren Verfasser aenderbar.
+--    Der Trigger hielt nur das Haekchen "offiziell" fest, nicht den Text -
+--    wer einmal uebernommen wurde, konnte hinterher schreiben, was er
+--    wollte, und das stand ohne Anmeldung auf der Hallenseite.
+create or replace function public.hallennotiz_schutz()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  -- auth.uid() ist null im SQL Editor und fuer service_role - die duerfen alles
+  if auth.uid() is not null and not public.ist_admin() then
+    if tg_op = 'UPDATE' then
+      new.offiziell := old.offiziell;
+      if old.offiziell then          -- einmal uebernommen, dann fest
+        new.text := old.text;
+        new.halle := old.halle;
+        new.user_id := old.user_id;
+      end if;
+    else
+      new.offiziell := false;
+    end if;
+  end if;
+  return new;
+end;
+$$;
+drop trigger if exists hallennotiz_schutz on public.hallen_notizen;
+create trigger hallennotiz_schutz before insert or update on public.hallen_notizen
+  for each row execute function public.hallennotiz_schutz();
+
+-- Aendern darf nur, wer freigeschaltet ist - wie beim Lesen. Loeschen
+-- bleibt offen, damit man eigene Hinweise zurueckziehen kann.
+drop policy if exists "eigene Hallenhinweise aendern" on public.hallen_notizen;
+create policy "eigene Hallenhinweise aendern" on public.hallen_notizen for update
+  using (auth.uid() = user_id and public.ist_freigeschaltet());
+
+-- 3. Zu eng: offizielle Hinweise sah nur die Rolle "anon". Ein angemeldetes,
+--    noch nicht freigeschaltetes Konto sah damit weniger als ein Besucher
+--    ohne Konto.
+drop policy if exists "offizielle Hinweise lesen" on public.hallen_notizen;
+create policy "offizielle Hinweise lesen" on public.hallen_notizen for select
+  to anon, authenticated using (offiziell);
+
+-- 4. Profilbilder: die App rechnet sie auf 128 Pixel und legt sie als
+--    data:-URL ab. Die Datenbank erzwang das nicht - man haette eine
+--    fremde Adresse eintragen koennen, die dann bei jedem Kollegen
+--    nachgeladen wird (und dabei dessen IP-Adresse verraet).
+--    "not valid" prueft nur neue Zeilen; die alten sind aus der App und
+--    passen ohnehin.
+alter table public.kontakte drop constraint if exists kontakte_bild_form;
+alter table public.kontakte add constraint kontakte_bild_form
+  check (bild is null or (bild like 'data:image/%' and length(bild) < 100000)) not valid;
+alter table public.profile drop constraint if exists profile_bild_form;
+alter table public.profile add constraint profile_bild_form
+  check (bild is null or (bild like 'data:image/%' and length(bild) < 100000)) not valid;
+alter table public.kontakte drop constraint if exists kontakte_rufname_laenge;
+alter table public.kontakte add constraint kontakte_rufname_laenge
+  check (rufname is null or length(rufname) <= 60) not valid;
+
+-- 5. Test-Push: geprueft wurde nur, dass die Zeile einem selbst gehoert,
+--    nicht das Geraet. Mit der UUID eines fremden Abos haette man es
+--    klingeln lassen koennen.
+drop policy if exists "eigene Tests anlegen" on public.push_test;
+create policy "eigene Tests anlegen" on public.push_test for insert
+  with check (auth.uid() = user_id
+    and exists (select 1 from public.push_abos a where a.id = abo_id and a.user_id = auth.uid()));

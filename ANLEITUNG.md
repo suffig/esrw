@@ -2441,6 +2441,56 @@ Einteilung. Sie bekommen deshalb ein eigenes Kennzeichen.
   `push_senden.py` überspringt Konten ohne Namen an dieser Stelle schon
   immer.
 
+### 10.6bd Push-Gesundheit, alte Korrekturen, Zugriffsregeln (Schema v35, v36)
+
+* **Alte Korrekturen stehen nicht mehr im Weg.** In Admin → Korrekturen
+  liegen Änderungen an Spielen, die länger als 30 Tage her sind, hinter
+  „Älter als 30 Tage". **Gelöscht wird nichts** - sie bleiben in Kraft und
+  im Archiv, sie sind nur zugeklappt.
+
+* **Admin → Push** (Schema **v35**). `push_senden.py` legt nach jedem Lauf
+  eine Zeile ab: wie viele Geräte angemeldet waren, wie viele Nachrichten
+  rausgingen, wie viele Abos tot waren (App gelöscht, Mitteilungen
+  abgestellt) und wie oft es schiefging. Keine Namen, keine Adressen, nur
+  Zahlen, und nur der Betreiber darf sie lesen. Die Tabelle räumt sich
+  selbst auf: älter als 30 Tage fliegt beim nächsten Lauf raus. In der App
+  steht daraus: letzter Lauf, Geräte, Nachrichten und Fehlversuche der
+  letzten 30 Tage, dazu die einzelnen Läufe zum Aufklappen. Bleiben die
+  Fehlversuche hoch, stimmt etwas mit den VAPID-Schlüsseln nicht.
+
+* **Zugriffsregeln durchgesehen** (Schema **v36**). Alle 30 Tabellen
+  gegeneinander gelesen. Vier Stellen waren offen, eine war zu eng:
+
+  1. **Der Namensschutz liess sich umgehen.** Wer seine eigene Profilzeile
+     löschte und neu anlegte, fing wieder bei „ohne Namen" an und durfte
+     sich einen anderen nehmen - auch den einer Person, die noch kein Konto
+     hat. Über die Archiv-Regel hätte er dann deren Spiele mitgelesen. Die
+     Regel „eigenes Profil loeschen" ist weg; das Konto räumt weiterhin
+     `konto_loeschen()` ab, fremde Zeilen der Betreiber.
+  2. **Offizielle Hallen-Hinweise blieben für ihren Verfasser änderbar.**
+     Der Trigger hielt nur das Häkchen „offiziell" fest, nicht den Text -
+     wer einmal übernommen wurde, konnte hinterher schreiben, was er
+     wollte, und das stand ohne Anmeldung auf der Hallenseite. Jetzt sind
+     Text und Halle nach der Übernahme fest, und ändern darf nur, wer
+     freigeschaltet ist.
+  3. **Zu eng:** offizielle Hinweise sah nur die Rolle „anon" - ein
+     angemeldetes, noch nicht freigeschaltetes Konto sah damit weniger als
+     ein Besucher ohne Konto.
+  4. **Profilbilder** mussten keine eingebetteten Bilder sein. Man hätte
+     eine fremde Adresse eintragen können, die dann bei jedem Kollegen
+     nachgeladen wird und dabei dessen IP-Adresse verrät. Jetzt prüft die
+     Datenbank auf `data:image/…` und begrenzt die Länge.
+  5. **Test-Push** prüfte nur, dass die Zeile einem selbst gehört, nicht
+     das Gerät.
+
+  Nicht geändert, aber notiert: `spiel_korrekturen` und `spiele_manuell`
+  sind für alle lesbar, auch ohne Konto - dort steht mit der Besetzung
+  also, wer wann wo pfeift. Das folgt derselben Regel wie die Kalender,
+  ist aber eine Ausnahme von der Tresor-Idee. Und in Supabase muss unter
+  Authentication die **E-Mail-Bestätigung eingeschaltet** sein, sonst
+  könnte sich jemand mit einer fremden Adresse anmelden und eine
+  Einladung einlösen.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

@@ -3919,7 +3919,8 @@ window.Mitglieder = (function () {
       ["adressen", "Vereine", "i-note", vereinsAdressenRendern],
       ["telefon", "Telefonliste", "i-users", telefonlisteRendern],
       ["zeiten", "Spielzeiten", "i-clock", spielzeitenRendern],
-      ["korrekturen", "Korrekturen", "i-note", korrekturenRendern]
+      ["korrekturen", "Korrekturen", "i-note", korrekturenRendern],
+      ["push", "Push", "i-bell", pushLaufRendern]
     ];
     if (!BEREICHE.filter(function (b) { return b[0] === adminBereich; }).length) adminBereich = BEREICHE[0][0];
 
@@ -4427,6 +4428,72 @@ window.Mitglieder = (function () {
     });
   }
 
+  // Admin -> Push: kommt an, was die App verschickt? Der Workflow legt nach
+  // jedem Lauf eine Zeile mit Zahlen ab (Schema v35) - keine Namen, keine
+  // Adressen. Hier steht, was daraus geworden ist.
+  function pushLaufRendern(box) {
+    leeren(box);
+    box.appendChild(h("h4", {}, [ikone("i-bell"), " Push"]));
+    box.appendChild(h("p", { class: "meta", style: "margin:0 0 8px", text:
+      "Nach jedem Lauf hält der Workflow fest, wie viele Geräte angemeldet waren, wie viele Nachrichten "
+      + "rausgingen und wie viele Abos tot waren. Tote Abos sind normal: App gelöscht oder Mitteilungen abgestellt." }));
+    var innen = h("div", {}, [skelett(1)]);
+    box.appendChild(innen);
+    speichern(sb.from("push_lauf").select("*").order("zeitpunkt", { ascending: false }).limit(30)).then(function (r) {
+      if (!box.isConnected) return;
+      leeren(innen);
+      if (r && r.error) {
+        innen.appendChild(h("p", { class: "achtung", text: "Tabelle push_lauf fehlt, schema.sql (v35) ausführen. " + fehlerText(r.error) }));
+        return;
+      }
+      var liste = (r && r.data) || [];
+      if (!liste.length) {
+        innen.appendChild(h("p", { class: "leer", text: "Noch kein Lauf protokolliert. Die erste Zeile kommt mit dem nächsten Durchgang." }));
+        return;
+      }
+      var letzte = liste[0];
+      var summe = liste.reduce(function (a2, z) {
+        a2.gesendet += z.gesendet || 0; a2.tot += z.tot || 0; a2.fehler += z.fehler || 0; return a2;
+      }, { gesendet: 0, tot: 0, fehler: 0 });
+
+      var kopf = h("div", { class: "status-liste", style: "padding:0" });
+      function zeile(was, wert, art) {
+        kopf.appendChild(h("div", { class: "sperre" }, [
+          h("span", { text: was }), h("span", { class: art || "meta", text: wert })]));
+      }
+      var her = Math.round((Date.now() - new Date(letzte.zeitpunkt).getTime()) / 60000);
+      zeile("Letzter Lauf", her < 2 ? "gerade eben" : her < 90 ? "vor " + her + " Min." : seitText(letzte.zeitpunkt));
+      zeile("Angemeldete Geräte", String(letzte.geraete || 0));
+      zeile("Nachrichten (30 Tage)", String(summe.gesendet));
+      zeile("Tote Abos entfernt", String(summe.tot), summe.tot ? "meta" : "meta");
+      zeile("Fehlversuche", String(summe.fehler), summe.fehler ? "achtung" : "meta");
+      innen.appendChild(kopf);
+
+      if (summe.fehler) {
+        innen.appendChild(h("p", { class: "meta", style: "margin:8px 0 0", text:
+          "Fehlversuche sind Nachrichten, die der Push-Dienst nicht angenommen hat - meist ein kurzer Aussetzer. "
+          + "Bleibt die Zahl hoch, stimmt etwas mit den Schlüsseln nicht (VAPID im Workflow)." }));
+      }
+      if (!letzte.geraete) {
+        innen.appendChild(h("p", { class: "meta", style: "margin:8px 0 0", text:
+          "Kein Gerät angemeldet. Push muss jeder für sich einschalten, unter Einstellungen, und die App muss dafür auf dem Home-Bildschirm liegen." }));
+      }
+
+      var det = h("details", { class: "tausch", style: "margin-top:10px" }, [
+        h("summary", { text: "Die letzten " + liste.length + " Läufe" })]);
+      liste.forEach(function (z) {
+        var d = new Date(z.zeitpunkt);
+        det.appendChild(h("div", { class: "sperre" }, [
+          h("span", { text: datumLang(d).replace(/(\d{2}\.\d{2})\.\d{4}/, "$1.") + " " + uhr(d) }),
+          h("span", { class: "meta", text: (z.gesendet || 0) + " gesendet"
+            + (z.tot ? " · " + z.tot + " tot" : "")
+            + (z.fehler ? " · " + z.fehler + " Fehler" : "")
+            + (z.hinweis ? " · " + z.hinweis : "") })]));
+      });
+      innen.appendChild(det);
+    });
+  }
+
   // Admin -> Korrekturen: alles, was du an Spielen von Hand geaendert hast.
   // Auf der Spielseite sieht man immer nur eines - hier steht, was insgesamt
   // von esrw.de abweicht, damit nichts vergessen liegen bleibt.
@@ -4445,7 +4512,24 @@ window.Mitglieder = (function () {
       if (r && r.error) { innen.appendChild(h("p", { class: "achtung", text: fehlerText(r.error) })); return; }
       var liste = (r && r.data) || [];
       if (!liste.length) { innen.appendChild(h("p", { class: "leer", text: "Nichts geändert, alles kommt von esrw.de." })); return; }
-      liste.forEach(function (k) {
+      // Korrekturen fuer laengst gespielte Partien bleiben stehen - sie
+      // gehoeren zum Archiv. Sie stehen nur nicht mehr im Weg.
+      var grenze = Date.now() - 30 * 86400000;
+      function frisch(k) {
+        var t = String(k.kennung || "").split("|")[0];
+        var d = t ? new Date(t).getTime() : NaN;
+        return isNaN(d) || d >= grenze;
+      }
+      var aktuell = liste.filter(frisch), aelter = liste.filter(function (k) { return !frisch(k); });
+      if (!aktuell.length) innen.appendChild(h("p", { class: "leer", text: "Nichts Aktuelles geändert." }));
+      var altBox = null;
+      if (aelter.length) {
+        altBox = h("details", { class: "tausch", style: "margin-top:10px" }, [
+          h("summary", { text: "Älter als 30 Tage (" + aelter.length + ")" }),
+          h("p", { class: "meta", style: "margin:6px 0 0", text: "Bleiben in Kraft und im Archiv. Nur ausgeblendet, damit die Liste übersichtlich bleibt." })
+        ]);
+      }
+      aktuell.concat(aelter).forEach(function (k, nr) {
         var teile = [];
         if (k.abgesagt) teile.push("abgesagt");
         if (k.halle) teile.push("Halle: " + k.halle);
@@ -4482,8 +4566,9 @@ window.Mitglieder = (function () {
             } })
           ])
         ]);
-        innen.appendChild(z);
+        (nr < aktuell.length ? innen : altBox).appendChild(z);
       });
+      if (altBox) innen.appendChild(altBox);
     });
   }
 
