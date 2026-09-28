@@ -1673,6 +1673,49 @@
   .abfahrt-gross svg.i { width:1.3rem; height:1.3rem; flex:none; }
   .abfahrt-gross b { display:block; font-size:1rem; }
   .abfahrt-gross small { display:block; color:var(--akzent); opacity:.85; font-weight:600; }
+  /* ---- Nachtrag Runde 42: Abstaende, Raender, Tippflaechen ---------- */
+  /* Karten, die ihren Innenabstand nie bekommen haben - Inhalt klebte am Rand */
+  .karte.archiv-liste { padding:2px 14px; }
+  .karte.einrichtung { padding:12px 14px; }
+  .karte.zuletzt-box { padding:0 14px 8px; }
+  .karte.zuletzt-box > summary { margin-left:-2px; }
+  /* Der Titel einer Unterseite ist eine Ueberschrift, keine Karte. Er sitzt
+     jetzt buendig zum Seitenrand statt zwei Pixel daneben. */
+  section:not(#detail):not(#mitglieder) > .profilzeile.karte { padding:6px 0 14px; }
+  /* Ein Mass fuer den Abstand zwischen Karten: zwoelf Pixel, ueberall */
+  .mg-inhalt > .karte + .karte,
+  .mg-inhalt > .melde + .melde,
+  #plan-liste > .karte + .karte { margin-top:12px; }
+  .kollege { margin-bottom:12px; }
+  /* Was man oft antippt, muss der Daumen sicher treffen: 40 Pixel.
+     Nebensaechliches bleibt kompakt, sonst waechst jede Seite ins Endlose. */
+  .reihe-knopf, .zeile-lauf, .telefon-zeile .ikon-knopf, .kontakt,
+  .spiel .zeile-link, .schnellzugriff a, .schnellzugriff button,
+  .menue a, .mg-untertabs button, .admin-leiste button { min-height:40px; }
+  .reihe-knopf, .kontakt, .spiel .zeile-link { display:flex; align-items:center; }
+  .stufen button, .schrittknopf, .rechner-lauf .schrittknopf { min-height:38px; min-width:38px; }
+  .leiste button { min-height:52px; }
+  label.mg-check, label.schalter { min-height:40px; display:flex; align-items:center; gap:10px; }
+  .einstellungen-liste > label { min-height:44px; }
+  /* Einheitliche Platzhalter, solange etwas laedt */
+  .lade-flaeche { display:flex; flex-direction:column; gap:10px; }
+  /* Links mitten im Text kann man nicht hoeher machen, ohne die Zeile zu
+     sprengen - sie bekommen deshalb eine unsichtbare Tippflaeche. */
+  .hallenlink, .meta .textknopf, .meta > a, .mg-fuss a, .kalender-innen a { position:relative; }
+  .hallenlink::after, .meta .textknopf::after, .meta > a::after, .mg-fuss a::after, .kalender-innen a::after {
+    content:""; position:absolute; left:0; right:0; top:-11px; bottom:-11px; z-index:1;
+  }
+  .farben button { width:34px; height:34px; }
+  .mg-foto { min-width:38px; min-height:38px; }
+  details > summary.abschnitt, .tausch > summary { min-height:40px; display:flex; align-items:center; }
+  .teilen-knopf, .kopier { min-height:38px; min-width:38px; }
+  .menue-gruppe > summary, button.menue-gruppe { min-height:40px; }
+  .profilzeile .textknopf { min-height:38px; }
+  #statistik .knopf-zeichen, #statistik button { min-height:40px; }
+  .start-anpassen a, #ziel-zeile .textknopf, #ziel-zeile a { position:relative; }
+  .start-anpassen a::after, #ziel-zeile .textknopf::after, #ziel-zeile a::after {
+    content:""; position:absolute; left:0; right:0; top:-11px; bottom:-11px; z-index:1;
+  }
   .nur-zeichen { padding-left:12px !important; padding-right:12px !important; }
   /* Gemeinsame Spiele auf der Kollegenseite: Datum fett, Paarung darunter */
   .zeile-lauf { display:flex; align-items:center; gap:10px; padding:10px 2px;
@@ -2245,6 +2288,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=87"></script>
+<script src="app.js?v=88"></script>
 </body>
 </html>

@@ -2866,6 +2866,54 @@ window.Mitglieder = (function () {
         inhalt.appendChild(h("div", { class: "melde karte" }, [h("div", { class: "mg-form" }, [wahl, text, knopf])]));
       }
 
+      // Krank oder verhindert: alles auf einmal, statt Spiel fuer Spiel
+      if (kommend.length) {
+        var tage = h("select", { class: "mg-select" }, [
+          h("option", { value: "3", text: "die nächsten 3 Tage" }),
+          h("option", { value: "7", text: "die nächsten 7 Tage", selected: true }),
+          h("option", { value: "14", text: "die nächsten 14 Tage" }),
+          h("option", { value: "0", text: "alles, was ansteht" })
+        ]);
+        var grund = h("input", { type: "text", maxlength: "200", placeholder: "Grund (optional), z. B. „krank, melde mich, wenn es besser ist“" });
+        function betroffene() {
+          var n = parseInt(tage.value, 10) || 0;
+          var bis = n ? Date.now() + n * 86400000 : Infinity;
+          return kommend.filter(function (s) { return new Date(s.beginn).getTime() <= bis; });
+        }
+        var zahl = h("p", { class: "meta", style: "margin:0 0 6px" });
+        function zahlNeu() {
+          var n = betroffene().length;
+          zahl.textContent = n ? n + (n === 1 ? " Spiel wird eingestellt." : " Spiele werden eingestellt.")
+                               : "In dem Zeitraum steht nichts an.";
+        }
+        tage.addEventListener("change", zahlNeu); zahlNeu();
+        var krankKnopf = h("button", { type: "button", class: "mg-neben", text: "Alle auf einmal ausschreiben", onclick: function () {
+          var liste = betroffene();
+          if (!liste.length) { meldung("In dem Zeitraum steht nichts an.", "warn"); return; }
+          if (!confirm(liste.length + (liste.length === 1 ? " Spiel" : " Spiele") + " in die Tauschbörse stellen?\n\n"
+                       + liste.map(function (s) { var d = new Date(s.beginn); return "· " + datum(d) + " " + uhr(d) + " " + s.paarung; }).join("\n")
+                       + "\n\nDas ersetzt nicht die Absprache mit dem Obmann.")) return;
+          krankKnopf.disabled = true;
+          var text = grund.value.trim();
+          liste.reduce(function (kette, s) {
+            return kette.then(function () {
+              return gesuchAnlegen(s, person).then(function (ok) {
+                if (ok && text) return speichern(sb.from("gesuche").update({ text: text }).eq("user_id", session.user.id).eq("kennung", kennungVon(s)));
+              });
+            });
+          }, Promise.resolve()).then(function () {
+            kurzMeldung(liste.length + (liste.length === 1 ? " Spiel eingestellt ✓" : " Spiele eingestellt ✓") + " Die Kollegen sehen sie sofort.", "gut");
+            zeigeTausch();
+          });
+        } });
+        inhalt.appendChild(h("h3", { class: "abschnitt", text: "Krank oder verhindert" }));
+        inhalt.appendChild(h("div", { class: "melde karte" }, [
+          h("p", { class: "meta", style: "margin:0 0 8px", text: "Schreibt alle deine Spiele im gewählten Zeitraum auf einmal aus. "
+            + "Sag dem Obmann trotzdem Bescheid - eintragen muss er." }),
+          h("div", { class: "mg-form" }, [tage, zahl, grund, krankKnopf])
+        ]));
+      }
+
       if (erledigt.length) {
         var box = h("details", { class: "karte" }, [h("summary", { text: "Erledigt (" + erledigt.length + ")" })]);
         erledigt.forEach(function (g) { box.appendChild(gesuchKarte(g, d.angebote[g.id] || [])); });

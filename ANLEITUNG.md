@@ -2335,6 +2335,42 @@ an.
   Fahrzeit, Kilometer, Puffer und Treffpunkt; erst dann Anschrift und der
   Weg zur Hallenseite.
 
+### 10.6ba Durchgang durch alle Bereiche: Tippflächen, Ränder, Krankmeldung
+
+Einmal alle Ansichten bei 375 Pixel durchgemessen statt nur angeschaut.
+Gefunden und behoben:
+
+* **Tippflächen.** Rund zwanzig Knöpfe und Links waren 19 bis 30 Pixel
+  hoch - am Handy kaum zu treffen. Was man oft antippt, ist jetzt
+  mindestens 40 Pixel hoch: Hallenzeilen, Aktionen auf der Spielkarte,
+  Schalter, Reiter, die Stufenknöpfe, der Schnellzugriff. Links mitten im
+  Text (Hallenname in einem Satz, „Startseite anpassen", „Saisonziel
+  setzen") lassen sich nicht höher machen, ohne die Zeile zu sprengen -
+  sie haben jetzt eine unsichtbare Tippfläche von 41 Pixeln.
+
+* **Karten ohne Innenabstand.** Archivliste, „Alles eingerichtet?" und
+  „Vergangene Spiele" hatten keinen - der Inhalt klebte am Kartenrand,
+  wie zuvor schon bei „Zusammen fahren" und „Du und …".
+
+* **Kopfzeile der Unterseiten.** Der Titel („Archiv", „Regeln" …) stand
+  zwei Pixel neben dem Seitenrand und damit auf keiner Linie mit den
+  Karten darunter. Jetzt bündig.
+
+* **Abstände.** Karten haben überall zwölf Pixel Abstand, vorher waren es
+  je nach Bereich acht bis zwanzig.
+
+* **Alles abschaltbar, jetzt wirklich.** Mit allen Schaltern auf „aus"
+  durchgetestet: jede Adresse führt zurück, kein Ziel bleibt in der
+  Leiste, in „Mehr" oder im Schnellzugriff stehen. Dazu ist auch
+  **Änderungen** abschaltbar, und der Bereich „Mehr" sagt es, wenn nichts
+  übrig ist, statt leer dazustehen.
+
+* **Krank oder verhindert** (Tauschbörse, unten): Zeitraum wählen -
+  3, 7, 14 Tage oder alles - und alle Spiele darin auf einmal in die
+  Tauschbörse stellen, mit einem Grund dazu. Vorher ging das nur Spiel
+  für Spiel. Die Absprache mit dem Obmann ersetzt es nicht, das sagt der
+  Hinweis auch.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

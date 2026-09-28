@@ -70,7 +70,8 @@
     ["rechner", "Strafrechner", "Stärke auf dem Eis ausrechnen", true],
     ["archiv", "Archiv", "alle Spiele aller Saisons mit Filtern", true],
     ["obmann", "Obmann per E-Mail", "Obmann-Adresse im Profil, „Monat per E-Mail“, Absage-Mail", true],
-    ["bild", "Profilbilder", "eigenes Bild hochladen und Bilder der Kollegen sehen", true]
+    ["bild", "Profilbilder", "eigenes Bild hochladen und Bilder der Kollegen sehen", true],
+    ["aenderungen", "Änderungen", "was sich an den Einteilungen getan hat, mit Vorher/Nachher", true]
   ];
   var funktionenStand = null;
   function funktionenLesen() {
@@ -2529,7 +2530,7 @@
     ["mitglieder/abrechnung", "i-euro", "Abrechnung", "abrechnung"],
     ["mitglieder/kollegen", "i-users", "Kollegen", "telefon"],
     ["mitglieder/tausch", "i-swap", "Tausch", "tausch"],
-    ["aenderungen", "i-bell", "Änderungen"],
+    ["aenderungen", "i-bell", "Änderungen", "aenderungen"],
     ["regeln", "i-buch", "Regeln", "regeln"],
     ["rechner", "i-rechner", "Strafrechner", "rechner"],
     ["archiv", "i-clock", "Archiv", "archiv"],
@@ -2554,7 +2555,8 @@
   function tabStandardDrei() {
     if (funktion("telefon")) return tabZiel("mitglieder/kollegen");
     if (funktion("tausch")) return tabZiel("mitglieder/tausch");
-    return tabZiel("aenderungen");
+    if (funktion("aenderungen")) return tabZiel("aenderungen");
+    return tabZiel("plan");
   }
   function tabFuerPlatz(p) {
     var w = lesen(p.schluessel);
@@ -2644,7 +2646,7 @@
     ["#mitglieder/abrechnung", "i-euro", "Abrechnung", "abrechnung"],
     ["#archiv", "i-clock", "Archiv", "archiv"],
     ["#mitfahren", "i-route", "Mitfahren", "mitfahren"],
-    ["#aenderungen", "i-bell", "Änderungen"],
+    ["#aenderungen", "i-bell", "Änderungen", "aenderungen"],
     ["#mitglieder/tausch", "i-swap", "Tausch", "tausch"],
     ["#statistik", "i-balken", "Statistik", "statistik"],
     ["#mitglieder/frei", "i-cal", "Verfügbar", "frei"],
@@ -3770,9 +3772,9 @@
     var liste = el("mehr-liste"); liste.innerHTML = "";
     var eintraege = [
       ["F\u00fcr dich"],
-      ["#archiv", "i-clock", "Archiv", "Alle deine Spiele, alle Saisons, mit Filtern und Export"],
+      funktion("archiv") ? ["#archiv", "i-clock", "Archiv", "Alle deine Spiele, alle Saisons, mit Filtern und Export"] : null,
       funktion("statistik") ? ["#statistik", "i-balken", "Statistik", "Saison, Ligen, Hallen, Partner, Saisonziel"] : null,
-      ["#aenderungen", "i-list", "\u00c4nderungen", "Was sich in 14 Tagen getan hat \u2013 mit Vorher/Nachher"],
+      funktion("aenderungen") ? ["#aenderungen", "i-list", "\u00c4nderungen", "Was sich in 14 Tagen getan hat \u2013 mit Vorher/Nachher"] : null,
       funktion("notizen") ? ["#mitglieder/notizen", "i-note", "Notizen", "Private Spielnotizen"] : null,
       funktion("regeln") ? ["#regeln", "i-buch", "Regeln", "Strafenmatrix, Spielzeiten und Bestimmungen, auch offline"] : null,
       funktion("rechner") ? ["#rechner", "i-rechner", "Strafrechner", "Wer sitzt, wer spielt: die Stärke auf dem Eis"] : null,
@@ -3809,6 +3811,10 @@
       if (e.length === 1) { var g = document.createElement("div"); g.className = "menue-gruppe"; g.textContent = e[0]; liste.appendChild(g); return; }
       liste.appendChild(kachel(e));
     });
+    // Hat der Betreiber alles abgeschaltet, soll hier nicht nur Leere stehen
+    if (!eintraege.some(function (e) { return e.length > 1; }) && !selten.length) {
+      liste.appendChild(leerZustand("Der Betreiber hat die Zusatzbereiche abgeschaltet. Spielplan und Startseite gehen weiter.", { label: "Zum Spielplan", href: "#plan" }));
+    }
     if (selten.length) {
       var kopf = document.createElement("button");
       kopf.type = "button"; kopf.className = "menue-gruppe menue-mehr";
@@ -4660,7 +4666,7 @@
     if (slug === "mehr") { zeigeMehr(); return; }
     if (slug === "einstellungen") { zeigeEinstellungen(); return; }
     if (slug === "mitglieder/konto") { location.hash = "einstellungen"; return; }
-    if (slug === "aenderungen") { zeigeAenderungen(); return; }
+    if (slug === "aenderungen") { if (!funktion("aenderungen")) { location.hash = "mehr"; return; } zeigeAenderungen(); return; }
     if (slug === "archiv" || slug.indexOf("archiv/") === 0) { if (!funktion("archiv")) { location.hash = "mehr"; return; } zeigeArchiv(slug.split("/")[1] || ""); return; }
     if (slug.indexOf("rechnung/") === 0) {
       var rk = decodeURIComponent(slug.slice(9));
