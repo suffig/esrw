@@ -2913,8 +2913,20 @@
     });
   }
   var suchModus = false;
+  // Ein Obmann pfeift nicht selbst - statt "Wer bist du?" steht das hier.
+  function obmannHinweis() {
+    var f = el("frage"), u = el("frage-unter");
+    if (!f || !u) return;
+    f.textContent = "Du bist als Obmann eingetragen";
+    u.textContent = "Du stehst in keiner Einteilung, deshalb gibt es hier kein eigenes Profil. "
+      + "Spielplan, Kollegen und der Betreiberbereich stehen dir offen.";
+    var liste = el("namen"); if (liste) liste.classList.add("versteckt");
+    var suche = el("suche"); if (suche) suche.classList.add("versteckt");
+  }
+
   function zeigeAuswahl(wechsel) {
     aktuell = null; ansicht("auswahl"); el("statistik").innerHTML = "";
+    if (kontoObmann && !wechsel) { obmannHinweis(); return; }
     suchModus = wechsel === "suche";
     el("frage").textContent = suchModus ? "Suche" : wechsel ? "Profil wechseln" : "Wer bist du?";
     el("frage-unter").textContent = suchModus ? "Kollegen, Hallen, Vereine, Spiele, Termine, Strafen und Bestimmungen. Tippen springt direkt hin." : wechsel ? "Der gewählte Name wird dein Profil auf diesem Gerät." : "Wähle deinen Namen. Danach siehst du deine Spiele, kannst den Kalender abonnieren und Mitteilungen bekommen.";
@@ -4904,8 +4916,17 @@
   // Steht im Konto ein Name, ist das Profil dieses Geraets daran gebunden.
   var kontoName = null;
   function kontoGebunden() { return !!(kontoName && sitzungVorhanden()); }
+  var kontoObmann = false;
   document.addEventListener("mg-profil", function (e) {
     if (e.detail && e.detail.slug) kontoName = e.detail.slug;
+    if (e.detail && e.detail.obmann) {
+      kontoObmann = true;
+      // Ohne eigene Einteilung ist die Namensliste der falsche Startpunkt
+      if (!profil || !profil.slug) {
+        obmannHinweis();
+        if (!location.hash || location.hash === "#" || location.hash === "#meine") location.hash = "plan";
+      }
+    }
     if (e.detail && e.detail.einstellungen) einstellungenAnwenden(e.detail.einstellungen);
     else if (e.detail && sitzungVorhanden()) einstellungenSync();
     var slug = e.detail && e.detail.slug, p = slug && personMit(slug);
@@ -5417,6 +5438,16 @@
       betreiberLaden(true).then(function () { korrekturenLaden(true); }); zeigeInstallHinweis(); zeigeNeu(); filterHoehe(); netzAnzeigen(); adminKnopfZeigen();
       setTimeout(zaehlerHolen, 1500);
       setTimeout(bilderLaden, 1200);
+      // Gehoert das Konto einem Obmann, fragt die App nicht nach einem Namen
+      if (sitzungVorhanden()) ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
+        .then(function (st) { return st.eingerichtet && st.session && window.Mitglieder.kontoKurz ? window.Mitglieder.kontoKurz() : null; })
+        .then(function (k) {
+          if (!k || !k.obmann) return;
+          kontoObmann = true;
+          if (profil && profil.slug) return;
+          obmannHinweis();
+          if (!el("auswahl").classList.contains("versteckt")) location.hash = "plan";
+        }).catch(function () {});
     })
     .catch(function (e) {
       anmeldeschirm((e && e.message) || "Daten konnten nicht geladen werden.");

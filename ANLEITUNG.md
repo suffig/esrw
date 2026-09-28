@@ -2409,6 +2409,38 @@ vorher:**
 * Versucht es doch jemand, sagt die App „Diesen Namen hat schon ein
   anderes Konto" statt einer Fehlermeldung aus der Datenbank.
 
+### 10.6bc Obmann-Konten ohne Namen (Schema v34)
+
+Seit v32 gehört zu jedem Konto ein Name aus der Einteilung. Für die
+Obmänner stimmt das nicht: sie pfeifen nicht selbst und stehen in keiner
+Einteilung. Sie bekommen deshalb ein eigenes Kennzeichen.
+
+* **Bei der Registrierung** steht in der Namensliste ganz unten
+  **„Obmann (pfeife nicht selbst)"**. Wer das wählt, kommt ohne Namen
+  durch; in der Freischaltungsliste steht dann „wartet, Obmann" statt
+  „wartet, ohne Namen", und die Zuordnung eines Namens wird gar nicht
+  erst angeboten.
+
+* **Im Adminbereich** hat jede Zeile den Knopf **„Obmann"** bzw. „kein
+  Obmann". Gesetzt wird das Kennzeichen nur vom Betreiber - die
+  Datenbank hält das fest (`profil_schutz`), sonst könnte sich jeder der
+  Namenspflicht entziehen.
+
+* **Im Profil** fragt die App keinen Namen mehr ab, sondern erklärt, warum
+  keiner nötig ist. Der Abschnitt „Was die Kollegen sehen" entfällt: ohne
+  Namen steht man in keiner Kollegenliste, und die Tabelle dahinter
+  verlangt einen.
+
+* **Auf der Startseite** kommt statt „Wer bist du?" der Hinweis, dass das
+  Konto einem Obmann gehört; die App springt in den Spielplan. Spielplan,
+  Kollegen, Info und der Betreiberbereich stehen wie gewohnt offen.
+
+* **Push**: Ankündigungen an alle erreichen Obmann-Konten wie jeden
+  anderen. Die persönlichen Nachrichten (neue Einteilung, Abfahrt,
+  Spieltag) entfallen, weil es keine eigenen Spiele gibt -
+  `push_senden.py` überspringt Konten ohne Namen an dieser Stelle schon
+  immer.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

@@ -531,6 +531,8 @@ window.Mitglieder = (function () {
       // Ein Name gehoert genau einem Konto - vergebene stehen nicht zur Wahl
       liste.filter(function (x) { return !x.vergeben; })
         .forEach(function (x) { nameWahl.appendChild(h("option", { value: x.slug, text: x.name })); });
+      // Obmaenner pfeifen nicht selbst und stehen in keiner Einteilung
+      if (namenDa) nameWahl.appendChild(h("option", { value: "_obmann", text: "Obmann (pfeife nicht selbst)" }));
       // Ohne Liste (Namenstabelle noch nicht eingespielt) waere die Pflicht
       // eine Sackgasse - dann faellt das Feld weg.
       if (!namenDa && nameWahl.parentNode) nameWahl.parentNode.removeChild(nameWahl);
@@ -546,16 +548,18 @@ window.Mitglieder = (function () {
         nameWahl.focus();
         return;
       }
-      var wunschName = nameWahl && nameWahl.value
+      var alsObmann = !!(nameWahl && nameWahl.value === "_obmann");
+      var wunschName = !alsObmann && nameWahl && nameWahl.value
         ? (nameWahl.options[nameWahl.selectedIndex].text || "") : "";
-      if (nameWahl && nameWahl.value && ctx.schreiben) ctx.schreiben("wunsch-slug", nameWahl.value);
+      if (!alsObmann && nameWahl && nameWahl.value && ctx.schreiben) ctx.schreiben("wunsch-slug", nameWahl.value);
       var lauf;
       if (modus === "registrieren") {
         // Der Name faehrt am Konto mit: so steht er in der Freischaltung,
         // auch wenn der Bestaetigungslink auf einem anderen Geraet aufgeht.
         lauf = sb.auth.signUp({ email: p.email, password: p.password,
           options: { emailRedirectTo: rueckkehr(),
-                     data: nameWahl && nameWahl.value ? { slug: nameWahl.value, name: wunschName } : undefined } });
+                     data: alsObmann ? { obmann: true }
+                       : (nameWahl && nameWahl.value ? { slug: nameWahl.value, name: wunschName } : undefined) } });
       } else if (modus === "vergessen") {
         lauf = sb.auth.resetPasswordForEmail(p.email, { redirectTo: rueckkehr() });
       } else {
@@ -696,6 +700,12 @@ window.Mitglieder = (function () {
               return ladeEinsaetze().then(function () { rahmen(); zeigeReiter(reiter); });
             });
         }
+        // Obmaenner haben keinen Namen in der Einteilung - fuer sie ist
+        // das Profil vollstaendig, auch ohne.
+        if (profil && profil.obmann) {
+          document.dispatchEvent(new CustomEvent("mg-profil", { detail: { obmann: true, name: profil.name || null, einstellungen: profil.einstellungen || null } }));
+          return ladeEinsaetze().then(function () { rahmen(); zeigeReiter(reiter); });
+        }
         if (!profil || !profil.slug) return zeigeEinrichtung();
         document.dispatchEvent(new CustomEvent("mg-profil", { detail: { slug: profil.slug, name: profil.name, einstellungen: profil.einstellungen || null } }));
         return ladeEinsaetze().then(function () { rahmen(); zeigeReiter(reiter); });
@@ -716,6 +726,19 @@ window.Mitglieder = (function () {
   // Schluessel fuer die verschluesselten Dateien in docs/. Die Tabelle
   // "tresor" liest nur, wer freigeschaltet ist - die Regeln stehen in
   // supabase/schema.sql, nicht hier.
+  // Das Noetigste ueber das eigene Konto, ohne den Mitgliederbereich zu
+  // oeffnen: die App braucht es schon beim Start, um zu wissen, ob sie
+  // nach einem Namen fragen muss.
+  function kontoKurz() {
+    return bereit().then(function () {
+      if (!sb || !session) return null;
+      return ladeProfil().then(function () {
+        return profil ? { slug: profil.slug || null, obmann: !!profil.obmann,
+                          freigeschaltet: !!profil.freigeschaltet, admin: !!profil.admin } : null;
+      });
+    }).catch(function () { return null; });
+  }
+
   function tresorSchluessel() {
     return bereit().then(function () {
       if (!sb || !session) return null;
@@ -944,6 +967,8 @@ window.Mitglieder = (function () {
     // er zum Konto - sonst stimmen Abrechnung und Statistik nicht mehr.
     // Die Datenbank haelt das ebenfalls fest (profil_schutz, Schema v32).
     var fest = !!(p.slug && !p.admin);
+    // Obmaenner pfeifen nicht selbst - von ihnen verlangt die App keinen Namen
+    var istObmann = !!p.obmann;
     var adresse = adressFeld({ wert: p.heimat || "", lat: p.heimat_lat, lon: p.heimat_lon });
     var heimat = adresse.feld;
     var teilen = h("input", { type: "checkbox" });
@@ -1036,7 +1061,7 @@ window.Mitglieder = (function () {
     var speichernKnopf = h("button", { type: "submit", class: "mg-haupt", text: "Speichern" });
     var form = h("form", { class: "mg-form", onsubmit: function (e) {
       e.preventDefault();
-      if (!fest && !auswahl.value) { meldung("Bitte deinen Namen wählen.", "warn"); return; }
+      if (!istObmann && !fest && !auswahl.value) { meldung("Bitte deinen Namen wählen.", "warn"); return; }
       if (!adresse.leer() && !adresse.gueltig()) {
         meldung("Bitte die Adresse aus der Vorschlagsliste wählen, dann stimmen Hausnummer, PLZ und Ort.", "warn");
         heimat.focus(); return;
@@ -1046,10 +1071,11 @@ window.Mitglieder = (function () {
         heimat.focus(); return;
       }
       speichernKnopf.disabled = true;
-      var gewaehlt = fest ? p.slug : auswahl.value;
-      var person = ctx.personMit(gewaehlt)
-        || (namenListe || []).filter(function (x) { return x.slug === gewaehlt; })[0]
-        || { slug: gewaehlt, name: fest ? (p.name || gewaehlt) : auswahl.options[auswahl.selectedIndex].text };
+      var gewaehlt = istObmann ? (p.slug || null) : fest ? p.slug : auswahl.value;
+      var person = (gewaehlt ? ctx.personMit(gewaehlt) : null)
+        || (gewaehlt ? (namenListe || []).filter(function (x) { return x.slug === gewaehlt; })[0] : null)
+        || { slug: gewaehlt,
+             name: istObmann ? (p.name || null) : fest ? (p.name || gewaehlt) : auswahl.options[auswahl.selectedIndex].text };
       var zeile = { id: session.user.id, slug: gewaehlt, name: person ? person.name : gewaehlt,
                     email: session.user.email || null,
                     heimat: heimat.value.trim() || null,
@@ -1086,9 +1112,11 @@ window.Mitglieder = (function () {
         } else sb.from("wohnorte").delete().eq("user_id", session.user.id).then(function () {}).catch(function () {});
         // Nummer und Anschrift fuer die Kollegen: eine Zeile, aus demselben Formular
         var nr = telefon.value.trim();
-        var zeigtBild = bildZeigen.checked && bildStand;
-        var zeigtTel = telefonZeigen.checked && nr;
-        var zeigtAdr = adresseZeigen.checked && zeile.heimat;
+        // Ohne Namen steht man in keiner Kollegenliste - und die Tabelle
+        // verlangt einen. Fuer Obmaenner faellt der Eintrag also weg.
+        var zeigtBild = !istObmann && bildZeigen.checked && bildStand;
+        var zeigtTel = !istObmann && telefonZeigen.checked && nr;
+        var zeigtAdr = !istObmann && adresseZeigen.checked && zeile.heimat;
         if (zeigtBild || zeigtTel || zeigtAdr) {
           speichern(sb.from("kontakte").upsert({ user_id: session.user.id, slug: zeile.slug, name: zeile.name,
                                                  telefon: zeigtTel ? nr : null,
@@ -1117,8 +1145,12 @@ window.Mitglieder = (function () {
     } }, [
       h("h4", { text: zurueck ? "Mein Profil" : "Wer bist du?" }),
       zurueck ? h("p", { class: "meta", style: "margin:0 0 8px", text: "Alles an einer Stelle: Name, Anschrift, Nummer. Abrechnung, Rechnung und die Liste der Kollegen nehmen sich die Angaben von hier." }) : null,
-      h("label", { text: "Dein Name auf esrw.de" }),
-      fest ? h("p", { class: "meta", style: "margin:0 0 4px" }, [
+      istObmann ? null : h("label", { text: "Dein Name auf esrw.de" }),
+      istObmann ? h("p", { class: "meta", style: "margin:0 0 4px" }, [
+        h("b", { text: "Obmann" }),
+        h("span", { text: " – du pfeifst nicht selbst und stehst in keiner Einteilung. "
+          + "Deshalb braucht dein Konto keinen Namen aus der Liste." })])
+      : fest ? h("p", { class: "meta", style: "margin:0 0 4px" }, [
         h("b", { text: p.name || p.slug }),
         h("span", { text: " – dein Name gehört zu deinem Konto. Ändern kann ihn nur der Betreiber, "
           + "damit Abrechnung und Statistik stimmen." })]) : auswahl,
@@ -1139,12 +1171,12 @@ window.Mitglieder = (function () {
       h("label", { class: "mg-check", style: "margin-top:8px" }, [teilen, " Wohnort für Fahrgemeinschaften teilen. Kollegen sehen nur den Ort und die Lage auf etwa einen Kilometer, keine Adresse. Dann schlägt „Zusammen fahren“ vor, wer auf dem Weg liegt."]),
       h("label", { text: "Handynummer für die Kollegen (freiwillig, jederzeit löschbar)" }), telefon,
       telHinweis,
-      h("p", { class: "regeln-kopf", style: "margin:14px 0 2px", text: "Was die Kollegen sehen" }),
-      fn("bild") ? h("label", { class: "mg-check" }, [bildZeigen, " Profilbild zeigen"]) : null,
-      h("label", { class: "mg-check", style: "margin-top:4px" }, [telefonZeigen, " Handynummer zeigen"]),
-      h("label", { class: "mg-check", style: "margin-top:4px" }, [adresseZeigen, " Anschrift zeigen"]),
-      h("p", { class: "meta", style: "margin:8px 0 4px", text: "Nur Freigeschaltete sehen das, und nur, was hier angehakt ist. So sieht es aus:" }),
-      vorschau,
+      istObmann ? null : h("p", { class: "regeln-kopf", style: "margin:14px 0 2px", text: "Was die Kollegen sehen" }),
+      (istObmann || !fn("bild")) ? null : h("label", { class: "mg-check" }, [bildZeigen, " Profilbild zeigen"]),
+      istObmann ? null : h("label", { class: "mg-check", style: "margin-top:4px" }, [telefonZeigen, " Handynummer zeigen"]),
+      istObmann ? null : h("label", { class: "mg-check", style: "margin-top:4px" }, [adresseZeigen, " Anschrift zeigen"]),
+      istObmann ? null : h("p", { class: "meta", style: "margin:8px 0 4px", text: "Nur Freigeschaltete sehen das, und nur, was hier angehakt ist. So sieht es aus:" }),
+      istObmann ? null : vorschau,
       fn("obmann") ? h("label", { text: "E-Mail des Obmanns (für „Monat per E-Mail“ in der Abrechnung, optional)" }) : null,
       fn("obmann") ? obmann : null,
       h("label", { text: "Kilometermodell" }), modell,
@@ -3210,7 +3242,8 @@ window.Mitglieder = (function () {
 
   function kontoUebersicht(box) {
     var zeilen = [["Name", profil.name || profil.slug || "?"], ["E-Mail", session.user.email || "?"],
-                  ["Freischaltung", profil.admin ? (adminModus() ? "Admin" : "Admin (Modus aus)") : profil.freigeschaltet ? "freigeschaltet ✓" : "wartet auf den Betreiber"],
+                  ["Freischaltung", (profil.admin ? (adminModus() ? "Admin" : "Admin (Modus aus)") : profil.freigeschaltet ? "freigeschaltet ✓" : "wartet auf den Betreiber")
+                    + (profil.obmann ? " · Obmann" : "")],
                   ["Heimatadresse", profil.heimat ? "hinterlegt ✓" : "fehlt (für Strecken und Abfahrt)"],
                   fn("obmann") ? ["Obmann-E-Mail", profil.obmann_email || "fehlt (für Mails aus der App)"] : null].filter(Boolean);
     function rendern() {
@@ -4646,6 +4679,23 @@ window.Mitglieder = (function () {
       });
       zeileEl.appendChild(wahl);
     }
+    // Obmaenner pfeifen nicht selbst; das Kennzeichen nimmt ihnen die
+    // Namenspflicht ab. Setzen darf es nur der Betreiber (Schema v34).
+    function obmannKnopf(p) {
+      return h("button", { type: "button", class: "textknopf", text: p.obmann ? "kein Obmann" : "Obmann",
+        title: p.obmann ? "Kennzeichen wieder entfernen" : "Pfeift nicht selbst, braucht keinen Namen",
+        onclick: function () {
+          speichern(sb.from("profile").update({ obmann: !p.obmann }).eq("id", p.id)).then(function (r) {
+            if (r && r.error) {
+              meldung(fehlerText(r.error) + (/obmann/.test(r.error.message || "") ? ", schema.sql (v34) ausführen." : ""), "warn");
+              return;
+            }
+            kurzMeldung(p.obmann ? "Kennzeichen entfernt." : (p.name || p.email || "Konto") + " ist Obmann ✓", "gut");
+            neu();
+          });
+        } });
+    }
+
     function mailAendern(p) {
       var neuMail = prompt("E-Mail im Verzeichnis ändern.\n\nAchtung: Das ändert nur den Eintrag hier (Anzeige und Einladungen). " +
         "Die Adresse zum Anmelden ändert der Kollege selbst unter Konto, oder du im Supabase-Dashboard.", p.email || "");
@@ -4666,7 +4716,7 @@ window.Mitglieder = (function () {
     }
 
     Promise.all([
-      speichern(sb.from("profile").select("id,name,slug,email,freigeschaltet,admin,angelegt,geaendert").order("name")),
+      speichern(sb.from("profile").select("id,name,slug,email,freigeschaltet,admin,obmann,angelegt,geaendert").order("name")),
       speichern(sb.from("einladungen").select("*").order("angelegt", { ascending: false }))
     ]).then(function (rr) {
       var r = rr[0] || {};
@@ -4685,7 +4735,7 @@ window.Mitglieder = (function () {
       if (!offen.length) box.appendChild(h("p", { class: "meta", text: "Niemand wartet." }));
       offen.sort(function (a, b) { return String(a.angelegt || "") < String(b.angelegt || "") ? -1 : 1; });
       offen.forEach(function (p) {
-        var marken = [[p.slug ? "wartet" : "wartet, ohne Namen", "warn"]];
+        var marken = [[p.obmann ? "wartet, Obmann" : p.slug ? "wartet" : "wartet, ohne Namen", "warn"]];
         var wann = p.angelegt ? "registriert " + seitText(p.angelegt) : "";
         var z = zeile(p, [
           h("button", { type: "button", class: "anfrage", text: "Freischalten", onclick: function () {
@@ -4695,10 +4745,11 @@ window.Mitglieder = (function () {
             });
           } }),
           h("button", { type: "button", class: "textknopf", text: "E-Mail", onclick: function () { mailAendern(p); } }),
+          obmannKnopf(p),
           h("button", { type: "button", class: "textknopf", style: "color:var(--rot)", text: "Entfernen", onclick: function () { entfernen(p); } })
         ], marken, wann);
         box.appendChild(z);
-        if (!p.slug) nameZuordnen(p, z);
+        if (!p.slug && !p.obmann) nameZuordnen(p, z);
       });
 
       // ---- Einladung vorbereiten
@@ -4763,8 +4814,9 @@ window.Mitglieder = (function () {
               speichern(sb.from("profile").update({ freigeschaltet: false }).eq("id", p.id)).then(function () { neu(); });
             } }),
             h("button", { type: "button", class: "textknopf", text: "E-Mail", onclick: function () { mailAendern(p); } }),
+            obmannKnopf(p),
             h("button", { type: "button", class: "textknopf", style: "color:var(--rot)", text: "Entfernen", onclick: function () { entfernen(p); } })
-          ], p.slug ? null : [["ohne Namen", "warn"]]));
+          ], p.obmann ? [["Obmann", "gut"]] : p.slug ? null : [["ohne Namen", "warn"]]));
         });
         box.appendChild(det);
       }
@@ -5294,6 +5346,6 @@ window.Mitglieder = (function () {
            sperrenAm: sperrenAm, gesuchAnlegen: gesuchAnlegen, offeneAbrechnungen: offeneAbrechnungen,
            extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat, obmann: obmann, termine: termine,
            einstellungenSpeichern: einstellungenSpeichern, radar: radar, angebotMachen: angebotMachen,
-           kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl, kontoRendern: kontoRendern, kontaktVon: kontaktVon, istAdmin: istAdmin, adminRecht: adminRecht, tresorSchluessel: tresorSchluessel, rechnungSprung: rechnungSprung, korrekturSpeichern: korrekturSpeichern, spielManuellLoeschen: spielManuellLoeschen,
+           kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl, kontoRendern: kontoRendern, kontaktVon: kontaktVon, istAdmin: istAdmin, adminRecht: adminRecht, tresorSchluessel: tresorSchluessel, kontoKurz: kontoKurz, rechnungSprung: rechnungSprung, korrekturSpeichern: korrekturSpeichern, spielManuellLoeschen: spielManuellLoeschen,
            mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, telefonVon: telefonVon, spielzeiten: spielzeiten, rechnungEinlesen: rechnungEinlesen, bilder: bilder, bildVon: bildVon, rufnameVon: rufnameVon, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb, wohnortEigen: wohnortEigen };
 })();

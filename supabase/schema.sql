@@ -1428,3 +1428,92 @@ alter table public.personen_liste add column if not exists vergeben boolean not 
 --     select email, slug, name, freigeschaltet from public.profile
 --      where slug is null order by angelegt;
 -- ----------------------------------------------------------------------
+
+
+-- ======================================================================
+-- v34: Obmann-Konten brauchen keinen Namen
+-- ======================================================================
+-- Seit v32 gehoert zu jedem Konto ein Name aus der Einteilung. Fuer die
+-- Obmaenner stimmt das nicht: sie pfeifen nicht selbst und stehen
+-- deshalb in keiner Einteilung. Sie bekommen ein eigenes Kennzeichen und
+-- bleiben ohne Namen - in der Freischaltungsliste steht dann "Obmann"
+-- statt "ohne Namen", und die App verlangt in ihrem Profil keinen.
+--
+-- Wer Obmann ist, entscheidet der Betreiber (Admin -> Freischaltung).
+-- Bei der Registrierung kann man es angeben; es ist nur ein Vorschlag,
+-- geaendert wird es wie "Admin" und "freigeschaltet" nur vom Betreiber.
+alter table public.profile add column if not exists obmann boolean not null default false;
+
+-- Der Schutz gilt fuer das neue Kennzeichen genauso: selbst setzen geht
+-- nicht, sonst koennte sich jeder der Namenspflicht entziehen.
+create or replace function public.profil_schutz()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  if auth.uid() is not null and not public.ist_admin() then
+    if tg_op = 'UPDATE' then
+      new.freigeschaltet := old.freigeschaltet;
+      new.admin := old.admin;
+      new.obmann := old.obmann;
+      -- Einmal gewaehlt, gehoert der Name zum Konto
+      if old.slug is not null then
+        new.slug := old.slug;
+        new.name := old.name;
+      end if;
+    else
+      new.freigeschaltet := false;
+      new.admin := false;
+      new.obmann := false;
+    end if;
+  end if;
+  return new;
+end;
+$$;
+drop trigger if exists profil_schutz on public.profile;
+create trigger profil_schutz before insert or update on public.profile
+  for each row execute function public.profil_schutz();
+
+-- Bei der Registrierung mitgeschickt: "obmann" statt eines Namens.
+create or replace function public.neues_konto()
+returns trigger language plpgsql security definer set search_path = public as $$
+declare
+  e        public.einladungen%rowtype;
+  m_slug   text;
+  m_name   text;
+  m_obmann boolean;
+  w_slug   text;
+  w_name   text;
+begin
+  select * into e from public.einladungen where lower(email) = lower(new.email);
+  m_slug   := nullif(new.raw_user_meta_data ->> 'slug', '');
+  m_name   := nullif(new.raw_user_meta_data ->> 'name', '');
+  m_obmann := coalesce((new.raw_user_meta_data ->> 'obmann')::boolean, false);
+
+  insert into public.profile (id, email) values (new.id, new.email)
+    on conflict (id) do nothing;
+
+  -- Einladung des Betreibers geht vor der eigenen Wahl
+  w_slug := coalesce(e.slug, m_slug);
+  w_name := coalesce(e.name, m_name);
+  if w_slug is not null and exists (
+       select 1 from public.profile x where x.slug = w_slug and x.id <> new.id) then
+    w_slug := null; w_name := null;      -- schon vergeben: der Betreiber klaert das
+  end if;
+
+  update public.profile p
+     set email          = new.email,
+         slug           = coalesce(p.slug, w_slug),
+         name           = coalesce(p.name, w_name),
+         obmann         = p.obmann or m_obmann,
+         freigeschaltet = p.freigeschaltet or coalesce(e.freischalten, false),
+         admin          = p.admin or coalesce(e.admin, false)
+   where p.id = new.id;
+
+  if e.email is not null then
+    update public.einladungen set eingeloest_am = now() where email = e.email;
+  end if;
+  return new;
+end;
+$$;
+drop trigger if exists konto_angelegt on auth.users;
+create trigger konto_angelegt after insert or update of email on auth.users
+  for each row execute function public.neues_konto();
