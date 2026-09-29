@@ -640,6 +640,47 @@ def test_funktionstexte():
         pruefe(nr not in quelle, "keine feste Nummer im Titel (%s)" % nr)
 
 
+def test_obmann_rechte():
+    """Die mittlere Stufe darf mehr als ein SR, aber nicht alles. Wichtig
+    ist beides: dass die Rechte wirken - und dass Freischaltung,
+    Funktionen und Sicherung beim Betreiber bleiben."""
+    print("\nObmann-Stufe")
+    wurzel = os.path.dirname(HIER)
+    with open(os.path.join(wurzel, "supabase", "schema.sql"), encoding="utf-8") as f:
+        schema = f.read()
+    with open(os.path.join(wurzel, "docs", "mitglieder.js"), encoding="utf-8") as f:
+        mg = f.read()
+    with open(os.path.join(wurzel, "docs", "app.js"), encoding="utf-8") as f:
+        app = f.read()
+
+    pruefe("obmann_rechte" in schema, "die Spalte fuer die Rechte steht im Schema")
+    pruefe("function public.obmann_darf(recht text)" in schema, "es gibt den Helfer obmann_darf()")
+    # Die Rechte darf nur der Betreiber setzen, sonst macht sich jeder selbst zum Obmann
+    schutz = schema[schema.rindex("create or replace function public.profil_schutz()"):]
+    pruefe("new.obmann_rechte := old.obmann_rechte;" in schutz, "der Trigger haelt die Rechte fest")
+    pruefe("new.obmann_rechte := '{}';" in schutz, "ein neues Konto startet ohne Rechte")
+
+    for recht, tabelle in (("korrekturen", "spiel_korrekturen"), ("spiele", "spiele_manuell"),
+                           ("ankuendigungen", "ankuendigungen")):
+        pruefe("public.obmann_darf('%s')" % recht in schema, "%s haengt an einem Recht (%s)" % (tabelle, recht))
+
+    # Was beim Betreiber bleiben muss
+    for tab in ("push_lauf", "sicherung_lauf", "funktionen", "einladungen", "tresor"):
+        teil = schema[schema.index("create table if not exists public.%s" % tab):] if ("create table if not exists public.%s" % tab) in schema else ""
+        pruefe("obmann_darf" not in teil[:2500], "%s bleibt beim Betreiber" % tab)
+
+    # Die App fragt nach dem Recht, nicht mehr nach dem Admin
+    pruefe("function darf(recht)" in mg, "die App kennt darf()")
+    pruefe('if (!session || !darf("korrekturen"))' in mg, "Korrekturen pruefen das Recht")
+    pruefe('if (!session || !darf("spiele"))' in mg, "manuelle Spiele pruefen das Recht")
+    pruefe("darfKorrigieren" in app, "die Spielseite fragt, ob korrigiert werden darf")
+    pruefe("Korrigieren (Admin)" not in app, "die Ueberschrift heisst nicht mehr nur 'Admin'")
+
+    # Und an jeder Aenderung steht, wer sie war
+    pruefe("function vonWem(" in app, "es gibt eine Stelle, die den Urheber nennt")
+    pruefe("Vom Betreiber korrigiert" not in app, "'vom Betreiber' steht nicht mehr fest im Text")
+
+
 def test_zurueckspielen():
     """Der Weg zurueck muss im Ernstfall funktionieren - und vorher nichts
     anfassen. Geprueft wird beides: der Probelauf schreibt nicht, und der
@@ -806,7 +847,7 @@ def main():
                  test_escape, test_ics, test_saison, test_aenderungstext, test_saisonarchiv,
                  test_korrektur_uid, test_gespannwechsel, test_ehemalige,
                  test_besetzung_korrektur, test_csp,
-                 test_rechnungsvorlage, test_sicherung, test_erinnerungszeit, test_zurueckspielen,
+                 test_rechnungsvorlage, test_sicherung, test_erinnerungszeit, test_zurueckspielen, test_obmann_rechte,
                  test_funktionstexte,
                  test_tresor):
         test()

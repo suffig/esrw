@@ -189,6 +189,28 @@ window.Mitglieder = (function () {
   // Oberflaeche ist ruhiger.
   function adminModus() { return !(ctx && ctx.lesen && ctx.lesen("adminaus") === "1"); }
   function istAdminAn() { return !!(profil && profil.admin && adminModus()); }
+
+  // Drei Stufen: Schiedsrichter, Obmann, Betreiber. Der Obmann arbeitet
+  // mit den Einteilungen, der Betreiber mit der App und den Konten.
+  // Welche Rechte ein Obmann hat, kreuzt der Betreiber je Person an
+  // (Schema v39, Spalte profile.obmann_rechte).
+  var OBMANN_RECHTE = [
+    ["korrekturen", "Einteilungen korrigieren", "Halle, Anstoß, Treffpunkt, Hinweis, Absage und das Gespann ändern"],
+    ["spiele", "Spiele und Ausfälle", "Spiele von Hand anlegen, gemeldete Ausfälle abarbeiten"],
+    ["ankuendigungen", "Ankündigungen und Termine", "Nachrichten an alle, Termine mit Zu- und Absage"],
+    ["stammdaten", "Stammdaten pflegen", "Telefonliste, Hallen, Vereine, Spielzeiten, offizielle Hallen-Hinweise"]
+  ];
+  // Der Betreiber darf immer alles - sonst muesste er sich selbst
+  // Haekchen setzen. Im Admin-Modus "aus" zaehlt auch fuer ihn nichts.
+  function darf(recht) {
+    if (!profil) return false;
+    if (profil.admin) return adminModus();
+    if (!profil.obmann || !(profil.freigeschaltet || profil.admin)) return false;
+    return (profil.obmann_rechte || []).indexOf(recht) >= 0;
+  }
+  function istObmannAn() { return !!(profil && !profil.admin && profil.obmann && OBMANN_RECHTE.some(function (r) { return darf(r[0]); })); }
+  // Alles, was den Betreiberbereich oeffnet
+  function darfBereich() { return istAdminAn() || istObmannAn(); }
   // Funktion vom Betreiber eingeschaltet? (Schalter kommen aus app.js)
   function fn(k) { return ctx && ctx.funktion ? ctx.funktion(k) : true; }
   // Einfache Ansicht (Schalter in den Einstellungen, siehe app.js)
@@ -827,6 +849,7 @@ window.Mitglieder = (function () {
       reiterListe = reiterListe.filter(function (t) { return KERN[t[0]] || t[0] === reiter; });
     }
     if (istAdminAn()) reiterListe.push(["admin", "Admin", "i-shield"]);
+    else if (istObmannAn()) reiterListe.push(["admin", "Obmann", "i-shield"]);
     reiterListe.forEach(function (t) {
       leiste.appendChild(h("button", { type: "button", "data-reiter": t[0], onclick: function () { zeigeReiter(t[0]); } }, [ikone(t[2]), t[1], h("span", { class: "zaehler versteckt" })]));
     });
@@ -866,7 +889,7 @@ window.Mitglieder = (function () {
     else if (name === "info") zeigeInfo();
     else if (name === "kollegen") zeigeTelefonbuch();
     else if (name === "profil") zeigeEinrichtung(true);
-    else if (name === "admin" && istAdminAn()) zeigeAdmin();
+    else if (name === "admin" && darfBereich()) zeigeAdmin();
     else if (name === "konto") zeigeKonto();
     else if (verfuegbareReiter.length && verfuegbareReiter[0] !== name) zeigeReiter(verfuegbareReiter[0]);
     else zeigeKonto();
@@ -2060,7 +2083,7 @@ window.Mitglieder = (function () {
             .then(function (ok) {
               if (!ok) return;
               vereinAdressen = null;
-              kurzMeldung(istAdminAn() ? "Gespeichert ✓ Kollegen sehen sie auch."
+              kurzMeldung(darf("stammdaten") ? "Gespeichert ✓ Kollegen sehen sie auch."
                                        : "Vorschlag gespeichert ✓ Der Betreiber prüft ihn.", "gut");
             });
         } }));
@@ -2691,6 +2714,7 @@ window.Mitglieder = (function () {
         return h("div", {}, [
           h("p", { class: "meta", style: "margin:0 0 8px", text: "Vergangene Spiele bekommen km und Vergütung von selbst. Die Knöpfe füllen nur, was noch fehlt." }),
           h("div", { class: "zweit" }, [strecken, gebuehr,
+            fn("obmann") ? h("button", { type: "button", text: "Monat per E-Mail", title: "Die Abrechnung eines Monats als Mail an den Obmann", onclick: function () { monatWaehlen(spiele); } }) : null,
             h("button", { type: "button", text: "CSV der Saison", onclick: function () { csvExport(spiele); } }),
             h("button", { type: "button", text: "Für die Steuer", title: "Jahresblatt und CSV je Steuerjahr", onclick: function () { zeigeFahrtenbuch(); } }),
             h("button", { type: "button", text: "Fahrtenbuch", onclick: function () { zeigeFahrtenbuch(); } }),
@@ -3421,12 +3445,13 @@ window.Mitglieder = (function () {
   }
 
   function angebotAnnehmen(g, a) {
-    if (!confirm(a.name + " übernimmt " + g.paarung + "? Danach geht eine Mail an den Obmann.")) return;
+    if (!confirm(a.name + " übernimmt " + g.paarung + "?"
+      + (fn("obmann") ? " Danach geht eine Mail an den Obmann." : " Sag dem Obmann Bescheid - umteilen muss er."))) return;
     sb.from("gesuche").update({ status: "vereinbart", vereinbart_mit: a.user_id, vereinbart_name: a.name, vereinbart_gemeldet: false }).eq("id", g.id)
       .then(function (r) {
         if (r.error) { meldung(fehlerText(r.error), "warn"); return; }
         kurzMeldung("Vereinbart ✓ " + a.name + " bekommt Bescheid.", "gut");
-        obmannMail(g, a.name);
+        if (fn("obmann")) obmannMail(g, a.name);
         zeigeTausch();
       });
   }
@@ -4146,10 +4171,10 @@ window.Mitglieder = (function () {
           var z = h("div", { class: "kandidat" + (n.offiziell ? " offiziell" : "") }, [
             h("div", {}, [n.offiziell ? h("span", { class: "offiziell-badge", text: "Offiziell" }) : null, n.text]),
             h("div", { class: "meta" }, [n.name + " · " + new Date(n.angelegt).toLocaleDateString("de-DE"),
-              (n.user_id === session.user.id || istAdminAn()) ? h("button", { type: "button", class: "textknopf", style: "margin-left:8px", text: "löschen", onclick: function () {
+              (n.user_id === session.user.id || darf("stammdaten")) ? h("button", { type: "button", class: "textknopf", style: "margin-left:8px", text: "löschen", onclick: function () {
                 sb.from("hallen_notizen").delete().eq("id", n.id).then(function () { cache.hallen[spiel.halle] = hinweise.filter(function (x) { return x !== n; }); neuZeichnen(); });
               } }) : null,
-              istAdminAn() ? h("button", { type: "button", class: "textknopf", style: "margin-left:8px", text: n.offiziell ? "nicht mehr offiziell" : "als offiziell markieren", title: "Offizielle Hinweise stehen oben, auf der Spielseite für alle und im Kalender", onclick: function () {
+              darf("stammdaten") ? h("button", { type: "button", class: "textknopf", style: "margin-left:8px", text: n.offiziell ? "nicht mehr offiziell" : "als offiziell markieren", title: "Offizielle Hinweise stehen oben, auf der Spielseite für alle und im Kalender", onclick: function () {
                 sb.from("hallen_notizen").update({ offiziell: !n.offiziell }).eq("id", n.id).then(function (r) { if (r.error) { meldung(fehlerText(r.error), "warn"); return; } n.offiziell = !n.offiziell; document.dispatchEvent(new CustomEvent("mg-betreiber")); neuZeichnen(); });
               } }) : null])
           ]);
@@ -4349,21 +4374,26 @@ window.Mitglieder = (function () {
   // fuenf Karten untereinander - auf dem Handy eine endlose Rolle.
   var adminBereich = "freischaltung";
   function zeigeAdmin() {
+    // Das fuenfte Feld sagt, welches Recht der Bereich braucht; ohne es
+    // sieht ihn nur der Betreiber.
     var BEREICHE = [
       ["freischaltung", "Freischaltung", "i-check", adminRendern],
       ["funktionen", "Funktionen", "i-shield", funktionenRendern],
-      ["spiel", "Spiel anlegen", "i-cal", spielAnlegenRendern],
-      ["hallen", "Hallen & Vereine", "i-pin", hallenPflegeRendern],
-      ["adressen", "Vereine", "i-note", vereinsAdressenRendern],
-      ["telefon", "Telefonliste", "i-users", telefonlisteRendern],
-      ["zeiten", "Spielzeiten", "i-clock", spielzeitenRendern],
-      ["korrekturen", "Korrekturen", "i-note", korrekturenRendern],
+      ["spiel", "Spiel anlegen", "i-cal", spielAnlegenRendern, "spiele"],
+      ["hallen", "Hallen & Vereine", "i-pin", hallenPflegeRendern, "stammdaten"],
+      ["adressen", "Vereine", "i-note", vereinsAdressenRendern, "stammdaten"],
+      ["telefon", "Telefonliste", "i-users", telefonlisteRendern, "stammdaten"],
+      ["zeiten", "Spielzeiten", "i-clock", spielzeitenRendern, "stammdaten"],
+      ["korrekturen", "Korrekturen", "i-note", korrekturenRendern, "korrekturen"],
       ["push", "Push", "i-bell", pushLaufRendern],
       ["speicher", "Speicher", "i-note", speicherRendern]
-    ];
+    ].filter(function (b) { return istAdminAn() || (b[4] && darf(b[4])); });
+    if (!BEREICHE.length) { inhalt.appendChild(h("p", { class: "leer", text: "Für dich ist hier zurzeit nichts freigegeben." })); return; }
     if (!BEREICHE.filter(function (b) { return b[0] === adminBereich; }).length) adminBereich = BEREICHE[0][0];
 
-    inhalt.appendChild(h("p", { class: "meta admin-kopf", text: "Betreiber-Werkzeuge. Was du hier änderst, sehen alle." }));
+    inhalt.appendChild(h("p", { class: "meta admin-kopf", text: istAdminAn()
+      ? "Betreiber-Werkzeuge. Was du hier änderst, sehen alle."
+      : "Als Obmann freigegeben. Was du hier änderst, sehen alle - dein Name steht dabei." }));
     var leiste = h("div", { class: "admin-leiste" });
     var zaehlKnopf = null;
     BEREICHE.forEach(function (b) {
@@ -4377,7 +4407,7 @@ window.Mitglieder = (function () {
 
     // Wartende Konten stehen als Zahl am Knopf - dafuer muss man nicht
     // erst hineinschauen.
-    sb.from("profile").select("id,freigeschaltet,admin").eq("freigeschaltet", false).then(function (r) {
+    if (istAdminAn()) sb.from("profile").select("id,freigeschaltet,admin").eq("freigeschaltet", false).then(function (r) {
       var n = (r.data || []).filter(function (p) { return !p.admin; }).length;
       if (!n || !zaehlKnopf || !zaehlKnopf.isConnected) return;
       zaehlKnopf.appendChild(h("i", { text: String(n) }));
@@ -4394,7 +4424,7 @@ window.Mitglieder = (function () {
 
   // Admin -> Spiel anlegen: Spiele, die auf esrw.de fehlen
   function spielManuellLoeschen(id) {
-    if (!session || !profil || !profil.admin) return Promise.resolve(false);
+    if (!session || !darf("spiele")) return Promise.resolve(false);
     return sb.from("spiele_manuell").delete().eq("id", id).then(function (r) { if (r.error) { meldung(fehlerText(r.error), "warn"); return false; } document.dispatchEvent(new CustomEvent("mg-betreiber")); return true; });
   }
   // Admin: gemeldete Ausfaelle. "Ausblenden" setzt die Marke in
@@ -4405,7 +4435,7 @@ window.Mitglieder = (function () {
     var kasten = h("div", { class: "ausfall-meldungen" });
     box.insertBefore(kasten, box.firstChild);
     Promise.all([
-      speichern(sb.from("spiel_meldungen").select("*").order("angelegt", { ascending: false })),
+      darf("spiele") ? speichern(sb.from("spiel_meldungen").select("*").order("angelegt", { ascending: false })) : Promise.resolve({ data: [] }),
       speichern(sb.from("spiel_korrekturen").select("kennung,geloescht,von").eq("geloescht", true))
     ]).then(function (rr) {
       var meldungen = (rr[0] && rr[0].data) || [];
@@ -5225,7 +5255,7 @@ window.Mitglieder = (function () {
   function zaehler() {
     if (!session) return Promise.resolve({ angemeldet: false });
     return ladeProfil().then(function () {
-      var z = { angemeldet: true, gesuche: 0, wartend: 0, info: 0, admin: istAdminAn(), adminRecht: !!(profil && profil.admin) };
+      var z = { angemeldet: true, gesuche: 0, wartend: 0, info: 0, admin: darfBereich(), nurObmann: istObmannAn(), adminRecht: !!(profil && profil.admin) };
       var laeufe = [];
       if (frei() && fn("tausch")) laeufe.push(sb.from("gesuche").select("id,user_id").eq("status", "offen").gte("beginn", new Date(Date.now() - 6 * 3600000).toISOString())
         .then(function (r) { z.gesuche = (r.data || []).filter(function (g) { return g.user_id !== session.user.id; }).length; }));
@@ -5261,7 +5291,7 @@ window.Mitglieder = (function () {
     // Name oben mit einer Marke rechts, darunter E-Mail und seit wann,
     // Knoepfe in einer eigenen Zeile. Vorher standen Marken, Name und
     // E-Mail ineinander und die Knoepfe sassen irgendwo dazwischen.
-    function zeile(p, knoepfe, marken, zusatz) {
+    function zeile(p, knoepfe, marken, zusatz, unten) {
       var kopf = h("div", { class: "konto-kopf" }, [
         h("b", { text: p.name || "Noch kein Name gewählt" }),
         (marken || []).length ? h("span", { class: "merkzeichen " + marken[0][1], text: marken[0][0] }) : null
@@ -5270,6 +5300,7 @@ window.Mitglieder = (function () {
       if (p.email) z.appendChild(h("small", { text: p.email }));
       if (zusatz) z.appendChild(h("small", { text: zusatz }));
       z.appendChild(h("span", { class: "zweit-klein" }, knoepfe.filter(Boolean)));
+      if (unten) z.appendChild(unten);
       return z;
     }
     // Alte Konten ohne Namen (vor der Pflicht bei der Registrierung) kann
@@ -5317,6 +5348,40 @@ window.Mitglieder = (function () {
         } });
     }
 
+    // Was ein Obmann darf, kreuzt der Betreiber hier an. Erscheint nur
+    // bei Konten mit dem Obmann-Kennzeichen; ohne Haekchen ist ein Obmann
+    // genau so weit wie jeder andere Schiedsrichter.
+    function rechteKasten(p) {
+      if (!p.obmann) return null;
+      var jetzt = p.obmann_rechte || [];
+      var kasten = h("div", { class: "obmann-rechte" }, [
+        h("p", { class: "meta", style: "margin:0 0 4px", text: "Darf als Obmann:" })]);
+      OBMANN_RECHTE.forEach(function (r) {
+        var box = h("input", { type: "checkbox" });
+        box.checked = jetzt.indexOf(r[0]) >= 0;
+        box.addEventListener("change", function () {
+          var neuRechte = OBMANN_RECHTE.map(function (x) { return x[0]; }).filter(function (k) {
+            var feld = kasten.querySelector('[data-recht="' + k + '"]');
+            return feld && feld.checked;
+          });
+          box.disabled = true;
+          speichern(sb.from("profile").update({ obmann_rechte: neuRechte }).eq("id", p.id)).then(function (rr) {
+            box.disabled = false;
+            if (rr && rr.error) {
+              box.checked = !box.checked;
+              meldung(fehlerText(rr.error) + (/obmann_rechte/.test(rr.error.message || "") ? ", schema.sql (v39) ausführen." : ""), "warn");
+              return;
+            }
+            p.obmann_rechte = neuRechte;
+            kurzMeldung(r[1] + (box.checked ? " freigegeben ✓" : " wieder entzogen"), box.checked ? "gut" : "");
+          });
+        });
+        box.setAttribute("data-recht", r[0]);
+        kasten.appendChild(h("label", { class: "mg-check", title: r[2] }, [box, " " + r[1]]));
+      });
+      return kasten;
+    }
+
     function mailAendern(p) {
       var neuMail = prompt("E-Mail im Verzeichnis ändern.\n\nAchtung: Das ändert nur den Eintrag hier (Anzeige und Einladungen). " +
         "Die Adresse zum Anmelden ändert der Kollege selbst unter Konto, oder du im Supabase-Dashboard.", p.email || "");
@@ -5337,7 +5402,7 @@ window.Mitglieder = (function () {
     }
 
     Promise.all([
-      speichern(sb.from("profile").select("id,name,slug,email,freigeschaltet,admin,obmann,angelegt,geaendert").order("name")),
+      speichern(sb.from("profile").select("id,name,slug,email,freigeschaltet,admin,obmann,obmann_rechte,angelegt,geaendert").order("name")),
       speichern(sb.from("einladungen").select("*").order("angelegt", { ascending: false }))
     ]).then(function (rr) {
       var r = rr[0] || {};
@@ -5437,7 +5502,7 @@ window.Mitglieder = (function () {
             h("button", { type: "button", class: "textknopf", text: "E-Mail", onclick: function () { mailAendern(p); } }),
             obmannKnopf(p),
             h("button", { type: "button", class: "textknopf", style: "color:var(--rot)", text: "Entfernen", onclick: function () { entfernen(p); } })
-          ], p.obmann ? [["Obmann", "gut"]] : p.slug ? null : [["ohne Namen", "warn"]]));
+          ], p.obmann ? [["Obmann", "gut"]] : p.slug ? null : [["ohne Namen", "warn"]], null, rechteKasten(p)));
         });
         box.appendChild(det);
       }
@@ -5591,7 +5656,7 @@ window.Mitglieder = (function () {
       var alle = (r.data || []).filter(function (a) { return (!a.bis || a.bis >= heute) && (!a.termin || a.termin >= heute || (a.bis && a.bis >= heute)); });
       var gelesen = gelesenLesen();
       leeren(inhalt);
-      if (istAdminAn()) inhalt.appendChild(ankuendigungFormular());
+      if (darf("ankuendigungen")) inhalt.appendChild(ankuendigungFormular());
       if (!alle.length) inhalt.appendChild(h("p", { class: "leer", text: "Keine Ankündigungen." }));
       var terminIds = alle.filter(function (a) { return a.termin && a.termin >= heute; }).map(function (a) { return a.id; });
       var antwortenVersprechen = terminIds.length && frei() ? sb.from("termin_antworten").select("ankuendigung_id,user_id,name,antwort").in("ankuendigung_id", terminIds).then(function (r2) { return r2.data || []; }).catch(function () { return []; }) : Promise.resolve([]);
@@ -5606,7 +5671,7 @@ window.Mitglieder = (function () {
         zeile.appendChild(h("button", { type: "button", class: "anfrage" + (meine && meine.antwort === "ja" ? " aktiv" : ""), text: "Ich komme", onclick: function () { setze("ja"); } }));
         zeile.appendChild(h("button", { type: "button", class: "anfrage" + (meine && meine.antwort === "nein" ? " aktiv" : ""), text: "Komme nicht", onclick: function () { setze("nein"); } }));
         zeile.appendChild(h("span", { class: "meta", text: ja.length + (ja.length === 1 ? " kommt" : " kommen") + (nein.length ? " · " + nein.length + " nicht" : "") }));
-        if (istAdminAn() && (ja.length || nein.length)) {
+        if (darf("ankuendigungen") && (ja.length || nein.length)) {
           var det = h("details", { class: "tausch", style: "width:100%;margin-top:4px" }, [h("summary", { text: "Wer hat geantwortet?" })]);
           if (ja.length) det.appendChild(h("div", { class: "meta", text: "Kommen: " + ja.map(function (x) { return x.name; }).sort().join(", ") }));
           if (nein.length) det.appendChild(h("div", { class: "meta", text: "Kommen nicht: " + nein.map(function (x) { return x.name; }).sort().join(", ") }));
@@ -5627,7 +5692,7 @@ window.Mitglieder = (function () {
           h("div", { style: "white-space:pre-wrap; margin-top:4px", text: a.text }),
           a.bis ? h("div", { class: "meta", text: "gilt bis " + a.bis.split("-").reverse().join(".") }) : null,
           a.termin && a.termin >= heute && frei() ? antwortZeile(a, antworten) : null,
-          istAdminAn() ? h("div", { class: "zweit" }, [
+          darf("ankuendigungen") ? h("div", { class: "zweit" }, [
             h("button", { type: "button", text: "Löschen", onclick: function () {
               if (!confirm("Ankündigung löschen?")) return;
               sb.from("ankuendigungen").delete().eq("id", a.id).then(function () { zeigeInfo(); });
@@ -5690,6 +5755,42 @@ window.Mitglieder = (function () {
   }
 
   // ---- Monatsabrechnung als E-Mail (mailto, Text mit Tabelle)
+
+  // Welcher Monat soll raus? Nur Monate anbieten, in denen etwas steht -
+  // eine leere Mail hilft niemandem.
+  function monatWaehlen(spiele) {
+    var monate = [], gesehen = {};
+    spiele.forEach(function (sp) {
+      var d = new Date(sp.beginn);
+      if (d > new Date()) return;
+      var k = d.getFullYear() + "-" + d.getMonth();
+      if (gesehen[k]) return;
+      gesehen[k] = true;
+      monate.push({ k: k, d: new Date(d.getFullYear(), d.getMonth(), 1), text: MONATE[d.getMonth()] + " " + d.getFullYear() });
+    });
+    if (!monate.length) { meldung("In dieser Saison liegt noch kein Monat hinter dir.", "warn"); return; }
+    monate.sort(function (a, b) { return b.d - a.d; });
+    abrechnungPanel = null;
+    var wahl = h("select", { class: "mg-select" }, monate.map(function (m) { return h("option", { value: m.k, text: m.text }); }));
+    var box = h("div", { class: "melde karte mg-panel" }, [
+      h("h4", { style: "margin:0 0 6px", text: "Monat per E-Mail" }),
+      h("p", { class: "meta", style: "margin:0 0 8px", text: profil.obmann_email
+        ? "Geht an " + profil.obmann_email + ". Die Mail öffnet sich in deinem Mailprogramm, abgeschickt wird sie erst von dir."
+        : "Es ist noch keine Obmann-Adresse hinterlegt (Konto → Einstellungen). Die Mail öffnet sich trotzdem, nur ohne Empfänger." }),
+      h("div", { class: "zweit" }, [wahl,
+        h("button", { type: "button", class: "anfrage", text: "Mail vorbereiten", onclick: function () {
+          var m = monate.filter(function (x) { return x.k === wahl.value; })[0];
+          if (!m) return;
+          var drin = spiele.filter(function (sp) {
+            var d = new Date(sp.beginn);
+            return d.getFullYear() + "-" + d.getMonth() === m.k;
+          });
+          monatsMail(drin, m.d);
+        } }),
+        h("button", { type: "button", text: "Zurück", onclick: function () { rendereAbrechnung(); } })])]);
+    leeren(inhalt);
+    inhalt.appendChild(box);
+  }
 
   function monatsMail(spiele, d) {
     var zeilen = [], summe = 0, km = 0, fahrt = 0;
@@ -5801,10 +5902,13 @@ window.Mitglieder = (function () {
 
   // Naechste Termine (Ankuendigungen mit Datum) fuer die Startseite
   function istAdmin() { return ladeProfil().then(function () { return istAdminAn(); }).catch(function () { return false; }); }
+  // Fuer app.js: darf dieses Konto Einteilungen aendern? Das koennen ein
+  // Betreiber und ein Obmann mit dem Recht "korrekturen".
+  function darfKorrigieren() { return ladeProfil().then(function () { return darf("korrekturen"); }).catch(function () { return false; }); }
   // Hat das Konto ueberhaupt Adminrechte (unabhaengig vom Modus)? Fuer den Schalter oben.
   function adminRecht() { return ladeProfil().then(function () { return !!(profil && profil.admin); }).catch(function () { return false; }); }
   function korrekturSpeichern(kennung, obj) {
-    if (!session || !profil || !profil.admin) return Promise.resolve(false);
+    if (!session || !darf("korrekturen")) return Promise.resolve(false);
     var lauf = obj ? sb.from("spiel_korrekturen").upsert(Object.assign({ kennung: kennung, von: profil.name || profil.slug, geaendert: new Date().toISOString() }, obj), { onConflict: "kennung" })
                    : sb.from("spiel_korrekturen").delete().eq("kennung", kennung);
     return lauf.then(function (r) { if (r.error) { meldung(fehlerText(r.error) + (/spiel_korrekturen/.test(r.error.message || "") ? ", schema.sql (v12) ausführen." : ""), "warn"); return false; } return true; })
@@ -5968,5 +6072,5 @@ window.Mitglieder = (function () {
            extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat, obmann: obmann, termine: termine,
            einstellungenSpeichern: einstellungenSpeichern, radar: radar, angebotMachen: angebotMachen,
            kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl, kontoRendern: kontoRendern, kontaktVon: kontaktVon, istAdmin: istAdmin, adminRecht: adminRecht, tresorSchluessel: tresorSchluessel, kontoKurz: kontoKurz, rechnungSprung: rechnungSprung, korrekturSpeichern: korrekturSpeichern, spielManuellLoeschen: spielManuellLoeschen,
-           mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, telefonVon: telefonVon, spielzeiten: spielzeiten, rechnungEinlesen: rechnungEinlesen, bilder: bilder, bildVon: bildVon, rufnameVon: rufnameVon, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb, wohnortEigen: wohnortEigen, notizenFuerSuche: notizenFuerSuche, zugang: zugang };
+           mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, telefonVon: telefonVon, spielzeiten: spielzeiten, rechnungEinlesen: rechnungEinlesen, bilder: bilder, bildVon: bildVon, rufnameVon: rufnameVon, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb, wohnortEigen: wohnortEigen, notizenFuerSuche: notizenFuerSuche, zugang: zugang, darfKorrigieren: darfKorrigieren };
 })();

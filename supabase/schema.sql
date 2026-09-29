@@ -1675,3 +1675,190 @@ create policy "manuelle Spiele lesen" on public.spiele_manuell for select
 -- einfacher in der App: abmelden, Spielplan bleibt leer, das war vorher
 -- schon so):
 --   select count(*) from public.spiel_korrekturen;   -- als Admin: Zahl
+
+
+-- ======================================================================
+-- v39: Der Obmann darf mehr als ein SR, aber nicht alles
+-- ======================================================================
+-- Bisher gab es zwei Stufen: freigeschaltet und Betreiber. Wer einteilt,
+-- brauchte fuer jede Korrektur den Betreiber. Jetzt gibt es dazwischen
+-- den Obmann - mit Rechten, die der Betreiber je Person ankreuzt.
+--
+-- Die Trennlinie: der Obmann arbeitet mit den Einteilungen, der
+-- Betreiber mit der App und den Konten. Freischaltung, Funktionen,
+-- Push-Gesundheit, Speicher und Sicherung bleiben beim Betreiber -
+-- das sind Entscheidungen ueber Zugang und Betrieb, nicht ueber Spiele.
+
+alter table public.profile add column if not exists obmann_rechte text[] not null default '{}';
+comment on column public.profile.obmann_rechte is
+  'Was dieser Obmann darf: korrekturen, spiele, ankuendigungen, stammdaten';
+
+-- Nur wer freigeschaltet und als Obmann gekennzeichnet ist, kann Rechte
+-- haben. Der Betreiber darf immer alles - sonst muesste er sich selbst
+-- Haekchen setzen.
+create or replace function public.obmann_darf(recht text)
+returns boolean language sql stable security definer set search_path = public as $$
+  select coalesce((
+    select p.admin or (p.obmann and (p.freigeschaltet or p.admin) and recht = any(p.obmann_rechte))
+      from public.profile p where p.id = auth.uid()), false);
+$$;
+revoke all on function public.obmann_darf(text) from public;
+grant execute on function public.obmann_darf(text) to authenticated;
+
+-- Die Rechte setzt nur der Betreiber - sonst koennte sich jeder selbst
+-- zum Obmann machen. Gleiches Muster wie fuer admin und freigeschaltet.
+create or replace function public.profil_schutz()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  if auth.uid() is not null and not public.ist_admin() then
+    if tg_op = 'UPDATE' then
+      new.freigeschaltet := old.freigeschaltet;
+      new.admin := old.admin;
+      new.obmann := old.obmann;
+      new.obmann_rechte := old.obmann_rechte;
+      -- Einmal gewaehlt, gehoert der Name zum Konto
+      if old.slug is not null then
+        new.slug := old.slug;
+        new.name := old.name;
+      end if;
+    else
+      new.freigeschaltet := false;
+      new.admin := false;
+      new.obmann := false;
+      new.obmann_rechte := '{}';
+    end if;
+  end if;
+  return new;
+end;
+$$;
+drop trigger if exists profil_schutz on public.profile;
+create trigger profil_schutz before insert or update on public.profile
+  for each row execute function public.profil_schutz();
+
+-- ---- Recht "korrekturen": Einteilungen aendern, auch das Gespann
+drop policy if exists "Admin korrigiert"   on public.spiel_korrekturen;
+drop policy if exists "Admin legt an"      on public.spiel_korrekturen;
+drop policy if exists "Admin loescht"      on public.spiel_korrekturen;
+drop policy if exists "Korrektur aendern"  on public.spiel_korrekturen;
+drop policy if exists "Korrektur anlegen"  on public.spiel_korrekturen;
+drop policy if exists "Korrektur loeschen" on public.spiel_korrekturen;
+create policy "Korrektur aendern" on public.spiel_korrekturen for update to authenticated
+  using (public.obmann_darf('korrekturen')) with check (public.obmann_darf('korrekturen'));
+create policy "Korrektur anlegen" on public.spiel_korrekturen for insert to authenticated
+  with check (public.obmann_darf('korrekturen'));
+create policy "Korrektur loeschen" on public.spiel_korrekturen for delete to authenticated
+  using (public.obmann_darf('korrekturen'));
+
+-- ---- Recht "spiele": Spiele von Hand anlegen, Ausfaelle abarbeiten
+drop policy if exists "Admin legt Spiele an"  on public.spiele_manuell;
+drop policy if exists "Admin aendert Spiele"  on public.spiele_manuell;
+drop policy if exists "Admin loescht Spiele"  on public.spiele_manuell;
+drop policy if exists "Spiele anlegen"        on public.spiele_manuell;
+drop policy if exists "Spiele aendern"        on public.spiele_manuell;
+drop policy if exists "Spiele loeschen"       on public.spiele_manuell;
+create policy "Spiele anlegen"  on public.spiele_manuell for insert to authenticated
+  with check (public.obmann_darf('spiele'));
+create policy "Spiele aendern"  on public.spiele_manuell for update to authenticated
+  using (public.obmann_darf('spiele')) with check (public.obmann_darf('spiele'));
+create policy "Spiele loeschen" on public.spiele_manuell for delete to authenticated
+  using (public.obmann_darf('spiele'));
+
+drop policy if exists "Meldungen lesen"    on public.spiel_meldungen;
+drop policy if exists "Meldung wegraeumen" on public.spiel_meldungen;
+create policy "Meldungen lesen" on public.spiel_meldungen for select to authenticated
+  using (auth.uid() = user_id or public.obmann_darf('spiele'));
+create policy "Meldung wegraeumen" on public.spiel_meldungen for delete to authenticated
+  using (auth.uid() = user_id or public.obmann_darf('spiele'));
+
+-- ---- Recht "ankuendigungen": Nachrichten und Termine
+drop policy if exists "Admin schreibt Ankuendigungen" on public.ankuendigungen;
+drop policy if exists "Admin aendert Ankuendigungen"  on public.ankuendigungen;
+drop policy if exists "Admin loescht Ankuendigungen"  on public.ankuendigungen;
+drop policy if exists "Ankuendigung schreiben" on public.ankuendigungen;
+drop policy if exists "Ankuendigung aendern"   on public.ankuendigungen;
+drop policy if exists "Ankuendigung loeschen"  on public.ankuendigungen;
+create policy "Ankuendigung schreiben" on public.ankuendigungen for insert to authenticated
+  with check (public.obmann_darf('ankuendigungen') and auth.uid() = user_id);
+create policy "Ankuendigung aendern"   on public.ankuendigungen for update to authenticated
+  using (public.obmann_darf('ankuendigungen'));
+create policy "Ankuendigung loeschen"  on public.ankuendigungen for delete to authenticated
+  using (public.obmann_darf('ankuendigungen'));
+
+-- ---- Recht "stammdaten": Telefonliste, Hallen, Vereine, Spielzeiten
+-- Die Regeln heissen noch "Admin pflegt ..." - der Name bleibt, damit
+-- diese Datei idempotent bleibt und nichts doppelt entsteht.
+drop policy if exists "Admin pflegt Hallen"  on public.hallen_extra;
+create policy "Admin pflegt Hallen"  on public.hallen_extra  for all to authenticated
+  using (public.obmann_darf('stammdaten')) with check (public.obmann_darf('stammdaten'));
+drop policy if exists "Admin pflegt Vereine" on public.vereine_extra;
+create policy "Admin pflegt Vereine" on public.vereine_extra for all to authenticated
+  using (public.obmann_darf('stammdaten')) with check (public.obmann_darf('stammdaten'));
+drop policy if exists "Admin pflegt Liste"   on public.telefonliste;
+create policy "Admin pflegt Liste"   on public.telefonliste  for all to authenticated
+  using (public.obmann_darf('stammdaten')) with check (public.obmann_darf('stammdaten'));
+drop policy if exists "Admin pflegt Zeiten"  on public.spielzeiten;
+create policy "Admin pflegt Zeiten"  on public.spielzeiten   for all to authenticated
+  using (public.obmann_darf('stammdaten')) with check (public.obmann_darf('stammdaten'));
+
+-- Vereinsadressen sind ein Sonderfall: anlegen darf jeder Freigeschaltete,
+-- und was der Betreiber geprueft hat ("verifiziert"), ist danach fest.
+-- Hier tritt der Obmann an die Stelle des Betreibers, sonst bleibt alles.
+drop policy if exists "Vereinsadressen aendern"  on public.vereine_adressen;
+drop policy if exists "Vereinsadressen loeschen" on public.vereine_adressen;
+create policy "Vereinsadressen aendern"  on public.vereine_adressen for update to authenticated
+  using (public.obmann_darf('stammdaten') or (public.ist_freigeschaltet() and not verifiziert))
+  with check (public.obmann_darf('stammdaten') or public.ist_freigeschaltet());
+create policy "Vereinsadressen loeschen" on public.vereine_adressen for delete to authenticated
+  using (public.obmann_darf('stammdaten') or (public.ist_freigeschaltet() and not verifiziert));
+
+create or replace function public.vereinsadresse_schutz()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  if auth.uid() is not null and not public.obmann_darf('stammdaten') then
+    if tg_op = 'UPDATE' then
+      new.verifiziert := old.verifiziert;
+      new.geprueft_am := old.geprueft_am;
+    else
+      new.verifiziert := false;
+      new.geprueft_am := null;
+    end if;
+  end if;
+  new.geaendert := now();
+  return new;
+end;
+$$;
+drop trigger if exists vereinsadresse_schutz on public.vereine_adressen;
+create trigger vereinsadresse_schutz before insert or update on public.vereine_adressen
+  for each row execute function public.vereinsadresse_schutz();
+
+-- Offizielle Hallen-Hinweise: das Haekchen setzt jetzt auch ein Obmann
+-- mit Stammdaten-Recht. Nach der Uebernahme bleibt der Text fest (v36).
+create or replace function public.hallennotiz_schutz()
+returns trigger language plpgsql security definer set search_path = public as $$
+begin
+  if auth.uid() is not null and not public.obmann_darf('stammdaten') then
+    if tg_op = 'UPDATE' then
+      new.offiziell := old.offiziell;
+      if old.offiziell then
+        new.text := old.text;
+        new.halle := old.halle;
+        new.user_id := old.user_id;
+      end if;
+    else
+      new.offiziell := false;
+    end if;
+  end if;
+  return new;
+end;
+$$;
+drop trigger if exists hallennotiz_schutz on public.hallen_notizen;
+create trigger hallennotiz_schutz before insert or update on public.hallen_notizen
+  for each row execute function public.hallennotiz_schutz();
+
+-- Zum Nachsehen: wer darf gerade was?
+--   select coalesce(name, email) as wer, admin, obmann, obmann_rechte
+--     from public.profile where admin or obmann order by admin desc, name;
+-- Rechte setzen (geht auch in der App unter Admin -> Freischaltung):
+--   update public.profile
+--      set obmann = true, obmann_rechte = '{korrekturen,spiele}'
+--    where slug = 'muster-max';

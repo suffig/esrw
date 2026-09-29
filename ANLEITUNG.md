@@ -2702,6 +2702,64 @@ Dazu folgt die Suche den Schaltern: ohne Hallenkarte keine Hallen, ohne
 Regelseite keine Strafen, Spielzeiten und Bestimmungen, ohne Notizen
 keine Notizen.
 
+### 10.6bl Der Obmann: eine Stufe zwischen SR und Betreiber (Schema v39)
+
+Bisher gab es zwei Stufen - freigeschaltet und Betreiber. Wer einteilt,
+brauchte für jede Korrektur dich. Jetzt gibt es dazwischen den Obmann.
+
+**Die Trennlinie:** der Obmann arbeitet mit den *Einteilungen*, der
+Betreiber mit der *App und den Konten*. Freischaltung, Funktionen,
+Push-Gesundheit, Speicher und Sicherung bleiben bei dir - das sind
+Entscheidungen über Zugang und Betrieb, nicht über Spiele.
+
+**Was du je Person ankreuzen kannst** (Admin → Freischaltung, der Kasten
+erscheint bei jedem Konto mit dem Obmann-Kennzeichen):
+
+| Recht | Was es öffnet |
+|---|---|
+| Einteilungen korrigieren | Halle, Anstoß, Treffpunkt, Hinweis, Absage und das **Gespann** ändern - auf der Spielseite und unter Admin → Korrekturen |
+| Spiele und Ausfälle | Spiele von Hand anlegen, gemeldete Ausfälle abarbeiten |
+| Ankündigungen und Termine | Nachrichten an alle, Termine mit Zu- und Absage, und sehen, wer geantwortet hat |
+| Stammdaten pflegen | Telefonliste, Hallen, Vereine, Spielzeiten, Hallen-Hinweise als offiziell markieren |
+
+Ohne Häkchen ist ein Obmann genau so weit wie jeder andere: das
+Kennzeichen allein gibt **keine** Rechte, es nimmt nur die Namenspflicht
+ab. Der Obmann sieht dann unter „Mehr" einen Punkt **Obmann** (nicht
+„Admin") und darin nur die Bereiche, die du freigegeben hast.
+
+Gesperrt bleibt für ihn alles Übrige - und zwar nicht nur in der
+Oberfläche: die Regeln in der Datenbank hängen an derselben Prüfung
+(`obmann_darf('…')`), ein Obmann ohne Recht kommt also auch an der App
+vorbei nicht weiter. Die Rechte selbst kann nur der Betreiber setzen;
+der Trigger `profil_schutz` hält sie fest.
+
+**An jeder Änderung steht jetzt der Name.** Mit mehreren Leuten, die
+ändern dürfen, reicht „vom Betreiber korrigiert" nicht mehr: auf der
+Spielkarte und der Spielseite steht „✎ Geändert von Jens am 30.09." -
+bei selbst angelegten Spielen genauso.
+
+Zum Nachsehen im SQL-Editor:
+
+```sql
+select coalesce(name, email) as wer, admin, obmann, obmann_rechte
+  from public.profile where admin or obmann order by admin desc, name;
+```
+
+### 10.6bm Die Obmann-Mail folgt dem Schalter
+
+Die Funktion „Obmann per E-Mail" war abgeschaltet, und trotzdem stand auf
+jeder Spielseite „**Obmann anschreiben (Absage / Frage)**". Die Zeile
+wurde immer gebaut; erst der Klick prüfte den Schalter und tat dann
+kommentarlos nichts - ein sichtbarer, toter Knopf. Dasselbe beim Annehmen
+eines Angebots in der Tauschbörse: der Bestätigungstext versprach eine
+Mail, die nicht kam. Beides folgt jetzt dem Schalter.
+
+Dabei ist aufgefallen, dass **„Monat per E-Mail" gar keinen Knopf mehr
+hatte**, obwohl die Funktionsbeschreibung ihn nennt und der Code
+vollständig da war. Er steht wieder unter Abrechnung → Weitere →
+Werkzeuge, mit Monatsauswahl, und erscheint nur, wenn die Funktion an
+ist.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

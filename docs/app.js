@@ -312,7 +312,7 @@
       });
       function bes3(alle, b) { return (alle || []).length >= 3 ? (b.rolle === "HSR" ? "HSR" : "LSR") : "SR"; }
       var halle = z.halle && daten.adressen[z.halle] !== undefined ? z.halle : (z.halle || "");
-      var basis = { id: id, manuell: true, beginn: beginn, treffpunkt: treff, liga: z.liga || "", paarung: z.paarung, halle: halle, ort: halle && daten.adressen[halle] ? halle + ", " + daten.adressen[halle] : (halle || ""), halle_erkannt: !!(halle && daten.adressen[halle]), system: bes.length, vergangen: new Date(beginn) < Date.now(), korrektur: z.hinweis ? { hinweis: z.hinweis, abgesagt: false, halle: null, beginn: null, treffpunkt: null } : null };
+      var basis = { id: id, manuell: true, von: z.von || null, beginn: beginn, treffpunkt: treff, liga: z.liga || "", paarung: z.paarung, halle: halle, ort: halle && daten.adressen[halle] ? halle + ", " + daten.adressen[halle] : (halle || ""), halle_erkannt: !!(halle && daten.adressen[halle]), system: bes.length, vergangen: new Date(beginn) < Date.now(), korrektur: z.hinweis ? { hinweis: z.hinweis, abgesagt: false, halle: null, beginn: null, treffpunkt: null } : null };
       daten.spiele.push(Object.assign({ besetzung: bes }, basis));
       bes.forEach(function (b) {
         if (!b.slug) return; var p = personMit(b.slug); if (!p) return;
@@ -340,6 +340,13 @@
     }).catch(function () {});
   }
   document.addEventListener("mg-betreiber", function () { betreiberLaden(true); });
+  // Wer hat es angelegt? Mit mehreren Obmaennern ist "vom Betreiber" zu
+  // ungenau - der Vorname reicht, der Nachname steht ohnehin daneben.
+  function vonWem(s) {
+    var wer = ((s.von || (s.korrektur && s.korrektur.von) || "") + "").split(",")[0].trim();
+    return wer ? " von " + wer : " vom Betreiber";
+  }
+
   function korrekturZeile(s) {
     var k = s.korrektur; if (!k) return null;
     var z = document.createElement("div"); z.className = k.abgesagt ? "achtung" : "geaendert";
@@ -350,7 +357,11 @@
     if (k.treffpunkt) teile.push("Treffpunkt " + uhr(new Date(s.treffpunkt)) + " Uhr");
     if (k.hinweis) teile.push(k.hinweis);
     if (s.gespannBetreiber) teile.push("Gespann geändert");
-    z.textContent = (s.manuell ? "✎ Vom Betreiber angelegt" : "✎ Vom Betreiber korrigiert") + (teile.length ? ": " + teile.join(" · ") : "");
+    var wer = (k.von || "").split(",")[0].trim();
+    z.textContent = "✎ " + (s.manuell ? "Angelegt" : "Geändert")
+      + (wer ? " von " + wer : " vom Betreiber")
+      + (k.geaendert ? " am " + datumKurz(new Date(k.geaendert)) : "")
+      + (teile.length ? ": " + teile.join(" · ") : "");
     return z;
   }
   function profilLesen() {
@@ -1166,7 +1177,7 @@
     if (s.hinweis) { var hw = document.createElement("div"); hw.className = "achtung"; hw.textContent = "⚠ " + s.hinweis; d.appendChild(hw); }
     if (s.aenderung) { var ae = document.createElement("div"); ae.className = "geaendert"; ae.textContent = "⚠ Geändert: " + s.aenderung; d.appendChild(ae); }
     var kz = korrekturZeile(s); if (kz) d.appendChild(kz);
-    else if (s.manuell) { var mz = document.createElement("div"); mz.className = "geaendert"; mz.textContent = "✎ Vom Betreiber angelegt"; d.appendChild(mz); }
+    else if (s.manuell) { var mz = document.createElement("div"); mz.className = "geaendert"; mz.textContent = "✎ Angelegt" + vonWem(s); d.appendChild(mz); }
     if (s.korrektur && s.korrektur.abgesagt) d.classList.add("abgesagt");
     var mehr = document.createElement("div"); mehr.className = "meta"; mehr.style.marginTop = "6px"; mehr.style.color = "var(--akzent)";
     mehr.textContent = funktionsText([[null, "Details"], [null, "Route"], ["tausch", "Tausch"], ["notizen", "Notiz"]]) + " \u203a";
@@ -1315,7 +1326,7 @@
     if (s.hinweis) { var hw = document.createElement("div"); hw.className = "achtung"; hw.textContent = "⚠ " + s.hinweis; ort.appendChild(hw); }
     if (s.aenderung) { var ae = document.createElement("div"); ae.className = "geaendert"; ae.textContent = "⚠ Geändert: " + s.aenderung; ort.appendChild(ae); }
     var kz2 = korrekturZeile(s); if (kz2) ort.appendChild(kz2);
-    else if (s.manuell) { var mz2 = document.createElement("div"); mz2.className = "geaendert"; mz2.textContent = "✎ Vom Betreiber angelegt (nicht auf esrw.de)"; ort.appendChild(mz2); }
+    else if (s.manuell) { var mz2 = document.createElement("div"); mz2.className = "geaendert"; mz2.textContent = "✎ Angelegt" + vonWem(s) + " (nicht auf esrw.de)"; ort.appendChild(mz2); }
     if (s.korrektur && s.korrektur.abgesagt) kopf.classList.add("abgesagt");
 
     var wer = karteAbschnitt(meins ? "Gespann" : "Besetzung");
@@ -1375,12 +1386,11 @@
         rl.appendChild(document.createTextNode("Rechnung schreiben (PDF fürs Formular)"));
         ab.appendChild(rl);
       }
-      if (!s.vergangen) {
+      if (!s.vergangen && funktion("obmann")) {
         var mailZeile = document.createElement("div");
         var mail = document.createElement("a"); mail.className = "zeile-link"; mail.href = "#"; mail.appendChild(ikone("i-bell")); mail.appendChild(document.createTextNode("Obmann anschreiben (Absage / Frage)"));
         mail.addEventListener("click", function (ev) {
           ev.preventDefault();
-          if (!funktion("obmann")) return;
           ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.obmann() : null; })
             .then(function (an) {
               var text = "Hallo,\n\nes geht um mein Spiel:\n" + spielText(s) + "\n\n[Grund / Frage hier eintragen]\n\nViele Grüße\n" + (profil.name ? profil.name.split(",").reverse().join(" ").trim() : "");
@@ -1408,11 +1418,11 @@
       });
       vb.appendChild(vl);
     }).catch(function () {});
-    // Admin: Spiel korrigieren
+    // Betreiber und Obmaenner mit dem Recht: Spiel korrigieren
     var lauf = inhalt._lauf = {};
     if (sitzungVorhanden()) ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
-      .then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.istAdmin() : false; })
-      .then(function (istAdmin) { if (istAdmin && inhalt._lauf === lauf) korrekturFormular(s, karteAbschnitt("Korrigieren (Admin)")); }).catch(function () {});
+      .then(function (st) { return st.eingerichtet && st.session && window.Mitglieder.darfKorrigieren ? window.Mitglieder.darfKorrigieren() : false; })
+      .then(function (ja) { if (ja && inhalt._lauf === lauf) korrekturFormular(s, karteAbschnitt("Korrigieren")); }).catch(function () {});
     setTimeout(function () {
       var karten = Array.prototype.slice.call(inhalt.querySelectorAll(":scope > .karte"));
       var punkte = karten.map(function (k) {
@@ -2809,7 +2819,7 @@
     }
     ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) {
       if (!st.eingerichtet || !st.session) return null;
-      return Promise.all([window.Mitglieder.heimat(), window.Mitglieder.obmann(), window.Mitglieder.wohnortEigen ? window.Mitglieder.wohnortEigen() : null, window.Mitglieder.zaehler()]);
+      return Promise.all([window.Mitglieder.heimat(), null, window.Mitglieder.wohnortEigen ? window.Mitglieder.wohnortEigen() : null, window.Mitglieder.zaehler()]);
     }).then(function (r) {
       if (!r || box._lauf !== lauf) return;
       if (funktion("abrechnung")) punkte.push({ ok: !!r[0], titel: "Heimatadresse", text: "für Strecken, Abfahrtszeit, km in der Abrechnung", href: "#einstellungen" });
@@ -4001,7 +4011,14 @@
       .then(function (st) { if (st.eingerichtet && st.session) return window.Mitglieder.zaehler(); })
       .then(function (z) {
         if (!z) return;
-        if (z.admin) Array.prototype.forEach.call(liste.querySelectorAll("a"), function (a) { if (a._nurAdmin) a.classList.remove("versteckt"); });
+        if (z.admin) Array.prototype.forEach.call(liste.querySelectorAll("a"), function (a) {
+          if (!a._nurAdmin) return;
+          a.classList.remove("versteckt");
+          if (!z.nurObmann) return;
+          var sp = a.querySelector("span"); if (!sp) return;
+          sp.firstChild.nodeValue = "Obmann";
+          var sm = sp.querySelector("small"); if (sm) sm.textContent = "Was der Betreiber für dich freigegeben hat";
+        });
         Object.keys(links).forEach(function (k) { if (z[k]) { links[k].textContent = z[k]; links[k].classList.remove("versteckt"); } });
       }).catch(function () {});
     window.scrollTo(0, 0);
@@ -4866,7 +4883,7 @@
     ["ruhig", "Nur nächstes Spiel", "ganz ruhige Startseite: Kopfkarte und deine Spiele, sonst nichts", false],
     ["schnell", "Schnellzugriff", "eine Reihe Knöpfe unter der Kopfkarte, ohne das, was unten schon in der Leiste steht", false],
     ["vollbild", "Am Spieltag groß", "ist heute ein Spiel, füllt die Kopfkarte den Bildschirm, der Rest kommt auf Tipp", false],
-    ["einrichtung", "„Alles eingerichtet?“", "zeigt fehlende Schritte (Kalender, Push, Heimatadresse, Wohnort, Obmann) mit Direktlink", true],
+    ["einrichtung", "„Alles eingerichtet?“", "zeigt fehlende Schritte (Kalender, Push, Heimatadresse, Wohnort) mit Direktlink", true],
     ["danach", "„Danach“ auf der Karte oben", "das übernächste Spiel in einer Zeile", false],
     ["wetter", "Wetter auf der Karte oben", "zum Treffpunkt, mit Glättehinweis", true, "wetter"],
     ["abfahrt", "Abfahrtszeit auf der Karte oben", "braucht die Heimatadresse im Konto", true],
