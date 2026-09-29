@@ -188,29 +188,53 @@ window.Mitglieder = (function () {
   // die App wie ein normaler Schiedsrichter benutzen. Rechte bleiben, nur die
   // Oberflaeche ist ruhiger.
   function adminModus() { return !(ctx && ctx.lesen && ctx.lesen("adminaus") === "1"); }
-  function istAdminAn() { return !!(profil && profil.admin && adminModus()); }
+  function istAdminAn() { return !!(profil && profil.admin && adminModus() && !testAn()); }
 
-  // Drei Stufen: Schiedsrichter, Obmann, Betreiber. Der Obmann arbeitet
-  // mit den Einteilungen, der Betreiber mit der App und den Konten.
-  // Welche Rechte ein Obmann hat, kreuzt der Betreiber je Person an
-  // (Schema v39, Spalte profile.obmann_rechte).
-  var OBMANN_RECHTE = [
-    ["korrekturen", "Einteilungen korrigieren", "Halle, Anstoß, Treffpunkt, Hinweis, Absage und das Gespann ändern"],
-    ["spiele", "Spiele und Ausfälle", "Spiele von Hand anlegen, gemeldete Ausfälle abarbeiten"],
-    ["ankuendigungen", "Ankündigungen und Termine", "Nachrichten an alle, Termine mit Zu- und Absage"],
-    ["stammdaten", "Stammdaten pflegen", "Telefonliste, Hallen, Vereine, Spielzeiten, offizielle Hallen-Hinweise"]
+  // Rechte gehoeren zum Konto, nicht zur Rolle (Schema v40, Spalte
+  // profile.rechte). Das Kennzeichen "obmann" heisst nur noch: pfeift
+  // nicht selbst, braucht keinen Namen. Was jemand darf, kreuzt der
+  // Betreiber je Person an - auch bei einem, der weiter selbst pfeift.
+  var RECHTE = [
+    ["korrekturen", "Einteilungen korrigieren", "Halle, Anstoß, Treffpunkt, Hinweis, Absage und das Gespann ändern",
+      "#mitglieder/admin", "Hier unter „Korrekturen“ – und auf jeder Spielseite"],
+    ["spiele", "Spiele und Ausfälle", "Spiele von Hand anlegen, die auf esrw.de fehlen, und gemeldete Ausfälle abarbeiten",
+      "#mitglieder/admin", "Hier unter „Spiel anlegen“"],
+    ["ankuendigungen", "Ankündigungen und Termine", "Nachrichten an alle schreiben, Termine mit Zu- und Absage",
+      "#mitglieder/info", "Mehr → Info"],
+    ["stammdaten", "Stammdaten pflegen", "Telefonliste, Hallen, Vereine, Spielzeiten, Hallen-Hinweise als offiziell markieren",
+      "#mitglieder/admin", "Hier unter „Hallen & Vereine“, „Telefonliste“, „Spielzeiten“"],
+    ["archiv", "Alle Spiele sehen", "Das ganze Archiv aller Kollegen statt nur der eigenen Spiele",
+      "#archiv", "Mehr → Archiv, Schalter „Alle Spiele aller Kollegen“"],
+    ["freischalten", "Konten freischalten", "Neue Anmeldungen freischalten und Einladungen anlegen. Rechte vergeben kann weiterhin nur der Betreiber.",
+      "#mitglieder/admin", "Hier unter „Freischaltung“"],
+    ["funktionen", "Funktionen schalten", "Bereiche der App für alle an- und ausschalten",
+      "#mitglieder/admin", "Hier unter „Funktionen“"]
   ];
+
+  // Testmodus: der Betreiber sieht die App als jemand anderes. Rein in
+  // der Oberflaeche - die Datenbank laesst ihn weiter alles, das steht
+  // auch so im Balken oben.
+  function testRolle() { return (ctx && ctx.lesen && ctx.lesen("testrolle")) || ""; }
+  function testRechte() {
+    try { return JSON.parse((ctx && ctx.lesen && ctx.lesen("testrechte")) || "[]") || []; } catch (e) { return []; }
+  }
+  function testAn() { return testRolle() === "sr" || testRolle() === "rechte"; }
+
   // Der Betreiber darf immer alles - sonst muesste er sich selbst
   // Haekchen setzen. Im Admin-Modus "aus" zaehlt auch fuer ihn nichts.
   function darf(recht) {
     if (!profil) return false;
+    if (profil.admin && testAn()) {
+      return testRolle() === "rechte" && testRechte().indexOf(recht) >= 0;
+    }
     if (profil.admin) return adminModus();
-    if (!profil.obmann || !(profil.freigeschaltet || profil.admin)) return false;
-    return (profil.obmann_rechte || []).indexOf(recht) >= 0;
+    if (!(profil.freigeschaltet || profil.admin)) return false;
+    return (profil.rechte || []).indexOf(recht) >= 0;
   }
-  function istObmannAn() { return !!(profil && !profil.admin && profil.obmann && OBMANN_RECHTE.some(function (r) { return darf(r[0]); })); }
+  // Hat jemand ueberhaupt etwas ueber das Uebliche hinaus?
+  function hatRechte() { return RECHTE.some(function (r) { return darf(r[0]); }); }
   // Alles, was den Betreiberbereich oeffnet
-  function darfBereich() { return istAdminAn() || istObmannAn(); }
+  function darfBereich() { return istAdminAn() || hatRechte(); }
   // Funktion vom Betreiber eingeschaltet? (Schalter kommen aus app.js)
   function fn(k) { return ctx && ctx.funktion ? ctx.funktion(k) : true; }
   // Einfache Ansicht (Schalter in den Einstellungen, siehe app.js)
@@ -849,7 +873,7 @@ window.Mitglieder = (function () {
       reiterListe = reiterListe.filter(function (t) { return KERN[t[0]] || t[0] === reiter; });
     }
     if (istAdminAn()) reiterListe.push(["admin", "Admin", "i-shield"]);
-    else if (istObmannAn()) reiterListe.push(["admin", "Obmann", "i-shield"]);
+    else if (hatRechte()) reiterListe.push(["admin", profil && profil.obmann ? "Obmann" : "Freigaben", "i-shield"]);
     reiterListe.forEach(function (t) {
       leiste.appendChild(h("button", { type: "button", "data-reiter": t[0], onclick: function () { zeigeReiter(t[0]); } }, [ikone(t[2]), t[1], h("span", { class: "zaehler versteckt" })]));
     });
@@ -4369,15 +4393,110 @@ window.Mitglieder = (function () {
 
   // ---- Admin: neue Konten freischalten
 
+  // Wer Rechte bekommt, weiss selten, wo sie greifen. Diese Seite sagt
+  // es in einem Satz je Recht - mit dem Weg dorthin.
+  function uebersichtRendern(box) {
+    leeren(box);
+    box.appendChild(h("h4", {}, [ikone("i-shield"), " Das darfst du"]));
+    var meine = RECHTE.filter(function (r) { return darf(r[0]); });
+    if (!meine.length) {
+      box.appendChild(h("p", { class: "leer", text: "Zurzeit nichts über das Übliche hinaus." }));
+      return;
+    }
+    box.appendChild(h("p", { class: "meta", style: "margin:0 0 10px", text:
+      "Der Betreiber hat dir " + (meine.length === 1 ? "eine Sache" : meine.length + " Sachen")
+      + " freigegeben. Was du damit änderst, sehen alle - dein Name steht dabei." }));
+    meine.forEach(function (r) {
+      box.appendChild(h("a", { class: "reihe-knopf", href: r[3], onclick: function () {
+        // Fuehrt der Weg in diesen Bereich, gleich den richtigen oeffnen
+        var ziel = { korrekturen: "korrekturen", spiele: "spiel", stammdaten: "hallen",
+                     freischalten: "freischaltung", funktionen: "funktionen" }[r[0]];
+        if (ziel) { adminBereich = ziel; setTimeout(function () { zeigeReiter("admin"); }, 0); }
+      } }, [
+        ikone("i-check"),
+        h("span", {}, [h("b", { text: r[1] }), h("small", { text: r[2] }),
+          h("small", { class: "obmann-weg", text: r[4] })]),
+        h("span", { class: "pfeil", text: "\u203a" })]));
+    });
+    var fehlt = RECHTE.filter(function (r) { return !darf(r[0]); });
+    if (fehlt.length) {
+      var det = h("details", { class: "tausch", style: "margin-top:10px" },
+        [h("summary", { text: "Was du nicht darfst" })]);
+      fehlt.forEach(function (r) {
+        det.appendChild(h("div", { class: "sperre" }, [h("span", { text: r[1] }), h("span", { class: "meta", text: "nicht freigegeben" })]));
+      });
+      det.appendChild(h("p", { class: "meta", style: "margin:8px 0 0", text: "Brauchst du etwas davon, sag dem Betreiber Bescheid." }));
+      box.appendChild(det);
+    }
+  }
+
+  // Admin -> Ansehen als: die App einmal mit den Augen eines anderen
+  // sehen. Das wirkt nur in der Oberflaeche - die Datenbank laesst den
+  // Betreiber weiter alles. Zum Pruefen, was jemand zu sehen bekommt,
+  // reicht das; zum Pruefen der Zugriffsregeln nicht, und genau das
+  // steht auch im Balken.
+  function testRolleSetzen(rolle, rechte, bereich) {
+    if (!ctx || !ctx.schreiben) return;
+    ctx.schreiben("testrolle", rolle || null);
+    ctx.schreiben("testrechte", rechte && rechte.length ? JSON.stringify(rechte) : null);
+    ctx.schreiben("adminbereich", bereich || null);
+    document.dispatchEvent(new CustomEvent("mg-testrolle", { detail: { rolle: rolle || "", rechte: rechte || [] } }));
+    location.reload();
+  }
+
+  function ansehenRendern(box) {
+    leeren(box);
+    box.appendChild(h("h4", {}, [ikone("i-auge"), " Ansehen als"]));
+    box.appendChild(h("p", { class: "meta", style: "margin:0 0 10px", text:
+      "So sieht die App für jemand anderen aus. Nur die Oberfläche - die Datenbank lässt dich weiter alles, "
+      + "zum Prüfen der Zugriffsregeln melde dich mit einem zweiten Konto an." }));
+
+    var rolle = testRolle(), gewaehlt = testRechte();
+    var stufen = h("div", { class: "mg-ansicht" }, [
+      h("button", { type: "button", class: rolle ? "" : "aktiv", text: "Betreiber",
+        onclick: function () { testRolleSetzen("", [], "ansehen"); } }),
+      h("button", { type: "button", class: rolle === "sr" ? "aktiv" : "", text: "Schiedsrichter",
+        onclick: function () { testRolleSetzen("sr", [], null); } }),
+      h("button", { type: "button", class: rolle === "rechte" ? "aktiv" : "", text: "Obmann",
+        onclick: function () { testRolleSetzen("rechte", gewaehlt.length ? gewaehlt : ["korrekturen", "spiele", "archiv"], "uebersicht"); } })
+    ]);
+    box.appendChild(stufen);
+
+    if (rolle === "rechte") {
+      var kasten = h("div", { class: "obmann-rechte" }, [
+        h("p", { class: "meta", style: "margin:0 0 4px", text: "Mit diesen Freigaben:" })]);
+      RECHTE.forEach(function (r) {
+        var feld = h("input", { type: "checkbox" });
+        feld.checked = gewaehlt.indexOf(r[0]) >= 0;
+        feld.setAttribute("data-recht", r[0]);
+        feld.addEventListener("change", function () {
+          var neu = RECHTE.map(function (x) { return x[0]; }).filter(function (k) {
+            var f2 = kasten.querySelector('[data-recht="' + k + '"]');
+            return f2 && f2.checked;
+          });
+          testRolleSetzen("rechte", neu, "uebersicht");
+        });
+        kasten.appendChild(h("label", { class: "mg-check", title: r[2] }, [feld, " " + r[1]]));
+      });
+      box.appendChild(kasten);
+    }
+    if (rolle) {
+      box.appendChild(h("button", { type: "button", class: "mg-neben", style: "margin-top:10px;width:100%",
+        text: "Zurück zu Betreiber", onclick: function () { testRolleSetzen("", [], "ansehen"); } }));
+    }
+  }
+
   // Adminseite: eine Leiste oben, darunter genau ein Bereich. Vorher standen
   // fuenf Karten untereinander - auf dem Handy eine endlose Rolle.
-  var adminBereich = "freischaltung";
+  var adminBereich = null;
   function zeigeAdmin() {
+    if (!adminBereich) adminBereich = (ctx && ctx.lesen && ctx.lesen("adminbereich")) || "freischaltung";
     // Das fuenfte Feld sagt, welches Recht der Bereich braucht; ohne es
     // sieht ihn nur der Betreiber.
     var BEREICHE = [
-      ["freischaltung", "Freischaltung", "i-check", adminRendern],
-      ["funktionen", "Funktionen", "i-shield", funktionenRendern],
+      ["uebersicht", "Übersicht", "i-shield", uebersichtRendern, "*"],
+      ["freischaltung", "Freischaltung", "i-check", adminRendern, "freischalten"],
+      ["funktionen", "Funktionen", "i-shield", funktionenRendern, "funktionen"],
       ["spiel", "Spiel anlegen", "i-cal", spielAnlegenRendern, "spiele"],
       ["hallen", "Hallen & Vereine", "i-pin", hallenPflegeRendern, "stammdaten"],
       ["adressen", "Vereine", "i-note", vereinsAdressenRendern, "stammdaten"],
@@ -4385,19 +4504,26 @@ window.Mitglieder = (function () {
       ["zeiten", "Spielzeiten", "i-clock", spielzeitenRendern, "stammdaten"],
       ["korrekturen", "Korrekturen", "i-note", korrekturenRendern, "korrekturen"],
       ["push", "Push", "i-bell", pushLaufRendern],
-      ["speicher", "Speicher", "i-note", speicherRendern]
-    ].filter(function (b) { return istAdminAn() || (b[4] && darf(b[4])); });
+      ["speicher", "Speicher", "i-note", speicherRendern],
+      ["ansehen", "Ansehen als", "i-auge", ansehenRendern]
+    ].filter(function (b) {
+      // Die Uebersicht ist nur fuer die, die nicht ohnehin alles sehen
+      if (b[4] === "*") return !istAdminAn();
+      return istAdminAn() || (b[4] && darf(b[4]));
+    });
     if (!BEREICHE.length) { inhalt.appendChild(h("p", { class: "leer", text: "Für dich ist hier zurzeit nichts freigegeben." })); return; }
     if (!BEREICHE.filter(function (b) { return b[0] === adminBereich; }).length) adminBereich = BEREICHE[0][0];
 
     inhalt.appendChild(h("p", { class: "meta admin-kopf", text: istAdminAn()
       ? "Betreiber-Werkzeuge. Was du hier änderst, sehen alle."
-      : "Als Obmann freigegeben. Was du hier änderst, sehen alle - dein Name steht dabei." }));
+      : "Für dich freigegeben. Was du hier änderst, sehen alle - dein Name steht dabei." }));
     var leiste = h("div", { class: "admin-leiste" });
     var zaehlKnopf = null;
     BEREICHE.forEach(function (b) {
       var k = h("button", { type: "button", class: "filterknopf" + (adminBereich === b[0] ? " aktiv" : ""), onclick: function () {
-        adminBereich = b[0]; zeigeReiter("admin");
+        adminBereich = b[0];
+        if (ctx && ctx.schreiben) ctx.schreiben("adminbereich", b[0]);
+        zeigeReiter("admin");
       } }, [ikone(b[2]), " " + b[1]]);
       if (b[0] === "freischaltung") zaehlKnopf = k;
       leiste.appendChild(k);
@@ -5254,7 +5380,7 @@ window.Mitglieder = (function () {
   function zaehler() {
     if (!session) return Promise.resolve({ angemeldet: false });
     return ladeProfil().then(function () {
-      var z = { angemeldet: true, gesuche: 0, wartend: 0, info: 0, admin: darfBereich(), nurObmann: istObmannAn(), adminRecht: !!(profil && profil.admin) };
+      var z = { angemeldet: true, gesuche: 0, wartend: 0, info: 0, admin: darfBereich(), nurObmann: !istAdminAn() && hatRechte(), obmann: !!(profil && profil.obmann), adminRecht: !!(profil && profil.admin) };
       var laeufe = [];
       if (frei() && fn("tausch")) laeufe.push(sb.from("gesuche").select("id,user_id").eq("status", "offen").gte("beginn", new Date(Date.now() - 6 * 3600000).toISOString())
         .then(function (r) { z.gesuche = (r.data || []).filter(function (g) { return g.user_id !== session.user.id; }).length; }));
@@ -5351,27 +5477,26 @@ window.Mitglieder = (function () {
     // bei Konten mit dem Obmann-Kennzeichen; ohne Haekchen ist ein Obmann
     // genau so weit wie jeder andere Schiedsrichter.
     function rechteKasten(p) {
-      if (!p.obmann) return null;
-      var jetzt = p.obmann_rechte || [];
+      var jetzt = p.rechte || [];
       var kasten = h("div", { class: "obmann-rechte" }, [
-        h("p", { class: "meta", style: "margin:0 0 4px", text: "Darf als Obmann:" })]);
-      OBMANN_RECHTE.forEach(function (r) {
+        h("p", { class: "meta", style: "margin:0 0 4px", text: "Darf zusätzlich:" })]);
+      RECHTE.forEach(function (r) {
         var box = h("input", { type: "checkbox" });
         box.checked = jetzt.indexOf(r[0]) >= 0;
         box.addEventListener("change", function () {
-          var neuRechte = OBMANN_RECHTE.map(function (x) { return x[0]; }).filter(function (k) {
+          var neuRechte = RECHTE.map(function (x) { return x[0]; }).filter(function (k) {
             var feld = kasten.querySelector('[data-recht="' + k + '"]');
             return feld && feld.checked;
           });
           box.disabled = true;
-          speichern(sb.from("profile").update({ obmann_rechte: neuRechte }).eq("id", p.id)).then(function (rr) {
+          speichern(sb.from("profile").update({ rechte: neuRechte }).eq("id", p.id)).then(function (rr) {
             box.disabled = false;
             if (rr && rr.error) {
               box.checked = !box.checked;
-              meldung(fehlerText(rr.error) + (/obmann_rechte/.test(rr.error.message || "") ? ", schema.sql (v39) ausführen." : ""), "warn");
+              meldung(fehlerText(rr.error) + (/rechte/.test(rr.error.message || "") ? ", schema.sql (v40) ausführen." : ""), "warn");
               return;
             }
-            p.obmann_rechte = neuRechte;
+            p.rechte = neuRechte;
             kurzMeldung(r[1] + (box.checked ? " freigegeben ✓" : " wieder entzogen"), box.checked ? "gut" : "");
           });
         });
@@ -5401,7 +5526,7 @@ window.Mitglieder = (function () {
     }
 
     Promise.all([
-      speichern(sb.from("profile").select("id,name,slug,email,freigeschaltet,admin,obmann,obmann_rechte,angelegt,geaendert").order("name")),
+      speichern(sb.from("profile").select("id,name,slug,email,freigeschaltet,admin,obmann,rechte,angelegt,geaendert").order("name")),
       speichern(sb.from("einladungen").select("*").order("angelegt", { ascending: false }))
     ]).then(function (rr) {
       var r = rr[0] || {};
@@ -5842,9 +5967,8 @@ window.Mitglieder = (function () {
   // Fuer app.js: darf dieses Konto Einteilungen aendern? Das koennen ein
   // Betreiber und ein Obmann mit dem Recht "korrekturen".
   function darfKorrigieren() { return ladeProfil().then(function () { return darf("korrekturen"); }).catch(function () { return false; }); }
-  // Betreiber oder Obmann mit mindestens einem Recht - fuer alles, was
-  // ueber die eigenen Spiele hinausgeht (Archiv aller Kollegen).
-  function darfAlleSpiele() { return ladeProfil().then(function () { return darfBereich(); }).catch(function () { return false; }); }
+  // Fuer app.js: das ganze Archiv statt nur der eigenen Spiele.
+  function darfAlleSpiele() { return ladeProfil().then(function () { return darf("archiv"); }).catch(function () { return false; }); }
   // Hat das Konto ueberhaupt Adminrechte (unabhaengig vom Modus)? Fuer den Schalter oben.
   function adminRecht() { return ladeProfil().then(function () { return !!(profil && profil.admin); }).catch(function () { return false; }); }
   function korrekturSpeichern(kennung, obj) {
@@ -5883,7 +6007,7 @@ window.Mitglieder = (function () {
     if (!session) return Promise.resolve(null);
     return ladeProfil().then(function () {
       var q = sb.from("spiele_archiv").select("kennung,beginn,liga,paarung,halle,system,besetzung,saison,manuell");
-      if (!(alle && darfBereich())) q = q.contains("slugs", [profil.slug]);
+      if (!(alle && darf("archiv"))) q = q.contains("slugs", [profil.slug]);
       return q.then(function (r) { return r.data || []; });
     }).catch(function () { return null; });
   }

@@ -641,10 +641,10 @@ def test_funktionstexte():
 
 
 def test_obmann_rechte():
-    """Die mittlere Stufe darf mehr als ein SR, aber nicht alles. Wichtig
-    ist beides: dass die Rechte wirken - und dass Freischaltung,
-    Funktionen und Sicherung beim Betreiber bleiben."""
-    print("\nObmann-Stufe")
+    """Rechte gehoeren zum Konto. Wichtig ist beides: dass sie wirken -
+    und dass die Handvoll Dinge, die wirklich dem Betreiber gehoeren,
+    nicht mit vergeben werden koennen."""
+    print("\nRechte je Konto")
     wurzel = os.path.dirname(HIER)
     with open(os.path.join(wurzel, "supabase", "schema.sql"), encoding="utf-8") as f:
         schema = f.read()
@@ -653,32 +653,47 @@ def test_obmann_rechte():
     with open(os.path.join(wurzel, "docs", "app.js"), encoding="utf-8") as f:
         app = f.read()
 
-    pruefe("obmann_rechte" in schema, "die Spalte fuer die Rechte steht im Schema")
-    pruefe("function public.obmann_darf(recht text)" in schema, "es gibt den Helfer obmann_darf()")
-    # Die Rechte darf nur der Betreiber setzen, sonst macht sich jeder selbst zum Obmann
+    pruefe("add column if not exists rechte text[]" in schema, "die Spalte rechte steht im Schema")
+    pruefe("function public.darf_recht(recht text)" in schema, "es gibt den Helfer darf_recht()")
+    pruefe("function public.obmann_darf(recht text)" in schema, "der alte Name aus v39 leitet weiter")
+
+    # Der Trigger ist die eigentliche Sperre: Rechte setzt nur der Betreiber,
+    # und an einer fremden Zeile bewegt sich sonst nur die Freischaltung.
     schutz = schema[schema.rindex("create or replace function public.profil_schutz()"):]
-    pruefe("new.obmann_rechte := old.obmann_rechte;" in schutz, "der Trigger haelt die Rechte fest")
-    pruefe("new.obmann_rechte := '{}';" in schutz, "ein neues Konto startet ohne Rechte")
+    schutz = schutz[:schutz.index("$$;")]
+    pruefe("new.rechte := old.rechte;" in schutz, "der Trigger haelt die Rechte fest")
+    pruefe("new.rechte := '{}';" in schutz, "ein neues Konto startet ohne Rechte")
+    pruefe("auth.uid() <> new.id" in schutz and "new := old;" in schutz,
+           "an einer fremden Zeile wird alles zurueckgesetzt")
+    pruefe("darf_recht('freischalten')" in schutz, "nur die Freischaltung darf sich dort bewegen")
 
-    for recht, tabelle in (("korrekturen", "spiel_korrekturen"), ("spiele", "spiele_manuell"),
-                           ("ankuendigungen", "ankuendigungen")):
-        pruefe("public.obmann_darf('%s')" % recht in schema, "%s haengt an einem Recht (%s)" % (tabelle, recht))
+    for recht in ("korrekturen", "spiele", "ankuendigungen", "stammdaten", "freischalten", "funktionen"):
+        pruefe(("darf_recht('%s')" % recht) in schema or ("obmann_darf('%s')" % recht) in schema,
+               "es gibt Regeln zum Recht %s" % recht)
 
-    # Was beim Betreiber bleiben muss
-    for tab in ("push_lauf", "sicherung_lauf", "funktionen", "einladungen", "tresor"):
-        teil = schema[schema.index("create table if not exists public.%s" % tab):] if ("create table if not exists public.%s" % tab) in schema else ""
-        pruefe("obmann_darf" not in teil[:2500], "%s bleibt beim Betreiber" % tab)
+    # Was der Betreiber nicht abgeben kann
+    for tab in ("push_lauf", "sicherung_lauf", "tresor"):
+        stelle = schema.index("create table if not exists public.%s" % tab)
+        teil = schema[stelle:stelle + 2500]
+        pruefe("darf_recht" not in teil and "obmann_darf" not in teil, "%s bleibt beim Betreiber" % tab)
+    pruefe("new.admin := old.admin;" in schutz, "Adminrechte vergibt weiterhin nur der Betreiber")
 
-    # Die App fragt nach dem Recht, nicht mehr nach dem Admin
+    # Die App fragt nach dem Recht
     pruefe("function darf(recht)" in mg, "die App kennt darf()")
     pruefe('if (!session || !darf("korrekturen"))' in mg, "Korrekturen pruefen das Recht")
     pruefe('if (!session || !darf("spiele"))' in mg, "manuelle Spiele pruefen das Recht")
+    pruefe('darf("archiv")' in mg, "das ganze Archiv haengt am Recht archiv")
     pruefe("darfKorrigieren" in app, "die Spielseite fragt, ob korrigiert werden darf")
-    pruefe("Korrigieren (Admin)" not in app, "die Ueberschrift heisst nicht mehr nur 'Admin'")
+    pruefe("obmann_rechte" not in mg, "in der App heisst es nicht mehr obmann_rechte")
 
-    # Und an jeder Aenderung steht, wer sie war
-    pruefe("function vonWem(" in app, "es gibt eine Stelle, die den Urheber nennt")
-    pruefe("Vom Betreiber korrigiert" not in app, "'vom Betreiber' steht nicht mehr fest im Text")
+    # Testmodus
+    pruefe("function testRolle()" in mg, "es gibt den Testmodus")
+    pruefe("function istAdminAn() { return !!(profil && profil.admin && adminModus() && !testAn()); }" in mg,
+           "im Testmodus zaehlt das Adminrecht nicht")
+    pruefe("function testBalken()" in app, "waehrend des Tests steht oben ein Balken")
+
+    # Uebersicht
+    pruefe("function uebersichtRendern(" in mg, "es gibt eine Uebersicht der eigenen Freigaben")
 
 
 def test_zurueckspielen():

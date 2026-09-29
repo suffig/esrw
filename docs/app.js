@@ -497,11 +497,48 @@
     k.setAttribute("aria-pressed", an ? "true" : "false");
     document.documentElement.classList.toggle("admin-aus", !an);
   }
+  // Testmodus: solange der Betreiber die App als jemand anderes ansieht,
+  // steht das oben. Sonst vergisst man es und wundert sich, warum die
+  // Haelfte fehlt.
+  var TEST_NAMEN = { sr: "Schiedsrichter", rechte: "Obmann" };
+  function testBalken() {
+    var box = el("testbalken"); if (!box) return;
+    var rolle = lesen("testrolle") || "";
+    box.innerHTML = "";
+    if (!rolle) { box.classList.add("versteckt"); document.documentElement.classList.remove("test-an"); return; }
+    var rechte = [];
+    try { rechte = JSON.parse(lesen("testrechte") || "[]") || []; } catch (e) {}
+    box.classList.remove("versteckt"); document.documentElement.classList.add("test-an");
+    var t = document.createElement("span");
+    t.textContent = "Du siehst die App als " + (TEST_NAMEN[rolle] || rolle)
+      + (rolle === "rechte" ? (rechte.length ? " mit " + rechte.length + (rechte.length === 1 ? " Freigabe" : " Freigaben") : " ohne Freigaben") : "")
+      + ". Nur die Ansicht \u2013 gespeichert wird weiter als du.";
+    box.appendChild(t);
+    var aendern = document.createElement("button");
+    aendern.type = "button"; aendern.textContent = "Ändern";
+    aendern.title = "Zurück zur Auswahl, dort eine andere Rolle oder andere Freigaben";
+    aendern.addEventListener("click", function () {
+      schreiben("testrolle", null); schreiben("testrechte", null); schreiben("adminbereich", "ansehen");
+      location.hash = "mitglieder/admin"; location.reload();
+    });
+    box.appendChild(aendern);
+    var zurueck = document.createElement("button");
+    zurueck.type = "button"; zurueck.textContent = "Beenden";
+    zurueck.addEventListener("click", function () {
+      schreiben("testrolle", null); schreiben("testrechte", null); schreiben("adminbereich", null);
+      location.reload();
+    });
+    box.appendChild(zurueck);
+  }
+  document.addEventListener("mg-testrolle", function () { testBalken(); });
+
   function adminKnopfZeigen() {
     if (!sitzungVorhanden()) { el("adminmodus").classList.add("versteckt"); return; }
     ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
       .then(function (st) { return st.eingerichtet && st.session && window.Mitglieder.adminRecht ? window.Mitglieder.adminRecht() : false; })
-      .then(function (ja) { el("adminmodus").classList.toggle("versteckt", !ja); adminKnopfStand(); }).catch(function () {});
+      // Im Testmodus gehoert der Schild-Knopf nicht ins Bild - man tut ja
+      // gerade so, als waere man jemand ohne ihn
+      .then(function (ja) { el("adminmodus").classList.toggle("versteckt", !ja || !!lesen("testrolle")); adminKnopfStand(); }).catch(function () {});
   }
   if (el("einfachmodus")) el("einfachmodus").addEventListener("click", function () { einfachSetzen(!einfachAn()); });
   if (el("fein-knopf")) el("fein-knopf").addEventListener("click", function () {
@@ -5596,7 +5633,7 @@
       // landet ein Direktlink auf "Tausch" beim ersten Besuch faelschlich auf "abgeschaltet"
       var geroutet = false, routen = function () { if (geroutet) return; geroutet = true; ausHash(); tourWennNeu(); };
       funktionenLaden().then(routen); setTimeout(routen, 1500);
-      betreiberLaden(true).then(function () { korrekturenLaden(true); }); zeigeInstallHinweis(); zeigeNeu(); filterHoehe(); netzAnzeigen(); adminKnopfZeigen();
+      betreiberLaden(true).then(function () { korrekturenLaden(true); }); zeigeInstallHinweis(); zeigeNeu(); filterHoehe(); netzAnzeigen(); adminKnopfZeigen(); testBalken();
       setTimeout(zaehlerHolen, 1500);
       setTimeout(bilderLaden, 1200);
       // Gehoert das Konto einem Obmann, fragt die App nicht nach einem Namen

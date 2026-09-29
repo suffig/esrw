@@ -1900,6 +1900,20 @@
     background:var(--bg); border:1px solid var(--linie); }
   .obmann-rechte label { display:flex; gap:8px; align-items:center;
     min-height:38px; font-size:.86rem; font-weight:600; }
+
+  /* Runde 55: Uebersicht der eigenen Freigaben */
+  .obmann-weg { color:var(--akzent); font-weight:600; }
+
+  /* Runde 55: Balken waehrend des Testmodus */
+  .testbalken { display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+    margin:0 0 12px; padding:10px 14px; border-radius:12px;
+    background:var(--warn-bg); color:var(--warn);
+    border-left:4px solid var(--warn); font-size:.86rem; font-weight:600; }
+  .testbalken.versteckt { display:none; }
+  .testbalken span { flex:1 1 12rem; min-width:0; }
+  .testbalken button { min-height:40px; padding:8px 14px; border-radius:10px;
+    border:1px solid currentColor; background:none; color:inherit;
+    font:inherit; font-weight:700; }
 </style>
 </head>
 <body>
@@ -1973,6 +1987,7 @@
       <li id="ob-3"><span class="ob-nr">3</span><span><b>Konto anlegen</b><small>Unter „Mehr“: Abrechnung, Notizen, Push. Freischalten muss dich der Betreiber.</small></span></li>
     </ol>
   </div>
+  <div class="testbalken versteckt" id="testbalken"></div>
   <div class="hinweis versteckt" id="onboarding-kurz"><svg class="i"><use href="#i-check"/></svg><span>Kalender abonniert ✓ · <a href="#mitglieder">Konto anlegen</a> für Abrechnung, Notizen und Push.</span><button type="button" class="rund" id="onboarding-kurz-weg" aria-label="Ausblenden">✕</button></div>
   <div class="install karte versteckt" id="install">
     <img src="icon-192.png" alt="" width="40" height="40">
@@ -2352,6 +2367,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=99"></script>
+<script src="app.js?v=100"></script>
 </body>
 </html>

@@ -1862,3 +1862,138 @@ create trigger hallennotiz_schutz before insert or update on public.hallen_notiz
 --   update public.profile
 --      set obmann = true, obmann_rechte = '{korrekturen,spiele}'
 --    where slug = 'muster-max';
+
+
+-- ======================================================================
+-- v40: Rechte gehoeren zum Konto, nicht zur Rolle
+-- ======================================================================
+-- v39 haengte die Rechte am Obmann-Kennzeichen. Das war zu eng: auch ein
+-- Schiedsrichter, der weiter selbst pfeift, kann etwas uebernehmen - ein
+-- Lehrwart die Spielzeiten, ein Beobachter den Blick ins ganze Archiv.
+-- Das Kennzeichen "obmann" bedeutet jetzt nur noch, was es urspruenglich
+-- hiess: pfeift nicht selbst, braucht keinen Namen. Wer was darf, steht
+-- in der Spalte "rechte".
+--
+-- Bekannte Rechte:
+--   korrekturen     Einteilungen aendern, auch das Gespann
+--   spiele          Spiele von Hand anlegen, Ausfaelle abarbeiten
+--   ankuendigungen  Nachrichten an alle, Termine
+--   stammdaten      Telefonliste, Hallen, Vereine, Spielzeiten
+--   archiv          alle Spiele aller Kollegen sehen (nur Oberflaeche)
+--   freischalten    neue Konten freischalten, Einladungen anlegen
+--   funktionen      Funktionen der App an- und ausschalten
+
+do $$
+begin
+  if exists (select 1 from information_schema.columns
+              where table_schema = 'public' and table_name = 'profile'
+                and column_name = 'obmann_rechte')
+     and not exists (select 1 from information_schema.columns
+              where table_schema = 'public' and table_name = 'profile'
+                and column_name = 'rechte') then
+    alter table public.profile rename column obmann_rechte to rechte;
+  end if;
+end $$;
+alter table public.profile add column if not exists rechte text[] not null default '{}';
+comment on column public.profile.rechte is
+  'Zusatzrechte: korrekturen, spiele, ankuendigungen, stammdaten, archiv, freischalten, funktionen';
+
+-- Kein "obmann" mehr in der Bedingung: freigeschaltet reicht, der Rest
+-- steht in der Liste. Der Betreiber darf immer alles.
+create or replace function public.darf_recht(recht text)
+returns boolean language sql stable security definer set search_path = public as $$
+  select coalesce((
+    select p.admin or ((p.freigeschaltet or p.admin) and recht = any(p.rechte))
+      from public.profile p where p.id = auth.uid()), false);
+$$;
+revoke all on function public.darf_recht(text) from public;
+grant execute on function public.darf_recht(text) to authenticated;
+
+-- Der alte Name aus v39 bleibt als Weiterleitung stehen, damit Regeln,
+-- die noch darauf zeigen, weiter greifen.
+create or replace function public.obmann_darf(recht text)
+returns boolean language sql stable security definer set search_path = public as $$
+  select public.darf_recht(recht);
+$$;
+revoke all on function public.obmann_darf(text) from public;
+grant execute on function public.obmann_darf(text) to authenticated;
+
+-- Wer freischalten darf, ist deshalb noch lange kein Betreiber: an einer
+-- fremden Zeile darf sich NUR "freigeschaltet" bewegen. Name, Anschrift,
+-- Rechnungsdaten und die Rechte selbst bleiben, wie sie waren.
+create or replace function public.profil_schutz()
+returns trigger language plpgsql security definer set search_path = public as $$
+declare
+  frei_neu boolean;
+begin
+  if auth.uid() is not null and not public.ist_admin() then
+    if tg_op = 'UPDATE' then
+      if auth.uid() <> new.id then
+        frei_neu := new.freigeschaltet;
+        new := old;
+        if public.darf_recht('freischalten') then
+          new.freigeschaltet := frei_neu;
+        end if;
+        return new;
+      end if;
+      new.freigeschaltet := old.freigeschaltet;
+      new.admin := old.admin;
+      new.obmann := old.obmann;
+      new.rechte := old.rechte;
+      -- Einmal gewaehlt, gehoert der Name zum Konto
+      if old.slug is not null then
+        new.slug := old.slug;
+        new.name := old.name;
+      end if;
+    else
+      new.freigeschaltet := false;
+      new.admin := false;
+      new.obmann := false;
+      new.rechte := '{}';
+    end if;
+  end if;
+  return new;
+end;
+$$;
+drop trigger if exists profil_schutz on public.profile;
+create trigger profil_schutz before insert or update on public.profile
+  for each row execute function public.profil_schutz();
+
+-- ---- Recht "freischalten"
+drop policy if exists "Admin liest alle Profile" on public.profile;
+drop policy if exists "Admin schaltet frei"     on public.profile;
+create policy "Admin liest alle Profile" on public.profile for select
+  using (public.ist_admin() or public.darf_recht('freischalten'));
+create policy "Admin schaltet frei"     on public.profile for update
+  using (public.ist_admin() or public.darf_recht('freischalten'));
+
+drop policy if exists "Admin pflegt Einladungen" on public.einladungen;
+create policy "Admin pflegt Einladungen" on public.einladungen for all to authenticated
+  using (public.darf_recht('freischalten')) with check (public.darf_recht('freischalten'));
+
+-- ---- Recht "funktionen"
+drop policy if exists "Admin schaltet" on public.funktionen;
+drop policy if exists "Admin legt an"  on public.funktionen;
+create policy "Admin schaltet" on public.funktionen for update to authenticated
+  using (public.darf_recht('funktionen')) with check (public.darf_recht('funktionen'));
+create policy "Admin legt an"  on public.funktionen for insert to authenticated
+  with check (public.darf_recht('funktionen'));
+
+-- "archiv" braucht keine eigene Regel: spiele_archiv ist fuer
+-- Freigeschaltete ohnehin ganz lesbar (v23), die App filtert nur auf die
+-- eigenen Spiele. Das Recht schaltet diesen Filter ab.
+
+-- In v39 hing "alle Spiele sehen" daran, dass ueberhaupt ein Recht
+-- gesetzt war. Jetzt ist es ein eigenes - wer schon eines hatte, behaelt
+-- den Blick ins Archiv.
+update public.profile
+   set rechte = array_append(rechte, 'archiv')
+ where rechte <> '{}' and not ('archiv' = any(rechte));
+
+-- Zum Nachsehen: wer darf was?
+--   select coalesce(name, email) as wer, admin, obmann, rechte
+--     from public.profile where admin or obmann or rechte <> '{}'
+--    order by admin desc, name;
+-- Rechte setzen (geht auch in der App unter Admin -> Freischaltung):
+--   update public.profile set rechte = '{korrekturen,archiv}'
+--    where slug = 'muster-max';

@@ -2771,6 +2771,52 @@ Funktion „Obmann per E-Mail" bleibt, sind die zwei Wege, für die man ihn
 wirklich anschreibt: **Fragen und Absagen von der Spielseite** und die
 **Mail bei einem Tausch**. Das Feld im Profil heisst jetzt auch so.
 
+### 10.6bn Rechte gehören zum Konto (Schema v40)
+
+v39 hängte die Rechte am Obmann-Kennzeichen. Das war zu eng: auch ein
+Schiedsrichter, der weiter selbst pfeift, kann etwas übernehmen - ein
+Lehrwart die Spielzeiten, ein Beobachter den Blick ins ganze Archiv. Das
+Kennzeichen **obmann** heisst jetzt wieder nur, was es ursprünglich hiess:
+*pfeift nicht selbst, braucht keinen Namen*. Wer was darf, steht in der
+Spalte `rechte` - und die kannst du **jedem freigeschalteten Konto**
+geben, nicht nur Obmännern. Der Kasten mit den Häkchen steht deshalb
+jetzt bei jedem Konto unter Admin → Freischaltung.
+
+Drei Rechte sind dazugekommen:
+
+| Recht | Was es öffnet |
+|---|---|
+| Alle Spiele sehen | Das ganze Archiv aller Kollegen statt nur der eigenen. Hing vorher daran, dass irgendein anderes Recht gesetzt war - wer eines hatte, behält es (das Schema trägt es beim Einspielen nach). |
+| Konten freischalten | Neue Anmeldungen freischalten und Einladungen anlegen. **Rechte vergeben kann weiterhin nur der Betreiber**: der Trigger `profil_schutz` lässt an einer fremden Profilzeile ausschliesslich `freigeschaltet` zu, alles andere (Name, Anschrift, Rechnungsdaten, Rechte, Adminstatus) wird zurückgesetzt. |
+| Funktionen schalten | Admin → Funktionen, also die App für alle umstellen. |
+
+Beim Betreiber bleiben: **Adminrechte vergeben, Push-Gesundheit,
+Speicher und Sicherung**.
+
+**Das Menü „Übersicht".** Wer Rechte bekommt, weiss selten, wo sie
+greifen. Als erster Punkt im eigenen Bereich steht deshalb „Das darfst
+du": ein Satz je Recht, der Weg dorthin, und ein Tipp führt direkt hin.
+Darunter aufklappbar, was **nicht** freigegeben ist - mit dem Hinweis,
+sich beim Betreiber zu melden. Der Reiter heisst „Obmann" bei Konten mit
+dem Kennzeichen, sonst „Freigaben".
+
+### 10.6bo Testmodus: die App mit fremden Augen
+
+Unter Admin → **Ansehen als** schaltest du auf **Schiedsrichter** oder
+**Obmann** um; beim Obmann kreuzt du an, welche Freigaben du testen
+willst. Die App lädt neu und verhält sich, als hättest du nur das:
+Reiter, Leiste unten, der Punkt unter „Mehr", die Spielseite, das Archiv.
+
+Oben steht die ganze Zeit ein Balken - „Du siehst die App als Obmann mit
+3 Freigaben" - mit **Ändern** (zurück zur Auswahl) und **Beenden**. Den
+Schild-Knopf oben blendet die App währenddessen aus, sonst wäre der
+Eindruck falsch.
+
+**Wichtig und im Balken auch so gesagt:** das wirkt nur in der
+Oberfläche. Die Datenbank kennt dich weiter als Betreiber und lässt dich
+alles - **gespeichert wird als du**. Zum Prüfen der Zugriffsregeln
+selbst brauchst du ein zweites Konto.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –
