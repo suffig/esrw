@@ -1647,3 +1647,31 @@ alter table public.sicherung_lauf enable row level security;
 drop policy if exists "Sicherungslauf lesen" on public.sicherung_lauf;
 create policy "Sicherungslauf lesen" on public.sicherung_lauf for select
   using (public.ist_admin());
+
+
+-- ======================================================================
+-- v38: Korrekturen und manuelle Spiele nur noch fuer Freigeschaltete
+-- ======================================================================
+-- Beide Tabellen waren fuer jeden lesbar, auch ohne Konto - und in ihnen
+-- steht mit der Besetzung, wer wann wo pfeift. Das war die letzte
+-- Ausnahme von der Tresor-Idee: die Einteilungen selbst liegen in docs/
+-- verschluesselt, und den Schluessel gibt es nur fuer Freigeschaltete
+-- ("Tresor lesen"). Wer die Korrekturen ohne Konto lesen konnte, bekam
+-- also Namen zu sehen, die ihm der Tresor gerade verwehrte.
+--
+-- Es kostet nichts: ohne Freischaltung laesst sich daten.json.bin nicht
+-- oeffnen, der Spielplan ist dann ohnehin leer - eine Korrektur dazu hat
+-- niemandem genuetzt. Die Kalender-Dateien bleiben unberuehrt, die baut
+-- der Workflow mit dem service_role-Schluessel, der RLS umgeht.
+drop policy if exists "Korrekturen lesen" on public.spiel_korrekturen;
+create policy "Korrekturen lesen" on public.spiel_korrekturen for select
+  to authenticated using (public.ist_freigeschaltet());
+
+drop policy if exists "manuelle Spiele lesen" on public.spiele_manuell;
+create policy "manuelle Spiele lesen" on public.spiele_manuell for select
+  to authenticated using (public.ist_freigeschaltet());
+
+-- Zur Probe (im SQL-Editor als anon ausfuehrbar machen ist muehsam -
+-- einfacher in der App: abmelden, Spielplan bleibt leer, das war vorher
+-- schon so):
+--   select count(*) from public.spiel_korrekturen;   -- als Admin: Zahl

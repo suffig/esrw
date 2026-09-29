@@ -612,6 +612,93 @@ def test_tresor():
         importlib.reload(esrw_ical_modul())
 
 
+def test_zurueckspielen():
+    """Der Weg zurueck muss im Ernstfall funktionieren - und vorher nichts
+    anfassen. Geprueft wird beides: der Probelauf schreibt nicht, und der
+    Ernstfall schickt genau die Zeilen aus der Sicherung."""
+    print("\nSicherung zurueckspielen")
+    import base64, datetime, shutil, tempfile
+    try:
+        import sicherung, tresor
+    except ImportError:
+        pruefe(False, "sicherung.py vorhanden")
+        return
+    try:
+        tresor.verschluesseln(b"x", b"0" * 32)
+    except ImportError:
+        print("  --   Paket 'cryptography' fehlt, Test uebersprungen")
+        return
+
+    alt_key = os.environ.get("DATEN_SCHLUESSEL")
+    alt_url = os.environ.get("SUPABASE_URL")
+    alt_dienst = os.environ.get("SUPABASE_SERVICE_KEY")
+    alt_ordner, alt_alarm = sicherung.ORDNER, sicherung.ALARM
+    alt_hole, alt_upsert = sicherung.hole, sicherung._upsert
+    ordner = tempfile.mkdtemp()
+    try:
+        os.environ["DATEN_SCHLUESSEL"] = base64.b64encode(b"Z" * 32).decode()
+        os.environ["SUPABASE_URL"] = "https://beispiel.test"
+        os.environ["SUPABASE_SERVICE_KEY"] = "probe"
+        sicherung.ORDNER = ordner
+        sicherung.ALARM = os.path.join(ordner, "alarm.txt")
+        k = tresor.schluessel()
+
+        inhalt = {"stand": "2026-01-01T00:00:00+00:00",
+                  "tabellen": {"profile": [{"id": "a", "slug": "muster-max"}],
+                               "einsaetze": [{"id": 1}, {"id": 2}]},
+                  "fehler": {}}
+        pfad = os.path.join(ordner, "2026-01-01.json")
+        tresor.json_schreiben(pfad, inhalt, k, separators=(",", ":"))
+
+        geschrieben = []
+        sicherung.hole = lambda url, d, t: []                      # Datenbank ist leer
+        sicherung._upsert = lambda url, d, t, z, schritt=500: (geschrieben.append((t, len(z))) or len(z))
+
+        pruefe(sicherung.zurueck(pfad + ".bin", False, []) == 0, "Probelauf laeuft durch")
+        pruefe(geschrieben == [], "Probelauf schreibt nichts")
+
+        pruefe(sicherung.zurueck(pfad + ".bin", True, []) == 0, "Ernstfall laeuft durch")
+        pruefe(sorted(geschrieben) == [("einsaetze", 2), ("profile", 1)],
+               "genau die Zeilen aus der Sicherung", str(sorted(geschrieben)))
+
+        geschrieben[:] = []
+        sicherung.zurueck(pfad + ".bin", True, ["profile"])
+        pruefe(geschrieben == [("profile", 1)], "einzelne Tabelle laesst den Rest in Ruhe", str(geschrieben))
+
+        # Eine Tabelle, die es in der Sicherung nicht gibt, darf nicht
+        # stillschweigend nichts tun
+        try:
+            sicherung.zurueck(pfad + ".bin", True, ["gibtsnicht"])
+            pruefe(False, "unbekannte Tabelle bricht ab")
+        except SystemExit:
+            pruefe(True, "unbekannte Tabelle bricht ab")
+
+        # Schluesselwechsel bemerken
+        pruefe(sicherung.schluessel_passt(k)[0], "eigener Schluessel passt")
+        fremd = base64.b64decode(base64.b64encode(b"Y" * 32))
+        passt, wer = sicherung.schluessel_passt(fremd)
+        pruefe(not passt and wer == "2026-01-01.json.bin", "fremder Schluessel faellt auf", str((passt, wer)))
+
+        # Alarm, wenn lange nichts mehr kam
+        sicherung.alarm_pruefen(datetime.date(2026, 1, 1), "Probe")
+        pruefe(not os.path.exists(sicherung.ALARM), "frische Sicherung loest keinen Alarm aus")
+        sicherung.alarm_pruefen(datetime.date(2026, 1, 9), "Probe")
+        pruefe(os.path.exists(sicherung.ALARM), "acht Tage Stillstand loesen Alarm aus")
+        with open(sicherung.ALARM, encoding="utf-8") as f:
+            text = f.read()
+        pruefe(text.splitlines()[0].startswith("Sicherung haengt"), "Alarm hat eine Titelzeile", text[:60])
+    finally:
+        sicherung.ORDNER, sicherung.ALARM = alt_ordner, alt_alarm
+        sicherung.hole, sicherung._upsert = alt_hole, alt_upsert
+        for name, wert in (("DATEN_SCHLUESSEL", alt_key), ("SUPABASE_URL", alt_url),
+                           ("SUPABASE_SERVICE_KEY", alt_dienst)):
+            if wert is None:
+                os.environ.pop(name, None)
+            else:
+                os.environ[name] = wert
+        shutil.rmtree(ordner, ignore_errors=True)
+
+
 def test_erinnerungszeit():
     """Wann die Spieltag-Erinnerung raus darf. Falsch gerechnet hiesse:
     sie kommt mitten in der Nacht oder erst nach dem Spiel."""
@@ -691,7 +778,7 @@ def main():
                  test_escape, test_ics, test_saison, test_aenderungstext, test_saisonarchiv,
                  test_korrektur_uid, test_gespannwechsel, test_ehemalige,
                  test_besetzung_korrektur, test_csp,
-                 test_rechnungsvorlage, test_sicherung, test_erinnerungszeit,
+                 test_rechnungsvorlage, test_sicherung, test_erinnerungszeit, test_zurueckspielen,
                  test_tresor):
         test()
     print("\n" + "-" * 58)

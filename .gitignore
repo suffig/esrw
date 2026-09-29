@@ -10,3 +10,5 @@ vapid_privat.txt
 # Sicherungen liegen nur verschluesselt im Repository - der Klartext aus
 # "python sicherung.py --zeigen" bleibt auf dem Rechner
 sicherungen/*.json
+sicherung_alarm.txt
+srumpf.txt

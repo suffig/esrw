@@ -18,8 +18,17 @@ gedacht hat.
 
 Aufruf:
 
-    python sicherung.py                 Sicherung des Tages schreiben
-    python sicherung.py --zeigen DATEI  eine Sicherung wieder lesbar machen
+    python sicherung.py                    Sicherung des Tages schreiben
+    python sicherung.py --zeigen DATEI     eine Sicherung lesbar machen
+    python sicherung.py --zurueck DATEI    Probelauf: was waere anders?
+    python sicherung.py --zurueck DATEI --wirklich [tabelle ...]
+                                           zurueckspielen, wirklich
+
+Zum Zurueckspielen gehoert der Kopf dazu, nicht nur der Befehl: es
+schreibt in die laufende Datenbank. Darum zeigt der Probelauf erst, was
+sich aendern wuerde, und erst "--wirklich" tut es. Ohne Tabellennamen
+sind alle gemeint; mit Namen nur die genannten - um eine Zeile zu retten,
+muss man nicht alles anfassen.
 """
 import datetime
 import glob
@@ -35,6 +44,10 @@ import tresor
 
 ORDNER = "sicherungen"
 SCHEMA = os.path.join("supabase", "schema.sql")
+# Der Workflow legt daraus ein Issue an - sonst faellt ein Ausfall erst
+# auf, wenn man ihn braucht.
+ALARM = os.environ.get("ALARM_DATEI") or "sicherung_alarm.txt"
+ALARM_TAGE = 2
 
 # Wie lange welche Sicherung liegen bleibt. Taeglich fuer den letzten Monat,
 # danach nur noch die vom Monatsersten - sonst waechst das Repository ewig.
@@ -88,6 +101,64 @@ def melden(url, dienst, zeilen):
         return False
 
 
+def alarm(titel, text):
+    """Eine Zeile Titel, darunter der Rumpf - dasselbe Format wie
+    meldung.txt bei neuen Einteilungen."""
+    try:
+        with io.open(ALARM, "w", encoding="utf-8") as f:
+            f.write(titel + "\n" + text + "\n")
+    except Exception:
+        pass
+    print(titel)
+
+
+def letzter_stand():
+    """Datum der neuesten vorhandenen Sicherung, oder None."""
+    tage = []
+    for pfad in glob.glob(os.path.join(ORDNER, "*.json.bin")):
+        try:
+            tage.append(datetime.date.fromisoformat(os.path.basename(pfad).split(".")[0]))
+        except ValueError:
+            continue
+    return max(tage) if tage else None
+
+
+def alarm_pruefen(heute, grund):
+    """Schlaegt an, wenn seit ALARM_TAGE keine Sicherung mehr entstanden
+    ist. Ein einzelner missglueckter Lauf ist normal (Netz, Wartung bei
+    Supabase) - zwei Tage am Stueck sind es nicht."""
+    letzte = letzter_stand()
+    if letzte is None:
+        alarm("Sicherung: noch keine einzige vorhanden",
+              "Die Datenbank wurde noch nie gesichert.\nGrund des letzten Versuchs: %s\n\n"
+              "Siehe sicherung.py und den Schritt \"Datenbank sichern\" im Workflow." % grund)
+        return
+    alter = (heute - letzte).days
+    if alter >= ALARM_TAGE:
+        alarm("Sicherung haengt seit %d Tagen" % alter,
+              "Die neueste Sicherung ist vom %s.\nGrund des letzten Versuchs: %s\n\n"
+              "Solange das so bleibt, gibt es keinen Stand, auf den man zurueck koennte."
+              % (letzte.isoformat(), grund))
+
+
+def schluessel_passt(k):
+    """Laesst sich die neueste vorhandene Sicherung noch entschluesseln?
+
+    Wenn nicht, ist DATEN_SCHLUESSEL gewechselt worden. Dann waere alles
+    Aeltere unlesbar - und niemand merkte es, weil die neuen Dateien ja
+    weiter entstehen. Lieber einmal laut sagen."""
+    vorhanden = sorted(glob.glob(os.path.join(ORDNER, "*.json.bin")))
+    if not vorhanden:
+        return True, None
+    neueste = vorhanden[-1]
+    try:
+        with open(neueste, "rb") as f:
+            tresor.entschluesseln(f.read(), k)
+        return True, None
+    except Exception:
+        return False, os.path.basename(neueste)
+
+
 def aufraeumen(heute):
     """Alte Sicherungen wegwerfen - taegliche nach 35 Tagen, Monatserste
     nach zwei Jahren."""
@@ -112,13 +183,21 @@ def sichern():
     url = (os.environ.get("SUPABASE_URL") or "").strip()
     dienst = (os.environ.get("SUPABASE_SERVICE_KEY") or "").strip()
     if not url or not dienst:
+        alarm_pruefen(datetime.date.today(), "SUPABASE_URL oder SUPABASE_SERVICE_KEY fehlt")
         print("SUPABASE_URL oder SUPABASE_SERVICE_KEY fehlt - keine Sicherung.")
         return 0
     k = tresor.schluessel()
     if not k:
         # Ohne Schluessel laege die halbe Kartei im Klartext im Repository.
+        alarm_pruefen(datetime.date.today(), "DATEN_SCHLUESSEL fehlt")
         print("DATEN_SCHLUESSEL fehlt - eine Sicherung im Klartext waere schlimmer als keine.")
         return 0
+
+    passt, wer = schluessel_passt(k)
+    if not passt:
+        print("ACHTUNG: %s laesst sich mit dem jetzigen DATEN_SCHLUESSEL nicht mehr oeffnen. "
+              "Wurde der Schluessel gewechselt? Dann sind alle aelteren Sicherungen wertlos - "
+              "bitte den alten Schluessel aufheben, sonst kommt niemand mehr an sie heran." % wer)
 
     heute = datetime.date.today()
     pfad = os.path.join(ORDNER, heute.isoformat() + ".json")
@@ -137,6 +216,7 @@ def sichern():
             fehler[t] = str(e)
 
     if not daten:
+        alarm_pruefen(heute, "keine einzige Tabelle lesbar")
         print("Keine einzige Tabelle gelesen - Sicherung abgebrochen.")
         return 1
 
@@ -152,6 +232,13 @@ def sichern():
 
     melden(url, dienst, {"tabellen": len(daten), "zeilen": zeilen, "bytes": groesse,
                          "fehler": ", ".join(sorted(fehler)) or None})
+    if fehler:
+        alarm("Sicherung unvollstaendig: %d Tabelle(n) fehlen" % len(fehler),
+              "Gesichert am %s, aber diese Tabellen kamen nicht mit:\n\n%s\n\n"
+              "Meist fehlt eine Tabelle im Schema oder eine Zugriffsregel sperrt den "
+              "service_role-Schluessel aus." % (
+                  heute.isoformat(),
+                  "\n".join("  * %s - %s" % (t, fehler[t]) for t in sorted(fehler))))
     weg = aufraeumen(heute)
     print("Sicherung %s: %d Tabellen, %d Zeilen, %d KB%s%s" % (
         heute.isoformat(), len(daten), zeilen, groesse // 1024,
@@ -178,8 +265,95 @@ def zeigen(pfad):
     print("Klartext liegt in %s - nach dem Blick bitte loeschen." % ziel)
 
 
+def _lesen(pfad):
+    k = tresor.schluessel()
+    if not k:
+        raise SystemExit("DATEN_SCHLUESSEL setzen, sonst laesst sich nichts lesen.")
+    with open(pfad, "rb") as f:
+        return json.loads(tresor.entschluesseln(f.read(), k).decode("utf-8"))
+
+
+def zurueck(pfad, wirklich, nur):
+    """Eine Sicherung wieder einspielen.
+
+    Standard ist der Probelauf: er sagt Tabelle fuer Tabelle, wie viele
+    Zeilen in der Sicherung stehen, wie viele jetzt da sind und was das
+    Einspielen aendern wuerde. Erst mit --wirklich passiert etwas, und
+    auch dann wird nur geschrieben, nie geloescht: die Zeilen gehen als
+    upsert rein (gleicher Primaerschluessel = ueberschrieben, neuer =
+    angelegt). Was seit der Sicherung dazukam, bleibt also stehen.
+    Wer wirklich einen Stand von damals will, leert die Tabelle vorher
+    von Hand im SQL-Editor - das ist Absicht, so etwas soll niemand
+    versehentlich tun."""
+    url = (os.environ.get("SUPABASE_URL") or "").strip()
+    dienst = (os.environ.get("SUPABASE_SERVICE_KEY") or "").strip()
+    if not url or not dienst:
+        raise SystemExit("SUPABASE_URL und SUPABASE_SERVICE_KEY setzen - ohne sie geht kein Schreiben.")
+
+    inhalt = _lesen(pfad)
+    tab = inhalt.get("tabellen", {})
+    print("Sicherung vom %s\n" % inhalt.get("stand"))
+    if nur:
+        fehlt = [t for t in nur if t not in tab]
+        if fehlt:
+            raise SystemExit("Nicht in dieser Sicherung: %s" % ", ".join(fehlt))
+        tab = {t: tab[t] for t in nur}
+
+    fehler = 0
+    for name in sorted(tab):
+        zeilen = tab[name] or []
+        try:
+            jetzt = len(hole(url, dienst, name))
+        except Exception as e:
+            print("  %-22s ? (jetzt nicht lesbar: %s)" % (name, str(e)[:60]))
+            jetzt = None
+        wie = "%d in der Sicherung, %s jetzt" % (len(zeilen), jetzt if jetzt is not None else "?")
+        if not wirklich:
+            print("  %-22s %s" % (name, wie))
+            continue
+        if not zeilen:
+            print("  %-22s %s - nichts einzuspielen" % (name, wie))
+            continue
+        try:
+            geschrieben = _upsert(url, dienst, name, zeilen)
+            print("  %-22s %s -> %d geschrieben" % (name, wie, geschrieben))
+        except Exception as e:
+            fehler += 1
+            print("  %-22s %s -> FEHLER: %s" % (name, wie, str(e)[:160]))
+
+    if not wirklich:
+        print("\nProbelauf, es wurde nichts geaendert. Wenn das so stimmt:")
+        print("  python sicherung.py --zurueck %s --wirklich%s"
+              % (pfad, (" " + " ".join(nur)) if nur else ""))
+        return 0
+    print("\nFertig%s." % (" - %d Tabelle(n) mit Fehlern, siehe oben" % fehler if fehler else ""))
+    return 1 if fehler else 0
+
+
+def _upsert(url, dienst, tabelle, zeilen, schritt=500):
+    """Zeilen in Haeppchen zurueckschreiben. merge-duplicates heisst:
+    vorhandene Primaerschluessel werden ueberschrieben, neue angelegt."""
+    geschrieben = 0
+    for i in range(0, len(zeilen), schritt):
+        teil = zeilen[i:i + schritt]
+        req = urllib.request.Request(
+            url.rstrip("/") + "/rest/v1/" + tabelle,
+            data=json.dumps(teil).encode("utf-8"), method="POST",
+            headers={"apikey": dienst, "Authorization": "Bearer " + dienst,
+                     "Content-Type": "application/json",
+                     "Prefer": "resolution=merge-duplicates,return=minimal"})
+        with urllib.request.urlopen(req, timeout=120):
+            geschrieben += len(teil)
+    return geschrieben
+
+
 if __name__ == "__main__":
-    if len(sys.argv) > 2 and sys.argv[1] == "--zeigen":
-        zeigen(sys.argv[2])
+    args = sys.argv[1:]
+    if len(args) > 1 and args[0] == "--zeigen":
+        zeigen(args[1])
+    elif len(args) > 1 and args[0] == "--zurueck":
+        rest = args[2:]
+        sys.exit(zurueck(args[1], "--wirklich" in rest,
+                         [a for a in rest if not a.startswith("--")]))
     else:
         sys.exit(sichern())

@@ -110,6 +110,25 @@ jobs:
           DATEN_SCHLUESSEL: ${{ secrets.DATEN_SCHLUESSEL }}
         run: python sicherung.py
 
+      # Ein Ausfall der Sicherung faellt sonst erst auf, wenn man sie
+      # braucht. Dasselbe Verfahren wie bei neuen Einteilungen: GitHub
+      # schickt fuer ein neues Issue von sich aus eine E-Mail.
+      - name: Bei haengender Sicherung ein Issue anlegen
+        if: hashFiles('sicherung_alarm.txt') != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TITEL=$(head -n 1 sicherung_alarm.txt)
+          tail -n +2 sicherung_alarm.txt > srumpf.txt
+          # Nicht jede Stunde dasselbe Issue - nur, wenn keines offen ist
+          OFFEN=$(gh issue list --label sicherung --state open --limit 1 --json number --jq 'length')
+          if [ "$OFFEN" = "0" ]; then
+            gh issue create --title "$TITEL" --body-file srumpf.txt --label sicherung \
+              || gh issue create --title "$TITEL" --body-file srumpf.txt
+          else
+            echo "Issue ist schon offen."
+          fi
+
       # Zweiter Meldeweg, der ohne zusaetzliche App auskommt: GitHub schickt
       # fuer ein neues Issue von sich aus eine E-Mail an den Repository-
       # Eigentuemer, und die GitHub-App auf dem Handy meldet sich per Push.

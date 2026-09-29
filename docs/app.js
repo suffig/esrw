@@ -224,13 +224,25 @@
       });
     });
   }
+  // Der eigene Zugang, wenn jemand angemeldet ist - sonst der oeffentliche
+  // Schluessel. Was damit sichtbar ist, entscheiden die Regeln in Supabase.
+  function zugangKopf(cfg) {
+    var anon = { apikey: cfg.anon_key, Authorization: "Bearer " + cfg.anon_key };
+    if (!window.Mitglieder || !window.Mitglieder.zugang) return Promise.resolve(anon);
+    return window.Mitglieder.zugang().then(function (t) {
+      return t ? { apikey: cfg.anon_key, Authorization: "Bearer " + t } : anon;
+    }).catch(function () { return anon; });
+  }
+
   function korrekturenLaden(neuZeichnen) {
     return hole("supabase.json").then(function (cfg) {
       cfg = cfg || {};
       if (cfg.mock) { try { return JSON.parse(localStorage.getItem("mock_spiel_korrekturen") || "[]"); } catch (e) { return []; } }
       if (!cfg.url || !cfg.anon_key) return null;
-      return fetch(cfg.url.replace(/\/$/, "") + "/rest/v1/spiel_korrekturen?select=*", { headers: { apikey: cfg.anon_key, Authorization: "Bearer " + cfg.anon_key } })
-        .then(function (r) { return r.ok ? r.json() : null; });
+      return zugangKopf(cfg).then(function (kopf) {
+        return fetch(cfg.url.replace(/\/$/, "") + "/rest/v1/spiel_korrekturen?select=*", { headers: kopf })
+          .then(function (r) { return r.ok ? r.json() : null; });
+      });
     }).then(function (zeilen) {
       if (!zeilen) return false;
       var neu = {}; zeilen.forEach(function (z) { neu[z.kennung] = z; });
@@ -250,8 +262,10 @@
       cfg = cfg || {};
       if (cfg.mock) { try { return JSON.parse(localStorage.getItem("mock_" + pfad.split("?")[0]) || "[]"); } catch (e) { return []; } }
       if (!cfg.url || !cfg.anon_key) return null;
-      return fetch(cfg.url.replace(/\/$/, "") + "/rest/v1/" + pfad, { headers: { apikey: cfg.anon_key, Authorization: "Bearer " + cfg.anon_key } })
-        .then(function (r) { return r.ok ? r.json() : null; });
+      return zugangKopf(cfg).then(function (kopf) {
+        return fetch(cfg.url.replace(/\/$/, "") + "/rest/v1/" + pfad, { headers: kopf })
+          .then(function (r) { return r.ok ? r.json() : null; });
+      });
     });
   }
   function betreiberAnwenden() {
