@@ -1841,6 +1841,35 @@
   .hinweis.warteschlange { flex-direction:column; gap:6px; align-items:stretch; }
   .hinweis.warteschlange .meta { color:inherit; opacity:.8; }
   .hinweis.warteschlange button { align-self:flex-start; }
+
+  /* Runde 47: Schnelleingabe, eigene Regeln, Pruefung */
+  .mg-schnellliste { display:flex; flex-direction:column; gap:1px; background:var(--linie);
+    border:1px solid var(--linie); border-radius:var(--radius); overflow:hidden; margin-top:10px; }
+  .mg-schnellkopf, .mg-schnellzeile { display:grid; grid-template-columns:1fr 4.2rem 4.6rem 4.6rem;
+    gap:6px; align-items:center; background:var(--karte); padding:6px 8px; }
+  .mg-schnellkopf { font-size:.72rem; text-transform:uppercase; letter-spacing:.04em;
+    color:var(--dim); background:var(--bg); padding:6px 8px; }
+  .mg-schnellkopf span + span, .mg-schnellzeile input { text-align:right; }
+  .mg-schnellzeile.erfasst { background:color-mix(in srgb, var(--gut-bg) 40%, var(--karte)); }
+  .mg-schnellzeile input { width:100%; min-height:40px; padding:6px 7px; font-size:.9rem;
+    border:1px solid var(--linie); border-radius:9px; background:var(--karte); color:inherit; }
+  .mg-schnellzeile input:focus { outline:2px solid var(--akzent); outline-offset:-1px; }
+  .mg-schnellspiel { display:flex; flex-direction:column; align-items:flex-start; gap:1px;
+    min-height:40px; padding:2px 0; background:none; border:0; color:inherit; text-align:left; width:100%; }
+  .mg-schnellspiel b { font-size:.82rem; font-weight:700; }
+  .mg-schnellspiel small { font-size:.72rem; color:var(--dim); line-height:1.25;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+
+  .mg-regel-neu { display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-top:6px; }
+  .mg-regel-neu select { flex:1 1 8rem; min-width:0; }
+  .mg-regel-neu input { flex:0 0 4.6rem; min-height:40px; padding:6px 8px; text-align:right;
+    border:1px solid var(--linie); border-radius:9px; background:var(--karte); color:inherit; }
+  .mg-regel-neu button { min-height:40px; }
+
+  .mg-fund { display:flex; flex-direction:column; align-items:flex-start; gap:2px;
+    width:100%; text-align:left; margin-bottom:6px; min-height:44px; }
+  .mg-fund small { color:var(--dim); font-size:.78rem; line-height:1.3; }
+  .mg-fund b, .mg-fund small { white-space:normal; overflow-wrap:anywhere; max-width:100%; }
 </style>
 </head>
 <body>
@@ -2293,6 +2322,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=92"></script>
+<script src="app.js?v=93"></script>
 </body>
 </html>

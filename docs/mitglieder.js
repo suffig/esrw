@@ -1302,7 +1302,34 @@ window.Mitglieder = (function () {
     });
   }
 
+  // Eigene Regeln: was die Gebuehrenordnung nicht weiss oder falsch
+  // einordnet (DEB-Ligen, Sonderabsprachen), traegt man einmal ein und
+  // muss es danach nie wieder tippen. Sie schlagen die Ordnung.
+  function regeln() {
+    var e = (profil && profil.einstellungen) || {};
+    return { liga: e.regeln_liga || {}, halle: e.regeln_halle || {} };
+  }
+  function ligaSchluessel(sp) { return (sp.liga || "ohne Liga") + "|" + (sp.rolle || ""); }
+  function regelBetrag(sp) {
+    var r = regeln().liga;
+    var genau = r[ligaSchluessel(sp)];
+    if (genau != null) return genau;
+    var alle = r[(sp.liga || "ohne Liga") + "|"];    // Regel ohne Rolle gilt fuer alle
+    return alle != null ? alle : null;
+  }
+  function regelKm(sp) {
+    var k = regeln().halle[sp.halle || ""];
+    return k != null ? k : null;
+  }
+  // Was die App vorschlaegt: erst die eigene Regel, dann die Ordnung
+  function sollBetrag(sp) { var r = regelBetrag(sp); return r != null ? r : grundgebuehr(sp); }
+  function regelnSpeichern(liga, halle) {
+    return einstellungenSpeichern({ regeln_liga: liga, regeln_halle: halle });
+  }
+
   function kmVorschlag(spiel) {
+    var eigen = regelKm(spiel);
+    if (eigen != null) return { km: eigen, art: "regel" };
     var s = streckeGespeichert(spiel.halle);
     if (s) return s;
     var l = luftlinie(spiel.halle);
@@ -2448,7 +2475,7 @@ window.Mitglieder = (function () {
     var n = 0, jetzt = new Date();
     spiele.forEach(function (sp) {
       if (einsaetze[sp.kennung] || new Date(sp.beginn) > jetzt) return;
-      var v = kmVorschlag(sp), g = grundgebuehr(sp);
+      var v = kmVorschlag(sp), g = sollBetrag(sp);
       if (v == null && g == null) return;
       var vp = verpflegungVorschlag(sp);
       speichereEinsatz(sp, Object.assign({ km: v && v.art === "route" ? v.km : null, verguetung: g }, vp != null ? { verpflegung: vp } : {}));
@@ -2572,7 +2599,8 @@ window.Mitglieder = (function () {
     ]);
     document.body.appendChild(leiste);
   }
-  function abrechnungSprung(kennung) { abrechnungZiel = kennung; nurOffene = false; }
+  function abrechnungSprung(kennung) { abrechnungZiel = kennung; nurOffene = false; schnellModus = false; }
+  var schnellModus = false;
   // Wartet etwas auf das Netz, soll man das sehen - nicht nur eine
   // Kurzmeldung, die nach drei Sekunden wieder weg ist.
   function warteBanner() {
@@ -2604,7 +2632,8 @@ window.Mitglieder = (function () {
     var offenN = spiele.filter(function (sp) { var e = einsaetze[sp.kennung]; return new Date(sp.beginn) < new Date() && (!e || e.verguetung == null || (e.km == null && profil.heimat_lat != null)); }).length;
     var chips = h("div", { class: "schnell mg-chips" }, [
       h("button", { type: "button", class: "filterknopf" + (nurOffene ? " aktiv" : ""), text: "Unvollständig" + (offenN ? " (" + offenN + ")" : ""), onclick: function () { nurOffene = true; rendereAbrechnung(); } }),
-      h("button", { type: "button", class: "filterknopf" + (!nurOffene ? " aktiv" : ""), text: "Alle", onclick: function () { nurOffene = false; rendereAbrechnung(); } })
+      h("button", { type: "button", class: "filterknopf" + (!nurOffene && !schnellModus ? " aktiv" : ""), text: "Alle", onclick: function () { nurOffene = false; schnellModus = false; rendereAbrechnung(); } }),
+      h("button", { type: "button", class: "filterknopf" + (schnellModus ? " aktiv" : ""), title: "Eine Zeile je Spiel, alles nebeneinander", text: "Schnelleingabe", onclick: function () { schnellModus = !schnellModus; if (schnellModus) nurOffene = false; rendereAbrechnung(); } })
     ]);
     inhalt.appendChild(h("div", { class: "mg-abrechnung-kopf" }, [saisonWahl, chips]));
     var wartet = warteBanner();
@@ -2633,7 +2662,7 @@ window.Mitglieder = (function () {
       spiele.forEach(function (sp) {
         var e = einsaetze[sp.kennung];
         if (e && e.verguetung != null) return;
-        var g = grundgebuehr(sp);
+        var g = sollBetrag(sp);
         if (g == null) { offen++; return; }
         speichereEinsatz(sp, { verguetung: g }); n++;
       });
@@ -2654,6 +2683,8 @@ window.Mitglieder = (function () {
             h("button", { type: "button", text: "Drucken", onclick: function () { window.print(); } })])]);
       },
       eintragen: function () { return spielEintragenFormular(function () { abrechnungPanel = null; rendereAbrechnung(); }); },
+      eigeneregeln: function () { return regelPanel(spiele); },
+      pruefen: function () { return pruefPanel(spiele); },
       regeln: function () {
         return h("p", { class: "meta mg-fuss", style: "margin:0", text:
           "km = einfache Strecke Wohnung → Halle (Straßenkilometer, wenn berechnet; sonst Luftlinie × 1,3). " +
@@ -2668,7 +2699,7 @@ window.Mitglieder = (function () {
     panelInhalt.rechnung = rechnungPanel;
     // Sieben Knoepfe nebeneinander hat niemand gelesen: vorne steht, was
     // staendig gebraucht wird, der Rest liegt unter "Weitere".
-    var WEITERE = [["art", "Abrechnungsart"], ["werkzeuge", "Werkzeuge"], ["eintragen", "+ Spiel eintragen"], ["regeln", "Wie gerechnet wird"]];
+    var WEITERE = [["eigeneregeln", "Eigene Regeln"], ["art", "Abrechnungsart"], ["werkzeuge", "Werkzeuge"], ["eintragen", "+ Spiel eintragen"], ["regeln", "Wie gerechnet wird"]];
     if (!einfach()) WEITERE.unshift(["detail", "Steuerjahre"]);
     panelInhalt.weiteres = function () {
       return h("div", { class: "mg-form" }, [
@@ -2678,7 +2709,8 @@ window.Mitglieder = (function () {
           text: p[1], onclick: function () { abrechnungPanel = p[0]; rendereAbrechnung(); } });
       })));
     };
-    var KNOEPFE = [["kalender", "Kalender"], ["rechnung", "Rechnung"]];
+    var offenP = abrechnungPruefen(spiele).length;
+    var KNOEPFE = [["pruefen", "Prüfen" + (offenP ? " (" + offenP + ")" : "")], ["kalender", "Kalender"], ["rechnung", "Rechnung"]];
     if (!einfach()) KNOEPFE.push(["detail", "Steuerjahre"]);
     KNOEPFE.push(["weiteres", "Weitere \u2026"]);
     KNOEPFE.forEach(function (p) {
@@ -2690,6 +2722,12 @@ window.Mitglieder = (function () {
     if (abrechnungPanel && panelInhalt[abrechnungPanel]) {
       var panel = h("div", { class: "melde karte mg-panel" }, [panelInhalt[abrechnungPanel]()]);
       inhalt.appendChild(panel);
+    }
+
+    if (schnellModus) {
+      inhalt.appendChild(schnellListe(spiele));
+      aktualisiereSummen();
+      return;
     }
 
     var liste = spiele;
@@ -2797,11 +2835,227 @@ window.Mitglieder = (function () {
     box.appendChild(h("label", { class: "mg-datei" }, ["+ Beleg (Foto/PDF)", datei]));
   }
 
+  // ---- Eigene Regeln verwalten
+  //
+  // Die Gebuehrenordnung kennt nicht jede Liga (DEB-Ligen, Auswahlspiele),
+  // und die Luftlinie stimmt selten. Wer einmal sagt "diese Liga bringt X,
+  // diese Halle sind Y km", muss es nie wieder tippen.
+  function regelPanel(spiele) {
+    var box = h("div", {});
+    function rendern() {
+      leeren(box);
+      var r = regeln(), ligaK = Object.keys(r.liga).sort(), halleK = Object.keys(r.halle).sort();
+
+      box.appendChild(h("p", { class: "meta", style: "margin:0 0 10px", text:
+        "Eigene Regeln gehen der Gebührenordnung vor und füllen neue Spiele von selbst aus. "
+        + "Jedes einzelne Spiel lässt sich weiterhin von Hand ändern." }));
+
+      // --- Vergütung je Liga
+      box.appendChild(h("h4", { style: "margin:0 0 6px", text: "Vergütung je Liga" }));
+      if (!ligaK.length) box.appendChild(h("p", { class: "leer", style: "margin:0 0 8px", text: "Noch keine Regel." }));
+      ligaK.forEach(function (k) {
+        var teil = k.split("|");
+        box.appendChild(h("div", { class: "sperre" }, [
+          h("span", { text: teil[0] + (teil[1] ? " · " + teil[1] : " · alle Rollen") }),
+          h("span", {}, [
+            h("b", { text: euro(r.liga[k]) }),
+            h("button", { type: "button", class: "rund", title: "Regel entfernen", text: "×", onclick: function () {
+              delete r.liga[k]; regelnSpeichern(r.liga, r.halle).then(function () { rendern(); rendereAbrechnung(); });
+            } })])]));
+      });
+
+      var ligen = []; spiele.forEach(function (sp) { var l = sp.liga || "ohne Liga"; if (ligen.indexOf(l) < 0) ligen.push(l); });
+      ligen.sort();
+      var ligaWahl = h("select", { class: "mg-select" }, ligen.map(function (l) { return h("option", { value: l, text: l }); }));
+      var rolleWahl = h("select", { class: "mg-select" }, [
+        h("option", { value: "", text: "alle Rollen" }),
+        h("option", { value: "SR", text: "SR" }), h("option", { value: "LR", text: "LR" }),
+        h("option", { value: "SRA", text: "SRA" }), h("option", { value: "SRB", text: "SRB" })]);
+      var betrag = h("input", { type: "number", step: "0.5", min: "0", inputmode: "decimal", placeholder: "€" });
+      box.appendChild(h("div", { class: "mg-regel-neu" }, [ligaWahl, rolleWahl, betrag,
+        h("button", { type: "button", class: "anfrage", text: "Merken", onclick: function () {
+          var v = zahl(betrag.value);
+          if (v == null) { meldung("Bitte einen Betrag eintragen.", "warn"); return; }
+          r.liga[ligaWahl.value + "|" + rolleWahl.value] = v;
+          regelnSpeichern(r.liga, r.halle).then(function (ok) {
+            if (!ok) { meldung("Regel konnte nicht gespeichert werden.", "warn"); return; }
+            betrag.value = ""; rendern(); rendereAbrechnung();
+          });
+        } })]));
+
+      // --- Kilometer je Halle
+      box.appendChild(h("h4", { style: "margin:14px 0 6px", text: "Kilometer je Halle" }));
+      box.appendChild(h("p", { class: "meta", style: "margin:0 0 6px", text: "Einfache Strecke von zu Hause. Was du hier einträgst, schlägt die berechnete Route." }));
+      if (!halleK.length) box.appendChild(h("p", { class: "leer", style: "margin:0 0 8px", text: "Noch keine Regel." }));
+      halleK.forEach(function (k) {
+        box.appendChild(h("div", { class: "sperre" }, [
+          h("span", { text: k }),
+          h("span", {}, [h("b", { text: r.halle[k] + " km" }),
+            h("button", { type: "button", class: "rund", title: "Regel entfernen", text: "×", onclick: function () {
+              delete r.halle[k]; regelnSpeichern(r.liga, r.halle).then(function () { rendern(); rendereAbrechnung(); });
+            } })])]));
+      });
+      var hallen = []; spiele.forEach(function (sp) { if (sp.halle && hallen.indexOf(sp.halle) < 0) hallen.push(sp.halle); });
+      hallen.sort();
+      var halleWahl = h("select", { class: "mg-select" }, hallen.map(function (l) { return h("option", { value: l, text: l }); }));
+      var kmFeld = h("input", { type: "number", step: "0.1", min: "0", inputmode: "decimal", placeholder: "km" });
+      if (!hallen.length) box.appendChild(h("p", { class: "meta", style: "margin:0", text: "In dieser Saison steht zu keinem Spiel eine Halle." }));
+      else box.appendChild(h("div", { class: "mg-regel-neu" }, [halleWahl, kmFeld,
+        h("button", { type: "button", class: "anfrage", text: "Merken", onclick: function () {
+          var v = zahl(kmFeld.value);
+          if (v == null) { meldung("Bitte eine Kilometerzahl eintragen.", "warn"); return; }
+          r.halle[halleWahl.value] = v;
+          regelnSpeichern(r.liga, r.halle).then(function (ok) {
+            if (!ok) { meldung("Regel konnte nicht gespeichert werden.", "warn"); return; }
+            kmFeld.value = ""; rendern(); rendereAbrechnung();
+          });
+        } })]));
+
+      if (ligaK.length || halleK.length) {
+        box.appendChild(h("button", { type: "button", class: "mg-neben", style: "margin-top:12px",
+          text: "Regeln auf alle leeren Felder anwenden", onclick: function () {
+            var n = 0, jetzt = new Date();
+            spiele.forEach(function (sp) {
+              if (new Date(sp.beginn) > jetzt) return;
+              var e = einsaetze[sp.kennung] || {}, aend = {};
+              if (e.verguetung == null && regelBetrag(sp) != null) aend.verguetung = regelBetrag(sp);
+              if (e.km == null && regelKm(sp) != null) aend.km = regelKm(sp);
+              if (Object.keys(aend).length) { speichereEinsatz(sp, aend); n++; }
+            });
+            meldung(n ? n + (n === 1 ? " Spiel ergänzt." : " Spiele ergänzt.") : "Es war nichts offen, wofür eine Regel gilt.", n ? "gut" : "");
+            rendereAbrechnung();
+          } }));
+      }
+    }
+    rendern();
+    return box;
+  }
+
+  // ---- Pruefung
+  //
+  // Vor dem Abschluss einmal alles durchsehen, was nicht stimmen kann.
+  // Nichts davon ist ein Fehler - es sind Stellen, die einen Blick wert sind.
+  function abrechnungPruefen(spiele) {
+    var jetzt = new Date(), funde = [];
+    function fund(art, sp, text) { funde.push({ art: art, sp: sp, text: text }); }
+
+    var nachTag = {};
+    spiele.forEach(function (sp) {
+      var d = new Date(sp.beginn);
+      if (d > jetzt) return;
+      var e = einsaetze[sp.kennung] || {};
+
+      if (e.verguetung == null) fund("fehlt", sp, "Keine Vergütung eingetragen.");
+      else {
+        var soll = sollBetrag(sp);
+        // Halbe Verguetung bei Ausfall vor Ort ist richtig, nicht auffaellig
+        if (soll != null && !e.ausgefallen && Math.abs(e.verguetung - soll) > Math.max(5, soll * 0.5))
+          fund("schief", sp, "Vergütung " + euro(e.verguetung) + ", erwartet wären " + euro(soll) + ".");
+      }
+      if (e.km == null && profil.heimat_lat != null) fund("fehlt", sp, "Keine Kilometer eingetragen.");
+      else if (e.km != null) {
+        var v = kmVorschlag(sp);
+        if (v && v.art !== "luftlinie" && Math.abs(e.km - v.km) > Math.max(15, v.km * 0.5))
+          fund("schief", sp, e.km + " km eingetragen, berechnet sind " + v.km + " km.");
+        if (e.km > 400) fund("schief", sp, e.km + " km einfache Strecke - sicher?");
+      }
+      if (e.auslagen != null && e.auslagen > 0 && !(e.belege || []).length)
+        fund("beleg", sp, euro(e.auslagen) + " Auslagen ohne Beleg.");
+      if ((e.belege || []).length && !e.auslagen)
+        fund("beleg", sp, "Beleg hinterlegt, aber keine Auslagen eingetragen.");
+      if (e.verpflegung != null && e.verpflegung > 0 && (profil.verpflegung_modus || "aus") === "aus")
+        fund("schief", sp, "Verpflegung eingetragen, obwohl sie abgeschaltet ist.");
+
+      var tag = d.toDateString() + "|" + uhr(d);
+      (nachTag[tag] = nachTag[tag] || []).push(sp);
+    });
+
+    Object.keys(nachTag).forEach(function (t) {
+      if (nachTag[t].length < 2) return;
+      fund("doppelt", nachTag[t][0], "Zur gleichen Zeit stehen " + nachTag[t].length + " Spiele: "
+        + nachTag[t].map(function (x) { return x.paarung; }).join(" / ") + ".");
+    });
+    return funde;
+  }
+
+  function pruefPanel(spiele) {
+    var funde = abrechnungPruefen(spiele);
+    if (!funde.length) {
+      return h("p", { class: "leer", style: "margin:0", text: "Nichts zu beanstanden - alle vergangenen Spiele sind vollständig und plausibel ✓" });
+    }
+    var TITEL = { fehlt: "Fehlt noch", schief: "Sieht ungewöhnlich aus", beleg: "Belege", doppelt: "Doppelt?" };
+    var box = h("div", {}, [h("p", { class: "meta", style: "margin:0 0 10px", text:
+      funde.length + (funde.length === 1 ? " Stelle" : " Stellen") + " zum Nachsehen. Nichts davon ist zwingend falsch - tippe eine an, um direkt hinzuspringen." })]);
+    ["fehlt", "schief", "beleg", "doppelt"].forEach(function (art) {
+      var teil = funde.filter(function (f) { return f.art === art; });
+      if (!teil.length) return;
+      box.appendChild(h("h4", { style: "margin:10px 0 4px", text: TITEL[art] + " (" + teil.length + ")" }));
+      teil.slice(0, 40).forEach(function (f) {
+        var d = new Date(f.sp.beginn);
+        box.appendChild(h("button", { type: "button", class: "mg-neben mg-fund", onclick: function () {
+          abrechnungPanel = null; abrechnungSprung(f.sp.kennung); rendereAbrechnung();
+        } }, [
+          h("b", { text: datum(d) + " · " + f.sp.paarung }),
+          h("small", { text: f.text })]));
+      });
+      if (teil.length > 40) box.appendChild(h("p", { class: "meta", text: "… und " + (teil.length - 40) + " weitere." }));
+    });
+    return box;
+  }
+
+  // ---- Schnelleingabe
+  //
+  // Eine Zeile je Spiel, alles nebeneinander tippbar. Wer eine ganze Saison
+  // nachtraegt, will nicht fuer jedes Spiel eine Karte aufklappen.
+  function schnellListe(spiele) {
+    var box = h("div", { class: "mg-schnellliste" });
+    var jetzt = new Date();
+    var liste = spiele.filter(function (sp) { return new Date(sp.beginn) <= jetzt; });
+    if (!liste.length) return h("p", { class: "leer", text: "Noch keine vergangenen Spiele in dieser Saison." });
+
+    box.appendChild(h("div", { class: "mg-schnellkopf" }, [
+      h("span", { text: "Spiel" }), h("span", { text: "km" }), h("span", { text: "Vergütung" }), h("span", { text: "Auslagen" })]));
+
+    liste.forEach(function (sp) {
+      var e = einsaetze[sp.kennung] || {};
+      var d = new Date(sp.beginn);
+      var soll = sollBetrag(sp), vor = kmVorschlag(sp);
+      function feld(wert, platz, schritt, schluessel) {
+        return h("input", { type: "number", step: schritt, min: "0", inputmode: "decimal",
+          value: wert != null ? wert : "", placeholder: platz,
+          onchange: function (ev) {
+            var aend = {}; aend[schluessel] = zahl(ev.target.value);
+            speichereEinsatz(sp, aend);
+            zeile.classList.toggle("erfasst", (einsaetze[sp.kennung] || {}).verguetung != null);
+          },
+          onkeydown: function (ev) {
+            // Enter springt ins naechste Feld - schneller als tippen und zielen
+            if (ev.key !== "Enter") return;
+            ev.preventDefault();
+            var alle = Array.prototype.slice.call(box.querySelectorAll("input"));
+            var i = alle.indexOf(ev.target);
+            if (i >= 0 && alle[i + 1]) alle[i + 1].focus();
+          } });
+      }
+      var zeile = h("div", { class: "mg-schnellzeile" + (e.verguetung != null ? " erfasst" : "") }, [
+        h("button", { type: "button", class: "mg-schnellspiel", onclick: function () {
+          schnellModus = false; abrechnungSprung(sp.kennung); rendereAbrechnung();
+        } }, [
+          h("b", { text: datum(d) }),
+          h("small", { text: (sp.liga ? sp.liga + " · " : "") + sp.paarung })]),
+        feld(e.km, vor ? "~" + vor.km : "km", "0.1", "km"),
+        feld(e.verguetung, soll != null ? "~" + soll : "€", "0.5", "verguetung"),
+        feld(e.auslagen, "€", "0.5", "auslagen")]);
+      box.appendChild(zeile);
+    });
+    return box;
+  }
+
   function eintrag(sp) {
     var e = einsaetze[sp.kennung] || {};
     var d = new Date(sp.beginn);
     var vorschlag = kmVorschlag(sp);
-    var gebuehr = grundgebuehr(sp);
+    var gebuehr = sollBetrag(sp);
     var vergangen = d < new Date();
 
     var km = h("input", { type: "number", step: "0.1", min: "0", inputmode: "decimal",
