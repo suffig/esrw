@@ -2655,6 +2655,53 @@ Einteilung. Sie bekommen deshalb ein eigenes Kennzeichen.
   die Marke veraltet und oben stand „In -3 Tagen". Gezählt wird jetzt
   nach dem Datum.
 
+### 10.6bj Die Texte folgen den Schaltern
+
+Unter den Spielen stand „Tipp für Route, Tausch, Notiz" - auch wenn die
+Tauschbörse gar nicht eingeschaltet war. Solche Aufzählungen laufen jetzt
+über einen Helfer, der nur nennt, was es auch gibt. Betroffen waren:
+
+* die Fusszeile jeder Spielkarte („Details, Route, Tausch ›"),
+* die Überschrift „Deine nächsten Spiele",
+* der Offline-Hinweis („Geht: … Braucht Netz: …"),
+* der Hinweis für Konten, die auf die Freischaltung warten,
+* die Unterzeile „Zur Spielseite" unter „Zusammen fahren",
+* der Hinweis auf echtes Push in der Meldekarte,
+* der Erklärtext und der Platzhalter der Suche.
+
+**Die Anleitung** (Mehr → Anleitung) wird jetzt beim Öffnen gebaut statt
+einmal fest hingeschrieben. Schritte zu abgeschalteten Funktionen fallen
+raus, die Zählung („3 von 8") stimmt dann immer noch; die Nummern stehen
+deshalb nicht mehr in den Überschriften. Auch innerhalb der Karten wird
+nur aufgezählt, was es gibt.
+
+Ein Regressionstest (`test_funktionstexte`) hält die alten, gelogenen
+Sätze fest - sie dürfen nicht zurückkommen.
+
+**Schalter wirken jetzt ohne Neustart.** Die Funktionen wurden bisher nur
+beim Start gelesen: legte der Betreiber einen um, merkte das jeder erst
+beim nächsten Kaltstart - bei einer App auf dem Home-Bildschirm können
+das Tage sein. Jetzt werden sie beim Aktualisieren und beim Zurückkehren
+in den Vordergrund mitgelesen, und es steht kurz da, was sich geändert
+hat („Neu da: Verfügbarkeit · Abgeschaltet: Tauschbörse").
+
+### 10.6bk Eine Suche statt zwei
+
+Die Lupe oben konnte längst alles durchsuchen - Kollegen, Hallen,
+Vereine, Spiele, Termine, Strafen, Spielzeiten, Bestimmungen. Das
+Suchfeld, das in der Runde davor auf „Mehr" dazukam, war eine zweite,
+schwächere Suche daneben. **Es ist weg.** Was es besser konnte, hat die
+Lupe dazubekommen:
+
+* **Seiten der App** - „archiv", „strafrechner", „einstellungen" springen
+  direkt hin. Gesucht wird in derselben Liste, die unter „Mehr" steht,
+  also nur in dem, was für dich überhaupt offen ist.
+* **Eigene Notizen** - Volltext, angemeldet und nur die eigenen.
+
+Dazu folgt die Suche den Schaltern: ohne Hallenkarte keine Hallen, ohne
+Regelseite keine Strafen, Spielzeiten und Bestimmungen, ohne Notizen
+keine Notizen.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

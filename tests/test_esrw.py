@@ -612,6 +612,34 @@ def test_tresor():
         importlib.reload(esrw_ical_modul())
 
 
+def test_funktionstexte():
+    """Was der Betreiber abschalten kann, darf nirgends fest im Text
+    stehen - sonst verspricht die App eine Tauschboerse, die es gar
+    nicht gibt. Die Aufzaehlungen laufen ueber funktionsText()."""
+    print("\nTexte folgen den Schaltern")
+    wurzel = os.path.dirname(HIER)
+    with open(os.path.join(wurzel, "docs", "app.js"), encoding="utf-8") as f:
+        quelle = f.read()
+    pruefe("function funktionsText(" in quelle, "es gibt einen Helfer fuer solche Aufzaehlungen")
+
+    # Stellen, die frueher gelogen haben. Sie duerfen nicht zurueckkommen.
+    frueher = [
+        '"Details, Route, Tausch ',
+        '"Tipp f\u00fcr Route, Tausch, Notiz"',
+        "Braucht Netz: Push, Wetter, Tausch, Karte",
+        "Danach siehst du Einteilungen, Kollegen und Tausch",
+        '"Route, Gespann, Checkliste und Notizen"',
+    ]
+    for f2 in frueher:
+        pruefe(f2 not in quelle, "fest verdrahtet ist weg: %s" % f2[:46])
+
+    # Die Anleitung entsteht beim Oeffnen, damit Schritte wegfallen koennen
+    pruefe("function tourBauen(" in quelle, "die Anleitung wird gebaut, nicht fest hingeschrieben")
+    pruefe("return roh.filter(" in quelle, "Schritte zu abgeschalteten Funktionen fallen raus")
+    for nr in ("1 \u00b7 Deinen", "2 \u00b7 Kalender", "3 \u00b7 Als App"):
+        pruefe(nr not in quelle, "keine feste Nummer im Titel (%s)" % nr)
+
+
 def test_zurueckspielen():
     """Der Weg zurueck muss im Ernstfall funktionieren - und vorher nichts
     anfassen. Geprueft wird beides: der Probelauf schreibt nicht, und der
@@ -779,6 +807,7 @@ def main():
                  test_korrektur_uid, test_gespannwechsel, test_ehemalige,
                  test_besetzung_korrektur, test_csp,
                  test_rechnungsvorlage, test_sicherung, test_erinnerungszeit, test_zurueckspielen,
+                 test_funktionstexte,
                  test_tresor):
         test()
     print("\n" + "-" * 58)

@@ -1883,24 +1883,6 @@
   .mg-balken i { display:block; height:100%; background:var(--akzent); border-radius:99px; }
   .mg-balken.voll i { background:var(--warn); }
 
-  /* Runde 48: Suche ueber alles (Mehr-Seite) */
-  .alles-suche-box { margin:0 0 14px; }
-  .alles-suche-box input[type="search"] { width:100%; min-height:44px; padding:10px 12px;
-    border:1px solid var(--linie); border-radius:12px; background:var(--karte); color:inherit;
-    font-size:1rem; font-family:inherit; }
-  .alles-suche-box input[type="search"]:focus { outline:2px solid var(--akzent); outline-offset:-1px; }
-  .alles-treffer { margin-top:8px; padding:4px 0; }
-  .alles-treffer.versteckt { display:none; }
-  .alles-treffer .leer, .alles-treffer .meta { padding:10px 14px; margin:0; }
-  .alles-treffer-zeile { display:flex; gap:10px; align-items:baseline; padding:10px 14px;
-    color:inherit; text-decoration:none; border-top:1px solid var(--linie); min-height:44px; }
-  .alles-treffer-zeile:first-child { border-top:0; }
-  .alles-treffer-zeile em { flex:0 0 auto; font-style:normal; font-size:.68rem; font-weight:700;
-    text-transform:uppercase; letter-spacing:.04em; color:var(--akzent);
-    background:var(--akzent-hell); padding:3px 7px; border-radius:99px; }
-  .alles-treffer-zeile > span { min-width:0; font-weight:600; overflow-wrap:anywhere; }
-  .alles-treffer-zeile small { display:block; font-weight:500; color:var(--dim);
-    font-size:.78rem; line-height:1.3; overflow-wrap:anywhere; }
 
   /* Runde 50: Ansicht der Abrechnung als ein Schalter mit drei Stellungen */
   .mg-ansicht { display:flex; flex:1 1 100%; gap:2px; padding:2px; border-radius:11px;
@@ -2137,7 +2119,6 @@
   <!-- Mehr: alles, was nicht in die Leiste passt -->
   <section id="mehr" class="versteckt">
     <div class="seitentitel"><h2>Mehr</h2><p>Alles, was nicht in die Leiste passt.</p></div>
-    <div id="mehr-suche"></div>
     <div class="mehr-ansicht" id="mehr-ansicht"></div>
     <div class="menue karte" id="mehr-liste"></div>
   </section>
@@ -2365,6 +2346,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=96"></script>
+<script src="app.js?v=97"></script>
 </body>
 </html>

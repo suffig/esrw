@@ -48,6 +48,21 @@
     if (!still) toast(an ? "Einfache Ansicht \u2013 Selteneres steht eine Ebene tiefer." : "Jetzt ist alles sichtbar.", "gut");
   }
 
+  // Texte, die Funktionen aufzaehlen, muessen mitgehen, wenn der Betreiber
+  // eine abschaltet - sonst steht unter den Spielen "Tipp fuer Route,
+  // Tausch, Notiz", waehrend es die Tauschboerse gar nicht gibt.
+  // Jedes Paar ist [Schluessel oder null, Wort]; null heisst "gibt es immer".
+  function funktionsWorte(paare) {
+    return paare.filter(function (p) { return !p[0] || funktion(p[0]); })
+                .map(function (p) { return p[1]; });
+  }
+  function funktionsText(paare, letztes) {
+    var w = funktionsWorte(paare);
+    if (!w.length) return "";
+    if (w.length === 1 || !letztes) return w.join(", ");
+    return w.slice(0, -1).join(", ") + " " + letztes + " " + w[w.length - 1];
+  }
+
   // ------------------------------------------------ Funktionen (Schalter)
   // Der Betreiber schaltet unter Admin -> Funktionen an und ab; die Tabelle
   // "funktionen" darf jeder lesen. Fehlt eine Zeile, gilt der Standard hier.
@@ -111,11 +126,23 @@
     if (!n) { var p = document.createElement("p"); p.className = "meta"; p.style.margin = "0"; p.textContent = "Der Betreiber hat zurzeit keine Bereiche eingeschaltet."; box.appendChild(p); }
   }
   function funktionenAnwenden(obj, neuZeichnen) {
-    var vorher = JSON.stringify(funktionenLesen());
+    var alt = funktionenLesen(), vorher = JSON.stringify(alt);
+    var dazu = [], weg = [];
+    if (neuZeichnen) FUNKTIONEN.forEach(function (f) {
+      var war = alt[f[0]] === undefined ? f[3] : !!alt[f[0]];
+      var ist = (obj || {})[f[0]] === undefined ? f[3] : !!(obj || {})[f[0]];
+      if (war !== ist) (ist ? dazu : weg).push(f[1]);
+    });
     funktionenStand = obj || {}; schreiben("funktionen", JSON.stringify(funktionenStand));
     FUNKTIONEN.forEach(function (f) { document.documentElement.classList.toggle("ohne-" + f[0], !funktion(f[0])); });
     if (el("tab-tausch")) tabDritterAnwenden();
     if (neuZeichnen && vorher !== JSON.stringify(funktionenStand) && typeof ausHash === "function" && daten) ausHash();
+    if (dazu.length || weg.length) {
+      var m = [];
+      if (dazu.length) m.push("Neu da: " + dazu.join(", "));
+      if (weg.length) m.push("Abgeschaltet: " + weg.join(", "));
+      toast(m.join(" · ") + ".", dazu.length && !weg.length ? "gut" : "");
+    }
   }
   function funktionenLaden() {
     funktionenAnwenden(funktionenLesen());
@@ -666,7 +693,13 @@
     if (!navigator.onLine) {
       s.className = "stand alt"; s.textContent = "Offline, gespeicherter Stand" + (letzterStand ? " von " + letzterStand : "");
       var q = 0; try { q = Object.keys(JSON.parse(localStorage.getItem("mg_queue") || "{}")).length; } catch (e) {}
-      el("offline-text").textContent = "Offline, Stand von " + (letzterStand || "?") + ". Geht: Spielplan, Spielseiten, Kalender, Abrechnung (gespeicherter Stand). Braucht Netz: Push, Wetter, Tausch, Karte." + (q ? " " + q + (q === 1 ? " Änderung wartet" : " Änderungen warten") + " aufs Nachreichen." : "");
+      var geht = funktionsText([[null, "Spielplan"], [null, "Spielseiten"], [null, "Kalender"],
+        ["abrechnung", "Abrechnung"], ["notizen", "Notizen"], ["regeln", "Regeln"]], "und");
+      var netz = funktionsText([["push", "Push"], ["wetter", "Wetter"], ["tausch", "Tausch"],
+        ["hallen", "Karte"], ["mitfahren", "Zusammen fahren"]], "und");
+      el("offline-text").textContent = "Offline, Stand von " + (letzterStand || "?") + ". Geht: " + geht + " (gespeicherter Stand)."
+        + (netz ? " Braucht Netz: " + netz + "." : "")
+        + (q ? " " + q + (q === 1 ? " Änderung wartet" : " Änderungen warten") + " aufs Nachreichen." : "");
     }
     else if (daten) standAnzeigen(daten, letzterLauf);
   }
@@ -863,7 +896,8 @@
     var lauf = liste._lauf = {};
     if (suchModus && f.length >= 2) {
       // Hallen
-      var hallen = Object.keys(daten.hallen || {}).concat(Object.keys(daten.adressen || {})).filter(function (n, i, a) { return a.indexOf(n) === i; })
+      var hallen = !funktion("hallen") ? [] :
+        Object.keys(daten.hallen || {}).concat(Object.keys(daten.adressen || {})).filter(function (n, i, a) { return a.indexOf(n) === i; })
         .filter(function (n) { return ohneZeichen(n + " " + ((daten.adressen || {})[n] || "")).indexOf(f) >= 0; }).slice(0, 6);
       if (hallen.length) { suchGruppe(liste, "Hallen"); treffer += hallen.length; }
       hallen.forEach(function (n) { suchEintrag(liste, n, (daten.adressen || {})[n] || "", function () { location.hash = "halle/" + hallenSlug(n); }); });
@@ -881,6 +915,29 @@
       var spiele = (daten.spiele || []).filter(function (s) { return !s.vergangen && ohneZeichen((s.liga || "") + " " + s.paarung + " " + (s.halle || "")).indexOf(f) >= 0; }).slice(0, 8);
       if (spiele.length) { suchGruppe(liste, "Spiele"); treffer += spiele.length; }
       spiele.forEach(function (s) { var d = new Date(s.beginn); suchEintrag(liste, datumKurz(d) + " " + uhr(d) + " · " + (s.liga ? s.liga + ": " : "") + s.paarung, (s.halle || "") + (s.besetzung && s.besetzung.length ? " · " + s.besetzung.map(function (b) { return b.name.split(",")[0]; }).join(", ") : " · unbesetzt"), function () { location.hash = "spiel/" + encodeURIComponent(kennungVon(s)); }); });
+      // Seiten der App. Die Liste steht unter "Mehr"; ist sie noch nicht
+      // aufgebaut worden, hilft ein Blick darauf - deshalb einmal bauen.
+      if (!mehrEintraege.length && el("mehr")) { var offen = !el("mehr").classList.contains("versteckt"); zeigeMehr(); if (!offen) el("mehr").classList.add("versteckt"); }
+      var seiten = mehrEintraege.filter(function (e) {
+        return ohneZeichen(e[2] + " " + (e[3] || "")).indexOf(f) >= 0;
+      }).slice(0, 5);
+      if (seiten.length) { suchGruppe(liste, "Seiten"); treffer += seiten.length; }
+      seiten.forEach(function (e) { suchEintrag(liste, e[2], e[3] || "", function () { location.hash = e[0].replace(/^#/, ""); }); });
+
+      // Eigene Notizen (Login)
+      if (sitzungVorhanden() && funktion("notizen")) ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
+        .then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.notizenFuerSuche() : null; })
+        .then(function (n) {
+          if (!n || liste._lauf !== lauf) return;
+          var nl = n.filter(function (x) { return ohneZeichen((x.text || "") + " " + (x.paarung || "")).indexOf(f) >= 0; }).slice(0, 5);
+          if (!nl.length) return;
+          suchGruppe(liste, "Meine Notizen"); el("nichts").classList.add("versteckt");
+          nl.forEach(function (x) {
+            var kurz = (x.text || "").length > 68 ? x.text.slice(0, 68).replace(/\s\S*$/, "") + " \u2026" : (x.text || "");
+            suchEintrag(liste, x.paarung || "Notiz", kurz, function () { location.hash = "mitglieder/notizen"; });
+          });
+        }).catch(function () {});
+
       // Termine (Login)
       if (sitzungVorhanden() && funktion("info")) ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
         .then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.termine() : null; })
@@ -892,11 +949,13 @@
           tl.forEach(function (x) { suchEintrag(liste, x.titel, x.termin.split("-").reverse().join("."), function () { location.hash = "mitglieder/info"; }); });
         }).catch(function () {});
       // Strafen und Bestimmungen liegen als Datei in der App, also auch offline
+      // Strafen, Spielzeiten und Bestimmungen fuehren alle auf die
+      // Regelseite - ist die aus, braucht sie auch niemand zu finden.
       var nachladen = [];
       if (!regelnDaten) nachladen.push(hole("strafen.json").then(function (d) { regelnDaten = d; }).catch(function () {}));
       if (!bestimmungenDaten) nachladen.push(hole("bestimmungen.json").then(function (d) { bestimmungenDaten = d; }).catch(function () {}));
       if (!zeitenDaten) nachladen.push(zeitenLaden().then(function (d) { zeitenDaten = d; }).catch(function () {}));
-      Promise.all(nachladen).then(function () {
+      if (funktion("regeln")) Promise.all(nachladen).then(function () {
         if (liste._lauf !== lauf) return;
         var st = ((regelnDaten && regelnDaten.strafen) || []).filter(function (r) {
           return ohneZeichen(r.name + " " + (r.info || "")).indexOf(f) >= 0;
@@ -1012,7 +1071,8 @@
     status.className = "status " + (lage === "an" ? "an" : "aus");
     if (lage === "an") {
       status.textContent = "an";
-      text.textContent = "Beim Öffnen der App bekommst du eine Mitteilung, wenn eine Einteilung dazugekommen ist oder sich geändert hat. Echtes Push auch bei geschlossener App: Mehr → Konto → Push.";
+      text.textContent = "Beim Öffnen der App bekommst du eine Mitteilung, wenn eine Einteilung dazugekommen ist oder sich geändert hat."
+        + (funktion("push") ? " Echtes Push auch bei geschlossener App: Mehr → Konto → Push." : "");
     } else if (lage === "fragen") {
       status.textContent = "aus";
       text.textContent = "Die App meldet sich dann, wenn eine Einteilung dazukommt oder sich ändert.";
@@ -1108,7 +1168,8 @@
     var kz = korrekturZeile(s); if (kz) d.appendChild(kz);
     else if (s.manuell) { var mz = document.createElement("div"); mz.className = "geaendert"; mz.textContent = "✎ Vom Betreiber angelegt"; d.appendChild(mz); }
     if (s.korrektur && s.korrektur.abgesagt) d.classList.add("abgesagt");
-    var mehr = document.createElement("div"); mehr.className = "meta"; mehr.style.marginTop = "6px"; mehr.style.color = "var(--akzent)"; mehr.textContent = "Details, Route, Tausch ›";
+    var mehr = document.createElement("div"); mehr.className = "meta"; mehr.style.marginTop = "6px"; mehr.style.color = "var(--akzent)";
+    mehr.textContent = funktionsText([[null, "Details"], [null, "Route"], ["tausch", "Tausch"], ["notizen", "Notiz"]]) + " \u203a";
     d.appendChild(mehr);
     karteEl.classList.add("tippbar");
     karteEl.addEventListener("click", function (ev) { if (ev.target.closest("a, button") || karteEl._gewischt) return; location.hash = "spiel/" + encodeURIComponent(kennungVon(s)); });
@@ -2530,7 +2591,9 @@
     var kommend = p.spiele.filter(function (s) { return !s.vergangen; });
     var gewesen = p.spiele.filter(function (s) { return s.vergangen; }).reverse();
     var h = document.createElement("h3"); h.className = "abschnitt"; h.textContent = "Deine nächsten Spiele";
-    var hs = document.createElement("small"); hs.textContent = "Tipp für Route, Tausch, Notiz"; h.appendChild(hs); ziel.appendChild(h);
+    var hs = document.createElement("small");
+    hs.textContent = "Tipp für " + funktionsText([[null, "Route"], ["tausch", "Tausch"], ["notizen", "Notiz"], ["checkliste", "Checkliste"]]);
+    h.appendChild(hs); ziel.appendChild(h);
     var istIch = !!(profil && profil.slug === p.slug);
     if (!kommend.length) {
       var zuletzt = p.statistik && p.statistik.letzte;
@@ -2980,8 +3043,12 @@
     if (kontoObmann && !wechsel) { obmannHinweis(); return; }
     suchModus = wechsel === "suche";
     el("frage").textContent = suchModus ? "Suche" : wechsel ? "Profil wechseln" : "Wer bist du?";
-    el("frage-unter").textContent = suchModus ? "Kollegen, Hallen, Vereine, Spiele, Termine, Strafen und Bestimmungen. Tippen springt direkt hin." : wechsel ? "Der gewählte Name wird dein Profil auf diesem Gerät." : "Wähle deinen Namen. Danach siehst du deine Spiele, kannst den Kalender abonnieren und Mitteilungen bekommen.";
-    el("suche").placeholder = suchModus ? "Name, Halle, Verein, Spiel, Strafe …" : "Namen suchen …";
+    var quellen = funktionsText([[null, "Kollegen"], ["hallen", "Hallen"], [null, "Vereine"], [null, "Spiele"],
+      [null, "Seiten"], ["notizen", "Notizen"], ["info", "Termine"], ["regeln", "Strafen"], ["regeln", "Bestimmungen"]], "und");
+    el("frage-unter").textContent = suchModus ? quellen + ". Tippen springt direkt hin." : wechsel ? "Der gewählte Name wird dein Profil auf diesem Gerät." : "Wähle deinen Namen. Danach siehst du deine Spiele, kannst den Kalender abonnieren und Mitteilungen bekommen.";
+    el("suche").placeholder = suchModus
+      ? funktionsText([[null, "Name"], ["hallen", "Halle"], [null, "Verein"], [null, "Spiel"], ["regeln", "Strafe"]]) + " …"
+      : "Namen suchen …";
     if (!suchModus) el("suche").value = "";
     zeigeListe(el("suche").value);
     suchVerlaufRendern();
@@ -3192,7 +3259,9 @@
         var sl = document.createElement("a"); sl.className = "reihe-knopf"; sl.href = "#spiel/" + encodeURIComponent(kennungVon(s));
         sl.appendChild(ikone("i-list"));
         var slt = document.createElement("span"); var slb = document.createElement("b"); slb.textContent = "Zur Spielseite"; slt.appendChild(slb);
-        var sls = document.createElement("small"); sls.textContent = "Route, Gespann, Checkliste und Notizen"; slt.appendChild(sls);
+        var sls = document.createElement("small");
+        sls.textContent = funktionsText([[null, "Route"], ["gespann", "Gespann"], ["checkliste", "Checkliste"], ["notizen", "Notizen"]], "und");
+        slt.appendChild(sls);
         sl.appendChild(slt);
         var slp = document.createElement("span"); slp.className = "pfeil"; slp.textContent = "›"; sl.appendChild(slp);
         box.appendChild(sl);
@@ -3698,28 +3767,41 @@
   function skelettKarte(hoehe) { var d = document.createElement("div"); d.className = "skelett-karte"; d.style.height = hoehe + "px"; return d; }
 
   // ---------------------------------------------------------- Anleitung
-  var TOUR = {
-    start: [
-      ["i-home", "Willkommen bei den Einteilungen", "Diese App zeigt dir deine Schiedsrichter-Einteilungen von esrw.de, immer aktuell, mit Halle, Treffpunkt, Route und Gespann. Fünf kurze Schritte, dann bist du startklar."],
-      ["i-users", "1 · Deinen Namen wählen", "Tippe unten in der Liste auf deinen Namen. Das ist dein Profil auf diesem Gerät, „Start“ zeigt dann deine Spiele.\nKollegen ansehen geht jederzeit über die Lupe oben."],
-      ["i-cal", "2 · Kalender abonnieren", "Auf „Start“ findest du die Kalender-Karte: „Im Kalender abonnieren“ legt ein Abo im iPhone-Kalender an. Neue oder geänderte Spiele kommen von allein aufs Handy, mit Wecker zum Treffpunkt.", "#", "Zur Startseite"],
-      ["i-bell", "3 · Als App und Push", "Safari: Teilen → „Zum Home-Bildschirm“. Danach unter Einstellungen „Push einschalten“: dann meldet sich die App bei neuen und geänderten Einteilungen, am Spieltag und zur Abfahrt.", "#einstellungen", "Zu den Einstellungen"],
-      ["i-key", "4 · Konto (freiwillig)", "Mit Konto gibt es Abrechnung (km und Vergütung automatisch), Notizen, Checkliste, Ankündigungen und Push auf allen Geräten. Der Betreiber schaltet dich frei.", "#mitglieder", "Konto anlegen"],
-      ["i-mehr", "5 · Wo ist was", "Start: nächstes Spiel und deine Spiele · Spielplan: alle Spiele, Filter, Woche/Monat · Abrechnung · Mehr: Info, Statistik, Notizen, Einstellungen.\nDiese Anleitung findest du jederzeit unter Mehr → Anleitung."]
-    ],
-    konto: [
-      ["i-check", "Konto angelegt ✓", "Abrechnung, Notizen, Checkliste und Push gehen sofort. Tauschbörse, Verfügbarkeit, Hallen-Hinweise und Kontakte schaltet der Betreiber nach der Freischaltung frei. Du bekommst das hier zu sehen."],
-      ["i-bell", "Push einschalten", "Unter Einstellungen → Push: Änderungen an deinen Spielen, Spieltag-Erinnerung mit Wetter, Abfahrt, Termine, Wochenvorschau. Die App muss dafür auf dem Home-Bildschirm liegen.", "#einstellungen", "Push einschalten"],
-      ["i-euro", "Abrechnung", "Vergangene Spiele bekommen km und Vergütung von selbst. Am Jahresende gibt es unter „Steuerjahre“ das Jahresblatt und die CSV fürs Finanzamt. Melden musst du nichts. Belege, Fahrtenbuch und Werkzeuge in der Leiste.\nHeimatadresse dafür unter Einstellungen → Profil eintragen.", "#mitglieder/abrechnung", "Zur Abrechnung"],
-      ["i-route", "Die Spielseite", "Ein Tipp auf ein Spiel: Route, Teilen, „In Kalender“, Wetter, Abfahrtszeit, Checkliste, Gespann-Notizen (mit Push an die Kollegen), Fahrgemeinschaft und deine private Notiz."],
-      ["i-swap", "Tausch und Verfügbarkeit", "Wenn freigeschaltet: Gesuche einstellen, Kollegen finden, die frei sind, Angebote annehmen. Unter Verfügbarkeit trägst du Sperrtage ein. Der Radar auf Start zeigt dann passende offene Spiele."],
+  //
+  // Die Schritte entstehen beim Oeffnen, nicht einmal fest: ein Schritt
+  // ueber die Tauschboerse hat nichts zu suchen, wenn sie aus ist. Das
+  // fuenfte Feld eines Schritts ist der Funktionsschluessel, den er
+  // braucht; fehlt es, gilt der Schritt immer.
+  function tourBauen(name) {
+    var start = [
+      ["i-home", "Willkommen bei den Einteilungen", "Diese App zeigt dir deine Schiedsrichter-Einteilungen von esrw.de, immer aktuell, mit Halle, Treffpunkt, Route und Gespann. Ein paar kurze Schritte, dann bist du startklar."],
+      ["i-users", "Deinen Namen wählen", "Tippe unten in der Liste auf deinen Namen. Das ist dein Profil auf diesem Gerät, „Start“ zeigt dann deine Spiele.\nKollegen ansehen geht jederzeit über die Lupe oben."],
+      ["i-cal", "Kalender abonnieren", "Auf „Start“ findest du die Kalender-Karte: „Im Kalender abonnieren“ legt ein Abo im iPhone-Kalender an. Neue oder geänderte Spiele kommen von allein aufs Handy, mit Wecker zum Treffpunkt.", "#", "Zur Startseite"],
+      ["i-bell", "Als App und Push", "Safari: Teilen → „Zum Home-Bildschirm“. Danach unter Einstellungen „Push einschalten“: dann meldet sich die App bei neuen und geänderten Einteilungen, am Spieltag und zur Abfahrt.", "#einstellungen", "Zu den Einstellungen", "push"],
+      ["i-key", "Konto (freiwillig)", "Mit Konto gibt es " + funktionsText([["abrechnung", "Abrechnung (km und Vergütung automatisch)"], ["notizen", "Notizen"], ["checkliste", "Checkliste"], ["info", "Ankündigungen"], ["push", "Push auf allen Geräten"]], "und") + ". Der Betreiber schaltet dich frei.", "#mitglieder", "Konto anlegen"],
+      ["i-mehr", "Wo ist was", "Start: nächstes Spiel und deine Spiele · Spielplan: alle Spiele, Filter, Woche/Monat" + (funktion("abrechnung") ? " · Abrechnung" : "") + " · Mehr: " + funktionsText([["info", "Info"], ["statistik", "Statistik"], ["notizen", "Notizen"], [null, "Einstellungen"]]) + ".\nDiese Anleitung findest du jederzeit unter Mehr → Anleitung."]
+    ];
+    var konto = [
+      ["i-check", "Konto angelegt ✓", funktionsText([["abrechnung", "Abrechnung"], ["notizen", "Notizen"], ["checkliste", "Checkliste"], ["push", "Push"]], "und") + " gehen sofort."
+        + (funktionsWorte([["tausch", "Tauschbörse"], ["frei", "Verfügbarkeit"], ["hallen", "Hallen-Hinweise"], ["gespann", "Kontakte"]]).length
+           ? " " + funktionsText([["tausch", "Tauschbörse"], ["frei", "Verfügbarkeit"], ["hallen", "Hallen-Hinweise"], ["gespann", "Kontakte"]], "und")
+             + " schaltet der Betreiber nach der Freischaltung frei. Du bekommst das hier zu sehen." : "")],
+      ["i-bell", "Push einschalten", "Unter Einstellungen → Push: Änderungen an deinen Spielen, Spieltag-Erinnerung mit Wetter, Abfahrt, Termine, Wochenvorschau. Wann die Erinnerung kommt, stellst du selbst ein. Die App muss dafür auf dem Home-Bildschirm liegen.", "#einstellungen", "Push einschalten", "push"],
+      ["i-euro", "Abrechnung", "Vergangene Spiele bekommen km und Vergütung von selbst. Am Jahresende gibt es unter „Steuerjahre“ das Jahresblatt und die CSV fürs Finanzamt. Melden musst du nichts. Belege, Fahrtenbuch und Werkzeuge unter „Weitere“.\nHeimatadresse dafür unter Einstellungen → Profil eintragen.", "#mitglieder/abrechnung", "Zur Abrechnung", "abrechnung"],
+      ["i-route", "Die Spielseite", "Ein Tipp auf ein Spiel: Route, Teilen, „In Kalender“" + (funktion("wetter") ? ", Wetter" : "") + ", Abfahrtszeit"
+        + (funktion("checkliste") ? ", Checkliste" : "") + (funktion("chat") ? ", Gespann-Notizen" + (funktion("push") ? " (mit Push an die Kollegen)" : "") : "")
+        + (funktion("mitfahren") ? ", Fahrgemeinschaft" : "") + (funktion("notizen") ? " und deine private Notiz" : "") + "."],
+      ["i-swap", "Tausch und Verfügbarkeit", "Wenn freigeschaltet: Gesuche einstellen, Kollegen finden, die frei sind, Angebote annehmen."
+        + (funktion("frei") ? " Unter Verfügbarkeit trägst du Sperrtage ein." : "") + " Der Radar auf Start zeigt dann passende offene Spiele.", null, null, "tausch"],
       ["i-sun", "Alles anpassbar", "Einstellungen → Startseite: welche Bausteine auf „Start“ stehen. Bereiche, die du nicht brauchst, blendest du aus. Schrift, Farbe und Karten-App wandern mit dem Konto auf jedes Gerät.", "#einstellungen", "Einstellungen öffnen"],
-      ["i-bell", "Info und Termine", "Ankündigungen vom Betreiber unter Mehr → Info. Termine (Lehrgang, Sitzung) kannst du zu- oder absagen; am Vortag kommt eine Erinnerung.", "#mitglieder/info", "Zu Info"]
-    ]
-  };
+      ["i-bell", "Info und Termine", "Ankündigungen vom Betreiber unter Mehr → Info. Termine (Lehrgang, Sitzung) kannst du zu- oder absagen; am Vortag kommt eine Erinnerung.", "#mitglieder/info", "Zu Info", "info"]
+    ];
+    var roh = name === "alles" ? start.concat(konto) : name === "konto" ? konto : start;
+    return roh.filter(function (sch) { return !sch[5] || funktion(sch[5]); });
+  }
   var tourSchritte = [], tourPos = 0, tourName = "";
   function tourOeffnen(name) {
-    tourSchritte = name === "alles" ? TOUR.start.concat(TOUR.konto) : (TOUR[name] || []);
+    tourSchritte = tourBauen(name);
     if (!tourSchritte.length) return;
     tourName = name; tourPos = 0; tourZeigen(); el("tour").classList.remove("versteckt"); document.body.style.overflow = "hidden";
   }
@@ -3765,8 +3847,11 @@
     var t = document.createElement("span");
     var b = document.createElement("b"); b.textContent = "Dein Konto steht.";
     t.appendChild(b);
-    t.appendChild(document.createTextNode(" Jetzt schaltet der Betreiber dich frei. Danach siehst du Einteilungen, Kollegen und Tausch. "
-      + "Abrechnung und Notizen kannst du schon benutzen."));
+    var danach = funktionsText([[null, "Einteilungen"], ["telefon", "Kollegen"], ["tausch", "Tausch"],
+      ["frei", "Verfügbarkeit"], ["hallen", "Hallen-Hinweise"]], "und");
+    var schon = funktionsText([["abrechnung", "Abrechnung"], ["notizen", "Notizen"], ["checkliste", "Checkliste"]], "und");
+    t.appendChild(document.createTextNode(" Jetzt schaltet der Betreiber dich frei. Danach siehst du " + danach + ". "
+      + (schon ? schon + " kannst du schon benutzen." : "")));
     d.appendChild(t);
     ziel.insertBefore(d, ziel.firstChild);
     window.scrollTo(0, 0);
@@ -3830,122 +3915,13 @@
 
   // Selten gebraucht: steht in der einfachen Ansicht zugeklappt am Ende.
   var MEHR_SELTEN = { "#statistik": 1, "#mitglieder/frei": 1, "#anleitung": 1, "#status": 1 };
-  // ---- Suche ueber alles
-  //
-  // Jede Liste hat ihr eigenes Suchfeld - was fehlte, war eines, das
-  // nicht wissen muss, wo etwas steht. Es sucht in den Seiten selbst,
-  // in Kollegen, Spielen, Hallen, Vereinen und den eigenen Notizen.
-
-  function suchtext(s) {
-    return (s || "").toLowerCase()
-      .replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue").replace(/ß/g, "ss");
-  }
-
-  function alleTreffer(frage, seiten) {
-    var f = suchtext(frage);
-    if (f.length < 2) return [];
-    var treffer = [];
-    function nimm(art, titel, unter, ziel, gewicht) {
-      var t = suchtext(titel + " " + (unter || ""));
-      var i = t.indexOf(f);
-      if (i < 0) return;
-      // Treffer am Wortanfang stehen oben - "Herford" soll nicht hinter
-      // "Eisadler Dortmund gegen Herford" landen
-      treffer.push({ art: art, titel: titel, unter: unter, ziel: ziel,
-                     rang: (i === 0 ? 0 : /\s/.test(t.charAt(i - 1)) ? 1 : 2) + (gewicht || 0) });
-    }
-
-    (seiten || []).forEach(function (e) { nimm("Seite", e[2], e[3], e[0], 0); });
-
-    (daten.personen || []).forEach(function (p) {
-      nimm("Kollege", p.name, (p.spiele || []).length + " Spiele in dieser Saison", "#" + p.slug, 0);
-    });
-
-    // Spiele: die eigenen zuerst, dann der Rest des Spielplans
-    var gesehen = {};
-    var ich = profilLesen();
-    var meine = (ich && ich.slug && personMit(ich.slug)) || null;
-    ((meine && meine.spiele) || []).forEach(function (s) {
-      var k = kennungVon(s); gesehen[k] = true;
-      nimm("Dein Spiel", (s.liga ? s.liga + ": " : "") + s.paarung,
-        datumKurz(new Date(s.beginn)) + (s.halle ? " · " + s.halle : ""), "#spiel/" + encodeURIComponent(k), 0);
-    });
-    (daten.personen || []).forEach(function (p) {
-      (p.spiele || []).forEach(function (s) {
-        var k = kennungVon(s); if (gesehen[k]) return; gesehen[k] = true;
-        nimm("Spiel", (s.liga ? s.liga + ": " : "") + s.paarung,
-          datumKurz(new Date(s.beginn)) + (s.halle ? " · " + s.halle : ""), "#spiel/" + encodeURIComponent(k), 3);
-      });
-    });
-
-    Object.keys(daten.adressen || {}).forEach(function (halle) {
-      nimm("Halle", halle, (daten.adressen || {})[halle] || "", "#karte", 1);
-    });
-
-    return treffer.sort(function (a, b) { return a.rang - b.rang; });
-  }
-
-  function sucheAufbauen(ziel, seiten) {
-    var feld = document.createElement("input");
-    feld.type = "search"; feld.id = "alles-suche"; feld.autocomplete = "off";
-    feld.placeholder = "Suchen: Kollege, Spiel, Halle, Seite \u2026";
-    var ergebnis = document.createElement("div"); ergebnis.className = "menue karte alles-treffer versteckt";
-    var box = document.createElement("div"); box.className = "alles-suche-box";
-    box.appendChild(feld); box.appendChild(ergebnis);
-    ziel.appendChild(box);
-
-    var notizen = [];
-    // Notizen liegen im Mitgliederbereich - ohne Anmeldung gibt es sie nicht
-    if (window.Mitglieder && window.Mitglieder.notizenFuerSuche) {
-      window.Mitglieder.notizenFuerSuche().then(function (n) { notizen = n || []; }).catch(function () {});
-    }
-
-    var timer = null;
-    feld.addEventListener("input", function () {
-      clearTimeout(timer);
-      timer = setTimeout(function () { zeichnen(); }, 120);
-    });
-
-    function zeichnen() {
-      ergebnis.innerHTML = "";
-      var frage = feld.value.trim();
-      if (frage.length < 2) { ergebnis.classList.add("versteckt"); return; }
-      var treffer = alleTreffer(frage, seiten);
-      var f = suchtext(frage);
-      notizen.forEach(function (n) {
-        if (suchtext(n.text + " " + n.paarung).indexOf(f) < 0) return;
-        treffer.push({ art: "Notiz", titel: n.paarung || "Notiz", unter: n.text.slice(0, 90),
-                       ziel: "#mitglieder/notizen", rang: 1 });
-      });
-      treffer.sort(function (a, b) { return a.rang - b.rang; });
-      ergebnis.classList.remove("versteckt");
-      if (!treffer.length) {
-        var leer = document.createElement("p"); leer.className = "leer";
-        leer.textContent = "Nichts gefunden. Notizen und Abrechnung durchsucht die App nur, wenn du angemeldet bist.";
-        ergebnis.appendChild(leer); return;
-      }
-      treffer.slice(0, 25).forEach(function (t) {
-        var a = document.createElement("a"); a.href = t.ziel; a.className = "alles-treffer-zeile";
-        var art = document.createElement("em"); art.textContent = t.art;
-        var sp = document.createElement("span"); sp.textContent = t.titel;
-        var sm = document.createElement("small"); sm.textContent = t.unter || "";
-        sp.appendChild(sm);
-        a.appendChild(art); a.appendChild(sp);
-        a.addEventListener("click", function () { feld.value = ""; ergebnis.classList.add("versteckt"); });
-        ergebnis.appendChild(a);
-      });
-      if (treffer.length > 25) {
-        var mehr = document.createElement("p"); mehr.className = "meta";
-        mehr.textContent = "\u2026 und " + (treffer.length - 25) + " weitere. Tipp genauer.";
-        ergebnis.appendChild(mehr);
-      }
-    }
-  }
+  // Was unter "Mehr" steht, haengt an Funktionen und Anmeldung. Die Liste
+  // entsteht dort; die Suche greift darauf zu, statt sie nachzubauen.
+  var mehrEintraege = [];
 
   function zeigeMehr() {
     ansicht("mehr"); aktuell = null;
     var liste = el("mehr-liste"); liste.innerHTML = "";
-    var suchbox = el("mehr-suche"); if (suchbox) suchbox.innerHTML = "";
     var eintraege = [
       ["F\u00fcr dich"],
       funktion("archiv") ? ["#archiv", "i-clock", "Archiv", "Alle deine Spiele, alle Saisons, mit Filtern und Export"] : null,
@@ -3975,7 +3951,8 @@
     eintraege = eintraege.filter(function (e, i, a) { return e.length > 1 || (a[i + 1] && a[i + 1].length > 1); });
     if (!sitzungVorhanden()) eintraege.unshift(["#mitglieder", "i-lock", "Anmelden", "Konto anlegen oder anmelden \u2013 f\u00fcr " + [funktion("tausch") ? "Tausch" : "", funktion("abrechnung") ? "Abrechnung" : "", funktion("info") ? "Info" : "", "Notizen"].filter(Boolean).join(", ")]);
 
-    if (suchbox) sucheAufbauen(suchbox, eintraege.filter(function (e) { return e.length > 1; }));
+    // Die Seiten kennt jetzt auch die Lupe oben - eine Suche reicht
+    mehrEintraege = eintraege.filter(function (e) { return e.length > 1; });
 
     function kachel(e) {
       var a = document.createElement("a"); a.href = e[0]; a.appendChild(ikone(e[1]));
@@ -5562,6 +5539,7 @@
     return Promise.all([hole("daten.json"), hole("stand.json").catch(function () { return null; })])
       .then(function (b) {
         daten = b[0]; standAnzeigen(daten, b[1]); betreiberAnwenden(); korrekturenAnwenden(); betreiberLaden(false).then(function () { korrekturenLaden(false); });
+        funktionenLaden();
         // Nur die gerade sichtbare Ansicht neu zeichnen - nie die Seite wechseln
         var sichtbar = function (id) { return !el(id).classList.contains("versteckt"); };
         if (aktuell && sichtbar("detail")) { var frisch = personMit(aktuell.slug); if (frisch) zeigePerson(frisch, true); }
