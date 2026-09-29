@@ -2575,6 +2575,86 @@ Einteilung. Sie bekommen deshalb ein eigenes Kennzeichen.
   die laufende: an welchen Tagen jemand pfeift, zeigt sich erst nach ein
   paar Jahren. Den Saison-Rückblick als Bild gab es schon.
 
+### 10.6bh Sicherung zurückspielen, Alarm, Schema v38
+
+* **Der Weg zurück.** Bisher liess sich eine Sicherung nur *ansehen*; im
+  Ernstfall wären das Stunden Handarbeit unter Druck gewesen. Jetzt:
+
+  ```
+  python sicherung.py --zurueck sicherungen/2026-09-29.json.bin
+  ```
+
+  Das ist ein **Probelauf**: Tabelle für Tabelle steht da, wie viele
+  Zeilen in der Sicherung sind und wie viele gerade in der Datenbank.
+  Geändert wird nichts. Erst mit `--wirklich` wird geschrieben, und auch
+  dann nur per upsert - **gelöscht wird nie**. Gleicher Primärschlüssel
+  heisst überschrieben, neuer heisst angelegt; was seit der Sicherung
+  dazukam, bleibt stehen. Wer wirklich den Stand von damals will, leert
+  die Tabelle vorher von Hand im SQL-Editor. Das ist Absicht - so etwas
+  soll niemand versehentlich tun. Einzelne Tabellen gehen auch:
+
+  ```
+  python sicherung.py --zurueck DATEI --wirklich einsaetze spielnotizen
+  ```
+
+  Beides braucht `SUPABASE_URL`, `SUPABASE_SERVICE_KEY` und
+  `DATEN_SCHLUESSEL` in der Umgebung.
+
+* **Alarm.** Kommt zwei Tage keine Sicherung mehr zustande, oder fehlen
+  einzelne Tabellen, legt der Workflow ein Issue mit der Marke
+  `sicherung` an - GitHub schickt dafür von sich aus eine Mail. Nur eines
+  zur Zeit, nicht stündlich ein neues. Ohne das fiele ein Ausfall erst
+  auf, wenn man die Sicherung braucht.
+
+* **Schlüsselwechsel.** Vor jedem Lauf wird geprüft, ob sich die neueste
+  vorhandene Datei noch öffnen lässt. Ein gewechselter
+  `DATEN_SCHLUESSEL` macht alles Ältere unlesbar, ohne dass es auffiele -
+  die neuen Dateien entstehen ja weiter.
+
+* **Schema v38.** `spiel_korrekturen` und `spiele_manuell` waren ohne
+  Konto lesbar, samt Besetzung - also wer wann wo pfeift. Das war die
+  letzte Ausnahme von der Tresor-Idee. Jetzt liest sie nur noch, wer
+  freigeschaltet ist. Es kostet nichts: ohne Freischaltung lässt sich
+  `daten.json.bin` ohnehin nicht öffnen, der Spielplan ist dann leer.
+  Die Kalender-Dateien bleiben unberührt, die baut der Workflow mit dem
+  service_role-Schlüssel. Dafür holt die App beides jetzt mit dem
+  **eigenen Zugang** statt mit dem öffentlichen Schlüssel.
+
+### 10.6bi Ruhigeres Design
+
+* **Abrechnung, eine Reihe statt zwei.** Aus sieben Knöpfen sind drei
+  plus ein Schalter geworden: oben **Alle · Offen · Schnell** als ein
+  Schalter mit drei Stellungen, darunter **Prüfen · Rechnung · Weitere**.
+  Kalender und Steuerjahre liegen unter „Weitere".
+
+* **Prüfen erledigt sich in der Liste.** Jeder Fund hat jetzt Knöpfe:
+  den Vorschlag übernehmen („Auf 45,00 € setzen", „38 km übernehmen"),
+  das Spiel öffnen, oder **„Passt so"** - dann taucht er nicht wieder
+  auf. Bei mehreren Vorschlägen gibt es einen Knopf für alle auf einmal.
+  Das Abgehakte liegt auf dem Gerät und lässt sich mit einem Tipp wieder
+  hervorholen.
+
+* **Startseite: eine Einrichtungskarte statt zwei.** „In drei Schritten
+  startklar" und „Alles eingerichtet?" standen untereinander und sagten
+  beide „Kalender abonnieren". Die drei Schritte sind für Leute ohne
+  Konto; wer eines hat, wird von der Checkliste geführt.
+
+* **Spielseite: Kopfzeile schlanker.** Dort standen Paarung, Datum,
+  Uhrzeit und Rolle - und in der Karte direkt darunter noch einmal
+  dasselbe, nur grösser. Jetzt steht oben nur noch „Spiel / Dein
+  Einsatz", wie auf den anderen Unterseiten.
+
+* **Drei Stellen, an denen ein fehlender Name die Seite abräumte.** Steht
+  in einer Besetzung ein Eintrag ohne Namen (möglich nach einer
+  Korrektur, die nur den Slug setzt), brach die Anzeige mit einem Fehler
+  ab - Kopfkarte, Spielseite und alles darunter blieben leer. Jetzt
+  steht dort der aus dem Slug gebildete Name oder „ohne Namen".
+
+* **Bleiben die Daten stehen, lügt die Startseite nicht mehr.** Ob ein
+  Spiel vorbei ist, markiert der Workflow beim Bauen. Fällt er aus, war
+  die Marke veraltet und oben stand „In -3 Tagen". Gezählt wird jetzt
+  nach dem Datum.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

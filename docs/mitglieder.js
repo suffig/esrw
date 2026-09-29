@@ -2639,10 +2639,15 @@ window.Mitglieder = (function () {
     var saisonWahl = h("select", { class: "mg-select", onchange: function (ev) { gewaehlteSaison = ev.target.value; saisonLaden(gewaehlteSaison).then(rendereAbrechnung); } },
       saisonen().map(function (s) { var o = h("option", { value: s, text: "Saison " + s }); if (s === gewaehlteSaison) o.selected = true; return o; }));
     var offenN = spiele.filter(function (sp) { var e = einsaetze[sp.kennung]; return new Date(sp.beginn) < new Date() && (!e || e.verguetung == null || (e.km == null && profil.heimat_lat != null)); }).length;
-    var chips = h("div", { class: "schnell mg-chips" }, [
-      h("button", { type: "button", class: "filterknopf" + (nurOffene ? " aktiv" : ""), text: "Unvollständig" + (offenN ? " (" + offenN + ")" : ""), onclick: function () { nurOffene = true; rendereAbrechnung(); } }),
-      h("button", { type: "button", class: "filterknopf" + (!nurOffene && !schnellModus ? " aktiv" : ""), text: "Alle", onclick: function () { nurOffene = false; schnellModus = false; rendereAbrechnung(); } }),
-      h("button", { type: "button", class: "filterknopf" + (schnellModus ? " aktiv" : ""), title: "Eine Zeile je Spiel, alles nebeneinander", text: "Schnelleingabe", onclick: function () { schnellModus = !schnellModus; if (schnellModus) nurOffene = false; rendereAbrechnung(); } })
+    var chips = h("div", { class: "mg-ansicht" }, [
+      h("button", { type: "button", class: !nurOffene && !schnellModus ? "aktiv" : "", text: "Alle",
+        onclick: function () { nurOffene = false; schnellModus = false; rendereAbrechnung(); } }),
+      h("button", { type: "button", class: nurOffene && !schnellModus ? "aktiv" : "", title: "Nur Spiele, bei denen noch etwas fehlt",
+        text: "Offen" + (offenN ? " " + offenN : ""),
+        onclick: function () { nurOffene = true; schnellModus = false; rendereAbrechnung(); } }),
+      h("button", { type: "button", class: schnellModus ? "aktiv" : "", title: "Eine Zeile je Spiel, alles nebeneinander",
+        text: "Schnell",
+        onclick: function () { schnellModus = true; nurOffene = false; rendereAbrechnung(); } })
     ]);
     inhalt.appendChild(h("div", { class: "mg-abrechnung-kopf" }, [saisonWahl, chips]));
     var wartet = warteBanner();
@@ -2708,7 +2713,7 @@ window.Mitglieder = (function () {
     panelInhalt.rechnung = rechnungPanel;
     // Sieben Knoepfe nebeneinander hat niemand gelesen: vorne steht, was
     // staendig gebraucht wird, der Rest liegt unter "Weitere".
-    var WEITERE = [["eigeneregeln", "Eigene Regeln"], ["art", "Abrechnungsart"], ["werkzeuge", "Werkzeuge"], ["eintragen", "+ Spiel eintragen"], ["regeln", "Wie gerechnet wird"]];
+    var WEITERE = [["kalender", "Kalender"], ["eigeneregeln", "Eigene Regeln"], ["art", "Abrechnungsart"], ["werkzeuge", "Werkzeuge"], ["eintragen", "+ Spiel eintragen"], ["regeln", "Wie gerechnet wird"]];
     if (!einfach()) WEITERE.unshift(["detail", "Steuerjahre"]);
     panelInhalt.weiteres = function () {
       return h("div", { class: "mg-form" }, [
@@ -2718,10 +2723,9 @@ window.Mitglieder = (function () {
           text: p[1], onclick: function () { abrechnungPanel = p[0]; rendereAbrechnung(); } });
       })));
     };
-    var offenP = abrechnungPruefen(spiele).length;
-    var KNOEPFE = [["pruefen", "Prüfen" + (offenP ? " (" + offenP + ")" : "")], ["kalender", "Kalender"], ["rechnung", "Rechnung"]];
-    if (!einfach()) KNOEPFE.push(["detail", "Steuerjahre"]);
-    KNOEPFE.push(["weiteres", "Weitere \u2026"]);
+    var abgeh = abgehakt();
+    var offenP = abrechnungPruefen(spiele).filter(function (f) { return !abgeh[f.id]; }).length;
+    var KNOEPFE = [["pruefen", "Prüfen" + (offenP ? " " + offenP : "")], ["rechnung", "Rechnung"], ["weiteres", "Weitere"]];
     KNOEPFE.forEach(function (p) {
       var offen = abrechnungPanel === p[0]
         || (p[0] === "weiteres" && WEITERE.filter(function (w) { return w[0] === abrechnungPanel; }).length);
@@ -2946,7 +2950,12 @@ window.Mitglieder = (function () {
   // Nichts davon ist ein Fehler - es sind Stellen, die einen Blick wert sind.
   function abrechnungPruefen(spiele) {
     var jetzt = new Date(), funde = [];
-    function fund(art, sp, text) { funde.push({ art: art, sp: sp, text: text }); }
+    // "loesung" ist der Knopf, der den Fund gleich hier erledigt - nicht
+    // jeder hat einen (was doppelt aussieht, muss ein Mensch entscheiden)
+    function fund(art, sp, text, loesung) {
+      funde.push({ art: art, sp: sp, text: text, loesung: loesung || null,
+                   id: art + "|" + sp.kennung + "|" + text.slice(0, 20) });
+    }
 
     var nachTag = {};
     spiele.forEach(function (sp) {
@@ -2954,26 +2963,31 @@ window.Mitglieder = (function () {
       if (d > jetzt) return;
       var e = einsaetze[sp.kennung] || {};
 
-      if (e.verguetung == null) fund("fehlt", sp, "Keine Vergütung eingetragen.");
-      else {
-        var soll = sollBetrag(sp);
+      var soll = sollBetrag(sp);
+      if (e.verguetung == null) {
+        fund("fehlt", sp, "Keine Vergütung eingetragen.",
+          soll != null ? { text: euro(soll) + " übernehmen", aend: { verguetung: soll } } : null);
+      } else if (soll != null && !e.ausgefallen && Math.abs(e.verguetung - soll) > Math.max(5, soll * 0.5)) {
         // Halbe Verguetung bei Ausfall vor Ort ist richtig, nicht auffaellig
-        if (soll != null && !e.ausgefallen && Math.abs(e.verguetung - soll) > Math.max(5, soll * 0.5))
-          fund("schief", sp, "Vergütung " + euro(e.verguetung) + ", erwartet wären " + euro(soll) + ".");
+        fund("schief", sp, "Vergütung " + euro(e.verguetung) + ", erwartet wären " + euro(soll) + ".",
+          { text: "Auf " + euro(soll) + " setzen", aend: { verguetung: soll } });
       }
-      if (e.km == null && profil.heimat_lat != null) fund("fehlt", sp, "Keine Kilometer eingetragen.");
-      else if (e.km != null) {
-        var v = kmVorschlag(sp);
+      var v = kmVorschlag(sp);
+      if (e.km == null && profil.heimat_lat != null) {
+        fund("fehlt", sp, "Keine Kilometer eingetragen.",
+          v ? { text: v.km + " km übernehmen", aend: { km: v.km } } : null);
+      } else if (e.km != null) {
         if (v && v.art !== "luftlinie" && Math.abs(e.km - v.km) > Math.max(15, v.km * 0.5))
-          fund("schief", sp, e.km + " km eingetragen, berechnet sind " + v.km + " km.");
-        if (e.km > 400) fund("schief", sp, e.km + " km einfache Strecke - sicher?");
+          fund("schief", sp, e.km + " km eingetragen, berechnet sind " + v.km + " km.",
+            { text: "Auf " + v.km + " km setzen", aend: { km: v.km } });
+        if (e.km > 400) fund("schief", sp, e.km + " km einfache Strecke - sicher?", null);
       }
       if (e.auslagen != null && e.auslagen > 0 && !(e.belege || []).length)
         fund("beleg", sp, euro(e.auslagen) + " Auslagen ohne Beleg.");
       if ((e.belege || []).length && !e.auslagen)
         fund("beleg", sp, "Beleg hinterlegt, aber keine Auslagen eingetragen.");
       if (e.verpflegung != null && e.verpflegung > 0 && (profil.verpflegung_modus || "aus") === "aus")
-        fund("schief", sp, "Verpflegung eingetragen, obwohl sie abgeschaltet ist.");
+        fund("schief", sp, "Verpflegung eingetragen, obwohl sie abgeschaltet ist.", { text: "Verpflegung leeren", aend: { verpflegung: null } });
 
       var tag = d.toDateString() + "|" + uhr(d);
       (nachTag[tag] = nachTag[tag] || []).push(sp);
@@ -2987,28 +3001,60 @@ window.Mitglieder = (function () {
     return funde;
   }
 
+  // Was jemand einmal als "passt so" abgehakt hat, soll nicht bei jedem
+  // Blick wieder oben stehen. Liegt auf dem Geraet, nicht im Konto - es
+  // ist eine Ansichtssache, keine Abrechnungssache.
+  function abgehakt() { return lokalLesen("mg_pruef_ok", {}); }
+  function abhaken(id) { var a = abgehakt(); a[id] = 1; lokalSchreiben("mg_pruef_ok", a); }
+
   function pruefPanel(spiele) {
-    var funde = abrechnungPruefen(spiele);
+    var alleFunde = abrechnungPruefen(spiele), ok = abgehakt();
+    var funde = alleFunde.filter(function (f) { return !ok[f.id]; });
+    var versteckt = alleFunde.length - funde.length;
     if (!funde.length) {
-      return h("p", { class: "leer", style: "margin:0", text: "Nichts zu beanstanden - alle vergangenen Spiele sind vollständig und plausibel ✓" });
+      var fertig = h("div", {}, [h("p", { class: "leer", style: "margin:0", text:
+        "Nichts zu beanstanden - alle vergangenen Spiele sind vollständig und plausibel ✓" })]);
+      if (versteckt) fertig.appendChild(h("button", { type: "button", class: "mg-neben", style: "margin-top:8px",
+        text: versteckt + (versteckt === 1 ? " abgehakter Fund" : " abgehakte Funde") + " wieder zeigen",
+        onclick: function () { lokalSchreiben("mg_pruef_ok", null); rendereAbrechnung(); } }));
+      return fertig;
     }
     var TITEL = { fehlt: "Fehlt noch", schief: "Sieht ungewöhnlich aus", beleg: "Belege", doppelt: "Doppelt?" };
     var box = h("div", {}, [h("p", { class: "meta", style: "margin:0 0 10px", text:
-      funde.length + (funde.length === 1 ? " Stelle" : " Stellen") + " zum Nachsehen. Nichts davon ist zwingend falsch - tippe eine an, um direkt hinzuspringen." })]);
+      funde.length + (funde.length === 1 ? " Stelle" : " Stellen") + " zum Nachsehen. Nichts davon ist zwingend falsch: übernimm den Vorschlag, öffne das Spiel, oder hak es als „passt so“ ab." })]);
     ["fehlt", "schief", "beleg", "doppelt"].forEach(function (art) {
       var teil = funde.filter(function (f) { return f.art === art; });
       if (!teil.length) return;
       box.appendChild(h("h4", { style: "margin:10px 0 4px", text: TITEL[art] + " (" + teil.length + ")" }));
       teil.slice(0, 40).forEach(function (f) {
         var d = new Date(f.sp.beginn);
-        box.appendChild(h("button", { type: "button", class: "mg-neben mg-fund", onclick: function () {
-          abrechnungPanel = null; abrechnungSprung(f.sp.kennung); rendereAbrechnung();
-        } }, [
+        var knoepfe = h("div", { class: "mg-fund-aktion" });
+        if (f.loesung) knoepfe.appendChild(h("button", { type: "button", class: "anfrage", text: f.loesung.text,
+          onclick: function () { speichereEinsatz(f.sp, f.loesung.aend); rendereAbrechnung(); } }));
+        knoepfe.appendChild(h("button", { type: "button", text: "Öffnen",
+          onclick: function () { abrechnungPanel = null; abrechnungSprung(f.sp.kennung); rendereAbrechnung(); } }));
+        knoepfe.appendChild(h("button", { type: "button", class: "leise", title: "Nicht mehr anzeigen", text: "Passt so",
+          onclick: function () { abhaken(f.id); rendereAbrechnung(); } }));
+        box.appendChild(h("div", { class: "mg-fund" }, [
           h("b", { text: datum(d) + " · " + f.sp.paarung }),
-          h("small", { text: f.text })]));
+          h("small", { text: f.text }),
+          knoepfe]));
       });
       if (teil.length > 40) box.appendChild(h("p", { class: "meta", text: "… und " + (teil.length - 40) + " weitere." }));
     });
+
+    var mitLoesung = funde.filter(function (f) { return f.loesung; });
+    if (mitLoesung.length > 1) {
+      box.appendChild(h("button", { type: "button", class: "mg-neben", style: "margin-top:10px;width:100%",
+        text: mitLoesung.length + " Vorschläge auf einmal übernehmen", onclick: function () {
+          mitLoesung.forEach(function (f) { speichereEinsatz(f.sp, f.loesung.aend); });
+          meldung(mitLoesung.length + " Einträge übernommen. Bitte kurz überfliegen.", "gut");
+          rendereAbrechnung();
+        } }));
+    }
+    if (versteckt) box.appendChild(h("button", { type: "button", class: "leise", style: "margin-top:8px",
+      text: versteckt + " abgehakt - wieder zeigen",
+      onclick: function () { lokalSchreiben("mg_pruef_ok", null); rendereAbrechnung(); } }));
     return box;
   }
 

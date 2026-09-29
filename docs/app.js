@@ -566,6 +566,11 @@
     kurz.classList.toggle("versteckt", !(s1 && s2 && !s3) || lesen("onboarding-kurz-weg") === "1" || el("auswahl").classList.contains("versteckt") === false);
     el("onboarding-kurz-weg").onclick = function () { schreiben("onboarding-kurz-weg", "1"); kurz.classList.add("versteckt"); };
     if (s1 && s2) { box.classList.add("versteckt"); return; }
+    // Zwei Karten sagten dasselbe: die drei Schritte und "Alles
+    // eingerichtet?", beide mit dem Punkt "Kalender abonnieren", direkt
+    // untereinander. Die Schritte sind fuer Leute ohne Konto; wer eines
+    // hat, wird von der Checkliste gefuehrt.
+    if (s3 && startEinstellung("einrichtung") && !startEinstellung("ruhig")) { box.classList.add("versteckt"); return; }
     el("ob-1").classList.toggle("fertig", s1); el("ob-2").classList.toggle("fertig", s2); el("ob-3").classList.toggle("fertig", s3);
     box.classList.remove("versteckt");
     el("onboarding-weg").onclick = function () { schreiben("onboarding-weg", "1"); box.classList.add("versteckt"); };
@@ -804,11 +809,12 @@
   });
 
   function initialen(name) {
-    var t = name.split(",");
+    var t = String(name || "").split(",");
     var nach = (t[0] || "").trim(), vor = (t[1] || "").trim();
     return ((vor[0] || "") + (nach[0] || "")).toUpperCase() || "?";
   }
   function farbeFuer(text) {
+    text = String(text == null ? "" : text);
     var hsum = 0; for (var i = 0; i < text.length; i++) hsum = (hsum * 31 + text.charCodeAt(i)) % 360;
     return "hsl(" + hsum + ", 45%, 42%)";
   }
@@ -1094,7 +1100,7 @@
 
     if (s.gespann && s.gespann.length) {
       var g = document.createElement("div"); g.className = "chips" + (fuer ? "" : " klein");
-      s.gespann.forEach(function (k) { var c = chip(k, s.system >= 3); if (!fuer) { var tn = Array.prototype.filter.call(c.childNodes, function (n) { return n.nodeType === 3; })[0]; if (tn) tn.textContent = (k.name || "").split(",")[0]; } g.appendChild(c); });
+      s.gespann.forEach(function (k) { if (!k || (!k.name && !k.slug)) return; var c = chip(k, s.system >= 3); if (!fuer) { var tn = Array.prototype.filter.call(c.childNodes, function (n) { return n.nodeType === 3; })[0]; if (tn) tn.textContent = (k.name || "").split(",")[0]; } g.appendChild(c); });
       d.appendChild(g);
     }
     if (s.hinweis) { var hw = document.createElement("div"); hw.className = "achtung"; hw.textContent = "⚠ " + s.hinweis; d.appendChild(hw); }
@@ -1163,8 +1169,12 @@
     if (!s.ort && s.halle && daten.adressen && daten.adressen[s.halle]) s.ort = s.halle + ", " + daten.adressen[s.halle];
     ansicht("spiel"); aktuell = null;
     var d = new Date(s.beginn), treff = new Date(s.treffpunkt);
-    el("spiel-titel").textContent = (s.liga ? s.liga + ": " : "") + s.paarung;
-    el("spiel-unter").textContent = datumKurz(d) + " · " + uhr(d) + " Uhr" + (meins ? " · du als " + (s.rolle || "SR") : "");
+    // Die Kopfzeile sagte Paarung, Datum, Uhrzeit und Rolle - und die
+    // Karte direkt darunter noch einmal dasselbe, nur groesser. Auf dem
+    // Handy waren das zwei lange Zeilen vor dem eigentlichen Inhalt.
+    // Jetzt steht hier wie auf den anderen Unterseiten nur, wo man ist.
+    el("spiel-titel").textContent = "Spiel";
+    el("spiel-unter").textContent = meins ? "Dein Einsatz" : "Einteilung";
 
     var kopf = el("spiel-kopf"); kopf.innerHTML = "";
     var h = document.createElement("div"); h.className = "spiel-kopf";
@@ -1634,15 +1644,25 @@
     }).catch(function () {});
   }
 
+  // "muster-max" -> "Muster, Max". Nur ein Notnagel: die Daten liefern
+  // den Namen sonst mit.
+  function namenAusSlug(slug) {
+    if (!slug) return "";
+    var t = String(slug).split("-").map(function (w) { return w ? w.charAt(0).toUpperCase() + w.slice(1) : w; });
+    return t.length > 1 ? t.slice(0, -1).join(" ") + ", " + t[t.length - 1] : t[0];
+  }
+
   function chip(person, mitRolle, klasseExtra) {
     var e = document.createElement(person.slug ? "a" : "span");
     e.className = "chip" + (profil && person.slug === profil.slug ? " ich" : "") + (klasseExtra ? " " + klasseExtra : "");
     if (person.slug) e.href = "#" + person.slug;
-    var av = document.createElement("i"); av.className = "avatar"; av.textContent = initialen(person.name);
+    var av = document.createElement("i"); av.className = "avatar"; av.textContent = initialen(person.name || person.slug);
     av.style.background = farbeFuer(person.slug || person.name);
     if (person.slug) { av.setAttribute("data-slug", person.slug); bildAnwenden(av, person.slug); }
     e.appendChild(av);
-    e.appendChild(document.createTextNode(person.name));
+    // Fehlt der Name (eine Korrektur, die nur den Slug setzt), stand hier
+    // wortwoertlich "undefined" auf der Spielseite
+    e.appendChild(document.createTextNode(person.name || namenAusSlug(person.slug) || "ohne Namen"));
     if (mitRolle && person.rolle) {
       var b = document.createElement("b"); b.className = person.rolle; b.textContent = person.rolle;
       b.title = (daten.rollen && daten.rollen[person.rolle]) || person.rolle; e.appendChild(b);
@@ -1655,10 +1675,14 @@
   function zeigeHeld(p) {
     var ziel = el("held");
     ziel.innerHTML = "";
-    var kommend = p.spiele.filter(function (s) { return !s.vergangen; });
+    var heute = new Date(); heute.setHours(0, 0, 0, 0);
+    var kommend = p.spiele.filter(function (s) {
+      if (s.vergangen) return false;
+      var t = new Date(s.beginn); t.setHours(0, 0, 0, 0);
+      return t >= heute;
+    });
     if (!kommend.length) return;
     var s = kommend[0], d = new Date(s.beginn);
-    var heute = new Date(); heute.setHours(0, 0, 0, 0);
     var tag = new Date(d); tag.setHours(0, 0, 0, 0);
     var diff = Math.round((tag - heute) / 86400000);
     var wann = diff === 0 ? "Heute" : diff === 1 ? "Morgen" : "In " + diff + " Tagen";
