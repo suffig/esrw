@@ -1836,6 +1836,11 @@
   .einstellungen-liste label > span > small { display:block; color:var(--dim); font-weight:500; }
   /* Adminbereich: die sechs Knoepfe lieber umbrechen als wegscrollen */
   .admin-leiste { flex-wrap:wrap; overflow-x:visible; }
+
+  /* Runde 46: wartende Aenderungen */
+  .hinweis.warteschlange { flex-direction:column; gap:6px; align-items:stretch; }
+  .hinweis.warteschlange .meta { color:inherit; opacity:.8; }
+  .hinweis.warteschlange button { align-self:flex-start; }
 </style>
 </head>
 <body>
@@ -2288,6 +2293,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=91"></script>
+<script src="app.js?v=92"></script>
 </body>
 </html>

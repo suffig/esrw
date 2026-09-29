@@ -6,3 +6,7 @@ aenderungen.json
 aenderungen.json.bin
 vapid_privat.txt
 .claude/
+
+# Sicherungen liegen nur verschluesselt im Repository - der Klartext aus
+# "python sicherung.py --zeigen" bleibt auf dem Rechner
+sicherungen/*.json

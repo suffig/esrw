@@ -98,6 +98,18 @@ jobs:
           pip install --quiet pywebpush
           python push_senden.py
 
+      # Der Free Plan von Supabase sichert nichts. Einmal am Tag zieht das
+      # Skript daher alle Tabellen und legt sie verschluesselt in
+      # sicherungen/ ab (Details in sicherung.py). Ein Fehler hier darf die
+      # Feeds nicht aufhalten.
+      - name: Datenbank sichern
+        continue-on-error: true
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          DATEN_SCHLUESSEL: ${{ secrets.DATEN_SCHLUESSEL }}
+        run: python sicherung.py
+
       # Zweiter Meldeweg, der ohne zusaetzliche App auskommt: GitHub schickt
       # fuer ein neues Issue von sich aus eine E-Mail an den Repository-
       # Eigentuemer, und die GitHub-App auf dem Handy meldet sich per Push.

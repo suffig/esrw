@@ -608,6 +608,48 @@ def test_tresor():
         importlib.reload(esrw_ical_modul())
 
 
+def test_sicherung():
+    """Die Sicherung muss jede Tabelle des Schemas erfassen und sich
+    hinterher wieder lesen lassen - sonst waere sie im Ernstfall wertlos."""
+    print("\nSicherung")
+    import base64, json, tempfile
+    try:
+        import sicherung, tresor
+    except ImportError:
+        pruefe(False, "sicherung.py vorhanden")
+        return
+    namen = sicherung.tabellen()
+    pruefe(len(namen) > 25, "alle Tabellen aus dem Schema gelesen (%d)" % len(namen))
+    for muss in ("profile", "einsaetze", "spielnotizen", "kontakte", "rechnungen"):
+        pruefe(muss in namen, "%s ist dabei" % muss)
+    pruefe("tresor" in namen, "auch die Tresor-Tabelle - ohne sie kaeme niemand mehr an die Daten")
+    try:
+        tresor.verschluesseln(b"x", b"0" * 32)
+    except ImportError:
+        print("  --   Paket 'cryptography' fehlt, Rueckweg uebersprungen")
+        return
+    alt = os.environ.get("DATEN_SCHLUESSEL")
+    ordner = tempfile.mkdtemp()
+    try:
+        os.environ["DATEN_SCHLUESSEL"] = base64.b64encode(b"S" * 32).decode()
+        k = tresor.schluessel()
+        inhalt = {"stand": "2026-01-01T00:00:00+00:00", "tabellen": {"profile": [{"slug": "aeoeuess"}]}, "fehler": {}}
+        ziel = os.path.join(ordner, "2026-01-01.json")
+        tresor.json_schreiben(ziel, inhalt, k, separators=(",", ":"))
+        with open(ziel + ".bin", "rb") as f:
+            roh = f.read()
+        pruefe(b"aeoeuess" not in roh, "die Sicherung liegt nicht im Klartext")
+        zurueck = json.loads(tresor.entschluesseln(roh, k).decode("utf-8"))
+        pruefe(zurueck == inhalt, "gelesen wie geschrieben")
+    finally:
+        if alt is None:
+            os.environ.pop("DATEN_SCHLUESSEL", None)
+        else:
+            os.environ["DATEN_SCHLUESSEL"] = alt
+        import shutil
+        shutil.rmtree(ordner, ignore_errors=True)
+
+
 def esrw_ical_modul():
     return sys.modules["esrw_ical"]
 
@@ -619,7 +661,7 @@ def main():
                  test_escape, test_ics, test_saison, test_aenderungstext, test_saisonarchiv,
                  test_korrektur_uid, test_gespannwechsel, test_ehemalige,
                  test_besetzung_korrektur, test_csp,
-                 test_rechnungsvorlage,
+                 test_rechnungsvorlage, test_sicherung,
                  test_tresor):
         test()
     print("\n" + "-" * 58)

@@ -406,12 +406,35 @@ window.Mitglieder = (function () {
   // ---- Offline: Profil und Einsaetze zwischenspeichern, Aenderungen in
   // eine Warteschlange legen und beim naechsten Kontakt nachreichen
   function lokalLesen(k, std) { try { return JSON.parse(localStorage.getItem(k)) || std; } catch (e) { return std; } }
-  function lokalSchreiben(k, v) { try { if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  // Gibt zurueck, ob es geklappt hat. Der Speicher des Browsers ist
+  // begrenzt (Bilder, Zwischenspeicher) - ein stilles Scheitern hiess
+  // frueher: die Aenderung ist weg und niemand merkt es.
+  function lokalSchreiben(k, v) {
+    try {
+      if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, JSON.stringify(v));
+      return true;
+    } catch (e) { return false; }
+  }
   function netzFehler(e) { var m = String((e && e.message) || e || ""); return !navigator.onLine || /fetch|network|netzwerk|load failed|abort/i.test(m); }
   function warteschlange() { return lokalLesen("mg_queue", {}); }
-  function inWarteschlange(zeile) {
-    var q = warteschlange(); q[zeile.kennung] = zeile; lokalSchreiben("mg_queue", q);
-    kurzMeldung("Offline gespeichert, es geht raus, sobald wieder Netz da ist.", "");
+  function warteZahl() { return Object.keys(warteschlange()).length; }
+  // _versuche und _grund sind Notizen der Warteschlange, keine Spalten
+  function ohneMerkmale(z) { var k = Object.assign({}, z); delete k._versuche; delete k._grund; return k; }
+  // Alles, was nicht beim ersten Versuch ankommt, landet hier - egal
+  // warum. Lieber einmal zu viel aufheben als einmal zu wenig.
+  function inWarteschlange(zeile, grund) {
+    var q = warteschlange();
+    var alt = q[zeile.kennung] || {};
+    q[zeile.kennung] = Object.assign({}, zeile, { _versuche: (alt._versuche || 0), _grund: grund || alt._grund || null });
+    if (!lokalSchreiben("mg_queue", q)) {
+      meldung("Der Speicher dieses Geräts ist voll - die Änderung konnte nicht einmal zwischengelagert werden. "
+        + "Bitte notier sie dir und versuch es nach einem Neustart der App noch einmal.", "warn");
+      return;
+    }
+    document.dispatchEvent(new CustomEvent("mg-warteschlange", { detail: { anzahl: warteZahl() } }));
+    kurzMeldung(grund === "fehler"
+      ? "Konnte gerade nicht gespeichert werden, liegt auf Wiedervorlage."
+      : "Offline gespeichert, es geht raus, sobald wieder Netz da ist.", "");
   }
   var nachreichenLaeuft = false;
   function nachreichen() {
@@ -421,16 +444,38 @@ window.Mitglieder = (function () {
     var n = 0;
     return keys.reduce(function (p, k) {
       return p.then(function () {
-        var zeile = Object.assign({}, q[k]); delete zeile.id;
+        var zeile = Object.assign({}, q[k]);
+        delete zeile.id; delete zeile._versuche; delete zeile._grund;
         return sb.from("einsaetze").upsert(zeile, { onConflict: "user_id,kennung" }).select().then(function (r) {
-          if (r.error) { if (!netzFehler(r.error)) { delete q[k]; lokalSchreiben("mg_queue", q); } return; }
+          if (r.error) {
+            // Frueher flog der Eintrag bei jedem Fehler raus, der nicht nach
+            // Netz aussah - auch bei abgelaufener Anmeldung oder einer
+            // Stoerung beim Anbieter. Jetzt bleibt er liegen und wird beim
+            // naechsten Mal wieder versucht.
+            q[k]._versuche = (q[k]._versuche || 0) + 1;
+            q[k]._grund = fehlerText(r.error);
+            lokalSchreiben("mg_queue", q);
+            return;
+          }
           delete q[k]; lokalSchreiben("mg_queue", q); n++;
           if (r.data && r.data[0] && einsaetze[k]) einsaetze[k].id = r.data[0].id;
-        }).catch(function () {});
+        }).catch(function (e) {
+          q[k]._versuche = (q[k]._versuche || 0) + 1;
+          q[k]._grund = fehlerText(e);
+          lokalSchreiben("mg_queue", q);
+        });
       });
-    }, Promise.resolve()).then(function () { nachreichenLaeuft = false; if (n) kurzMeldung(n + (n === 1 ? " Änderung" : " Änderungen") + " nachgereicht ✓", "gut"); return n; });
+    }, Promise.resolve()).then(function () {
+      nachreichenLaeuft = false;
+      if (n) kurzMeldung(n + (n === 1 ? " Änderung" : " Änderungen") + " nachgereicht ✓", "gut");
+      document.dispatchEvent(new CustomEvent("mg-warteschlange", { detail: { anzahl: warteZahl() } }));
+      return n;
+    });
   }
   window.addEventListener("online", function () { setTimeout(function () { nachreichen(); }, 1500); });
+  document.addEventListener("mg-warteschlange", function () {
+    if (reiter === "abrechnung" && inhalt && inhalt.isConnected) rendereAbrechnung();
+  });
 
   function ladeProfil() {
     if (!session) return Promise.resolve(null);
@@ -1368,7 +1413,7 @@ window.Mitglieder = (function () {
         einsaetze = {};
         (r.data || []).forEach(function (z) { einsaetze[z.kennung] = z; });
         // Offline-Aenderungen liegen ueber dem Serverstand, bis sie nachgereicht sind
-        var q = warteschlange(); Object.keys(q).forEach(function (k) { einsaetze[k] = Object.assign({}, einsaetze[k] || {}, q[k]); });
+        var q = warteschlange(); Object.keys(q).forEach(function (k) { einsaetze[k] = Object.assign({}, einsaetze[k] || {}, ohneMerkmale(q[k])); });
         if (!sb._attrappe) lokalSchreiben("mg_einsaetze_cache", r.data || []);
         nachreichen();
       })
@@ -1376,7 +1421,7 @@ window.Mitglieder = (function () {
         if (!netzFehler(e)) throw e;
         einsaetze = {};
         lokalLesen("mg_einsaetze_cache", []).forEach(function (z) { einsaetze[z.kennung] = z; });
-        var q = warteschlange(); Object.keys(q).forEach(function (k) { einsaetze[k] = Object.assign({}, einsaetze[k] || {}, q[k]); });
+        var q = warteschlange(); Object.keys(q).forEach(function (k) { einsaetze[k] = Object.assign({}, einsaetze[k] || {}, ohneMerkmale(q[k])); });
       });
   }
 
@@ -1471,10 +1516,17 @@ window.Mitglieder = (function () {
     clearTimeout(speicherTimer[spiel.kennung]);
     speicherTimer[spiel.kennung] = setTimeout(function () {
       sb.from("einsaetze").upsert(zeile, { onConflict: "user_id,kennung" }).select().then(function (r) {
-        if (r.error) { if (netzFehler(r.error)) { inWarteschlange(zeile); return; } meldung("Speichern fehlgeschlagen: " + fehlerText(r.error), "warn"); return; }
+        if (r.error) {
+          inWarteschlange(zeile, netzFehler(r.error) ? "netz" : "fehler");
+          if (!netzFehler(r.error)) meldung("Speichern hat gerade nicht geklappt (" + fehlerText(r.error) + "). Die Änderung liegt auf Wiedervorlage.", "warn");
+          return;
+        }
         if (r.data && r.data[0] && r.data[0].id) einsaetze[spiel.kennung].id = r.data[0].id;
         kurzMeldung("Gespeichert ✓", "gut");
-      }).catch(function (e) { if (netzFehler(e)) inWarteschlange(zeile); else meldung("Speichern fehlgeschlagen: " + fehlerText(e), "warn"); });
+      }).catch(function (e) {
+        inWarteschlange(zeile, netzFehler(e) ? "netz" : "fehler");
+        if (!netzFehler(e)) meldung("Speichern hat gerade nicht geklappt (" + fehlerText(e) + "). Die Änderung liegt auf Wiedervorlage.", "warn");
+      });
     }, 600);
   }
 
@@ -2521,6 +2573,27 @@ window.Mitglieder = (function () {
     document.body.appendChild(leiste);
   }
   function abrechnungSprung(kennung) { abrechnungZiel = kennung; nurOffene = false; }
+  // Wartet etwas auf das Netz, soll man das sehen - nicht nur eine
+  // Kurzmeldung, die nach drei Sekunden wieder weg ist.
+  function warteBanner() {
+    var q = warteschlange(), keys = Object.keys(q);
+    if (!keys.length) return null;
+    var haengt = keys.filter(function (k) { return (q[k]._versuche || 0) >= 3; });
+    var knopf = h("button", { type: "button", class: "anfrage", text: "Jetzt versuchen", onclick: function () {
+      knopf.disabled = true; knopf.textContent = "sende …";
+      nachreichen().then(function () { rendereAbrechnung(); });
+    } });
+    return h("div", { class: "hinweis warteschlange" + (haengt.length ? " warn" : "") }, [
+      h("p", { style: "margin:0", text: keys.length === 1
+        ? "Eine Änderung wartet noch darauf, gespeichert zu werden."
+        : keys.length + " Änderungen warten noch darauf, gespeichert zu werden." }),
+      h("p", { class: "meta", style: "margin:0", text: haengt.length
+        ? "Es klappt seit mehreren Versuchen nicht: " + (q[haengt[0]]._grund || "unbekannter Grund")
+          + ". Die Eingaben bleiben gespeichert, bis es durchgeht - melde dich notfalls einmal ab und wieder an."
+        : "Sie sind auf diesem Gerät gesichert und gehen raus, sobald wieder Netz da ist." }),
+      knopf]);
+  }
+
   function rendereAbrechnung() {
     leeren(inhalt);
     var spiele = saisonSpiele(gewaehlteSaison);
@@ -2534,6 +2607,8 @@ window.Mitglieder = (function () {
       h("button", { type: "button", class: "filterknopf" + (!nurOffene ? " aktiv" : ""), text: "Alle", onclick: function () { nurOffene = false; rendereAbrechnung(); } })
     ]);
     inhalt.appendChild(h("div", { class: "mg-abrechnung-kopf" }, [saisonWahl, chips]));
+    var wartet = warteBanner();
+    if (wartet) inhalt.appendChild(wartet);
 
     inhalt.appendChild(h("div", { class: "mg-summenblock" }));
 
@@ -3840,16 +3915,37 @@ window.Mitglieder = (function () {
       if (mitNotiz) {
         innen.appendChild(h("h4", { text: "Meine Notiz (nur für mich)" }));
         var ta = h("textarea", { rows: "3", placeholder: "Vorkommnisse, Strafen, Lernpunkte …", maxlength: "4000" });
-        ta.value = notiz ? notiz.text : "";
+        // Ein Entwurf liegt vor, wenn das Speichern beim letzten Mal nicht
+        // durchkam oder die App mittendrin geschlossen wurde
+        var entwurf = entwuerfe()[kennung];
+        ta.value = entwurf != null ? entwurf : (notiz ? notiz.text : "");
+        var fuss = h("p", { class: "meta", text: entwurf != null && entwurf !== (notiz ? notiz.text : "")
+          ? "Ungespeicherter Entwurf von diesem Gerät - er geht beim nächsten Tippen raus."
+          : "Speichert von selbst. Alle Notizen: Mehr → Notizen." });
         var timer = null;
         ta.addEventListener("input", function () {
+          entwurfSetzen(kennung, ta.value);        // erst auf dem Geraet, dann ins Netz
           clearTimeout(timer);
-          timer = setTimeout(function () { notizSpeichern(spiel, ta.value.trim()); }, 800);
+          timer = setTimeout(function () {
+            notizSpeichern(spiel, ta.value.trim()).then(function (ok) {
+              if (ok) { entwurfSetzen(kennung, null); fuss.textContent = "Speichert von selbst. Alle Notizen: Mehr → Notizen."; }
+              else fuss.textContent = "Noch nicht gespeichert - der Text liegt auf diesem Gerät und geht später raus.";
+            });
+          }, 800);
         });
-        innen.appendChild(h("div", { class: "mg-form" }, [ta, h("p", { class: "meta", text: "Speichert von selbst. Alle Notizen: Mehr → Notizen." })]));
+        innen.appendChild(h("div", { class: "mg-form" }, [ta, fuss]));
       }
     });
     ziel.appendChild(box);
+  }
+
+  // Entwuerfe privater Notizen. Sie liegen auf dem Geraet, bis der Server
+  // bestaetigt hat - sonst waere ein abgebrochener Tippvorgang verloren.
+  function entwuerfe() { return lokalLesen("mg_notiz_entwurf", {}); }
+  function entwurfSetzen(kennung, text) {
+    var e = entwuerfe();
+    if (text === null) delete e[kennung]; else e[kennung] = text;
+    lokalSchreiben("mg_notiz_entwurf", e);
   }
 
   function notizSpeichern(spiel, text) {
@@ -3858,11 +3954,13 @@ window.Mitglieder = (function () {
       ? sb.from("spielnotizen").upsert({ user_id: session.user.id, kennung: kennung, beginn: spiel.beginn, liga: spiel.liga || null, paarung: spiel.paarung, halle: spiel.halle || null, text: text }, { onConflict: "user_id,kennung" }).select()
       : sb.from("spielnotizen").delete().eq("user_id", session.user.id).eq("kennung", kennung);
     return lauf.then(function (r) {
-      if (r.error) { meldung(fehlerText(r.error), "warn"); return; }
+      if (r.error) { meldung(fehlerText(r.error), "warn"); return false; }
       if (text) cache.notizen[kennung] = (r.data && r.data[0]) || { kennung: kennung, text: text, beginn: spiel.beginn, paarung: spiel.paarung };
       else delete cache.notizen[kennung];
+      entwurfSetzen(kennung, null);
       kurzMeldung("Notiz gespeichert ✓", "gut");
-    });
+      return true;
+    }).catch(function (e) { meldung(fehlerText(e), "warn"); return false; });
   }
 
   function zeigeNotizen() {
@@ -3884,7 +3982,7 @@ window.Mitglieder = (function () {
           var ta = h("textarea", { rows: "3", maxlength: "4000" }); ta.value = n.text;
           var timer = null;
           ta.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(function () {
-            notizSpeichern({ beginn: n.beginn, paarung: n.paarung, liga: n.liga, halle: n.halle }, ta.value.trim()).then(function () { n.text = ta.value.trim(); });
+            notizSpeichern({ beginn: n.beginn, paarung: n.paarung, liga: n.liga, halle: n.halle }, ta.value.trim()).then(function (ok) { if (ok) n.text = ta.value.trim(); });
           }, 800); });
           liste.appendChild(h("div", { class: "spiel karte" }, [
             h("div", { class: "kopfzeile" }, [h("span", { class: "datum", text: datum(d) + " · " + uhr(d) + " Uhr" }),
