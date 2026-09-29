@@ -573,8 +573,11 @@ def statistik_aus_historie(historie, stand):
                 "ligen": Counter(), "hallen": Counter(),
                 "partner": Counter(), "partner_namen": {}, "je_saison": Counter(),
                 "erste": None, "letzte": None, "spiele_saison": [],
-                "schreibweisen": Counter()})
+                "schreibweisen": Counter(), "wochentage": Counter()})
             s["gesamt"] += 1
+            # Ueber alle Saisons, nicht nur die laufende: an welchen Tagen
+            # jemand pfeift, sieht man erst nach ein paar Jahren
+            s["wochentage"][beginn.weekday()] += 1
             s["schreibweisen"][name] += 1
             s["je_saison"][saison] += 1
             if saison == jetzt_saison:
@@ -1580,6 +1583,7 @@ def main():
             "partner": [(name_von.get(k, s["partner_namen"].get(k, k)), n)
                         for k, n in s["partner"].most_common(5)],
             "je_saison": sorted(s["je_saison"].items()),
+            "wochentage": [s["wochentage"].get(i, 0) for i in range(7)],
             "erste": s["erste"], "letzte": s["letzte"],
         }
 

@@ -70,6 +70,24 @@ def hole(url, schluessel, tabelle):
         von += schritt
 
 
+def melden(url, dienst, zeilen):
+    """Eine Zeile in sicherung_lauf (Schema v37) - nur Zahlen. Damit steht
+    im Adminbereich, ob die Sicherung laeuft, ohne dass jemand ins
+    Repository schauen muss. Schlaegt das fehl, ist die Sicherung
+    trotzdem geschrieben; also nur melden, nicht abbrechen."""
+    daten = json.dumps(zeilen).encode("utf-8")
+    req = urllib.request.Request(
+        url.rstrip("/") + "/rest/v1/sicherung_lauf", data=daten, method="POST",
+        headers={"apikey": dienst, "Authorization": "Bearer " + dienst,
+                 "Content-Type": "application/json", "Prefer": "return=minimal"})
+    try:
+        with urllib.request.urlopen(req, timeout=30):
+            return True
+    except Exception as e:
+        print("Sicherung nicht protokolliert (%s) - Tabelle sicherung_lauf fehlt? schema.sql v37." % str(e)[:120])
+        return False
+
+
 def aufraeumen(heute):
     """Alte Sicherungen wegwerfen - taegliche nach 35 Tagen, Monatserste
     nach zwei Jahren."""
@@ -132,6 +150,8 @@ def sichern():
     tresor.json_schreiben(pfad, inhalt, k, separators=(",", ":"))
     groesse = os.path.getsize(pfad + ".bin")
 
+    melden(url, dienst, {"tabellen": len(daten), "zeilen": zeilen, "bytes": groesse,
+                         "fehler": ", ".join(sorted(fehler)) or None})
     weg = aufraeumen(heute)
     print("Sicherung %s: %d Tabellen, %d Zeilen, %d KB%s%s" % (
         heute.isoformat(), len(daten), zeilen, groesse // 1024,

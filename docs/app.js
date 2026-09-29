@@ -1681,7 +1681,7 @@
     }
     if (s.gespann && s.gespann.length) {
       var ge = document.createElement("span");
-      ge.appendChild(ikone("i-users")); ge.appendChild(document.createTextNode(s.gespann.map(function (x) { return x.name.split(",")[0]; }).join(", ")));
+      ge.appendChild(ikone("i-users")); ge.appendChild(document.createTextNode(s.gespann.map(function (x) { return (x.name || x.slug || "").split(",")[0]; }).filter(Boolean).join(", ")));
       ak.appendChild(ge);
     }
     h.appendChild(ak);
@@ -2318,6 +2318,18 @@
     });
     return box;
   }
+  // Die Wochentage kommen als sieben Zahlen ab Montag. Anders als die
+  // uebrigen Balken zaehlen sie ueber alle Saisons - an welchen Tagen
+  // jemand pfeift, zeigt sich erst nach ein paar Jahren.
+  function wochentagBalken(zahlen) {
+    if (!zahlen || !zahlen.length || !zahlen.some(function (n) { return n; })) return null;
+    var NAMEN = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
+    var paare = zahlen.map(function (n, i) { return [NAMEN[i], n]; })
+      .filter(function (p2) { return p2[1]; })
+      .sort(function (a, b) { return b[1] - a[1]; });
+    return balken("Wochentage", paare);
+  }
+
   function zeigeStatistik(p) {
     var ziel = el("statistik"); ziel.innerHTML = "";
     var s = p.statistik; if (!s) return;
@@ -2334,7 +2346,8 @@
     });
     ziel.appendChild(zahlen);
     [balken("Meiste Ligen", s.ligen), balken("Meiste Hallen", s.hallen), balken("Meiste Gespannpartner", s.partner),
-     s.je_saison && s.je_saison.length > 1 ? balken("Spiele je Saison", s.je_saison.slice().reverse()) : null
+     s.je_saison && s.je_saison.length > 1 ? balken("Spiele je Saison", s.je_saison.slice().reverse()) : null,
+     wochentagBalken(s.wochentage)
     ].forEach(function (b) { if (b) ziel.appendChild(b); });
     var hsr = (s.rollen && s.rollen.HSR) || 0, lsr = (s.rollen && s.rollen.LSR) || 0;
     if (hsr + lsr) {
@@ -3779,9 +3792,122 @@
 
   // Selten gebraucht: steht in der einfachen Ansicht zugeklappt am Ende.
   var MEHR_SELTEN = { "#statistik": 1, "#mitglieder/frei": 1, "#anleitung": 1, "#status": 1 };
+  // ---- Suche ueber alles
+  //
+  // Jede Liste hat ihr eigenes Suchfeld - was fehlte, war eines, das
+  // nicht wissen muss, wo etwas steht. Es sucht in den Seiten selbst,
+  // in Kollegen, Spielen, Hallen, Vereinen und den eigenen Notizen.
+
+  function suchtext(s) {
+    return (s || "").toLowerCase()
+      .replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue").replace(/ß/g, "ss");
+  }
+
+  function alleTreffer(frage, seiten) {
+    var f = suchtext(frage);
+    if (f.length < 2) return [];
+    var treffer = [];
+    function nimm(art, titel, unter, ziel, gewicht) {
+      var t = suchtext(titel + " " + (unter || ""));
+      var i = t.indexOf(f);
+      if (i < 0) return;
+      // Treffer am Wortanfang stehen oben - "Herford" soll nicht hinter
+      // "Eisadler Dortmund gegen Herford" landen
+      treffer.push({ art: art, titel: titel, unter: unter, ziel: ziel,
+                     rang: (i === 0 ? 0 : /\s/.test(t.charAt(i - 1)) ? 1 : 2) + (gewicht || 0) });
+    }
+
+    (seiten || []).forEach(function (e) { nimm("Seite", e[2], e[3], e[0], 0); });
+
+    (daten.personen || []).forEach(function (p) {
+      nimm("Kollege", p.name, (p.spiele || []).length + " Spiele in dieser Saison", "#" + p.slug, 0);
+    });
+
+    // Spiele: die eigenen zuerst, dann der Rest des Spielplans
+    var gesehen = {};
+    var ich = profilLesen();
+    var meine = (ich && ich.slug && personMit(ich.slug)) || null;
+    ((meine && meine.spiele) || []).forEach(function (s) {
+      var k = kennungVon(s); gesehen[k] = true;
+      nimm("Dein Spiel", (s.liga ? s.liga + ": " : "") + s.paarung,
+        datumKurz(new Date(s.beginn)) + (s.halle ? " · " + s.halle : ""), "#spiel/" + encodeURIComponent(k), 0);
+    });
+    (daten.personen || []).forEach(function (p) {
+      (p.spiele || []).forEach(function (s) {
+        var k = kennungVon(s); if (gesehen[k]) return; gesehen[k] = true;
+        nimm("Spiel", (s.liga ? s.liga + ": " : "") + s.paarung,
+          datumKurz(new Date(s.beginn)) + (s.halle ? " · " + s.halle : ""), "#spiel/" + encodeURIComponent(k), 3);
+      });
+    });
+
+    Object.keys(daten.adressen || {}).forEach(function (halle) {
+      nimm("Halle", halle, (daten.adressen || {})[halle] || "", "#karte", 1);
+    });
+
+    return treffer.sort(function (a, b) { return a.rang - b.rang; });
+  }
+
+  function sucheAufbauen(ziel, seiten) {
+    var feld = document.createElement("input");
+    feld.type = "search"; feld.id = "alles-suche"; feld.autocomplete = "off";
+    feld.placeholder = "Suchen: Kollege, Spiel, Halle, Seite \u2026";
+    var ergebnis = document.createElement("div"); ergebnis.className = "menue karte alles-treffer versteckt";
+    var box = document.createElement("div"); box.className = "alles-suche-box";
+    box.appendChild(feld); box.appendChild(ergebnis);
+    ziel.appendChild(box);
+
+    var notizen = [];
+    // Notizen liegen im Mitgliederbereich - ohne Anmeldung gibt es sie nicht
+    if (window.Mitglieder && window.Mitglieder.notizenFuerSuche) {
+      window.Mitglieder.notizenFuerSuche().then(function (n) { notizen = n || []; }).catch(function () {});
+    }
+
+    var timer = null;
+    feld.addEventListener("input", function () {
+      clearTimeout(timer);
+      timer = setTimeout(function () { zeichnen(); }, 120);
+    });
+
+    function zeichnen() {
+      ergebnis.innerHTML = "";
+      var frage = feld.value.trim();
+      if (frage.length < 2) { ergebnis.classList.add("versteckt"); return; }
+      var treffer = alleTreffer(frage, seiten);
+      var f = suchtext(frage);
+      notizen.forEach(function (n) {
+        if (suchtext(n.text + " " + n.paarung).indexOf(f) < 0) return;
+        treffer.push({ art: "Notiz", titel: n.paarung || "Notiz", unter: n.text.slice(0, 90),
+                       ziel: "#mitglieder/notizen", rang: 1 });
+      });
+      treffer.sort(function (a, b) { return a.rang - b.rang; });
+      ergebnis.classList.remove("versteckt");
+      if (!treffer.length) {
+        var leer = document.createElement("p"); leer.className = "leer";
+        leer.textContent = "Nichts gefunden. Notizen und Abrechnung durchsucht die App nur, wenn du angemeldet bist.";
+        ergebnis.appendChild(leer); return;
+      }
+      treffer.slice(0, 25).forEach(function (t) {
+        var a = document.createElement("a"); a.href = t.ziel; a.className = "alles-treffer-zeile";
+        var art = document.createElement("em"); art.textContent = t.art;
+        var sp = document.createElement("span"); sp.textContent = t.titel;
+        var sm = document.createElement("small"); sm.textContent = t.unter || "";
+        sp.appendChild(sm);
+        a.appendChild(art); a.appendChild(sp);
+        a.addEventListener("click", function () { feld.value = ""; ergebnis.classList.add("versteckt"); });
+        ergebnis.appendChild(a);
+      });
+      if (treffer.length > 25) {
+        var mehr = document.createElement("p"); mehr.className = "meta";
+        mehr.textContent = "\u2026 und " + (treffer.length - 25) + " weitere. Tipp genauer.";
+        ergebnis.appendChild(mehr);
+      }
+    }
+  }
+
   function zeigeMehr() {
     ansicht("mehr"); aktuell = null;
     var liste = el("mehr-liste"); liste.innerHTML = "";
+    var suchbox = el("mehr-suche"); if (suchbox) suchbox.innerHTML = "";
     var eintraege = [
       ["F\u00fcr dich"],
       funktion("archiv") ? ["#archiv", "i-clock", "Archiv", "Alle deine Spiele, alle Saisons, mit Filtern und Export"] : null,
@@ -3810,6 +3936,8 @@
     });
     eintraege = eintraege.filter(function (e, i, a) { return e.length > 1 || (a[i + 1] && a[i + 1].length > 1); });
     if (!sitzungVorhanden()) eintraege.unshift(["#mitglieder", "i-lock", "Anmelden", "Konto anlegen oder anmelden \u2013 f\u00fcr " + [funktion("tausch") ? "Tausch" : "", funktion("abrechnung") ? "Abrechnung" : "", funktion("info") ? "Info" : "", "Notizen"].filter(Boolean).join(", ")]);
+
+    if (suchbox) sucheAufbauen(suchbox, eintraege.filter(function (e) { return e.length > 1; }));
 
     function kachel(e) {
       var a = document.createElement("a"); a.href = e[0]; a.appendChild(ikone(e[1]));
@@ -4801,7 +4929,7 @@
   // Sicherung: alles, was nur hier liegt und nach einem verlorenen Konto
   // oder einem neuen Handy sonst neu getippt werden muesste.
   var SICHER_SCHLUESSEL = ["einfach", "karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche",
-    "pushwoche", "pushabrechnung", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4", "thema", "funktionen", "verkehr"];
+    "pushwoche", "pushabrechnung", "pushvorlauf", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4", "thema", "funktionen", "verkehr"];
   function sicherungBauen() {
     var app = {};
     SICHER_SCHLUESSEL.forEach(function (k) { var w = lesen(k); if (w !== null && w !== undefined) app[k] = w; });
@@ -4902,7 +5030,7 @@
   function einstellungenAnwenden(e) {
     if (!e) return;
     var geaendert = false;
-    ["einfach", "karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche", "pushwoche", "pushabrechnung", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4", "verkehr"].forEach(function (k) { if ((lesen(k) || null) !== (e[k] || null)) { schreiben(k, e[k] || null); geaendert = true; } });
+    ["einfach", "karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche", "pushwoche", "pushabrechnung", "pushvorlauf", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4", "verkehr"].forEach(function (k) { if ((lesen(k) || null) !== (e[k] || null)) { schreiben(k, e[k] || null); geaendert = true; } });
     if (geaendert) { einstellungenLaden(true); themaAnwenden(); einfachAnwenden(); tabsAnwenden(); funktionenAnwenden(funktionenLesen()); toast("Einstellungen vom Konto übernommen", ""); if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true); }
   }
   // Das eigene Bild liegt zusaetzlich auf dem Geraet, damit die Kopfzeile

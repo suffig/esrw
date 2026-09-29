@@ -5,8 +5,10 @@ eingeschaltet haben:
 
   * neue, geaenderte und abgesetzte Einteilungen (aus aenderungen.json,
     das esrw_ical.py im selben Lauf schreibt)
-  * am Spieltag ab 07:00 Uhr eine Erinnerung je Spiel (Uhrzeit, Treffpunkt,
-    Halle, Abfahrt wenn die Strecke im Profil bekannt ist)
+  * eine Erinnerung je Spiel (Uhrzeit, Treffpunkt, Halle, Abfahrt wenn die
+    Strecke im Profil bekannt ist). Wann sie kommt, stellt jeder selbst ein:
+    am Spieltag ab 07:00 Uhr, eine Zahl Stunden vor dem Treffpunkt oder am
+    Abend davor (Einstellungen -> Push)
   * kurz vor der Abfahrt "In ~30 Minuten losfahren" - nur, wenn die Person
     ihre Heimatadresse hinterlegt und die Strecke berechnet hat
 
@@ -35,7 +37,7 @@ import os
 import sys
 import urllib.parse
 import urllib.request
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, time, timedelta, timezone
 
 import tresor
 
@@ -144,42 +146,74 @@ WOCHENTAGE = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
 MONATE = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]
 
 
+def vorlauf_zeit(profil, treff):
+    """Wann die Spieltag-Erinnerung frueestens raus darf. Jeder stellt das
+    selbst ein (Einstellungen -> Push): zur festen Stunde am Spieltag, eine
+    Zahl Stunden vor dem Treffpunkt, oder am Abend davor."""
+    wahl = str(((profil or {}).get("einstellungen") or {}).get("pushvorlauf") or "").strip()
+    if wahl == "abend":
+        davor = treff.date() - timedelta(days=1)
+        return datetime.combine(davor, time(18, 0), tzinfo=BERLIN)
+    if wahl.isdigit() and 0 < int(wahl) <= 48:
+        return treff - timedelta(hours=int(wahl))
+    return datetime.combine(treff.date(), time(ERINNERUNG_AB_STUNDE, 0), tzinfo=BERLIN)
+
+
+def verkehr_puffer(profil):
+    """Derselbe Aufschlag, den die App auf die Fahrzeit rechnet - der
+    Routendienst kennt keinen Stau (Einstellungen -> Puffer fuer Verkehr)."""
+    try:
+        p = int(((profil or {}).get("einstellungen") or {}).get("verkehr") or 0)
+    except (TypeError, ValueError):
+        return 0
+    return p if 0 <= p <= 60 else 0
+
+
 def erinnerungen(person, profil, jetzt, schon):
     """Spieltag- und Abfahrt-Erinnerungen fuer eine Person. Liefert
     (schluessel, nutzlast)-Paare, die noch nicht verschickt wurden."""
     heraus = []
     strecken = (profil or {}).get("strecken") or {}
-    heute = jetzt.date()
+    puffer = verkehr_puffer(profil)
     for s in person.get("spiele", []):
         try:
             beginn = datetime.fromisoformat(s["beginn"]).astimezone(BERLIN)
             treff = datetime.fromisoformat(s["treffpunkt"]).astimezone(BERLIN)
         except (KeyError, ValueError):
             continue
-        if beginn.date() != heute or beginn < jetzt:
+        if beginn < jetzt:
+            continue
+        ab_wann = vorlauf_zeit(profil, treff)
+        # Mehr als der Vorlauf im Voraus interessiert niemanden - und die
+        # Abfahrt-Erinnerung betrifft ohnehin nur den Spieltag selbst
+        if beginn.date() != jetzt.date() and jetzt < ab_wann:
             continue
         kennung = s["beginn"] + "|" + s["paarung"]
         strecke = strecken.get(s.get("halle") or "") or {}
         minuten = strecke.get("minuten")
+        if minuten and puffer:
+            minuten = round(minuten * (1 + puffer / 100.0))
         abfahrt = treff - timedelta(minutes=minuten) if minuten else None
 
         k = "spieltag|" + kennung
-        if jetzt.hour >= ERINNERUNG_AB_STUNDE and k not in schon:
+        if jetzt >= ab_wann and k not in schon:
             text = "%s Uhr %s%s\nTreffpunkt %s Uhr · %s" % (
                 beginn.strftime("%H:%M"), (s.get("liga") + ": ") if s.get("liga") else "",
                 s.get("paarung", ""), treff.strftime("%H:%M"), s.get("halle") or "Halle unbekannt")
             if abfahrt:
-                text += "\nAbfahrt ca. %s Uhr (%s km, ohne Verkehr)" % (
-                    abfahrt.strftime("%H:%M"), strecke.get("km", "?"))
+                text += "\nAbfahrt ca. %s Uhr (%s km, %s)" % (
+                    abfahrt.strftime("%H:%M"), strecke.get("km", "?"),
+                    ("inkl. %d %% Puffer" % puffer) if puffer else "ohne Verkehr")
             w = wetter(s.get("koordinaten"), abfahrt or treff)
             if w:
                 text += "\nWetter: " + w
-            heraus.append((k, {"titel": "Heute: %s als %s" % (s.get("paarung", "Spiel"), s.get("rolle", "SR")),
+            wann = "Heute" if beginn.date() == jetzt.date() else "Morgen" if beginn.date() == jetzt.date() + timedelta(days=1) else beginn.strftime("%d.%m.")
+            heraus.append((k, {"titel": "%s: %s als %s" % (wann, s.get("paarung", "Spiel"), s.get("rolle", "SR")),
                                "text": text[:900], "url": "./#" + person["slug"],
                                "ort": s.get("ort") or None, "tag": "spieltag"}))
 
         k = "abfahrt|" + kennung
-        if abfahrt and k not in schon:
+        if abfahrt and beginn.date() == jetzt.date() and k not in schon:
             rest = (abfahrt - jetzt).total_seconds() / 60
             if 0 < rest <= ABFAHRT_FENSTER_MIN:
                 heraus.append((k, {"titel": "In ~%d Min. losfahren" % round(rest),

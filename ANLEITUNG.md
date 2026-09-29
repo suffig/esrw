@@ -2491,6 +2491,90 @@ Einteilung. Sie bekommen deshalb ein eigenes Kennzeichen.
   könnte sich jemand mit einer fremden Adresse anmelden und eine
   Einladung einlösen.
 
+### 10.6be Nichts geht verloren, und eine eigene Sicherung (Schema v37)
+
+* **Speichern lässt nichts mehr fallen.** Drei Wege, auf denen eine
+  Eingabe verschwinden konnte, sind zu: Schlug das Speichern eines
+  Einsatzes aus einem anderen Grund als dem Netz fehl (abgelaufene
+  Anmeldung, Störung beim Anbieter), gab es nur eine Meldung - nach dem
+  Neuladen war die Änderung weg. Beim Nachreichen flog ein Eintrag bei
+  genau solchen Fehlern stillschweigend aus der Warteschlange. Und das
+  Zwischenlagern auf dem Gerät konnte scheitern (Speicher voll), während
+  die App „offline gespeichert" meldete. Jetzt landet **jeder** Fehler in
+  der Warteschlange, ein Eintrag bleibt liegen und zählt seine Versuche,
+  und ein voller Gerätespeicher sagt es dir.
+
+* **Sichtbar statt flüchtig.** Oben in der Abrechnung steht, wie viele
+  Änderungen noch warten, warum es hängt und ein Knopf „Jetzt versuchen".
+  Private Notizen liegen als Entwurf auf dem Gerät, bis der Server
+  bestätigt hat - wer mitten im Tippen die App schliesst, findet den Text
+  wieder.
+
+* **Eigene Sicherung** (`sicherung.py`, Schema **v37**). Der Free Plan von
+  Supabase sichert **nichts**; ein Versehen im SQL-Editor oder ein Ausfall
+  dort wäre endgültig. Der Workflow zieht deshalb einmal am Tag alle
+  Tabellen (die Namen liest er aus `schema.sql`, damit keine neue durchs
+  Raster fällt), verschlüsselt sie mit `DATEN_SCHLUESSEL` und legt sie in
+  `sicherungen/` ab. Täglich für 35 Tage, danach nur noch die
+  Monatsersten für zwei Jahre. Lesbar machen:
+  `python sicherung.py --zeigen sicherungen/2026-09-29.json.bin` - der
+  Klartext landet daneben und gehört danach gelöscht (`.gitignore` hält
+  ihn ohnehin aus dem Repository). **Dateien im Storage (die Belege) sind
+  nicht dabei**, die liegen nur bei Supabase.
+
+* **Reicht der Free Plan?** Ja, mit Abstand. Eine ganze Saison sind rund
+  320 KB, das Limit der Datenbank liegt bei 500 MB; die wachsenden
+  Tabellen (`push_gesendet`, `push_lauf`) räumen sich selbst auf. Das
+  Projekt schläft auch nicht ein, weil der Workflow stündlich schreibt.
+  Aufpassen muss man nur beim Bucket `belege`: 1 GB, Fotos werden vor dem
+  Hochladen auf etwa 300 KB gerechnet, **PDF gehen ungerechnet durch**
+  (bis 10 MB je Datei).
+
+* **Admin → Speicher.** Zeigt beides an einer Stelle: wann die letzte
+  Sicherung war und wie gross sie ist, wie viele Belege hängen, wie viele
+  Zeilen in welcher Tabelle stehen, und was das von den Free-Plan-Grenzen
+  aufbraucht. Ist die letzte Sicherung älter als zwei Tage, steht es rot
+  da.
+
+### 10.6bf Abrechnung: Schnelleingabe, eigene Regeln, Prüfen
+
+* **Schnelleingabe** (Knopf neben „Unvollständig"/„Alle"). Eine Zeile je
+  Spiel, km, Vergütung und Auslagen nebeneinander tippbar, Enter springt
+  ins nächste Feld. Wer eine ganze Saison nachträgt, muss nicht mehr für
+  jedes Spiel eine Karte aufklappen. Tipp auf das Spiel selbst führt in
+  die volle Ansicht.
+
+* **Eigene Regeln** (Weitere → Eigene Regeln). „Diese Liga bringt X",
+  „diese Halle sind Y km" - einmal eingetragen, danach füllt die App neue
+  Spiele von selbst. Die Regeln **schlagen** die Gebührenordnung und die
+  berechnete Route, denn die Ordnung kennt nicht jede Liga (DEB-Ligen,
+  Auswahlspiele) und die Luftlinie stimmt selten. Ein Knopf trägt sie
+  nachträglich in alle leeren Felder ein. Sie liegen im Konto, gelten
+  also auf jedem Gerät.
+
+* **Prüfen** (Knopf in der Leiste, mit Zahl). Sucht, was vor dem
+  Abschluss einen Blick wert ist: fehlende Vergütung oder km, Beträge
+  weit neben dem Erwarteten, Auslagen ohne Beleg und Beleg ohne Auslagen,
+  Verpflegung trotz abgeschalteter Pauschale, zwei Spiele zur selben
+  Zeit. Nichts davon ist zwingend falsch - ein Tipp springt ins Spiel.
+
+### 10.6bg Suche über alles, Erinnerung zur eigenen Zeit
+
+* **Ein Suchfeld oben auf „Mehr"**, das nicht wissen muss, wo etwas
+  steht: Seiten, Kollegen, Spiele (die eigenen zuerst), Hallen und die
+  eigenen Notizen. Treffer am Wortanfang stehen oben.
+
+* **Erinnerung ans Spiel** (Einstellungen → Push, nur sichtbar, wenn Push
+  auf dem Gerät an ist). Bisher kam sie immer am Spieltag ab 07:00 Uhr.
+  Jetzt wählst du: 07:00 Uhr, 3, 6 oder 12 Stunden vor dem Treffpunkt
+  oder am Abend davor ab 18 Uhr. Die Abfahrtszeit darin rechnet mit
+  deinem Verkehrspuffer (Einstellungen → Unterwegs) - der Routendienst
+  kennt keinen Stau.
+
+* **Wochentage in der Statistik.** Über alle Saisons gezählt, nicht nur
+  die laufende: an welchen Tagen jemand pfeift, zeigt sich erst nach ein
+  paar Jahren. Den Saison-Rückblick als Bild gab es schon.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

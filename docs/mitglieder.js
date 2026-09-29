@@ -3677,6 +3677,26 @@ window.Mitglieder = (function () {
         var ab = h("input", { type: "checkbox" }); ab.checked = !(ctx && ctx.lesen && ctx.lesen("pushabrechnung") === "0");
         ab.addEventListener("change", function () { if (ctx && ctx.schreiben) ctx.schreiben("pushabrechnung", ab.checked ? null : "0"); if (ctx && ctx.einstellungenSync) ctx.einstellungenSync(); });
         box.appendChild(h("label", { class: "mg-check mg-woche", style: "display:flex;gap:8px;align-items:center;margin-top:6px" }, [ab, " Nach dem Spiel „Spiel abrechnen?“ (abends, mit Vorbelegung)"]));
+
+        // Wann die Spieltag-Erinnerung kommt. "07:00" war lange die einzige
+        // Antwort - wer um sieben noch schlaeft, hatte sie mittags vergessen.
+        var VORLAUF = [["", "07:00 Uhr"], ["3", "3 Std. vorher"], ["6", "6 Std. vorher"], ["12", "12 Std. vorher"], ["abend", "Abend davor"]];
+        var jetztV = (ctx && ctx.lesen && ctx.lesen("pushvorlauf")) || "";
+        var stufen = h("span", { class: "stufen" }, VORLAUF.map(function (v) {
+          return h("button", { type: "button", class: v[0] === jetztV ? "aktiv" : "", text: v[1], onclick: function (ev) {
+            Array.prototype.forEach.call(stufen.querySelectorAll("button"), function (b2) { b2.classList.remove("aktiv"); });
+            ev.target.classList.add("aktiv");
+            if (ctx && ctx.schreiben) ctx.schreiben("pushvorlauf", v[0] || null);
+            if (ctx && ctx.einstellungenSync) ctx.einstellungenSync();
+            kurzMeldung(v[0] === "abend" ? "Die Erinnerung kommt am Abend davor ab 18 Uhr."
+              : v[0] ? "Die Erinnerung kommt " + v[0] + " Stunden vor dem Treffpunkt."
+              : "Die Erinnerung kommt am Spieltag ab 07:00 Uhr.", "");
+          } });
+        }));
+        box.appendChild(h("label", { class: "mg-woche mg-vorlauf", style: "display:flex;flex-direction:column;gap:6px;align-items:flex-start;margin-top:10px" }, [
+          h("span", {}, [h("b", { text: "Erinnerung ans Spiel" }),
+            h("small", { style: "display:block", text: "Uhrzeit, Treffpunkt, Halle und Abfahrt - wann sie kommt, bestimmst du." })]),
+          stufen]));
       }
       if (lage === "an") box.appendChild(h("button", { type: "button", class: "mg-neben", style: "margin-top:8px;width:100%", text: "Testnachricht auf diesem Gerät", onclick: function () {
         navigator.serviceWorker.ready.then(function (reg) {
@@ -4202,6 +4222,17 @@ window.Mitglieder = (function () {
     lokalSchreiben("mg_notiz_entwurf", e);
   }
 
+  // Fuer die Suche auf der Mehr-Seite. Nur die eigenen Notizen, und nur
+  // wenn ueberhaupt jemand angemeldet ist.
+  function notizenFuerSuche() {
+    return bereit().then(function (st) {
+      if (!st.eingerichtet || !session) return [];
+      return sb.from("spielnotizen").select("kennung,paarung,text,beginn")
+        .eq("user_id", session.user.id).limit(300)
+        .then(function (r) { return (r && r.data) || []; });
+    }).catch(function () { return []; });
+  }
+
   function notizSpeichern(spiel, text) {
     var kennung = kennungVon(spiel);
     var lauf = text
@@ -4272,7 +4303,8 @@ window.Mitglieder = (function () {
       ["telefon", "Telefonliste", "i-users", telefonlisteRendern],
       ["zeiten", "Spielzeiten", "i-clock", spielzeitenRendern],
       ["korrekturen", "Korrekturen", "i-note", korrekturenRendern],
-      ["push", "Push", "i-bell", pushLaufRendern]
+      ["push", "Push", "i-bell", pushLaufRendern],
+      ["speicher", "Speicher", "i-note", speicherRendern]
     ];
     if (!BEREICHE.filter(function (b) { return b[0] === adminBereich; }).length) adminBereich = BEREICHE[0][0];
 
@@ -4778,6 +4810,103 @@ window.Mitglieder = (function () {
       suche.addEventListener("input", zeichne);
       zeichne();
     });
+  }
+
+  // Admin -> Speicher: reicht der Free Plan noch, und laeuft die Sicherung?
+  // Die Grenzen stehen hier als Zahlen, weil die App sie nicht abfragen
+  // kann - Supabase verraet sie nur im eigenen Dashboard.
+  var FREI_DB = 500 * 1024 * 1024;        // 500 MB Datenbank
+  var FREI_BUCKET = 1024 * 1024 * 1024;   // 1 GB fuer Dateien
+
+  function speicherRendern(box) {
+    leeren(box);
+    box.appendChild(h("h4", {}, [ikone("i-note"), " Speicher und Sicherung"]));
+    box.appendChild(h("p", { class: "meta", style: "margin:0 0 8px", text:
+      "Der Free Plan von Supabase gibt 500 MB Datenbank und 1 GB für Dateien. "
+      + "Gesichert wird nichts davon automatisch - das macht der Workflow einmal am Tag selbst." }));
+    var innen = h("div", {}, [skelett(1)]);
+    box.appendChild(innen);
+
+    // Zeilen zaehlen, ohne sie zu laden: head + count bringt nur die Zahl
+    var TABELLEN = ["profile", "einsaetze", "spielnotizen", "spielkommentare", "kontakte",
+                    "gesuche", "angebote", "mitfahrten", "spiele_archiv", "rechnungen",
+                    "push_abos", "push_gesendet", "telefonliste", "spiel_korrekturen"];
+    var zaehlung = TABELLEN.map(function (t) {
+      return sb.from(t).select("id", { count: "exact", head: true })
+        .then(function (r) { return { t: t, n: r && r.count != null ? r.count : null }; })
+        .catch(function () { return { t: t, n: null }; });
+    });
+
+    Promise.all([
+      Promise.all(zaehlung),
+      sb.from("sicherung_lauf").select("*").order("zeitpunkt", { ascending: false }).limit(1)
+        .then(function (r) { return r; }).catch(function (e) { return { error: e }; }),
+      sb.from("einsaetze").select("belege").then(function (r) { return r; }).catch(function (e) { return { error: e }; })
+    ]).then(function (erg) {
+      if (!box.isConnected) return;
+      leeren(innen);
+      var zahlen = erg[0], letzte = (erg[1] && erg[1].data && erg[1].data[0]) || null, alleE = erg[2];
+
+      // --- Sicherung
+      innen.appendChild(h("h4", { style: "margin:0 0 4px", text: "Letzte Sicherung" }));
+      if (erg[1] && erg[1].error) {
+        innen.appendChild(h("p", { class: "achtung", text: "Tabelle sicherung_lauf fehlt - schema.sql (v37) einspielen." }));
+      } else if (!letzte) {
+        innen.appendChild(h("p", { class: "achtung", text: "Noch keine Sicherung protokolliert. Die erste kommt beim nächsten Lauf des Workflows." }));
+      } else {
+        var alt = (Date.now() - new Date(letzte.zeitpunkt).getTime()) / 86400000;
+        innen.appendChild(h("div", { class: "status-liste", style: "padding:0" }, [
+          h("div", { class: "sperre" }, [h("span", { text: "Stand" }),
+            h("span", { class: alt > 2 ? "achtung" : "meta", text: seitText(letzte.zeitpunkt) })]),
+          h("div", { class: "sperre" }, [h("span", { text: "Umfang" }),
+            h("span", { class: "meta", text: letzte.tabellen + " Tabellen · " + letzte.zeilen + " Zeilen · " + kb(letzte.bytes) })])]));
+        if (letzte.fehler) innen.appendChild(h("p", { class: "achtung", text: "Nicht gelesen: " + letzte.fehler }));
+        if (alt > 2) innen.appendChild(h("p", { class: "achtung", text: "Die letzte Sicherung ist älter als zwei Tage - läuft der Workflow noch?" }));
+      }
+
+      // --- Dateien
+      innen.appendChild(h("h4", { style: "margin:14px 0 4px", text: "Belege" }));
+      var belegN = 0;
+      if (alleE && alleE.data) alleE.data.forEach(function (z) { belegN += (z.belege || []).length; });
+      // Die Groesse kennt nur Supabase. Aus der App laesst sich nur zaehlen,
+      // wie viele Dateien haengen - die Rechnung darunter ist eine Schaetzung.
+      var geschaetzt = belegN * 300 * 1024;
+      innen.appendChild(h("p", { class: "meta", style: "margin:0", text:
+        belegN + (belegN === 1 ? " Beleg" : " Belege") + " hinterlegt. Fotos werden vor dem Hochladen auf etwa 300 KB gerechnet, "
+        + "das wären rund " + kb(geschaetzt) + " von 1 GB. PDF gehen ungerechnet durch (bis 10 MB), die genaue Zahl steht nur im Supabase-Dashboard." }));
+      innen.appendChild(balken(geschaetzt / FREI_BUCKET));
+
+      // --- Zeilen
+      innen.appendChild(h("h4", { style: "margin:14px 0 4px", text: "Zeilen je Tabelle" }));
+      var gesamt = 0;
+      zahlen.forEach(function (z) { if (z.n) gesamt += z.n; });
+      // Grob gerechnet: eine Zeile belegt selten mehr als ein halbes KB
+      innen.appendChild(h("p", { class: "meta", style: "margin:0 0 6px", text:
+        gesamt + " Zeilen in den gezählten Tabellen, grob " + kb(gesamt * 512) + " von 500 MB." }));
+      innen.appendChild(balken(gesamt * 512 / FREI_DB));
+      var einzeln = zahlen.filter(function (z) { return z.n; }).sort(function (a, b) { return b.n - a.n; });
+      if (einzeln.length) {
+        var det = h("details", { class: "tausch", style: "margin-top:8px" }, [h("summary", { text: "Einzeln" })]);
+        einzeln.forEach(function (z) {
+          det.appendChild(h("div", { class: "sperre" }, [h("span", { text: z.t }), h("span", { class: "meta", text: String(z.n) })]));
+        });
+        innen.appendChild(det);
+      }
+
+      innen.appendChild(h("p", { class: "meta", style: "margin:10px 0 0", text:
+        "Ein Projekt im Free Plan schläft nach einer Woche ohne Zugriff ein. Das passiert hier nicht, "
+        + "weil der Workflow stündlich schreibt." }));
+    });
+  }
+
+  function kb(n) {
+    if (n == null) return "?";
+    if (n < 1024 * 1024) return Math.round(n / 1024) + " KB";
+    return (n / 1024 / 1024).toFixed(n < 100 * 1024 * 1024 ? 1 : 0) + " MB";
+  }
+  function balken(anteil) {
+    var p = Math.max(1, Math.min(100, Math.round((anteil || 0) * 100)));
+    return h("div", { class: "mg-balken" + (p > 80 ? " voll" : "") }, [h("i", { style: "width:" + p + "%" })]);
   }
 
   // Admin -> Push: kommt an, was die App verschickt? Der Workflow legt nach
@@ -5784,5 +5913,5 @@ window.Mitglieder = (function () {
            extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat, obmann: obmann, termine: termine,
            einstellungenSpeichern: einstellungenSpeichern, radar: radar, angebotMachen: angebotMachen,
            kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl, kontoRendern: kontoRendern, kontaktVon: kontaktVon, istAdmin: istAdmin, adminRecht: adminRecht, tresorSchluessel: tresorSchluessel, kontoKurz: kontoKurz, rechnungSprung: rechnungSprung, korrekturSpeichern: korrekturSpeichern, spielManuellLoeschen: spielManuellLoeschen,
-           mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, telefonVon: telefonVon, spielzeiten: spielzeiten, rechnungEinlesen: rechnungEinlesen, bilder: bilder, bildVon: bildVon, rufnameVon: rufnameVon, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb, wohnortEigen: wohnortEigen };
+           mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, telefonVon: telefonVon, spielzeiten: spielzeiten, rechnungEinlesen: rechnungEinlesen, bilder: bilder, bildVon: bildVon, rufnameVon: rufnameVon, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb, wohnortEigen: wohnortEigen, notizenFuerSuche: notizenFuerSuche };
 })();

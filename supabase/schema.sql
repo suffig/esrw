@@ -1624,3 +1624,26 @@ drop policy if exists "eigene Tests anlegen" on public.push_test;
 create policy "eigene Tests anlegen" on public.push_test for insert
   with check (auth.uid() = user_id
     and exists (select 1 from public.push_abos a where a.id = abo_id and a.user_id = auth.uid()));
+
+
+-- ======================================================================
+-- v37: Protokoll der Sicherungen
+-- ======================================================================
+-- Der Free Plan von Supabase sichert nichts. sicherung.py zieht deshalb
+-- einmal am Tag alle Tabellen und legt sie verschluesselt im Repository
+-- ab. Damit man in der App sieht, ob das laeuft, schreibt es hier eine
+-- Zeile je Lauf - nur Zahlen, keine Inhalte.
+create table if not exists public.sicherung_lauf (
+  id          bigserial primary key,
+  zeitpunkt   timestamptz not null default now(),
+  tabellen    int not null default 0,      -- wie viele Tabellen gelesen wurden
+  zeilen      int not null default 0,      -- wie viele Zeilen insgesamt
+  bytes       bigint not null default 0,   -- Groesse der verschluesselten Datei
+  fehler      text                          -- Tabellen, die nicht lesbar waren
+);
+alter table public.sicherung_lauf enable row level security;
+-- Schreiben tut nur der Workflow (service_role, umgeht RLS). Lesen darf
+-- nur der Betreiber - sonst stuende dort, wie viele Zeilen jede Tabelle hat.
+drop policy if exists "Sicherungslauf lesen" on public.sicherung_lauf;
+create policy "Sicherungslauf lesen" on public.sicherung_lauf for select
+  using (public.ist_admin());

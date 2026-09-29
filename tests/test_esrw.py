@@ -386,6 +386,10 @@ def test_saisonarchiv():
             stats, _ = E.statistik_aus_historie(dict(E.saisonarchiv_laden(), **historie), stand)
             st = stats[E.personen_schluessel("Muster, Max")]
             pruefe(st["gesamt"] == 2 and st["saison"] == 1 and len(st["spiele_saison"]) == 1, "Statistik zaehlt alle Saisons, Liste nur die laufende", str((st["gesamt"], st["saison"], len(st["spiele_saison"]))))
+            # Wochentage zaehlen ueber alle Saisons, sonst saehe man nach
+            # einem Jahr nichts
+            tage = [st["wochentage"].get(i, 0) for i in range(7)]
+            pruefe(sum(tage) == 2, "Wochentage zaehlen jedes Spiel", str(tage))
         finally:
             E.BASIS = alt_basis
 
@@ -608,6 +612,32 @@ def test_tresor():
         importlib.reload(esrw_ical_modul())
 
 
+def test_erinnerungszeit():
+    """Wann die Spieltag-Erinnerung raus darf. Falsch gerechnet hiesse:
+    sie kommt mitten in der Nacht oder erst nach dem Spiel."""
+    print("\nErinnerungszeit")
+    import datetime
+    try:
+        import push_senden as P
+    except ImportError as e:
+        print("  --   push_senden nicht ladbar (%s), Test uebersprungen" % e)
+        return
+    treff = datetime.datetime(2026, 9, 12, 12, 30, tzinfo=P.BERLIN)
+    pruefe(P.vorlauf_zeit({}, treff).hour == 7, "ohne Einstellung bleibt es bei 07:00")
+    pruefe(P.vorlauf_zeit({}, treff).date() == treff.date(), "und zwar am Spieltag")
+    drei = P.vorlauf_zeit({"einstellungen": {"pushvorlauf": "3"}}, treff)
+    pruefe(drei == treff - datetime.timedelta(hours=3), "3 Stunden vor dem Treffpunkt")
+    abend = P.vorlauf_zeit({"einstellungen": {"pushvorlauf": "abend"}}, treff)
+    pruefe(abend.date() == treff.date() - datetime.timedelta(days=1) and abend.hour == 18,
+           "Abend davor ist der Vortag um 18 Uhr")
+    for kaputt in ("0", "99", "", "morgen", None):
+        pruefe(P.vorlauf_zeit({"einstellungen": {"pushvorlauf": kaputt}}, treff).hour == 7,
+               "unsinnige Angabe %r faellt auf 07:00 zurueck" % (kaputt,))
+    pruefe(P.verkehr_puffer({"einstellungen": {"verkehr": "20"}}) == 20, "Verkehrspuffer wird uebernommen")
+    pruefe(P.verkehr_puffer({"einstellungen": {"verkehr": "999"}}) == 0, "unsinniger Puffer zaehlt nicht")
+    pruefe(P.verkehr_puffer({}) == 0, "ohne Einstellung kein Puffer")
+
+
 def test_sicherung():
     """Die Sicherung muss jede Tabelle des Schemas erfassen und sich
     hinterher wieder lesen lassen - sonst waere sie im Ernstfall wertlos."""
@@ -661,7 +691,7 @@ def main():
                  test_escape, test_ics, test_saison, test_aenderungstext, test_saisonarchiv,
                  test_korrektur_uid, test_gespannwechsel, test_ehemalige,
                  test_besetzung_korrektur, test_csp,
-                 test_rechnungsvorlage, test_sicherung,
+                 test_rechnungsvorlage, test_sicherung, test_erinnerungszeit,
                  test_tresor):
         test()
     print("\n" + "-" * 58)
