@@ -84,7 +84,7 @@
     ["regeln", "Regeln", "Strafentabelle, Spielzeiten, Durchführungsbestimmungen", true],
     ["rechner", "Strafrechner", "Stärke auf dem Eis ausrechnen", true],
     ["archiv", "Archiv", "alle Spiele aller Saisons mit Filtern", true],
-    ["obmann", "Obmann per E-Mail", "Obmann-Adresse im Profil, „Monat per E-Mail“, Absage-Mail", true],
+    ["obmann", "Obmann per E-Mail", "Obmann-Adresse im Profil, Absage und Fragen von der Spielseite, Mail bei einem Tausch", true],
     ["bild", "Profilbilder", "eigenes Bild hochladen und Bilder der Kollegen sehen", true],
     ["aenderungen", "Änderungen", "was sich an den Einteilungen getan hat, mit Vorher/Nachher", true]
   ];
@@ -3376,8 +3376,8 @@
     // 4) Datenbank (angemeldet)
     if (sitzungVorhanden()) laeufe.push(ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.archivAusDb(alle) : null; })
       .then(function (zeilen) { (zeilen || []).forEach(function (z) { merge({ kennung: z.kennung, beginn: z.beginn, liga: z.liga, paarung: z.paarung, halle: z.halle, system: z.system, besetzung: z.besetzung || [], saison: z.saison, manuell: z.manuell }); }); }).catch(function () {}));
-    // Admin-Schalter nur fuer Admins zeigen
-    if (sitzungVorhanden()) ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.istAdmin() : false; })
+    // Der Schalter "alle Kollegen" ist fuer Betreiber und Obmaenner
+    if (sitzungVorhanden()) ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) { return st.eingerichtet && st.session && window.Mitglieder.darfAlleSpiele ? window.Mitglieder.darfAlleSpiele() : false; })
       .then(function (ja) { el("archiv-admin").classList.toggle("versteckt", !ja); }).catch(function () {});
     else el("archiv-admin").classList.add("versteckt");
     Promise.all(laeufe).then(function () {

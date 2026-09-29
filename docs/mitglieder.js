@@ -1254,7 +1254,7 @@ window.Mitglieder = (function () {
       istObmann ? null : h("label", { class: "mg-check", style: "margin-top:4px" }, [adresseZeigen, " Anschrift zeigen"]),
       istObmann ? null : h("p", { class: "meta", style: "margin:8px 0 4px", text: "Nur Freigeschaltete sehen das, und nur, was hier angehakt ist. So sieht es aus:" }),
       istObmann ? null : vorschau,
-      fn("obmann") ? h("label", { text: "E-Mail des Obmanns (für „Monat per E-Mail“ in der Abrechnung, optional)" }) : null,
+      fn("obmann") ? h("label", { text: "E-Mail des Obmanns (für Fragen und Absagen von der Spielseite, optional)" }) : null,
       fn("obmann") ? obmann : null,
       h("label", { text: "Kilometermodell" }), modell,
       h("div", { class: "mg-felder mg-zwei" }, [
@@ -2714,7 +2714,6 @@ window.Mitglieder = (function () {
         return h("div", {}, [
           h("p", { class: "meta", style: "margin:0 0 8px", text: "Vergangene Spiele bekommen km und Vergütung von selbst. Die Knöpfe füllen nur, was noch fehlt." }),
           h("div", { class: "zweit" }, [strecken, gebuehr,
-            fn("obmann") ? h("button", { type: "button", text: "Monat per E-Mail", title: "Die Abrechnung eines Monats als Mail an den Obmann", onclick: function () { monatWaehlen(spiele); } }) : null,
             h("button", { type: "button", text: "CSV der Saison", onclick: function () { csvExport(spiele); } }),
             h("button", { type: "button", text: "Für die Steuer", title: "Jahresblatt und CSV je Steuerjahr", onclick: function () { zeigeFahrtenbuch(); } }),
             h("button", { type: "button", text: "Fahrtenbuch", onclick: function () { zeigeFahrtenbuch(); } }),
@@ -5754,68 +5753,6 @@ window.Mitglieder = (function () {
     ]);
   }
 
-  // ---- Monatsabrechnung als E-Mail (mailto, Text mit Tabelle)
-
-  // Welcher Monat soll raus? Nur Monate anbieten, in denen etwas steht -
-  // eine leere Mail hilft niemandem.
-  function monatWaehlen(spiele) {
-    var monate = [], gesehen = {};
-    spiele.forEach(function (sp) {
-      var d = new Date(sp.beginn);
-      if (d > new Date()) return;
-      var k = d.getFullYear() + "-" + d.getMonth();
-      if (gesehen[k]) return;
-      gesehen[k] = true;
-      monate.push({ k: k, d: new Date(d.getFullYear(), d.getMonth(), 1), text: MONATE[d.getMonth()] + " " + d.getFullYear() });
-    });
-    if (!monate.length) { meldung("In dieser Saison liegt noch kein Monat hinter dir.", "warn"); return; }
-    monate.sort(function (a, b) { return b.d - a.d; });
-    abrechnungPanel = null;
-    var wahl = h("select", { class: "mg-select" }, monate.map(function (m) { return h("option", { value: m.k, text: m.text }); }));
-    var box = h("div", { class: "melde karte mg-panel" }, [
-      h("h4", { style: "margin:0 0 6px", text: "Monat per E-Mail" }),
-      h("p", { class: "meta", style: "margin:0 0 8px", text: profil.obmann_email
-        ? "Geht an " + profil.obmann_email + ". Die Mail öffnet sich in deinem Mailprogramm, abgeschickt wird sie erst von dir."
-        : "Es ist noch keine Obmann-Adresse hinterlegt (Konto → Einstellungen). Die Mail öffnet sich trotzdem, nur ohne Empfänger." }),
-      h("div", { class: "zweit" }, [wahl,
-        h("button", { type: "button", class: "anfrage", text: "Mail vorbereiten", onclick: function () {
-          var m = monate.filter(function (x) { return x.k === wahl.value; })[0];
-          if (!m) return;
-          var drin = spiele.filter(function (sp) {
-            var d = new Date(sp.beginn);
-            return d.getFullYear() + "-" + d.getMonth() === m.k;
-          });
-          monatsMail(drin, m.d);
-        } }),
-        h("button", { type: "button", text: "Zurück", onclick: function () { rendereAbrechnung(); } })])]);
-    leeren(inhalt);
-    inhalt.appendChild(box);
-  }
-
-  function monatsMail(spiele, d) {
-    var zeilen = [], summe = 0, km = 0, fahrt = 0;
-    spiele.slice().reverse().forEach(function (sp) {
-      var e = einsaetze[sp.kennung] || {}, b = betragFuer(sp, e), dd = new Date(sp.beginn);
-      summe += b.betrag || 0; km += e.km || 0; fahrt += fahrtkosten(e);
-      zeilen.push(dd.toLocaleDateString("de-DE") + " " + uhr(dd) + "  " + (sp.liga ? sp.liga + " " : "") + sp.paarung + " (" + (sp.rolle || "SR") + (sp.system >= 3 ? ", " + sp.system + "er" : "") + ")" +
-        (sp.halle ? "\n    " + sp.halle : "") +
-        "\n    Vergütung " + euro(b.betrag || 0) + (b.zeit ? " inkl. +20 % Uhrzeit" : "") + (b.ueber ? " inkl. übergreifend" : "") + (e.ausgefallen ? " (50 %, vor Ort ausgefallen)" : "") +
-        (e.km != null ? " · " + e.km + " km " + ((profil.km_modell || "einfach") === "einfach" ? "einfach" : "einfach (hin und zurück gerechnet)") + ", Fahrt " + euro(fahrtkosten(e)) : "") + (e.auslagen ? " · Auslagen " + euro(e.auslagen) : "") + (e.verpflegung ? " · Verpflegung " + euro(e.verpflegung) : ""));
-    });
-    var monat = MONATE[d.getMonth()] + " " + d.getFullYear();
-    var text = "Hallo,\n\nanbei meine Abrechnung für " + monat + ":\n\n" + zeilen.join("\n\n") +
-      "\n\nSumme Vergütung: " + euro(summe) + "\nKilometer (einfach): " + Math.round(km) + " km · Fahrtkosten: " + euro(fahrt) +
-      "\n\nViele Grüße\n" + (profil.name ? profil.name.split(",").reverse().join(" ").trim() : "");
-    var an = profil.obmann_email || "";
-    var mailto = "mailto:" + encodeURIComponent(an) + "?subject=" + encodeURIComponent("Abrechnung " + monat + ", " + (profil.name || "")) + "&body=" + encodeURIComponent(text);
-    if (mailto.length > 1800 && navigator.share) {
-      navigator.share({ title: "Abrechnung " + monat, text: text }).catch(function () {});
-    } else {
-      location.href = mailto;
-    }
-    if (!an) kurzMeldung("Empfänger fehlt. Trag die Obmann-Adresse unter Konto → Einstellungen ein, dann steht sie gleich drin.", "");
-  }
-
   // ---- Fahrtenbuch (Druckansicht fuer das Finanzamt)
 
   function zeigeFahrtenbuch() {
@@ -5905,6 +5842,9 @@ window.Mitglieder = (function () {
   // Fuer app.js: darf dieses Konto Einteilungen aendern? Das koennen ein
   // Betreiber und ein Obmann mit dem Recht "korrekturen".
   function darfKorrigieren() { return ladeProfil().then(function () { return darf("korrekturen"); }).catch(function () { return false; }); }
+  // Betreiber oder Obmann mit mindestens einem Recht - fuer alles, was
+  // ueber die eigenen Spiele hinausgeht (Archiv aller Kollegen).
+  function darfAlleSpiele() { return ladeProfil().then(function () { return darfBereich(); }).catch(function () { return false; }); }
   // Hat das Konto ueberhaupt Adminrechte (unabhaengig vom Modus)? Fuer den Schalter oben.
   function adminRecht() { return ladeProfil().then(function () { return !!(profil && profil.admin); }).catch(function () { return false; }); }
   function korrekturSpeichern(kennung, obj) {
@@ -5936,12 +5876,14 @@ window.Mitglieder = (function () {
   }
   function wohnortVon(slug) { return cache.wohnorte[slug] || null; }
   function vorschlaegeFuer(spiel, slugs) { return wegVorschlaege(spiel, slugs); }
-  // Archiv aus der Datenbank: eigene Spiele oder (Admin) alle
+  // Archiv aus der Datenbank: eigene Spiele oder - fuer Betreiber und
+  // Obmaenner - alle. Wer einteilt, muss sehen, wer wann schon gepfiffen
+  // hat; mit nur den eigenen Spielen laesst sich das nicht beurteilen.
   function archivAusDb(alle) {
     if (!session) return Promise.resolve(null);
     return ladeProfil().then(function () {
       var q = sb.from("spiele_archiv").select("kennung,beginn,liga,paarung,halle,system,besetzung,saison,manuell");
-      if (!(alle && istAdminAn())) q = q.contains("slugs", [profil.slug]);
+      if (!(alle && darfBereich())) q = q.contains("slugs", [profil.slug]);
       return q.then(function (r) { return r.data || []; });
     }).catch(function () { return null; });
   }
@@ -6072,5 +6014,6 @@ window.Mitglieder = (function () {
            extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat, obmann: obmann, termine: termine,
            einstellungenSpeichern: einstellungenSpeichern, radar: radar, angebotMachen: angebotMachen,
            kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl, kontoRendern: kontoRendern, kontaktVon: kontaktVon, istAdmin: istAdmin, adminRecht: adminRecht, tresorSchluessel: tresorSchluessel, kontoKurz: kontoKurz, rechnungSprung: rechnungSprung, korrekturSpeichern: korrekturSpeichern, spielManuellLoeschen: spielManuellLoeschen,
-           mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, telefonVon: telefonVon, spielzeiten: spielzeiten, rechnungEinlesen: rechnungEinlesen, bilder: bilder, bildVon: bildVon, rufnameVon: rufnameVon, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb, wohnortEigen: wohnortEigen, notizenFuerSuche: notizenFuerSuche, zugang: zugang, darfKorrigieren: darfKorrigieren };
+           mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, telefonVon: telefonVon, spielzeiten: spielzeiten, rechnungEinlesen: rechnungEinlesen, bilder: bilder, bildVon: bildVon, rufnameVon: rufnameVon, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb, wohnortEigen: wohnortEigen, notizenFuerSuche: notizenFuerSuche, zugang: zugang, darfKorrigieren: darfKorrigieren,
+           darfAlleSpiele: darfAlleSpiele };
 })();

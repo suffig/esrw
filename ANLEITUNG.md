@@ -2733,6 +2733,15 @@ Oberfläche: die Regeln in der Datenbank hängen an derselben Prüfung
 vorbei nicht weiter. Die Rechte selbst kann nur der Betreiber setzen;
 der Trigger `profil_schutz` hält sie fest.
 
+**Der Obmann sieht alles, nicht nur seine eigenen Spiele.** Im Archiv
+steht für ihn - wie für dich - der Schalter „Alle Spiele aller Kollegen"
+samt Kollegen-Auswahl. Wer einteilt, muss sehen, wer wann schon gepfiffen
+hat; mit nur den eigenen Spielen lässt sich das nicht beurteilen. Der
+Spielplan, die Kollegenseiten und die Spielseite jedes Spiels standen
+ohnehin jedem Freigeschalteten offen - korrigieren kann er dort mit dem
+Recht „Einteilungen korrigieren" auch Spiele, bei denen er selbst nicht
+eingeteilt ist. Ein Obmann ohne jedes Häkchen sieht den Schalter nicht.
+
 **An jeder Änderung steht jetzt der Name.** Mit mehreren Leuten, die
 ändern dürfen, reicht „vom Betreiber korrigiert" nicht mehr: auf der
 Spielkarte und der Spielseite steht „✎ Geändert von Jens am 30.09." -
@@ -2754,11 +2763,13 @@ kommentarlos nichts - ein sichtbarer, toter Knopf. Dasselbe beim Annehmen
 eines Angebots in der Tauschbörse: der Bestätigungstext versprach eine
 Mail, die nicht kam. Beides folgt jetzt dem Schalter.
 
-Dabei ist aufgefallen, dass **„Monat per E-Mail" gar keinen Knopf mehr
-hatte**, obwohl die Funktionsbeschreibung ihn nennt und der Code
-vollständig da war. Er steht wieder unter Abrechnung → Weitere →
-Werkzeuge, mit Monatsauswahl, und erscheint nur, wenn die Funktion an
-ist.
+**Abrechnungen gehen nie an den Obmann.** „Monat per E-Mail" hatte
+keinen Knopf mehr; kurz war er wieder da, ist aber wieder raus - samt
+Code. Die Abrechnung ist eine private Aufstellung für dich oder deinen
+Steuerberater, sie hat beim Obmann nichts zu suchen. Was von der
+Funktion „Obmann per E-Mail" bleibt, sind die zwei Wege, für die man ihn
+wirklich anschreibt: **Fragen und Absagen von der Spielseite** und die
+**Mail bei einem Tausch**. Das Feld im Profil heisst jetzt auch so.
 
 ### 10.7 Freischaltung neuer Konten
 
