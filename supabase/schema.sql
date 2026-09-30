@@ -1997,3 +1997,22 @@ update public.profile
 -- Rechte setzen (geht auch in der App unter Admin -> Freischaltung):
 --   update public.profile set rechte = '{korrekturen,archiv}'
 --    where slug = 'muster-max';
+
+
+-- ======================================================================
+-- v41: Wann ist ein Spiel abgehakt?
+-- ======================================================================
+-- Die Abrechnung wusste bisher nur, ob ein Betrag erfasst ist. Was davon
+-- schon beim Verein war und was noch aussteht, stand nirgends. Mit der
+-- Rechnung ist das Spiel praktisch durch - also setzt die App die Marke
+-- beim Erzeugen der Rechnung selbst, und von Hand geht es auch.
+alter table public.einsaetze add column if not exists bezahlt timestamptz;
+comment on column public.einsaetze.bezahlt is
+  'Wann abgehakt. Wird beim Erzeugen einer Rechnung gesetzt, laesst sich von Hand setzen und zuruecknehmen.';
+
+-- Die Rechnung merkt sich ausserdem, was sie erzeugt hat - damit sie am
+-- Spiel haengt und sich von dort neu laden laesst (die Spalte "felder"
+-- gibt es seit v20, "kennungen" seit v18; hier nur der Vollstaendigkeit
+-- halber, falls eine aeltere Datenbank sie noch nicht hat).
+alter table public.rechnungen add column if not exists felder jsonb;
+alter table public.rechnungen add column if not exists kennungen text[];

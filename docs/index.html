@@ -1914,9 +1914,55 @@
   .testbalken button { min-height:40px; padding:8px 14px; border-radius:10px;
     border:1px solid currentColor; background:none; color:inherit;
     font:inherit; font-weight:700; }
+
+  /* Runde 56: abgehakte Spiele */
+  .mg-status.bezahlt { background:var(--gut-bg); color:var(--gut); }
+  .mg-eintrag.bezahlt { border-left:3px solid var(--gut); }
+  .mg-eintrag.bezahlt .mg-betrag-kurz { opacity:.75; }
+
+  /* Runde 56: vier Kacheln im Summenblock - zwei Reihen statt Gequetsche */
+  .mg-saldo { flex-wrap:wrap; }
+  .mg-saldo .zahl { flex:1 1 calc(50% - 5px); min-width:0; }
+  .mg-saldo .zahl span { overflow-wrap:anywhere; }
+
+  /* Runde 56: Rechte je Konto aufklappbar */
+  details.rechte-klapp { margin-top:8px; }
+  details.rechte-klapp > summary { font-size:.82rem; font-weight:700; color:var(--dim);
+    padding:6px 0; min-height:36px; display:flex; align-items:center; }
+  details.rechte-klapp.hat > summary { color:var(--akzent); }
+  details.rechte-klapp .obmann-rechte { margin-top:2px; }
+  .konto-zeile input[type="search"] { width:100%; }
+
+  /* Runde 56: Ladeanzeige. Der Streifen oben laeuft, solange etwas
+     unterwegs ist; das Skelett zeigt die Form dessen, was kommt. */
+  .lade-streifen { position:fixed; top:0; left:0; right:0; height:4px; z-index:70;
+    overflow:hidden; pointer-events:none; opacity:0; transition:opacity .2s;
+    background:color-mix(in srgb, var(--akzent) 14%, transparent); }
+  :root.laedt .lade-streifen { opacity:1; }
+  .lade-streifen i { display:block; height:100%; width:45%;
+    background:linear-gradient(90deg, transparent, var(--akzent), transparent);
+    box-shadow:0 0 10px var(--akzent); transform:translateX(-100%); }
+  :root.laedt .lade-streifen i { animation:lade-lauf 1.1s infinite; }
+  @keyframes lade-lauf { to { transform:translateX(350%); } }
+
+  .skelett-karte { display:flex; flex-direction:column; justify-content:center;
+    gap:9px; height:auto; min-height:104px; padding:16px; border-radius:var(--radius); }
+  .skelett-karte i { display:block; height:11px; border-radius:99px;
+    background:color-mix(in srgb, var(--dim) 28%, transparent); }
+  .skelett-karte i.s1 { width:42%; }
+  .skelett-karte i.s2 { width:78%; height:14px; }
+  .skelett-karte i.s3 { width:56%; }
+  .skelett-zeile, .skelett-karte { border-radius:var(--radius); }
+
+  .lade-zeile { display:flex; align-items:center; gap:8px; }
+  .lade-punkt { width:14px; height:14px; border-radius:50%; flex:none;
+    border:2px solid color-mix(in srgb, var(--akzent) 35%, transparent);
+    border-top-color:var(--akzent); animation:lade-dreh .8s linear infinite; }
+  @keyframes lade-dreh { to { transform:rotate(360deg); } }
 </style>
 </head>
 <body>
+<div class="lade-streifen" aria-hidden="true"><i></i></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-teilen" viewBox="0 0 24 24"><circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/><path d="M8.3 10.8 15.7 6.4"/><path d="m15.7 17.6-7.4-4.4"/></symbol>
@@ -2367,6 +2413,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=100"></script>
+<script src="app.js?v=101"></script>
 </body>
 </html>

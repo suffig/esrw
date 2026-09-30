@@ -146,7 +146,10 @@ window.Mitglieder = (function () {
   function rolleBadge(rolle) { return h("span", { class: "rolle " + (rolle || ""), text: rolle || "" }); }
   function skelett(n) {
     var box = h("div", { class: "skelett" });
-    for (var i = 0; i < (n || 3); i++) box.appendChild(h("div", { class: "karte skelett-karte" }));
+    for (var i = 0; i < (n || 3); i++) {
+      box.appendChild(h("div", { class: "karte skelett-karte" }, [
+        h("i", { class: "s1" }), h("i", { class: "s2" }), h("i", { class: "s3" })]));
+    }
     return box;
   }
   function frei() { return !!(sb && sb._attrappe) || !!(profil && (profil.freigeschaltet || profil.admin)); }
@@ -1592,7 +1595,10 @@ window.Mitglieder = (function () {
     }, alt.id ? { id: alt.id } : {}, alt.belege !== undefined ? { belege: alt.belege } : {},
        // Neue Spalten (v14) nur mitschicken, wenn sie gebraucht werden - sonst
        // scheitert jedes Speichern, solange das Schema nicht nachgezogen ist
-       alt.verpflegung != null ? { verpflegung: alt.verpflegung } : {}, alt.privat ? { privat: true } : {}, aenderung);
+       alt.verpflegung != null ? { verpflegung: alt.verpflegung } : {}, alt.privat ? { privat: true } : {},
+       // Wie bei verpflegung: nur mitschicken, wenn gesetzt - sonst
+       // scheitert jedes Speichern, solange v41 nicht eingespielt ist
+       alt.bezahlt != null ? { bezahlt: alt.bezahlt } : {}, aenderung);
     einsaetze[spiel.kennung] = zeile;
     aktualisiereSummen();
     aktualisiereZeile(spiel);
@@ -1686,11 +1692,25 @@ window.Mitglieder = (function () {
     var sS = summen(spiele);
     var saldo = h("div", { class: "mg-saldo" });
     var kosten = sS.fahrt + sS.verpf + sS.ausl;
+    // Was noch nicht abgehakt ist - die eigentliche Frage beim Blick in
+    // die Abrechnung: was steht noch aus?
+    var jetzt = new Date(), offenBetrag = 0, offenN = 0;
+    spiele.forEach(function (sp) {
+      if (new Date(sp.beginn) > jetzt) return;
+      var e = einsaetze[sp.kennung];
+      if (e && e.bezahlt) return;
+      offenN++;
+      offenBetrag += e ? (betragFuer(sp, e).betrag || 0) : 0;
+    });
     [["Vergütung", euro(sS.verg), null, ""], ["Kosten", euro(kosten), null, ""],
-     ["Saldo", euro(sS.verg - kosten), function () { abrechnungPanel = "detail"; rendereAbrechnung(); }, sS.verg - kosten < 0 ? "offen" : "offen fertig"]
+     ["Saldo", euro(sS.verg - kosten), function () { abrechnungPanel = "detail"; rendereAbrechnung(); }, sS.verg - kosten < 0 ? "offen" : "offen fertig"],
+     [offenN ? "Offen · " + offenN + (offenN === 1 ? " Spiel" : " Spiele") : "Alles abgehakt",
+      offenN ? euro(offenBetrag) : "✓",
+      function () { nurUnbezahlt = !nurUnbezahlt; nurOffene = false; schnellModus = false; rendereAbrechnung(); },
+      offenN ? "offen" : "offen fertig"]
     ].forEach(function (p) {
       var k = h("div", { class: "zahl karte " + p[3] + (p[2] ? " tippbar" : "") }, [h("b", { text: p[1] }), h("span", { text: p[0] })]);
-      if (p[2]) { k.style.cursor = "pointer"; k.title = "Antippen: Steuerjahre"; k.addEventListener("click", p[2]); }
+      if (p[2]) { k.style.cursor = "pointer"; k.title = "Antippen"; k.addEventListener("click", p[2]); }
       saldo.appendChild(k);
     });
     var neu = h("div", { class: "mg-summenblock" }, [saldo]);
@@ -2177,9 +2197,10 @@ window.Mitglieder = (function () {
       if (!stamm.name || !stamm.strasse || !stamm.plz_ort) { meldung("Bitte oben erst deine eigenen Daten eintragen.", "warn"); stammZeile.open = true; stammZeile.scrollIntoView({ block: "center", behavior: "smooth" }); return; }
       if (!f.name) { meldung("Der Rechnungsempfänger fehlt.", "warn"); g2.open = true; g2.scrollIntoView({ block: "center", behavior: "smooth" }); return; }
       if (!f.nummer) { meldung("Die Rechnungsnummer fehlt.", "warn"); g3.open = true; return; }
-      // Ohne diese beiden schickt der Verein die Rechnung meist zurueck
-      var fehlt2 = [!stamm.sr_nummer ? "die Schiedsrichternummer" : "", !stamm.steuernummer ? "die Steuernummer" : ""].filter(Boolean);
-      if (fehlt2.length && !confirm("Es fehlt " + fehlt2.join(" und ") + ". Der Verein schickt die Rechnung dann meist zurück. Trotzdem erstellen?")) {
+      // Die Steuernummer gehoert nicht auf die Rechnung - frueher stand
+      // hier eine Warnung, die nur im Weg war. Ohne die
+      // Schiedsrichternummer kommt sie dagegen oft zurueck.
+      if (!stamm.sr_nummer && !confirm("Die Schiedsrichternummer fehlt. Der Verein schickt die Rechnung dann oft zurück. Trotzdem erstellen?")) {
         stammZeile.open = true; stammZeile.scrollIntoView({ block: "center", behavior: "smooth" }); return;
       }
       rechnungErzeugen(stamm, f, betraege(), f.nummer);
@@ -2268,8 +2289,30 @@ window.Mitglieder = (function () {
   // Ein Supabase-Aufruf ist kein echtes Promise (kein .catch) - das hier
   // macht eines daraus, damit ein Fehler beim Notieren nicht die fertige
   // Rechnung kaputtmacht.
+  // Ein Streifen oben, solange etwas unterwegs ist. Das graue Skelett
+  // sieht man auf einem hellen Handy im Sonnenlicht kaum; ein laufender
+  // Balken am oberen Rand faellt auf, ohne im Weg zu sein.
+  var laufende = 0, ladeTimer = null;
+  function ladeAn() {
+    laufende++;
+    if (laufende === 1) {
+      // Erst nach einem Moment - bei schnellen Abrufen soll nichts blitzen
+      clearTimeout(ladeTimer);
+      ladeTimer = setTimeout(function () {
+        if (laufende > 0) document.documentElement.classList.add("laedt");
+      }, 220);
+    }
+  }
+  function ladeAus() {
+    laufende = Math.max(0, laufende - 1);
+    if (!laufende) { clearTimeout(ladeTimer); document.documentElement.classList.remove("laedt"); }
+  }
+
   function speichern(aufruf) {
-    return Promise.resolve().then(function () { return aufruf; }).catch(function (e) { return { error: e }; });
+    ladeAn();
+    return Promise.resolve().then(function () { return aufruf; })
+      .catch(function (e) { return { error: e }; })
+      .then(function (r) { ladeAus(); return r; });
   }
 
   function rechnungErzeugen(stamm, f, betraege, nummer) {
@@ -2311,6 +2354,12 @@ window.Mitglieder = (function () {
         var wann = new Date();
         if (f.kennungen && f.kennungen.length && rechnungWahl[f.kennungen[0]]) wann = new Date(rechnungWahl[f.kennungen[0]].beginn);
         rechnungWahl = {}; rechnungListe = null; rechnungForm = rechnungFormLeer();
+        // Mit der Rechnung ist das Spiel durch - die Marke setzt die App
+        // selbst, zuruecknehmen kann man sie am Spiel.
+        (f.kennungen || []).forEach(function (k) {
+          var sp = alleSpiele().filter(function (x) { return x.kennung === k; })[0];
+          if (sp) speichereEinsatz(sp, { bezahlt: new Date().toISOString() });
+        });
         return speichern(sb.from("rechnungen").insert({
           user_id: session.user.id, nummer: nummer, datum: wann.toISOString().slice(0, 10),
           verein: f.verein || f.name, betrag: Math.round(betraege.gesamt * 100) / 100,
@@ -2368,6 +2417,43 @@ window.Mitglieder = (function () {
   function ausfallErneuern(box, sp) {
     var neu = ausfallZeile(sp);
     if (neu && box.parentNode) box.parentNode.replaceChild(neu, box);
+  }
+
+  // Ist zu diesem Spiel schon eine Rechnung geschrieben? Die Liste kommt
+  // aus rechnungenLaden(), hier nur der Zugriff darauf.
+  function rechnungZu(kennung) {
+    var treffer = null;
+    (rechnungListe || []).forEach(function (rg) {
+      if ((rg.kennungen || []).indexOf(kennung) >= 0) treffer = rg;
+    });
+    return treffer;
+  }
+
+  // "Bezahlt" heisst: fuer dich erledigt. Die Marke setzt die Rechnung
+  // selbst; von Hand geht beides, setzen und zuruecknehmen.
+  function bezahltZeile(sp) {
+    var e = einsaetze[sp.kennung] || {};
+    var box = h("div", { class: "zweit" });
+    function neu() {
+      leeren(box);
+      var ist = !!e.bezahlt;
+      box.appendChild(h("button", { type: "button", class: ist ? "mg-neben" : "",
+        text: ist ? "Doch nicht bezahlt" : "Als bezahlt abhaken",
+        title: ist ? "Marke wieder entfernen" : "Für dich erledigt - taucht dann nicht mehr unter „Offen“ auf",
+        onclick: function () {
+          var wert = ist ? null : new Date().toISOString();
+          speichereEinsatz(sp, { bezahlt: wert });
+          e = einsaetze[sp.kennung] || {};
+          neu(); aktualisiereSummen(); aktualisiereZeile(sp);
+        } }));
+      if (ist) box.appendChild(h("span", { class: "meta", style: "align-self:center",
+        text: "abgehakt am " + new Date(e.bezahlt).toLocaleDateString("de-DE") }));
+      var rg = rechnungZu(sp.kennung);
+      if (rg) box.appendChild(h("button", { type: "button", text: "Rechnung " + rg.nummer + " laden",
+        title: "Dasselbe PDF noch einmal bauen", onclick: function () { rechnungNochmal(rg); } }));
+    }
+    neu();
+    return box;
   }
 
   // Die Zeile unter einem Spiel in der Abrechnung: vormerken oder die
@@ -2439,7 +2525,18 @@ window.Mitglieder = (function () {
     var kurz = wurzel.querySelector('[data-kennung="' + spiel.kennung.replace(/"/g, "") + '"] .mg-betrag-kurz');
     if (kurz) kurz.textContent = b.betrag != null ? euro(b.betrag) + (e.km != null ? " · " + e.km + " km" : "") : "Betrag fehlt";
     var karte = wurzel.querySelector('[data-kennung="' + spiel.kennung.replace(/"/g, "") + '"]');
-    if (karte) karte.classList.toggle("erfasst", b.betrag != null);
+    if (!karte) return;
+    karte.classList.toggle("erfasst", b.betrag != null);
+    // Die Marke "bezahlt" wandert mit, ohne die ganze Liste neu zu bauen
+    karte.classList.toggle("bezahlt", !!(e && e.bezahlt));
+    var marke = karte.querySelector(".mg-status.bezahlt");
+    if (e && e.bezahlt && !marke) {
+      marke = h("span", { class: "mg-status bezahlt", text: "bezahlt" });
+      if (kurz && kurz.parentNode) kurz.parentNode.insertBefore(marke, kurz.nextSibling);
+    } else if (marke && !(e && e.bezahlt)) {
+      marke.remove();
+    }
+    if (marke && e && e.bezahlt) marke.title = "Abgehakt am " + new Date(e.bezahlt).toLocaleDateString("de-DE");
   }
 
   function betragText(spiel, e, b) {
@@ -2655,8 +2752,8 @@ window.Mitglieder = (function () {
     ]);
     document.body.appendChild(leiste);
   }
-  function abrechnungSprung(kennung) { abrechnungZiel = kennung; nurOffene = false; schnellModus = false; }
-  var schnellModus = false;
+  function abrechnungSprung(kennung) { abrechnungZiel = kennung; nurOffene = false; nurUnbezahlt = false; schnellModus = false; }
+  var schnellModus = false, nurUnbezahlt = false;
   // Wartet etwas auf das Netz, soll man das sehen - nicht nur eine
   // Kurzmeldung, die nach drei Sekunden wieder weg ist.
   function warteBanner() {
@@ -2687,14 +2784,17 @@ window.Mitglieder = (function () {
       saisonen().map(function (s) { var o = h("option", { value: s, text: "Saison " + s }); if (s === gewaehlteSaison) o.selected = true; return o; }));
     var offenN = spiele.filter(function (sp) { var e = einsaetze[sp.kennung]; return new Date(sp.beginn) < new Date() && (!e || e.verguetung == null || (e.km == null && profil.heimat_lat != null)); }).length;
     var chips = h("div", { class: "mg-ansicht" }, [
-      h("button", { type: "button", class: !nurOffene && !schnellModus ? "aktiv" : "", text: "Alle",
-        onclick: function () { nurOffene = false; schnellModus = false; rendereAbrechnung(); } }),
+      h("button", { type: "button", class: !nurOffene && !schnellModus && !nurUnbezahlt ? "aktiv" : "", text: "Alle",
+        onclick: function () { nurOffene = false; nurUnbezahlt = false; schnellModus = false; rendereAbrechnung(); } }),
       h("button", { type: "button", class: nurOffene && !schnellModus ? "aktiv" : "", title: "Nur Spiele, bei denen noch etwas fehlt",
-        text: "Offen" + (offenN ? " " + offenN : ""),
-        onclick: function () { nurOffene = true; schnellModus = false; rendereAbrechnung(); } }),
+        text: "Lücken" + (offenN ? " " + offenN : ""),
+        onclick: function () { nurOffene = true; nurUnbezahlt = false; schnellModus = false; rendereAbrechnung(); } }),
+      h("button", { type: "button", class: nurUnbezahlt ? "aktiv" : "", title: "Nur Spiele, die noch nicht abgehakt sind",
+        text: "Offen",
+        onclick: function () { nurUnbezahlt = true; nurOffene = false; schnellModus = false; rendereAbrechnung(); } }),
       h("button", { type: "button", class: schnellModus ? "aktiv" : "", title: "Eine Zeile je Spiel, alles nebeneinander",
         text: "Schnell",
-        onclick: function () { schnellModus = true; nurOffene = false; rendereAbrechnung(); } })
+        onclick: function () { schnellModus = true; nurOffene = false; nurUnbezahlt = false; rendereAbrechnung(); } })
     ]);
     inhalt.appendChild(h("div", { class: "mg-abrechnung-kopf" }, [saisonWahl, chips]));
     var wartet = warteBanner();
@@ -2791,7 +2891,11 @@ window.Mitglieder = (function () {
     }
 
     var liste = spiele;
-    if (nurOffene) liste = spiele.filter(function (sp) {
+    if (nurUnbezahlt) liste = spiele.filter(function (sp) {
+      var e = einsaetze[sp.kennung];
+      return new Date(sp.beginn) < new Date() && !(e && e.bezahlt);
+    });
+    else if (nurOffene) liste = spiele.filter(function (sp) {
       var e = einsaetze[sp.kennung];
       // km zaehlt nur als "fehlt", wenn eine Heimatadresse da ist - sonst waere jedes Spiel unvollstaendig
       return new Date(sp.beginn) < new Date() && (!e || e.verguetung == null || (e.km == null && profil.heimat_lat != null));
@@ -3185,7 +3289,7 @@ window.Mitglieder = (function () {
     var details = h("div", { class: "mg-details versteckt" });
     var wahl = h("input", { type: "checkbox", class: "check mg-wahl" }); wahl.checked = !!auswahl[sp.kennung];
     wahl.addEventListener("change", function () { if (wahl.checked) auswahl[sp.kennung] = sp; else delete auswahl[sp.kennung]; zeile.classList.toggle("gewaehlt", wahl.checked); auswahlLeiste(); });
-    var zeile = h("div", { class: "spiel karte mg-eintrag" + (vergangen ? "" : " war") + (b.betrag != null ? " erfasst" : "") + (auswahl[sp.kennung] ? " gewaehlt" : ""), "data-kennung": sp.kennung.replace(/"/g, "") }, [
+    var zeile = h("div", { class: "spiel karte mg-eintrag" + (vergangen ? "" : " war") + (b.betrag != null ? " erfasst" : "") + (e.bezahlt ? " bezahlt" : "") + (auswahl[sp.kennung] ? " gewaehlt" : ""), "data-kennung": sp.kennung.replace(/"/g, "") }, [
       h("div", { class: "mg-kopf", onclick: function (ev) { if (ev.target.closest("input, button, a, label")) return; if (auswahlModus) { wahl.checked = !wahl.checked; wahl.dispatchEvent(new Event("change")); return; } details.classList.toggle("versteckt"); zeile.classList.toggle("offen", !details.classList.contains("versteckt")); } }, [
         h("div", { class: "mg-wahlfeld" + (auswahlModus ? "" : " versteckt") }, [wahl]),
         h("div", { class: "kopfzeile" }, [
@@ -3195,6 +3299,7 @@ window.Mitglieder = (function () {
         h("div", { class: "paarung", text: (sp.liga ? sp.liga + ": " : "") + sp.paarung }),
         h("div", { class: "mg-summe" }, [
           h("span", { class: "meta mg-betrag-kurz", text: b.betrag != null ? euro(b.betrag) + (e.km != null ? " · " + e.km + " km" : "") : "Betrag fehlt" }),
+          e.bezahlt ? h("span", { class: "mg-status bezahlt", title: "Abgehakt am " + new Date(e.bezahlt).toLocaleDateString("de-DE"), text: "bezahlt" }) : null,
           vergangen ? null : h("span", { class: "mg-status kommt", text: "kommt" }),
           vergangen ? fotoKnopf : null, foto,
           h("span", { class: "meta mg-auf", text: "Details ›" })
@@ -3219,6 +3324,7 @@ window.Mitglieder = (function () {
       // Direkt von hier auf die Gebuehrenabrechnung - und, wenn es schon
       // eine gibt, dieselbe Rechnung noch einmal als PDF.
       rechnungZeile(sp),
+      bezahltZeile(sp),
       ausfallZeile(sp),
       sp.privat ? h("div", { class: "zweit" }, [h("button", { type: "button", style: "color:var(--rot)", text: "Eintrag löschen", onclick: function () {
         if (!confirm("Dieses selbst eingetragene Spiel samt Abrechnung und Belegen löschen?")) return;
@@ -4000,7 +4106,8 @@ window.Mitglieder = (function () {
   // Reiter "Kollegen": die Liste, wie jeder Freigeschaltete sie sieht.
   function zeigeTelefonbuch() {
     var karte = h("div", { class: "melde karte" });
-    var kopf = h("p", { class: "meta", style: "margin:0 0 8px", text: "lade …" });
+    var kopf = h("p", { class: "meta lade-zeile", style: "margin:0 0 8px" }, [
+      h("i", { class: "lade-punkt" }), "Kollegen werden geladen …"]);
     var suche = h("input", { type: "search", class: "mg-suche", placeholder: "Name oder Ort suchen …" });
     var liste = h("div", { class: "telefon-liste" }, [skelett(2)]);
     karte.appendChild(h("h4", {}, [ikone("i-users"), " Kollegen"]));
@@ -5407,6 +5514,13 @@ window.Mitglieder = (function () {
   // dem Kollegen, und die Einladung ueber die API braeuchte den geheimen
   // Schluessel. Darum die Einladung: Adresse (und Name) vormerken, wer sich
   // damit registriert, ist sofort dabei.
+  // Suchtext und Filter der Kontoliste - sie muessen das Neuzeichnen
+  // ueberstehen, sonst ist nach jedem Haekchen wieder alles offen.
+  var kontoSuche = "", kontoFilter = "";
+  function ohneUmlaut(t) {
+    return String(t || "").toLowerCase()
+      .replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue").replace(/ß/g, "ss");
+  }
   function adminRendern(box) {
     namenAbgleichen();
     function neu() { adminRendern(box); }
@@ -5478,8 +5592,12 @@ window.Mitglieder = (function () {
     // genau so weit wie jeder andere Schiedsrichter.
     function rechteKasten(p) {
       var jetzt = p.rechte || [];
-      var kasten = h("div", { class: "obmann-rechte" }, [
-        h("p", { class: "meta", style: "margin:0 0 4px", text: "Darf zusätzlich:" })]);
+      // Sieben Haekchen bei jedem Konto machten die Liste unlesbar -
+      // zugeklappt steht nur da, wie viele gesetzt sind.
+      var kasten = h("div", { class: "obmann-rechte" });
+      var huelle = h("details", { class: "tausch rechte-klapp" }, [
+        h("summary", { text: "Rechte" + (jetzt.length ? " (" + jetzt.length + ")" : "") }), kasten]);
+      if (jetzt.length) huelle.classList.add("hat");
       RECHTE.forEach(function (r) {
         var box = h("input", { type: "checkbox" });
         box.checked = jetzt.indexOf(r[0]) >= 0;
@@ -5497,13 +5615,16 @@ window.Mitglieder = (function () {
               return;
             }
             p.rechte = neuRechte;
+            var titel = huelle.querySelector("summary");
+            if (titel) titel.textContent = "Rechte" + (neuRechte.length ? " (" + neuRechte.length + ")" : "");
+            huelle.classList.toggle("hat", !!neuRechte.length);
             kurzMeldung(r[1] + (box.checked ? " freigegeben ✓" : " wieder entzogen"), box.checked ? "gut" : "");
           });
         });
         box.setAttribute("data-recht", r[0]);
         kasten.appendChild(h("label", { class: "mg-check", title: r[2] }, [box, " " + r[1]]));
       });
-      return kasten;
+      return huelle;
     }
 
     function mailAendern(p) {
@@ -5537,12 +5658,39 @@ window.Mitglieder = (function () {
       var offeneEin = einladungen.filter(function (e) { return !e.eingeloest_am; });
       var offen = alle.filter(function (p) { return !p.freigeschaltet && !p.admin; });
       leeren(box);
-      box.appendChild(h("h4", { text: "Freischaltung" }));
+      box.appendChild(h("h4", { text: "Konten" }));
       box.appendChild(h("p", { class: "meta", text: alle.length + " Konten · " + offen.length + (offen.length === 1 ? " wartet" : " warten")
         + (offeneEin.length ? " · " + offeneEin.length + " eingeladen, noch nicht registriert" : "") + "." }));
 
+      // ---- Suchen und filtern. Bei sechzig Konten ist Scrollen keine
+      //      Antwort mehr, und die Rechte will man gezielt setzen.
+      var suchfeld = h("input", { type: "search", placeholder: "Name oder E-Mail suchen …", value: kontoSuche, autocomplete: "off" });
+      var timer = null;
+      suchfeld.addEventListener("input", function () {
+        clearTimeout(timer);
+        timer = setTimeout(function () { kontoSuche = suchfeld.value; neu(); }, 250);
+      });
+      var FILTER = [["", "Alle"], ["wartet", "Wartet"], ["rechte", "Mit Rechten"], ["obmann", "Obmänner"], ["ohne", "Ohne Namen"]];
+      var filterLeiste = h("div", { class: "mg-leiste" }, FILTER.map(function (f) {
+        return h("button", { type: "button", class: "filterknopf" + (kontoFilter === f[0] ? " aktiv" : ""), text: f[1],
+          onclick: function () { kontoFilter = f[0]; neu(); } });
+      }));
+      box.appendChild(h("div", { class: "mg-form", style: "margin:0 0 4px" }, [suchfeld]));
+      box.appendChild(filterLeiste);
+
+      var f = ohneUmlaut(kontoSuche);
+      function passt(p) {
+        if (kontoFilter === "wartet" && (p.freigeschaltet || p.admin)) return false;
+        if (kontoFilter === "rechte" && !(p.rechte || []).length) return false;
+        if (kontoFilter === "obmann" && !p.obmann) return false;
+        if (kontoFilter === "ohne" && p.slug) return false;
+        if (!f) return true;
+        return ohneUmlaut((p.name || "") + " " + (p.email || "") + " " + (p.slug || "")).indexOf(f) >= 0;
+      }
+      offen = offen.filter(passt);
+
       // ---- wer wartet
-      if (!offen.length) box.appendChild(h("p", { class: "meta", text: "Niemand wartet." }));
+      if (!offen.length) box.appendChild(h("p", { class: "meta", text: kontoSuche || kontoFilter ? "Niemand, der wartet, passt dazu." : "Niemand wartet." }));
       offen.sort(function (a, b) { return String(a.angelegt || "") < String(b.angelegt || "") ? -1 : 1; });
       offen.forEach(function (p) {
         var marken = [[p.obmann ? "wartet, Obmann" : p.slug ? "wartet" : "wartet, ohne Namen", "warn"]];
@@ -5611,9 +5759,11 @@ window.Mitglieder = (function () {
       box.appendChild(einlBox);
 
       // ---- dabei
-      var freie = alle.filter(function (p) { return p.freigeschaltet && !p.admin; });
+      var freie = alle.filter(function (p) { return p.freigeschaltet && !p.admin; }).filter(passt);
       if (freie.length) {
         var det = h("details", { class: "tausch" }, [h("summary", { text: freie.length + " freigeschaltet" })]);
+        // Wer sucht, will die Treffer sehen und nicht erst aufklappen
+        if (kontoSuche || kontoFilter) det.open = true;
         freie.forEach(function (p) {
           det.appendChild(zeile(p, [
             h("button", { type: "button", class: "textknopf", text: "Admin", title: "Zum Admin machen", onclick: function () {
@@ -5632,8 +5782,9 @@ window.Mitglieder = (function () {
       }
 
       // ---- Admins
-      var admins = alle.filter(function (p) { return p.admin; });
+      var admins = alle.filter(function (p) { return p.admin; }).filter(passt);
       var adet = h("details", { class: "tausch" }, [h("summary", { text: admins.length + (admins.length === 1 ? " Admin" : " Admins") })]);
+      if ((kontoSuche || kontoFilter) && admins.length) adet.open = true;
       admins.forEach(function (p) {
         adet.appendChild(zeile({ id: p.id, name: (p.name || p.slug || "(ohne Namen)") + (p.id === session.user.id ? " (du)" : ""), email: p.email },
           [p.id === session.user.id ? null : h("button", { type: "button", class: "textknopf", text: "Admin entfernen", onclick: function () {

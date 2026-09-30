@@ -2817,6 +2817,58 @@ Oberfläche. Die Datenbank kennt dich weiter als Betreiber und lässt dich
 alles - **gespeichert wird als du**. Zum Prüfen der Zugriffsregeln
 selbst brauchst du ein zweites Konto.
 
+### 10.6bp Abrechnung: was steht noch aus? (Schema v41)
+
+Die Abrechnung wusste bisher nur, ob ein Betrag erfasst ist. Was davon
+schon beim Verein war und was noch aussteht, stand nirgends.
+
+* **Vierte Kachel „Offen".** Neben Vergütung, Kosten und Saldo steht
+  jetzt, wie viel bei wie vielen Spielen noch nicht abgehakt ist. Ein
+  Tipp darauf filtert die Liste auf genau diese Spiele.
+* **Der Ansichtsschalter hat vier Stellungen:** Alle · **Lücken** (da
+  fehlt noch ein Betrag oder km) · **Offen** (noch nicht abgehakt) ·
+  Schnell. „Unvollständig" hiess vorher „Offen" - der Name passt jetzt
+  besser zu dem, was gemeint ist.
+* **„Als bezahlt abhaken"** steht in den Details jedes Spiels, und
+  natürlich auch „Doch nicht bezahlt". Abgehakte Spiele bekommen eine
+  grüne Marke und einen grünen Rand.
+* **Eine Rechnung hakt die Spiele selbst ab.** Wer eine Rechnung
+  erzeugt, muss danach nichts mehr anfassen.
+* **Die Rechnung hängt am Spiel.** In den Details steht „Rechnung
+  2026-004 laden" - dasselbe PDF wird neu gebaut, aus den gespeicherten
+  Feldern. Nichts liegt irgendwo herum.
+* **Keine Warnung mehr wegen der Steuernummer.** Sie gehört nicht auf
+  die Rechnung. Ohne die Schiedsrichternummer warnt die App weiter, die
+  fehlt dem Verein wirklich.
+
+Die Rechnungsnummer zählte schon vorher hoch und nimmt eine von Hand
+geänderte Nummer als neuen Zählpunkt - unter Rechnung → Meine Daten
+steht sie als „Nächste Rechnungsnummer" und lässt sich dort jederzeit
+korrigieren.
+
+### 10.6bq Adminbereich: suchen statt scrollen
+
+* **Rechte sind zugeklappt.** Sieben Häkchen bei jedem Konto machten die
+  Liste unlesbar. Jetzt steht dort „Rechte (2)", und was gesetzt ist,
+  sieht man an der Farbe, ohne aufzuklappen.
+* **Suchfeld und Filter** über der Kontoliste: Name oder E-Mail suchen,
+  dazu **Alle · Wartet · Mit Rechten · Obmänner · Ohne Namen**. Wer
+  sucht, bekommt die Aufklapper automatisch offen. Suche und Filter
+  überstehen jedes Häkchen - sonst wäre nach jeder Änderung wieder alles
+  zu.
+
+### 10.6br Ladeanzeige
+
+* **Ein Streifen oben**, solange etwas unterwegs ist - dünn, in der
+  Akzentfarbe, mit einem Lauflicht. Er erscheint erst nach 220 ms, damit
+  bei schnellen Abrufen nichts blitzt, und hängt an derselben Stelle wie
+  jeder Datenbankaufruf; er gilt also überall, nicht nur dort, wo jemand
+  daran gedacht hat.
+* **Das Skelett sieht aus wie das, was kommt:** drei Balken je Karte
+  statt eines grauen Klotzes, abgerundet, mit kräftigerem Schimmer.
+* **Die Telefonliste sagt es deutlicher:** „Kollegen werden geladen …"
+  mit einem drehenden Ring statt „lade …".
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –
