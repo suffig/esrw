@@ -2834,6 +2834,11 @@ schon beim Verein war und was noch aussteht, stand nirgends.
   grüne Marke und einen grünen Rand.
 * **Eine Rechnung hakt die Spiele selbst ab.** Wer eine Rechnung
   erzeugt, muss danach nichts mehr anfassen.
+* **Abgehakte Spiele stehen nicht mehr in der Auswahl.** Unter Rechnung
+  → Spiele liegen sie hinter „3 Spiele schon abgehakt" - weg sind sie
+  nicht, für eine zweite Rechnung braucht man sie noch. Dasselbe gilt
+  für Spiele, zu denen schon eine Rechnung existiert; an der Zeile steht
+  dann „Rechnung 2026-001 ✓".
 * **Die Rechnung hängt am Spiel.** In den Details steht „Rechnung
   2026-004 laden" - dasselbe PDF wird neu gebaut, aus den gespeicherten
   Feldern. Nichts liegt irgendwo herum.

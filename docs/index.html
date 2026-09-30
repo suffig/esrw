@@ -1959,6 +1959,12 @@
     border:2px solid color-mix(in srgb, var(--akzent) 35%, transparent);
     border-top-color:var(--akzent); animation:lade-dreh .8s linear infinite; }
   @keyframes lade-dreh { to { transform:rotate(360deg); } }
+
+  /* Runde 57: abgehakte Spiele in der Rechnungsauswahl */
+  .rechnung-zeile.erledigt b { font-weight:600; }
+  .rechnung-zeile.erledigt small { color:var(--gut); }
+  details.rechnung-erledigt > summary { font-size:.84rem; font-weight:700;
+    color:var(--dim); padding:8px 0; min-height:40px; display:flex; align-items:center; }
 </style>
 </head>
 <body>
@@ -2413,6 +2419,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=101"></script>
+<script src="app.js?v=102"></script>
 </body>
 </html>

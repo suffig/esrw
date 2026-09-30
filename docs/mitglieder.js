@@ -2039,8 +2039,10 @@ window.Mitglieder = (function () {
     var wahlBox = h("div", { class: "rechnung-wahl" });
     if (!liste.length) wahlBox.appendChild(h("p", { class: "meta", text: "Kein Spiel gefunden, zu dem sich ein Betrag ermitteln lässt." }));
     var jetzt = Date.now();
-    liste.slice(0, 25).forEach(function (sp) {
+
+    function wahlZeile(sp) {
       var b = rechnungBetrag(sp), d = new Date(sp.beginn);
+      var e = einsaetze[sp.kennung] || {};
       var c = h("input", { type: "checkbox" });
       c.checked = !!rechnungWahl[sp.kennung];
       c.addEventListener("change", function () {
@@ -2052,13 +2054,38 @@ window.Mitglieder = (function () {
         nochmal();
       });
       var zusatz = euro(b.betrag) + (b.geschaetzt ? " · nach Ordnung" : "") + (d.getTime() > jetzt ? " · kommt noch" : "");
-      var l = h("label", { class: "rechnung-zeile" }, [
+      var rg = rechnungZu(sp.kennung);
+      if (rg) zusatz += " · Rechnung " + rg.nummer + " ✓";
+      else if (e.bezahlt) zusatz += " · abgehakt";
+      var l = h("label", { class: "rechnung-zeile" + (e.bezahlt || rg ? " erledigt" : "") }, [
         h("span", {}, [h("b", { text: datumLang(d) + " · " + (sp.liga ? sp.liga + ": " : "") + sp.paarung }),
                        h("small", { text: (sp.halle || "") + " · " + zusatz })]),
         c]);
       l._kennung = sp.kennung;
-      wahlBox.appendChild(l);
+      return l;
+    }
+
+    // Abgehakte Spiele standen hier weiter wie offene. Sie sind nicht weg -
+    // fuer eine zweite Rechnung braucht man sie noch -, aber sie liegen
+    // hinter einem Aufklapper.
+    var offeneSp = [], erledigt = [];
+    liste.forEach(function (sp) {
+      var e = einsaetze[sp.kennung] || {};
+      // Abgehakt oder schon auf einer Rechnung - beides heisst "durch".
+      // Die Rechnungsliste steht erst nach dem Nachladen zur Verfuegung,
+      // beim ersten Zeichnen zaehlt nur die Marke.
+      (e.bezahlt || rechnungZu(sp.kennung) ? erledigt : offeneSp).push(sp);
     });
+    offeneSp.slice(0, 25).forEach(function (sp) { wahlBox.appendChild(wahlZeile(sp)); });
+    if (liste.length && !offeneSp.length) {
+      wahlBox.appendChild(h("p", { class: "meta", text: "Alles abgehakt - was noch einmal auf eine Rechnung soll, steht unten." }));
+    }
+    if (erledigt.length) {
+      var det = h("details", { class: "tausch rechnung-erledigt" },
+        [h("summary", { text: erledigt.length + (erledigt.length === 1 ? " Spiel schon abgehakt" : " Spiele schon abgehakt") })]);
+      erledigt.slice(0, 25).forEach(function (sp) { det.appendChild(wahlZeile(sp)); });
+      wahlBox.appendChild(det);
+    }
     g1.appendChild(wahlBox);
 
     // Doppelansetzung: die uebrigen Spiele desselben Tages beim selben Verein
@@ -2219,6 +2246,9 @@ window.Mitglieder = (function () {
     nummerPruefen();
 
     // ---- Zuletzt geschrieben --------------------------------------------
+    // War die Liste schon da, muss danach nichts neu gezeichnet werden -
+    // sonst baut sich das Panel endlos selbst neu auf.
+    var listeWarDa = !!rechnungListe;
     rechnungenLaden().then(function (liste2) {
       if (!box.isConnected) return;
       // Erst jetzt stehen die alten Nummern fest - der Vorschlag wird
@@ -2229,12 +2259,10 @@ window.Mitglieder = (function () {
       }
       nummerPruefen();
       if (!liste2.length || box.querySelector(".rechnung-verlauf")) return;
-      var drin = {};
-      liste2.forEach(function (rg) { (rg.kennungen || []).forEach(function (k) { drin[k] = rg.nummer; }); });
-      Array.prototype.forEach.call(wahlBox.querySelectorAll(".rechnung-zeile"), function (z) {
-        var k = z._kennung; if (!k || !drin[k]) return;
-        var sm = z.querySelector("small"); if (sm) sm.textContent += " · Rechnung " + drin[k] + " ✓";
-      });
+      // Beim ersten Zeichnen war die Rechnungsliste noch nicht da - jetzt
+      // schon, also die Auswahl einmal neu aufbauen, damit berechnete
+      // Spiele unter den Aufklapper wandern.
+      if (!listeWarDa) { nochmal(); return; }
       var vb = h("details", { class: "tausch rechnung-verlauf" }, [h("summary", { text: "Geschriebene Rechnungen (" + liste2.length + ")" })]);
       var k2 = h("div", { class: "karte" });
       liste2.slice(0, 12).forEach(function (rg) {
