@@ -9,17 +9,17 @@ REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
 UID:6fda6909f9b5160e65bd740715822778a570646a@esrw.de
-SEQUENCE:0
-DTSTAMP:20260921T153038Z
-LAST-MODIFIED:20260921T153038Z
+SEQUENCE:1
+DTSTAMP:20260930T133044Z
+LAST-MODIFIED:20260930T133044Z
 DTSTART:20261002T171500Z
 DTEND:20261002T204500Z
 SUMMARY:SR · Senioren LL · Dinslakener Kobras 1b – EHC Troisdorf
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
   19:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissporthal
- le Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Vorgeitz\
- , Benny\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/ei
- nteilungen.html
+ le Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Hartmann\
+ , Marius\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/e
+ inteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
