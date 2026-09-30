@@ -5402,6 +5402,15 @@
   // der Schluessel aus der Datenbank, dann die Datei, dann das Entschluesseln.
   // Solange sagt der Platzhalter, woran es gerade liegt.
   var startStufen = ["Anmeldung prüfen", "Schlüssel holen", "Einteilungen laden", "Entschlüsseln", "Fast fertig"];
+  // Ein Satz je Schritt - sonst steht da eine Zahl, die niemandem sagt,
+  // worauf gerade gewartet wird.
+  var startHinweise = [
+    "Wir sehen nach, ob du angemeldet bist.",
+    "Die Einteilungen liegen verschlüsselt – der Schlüssel kommt aus deinem Konto.",
+    "Der aktuelle Stand wird geholt.",
+    "Gleich sind die Spiele lesbar.",
+    "Deine Seite wird aufgebaut."
+  ];
   if (!navigator.onLine) {
     var st = el("start-stufe-text");
     if (st) st.textContent = "Offline, gespeicherter Stand wird geladen";
@@ -5412,7 +5421,10 @@
     if (startFertig || !d || !d.classList.contains("start-laedt")) return;
     if (nr >= startStufen.length) startFertig = true;
     var t = el("start-stufe-text"), b = el("start-fortschritt");
+    var z = el("start-stufe-zahl"), hw = el("start-stufe-hinweis");
     if (t) t.textContent = startStufen[nr - 1] || "";
+    if (z) z.textContent = Math.min(nr, startStufen.length) + " von " + startStufen.length;
+    if (hw) hw.textContent = startHinweise[nr - 1] || "";
     if (b) b.style.width = Math.round(nr / startStufen.length * 100) + "%";
   }
   // Dauert es ungewoehnlich lange, lieber sagen warum, als still warten

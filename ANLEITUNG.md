@@ -2874,6 +2874,32 @@ korrigieren.
 * **Die Telefonliste sagt es deutlicher:** „Kollegen werden geladen …"
   mit einem drehenden Ring statt „lade …".
 
+### 10.6bs Nachträge zur Abrechnung
+
+* **Der Hinweis „N vergangene Spiele haben noch keine Rechnung"** zählte
+  abgehakte Spiele mit. Er sah nur nach, ob eine Rechnung existiert - wer
+  ein Spiel von Hand als bezahlt markiert hatte, fand es dort weiter als
+  offen. Jetzt gilt beides als erledigt: Rechnung geschrieben **oder**
+  abgehakt.
+* **Mehrere Spiele auf einmal abhaken.** In der Mehrfachauswahl (langer
+  Druck auf eine Karte, oder Rechtsklick) stehen jetzt **bezahlt** und
+  **nicht bezahlt**. Mit „Alle" darüber ist eine ganze Saison in zwei
+  Tipps abgehakt.
+* **Das Rechnungsdatum war schon immer der Spieltag** - sobald ein Spiel
+  gewählt ist, trägt die App es ein. Damit das nicht nach einem Zufall
+  aussieht, heisst das Feld jetzt „Datum (kommt vom Spieltag)". Ohne
+  gewähltes Spiel steht der heutige Tag darin; von Hand ändern geht
+  weiterhin.
+
+### 10.6bt Der Ladebalken beim Start
+
+Aus dem dünnen Strich über dem Skelett ist eine eigene Karte geworden:
+der Schritt in normaler Schriftgrösse, rechts „4 von 5", darunter ein
+10 px hoher Balken mit laufendem Schimmer und ein Satz, der sagt, worauf
+gerade gewartet wird („Die Einteilungen liegen verschlüsselt – der
+Schlüssel kommt aus deinem Konto."). Der Schimmer läuft auch, wenn ein
+Schritt einmal länger dauert - dann sieht man, dass nichts hängt.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

@@ -1959,15 +1959,19 @@ window.Mitglieder = (function () {
       ]));
     }
 
-    // Woran man leicht nicht denkt: vergangene Spiele, zu denen noch keine
-    // Rechnung geschrieben ist. Steht oben, mit einem Tipp zum aeltesten.
+    // Woran man leicht nicht denkt: vergangene Spiele, die weder eine
+    // Rechnung haben noch von Hand abgehakt sind. Steht oben, mit einem
+    // Tipp zum aeltesten. Wer ein Spiel abhakt, meint "fuer mich
+    // erledigt" - dann hat der Hinweis dazu nichts mehr zu sagen.
     rechnungenLaden().then(function (geschrieben) {
       if (!box.isConnected || box.querySelector(".rechnung-offen")) return;
       var drin = {};
       geschrieben.forEach(function (rg) { (rg.kennungen || []).forEach(function (k) { drin[k] = 1; }); });
       var jetzt = Date.now();
       var offen = rechnungSpiele().filter(function (sp) {
-        return new Date(sp.beginn).getTime() < jetzt && !drin[sp.kennung] && !rechnungWahl[sp.kennung];
+        if (new Date(sp.beginn).getTime() >= jetzt) return false;
+        if (drin[sp.kennung] || rechnungWahl[sp.kennung]) return false;
+        return !(einsaetze[sp.kennung] || {}).bezahlt;
       });
       if (!offen.length) return;
       var aelt = offen[offen.length - 1];
@@ -2184,7 +2188,7 @@ window.Mitglieder = (function () {
       h("button", { type: "button", class: "textknopf", text: "Vorschlag wieder übernehmen", onclick: function () {
         f.nummerManuell = false; f.nummer = nummerVorschlag(f); nochmal();
       } })]));
-    g3.appendChild(feld("datum", "Datum"));
+    g3.appendChild(feld("datum", "Datum (kommt vom Spieltag)"));
     g3.appendChild(feld("ort", "Spielort"));
     g3.appendChild(feld("klasse", "Spielklasse"));
 
@@ -2774,6 +2778,17 @@ window.Mitglieder = (function () {
       h("span", { text: n + (n === 1 ? " Spiel" : " Spiele") }),
       h("button", { type: "button", class: "anfrage", text: "Verpflegung 14 €", disabled: n ? null : "disabled", onclick: function () { liste.forEach(function (sp) { speichereEinsatz(sp, { verpflegung: 14 }); }); auswahlEnde(); } }),
       h("button", { type: "button", text: "ohne Verpfl.", disabled: n ? null : "disabled", onclick: function () { liste.forEach(function (sp) { speichereEinsatz(sp, { verpflegung: null }); }); auswahlEnde(); } }),
+      h("button", { type: "button", class: "anfrage", text: "bezahlt", title: "Alle gewählten Spiele abhaken",
+        disabled: n ? null : "disabled", onclick: function () {
+          var wann = new Date().toISOString();
+          liste.forEach(function (sp) { speichereEinsatz(sp, { bezahlt: wann }); });
+          kurzMeldung(n + (n === 1 ? " Spiel abgehakt ✓" : " Spiele abgehakt ✓"), "gut");
+          auswahlEnde();
+        } }),
+      h("button", { type: "button", text: "nicht bezahlt", disabled: n ? null : "disabled", onclick: function () {
+        liste.forEach(function (sp) { speichereEinsatz(sp, { bezahlt: null }); });
+        auswahlEnde();
+      } }),
       h("button", { type: "button", text: "CSV", disabled: n ? null : "disabled", onclick: function () { csvExport(liste.slice().sort(function (a, b) { return a.beginn < b.beginn ? -1 : 1; }), "Auswahl"); } }),
       h("button", { type: "button", text: "Alle", onclick: function () { saisonSpiele(gewaehlteSaison).forEach(function (sp) { if (new Date(sp.beginn) < new Date()) auswahl[sp.kennung] = sp; }); rendereAbrechnung(); } }),
       h("button", { type: "button", class: "textknopf", text: "Fertig", onclick: auswahlEnde })

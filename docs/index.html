@@ -1636,10 +1636,24 @@
      wartet als Platzhalter, bis die Einteilungen entschluesselt sind. */
   .start-platz { display:none; }
   .anzahl.ruhig { color:var(--dim); font-weight:600; }
-  .start-stufe { margin:0 0 10px; font-size:.82rem; font-weight:700; color:var(--dim); }
-  .start-balken { display:block; height:4px; border-radius:99px; background:var(--linie); overflow:hidden; margin-bottom:7px; }
-  .start-balken i { display:block; height:100%; width:8%; border-radius:99px; background:var(--akzent);
-                    transition:width .35s ease; }
+  /* Der Balken war ein Strich ueber dem Skelett und ging unter. Jetzt ist
+     er eine eigene Karte: Schritt, Zahl, breiter Balken, ein Satz dazu. */
+  .start-lade { padding:16px; margin-bottom:12px; }
+  .start-kopf { display:flex; gap:10px; align-items:baseline; justify-content:space-between; margin-bottom:10px; }
+  .start-kopf b { font-size:1.02rem; font-weight:800; }
+  .start-kopf span { flex:none; font-size:.8rem; font-weight:700; color:var(--dim); }
+  .start-lade small { display:block; margin-top:9px; font-size:.8rem; color:var(--dim); line-height:1.35; }
+  .start-balken { display:block; height:10px; border-radius:99px; overflow:hidden; position:relative;
+    background:color-mix(in srgb, var(--akzent) 14%, transparent); }
+  .start-balken i { display:block; height:100%; width:8%; border-radius:99px;
+    background:linear-gradient(90deg, var(--akzent), color-mix(in srgb, var(--akzent) 55%, #fff));
+    transition:width .4s cubic-bezier(.4,0,.2,1); }
+  /* Ein Schimmer laeuft mit - so sieht man, dass etwas passiert, auch
+     wenn ein Schritt einmal laenger dauert. */
+  .start-balken::after { content:""; position:absolute; inset:0; transform:translateX(-100%);
+    background:linear-gradient(90deg, transparent, rgba(255,255,255,.45), transparent);
+    animation:schimmer 1.4s infinite; }
+  :root[data-theme="dark"] .start-balken::after { background:linear-gradient(90deg, transparent, rgba(255,255,255,.14), transparent); }
   #detail.start-laedt .start-platz { display:block; }
   #detail.start-laedt .spalte-haupt > *:not(.profilzeile):not(.start-platz) { display:none !important; }
   #detail.start-laedt .spalten > *:not(.spalte-haupt) { display:none !important; }
@@ -2116,9 +2130,13 @@
     </div>
 
     <div class="start-platz" id="start-platz">
-      <p class="start-stufe"><span class="start-balken"><i id="start-fortschritt"></i></span><span id="start-stufe-text">Dein Profil wird geladen …</span></p>
-      <div class="karte skelett-karte"></div>
-      <div class="karte skelett-karte"></div>
+      <div class="karte start-lade">
+        <div class="start-kopf"><b id="start-stufe-text">Dein Profil wird geladen …</b><span id="start-stufe-zahl"></span></div>
+        <span class="start-balken"><i id="start-fortschritt"></i></span>
+        <small id="start-stufe-hinweis">Die Einteilungen liegen verschlüsselt – das dauert einen Moment.</small>
+      </div>
+      <div class="karte skelett-karte"><i class="s1"></i><i class="s2"></i><i class="s3"></i></div>
+      <div class="karte skelett-karte"><i class="s1"></i><i class="s2"></i><i class="s3"></i></div>
     </div>
 
     <div class="pins versteckt" id="pins"></div>
@@ -2419,6 +2437,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=102"></script>
+<script src="app.js?v=103"></script>
 </body>
 </html>
