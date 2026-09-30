@@ -1312,15 +1312,15 @@ END:VEVENT
 BEGIN:VEVENT
 UID:b8802d682765bb094435c972e3fc2656c487be9d@esrw.de
 SEQUENCE:0
-DTSTAMP:20260921T153038Z
-LAST-MODIFIED:20260921T153038Z
+DTSTAMP:20260930T091528Z
+LAST-MODIFIED:20260930T091528Z
 DTSTART:20261003T070000Z
 DTEND:20261003T103000Z
 SUMMARY:U13 LL · EHC Troisdorf 1b – EHC Die Bären Neuwied
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
   09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: ICEDOME Troisdor
- f\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Moritz\, A
- lexander\n\nQuelle: https://www.esrw.de/einteilungen.html
+ f\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Hoffmann\,
+  Jan\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2205,15 +2205,15 @@ END:VEVENT
 BEGIN:VEVENT
 UID:fa9f464ae93670d66377ef10b1645fc2c768cb91@esrw.de
 SEQUENCE:0
-DTSTAMP:20260921T153038Z
-LAST-MODIFIED:20260921T153038Z
+DTSTAMP:20260930T091528Z
+LAST-MODIFIED:20260930T091528Z
 DTSTART:20261004T150000Z
 DTEND:20261004T183000Z
 SUMMARY:U13 RLB · EHC Troisdorf – Herner EV
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
   17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: ICEDOME Troisdo
- rf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Moritz\, 
- Alexander\n\nQuelle: https://www.esrw.de/einteilungen.html
+ rf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Hauerwaas
+ \, Gabriel\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
