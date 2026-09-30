@@ -50,6 +50,33 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
  le Krefeld":geo:51.339877,6.540168
 END:VEVENT
 BEGIN:VEVENT
+UID:c203e7c12e65fd37fd4036694b36ef064ee14572@esrw.de
+SEQUENCE:0
+DTSTAMP:20260930T093037Z
+LAST-MODIFIED:20260930T093037Z
+DTSTART:20261003T144500Z
+DTEND:20261003T181500Z
+SUMMARY:SR · FS U15 · SPG NEV / GSC – Aachener EC In Moers !!!
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:45 Uhr\nTreffpunkt:
+  16:45 Uhr (60 Min vor Spielbeginn)\nLiga: FS U15\nHalle: Eissporthalle Mo
+ ers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Hartmann\, Marius\
+ n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
+GEO:51.43973;6.6198
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
+ rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
+ ":geo:51.43973,6.6198
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · FS U15 · SPG NEV / GSC 
+ – Aachener EC In Moers !!!
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:83f8014f9e17ebfb912944c8b42ab3f08963eb38@esrw.de
 SEQUENCE:0
 DTSTAMP:20260921T153038Z

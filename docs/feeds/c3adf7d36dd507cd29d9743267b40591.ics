@@ -1010,8 +1010,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:e12872a56ee4a91f8997c063777f0e89f6b591a9@esrw.de
 SEQUENCE:0
-DTSTAMP:20260921T153038Z
-LAST-MODIFIED:20260921T153038Z
+DTSTAMP:20260930T093037Z
+LAST-MODIFIED:20260930T093037Z
 DTSTART:20261002T170000Z
 DTEND:20261002T203000Z
 SUMMARY:U20 RL · Herforder EV – Ratinger Ice Aliens
@@ -1062,6 +1062,34 @@ DESCRIPTION:In einer Stunde an der Halle - BL FS · EHC Essen Ruhr – EC B
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:8be690da53013861b576cdc31a68d910937821cc@esrw.de
+SEQUENCE:0
+DTSTAMP:20260930T093037Z
+LAST-MODIFIED:20260930T093037Z
+DTSTART:20261002T170000Z
+DTEND:20261002T203000Z
+SUMMARY:RL FS · Eisadler Dortmund – ESV Grizzlys Bergkamen
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissportzentrum W
+ estfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Priebsch\, J
+ an Philipp (HSR) / Malik\, Orlando (LSR)\n\nQuelle: https://www.esrw.de/ei
+ nteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - RL FS · Eisadler Dortmund – E
+ SV Grizzlys Bergkamen
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:60c7cb957011d4b51fee982d028be266e6bf6671@esrw.de
 SEQUENCE:0
 DTSTAMP:20260921T153038Z
@@ -1086,34 +1114,6 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - U17 RL · Lippe Hockey Hamm – 
  EHC Troisdorf
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
-UID:8be690da53013861b576cdc31a68d910937821cc@esrw.de
-SEQUENCE:0
-DTSTAMP:20260921T153038Z
-LAST-MODIFIED:20260921T153038Z
-DTSTART:20261002T170000Z
-DTEND:20261002T203000Z
-SUMMARY:RL FS · Eisadler Dortmund – ESV Grizzlys Bergkamen
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
-  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissportzentrum W
- estfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Priebsch\, J
- an Philipp (HSR) / Strube\, Julia (LSR)\n\nQuelle: https://www.esrw.de/ein
- teilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
-GEO:51.49525;7.458288
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
-  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
- rum Westfalen":geo:51.49525,7.458288
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - RL FS · Eisadler Dortmund – E
- SV Grizzlys Bergkamen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1362,33 +1362,6 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - U15 LL · SpG ESV Grizzlys Bergk
  amen / ESC Rheine Young Cats – Dinslakener Kobras
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
-UID:3f000d3665c3e1f5eeacc7b0c54a3d4440b066d1@esrw.de
-SEQUENCE:0
-DTSTAMP:20260921T153038Z
-LAST-MODIFIED:20260921T153038Z
-DTSTART:20261003T080000Z
-DTEND:20261003T113000Z
-SUMMARY:U17 I · Düsseldorfer EG – ESC Dresden
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:00 Uhr\nTreffpunkt:
-  10:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eishalle Brehmstr
- aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: van Himbeeck
- \, Frederic\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
-GEO:51.242557;6.802144
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
- hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
- hmstraße":geo:51.242557,6.802144
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U17 I · Düsseldorfer EG – ES
- C Dresden
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1717,6 +1690,33 @@ DESCRIPTION:In einer Stunde an der Halle - U20 LL · ESV Grizzlys Bergkamen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:e80dc4bb736dca7f56f6640aeee188746f544fc5@esrw.de
+SEQUENCE:0
+DTSTAMP:20260930T093037Z
+LAST-MODIFIED:20260930T093037Z
+DTSTART:20261003T144500Z
+DTEND:20261003T181500Z
+SUMMARY:FS U15 · SPG NEV / GSC – Aachener EC In Moers !!!
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:45 Uhr\nTreffpunkt:
+  16:45 Uhr (60 Min vor Spielbeginn)\nLiga: FS U15\nHalle: Eissporthalle Mo
+ ers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Heffler\, Zsolt\n\
+ nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
+GEO:51.43973;6.6198
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
+ rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
+ ":geo:51.43973,6.6198
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - FS U15 · SPG NEV / GSC – Aach
+ ener EC In Moers !!!
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:8ee8302dbb6bfde257d608c9a8b1ae2236023797@esrw.de
 SEQUENCE:0
 DTSTAMP:20260921T153038Z
@@ -1960,6 +1960,33 @@ DESCRIPTION:In einer Stunde an der Halle - U15 LL · EHC Essen Ruhr – Lip
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:a399a1fda6236aa4e33a81a038ecc976d6d905bc@esrw.de
+SEQUENCE:0
+DTSTAMP:20260930T093037Z
+LAST-MODIFIED:20260930T093037Z
+DTSTART:20261004T080000Z
+DTEND:20261004T113000Z
+SUMMARY:U17 I · Düsseldorfer EG – ESC Dresden
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:00 Uhr\nTreffpunkt:
+  10:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eishalle Brehmstr
+ aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: van Himbeeck
+ \, Frederic\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - U17 I · Düsseldorfer EG – ES
+ C Dresden
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:66f7ee95e843d417540e951ae1e06dda9d9d0f52@esrw.de
 SEQUENCE:0
 DTSTAMP:20260921T153038Z
@@ -2145,6 +2172,33 @@ BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - U11 RL · Krefelder EV
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:2341eaed7d80a9e9fc404632e57251a07d70229a@esrw.de
+SEQUENCE:0
+DTSTAMP:20260930T093037Z
+LAST-MODIFIED:20260930T093037Z
+DTSTART:20261004T141500Z
+DTEND:20261004T174500Z
+SUMMARY:FS U17 · TuS Wiehl – Herner EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
+  16:15 Uhr (60 Min vor Spielbeginn)\nLiga: FS U17\nHalle: Eissporthalle Wi
+ ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Schöche\, Gian-Ca
+ rlo\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
+GEO:50.947034;7.5553
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
+ enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
+ ":geo:50.947034,7.5553
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - FS U17 · TuS Wiehl – Herner E
+ V
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2422,6 +2476,33 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - RL FS · Grefrather EG – Neuss
  er EV
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:7656f6b683289f90c542a499f1864ef45a59089b@esrw.de
+SEQUENCE:0
+DTSTAMP:20260930T093037Z
+LAST-MODIFIED:20260930T093037Z
+DTSTART:20261004T170000Z
+DTEND:20261004T203000Z
+SUMMARY:FS U17 · SPG NEV / GSC – Grefrather EG
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: FS U17\nHalle: Eissporthalle Ne
+ uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Reuter\, Rick\n
+ \nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
+GEO:51.175806;6.680258
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
+ -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
+ uss":geo:51.175806,6.680258
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - FS U17 · SPG NEV / GSC – Gref
+ rather EG
 END:VALARM
 END:VEVENT
 END:VCALENDAR

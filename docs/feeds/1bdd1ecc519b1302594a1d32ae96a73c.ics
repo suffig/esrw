@@ -29,6 +29,34 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
  e":geo:51.532602,7.254372
 END:VEVENT
 BEGIN:VEVENT
+UID:4ef18dee63dee989c43a654004abf0aebc992f8d@esrw.de
+SEQUENCE:0
+DTSTAMP:20260930T093037Z
+LAST-MODIFIED:20260930T093037Z
+DTSTART:20261002T170000Z
+DTEND:20261002T203000Z
+SUMMARY:LSR · RL FS · Eisadler Dortmund – ESV Grizzlys Bergkamen
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissportzentrum W
+ estfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Priebsch\, J
+ an Philipp (HSR) / Malik\, Orlando (LSR)\n\nQuelle: https://www.esrw.de/ei
+ nteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · RL FS · Eisadler Dortmun
+ d – ESV Grizzlys Bergkamen
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:7572dcb5b9ea6a6260f7c6224f93c4c3c02120bb@esrw.de
 SEQUENCE:1
 DTSTAMP:20260921T171526Z

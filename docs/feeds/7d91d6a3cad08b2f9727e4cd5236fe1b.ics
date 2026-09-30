@@ -31,16 +31,16 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
 END:VEVENT
 BEGIN:VEVENT
 UID:183ae9eecfcbdc6b1e1b90c0cf694e62cf870ff1@esrw.de
-SEQUENCE:0
-DTSTAMP:20260921T153038Z
-LAST-MODIFIED:20260921T153038Z
+SEQUENCE:1
+DTSTAMP:20260930T093037Z
+LAST-MODIFIED:20260930T093037Z
 DTSTART:20261002T170000Z
 DTEND:20261002T203000Z
 SUMMARY:SR · U20 RL · Herforder EV – Ratinger Ice Aliens
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
   19:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eishalle Im Klei
- nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Berger\, Eu
- gen\n\nQuelle: https://www.esrw.de/einteilungen.html
+ nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Brücker\, 
+ Tobias\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
