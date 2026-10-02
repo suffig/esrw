@@ -51,12 +51,6 @@ GEO:50.967548;7.135355
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
  dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
  TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · RL FS · Neusser EV – B
- ergisch Gladbach
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:f3392fe55d395043588cd768e5116b61b4e6f874@esrw.de
