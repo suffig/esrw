@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:2986aeaa369b1a3dbbf314ffdef2d502712433fc@esrw.de
-SEQUENCE:0
-DTSTAMP:20260921T094526Z
-LAST-MODIFIED:20260921T094526Z
-DTSTART:20260925T160000Z
-DTEND:20260925T193000Z
-SUMMARY:SR · U17 I · Krefelder EV – Düsseldorfer EG Yayla Arena !!!
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
-  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Yayla Arena Krefe
- ld\nAdresse: Westparkstraße 111\, 47803 Krefeld\nGespann: Pluschkell\, Ju
- lian\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Yayla Arena Krefeld\, Westparkstraße 111\, 47803 Krefeld
-GEO:51.340907;6.540218
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Yayla Arena Krefeld, Westp
- arkstraße 111, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Yayla Arena Kre
- feld":geo:51.340907,6.540218
-END:VEVENT
-BEGIN:VEVENT
 UID:a20258b978eabd5c8e876a9cb64c8561305f9787@esrw.de
 SEQUENCE:0
 DTSTAMP:20261002T111527Z
