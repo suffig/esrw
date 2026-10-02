@@ -27,12 +27,6 @@ GEO:51.165932;7.086769
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
  ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
  le Solingen":geo:51.165932,7.086769
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL · EC Bergisch Lan
- d – Eisadler Dortmund 1b
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:c72c978b63ceeab836c66bd196dd99e338170ee5@esrw.de
