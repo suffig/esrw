@@ -108,4 +108,60 @@ TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Rot · Herner EV
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:8ae874371ed777a7aae0f6c9e41eb70518630bba@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261009T171500Z
+DTEND:20261009T204500Z
+SUMMARY:LSR · U20 RL · EHC Troisdorf – Eisadler Dortmund
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
+  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: ICEDOME Troisdor
+ f\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Starke\, M
+ atthias (HSR) / Schöche\, Gian-Carlo (LSR)\n\nQuelle: https://www.esrw.de
+ /einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
+GEO:50.811945;7.109233
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
+ rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
+ isdorf":geo:50.811945,7.109233
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL · EHC Troisdorf 
+ – Eisadler Dortmund
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:8f4bcaabfe100641e2b851eb4cf2e47ba36247f9@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261010T173000Z
+DTEND:20261010T210000Z
+SUMMARY:LSR · U20 RL · Neusser EV – Ratinger Ice Aliens
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
+  19:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissporthalle Ne
+ uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Priebsch\, Jan 
+ Philipp (HSR) / Braun\, Benjamin (LSR)\n\nQuelle: https://www.esrw.de/eint
+ eilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
+GEO:51.175806;6.680258
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
+ -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
+ uss":geo:51.175806,6.680258
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL · Neusser EV – 
+ Ratinger Ice Aliens
+END:VALARM
+END:VEVENT
 END:VCALENDAR

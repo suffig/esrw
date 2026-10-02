@@ -103,4 +103,61 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL · EHC Essen Ruhr
  – Lippe Hockey Hamm
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:3b693e5fd871ef4775b6e1efaa82922d1611cda8@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261010T090000Z
+DTEND:20261010T123000Z
+SUMMARY:SR · U9 LL Gelb · ESV Bergisch Gladbach
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
+  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Gelb\nHalle: Eissporthall
+ e Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbach\
+ nGespann: Henkels\, André\n\nQuelle: https://www.esrw.de/einteilungen.htm
+ l
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
+ ch Gladbach
+GEO:50.967548;7.135355
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
+ dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
+ TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Gelb · ESV Bergisch
+  Gladbach
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:966a6870e1b02d574c29178ff5c687a281e7df38@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261010T141500Z
+DTEND:20261010T174500Z
+SUMMARY:LSR · U20 RL · TuS Wiehl – Herforder EV
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
+  16:15 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissporthalle Wi
+ ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Starke\, Matthias 
+ (HSR) / Hauerwaas\, Gabriel (LSR)\n\nQuelle: https://www.esrw.de/einteilun
+ gen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
+GEO:50.947034;7.5553
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
+ enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
+ ":geo:50.947034,7.5553
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL · TuS Wiehl – H
+ erforder EV
+END:VALARM
+END:VEVENT
 END:VCALENDAR

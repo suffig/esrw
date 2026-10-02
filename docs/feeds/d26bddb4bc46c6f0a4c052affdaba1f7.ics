@@ -90,4 +90,50 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL · ESV Grizzl
  ys Bergkamen 1c – EHC Troisdorf 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:7214ea6865c8aa4914d671110bc1765f81bf955c@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261010T050000Z
+DTEND:20261010T083000Z
+SUMMARY:SR · U13 BZL Gr.A · ESC Rheine Young Cats – Eisadler Dortmund 1
+ b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\n!! Halle nicht au
+ tomatisch erkannt - bitte selbst pruefen !!\nGespann: Brücker\, Tobias\n\
+ nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A · ESC Rheine
+  Young Cats – Eisadler Dortmund 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:44a5a142d19acad11db4aedf4d2edbd758550c67@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261011T170000Z
+DTEND:20261011T203000Z
+SUMMARY:SR · Frauen Pokal Gr.B · TSVE Bielefeld – KEC "Die Haie"
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen Pokal Gr.B\n!! Halle nic
+ ht automatisch erkannt - bitte selbst pruefen !!\nGespann: Zynda\, Jayden\
+ nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/einteilunge
+ n.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen Pokal Gr.B · TSVE 
+ Bielefeld – KEC "Die Haie"
+END:VALARM
+END:VEVENT
 END:VCALENDAR

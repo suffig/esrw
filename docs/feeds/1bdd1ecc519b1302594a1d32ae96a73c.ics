@@ -112,4 +112,87 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL · ESV Grizzlys Ber
  gkamen – EHC Die Bären Neuwied
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:c2d3980549ff51ae3afb004b5ecf588c2884a5b3@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261010T144500Z
+DTEND:20261010T181500Z
+SUMMARY:SR · U15 BZL · SpG Neusser EV 1b / GSC Moers 1b – EC Bergisch L
+ and
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:45 Uhr\nTreffpunkt:
+  16:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Eissporthalle M
+ oers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Vorgeitz\, Benny\
+ n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
+GEO:51.43973;6.6198
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
+ rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
+ ":geo:51.43973,6.6198
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL · SpG Neusser EV 
+ 1b / GSC Moers 1b – EC Bergisch Land
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:326051a1699c268a8848ce0f310b5d449df0a242@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261010T173000Z
+DTEND:20261010T210000Z
+SUMMARY:SR · U20 LL · GSC Moers – EC Bergisch Land
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
+  19:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 LL\nHalle: Eissporthalle Mo
+ ers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Vorgeitz\, Benny\n
+ \nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
+GEO:51.43973;6.6198
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
+ rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
+ ":geo:51.43973,6.6198
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U20 LL · GSC Moers – EC
+  Bergisch Land
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:3eb98d90552a22fe801d3581d5740fd7a39d6910@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261011T154500Z
+DTEND:20261011T191500Z
+SUMMARY:SR · Senioren LL · Soester EG – ESC Rheine
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:45 Uhr\nTreffpunkt:
+  17:45 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissportzen
+ trum Möhnesee\nAdresse: Teigelhof 4\, 59519 Möhnesee\nGespann: Steeg\, C
+ edric\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/eint
+ eilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Möhnesee\, Teigelhof 4\, 59519 Möhnesee
+GEO:51.515208;8.159069
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Möhnesee,
+  Teigelhof 4, 59519 Möhnesee";X-APPLE-RADIUS=100;X-TITLE="Eissportzentrum
+  Möhnesee":geo:51.515208,8.159069
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL · Soester EG 
+ – ESC Rheine
+END:VALARM
+END:VEVENT
 END:VCALENDAR

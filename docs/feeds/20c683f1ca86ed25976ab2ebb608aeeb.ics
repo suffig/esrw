@@ -7,4 +7,61 @@ X-WR-CALNAME:Einteilungen – Meißner\, Nils
 X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:68c94cfe270ab8438fb59a1abc6a3d7455f6626d@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261010T143000Z
+DTEND:20261010T180000Z
+SUMMARY:SR · Senioren LL · ESV Grizzlys Bergkamen 1b – Eisadler Dortmun
+ d 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
+  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissporthal
+ le Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Müller\,
+  Lars\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/eint
+ eilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL · ESV Grizzly
+ s Bergkamen 1b – Eisadler Dortmund 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:bb6ebd701478132429aaf1719893ac1ec483b3e4@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261011T160000Z
+DTEND:20261011T193000Z
+SUMMARY:HSR · Senioren RLW · Eisadler Dortmund – Neusser EV
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 19:00 Uhr\nTreff
+ punkt: 18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ portzentrum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann:
+  Pacalaj\, Erik (LSR) / Skalecki\, Martin (LSR)\nVergütung lt. Ordnung: 1
+ 00 €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW · Eisadler 
+ Dortmund – Neusser EV
+END:VALARM
+END:VEVENT
 END:VCALENDAR

@@ -110,4 +110,59 @@ DESCRIPTION:In einer Stunde an der Halle - LSR · RL FS · Grefrather EG
  – Grefrather EG 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:521552e041faef6d1891092cedd15f6a33cc5bfc@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261010T134500Z
+DTEND:20261010T171500Z
+SUMMARY:SR · U15 RLA · Krefelder EV – Iserlohner EC
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:45 Uhr\nTreffpunkt:
+  15:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Rheinlandhalle 
+ Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Scholz\, U
+ do\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
+GEO:51.339877;6.540168
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
+ stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
+ le Krefeld":geo:51.339877,6.540168
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA · Krefelder EV 
+ – Iserlohner EC
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:836910267db6c4ed8fb37ec8a3e723d59a08a1a0@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261011T151500Z
+DTEND:20261011T184500Z
+SUMMARY:LSR · Senioren RLW · GSC Moers – Dinslakener Kobras
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:15 Uhr\nTreffpunkt:
+  17:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
+ lle Moers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Kyei-Nimako\
+ , Denis (HSR) / Hornig\, Marius (LSR)\nVergütung lt. Ordnung: 100 €\n\n
+ Quelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
+GEO:51.43973;6.6198
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
+ rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
+ ":geo:51.43973,6.6198
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW · GSC Moers
+  – Dinslakener Kobras
+END:VALARM
+END:VEVENT
 END:VCALENDAR

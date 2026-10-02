@@ -76,4 +76,32 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB · EHC Troisdorf
  – Herner EV
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:7adb6cd75f11e7287c5eb56c3c566339ef973036@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261010T141500Z
+DTEND:20261010T174500Z
+SUMMARY:LSR · U20 RL · TuS Wiehl – Herforder EV
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
+  16:15 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissporthalle Wi
+ ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Starke\, Matthias 
+ (HSR) / Hindley\, David (LSR)\n\nQuelle: https://www.esrw.de/einteilungen.
+ html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
+GEO:50.947034;7.5553
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
+ enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
+ ":geo:50.947034,7.5553
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL · TuS Wiehl – H
+ erforder EV
+END:VALARM
+END:VEVENT
 END:VCALENDAR

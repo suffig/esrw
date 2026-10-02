@@ -7,4 +7,61 @@ X-WR-CALNAME:Einteilungen – Steven\, Patrick
 X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:ae8f046b3c781d73e492287edf82805bb9aa295f@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261010T130000Z
+DTEND:20261010T163000Z
+SUMMARY:HSR · DNL III · EV Duisburg – Crocodiles Hamburg
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 16:00 Uhr\nTreff
+ punkt: 15:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero R
+ heinlandhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGe
+ spann: Heffler\, Philipp (LSR) / Schmidt\, Waldemar (LSR)\n\nQuelle: https
+ ://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · DNL III · EV Duisburg 
+ – Crocodiles Hamburg
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:80f51a5bea2b3f30115c49070b08bd032b185169@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261011T163000Z
+DTEND:20261011T200000Z
+SUMMARY:HSR · Senioren RLW · Grefrather EG – ESV Bergisch Gladbach
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 19:30 Uhr\nTreff
+ punkt: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ portzentrum Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespan
+ n: Menzel\, Joey-Max (LSR) / Beckford\, Emanuel (LSR)\nVergütung lt. Ordn
+ ung: 100 €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Grefrath\, Stadionstraße 161\, 47929 Grefrath
+GEO:51.348547;6.341019
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath, 
+ Stadionstraße 161, 47929 Grefrath";X-APPLE-RADIUS=100;X-TITLE="Eissportze
+ ntrum Grefrath":geo:51.348547,6.341019
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW · Grefrathe
+ r EG – ESV Bergisch Gladbach
+END:VALARM
+END:VEVENT
 END:VCALENDAR

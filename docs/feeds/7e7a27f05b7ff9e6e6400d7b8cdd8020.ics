@@ -82,4 +82,87 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA · Kölner Junghai
  e – Iserlohner EC
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:9ef868312314d5c6edda11edd618caa2186f0b89@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261009T171500Z
+DTEND:20261009T204500Z
+SUMMARY:HSR · U20 RL · EHC Troisdorf – Eisadler Dortmund
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:15 Uhr\nTreff
+ punkt: 19:15 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: ICEDOME Tr
+ oisdorf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Sch
+ öche\, Gian-Carlo (LSR) / Rieneck\, Maximilian (LSR)\n\nQuelle: https://w
+ ww.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
+GEO:50.811945;7.109233
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
+ rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
+ isdorf":geo:50.811945,7.109233
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · U20 RL · EHC Troisdorf 
+ – Eisadler Dortmund
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:73c6ce068b83fff88292665679e399a15406f466@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261010T141500Z
+DTEND:20261010T174500Z
+SUMMARY:HSR · U20 RL · TuS Wiehl – Herforder EV
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 17:15 Uhr\nTreff
+ punkt: 16:15 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissportha
+ lle Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Hauerwaas\, 
+ Gabriel (LSR) / Hindley\, David (LSR)\n\nQuelle: https://www.esrw.de/einte
+ ilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
+GEO:50.947034;7.5553
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
+ enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
+ ":geo:50.947034,7.5553
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · U20 RL · TuS Wiehl – H
+ erforder EV
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:c6e3ff390e8531fcabefd9dec0aac3e4b73a1732@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261011T141500Z
+DTEND:20261011T174500Z
+SUMMARY:SR · U15 LL · TuS Wiehl – EV Duisburg 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
+  16:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Wi
+ ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Bocklemünd\, Cid\
+ n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
+GEO:50.947034;7.5553
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
+ enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
+ ":geo:50.947034,7.5553
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL · TuS Wiehl – EV
+  Duisburg 1b
+END:VALARM
+END:VEVENT
 END:VCALENDAR

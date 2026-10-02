@@ -7,4 +7,61 @@ X-WR-CALNAME:Einteilungen – Kyei-Nimako\, Denis
 X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:a7200c0c7099734fc979346b3093044fd05fb5ef@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261011T070000Z
+DTEND:20261011T103000Z
+SUMMARY:HSR · DNL III · EV Duisburg – Crocodiles Hamburg
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 10:00 Uhr\nTreff
+ punkt: 09:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero R
+ heinlandhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGe
+ spann: Schmidt\, Waldemar (LSR) / Stockenschneider\, Lars (LSR)\n\nQuelle:
+  https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · DNL III · EV Duisburg 
+ – Crocodiles Hamburg
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:e6237b1505032f20fd9e4e296f3354a3c16f4d11@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261011T151500Z
+DTEND:20261011T184500Z
+SUMMARY:HSR · Senioren RLW · GSC Moers – Dinslakener Kobras
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 18:15 Uhr\nTreff
+ punkt: 17:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ porthalle Moers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Reuter
+ \, Fynn (LSR) / Hornig\, Marius (LSR)\nVergütung lt. Ordnung: 100 €\n\n
+ Quelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
+GEO:51.43973;6.6198
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
+ rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
+ ":geo:51.43973,6.6198
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW · GSC Moers
+  – Dinslakener Kobras
+END:VALARM
+END:VEVENT
 END:VCALENDAR

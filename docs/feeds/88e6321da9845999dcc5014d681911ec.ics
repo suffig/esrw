@@ -77,4 +77,31 @@ DESCRIPTION:In einer Stunde an der Halle - SR · FS U17 · SPG NEV / GSC
  – Grefrather EG
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:685c17abedf08b147624096957eeddf89d8e29cd@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261010T163000Z
+DTEND:20261010T200000Z
+SUMMARY:SR · U17 LL · Grefrather EG – SpG Neusser EV / GSC Moers
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\nHalle: Eissportzentrum 
+ Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespann: Heyer\, C
+ hristoph (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Grefrath\, Stadionstraße 161\, 47929 Grefrath
+GEO:51.348547;6.341019
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath, 
+ Stadionstraße 161, 47929 Grefrath";X-APPLE-RADIUS=100;X-TITLE="Eissportze
+ ntrum Grefrath":geo:51.348547,6.341019
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL · Grefrather EG 
+ – SpG Neusser EV / GSC Moers
+END:VALARM
+END:VEVENT
 END:VCALENDAR

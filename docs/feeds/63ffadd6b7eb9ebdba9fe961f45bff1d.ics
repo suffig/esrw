@@ -147,4 +147,81 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB · Iserlohner EC 1
  b – Krefelder EV 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:88be2e8aab05b275e16ac2d49981dac0c4afd6d8@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261009T170000Z
+DTEND:20261009T203000Z
+SUMMARY:SR · U17 RL · Herforder EV – Ratinger Ice Aliens
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eishalle Im Klei
+ nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Zynda\, Nic
+ k\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Im Kleinen Felde\, Im Kleinen Felde\, 32051 Herford
+GEO:52.114893;8.652028
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
+  Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
+ Kleinen Felde":geo:52.114893,8.652028
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL · Herforder EV –
+  Ratinger Ice Aliens
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:a35d95ef0c46248752c783d86d1e27c3a7ca1d93@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261010T063000Z
+DTEND:20261010T100000Z
+SUMMARY:SR · U11 LL Lila · Lippe Hockey Hamm
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
+  08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Lila\nHalle: HELINET Eis
+ sportarena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: M
+ üller\, Lars\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:HELINET Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 Hamm
+GEO:51.686934;7.886138
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
+ , Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="HELINET
+  Eissportarena Hamm":geo:51.686934,7.886138
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Lila · Lippe Hocke
+ y Hamm
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:e9c3ad2cc1fdf15c0c51156c2c55326bda106e69@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261011T170000Z
+DTEND:20261011T203000Z
+SUMMARY:SR · Frauen Pokal Gr.B · TSVE Bielefeld – KEC "Die Haie"
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen Pokal Gr.B\n!! Halle nic
+ ht automatisch erkannt - bitte selbst pruefen !!\nGespann: Keller\, Alexan
+ der\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/einteil
+ ungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen Pokal Gr.B · TSVE 
+ Bielefeld – KEC "Die Haie"
+END:VALARM
+END:VEVENT
 END:VCALENDAR

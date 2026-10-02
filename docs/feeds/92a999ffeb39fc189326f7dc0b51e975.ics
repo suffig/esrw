@@ -82,4 +82,59 @@ TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Rot · Herner EV
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:e7861a71573764ccbb7786433034f135288a9833@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261010T073000Z
+DTEND:20261010T110000Z
+SUMMARY:SR · U15 LL · SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats 
+ – ESC Darmstadt
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
+  09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Be
+ rgkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Naust\, Marc A
+ ndré\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL · SpG ESV Grizzlys
+  Bergkamen / ESC Rheine Young Cats – ESC Darmstadt
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:aa264ab677dd15667cae597e05251c0d21869719@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261011T150000Z
+DTEND:20261011T183000Z
+SUMMARY:SR · U9 LL Lila · SpG GSC Moers 1b – Aachener EC -
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
+  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Lila\nHalle: 100'5 Arena 
+ Aachen\nAdresse: Hubert-Wienen-Straße 8\, 52070 Aachen\n\nQuelle: https:/
+ /www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:100'5 Arena Aachen\, Hubert-Wienen-Straße 8\, 52070 Aachen
+GEO:50.79546;6.100933
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="100'5 Arena Aachen, Hubert
+ -Wienen-Straße 8, 52070 Aachen";X-APPLE-RADIUS=100;X-TITLE="100'5 Arena A
+ achen":geo:50.79546,6.100933
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Lila · SpG GSC Moer
+ s 1b – Aachener EC -
+END:VALARM
+END:VEVENT
 END:VCALENDAR

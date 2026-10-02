@@ -55,4 +55,89 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB · EHC Troisdorf
  – Düsseldorfer EG 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:b5369d223846403840d50ae69e18eeef39f6a196@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261010T074500Z
+DTEND:20261010T111500Z
+SUMMARY:SR · U15 LL · TuS Wiehl – Eisadler Dortmund
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:45 Uhr\nTreffpunkt:
+  09:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Wi
+ ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Finke\, Gudrun\n\n
+ Quelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
+GEO:50.947034;7.5553
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
+ enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
+ ":geo:50.947034,7.5553
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL · TuS Wiehl – Ei
+ sadler Dortmund
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:b2388da9cfc806ef3190fd88856eb83c2495cc05@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261011T050000Z
+DTEND:20261011T083000Z
+SUMMARY:SR · U13 BZL Gr.B · ESV Bergisch Gladbach – ESC Darmstadt 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.B\nHalle: Eissportha
+ lle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbac
+ h\nGespann: Victor\, Tobias (N)\n\nQuelle: https://www.esrw.de/einteilunge
+ n.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
+ ch Gladbach
+GEO:50.967548;7.135355
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
+ dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
+ TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.B · ESV Bergis
+ ch Gladbach – ESC Darmstadt 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:b846f04916999ca4eb6cbf4c8b54552668c6d899@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T111527Z
+LAST-MODIFIED:20261002T111527Z
+DTSTART:20261012T163000Z
+DTEND:20261012T200000Z
+SUMMARY:SR · Frauen LL · DEC Düsseldorfer Devils – Eisadler Dortmund
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen LL\nHalle: Eissporthalle
+  Düsseldorf-Benrath\nAdresse: Kappeler Str. 107\, 40597 Düsseldorf\nGesp
+ ann: Wunsch\, Philipp\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://w
+ ww.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Düsseldorf-Benrath\, Kappeler Str. 107\, 40597 Düs
+ seldorf
+GEO:51.168801;6.858999
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Düsseldorf-
+ Benrath, Kappeler Str. 107, 40597 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE=
+ "Eissporthalle Düsseldorf-Benrath":geo:51.168801,6.858999
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL · DEC Düsseldo
+ rfer Devils – Eisadler Dortmund
+END:VALARM
+END:VEVENT
 END:VCALENDAR
