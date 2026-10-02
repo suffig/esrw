@@ -1062,35 +1062,6 @@ DESCRIPTION:In einer Stunde an der Halle - BL FS · EHC Essen Ruhr – EC B
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:10082780360b29efc85df1f9873df18c02aa722b@esrw.de
-SEQUENCE:0
-DTSTAMP:20260930T130055Z
-LAST-MODIFIED:20260930T130055Z
-DTSTART:20261002T170000Z
-DTEND:20261002T203000Z
-SUMMARY:RL FS · Neusser EV – Bergisch Gladbach
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
-  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthalle Ber
- gisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbach\nGesp
- ann: Perlitz\, Christian (HSR) / Krüger\, Martin (LSR)\n\nQuelle: https:/
- /www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
- ch Gladbach
-GEO:50.967548;7.135355
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
- dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
- TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - RL FS · Neusser EV – Bergisch
-  Gladbach
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:8be690da53013861b576cdc31a68d910937821cc@esrw.de
 SEQUENCE:0
 DTSTAMP:20260930T093037Z
@@ -1143,6 +1114,35 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - U17 RL · Lippe Hockey Hamm – 
  EHC Troisdorf
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:10082780360b29efc85df1f9873df18c02aa722b@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T082808Z
+LAST-MODIFIED:20261002T082808Z
+DTSTART:20261002T170000Z
+DTEND:20261002T203000Z
+SUMMARY:RL FS · Neusser EV – Bergisch Gladbach
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthalle Ber
+ gisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbach\nGesp
+ ann: Perlitz\, Christian (HSR) / Schöche\, Gian Carlo (LSR)\n\nQuelle: ht
+ tps://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
+ ch Gladbach
+GEO:50.967548;7.135355
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
+ dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
+ TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - RL FS · Neusser EV – Bergisch
+  Gladbach
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2532,6 +2532,28 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - FS U17 · SPG NEV / GSC – Gref
  rather EG
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:d540e1b55d3dfc0d4699c5b67c22fdf0a1f76aff@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T082808Z
+LAST-MODIFIED:20261002T082808Z
+DTSTART:20261005T151500Z
+DTEND:20261005T184500Z
+SUMMARY:U14 NRW · EHV NRW U14 – Kölner Junghaie U15 In Köln !!!!
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:15 Uhr\nTreffpunkt:
+  17:15 Uhr (60 Min vor Spielbeginn)\nLiga: U14 NRW\n!! Halle nicht automat
+ isch erkannt - bitte selbst pruefen !!\nGespann: Schöche\, Gian-Carlo\n\n
+ Quelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - U14 NRW · EHV NRW U14 – Köln
+ er Junghaie U15 In Köln !!!!
 END:VALARM
 END:VEVENT
 END:VCALENDAR

@@ -61,4 +61,26 @@ DESCRIPTION:In einer Stunde an der Halle - SR · FS U17 · TuS Wiehl – He
  rner EV
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:96308fc464f45c85be5ea330ee05ccde77a335f5@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T082808Z
+LAST-MODIFIED:20261002T082808Z
+DTSTART:20261005T151500Z
+DTEND:20261005T184500Z
+SUMMARY:SR · U14 NRW · EHV NRW U14 – Kölner Junghaie U15 In Köln !!!!
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:15 Uhr\nTreffpunkt:
+  17:15 Uhr (60 Min vor Spielbeginn)\nLiga: U14 NRW\n!! Halle nicht automat
+ isch erkannt - bitte selbst pruefen !!\nGespann: Schöche\, Gian-Carlo\n\n
+ Quelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U14 NRW · EHV NRW U14 –
+  Kölner Junghaie U15 In Köln !!!!
+END:VALARM
+END:VEVENT
 END:VCALENDAR

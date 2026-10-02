@@ -31,17 +31,17 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
 END:VEVENT
 BEGIN:VEVENT
 UID:5662f081e678721d2660241d466b47228c00b524@esrw.de
-SEQUENCE:0
-DTSTAMP:20260930T130055Z
-LAST-MODIFIED:20260930T130055Z
+SEQUENCE:1
+DTSTAMP:20261002T082808Z
+LAST-MODIFIED:20261002T082808Z
 DTSTART:20261002T170000Z
 DTEND:20261002T203000Z
 SUMMARY:LSR · RL FS · Neusser EV – Bergisch Gladbach
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
   19:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthalle Ber
  gisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbach\nGesp
- ann: Perlitz\, Christian (HSR) / Garcia Nieto\, Dario (LSR)\n\nQuelle: htt
- ps://www.esrw.de/einteilungen.html
+ ann: Perlitz\, Christian (HSR) / Schöche\, Gian Carlo (LSR)\n\nQuelle: ht
+ tps://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

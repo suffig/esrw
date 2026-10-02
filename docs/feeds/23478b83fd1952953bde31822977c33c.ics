@@ -30,6 +30,35 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
  uss":geo:51.175806,6.680258
 END:VEVENT
 BEGIN:VEVENT
+UID:51556a8cceb86c371bfb0d502bb17728cc2c2d19@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T082808Z
+LAST-MODIFIED:20261002T082808Z
+DTSTART:20261002T170000Z
+DTEND:20261002T203000Z
+SUMMARY:LSR · RL FS · Neusser EV – Bergisch Gladbach
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthalle Ber
+ gisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbach\nGesp
+ ann: Perlitz\, Christian (HSR) / Krüger\, Martin (LSR)\n\nQuelle: https:/
+ /www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
+ ch Gladbach
+GEO:50.967548;7.135355
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
+ dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
+ TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · RL FS · Neusser EV – B
+ ergisch Gladbach
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:15607b51003a015fad2ca71eed0433c6ac1989a4@esrw.de
 SEQUENCE:0
 DTSTAMP:20260921T153038Z
@@ -108,6 +137,28 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · FS U17 · TuS Wiehl – He
  rner EV
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:695598729eda32c0adbdd1d672b9276b67ae812a@esrw.de
+SEQUENCE:0
+DTSTAMP:20261002T082808Z
+LAST-MODIFIED:20261002T082808Z
+DTSTART:20261005T151500Z
+DTEND:20261005T184500Z
+SUMMARY:SR · U14 NRW · EHV NRW U14 – Kölner Junghaie U15 In Köln !!!!
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:15 Uhr\nTreffpunkt:
+  17:15 Uhr (60 Min vor Spielbeginn)\nLiga: U14 NRW\n!! Halle nicht automat
+ isch erkannt - bitte selbst pruefen !!\nGespann: Hoffmann\, Jan\n\nQuelle:
+  https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U14 NRW · EHV NRW U14 –
+  Kölner Junghaie U15 In Köln !!!!
 END:VALARM
 END:VEVENT
 END:VCALENDAR
