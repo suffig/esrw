@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:467fc6e84aa5939b5ad2168cf35e97823fa70521@esrw.de
-SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
-DTSTART:20260925T163000Z
-DTEND:20260925T200000Z
-SUMMARY:SR · U17 RL · Lippe Hockey Hamm – Eisadler Dortmund
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
-  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: HELINET Eissport
- arena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Steeg\
- , Cedric\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:HELINET Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 Hamm
-GEO:51.686934;7.886138
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
- , Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="HELINET
-  Eissportarena Hamm":geo:51.686934,7.886138
-END:VEVENT
-BEGIN:VEVENT
 UID:191bf21b90ad84e0baf9d3f3dc996407dcbdc073@esrw.de
 SEQUENCE:1
 DTSTAMP:20260918T173202Z

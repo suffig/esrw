@@ -8,49 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:6549f080aa123d99919d605c525b5e6c9607341a@esrw.de
-SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
-DTSTART:20260925T163000Z
-DTEND:20260925T200000Z
-SUMMARY:RL FS · Ratinger Ice Aliens – Grefrather EG
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
-  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eishalle Brehmstr
- aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Caelers\, Fa
- bian (HSR) / Leibfried\, Raphael (LSR)\n\nQuelle: https://www.esrw.de/eint
- eilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
-GEO:51.242557;6.802144
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
- hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
- hmstraße":geo:51.242557,6.802144
-END:VEVENT
-BEGIN:VEVENT
-UID:259ec036feb3f2a0b88c15761138472a657f4306@esrw.de
-SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
-DTSTART:20260925T163000Z
-DTEND:20260925T200000Z
-SUMMARY:U17 RL · Lippe Hockey Hamm – Eisadler Dortmund
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
-  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: HELINET Eissport
- arena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Zynda\
- , Jayden\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:HELINET Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 Hamm
-GEO:51.686934;7.886138
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
- , Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="HELINET
-  Eissportarena Hamm":geo:51.686934,7.886138
-END:VEVENT
-BEGIN:VEVENT
 UID:80d47e877bb10401e94643e58a8ae6289d27a045@esrw.de
 SEQUENCE:0
 DTSTAMP:20260917T173038Z
