@@ -52,35 +52,6 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West,
  n-West":geo:51.454179,6.976731
 END:VEVENT
 BEGIN:VEVENT
-UID:8cca2a7e49c317366b1a79a1afd96beea6703fdb@esrw.de
-SEQUENCE:0
-DTSTAMP:20260921T153038Z
-LAST-MODIFIED:20260921T153038Z
-DTSTART:20261002T170000Z
-DTEND:20261002T203000Z
-SUMMARY:SR · Frauen LL · ESV Bergisch Gladbach – Eisadler Dortmund
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
-  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen LL\nHalle: Eissporthalle
-  Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbach\n
- Gespann: Schlüter\, Thomas\nVergütung lt. Ordnung: 95 €\n\nQuelle: htt
- ps://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
- ch Gladbach
-GEO:50.967548;7.135355
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
- dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
- TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL · ESV Bergisch 
- Gladbach – Eisadler Dortmund
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:41dfc24a08e42060e4d8e99913596af4eed600ae@esrw.de
 SEQUENCE:1
 DTSTAMP:20260921T171526Z
