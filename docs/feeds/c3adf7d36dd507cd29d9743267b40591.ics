@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:32c4747221cd941ec31afc392e3314e879738f38@esrw.de
-SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
-DTSTART:20260926T103000Z
-DTEND:20260926T140000Z
-SUMMARY:U15 LL · Eisadler Dortmund – ESC Darmstadt
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
-  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissportzentrum 
- Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Schlüter\,
-  Thomas\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
-GEO:51.49525;7.458288
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
-  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
- rum Westfalen":geo:51.49525,7.458288
-END:VEVENT
-BEGIN:VEVENT
 UID:841ad7379b6b5e24c4e9a8bbd38b63ec8af74ca0@esrw.de
 SEQUENCE:0
 DTSTAMP:20260917T173038Z
@@ -1051,12 +1030,6 @@ GEO:51.49525;7.458288
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
   Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
  rum Westfalen":geo:51.49525,7.458288
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U15 LL · Eisadler Dortmund – 
- SpG EHC Gelsenkirchen / Herner EV 1b
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:361a4dabb3b7f4efa455855e2c65692a664863ad@esrw.de
@@ -1078,12 +1051,6 @@ GEO:51.339877;6.540168
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
  stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
  le Krefeld":geo:51.339877,6.540168
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U13 RLA · Krefelder EV – Düs
- seldorfer EG YAYLA Krefeld
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:c251eec05ce7577c762c36acb41a2e661474d2c5@esrw.de
