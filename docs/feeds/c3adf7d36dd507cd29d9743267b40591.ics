@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:f34581c4fadef154a063c5df1857013d1caf6db4@esrw.de
-SEQUENCE:0
-DTSTAMP:20260918T173202Z
-LAST-MODIFIED:20260918T173202Z
-DTSTART:20260926T073000Z
-DTEND:20260926T110000Z
-SUMMARY:U17 LL · ESV Grizzlys Bergkamen – ESC Darmstadt
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
-  09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\nHalle: Eissporthalle Be
- rgkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Klemm\, Julian
- \n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
-GEO:51.602578;7.626858
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
- äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
- ergkamen":geo:51.602578,7.626858
-END:VEVENT
-BEGIN:VEVENT
 UID:8c9ca647b223f9f8c7e2198140747b989b75abce@esrw.de
 SEQUENCE:0
 DTSTAMP:20260917T173038Z
@@ -1008,12 +987,6 @@ GEO:51.602578;7.626858
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
  äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
  ergkamen":geo:51.602578,7.626858
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U15 LL · SpG ESV Grizzlys Bergk
- amen / ESC Rheine Young Cats – Dinslakener Kobras
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:53930ffbc94eea6fa226726c1166a0552cc77360@esrw.de
