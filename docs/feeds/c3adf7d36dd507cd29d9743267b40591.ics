@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:83e6e4a5018577806016c1ed9375d090489dd195@esrw.de
-SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
-DTSTART:20260926T091500Z
-DTEND:20260926T124500Z
-SUMMARY:U15 RLA · Iserlohner EC – Kölner Junghaie
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:15 Uhr\nTreffpunkt:
-  11:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eissporthalle a
- m Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Zynda\,
-  Nick\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
-GEO:51.384598;7.713829
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
- , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
- alle am Seilersee":geo:51.384598,7.713829
-END:VEVENT
-BEGIN:VEVENT
 UID:32c4747221cd941ec31afc392e3314e879738f38@esrw.de
 SEQUENCE:0
 DTSTAMP:20260917T173038Z
@@ -1008,11 +987,6 @@ GEO:51.454179;6.976731
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
  Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
  n-West":geo:51.454179,6.976731
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U9 LL Blau · EHC Essen Ruhr
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:5d8a4fe5122da2167f712b9a375149b98c452d3d@esrw.de
