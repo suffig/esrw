@@ -52,15 +52,15 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
  rum Westfalen":geo:51.49525,7.458288
 END:VEVENT
 BEGIN:VEVENT
-UID:d0dc9ebb68f21ed5c1cb14db95fd03101320127b@esrw.de
+UID:b3aeee41533a850ea79891ec88324f660a21c795@esrw.de
 SEQUENCE:0
-DTSTAMP:20260921T153038Z
-LAST-MODIFIED:20260921T153038Z
-DTSTART:20261003T103000Z
-DTEND:20261003T140000Z
+DTSTAMP:20261003T081527Z
+LAST-MODIFIED:20261003T081527Z
+DTSTART:20261003T090000Z
+DTEND:20261003T123000Z
 SUMMARY:SR · U15 RLA · Düsseldorfer EG – Krefelder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
-  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eishalle Brehms
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
+  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eishalle Brehms
  traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Heffler\, 
  Philipp\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
