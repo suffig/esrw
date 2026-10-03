@@ -1008,12 +1008,6 @@ GEO:51.384598;7.713829
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
  , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
  alle am Seilersee":geo:51.384598,7.713829
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U17 I · Iserlohner EC – Köln
- er Junghaie
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:b58c939442bbc51abbc2ad5effb30c524ea0e507@esrw.de
@@ -1035,12 +1029,6 @@ GEO:51.574578;6.735361
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
  m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
  inslaken":geo:51.574578,6.735361
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - DFEL2 Nord · Dinslakener Kobras
-  – FASS Berlin
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:bb57ed597b47adcf7da4e6733475cde2fc5c041c@esrw.de
