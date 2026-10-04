@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:01362b10abb6ae38a0e3c9ca132b244e52ecf82d@esrw.de
-SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
-DTSTART:20260927T083000Z
-DTEND:20260927T120000Z
-SUMMARY:U11 LL Blau · Kölner Junghaie 1c
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:30 Uhr\nTreffpunkt:
-  10:30 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Blau\nHalle: Kölnarena 
- 2\nAdresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Krawinkel\, Ma
- rkus\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
-GEO:50.937979;6.98935
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
- r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
- .937979,6.98935
-END:VEVENT
-BEGIN:VEVENT
 UID:2ba7f11ee7104c5a157c138a17e259679b12fd28@esrw.de
 SEQUENCE:0
 DTSTAMP:20260917T173038Z
