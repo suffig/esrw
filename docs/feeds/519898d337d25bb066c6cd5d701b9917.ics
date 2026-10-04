@@ -3,23 +3,23 @@ VERSION:2.0
 PRODID:-//esrw-ical//Schiedsrichter-Einteilungen//DE
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
-X-WR-CALNAME:Einteilungen – Lindemans\, Pepe
+X-WR-CALNAME:Einteilungen – Küper\, Sascha
 X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:3174388d76c0ef544fda72921ef382e4eb4efe06@esrw.de
-SEQUENCE:1
+UID:5ac9519d9c8ca00f556745e837f302597f4adb62@esrw.de
+SEQUENCE:0
 DTSTAMP:20261004T144527Z
 LAST-MODIFIED:20261004T144527Z
 DTSTART:20261009T171500Z
 DTEND:20261009T204500Z
-SUMMARY:LSR · Senioren RLW · Dinslakener Kobras – TuS Wiehl
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
-  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
- lle Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Küper\,
-  Sascha (HSR) / Störmann\, Manuel (LSR)\nVergütung lt. Ordnung: 100 €\
- n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:HSR · Senioren RLW · Dinslakener Kobras – TuS Wiehl
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:15 Uhr\nTreff
+ punkt: 19:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ porthalle Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Li
+ ndemans\, Pepe (LSR) / Störmann\, Manuel (LSR)\nVergütung lt. Ordnung: 1
+ 00 €\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -31,7 +31,7 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW · Dinslaken
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW · Dinslaken
  er Kobras – TuS Wiehl
 END:VALARM
 END:VEVENT
