@@ -14,7 +14,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T114500Z
 DTEND:20261004T151500Z
-SUMMARY:SR · U13 RLB · Kölner Junghaie 1b – EJ Kassel
+SUMMARY:SR · U13 RLB: Kölner Junghaie 1b – EJ Kassel
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:45 Uhr\nTreffpunkt:
   13:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Kölnarena 2\nA
  dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Licau\, Sebastian\
@@ -35,7 +35,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T143000Z
 DTEND:20261004T180000Z
-SUMMARY:SR · U15 RLA · Kölner Junghaie – Iserlohner EC
+SUMMARY:SR · U15 RLA: Kölner Junghaie – Iserlohner EC
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
   16:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Kölnarena 2\nA
  dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Licau\, Sebastian\
@@ -56,7 +56,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261009T171500Z
 DTEND:20261009T204500Z
-SUMMARY:HSR · U20 RL · EHC Troisdorf – Eisadler Dortmund
+SUMMARY:HSR · U20 RL: EHC Troisdorf – Eisadler Dortmund
 DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:15 Uhr\nTreff
  punkt: 19:15 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: ICEDOME Tr
  oisdorf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Sch
@@ -73,8 +73,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - HSR · U20 RL · EHC Troisdorf 
- – Eisadler Dortmund
+DESCRIPTION:In einer Stunde an der Halle - HSR · U20 RL: EHC Troisdorf –
+  Eisadler Dortmund
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -84,7 +84,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T141500Z
 DTEND:20261010T174500Z
-SUMMARY:HSR · U20 RL · TuS Wiehl – Herforder EV
+SUMMARY:HSR · U20 RL: TuS Wiehl – Herforder EV
 DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 17:15 Uhr\nTreff
  punkt: 16:15 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissportha
  lle Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Hauerwaas\, 
@@ -101,8 +101,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - HSR · U20 RL · TuS Wiehl – H
- erforder EV
+DESCRIPTION:In einer Stunde an der Halle - HSR · U20 RL: TuS Wiehl – Her
+ forder EV
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -112,7 +112,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T141500Z
 DTEND:20261011T174500Z
-SUMMARY:SR · U15 LL · TuS Wiehl – EV Duisburg 1b
+SUMMARY:SR · U15 LL: TuS Wiehl – EV Duisburg 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
   16:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Wi
  ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Bocklemünd\, Cid\
@@ -128,8 +128,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL · TuS Wiehl – EV
-  Duisburg 1b
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: TuS Wiehl – EV D
+ uisburg 1b
 END:VALARM
 END:VEVENT
 END:VCALENDAR

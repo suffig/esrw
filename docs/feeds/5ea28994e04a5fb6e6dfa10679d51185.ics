@@ -14,7 +14,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261003T130000Z
 DTEND:20261003T163000Z
-SUMMARY:SR · U13 RLB · EV Duisburg – EJ Kassel
+SUMMARY:SR · U13 RLB: EV Duisburg – EJ Kassel
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:00 Uhr\nTreffpunkt:
   15:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: PreZero Rheinla
  ndhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann:
@@ -36,7 +36,7 @@ DTSTAMP:20261003T191526Z
 LAST-MODIFIED:20261003T191526Z
 DTSTART:20261004T133000Z
 DTEND:20261004T170000Z
-SUMMARY:SR · U15 RLB · Herner EV – EJ Kassel
+SUMMARY:SR · U15 RLB: Herner EV – EJ Kassel
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
   15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Gysenberghalle 
  Herne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Schmidt\, Waldema
@@ -57,7 +57,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T063000Z
 DTEND:20261010T100000Z
-SUMMARY:SR · U11 LL Gelb · EC Bergisch Land
+SUMMARY:SR · U11 LL Gelb: EC Bergisch Land
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
   08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Gelb\nHalle: Eissporthal
  le Solingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Hoffm
@@ -73,8 +73,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Gelb · EC Bergisch
-  Land
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Gelb: EC Bergisch L
+ and
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -84,7 +84,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T063000Z
 DTEND:20261011T100000Z
-SUMMARY:SR · U17 RL · Herner EV – EHC Troisdorf
+SUMMARY:SR · U17 RL: Herner EV – EHC Troisdorf
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
   08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Gysenberghalle H
  erne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Scholz\, Udo\n\nQu
@@ -100,8 +100,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL · Herner EV – EH
- C Troisdorf
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Herner EV – EHC 
+ Troisdorf
 END:VALARM
 END:VEVENT
 END:VCALENDAR

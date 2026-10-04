@@ -14,7 +14,7 @@ DTSTAMP:20261003T081527Z
 LAST-MODIFIED:20261003T081527Z
 DTSTART:20261003T090000Z
 DTEND:20261003T123000Z
-SUMMARY:SR · U15 RLA · Düsseldorfer EG – Krefelder EV
+SUMMARY:SR · U15 RLA: Düsseldorfer EG – Krefelder EV
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
   11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eishalle Brehms
  traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Scholz\, A
@@ -35,7 +35,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261003T133000Z
 DTEND:20261003T170000Z
-SUMMARY:SR · U17 I · Düsseldorfer EG – ESC Dresden
+SUMMARY:SR · U17 I: Düsseldorfer EG – ESC Dresden
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
   15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eishalle Brehmstr
  aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Scholz\, Ari
@@ -56,7 +56,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T130000Z
 DTEND:20261010T163000Z
-SUMMARY:LSR · DNL III · EV Duisburg – Crocodiles Hamburg
+SUMMARY:LSR · DNL III: EV Duisburg – Crocodiles Hamburg
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 16:00 Uhr\nTreffpunkt:
   15:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero Rheinla
  ndhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann:
@@ -74,8 +74,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · DNL III · EV Duisburg 
- – Crocodiles Hamburg
+DESCRIPTION:In einer Stunde an der Halle - LSR · DNL III: EV Duisburg – 
+ Crocodiles Hamburg
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -85,7 +85,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T093000Z
 DTEND:20261011T130000Z
-SUMMARY:SR · U13 LL · Dinslakener Kobras – EHC Die Bären Neuwied
+SUMMARY:SR · U13 LL: Dinslakener Kobras – EHC Die Bären Neuwied
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
   11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Di
  nslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Kuriata\, Flor
@@ -101,8 +101,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL · Dinslakener Kobr
- as – EHC Die Bären Neuwied
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: Dinslakener Kobras
+  – EHC Die Bären Neuwied
 END:VALARM
 END:VEVENT
 END:VCALENDAR

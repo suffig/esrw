@@ -14,7 +14,7 @@ DTSTAMP:20260930T091528Z
 LAST-MODIFIED:20260930T091528Z
 DTSTART:20261004T150000Z
 DTEND:20261004T183000Z
-SUMMARY:SR · U13 RLB · EHC Troisdorf – Herner EV
+SUMMARY:SR · U13 RLB: EHC Troisdorf – Herner EV
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
   17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: ICEDOME Troisdo
  rf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Finke\, G
@@ -35,7 +35,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T141500Z
 DTEND:20261010T174500Z
-SUMMARY:LSR · U20 RL · TuS Wiehl – Herforder EV
+SUMMARY:LSR · U20 RL: TuS Wiehl – Herforder EV
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
   16:15 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissporthalle Wi
  ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Starke\, Matthias 
@@ -52,8 +52,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL · TuS Wiehl – H
- erforder EV
+DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: TuS Wiehl – Her
+ forder EV
 END:VALARM
 END:VEVENT
 END:VCALENDAR

@@ -14,7 +14,7 @@ DTSTAMP:20260930T093037Z
 LAST-MODIFIED:20260930T093037Z
 DTSTART:20261002T170000Z
 DTEND:20261002T203000Z
-SUMMARY:HSR · RL FS · Eisadler Dortmund – ESV Grizzlys Bergkamen
+SUMMARY:HSR · RL FS: Eisadler Dortmund – ESV Grizzlys Bergkamen
 DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:00 Uhr\nTreff
  punkt: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissportzen
  trum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Heu\, 
@@ -36,7 +36,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T173000Z
 DTEND:20261010T210000Z
-SUMMARY:HSR · U20 RL · Neusser EV – Ratinger Ice Aliens
+SUMMARY:HSR · U20 RL: Neusser EV – Ratinger Ice Aliens
 DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:30 Uhr\nTreff
  punkt: 19:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissportha
  lle Neuss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Braun\, B
@@ -53,8 +53,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - HSR · U20 RL · Neusser EV – 
- Ratinger Ice Aliens
+DESCRIPTION:In einer Stunde an der Halle - HSR · U20 RL: Neusser EV – Ra
+ tinger Ice Aliens
 END:VALARM
 END:VEVENT
 END:VCALENDAR

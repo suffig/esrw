@@ -14,8 +14,8 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T143000Z
 DTEND:20261010T180000Z
-SUMMARY:SR · Senioren LL · ESV Grizzlys Bergkamen 1b – Eisadler Dortmun
- d 1b
+SUMMARY:SR · Senioren LL: ESV Grizzlys Bergkamen 1b – Eisadler Dortmund 
+ 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
   16:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissporthal
  le Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Müller\,
@@ -32,8 +32,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL · ESV Grizzly
- s Bergkamen 1b – Eisadler Dortmund 1b
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: ESV Grizzlys 
+ Bergkamen 1b – Eisadler Dortmund 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -43,7 +43,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T160000Z
 DTEND:20261011T193000Z
-SUMMARY:HSR · Senioren RLW · Eisadler Dortmund – Neusser EV
+SUMMARY:HSR · Senioren RLW: Eisadler Dortmund – Neusser EV
 DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 19:00 Uhr\nTreff
  punkt: 18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
  portzentrum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann:
@@ -60,8 +60,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW · Eisadler 
- Dortmund – Neusser EV
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: Eisadler Do
+ rtmund – Neusser EV
 END:VALARM
 END:VEVENT
 END:VCALENDAR

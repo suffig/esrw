@@ -14,7 +14,7 @@ DTSTAMP:20260921T171526Z
 LAST-MODIFIED:20260921T171526Z
 DTSTART:20261003T073000Z
 DTEND:20261003T110000Z
-SUMMARY:SR · U15 LL · SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats 
+SUMMARY:SR · U15 LL: SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats 
  – Dinslakener Kobras
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
   09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Be
@@ -36,7 +36,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T050000Z
 DTEND:20261004T083000Z
-SUMMARY:SR · U13 RLB · Iserlohner EC 1b – Krefelder EV 1b
+SUMMARY:SR · U13 RLB: Iserlohner EC 1b – Krefelder EV 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
   07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Eissporthalle a
  m Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Zynda\,
@@ -57,7 +57,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261009T170000Z
 DTEND:20261009T203000Z
-SUMMARY:SR · U17 RL · Herforder EV – Ratinger Ice Aliens
+SUMMARY:SR · U17 RL: Herforder EV – Ratinger Ice Aliens
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
   19:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eishalle Im Klei
  nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Zynda\, Nic
@@ -73,8 +73,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL · Herforder EV –
-  Ratinger Ice Aliens
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Herforder EV – R
+ atinger Ice Aliens
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -84,7 +84,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T063000Z
 DTEND:20261010T100000Z
-SUMMARY:SR · U11 LL Lila · Lippe Hockey Hamm
+SUMMARY:SR · U11 LL Lila: Lippe Hockey Hamm
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
   08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Lila\nHalle: HELINET Eis
  sportarena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: M
@@ -100,8 +100,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Lila · Lippe Hocke
- y Hamm
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Lila: Lippe Hockey 
+ Hamm
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -111,7 +111,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T170000Z
 DTEND:20261011T203000Z
-SUMMARY:SR · Frauen Pokal Gr.B · TSVE Bielefeld – KEC "Die Haie"
+SUMMARY:SR · Frauen Pokal Gr.B: TSVE Bielefeld – KEC "Die Haie"
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
   19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen Pokal Gr.B\n!! Halle nic
  ht automatisch erkannt - bitte selbst pruefen !!\nGespann: Keller\, Alexan
@@ -123,8 +123,8 @@ TRANSP:OPAQUE
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Frauen Pokal Gr.B · TSVE 
- Bielefeld – KEC "Die Haie"
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen Pokal Gr.B: TSVE Bi
+ elefeld – KEC "Die Haie"
 END:VALARM
 END:VEVENT
 END:VCALENDAR

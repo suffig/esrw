@@ -14,7 +14,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261003T060000Z
 DTEND:20261003T093000Z
-SUMMARY:SR · U13 LL · Lippe Hockey Hamm – EC Bergisch Land
+SUMMARY:SR · U13 LL: Lippe Hockey Hamm – EC Bergisch Land
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
   08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: HELINET Eissport
  arena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Kalisc
@@ -35,7 +35,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261003T143000Z
 DTEND:20261003T180000Z
-SUMMARY:SR · U20 LL · ESV Grizzlys Bergkamen – EC Bergisch Land
+SUMMARY:SR · U20 LL: ESV Grizzlys Bergkamen – EC Bergisch Land
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
   16:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 LL\nHalle: Eissporthalle Be
  rgkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Skalecki\, Mar
@@ -56,7 +56,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T160000Z
 DTEND:20261004T193000Z
-SUMMARY:HSR · U20 RL · Eisadler Dortmund – TuS Wiehl
+SUMMARY:HSR · U20 RL: Eisadler Dortmund – TuS Wiehl
 DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 19:00 Uhr\nTreff
  punkt: 18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissportze
  ntrum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Fenke
@@ -78,7 +78,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T103000Z
 DTEND:20261011T140000Z
-SUMMARY:SR · U13 LL · Eisadler Dortmund – EHC Troisdorf 1b
+SUMMARY:SR · U13 LL: Eisadler Dortmund – EHC Troisdorf 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
   12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissportzentrum 
  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Henkels\, A
@@ -94,8 +94,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL · Eisadler Dortmun
- d – EHC Troisdorf 1b
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: Eisadler Dortmund 
+ – EHC Troisdorf 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -105,7 +105,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T154500Z
 DTEND:20261011T191500Z
-SUMMARY:SR · Senioren LL · Soester EG – ESC Rheine
+SUMMARY:SR · Senioren LL: Soester EG – ESC Rheine
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:45 Uhr\nTreffpunkt:
   17:45 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissportzen
  trum Möhnesee\nAdresse: Teigelhof 4\, 59519 Möhnesee\nGespann: Heu\, Ale
@@ -122,7 +122,7 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Möhnesee,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL · Soester EG 
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: Soester EG 
  – ESC Rheine
 END:VALARM
 END:VEVENT

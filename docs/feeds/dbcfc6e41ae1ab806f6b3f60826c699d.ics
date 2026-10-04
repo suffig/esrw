@@ -14,7 +14,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T090000Z
 DTEND:20261011T123000Z
-SUMMARY:SR · U17 I · Kölner Junghaie – Eisbären Juniors Berlin
+SUMMARY:SR · U17 I: Kölner Junghaie – Eisbären Juniors Berlin
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
   11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Kölnarena 2\nAdr
  esse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Pluschkell\, Julian\
@@ -30,7 +30,7 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 I · Kölner Junghaie 
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Kölner Junghaie 
  – Eisbären Juniors Berlin
 END:VALARM
 END:VEVENT
@@ -41,7 +41,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T114500Z
 DTEND:20261011T151500Z
-SUMMARY:SR · U9 RL · Kölner Junghaie
+SUMMARY:SR · U9 RL: Kölner Junghaie
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:45 Uhr\nTreffpunkt:
   13:45 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: Kölnarena 2\nAdr
  esse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Pluschkell\, Julian\
@@ -57,7 +57,7 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U9 RL · Kölner Junghaie
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 RL: Kölner Junghaie
 END:VALARM
 END:VEVENT
 END:VCALENDAR

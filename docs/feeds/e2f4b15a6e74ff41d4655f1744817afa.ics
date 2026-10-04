@@ -14,7 +14,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261003T150000Z
 DTEND:20261003T183000Z
-SUMMARY:SR · U13 LL · Neusser EV – EHC Essen Ruhr
+SUMMARY:SR · U13 LL: Neusser EV – EHC Essen Ruhr
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
   17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Ne
  uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Quint\, Sascha\
@@ -35,7 +35,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261003T173000Z
 DTEND:20261003T210000Z
-SUMMARY:LSR · U20 RL · Neusser EV – Herforder EV
+SUMMARY:LSR · U20 RL: Neusser EV – Herforder EV
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
   19:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissporthalle Ne
  uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Schlüter\, Tho
@@ -57,7 +57,7 @@ DTSTAMP:20261003T191526Z
 LAST-MODIFIED:20261003T191526Z
 DTSTART:20261004T133000Z
 DTEND:20261004T170000Z
-SUMMARY:SR · U15 RLB · Herner EV – EJ Kassel
+SUMMARY:SR · U15 RLB: Herner EV – EJ Kassel
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
   15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Gysenberghalle 
  Herne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Melchert\, Philip
@@ -78,7 +78,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261009T163000Z
 DTEND:20261009T200000Z
-SUMMARY:SR · Frauen LL · ESV Bergisch Gladbach – Ratinger Ice Aliens
+SUMMARY:SR · Frauen LL: ESV Bergisch Gladbach – Ratinger Ice Aliens
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
   18:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen LL\nHalle: Eissporthalle
   Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbach\n
@@ -96,8 +96,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL · ESV Bergisch 
- Gladbach – Ratinger Ice Aliens
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: ESV Bergisch Gl
+ adbach – Ratinger Ice Aliens
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -107,7 +107,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T130000Z
 DTEND:20261010T163000Z
-SUMMARY:LSR · DNL III · EV Duisburg – Crocodiles Hamburg
+SUMMARY:LSR · DNL III: EV Duisburg – Crocodiles Hamburg
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 16:00 Uhr\nTreffpunkt:
   15:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero Rheinla
  ndhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann:
@@ -125,8 +125,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · DNL III · EV Duisburg 
- – Crocodiles Hamburg
+DESCRIPTION:In einer Stunde an der Halle - LSR · DNL III: EV Duisburg – 
+ Crocodiles Hamburg
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -136,7 +136,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T070000Z
 DTEND:20261011T103000Z
-SUMMARY:LSR · DNL III · EV Duisburg – Crocodiles Hamburg
+SUMMARY:LSR · DNL III: EV Duisburg – Crocodiles Hamburg
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
   09:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero Rheinla
  ndhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann:
@@ -154,8 +154,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · DNL III · EV Duisburg 
- – Crocodiles Hamburg
+DESCRIPTION:In einer Stunde an der Halle - LSR · DNL III: EV Duisburg – 
+ Crocodiles Hamburg
 END:VALARM
 END:VEVENT
 END:VCALENDAR

@@ -14,7 +14,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261012T163000Z
 DTEND:20261012T200000Z
-SUMMARY:SR · Frauen LL · DEC Düsseldorfer Devils – Eisadler Dortmund
+SUMMARY:SR · Frauen LL: DEC Düsseldorfer Devils – Eisadler Dortmund
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
   18:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen LL\nHalle: Eissporthalle
   Düsseldorf-Benrath\nAdresse: Kappeler Str. 107\, 40597 Düsseldorf\nGesp
@@ -32,8 +32,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Düsseldorf-
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL · DEC Düsseldo
- rfer Devils – Eisadler Dortmund
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: DEC Düsseldorf
+ er Devils – Eisadler Dortmund
 END:VALARM
 END:VEVENT
 END:VCALENDAR

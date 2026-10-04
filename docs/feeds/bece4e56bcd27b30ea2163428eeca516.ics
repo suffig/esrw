@@ -14,7 +14,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T151500Z
 DTEND:20261011T184500Z
-SUMMARY:LSR · Senioren RLW · GSC Moers – Dinslakener Kobras
+SUMMARY:LSR · Senioren RLW: GSC Moers – Dinslakener Kobras
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:15 Uhr\nTreffpunkt:
   17:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
  lle Moers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Kyei-Nimako\
@@ -31,8 +31,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW · GSC Moers
-  – Dinslakener Kobras
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: GSC Moers 
+ – Dinslakener Kobras
 END:VALARM
 END:VEVENT
 END:VCALENDAR

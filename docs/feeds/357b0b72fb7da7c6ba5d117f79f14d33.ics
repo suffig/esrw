@@ -14,7 +14,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T130000Z
 DTEND:20261010T163000Z
-SUMMARY:HSR · DNL III · EV Duisburg – Crocodiles Hamburg
+SUMMARY:HSR · DNL III: EV Duisburg – Crocodiles Hamburg
 DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 16:00 Uhr\nTreff
  punkt: 15:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero R
  heinlandhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGe
@@ -32,8 +32,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - HSR · DNL III · EV Duisburg 
- – Crocodiles Hamburg
+DESCRIPTION:In einer Stunde an der Halle - HSR · DNL III: EV Duisburg – 
+ Crocodiles Hamburg
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -43,7 +43,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T163000Z
 DTEND:20261011T200000Z
-SUMMARY:HSR · Senioren RLW · Grefrather EG – ESV Bergisch Gladbach
+SUMMARY:HSR · Senioren RLW: Grefrather EG – ESV Bergisch Gladbach
 DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 19:30 Uhr\nTreff
  punkt: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
  portzentrum Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespan
@@ -60,8 +60,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW · Grefrathe
- r EG – ESV Bergisch Gladbach
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: Grefrather 
+ EG – ESV Bergisch Gladbach
 END:VALARM
 END:VEVENT
 END:VCALENDAR

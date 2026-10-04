@@ -14,7 +14,7 @@ DTSTAMP:20260921T101525Z
 LAST-MODIFIED:20260921T101525Z
 DTSTART:20260927T170000Z
 DTEND:20260927T203000Z
-SUMMARY:SR · BZ FS · Neusser EV 1b – EHC Essen
+SUMMARY:SR · BZ FS: Neusser EV 1b – EHC Essen
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
   19:00 Uhr (60 Min vor Spielbeginn)\nLiga: BZ FS\nHalle: Eissporthalle Neu
  ss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Stocker\, Quirin
@@ -35,7 +35,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T163000Z
 DTEND:20261011T200000Z
-SUMMARY:LSR · Senioren RLW · Grefrather EG – ESV Bergisch Gladbach
+SUMMARY:LSR · Senioren RLW: Grefrather EG – ESV Bergisch Gladbach
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
   18:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportze
  ntrum Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespann: Ste
@@ -52,8 +52,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW · Grefrathe
- r EG – ESV Bergisch Gladbach
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Grefrather 
+ EG – ESV Bergisch Gladbach
 END:VALARM
 END:VEVENT
 END:VCALENDAR

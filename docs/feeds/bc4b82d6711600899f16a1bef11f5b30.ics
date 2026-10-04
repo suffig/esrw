@@ -14,7 +14,7 @@ DTSTAMP:20260930T093037Z
 LAST-MODIFIED:20260930T093037Z
 DTSTART:20261002T170000Z
 DTEND:20261002T203000Z
-SUMMARY:SR · U20 RL · Herforder EV – Ratinger Ice Aliens
+SUMMARY:SR · U20 RL: Herforder EV – Ratinger Ice Aliens
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
   19:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eishalle Im Klei
  nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Müller\, L
@@ -35,7 +35,7 @@ DTSTAMP:20260921T171526Z
 LAST-MODIFIED:20260921T171526Z
 DTSTART:20261003T073000Z
 DTEND:20261003T110000Z
-SUMMARY:SR · U15 LL · SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats 
+SUMMARY:SR · U15 LL: SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats 
  – Dinslakener Kobras
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
   09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Be
@@ -57,8 +57,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T050000Z
 DTEND:20261010T083000Z
-SUMMARY:SR · U13 BZL Gr.A · ESC Rheine Young Cats – Eisadler Dortmund 1
- b
+SUMMARY:SR · U13 BZL Gr.A: ESC Rheine Young Cats – Eisadler Dortmund 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
   07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\n!! Halle nicht au
  tomatisch erkannt - bitte selbst pruefen !!\nGespann: Keller\, Alexander\n
@@ -69,8 +68,8 @@ TRANSP:OPAQUE
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A · ESC Rheine
-  Young Cats – Eisadler Dortmund 1b
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: ESC Rheine Y
+ oung Cats – Eisadler Dortmund 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -80,7 +79,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T044500Z
 DTEND:20261011T081500Z
-SUMMARY:SR · U13 BZL Gr.A · TSVE Bielefeld – GSC Moers
+SUMMARY:SR · U13 BZL Gr.A: TSVE Bielefeld – GSC Moers
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 07:45 Uhr\nTreffpunkt:
   06:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\n!! Halle nicht au
  tomatisch erkannt - bitte selbst pruefen !!\nGespann: Funk\, Marvin\n\nQue
@@ -91,8 +90,8 @@ TRANSP:OPAQUE
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A · TSVE Biele
- feld – GSC Moers
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: TSVE Bielefe
+ ld – GSC Moers
 END:VALARM
 END:VEVENT
 END:VCALENDAR

@@ -14,7 +14,7 @@ DTSTAMP:20260930T093037Z
 LAST-MODIFIED:20260930T093037Z
 DTSTART:20261004T170000Z
 DTEND:20261004T203000Z
-SUMMARY:SR · FS U17 · SPG NEV / GSC – Grefrather EG
+SUMMARY:SR · FS U17: SPG NEV / GSC – Grefrather EG
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
   19:00 Uhr (60 Min vor Spielbeginn)\nLiga: FS U17\nHalle: Eissporthalle Ne
  uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Heyer\, Christo
@@ -30,8 +30,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · FS U17 · SPG NEV / GSC 
- – Grefrather EG
+DESCRIPTION:In einer Stunde an der Halle - SR · FS U17: SPG NEV / GSC – 
+ Grefrather EG
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -41,7 +41,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T163000Z
 DTEND:20261010T200000Z
-SUMMARY:SR · U17 LL · Grefrather EG – SpG Neusser EV / GSC Moers
+SUMMARY:SR · U17 LL: Grefrather EG – SpG Neusser EV / GSC Moers
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
   18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\nHalle: Eissportzentrum 
  Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespann: Heyer\, C
@@ -57,8 +57,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL · Grefrather EG 
- – SpG Neusser EV / GSC Moers
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: Grefrather EG – 
+ SpG Neusser EV / GSC Moers
 END:VALARM
 END:VEVENT
 END:VCALENDAR

@@ -14,7 +14,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T060000Z
 DTEND:20261011T093000Z
-SUMMARY:SR · U15 RLA · Iserlohner EC – Krefelder EV
+SUMMARY:SR · U15 RLA: Iserlohner EC – Krefelder EV
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
   08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eissporthalle a
  m Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Garbsch
@@ -30,8 +30,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA · Iserlohner EC 
- – Krefelder EV
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA: Iserlohner EC –
+  Krefelder EV
 END:VALARM
 END:VEVENT
 END:VCALENDAR

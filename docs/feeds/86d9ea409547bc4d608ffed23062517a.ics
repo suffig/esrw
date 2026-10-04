@@ -14,7 +14,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T160000Z
 DTEND:20261004T193000Z
-SUMMARY:LSR · U20 RL · Eisadler Dortmund – TuS Wiehl
+SUMMARY:LSR · U20 RL: Eisadler Dortmund – TuS Wiehl
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
   18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissportzentrum 
  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Steeg\, Ced
@@ -36,7 +36,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261009T163000Z
 DTEND:20261009T200000Z
-SUMMARY:SR · U15 RLB · Iserlohner EC 1b – EHC Troisdorf
+SUMMARY:SR · U15 RLB: Iserlohner EC 1b – EHC Troisdorf
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
   18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Eissporthalle a
  m Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Galeske
@@ -52,8 +52,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB · Iserlohner EC 1
- b – EHC Troisdorf
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB: Iserlohner EC 1b 
+ – EHC Troisdorf
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -63,7 +63,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T080000Z
 DTEND:20261010T113000Z
-SUMMARY:SR · U9 RL · Iserlohner EC
+SUMMARY:SR · U9 RL: Iserlohner EC
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:00 Uhr\nTreffpunkt:
   10:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: Eissporthalle am 
  Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Galeske\,
@@ -79,7 +79,7 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U9 RL · Iserlohner EC
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 RL: Iserlohner EC
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -89,7 +89,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T153000Z
 DTEND:20261011T190000Z
-SUMMARY:LSR · Senioren RLW · ESV Grizzlys Bergkamen – TuS Wiehl
+SUMMARY:LSR · Senioren RLW: ESV Grizzlys Bergkamen – TuS Wiehl
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
   17:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
  lle Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Müller\
@@ -106,8 +106,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW · ESV Grizz
- lys Bergkamen – TuS Wiehl
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: ESV Grizzly
+ s Bergkamen – TuS Wiehl
 END:VALARM
 END:VEVENT
 END:VCALENDAR

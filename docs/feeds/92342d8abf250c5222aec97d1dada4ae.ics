@@ -14,7 +14,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261009T141500Z
 DTEND:20261009T174500Z
-SUMMARY:SR · U13 LL · EC Bergisch Land – ESV Grizzlys Bergkamen
+SUMMARY:SR · U13 LL: EC Bergisch Land – ESV Grizzlys Bergkamen
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
   16:15 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle So
  lingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Henkels\, 
@@ -30,8 +30,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL · EC Bergisch Land
-  – ESV Grizzlys Bergkamen
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: EC Bergisch Land 
+ – ESV Grizzlys Bergkamen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -41,7 +41,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T103000Z
 DTEND:20261010T140000Z
-SUMMARY:SR · U15 LL · Ratinger Ice Aliens – EV Duisburg 1b
+SUMMARY:SR · U15 LL: Ratinger Ice Aliens – EV Duisburg 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
   12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Ra
  tingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Marks\, Marcel\
@@ -57,8 +57,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL · Ratinger Ice Ali
- ens – EV Duisburg 1b
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Ratinger Ice Alien
+ s – EV Duisburg 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -68,7 +68,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T140000Z
 DTEND:20261011T173000Z
-SUMMARY:SR · U13 LL · Ratinger Ice Aliens – EV Duisburg 1b
+SUMMARY:SR · U13 LL: Ratinger Ice Aliens – EV Duisburg 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:00 Uhr\nTreffpunkt:
   16:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Ra
  tingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Schlüter\, Tho
@@ -84,8 +84,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL · Ratinger Ice Ali
- ens – EV Duisburg 1b
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: Ratinger Ice Alien
+ s – EV Duisburg 1b
 END:VALARM
 END:VEVENT
 END:VCALENDAR

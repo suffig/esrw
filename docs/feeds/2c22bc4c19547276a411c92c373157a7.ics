@@ -14,8 +14,8 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T144500Z
 DTEND:20261010T181500Z
-SUMMARY:SR · U15 BZL · SpG Neusser EV 1b / GSC Moers 1b – EC Bergisch L
- and
+SUMMARY:SR · U15 BZL: SpG Neusser EV 1b / GSC Moers 1b – EC Bergisch Lan
+ d
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:45 Uhr\nTreffpunkt:
   16:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Eissporthalle M
  oers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Heu\, Alexander\n
@@ -31,8 +31,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL · SpG Neusser EV 
- 1b / GSC Moers 1b – EC Bergisch Land
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: SpG Neusser EV 1b
+  / GSC Moers 1b – EC Bergisch Land
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -42,7 +42,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T173000Z
 DTEND:20261010T210000Z
-SUMMARY:SR · U20 LL · GSC Moers – EC Bergisch Land
+SUMMARY:SR · U20 LL: GSC Moers – EC Bergisch Land
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
   19:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 LL\nHalle: Eissporthalle Mo
  ers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Heu\, Alexander\n\
@@ -58,8 +58,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U20 LL · GSC Moers – EC
-  Bergisch Land
+DESCRIPTION:In einer Stunde an der Halle - SR · U20 LL: GSC Moers – EC B
+ ergisch Land
 END:VALARM
 END:VEVENT
 END:VCALENDAR

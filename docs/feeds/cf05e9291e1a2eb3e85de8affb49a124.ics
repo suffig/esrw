@@ -14,7 +14,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T050000Z
 DTEND:20261004T083000Z
-SUMMARY:SR · U9 LL Rot · Düsseldorfer EG 1b
+SUMMARY:SR · U9 LL Rot: Düsseldorfer EG 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
   07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Rot\nHalle: Eishalle Breh
  mstraße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Dietrich
@@ -35,7 +35,7 @@ DTSTAMP:20260930T093037Z
 LAST-MODIFIED:20260930T093037Z
 DTSTART:20261004T080000Z
 DTEND:20261004T113000Z
-SUMMARY:SR · U17 I · Düsseldorfer EG – ESC Dresden
+SUMMARY:SR · U17 I: Düsseldorfer EG – ESC Dresden
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:00 Uhr\nTreffpunkt:
   10:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eishalle Brehmstr
  aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Dietrich\, J
@@ -56,7 +56,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T133000Z
 DTEND:20261010T170000Z
-SUMMARY:SR · U17 I · Kölner Junghaie – Eisbären Juniors Berlin
+SUMMARY:SR · U17 I: Kölner Junghaie – Eisbären Juniors Berlin
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
   15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Kölnarena 2\nAdr
  esse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Leibfried\, Raphael\
@@ -72,7 +72,7 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 I · Kölner Junghaie 
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Kölner Junghaie 
  – Eisbären Juniors Berlin
 END:VALARM
 END:VEVENT
@@ -83,7 +83,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T161500Z
 DTEND:20261010T194500Z
-SUMMARY:SR · Frauen BZL · KEC "Die Haie" 1c – ESV Bergisch Gladbach 1b
+SUMMARY:SR · Frauen BZL: KEC "Die Haie" 1c – ESV Bergisch Gladbach 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:15 Uhr\nTreffpunkt:
   18:15 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Kölnarena 2
  \nAdresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Leibfried\, Rap
@@ -100,8 +100,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL · KEC "Die Hai
- e" 1c – ESV Bergisch Gladbach 1b
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL: KEC "Die Haie"
+  1c – ESV Bergisch Gladbach 1b
 END:VALARM
 END:VEVENT
 END:VCALENDAR

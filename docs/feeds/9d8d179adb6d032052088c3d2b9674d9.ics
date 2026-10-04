@@ -14,7 +14,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261015T153000Z
 DTEND:20261015T190000Z
-SUMMARY:SR · U15 LL · EV Duisburg 1b – Ratinger Ice Aliens
+SUMMARY:SR · U15 LL: EV Duisburg 1b – Ratinger Ice Aliens
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
   17:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: PreZero Rheinlan
  dhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: 
@@ -31,8 +31,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL · EV Duisburg 1b 
- – Ratinger Ice Aliens
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: EV Duisburg 1b –
+  Ratinger Ice Aliens
 END:VALARM
 END:VEVENT
 END:VCALENDAR

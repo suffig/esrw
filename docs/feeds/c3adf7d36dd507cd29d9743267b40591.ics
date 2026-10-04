@@ -14,7 +14,7 @@ DTSTAMP:20260921T101525Z
 LAST-MODIFIED:20260921T101525Z
 DTSTART:20260927T170000Z
 DTEND:20260927T203000Z
-SUMMARY:BZ FS · Neusser EV 1b – EHC Essen
+SUMMARY:SR · BZ FS: Neusser EV 1b – EHC Essen
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
   19:00 Uhr (60 Min vor Spielbeginn)\nLiga: BZ FS\nHalle: Eissporthalle Neu
  ss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Stocker\, Quirin
@@ -35,7 +35,7 @@ DTSTAMP:20260930T093037Z
 LAST-MODIFIED:20260930T093037Z
 DTSTART:20261002T170000Z
 DTEND:20261002T203000Z
-SUMMARY:U20 RL · Herforder EV – Ratinger Ice Aliens
+SUMMARY:SR · U20 RL: Herforder EV – Ratinger Ice Aliens
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
   19:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eishalle Im Klei
  nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Müller\, L
@@ -56,7 +56,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261002T170000Z
 DTEND:20261002T203000Z
-SUMMARY:BL FS · EHC Essen Ruhr – EC Bergisch Land
+SUMMARY:SR · BL FS: EHC Essen Ruhr – EC Bergisch Land
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
   19:00 Uhr (60 Min vor Spielbeginn)\nLiga: BL FS\nHalle: Eissporthalle Ess
  en-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Fenke\, Matthias\n
@@ -77,7 +77,7 @@ DTSTAMP:20260930T093037Z
 LAST-MODIFIED:20260930T093037Z
 DTSTART:20261002T170000Z
 DTEND:20261002T203000Z
-SUMMARY:RL FS · Eisadler Dortmund – ESV Grizzlys Bergkamen
+SUMMARY:LSR · RL FS: Eisadler Dortmund – ESV Grizzlys Bergkamen
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
   19:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissportzentrum W
  estfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Priebsch\, J
@@ -99,7 +99,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261002T170000Z
 DTEND:20261002T203000Z
-SUMMARY:U17 RL · Lippe Hockey Hamm – EHC Troisdorf
+SUMMARY:SR · U17 RL: Lippe Hockey Hamm – EHC Troisdorf
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
   19:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: HELINET Eissport
  arena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Zynda\
@@ -120,7 +120,7 @@ DTSTAMP:20261002T082808Z
 LAST-MODIFIED:20261002T082808Z
 DTSTART:20261002T170000Z
 DTEND:20261002T203000Z
-SUMMARY:RL FS · Neusser EV – Bergisch Gladbach
+SUMMARY:LSR · RL FS: Neusser EV – Bergisch Gladbach
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
   19:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthalle Ber
  gisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbach\nGesp
@@ -143,7 +143,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261002T171500Z
 DTEND:20261002T204500Z
-SUMMARY:U15 BZL · EC Bergisch Land – Eisadler Dortmund 1b
+SUMMARY:SR · U15 BZL: EC Bergisch Land – Eisadler Dortmund 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
   19:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Eissporthalle S
  olingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Henkels\,
@@ -164,7 +164,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261002T171500Z
 DTEND:20261002T204500Z
-SUMMARY:U15 RLB · EHC Troisdorf – Düsseldorfer EG 1b
+SUMMARY:SR · U15 RLB: EHC Troisdorf – Düsseldorfer EG 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
   19:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: ICEDOME Troisdo
  rf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Moritz\, 
@@ -185,7 +185,7 @@ DTSTAMP:20260930T133044Z
 LAST-MODIFIED:20260930T133044Z
 DTSTART:20261002T171500Z
 DTEND:20261002T204500Z
-SUMMARY:Senioren LL · Dinslakener Kobras 1b – EHC Troisdorf
+SUMMARY:SR · Senioren LL: Dinslakener Kobras 1b – EHC Troisdorf
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
   19:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissporthal
  le Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Störmann
@@ -207,7 +207,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261003T050000Z
 DTEND:20261003T083000Z
-SUMMARY:U17 RL · Herforder EV – Herner EV
+SUMMARY:SR · U17 RL: Herforder EV – Herner EV
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
   07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eishalle Im Klei
  nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Keller\, Al
@@ -228,7 +228,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261003T060000Z
 DTEND:20261003T093000Z
-SUMMARY:U13 LL · Lippe Hockey Hamm – EC Bergisch Land
+SUMMARY:SR · U13 LL: Lippe Hockey Hamm – EC Bergisch Land
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
   08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: HELINET Eissport
  arena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Steeg\
@@ -249,7 +249,7 @@ DTSTAMP:20260921T171526Z
 LAST-MODIFIED:20260921T171526Z
 DTSTART:20261003T061500Z
 DTEND:20261003T094500Z
-SUMMARY:U9 LL Lila · SpG EHC Gelsenkirchen – Herner EV 1b -
+SUMMARY:SR · U9 LL Lila: SpG EHC Gelsenkirchen – Herner EV 1b -
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:15 Uhr\nTreffpunkt:
   08:15 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Lila\nHalle: Emscher-Lipp
  e-Halle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\nG
@@ -271,7 +271,7 @@ DTSTAMP:20260930T091528Z
 LAST-MODIFIED:20260930T091528Z
 DTSTART:20261003T070000Z
 DTEND:20261003T103000Z
-SUMMARY:U13 LL · EHC Troisdorf 1b – EHC Die Bären Neuwied
+SUMMARY:SR · U13 LL: EHC Troisdorf 1b – EHC Die Bären Neuwied
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
   09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: ICEDOME Troisdor
  f\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Hoffmann\,
@@ -292,8 +292,8 @@ DTSTAMP:20260921T171526Z
 LAST-MODIFIED:20260921T171526Z
 DTSTART:20261003T073000Z
 DTEND:20261003T110000Z
-SUMMARY:U15 LL · SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats – Di
- nslakener Kobras
+SUMMARY:SR · U15 LL: SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats 
+ – Dinslakener Kobras
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
   09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Be
  rgkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Zynda\, Jayden
@@ -314,7 +314,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261003T083000Z
 DTEND:20261003T120000Z
-SUMMARY:U15 LL · Herforder EV – EHC Die Bären Neuwied
+SUMMARY:SR · U15 LL: Herforder EV – EHC Die Bären Neuwied
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:30 Uhr\nTreffpunkt:
   10:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eishalle Im Klei
  nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Keller\, Al
@@ -335,7 +335,7 @@ DTSTAMP:20261003T081527Z
 LAST-MODIFIED:20261003T081527Z
 DTSTART:20261003T090000Z
 DTEND:20261003T123000Z
-SUMMARY:U15 RLA · Düsseldorfer EG – Krefelder EV
+SUMMARY:SR · U15 RLA: Düsseldorfer EG – Krefelder EV
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
   11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eishalle Brehms
  traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Scholz\, A
@@ -356,7 +356,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261003T091500Z
 DTEND:20261003T124500Z
-SUMMARY:U9 LL Blau · EHC Essen Ruhr
+SUMMARY:SR · U9 LL Blau: EHC Essen Ruhr
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:15 Uhr\nTreffpunkt:
   11:15 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Blau\nHalle: Eissporthall
  e Essen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Henkels\, And
@@ -377,7 +377,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261003T092000Z
 DTEND:20261003T125000Z
-SUMMARY:U17 I · Iserlohner EC – Kölner Junghaie
+SUMMARY:SR · U17 I: Iserlohner EC – Kölner Junghaie
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:20 Uhr\nTreffpunkt:
   11:20 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eissporthalle am 
  Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Müller\,
@@ -398,7 +398,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261003T093000Z
 DTEND:20261003T130000Z
-SUMMARY:DFEL2 Nord · Dinslakener Kobras – FASS Berlin
+SUMMARY:SR · DFEL2 Nord: Dinslakener Kobras – FASS Berlin
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
   11:30 Uhr (60 Min vor Spielbeginn)\nLiga: DFEL2 Nord\nHalle: Eissporthall
  e Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Hofer\, Ca
@@ -419,8 +419,8 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261003T103000Z
 DTEND:20261003T140000Z
-SUMMARY:U15 LL · Eisadler Dortmund – SpG EHC Gelsenkirchen / Herner EV 1
- b
+SUMMARY:SR · U15 LL: Eisadler Dortmund – SpG EHC Gelsenkirchen / Herner 
+ EV 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
   12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissportzentrum 
  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Zynda\, Nic
@@ -441,7 +441,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261003T103000Z
 DTEND:20261003T140000Z
-SUMMARY:U13 RLA · Krefelder EV – Düsseldorfer EG YAYLA Krefeld
+SUMMARY:SR · U13 RLA: Krefelder EV – Düsseldorfer EG YAYLA Krefeld
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
   12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLA\nHalle: Rheinlandhalle 
  Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Reuter\, F
@@ -462,7 +462,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261003T130000Z
 DTEND:20261003T163000Z
-SUMMARY:U13 RLB · EV Duisburg – EJ Kassel
+SUMMARY:SR · U13 RLB: EV Duisburg – EJ Kassel
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:00 Uhr\nTreffpunkt:
   15:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: PreZero Rheinla
  ndhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann:
@@ -484,7 +484,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261003T133000Z
 DTEND:20261003T170000Z
-SUMMARY:U17 I · Düsseldorfer EG – ESC Dresden
+SUMMARY:SR · U17 I: Düsseldorfer EG – ESC Dresden
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
   15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eishalle Brehmstr
  aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Scholz\, Ari
@@ -505,7 +505,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261003T133000Z
 DTEND:20261003T170000Z
-SUMMARY:U17 I · Krefelder EV – ES Weißwasser YAYLA Krefeld
+SUMMARY:SR · U17 I: Krefelder EV – ES Weißwasser YAYLA Krefeld
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
   15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Rheinlandhalle Kr
  efeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Reuter\, Fyn
@@ -526,7 +526,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261003T133000Z
 DTEND:20261003T170000Z
-SUMMARY:U13 RLA · Kölner Junghaie – Iserlohner EC
+SUMMARY:SR · U13 RLA: Kölner Junghaie – Iserlohner EC
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
   15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLA\nHalle: Kölnarena 2\nA
  dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Schöche\, Gian-Ca
@@ -547,7 +547,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261003T143000Z
 DTEND:20261003T180000Z
-SUMMARY:U20 LL · ESV Grizzlys Bergkamen – EC Bergisch Land
+SUMMARY:SR · U20 LL: ESV Grizzlys Bergkamen – EC Bergisch Land
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
   16:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 LL\nHalle: Eissporthalle Be
  rgkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Steeg\, Cedric
@@ -568,7 +568,7 @@ DTSTAMP:20260930T093037Z
 LAST-MODIFIED:20260930T093037Z
 DTSTART:20261003T144500Z
 DTEND:20261003T181500Z
-SUMMARY:FS U15 · SPG NEV / GSC – Aachener EC In Moers !!!
+SUMMARY:SR · FS U15: SPG NEV / GSC – Aachener EC In Moers !!!
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:45 Uhr\nTreffpunkt:
   16:45 Uhr (60 Min vor Spielbeginn)\nLiga: FS U15\nHalle: Eissporthalle Mo
  ers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Heffler\, Zsolt\n\
@@ -589,7 +589,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261003T150000Z
 DTEND:20261003T183000Z
-SUMMARY:U13 LL · Neusser EV – EHC Essen Ruhr
+SUMMARY:SR · U13 LL: Neusser EV – EHC Essen Ruhr
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
   17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Ne
  uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Schmidt\, Walde
@@ -610,7 +610,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261003T164500Z
 DTEND:20261003T201500Z
-SUMMARY:U15 RLA · Kölner Junghaie – Iserlohner EC
+SUMMARY:SR · U15 RLA: Kölner Junghaie – Iserlohner EC
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:45 Uhr\nTreffpunkt:
   18:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Kölnarena 2\nA
  dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Schöche\, Gian-Ca
@@ -631,7 +631,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261003T173000Z
 DTEND:20261003T210000Z
-SUMMARY:U20 RL · Neusser EV – Herforder EV
+SUMMARY:LSR · U20 RL: Neusser EV – Herforder EV
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
   19:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissporthalle Ne
  uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Schlüter\, Tho
@@ -653,7 +653,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T050000Z
 DTEND:20261004T083000Z
-SUMMARY:U9 LL Rot · Düsseldorfer EG 1b
+SUMMARY:SR · U9 LL Rot: Düsseldorfer EG 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
   07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Rot\nHalle: Eishalle Breh
  mstraße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: van Himb
@@ -674,7 +674,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T050000Z
 DTEND:20261004T083000Z
-SUMMARY:U13 RLB · Iserlohner EC 1b – Krefelder EV 1b
+SUMMARY:SR · U13 RLB: Iserlohner EC 1b – Krefelder EV 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
   07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Eissporthalle a
  m Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Zynda\,
@@ -695,7 +695,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T060000Z
 DTEND:20261004T093000Z
-SUMMARY:U13 LL · ESV Grizzlys Bergkamen – EHC Die Bären Neuwied
+SUMMARY:SR · U13 LL: ESV Grizzlys Bergkamen – EHC Die Bären Neuwied
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
   08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Be
  rgkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Honselmann\, T
@@ -716,7 +716,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T063000Z
 DTEND:20261004T100000Z
-SUMMARY:U11 LL Rot · Herner EV
+SUMMARY:SR · U11 LL Rot: Herner EV
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
   08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Rot\nHalle: Gysenberghal
  le Herne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Rieneck\, Maxi
@@ -737,7 +737,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T070000Z
 DTEND:20261004T103000Z
-SUMMARY:U15 LL · EV Duisburg 1b – Herforder EV
+SUMMARY:SR · U15 LL: EV Duisburg 1b – Herforder EV
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
   09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: PreZero Rheinlan
  dhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: 
@@ -759,7 +759,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T071500Z
 DTEND:20261004T104500Z
-SUMMARY:U15 LL · EHC Essen Ruhr – Lippe Hockey Hamm
+SUMMARY:SR · U15 LL: EHC Essen Ruhr – Lippe Hockey Hamm
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:15 Uhr\nTreffpunkt:
   09:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Es
  sen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Hindley\, David\n
@@ -780,7 +780,7 @@ DTSTAMP:20260930T093037Z
 LAST-MODIFIED:20260930T093037Z
 DTSTART:20261004T080000Z
 DTEND:20261004T113000Z
-SUMMARY:U17 I · Düsseldorfer EG – ESC Dresden
+SUMMARY:SR · U17 I: Düsseldorfer EG – ESC Dresden
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:00 Uhr\nTreffpunkt:
   10:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eishalle Brehmstr
  aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: van Himbeeck
@@ -801,7 +801,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T080000Z
 DTEND:20261004T113000Z
-SUMMARY:U17 I · Krefelder EV – ES Weißwasser YAYLA Krefeld
+SUMMARY:SR · U17 I: Krefelder EV – ES Weißwasser YAYLA Krefeld
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:00 Uhr\nTreffpunkt:
   10:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Rheinlandhalle Kr
  efeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Pluschkell\,
@@ -822,7 +822,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T090000Z
 DTEND:20261004T123000Z
-SUMMARY:U17 I · Kölner Junghaie – Iserlohner EC
+SUMMARY:SR · U17 I: Kölner Junghaie – Iserlohner EC
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
   11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Kölnarena 2\nAdr
  esse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Scholz\, Arien\n\nQu
@@ -843,7 +843,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T093000Z
 DTEND:20261004T130000Z
-SUMMARY:U13 LL · Dinslakener Kobras – Eisadler Dortmund
+SUMMARY:SR · U13 LL: Dinslakener Kobras – Eisadler Dortmund
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
   11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Di
  nslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Störmann\, Ma
@@ -864,7 +864,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T110000Z
 DTEND:20261004T143000Z
-SUMMARY:U15 RLB · Düsseldorfer EG 1b – Krefelder EV 1b
+SUMMARY:SR · U15 RLB: Düsseldorfer EG 1b – Krefelder EV 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:00 Uhr\nTreffpunkt:
   13:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Eishalle Brehms
  traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Schlüter\
@@ -885,7 +885,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T114500Z
 DTEND:20261004T151500Z
-SUMMARY:U13 RLB · Kölner Junghaie 1b – EJ Kassel
+SUMMARY:SR · U13 RLB: Kölner Junghaie 1b – EJ Kassel
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:45 Uhr\nTreffpunkt:
   13:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Kölnarena 2\nA
  dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Starke\, Matthias\
@@ -906,7 +906,7 @@ DTSTAMP:20261003T191526Z
 LAST-MODIFIED:20261003T191526Z
 DTSTART:20261004T133000Z
 DTEND:20261004T170000Z
-SUMMARY:U15 RLB · Herner EV – EJ Kassel
+SUMMARY:SR · U15 RLB: Herner EV – EJ Kassel
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
   15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Gysenberghalle 
  Herne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Schmidt\, Waldema
@@ -927,7 +927,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T140000Z
 DTEND:20261004T173000Z
-SUMMARY:U11 RL · Krefelder EV
+SUMMARY:SR · U11 RL: Krefelder EV
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:00 Uhr\nTreffpunkt:
   16:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 RL\nHalle: Rheinlandhalle K
  refeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Pluschkell\
@@ -948,7 +948,7 @@ DTSTAMP:20260930T093037Z
 LAST-MODIFIED:20260930T093037Z
 DTSTART:20261004T141500Z
 DTEND:20261004T174500Z
-SUMMARY:FS U17 · TuS Wiehl – Herner EV
+SUMMARY:SR · FS U17: TuS Wiehl – Herner EV
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
   16:15 Uhr (60 Min vor Spielbeginn)\nLiga: FS U17\nHalle: Eissporthalle Wi
  ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Schöche\, Gian-Ca
@@ -969,7 +969,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T143000Z
 DTEND:20261004T180000Z
-SUMMARY:BL FS · EHC Gelsenkirchen – Neusser EV 1b
+SUMMARY:SR · BL FS: EHC Gelsenkirchen – Neusser EV 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
   16:30 Uhr (60 Min vor Spielbeginn)\nLiga: BL FS\nHalle: Emscher-Lippe-Hal
  le Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\nGespan
@@ -991,7 +991,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T143000Z
 DTEND:20261004T180000Z
-SUMMARY:U15 RLA · Kölner Junghaie – Iserlohner EC
+SUMMARY:SR · U15 RLA: Kölner Junghaie – Iserlohner EC
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
   16:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Kölnarena 2\nA
  dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Starke\, Matthias\
@@ -1012,7 +1012,7 @@ DTSTAMP:20260930T091528Z
 LAST-MODIFIED:20260930T091528Z
 DTSTART:20261004T150000Z
 DTEND:20261004T183000Z
-SUMMARY:U13 RLB · EHC Troisdorf – Herner EV
+SUMMARY:SR · U13 RLB: EHC Troisdorf – Herner EV
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
   17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: ICEDOME Troisdo
  rf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Hauerwaas
@@ -1033,7 +1033,7 @@ DTSTAMP:20260921T171526Z
 LAST-MODIFIED:20260921T171526Z
 DTSTART:20261004T151500Z
 DTEND:20261004T184500Z
-SUMMARY:RL FS · GSC Moers – Jadehaie Sande
+SUMMARY:LSR · RL FS: GSC Moers – Jadehaie Sande
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:15 Uhr\nTreffpunkt:
   17:15 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthalle Moe
  rs\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Stocker\, Quirin (H
@@ -1055,7 +1055,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T153000Z
 DTEND:20261004T190000Z
-SUMMARY:Senioren BZL · ESV Grizzlys Bergkamen 1c – EHC Troisdorf 1b
+SUMMARY:SR · Senioren BZL: ESV Grizzlys Bergkamen 1c – EHC Troisdorf 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
   17:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eissportha
  lle Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Skalecki
@@ -1077,7 +1077,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T154500Z
 DTEND:20261004T191500Z
-SUMMARY:LL FS · Soester EG – EHC Essen Ruhr
+SUMMARY:SR · LL FS: Soester EG – EHC Essen Ruhr
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:45 Uhr\nTreffpunkt:
   17:45 Uhr (60 Min vor Spielbeginn)\nLiga: LL FS\nHalle: Eissportzentrum M
  öhnesee\nAdresse: Teigelhof 4\, 59519 Möhnesee\nGespann: Müller\, Lars\
@@ -1098,7 +1098,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T160000Z
 DTEND:20261004T193000Z
-SUMMARY:U20 RL · Eisadler Dortmund – TuS Wiehl
+SUMMARY:LSR · U20 RL: Eisadler Dortmund – TuS Wiehl
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
   18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissportzentrum 
  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Steeg\, Ced
@@ -1120,7 +1120,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T160000Z
 DTEND:20261004T193000Z
-SUMMARY:Frauen Pokal Gr.A · EC Bergisch Land – EHV NRW U15w
+SUMMARY:SR · Frauen Pokal Gr.A: EC Bergisch Land – EHV NRW U15w
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
   18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen Pokal Gr.A\nHalle: Eissp
  orthalle Solingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann:
@@ -1142,7 +1142,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T160000Z
 DTEND:20261004T193000Z
-SUMMARY:Senioren RLW · Dinslakener Kobras – Ratinger Ice Aliens
+SUMMARY:LSR · Senioren RLW: Dinslakener Kobras – Ratinger Ice Aliens
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
   18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
  lle Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Perlitz\
@@ -1164,7 +1164,7 @@ DTSTAMP:20260930T124527Z
 LAST-MODIFIED:20260930T124527Z
 DTSTART:20261004T163000Z
 DTEND:20261004T200000Z
-SUMMARY:RL FS · Grefrather EG – Grefrather EG 1b
+SUMMARY:LSR · RL FS: Grefrather EG – Grefrather EG 1b
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
   18:30 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissportzentrum G
  refrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespann: Schrörs\,
@@ -1186,7 +1186,7 @@ DTSTAMP:20260930T093037Z
 LAST-MODIFIED:20260930T093037Z
 DTSTART:20261004T170000Z
 DTEND:20261004T203000Z
-SUMMARY:FS U17 · SPG NEV / GSC – Grefrather EG
+SUMMARY:SR · FS U17: SPG NEV / GSC – Grefrather EG
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
   19:00 Uhr (60 Min vor Spielbeginn)\nLiga: FS U17\nHalle: Eissporthalle Ne
  uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Reuter\, Rick\n
@@ -1202,8 +1202,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - FS U17 · SPG NEV / GSC – Gref
- rather EG
+DESCRIPTION:In einer Stunde an der Halle - SR · FS U17: SPG NEV / GSC – 
+ Grefrather EG
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1213,7 +1213,7 @@ DTSTAMP:20261002T082808Z
 LAST-MODIFIED:20261002T082808Z
 DTSTART:20261005T151500Z
 DTEND:20261005T184500Z
-SUMMARY:U14 NRW · EHV NRW U14 – Kölner Junghaie U15 In Köln !!!!
+SUMMARY:SR · U14 NRW: EHV NRW U14 – Kölner Junghaie U15 In Köln !!!!
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:15 Uhr\nTreffpunkt:
   17:15 Uhr (60 Min vor Spielbeginn)\nLiga: U14 NRW\n!! Halle nicht automat
  isch erkannt - bitte selbst pruefen !!\nGespann: Schöche\, Gian-Carlo\n\n
@@ -1224,8 +1224,8 @@ TRANSP:OPAQUE
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U14 NRW · EHV NRW U14 – Köln
- er Junghaie U15 In Köln !!!!
+DESCRIPTION:In einer Stunde an der Halle - SR · U14 NRW: EHV NRW U14 – K
+ ölner Junghaie U15 In Köln !!!!
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1235,7 +1235,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261009T141500Z
 DTEND:20261009T174500Z
-SUMMARY:U13 LL · EC Bergisch Land – ESV Grizzlys Bergkamen
+SUMMARY:SR · U13 LL: EC Bergisch Land – ESV Grizzlys Bergkamen
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
   16:15 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle So
  lingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Schwarz\, 
@@ -1251,8 +1251,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U13 LL · EC Bergisch Land – E
- SV Grizzlys Bergkamen
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: EC Bergisch Land 
+ – ESV Grizzlys Bergkamen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1262,7 +1262,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261009T163000Z
 DTEND:20261009T200000Z
-SUMMARY:U15 RLB · Iserlohner EC 1b – EHC Troisdorf
+SUMMARY:SR · U15 RLB: Iserlohner EC 1b – EHC Troisdorf
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
   18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Eissporthalle a
  m Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Warnke\
@@ -1278,8 +1278,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U15 RLB · Iserlohner EC 1b – 
- EHC Troisdorf
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB: Iserlohner EC 1b 
+ – EHC Troisdorf
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1289,7 +1289,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261009T163000Z
 DTEND:20261009T200000Z
-SUMMARY:Frauen LL · ESV Bergisch Gladbach – Ratinger Ice Aliens
+SUMMARY:SR · Frauen LL: ESV Bergisch Gladbach – Ratinger Ice Aliens
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
   18:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen LL\nHalle: Eissporthalle
   Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbach\n
@@ -1307,8 +1307,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - Frauen LL · ESV Bergisch Gladba
- ch – Ratinger Ice Aliens
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: ESV Bergisch Gl
+ adbach – Ratinger Ice Aliens
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1318,7 +1318,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261009T164500Z
 DTEND:20261009T201500Z
-SUMMARY:U20 LL · Herner EV – Lippe Hockey Hamm
+SUMMARY:SR · U20 LL: Herner EV – Lippe Hockey Hamm
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:45 Uhr\nTreffpunkt:
   18:45 Uhr (60 Min vor Spielbeginn)\nLiga: U20 LL\nHalle: Gysenberghalle H
  erne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Scholz\, Udo\n\nQu
@@ -1334,8 +1334,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U20 LL · Herner EV – Lippe Ho
- ckey Hamm
+DESCRIPTION:In einer Stunde an der Halle - SR · U20 LL: Herner EV – Lipp
+ e Hockey Hamm
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1345,7 +1345,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261009T170000Z
 DTEND:20261009T203000Z
-SUMMARY:U17 RL · Herforder EV – Ratinger Ice Aliens
+SUMMARY:SR · U17 RL: Herforder EV – Ratinger Ice Aliens
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
   19:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eishalle Im Klei
  nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Zynda\, Nic
@@ -1361,8 +1361,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U17 RL · Herforder EV – Ratin
- ger Ice Aliens
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Herforder EV – R
+ atinger Ice Aliens
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1372,7 +1372,7 @@ DTSTAMP:20261004T144527Z
 LAST-MODIFIED:20261004T144527Z
 DTSTART:20261009T171500Z
 DTEND:20261009T204500Z
-SUMMARY:Senioren RLW · Dinslakener Kobras – TuS Wiehl
+SUMMARY:HSR · Senioren RLW: Dinslakener Kobras – TuS Wiehl
 DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:15 Uhr\nTreff
  punkt: 19:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
  porthalle Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Li
@@ -1389,8 +1389,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - Senioren RLW · Dinslakener Kobr
- as – TuS Wiehl
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: Dinslakener
+  Kobras – TuS Wiehl
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1400,7 +1400,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261009T171500Z
 DTEND:20261009T204500Z
-SUMMARY:U20 RL · EHC Troisdorf – Eisadler Dortmund
+SUMMARY:LSR · U20 RL: EHC Troisdorf – Eisadler Dortmund
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
   19:15 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: ICEDOME Troisdor
  f\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Starke\, M
@@ -1417,8 +1417,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U20 RL · EHC Troisdorf – Eisa
- dler Dortmund
+DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: EHC Troisdorf –
+  Eisadler Dortmund
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1428,7 +1428,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261009T173000Z
 DTEND:20261009T210000Z
-SUMMARY:U20 RL · Neusser EV – Dinslakener Kobras
+SUMMARY:LSR · U20 RL: Neusser EV – Dinslakener Kobras
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
   19:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissporthalle Ne
  uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Krawinkel\, Mar
@@ -1445,8 +1445,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U20 RL · Neusser EV – Dinslak
- ener Kobras
+DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: Neusser EV – Di
+ nslakener Kobras
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1456,7 +1456,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T050000Z
 DTEND:20261010T083000Z
-SUMMARY:U13 BZL Gr.A · ESC Rheine Young Cats – Eisadler Dortmund 1b
+SUMMARY:SR · U13 BZL Gr.A: ESC Rheine Young Cats – Eisadler Dortmund 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
   07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\n!! Halle nicht au
  tomatisch erkannt - bitte selbst pruefen !!\nGespann: Keller\, Alexander\n
@@ -1467,8 +1467,8 @@ TRANSP:OPAQUE
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U13 BZL Gr.A · ESC Rheine Young
-  Cats – Eisadler Dortmund 1b
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: ESC Rheine Y
+ oung Cats – Eisadler Dortmund 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1478,7 +1478,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T050000Z
 DTEND:20261010T083000Z
-SUMMARY:U15 LL · Herforder EV – SpG EHC Gelsenkirchen / Herner EV 1b
+SUMMARY:SR · U15 LL: Herforder EV – SpG EHC Gelsenkirchen / Herner EV 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
   07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eishalle Im Klei
  nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Klemm\, Jul
@@ -1494,8 +1494,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U15 LL · Herforder EV – SpG E
- HC Gelsenkirchen / Herner EV 1b
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Herforder EV – S
+ pG EHC Gelsenkirchen / Herner EV 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1505,7 +1505,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T063000Z
 DTEND:20261010T100000Z
-SUMMARY:U11 LL Gelb · EC Bergisch Land
+SUMMARY:SR · U11 LL Gelb: EC Bergisch Land
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
   08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Gelb\nHalle: Eissporthal
  le Solingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Melch
@@ -1521,7 +1521,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U11 LL Gelb · EC Bergisch Land
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Gelb: EC Bergisch L
+ and
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1531,7 +1532,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T063000Z
 DTEND:20261010T100000Z
-SUMMARY:U11 LL Lila · Lippe Hockey Hamm
+SUMMARY:SR · U11 LL Lila: Lippe Hockey Hamm
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
   08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Lila\nHalle: HELINET Eis
  sportarena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Z
@@ -1547,7 +1548,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U11 LL Lila · Lippe Hockey Hamm
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Lila: Lippe Hockey 
+ Hamm
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1557,7 +1559,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T070000Z
 DTEND:20261010T103000Z
-SUMMARY:U13 RLB · EV Duisburg – Krefelder EV 1b
+SUMMARY:SR · U13 RLB: EV Duisburg – Krefelder EV 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
   09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: PreZero Rheinla
  ndhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann:
@@ -1574,8 +1576,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U13 RLB · EV Duisburg – Krefe
- lder EV 1b
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB: EV Duisburg – K
+ refelder EV 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1585,8 +1587,8 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T073000Z
 DTEND:20261010T110000Z
-SUMMARY:U15 LL · SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats – ES
- C Darmstadt
+SUMMARY:SR · U15 LL: SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats 
+ – ESC Darmstadt
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
   09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Be
  rgkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Naust\, Marc A
@@ -1602,8 +1604,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U15 LL · SpG ESV Grizzlys Bergk
- amen / ESC Rheine Young Cats – ESC Darmstadt
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: SpG ESV Grizzlys B
+ ergkamen / ESC Rheine Young Cats – ESC Darmstadt
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1613,7 +1615,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T074500Z
 DTEND:20261010T111500Z
-SUMMARY:U15 LL · TuS Wiehl – Eisadler Dortmund
+SUMMARY:SR · U15 LL: TuS Wiehl – Eisadler Dortmund
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:45 Uhr\nTreffpunkt:
   09:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Wi
  ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Moritz\, Alexander
@@ -1629,8 +1631,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U15 LL · TuS Wiehl – Eisadler
-  Dortmund
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: TuS Wiehl – Eisa
+ dler Dortmund
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1640,7 +1642,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T080000Z
 DTEND:20261010T113000Z
-SUMMARY:U9 RL · Iserlohner EC
+SUMMARY:SR · U9 RL: Iserlohner EC
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:00 Uhr\nTreffpunkt:
   10:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: Eissporthalle am 
  Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Warnke\, 
@@ -1656,7 +1658,7 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U9 RL · Iserlohner EC
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 RL: Iserlohner EC
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1666,7 +1668,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T083000Z
 DTEND:20261010T120000Z
-SUMMARY:U17 RL · Herforder EV – TuS Wiehl
+SUMMARY:SR · U17 RL: Herforder EV – TuS Wiehl
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:30 Uhr\nTreffpunkt:
   10:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eishalle Im Klei
  nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Klemm\, Jul
@@ -1682,8 +1684,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U17 RL · Herforder EV – TuS W
- iehl
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Herforder EV – T
+ uS Wiehl
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1693,7 +1695,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T090000Z
 DTEND:20261010T123000Z
-SUMMARY:U9 LL Gelb · ESV Bergisch Gladbach
+SUMMARY:SR · U9 LL Gelb: ESV Bergisch Gladbach
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
   11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Gelb\nHalle: Eissporthall
  e Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbach\
@@ -1710,8 +1712,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U9 LL Gelb · ESV Bergisch Gladb
- ach
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Gelb: ESV Bergisch G
+ ladbach
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1721,7 +1723,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T090000Z
 DTEND:20261010T123000Z
-SUMMARY:U13 RLA · Düsseldorfer EG – Kölner Junghaie
+SUMMARY:SR · U13 RLA: Düsseldorfer EG – Kölner Junghaie
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
   11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLA\nHalle: Eishalle Brehms
  traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Schlüter\
@@ -1737,8 +1739,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U13 RLA · Düsseldorfer EG – 
- Kölner Junghaie
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLA: Düsseldorfer EG 
+ – Kölner Junghaie
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1748,7 +1750,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T093000Z
 DTEND:20261010T130000Z
-SUMMARY:U15 LL · Dinslakener Kobras – Lippe Hockey Hamm
+SUMMARY:SR · U15 LL: Dinslakener Kobras – Lippe Hockey Hamm
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
   11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Di
  nslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Heffler\, Zsol
@@ -1764,8 +1766,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U15 LL · Dinslakener Kobras –
-  Lippe Hockey Hamm
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Dinslakener Kobras
+  – Lippe Hockey Hamm
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1775,7 +1777,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T103000Z
 DTEND:20261010T140000Z
-SUMMARY:U15 LL · Ratinger Ice Aliens – EV Duisburg 1b
+SUMMARY:SR · U15 LL: Ratinger Ice Aliens – EV Duisburg 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
   12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Ra
  tingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Schwarz\, Kjell
@@ -1791,8 +1793,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U15 LL · Ratinger Ice Aliens 
- – EV Duisburg 1b
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Ratinger Ice Alien
+ s – EV Duisburg 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1802,7 +1804,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T130000Z
 DTEND:20261010T163000Z
-SUMMARY:DNL III · EV Duisburg – Crocodiles Hamburg
+SUMMARY:LSR · DNL III: EV Duisburg – Crocodiles Hamburg
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 16:00 Uhr\nTreffpunkt:
   15:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero Rheinla
  ndhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann:
@@ -1820,8 +1822,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - DNL III · EV Duisburg – Croco
- diles Hamburg
+DESCRIPTION:In einer Stunde an der Halle - LSR · DNL III: EV Duisburg – 
+ Crocodiles Hamburg
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1831,7 +1833,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T133000Z
 DTEND:20261010T170000Z
-SUMMARY:U17 I · Kölner Junghaie – Eisbären Juniors Berlin
+SUMMARY:SR · U17 I: Kölner Junghaie – Eisbären Juniors Berlin
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
   15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Kölnarena 2\nAdr
  esse: Gummersbacher Straße 4\, 50679 Köln\nGespann: van Himbeeck\, Frede
@@ -1847,8 +1849,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U17 I · Kölner Junghaie – Ei
- sbären Juniors Berlin
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Kölner Junghaie 
+ – Eisbären Juniors Berlin
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1858,7 +1860,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T133000Z
 DTEND:20261010T170000Z
-SUMMARY:U15 RLA · Düsseldorfer EG – Kölner Junghaie
+SUMMARY:SR · U15 RLA: Düsseldorfer EG – Kölner Junghaie
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
   15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eishalle Brehms
  traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Schlüter\
@@ -1874,8 +1876,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U15 RLA · Düsseldorfer EG – 
- Kölner Junghaie
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA: Düsseldorfer EG 
+ – Kölner Junghaie
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1885,7 +1887,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T134500Z
 DTEND:20261010T171500Z
-SUMMARY:U15 RLA · Krefelder EV – Iserlohner EC
+SUMMARY:SR · U15 RLA: Krefelder EV – Iserlohner EC
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:45 Uhr\nTreffpunkt:
   15:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Rheinlandhalle 
  Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Scholz\, U
@@ -1901,8 +1903,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U15 RLA · Krefelder EV – Iser
- lohner EC
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA: Krefelder EV – 
+ Iserlohner EC
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1912,7 +1914,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T141500Z
 DTEND:20261010T174500Z
-SUMMARY:U20 RL · TuS Wiehl – Herforder EV
+SUMMARY:LSR · U20 RL: TuS Wiehl – Herforder EV
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
   16:15 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissporthalle Wi
  ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Starke\, Matthias 
@@ -1929,8 +1931,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U20 RL · TuS Wiehl – Herforde
- r EV
+DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: TuS Wiehl – Her
+ forder EV
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1940,7 +1942,8 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T143000Z
 DTEND:20261010T180000Z
-SUMMARY:Senioren LL · ESV Grizzlys Bergkamen 1b – Eisadler Dortmund 1b
+SUMMARY:SR · Senioren LL: ESV Grizzlys Bergkamen 1b – Eisadler Dortmund 
+ 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
   16:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissporthal
  le Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Müller\,
@@ -1957,8 +1960,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - Senioren LL · ESV Grizzlys Berg
- kamen 1b – Eisadler Dortmund 1b
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: ESV Grizzlys 
+ Bergkamen 1b – Eisadler Dortmund 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1968,7 +1971,8 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T144500Z
 DTEND:20261010T181500Z
-SUMMARY:U15 BZL · SpG Neusser EV 1b / GSC Moers 1b – EC Bergisch Land
+SUMMARY:SR · U15 BZL: SpG Neusser EV 1b / GSC Moers 1b – EC Bergisch Lan
+ d
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:45 Uhr\nTreffpunkt:
   16:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Eissporthalle M
  oers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Vorgeitz\, Benny\
@@ -1984,8 +1988,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U15 BZL · SpG Neusser EV 1b / G
- SC Moers 1b – EC Bergisch Land
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: SpG Neusser EV 1b
+  / GSC Moers 1b – EC Bergisch Land
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1995,7 +1999,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T144500Z
 DTEND:20261010T181500Z
-SUMMARY:U13 RLB · Iserlohner EC 1b – EJ Kassel
+SUMMARY:SR · U13 RLB: Iserlohner EC 1b – EJ Kassel
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:45 Uhr\nTreffpunkt:
   16:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Emscher-Lippe-H
  alle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\nGesp
@@ -2012,8 +2016,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Emscher-Lippe-Halle Gelsen
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U13 RLB · Iserlohner EC 1b – 
- EJ Kassel
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB: Iserlohner EC 1b 
+ – EJ Kassel
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2023,7 +2027,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T161500Z
 DTEND:20261010T194500Z
-SUMMARY:Frauen BZL · KEC "Die Haie" 1c – ESV Bergisch Gladbach 1b
+SUMMARY:SR · Frauen BZL: KEC "Die Haie" 1c – ESV Bergisch Gladbach 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:15 Uhr\nTreffpunkt:
   18:15 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Kölnarena 2
  \nAdresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: van Himbeeck\, 
@@ -2040,8 +2044,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - Frauen BZL · KEC "Die Haie" 1c 
- – ESV Bergisch Gladbach 1b
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL: KEC "Die Haie"
+  1c – ESV Bergisch Gladbach 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2051,7 +2055,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T163000Z
 DTEND:20261010T200000Z
-SUMMARY:U17 LL · Grefrather EG – SpG Neusser EV / GSC Moers
+SUMMARY:SR · U17 LL: Grefrather EG – SpG Neusser EV / GSC Moers
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
   18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\nHalle: Eissportzentrum 
  Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespann: Reuter\, 
@@ -2067,8 +2071,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U17 LL · Grefrather EG – SpG 
- Neusser EV / GSC Moers
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: Grefrather EG – 
+ SpG Neusser EV / GSC Moers
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2078,7 +2082,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T173000Z
 DTEND:20261010T210000Z
-SUMMARY:U20 RL · Neusser EV – Ratinger Ice Aliens
+SUMMARY:LSR · U20 RL: Neusser EV – Ratinger Ice Aliens
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
   19:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissporthalle Ne
  uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Priebsch\, Jan 
@@ -2095,8 +2099,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U20 RL · Neusser EV – Ratinge
- r Ice Aliens
+DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: Neusser EV – Ra
+ tinger Ice Aliens
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2106,7 +2110,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T173000Z
 DTEND:20261010T210000Z
-SUMMARY:U20 LL · GSC Moers – EC Bergisch Land
+SUMMARY:SR · U20 LL: GSC Moers – EC Bergisch Land
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
   19:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 LL\nHalle: Eissporthalle Mo
  ers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Vorgeitz\, Benny\n
@@ -2122,8 +2126,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U20 LL · GSC Moers – EC Bergi
- sch Land
+DESCRIPTION:In einer Stunde an der Halle - SR · U20 LL: GSC Moers – EC B
+ ergisch Land
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2133,7 +2137,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T044500Z
 DTEND:20261011T081500Z
-SUMMARY:U13 BZL Gr.A · TSVE Bielefeld – GSC Moers
+SUMMARY:SR · U13 BZL Gr.A: TSVE Bielefeld – GSC Moers
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 07:45 Uhr\nTreffpunkt:
   06:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\n!! Halle nicht au
  tomatisch erkannt - bitte selbst pruefen !!\nGespann: Funk\, Marvin\n\nQue
@@ -2144,8 +2148,8 @@ TRANSP:OPAQUE
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U13 BZL Gr.A · TSVE Bielefeld 
- – GSC Moers
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: TSVE Bielefe
+ ld – GSC Moers
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2155,7 +2159,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T050000Z
 DTEND:20261011T083000Z
-SUMMARY:Frauen Pokal Gr.A · Eisadler Dortmund – EC Bergisch Land
+SUMMARY:SR · Frauen Pokal Gr.A: Eisadler Dortmund – EC Bergisch Land
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
   07:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen Pokal Gr.A\nHalle: Eissp
  ortzentrum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: 
@@ -2172,8 +2176,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - Frauen Pokal Gr.A · Eisadler Do
- rtmund – EC Bergisch Land
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen Pokal Gr.A: Eisadle
+ r Dortmund – EC Bergisch Land
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2183,7 +2187,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T050000Z
 DTEND:20261011T083000Z
-SUMMARY:U13 BZL Gr.B · ESV Bergisch Gladbach – ESC Darmstadt 1b
+SUMMARY:SR · U13 BZL Gr.B: ESV Bergisch Gladbach – ESC Darmstadt 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
   07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.B\nHalle: Eissportha
  lle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbac
@@ -2201,8 +2205,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U13 BZL Gr.B · ESV Bergisch Gla
- dbach – ESC Darmstadt 1b
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.B: ESV Bergisch
+  Gladbach – ESC Darmstadt 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2212,7 +2216,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T060000Z
 DTEND:20261011T093000Z
-SUMMARY:U9 LL Grün · ESV Grizzlys Bergkamen
+SUMMARY:SR · U9 LL Grün: ESV Grizzlys Bergkamen
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
   08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Grün\nHalle: Eissporthal
  le Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Skalecki\
@@ -2228,8 +2232,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U9 LL Grün · ESV Grizzlys Berg
- kamen
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Grün: ESV Grizzlys 
+ Bergkamen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2239,7 +2243,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T060000Z
 DTEND:20261011T093000Z
-SUMMARY:U15 RLA · Iserlohner EC – Krefelder EV
+SUMMARY:SR · U15 RLA: Iserlohner EC – Krefelder EV
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
   08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eissporthalle a
  m Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Schmidt
@@ -2255,8 +2259,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U15 RLA · Iserlohner EC – Kre
- felder EV
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA: Iserlohner EC –
+  Krefelder EV
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2266,7 +2270,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T063000Z
 DTEND:20261011T100000Z
-SUMMARY:U17 RL · Herner EV – EHC Troisdorf
+SUMMARY:SR · U17 RL: Herner EV – EHC Troisdorf
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
   08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Gysenberghalle H
  erne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Scholz\, Udo\n\nQu
@@ -2282,8 +2286,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U17 RL · Herner EV – EHC Troi
- sdorf
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Herner EV – EHC 
+ Troisdorf
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2293,7 +2297,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T070000Z
 DTEND:20261011T103000Z
-SUMMARY:DNL III · EV Duisburg – Crocodiles Hamburg
+SUMMARY:HSR · DNL III: EV Duisburg – Crocodiles Hamburg
 DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 10:00 Uhr\nTreff
  punkt: 09:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero R
  heinlandhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGe
@@ -2311,8 +2315,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - DNL III · EV Duisburg – Croco
- diles Hamburg
+DESCRIPTION:In einer Stunde an der Halle - HSR · DNL III: EV Duisburg – 
+ Crocodiles Hamburg
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2322,7 +2326,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T090000Z
 DTEND:20261011T123000Z
-SUMMARY:U17 I · Kölner Junghaie – Eisbären Juniors Berlin
+SUMMARY:SR · U17 I: Kölner Junghaie – Eisbären Juniors Berlin
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
   11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Kölnarena 2\nAdr
  esse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Pluschkell\, Julian\
@@ -2338,8 +2342,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U17 I · Kölner Junghaie – Ei
- sbären Juniors Berlin
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Kölner Junghaie 
+ – Eisbären Juniors Berlin
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2349,7 +2353,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T093000Z
 DTEND:20261011T130000Z
-SUMMARY:U13 LL · Dinslakener Kobras – EHC Die Bären Neuwied
+SUMMARY:SR · U13 LL: Dinslakener Kobras – EHC Die Bären Neuwied
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
   11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Di
  nslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Kuriata\, Flor
@@ -2365,8 +2369,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U13 LL · Dinslakener Kobras –
-  EHC Die Bären Neuwied
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: Dinslakener Kobras
+  – EHC Die Bären Neuwied
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2376,7 +2380,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T103000Z
 DTEND:20261011T140000Z
-SUMMARY:U13 LL · Eisadler Dortmund – EHC Troisdorf 1b
+SUMMARY:SR · U13 LL: Eisadler Dortmund – EHC Troisdorf 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
   12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissportzentrum 
  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Steeg\, Ced
@@ -2392,8 +2396,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U13 LL · Eisadler Dortmund – 
- EHC Troisdorf 1b
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: Eisadler Dortmund 
+ – EHC Troisdorf 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2403,7 +2407,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T110000Z
 DTEND:20261011T143000Z
-SUMMARY:U13 RLA · Düsseldorfer EG – Krefelder EV
+SUMMARY:SR · U13 RLA: Düsseldorfer EG – Krefelder EV
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:00 Uhr\nTreffpunkt:
   13:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLA\nHalle: Eishalle Brehms
  traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Heyer\, Ch
@@ -2419,8 +2423,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U13 RLA · Düsseldorfer EG – 
- Krefelder EV
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLA: Düsseldorfer EG 
+ – Krefelder EV
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2430,7 +2434,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T114500Z
 DTEND:20261011T151500Z
-SUMMARY:U9 RL · Kölner Junghaie
+SUMMARY:SR · U9 RL: Kölner Junghaie
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:45 Uhr\nTreffpunkt:
   13:45 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: Kölnarena 2\nAdr
  esse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Pluschkell\, Julian\
@@ -2446,7 +2450,7 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U9 RL · Kölner Junghaie
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 RL: Kölner Junghaie
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2456,7 +2460,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T140000Z
 DTEND:20261011T173000Z
-SUMMARY:U13 LL · Ratinger Ice Aliens – EV Duisburg 1b
+SUMMARY:SR · U13 LL: Ratinger Ice Aliens – EV Duisburg 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:00 Uhr\nTreffpunkt:
   16:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Ra
  tingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Schwarz\, Kjell
@@ -2472,8 +2476,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U13 LL · Ratinger Ice Aliens 
- – EV Duisburg 1b
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: Ratinger Ice Alien
+ s – EV Duisburg 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2483,7 +2487,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T141500Z
 DTEND:20261011T174500Z
-SUMMARY:U15 LL · TuS Wiehl – EV Duisburg 1b
+SUMMARY:SR · U15 LL: TuS Wiehl – EV Duisburg 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
   16:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Wi
  ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Starke\, Matthias\
@@ -2499,8 +2503,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U15 LL · TuS Wiehl – EV Duisb
- urg 1b
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: TuS Wiehl – EV D
+ uisburg 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2510,7 +2514,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T143000Z
 DTEND:20261011T180000Z
-SUMMARY:U15 RLA · Kölner Junghaie – Düsseldorfer EG
+SUMMARY:SR · U15 RLA: Kölner Junghaie – Düsseldorfer EG
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
   16:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Kölnarena 2\nA
  dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Solbach\, Carsten\
@@ -2526,8 +2530,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U15 RLA · Kölner Junghaie – 
- Düsseldorfer EG
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA: Kölner Junghaie 
+ – Düsseldorfer EG
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2537,7 +2541,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T150000Z
 DTEND:20261011T183000Z
-SUMMARY:U9 LL Lila · SpG GSC Moers 1b – Aachener EC -
+SUMMARY:SR · U9 LL Lila: SpG GSC Moers 1b – Aachener EC -
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
   17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Lila\nHalle: 100'5 Arena 
  Aachen\nAdresse: Hubert-Wienen-Straße 8\, 52070 Aachen\n\nQuelle: https:/
@@ -2553,8 +2557,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="100'5 Arena Aachen, Hubert
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U9 LL Lila · SpG GSC Moers 1b 
- – Aachener EC -
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Lila: SpG GSC Moers 
+ 1b – Aachener EC -
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2564,7 +2568,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T151500Z
 DTEND:20261011T184500Z
-SUMMARY:Senioren RLW · GSC Moers – Dinslakener Kobras
+SUMMARY:LSR · Senioren RLW: GSC Moers – Dinslakener Kobras
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:15 Uhr\nTreffpunkt:
   17:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
  lle Moers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Kyei-Nimako\
@@ -2581,8 +2585,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - Senioren RLW · GSC Moers – Di
- nslakener Kobras
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: GSC Moers 
+ – Dinslakener Kobras
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2592,7 +2596,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T153000Z
 DTEND:20261011T190000Z
-SUMMARY:U17 RL · Lippe Hockey Hamm – TuS Wiehl
+SUMMARY:SR · U17 RL: Lippe Hockey Hamm – TuS Wiehl
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
   17:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: HELINET Eissport
  arena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Naust\
@@ -2608,8 +2612,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U17 RL · Lippe Hockey Hamm – 
- TuS Wiehl
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Lippe Hockey Hamm 
+ – TuS Wiehl
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2619,7 +2623,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T153000Z
 DTEND:20261011T190000Z
-SUMMARY:Senioren RLW · ESV Grizzlys Bergkamen – TuS Wiehl
+SUMMARY:LSR · Senioren RLW: ESV Grizzlys Bergkamen – TuS Wiehl
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
   17:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
  lle Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Müller\
@@ -2636,8 +2640,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - Senioren RLW · ESV Grizzlys Ber
- gkamen – TuS Wiehl
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: ESV Grizzly
+ s Bergkamen – TuS Wiehl
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2647,7 +2651,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T154500Z
 DTEND:20261011T191500Z
-SUMMARY:Senioren LL · Soester EG – ESC Rheine
+SUMMARY:SR · Senioren LL: Soester EG – ESC Rheine
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:45 Uhr\nTreffpunkt:
   17:45 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissportzen
  trum Möhnesee\nAdresse: Teigelhof 4\, 59519 Möhnesee\nGespann: Steeg\, C
@@ -2664,8 +2668,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Möhnesee,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - Senioren LL · Soester EG – ES
- C Rheine
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: Soester EG 
+ – ESC Rheine
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2675,7 +2679,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T160000Z
 DTEND:20261011T193000Z
-SUMMARY:U17 LL · EC Bergisch Land – EHC Die Bären Neuwied
+SUMMARY:SR · U17 LL: EC Bergisch Land – EHC Die Bären Neuwied
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
   18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\nHalle: Eissporthalle So
  lingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Krüger\, 
@@ -2691,8 +2695,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U17 LL · EC Bergisch Land – E
- HC Die Bären Neuwied
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: EC Bergisch Land 
+ – EHC Die Bären Neuwied
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2702,7 +2706,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T160000Z
 DTEND:20261011T193000Z
-SUMMARY:U17 RL · Dinslakener Kobras – Eisadler Dortmund
+SUMMARY:SR · U17 RL: Dinslakener Kobras – Eisadler Dortmund
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
   18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eissporthalle Di
  nslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Störmann\, Ma
@@ -2718,8 +2722,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U17 RL · Dinslakener Kobras –
-  Eisadler Dortmund
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Dinslakener Kobras
+  – Eisadler Dortmund
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2729,7 +2733,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T160000Z
 DTEND:20261011T193000Z
-SUMMARY:Senioren RLW · Eisadler Dortmund – Neusser EV
+SUMMARY:HSR · Senioren RLW: Eisadler Dortmund – Neusser EV
 DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 19:00 Uhr\nTreff
  punkt: 18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
  portzentrum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann:
@@ -2746,8 +2750,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - Senioren RLW · Eisadler Dortmun
- d – Neusser EV
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: Eisadler Do
+ rtmund – Neusser EV
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2757,7 +2761,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T161500Z
 DTEND:20261011T194500Z
-SUMMARY:Senioren BZL · ESV Bergisch Gladbach 1b – EHC Gelsenkirchen
+SUMMARY:SR · Senioren BZL: ESV Bergisch Gladbach 1b – EHC Gelsenkirchen
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:15 Uhr\nTreffpunkt:
   18:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eissportha
  lle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbac
@@ -2775,8 +2779,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - Senioren BZL · ESV Bergisch Gla
- dbach 1b – EHC Gelsenkirchen
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: ESV Bergisch
+  Gladbach 1b – EHC Gelsenkirchen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2786,7 +2790,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T163000Z
 DTEND:20261011T200000Z
-SUMMARY:Senioren RLW · Grefrather EG – ESV Bergisch Gladbach
+SUMMARY:LSR · Senioren RLW: Grefrather EG – ESV Bergisch Gladbach
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
   18:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportze
  ntrum Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespann: Ste
@@ -2803,8 +2807,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - Senioren RLW · Grefrather EG 
- – ESV Bergisch Gladbach
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Grefrather 
+ EG – ESV Bergisch Gladbach
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2814,7 +2818,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T170000Z
 DTEND:20261011T203000Z
-SUMMARY:Frauen Pokal Gr.B · TSVE Bielefeld – KEC "Die Haie"
+SUMMARY:SR · Frauen Pokal Gr.B: TSVE Bielefeld – KEC "Die Haie"
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
   19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen Pokal Gr.B\n!! Halle nic
  ht automatisch erkannt - bitte selbst pruefen !!\nGespann: Zynda\, Jayden\
@@ -2826,8 +2830,8 @@ TRANSP:OPAQUE
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - Frauen Pokal Gr.B · TSVE Bielef
- eld – KEC "Die Haie"
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen Pokal Gr.B: TSVE Bi
+ elefeld – KEC "Die Haie"
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2837,7 +2841,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261012T163000Z
 DTEND:20261012T200000Z
-SUMMARY:Frauen LL · DEC Düsseldorfer Devils – Eisadler Dortmund
+SUMMARY:SR · Frauen LL: DEC Düsseldorfer Devils – Eisadler Dortmund
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
   18:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen LL\nHalle: Eissporthalle
   Düsseldorf-Benrath\nAdresse: Kappeler Str. 107\, 40597 Düsseldorf\nGesp
@@ -2855,8 +2859,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Düsseldorf-
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - Frauen LL · DEC Düsseldorfer D
- evils – Eisadler Dortmund
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: DEC Düsseldorf
+ er Devils – Eisadler Dortmund
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2866,7 +2870,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261015T153000Z
 DTEND:20261015T190000Z
-SUMMARY:U15 LL · EV Duisburg 1b – Ratinger Ice Aliens
+SUMMARY:SR · U15 LL: EV Duisburg 1b – Ratinger Ice Aliens
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
   17:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: PreZero Rheinlan
  dhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: 
@@ -2883,8 +2887,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U15 LL · EV Duisburg 1b – Rat
- inger Ice Aliens
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: EV Duisburg 1b –
+  Ratinger Ice Aliens
 END:VALARM
 END:VEVENT
 END:VCALENDAR

@@ -14,7 +14,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T073000Z
 DTEND:20261010T110000Z
-SUMMARY:SR · U15 LL · SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats 
+SUMMARY:SR · U15 LL: SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats 
  – ESC Darmstadt
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
   09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Be
@@ -31,8 +31,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL · SpG ESV Grizzlys
-  Bergkamen / ESC Rheine Young Cats – ESC Darmstadt
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: SpG ESV Grizzlys B
+ ergkamen / ESC Rheine Young Cats – ESC Darmstadt
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -42,7 +42,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T153000Z
 DTEND:20261011T190000Z
-SUMMARY:SR · U17 RL · Lippe Hockey Hamm – TuS Wiehl
+SUMMARY:SR · U17 RL: Lippe Hockey Hamm – TuS Wiehl
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
   17:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: HELINET Eissport
  arena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Fenke\
@@ -58,8 +58,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL · Lippe Hockey Ham
- m – TuS Wiehl
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Lippe Hockey Hamm 
+ – TuS Wiehl
 END:VALARM
 END:VEVENT
 END:VCALENDAR

@@ -14,7 +14,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261003T173000Z
 DTEND:20261003T210000Z
-SUMMARY:HSR · U20 RL · Neusser EV – Herforder EV
+SUMMARY:HSR · U20 RL: Neusser EV – Herforder EV
 DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:30 Uhr\nTreff
  punkt: 19:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissportha
  lle Neuss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Quint\, S
@@ -36,7 +36,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T110000Z
 DTEND:20261004T143000Z
-SUMMARY:SR · U15 RLB · Düsseldorfer EG 1b – Krefelder EV 1b
+SUMMARY:SR · U15 RLB: Düsseldorfer EG 1b – Krefelder EV 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:00 Uhr\nTreffpunkt:
   13:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Eishalle Brehms
  traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Hofer\, Ca
@@ -57,7 +57,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T090000Z
 DTEND:20261010T123000Z
-SUMMARY:SR · U13 RLA · Düsseldorfer EG – Kölner Junghaie
+SUMMARY:SR · U13 RLA: Düsseldorfer EG – Kölner Junghaie
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
   11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLA\nHalle: Eishalle Brehms
  traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Pacalaj\, 
@@ -73,8 +73,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLA · Düsseldorfer E
- G – Kölner Junghaie
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLA: Düsseldorfer EG 
+ – Kölner Junghaie
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -84,7 +84,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T133000Z
 DTEND:20261010T170000Z
-SUMMARY:SR · U15 RLA · Düsseldorfer EG – Kölner Junghaie
+SUMMARY:SR · U15 RLA: Düsseldorfer EG – Kölner Junghaie
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
   15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eishalle Brehms
  traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Pacalaj\, 
@@ -100,8 +100,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA · Düsseldorfer E
- G – Kölner Junghaie
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA: Düsseldorfer EG 
+ – Kölner Junghaie
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -111,7 +111,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T140000Z
 DTEND:20261011T173000Z
-SUMMARY:SR · U13 LL · Ratinger Ice Aliens – EV Duisburg 1b
+SUMMARY:SR · U13 LL: Ratinger Ice Aliens – EV Duisburg 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:00 Uhr\nTreffpunkt:
   16:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Ra
  tingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Schwarz\, Kjell
@@ -127,8 +127,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL · Ratinger Ice Ali
- ens – EV Duisburg 1b
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: Ratinger Ice Alien
+ s – EV Duisburg 1b
 END:VALARM
 END:VEVENT
 END:VCALENDAR

@@ -14,7 +14,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261002T171500Z
 DTEND:20261002T204500Z
-SUMMARY:SR · U15 RLB · EHC Troisdorf – Düsseldorfer EG 1b
+SUMMARY:SR · U15 RLB: EHC Troisdorf – Düsseldorfer EG 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
   19:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: ICEDOME Troisdo
  rf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Moritz\, 
@@ -35,7 +35,7 @@ DTSTAMP:20260930T091528Z
 LAST-MODIFIED:20260930T091528Z
 DTSTART:20261004T150000Z
 DTEND:20261004T183000Z
-SUMMARY:SR · U13 RLB · EHC Troisdorf – Herner EV
+SUMMARY:SR · U13 RLB: EHC Troisdorf – Herner EV
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
   17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: ICEDOME Troisdo
  rf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Hauerwaas
@@ -56,7 +56,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T074500Z
 DTEND:20261010T111500Z
-SUMMARY:SR · U15 LL · TuS Wiehl – Eisadler Dortmund
+SUMMARY:SR · U15 LL: TuS Wiehl – Eisadler Dortmund
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:45 Uhr\nTreffpunkt:
   09:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Wi
  ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Moritz\, Alexander
@@ -72,8 +72,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL · TuS Wiehl – Ei
- sadler Dortmund
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: TuS Wiehl – Eisa
+ dler Dortmund
 END:VALARM
 END:VEVENT
 END:VCALENDAR

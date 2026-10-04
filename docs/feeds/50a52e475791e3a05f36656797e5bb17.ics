@@ -14,7 +14,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T141500Z
 DTEND:20261011T174500Z
-SUMMARY:SR · U15 LL · TuS Wiehl – EV Duisburg 1b
+SUMMARY:SR · U15 LL: TuS Wiehl – EV Duisburg 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
   16:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Wi
  ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Starke\, Matthias\
@@ -30,8 +30,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL · TuS Wiehl – EV
-  Duisburg 1b
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: TuS Wiehl – EV D
+ uisburg 1b
 END:VALARM
 END:VEVENT
 END:VCALENDAR

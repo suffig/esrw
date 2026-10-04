@@ -14,7 +14,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261009T163000Z
 DTEND:20261009T200000Z
-SUMMARY:SR · Frauen LL · ESV Bergisch Gladbach – Ratinger Ice Aliens
+SUMMARY:SR · Frauen LL: ESV Bergisch Gladbach – Ratinger Ice Aliens
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
   18:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen LL\nHalle: Eissporthalle
   Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbach\n
@@ -32,8 +32,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL · ESV Bergisch 
- Gladbach – Ratinger Ice Aliens
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: ESV Bergisch Gl
+ adbach – Ratinger Ice Aliens
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -43,7 +43,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T093000Z
 DTEND:20261011T130000Z
-SUMMARY:SR · U13 LL · Dinslakener Kobras – EHC Die Bären Neuwied
+SUMMARY:SR · U13 LL: Dinslakener Kobras – EHC Die Bären Neuwied
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
   11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Di
  nslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Heffler\, Phil
@@ -59,8 +59,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL · Dinslakener Kobr
- as – EHC Die Bären Neuwied
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: Dinslakener Kobras
+  – EHC Die Bären Neuwied
 END:VALARM
 END:VEVENT
 END:VCALENDAR

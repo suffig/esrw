@@ -14,7 +14,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261003T093000Z
 DTEND:20261003T130000Z
-SUMMARY:SR · DFEL2 Nord · Dinslakener Kobras – FASS Berlin
+SUMMARY:SR · DFEL2 Nord: Dinslakener Kobras – FASS Berlin
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
   11:30 Uhr (60 Min vor Spielbeginn)\nLiga: DFEL2 Nord\nHalle: Eissporthall
  e Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Heyer\, Ch
@@ -35,7 +35,7 @@ DTSTAMP:20260921T153038Z
 LAST-MODIFIED:20260921T153038Z
 DTSTART:20261004T110000Z
 DTEND:20261004T143000Z
-SUMMARY:SR · U15 RLB · Düsseldorfer EG 1b – Krefelder EV 1b
+SUMMARY:SR · U15 RLB: Düsseldorfer EG 1b – Krefelder EV 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:00 Uhr\nTreffpunkt:
   13:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Eishalle Brehms
  traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Schlüter\
@@ -56,7 +56,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261009T164500Z
 DTEND:20261009T201500Z
-SUMMARY:SR · U20 LL · Herner EV – Lippe Hockey Hamm
+SUMMARY:SR · U20 LL: Herner EV – Lippe Hockey Hamm
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:45 Uhr\nTreffpunkt:
   18:45 Uhr (60 Min vor Spielbeginn)\nLiga: U20 LL\nHalle: Gysenberghalle H
  erne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Scholz\, Udo\n\nQu
@@ -72,8 +72,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U20 LL · Herner EV – Li
- ppe Hockey Hamm
+DESCRIPTION:In einer Stunde an der Halle - SR · U20 LL: Herner EV – Lipp
+ e Hockey Hamm
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -83,8 +83,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T161500Z
 DTEND:20261011T194500Z
-SUMMARY:SR · Senioren BZL · ESV Bergisch Gladbach 1b – EHC Gelsenkirche
- n
+SUMMARY:SR · Senioren BZL: ESV Bergisch Gladbach 1b – EHC Gelsenkirchen
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:15 Uhr\nTreffpunkt:
   18:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eissportha
  lle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbac
@@ -102,8 +101,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL · ESV Bergis
- ch Gladbach 1b – EHC Gelsenkirchen
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: ESV Bergisch
+  Gladbach 1b – EHC Gelsenkirchen
 END:VALARM
 END:VEVENT
 END:VCALENDAR

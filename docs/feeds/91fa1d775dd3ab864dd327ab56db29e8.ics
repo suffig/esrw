@@ -14,8 +14,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T050000Z
 DTEND:20261010T083000Z
-SUMMARY:SR · U15 LL · Herforder EV – SpG EHC Gelsenkirchen / Herner EV 
- 1b
+SUMMARY:SR · U15 LL: Herforder EV – SpG EHC Gelsenkirchen / Herner EV 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
   07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eishalle Im Klei
  nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Klemm\, Jul
@@ -31,8 +30,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL · Herforder EV –
-  SpG EHC Gelsenkirchen / Herner EV 1b
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Herforder EV – S
+ pG EHC Gelsenkirchen / Herner EV 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -42,7 +41,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T083000Z
 DTEND:20261010T120000Z
-SUMMARY:SR · U17 RL · Herforder EV – TuS Wiehl
+SUMMARY:SR · U17 RL: Herforder EV – TuS Wiehl
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:30 Uhr\nTreffpunkt:
   10:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eishalle Im Klei
  nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Klemm\, Jul
@@ -58,8 +57,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL · Herforder EV –
-  TuS Wiehl
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Herforder EV – T
+ uS Wiehl
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -69,7 +68,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T044500Z
 DTEND:20261011T081500Z
-SUMMARY:SR · U13 BZL Gr.A · TSVE Bielefeld – GSC Moers
+SUMMARY:SR · U13 BZL Gr.A: TSVE Bielefeld – GSC Moers
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 07:45 Uhr\nTreffpunkt:
   06:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\n!! Halle nicht au
  tomatisch erkannt - bitte selbst pruefen !!\nGespann: Brücker\, Tobias\n\
@@ -80,8 +79,8 @@ TRANSP:OPAQUE
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A · TSVE Biele
- feld – GSC Moers
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: TSVE Bielefe
+ ld – GSC Moers
 END:VALARM
 END:VEVENT
 END:VCALENDAR

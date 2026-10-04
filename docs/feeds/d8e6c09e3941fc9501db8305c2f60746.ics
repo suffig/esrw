@@ -14,7 +14,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261009T163000Z
 DTEND:20261009T200000Z
-SUMMARY:SR · U15 RLB · Iserlohner EC 1b – EHC Troisdorf
+SUMMARY:SR · U15 RLB: Iserlohner EC 1b – EHC Troisdorf
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
   18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Eissporthalle a
  m Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Warnke\
@@ -30,8 +30,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB · Iserlohner EC 1
- b – EHC Troisdorf
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB: Iserlohner EC 1b 
+ – EHC Troisdorf
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -41,7 +41,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261010T080000Z
 DTEND:20261010T113000Z
-SUMMARY:SR · U9 RL · Iserlohner EC
+SUMMARY:SR · U9 RL: Iserlohner EC
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:00 Uhr\nTreffpunkt:
   10:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: Eissporthalle am 
  Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Warnke\, 
@@ -57,7 +57,7 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U9 RL · Iserlohner EC
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 RL: Iserlohner EC
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -67,7 +67,7 @@ DTSTAMP:20261002T111527Z
 LAST-MODIFIED:20261002T111527Z
 DTSTART:20261011T060000Z
 DTEND:20261011T093000Z
-SUMMARY:SR · U9 LL Grün · ESV Grizzlys Bergkamen
+SUMMARY:SR · U9 LL Grün: ESV Grizzlys Bergkamen
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
   08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Grün\nHalle: Eissporthal
  le Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Skalecki\
@@ -83,8 +83,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Grün · ESV Grizzly
- s Bergkamen
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Grün: ESV Grizzlys 
+ Bergkamen
 END:VALARM
 END:VEVENT
 END:VCALENDAR
