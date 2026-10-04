@@ -78,7 +78,7 @@ def uhr(iso):
     return datetime.fromisoformat(iso).astimezone(BERLIN).strftime("%H:%M")
 
 
-def aenderungs_nachricht(slug, a):
+def aenderungs_nachricht(slug, a, mit_gespann=True):
     details = (a.get("details") or {}).get("geaendert") or []
     geaendert = []
     if details and len(details) == len(a.get("geaendert", [])):
@@ -91,15 +91,25 @@ def aenderungs_nachricht(slug, a):
             geaendert.append("Geändert: %s\n   %s%s" % (d.get("text", ""), ("Betreiber: " if d.get("korrektur") else ""), was))
     else:
         geaendert = ["Geändert: " + z for z in a.get("geaendert", [])]
+    # Wechselt im Gespann jemand, stand das bisher nur im Protokoll der App.
+    # Es ist aber das eigene Spiel - und wer mit wem pfeift, will man wissen.
+    gespann = []
+    if mit_gespann:
+        for d in (a.get("details") or {}).get("gespann") or []:
+            was = d.get("was") or ""
+            gespann.append("Gespann: %s%s" % (d.get("text", ""), ("\n   " + was) if was else ""))
+
     zeilen = (["Neu: " + z for z in a.get("neu", [])]
               + geaendert
-              + ["Abgesetzt: " + z for z in a.get("entfallen", [])])
+              + ["Abgesetzt: " + z for z in a.get("entfallen", [])]
+              + gespann)
     if not zeilen:
         return None
     titel = "Einteilung: %s" % ", ".join(
         t for t, n in (("%d neu" % len(a.get("neu", [])), a.get("neu")),
                        ("%d geändert" % len(a.get("geaendert", [])), a.get("geaendert")),
-                       ("%d abgesetzt" % len(a.get("entfallen", [])), a.get("entfallen"))) if n)
+                       ("%d abgesetzt" % len(a.get("entfallen", [])), a.get("entfallen")),
+                       ("%d im Gespann" % len(gespann), gespann)) if n)
     return {"titel": titel, "text": "\n".join(zeilen)[:900], "url": "./#" + slug}
 
 
@@ -311,7 +321,8 @@ def main():
         if not slug:
             continue
         liste = []
-        n = aenderungs_nachricht(slug, aenderungen.get(slug) or {})
+        mit_gespann = str(((profil or {}).get("einstellungen") or {}).get("pushgespann") or "") != "0"
+        n = aenderungs_nachricht(slug, aenderungen.get(slug) or {}, mit_gespann)
         if n:
             liste.append((None, n))
         if slug in personen:

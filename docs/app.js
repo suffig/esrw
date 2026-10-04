@@ -1003,6 +1003,7 @@
       if (!regelnDaten) nachladen.push(hole("strafen.json").then(function (d) { regelnDaten = d; }).catch(function () {}));
       if (!bestimmungenDaten) nachladen.push(hole("bestimmungen.json").then(function (d) { bestimmungenDaten = d; }).catch(function () {}));
       if (!zeitenDaten) nachladen.push(zeitenLaden().then(function (d) { zeitenDaten = d; }).catch(function () {}));
+      if (!staerkenDaten) nachladen.push(staerkenLaden().then(function (d) { staerkenDaten = d; }).catch(function () {}));
       if (funktion("regeln")) Promise.all(nachladen).then(function () {
         if (liste._lauf !== lauf) return;
         var st = ((regelnDaten && regelnDaten.strafen) || []).filter(function (r) {
@@ -1034,6 +1035,17 @@
           zt.forEach(function (l) {
             suchEintrag(liste, l.liga, [l.spielzeit, l.verlaengerung].filter(Boolean).join(" \u00b7 ") || "Angaben fehlen noch", function () {
               regelnTeil = "zeiten"; location.hash = "regeln";
+            });
+          });
+        }
+        var st2 = (staerkenDaten || []).filter(function (l) {
+          return ohneZeichen(l.liga + " " + (l.gruppe || "") + " " + (l.feldspieler || "")).indexOf(f) >= 0;
+        }).slice(0, 5);
+        if (st2.length) {
+          suchGruppe(liste, "Antrittsstärke"); el("nichts").classList.add("versteckt");
+          st2.forEach(function (l) {
+            suchEintrag(liste, l.liga, [l.feldspieler, l.torwart].filter(Boolean).join(" · ") || "Angaben fehlen noch", function () {
+              regelnTeil = "staerken"; location.hash = "regeln";
             });
           });
         }
@@ -3091,7 +3103,8 @@
     suchModus = wechsel === "suche";
     el("frage").textContent = suchModus ? "Suche" : wechsel ? "Profil wechseln" : "Wer bist du?";
     var quellen = funktionsText([[null, "Kollegen"], ["hallen", "Hallen"], [null, "Vereine"], [null, "Spiele"],
-      [null, "Seiten"], ["notizen", "Notizen"], ["info", "Termine"], ["regeln", "Strafen"], ["regeln", "Bestimmungen"]], "und");
+      [null, "Seiten"], ["notizen", "Notizen"], ["info", "Termine"], ["regeln", "Strafen"],
+      ["regeln", "Antrittsstärken"], ["regeln", "Bestimmungen"]], "und");
     el("frage-unter").textContent = suchModus ? quellen + ". Tippen springt direkt hin." : wechsel ? "Der gewählte Name wird dein Profil auf diesem Gerät." : "Wähle deinen Namen. Danach siehst du deine Spiele, kannst den Kalender abonnieren und Mitteilungen bekommen.";
     el("suche").placeholder = suchModus
       ? funktionsText([[null, "Name"], ["hallen", "Halle"], [null, "Verein"], [null, "Spiel"], ["regeln", "Strafe"]]) + " …"
@@ -3679,6 +3692,21 @@
       arten.appendChild(b);
     });
     kopf.appendChild(arten);
+    // Zeitraum, Sortierung, Person und Suche standen alle offen da - mehr
+    // Bedienung als Inhalt. Jetzt liegen sie hinter einem Aufklapper, der
+    // sagt, was gerade eingestellt ist.
+    var mehr = document.createElement("details");
+    mehr.className = "tausch aend-mehr";
+    mehr.open = !!(f.suche || f.person || f.tage !== 14 || f.sort !== "neu");
+    var msum = document.createElement("summary");
+    var teile = [];
+    if (f.tage !== 14) teile.push(f.tage === 1 ? "24 Stunden" : f.tage + " Tage");
+    if (f.sort !== "neu") teile.push(f.sort === "alt" ? "Älteste zuerst" : "Nach Spieltag");
+    if (f.person) teile.push("eine Person");
+    if (f.suche) teile.push("Suche „" + f.suche + "“");
+    msum.textContent = teile.length ? "Filter: " + teile.join(" · ") : "Zeitraum, Sortierung, Suche";
+    mehr.appendChild(msum);
+    kopf.appendChild(mehr);
     // Zeitraum, Sortierung, Suche
     var zeile = document.createElement("div"); zeile.className = "filterzeile";
     function wahl(wert, punkte, fn) {
@@ -3689,7 +3717,7 @@
     }
     zeile.appendChild(wahl(f.tage, [[1, "24 Stunden"], [3, "3 Tage"], [7, "7 Tage"], [14, "14 Tage"]], function (v) { f.tage = parseInt(v, 10); }));
     zeile.appendChild(wahl(f.sort, [["neu", "Neueste zuerst"], ["alt", "Älteste zuerst"], ["spieltag", "Nach Spieltag"]], function (v) { f.sort = v; }));
-    kopf.appendChild(zeile);
+    mehr.appendChild(zeile);
     // Bei "Alle Kollegen": auf eine Person eingrenzen
     if (f.wer === "alle") {
       var namen = {};
@@ -3699,7 +3727,7 @@
         var wz = document.createElement("div"); wz.className = "filterzeile";
         wz.appendChild(wahl(f.person || "", [["", "Alle Kollegen"]].concat(slugs.map(function (sl) { return [sl, namen[sl]]; })),
           function (v) { f.person = v; }));
-        kopf.appendChild(wz);
+        mehr.appendChild(wz);
       }
     }
     var such = document.createElement("div"); such.className = "filterzeile";
@@ -3714,7 +3742,7 @@
     kn.appendChild(document.createTextNode(navigator.share ? "Teilen" : "Kopieren"));
     kn.addEventListener("click", aendTeilen);
     such.appendChild(kn);
-    kopf.appendChild(such);
+    mehr.appendChild(such);
   }
 
   // Tagesueberschrift: "Heute", "Gestern" oder das Datum - aber nie beides
@@ -3769,8 +3797,8 @@
       hin.textContent = neue === 1 ? "1 Eintrag ist neu seit deinem letzten Besuch" : neue + " Einträge sind neu seit deinem letzten Besuch";
       ziel.appendChild(hin);
     }
-    var gruppe = null, box = null;
-    liste.forEach(function (e) {
+    var gruppe = null, box = null, imTag = {}, huellen = [];
+    liste.forEach(function (e, nr) {
       var d = new Date(e.zeit);
       var titel, schluessel;
       if (f.sort === "spieltag") {
@@ -3779,11 +3807,29 @@
         titel = sd ? "Spieltag " + tagKopf(sd) : "Ohne Spieltag";
       } else { schluessel = d.toDateString(); titel = tagKopf(d); }
       if (schluessel !== gruppe) {
-        gruppe = schluessel;
+        gruppe = schluessel; imTag = {};
         var hh = document.createElement("div"); hh.className = "protokoll-tag"; hh.textContent = titel; ziel.appendChild(hh);
         box = document.createElement("div"); box.className = "karte protokoll"; ziel.appendChild(box);
       }
-      box.appendChild(aendZeile(e, d));
+      // Wird dasselbe Spiel an einem Tag mehrfach geaendert, standen hier
+      // drei fast gleiche Zeilen untereinander. Jetzt steht die erste da,
+      // der Rest dahinter in einem Aufklapper.
+      var k = e.href || ("x" + nr);
+      if (imTag[k]) { imTag[k].weitere.push(e); return; }
+      var zeileEl = aendZeile(e, d);
+      var huelle = { zeile: zeileEl, weitere: [] };
+      imTag[k] = huelle; huellen.push(huelle);
+      box.appendChild(zeileEl);
+    });
+    huellen.forEach(function (hu) {
+      if (!hu.weitere.length || !hu.zeile.parentNode) return;
+      var det = document.createElement("details"); det.className = "aend-weitere";
+      var sum = document.createElement("summary");
+      sum.textContent = hu.weitere.length === 1 ? "eine weitere Änderung an diesem Spiel"
+                                                : hu.weitere.length + " weitere Änderungen an diesem Spiel";
+      det.appendChild(sum);
+      hu.weitere.forEach(function (e2) { det.appendChild(aendZeile(e2, new Date(e2.zeit))); });
+      hu.zeile.parentNode.insertBefore(det, hu.zeile.nextSibling);
     });
   }
 
@@ -4067,7 +4113,7 @@
   // Durchfuehrungsbestimmungen, die Schiedsrichter betreffen. Beides sind
   // eigene Zusammenstellungen - der Wortlaut steht in den verlinkten
   // Dokumenten, und die liegen beim Verband, nicht hier.
-  var regelnDaten = null, bestimmungenDaten = null, zeitenDaten = null, regelnTeil = "strafen", regelArt = "";
+  var regelnDaten = null, bestimmungenDaten = null, zeitenDaten = null, staerkenDaten = null, regelnTeil = "strafen", regelArt = "";
   // Die Suche oben faengt damit an, was sie schon geladen hat; sonst holt sie nach.
   // Jede Strafart hat ihre Farbe - von Gruen (2) bis Rot (MS). Die Klasse
   // kommt aus dem Kuerzel: "5+SPD" -> "farbe-5spd".
@@ -4089,14 +4135,25 @@
     Promise.all([
       regelnDaten ? Promise.resolve(regelnDaten) : hole("strafen.json").catch(function () { return null; }),
       bestimmungenDaten ? Promise.resolve(bestimmungenDaten) : hole("bestimmungen.json").catch(function () { return null; }),
-      zeitenDaten ? Promise.resolve(zeitenDaten) : zeitenLaden()
+      zeitenDaten ? Promise.resolve(zeitenDaten) : zeitenLaden(),
+      staerkenDaten ? Promise.resolve(staerkenDaten) : staerkenLaden()
     ]).then(function (r) {
       regelnDaten = r[0] || regelnDaten; bestimmungenDaten = r[1] || bestimmungenDaten;
-      zeitenDaten = r[2] || zeitenDaten;
+      zeitenDaten = r[2] || zeitenDaten; staerkenDaten = r[3] || staerkenDaten;
       regelnZeichnen();
     });
     window.scrollTo(0, 0);
   }
+  // Mindestantrittsstaerken kommen nur aus der Datenbank - sie stehen in
+  // den Bestimmungen des Verbandes und aendern sich selten, aber es gibt
+  // keine Startfassung in der App.
+  function staerkenLaden() {
+    if (!sitzungVorhanden()) return Promise.resolve([]);
+    return ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
+      .then(function (st) { return st.eingerichtet && st.session && window.Mitglieder.antrittsstaerken ? window.Mitglieder.antrittsstaerken() : []; })
+      .catch(function () { return []; });
+  }
+
   // Spielzeiten: der Betreiber pflegt sie in der Datenbank, die Datei in
   // der App ist Startfassung und Rueckfalloption (auch offline).
   function zeitenLaden() {
@@ -4309,6 +4366,55 @@
   function regelnZeichnen() {
     var ziel = el("regeln-liste"); ziel.innerHTML = "";
     var arten = el("regeln-arten"); arten.innerHTML = "";
+    if (regelnTeil === "staerken") {
+      el("regeln-unter").textContent = "Mindestantrittsstärken";
+      if (!sitzungVorhanden()) { ziel.appendChild(hinweisKarte("Die Antrittsstärken stehen angemeldeten Kollegen offen.")); return; }
+      if (!staerkenDaten || !staerkenDaten.length) {
+        ziel.appendChild(hinweisKarte("Noch nichts hinterlegt. Der Betreiber pflegt die Zahlen unter Admin → Antrittsstärken."));
+        return;
+      }
+      var meineL = naechsteLiga();
+      var grp = [];
+      staerkenDaten.forEach(function (l) {
+        var g = grp.filter(function (x) { return x.titel === (l.gruppe || "Ligen"); })[0];
+        if (!g) { g = { titel: l.gruppe || "Ligen", zeilen: [] }; grp.push(g); }
+        g.zeilen.push(l);
+      });
+      var offen = null;
+      grp.forEach(function (g) { g.zeilen.forEach(function (l) { if (!offen && ligaPasst(l.liga, meineL)) offen = g; }); });
+      grp.forEach(function (g, nr) {
+        var d = document.createElement("details"); d.className = "karte bestimmung-block";
+        d.open = offen ? g === offen : !nr;
+        var sm = document.createElement("summary");
+        var t = document.createElement("span");
+        var b = document.createElement("b"); b.textContent = g.titel; t.appendChild(b);
+        var anz = document.createElement("small"); anz.textContent = g.zeilen.length + (g.zeilen.length === 1 ? " Eintrag" : " Einträge"); t.appendChild(anz);
+        sm.appendChild(t); d.appendChild(sm);
+        g.zeilen.forEach(function (l) {
+          var z = document.createElement("div"); z.className = "zeiten-zeile";
+          var kopf = document.createElement("b"); kopf.textContent = l.liga;
+          if (ligaPasst(l.liga, meineL)) {
+            z.classList.add("meine");
+            var mk = document.createElement("span"); mk.className = "zeiten-marke";
+            mk.textContent = "dein nächstes Spiel"; kopf.appendChild(mk);
+          }
+          z.appendChild(kopf);
+          [["Mindestens", l.feldspieler], ["Torwart", l.torwart], ["Wartezeit", l.wartezeit],
+           ["Reicht es nicht", l.folge]].forEach(function (paar) {
+            if (!paar[1]) return;
+            var r2 = document.createElement("div"); r2.className = "zeiten-wert";
+            var k = document.createElement("span"); k.textContent = paar[0]; r2.appendChild(k);
+            var v = document.createElement("b"); v.textContent = paar[1]; r2.appendChild(v);
+            z.appendChild(r2);
+          });
+          if (l.hinweis) { var hw = document.createElement("small"); hw.className = "zeiten-hinweis"; hw.textContent = l.hinweis; z.appendChild(hw); }
+          if (l.quelle) { var q = document.createElement("small"); q.className = "fundstelle"; q.textContent = l.quelle; z.appendChild(q); }
+          d.appendChild(z);
+        });
+        ziel.appendChild(d);
+      });
+      return;
+    }
     if (regelnTeil === "zeiten") {
       el("regeln-unter").textContent = zeitenDaten ? "Spielzeiten, " + (zeitenDaten.stand || "") : "Spielzeiten";
       if (!zeitenDaten) { ziel.appendChild(hinweisKarte("Spielzeiten nicht geladen.")); return; }
@@ -4998,7 +5104,7 @@
   // Sicherung: alles, was nur hier liegt und nach einem verlorenen Konto
   // oder einem neuen Handy sonst neu getippt werden muesste.
   var SICHER_SCHLUESSEL = ["einfach", "karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche",
-    "pushwoche", "pushabrechnung", "pushvorlauf", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4", "thema", "funktionen", "verkehr"];
+    "pushwoche", "pushabrechnung", "pushvorlauf", "pushgespann", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4", "thema", "funktionen", "verkehr"];
   function sicherungBauen() {
     var app = {};
     SICHER_SCHLUESSEL.forEach(function (k) { var w = lesen(k); if (w !== null && w !== undefined) app[k] = w; });
@@ -5099,7 +5205,7 @@
   function einstellungenAnwenden(e) {
     if (!e) return;
     var geaendert = false;
-    ["einfach", "karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche", "pushwoche", "pushabrechnung", "pushvorlauf", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4", "verkehr"].forEach(function (k) { if ((lesen(k) || null) !== (e[k] || null)) { schreiben(k, e[k] || null); geaendert = true; } });
+    ["einfach", "karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche", "pushwoche", "pushabrechnung", "pushvorlauf", "pushgespann", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4", "verkehr"].forEach(function (k) { if ((lesen(k) || null) !== (e[k] || null)) { schreiben(k, e[k] || null); geaendert = true; } });
     if (geaendert) { einstellungenLaden(true); themaAnwenden(); einfachAnwenden(); tabsAnwenden(); funktionenAnwenden(funktionenLesen()); toast("Einstellungen vom Konto übernommen", ""); if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true); }
   }
   // Das eigene Bild liegt zusaetzlich auf dem Geraet, damit die Kopfzeile

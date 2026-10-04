@@ -2900,6 +2900,115 @@ gerade gewartet wird („Die Einteilungen liegen verschlüsselt – der
 Schlüssel kommt aus deinem Konto."). Der Schimmer läuft auch, wenn ein
 Schritt einmal länger dauert - dann sieht man, dass nichts hängt.
 
+### 10.6bu Hinweis vor der Abrechnung (Schema v42)
+
+Wer die Abrechnung zum ersten Mal öffnet, kommt nicht hinein, ohne einen
+Hinweis gelesen und bestätigt zu haben. Vier Punkte in eigenen Kästen:
+
+* **Keine Steuerberatung** - die App gibt keine steuerliche oder
+  rechtliche Auskunft; das dürfen nur Finanzamt und Steuerberater.
+* **Die Zahlen sind Vorschläge** - Kilometer aus einer Routenberechnung,
+  die Vergütung aus der hinterlegten Gebührenordnung; beides kann
+  veraltet sein.
+* **Du bleibst verantwortlich** - für das, was du meldest, haftet der
+  Betreiber der App nicht.
+* **Deine Daten** - die Beträge sieht nur das eigene Konto, auch der
+  Betreiber nicht.
+
+Erst mit Häkchen wird der Knopf aktiv. Die Zustimmung steht **im Konto**
+(`profile.abrechnung_ok` mit Zeitstempel und Fassungsnummer), nicht auf
+dem Gerät: auf dem nächsten Handy wird niemand noch einmal gefragt, und
+du kannst nachsehen, wer wann zugestimmt hat. Ändert sich der Text,
+erhöhst du `ABRECHNUNG_FASSUNG` in `docs/mitglieder.js` - dann wird neu
+gefragt. Nachlesen geht später unter Konto → „Hinweis zur Abrechnung
+nachlesen".
+
+### 10.6bv Mindestantrittsstärken (Schema v43)
+
+Neuer Reiter unter **Regeln → Antrittsstärke** und ein Punkt **Admin →
+Antrittsstärken**. Gleiche Bauart wie die Spielzeiten: du pflegst Liga,
+Mindestzahl, Torwart, Wartezeit, was bei Unterschreitung gilt, Hinweis
+und Fundstelle; alle angemeldeten Kollegen sehen es, leere Felder tauchen
+nicht auf. Die Liga, in der dein nächstes Spiel ist, wird markiert und
+aufgeklappt. Quelle sind die Bestimmungen „Nachwuchs" des EHV NRW -
+**die Zahlen trägst du selbst ein**, ich habe sie nicht erfunden.
+
+Die Suche (Lupe oben) findet sie mit.
+
+### 10.6bw Änderungen: weniger Bedienung, weniger Wiederholung
+
+* **Filter aufgeräumt.** Oben bleiben die Chips (meine/alle und die
+  Arten). Zeitraum, Sortierung, Person und Suche liegen hinter einem
+  Aufklapper, der im Titel sagt, was eingestellt ist („Filter: 3 Tage ·
+  Suche „Herford"").
+* **Mehrfachänderungen gefaltet.** Wird dasselbe Spiel an einem Tag
+  mehrmals geändert, steht nur die erste Zeile da; der Rest hängt
+  darunter in „2 weitere Änderungen an diesem Spiel".
+* „Meine Spiele" war schon der Standard.
+
+### 10.6bx Push, wenn sich dein Gespann ändert
+
+Gespannwechsel standen bisher nur im Protokoll der App - obwohl es das
+eigene Spiel betrifft. Jetzt gehen sie mit dem Push raus („2 im
+Gespann"), und zwar auch, wenn der Wechsel aus einer Korrektur in der App
+kommt und nicht von esrw.de. Abschalten geht unter Einstellungen → Push →
+„Wenn sich dein Gespann ändert".
+
+### 10.6by Abo je Saison: Stand der Überlegungen (Schema v44)
+
+**Technisch vorbereitet, nichts aktiv.** Es gibt die Tabelle `abo`
+(ein Eintrag je Konto: Saison, bezahlt bis, Betrag, Quelle, Referenz) und
+unter **Admin → Abo** kannst du von Hand eintragen, bis wann ein Konto
+bezahlt hätte. Die App sperrt deswegen **nichts** - die Funktion
+`abo_aktiv()` steht im Schema, wird aber von keiner Regel benutzt. So
+lässt sich ausprobieren, ohne dass jemand ausgesperrt wird.
+
+Lesen darf jeder seinen eigenen Eintrag, schreiben nur der Betreiber -
+kein Recht aus v40 öffnet das. Das ist Absicht: **eine Zahlung darf nie
+aus der App heraus eintragbar sein.** Kommt später ein Zahlungsanbieter
+dazu, meldet der sie an einen Server (Webhook), der mit dem
+service_role-Schlüssel schreibt.
+
+**Was rechtlich dazugehört** (ich bin kein Anwalt - das ist eine Liste
+zum Abarbeiten, keine Rechtsberatung):
+
+* **Impressum.** Sobald Geld fliesst, ist die App geschäftsmässig. Name,
+  Anschrift, E-Mail müssen auf die Seite - eine Postfachadresse reicht
+  nicht.
+* **AGB** mit Laufzeit („je Saison"), was passiert, wenn nicht verlängert
+  wird, und was bei Ausfall der Dienste gilt.
+* **Widerrufsrecht.** Verbraucher dürfen 14 Tage widerrufen. Bei digitalen
+  Diensten erlischt das nur, wenn der Kunde ausdrücklich zustimmt, dass
+  sofort losgeht, und das bestätigt bekommt. Ohne diese Klickstrecke
+  schuldest du 14 Tage lang Geld zurück.
+* **Preisangabe.** Endpreis inklusive Umsatzsteuer, oder der Hinweis
+  „Kleinunternehmer nach § 19 UStG, keine Umsatzsteuer".
+* **Steuer.** Einnahmen sind Einnahmen. Unter der Kleinunternehmergrenze
+  bleibt es einfach, aber anzugeben ist es trotzdem - das klärst du mit
+  deinem Steuerberater, nicht mit mir.
+* **Datenschutz.** Mit dem Zahlungsanbieter brauchst du einen
+  Auftragsverarbeitungsvertrag, und die Datenschutzerklärung muss ihn
+  nennen. Zahlungsdaten gehören **nie** in diese Datenbank.
+* **Vertragspartner.** Privatperson oder Verein? Beim Verein ist die
+  Haftung anders geregelt, dafür braucht es einen Beschluss.
+
+**Was technisch noch fehlt:**
+
+* Ein Zahlungsanbieter mit fertiger Seite (Stripe oder Paddle). Paddle
+  tritt als Verkäufer auf und übernimmt die Umsatzsteuer - weniger
+  Papierkram, höhere Gebühr. Stripe ist billiger, lässt die Pflichten
+  aber bei dir.
+* Ein kleiner Server für den Webhook. Die App ist eine statische Seite
+  und kann so etwas nicht - eine Supabase Edge Function wäre der kurze
+  Weg.
+* Eine Entscheidung, **was gesperrt wird**, wenn jemand nicht verlängert.
+  Mein Vorschlag: Einteilungen, Kalender und Push bleiben für alle offen
+  (das ist der Kern und kommt vom Verband), zahlungspflichtig wäre nur,
+  was Arbeit abnimmt - Abrechnung, Rechnung, Archiv, Statistik.
+* Eine Schonfrist (zwei, drei Wochen nach Ablauf) und eine Erinnerung
+  vorher per Push, sonst steht jemand mitten in der Saison ohne
+  Abrechnung da.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

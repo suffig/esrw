@@ -2645,8 +2645,92 @@ window.Mitglieder = (function () {
     setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
   }
 
+  // ---- Hinweis vor der Abrechnung
+  //
+  // Die Abrechnung rechnet Betraege aus und baut ein PDF. Das ist eine
+  // Rechenhilfe, keine Steuerberatung - und wer sie benutzt, soll das
+  // einmal gelesen haben. Die Zustimmung haengt am Konto (Schema v42),
+  // nicht am Geraet: wer sie einmal gegeben hat, wird auf dem naechsten
+  // Handy nicht wieder gefragt.
+  //
+  // Die Zahl steigt, wenn sich der Text aendert - dann wird neu gefragt.
+  var ABRECHNUNG_FASSUNG = 1;
+
+  function abrechnungZugestimmt() {
+    if (!profil) return false;
+    if (!profil.abrechnung_ok) return false;
+    return (profil.abrechnung_ok_fassung || 0) >= ABRECHNUNG_FASSUNG;
+  }
+
+  function abrechnungTor(nurLesen) {
+    leeren(inhalt);
+    var box = h("div", { class: "melde karte abrechnung-tor" });
+    box.appendChild(h("h4", {}, [ikone("i-euro"), nurLesen ? " Hinweis zur Abrechnung" : " Bevor es losgeht"]));
+    box.appendChild(h("p", { style: "margin:0 0 10px", text:
+      "Die Abrechnung hilft dir beim Rechnen: sie schlägt Kilometer und Vergütung vor, zählt zusammen "
+      + "und füllt das Formular aus. Mehr ist es nicht." }));
+
+    var punkte = [
+      ["Keine Steuerberatung", "Diese App gibt keine steuerliche oder rechtliche Auskunft. Ob und wie du deine Einnahmen "
+        + "angeben musst, welche Pauschalen für dich gelten und was absetzbar ist, klärst du mit deinem Finanzamt "
+        + "oder einem Steuerberater. Nur die dürfen das."],
+      ["Die Zahlen sind Vorschläge", "Kilometer kommen aus einer Routenberechnung, die Vergütung aus der "
+        + "Gebührenordnung in der Fassung, die hier hinterlegt ist. Beides kann veraltet oder im Einzelfall falsch sein. "
+        + "Prüfen musst du selbst."],
+      ["Du bleibst verantwortlich", "Was du dem Verein, dem Verband oder dem Finanzamt meldest, verantwortest du. "
+        + "Für Fehler in den Beträgen, in der Rechnung oder in der Steuererklärung haftet der Betreiber dieser App nicht."],
+      ["Deine Daten", "Was du hier einträgst, liegt in deinem Konto und ist nur für dich sichtbar - auch der Betreiber "
+        + "sieht deine Beträge nicht. Löschen kannst du alles unter Konto."]
+    ];
+    var liste = h("div", { class: "tor-punkte" });
+    punkte.forEach(function (p) {
+      liste.appendChild(h("div", { class: "tor-punkt" }, [
+        h("b", { text: p[0] }), h("small", { text: p[1] })]));
+    });
+    box.appendChild(liste);
+
+    if (nurLesen) {
+      box.appendChild(h("p", { class: "meta", style: "margin:12px 0 0", text: profil.abrechnung_ok
+        ? "Bestätigt am " + new Date(profil.abrechnung_ok).toLocaleDateString("de-DE") + "."
+        : "Noch nicht bestätigt." }));
+      box.appendChild(h("button", { type: "button", class: "mg-neben", style: "width:100%;margin-top:10px",
+        text: "Zurück", onclick: function () { zeigeReiter("konto"); } }));
+      inhalt.appendChild(box);
+      return;
+    }
+    var haken = h("input", { type: "checkbox" });
+    var knopf = h("button", { type: "button", class: "haupt", disabled: "disabled",
+      style: "width:100%;margin-top:12px", text: "Verstanden, weiter zur Abrechnung" });
+    haken.addEventListener("change", function () {
+      if (haken.checked) knopf.removeAttribute("disabled"); else knopf.setAttribute("disabled", "disabled");
+    });
+    box.appendChild(h("label", { class: "mg-check", style: "margin-top:12px" },
+      [haken, " Ich habe das gelesen und bin einverstanden."]));
+    knopf.addEventListener("click", function () {
+      if (!haken.checked) return;
+      knopf.disabled = true; knopf.textContent = "einen Moment …";
+      var jetzt = new Date().toISOString();
+      speichern(sb.from("profile").upsert({ id: session.user.id, abrechnung_ok: jetzt,
+        abrechnung_ok_fassung: ABRECHNUNG_FASSUNG })).then(function (r) {
+        if (r && r.error) {
+          knopf.disabled = false; knopf.textContent = "Verstanden, weiter zur Abrechnung";
+          meldung(fehlerText(r.error) + (/abrechnung_ok/.test(r.error.message || "") ? ", schema.sql (v42) ausführen." : ""), "warn");
+          return;
+        }
+        profil.abrechnung_ok = jetzt;
+        profil.abrechnung_ok_fassung = ABRECHNUNG_FASSUNG;
+        zeigeAbrechnung();
+      });
+    });
+    box.appendChild(knopf);
+    box.appendChild(h("p", { class: "meta", style: "margin:10px 0 0", text:
+      "Du kannst das später unter Konto → Einstellungen noch einmal nachlesen." }));
+    inhalt.appendChild(box);
+  }
+
   function zeigeAbrechnung() {
     leeren(inhalt);
+    if (!abrechnungZugestimmt()) { abrechnungTor(); return; }
     inhalt.appendChild(skelett(3));
     ladeArchiv().then(function () {
       if (!gewaehlteSaison || saisonen().indexOf(gewaehlteSaison) < 0) gewaehlteSaison = ctx.daten.saison || saisonen()[0] || null;
@@ -3832,6 +3916,8 @@ window.Mitglieder = (function () {
       var liste = h("div", { class: "status-liste", style: "padding:0" });
       zeilen.forEach(function (z) { liste.appendChild(h("div", {}, [h("span", { text: z[0] }), h("span", { text: z[1] })])); });
       box.appendChild(liste);
+      if (fn("abrechnung")) box.appendChild(h("button", { type: "button", class: "textknopf", style: "margin-top:8px",
+        text: "Hinweis zur Abrechnung nachlesen", onclick: function () { zeigeReiter("abrechnung"); setTimeout(function () { abrechnungTor(true); }, 0); } }));
     }
     rendern();
     sb.from("push_abos").select("id,geraet,angelegt,endpoint").eq("user_id", session.user.id).then(function (r) {
@@ -3929,6 +4015,16 @@ window.Mitglieder = (function () {
         var ab = h("input", { type: "checkbox" }); ab.checked = !(ctx && ctx.lesen && ctx.lesen("pushabrechnung") === "0");
         ab.addEventListener("change", function () { if (ctx && ctx.schreiben) ctx.schreiben("pushabrechnung", ab.checked ? null : "0"); if (ctx && ctx.einstellungenSync) ctx.einstellungenSync(); });
         box.appendChild(h("label", { class: "mg-check mg-woche", style: "display:flex;gap:8px;align-items:center;margin-top:6px" }, [ab, " Nach dem Spiel „Spiel abrechnen?“ (abends, mit Vorbelegung)"]));
+
+        // Wechselt jemand im Gespann, war das bisher nur im Protokoll zu
+        // sehen - obwohl es das eigene Spiel betrifft.
+        var gp = h("input", { type: "checkbox" }); gp.checked = !(ctx && ctx.lesen && ctx.lesen("pushgespann") === "0");
+        gp.addEventListener("change", function () {
+          if (ctx && ctx.schreiben) ctx.schreiben("pushgespann", gp.checked ? null : "0");
+          if (ctx && ctx.einstellungenSync) ctx.einstellungenSync();
+          kurzMeldung(gp.checked ? "Du bekommst Bescheid, wenn sich dein Gespann ändert." : "Gespannwechsel kommen nicht mehr per Push.", "");
+        });
+        box.appendChild(h("label", { class: "mg-check mg-woche", style: "display:flex;gap:8px;align-items:center;margin-top:6px" }, [gp, " Wenn sich dein Gespann ändert"]));
 
         // Wann die Spieltag-Erinnerung kommt. "07:00" war lange die einzige
         // Antwort - wer um sieben noch schlaeft, hatte sie mittags vergessen.
@@ -4652,9 +4748,11 @@ window.Mitglieder = (function () {
       ["adressen", "Vereine", "i-note", vereinsAdressenRendern, "stammdaten"],
       ["telefon", "Telefonliste", "i-users", telefonlisteRendern, "stammdaten"],
       ["zeiten", "Spielzeiten", "i-clock", spielzeitenRendern, "stammdaten"],
+      ["staerken", "Antrittsstärken", "i-users", staerkenRendern, "stammdaten"],
       ["korrekturen", "Korrekturen", "i-note", korrekturenRendern, "korrekturen"],
       ["push", "Push", "i-bell", pushLaufRendern],
       ["speicher", "Speicher", "i-note", speicherRendern],
+      ["abo", "Abo", "i-euro", aboRendern],
       ["ansehen", "Ansehen als", "i-auge", ansehenRendern]
     ].filter(function (b) {
       // Die Uebersicht ist nur fuer die, die nicht ohnehin alles sehen
@@ -5492,6 +5590,148 @@ window.Mitglieder = (function () {
         innen.appendChild(det);
       });
     });
+  }
+
+  // Admin -> Abo: Vorbereitung, nichts weiter. Die App sperrt damit noch
+  // nichts; hier steht nur, bis wann ein Konto bezahlt hat. Erst wenn ein
+  // Zahlungsanbieter dranhaengt und die rechtlichen Sachen stehen, wird
+  // daraus ein echtes Abo (Schema v44).
+  function aboRendern(box) {
+    function neu() { leeren(box); aboRendern(box); }
+    leeren(box);
+    box.appendChild(h("h4", {}, [ikone("i-euro"), " Abo"]));
+    box.appendChild(h("div", { class: "hinweis warn", style: "margin:0 0 10px" }, [
+      h("span", {}, [h("b", { text: "Noch nichts aktiv." }),
+        h("small", { style: "display:block", text: "Die App sperrt nichts, niemand zahlt etwas. Hier lässt sich nur "
+          + "festhalten, bis wann ein Konto bezahlt hätte - zum Ausprobieren und für den Tag, an dem es losgeht." })])]));
+
+    var innen = h("div", {}, [skelett(1)]);
+    box.appendChild(innen);
+
+    Promise.all([
+      speichern(sb.from("profile").select("id,name,slug,email,freigeschaltet,admin").order("name")),
+      speichern(sb.from("abo").select("*"))
+    ]).then(function (rr) {
+      if (!box.isConnected) return;
+      leeren(innen);
+      if (rr[1] && rr[1].error) {
+        innen.appendChild(h("p", { class: "achtung", text: "Tabelle abo fehlt, schema.sql (v44) ausführen. " + fehlerText(rr[1].error) }));
+        return;
+      }
+      var konten = (rr[0] && rr[0].data) || [];
+      var abos = {}; ((rr[1] && rr[1].data) || []).forEach(function (a) { abos[a.user_id] = a; });
+      var heute = new Date().toISOString().slice(0, 10);
+      var zahlend = Object.keys(abos).filter(function (k) { return abos[k].bezahlt_bis >= heute; }).length;
+      innen.appendChild(h("p", { class: "meta", style: "margin:0 0 8px", text:
+        zahlend + " von " + konten.filter(function (p) { return p.freigeschaltet && !p.admin; }).length
+        + " freigeschalteten Konten stünden gerade auf bezahlt." }));
+
+      konten.filter(function (p) { return !p.admin; }).forEach(function (p) {
+        var a = abos[p.id] || {};
+        var gueltig = a.bezahlt_bis && a.bezahlt_bis >= heute;
+        var bis = h("input", { type: "date", value: a.bezahlt_bis || "" });
+        var saison = h("input", { type: "text", value: a.saison || (ctx.daten && ctx.daten.saison) || "", placeholder: "Saison" });
+        var zeileEl = h("div", { class: "konto-zeile" }, [
+          h("div", { class: "konto-kopf" }, [
+            h("b", { text: p.name || p.email || "ohne Namen" }),
+            h("span", { class: "merkzeichen " + (gueltig ? "gut" : "warn"),
+              text: gueltig ? "bis " + a.bezahlt_bis.split("-").reverse().join(".") : "offen" })]),
+          h("div", { class: "mg-regel-neu" }, [saison, bis,
+            h("button", { type: "button", class: "anfrage", text: "Merken", onclick: function () {
+              speichern(sb.from("abo").upsert({ user_id: p.id, saison: saison.value.trim() || null,
+                bezahlt_bis: bis.value || null, quelle: "von Hand", geaendert: new Date().toISOString() },
+                { onConflict: "user_id" })).then(function (r2) {
+                if (r2 && r2.error) { meldung(fehlerText(r2.error), "warn"); return; }
+                kurzMeldung("Gemerkt ✓", "gut"); neu();
+              });
+            } }),
+            a.bezahlt_bis ? h("button", { type: "button", class: "textknopf", text: "löschen", onclick: function () {
+              speichern(sb.from("abo").delete().eq("user_id", p.id)).then(function () { neu(); });
+            } }) : null])]);
+        innen.appendChild(zeileEl);
+      });
+
+      innen.appendChild(h("p", { class: "meta mg-fuss", style: "margin-top:10px", text:
+        "Was noch fehlt, bevor daraus ein Abo wird: Impressum und AGB, Widerrufsbelehrung, "
+        + "ein Zahlungsanbieter mit Auftragsverarbeitungsvertrag, und eine Entscheidung, was passiert, "
+        + "wenn jemand nicht verlängert. Nachzulesen in der ANLEITUNG." }));
+    });
+  }
+
+  // Admin -> Antrittsstaerken: wie viele Spieler eine Mannschaft stellen
+  // muss. Steht in den Bestimmungen "Nachwuchs" des EHV NRW; in der Halle
+  // hat die niemand dabei. Gleiche Bauart wie die Spielzeiten.
+  function staerkenRendern(box) {
+    function neu() { leeren(box); staerkenRendern(box); }
+    leeren(box);
+    box.appendChild(h("h4", {}, [ikone("i-users"), " Mindestantrittsstärken"]));
+    box.appendChild(h("p", { class: "meta", style: "margin:0 0 8px", text:
+      "Wie viele Spieler eine Mannschaft mindestens stellen muss, wie lange gewartet wird und was gilt, "
+      + "wenn es nicht reicht. Quelle sind die Bestimmungen „Nachwuchs“ des EHV NRW. "
+      + "Alle angemeldeten Kollegen sehen es unter Regeln, leere Felder tauchen nicht auf." }));
+
+    var felder = [["liga", "Liga oder Altersklasse (eindeutig)"], ["gruppe", "Gruppe, etwa Nachwuchs"],
+                  ["feldspieler", "Mindestzahl Spieler"], ["torwart", "Torwart"],
+                  ["wartezeit", "Wartezeit"], ["folge", "Wenn es nicht reicht"],
+                  ["hinweis", "Hinweis"], ["quelle", "Fundstelle"]];
+
+    function formular(zeile, fertig) {
+      var ein = {};
+      var kasten = h("div", { class: "mg-form" });
+      felder.forEach(function (f) {
+        ein[f[0]] = h("input", { type: "text", value: (zeile && zeile[f[0]]) || "", placeholder: f[1] });
+        kasten.appendChild(h("label", { class: "meta", text: f[1] }));
+        kasten.appendChild(ein[f[0]]);
+      });
+      kasten.appendChild(h("button", { type: "button", class: "anfrage", text: "Speichern", onclick: function () {
+        var werte = { reihenfolge: (zeile && zeile.reihenfolge) || 100, geaendert: new Date().toISOString() };
+        felder.forEach(function (f) { werte[f[0]] = ein[f[0]].value.trim() || null; });
+        if (!werte.liga) { meldung("Die Liga braucht einen Namen.", "warn"); return; }
+        speichern(sb.from("antrittsstaerken").upsert(werte, { onConflict: "liga" })).then(function (r) {
+          if (r && r.error) { meldung(fehlerText(r.error) + (/antrittsstaerken/.test(r.error.message || "") ? ", schema.sql (v43) ausführen." : ""), "warn"); return null; }
+          if (zeile && zeile.liga && zeile.liga !== werte.liga) return speichern(sb.from("antrittsstaerken").delete().eq("liga", zeile.liga));
+          return true;
+        }).then(function (ok) { if (ok) { kurzMeldung("Gespeichert ✓", "gut"); if (fertig) fertig(); } });
+      } }));
+      return kasten;
+    }
+
+    box.appendChild(h("details", { class: "tausch" }, [
+      h("summary", { text: "Eintrag anlegen" }), formular(null, neu)]));
+
+    var innen = h("div", {}, [skelett(1)]);
+    box.appendChild(innen);
+    speichern(sb.from("antrittsstaerken").select("*").order("reihenfolge").order("liga")).then(function (r) {
+      if (!box.isConnected) return;
+      leeren(innen);
+      if (r && r.error) {
+        innen.appendChild(h("p", { class: "achtung", text: "Tabelle antrittsstaerken fehlt, schema.sql (v43) ausführen. " + fehlerText(r.error) }));
+        return;
+      }
+      var liste = (r && r.data) || [];
+      if (!liste.length) { innen.appendChild(h("p", { class: "leer", text: "Noch nichts eingetragen." })); return; }
+      liste.forEach(function (z) {
+        var det = h("details", { class: "tausch", style: "margin-top:6px" }, [h("summary", {}, [h("span", {}, [
+          h("b", { text: z.liga }),
+          h("small", { style: "display:block;color:var(--dim)", text: [z.gruppe, z.feldspieler].filter(Boolean).join(" · ") || "ohne Angaben" })])])]);
+        det.appendChild(formular(z, neu));
+        det.appendChild(h("p", { class: "meta", style: "margin:6px 0 0" }, [
+          h("button", { type: "button", class: "textknopf", text: "Eintrag löschen", onclick: function () {
+            if (!confirm(z.liga + " löschen?")) return;
+            speichern(sb.from("antrittsstaerken").delete().eq("liga", z.liga)).then(function () { kurzMeldung("Gelöscht.", ""); neu(); });
+          } })]));
+        innen.appendChild(det);
+      });
+    });
+  }
+
+  // Fuer die Regelseite in app.js
+  function antrittsstaerken() {
+    return bereit().then(function (st) {
+      if (!st.eingerichtet || !session) return [];
+      return sb.from("antrittsstaerken").select("*").order("reihenfolge").order("liga")
+        .then(function (r) { return (r && r.data) || []; });
+    }).catch(function () { return []; });
   }
 
   // Admin -> Funktionen: Schalter je Funktion, Tabelle "funktionen"
@@ -6332,6 +6572,6 @@ window.Mitglieder = (function () {
            extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat, obmann: obmann, termine: termine,
            einstellungenSpeichern: einstellungenSpeichern, radar: radar, angebotMachen: angebotMachen,
            kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl, kontoRendern: kontoRendern, kontaktVon: kontaktVon, istAdmin: istAdmin, adminRecht: adminRecht, tresorSchluessel: tresorSchluessel, kontoKurz: kontoKurz, rechnungSprung: rechnungSprung, korrekturSpeichern: korrekturSpeichern, spielManuellLoeschen: spielManuellLoeschen,
-           mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, telefonVon: telefonVon, spielzeiten: spielzeiten, rechnungEinlesen: rechnungEinlesen, bilder: bilder, bildVon: bildVon, rufnameVon: rufnameVon, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb, wohnortEigen: wohnortEigen, notizenFuerSuche: notizenFuerSuche, zugang: zugang, darfKorrigieren: darfKorrigieren,
+           mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, telefonVon: telefonVon, spielzeiten: spielzeiten, rechnungEinlesen: rechnungEinlesen, bilder: bilder, bildVon: bildVon, rufnameVon: rufnameVon, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb, wohnortEigen: wohnortEigen, notizenFuerSuche: notizenFuerSuche, zugang: zugang, darfKorrigieren: darfKorrigieren, antrittsstaerken: antrittsstaerken,
            darfAlleSpiele: darfAlleSpiele };
 })();

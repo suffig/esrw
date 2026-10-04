@@ -2016,3 +2016,106 @@ comment on column public.einsaetze.bezahlt is
 -- halber, falls eine aeltere Datenbank sie noch nicht hat).
 alter table public.rechnungen add column if not exists felder jsonb;
 alter table public.rechnungen add column if not exists kennungen text[];
+
+
+-- ======================================================================
+-- v42: Zustimmung, bevor die Abrechnung aufgeht
+-- ======================================================================
+-- Die Abrechnung rechnet Betraege aus und baut ein PDF. Das ist eine
+-- Hilfe beim Rechnen, keine Steuerberatung - und wer sie benutzt, soll
+-- das einmal gelesen und bestaetigt haben. Der Zeitpunkt wird
+-- festgehalten, damit nachvollziehbar ist, wer wann zugestimmt hat.
+alter table public.profile add column if not exists abrechnung_ok timestamptz;
+alter table public.profile add column if not exists abrechnung_ok_fassung int;
+comment on column public.profile.abrechnung_ok is
+  'Wann der Hinweis zur Abrechnung bestaetigt wurde (null = noch nicht).';
+comment on column public.profile.abrechnung_ok_fassung is
+  'Welche Fassung des Textes bestaetigt wurde - aendert sie sich, wird neu gefragt.';
+
+-- Die Spalten gehoeren dem Konto selbst; der Trigger profil_schutz haelt
+-- nur admin/obmann/rechte/freigeschaltet fest, diese hier nicht - also
+-- kann jeder fuer sich bestaetigen, aber nicht fuer andere.
+
+-- ======================================================================
+-- v43: Mindestantrittsstaerken
+-- ======================================================================
+-- Wie viele Spieler eine Mannschaft mindestens stellen muss, steht in den
+-- Bestimmungen "Nachwuchs" des EHV NRW. In der Halle hat die niemand
+-- dabei. Dieselbe Bauart wie die Spielzeiten: der Betreiber pflegt sie,
+-- lesen darf sie jeder Angemeldete.
+create table if not exists public.antrittsstaerken (
+  liga          text primary key,
+  gruppe        text,                -- "Nachwuchs", "Senioren", ...
+  feldspieler   text,                -- "8" oder "8 + Torwart"
+  torwart       text,                -- "ja", "nein", "ohne moeglich"
+  wartezeit     text,                -- wie lange gewartet wird
+  folge         text,                -- was passiert, wenn es nicht reicht
+  hinweis       text,
+  quelle        text,
+  reihenfolge   int  not null default 100,
+  geaendert     timestamptz not null default now()
+);
+alter table public.antrittsstaerken enable row level security;
+drop policy if exists "Antrittsstaerken lesen"  on public.antrittsstaerken;
+drop policy if exists "Admin pflegt Staerken"   on public.antrittsstaerken;
+create policy "Antrittsstaerken lesen" on public.antrittsstaerken for select to authenticated using (true);
+create policy "Admin pflegt Staerken"  on public.antrittsstaerken for all    to authenticated
+  using (public.darf_recht('stammdaten')) with check (public.darf_recht('stammdaten'));
+
+
+-- ======================================================================
+-- v44: Abo je Saison - die Technik, noch ohne Bezahlung
+-- ======================================================================
+-- Vorbereitung, nichts weiter: die App sperrt damit noch nichts. Es gibt
+-- nur eine Stelle, an der steht, bis wann ein Konto bezahlt hat, und der
+-- Betreiber kann das von Hand setzen. Erst wenn ein Zahlungsanbieter
+-- dranhaengt (und die rechtlichen Sachen stehen - AGB, Widerruf,
+-- Impressum, Datenschutz), wird daraus ein echtes Abo.
+--
+-- Wichtig fuer spaeter: eine Zahlung darf NIE aus der App heraus
+-- eingetragen werden koennen. Der Zahlungsanbieter meldet sie an einen
+-- Server (Webhook), der mit dem service_role-Schluessel schreibt. Darum
+-- darf hier niemand ausser dem Betreiber schreiben.
+create table if not exists public.abo (
+  user_id     uuid primary key references auth.users(id) on delete cascade,
+  saison      text,                        -- "2026/27"
+  bezahlt_bis date,                        -- bis wann freigeschaltet
+  betrag      numeric(8,2),
+  quelle      text,                        -- "von Hand", spaeter z.B. "stripe"
+  referenz    text,                        -- Beleg-/Vorgangsnummer des Anbieters
+  hinweis     text,
+  angelegt    timestamptz not null default now(),
+  geaendert   timestamptz not null default now()
+);
+alter table public.abo enable row level security;
+
+-- Jeder sieht seinen eigenen Stand (dafuer ist er ja da), schreiben darf
+-- nur der Betreiber. Kein Recht aus v40 oeffnet das - wer abrechnet,
+-- entscheidet nicht ueber Zahlungen.
+drop policy if exists "eigenes Abo lesen" on public.abo;
+drop policy if exists "Abo lesen (Betreiber)" on public.abo;
+drop policy if exists "Abo pflegen" on public.abo;
+create policy "eigenes Abo lesen"   on public.abo for select to authenticated
+  using (auth.uid() = user_id or public.ist_admin());
+create policy "Abo pflegen"         on public.abo for all    to authenticated
+  using (public.ist_admin()) with check (public.ist_admin());
+
+-- Hilfsfunktion fuer spaeter: zahlt dieses Konto gerade?
+-- Noch nutzt sie niemand - sie steht hier, damit die Regel an einer
+-- Stelle liegt, wenn es so weit ist.
+create or replace function public.abo_aktiv()
+returns boolean language sql stable security definer set search_path = public as $$
+  select coalesce((
+    select a.bezahlt_bis >= current_date from public.abo a where a.user_id = auth.uid()), false)
+    or coalesce((select admin from public.profile where id = auth.uid()), false);
+$$;
+revoke all on function public.abo_aktiv() from public;
+grant execute on function public.abo_aktiv() to authenticated;
+
+-- Von Hand eintragen (geht auch in der App unter Admin -> Abo):
+--   insert into public.abo (user_id, saison, bezahlt_bis, betrag, quelle)
+--   select id, '2026/27', '2027-06-30', 12.00, 'von Hand'
+--     from public.profile where slug = 'muster-max'
+--   on conflict (user_id) do update
+--     set saison = excluded.saison, bezahlt_bis = excluded.bezahlt_bis,
+--         betrag = excluded.betrag, quelle = excluded.quelle, geaendert = now();

@@ -1979,6 +1979,24 @@
   .rechnung-zeile.erledigt small { color:var(--gut); }
   details.rechnung-erledigt > summary { font-size:.84rem; font-weight:700;
     color:var(--dim); padding:8px 0; min-height:40px; display:flex; align-items:center; }
+
+  /* Runde 59: Hinweis vor der Abrechnung */
+  .tor-punkte { display:flex; flex-direction:column; gap:10px; margin-top:4px; }
+  .tor-punkt { padding:11px 13px; border-radius:12px; background:var(--bg);
+    border:1px solid var(--linie); }
+  .tor-punkt b { display:block; font-size:.92rem; margin-bottom:3px; }
+  .tor-punkt small { display:block; font-size:.84rem; line-height:1.45; color:var(--dim); }
+  .abrechnung-tor .mg-check { font-size:.92rem; font-weight:700; gap:10px; min-height:44px; }
+
+  /* Runde 59: Aenderungen - Filter hinter einem Aufklapper, Mehrfaches gefaltet */
+  details.aend-mehr { margin:6px 0 2px; }
+  details.aend-mehr > summary { font-size:.82rem; font-weight:700; color:var(--dim);
+    padding:8px 0; min-height:40px; display:flex; align-items:center; }
+  details.aend-mehr .filterzeile { margin-top:6px; }
+  details.aend-weitere { border-top:1px solid var(--linie); }
+  details.aend-weitere > summary { font-size:.78rem; font-weight:700; color:var(--dim);
+    padding:8px 12px; min-height:40px; display:flex; align-items:center; }
+  details.aend-weitere .zeile { opacity:.85; }
 </style>
 </head>
 <body>
@@ -2266,7 +2284,7 @@
     <div class="filterleiste">
       <div class="schalterzeile">
         <span class="modus" id="regeln-modus" role="tablist">
-          <button type="button" data-teil="strafen" class="aktiv">Strafen</button><button type="button" data-teil="zeiten">Spielzeiten</button><button type="button" data-teil="bestimmungen">Bestimmungen</button>
+          <button type="button" data-teil="strafen" class="aktiv">Strafen</button><button type="button" data-teil="zeiten">Spielzeiten</button><button type="button" data-teil="staerken">Antrittsstärke</button><button type="button" data-teil="bestimmungen">Bestimmungen</button>
         </span>
       </div>
       <div class="plan-suchzeile" id="regeln-suchzeile">
@@ -2437,6 +2455,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=103"></script>
+<script src="app.js?v=104"></script>
 </body>
 </html>
