@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:df0b1523b01832dcb7298194fe73d96c2be5cde9@esrw.de
-SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
-DTSTART:20260927T063000Z
-DTEND:20260927T100000Z
-SUMMARY:SR · U15 RLB · Herner EV – EHC Troisdorf
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
-  08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Gysenberghalle 
- Herne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Strube\, Julia\n\
- nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Gysenberghalle Herne\, Am Revierpark 22\, 44627 Herne
-GEO:51.532602;7.254372
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
- evierpark 22, 44627 Herne";X-APPLE-RADIUS=100;X-TITLE="Gysenberghalle Hern
- e":geo:51.532602,7.254372
-END:VEVENT
-BEGIN:VEVENT
 UID:47a9331f86a3b681c619b3830e8865834116717c@esrw.de
 SEQUENCE:0
 DTSTAMP:20260921T153038Z
@@ -90,11 +69,6 @@ GEO:51.532602;7.254372
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
  evierpark 22, 44627 Herne";X-APPLE-RADIUS=100;X-TITLE="Gysenberghalle Hern
  e":geo:51.532602,7.254372
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Rot · Herner EV
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:8ae874371ed777a7aae0f6c9e41eb70518630bba@esrw.de
