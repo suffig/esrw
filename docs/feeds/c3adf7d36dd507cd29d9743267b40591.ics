@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:744f734e1abbed2d39592f15956c2654562d1985@esrw.de
-SEQUENCE:0
-DTSTAMP:20260918T173202Z
-LAST-MODIFIED:20260918T173202Z
-DTSTART:20260927T060000Z
-DTEND:20260927T093000Z
-SUMMARY:U13 LL · ESV Grizzlys Bergkamen – Ratinger Ice Aliens
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
-  08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Be
- rgkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Malik\, Orland
- o\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
-GEO:51.602578;7.626858
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
- äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
- ergkamen":geo:51.602578,7.626858
-END:VEVENT
-BEGIN:VEVENT
 UID:1c659e9cab5616f1b6305dc0dfb0fd9d7671c2e2@esrw.de
 SEQUENCE:0
 DTSTAMP:20260917T173038Z
@@ -1091,12 +1070,6 @@ GEO:51.602578;7.626858
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
  äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
  ergkamen":geo:51.602578,7.626858
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U13 LL · ESV Grizzlys Bergkamen
-  – EHC Die Bären Neuwied
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:44726f1402aa51a5d0676f9f71ba98f3931f0170@esrw.de

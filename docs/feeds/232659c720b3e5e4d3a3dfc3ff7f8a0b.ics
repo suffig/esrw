@@ -50,12 +50,6 @@ GEO:51.602578;7.626858
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
  äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
  ergkamen":geo:51.602578,7.626858
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL · ESV Grizzlys Ber
- gkamen – EHC Die Bären Neuwied
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:5d139a58604fac3b6dc6b164c96eb5ed1161109d@esrw.de
