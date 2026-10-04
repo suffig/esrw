@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:646f613c7cfe8f8c8988936b388fffa6e34cc4ed@esrw.de
-SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
-DTSTART:20260927T093000Z
-DTEND:20260927T130000Z
-SUMMARY:U15 LL · Dinslakener Kobras – EHC Die Bären Neuwied
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
-  11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Di
- nslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Kuriata\, Flor
- ian-Nikita\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
-GEO:51.574578;6.735361
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
- m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
- inslaken":geo:51.574578,6.735361
-END:VEVENT
-BEGIN:VEVENT
 UID:c7d794745274357876c28255837110ff2064abed@esrw.de
 SEQUENCE:0
 DTSTAMP:20260917T173038Z
@@ -1113,12 +1092,6 @@ GEO:51.574578;6.735361
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
  m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
  inslaken":geo:51.574578,6.735361
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U13 LL · Dinslakener Kobras –
-  Eisadler Dortmund
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:4b99c6d4121494a9ef8022573057ade2600456da@esrw.de

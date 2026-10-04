@@ -27,12 +27,6 @@ GEO:51.574578;6.735361
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
  m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
  inslaken":geo:51.574578,6.735361
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL · Dinslakener Kobr
- as – Eisadler Dortmund
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:0b095a7e3177dbcd5a7e3bdf426afb0f4d42e240@esrw.de
