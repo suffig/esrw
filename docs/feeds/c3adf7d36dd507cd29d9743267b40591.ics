@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:248fa8b1d0b8b100cc09053cf28e50afa553e1d0@esrw.de
-SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
-DTSTART:20260927T143000Z
-DTEND:20260927T180000Z
-SUMMARY:U15 RLB · Kölner Junghaie 1b – EJ Kassel
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
-  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Kölnarena 2\nA
- dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Pluschkell\, Julia
- n\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
-GEO:50.937979;6.98935
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
- r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
- .937979,6.98935
-END:VEVENT
-BEGIN:VEVENT
 UID:7b4d4a758cf89e69e2e61245d0f29c999138d569@esrw.de
 SEQUENCE:0
 DTSTAMP:20260921T154526Z
@@ -1133,12 +1112,6 @@ GEO:51.553483;7.073102
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Emscher-Lippe-Halle Gelsen
  kirchen, Adenauerallee 118, 45891 Gelsenkirchen";X-APPLE-RADIUS=100;X-TITL
  E="Emscher-Lippe-Halle Gelsenkirchen":geo:51.553483,7.073102
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - BL FS · EHC Gelsenkirchen – N
- eusser EV 1b
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:4a2ba7eb5ac15f009ac9b87bc651e3e2ed728835@esrw.de
@@ -1160,12 +1133,6 @@ GEO:50.937979;6.98935
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
  r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
  .937979,6.98935
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U15 RLA · Kölner Junghaie – 
- Iserlohner EC
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:fa9f464ae93670d66377ef10b1645fc2c768cb91@esrw.de
