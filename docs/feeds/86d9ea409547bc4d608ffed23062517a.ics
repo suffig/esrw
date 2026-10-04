@@ -28,12 +28,6 @@ GEO:51.49525;7.458288
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
   Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
  rum Westfalen":geo:51.49525,7.458288
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL · Eisadler Dortmu
- nd – TuS Wiehl
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:b9edb147e92fc4369f5d215dd496e7f67777b5e9@esrw.de

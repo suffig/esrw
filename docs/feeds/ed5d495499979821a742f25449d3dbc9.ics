@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:59bf132526e35ba6faeda4ab3207e0b2ce949fca@esrw.de
-SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
-DTSTART:20260927T160000Z
-DTEND:20260927T193000Z
-SUMMARY:SR · LL FS · EC Bergisch Land – Dinslakener Kobras
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
-  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: LL FS\nHalle: Eissporthalle Sol
- ingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Reuter\, Fy
- nn\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
-GEO:51.165932;7.086769
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
- ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
- le Solingen":geo:51.165932,7.086769
-END:VEVENT
-BEGIN:VEVENT
 UID:19bdcb0b90b40bfa1227455421cae24bb0400442@esrw.de
 SEQUENCE:0
 DTSTAMP:20260921T153038Z
@@ -91,12 +70,6 @@ GEO:51.165932;7.086769
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
  ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
  le Solingen":geo:51.165932,7.086769
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Frauen Pokal Gr.A · EC Be
- rgisch Land – EHV NRW U15w
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:4441f36afbde1f7cedc05bf635b72d3a3feb01f9@esrw.de

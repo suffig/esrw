@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:b2fc598aa3804f15de86708ff4db4ea4bfd3459b@esrw.de
-SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
-DTSTART:20260927T160000Z
-DTEND:20260927T193000Z
-SUMMARY:LSR · U20 RL · Dinslakener Kobras – EHC Troisdorf
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
-  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissporthalle Di
- nslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Caelers\, Fabi
- an (HSR) / Hartmann\, Marius (LSR)\n\nQuelle: https://www.esrw.de/einteilu
- ngen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
-GEO:51.574578;6.735361
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
- m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
- inslaken":geo:51.574578,6.735361
-END:VEVENT
-BEGIN:VEVENT
 UID:5662f081e678721d2660241d466b47228c00b524@esrw.de
 SEQUENCE:1
 DTSTAMP:20261002T082808Z
@@ -73,12 +51,6 @@ GEO:51.574578;6.735361
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
  m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
  inslaken":geo:51.574578,6.735361
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW · Dinslaken
- er Kobras – Ratinger Ice Aliens
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:fc56a64b4b516a08c94ac705d1fa11b2da8d8ac1@esrw.de

@@ -8,71 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:a170a679e2466e2bdf2065fc59d0a34284d8cf7a@esrw.de
-SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
-DTSTART:20260927T160000Z
-DTEND:20260927T193000Z
-SUMMARY:U20 RL · Dinslakener Kobras – EHC Troisdorf
-DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 19:00 Uhr\nTreff
- punkt: 18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissportha
- lle Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Hartmann
- \, Marius (LSR) / Krüger\, Martin (LSR)\n\nQuelle: https://www.esrw.de/ei
- nteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
-GEO:51.574578;6.735361
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
- m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
- inslaken":geo:51.574578,6.735361
-END:VEVENT
-BEGIN:VEVENT
-UID:5ab90cc2314a5cd3484b2049d963058259915156@esrw.de
-SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
-DTSTART:20260927T160000Z
-DTEND:20260927T193000Z
-SUMMARY:LL FS · EC Bergisch Land – Dinslakener Kobras
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
-  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: LL FS\nHalle: Eissporthalle Sol
- ingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Reuter\, Fy
- nn\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
-GEO:51.165932;7.086769
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
- ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
- le Solingen":geo:51.165932,7.086769
-END:VEVENT
-BEGIN:VEVENT
-UID:28338ab1c473d7dcc7b1ffb67d3f98c6c3cd981f@esrw.de
-SEQUENCE:0
-DTSTAMP:20260917T173038Z
-LAST-MODIFIED:20260917T173038Z
-DTSTART:20260927T160000Z
-DTEND:20260927T193000Z
-SUMMARY:RL FS · Eisadler Dortmund – Harzer Falken
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
-  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissportzentrum W
- estfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Pernt\, Hend
- rik (HSR) / Scholz\, Arien (LSR)\n\nQuelle: https://www.esrw.de/einteilung
- en.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
-GEO:51.49525;7.458288
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
-  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
- rum Westfalen":geo:51.49525,7.458288
-END:VEVENT
-BEGIN:VEVENT
 UID:146f0ed64e6cda7e9683d611985330e079d755f3@esrw.de
 SEQUENCE:0
 DTSTAMP:20260921T101525Z
@@ -1177,12 +1112,6 @@ GEO:51.49525;7.458288
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
   Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
  rum Westfalen":geo:51.49525,7.458288
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - U20 RL · Eisadler Dortmund – 
- TuS Wiehl
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:1dd2190087b6fa8cda3105e1207e8e826505243f@esrw.de
@@ -1205,12 +1134,6 @@ GEO:51.165932;7.086769
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
  ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
  le Solingen":geo:51.165932,7.086769
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - Frauen Pokal Gr.A · EC Bergisch
-  Land – EHV NRW U15w
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:68796763f4ba11a3ee84862082e553d5a5fdd260@esrw.de
@@ -1233,12 +1156,6 @@ GEO:51.574578;6.735361
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
  m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
  inslaken":geo:51.574578,6.735361
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - Senioren RLW · Dinslakener Kobr
- as – Ratinger Ice Aliens
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:a5f9cd86e5919a368128db181e834ec6cc0827dc@esrw.de
