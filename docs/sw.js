@@ -5,7 +5,7 @@
  * Parkhaus, Zug - kommt die zuletzt gespeicherte Fassung zum Zug.
  */
 
-const VERSION = "v96";
+const VERSION = "v97";
 const CACHE = "einteilungen-" + VERSION;
 
 // Wird beim ersten Besuch gespeichert, damit die App auch dann startet,
@@ -146,12 +146,24 @@ self.addEventListener("fetch", (e) => {
       .then((antwort) => {
         if (antwort && antwort.ok) {
           const kopie = antwort.clone();
-          caches.open(CACHE).then((c) => c.put(anfrage, kopie)).catch(() => {});
+          // Ohne ?v=... ablegen, sonst liegt dieselbe Datei unter jeder
+          // Versionsnummer neu im Speicher und wird nie wiedergefunden.
+          const schluessel = new Request(url.origin + url.pathname, { credentials: "same-origin" });
+          caches.open(CACHE).then((c) => c.put(schluessel, kopie)).catch(() => {});
         }
         return antwort;
       })
       // ?v=... in der Adresse ignorieren, sonst findet der Cache app.js nicht
-      .catch(() => caches.match(anfrage, { ignoreSearch: true }).then(
-        (treffer) => treffer || caches.match("./index.html")))
+      .catch(() => caches.match(anfrage, { ignoreSearch: true }).then((treffer) => {
+        if (treffer) return treffer;
+        // index.html als Notnagel gilt NUR fuer Seitenaufrufe. Frueher kam
+        // sie auch als Antwort auf app.js oder mitglieder.js - der Browser
+        // lehnt HTML als Skript ab ("nosniff"), und die App meldete dann
+        // "nicht ladbar", obwohl nur das Netz kurz weg war.
+        if (anfrage.mode === "navigate" || anfrage.destination === "document") {
+          return caches.match("./index.html");
+        }
+        return new Response("", { status: 504, statusText: "offline" });
+      }))
   );
 });

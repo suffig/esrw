@@ -14,6 +14,16 @@
     "Suche über alles, Spieltag-Modus, Gespann-Chat und Push bei jeder Änderung von esrw.de",
     "Ziehen zum Aktualisieren auf Start und Spielplan"
   ] };
+  // Die Versionsnummer aus dem eigenen Script-Tag (app.js?v=NNN). Damit
+  // laedt mitglieder.js unter derselben Adresse wie beim letzten Start -
+  // und beim naechsten Freigeben unter einer neuen.
+  var APP_VERSION = (function () {
+    try {
+      var s = document.currentScript || document.querySelector('script[src*="app.js"]');
+      var t = s && s.src && s.src.match(/[?&]v=(\d+)/);
+      return t ? t[1] : "0";
+    } catch (e) { return "0"; }
+  })();
   var daten = null, aktuell = null, profil = null;
   var el = function (id) { return document.getElementById(id); };
   var wochentag = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
@@ -3127,14 +3137,37 @@
   }
 
   var mitgliederGeladen = null;
+  // Frueher stand hier Date.now(): bei jedem Start eine neue Adresse, die
+  // im Zwischenspeicher nie zu finden war - also jedes Mal uebers Netz.
+  // Mit der Versionsnummer der App ist es dieselbe Adresse wie gestern,
+  // und beim naechsten Freigeben eine neue.
   function ladeMitglieder() {
     if (!mitgliederGeladen) {
       mitgliederGeladen = new Promise(function (ok, nein) {
         if (window.Mitglieder) return ok(window.Mitglieder);
-        var s = document.createElement("script"); s.src = "mitglieder.js?" + Date.now();
-        s.onload = function () { ok(window.Mitglieder); }; s.onerror = function () { nein(new Error("mitglieder.js nicht ladbar")); };
-        document.head.appendChild(s);
+        var versuche = 0;
+        function hol() {
+          versuche++;
+          var s = document.createElement("script");
+          // Beim zweiten Versuch ohne Versionsnummer - falls genau die
+          // eine Adresse im Zwischenspeicher kaputt liegt
+          s.src = versuche === 1 ? "mitglieder.js?v=" + APP_VERSION : "mitglieder.js?neu=" + Date.now();
+          s.onload = function () {
+            if (window.Mitglieder) return ok(window.Mitglieder);
+            if (versuche < 2) return hol();
+            nein(new Error("mitglieder.js geladen, aber leer"));
+          };
+          s.onerror = function () {
+            if (versuche < 2) return setTimeout(hol, 400);
+            nein(new Error("mitglieder.js nicht ladbar"));
+          };
+          document.head.appendChild(s);
+        }
+        hol();
       });
+      // Ein gescheiterter Versuch darf nicht fuer immer haengen bleiben -
+      // sonst hilft auch ein spaeterer Tipp nicht mehr.
+      mitgliederGeladen.catch(function () { mitgliederGeladen = null; });
     }
     return mitgliederGeladen;
   }
