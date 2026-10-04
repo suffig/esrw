@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:dd8b42a3a3ade553175d87168f9c60f6bce9bab0@esrw.de
-SEQUENCE:0
-DTSTAMP:20260918T173202Z
-LAST-MODIFIED:20260918T173202Z
-DTSTART:20260927T153000Z
-DTEND:20260927T190000Z
-SUMMARY:RL FS · ESV Bergkamen – Bremen
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
-  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthalle Ber
- gkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Steeg\, Cedric 
- (HSR) / Schmidt\, Waldemar (LSR)\n\nQuelle: https://www.esrw.de/einteilung
- en.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
-GEO:51.602578;7.626858
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
- äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
- ergkamen":geo:51.602578,7.626858
-END:VEVENT
-BEGIN:VEVENT
 UID:a170a679e2466e2bdf2065fc59d0a34284d8cf7a@esrw.de
 SEQUENCE:0
 DTSTAMP:20260917T173038Z
@@ -1156,12 +1134,6 @@ GEO:51.602578;7.626858
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
  äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
  ergkamen":geo:51.602578,7.626858
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - Senioren BZL · ESV Grizzlys Ber
- gkamen 1c – EHC Troisdorf 1b
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:d09f38eb4facee3017f6570aebe719a686ecac15@esrw.de
