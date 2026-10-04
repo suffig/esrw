@@ -619,18 +619,33 @@ window.Mitglieder = (function () {
     // schon im Profil, aendern laesst er sich spaeter jederzeit im Profil.
     var nameWahl = modus === "registrieren" ? h("select", { class: "mg-select" },
       [h("option", { value: "", text: "dein Name auf esrw.de" })]) : null;
+    var nameLabel = modus === "registrieren" ? h("label", { class: "anmelde-label", text: "Dein Name auf esrw.de" }) : null;
+    var nameHinweis = modus === "registrieren" ? h("p", { class: "meta", style: "margin:-2px 0 6px",
+      text: "Pflicht, daran erkennt der Betreiber dich. E-Mail-Adressen sind nicht immer eindeutig. Später im Profil änderbar." }) : null;
     var namenDa = false;
+    // Kommt keine Liste (Tabelle noch nicht eingespielt, kein Netz), faellt
+    // das Feld weg - samt Beschriftung und Pflichthinweis, sonst stand beides
+    // ohne Feld da und die Anmeldung war eine Sackgasse.
+    function ohneNamensliste() {
+      namenDa = false;
+      if (nameWahl && nameWahl.parentNode) nameWahl.parentNode.removeChild(nameWahl);
+      if (nameLabel && nameLabel.parentNode) nameLabel.parentNode.removeChild(nameLabel);
+      if (nameHinweis) nameHinweis.textContent = "Die Namensliste ist gerade nicht abrufbar. Lege das Konto trotzdem an – "
+        + "der Betreiber ordnet deinen Namen bei der Freischaltung zu.";
+    }
     if (nameWahl) personenNamen().then(function (liste) {
       namenDa = liste.length > 0;
       // Ein Name gehoert genau einem Konto - vergebene stehen nicht zur Wahl
       liste.filter(function (x) { return !x.vergeben; })
         .forEach(function (x) { nameWahl.appendChild(h("option", { value: x.slug, text: x.name })); });
-      // Obmaenner pfeifen nicht selbst und stehen in keiner Einteilung
-      if (namenDa) nameWahl.appendChild(h("option", { value: "_obmann", text: "Obmann (pfeife nicht selbst)" }));
-      // Ohne Liste (Namenstabelle noch nicht eingespielt) waere die Pflicht
-      // eine Sackgasse - dann faellt das Feld weg.
-      if (!namenDa && nameWahl.parentNode) nameWahl.parentNode.removeChild(nameWahl);
-    });
+      if (namenDa) {
+        // Obmaenner pfeifen nicht selbst und stehen in keiner Einteilung
+        nameWahl.appendChild(h("option", { value: "_obmann", text: "Obmann (pfeife nicht selbst)" }));
+        // Neu beim ESRW und noch in keiner Einteilung? Der Admin sieht solche
+        // Konten als "wartet, ohne Namen" und ordnet sie beim Freischalten zu.
+        nameWahl.appendChild(h("option", { value: "_fehlt", text: "Mein Name steht nicht dabei" }));
+      } else ohneNamensliste();
+    }).catch(function () { ohneNamensliste(); });
 
     var form = h("form", { class: "mg-form", onsubmit: function (e) {
       e.preventDefault();
@@ -643,9 +658,12 @@ window.Mitglieder = (function () {
         return;
       }
       var alsObmann = !!(nameWahl && nameWahl.value === "_obmann");
-      var wunschName = !alsObmann && nameWahl && nameWahl.value
-        ? (nameWahl.options[nameWahl.selectedIndex].text || "") : "";
-      if (!alsObmann && nameWahl && nameWahl.value && ctx.schreiben) ctx.schreiben("wunsch-slug", nameWahl.value);
+      var gewaehlt = nameWahl && nameWahl.value && nameWahl.value.charAt(0) !== "_" ? nameWahl.value : "";
+      var wunschName = gewaehlt ? (nameWahl.options[nameWahl.selectedIndex].text || "") : "";
+      if (gewaehlt && ctx.schreiben) {
+        ctx.schreiben("wunsch-slug", gewaehlt);
+        ctx.schreiben("wunsch-name", wunschName || null);
+      }
       var lauf;
       if (modus === "registrieren") {
         // Der Name faehrt am Konto mit: so steht er in der Freischaltung,
@@ -653,7 +671,7 @@ window.Mitglieder = (function () {
         lauf = sb.auth.signUp({ email: p.email, password: p.password,
           options: { emailRedirectTo: rueckkehr(),
                      data: alsObmann ? { obmann: true }
-                       : (nameWahl && nameWahl.value ? { slug: nameWahl.value, name: wunschName } : undefined) } });
+                       : (gewaehlt ? { slug: gewaehlt, name: wunschName } : undefined) } });
       } else if (modus === "vergessen") {
         lauf = sb.auth.resetPasswordForEmail(p.email, { redirectTo: rueckkehr() });
       } else {
@@ -684,10 +702,9 @@ window.Mitglieder = (function () {
       email,
       modus === "vergessen" ? null : h("label", { class: "anmelde-label", text: "Passwort" }),
       modus === "vergessen" ? null : pwFeld,
-      nameWahl ? h("label", { class: "anmelde-label", text: "Dein Name auf esrw.de" }) : null,
+      nameLabel,
       nameWahl,
-      nameWahl ? h("p", { class: "meta", style: "margin:-2px 0 6px",
-        text: "Pflicht, daran erkennt der Betreiber dich. E-Mail-Adressen sind nicht immer eindeutig. Später im Profil änderbar." }) : null,
+      nameHinweis,
       knopf
     ]);
 
@@ -784,10 +801,14 @@ window.Mitglieder = (function () {
         var wunsch = ctx.lesen ? ctx.lesen("wunsch-slug") : null;
         if (wunsch && !(profil && profil.slug)) {
           var person = ctx.personMit(wunsch);
+          // Der Name kommt aus der Auswahl bei der Registrierung; die
+          // Personenliste in den Daten ist fuer ein frisches Konto leer,
+          // weil der Tresor noch zu ist.
+          var gemerkt = ctx.lesen ? ctx.lesen("wunsch-name") : null;
           return speichern(sb.from("profile").upsert({ id: session.user.id, slug: wunsch,
-              name: person ? person.name : wunsch, email: session.user.email || null }))
+              name: (person && person.name) || gemerkt || wunsch, email: session.user.email || null }))
             .then(function () {
-              if (ctx.schreiben) ctx.schreiben("wunsch-slug", null);
+              if (ctx.schreiben) { ctx.schreiben("wunsch-slug", null); ctx.schreiben("wunsch-name", null); }
               profil = profil || {};
               profil.id = session.user.id; profil.slug = wunsch; profil.name = person ? person.name : wunsch;
               document.dispatchEvent(new CustomEvent("mg-profil", { detail: { slug: profil.slug, name: profil.name } }));
@@ -1070,6 +1091,9 @@ window.Mitglieder = (function () {
     personenNamen().then(function (liste) {
       var soll = p.slug || (ctx.lesen && ctx.lesen("wunsch-slug")) || ctx.slug;
       liste.forEach(function (x) {
+        // Vergebene Namen gar nicht anbieten: profile_slug_eindeutig (v32)
+        // weist sie ab, und die Fehlermeldung hinterher hilft keinem.
+        if (x.vergeben && x.slug !== soll) return;
         var o = h("option", { value: x.slug, text: x.name });
         if (soll === x.slug) o.selected = true;
         auswahl.appendChild(o);

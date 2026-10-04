@@ -200,12 +200,31 @@ Der Kalender ist nur lesend. Änderungen macht immer der ESRW, du bekommst sie
 automatisch nach. Ändert sich Zeit oder Halle, steht eine Woche lang ein ⚠ im
 Termintitel und in der Beschreibung, was vorher galt.
 
+### Jeder stellt seinen Kalender selbst ein
+
+In der App unter **Konto → Einstellungen → Kalender** entscheidet jeder für
+sich, was im Termintitel steht (Rolle, Liga, Halle, die Nachnamen der
+Kollegen), ob der Termin zum Treffpunkt oder erst zum Anpfiff beginnt und
+wie oft der Wecker klingelt – bis zu vier Erinnerungen von 30 Minuten bis
+einen Tag vorher. Eine Vorschau zeigt sofort, wie der Titel aussieht.
+
+Gebaut werden die `.ics`-Dateien nicht im Browser, sondern vom stündlichen
+Workflow: jeder hat seine eigene Adresse. Die Wünsche reisen deshalb mit dem
+Konto (`profile.einstellungen.kalender`), `esrw_ical.py` liest sie beim
+nächsten Lauf. Eine Änderung steht also spätestens eine Stunde später im
+Kalender – und erst, wenn das iPhone das Abo das nächste Mal abholt.
+
+Wer nichts einstellt, bekommt die Voreinstellung aus `KALENDER_STANDARD`
+in `esrw_ical.py`: Rolle und Liga im Titel, Beginn zum Treffpunkt, ein
+Wecker eine Stunde vorher.
+
 ### Die zwei Wecker
 
 **Termin selbst** beginnt zum Treffpunkt, also eine Stunde vor Spielbeginn.
 
 **Eingebauter Alert:** eine Stunde vor dem Termin – bei Spielbeginn 18:00 Uhr
-also um 16:00 Uhr. Änderbar in `config.json` unter `erinnerungen`.
+also um 16:00 Uhr. Das ist die Voreinstellung für alle, die nichts eigenes
+gewählt haben; sie steht in `config.json` unter `erinnerungen`.
 
 **Abfahrtszeitpunkt** rechnet iOS selbst aus, verkehrsabhängig vom aktuellen
 Standort. Dafür einmal einschalten:

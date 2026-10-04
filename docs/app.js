@@ -699,6 +699,7 @@
     ziel.appendChild(b);
   }
   function einstellungenLaden(nurAnwenden) {
+    kalenderEinstRendern();
     el("karten-app").value = lesen("karten") || "auto";
     if (!nurAnwenden) el("karten-app").addEventListener("change", function (e) { schreiben("karten", e.target.value === "auto" ? null : e.target.value); if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true); toast("Karten-App: " + e.target.options[e.target.selectedIndex].text, ""); einstellungenSync(); });
     einfachAnwenden();
@@ -5178,7 +5179,7 @@
   // Sicherung: alles, was nur hier liegt und nach einem verlorenen Konto
   // oder einem neuen Handy sonst neu getippt werden muesste.
   var SICHER_SCHLUESSEL = ["einfach", "karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche",
-    "pushwoche", "pushabrechnung", "pushvorlauf", "pushgespann", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4", "thema", "funktionen", "verkehr"];
+    "pushwoche", "pushabrechnung", "pushvorlauf", "pushgespann", "kalender", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4", "thema", "funktionen", "verkehr"];
   function sicherungBauen() {
     var app = {};
     SICHER_SCHLUESSEL.forEach(function (k) { var w = lesen(k); if (w !== null && w !== undefined) app[k] = w; });
@@ -5264,11 +5265,130 @@
     });
   }
 
+  // Was mit dem Konto auf jedes Geraet wandert. Eine Liste, nicht drei:
+  // frueher stand sie einmal hier und einmal beim Anwenden, und was man
+  // nur an einer Stelle eintrug, wurde nie gespeichert (so ging es
+  // "pushvorlauf", "pushgespann" und den Kalenderwuenschen).
+  var SYNC_SCHLUESSEL = ["verkehr", "einfach", "karten", "schrift", "akzent", "kompakt",
+    "ziel", "start", "bereiche", "pushwoche", "pushabrechnung", "pushvorlauf", "pushgespann",
+    "kalender", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4"];
+
   function einstellungenSammeln() {
-    return { verkehr: lesen("verkehr") || null, einfach: lesen("einfach") || null, karten: lesen("karten") || null, schrift: lesen("schrift") || null, akzent: lesen("akzent") || null, kompakt: lesen("kompakt") || null, ziel: lesen("ziel") || null, start: lesen("start") || null, bereiche: lesen("bereiche") || null, pushwoche: lesen("pushwoche") || null, pushabrechnung: lesen("pushabrechnung") || null, "schnell-aus": lesen("schnell-aus") || null, "start-ordnung": lesen("start-ordnung") || null,
-             tab2: lesen("tab2") || null, tab3: lesen("tab3") || null, tab4: lesen("tab4") || null };
+    var o = {};
+    SYNC_SCHLUESSEL.forEach(function (k) { o[k] = lesen(k) || null; });
+    return o;
   }
   var syncTimer = null;
+  // ---- Kalender: was im Termin steht, wann der Wecker klingelt
+  //
+  // Die ICS-Dateien baut der Workflow, nicht der Browser - jeder hat
+  // seine eigene Adresse. Die Wuensche stehen deshalb im Konto
+  // (profile.einstellungen.kalender) und esrw_ical.py liest sie beim
+  // naechsten Lauf. Sichtbar wird eine Aenderung also erst, wenn der
+  // Kalender das naechste Mal nachsieht.
+  var KAL_STANDARD = { rolle: true, liga: true, halle: false, gespann: false,
+                       beginn: "treffpunkt", alarme: ["-PT1H"] };
+  function kalenderEinst() {
+    var g = {};
+    try { g = JSON.parse(lesen("kalender") || "{}") || {}; } catch (e) {}
+    var w = {};
+    Object.keys(KAL_STANDARD).forEach(function (k) { w[k] = g[k] === undefined ? KAL_STANDARD[k] : g[k]; });
+    if (!Array.isArray(w.alarme)) w.alarme = KAL_STANDARD.alarme.slice();
+    return w;
+  }
+  function kalenderMerken(w) {
+    schreiben("kalender", JSON.stringify(w));
+    einstellungenSync();
+    kalenderEinstRendern();
+  }
+
+  var KAL_ALARME = [["-PT30M", "30 Min."], ["-PT1H", "1 Std."], ["-PT2H", "2 Std."],
+                    ["-PT3H", "3 Std."], ["-P1D", "Tag vorher"]];
+
+  function kalenderEinstRendern() {
+    var box = el("kalender-einst"); if (!box) return;
+    box.innerHTML = "";
+    var w = kalenderEinst();
+
+    // Vorschau: so sieht ein Termin dann aus
+    var vorschau = document.createElement("p");
+    vorschau.className = "meta kal-vorschau";
+    function vorschauBauen() {
+      var teile = [];
+      if (w.rolle) teile.push("(L)SR");
+      teile.push((w.liga ? "U13 RLB: " : "") + "Herforder EV – Krefelder EV");
+      if (w.halle) teile.push("Eishalle Herford");
+      if (w.gespann) teile.push("mit Menzel, Hofer");
+      vorschau.textContent = teile.join(" · ");
+    }
+
+    function schalter(schluessel, titel, erklaerung) {
+      var l = document.createElement("label");
+      var sp = document.createElement("span");
+      var b = document.createElement("b"); b.textContent = titel; sp.appendChild(b);
+      if (erklaerung) { var sm = document.createElement("small"); sm.textContent = erklaerung; sp.appendChild(sm); }
+      l.appendChild(sp);
+      var c = document.createElement("input"); c.type = "checkbox"; c.checked = !!w[schluessel];
+      c.addEventListener("change", function () { w[schluessel] = c.checked; kalenderMerken(w); });
+      l.appendChild(c);
+      box.appendChild(l);
+    }
+
+    var kopf = document.createElement("p"); kopf.className = "listen-kopf"; kopf.style.margin = "0 0 2px";
+    kopf.textContent = "Was im Titel steht";
+    box.appendChild(kopf);
+    vorschauBauen();
+    box.appendChild(vorschau);
+    schalter("rolle", "Deine Rolle", "„(L)SR“ vorneweg");
+    schalter("liga", "Liga", "„U13 RLB:“ vor der Paarung");
+    schalter("halle", "Halle", "hinten am Titel, auch ohne Ortsangabe sichtbar");
+    schalter("gespann", "Gespann", "die Nachnamen der Kollegen");
+
+    // Beginn
+    var l2 = document.createElement("label");
+    var s2 = document.createElement("span");
+    var b2 = document.createElement("b"); b2.textContent = "Termin beginnt"; s2.appendChild(b2);
+    var sm2 = document.createElement("small"); sm2.textContent = "Treffpunkt ist 60 Min. vor Anpfiff"; s2.appendChild(sm2);
+    l2.appendChild(s2);
+    var wahl = document.createElement("select"); wahl.className = "mg-select";
+    [["treffpunkt", "zum Treffpunkt"], ["anstoss", "zum Anpfiff"]].forEach(function (o) {
+      var op = document.createElement("option"); op.value = o[0]; op.textContent = o[1];
+      if (w.beginn === o[0]) op.selected = true; wahl.appendChild(op);
+    });
+    wahl.addEventListener("change", function () { w.beginn = wahl.value; kalenderMerken(w); });
+    l2.appendChild(wahl);
+    box.appendChild(l2);
+
+    // Erinnerungen
+    var kopf2 = document.createElement("p"); kopf2.className = "listen-kopf"; kopf2.style.margin = "12px 0 2px";
+    kopf2.textContent = "Erinnerungen";
+    box.appendChild(kopf2);
+    var hin = document.createElement("p"); hin.className = "meta"; hin.style.margin = "0 0 6px";
+    hin.textContent = w.alarme.length
+      ? "Dein Kalender weckt dich " + w.alarme.length + "× vor dem gewählten Beginn."
+      : "Kein Wecker - der Termin steht nur im Kalender.";
+    box.appendChild(hin);
+    var reihe = document.createElement("div"); reihe.className = "stufen kal-alarme";
+    KAL_ALARME.forEach(function (a) {
+      var k = document.createElement("button"); k.type = "button"; k.textContent = a[1];
+      if (w.alarme.indexOf(a[0]) >= 0) k.classList.add("aktiv");
+      k.addEventListener("click", function () {
+        var i = w.alarme.indexOf(a[0]);
+        if (i >= 0) w.alarme.splice(i, 1);
+        else if (w.alarme.length >= 4) { toast("Mehr als vier Wecker nimmt der Kalender nicht.", "warn"); return; }
+        else w.alarme.push(a[0]);
+        kalenderMerken(w);
+      });
+      reihe.appendChild(k);
+    });
+    box.appendChild(reihe);
+
+    var fuss = document.createElement("p"); fuss.className = "meta"; fuss.style.margin = "10px 0 0";
+    fuss.textContent = "Die Kalenderdatei baut der Server. Deine Änderung steht spätestens in einer Stunde drin, "
+      + "wenn dein Kalender das nächste Mal nachsieht.";
+    box.appendChild(fuss);
+  }
+
   function einstellungenSync() {
     clearTimeout(syncTimer);
     syncTimer = setTimeout(function () {
@@ -5279,7 +5399,7 @@
   function einstellungenAnwenden(e) {
     if (!e) return;
     var geaendert = false;
-    ["einfach", "karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche", "pushwoche", "pushabrechnung", "pushvorlauf", "pushgespann", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4", "verkehr"].forEach(function (k) { if ((lesen(k) || null) !== (e[k] || null)) { schreiben(k, e[k] || null); geaendert = true; } });
+    SYNC_SCHLUESSEL.forEach(function (k) { if ((lesen(k) || null) !== (e[k] || null)) { schreiben(k, e[k] || null); geaendert = true; } });
     if (geaendert) { einstellungenLaden(true); themaAnwenden(); einfachAnwenden(); tabsAnwenden(); funktionenAnwenden(funktionenLesen()); toast("Einstellungen vom Konto übernommen", ""); if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true); }
   }
   // Das eigene Bild liegt zusaetzlich auf dem Geraet, damit die Kopfzeile

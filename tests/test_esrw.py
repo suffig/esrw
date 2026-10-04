@@ -640,6 +640,45 @@ def test_funktionstexte():
         pruefe(nr not in quelle, "keine feste Nummer im Titel (%s)" % nr)
 
 
+def test_kalenderwuensche():
+    """Jeder stellt seinen Kalender selbst ein. Die Wuensche liegen im
+    Konto und kommen als JSON-Text an - die App kennt nur Zeichenketten."""
+    print("\nKalenderwuensche")
+    E = esrw_ical_modul()
+    t = {"paarung": "Herforder EV – Krefelder EV", "rolle": "(L)SR", "liga": "U13 RLB",
+         "halle_name": "Eishalle Herford", "korrektur": None,
+         "gespann_roh": [("Menzel, Tim", "SR", "menzel-tim"), ("Hofer, Lena", "SR", "hofer-lena")]}
+
+    pruefe(E.ics_titel(t, E.KALENDER_STANDARD) == "(L)SR · U13 RLB: Herforder EV – Krefelder EV",
+           "Voreinstellung: Rolle und Liga, kein Gespann", E.ics_titel(t, E.KALENDER_STANDARD))
+    mit = dict(E.KALENDER_STANDARD, gespann=True)
+    pruefe(E.ics_titel(t, mit).endswith("· mit Menzel, Hofer"), "mit Gespann stehen die Nachnamen hinten")
+    ohne = dict(E.KALENDER_STANDARD, rolle=False, liga=False, halle=True)
+    pruefe(E.ics_titel(t, ohne) == "Herforder EV – Krefelder EV · Eishalle Herford",
+           "ohne Rolle und Liga, dafuer die Halle", E.ics_titel(t, ohne))
+    abgesagt = dict(t, korrektur={"abgesagt": True})
+    pruefe(E.ics_titel(abgesagt, E.KALENDER_STANDARD).startswith("ABGESAGT · "),
+           "eine Absage steht immer vorne")
+
+    pruefe("Stunde" in E.alarm_text("-PT1H"), "bekannte Vorlaufzeit hat einen Text")
+    pruefe(E.alarm_text("-PT7M") != "", "unbekannte Vorlaufzeit bleibt nicht stumm")
+
+    # Der Weg aus dem Konto: localStorage kennt nur Zeichenketten, also
+    # kommt ein JSON-Text an - frueher fiel der durchs Raster.
+    import json as _json
+    for roh in (_json.dumps({"gespann": True, "alarme": ["-PT2H"]}),
+                {"gespann": True, "alarme": ["-PT2H"]}):
+        art = "Text" if isinstance(roh, str) else "Objekt"
+        if isinstance(roh, str):
+            roh = _json.loads(roh)
+        w = dict(E.KALENDER_STANDARD)
+        for k, v in roh.items():
+            if k in w:
+                w[k] = v
+        pruefe(w["gespann"] is True and w["alarme"] == ["-PT2H"],
+               "Wuensche kommen als %s an" % art)
+
+
 def test_obmann_rechte():
     """Rechte gehoeren zum Konto. Wichtig ist beides: dass sie wirken -
     und dass die Handvoll Dinge, die wirklich dem Betreiber gehoeren,
@@ -863,6 +902,7 @@ def main():
                  test_korrektur_uid, test_gespannwechsel, test_ehemalige,
                  test_besetzung_korrektur, test_csp,
                  test_rechnungsvorlage, test_sicherung, test_erinnerungszeit, test_zurueckspielen, test_obmann_rechte,
+                 test_kalenderwuensche,
                  test_funktionstexte,
                  test_tresor):
         test()

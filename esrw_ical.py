@@ -332,11 +332,27 @@ def falte(zeile):
     return "\r\n ".join(stuecke)
 
 
+def alarm_text(wann):
+    """"-PT1H" -> "In einer Stunde an der Halle". Was nicht erkannt wird,
+    bekommt einen neutralen Text - ein Alarm ohne Text ist schlechter als
+    einer mit."""
+    bekannt = {
+        "-PT30M": "In einer halben Stunde an der Halle",
+        "-PT1H": "In einer Stunde an der Halle",
+        "-PT2H": "In zwei Stunden an der Halle",
+        "-PT3H": "In drei Stunden an der Halle",
+        "-PT12H": "Morgen Spiel",
+        "-P1D": "Morgen Spiel",
+    }
+    return bekannt.get(wann, "Bald an der Halle")
+
+
 def utc(zeitpunkt):
     return zeitpunkt.astimezone(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
 
 
-def baue_ics(termine, kalendername, cfg, stand):
+def baue_ics(termine, kalendername, cfg, stand, einst=None):
+    einst = einst or KALENDER_STANDARD
     zeilen = [
         "BEGIN:VCALENDAR",
         "VERSION:2.0",
@@ -349,7 +365,8 @@ def baue_ics(termine, kalendername, cfg, stand):
         "X-PUBLISHED-TTL:PT1H",
     ]
     for t in termine:
-        titel = ("⚠ " + t["titel"]) if t.get("aenderung") else t["titel"]
+        eigen = ics_titel(t, einst) if t.get("paarung") else t["titel"]
+        titel = ("⚠ " + eigen) if t.get("aenderung") else eigen
         beschreibung = t["beschreibung"]
         if t.get("aenderung"):
             beschreibung = "Geändert: %s\n\n%s" % (t["aenderung"], beschreibung)
@@ -366,7 +383,7 @@ def baue_ics(termine, kalendername, cfg, stand):
             "SEQUENCE:%d" % t.get("sequence", 0),
             "DTSTAMP:" + utc(stempel),
             "LAST-MODIFIED:" + utc(stempel),
-            "DTSTART:" + utc(t["treffpunkt"]),
+            "DTSTART:" + utc(t["anstoss"] if einst.get("beginn") == "anstoss" and t.get("anstoss") else t["treffpunkt"]),
             "DTEND:" + utc(t["ende"]),
             "SUMMARY:" + escape(titel),
             "DESCRIPTION:" + escape(beschreibung),
@@ -389,12 +406,12 @@ def baue_ics(termine, kalendername, cfg, stand):
         # Erinnerungen nur fuer kuenftige Spiele - fuer die Vergangenheit
         # wuerde iOS beim Abonnieren einen Schwall Alarme nachfeuern.
         if not t["vergangen"]:
-            for alarm in cfg["erinnerungen"]:
+            for wann in einst.get("alarme", []):
                 zeilen += [
                     "BEGIN:VALARM",
                     "ACTION:DISPLAY",
-                    "TRIGGER:" + alarm["wann"],
-                    "DESCRIPTION:" + escape("%s - %s" % (alarm["text"], t["titel"])),
+                    "TRIGGER:" + wann,
+                    "DESCRIPTION:" + escape(alarm_text(wann) + " - " + titel),
                     "END:VALARM",
                 ]
         zeilen.append("END:VEVENT")
@@ -733,6 +750,72 @@ def tabelle_laden(cfg, pfad):
     except Exception as e:
         print("  ! Tabelle %s nicht lesbar: %s" % (pfad.split("?")[0], str(e)[:100]), file=sys.stderr)
         return []
+
+
+# Was jeder fuer seinen Kalender eingestellt hat. Die Feeds werden hier
+# gebaut, nicht im Browser - also muss der Workflow die Wuensche kennen.
+# Fehlt etwas oder ist die Tabelle nicht lesbar, gilt die Voreinstellung.
+KALENDER_STANDARD = {
+    "rolle": True,        # "SR · " vor dem Titel
+    "liga": True,         # "U13 RLB: " vor der Paarung
+    "halle": False,       # Halle hinten an den Titel
+    "gespann": False,     # Namen der Kollegen hinten an den Titel
+    "beginn": "treffpunkt",   # oder "anstoss"
+    "alarme": ["-PT1H"],  # Vorlaufzeiten, leer = keine Erinnerung
+}
+
+
+def kalender_einstellungen(cfg):
+    """slug -> Wuensche fuer den eigenen Kalender."""
+    zeilen = tabelle_laden(cfg, "profile?select=slug,einstellungen")
+    heraus = {}
+    for z in zeilen:
+        slug = z.get("slug")
+        if not slug:
+            continue
+        roh = ((z.get("einstellungen") or {}).get("kalender")) or {}
+        # Die App legt alle Einstellungen als Text ab (localStorage kennt
+        # nur Zeichenketten) - hier kommt also ein JSON-String an.
+        if isinstance(roh, str):
+            try:
+                roh = json.loads(roh)
+            except ValueError:
+                continue
+        if not isinstance(roh, dict):
+            continue
+        werte = dict(KALENDER_STANDARD)
+        for k, v in roh.items():
+            if k in werte:
+                werte[k] = v
+        if not isinstance(werte.get("alarme"), list):
+            werte["alarme"] = list(KALENDER_STANDARD["alarme"])
+        # Nur Vorlaufzeiten, die auch nach einer Dauer aussehen
+        werte["alarme"] = [a for a in werte["alarme"][:4]
+                           if isinstance(a, str) and re.match(r"^-?P", a)]
+        heraus[slug] = werte
+    return heraus
+
+
+def ics_titel(t, einst):
+    """Der Titel eines Termins, so wie dieser Kollege ihn haben will."""
+    teile = []
+    if einst.get("rolle") and t.get("rolle"):
+        teile.append(t["rolle"])
+    mitte = t["paarung"]
+    if einst.get("liga") and t.get("liga"):
+        mitte = "%s: %s" % (t["liga"], mitte)
+    teile.append(mitte)
+    if einst.get("halle") and t.get("halle_name"):
+        teile.append(t["halle_name"])
+    if einst.get("gespann") and t.get("gespann_roh"):
+        namen = [n.split(",")[0].strip() for n, _r, _s in t["gespann_roh"]]
+        if namen:
+            teile.append("mit " + ", ".join(namen))
+    titel = " · ".join(x for x in teile if x)
+    k = t.get("korrektur")
+    if k and k.get("abgesagt"):
+        titel = "ABGESAGT · " + titel
+    return titel
 
 
 def korrekturen_laden(cfg):
@@ -1548,10 +1631,12 @@ def main():
             os.remove(os.path.join(feeds, datei))
 
     muster = cfg.get("kalender_name_muster", "Einteilungen – {name}")
+    wuensche = kalender_einstellungen(cfg)
     for p in personen:
         with open(os.path.join(feeds, feed_name(p["slug"], p["slug"])), "w",
                   encoding="utf-8", newline="") as f:
-            f.write(baue_ics(p["termine"], muster.format(name=p["name"]), cfg, stand))
+            f.write(baue_ics(p["termine"], muster.format(name=p["name"]), cfg, stand,
+                             wuensche.get(p["slug"])))
 
     # Gesamtkalender: jedes Spiel einmal, ohne Rollenbezug
     gesamt, gesehen = [], set()

@@ -2012,6 +2012,14 @@
   .staerke-zusatz { display:block; font-size:.78rem; color:var(--dim);
     line-height:1.35; padding:0 0 8px; }
   .zeiten-wert b.aus { color:var(--dim); font-weight:600; }
+
+  /* Runde 62: Kalender-Einstellungen */
+  .kal-vorschau { margin:0 0 10px; padding:9px 11px; border-radius:10px;
+    background:var(--bg); border:1px solid var(--linie);
+    font-size:.84rem; font-weight:600; color:var(--text); overflow-wrap:anywhere; }
+  .kal-alarme { flex-wrap:wrap; }
+  #kalender-einst .listen-kopf { font-size:.74rem; text-transform:uppercase;
+    letter-spacing:.04em; color:var(--dim); font-weight:800; }
 </style>
 </head>
 <body>
@@ -2263,6 +2271,8 @@
       <label>Aussehen <span class="stufen" id="thema-wahl"><button type="button" data-thema="">System</button><button type="button" data-thema="light">Hell</button><button type="button" data-thema="dark">Dunkel</button><button type="button" data-thema="abend">Abends</button></span></label>
       <label>Kompakte Ansicht <input type="checkbox" id="kompakt"></label>
     </div>
+    <h3 class="abschnitt">Kalender<small>Was in deinen Terminen steht und wann der Wecker klingelt</small></h3>
+    <div class="karte einstellungen-liste" id="kalender-einst"></div>
     <h3 class="abschnitt">Unterwegs<small>Route, Abfahrt und dein Ziel für die Saison</small></h3>
     <div class="karte einstellungen-liste">
       <label>Karten-App <select id="karten-app"><option value="auto">automatisch</option><option value="apple">Apple Karten</option><option value="google">Google Maps</option></select></label>
@@ -2470,6 +2480,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=106"></script>
+<script src="app.js?v=107"></script>
 </body>
 </html>
