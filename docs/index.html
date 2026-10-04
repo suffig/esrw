@@ -1997,6 +1997,21 @@
   details.aend-weitere > summary { font-size:.78rem; font-weight:700; color:var(--dim);
     padding:8px 12px; min-height:40px; display:flex; align-items:center; }
   details.aend-weitere .zeile { opacity:.85; }
+
+  /* Runde 60: Antrittsstaerken als Tabelle, wie in den Bestimmungen */
+  .staerke-tabelle { display:flex; flex-direction:column; }
+  .staerke-kopf, .staerke-zeile { display:grid; grid-template-columns:1fr 3rem 3rem;
+    gap:8px; align-items:center; padding:8px 0; border-top:1px solid var(--linie); }
+  .staerke-kopf { border-top:0; font-size:.72rem; text-transform:uppercase;
+    letter-spacing:.04em; color:var(--dim); padding-bottom:4px; }
+  .staerke-kopf span + span, .staerke-zeile b { text-align:center; }
+  .staerke-zeile span { font-size:.9rem; overflow-wrap:anywhere; }
+  .staerke-zeile b { font-size:1.05rem; font-weight:800; }
+  .staerke-zeile.meine { background:var(--akzent-hell); border-radius:9px;
+    padding-left:8px; padding-right:8px; margin:0 -8px; }
+  .staerke-zusatz { display:block; font-size:.78rem; color:var(--dim);
+    line-height:1.35; padding:0 0 8px; }
+  .zeiten-wert b.aus { color:var(--dim); font-weight:600; }
 </style>
 </head>
 <body>
@@ -2455,6 +2470,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=104"></script>
+<script src="app.js?v=105"></script>
 </body>
 </html>

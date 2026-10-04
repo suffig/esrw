@@ -2119,3 +2119,179 @@ grant execute on function public.abo_aktiv() to authenticated;
 --   on conflict (user_id) do update
 --     set saison = excluded.saison, bezahlt_bis = excluded.bezahlt_bis,
 --         betrag = excluded.betrag, quelle = excluded.quelle, geaendert = now();
+
+
+-- ======================================================================
+-- v45: Antrittsstaerken je Saison, Einsatz in niedrigerer Altersklasse
+-- ======================================================================
+-- v43 kannte nur eine Fassung. Die Bestimmungen gelten aber je Saison und
+-- aendern sich (die 1b-Teams brauchen 2027/28 einen Spieler mehr). Also
+-- gehoert die Saison zum Schluessel.
+--
+-- Quelle: Eishockeyverband NRW e.V., Durchfuehrungsbestimmungen
+-- 2026/2027 - Anhang 4 -, Stand 13.05.2026.
+
+-- Die alte Tabelle aus v43 hatte nur "liga" als Schluessel. Steht noch
+-- nichts drin, kann sie einfach neu entstehen; sonst wandert der Inhalt
+-- in die laufende Saison.
+do $$
+begin
+  if exists (select 1 from information_schema.columns
+              where table_schema = 'public' and table_name = 'antrittsstaerken'
+                and column_name = 'liga')
+     and not exists (select 1 from information_schema.columns
+              where table_schema = 'public' and table_name = 'antrittsstaerken'
+                and column_name = 'saison') then
+    alter table public.antrittsstaerken add column saison text not null default '2026/27';
+    alter table public.antrittsstaerken drop constraint if exists antrittsstaerken_pkey;
+    alter table public.antrittsstaerken add primary key (saison, liga);
+  end if;
+end $$;
+
+create table if not exists public.antrittsstaerken (
+  saison        text not null,
+  liga          text not null,
+  gruppe        text,
+  feldspieler   text,
+  torwart       text,
+  wartezeit     text,
+  folge         text,
+  hinweis       text,
+  quelle        text,
+  reihenfolge   int  not null default 100,
+  geaendert     timestamptz not null default now(),
+  primary key (saison, liga)
+);
+alter table public.antrittsstaerken enable row level security;
+drop policy if exists "Antrittsstaerken lesen"  on public.antrittsstaerken;
+drop policy if exists "Admin pflegt Staerken"   on public.antrittsstaerken;
+create policy "Antrittsstaerken lesen" on public.antrittsstaerken for select to authenticated using (true);
+create policy "Admin pflegt Staerken"  on public.antrittsstaerken for all    to authenticated
+  using (public.darf_recht('stammdaten')) with check (public.darf_recht('stammdaten'));
+
+-- Startfassung. "do nothing" statt "do update": was der Betreiber selbst
+-- geaendert hat, bleibt stehen, auch wenn diese Datei neu laeuft.
+insert into public.antrittsstaerken (saison, liga, gruppe, feldspieler, torwart, reihenfolge) values
+  ('2026/27', 'U20', 'Nachwuchs', '10 Feldspieler', '1', 10),
+  ('2026/27', 'U17', 'Nachwuchs', '10 Feldspieler', '1', 20),
+  ('2026/27', 'U15 Regionalliga A', 'Nachwuchs', '9 Feldspieler', '1', 30),
+  ('2026/27', 'U15 Regionalliga B', 'Nachwuchs', '13 Feldspieler', '2', 40),
+  ('2026/27', 'U15 Regionalliga B (1b Teams)', 'Nachwuchs', '11 Feldspieler', '2', 50),
+  ('2026/27', 'U15 Landesliga', 'Nachwuchs', '10 Feldspieler', '2', 60),
+  ('2026/27', 'U15 Bezirksliga', 'Nachwuchs', '10 Feldspieler', '1', 70),
+  ('2026/27', 'U13 Regionalliga A', 'Nachwuchs', '9 Feldspieler', '1', 80),
+  ('2026/27', 'U13 Regionalliga B', 'Nachwuchs', '13 Feldspieler', '2', 90),
+  ('2026/27', 'U13 Regionalliga B (1b Teams)', 'Nachwuchs', '11 Feldspieler', '2', 100),
+  ('2026/27', 'U13 Landesliga', 'Nachwuchs', '10 Feldspieler', '2', 110),
+  ('2026/27', 'U13 Bezirksliga', 'Nachwuchs', '10 Feldspieler', '1', 120),
+  ('2027/28', 'U20', 'Nachwuchs', '10 Feldspieler', '1', 10),
+  ('2027/28', 'U17', 'Nachwuchs', '10 Feldspieler', '1', 20),
+  ('2027/28', 'U15 Regionalliga A', 'Nachwuchs', '9 Feldspieler', '1', 30),
+  ('2027/28', 'U15 Regionalliga B', 'Nachwuchs', '13 Feldspieler', '2', 40),
+  ('2027/28', 'U15 Regionalliga B (1b Teams)', 'Nachwuchs', '12 Feldspieler', '2', 50),
+  ('2027/28', 'U15 Landesliga', 'Nachwuchs', '10 Feldspieler', '2', 60),
+  ('2027/28', 'U15 Bezirksliga', 'Nachwuchs', '10 Feldspieler', '1', 70),
+  ('2027/28', 'U13 Regionalliga A', 'Nachwuchs', '9 Feldspieler', '1', 80),
+  ('2027/28', 'U13 Regionalliga B', 'Nachwuchs', '13 Feldspieler', '2', 90),
+  ('2027/28', 'U13 Regionalliga B (1b Teams)', 'Nachwuchs', '12 Feldspieler', '2', 100),
+  ('2027/28', 'U13 Landesliga', 'Nachwuchs', '10 Feldspieler', '2', 110),
+  ('2027/28', 'U13 Bezirksliga', 'Nachwuchs', '10 Feldspieler', '1', 120)
+on conflict (saison, liga) do nothing;
+
+update public.antrittsstaerken
+   set quelle = 'DFBest. 2026/2027 - Anhang 4 - v1.00, Stand 13.05.2026'
+ where quelle is null;
+
+-- ---- Einsatz in der naechst niedrigeren Altersklasse
+-- Art. 51 Ziff. 8 SpO in der Fassung der Durchfuehrungsbestimmungen:
+-- welcher Jahrgang darf eine Klasse tiefer spielen.
+create table if not exists public.einsatz_klassen (
+  was           text primary key,          -- "U15 in U13"
+  saison_a      text,                      -- was in 2026/27 gilt
+  saison_b      text,                      -- was in 2027/28 gilt
+  hinweis       text,
+  reihenfolge   int  not null default 100,
+  geaendert     timestamptz not null default now()
+);
+alter table public.einsatz_klassen enable row level security;
+drop policy if exists "Einsatzklassen lesen" on public.einsatz_klassen;
+drop policy if exists "Admin pflegt Einsatz" on public.einsatz_klassen;
+create policy "Einsatzklassen lesen" on public.einsatz_klassen for select to authenticated using (true);
+create policy "Admin pflegt Einsatz" on public.einsatz_klassen for all    to authenticated
+  using (public.darf_recht('stammdaten')) with check (public.darf_recht('stammdaten'));
+
+insert into public.einsatz_klassen (was, saison_a, saison_b, reihenfolge) values
+  ('U9 in U7', null, null, 10),
+  ('U11 in U9', null, null, 20),
+  ('U13 in U11', null, null, 30),
+  ('U15 in U13', 'Junger Jahrgang', null, 40),
+  ('U17 in U15', 'Junger/ alter Jahrgang', 'Junger/ alter Jahrgang', 50),
+  ('U20 in U17', 'Junger/ mittlerer Jahrgang', 'Junger/ mittlerer Jahrgang', 60),
+  ('Frauen in U20', '1./ 2. Senioren-Jahrgang', '1./ 2. Senioren-Jahrgang', 70)
+on conflict (was) do nothing;
+
+
+-- ======================================================================
+-- v46: Der Schalter fuer das Abo - steht auf aus
+-- ======================================================================
+-- Ist er an, kommt ohne bezahltes Abo niemand mehr an die Daten: die
+-- Pruefung haengt in ist_freigeschaltet(), und daran haengt praktisch
+-- alles - Tresor, Archiv, Abrechnung, Kontakte, Tauschboerse.
+--
+-- ACHTUNG beim Einschalten: wer dann nicht in der Tabelle "abo" steht,
+-- ist sofort draussen. Erst eintragen, dann schalten. Der Betreiber
+-- (admin) kommt immer durch, sonst koennte man sich selbst aussperren.
+create table if not exists public.abo_einstellungen (
+  id              int primary key default 1,
+  aktiv           boolean not null default false,
+  saison          text,
+  preis           numeric(8,2),
+  schonfrist_tage int not null default 21,
+  hinweis         text,
+  geaendert       timestamptz not null default now(),
+  constraint abo_einstellungen_eine_zeile check (id = 1)
+);
+insert into public.abo_einstellungen (id) values (1) on conflict (id) do nothing;
+alter table public.abo_einstellungen enable row level security;
+-- Lesen duerfen alle Angemeldeten (die App muss wissen, ob sie sperrt
+-- und was es kostet), schalten nur der Betreiber.
+drop policy if exists "Abo-Einstellungen lesen"  on public.abo_einstellungen;
+drop policy if exists "Abo-Einstellungen setzen" on public.abo_einstellungen;
+create policy "Abo-Einstellungen lesen"  on public.abo_einstellungen for select to authenticated using (true);
+create policy "Abo-Einstellungen setzen" on public.abo_einstellungen for all    to authenticated
+  using (public.ist_admin()) with check (public.ist_admin());
+
+create or replace function public.abo_pflicht()
+returns boolean language sql stable security definer set search_path = public as $$
+  select coalesce((select aktiv from public.abo_einstellungen where id = 1), false);
+$$;
+revoke all on function public.abo_pflicht() from public;
+grant execute on function public.abo_pflicht() to authenticated;
+
+-- Bezahlt - mit Schonfrist. Die Schonfrist steht in den Einstellungen,
+-- damit nicht mitten in der Saison jemand auf der Strasse steht, weil
+-- eine Ueberweisung drei Tage braucht.
+create or replace function public.abo_aktiv()
+returns boolean language sql stable security definer set search_path = public as $$
+  select coalesce((select admin from public.profile where id = auth.uid()), false)
+      or coalesce((
+           select a.bezahlt_bis + coalesce(
+                    (select schonfrist_tage from public.abo_einstellungen where id = 1), 21)
+                  >= current_date
+             from public.abo a where a.user_id = auth.uid()), false);
+$$;
+
+-- Hier wird es scharf: solange abo_pflicht() aus ist, aendert sich nichts.
+create or replace function public.ist_freigeschaltet()
+returns boolean language sql stable security definer set search_path = public as $$
+  select coalesce((select freigeschaltet or admin from public.profile where id = auth.uid()), false)
+     and (not public.abo_pflicht() or public.abo_aktiv());
+$$;
+
+-- Zum Ein- und Ausschalten (geht auch in der App unter Admin -> Abo):
+--   update public.abo_einstellungen set aktiv = true, geaendert = now() where id = 1;
+-- Zum Nachsehen, wer dann draussen waere:
+--   select p.name, a.bezahlt_bis
+--     from public.profile p left join public.abo a on a.user_id = p.id
+--    where p.freigeschaltet and not p.admin
+--      and (a.bezahlt_bis is null or a.bezahlt_bis < current_date);

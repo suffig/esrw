@@ -776,7 +776,9 @@ window.Mitglieder = (function () {
     angezeigt = "bereich";
     leeren(wurzel);
     wurzel.appendChild(skelett(3));
-    return ladeProfil()
+    // Vor allem anderen: zahlt dieses Konto? Davon haengt ab, ob es
+    // ueberhaupt etwas zu sehen gibt.
+    return aboLaden().catch(function () { return null; }).then(function () { return ladeProfil(); })
       .then(function () {
         // Bei der Registrierung gewaehlter Name: einmal ins Profil schreiben
         var wunsch = ctx.lesen ? ctx.lesen("wunsch-slug") : null;
@@ -906,6 +908,12 @@ window.Mitglieder = (function () {
     }
     if ((name === "tausch" || name === "frei" || name === "info" || name === "kollegen") && !frei()) {
       inhalt.appendChild(h("p", { class: "leer", text: "Erst nach der Freischaltung durch den Betreiber." }));
+      return;
+    }
+    // Greift die Abo-Pflicht, liefert die Datenbank schlicht nichts mehr -
+    // ohne Erklaerung saehe das nach einem Fehler aus.
+    if (name !== "konto" && aboStand && aboStand.pflicht && !aboStand.bezahlt && !(profil && profil.admin)) {
+      aboSperre();
       return;
     }
     if (name !== "abrechnung") { auswahlModus = false; auswahl = {}; var al = document.querySelector(".mg-auswahlleiste"); if (al) al.remove(); }
@@ -3916,6 +3924,7 @@ window.Mitglieder = (function () {
       var liste = h("div", { class: "status-liste", style: "padding:0" });
       zeilen.forEach(function (z) { liste.appendChild(h("div", {}, [h("span", { text: z[0] }), h("span", { text: z[1] })])); });
       box.appendChild(liste);
+      box.appendChild(aboZeile());
       if (fn("abrechnung")) box.appendChild(h("button", { type: "button", class: "textknopf", style: "margin-top:8px",
         text: "Hinweis zur Abrechnung nachlesen", onclick: function () { zeigeReiter("abrechnung"); setTimeout(function () { abrechnungTor(true); }, 0); } }));
     }
@@ -5592,6 +5601,86 @@ window.Mitglieder = (function () {
     });
   }
 
+  // ---- Abo
+  //
+  // Solange der Schalter aus ist, aendert sich nichts - die App zeigt dann
+  // auch nichts davon. Ist er an, kommt ohne bezahltes Abo niemand mehr
+  // an die Daten; das entscheidet aber die Datenbank (Schema v46), nicht
+  // diese Datei. Hier steht nur, was man dazu sieht.
+  var aboStand = null;
+  function aboLaden() {
+    if (aboStand) return Promise.resolve(aboStand);
+    if (!session) return Promise.resolve({ pflicht: false });
+    return Promise.all([
+      sb.from("abo_einstellungen").select("*").eq("id", 1).maybeSingle()
+        .then(function (r) { return (r && r.data) || null; }).catch(function () { return null; }),
+      sb.from("abo").select("*").eq("user_id", session.user.id).maybeSingle()
+        .then(function (r) { return (r && r.data) || null; }).catch(function () { return null; })
+    ]).then(function (b) {
+      var e = b[0] || {}, a = b[1];
+      var schon = e.schonfrist_tage == null ? 21 : e.schonfrist_tage;
+      var bis = a && a.bezahlt_bis ? new Date(a.bezahlt_bis + "T23:59:59") : null;
+      var ende = bis ? new Date(bis.getTime() + schon * 86400000) : null;
+      aboStand = {
+        pflicht: !!e.aktiv, saison: e.saison || null, preis: e.preis, schonfrist: schon,
+        hinweis: e.hinweis || null, eintrag: a,
+        bezahltBis: bis, gueltigBis: ende,
+        bezahlt: !!(ende && ende >= new Date()),
+        inSchonfrist: !!(bis && ende && bis < new Date() && ende >= new Date())
+      };
+      return aboStand;
+    });
+  }
+
+  // Was man sieht, wenn die Abo-Pflicht greift und nichts bezahlt ist.
+  function aboSperre() {
+    var st = aboStand || {};
+    var box = h("div", { class: "melde karte" });
+    box.appendChild(h("h4", {}, [ikone("i-lock"), " Beitrag für diese Saison"]));
+    box.appendChild(h("p", { style: "margin:0 0 10px", text:
+      st.bezahltBis
+        ? "Dein Beitrag lief am " + st.bezahltBis.toLocaleDateString("de-DE") + " ab. Solange er offen ist, "
+          + "bleiben Einteilungen, Abrechnung und alles Weitere zu."
+        : "Für die Saison " + (st.saison || "") + " ist noch kein Beitrag hinterlegt. Solange er offen ist, "
+          + "bleiben Einteilungen, Abrechnung und alles Weitere zu." }));
+    if (st.preis != null) box.appendChild(h("p", { class: "meta", style: "margin:0 0 10px",
+      text: "Beitrag: " + euro(st.preis) + " je Saison." + (st.hinweis ? " " + st.hinweis : "") }));
+    box.appendChild(h("p", { class: "meta", style: "margin:0 0 10px", text:
+      "Bezahlt wird noch nicht in der App - melde dich beim Betreiber, er trägt es ein." }));
+    box.appendChild(h("button", { type: "button", class: "mg-neben", style: "width:100%",
+      text: "Zu deinem Konto", onclick: function () { zeigeReiter("konto"); } }));
+    inhalt.appendChild(box);
+  }
+
+  // Die Zeile fuers Profil: wie steht es um die laufende Saison?
+  function aboZeile() {
+    var box = h("div", { class: "abo-stand" });
+    aboLaden().then(function (st) {
+      if (!box.isConnected) return;
+      leeren(box);
+      if (!st.pflicht && !st.eintrag) return;      // nichts aktiv, nichts zu sagen
+      var saison = st.saison || (ctx.daten && ctx.daten.saison) || "";
+      var lage, farbe;
+      if (profil && profil.admin) { lage = "Als Betreiber immer freigeschaltet."; farbe = "gut"; }
+      else if (st.bezahlt && !st.inSchonfrist) { lage = "Bezahlt bis " + st.bezahltBis.toLocaleDateString("de-DE") + "."; farbe = "gut"; }
+      else if (st.inSchonfrist) { lage = "Abgelaufen am " + st.bezahltBis.toLocaleDateString("de-DE")
+        + ", noch bis " + st.gueltigBis.toLocaleDateString("de-DE") + " nutzbar."; farbe = "warn"; }
+      else if (st.pflicht) { lage = "Für diese Saison nicht bezahlt."; farbe = "warn"; }
+      else { lage = "Noch nichts hinterlegt."; farbe = ""; }
+      box.appendChild(h("div", { class: "status-liste", style: "padding:0" }, [
+        h("div", {}, [h("span", { text: "Saison " + saison }),
+          h("span", { class: farbe === "gut" ? "an" : farbe === "warn" ? "aus" : "meta", text: lage })])]));
+      if (st.pflicht && st.preis != null) {
+        box.appendChild(h("p", { class: "meta", style: "margin:4px 0 0", text:
+          "Beitrag: " + euro(st.preis) + " je Saison." + (st.hinweis ? " " + st.hinweis : "") }));
+      } else if (!st.pflicht) {
+        box.appendChild(h("p", { class: "meta", style: "margin:4px 0 0", text:
+          "Die App ist zurzeit für alle frei - der Eintrag ist nur vorgemerkt." }));
+      }
+    });
+    return box;
+  }
+
   // Admin -> Abo: Vorbereitung, nichts weiter. Die App sperrt damit noch
   // nichts; hier steht nur, bis wann ein Konto bezahlt hat. Erst wenn ein
   // Zahlungsanbieter dranhaengt und die rechtlichen Sachen stehen, wird
@@ -5600,17 +5689,13 @@ window.Mitglieder = (function () {
     function neu() { leeren(box); aboRendern(box); }
     leeren(box);
     box.appendChild(h("h4", {}, [ikone("i-euro"), " Abo"]));
-    box.appendChild(h("div", { class: "hinweis warn", style: "margin:0 0 10px" }, [
-      h("span", {}, [h("b", { text: "Noch nichts aktiv." }),
-        h("small", { style: "display:block", text: "Die App sperrt nichts, niemand zahlt etwas. Hier lässt sich nur "
-          + "festhalten, bis wann ein Konto bezahlt hätte - zum Ausprobieren und für den Tag, an dem es losgeht." })])]));
-
     var innen = h("div", {}, [skelett(1)]);
     box.appendChild(innen);
 
     Promise.all([
       speichern(sb.from("profile").select("id,name,slug,email,freigeschaltet,admin").order("name")),
-      speichern(sb.from("abo").select("*"))
+      speichern(sb.from("abo").select("*")),
+      speichern(sb.from("abo_einstellungen").select("*").eq("id", 1).maybeSingle())
     ]).then(function (rr) {
       if (!box.isConnected) return;
       leeren(innen);
@@ -5620,11 +5705,58 @@ window.Mitglieder = (function () {
       }
       var konten = (rr[0] && rr[0].data) || [];
       var abos = {}; ((rr[1] && rr[1].data) || []).forEach(function (a) { abos[a.user_id] = a; });
+      var ein = (rr[2] && rr[2].data) || { aktiv: false, schonfrist_tage: 21 };
       var heute = new Date().toISOString().slice(0, 10);
       var zahlend = Object.keys(abos).filter(function (k) { return abos[k].bezahlt_bis >= heute; }).length;
+      var offen = konten.filter(function (p) { return p.freigeschaltet && !p.admin && !(abos[p.id] && abos[p.id].bezahlt_bis >= heute); });
+
+      // ---- Der Schalter. Wer ihn umlegt, sperrt alle ohne Eintrag aus -
+      //      das steht hier so deutlich wie moeglich.
+      var schalter = h("input", { type: "checkbox" }); schalter.checked = !!ein.aktiv;
+      schalter.addEventListener("change", function () {
+        if (schalter.checked && offen.length
+          && !confirm(offen.length + " freigeschaltete Konten haben kein bezahltes Abo.\n\n"
+            + "Wenn du jetzt einschaltest, kommen sie nicht mehr an Einteilungen, Abrechnung, "
+            + "Kontakte und alles Weitere - nur noch du.\n\nWirklich einschalten?")) {
+          schalter.checked = false; return;
+        }
+        speichern(sb.from("abo_einstellungen").upsert({ id: 1, aktiv: schalter.checked,
+          geaendert: new Date().toISOString() })).then(function (r2) {
+          if (r2 && r2.error) { schalter.checked = !schalter.checked; meldung(fehlerText(r2.error) + ", schema.sql (v46) ausführen.", "warn"); return; }
+          aboStand = null;
+          kurzMeldung(schalter.checked ? "Abo-Pflicht ist an." : "Abo-Pflicht ist aus, die App ist wieder für alle offen.", schalter.checked ? "warn" : "gut");
+          neu();
+        });
+      });
+      innen.appendChild(h("div", { class: "hinweis " + (ein.aktiv ? "warn" : "") }, [
+        h("span", {}, [
+          h("b", { text: ein.aktiv ? "Abo-Pflicht ist an." : "Abo-Pflicht ist aus." }),
+          h("small", { style: "display:block", text: ein.aktiv
+            ? "Ohne bezahltes Abo kommt niemand mehr an die Daten. Du als Betreiber immer."
+            : "Die App ist für alle Freigeschalteten offen. Hier lässt sich schon eintragen, wer bezahlt hat - es wirkt nur noch nicht." })])]));
+      innen.appendChild(h("label", { class: "mg-check", style: "margin:8px 0" }, [schalter, " Abo-Pflicht einschalten"]));
+
+      // ---- Saison, Preis, Schonfrist
+      var fSaison = h("input", { type: "text", value: ein.saison || (ctx.daten && ctx.daten.saison) || "", placeholder: "Saison" });
+      var fPreis = h("input", { type: "number", step: "0.5", min: "0", value: ein.preis != null ? ein.preis : "", placeholder: "€" });
+      var fFrist = h("input", { type: "number", min: "0", max: "120", value: ein.schonfrist_tage != null ? ein.schonfrist_tage : 21 });
+      innen.appendChild(h("div", { class: "mg-regel-neu" }, [fSaison, fPreis, fFrist,
+        h("button", { type: "button", class: "anfrage", text: "Merken", onclick: function () {
+          speichern(sb.from("abo_einstellungen").upsert({ id: 1, saison: fSaison.value.trim() || null,
+            preis: fPreis.value === "" ? null : parseFloat(fPreis.value),
+            schonfrist_tage: parseInt(fFrist.value, 10) || 0, geaendert: new Date().toISOString() }))
+            .then(function (r2) {
+              if (r2 && r2.error) { meldung(fehlerText(r2.error), "warn"); return; }
+              aboStand = null; kurzMeldung("Gemerkt ✓", "gut"); neu();
+            });
+        } })]));
+      innen.appendChild(h("p", { class: "meta", style: "margin:2px 0 10px", text:
+        "Saison · Beitrag je Saison · Schonfrist in Tagen (so lange geht es nach Ablauf noch weiter)." }));
+
       innen.appendChild(h("p", { class: "meta", style: "margin:0 0 8px", text:
         zahlend + " von " + konten.filter(function (p) { return p.freigeschaltet && !p.admin; }).length
-        + " freigeschalteten Konten stünden gerade auf bezahlt." }));
+        + " freigeschalteten Konten stehen auf bezahlt"
+        + (offen.length ? " · " + offen.length + (offen.length === 1 ? " wäre draußen" : " wären draußen") : "") + "." }));
 
       konten.filter(function (p) { return !p.admin; }).forEach(function (p) {
         var a = abos[p.id] || {};
@@ -5652,9 +5784,8 @@ window.Mitglieder = (function () {
       });
 
       innen.appendChild(h("p", { class: "meta mg-fuss", style: "margin-top:10px", text:
-        "Was noch fehlt, bevor daraus ein Abo wird: Impressum und AGB, Widerrufsbelehrung, "
-        + "ein Zahlungsanbieter mit Auftragsverarbeitungsvertrag, und eine Entscheidung, was passiert, "
-        + "wenn jemand nicht verlängert. Nachzulesen in der ANLEITUNG." }));
+        "Bezahlt wird noch nirgends - die Einträge setzt du von Hand. Was fehlt, bevor daraus ein echtes Abo wird "
+        + "(Impressum, AGB, Widerruf, Zahlungsanbieter, Webhook), steht in der ANLEITUNG." }));
     });
   }
 
@@ -5670,8 +5801,8 @@ window.Mitglieder = (function () {
       + "wenn es nicht reicht. Quelle sind die Bestimmungen „Nachwuchs“ des EHV NRW. "
       + "Alle angemeldeten Kollegen sehen es unter Regeln, leere Felder tauchen nicht auf." }));
 
-    var felder = [["liga", "Liga oder Altersklasse (eindeutig)"], ["gruppe", "Gruppe, etwa Nachwuchs"],
-                  ["feldspieler", "Mindestzahl Spieler"], ["torwart", "Torwart"],
+    var felder = [["saison", "Saison, etwa 2026/27"], ["liga", "Liga oder Altersklasse"], ["gruppe", "Gruppe, etwa Nachwuchs"],
+                  ["feldspieler", "Anzahl Feldspieler"], ["torwart", "Anzahl Torhüter"],
                   ["wartezeit", "Wartezeit"], ["folge", "Wenn es nicht reicht"],
                   ["hinweis", "Hinweis"], ["quelle", "Fundstelle"]];
 
@@ -5686,10 +5817,12 @@ window.Mitglieder = (function () {
       kasten.appendChild(h("button", { type: "button", class: "anfrage", text: "Speichern", onclick: function () {
         var werte = { reihenfolge: (zeile && zeile.reihenfolge) || 100, geaendert: new Date().toISOString() };
         felder.forEach(function (f) { werte[f[0]] = ein[f[0]].value.trim() || null; });
-        if (!werte.liga) { meldung("Die Liga braucht einen Namen.", "warn"); return; }
-        speichern(sb.from("antrittsstaerken").upsert(werte, { onConflict: "liga" })).then(function (r) {
-          if (r && r.error) { meldung(fehlerText(r.error) + (/antrittsstaerken/.test(r.error.message || "") ? ", schema.sql (v43) ausführen." : ""), "warn"); return null; }
-          if (zeile && zeile.liga && zeile.liga !== werte.liga) return speichern(sb.from("antrittsstaerken").delete().eq("liga", zeile.liga));
+        if (!werte.liga || !werte.saison) { meldung("Saison und Liga sind Pflicht.", "warn"); return; }
+        speichern(sb.from("antrittsstaerken").upsert(werte, { onConflict: "saison,liga" })).then(function (r) {
+          if (r && r.error) { meldung(fehlerText(r.error) + (/antrittsstaerken|saison/.test(r.error.message || "") ? ", schema.sql (v45) ausführen." : ""), "warn"); return null; }
+          if (zeile && zeile.liga && (zeile.liga !== werte.liga || zeile.saison !== werte.saison)) {
+            return speichern(sb.from("antrittsstaerken").delete().eq("liga", zeile.liga).eq("saison", zeile.saison));
+          }
           return true;
         }).then(function (ok) { if (ok) { kurzMeldung("Gespeichert ✓", "gut"); if (fertig) fertig(); } });
       } }));
@@ -5701,37 +5834,47 @@ window.Mitglieder = (function () {
 
     var innen = h("div", {}, [skelett(1)]);
     box.appendChild(innen);
-    speichern(sb.from("antrittsstaerken").select("*").order("reihenfolge").order("liga")).then(function (r) {
+    speichern(sb.from("antrittsstaerken").select("*").order("saison", { ascending: false }).order("reihenfolge").order("liga")).then(function (r) {
       if (!box.isConnected) return;
       leeren(innen);
       if (r && r.error) {
-        innen.appendChild(h("p", { class: "achtung", text: "Tabelle antrittsstaerken fehlt, schema.sql (v43) ausführen. " + fehlerText(r.error) }));
+        innen.appendChild(h("p", { class: "achtung", text: "Tabelle antrittsstaerken fehlt, schema.sql (v45) ausführen. " + fehlerText(r.error) }));
         return;
       }
       var liste = (r && r.data) || [];
-      if (!liste.length) { innen.appendChild(h("p", { class: "leer", text: "Noch nichts eingetragen." })); return; }
+      if (!liste.length) { innen.appendChild(h("p", { class: "leer", text: "Noch nichts eingetragen. Die Startfassung kommt mit schema.sql (v45)." })); return; }
+      var saison = null;
       liste.forEach(function (z) {
+        if (z.saison !== saison) {
+          saison = z.saison;
+          innen.appendChild(h("p", { class: "listen-kopf", style: "margin:12px 0 2px", text: "Saison " + (saison || "ohne") }));
+        }
         var det = h("details", { class: "tausch", style: "margin-top:6px" }, [h("summary", {}, [h("span", {}, [
           h("b", { text: z.liga }),
-          h("small", { style: "display:block;color:var(--dim)", text: [z.gruppe, z.feldspieler].filter(Boolean).join(" · ") || "ohne Angaben" })])])]);
+          h("small", { style: "display:block;color:var(--dim)", text: [z.feldspieler, z.torwart ? z.torwart + " Torhüter" : ""].filter(Boolean).join(" · ") || "ohne Angaben" })])])]);
         det.appendChild(formular(z, neu));
         det.appendChild(h("p", { class: "meta", style: "margin:6px 0 0" }, [
           h("button", { type: "button", class: "textknopf", text: "Eintrag löschen", onclick: function () {
-            if (!confirm(z.liga + " löschen?")) return;
-            speichern(sb.from("antrittsstaerken").delete().eq("liga", z.liga)).then(function () { kurzMeldung("Gelöscht.", ""); neu(); });
+            if (!confirm(z.saison + " · " + z.liga + " löschen?")) return;
+            speichern(sb.from("antrittsstaerken").delete().eq("liga", z.liga).eq("saison", z.saison)).then(function () { kurzMeldung("Gelöscht.", ""); neu(); });
           } })]));
         innen.appendChild(det);
       });
     });
   }
 
-  // Fuer die Regelseite in app.js
+  // Fuer die Regelseite in app.js: Antrittsstaerken je Saison und die
+  // Regel, welcher Jahrgang eine Klasse tiefer spielen darf.
   function antrittsstaerken() {
     return bereit().then(function (st) {
-      if (!st.eingerichtet || !session) return [];
-      return sb.from("antrittsstaerken").select("*").order("reihenfolge").order("liga")
-        .then(function (r) { return (r && r.data) || []; });
-    }).catch(function () { return []; });
+      if (!st.eingerichtet || !session) return { staerken: [], einsatz: [] };
+      return Promise.all([
+        sb.from("antrittsstaerken").select("*").order("saison", { ascending: false }).order("reihenfolge").order("liga")
+          .then(function (r) { return (r && r.data) || []; }).catch(function () { return []; }),
+        sb.from("einsatz_klassen").select("*").order("reihenfolge")
+          .then(function (r) { return (r && r.data) || []; }).catch(function () { return []; })
+      ]).then(function (b) { return { staerken: b[0], einsatz: b[1] }; });
+    }).catch(function () { return { staerken: [], einsatz: [] }; });
   }
 
   // Admin -> Funktionen: Schalter je Funktion, Tabelle "funktionen"

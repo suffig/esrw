@@ -3009,6 +3009,98 @@ zum Abarbeiten, keine Rechtsberatung):
   vorher per Push, sonst steht jemand mitten in der Saison ohne
   Abrechnung da.
 
+### 10.6bz Antrittsstärken: die Zahlen sind drin (Schema v45)
+
+Die Tabellen aus den Durchführungsbestimmungen 2026/2027 (Anhang 4,
+Stand 13.05.2026) stehen jetzt im Schema und kommen beim Einspielen mit -
+**beide Saisons**, denn die 1b-Teams brauchen 2027/28 einen Spieler mehr
+(11 → 12). Deshalb gehört die Saison zum Schlüssel; v43 kannte nur eine
+Fassung.
+
+Unter **Regeln → Antrittsstärke** steht es als Tabelle wie im Original:
+Altersklasse, Feld, Tor. Die laufende Saison ist offen, die nächste
+darunter zum Aufklappen, und die Liga deines nächsten Spiels ist
+hervorgehoben.
+
+Darunter die zweite Tabelle: **Einsatz in der nächst niedrigeren Klasse**
+(Art. 51 Ziff. 8 SpO in der Fassung der Bestimmungen) - welcher Jahrgang
+eine Klasse tiefer spielen darf, je Saison. Wo nichts erlaubt ist, steht
+„nicht möglich".
+
+Ändern geht unter **Admin → Antrittsstärken**. Das `insert` im Schema ist
+`on conflict do nothing`: was du selbst geändert hast, bleibt stehen,
+auch wenn die Datei noch einmal läuft.
+
+### 10.6ca Abo: der Schalter ist da, er steht auf aus (Schema v46)
+
+**Was passiert, wenn er an ist:** ohne bezahltes Abo kommt niemand mehr
+an die Daten. Die Prüfung hängt in `ist_freigeschaltet()`, und daran
+hängt praktisch alles - Tresor, Einteilungen, Archiv, Abrechnung,
+Kontakte, Tauschbörse. Also nicht nur ein Bereich, sondern die ganze App.
+Der Betreiber kommt immer durch, sonst könntest du dich selbst
+aussperren.
+
+**Einschalten unter Admin → Abo.** Dort stehen auch Saison, Beitrag und
+eine **Schonfrist** in Tagen (Standard 21): so lange geht es nach Ablauf
+noch weiter, damit niemand mitten in der Saison auf der Strasse steht,
+weil eine Überweisung drei Tage braucht. Vor dem Einschalten zählt die
+App, wie viele freigeschaltete Konten **kein** bezahltes Abo haben, und
+fragt noch einmal nach - die wären sofort draussen.
+
+**Im Profil** (Konto → Dein Konto) steht für jeden, wie er für die Saison
+dasteht: „Bezahlt bis 30.06.2027", „Abgelaufen am …, noch bis … nutzbar"
+oder „Für diese Saison nicht bezahlt". Solange der Schalter aus ist,
+steht dort „Die App ist zurzeit für alle frei".
+
+Wen es trifft, sieht keine leeren Listen, sondern eine Karte **„Beitrag
+für diese Saison"** mit dem Betrag und dem Hinweis, sich beim Betreiber
+zu melden.
+
+### 10.6cb Was eine Supabase Edge Function ist
+
+Die App ist eine statische Seite auf GitHub Pages: nur Dateien, kein
+Server. Sie kann **niemandem zuhören**. Ein Zahlungsanbieter muss aber
+irgendwo anrufen können, wenn jemand bezahlt hat (ein „Webhook") - und
+dieser Anruf darf nicht aus dem Browser kommen, sonst schaltet sich jeder
+selbst frei.
+
+Eine **Edge Function** ist genau dieser kleine Zuhörer: ein Stück
+TypeScript, das bei Supabase liegt und unter einer eigenen Adresse
+erreichbar ist (`https://<projekt>.supabase.co/functions/v1/abo-webhook`).
+Sie läuft nur, wenn jemand sie aufruft, und hat Zugriff auf den
+`service_role`-Schlüssel - den, der alle Zugriffsregeln umgeht. Deshalb
+muss sie als Erstes prüfen, dass der Anruf wirklich vom Anbieter kommt.
+
+So liefe es ab:
+
+1. Der Kollege tippt in der App auf „Beitrag bezahlen".
+2. Die App schickt ihn zur Bezahlseite des Anbieters. Dort gibt er seine
+   Daten ein - **nicht bei uns**, Zahlungsdaten gehören nie in diese
+   Datenbank.
+3. Nach der Zahlung ruft der Anbieter die Funktion auf.
+4. Sie prüft die Unterschrift, sucht das Konto (über eine ID, die beim
+   Start der Zahlung mitgegeben wurde - nie über die E-Mail, die kann
+   sich ändern) und trägt in `abo` ein, bis wann bezahlt ist.
+5. Beim nächsten Laden sieht die App den neuen Stand.
+
+Das Gerüst liegt fertig kommentiert in
+`supabase/functions/abo-webhook/index.ts` - **nicht in Betrieb**, es ist
+nirgends hochgeladen. Einrichten später so:
+
+```bash
+npm install -g supabase
+supabase login
+supabase link --project-ref <deine-projekt-id>
+supabase secrets set ZAHLUNG_SIGNATUR=<Webhook-Secret des Anbieters>
+supabase functions deploy abo-webhook --no-verify-jwt
+```
+
+`--no-verify-jwt` muss sein: der Anbieter hat kein Supabase-Konto, die
+Prüfung übernimmt die Unterschrift. `SUPABASE_URL` und
+`SUPABASE_SERVICE_ROLE_KEY` stellt Supabase von selbst bereit. Kostenlos
+sind im Free Plan 500.000 Aufrufe im Monat - bei ein paar Dutzend
+Zahlungen im Jahr also nichts.
+
 ### 10.7 Freischaltung neuer Konten
 
 Wer sich registriert, kann sofort Abrechnung, Notizen und Push nutzen –

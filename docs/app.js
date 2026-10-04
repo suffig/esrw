@@ -1038,13 +1038,13 @@
             });
           });
         }
-        var st2 = (staerkenDaten || []).filter(function (l) {
+        var st2 = ((staerkenDaten && staerkenDaten.staerken) || []).filter(function (l) {
           return ohneZeichen(l.liga + " " + (l.gruppe || "") + " " + (l.feldspieler || "")).indexOf(f) >= 0;
         }).slice(0, 5);
         if (st2.length) {
           suchGruppe(liste, "Antrittsstärke"); el("nichts").classList.add("versteckt");
           st2.forEach(function (l) {
-            suchEintrag(liste, l.liga, [l.feldspieler, l.torwart].filter(Boolean).join(" · ") || "Angaben fehlen noch", function () {
+            suchEintrag(liste, l.liga + " (" + (l.saison || "") + ")", [l.feldspieler, l.torwart ? l.torwart + " Torhüter" : ""].filter(Boolean).join(" · ") || "Angaben fehlen noch", function () {
               regelnTeil = "staerken"; location.hash = "regeln";
             });
           });
@@ -4148,10 +4148,11 @@
   // den Bestimmungen des Verbandes und aendern sich selten, aber es gibt
   // keine Startfassung in der App.
   function staerkenLaden() {
-    if (!sitzungVorhanden()) return Promise.resolve([]);
+    var leer = { staerken: [], einsatz: [] };
+    if (!sitzungVorhanden()) return Promise.resolve(leer);
     return ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
-      .then(function (st) { return st.eingerichtet && st.session && window.Mitglieder.antrittsstaerken ? window.Mitglieder.antrittsstaerken() : []; })
-      .catch(function () { return []; });
+      .then(function (st) { return st.eingerichtet && st.session && window.Mitglieder.antrittsstaerken ? window.Mitglieder.antrittsstaerken() : leer; })
+      .catch(function () { return leer; });
   }
 
   // Spielzeiten: der Betreiber pflegt sie in der Datenbank, die Datei in
@@ -4369,50 +4370,90 @@
     if (regelnTeil === "staerken") {
       el("regeln-unter").textContent = "Mindestantrittsstärken";
       if (!sitzungVorhanden()) { ziel.appendChild(hinweisKarte("Die Antrittsstärken stehen angemeldeten Kollegen offen.")); return; }
-      if (!staerkenDaten || !staerkenDaten.length) {
+      var st = (staerkenDaten && staerkenDaten.staerken) || [];
+      var ein = (staerkenDaten && staerkenDaten.einsatz) || [];
+      if (!st.length && !ein.length) {
         ziel.appendChild(hinweisKarte("Noch nichts hinterlegt. Der Betreiber pflegt die Zahlen unter Admin → Antrittsstärken."));
         return;
       }
       var meineL = naechsteLiga();
-      var grp = [];
-      staerkenDaten.forEach(function (l) {
-        var g = grp.filter(function (x) { return x.titel === (l.gruppe || "Ligen"); })[0];
-        if (!g) { g = { titel: l.gruppe || "Ligen", zeilen: [] }; grp.push(g); }
+      // Nach Saison gruppieren - die laufende steht offen, die naechste
+      // darunter zum Aufklappen.
+      var saisons = [];
+      // Die Reihenfolge kommt aus der Datenbank, aber verlassen wir uns
+      // nicht darauf - sortiert wird hier noch einmal.
+      st = st.slice().sort(function (x, y) {
+        if ((x.saison || "") !== (y.saison || "")) return (x.saison || "") < (y.saison || "") ? 1 : -1;
+        return (x.reihenfolge || 100) - (y.reihenfolge || 100);
+      });
+      st.forEach(function (l) {
+        var g = saisons.filter(function (x) { return x.titel === (l.saison || "ohne Saison"); })[0];
+        if (!g) { g = { titel: l.saison || "ohne Saison", zeilen: [] }; saisons.push(g); }
         g.zeilen.push(l);
       });
-      var offen = null;
-      grp.forEach(function (g) { g.zeilen.forEach(function (l) { if (!offen && ligaPasst(l.liga, meineL)) offen = g; }); });
-      grp.forEach(function (g, nr) {
+      var jetzt = (daten && daten.saison) || "";
+      saisons.forEach(function (g, nr) {
         var d = document.createElement("details"); d.className = "karte bestimmung-block";
-        d.open = offen ? g === offen : !nr;
+        d.open = jetzt ? g.titel === jetzt : !nr;
         var sm = document.createElement("summary");
         var t = document.createElement("span");
-        var b = document.createElement("b"); b.textContent = g.titel; t.appendChild(b);
-        var anz = document.createElement("small"); anz.textContent = g.zeilen.length + (g.zeilen.length === 1 ? " Eintrag" : " Einträge"); t.appendChild(anz);
+        var b = document.createElement("b"); b.textContent = "Saison " + g.titel; t.appendChild(b);
+        var anz = document.createElement("small");
+        anz.textContent = g.zeilen.length + (g.zeilen.length === 1 ? " Altersklasse" : " Altersklassen")
+          + (g.titel === jetzt ? " · läuft" : "");
+        t.appendChild(anz);
         sm.appendChild(t); d.appendChild(sm);
-        g.zeilen.forEach(function (l) {
-          var z = document.createElement("div"); z.className = "zeiten-zeile";
-          var kopf = document.createElement("b"); kopf.textContent = l.liga;
-          if (ligaPasst(l.liga, meineL)) {
-            z.classList.add("meine");
-            var mk = document.createElement("span"); mk.className = "zeiten-marke";
-            mk.textContent = "dein nächstes Spiel"; kopf.appendChild(mk);
-          }
-          z.appendChild(kopf);
-          [["Mindestens", l.feldspieler], ["Torwart", l.torwart], ["Wartezeit", l.wartezeit],
-           ["Reicht es nicht", l.folge]].forEach(function (paar) {
-            if (!paar[1]) return;
-            var r2 = document.createElement("div"); r2.className = "zeiten-wert";
-            var k = document.createElement("span"); k.textContent = paar[0]; r2.appendChild(k);
-            var v = document.createElement("b"); v.textContent = paar[1]; r2.appendChild(v);
-            z.appendChild(r2);
-          });
-          if (l.hinweis) { var hw = document.createElement("small"); hw.className = "zeiten-hinweis"; hw.textContent = l.hinweis; z.appendChild(hw); }
-          if (l.quelle) { var q = document.createElement("small"); q.className = "fundstelle"; q.textContent = l.quelle; z.appendChild(q); }
-          d.appendChild(z);
+        // Als Tabelle: Klasse, Feldspieler, Torhueter - so steht es auch
+        // in den Bestimmungen, und so liest es sich am Spieltag am besten.
+        var tab = document.createElement("div"); tab.className = "staerke-tabelle";
+        var kopf = document.createElement("div"); kopf.className = "staerke-kopf";
+        ["Altersklasse", "Feld", "Tor"].forEach(function (x) {
+          var c = document.createElement("span"); c.textContent = x; kopf.appendChild(c);
         });
+        tab.appendChild(kopf);
+        g.zeilen.forEach(function (l) {
+          var r2 = document.createElement("div"); r2.className = "staerke-zeile";
+          if (ligaPasst(l.liga, meineL)) r2.classList.add("meine");
+          var n1 = document.createElement("span"); n1.textContent = l.liga; r2.appendChild(n1);
+          var n2 = document.createElement("b"); n2.textContent = (l.feldspieler || "–").replace(/\s*Feldspieler$/, ""); r2.appendChild(n2);
+          var n3 = document.createElement("b"); n3.textContent = l.torwart || "–"; r2.appendChild(n3);
+          tab.appendChild(r2);
+          if (l.wartezeit || l.folge || l.hinweis) {
+            var zus = document.createElement("small"); zus.className = "staerke-zusatz";
+            zus.textContent = [l.wartezeit ? "Wartezeit: " + l.wartezeit : "",
+                               l.folge ? "Reicht es nicht: " + l.folge : "", l.hinweis].filter(Boolean).join(" · ");
+            tab.appendChild(zus);
+          }
+        });
+        d.appendChild(tab);
+        var q = (g.zeilen.filter(function (l) { return l.quelle; })[0] || {}).quelle;
+        if (q) { var qe = document.createElement("small"); qe.className = "fundstelle"; qe.textContent = q; d.appendChild(qe); }
         ziel.appendChild(d);
       });
+
+      // Wer darf eine Klasse tiefer spielen?
+      if (ein.length) {
+        var ed = document.createElement("details"); ed.className = "karte bestimmung-block";
+        var esm = document.createElement("summary");
+        var et = document.createElement("span");
+        var eb = document.createElement("b"); eb.textContent = "Einsatz in der nächst niedrigeren Klasse"; et.appendChild(eb);
+        var esmall = document.createElement("small"); esmall.textContent = "wer darf eine Klasse tiefer spielen"; et.appendChild(esmall);
+        esm.appendChild(et); ed.appendChild(esm);
+        ein.forEach(function (e) {
+          var z2 = document.createElement("div"); z2.className = "zeiten-zeile";
+          var k2 = document.createElement("b"); k2.textContent = e.was; z2.appendChild(k2);
+          [["2026/27", e.saison_a], ["2027/28", e.saison_b]].forEach(function (paar) {
+            var r3 = document.createElement("div"); r3.className = "zeiten-wert";
+            var ks = document.createElement("span"); ks.textContent = paar[0]; r3.appendChild(ks);
+            var vs = document.createElement("b"); vs.textContent = paar[1] || "nicht möglich"; r3.appendChild(vs);
+            if (!paar[1]) vs.className = "aus";
+            z2.appendChild(r3);
+          });
+          if (e.hinweis) { var hw2 = document.createElement("small"); hw2.className = "zeiten-hinweis"; hw2.textContent = e.hinweis; z2.appendChild(hw2); }
+          ed.appendChild(z2);
+        });
+        ziel.appendChild(ed);
+      }
       return;
     }
     if (regelnTeil === "zeiten") {
