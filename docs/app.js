@@ -154,9 +154,22 @@
       toast(m.join(" · ") + ".", dazu.length && !weg.length ? "gut" : "");
     }
   }
+  // supabase.json aendert sich waehrend einer Sitzung nicht. An jedem
+  // hole() haengt aber ein Cache-Buster, also ging bisher fuer jede
+  // Kleinigkeit - Funktionen, Korrekturen, jeder REST-Aufruf - eine eigene
+  // Anfrage ins Netz. Einmal holen reicht; scheitert es, wird es neu
+  // versucht.
+  var zugangCfgLauf = null;
+  function holeCfg() {
+    if (!zugangCfgLauf) {
+      zugangCfgLauf = hole("supabase.json").catch(function (e) { zugangCfgLauf = null; throw e; });
+    }
+    return zugangCfgLauf;
+  }
+
   function funktionenLaden() {
     funktionenAnwenden(funktionenLesen());
-    return hole("supabase.json").then(function (cfg) {
+    return holeCfg().then(function (cfg) {
       cfg = cfg || {};
       if (cfg.mock) { try { return JSON.parse(localStorage.getItem("mock_funktionen") || "[]"); } catch (e) { return []; } }
       if (!cfg.url || !cfg.anon_key) return null;
@@ -272,7 +285,7 @@
   }
 
   function korrekturenLaden(neuZeichnen) {
-    return hole("supabase.json").then(function (cfg) {
+    return holeCfg().then(function (cfg) {
       cfg = cfg || {};
       if (cfg.mock) { try { return JSON.parse(localStorage.getItem("mock_spiel_korrekturen") || "[]"); } catch (e) { return []; } }
       if (!cfg.url || !cfg.anon_key) return null;
@@ -295,7 +308,7 @@
   // App sie selbst (Spiele mit id "m:<uuid>" werden nicht doppelt angelegt).
   var betreiber = { spiele: [], hallen: [], hinweise: {} };
   function supabaseRest(pfad) {
-    return hole("supabase.json").then(function (cfg) {
+    return holeCfg().then(function (cfg) {
       cfg = cfg || {};
       if (cfg.mock) { try { return JSON.parse(localStorage.getItem("mock_" + pfad.split("?")[0]) || "[]"); } catch (e) { return []; } }
       if (!cfg.url || !cfg.anon_key) return null;
@@ -672,10 +685,15 @@
   }
   // Ob der Feed erreichbar und aktuell ist. Was das Handy daraus macht, sieht
   // die Seite nicht - das steht nur im Kalender-Konto des Geraets.
-  var feedGeprueft = {};
+  var feedGeprueft = {}, feedFehler = {};
   function feedPruefen(p, erzwingen) {
     var ziel = el("feed-pruefung");
     if (feedGeprueft[p.slug] && !erzwingen) { ziel.textContent = feedGeprueft[p.slug]; feedKnopf(p); return; }
+    // Auch ein Fehlschlag zaehlt - sonst laeuft die Pruefung ohne Netz bei
+    // jedem Seitenwechsel neu. Nach einer Minute darf sie es wieder versuchen.
+    if (feedFehler[p.slug] && !erzwingen && Date.now() - feedFehler[p.slug].zeit < 60000) {
+      ziel.textContent = feedFehler[p.slug].text; feedKnopf(p); return;
+    }
     ziel.textContent = "Prüfe den Kalender-Link …";
     // Ohne Cache-Buster: genau die Adresse, die auch das Handy abruft
     feedBereit(p.slug).then(function () { return fetch(feedUrl(p.slug, location.protocol), { cache: erzwingen ? "reload" : "default" }); }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); }).then(function (t) {
@@ -689,13 +707,17 @@
         + ". Wann dein Handy zuletzt abgerufen hat, zeigt nur das Handy: Einstellungen → Apps → Kalender → Accounts → Abo (Aktualisieren: stündlich).";
       ziel.textContent = feedGeprueft[p.slug];
       feedKnopf(p);
-    }).catch(function () { ziel.textContent = "Kalender-Link gerade nicht erreichbar. Ohne Netz ist das normal, sonst bitte später noch einmal."; feedKnopf(p); });
+    }).catch(function () {
+      var text = "Kalender-Link gerade nicht erreichbar. Ohne Netz ist das normal, sonst bitte später noch einmal.";
+      feedFehler[p.slug] = { zeit: Date.now(), text: text };
+      ziel.textContent = text; feedKnopf(p);
+    });
   }
   function feedKnopf(p) {
     var ziel = el("feed-pruefung");
     if (ziel.querySelector("button")) return;
     var b = document.createElement("button"); b.type = "button"; b.className = "textknopf"; b.style.marginLeft = "6px"; b.textContent = "Neu prüfen";
-    b.addEventListener("click", function () { delete feedGeprueft[p.slug]; feedPruefen(p, true); });
+    b.addEventListener("click", function () { delete feedGeprueft[p.slug]; delete feedFehler[p.slug]; feedPruefen(p, true); });
     ziel.appendChild(b);
   }
   function einstellungenLaden(nurAnwenden) {

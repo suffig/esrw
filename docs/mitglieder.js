@@ -1995,28 +1995,8 @@ window.Mitglieder = (function () {
     // Rechnung haben noch von Hand abgehakt sind. Steht oben, mit einem
     // Tipp zum aeltesten. Wer ein Spiel abhakt, meint "fuer mich
     // erledigt" - dann hat der Hinweis dazu nichts mehr zu sagen.
-    rechnungenLaden().then(function (geschrieben) {
-      if (!box.isConnected || box.querySelector(".rechnung-offen")) return;
-      var drin = {};
-      geschrieben.forEach(function (rg) { (rg.kennungen || []).forEach(function (k) { drin[k] = 1; }); });
-      var jetzt = Date.now();
-      var offen = rechnungSpiele().filter(function (sp) {
-        if (new Date(sp.beginn).getTime() >= jetzt) return false;
-        if (drin[sp.kennung] || rechnungWahl[sp.kennung]) return false;
-        return !(einsaetze[sp.kennung] || {}).bezahlt;
-      });
-      if (!offen.length) return;
-      var aelt = offen[offen.length - 1];
-      box.insertBefore(h("div", { class: "hinweis warn rechnung-offen" }, [
-        h("span", {}, [
-          h("b", { text: offen.length === 1 ? "Ein vergangenes Spiel hat noch keine Rechnung."
-                                            : offen.length + " vergangene Spiele haben noch keine Rechnung." }),
-          h("small", { style: "display:block", text: "Am längsten offen: " + datumLang(new Date(aelt.beginn)) + ", " + aelt.paarung })]),
-        h("button", { type: "button", class: "anfrage", text: "Übernehmen", onclick: function () {
-          rechnungWahl = {}; rechnungWahl[aelt.kennung] = aelt;
-          rechnungForm = rechnungFormAusWahl(); nochmal();
-        } })]), box.firstChild);
-    });
+    rechnungOffenBox = box;
+    rechnungOffenZeigen();
 
     // ---- Was fehlt noch? ------------------------------------------------
     function betraege() {
@@ -2485,6 +2465,39 @@ window.Mitglieder = (function () {
 
   // Ist zu diesem Spiel schon eine Rechnung geschrieben? Die Liste kommt
   // aus rechnungenLaden(), hier nur der Zugriff darauf.
+  var rechnungOffenBox = null;
+  function rechnungOffenZeigen() {
+    var box = rechnungOffenBox;
+    // Beim Zeichnen haengt die Box noch nicht im Dokument - geprueft wird
+    // erst, wenn die Rechnungsliste da ist.
+    if (!box) return;
+    rechnungenLaden().then(function (geschrieben) {
+      if (box !== rechnungOffenBox || !box.isConnected) return;
+      var alt = box.querySelector(".rechnung-offen");
+      if (alt && alt.parentNode) alt.parentNode.removeChild(alt);
+      var drin = {};
+      geschrieben.forEach(function (rg) { (rg.kennungen || []).forEach(function (k) { drin[k] = 1; }); });
+      var jetzt = Date.now();
+      var offen = rechnungSpiele().filter(function (sp) {
+        if (new Date(sp.beginn).getTime() >= jetzt) return false;
+        if (drin[sp.kennung] || rechnungWahl[sp.kennung]) return false;
+        return !(einsaetze[sp.kennung] || {}).bezahlt;
+      });
+      if (!offen.length) return;
+      var aelt = offen[offen.length - 1];
+      box.insertBefore(h("div", { class: "hinweis warn rechnung-offen" }, [
+        h("span", {}, [
+          h("b", { text: offen.length === 1 ? "Ein vergangenes Spiel hat noch keine Rechnung."
+                                            : offen.length + " vergangene Spiele haben noch keine Rechnung." }),
+          h("small", { style: "display:block", text: "Am längsten offen: " + datumLang(new Date(aelt.beginn)) + ", " + aelt.paarung })]),
+        h("button", { type: "button", class: "anfrage", text: "Übernehmen", onclick: function () {
+          rechnungWahl = {}; rechnungWahl[aelt.kennung] = aelt;
+          rechnungForm = rechnungFormAusWahl();
+          abrechnungPanel = "rechnung"; rendereAbrechnung();
+        } })]), box.firstChild);
+    });
+  }
+
   function rechnungZu(kennung) {
     var treffer = null;
     (rechnungListe || []).forEach(function (rg) {
@@ -2508,7 +2521,7 @@ window.Mitglieder = (function () {
           var wert = ist ? null : new Date().toISOString();
           speichereEinsatz(sp, { bezahlt: wert });
           e = einsaetze[sp.kennung] || {};
-          neu(); aktualisiereSummen(); aktualisiereZeile(sp);
+          neu(); aktualisiereSummen(); aktualisiereZeile(sp); rechnungOffenZeigen();
         } }));
       if (ist) box.appendChild(h("span", { class: "meta", style: "align-self:center",
         text: "abgehakt am " + new Date(e.bezahlt).toLocaleDateString("de-DE") }));
@@ -6109,7 +6122,7 @@ window.Mitglieder = (function () {
       var offen = alle.filter(function (p) { return !p.freigeschaltet && !p.admin; });
       leeren(box);
       box.appendChild(h("h4", { text: "Konten" }));
-      box.appendChild(h("p", { class: "meta", text: alle.length + " Konten · " + offen.length + (offen.length === 1 ? " wartet" : " warten")
+      box.appendChild(h("p", { class: "meta", text: alle.length + (alle.length === 1 ? " Konto · " : " Konten · ") + offen.length + (offen.length === 1 ? " wartet" : " warten")
         + (offeneEin.length ? " · " + offeneEin.length + " eingeladen, noch nicht registriert" : "") + "." }));
 
       // ---- Suchen und filtern. Bei sechzig Konten ist Scrollen keine

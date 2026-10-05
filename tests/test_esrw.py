@@ -662,6 +662,14 @@ def test_kalenderwuensche():
 
     pruefe("Stunde" in E.alarm_text("-PT1H"), "bekannte Vorlaufzeit hat einen Text")
     pruefe(E.alarm_text("-PT7M") != "", "unbekannte Vorlaufzeit bleibt nicht stumm")
+    # Wer zum Anpfiff beginnt, ist dann laengst da - "an der Halle" waere falsch
+    anpf = {"beginn": "anstoss"}
+    pruefe("an der Halle" not in E.alarm_text("-PT1H", anpf), "zum Anpfiff nicht 'an der Halle'",
+           E.alarm_text("-PT1H", anpf))
+    pruefe(E.alarm_text("-PT1H", anpf) == "Noch eine Stunde bis Anpfiff", "und der Fall stimmt",
+           E.alarm_text("-PT1H", anpf))
+    pruefe(E.alarm_text("-PT30M") == "In einer halben Stunde an der Halle", "Dativ beim Treffpunkt",
+           E.alarm_text("-PT30M"))
 
     # Der Weg aus dem Konto: localStorage kennt nur Zeichenketten, also
     # kommt ein JSON-Text an - frueher fiel der durchs Raster.

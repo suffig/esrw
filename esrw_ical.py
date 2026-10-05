@@ -332,19 +332,31 @@ def falte(zeile):
     return "\r\n ".join(stuecke)
 
 
-def alarm_text(wann):
+def alarm_text(wann, einst=None):
     """"-PT1H" -> "In einer Stunde an der Halle". Was nicht erkannt wird,
     bekommt einen neutralen Text - ein Alarm ohne Text ist schlechter als
-    einer mit."""
-    bekannt = {
-        "-PT30M": "In einer halben Stunde an der Halle",
-        "-PT1H": "In einer Stunde an der Halle",
-        "-PT2H": "In zwei Stunden an der Halle",
-        "-PT3H": "In drei Stunden an der Halle",
-        "-PT12H": "Morgen Spiel",
-        "-P1D": "Morgen Spiel",
+    einer mit.
+
+    Wer den Termin zum Anpfiff legt, ist dann laengst in der Halle - fuer den
+    zaehlt die Zeit bis zum Anpfiff, nicht bis zur Ankunft."""
+    anpfiff = (einst or {}).get("beginn") == "anstoss"
+    # Zwei Faelle noetig: "Noch eine Stunde", aber "In einer Stunde".
+    spanne = {
+        "-PT30M": ("eine halbe Stunde", "einer halben Stunde"),
+        "-PT1H": ("eine Stunde", "einer Stunde"),
+        "-PT2H": ("zwei Stunden", "zwei Stunden"),
+        "-PT3H": ("drei Stunden", "drei Stunden"),
     }
-    return bekannt.get(wann, "Bald an der Halle")
+    if wann in spanne:
+        return ("Noch %s bis Anpfiff" % spanne[wann][0]) if anpfiff \
+            else ("In %s an der Halle" % spanne[wann][1])
+    # Zwoelf Stunden koennen auf denselben oder den Vortag fallen - also
+    # keine Behauptung ueber den Tag aufstellen.
+    if wann == "-PT12H":
+        return "In zwölf Stunden Spiel"
+    if wann == "-P1D":
+        return "Morgen Spiel"
+    return "Bald Anpfiff" if anpfiff else "Bald an der Halle"
 
 
 def utc(zeitpunkt):
@@ -411,7 +423,7 @@ def baue_ics(termine, kalendername, cfg, stand, einst=None):
                     "BEGIN:VALARM",
                     "ACTION:DISPLAY",
                     "TRIGGER:" + wann,
-                    "DESCRIPTION:" + escape(alarm_text(wann) + " - " + titel),
+                    "DESCRIPTION:" + escape(alarm_text(wann, einst) + " - " + titel),
                     "END:VALARM",
                 ]
         zeilen.append("END:VEVENT")

@@ -2020,6 +2020,12 @@
   .kal-alarme { flex-wrap:wrap; }
   #kalender-einst .listen-kopf { font-size:.74rem; text-transform:uppercase;
     letter-spacing:.04em; color:var(--dim); font-weight:800; }
+
+  /* Runde 63: Die Spielseite faehrt mit translateX(24px) herein. Das
+     schob fuer eine Viertelsekunde den Rand nach rechts - sichtbar als
+     Wackeln und seitliches Ziehen auf dem Handy. "clip" statt "hidden",
+     damit position:sticky weiter haelt. */
+  main { overflow-x:clip; }
 </style>
 </head>
 <body>
@@ -2480,6 +2486,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=107"></script>
+<script src="app.js?v=111"></script>
 </body>
 </html>
