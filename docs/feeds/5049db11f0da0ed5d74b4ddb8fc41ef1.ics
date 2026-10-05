@@ -8,35 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:27c10c80b9df57bcb0227aacafc3896b363fa00a@esrw.de
-SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
-DTSTART:20261009T163000Z
-DTEND:20261009T200000Z
-SUMMARY:SR · Frauen LL: ESV Bergisch Gladbach – Ratinger Ice Aliens
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
-  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen LL\nHalle: Eissporthalle
-  Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbach\n
- Gespann: Schmidt\, Waldemar\nVergütung lt. Ordnung: 95 €\n\nQuelle: htt
- ps://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
- ch Gladbach
-GEO:50.967548;7.135355
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
- dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
- TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: ESV Bergisch Gl
- adbach – Ratinger Ice Aliens
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:4d249e8f9a32b72e4f39765f1398abe6ac5cf752@esrw.de
 SEQUENCE:0
 DTSTAMP:20261002T111527Z

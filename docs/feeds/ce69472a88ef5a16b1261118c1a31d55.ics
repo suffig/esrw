@@ -76,33 +76,4 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U20 LL: Herner EV – Lipp
  e Hockey Hamm
 END:VALARM
 END:VEVENT
-BEGIN:VEVENT
-UID:c31a644cef84ee57401ec7f376f1718fa6d2a001@esrw.de
-SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
-DTSTART:20261011T161500Z
-DTEND:20261011T194500Z
-SUMMARY:SR · Senioren BZL: ESV Bergisch Gladbach 1b – EHC Gelsenkirchen
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:15 Uhr\nTreffpunkt:
-  18:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eissportha
- lle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbac
- h\nGespann: Garcia Nieto\, Dario\nVergütung lt. Ordnung: 100 €\n\nQuell
- e: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
- ch Gladbach
-GEO:50.967548;7.135355
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
- dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
- TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: ESV Bergisch
-  Gladbach 1b – EHC Gelsenkirchen
-END:VALARM
-END:VEVENT
 END:VCALENDAR

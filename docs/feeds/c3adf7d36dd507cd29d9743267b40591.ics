@@ -1250,35 +1250,6 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB: Iserlohner EC 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:fcf5934b8d36fe8253daea50d33d9a2bcf5207f0@esrw.de
-SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
-DTSTART:20261009T163000Z
-DTEND:20261009T200000Z
-SUMMARY:SR · Frauen LL: ESV Bergisch Gladbach – Ratinger Ice Aliens
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
-  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen LL\nHalle: Eissporthalle
-  Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbach\n
- Gespann: Schmidt\, Waldemar\nVergütung lt. Ordnung: 95 €\n\nQuelle: htt
- ps://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
- ch Gladbach
-GEO:50.967548;7.135355
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
- dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
- TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: ESV Bergisch Gl
- adbach – Ratinger Ice Aliens
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:2b0f70213d19bb58a693439d4d1ad96331753ea3@esrw.de
 SEQUENCE:0
 DTSTAMP:20261002T111527Z
@@ -2148,35 +2119,6 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Frauen Pokal Gr.A: Eisadle
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:935dc6967907883f959a0c67aab9eb4d757b935c@esrw.de
-SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
-DTSTART:20261011T050000Z
-DTEND:20261011T083000Z
-SUMMARY:SR · U13 BZL Gr.B: ESV Bergisch Gladbach – ESC Darmstadt 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
-  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.B\nHalle: Eissportha
- lle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbac
- h\nGespann: Victor\, Tobias (N)\n\nQuelle: https://www.esrw.de/einteilunge
- n.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
- ch Gladbach
-GEO:50.967548;7.135355
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
- dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
- TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.B: ESV Bergisch
-  Gladbach – ESC Darmstadt 1b
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:7fcf54c05d30e60f7cdefa0a32d48342c35bd189@esrw.de
 SEQUENCE:0
 DTSTAMP:20261002T111527Z
@@ -2719,35 +2661,6 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: Eisadler Do
  rtmund – Neusser EV
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
-UID:a2d5e2f3219b7385ec3d056577da2abe5b46c132@esrw.de
-SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
-DTSTART:20261011T161500Z
-DTEND:20261011T194500Z
-SUMMARY:SR · Senioren BZL: ESV Bergisch Gladbach 1b – EHC Gelsenkirchen
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:15 Uhr\nTreffpunkt:
-  18:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eissportha
- lle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbac
- h\nGespann: Hofer\, Carsten\nVergütung lt. Ordnung: 100 €\n\nQuelle: ht
- tps://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
- ch Gladbach
-GEO:50.967548;7.135355
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
- dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
- TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: ESV Bergisch
-  Gladbach 1b – EHC Gelsenkirchen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
