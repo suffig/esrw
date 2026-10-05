@@ -99,6 +99,33 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: EC Bergisch Land
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:6d77a62a10d01dd639d4ceb16d89c8bbe885198f@esrw.de
+SEQUENCE:0
+DTSTAMP:20261005T173040Z
+LAST-MODIFIED:20261005T173040Z
+DTSTART:20261009T171500Z
+DTEND:20261009T204500Z
+SUMMARY:SR · BZL FS: EC Bergisch Land – EHC Essen Ruhr
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
+  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: BZL FS\nHalle: Eissporthalle So
+ lingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Schmidt\, 
+ Waldemar\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
+GEO:51.165932;7.086769
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
+ ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
+ le Solingen":geo:51.165932,7.086769
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · BZL FS: EC Bergisch Land 
+ – EHC Essen Ruhr
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:3af2d33f7e2a6c59d721044197b477ab0c167b7d@esrw.de
 SEQUENCE:0
 DTSTAMP:20261002T111527Z
