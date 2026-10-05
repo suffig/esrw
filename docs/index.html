@@ -2026,6 +2026,14 @@
      Wackeln und seitliches Ziehen auf dem Handy. "clip" statt "hidden",
      damit position:sticky weiter haelt. */
   main { overflow-x:clip; }
+
+  /* Runde 64: Kalendereinstellungen findbar machen */
+  .kal-kurz { margin:10px 0 0; padding-top:10px; border-top:1px solid var(--linie); }
+  .hervor { animation:hervor 2.2s ease-out; }
+  @keyframes hervor {
+    0%, 70% { box-shadow:0 0 0 3px var(--akzent); }
+    100%    { box-shadow:0 0 0 0 transparent; }
+  }
 </style>
 </head>
 <body>
@@ -2206,6 +2214,7 @@
           <button id="teilen" class="versteckt">Teilen</button>
         </div>
         <button type="button" class="mg-neben versteckt" id="abfahrt-ics" style="width:100%;margin-top:8px">Kalenderdatei mit Abfahrtsalarm laden</button>
+        <div class="kal-kurz" id="kalender-kurz"></div>
         <p class="meta" id="feed-pruefung" style="margin:10px 0 0"></p>
     <div class="melde unterpunkt versteckt" id="melde">
       <h4><svg class="i"><use href="#i-bell"/></svg> Benachrichtigungen <span class="status" id="melde-status"></span></h4>
@@ -2219,6 +2228,8 @@
         <li>Oben auf <em>Im Kalender abonnieren</em> tippen.</li>
         <li>iOS fragt nach, dann mit <em>Abonnieren</em> bestätigen.</li>
         <li>Bei <mark>„Alarme entfernen“ auf AUS</mark> stellen, sonst kommen keine Erinnerungen.</li>
+        <li>Wie viele Erinnerungen es gibt und was im Termintitel steht, wählst du selbst:
+            <a href="#einstellungen/kalender">Kalender einstellen</a>.</li>
         <li>Unter <em>Aktualisieren</em> „Alle 15 Minuten“ oder „Stündlich“ wählen.</li>
       </ol>
       <p>Falls nichts passiert: Einstellungen → Apps → Kalender → Accounts → Account hinzufügen →
@@ -2486,6 +2497,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=111"></script>
+<script src="app.js?v=116"></script>
 </body>
 </html>

@@ -55,6 +55,7 @@
     schreiben("einfach", an ? null : "0");
     einfachAnwenden(); einstellungenSync();
     if (!el("mehr").classList.contains("versteckt")) zeigeMehr();
+    if (!el("einstellungen").classList.contains("versteckt")) setTimeout(einstellungenSprung, 60);
     if (!still) toast(an ? "Einfache Ansicht \u2013 Selteneres steht eine Ebene tiefer." : "Jetzt ist alles sichtbar.", "gut");
   }
 
@@ -1510,7 +1511,7 @@
       var punkte = karten.map(function (k) {
         var h4 = k.querySelector("h4"); if (!h4 || k.classList.contains("versteckt")) return null;
         var titel = h4.textContent.replace(/\s*\d+\/\d+$/, "").replace(/\s*\(.*\)$/, "").trim();
-        return [k, titel.length > 18 ? titel.slice(0, 17) + "…" : titel];
+        return [k, kurzTitel(titel)];
       }).filter(Boolean);
       sprungleiste("spiel-sprung", "spiel", punkte);
     }, 900);
@@ -3925,7 +3926,7 @@
     var start = [
       ["i-home", "Willkommen bei den Einteilungen", "Diese App zeigt dir deine Schiedsrichter-Einteilungen von esrw.de, immer aktuell, mit Halle, Treffpunkt, Route und Gespann. Ein paar kurze Schritte, dann bist du startklar."],
       ["i-users", "Deinen Namen wählen", "Tippe unten in der Liste auf deinen Namen. Das ist dein Profil auf diesem Gerät, „Start“ zeigt dann deine Spiele.\nKollegen ansehen geht jederzeit über die Lupe oben."],
-      ["i-cal", "Kalender abonnieren", "Auf „Start“ findest du die Kalender-Karte: „Im Kalender abonnieren“ legt ein Abo im iPhone-Kalender an. Neue oder geänderte Spiele kommen von allein aufs Handy, mit Wecker zum Treffpunkt.", "#", "Zur Startseite"],
+      ["i-cal", "Kalender abonnieren", "Auf „Start“ findest du die Kalender-Karte: „Im Kalender abonnieren“ legt ein Abo im iPhone-Kalender an. Neue oder geänderte Spiele kommen von allein aufs Handy, mit Wecker zum Treffpunkt.\nWas im Termin steht und wann der Wecker klingelt, stellst du dort unter „Anpassen“ selbst ein.", "#", "Zur Startseite"],
       ["i-bell", "Als App und Push", "Safari: Teilen → „Zum Home-Bildschirm“. Danach unter Einstellungen „Push einschalten“: dann meldet sich die App bei neuen und geänderten Einteilungen, am Spieltag und zur Abfahrt.", "#einstellungen", "Zu den Einstellungen", "push"],
       ["i-key", "Konto (freiwillig)", "Mit Konto gibt es " + funktionsText([["abrechnung", "Abrechnung (km und Vergütung automatisch)"], ["notizen", "Notizen"], ["checkliste", "Checkliste"], ["info", "Ankündigungen"], ["push", "Push auf allen Geräten"]], "und") + ". Der Betreiber schaltet dich frei.", "#mitglieder", "Konto anlegen"],
       ["i-mehr", "Wo ist was", "Start: nächstes Spiel und deine Spiele · Spielplan: alle Spiele, Filter, Woche/Monat" + (funktion("abrechnung") ? " · Abrechnung" : "") + " · Mehr: " + funktionsText([["info", "Info"], ["statistik", "Statistik"], ["notizen", "Notizen"], [null, "Einstellungen"]]) + ".\nDiese Anleitung findest du jederzeit unter Mehr → Anleitung."]
@@ -4751,6 +4752,23 @@
   }
 
   // Sprungleiste: Chips, die zu den Abschnitten einer langen Seite springen
+  // Die Leiste zeigt nur, was gerade sichtbar ist. Sie muss also mitgehen,
+  // wenn die einfache Ansicht die halbe Seite ein- oder ausblendet - sonst
+  // fehlt hinterher der halbe Wegweiser.
+  function einstellungenSprung() {
+    sprungleiste("einstellungen-sprung", "einstellungen", [["konto-bereich", "Konto"], ["einfach", "Aussehen"], ["kalender-einst", "Kalender"], ["karten-app", "Unterwegs"], ["start-bausteine", "Startseite"], ["start-ordnung", "Reihenfolge"], ["schnell-wahl", "Schnellzugriff"], ["tab-wahl", "Leiste"], ["bereiche", "Bereiche"], ["sicherung-raus", "Sicherung"], ["adminzeile", "Betreiber"]]);
+  }
+
+  // Ein Chip-Titel darf kurz sein, aber nicht mitten im Wort enden -
+  // "Spieltag-Checkliste" hat genau ein Zeichen zu viel und wurde zu
+  // "Spieltag-Checklis…". Die Leiste rollt ohnehin seitwaerts.
+  function kurzTitel(t) {
+    if (t.length <= 22) return t;
+    var schnitt = t.slice(0, 21);
+    var i = Math.max(schnitt.lastIndexOf(" "), schnitt.lastIndexOf("-"));
+    return (i > 10 ? schnitt.slice(0, i) : schnitt) + "…";
+  }
+
   function sprungleiste(leisteId, bereichId, punkte) {
     var leiste = el(leisteId); if (!leiste) return;
     leiste.innerHTML = "";
@@ -4812,10 +4830,22 @@
     }).catch(function () {});
   }
 
-  function zeigeEinstellungen() {
+  function zeigeEinstellungen(ziel) {
     ansicht("einstellungen"); aktuell = null; window.scrollTo(0, 0);
+    // "#einstellungen/kalender" kommt aus der Kalenderkarte. Ohne das
+    // Hinspringen muesste man die lange Seite erst absuchen.
+    if (ziel) setTimeout(function () {
+      var k = el(ziel === "kalender" ? "kalender-einst" : ziel);
+      if (!k) return;
+      // Ueber eine lange Seite ist weiches Rollen kein Genuss, sondern
+      // zwei Sekunden Warten - ab anderthalb Bildschirmen also direkt hin.
+      var weit = Math.abs(k.getBoundingClientRect().top) > window.innerHeight * 1.5;
+      k.scrollIntoView({ behavior: weit ? "auto" : "smooth", block: "center" });
+      k.classList.add("hervor");
+      setTimeout(function () { k.classList.remove("hervor"); }, 2200);
+    }, 300);
     bereicheRendern(); startBausteineRendern(); startOrdnungRendern(); schnellWahlRendern(); tabWahlRendern(); pushVerlaufRendern(); adminZeileRendern();
-    setTimeout(function () { sprungleiste("einstellungen-sprung", "einstellungen", [["konto-bereich", "Konto"], ["einfach", "Aussehen"], ["karten-app", "Unterwegs"], ["start-bausteine", "Startseite"], ["start-ordnung", "Reihenfolge"], ["schnell-wahl", "Schnellzugriff"], ["tab-wahl", "Leiste"], ["bereiche", "Bereiche"], ["sicherung-raus", "Sicherung"], ["adminzeile", "Betreiber"]]); }, 400);
+    setTimeout(einstellungenSprung, 400);
     var kb = el("konto-bereich"); kb.innerHTML = "";
     if (!sitzungVorhanden()) {
       var k = document.createElement("a"); k.href = "#mitglieder"; k.className = "hinweis"; k.style.display = "flex"; k.style.textDecoration = "none"; k.style.color = "inherit"; k.style.marginBottom = "12px";
@@ -5076,7 +5106,7 @@
     if (slug === "status") { zeigeStatus(); return; }
     if (slug.indexOf("statistik") === 0) { zeigeStatSeite(slug.split("/")[1] || (profil && profil.slug) || ""); return; }
     if (slug === "mehr") { zeigeMehr(); return; }
-    if (slug === "einstellungen") { zeigeEinstellungen(); return; }
+    if (slug === "einstellungen" || slug.indexOf("einstellungen/") === 0) { zeigeEinstellungen(slug.split("/")[1] || null); return; }
     if (slug === "mitglieder/konto") { location.hash = "einstellungen"; return; }
     if (slug === "aenderungen") { if (!funktion("aenderungen")) { location.hash = "mehr"; return; } zeigeAenderungen(); return; }
     if (slug === "archiv" || slug.indexOf("archiv/") === 0) { if (!funktion("archiv")) { location.hash = "mehr"; return; } zeigeArchiv(slug.split("/")[1] || ""); return; }
@@ -5327,7 +5357,35 @@
   var KAL_ALARME = [["-PT30M", "30 Min."], ["-PT1H", "1 Std."], ["-PT2H", "2 Std."],
                     ["-PT3H", "3 Std."], ["-P1D", "Tag vorher"]];
 
+  // In einem Satz, was im Kalender landet - steht direkt beim Abo-Knopf,
+  // wo man an den Kalender denkt, und fuehrt zu den Einstellungen.
+  function kalenderKurzRendern() {
+    var box = el("kalender-kurz"); if (!box) return;
+    box.innerHTML = "";
+    var w = kalenderEinst();
+    var teile = [];
+    if (w.rolle) teile.push("Rolle");
+    if (w.liga) teile.push("Liga");
+    if (w.halle) teile.push("Halle");
+    if (w.gespann) teile.push("Gespann");
+    var text = "Im Titel: " + (teile.length ? teile.join(" · ") : "nur die Paarung")
+      + " · Beginn " + (w.beginn === "anstoss" ? "zum Anpfiff" : "zum Treffpunkt")
+      + " · " + (w.alarme.length ? w.alarme.length + " Erinnerung" + (w.alarme.length === 1 ? "" : "en") : "kein Wecker");
+    var p = document.createElement("p"); p.className = "meta"; p.style.margin = "0 0 8px";
+    p.textContent = text;
+    box.appendChild(p);
+    // Ein richtiger Knopf wie "Link kopieren" daneben - als Textlink neben
+    // der Zeile uebersah man ihn, genau das war die Klage.
+    var reihe = document.createElement("div"); reihe.className = "zweit";
+    var k = document.createElement("button"); k.type = "button";
+    k.textContent = "Kalender anpassen";
+    k.addEventListener("click", function () { location.hash = "einstellungen/kalender"; });
+    reihe.appendChild(k);
+    box.appendChild(reihe);
+  }
+
   function kalenderEinstRendern() {
+    kalenderKurzRendern();
     var box = el("kalender-einst"); if (!box) return;
     box.innerHTML = "";
     var w = kalenderEinst();
