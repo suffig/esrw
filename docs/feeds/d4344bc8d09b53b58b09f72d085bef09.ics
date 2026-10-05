@@ -64,12 +64,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:15 Uhr\nTreffpunkt:
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U14 NRW: EHV NRW U14 – K
- ölner Junghaie U15 In Köln !!!!
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:86adc82a956f25e34c27bba35b559dd6f8be5e50@esrw.de
