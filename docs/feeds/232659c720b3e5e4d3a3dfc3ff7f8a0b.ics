@@ -51,31 +51,31 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
  ergkamen":geo:51.602578,7.626858
 END:VEVENT
 BEGIN:VEVENT
-UID:5d139a58604fac3b6dc6b164c96eb5ed1161109d@esrw.de
+UID:9439f6e4f07acdb9aee492b4130ee8057dba497d@esrw.de
 SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
-DTSTART:20261010T144500Z
-DTEND:20261010T181500Z
-SUMMARY:SR · U13 RLB: Iserlohner EC 1b – EJ Kassel
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:45 Uhr\nTreffpunkt:
-  16:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Emscher-Lippe-H
- alle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\nGesp
- ann: Quint\, Sascha\n\nQuelle: https://www.esrw.de/einteilungen.html
+DTSTAMP:20261006T161529Z
+LAST-MODIFIED:20261006T161529Z
+DTSTART:20261010T073000Z
+DTEND:20261010T110000Z
+SUMMARY:SR · U15 LL: SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats 
+ – ESC Darmstadt
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
+  09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Be
+ rgkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Naust\, Marc A
+ ndré\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-LOCATION:Emscher-Lippe-Halle Gelsenkirchen\, Adenauerallee 118\, 45891 Gels
- enkirchen
-GEO:51.553483;7.073102
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Emscher-Lippe-Halle Gelsen
- kirchen, Adenauerallee 118, 45891 Gelsenkirchen";X-APPLE-RADIUS=100;X-TITL
- E="Emscher-Lippe-Halle Gelsenkirchen":geo:51.553483,7.073102
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB: Iserlohner EC 1b 
- – EJ Kassel
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: SpG ESV Grizzlys B
+ ergkamen / ESC Rheine Young Cats – ESC Darmstadt
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

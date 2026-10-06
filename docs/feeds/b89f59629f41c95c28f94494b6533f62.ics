@@ -73,16 +73,17 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
 END:VEVENT
 BEGIN:VEVENT
 UID:8558322f2eeb88bcf48594a3c0e153b314a33a03@esrw.de
-SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
+SEQUENCE:1
+DTSTAMP:20261006T161529Z
+LAST-MODIFIED:20261006T161529Z
 DTSTART:20261010T144500Z
 DTEND:20261010T181500Z
 SUMMARY:SR · U13 RLB: Iserlohner EC 1b – EJ Kassel
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:45 Uhr\nTreffpunkt:
   16:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Emscher-Lippe-H
  alle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\nGesp
- ann: Honselmann\, Tom (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+ ann: Kalischke\, Christian (N)\n\nQuelle: https://www.esrw.de/einteilungen
+ .html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
