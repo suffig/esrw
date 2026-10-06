@@ -56,6 +56,32 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: TuS Wiehl – Eisa
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:95e92ca3a33656daae966bed0fe766c3507ed5ef@esrw.de
+SEQUENCE:0
+DTSTAMP:20261006T120050Z
+LAST-MODIFIED:20261006T120050Z
+DTSTART:20261011T051500Z
+DTEND:20261011T084500Z
+SUMMARY:SR · U11 LL Grau: TuS Wiehl 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:15 Uhr\nTreffpunkt:
+  07:15 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Grau\nHalle: Eissporthal
+ le Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\n\nQuelle: https://www.
+ esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
+GEO:50.947034;7.5553
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
+ enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
+ ":geo:50.947034,7.5553
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Grau: TuS Wiehl 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:b846f04916999ca4eb6cbf4c8b54552668c6d899@esrw.de
 SEQUENCE:0
 DTSTAMP:20261002T111527Z

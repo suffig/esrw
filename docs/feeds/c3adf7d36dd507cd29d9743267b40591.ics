@@ -2118,6 +2118,33 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: TSVE Bielefe
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:2fbbeb48e60bfbddb1cb8caca821f8ee24fac87c@esrw.de
+SEQUENCE:0
+DTSTAMP:20261006T120050Z
+LAST-MODIFIED:20261006T120050Z
+DTSTART:20261011T050000Z
+DTEND:20261011T083000Z
+SUMMARY:SR · U15 RLA: Iserlohner EC – Krefelder EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eissporthalle a
+ m Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Schmidt
+ \, Eugen\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
+GEO:51.384598;7.713829
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
+ , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
+ alle am Seilersee":geo:51.384598,7.713829
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA: Iserlohner EC –
+  Krefelder EV
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:16f3a56392a7f0b8f4880be92a289fbf69c87047@esrw.de
 SEQUENCE:0
 DTSTAMP:20261002T111527Z
@@ -2146,6 +2173,32 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Frauen Pokal Gr.A: Eisadle
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:09b89194c1ed025cc30d65edeb46bdf9a8c48ecc@esrw.de
+SEQUENCE:0
+DTSTAMP:20261006T120050Z
+LAST-MODIFIED:20261006T120050Z
+DTSTART:20261011T051500Z
+DTEND:20261011T084500Z
+SUMMARY:SR · U11 LL Grau: TuS Wiehl 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:15 Uhr\nTreffpunkt:
+  07:15 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Grau\nHalle: Eissporthal
+ le Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\n\nQuelle: https://www.
+ esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
+GEO:50.947034;7.5553
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
+ enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
+ ":geo:50.947034,7.5553
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Grau: TuS Wiehl 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:7fcf54c05d30e60f7cdefa0a32d48342c35bd189@esrw.de
 SEQUENCE:0
 DTSTAMP:20261002T111527Z
@@ -2170,33 +2223,6 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Grün: ESV Grizzlys 
  Bergkamen
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
-UID:e6002dca7a39268912a4b103e99e2dc6f923239b@esrw.de
-SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
-DTSTART:20261011T060000Z
-DTEND:20261011T093000Z
-SUMMARY:SR · U15 RLA: Iserlohner EC – Krefelder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
-  08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eissporthalle a
- m Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Schmidt
- \, Eugen\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
-GEO:51.384598;7.713829
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
- , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
- alle am Seilersee":geo:51.384598,7.713829
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA: Iserlohner EC –
-  Krefelder EV
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

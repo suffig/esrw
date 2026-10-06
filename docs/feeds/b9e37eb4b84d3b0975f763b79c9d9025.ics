@@ -50,15 +50,15 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Möhnesee,
   Möhnesee":geo:51.515208,8.159069
 END:VEVENT
 BEGIN:VEVENT
-UID:ccf2dda846233b86a01acbdb2d45991d972d574c@esrw.de
+UID:9688368968ac66bed043d34393ffaba1ed1fd9d6@esrw.de
 SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
-DTSTART:20261011T060000Z
-DTEND:20261011T093000Z
+DTSTAMP:20261006T120050Z
+LAST-MODIFIED:20261006T120050Z
+DTSTART:20261011T050000Z
+DTEND:20261011T083000Z
 SUMMARY:SR · U15 RLA: Iserlohner EC – Krefelder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
-  08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eissporthalle a
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eissporthalle a
  m Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Schmidt
  \, Eugen\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
