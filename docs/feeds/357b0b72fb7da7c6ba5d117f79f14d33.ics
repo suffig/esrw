@@ -8,6 +8,34 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
+UID:7b9b3ce11fefa27c7826ac611c47766cebe20554@esrw.de
+SEQUENCE:0
+DTSTAMP:20261006T090050Z
+LAST-MODIFIED:20261006T090050Z
+DTSTART:20261009T173000Z
+DTEND:20261009T210000Z
+SUMMARY:HSR · U20 RL: Neusser EV – Dinslakener Kobras
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:30 Uhr\nTreff
+ punkt: 19:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissportha
+ lle Neuss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Engler\, 
+ Gerhard (LSR) / Fenke\, Matthias (LSR)\n\nQuelle: https://www.esrw.de/eint
+ eilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
+GEO:51.175806;6.680258
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
+ -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
+ uss":geo:51.175806,6.680258
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · U20 RL: Neusser EV – Di
+ nslakener Kobras
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:ae8f046b3c781d73e492287edf82805bb9aa295f@esrw.de
 SEQUENCE:0
 DTSTAMP:20261002T111527Z

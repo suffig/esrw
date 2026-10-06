@@ -73,17 +73,17 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
 END:VEVENT
 BEGIN:VEVENT
 UID:1423d3e816ef16963a6b89aebaa8a76742ab47b9@esrw.de
-SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
+SEQUENCE:1
+DTSTAMP:20261006T090050Z
+LAST-MODIFIED:20261006T090050Z
 DTSTART:20261009T173000Z
 DTEND:20261009T210000Z
 SUMMARY:LSR · U20 RL: Neusser EV – Dinslakener Kobras
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
   19:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissporthalle Ne
- uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Krawinkel\, Mar
- kus (HSR) / Engler\, Gerhard (LSR)\n\nQuelle: https://www.esrw.de/einteilu
- ngen.html
+ uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Steven\, Patric
+ k (HSR) / Engler\, Gerhard (LSR)\n\nQuelle: https://www.esrw.de/einteilung
+ en.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
