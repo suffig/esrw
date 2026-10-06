@@ -131,4 +131,112 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: Ratinger Ice Alien
  s – EV Duisburg 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:ab1330bd4d34f72f70f6f14e182482714402a28d@esrw.de
+SEQUENCE:0
+DTSTAMP:20261006T110047Z
+LAST-MODIFIED:20261006T110047Z
+DTSTART:20261016T170000Z
+DTEND:20261016T203000Z
+SUMMARY:SR · BZL FS: EHC Essen Ruhr – Neusser EV 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: BZL FS\nHalle: Eissporthalle Es
+ sen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Scholz\, Arien\n\
+ nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Essen-West\, Curtiusstr. 2\, 45144 Essen
+GEO:51.454179;6.976731
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
+ Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
+ n-West":geo:51.454179,6.976731
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · BZL FS: EHC Essen Ruhr –
+  Neusser EV 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:bc4fd6dbf8599bccf55753fb30e6e433d0cb22f2@esrw.de
+SEQUENCE:0
+DTSTAMP:20261006T110047Z
+LAST-MODIFIED:20261006T110047Z
+DTSTART:20261017T144500Z
+DTEND:20261017T181500Z
+SUMMARY:SR · U11 LL Blau: GSC Moers 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:45 Uhr\nTreffpunkt:
+  16:45 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Blau\nHalle: Eissporthal
+ le Moers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Victor\, Tobi
+ as (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
+GEO:51.43973;6.6198
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
+ rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
+ ":geo:51.43973,6.6198
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Blau: GSC Moers 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:c13365c8f3c3317a86ae2e40eddfbc62430f6cd5@esrw.de
+SEQUENCE:0
+DTSTAMP:20261006T110047Z
+LAST-MODIFIED:20261006T110047Z
+DTSTART:20261018T150000Z
+DTEND:20261018T183000Z
+SUMMARY:SR · Senioren BZL: EHC Troisdorf 1b – TuS Wiehl 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
+  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: ICEDOME Tr
+ oisdorf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Kuda
+ l\, Lars\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/e
+ inteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
+GEO:50.811945;7.109233
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
+ rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
+ isdorf":geo:50.811945,7.109233
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: EHC Troisdor
+ f 1b – TuS Wiehl 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:de8b2f35a8eb0737ded4e7b32e9a3c7a3b7e6a10@esrw.de
+SEQUENCE:0
+DTSTAMP:20261006T110047Z
+LAST-MODIFIED:20261006T110047Z
+DTSTART:20261021T153000Z
+DTEND:20261021T190000Z
+SUMMARY:SR · U15 RLA: Kölner Junghaie – Krefelder EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
+  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Kölnarena 2\nA
+ dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Garcia Nieto\, Dar
+ io\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA: Kölner Junghaie 
+ – Krefelder EV
+END:VALARM
+END:VEVENT
 END:VCALENDAR

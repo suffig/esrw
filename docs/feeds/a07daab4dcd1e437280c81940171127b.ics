@@ -76,4 +76,31 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: TuS Wiehl – Eisa
  dler Dortmund
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:fe2f59b78535cdfaaa69cc19e19bf338fa1ca22d@esrw.de
+SEQUENCE:0
+DTSTAMP:20261006T110047Z
+LAST-MODIFIED:20261006T110047Z
+DTSTART:20261017T070000Z
+DTEND:20261017T103000Z
+SUMMARY:SR · U9 LL Rot: EHC Troisdorf 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Rot\nHalle: ICEDOME Trois
+ dorf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Kremer\
+ , Igor\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
+GEO:50.811945;7.109233
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
+ rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
+ isdorf":geo:50.811945,7.109233
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Rot: EHC Troisdorf 1
+ b
+END:VALARM
+END:VEVENT
 END:VCALENDAR

@@ -34,4 +34,32 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: TuS Wiehl – EV D
  uisburg 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:629a779b1baa201fa2f0277c00fe895c4626ef4b@esrw.de
+SEQUENCE:0
+DTSTAMP:20261006T110047Z
+LAST-MODIFIED:20261006T110047Z
+DTSTART:20261016T173000Z
+DTEND:20261016T210000Z
+SUMMARY:SR · Frauen Pokal Gr.B: KEC "Die Haie" – Dinslakener Kobras
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
+  19:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen Pokal Gr.B\nHalle: Köln
+ arena 2\nAdresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Hartmann
+ \, Marius\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/e
+ inteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen Pokal Gr.B: KEC "Di
+ e Haie" – Dinslakener Kobras
+END:VALARM
+END:VEVENT
 END:VCALENDAR

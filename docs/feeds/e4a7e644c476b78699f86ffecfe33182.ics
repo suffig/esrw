@@ -56,4 +56,31 @@ DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: TuS Wiehl – Her
  forder EV
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:f8dd497ea15b668d9e733659b47a2d8260e47469@esrw.de
+SEQUENCE:0
+DTSTAMP:20261006T110047Z
+LAST-MODIFIED:20261006T110047Z
+DTSTART:20261016T171500Z
+DTEND:20261016T204500Z
+SUMMARY:SR · U17 RL: EHC Troisdorf – Eisadler Dortmund
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
+  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: ICEDOME Troisdor
+ f\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Henkels\, 
+ André\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
+GEO:50.811945;7.109233
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
+ rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
+ isdorf":geo:50.811945,7.109233
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: EHC Troisdorf – 
+ Eisadler Dortmund
+END:VALARM
+END:VEVENT
 END:VCALENDAR

@@ -29,4 +29,32 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
  rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
  ":geo:51.43973,6.6198
 END:VEVENT
+BEGIN:VEVENT
+UID:e3a333bfa32b00667f74868bb02347ce841d8611@esrw.de
+SEQUENCE:0
+DTSTAMP:20261006T110047Z
+LAST-MODIFIED:20261006T110047Z
+DTSTART:20261017T080000Z
+DTEND:20261017T113000Z
+SUMMARY:HSR · U20 RL: Ratinger Ice Aliens – EHC Troisdorf
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 11:00 Uhr\nTreff
+ punkt: 10:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissportha
+ lle Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Solbach\,
+  Carsten (LSR) / Quint\, Sascha (LSR)\n\nQuelle: https://www.esrw.de/einte
+ ilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
+GEO:51.295808;6.834624
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
+  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
+ tingen":geo:51.295808,6.834624
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · U20 RL: Ratinger Ice Alie
+ ns – EHC Troisdorf
+END:VALARM
+END:VEVENT
 END:VCALENDAR

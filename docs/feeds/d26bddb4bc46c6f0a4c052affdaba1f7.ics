@@ -116,4 +116,48 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Frauen Pokal Gr.B: TSVE Bi
  elefeld – KEC "Die Haie"
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:31a888ceddb034a9c5306eda846f86935e32d3ea@esrw.de
+SEQUENCE:0
+DTSTAMP:20261006T110047Z
+LAST-MODIFIED:20261006T110047Z
+DTSTART:20261017T050000Z
+DTEND:20261017T083000Z
+SUMMARY:SR · U13 BZL Gr.A: ESC Rheine Young Cats – Mädchen W.I.N. 2
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\n!! Halle nicht au
+ tomatisch erkannt - bitte selbst pruefen !!\nGespann: Brücker\, Tobias\n\
+ nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: ESC Rheine Y
+ oung Cats – Mädchen W.I.N. 2
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:e7d018b6a272b794774297c50e5f4f4b206344e7@esrw.de
+SEQUENCE:0
+DTSTAMP:20261006T110047Z
+LAST-MODIFIED:20261006T110047Z
+DTSTART:20261018T160000Z
+DTEND:20261018T193000Z
+SUMMARY:SR · Senioren LL: ESC Rheine – Soester EG
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
+  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\n!! Halle nicht aut
+ omatisch erkannt - bitte selbst pruefen !!\nGespann: Zynda\, Nick\nVergüt
+ ung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: ESC Rheine 
+ – Soester EG
+END:VALARM
+END:VEVENT
 END:VCALENDAR

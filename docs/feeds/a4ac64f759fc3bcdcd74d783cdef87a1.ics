@@ -35,4 +35,26 @@ DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Grefrather
  EG – ESV Bergisch Gladbach
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:dd4bfc95ca918663566c47d88d1adad8fbc7329a@esrw.de
+SEQUENCE:0
+DTSTAMP:20261006T110047Z
+LAST-MODIFIED:20261006T110047Z
+DTSTART:20261018T170000Z
+DTEND:20261018T203000Z
+SUMMARY:SR · U15 LL: SpG Neusser EV / GSC Moers – EV Duisburg 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\n!! Halle nicht automati
+ sch erkannt - bitte selbst pruefen !!\nGespann: Hartmann\, Marius\n\nQuell
+ e: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: SpG Neusser EV / G
+ SC Moers – EV Duisburg 1b
+END:VALARM
+END:VEVENT
 END:VCALENDAR
