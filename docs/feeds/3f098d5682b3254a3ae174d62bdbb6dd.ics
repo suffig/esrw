@@ -50,35 +50,6 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West,
  n-West":geo:51.454179,6.976731
 END:VEVENT
 BEGIN:VEVENT
-UID:3b693e5fd871ef4775b6e1efaa82922d1611cda8@esrw.de
-SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
-DTSTART:20261010T090000Z
-DTEND:20261010T123000Z
-SUMMARY:SR · U9 LL Gelb: ESV Bergisch Gladbach
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
-  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Gelb\nHalle: Eissporthall
- e Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbach\
- nGespann: Henkels\, André\n\nQuelle: https://www.esrw.de/einteilungen.htm
- l
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
- ch Gladbach
-GEO:50.967548;7.135355
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
- dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
- TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Gelb: ESV Bergisch G
- ladbach
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:966a6870e1b02d574c29178ff5c687a281e7df38@esrw.de
 SEQUENCE:0
 DTSTAMP:20261002T111527Z

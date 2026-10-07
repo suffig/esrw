@@ -126,34 +126,6 @@ DESCRIPTION:In einer Stunde an der Halle - SR · BZL FS: EC Bergisch Land
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:3af2d33f7e2a6c59d721044197b477ab0c167b7d@esrw.de
-SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
-DTSTART:20261010T090000Z
-DTEND:20261010T123000Z
-SUMMARY:SR · U9 LL Gelb: ESV Bergisch Gladbach
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
-  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Gelb\nHalle: Eissporthall
- e Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbach\
- nGespann: Hindley\, David\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
- ch Gladbach
-GEO:50.967548;7.135355
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
- dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
- TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Gelb: ESV Bergisch G
- ladbach
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:2f3a6d78274d3bddb12d8f083d1c7d1b15286f34@esrw.de
 SEQUENCE:0
 DTSTAMP:20261002T111527Z
