@@ -2911,11 +2911,11 @@
     }).catch(function () { rendern(); });
     function rendern() {
       var offen = punkte.filter(function (x) { return !x.ok; });
-      if (!offen.length) { schreiben("einrichtung-weg", String(Date.now() + 365 * 86400000)); return; }
+      if (!offen.length) { schreiben("einrichtung-weg", String(Date.now() + 365 * 86400000)); einstellungenSync(); return; }
       box.className = "karte einrichtung";
       var kz = document.createElement("div"); kz.className = "kopfzeile";
       var hh = document.createElement("h4"); hh.appendChild(ikone("i-check")); hh.appendChild(document.createTextNode("Alles eingerichtet? " + (punkte.length - offen.length) + " von " + punkte.length)); kz.appendChild(hh);
-      var zu = document.createElement("button"); zu.type = "button"; zu.className = "textknopf"; zu.textContent = "Später"; zu.addEventListener("click", function () { schreiben("einrichtung-weg", String(Date.now())); box.className = "versteckt"; }); kz.appendChild(zu);
+      var zu = document.createElement("button"); zu.type = "button"; zu.className = "textknopf"; zu.textContent = "Später"; zu.addEventListener("click", function () { schreiben("einrichtung-weg", String(Date.now())); einstellungenSync(); box.className = "versteckt"; }); kz.appendChild(zu);
       box.appendChild(kz);
       var fort = document.createElement("div"); fort.className = "fortschritt"; var fi = document.createElement("i"); fi.style.width = Math.round((punkte.length - offen.length) / punkte.length * 100) + "%"; fort.appendChild(fi); box.appendChild(fort);
       offen.forEach(function (x) {
@@ -5337,9 +5337,10 @@
   var SYNC_SCHLUESSEL = ["verkehr", "einfach", "karten", "schrift", "akzent", "kompakt",
     "ziel", "start", "bereiche", "pushwoche", "pushabrechnung", "pushvorlauf", "pushgespann",
     "kalender", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4",
-    // Die Anleitung lief einmal - das gilt fuer alle Geraete desselben
-    // Kontos, sonst steht sie nach jedem Abmelden wieder da.
-    "tour-start", "tour-konto"];
+    // Die Anleitung lief einmal, die Einrichtungsliste ist weggetippt - das
+    // gilt fuer alle Geraete desselben Kontos, sonst steht beides nach jedem
+    // Abmelden wieder da.
+    "tour-start", "tour-konto", "einrichtung-weg"];
 
   function einstellungenSammeln() {
     var o = {};
@@ -5501,7 +5502,7 @@
       if ((lesen(k) || null) === (e[k] || null)) return;
       schreiben(k, e[k] || null); geaendert = true;
       // Dass die Anleitung schon lief, ist keine Meldung wert
-      if (k.indexOf("tour-") !== 0) sichtbar = true;
+      if (k.indexOf("tour-") !== 0 && k !== "einrichtung-weg") sichtbar = true;
     });
     if (geaendert) { einstellungenLaden(true); themaAnwenden(); einfachAnwenden(); tabsAnwenden(); funktionenAnwenden(funktionenLesen()); if (sichtbar) toast("Einstellungen vom Konto übernommen", ""); if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true); }
   }
