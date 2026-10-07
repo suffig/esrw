@@ -4769,7 +4769,8 @@
   // wenn die einfache Ansicht die halbe Seite ein- oder ausblendet - sonst
   // fehlt hinterher der halbe Wegweiser.
   function einstellungenSprung() {
-    sprungleiste("einstellungen-sprung", "einstellungen", [["konto-bereich", "Konto"], ["einfach", "Aussehen"], ["kalender-einst", "Kalender"], ["karten-app", "Unterwegs"], ["start-bausteine", "Startseite"], ["start-ordnung", "Reihenfolge"], ["schnell-wahl", "Schnellzugriff"], ["tab-wahl", "Leiste"], ["bereiche", "Bereiche"], ["sicherung-raus", "Sicherung"], ["adminzeile", "Betreiber"]]);
+    sprungleiste("einstellungen-sprung", "einstellungen", [["konto-bereich", "Konto"], ["konto-profil", "Profil"], ["konto-push", "Push"],
+       ["konto-daten", "Daten"], ["einfach", "Aussehen"], ["kalender-einst", "Kalender"], ["karten-app", "Unterwegs"], ["start-bausteine", "Startseite"], ["start-ordnung", "Reihenfolge"], ["schnell-wahl", "Schnellzugriff"], ["tab-wahl", "Leiste"], ["bereiche", "Bereiche"], ["sicherung-raus", "Sicherung"], ["adminzeile", "Betreiber"]]);
   }
 
   // Ein Chip-Titel darf kurz sein, aber nicht mitten im Wort enden -
@@ -4859,6 +4860,7 @@
     }, 300);
     bereicheRendern(); startBausteineRendern(); startOrdnungRendern(); schnellWahlRendern(); tabWahlRendern(); pushVerlaufRendern(); adminZeileRendern();
     setTimeout(einstellungenSprung, 400);
+    setTimeout(einstellungenSprung, 1600);
     var kb = el("konto-bereich"); kb.innerHTML = "";
     if (!sitzungVorhanden()) {
       var k = document.createElement("a"); k.href = "#mitglieder"; k.className = "hinweis"; k.style.display = "flex"; k.style.textDecoration = "none"; k.style.color = "inherit"; k.style.marginBottom = "12px";

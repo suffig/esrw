@@ -3906,14 +3906,14 @@ window.Mitglieder = (function () {
     var ueber = h("div", { class: "melde karte" }, [h("h4", { text: "Dein Konto" }), skelett(1)]);
     inhalt.appendChild(ueber);
     kontoUebersicht(ueber);
-    inhalt.appendChild(h("div", { class: "melde karte" }, [
+    inhalt.appendChild(h("div", { class: "melde karte", id: "konto-profil" }, [
       h("h4", { text: "Mein Profil" }),
       h("p", { text: "Name, Anschrift, Handynummer, Kilometermodell und die Rechnungsdaten, alles an einer Stelle. Auch über das Zeichen oben rechts erreichbar." }),
       h("button", { type: "button", class: "haupt", text: "Profil bearbeiten", onclick: function () { zeigeEinrichtung(seite ? "seite" : true); } })
     ]));
     // Rechnungsdaten stehen im Profil - hier nur der Weg dorthin.
     if (fn("push")) {
-      var pushBox = h("div", { class: "melde karte" }, [h("h4", {}, [ikone("i-bell"), " Push-Benachrichtigungen ", h("span", { class: "status", text: "" })]), h("p", { text: "prüfe …" })]);
+      var pushBox = h("div", { class: "melde karte", id: "konto-push" }, [h("h4", {}, [ikone("i-bell"), " Push-Benachrichtigungen ", h("span", { class: "status", text: "" })]), h("p", { text: "prüfe …" })]);
       inhalt.appendChild(pushBox);
       pushRendern(pushBox);
     }
@@ -3938,7 +3938,7 @@ window.Mitglieder = (function () {
       } })
     ]));
 
-    inhalt.appendChild(h("div", { class: "melde karte" }, [
+    inhalt.appendChild(h("div", { class: "melde karte", id: "konto-daten" }, [
       h("h4", { text: "Daten" }),
       h("p", { text: "Alles, was du hier einträgst, liegt in deinem Supabase-Konto und ist nur für dich lesbar. Ausgenommen sind Gesuche, Angebote, Verfügbarkeiten, Hallen-Hinweise, Mitfahrten und eine freigegebene Handynummer, die alle Mitglieder sehen. " +
         "Abrechnung als CSV gibt es im Reiter Abrechnung." }),

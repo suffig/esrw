@@ -640,6 +640,23 @@ def test_funktionstexte():
         pruefe(nr not in quelle, "keine feste Nummer im Titel (%s)" % nr)
 
 
+def test_vereinsnamen():
+    """Ein Trennstrich am Ende machte aus einem Verein zwei."""
+    print("\nVereinsnamen")
+    E = esrw_ical_modul()
+    pruefe(E.verein_sauber("Herner EV 1b -") == "Herner EV 1b", "Strich hinten faellt weg",
+           E.verein_sauber("Herner EV 1b -"))
+    pruefe(E.verein_sauber("– EV Duisburg") == "EV Duisburg", "auch vorne")
+    pruefe(E.verein_sauber("EHC Essen-West") == "EHC Essen-West", "Bindestrich im Namen bleibt",
+           E.verein_sauber("EHC Essen-West"))
+    pruefe(E.paarung_aus("Herner EV", "Iserlohner EC 1b") == "Herner EV – Iserlohner EC 1b",
+           "normale Paarung unveraendert")
+    pruefe(E.paarung_aus("SpG EHC Gelsenkirchen", "Herner EV 1b -") == "SpG EHC Gelsenkirchen – Herner EV 1b",
+           "und die kaputte wird sauber", E.paarung_aus("SpG EHC Gelsenkirchen", "Herner EV 1b -"))
+    pruefe(E.paarung_aus("Turnier Herford", "-") == "Turnier Herford",
+           "ein Strich allein ist kein Gast", E.paarung_aus("Turnier Herford", "-"))
+
+
 def test_kalenderwuensche():
     """Jeder stellt seinen Kalender selbst ein. Die Wuensche liegen im
     Konto und kommen als JSON-Text an - die App kennt nur Zeichenketten."""
@@ -910,7 +927,7 @@ def main():
                  test_korrektur_uid, test_gespannwechsel, test_ehemalige,
                  test_besetzung_korrektur, test_csp,
                  test_rechnungsvorlage, test_sicherung, test_erinnerungszeit, test_zurueckspielen, test_obmann_rechte,
-                 test_kalenderwuensche,
+                 test_kalenderwuensche, test_vereinsnamen,
                  test_funktionstexte,
                  test_tresor):
         test()

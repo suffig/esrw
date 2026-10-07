@@ -170,6 +170,13 @@ def text_aus(fragment):
     return " ".join(html.unescape(re.sub(r"<[^>]+>", " ", fragment)).split())
 
 
+def verein_sauber(name):
+    """esrw.de laesst hin und wieder einen Trennstrich stehen
+    ("Herner EV 1b -"). In Suche, Filtern und Statistik stuende derselbe
+    Verein dann zweimal."""
+    return re.sub(r"^[\s\-\u2013\u2014/]+|[\s\-\u2013\u2014/]+$", "", name or "")
+
+
 def slug_aus(name):
     return nkey(re.sub(r"\([^)]*\)", " ", name)).replace(" ", "-") or "unbekannt"
 
@@ -433,6 +440,11 @@ def baue_ics(termine, kalendername, cfg, stand, einst=None):
 
 # --------------------------------------------------------------------- Archiv
 
+def paarung_aus(heim, gast):
+    heim, gast = verein_sauber(heim), verein_sauber(gast)
+    return "%s – %s" % (heim, gast) if gast else heim
+
+
 def ergaenze_historie(historie, spiele, venues, stand):
     """Traegt neu gesehene Spiele dauerhaft ein. esrw.de zeigt nur wenige Tage
     rueckwaerts - hier bleibt die ganze Saison erhalten."""
@@ -446,7 +458,7 @@ def ergaenze_historie(historie, spiele, venues, stand):
             "beginn": s["start"].isoformat(),
             "begegnung": s["begegnung"],
             "liga": s["begegnung"].split(":", 1)[0].strip() if ":" in s["begegnung"] else "",
-            "paarung": "%s – %s" % (heim, gast) if gast else heim,
+            "paarung": paarung_aus(heim, gast),
             "halle": halle["name"] if halle else "",
             "besetzung": s["besetzung"],
             "zuletzt_gesehen": heute,
