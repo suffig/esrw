@@ -31,16 +31,17 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
 END:VEVENT
 BEGIN:VEVENT
 UID:1c3e08b017b844ca0b7489c0056dc79f2197224a@esrw.de
-SEQUENCE:1
-DTSTAMP:20260921T171526Z
-LAST-MODIFIED:20260921T171526Z
+SEQUENCE:2
+DTSTAMP:20261007T215052Z
+LAST-MODIFIED:20261007T215052Z
 DTSTART:20261003T061500Z
 DTEND:20261003T094500Z
-SUMMARY:SR · U9 LL Lila: SpG EHC Gelsenkirchen – Herner EV 1b -
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:15 Uhr\nTreffpunkt:
-  08:15 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Lila\nHalle: Emscher-Lipp
- e-Halle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\nG
- espann: Heu\, Alexander\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ SR · U9 LL Lila: SpG EHC Gelsenkirchen – Herner EV 1b
+DESCRIPTION:Geändert: Ansetzung\n\nRolle: Schiedsrichter (SR)\nSpielbeginn
+ : 09:15 Uhr\nTreffpunkt: 08:15 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL L
+ ila\nHalle: Emscher-Lippe-Halle Gelsenkirchen\nAdresse: Adenauerallee 118\
+ , 45891 Gelsenkirchen\nGespann: Heu\, Alexander\n\nQuelle: https://www.esr
+ w.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

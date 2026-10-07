@@ -79,16 +79,16 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:aa264ab677dd15667cae597e05251c0d21869719@esrw.de
-SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
+SEQUENCE:1
+DTSTAMP:20261007T215052Z
+LAST-MODIFIED:20261007T215052Z
 DTSTART:20261011T150000Z
 DTEND:20261011T183000Z
-SUMMARY:SR · U9 LL Lila: SpG GSC Moers 1b – Aachener EC -
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
-  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Lila\nHalle: 100'5 Arena 
- Aachen\nAdresse: Hubert-Wienen-Straße 8\, 52070 Aachen\n\nQuelle: https:/
- /www.esrw.de/einteilungen.html
+SUMMARY:⚠ SR · U9 LL Lila: SpG GSC Moers 1b – Aachener EC
+DESCRIPTION:Geändert: Ansetzung\n\nRolle: Schiedsrichter (SR)\nSpielbeginn
+ : 18:00 Uhr\nTreffpunkt: 17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL L
+ ila\nHalle: 100'5 Arena Aachen\nAdresse: Hubert-Wienen-Straße 8\, 52070 A
+ achen\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -100,8 +100,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="100'5 Arena Aachen, Hubert
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Lila: SpG GSC Moers 
- 1b – Aachener EC -
+DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · U9 LL Lila: SpG GSC Mo
+ ers 1b – Aachener EC
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
