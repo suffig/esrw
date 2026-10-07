@@ -133,16 +133,16 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:0fce8df5673b2a1bd8d6ef39e2dd89e0ff399d65@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
+SEQUENCE:1
+DTSTAMP:20261007T080044Z
+LAST-MODIFIED:20261007T080044Z
 DTSTART:20261019T160000Z
 DTEND:20261019T193000Z
 SUMMARY:SR · U15 LL: Eisadler Dortmund – EV Duisburg 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
   18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissportzentrum 
- Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Garbsch\, R
- ené\n\nQuelle: https://www.esrw.de/einteilungen.html
+ Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Schlüter\,
+  Thomas\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

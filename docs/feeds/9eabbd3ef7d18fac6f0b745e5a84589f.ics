@@ -213,30 +213,30 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: EHC Troisdor
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:de8b2f35a8eb0737ded4e7b32e9a3c7a3b7e6a10@esrw.de
+UID:7718e7b1cd02cb63de4efd42dacac2d32931af29@esrw.de
 SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261021T153000Z
-DTEND:20261021T190000Z
-SUMMARY:SR · U15 RLA: Kölner Junghaie – Krefelder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
-  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Kölnarena 2\nA
- dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Garcia Nieto\, Dar
- io\n\nQuelle: https://www.esrw.de/einteilungen.html
+DTSTAMP:20261007T080044Z
+LAST-MODIFIED:20261007T080044Z
+DTSTART:20261019T160000Z
+DTEND:20261019T193000Z
+SUMMARY:SR · U15 LL: Eisadler Dortmund – EV Duisburg 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
+  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissportzentrum 
+ Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Kalischke\,
+  Christian (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
-GEO:50.937979;6.98935
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
- r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
- .937979,6.98935
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA: Kölner Junghaie 
- – Krefelder EV
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Eisadler Dortmund 
+ – EV Duisburg 1b
 END:VALARM
 END:VEVENT
 END:VCALENDAR

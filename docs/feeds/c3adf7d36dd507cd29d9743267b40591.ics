@@ -4394,15 +4394,15 @@ END:VEVENT
 BEGIN:VEVENT
 UID:74f4aca23d23708a4de137ae1a20f6a57c1c096d@esrw.de
 SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
+DTSTAMP:20261007T080044Z
+LAST-MODIFIED:20261007T080044Z
 DTSTART:20261019T160000Z
 DTEND:20261019T193000Z
 SUMMARY:SR · U15 LL: Eisadler Dortmund – EV Duisburg 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
   18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissportzentrum 
- Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Kalischke\,
-  Christian (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+ Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Schlüter\,
+  Thomas\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -4448,15 +4448,15 @@ END:VEVENT
 BEGIN:VEVENT
 UID:5df67b7a2a6b9eda7be4b310139d4f54873c73f0@esrw.de
 SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
+DTSTAMP:20261007T080044Z
+LAST-MODIFIED:20261007T080044Z
 DTSTART:20261021T153000Z
 DTEND:20261021T190000Z
 SUMMARY:SR · U15 RLA: Kölner Junghaie – Krefelder EV
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
   17:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Kölnarena 2\nA
- dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Schlüter\, Thomas
- \n\nQuelle: https://www.esrw.de/einteilungen.html
+ dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Garcia Nieto\, Dar
+ io\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
