@@ -3959,6 +3959,8 @@
     el("tour").classList.add("versteckt"); document.body.style.overflow = "";
     if (tourName === "start" || tourName === "alles") schreiben("tour-start", "1");
     if (tourName === "konto" || tourName === "alles") schreiben("tour-konto", "1");
+    // Mit ins Konto, sonst faengt das naechste Geraet wieder von vorne an
+    if (sitzungVorhanden()) einstellungenSync();
   }
   function tourZeigen() {
     var s = tourSchritte[tourPos], sym = el("tour-symbol"); sym.innerHTML = ""; sym.appendChild(ikone(s[0]));
@@ -3975,9 +3977,20 @@
   el("tour-weg").addEventListener("click", tourSchliessen);
   el("tour").addEventListener("click", function (ev) { if (ev.target === el("tour")) tourSchliessen(); });
   document.addEventListener("keydown", function (ev) { if (ev.key === "Escape" && !el("tour").classList.contains("versteckt")) tourSchliessen(); });
-  function tourWennNeu() {
+  function tourWennNeu(versuch) {
     if (!el("tour").classList.contains("versteckt")) return;
-    if (!lesen("tour-start") && !(profil && profil.slug)) setTimeout(function () { if (lesen("tour-start")) return; tourOeffnen("start"); }, 700);
+    if (lesen("tour-start") || (profil && profil.slug)) return;
+    // Wer angemeldet ist, bekommt die Antwort aus dem Konto - erst darauf
+    // warten. Sonst stand die Anleitung auf jedem neuen Geraet wieder da,
+    // obwohl man sie laengst weggeklickt hatte.
+    // Nach fuenf Sekunden ohne Antwort nicht laenger warten: lieber einmal
+    // zu viel erklaert als eine Anleitung, die nie aufgeht.
+    versuch = versuch || 0;
+    if (sitzungVorhanden() && !kontoEinstellungenDa && versuch < 10) {
+      setTimeout(function () { tourWennNeu(versuch + 1); }, 500);
+      return;
+    }
+    setTimeout(function () { if (lesen("tour-start")) return; tourOeffnen("start"); }, 700);
   }
   // Nach der Registrierung: auf die Startseite, mit einem Wort dazu, was
   // noch fehlt. Sonst landet man in einem Bereich, der noch leer ist.
@@ -5323,7 +5336,10 @@
   // "pushvorlauf", "pushgespann" und den Kalenderwuenschen).
   var SYNC_SCHLUESSEL = ["verkehr", "einfach", "karten", "schrift", "akzent", "kompakt",
     "ziel", "start", "bereiche", "pushwoche", "pushabrechnung", "pushvorlauf", "pushgespann",
-    "kalender", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4"];
+    "kalender", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4",
+    // Die Anleitung lief einmal - das gilt fuer alle Geraete desselben
+    // Kontos, sonst steht sie nach jedem Abmelden wieder da.
+    "tour-start", "tour-konto"];
 
   function einstellungenSammeln() {
     var o = {};
@@ -5476,11 +5492,18 @@
       window.Mitglieder.einstellungenSpeichern(einstellungenSammeln()).catch(function () {});
     }, 800);
   }
+  var kontoEinstellungenDa = false;
   function einstellungenAnwenden(e) {
+    kontoEinstellungenDa = true;
     if (!e) return;
-    var geaendert = false;
-    SYNC_SCHLUESSEL.forEach(function (k) { if ((lesen(k) || null) !== (e[k] || null)) { schreiben(k, e[k] || null); geaendert = true; } });
-    if (geaendert) { einstellungenLaden(true); themaAnwenden(); einfachAnwenden(); tabsAnwenden(); funktionenAnwenden(funktionenLesen()); toast("Einstellungen vom Konto übernommen", ""); if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true); }
+    var geaendert = false, sichtbar = false;
+    SYNC_SCHLUESSEL.forEach(function (k) {
+      if ((lesen(k) || null) === (e[k] || null)) return;
+      schreiben(k, e[k] || null); geaendert = true;
+      // Dass die Anleitung schon lief, ist keine Meldung wert
+      if (k.indexOf("tour-") !== 0) sichtbar = true;
+    });
+    if (geaendert) { einstellungenLaden(true); themaAnwenden(); einfachAnwenden(); tabsAnwenden(); funktionenAnwenden(funktionenLesen()); if (sichtbar) toast("Einstellungen vom Konto übernommen", ""); if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true); }
   }
   // Das eigene Bild liegt zusaetzlich auf dem Geraet, damit die Kopfzeile
   // beim naechsten Start sofort stimmt - start.js liest es von dort.
@@ -5491,11 +5514,35 @@
     avatarKopf();
   });
   // Steht im Konto ein Name, ist das Profil dieses Geraets daran gebunden.
-  var kontoName = null;
+  // Gewaehlt wird er einmal bei der Registrierung, aendern kann ihn danach
+  // nur der Betreiber. Der Slug liegt auch auf dem Geraet: beim Start sind
+  // die Einteilungen noch verschluesselt, und ohne ihn stand solange die
+  // Namensliste da - auf jedem neuen Geraet aufs Neue.
+  var kontoName = lesen("konto-slug") || null;
   function kontoGebunden() { return !!(kontoName && sitzungVorhanden()); }
+  function kontoNamenMerken(slug) {
+    kontoName = slug || null;
+    schreiben("konto-slug", kontoName);
+    return kontoNamenAnwenden();
+  }
+  // true, sobald das Profil dieses Geraets auf dem Namen aus dem Konto steht
+  function kontoNamenAnwenden() {
+    if (!kontoName || !daten) return false;
+    var p = personMit(kontoName);
+    if (!p) return false;
+    if (profil && profil.slug === p.slug) {
+      if (!profil.name) { profil.name = p.name; profilSchreiben(); }
+      return true;
+    }
+    profil = { slug: p.slug, name: p.name, gesehen: {}, begonnen: false };
+    profilSchreiben(); schreiben("person", null); avatarKopf();
+    // Stand gerade die Namensliste da, gehoert jetzt die eigene Seite hin
+    if (!el("auswahl").classList.contains("versteckt")) zeigePerson(p);
+    return true;
+  }
   var kontoObmann = false;
   document.addEventListener("mg-profil", function (e) {
-    if (e.detail && e.detail.slug) kontoName = e.detail.slug;
+    if (e.detail && e.detail.slug) kontoNamenMerken(e.detail.slug);
     if (e.detail && e.detail.obmann) {
       kontoObmann = true;
       // Ohne eigene Einteilung ist die Namensliste der falsche Startpunkt
@@ -5505,7 +5552,9 @@
       }
     }
     if (e.detail && e.detail.einstellungen) einstellungenAnwenden(e.detail.einstellungen);
-    else if (e.detail && sitzungVorhanden()) einstellungenSync();
+    // Ohne Einstellungen im Konto gilt, was auf dem Geraet steht - und das
+    // wandert jetzt hinauf. Gewartet werden muss darauf also nicht mehr.
+    else if (e.detail && sitzungVorhanden()) { kontoEinstellungenDa = true; einstellungenSync(); }
     var slug = e.detail && e.detail.slug, p = slug && personMit(slug);
     if (!p || (profil && profil.slug === slug)) return;
     profil = { slug: p.slug, name: p.name, gesehen: {}, begonnen: false };
@@ -6020,7 +6069,11 @@
       document.title = daten.titel || "ESRW App"; titelAnpassen(); setTimeout(titelAnpassen, 800); el("quelle").href = daten.quelle;
       standAnzeigen(daten, b[1]);
       el("fuss").textContent = "Termine beginnen " + daten.vorlauf_minuten + " Minuten vor Spielbeginn, damit du rechtzeitig an der Halle bist.";
-      einstellungenLaden(); filterLaden(); avatarKopf(); zeigeListe("");
+      einstellungenLaden(); filterLaden();
+      // Der gemerkte Name aus dem Konto gilt, sobald die Einteilungen offen
+      // sind - vor dem Routen, sonst zeigt die App kurz die Namensliste.
+      kontoNamenAnwenden();
+      avatarKopf(); zeigeListe("");
       // Erst die Funktions-Schalter (Cache sofort, Server kurz danach), dann routen - sonst
       // landet ein Direktlink auf "Tausch" beim ersten Besuch faelschlich auf "abgeschaltet"
       var geroutet = false, routen = function () { if (geroutet) return; geroutet = true; ausHash(); tourWennNeu(); };
@@ -6032,7 +6085,13 @@
       if (sitzungVorhanden()) ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
         .then(function (st) { return st.eingerichtet && st.session && window.Mitglieder.kontoKurz ? window.Mitglieder.kontoKurz() : null; })
         .then(function (k) {
-          if (!k || !k.obmann) return;
+          if (!k) return;
+          if (k.slug) kontoNamenMerken(k.slug);
+          // Die Einstellungen des Kontos gelten auch, wenn man den
+          // Mitgliederbereich nie oeffnet - frueher kamen sie erst dort an.
+          if (k.einstellungen) einstellungenAnwenden(k.einstellungen);
+          else kontoEinstellungenDa = true;
+          if (!k.obmann) return;
           kontoObmann = true;
           if (profil && profil.slug) return;
           obmannHinweis();
@@ -6056,7 +6115,7 @@
     var an = !!(e.detail && e.detail.angemeldet);
     if (an === angemeldetStand) return;
     angemeldetStand = an;
-    if (!an) { try { localStorage.removeItem("tresor"); } catch (x) {} }
+    if (!an) { try { localStorage.removeItem("tresor"); } catch (x) {} schreiben("konto-slug", null); }
     location.reload();
   });
 

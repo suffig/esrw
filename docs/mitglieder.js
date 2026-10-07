@@ -850,8 +850,9 @@ window.Mitglieder = (function () {
     return bereit().then(function () {
       if (!sb || !session) return null;
       return ladeProfil().then(function () {
-        return profil ? { slug: profil.slug || null, obmann: !!profil.obmann,
-                          freigeschaltet: !!profil.freigeschaltet, admin: !!profil.admin } : null;
+        return profil ? { slug: profil.slug || null, name: profil.name || null, obmann: !!profil.obmann,
+                          freigeschaltet: !!profil.freigeschaltet, admin: !!profil.admin,
+                          einstellungen: profil.einstellungen || null } : null;
       });
     }).catch(function () { return null; });
   }
