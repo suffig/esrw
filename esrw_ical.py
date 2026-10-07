@@ -1001,7 +1001,7 @@ def besetzung_korrigieren(spiele, korrekturen, venues):
         if s.get("manuell"):
             continue
         _halle, heim, gast, _sicher = finde_halle(s["begegnung"], venues)
-        paarung = "%s – %s" % (heim, gast) if gast else heim
+        paarung = paarung_aus(heim, gast)
         k = korrekturen.get(s["start"].isoformat() + "|" + paarung)
         neu = (k or {}).get("besetzung")
         if not neu:
@@ -1026,7 +1026,7 @@ def sammle_personen(spiele, cfg, venues, jetzt, bevorzugt=frozenset(), gebuehren
         halle, heim, gast, sicher = finde_halle(spiel["begegnung"], venues)
         liga = spiel["begegnung"].split(":", 1)[0].strip() if ":" in spiel["begegnung"] else ""
         anstoss = spiel["start"]
-        paarung = "%s – %s" % (heim, gast) if gast else heim
+        paarung = paarung_aus(heim, gast)
         besetzung = rollen_fuer(spiel["besetzung"])
         kennung = spiel_id(anstoss.isoformat(), spiel["begegnung"])
         # Kennung der App (Original-Beginn|Paarung) - darauf zeigen Korrekturen

@@ -4860,7 +4860,6 @@
     }, 300);
     bereicheRendern(); startBausteineRendern(); startOrdnungRendern(); schnellWahlRendern(); tabWahlRendern(); pushVerlaufRendern(); adminZeileRendern();
     setTimeout(einstellungenSprung, 400);
-    setTimeout(einstellungenSprung, 1600);
     var kb = el("konto-bereich"); kb.innerHTML = "";
     if (!sitzungVorhanden()) {
       var k = document.createElement("a"); k.href = "#mitglieder"; k.className = "hinweis"; k.style.display = "flex"; k.style.textDecoration = "none"; k.style.color = "inherit"; k.style.marginBottom = "12px";
@@ -4870,7 +4869,7 @@
     ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) {
       if (!st.eingerichtet || !st.session) return;
       return window.Mitglieder.kontoRendern(kb);
-    }).catch(function () {});
+    }).then(einstellungenSprung).catch(function () {});
   }
 
   // ------------------------------------------------------------ Hallenkarte
