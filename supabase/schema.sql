@@ -2295,3 +2295,101 @@ $$;
 --     from public.profile p left join public.abo a on a.user_id = p.id
 --    where p.freigeschaltet and not p.admin
 --      and (a.bezahlt_bis is null or a.bezahlt_bis < current_date);
+
+-- ======================================================================
+-- v47: Kennungen ohne Reststrich
+-- ======================================================================
+-- esrw.de laesst hin und wieder einen Trennstrich stehen ("Herner EV 1b -").
+-- Bis zum 08.10.2026 ging der ungefiltert in die Kennung "beginn|paarung"
+-- ein. Seither raeumt verein_sauber() ihn weg - die App bildet also eine
+-- andere Kennung als die, unter der aeltere Zeilen gespeichert sind, und
+-- die finden sich nicht mehr wieder. Spuerbar waere das als: eine
+-- Korrektur des Betreibers verschwindet, ein bereits abgerechnetes Spiel
+-- fragt nochmal nach der Abrechnung, eine Erinnerung kommt zweimal.
+--
+-- Betroffen war genau ein Spiel von 144. Dieser Abschnitt zieht die
+-- gespeicherten Kennungen nach und ist beliebig oft ausfuehrbar.
+--
+-- Nur der Strich am Ende: am Anfang kam keiner vor, und ein Regex ueber
+-- den Heimverein waere unnoetig riskant.
+
+create or replace function public.kennung_sauber(k text) returns text
+  language sql immutable as $$ select regexp_replace(k, '[[:space:]/–—-]+$', '') $$;
+
+-- Je Tabelle zuerst die Zeilen weg, die sonst gegen die Eindeutigkeit
+-- stossen wuerden (die saubere Fassung ist dann schon da und gewinnt),
+-- danach den Rest umschreiben.
+
+delete from public.einsaetze e
+ where e.kennung <> public.kennung_sauber(e.kennung)
+   and exists (select 1 from public.einsaetze x
+                where x.user_id = e.user_id and x.kennung = public.kennung_sauber(e.kennung));
+update public.einsaetze e set kennung = public.kennung_sauber(e.kennung)
+ where e.kennung <> public.kennung_sauber(e.kennung);
+
+delete from public.gesuche g
+ where g.kennung <> public.kennung_sauber(g.kennung)
+   and exists (select 1 from public.gesuche x
+                where x.user_id = g.user_id and x.kennung = public.kennung_sauber(g.kennung));
+update public.gesuche g set kennung = public.kennung_sauber(g.kennung)
+ where g.kennung <> public.kennung_sauber(g.kennung);
+
+delete from public.mitfahrten m
+ where m.kennung <> public.kennung_sauber(m.kennung)
+   and exists (select 1 from public.mitfahrten x
+                where x.user_id = m.user_id and x.kennung = public.kennung_sauber(m.kennung));
+update public.mitfahrten m set kennung = public.kennung_sauber(m.kennung)
+ where m.kennung <> public.kennung_sauber(m.kennung);
+
+delete from public.spielnotizen n
+ where n.kennung <> public.kennung_sauber(n.kennung)
+   and exists (select 1 from public.spielnotizen x
+                where x.user_id = n.user_id and x.kennung = public.kennung_sauber(n.kennung));
+update public.spielnotizen n set kennung = public.kennung_sauber(n.kennung)
+ where n.kennung <> public.kennung_sauber(n.kennung);
+
+delete from public.spiel_meldungen s
+ where s.kennung <> public.kennung_sauber(s.kennung)
+   and exists (select 1 from public.spiel_meldungen x
+                where x.user_id = s.user_id and x.kennung = public.kennung_sauber(s.kennung));
+update public.spiel_meldungen s set kennung = public.kennung_sauber(s.kennung)
+ where s.kennung <> public.kennung_sauber(s.kennung);
+
+-- Kommentare haben keine Eindeutigkeit je Spiel - hier reicht Umschreiben.
+update public.spielkommentare k set kennung = public.kennung_sauber(k.kennung)
+ where k.kennung <> public.kennung_sauber(k.kennung);
+
+-- Kennung ist Primaerschluessel: erst die Dublette weg, dann umbenennen.
+delete from public.spiel_korrekturen k
+ where k.kennung <> public.kennung_sauber(k.kennung)
+   and exists (select 1 from public.spiel_korrekturen x
+                where x.kennung = public.kennung_sauber(k.kennung));
+update public.spiel_korrekturen k set kennung = public.kennung_sauber(k.kennung)
+ where k.kennung <> public.kennung_sauber(k.kennung);
+
+-- Im Archiv hat der stuendliche Lauf die saubere Zeile laengst angelegt;
+-- die alte ist eine Leiche, die das Spiel doppelt anzeigen wuerde.
+delete from public.spiele_archiv a
+ where a.kennung <> public.kennung_sauber(a.kennung)
+   and exists (select 1 from public.spiele_archiv x
+                where x.kennung = public.kennung_sauber(a.kennung));
+update public.spiele_archiv a set kennung = public.kennung_sauber(a.kennung)
+ where a.kennung <> public.kennung_sauber(a.kennung);
+
+-- push_gesendet speichert "praefix|kennung" - der Strich steht auch hier
+-- am Ende. Ohne das kaeme eine Erinnerung ein zweites Mal.
+delete from public.push_gesendet p
+ where p.schluessel <> public.kennung_sauber(p.schluessel)
+   and exists (select 1 from public.push_gesendet x
+                where x.user_id = p.user_id and x.schluessel = public.kennung_sauber(p.schluessel));
+update public.push_gesendet p set schluessel = public.kennung_sauber(p.schluessel)
+ where p.schluessel <> public.kennung_sauber(p.schluessel);
+
+-- Rechnungen merken sich die abgerechneten Spiele als Feld.
+update public.rechnungen r
+   set kennungen = (select array_agg(public.kennung_sauber(k) order by o)
+                      from unnest(r.kennungen) with ordinality as t(k, o))
+ where r.kennungen is not null
+   and exists (select 1 from unnest(r.kennungen) k where k <> public.kennung_sauber(k));
+
+drop function if exists public.kennung_sauber(text);

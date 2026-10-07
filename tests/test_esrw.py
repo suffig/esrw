@@ -601,6 +601,32 @@ def test_tresor():
         pruefe(b"A - B" not in roh, "die Paarung steht nicht lesbar drin")
         zurueck = E2.lade(os.path.join("docs", "archiv", "0000-00.json"), None)
         pruefe(zurueck == inhalt, "gelesen wie geschrieben")
+
+        # Gleicher Inhalt darf die Datei nicht anfassen - sonst committet der
+        # Workflow viermal die Stunde Dateien, in denen nichts neu ist.
+        vorher = open(probe + ".bin", "rb").read()
+        E2.schreibe(os.path.join("docs", "archiv", "0000-00.json"), inhalt)
+        pruefe(open(probe + ".bin", "rb").read() == vorher,
+               "gleicher Inhalt wird nicht neu verschluesselt")
+        E2.schreibe(os.path.join("docs", "archiv", "0000-00.json"), dict(inhalt, saison="0000/01"))
+        pruefe(open(probe + ".bin", "rb").read() != vorher, "neuer Inhalt wird geschrieben")
+        E2.schreibe(os.path.join("docs", "archiv", "0000-00.json"), inhalt)
+
+        # Ohne Schluessel, aber mit vorhandener .bin: abbrechen. Sonst liest
+        # der Lauf nichts, haelt sich fuer den ersten und schreibt alles im
+        # Klartext daneben - der Workflow committet das dann.
+        try:
+            tresor.json_lesen(probe, None)
+            pruefe(False, "ohne Schluessel bricht das Lesen ab")
+        except SystemExit:
+            pruefe(True, "ohne Schluessel bricht das Lesen ab")
+        try:
+            tresor.json_schreiben(probe, {"x": 1}, None)
+            pruefe(False, "ohne Schluessel entsteht kein Klartext")
+        except SystemExit:
+            pruefe(True, "ohne Schluessel entsteht kein Klartext")
+        pruefe(os.path.exists(probe + ".bin"), "die verschluesselte Fassung bleibt liegen")
+        pruefe(not os.path.exists(probe), "kein Klartext daneben")
     finally:
         for p in (probe, probe + ".bin"):
             if os.path.exists(p):
@@ -679,6 +705,16 @@ def test_kalenderwuensche():
 
     pruefe("Stunde" in E.alarm_text("-PT1H"), "bekannte Vorlaufzeit hat einen Text")
     pruefe(E.alarm_text("-PT7M") != "", "unbekannte Vorlaufzeit bleibt nicht stumm")
+
+    # Die Vorlaufzeit landet unveraendert als TRIGGER: im Feed. Sie kommt
+    # aus dem Konto - wer hier Zeilen einschmuggeln darf, schreibt sich
+    # eigene Kalendereintraege.
+    for gut in ("-PT1H", "-PT90M", "-P1D", "-P1DT2H", "PT0S", "-P2W"):
+        pruefe(E.ALARM_DAUER.fullmatch(gut) is not None, "Dauer bleibt erlaubt: %s" % gut)
+    for schlecht in ("-P\r\nATTACH:http://x/y", "-P;X-BOESE=1", "-P", "P",
+                     "-PT1H ", "morgen", "-PT1Humpf", "<script>"):
+        pruefe(E.ALARM_DAUER.fullmatch(schlecht) is None,
+               "faellt raus: %s" % schlecht.replace("\r", "\\r").replace("\n", "\\n"))
     # Wer zum Anpfiff beginnt, ist dann laengst da - "an der Halle" waere falsch
     anpf = {"beginn": "anstoss"}
     pruefe("an der Halle" not in E.alarm_text("-PT1H", anpf), "zum Anpfiff nicht 'an der Halle'",

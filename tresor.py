@@ -66,14 +66,50 @@ def entschluesseln(daten, k):
     return AESGCM(k).decrypt(nonce, daten[len(KENNUNG) + NONCE_LAENGE:], None)
 
 
+def _ohne_schluessel(pfad):
+    """Kein Schluessel, aber die verschluesselte Fassung liegt da.
+
+    Weitermachen hiesse: json_lesen gibt den Standardwert zurueck, der Lauf
+    haelt sich fuer einen ersten Lauf, json_schreiben legt alles im Klartext
+    daneben und loescht die .bin - und der Workflow committet beides. Namen
+    und Einteilungen stuenden offen im Repository. Ein lauter Abbruch ist
+    hier das sichere Ende: ein fehlgeschlagener Lauf faellt auf, ein stiller
+    Klartext nicht.
+    """
+    raise SystemExit(
+        "DATEN_SCHLUESSEL fehlt, aber %s.bin liegt da. Ohne Schluessel wuerden "
+        "die Daten im Klartext geschrieben und die verschluesselte Fassung "
+        "geloescht - deshalb Abbruch. Secret setzen, oder die .bin wegnehmen, "
+        "wenn wirklich im Klartext gearbeitet werden soll." % pfad)
+
+
+def _steht_schon_da(pfad, roh, k):
+    """Liegt genau dieser Inhalt schon verschluesselt da?
+
+    AES-GCM bekommt jedes Mal einen frischen Nonce, gleicher Text ergibt
+    also jedes Mal ein anderes Chiffrat. Ohne diesen Vergleich schreibt
+    jeder Lauf alle Dateien neu, und der Workflow committet viermal die
+    Stunde vier Binaerdateien, in denen sich nichts geaendert hat.
+    """
+    try:
+        with open(pfad + ".bin", "rb") as f:
+            return entschluesseln(f.read(), k) == roh
+    except Exception:
+        return False
+
+
 def json_schreiben(pfad, inhalt, k, **json_args):
     """Schreibt <pfad>.bin verschluesselt - oder <pfad> im Klartext, wenn kein
     Schluessel da ist. Die jeweils andere Fassung wird geloescht, damit nie
     beides nebeneinander liegt."""
+    if not k and os.path.exists(pfad + ".bin"):
+        _ohne_schluessel(pfad)
     text = json.dumps(inhalt, ensure_ascii=False, **json_args)
     if k:
-        with open(pfad + ".bin", "wb") as f:
-            f.write(verschluesseln(text.encode("utf-8"), k))
+        roh = text.encode("utf-8")
+        if not _steht_schon_da(pfad, roh, k):
+            with open(pfad + ".bin", "wb") as f:
+                f.write(verschluesseln(roh, k))
         if os.path.exists(pfad):
             os.remove(pfad)
     else:
@@ -85,6 +121,8 @@ def json_schreiben(pfad, inhalt, k, **json_args):
 
 def json_lesen(pfad, k, standard=None):
     """Liest <pfad>.bin (verschluesselt) oder <pfad> (Klartext)."""
+    if not k and os.path.exists(pfad + ".bin"):
+        _ohne_schluessel(pfad)
     if k and os.path.exists(pfad + ".bin"):
         with open(pfad + ".bin", "rb") as f:
             return json.loads(entschluesseln(f.read(), k).decode("utf-8"))
@@ -97,9 +135,13 @@ def json_lesen(pfad, k, standard=None):
 def text_schreiben(pfad, text, k):
     """Wie json_schreiben, aber fuer fertigen Text (Kalenderdateien bleiben
     Klartext - ein Kalender kann nicht entschluesseln)."""
+    if not k and os.path.exists(pfad + ".bin"):
+        _ohne_schluessel(pfad)
     if k:
-        with open(pfad + ".bin", "wb") as f:
-            f.write(verschluesseln(text.encode("utf-8"), k))
+        roh = text.encode("utf-8")
+        if not _steht_schon_da(pfad, roh, k):
+            with open(pfad + ".bin", "wb") as f:
+                f.write(verschluesseln(roh, k))
         if os.path.exists(pfad):
             os.remove(pfad)
     else:

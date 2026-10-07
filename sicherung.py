@@ -66,17 +66,46 @@ def tabellen():
     return namen
 
 
+ORDNUNG_VORZUG = ("id", "kennung", "schluessel", "slug", "user_id", "angelegt")
+
+
+def _ordnung(zeile):
+    """Die erste Spalte aus der Vorzugsliste, die es hier wirklich gibt."""
+    for s in ORDNUNG_VORZUG:
+        if s in zeile:
+            return "&order=" + s
+    return ""
+
+
 def hole(url, schluessel, tabelle):
     """Eine Tabelle vollstaendig, seitenweise - PostgREST liefert hoechstens
-    1000 Zeilen auf einmal."""
-    alles, schritt, von = [], 1000, 0
-    while True:
+    1000 Zeilen auf einmal.
+
+    Mit Range allein liegt die Reihenfolge nicht fest. Aendert sich die
+    Tabelle waehrend des Lesens, kommen Zeilen zweimal oder gar nicht - und
+    niemand merkt es. Darum: eine Seite blind holen, und erst wenn es mehr
+    gibt, von vorn mit einer Sortierspalte, die diese Tabelle hat.
+    """
+    schritt = 1000
+
+    def seite(von, ordnung):
         req = urllib.request.Request(
-            url.rstrip("/") + "/rest/v1/" + tabelle + "?select=*",
+            url.rstrip("/") + "/rest/v1/" + tabelle + "?select=*" + ordnung,
             headers={"apikey": schluessel, "Authorization": "Bearer " + schluessel,
                      "Range-Unit": "items", "Range": "%d-%d" % (von, von + schritt - 1)})
         with urllib.request.urlopen(req, timeout=60) as r:
-            teil = json.loads(r.read().decode("utf-8") or "[]")
+            return json.loads(r.read().decode("utf-8") or "[]")
+
+    erste = seite(0, "")
+    if len(erste) < schritt:
+        return erste
+    ordnung = _ordnung(erste[0])
+    if not ordnung:
+        print("  ! %s: keine Spalte zum Sortieren gefunden - die Reihenfolge "
+              "ueber die Seiten ist nicht gesichert." % tabelle, file=sys.stderr)
+    alles, von = [], 0
+    while True:
+        teil = seite(von, ordnung)
         alles.extend(teil)
         if len(teil) < schritt:
             return alles
@@ -202,8 +231,17 @@ def sichern():
     heute = datetime.date.today()
     pfad = os.path.join(ORDNER, heute.isoformat() + ".json")
     if os.path.exists(pfad + ".bin") and "--erzwingen" not in sys.argv:
-        # Der Workflow laeuft stuendlich, gesichert wird einmal am Tag
-        return 0
+        # Der Workflow laeuft stuendlich, gesichert wird einmal am Tag. Eine
+        # halbe Sicherung darf den Tag aber nicht belegen: sonst bleibt die
+        # Luecke bis morgen stehen, und der Alarm kommt einen Tag zu spaet.
+        try:
+            alt = tresor.json_lesen(pfad, k, None) or {}
+        except Exception:
+            alt = {}
+        if not alt.get("fehler"):
+            return 0
+        print("Sicherung von heute war unvollstaendig (%s) - neuer Versuch."
+              % ", ".join(sorted(alt["fehler"])))
 
     daten, fehler, zeilen = {}, {}, 0
     for t in tabellen():

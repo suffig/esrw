@@ -34,6 +34,7 @@ laeuft weiter.
 
 import json
 import os
+import re
 import sys
 import urllib.parse
 import urllib.request
@@ -45,7 +46,12 @@ try:
     from zoneinfo import ZoneInfo
     BERLIN = ZoneInfo("Europe/Berlin")
 except Exception:  # pragma: no cover - sehr alte Python-Version
+    # Fester Sommerzeit-Versatz: im Winter liegen damit alle Erinnerungen
+    # eine Stunde falsch. In der CI (Linux) kommt das nicht vor, auf einem
+    # Rechner ohne tzdata schon - deshalb laut sagen, nicht stillschweigen.
     BERLIN = timezone(timedelta(hours=2))
+    print("Push: zoneinfo fehlt (unter Windows hilft 'pip install tzdata'). "
+          "Fester Versatz +02:00 - im Winter eine Stunde daneben.", file=sys.stderr)
 
 BASIS = os.path.dirname(os.path.abspath(__file__))
 ERINNERUNG_AB_STUNDE = 7      # Spieltag-Erinnerung fruehestens um 07:00
@@ -69,8 +75,15 @@ def lade_json(name, standard):
     pfad = os.path.join(BASIS, name)
     try:
         wert = tresor.json_lesen(pfad, tresor.schluessel(), None)
-    except Exception:
+    except FileNotFoundError:
         wert = None
+    except Exception as e:
+        # Ein falscher Schluessel oder eine angefasste Datei sahen bisher aus
+        # wie "nichts zu melden": der Lauf endete mit 0 und alle Pushes der
+        # Stunde waren weg, denn aenderungen.json wird neu gebaut. Lieber
+        # laut daneben.
+        raise SystemExit("Push: %s nicht lesbar (%s). DATEN_SCHLUESSEL pruefen."
+                         % (name, str(e)[:120]))
     return standard if wert is None else wert
 
 
@@ -234,7 +247,7 @@ def erinnerungen(person, profil, jetzt, schon):
     return heraus
 
 
-def gesuche_pflegen(url, service, daten, jetzt, nachrichten):
+def gesuche_pflegen(url, service, daten, jetzt, nachrichten, nachtragen):
     """Offene Gesuche schliessen, sobald esrw.de den Suchenden nicht mehr im
     Spiel fuehrt; Helfer erledigter Gesuche benachrichtigen."""
     spiele_von = {s["beginn"] + "|" + s["paarung"]: s for s in daten.get("spiele", [])}
@@ -265,16 +278,23 @@ def gesuche_pflegen(url, service, daten, jetzt, nachrichten):
                 "text": "%s hat für %s (%s Uhr) Ersatz gefunden – danke fürs Anbieten." % (
                     g.get("name", "?"), g.get("paarung", ""), uhr(g["beginn"]) if g.get("beginn") else "?"),
                 "url": "./#mitglieder/tausch"}))
-        api(url, service, "gesuche?id=eq." + urllib.parse.quote(g["id"]), "PATCH", {"gemeldet": True})
+        nachtragen.append(("gesuche?id=eq." + urllib.parse.quote(g["id"]), {"gemeldet": True}))
 
 
 def main():
     url = os.environ.get("SUPABASE_URL", "").strip()
     service = os.environ.get("SUPABASE_SERVICE_KEY", "").strip()
     vapid = os.environ.get("VAPID_PRIVATE", "").strip()
-    kontakt = os.environ.get("VAPID_KONTAKT", "").strip() or "mailto:push@example.invalid"
+    # Apple lehnt einen VAPID-Absender ab, den es nicht erreichen kann. Mit
+    # einem Platzhalter schlugen alle Pushes fehl, waehrend der Lauf gruen
+    # blieb - deshalb hier Schluss, wenn die Adresse fehlt.
+    kontakt = os.environ.get("VAPID_KONTAKT", "").strip()
     if not (url and service and vapid):
         print("Push: SUPABASE_URL, SUPABASE_SERVICE_KEY oder VAPID_PRIVATE fehlt - nichts zu tun.")
+        return 0
+    if not kontakt:
+        print("Push: VAPID_KONTAKT fehlt (mailto:... oder https://...) - ohne "
+              "erreichbaren Absender lehnen Apple und andere die Pushes ab.", file=sys.stderr)
         return 0
 
     try:
@@ -316,6 +336,10 @@ def main():
 
     # Nachrichten je Nutzer einsammeln
     nachrichten = {}   # user_id -> [(schluessel oder None, nutzlast)]
+    # "Erledigt"-Haken erst setzen, wenn verschickt wurde. Standen sie vor
+    # dem Senden, war eine Benachrichtigung bei jedem Abbruch dazwischen
+    # endgueltig weg: die Zeile gilt als gemeldet, gesehen hat sie niemand.
+    nachtragen = []    # [(pfad, nutzlast)] - nach der Sendeschleife
     for uid, profil in profil_von.items():
         slug = profil.get("slug")
         if not slug:
@@ -399,8 +423,8 @@ def main():
                 nachrichten.setdefault(uid, []).append((None, {
                     "titel": "Morgen: " + t["titel"], "text": (t.get("text") or "")[:400], "url": "./#mitglieder/info"}))
             try:
-                api(url, service, "ankuendigungen?id=eq." + urllib.parse.quote(t["id"]), "PATCH",
-                    {"erinnert": jetzt.astimezone(timezone.utc).isoformat()})
+                nachtragen.append(("ankuendigungen?id=eq." + urllib.parse.quote(t["id"]),
+                                   {"erinnert": jetzt.astimezone(timezone.utc).isoformat()}))
             except Exception:
                 pass
 
@@ -410,8 +434,15 @@ def main():
         neu = neu or []
         if neu:
             slug_zu_uid = {}
-            for p in api(url, service, "profile?select=id,slug&slug=in.(%s)" % ",".join(
-                    '"%s"' % g for k in neu for g in (k.get("gespann") or []))) or []:
+            # Die Slugs stehen so im Kommentar, wie ihn ein Mitglied
+            # geschrieben hat. Unkodiert haengt ein "&" einen Parameter an
+            # die Abfrage mit dem Service-Schluessel, und ein Zeichen, das
+            # urllib nicht mag, liess den ganzen Block auffliegen - dann
+            # blieben die Gespann-Notizen fuer alle liegen.
+            slugs = sorted({g for k in neu for g in (k.get("gespann") or [])
+                            if isinstance(g, str) and re.fullmatch(r"[a-z0-9-]{1,80}", g)})
+            for p in (api(url, service, "profile?select=id,slug&slug=in.(%s)" % ",".join(
+                    '"%s"' % g for g in slugs)) if slugs else []) or []:
                 slug_zu_uid[p["slug"]] = p["id"]
             for k in neu:
                 for g in k.get("gespann") or []:
@@ -422,7 +453,7 @@ def main():
                         "titel": "%s zum Spiel %s" % (k.get("name", "?").split(",")[-1].strip(), uhr(k["beginn"]) + " Uhr" if k.get("beginn") else ""),
                         "text": (k.get("paarung", "") + ": " + (k.get("text") or ""))[:400],
                         "url": "./#spiel/" + urllib.parse.quote(k.get("kennung") or "", safe="")}))
-                api(url, service, "spielkommentare?id=eq." + urllib.parse.quote(k["id"]), "PATCH", {"gemeldet": True})
+                nachtragen.append(("spielkommentare?id=eq." + urllib.parse.quote(k["id"]), {"gemeldet": True}))
     except Exception as e:
         print("Push: Gespann-Notizen nicht verarbeitet: %s" % str(e)[:120], file=sys.stderr)
 
@@ -436,7 +467,8 @@ def main():
                 try:
                     webpush(subscription_info={"endpoint": a["endpoint"], "keys": {"p256dh": a["p256dh"], "auth": a["auth"]}},
                             data=json.dumps({"titel": "Einteilungen: Test vom Server", "text": "Dieses Gerät bekommt Push-Nachrichten. Alles gut.", "url": "./#mitglieder/konto"}, ensure_ascii=False),
-                            vapid_private_key=vapid, vapid_claims={"sub": kontakt}, ttl=600)
+                            vapid_private_key=vapid, vapid_claims={"sub": kontakt}, ttl=600,
+                            timeout=15)
                 except Exception as e:
                     print("Push-Test fehlgeschlagen: %s" % str(e)[:120], file=sys.stderr)
             api(url, service, "push_test?id=eq." + urllib.parse.quote(t["id"]), "DELETE")
@@ -498,7 +530,7 @@ def main():
                     return 2 * 6371 * math.asin(math.sqrt(x))
                 for m in neue:
                     spiel = next((s for s in spiele_alle if (s.get("id") or (s["beginn"] + "|" + s.get("paarung", ""))) == m["kennung"]), None)
-                    api(url, service, "mitfahrten?id=eq." + urllib.parse.quote(m["id"]), "PATCH", {"gemeldet": True})
+                    nachtragen.append(("mitfahrten?id=eq." + urllib.parse.quote(m["id"]), {"gemeldet": True}))
                     if not spiel:
                         continue
                     try:
@@ -547,11 +579,23 @@ def main():
     # im Spiel fuehrt; Helfer bekommen Bescheid
     try:
         if an("tausch", False):
-            gesuche_pflegen(url, service, daten, jetzt, nachrichten)
+            gesuche_pflegen(url, service, daten, jetzt, nachrichten, nachtragen)
     except Exception as e:
         print("Push: Tauschboerse nicht gepflegt: %s" % str(e)[:120], file=sys.stderr)
 
+    def haken_setzen():
+        for pfad, nutzlast in nachtragen:
+            try:
+                api(url, service, pfad, "PATCH", nutzlast)
+            except Exception as e:
+                print("Push: Haken nicht gesetzt (%s): %s" % (pfad[:48], str(e)[:90]),
+                      file=sys.stderr)
+        del nachtragen[:]
+
     if not nachrichten:
+        # Auch ohne Empfaenger die Haken setzen - sonst meldet sich dieselbe
+        # Notiz jede Stunde neu.
+        haken_setzen()
         print("Push: nichts zu melden.")
         return 0
 
@@ -563,7 +607,10 @@ def main():
                     subscription_info={"endpoint": abo["endpoint"],
                                        "keys": {"p256dh": abo["p256dh"], "auth": abo["auth"]}},
                     data=json.dumps(nutzlast, ensure_ascii=False), vapid_private_key=vapid,
-                    vapid_claims={"sub": kontakt}, ttl=3600 if schluessel else 86400)
+                    vapid_claims={"sub": kontakt}, ttl=3600 if schluessel else 86400,
+                    # Ohne Zeitgrenze haengt ein stummer Push-Dienst den
+                    # ganzen Lauf, und die naechsten Stunden stauen sich.
+                    timeout=15)
                 gesendet_n += 1
                 if schluessel:
                     neu_gemerkt.append({"user_id": abo["user_id"], "schluessel": schluessel})
@@ -584,7 +631,11 @@ def main():
                 fehler_n += 1
                 print("Push an %s nicht moeglich: %s" % (abo["user_id"][:8], str(e)[:120]), file=sys.stderr)
 
-    if ank:
+    haken_setzen()
+
+    # Nur vermerken, wenn wirklich etwas rausging - sonst gilt eine
+    # Ankuendigung als verschickt, die kein Geraet erreicht hat.
+    if ank and gesendet_n:
         try:
             api(url, service, "ankuendigungen?id=in.(%s)" % ",".join(a["id"] for a in ank), "PATCH",
                 {"push_gesendet": jetzt.astimezone(timezone.utc).isoformat()})

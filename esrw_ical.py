@@ -33,7 +33,12 @@ try:
     from zoneinfo import ZoneInfo
     BERLIN = ZoneInfo("Europe/Berlin")
 except Exception:  # pragma: no cover
+    # Ohne Zeitzone rechnet _zeit() in UTC weiter: Spiele aus
+    # spiele_manuell stehen dann mit falscher Stunde in daten.json.
+    # Die Spiele von esrw.de behalten ihren Versatz, sind also heil.
     BERLIN = None
+    sys.stderr.write("Warnung: zoneinfo fehlt (unter Windows 'pip install tzdata'). "
+                     "Von Hand eingetragene Spiele bekommen UTC-Zeiten.\n")
 from collections import Counter
 from datetime import datetime, timedelta, timezone
 
@@ -788,6 +793,10 @@ KALENDER_STANDARD = {
     "alarme": ["-PT1H"],  # Vorlaufzeiten, leer = keine Erinnerung
 }
 
+# Eine Dauer nach ISO 8601, nicht mehr: "-PT1H", "-PT90M", "-P1DT2H".
+# Das P darf nicht allein stehen, und hinter der Dauer darf nichts kommen.
+ALARM_DAUER = re.compile(r"-?P(?=[0-9T])(?:[0-9]+[WD])*(?:T(?:[0-9]+[HMS])+)?")
+
 
 def kalender_einstellungen(cfg):
     """slug -> Wuensche fuer den eigenen Kalender."""
@@ -813,9 +822,13 @@ def kalender_einstellungen(cfg):
                 werte[k] = v
         if not isinstance(werte.get("alarme"), list):
             werte["alarme"] = list(KALENDER_STANDARD["alarme"])
-        # Nur Vorlaufzeiten, die auch nach einer Dauer aussehen
+        # Die Vorlaufzeit steht als TRIGGER: unveraendert im Kalender - und
+        # sie kommt aus dem Konto, also von aussen. "^-?P" liess alles
+        # dahinter durch: mit "-P\r\nATTACH:..." haengt sich jeder beliebige
+        # Zeilen in seinen eigenen Feed. Darum die ganze Angabe pruefen und
+        # nur Ziffern und die Dauer-Buchstaben zulassen.
         werte["alarme"] = [a for a in werte["alarme"][:4]
-                           if isinstance(a, str) and re.match(r"^-?P", a)]
+                           if isinstance(a, str) and ALARM_DAUER.fullmatch(a)]
         heraus[slug] = werte
     return heraus
 
