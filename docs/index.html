@@ -2090,6 +2090,25 @@
   :root[data-design="neu"] .karte,
   :root[data-design="neu"] .spiel,
   :root[data-design="neu"] .melde { box-shadow:none; }
+
+  /* Die Spielkarte war 203 px hoch; drei Spiele an einem Wochenende
+     fuellten damit den Bildschirm. Gleiche Angaben, enger gesetzt:
+     Datum als Kachel links, Uhrzeit und Begegnung in einer Zeile,
+     darunter Halle und Gespann. */
+  :root[data-design="neu"] .spiel { border:0; padding:var(--abstand-m) var(--abstand-l);
+    margin-bottom:var(--abstand-xs); }
+  :root[data-design="neu"] .spiel .kopfzeile { margin-bottom:0; }
+  :root[data-design="neu"] .spiel .paarung { font-size:var(--s-xl); line-height:1.3;
+    margin-top:0; }
+  :root[data-design="neu"] .spiel .meta { font-size:var(--s-m); line-height:1.35; }
+  :root[data-design="neu"] .spiel.zeit-links .wann { padding:var(--halb) var(--eng);
+    border-radius:var(--radius-s); }
+  :root[data-design="neu"] .spiel .wann em { font-size:var(--s-2xl); }
+  /* Das Gespann steht als Zeile, nicht als Kette von Kacheln */
+  :root[data-design="neu"] .spiel .chip { padding:2px var(--abstand-s) 2px var(--eng);
+    font-size:var(--s-s); background:none; border:0; }
+  :root[data-design="neu"] .spiel .avatar { width:18px; height:18px; font-size:9px; }
+  :root[data-design="neu"] .spiel .rolle { padding:3px var(--abstand-s); font-size:var(--s-xs); }
 </style>
 </head>
 <body>
