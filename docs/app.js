@@ -1333,10 +1333,10 @@
 
     var kopf = el("spiel-kopf"); kopf.innerHTML = "";
     var h = document.createElement("div"); h.className = "spiel-kopf";
-    if (s.liga) {
-      var hue = (function () { var g = ligaGruppe(s.liga), hv = LIGA_FARBEN[g]; if (hv === undefined) { hv = 0; for (var i = 0; i < g.length; i++) hv = (hv * 31 + g.charCodeAt(i)) % 360; } return hv; })();
-      h.classList.add("liga-farbe"); h.style.setProperty("--liga-dunkel-1", "hsl(" + hue + ", 45%, 26%)"); h.style.setProperty("--liga-dunkel-2", "hsl(" + hue + ", 50%, 40%)");
-    }
+    // Frueher trug die groesste Flaeche der Seite die Ligafarbe - ein
+    // zufaelliger Farbton aus dem Ligakuerzel, der die gewaehlte
+    // Akzentfarbe und das Logo ueberdeckte. Die Liga steht als Chip
+    // darunter, in der Liste faerbt sie weiterhin die Datumskachel.
     var w = document.createElement("div"); w.className = "wann";
     var t = tagTitel(d); w.textContent = t[0] + (t[1] ? " · " + t[1] : ""); h.appendChild(w);
     var z = document.createElement("div"); z.className = "zeit"; z.textContent = uhr(d) + " Uhr"; h.appendChild(z);

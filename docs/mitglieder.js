@@ -3051,33 +3051,29 @@ window.Mitglieder = (function () {
 
     inhalt.appendChild(h("div", { class: "mg-summenblock" }));
 
-    var hallen = []; spiele.forEach(function (sp) { if (sp.halle && hallen.indexOf(sp.halle) < 0) hallen.push(sp.halle); });
-    var strecken = h("button", { type: "button", text: "Strecken berechnen", onclick: function () {
-      if (!profil.heimat_lat) { meldung("Erst unter Konto → Einstellungen die Heimatadresse setzen und suchen lassen.", "warn"); return; }
-      strecken.disabled = true; strecken.textContent = "berechne …";
-      streckenFuer(hallen).then(function () {
-        var n = 0;
+    // Seit die Abrechnung beim Oeffnen selbst eintraegt, ist das hier nur
+    // noch der Nachzuegler fuer Spiele, die damals nichts abbekommen haben.
+    var nachtragen = h("button", { type: "button", text: "Fehlendes nachtragen", onclick: function () {
+      nachtragen.disabled = true; nachtragen.textContent = "trägt nach …";
+      streckenNachladen(spiele).then(function () {
+        var km = 0, verg = 0, offen = 0;
         spiele.forEach(function (sp) {
-          var e = einsaetze[sp.kennung];
-          if (e && e.km != null) return;
-          var v = kmVorschlag(sp);
-          if (v) { speichereEinsatz(sp, { km: v.km }); n++; }
+          var e = einsaetze[sp.kennung], aend = {};
+          if (!e || e.km == null) { var v = kmVorschlag(sp); if (v) { aend.km = v.km; km++; } }
+          if (!e || e.verguetung == null) {
+            var g = sollBetrag(sp);
+            if (g == null) offen++; else { aend.verguetung = g; verg++; }
+          }
+          if (Object.keys(aend).length) speichereEinsatz(sp, aend);
         });
-        meldung(hallen.length + " Hallen berechnet, " + n + " Spiele eingetragen.", "gut");
+        var teile = [];
+        if (km) teile.push(km + (km === 1 ? " Kilometerangabe" : " Kilometerangaben"));
+        if (verg) teile.push(verg + (verg === 1 ? " Vergütung" : " Vergütungen"));
+        meldung(teile.length
+          ? teile.join(" und ") + " nachgetragen" + (offen ? ", " + offen + " ohne Zuordnung (bitte von Hand)" : "") + "."
+          : "Es fehlte nichts.", teile.length ? "gut" : "");
         rendereAbrechnung();
-      }).catch(function (e) { meldung("Streckenberechnung fehlgeschlagen: " + (e.message || e), "warn"); rendereAbrechnung(); });
-    } });
-    var gebuehr = h("button", { type: "button", text: "Vergütung eintragen", onclick: function () {
-      var n = 0, offen = 0;
-      spiele.forEach(function (sp) {
-        var e = einsaetze[sp.kennung];
-        if (e && e.verguetung != null) return;
-        var g = sollBetrag(sp);
-        if (g == null) { offen++; return; }
-        speichereEinsatz(sp, { verguetung: g }); n++;
-      });
-      meldung(n + " Spiele nach Gebührenordnung eingetragen" + (offen ? ", " + offen + " ohne Zuordnung (bitte von Hand)" : "") + ".", n ? "gut" : "warn");
-      rendereAbrechnung();
+      }, function (e) { meldung("Nachtragen fehlgeschlagen: " + fehlerText(e), "warn"); rendereAbrechnung(); });
     } });
     // Eine Leiste, ein Panel: Steuerjahre, Abrechnungsart, Werkzeuge, Spiel eintragen, Regeln
     var panelInhalt = {
@@ -3085,11 +3081,10 @@ window.Mitglieder = (function () {
       art: function () { return abrechnungEinstellungen(spiele); },
       werkzeuge: function () {
         return h("div", {}, [
-          h("p", { class: "meta", style: "margin:0 0 8px", text: "Vergangene Spiele bekommen km und Vergütung von selbst. Die Knöpfe füllen nur, was noch fehlt." }),
-          h("div", { class: "zweit" }, [strecken, gebuehr,
+          h("p", { class: "meta", style: "margin:0 0 8px", text: "Vergangene Spiele bekommen km und Vergütung beim Öffnen von selbst. Hier steht, was man darüber hinaus braucht." }),
+          h("div", { class: "zweit" }, [nachtragen,
+            h("button", { type: "button", text: "Fahrtenbuch für die Steuer", title: "Jahresblatt und CSV je Steuerjahr", onclick: function () { zeigeFahrtenbuch(); } }),
             h("button", { type: "button", text: "CSV der Saison", onclick: function () { csvExport(spiele); } }),
-            h("button", { type: "button", text: "Für die Steuer", title: "Jahresblatt und CSV je Steuerjahr", onclick: function () { zeigeFahrtenbuch(); } }),
-            h("button", { type: "button", text: "Fahrtenbuch", onclick: function () { zeigeFahrtenbuch(); } }),
             h("button", { type: "button", text: "Drucken", onclick: function () { window.print(); } })])]);
       },
       eintragen: function () { return spielEintragenFormular(function () { abrechnungPanel = null; rendereAbrechnung(); }); },
