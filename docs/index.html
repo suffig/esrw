@@ -2057,6 +2057,39 @@
      niemand bestaetigt - ein Tipp ins Feld laesst den Vermerk verschwinden */
   .mg-status.gerechnet { background:var(--warn-bg); color:var(--warn); border:0; font:inherit;
     font-size:var(--s-xs); font-weight:700; cursor:pointer; }
+
+  /* ==================================================================
+     Neues Design (im Aufbau)
+     Alles unter :root[data-design="neu"]. Das alte Design bleibt
+     unberuehrt, der Schalter steht in den Einstellungen und ist nur fuer
+     den Betreiber sichtbar. Hier entsteht Ansicht fuer Ansicht das, was
+     in referenz/entwurf/ zu sehen ist.
+     ================================================================== */
+  :root[data-design="neu"] {
+    --bg:#f4f5f7; --karte:#fff; --linie:#e4e7ec;
+    --text:#14181f; --dim:#687283;
+    --akzent:#111418; --akzent-hell:#f0f1f3; --akzent-text:#fff;
+    --held-1:#111418; --held-2:#20262f;
+    --schatten:none;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root[data-design="neu"]:not([data-theme="light"]) {
+      --bg:#0e1116; --karte:#171b22; --linie:#2a303a;
+      --text:#eceff3; --dim:#98a1ad;
+      --akzent:#fff; --akzent-hell:#1f242d; --akzent-text:#14181f;
+      --held-1:#20262f; --held-2:#272e38;
+    }
+  }
+  :root[data-design="neu"][data-theme="dark"] {
+    --bg:#0e1116; --karte:#171b22; --linie:#2a303a;
+    --text:#eceff3; --dim:#98a1ad;
+    --akzent:#fff; --akzent-hell:#1f242d; --akzent-text:#14181f;
+    --held-1:#20262f; --held-2:#272e38;
+  }
+  /* Karten tragen Flaeche, keine Rahmen - Linien nur, wo sie trennen */
+  :root[data-design="neu"] .karte,
+  :root[data-design="neu"] .spiel,
+  :root[data-design="neu"] .melde { box-shadow:none; }
 </style>
 </head>
 <body>

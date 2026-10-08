@@ -404,6 +404,14 @@
     var st = new Date().getHours();
     return st >= ABEND_VON || st < ABEND_BIS;
   }
+  // Das neue Design entsteht Ansicht fuer Ansicht. Bis es fertig ist,
+  // laeuft das alte weiter; der Betreiber kann zwischen beiden wechseln
+  // und jederzeit zurueck. Fuer alle anderen gibt es den Schalter nicht.
+  function designNeu() { return lesen("design") === "neu"; }
+  function designAnwenden() {
+    if (designNeu()) document.documentElement.setAttribute("data-design", "neu");
+    else document.documentElement.removeAttribute("data-design");
+  }
   function themaAnwenden() {
     var t = lesen("thema");
     var gewaehlt = t === "abend" ? (abendDunkel() ? "dark" : "light") : t;
@@ -2983,7 +2991,12 @@
     ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
       .then(function (st) { return st.eingerichtet && st.session && window.Mitglieder.adminRecht ? window.Mitglieder.adminRecht() : false; })
       .then(function (ja) {
-        if (!ja) return;
+        if (!ja) {
+          // Ohne Adminrecht gibt es den Schalter nicht - dann darf auch das
+          // neue Design nicht haengen bleiben, sonst kaeme man nicht zurueck.
+          if (designNeu()) { schreiben("design", null); designAnwenden(); }
+          return;
+        }
         var h3 = document.createElement("h3"); h3.className = "abschnitt"; h3.textContent = "Betreiber";
         var sm = document.createElement("small"); sm.textContent = "Admin-Funktionen ein- oder ausblenden, die Rechte bleiben"; h3.appendChild(sm);
         box.appendChild(h3);
@@ -2994,7 +3007,25 @@
         t.appendChild(b); t.appendChild(s2);
         var c = document.createElement("input"); c.type = "checkbox"; c.checked = adminModusAn();
         c.addEventListener("change", function () { schreiben("adminaus", c.checked ? null : "1"); adminKnopfStand(); zaehlerHolen(); toast(c.checked ? "Admin-Modus an." : "Admin-Modus aus.", "gut"); });
-        l.appendChild(t); l.appendChild(c); karte.appendChild(l); box.appendChild(karte);
+        l.appendChild(t); l.appendChild(c); karte.appendChild(l);
+
+        // Zweiter Schalter: das neue Design. Es entsteht Stueck fuer Stueck,
+        // deshalb sieht man es nur hier - und kommt jederzeit zurueck.
+        var ld = document.createElement("label"); var td = document.createElement("span");
+        var bd = document.createElement("b"); bd.textContent = "Neues Design"; bd.style.display = "block";
+        var sd = document.createElement("small");
+        sd.textContent = "Im Aufbau. Was noch nicht umgestellt ist, sieht aus wie bisher.";
+        sd.style.color = "var(--dim)"; sd.style.fontWeight = "500";
+        td.appendChild(bd); td.appendChild(sd);
+        var cd = document.createElement("input"); cd.type = "checkbox"; cd.checked = designNeu();
+        cd.addEventListener("change", function () {
+          schreiben("design", cd.checked ? "neu" : null);
+          designAnwenden();
+          toast(cd.checked ? "Neues Design an." : "Zurück zum bisherigen Design.", "gut");
+        });
+        ld.appendChild(td); ld.appendChild(cd); karte.appendChild(ld);
+
+        box.appendChild(karte);
         box.classList.remove("versteckt");
       }).catch(function () {});
   }
@@ -6077,7 +6108,7 @@
       document.title = daten.titel || "ESRW App"; titelAnpassen(); setTimeout(titelAnpassen, 800); el("quelle").href = daten.quelle;
       standAnzeigen(daten, b[1]);
       el("fuss").textContent = "Termine beginnen " + daten.vorlauf_minuten + " Minuten vor Spielbeginn, damit du rechtzeitig an der Halle bist.";
-      einstellungenLaden(); filterLaden();
+      einstellungenLaden(); filterLaden(); designAnwenden();
       // Der gemerkte Name aus dem Konto gilt, sobald die Einteilungen offen
       // sind - vor dem Routen, sonst zeigt die App kurz die Namensliste.
       kontoNamenAnwenden();
