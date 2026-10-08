@@ -14,6 +14,9 @@
     --akzent:#111418; --akzent-text:#fff;
     --held:#111418; --held-text:#fff;   /* die grosse Flaeche, hell wie dunkel ruhig */
     --gut:#1d6b3f; --gut-bg:#e6f4ec; --warn:#9a4a15; --warn-bg:#fdf1e6;
+    /* Farbe traegt Bedeutung, nicht Dekoration: Rolle, Dringlichkeit, Geld */
+    --sr:#0f3d6e; --sr-bg:#e3ecf7; --hsr:#8a4b00; --hsr-bg:#fbeedd;
+    --lsr:#0b6e6e; --lsr-bg:#dff3f3; --heute:#b3261e; --heute-bg:#fbe9e7;
     --radius-s:10px; --radius:14px; --radius-gross:18px; --radius-pille:99px;
     --a-xs:4px; --a-s:8px; --a-m:12px; --a-l:16px; --a-xl:24px;
     --s-xs:.68rem; --s-s:.74rem; --s-m:.8rem; --s-l:.88rem;
@@ -26,6 +29,8 @@
       --akzent:#fff; --akzent-text:#14181f;
       --held:#20262f; --held-text:#eceff3;
       --gut:#7ed09c; --gut-bg:#17281d; --warn:#e6a76b; --warn-bg:#2e2417;
+      --sr:#6aa7e8; --sr-bg:#1b2a3d; --hsr:#f0b56b; --hsr-bg:#3a2a14;
+      --lsr:#5fd0d0; --lsr-bg:#12302f; --heute:#f08a8a; --heute-bg:#3a1a1a;
       color-scheme: dark; }
   }
   * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
@@ -80,7 +85,18 @@
   .spiel .mitte > b { display:block; font-size:var(--s-xl); font-weight:700; }
   .spiel .mitte > span { display:block; font-size:var(--s-m); color:var(--leise);
     white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .spiel .rolle { font-size:var(--s-xs); font-weight:800; color:var(--leise); flex:none; }
+  .spiel .rolle { font-size:var(--s-xs); font-weight:800; flex:none; padding:3px var(--a-s);
+    border-radius:var(--radius-pille); background:var(--sr-bg); color:var(--sr); }
+  .spiel .rolle.hsr { background:var(--hsr-bg); color:var(--hsr); }
+  .spiel .rolle.lsr { background:var(--lsr-bg); color:var(--lsr); }
+  /* Was heute ansteht, faellt ins Auge - ohne die Liste bunt zu machen */
+  .spiel.heute .tag b { color:var(--heute); }
+  .spiel.heute .tag span { color:var(--heute); }
+  .spiel.heute { box-shadow:inset 3px 0 0 var(--heute); }
+  /* Ein Punkt sagt, wo die Abrechnung steht */
+  .punkt { width:8px; height:8px; border-radius:50%; flex:none; background:var(--linie); }
+  .punkt.offen { background:var(--warn); }
+  .punkt.bezahlt { background:var(--gut); }
   /* Kollegen auf der Kachel. Wer mit wem pfeift, ist die haeufigste
      Rueckfrage - als Text, weil Initialen-Kreise in der schmalen Spalte
      umbrechen und der Name ohnehin das Wichtige ist. */
@@ -106,6 +122,15 @@
   .ab .mitte span { font-size:var(--s-s); color:var(--leise); }
   .ab .geld { font-size:var(--s-xl); font-weight:800; text-align:right; }
   .ab .geld small { display:block; font-size:var(--s-xs); font-weight:600; color:var(--leise); }
+  .ab .geld.bezahlt { color:var(--gut); }
+  /* Wie weit die Saison abgerechnet ist, auf einen Blick */
+  .balken { height:8px; border-radius:var(--radius-pille); background:var(--erhaben);
+    border:1px solid var(--linie); overflow:hidden; display:flex; margin-top:var(--a-m); }
+  .balken i { display:block; height:100%; }
+  .balken .ist { background:var(--gut); }
+  .balken .offen { background:var(--warn); }
+  .balken-text { display:flex; justify-content:space-between; font-size:var(--s-xs);
+    color:var(--leise); margin-top:var(--a-xs); }
   .pruef { background:var(--warn-bg); color:var(--warn); border:0; font:inherit; font-weight:700;
     font-size:var(--s-xs); border-radius:var(--radius-pille); min-height:32px; padding:0 var(--a-m); cursor:pointer; }
 
@@ -143,7 +168,7 @@
   </div>
 
   <h2 class="trenner">Danach</h2>
-  <a class="spiel" href="#">
+  <a class="spiel heute" href="#">
     <div class="tag"><b>27</b><span>So</span></div>
     <div class="mitte"><b>10:00 · EV Duisburg</b><span>Rheinlandhalle Krefeld · U11 RL</span><div class="gespann">mit <b>Heu</b></div></div>
     <div class="rolle">SR</div>
@@ -151,7 +176,7 @@
   <a class="spiel" href="#">
     <div class="tag"><b>04</b><span>So</span></div>
     <div class="mitte"><b>12:30 · Dinslakener Kobras – Eisadler Dortmund</b><span>Eissporthalle Dinslaken · U13 LL</span><div class="gespann">mit <b>Störmann</b></div></div>
-    <div class="rolle">SR</div>
+    <div class="rolle lsr">LR</div>
   </a>
 
   <h2 class="trenner">2 · Spielplan</h2>
@@ -198,16 +223,20 @@
     <div style="display:flex;justify-content:space-between;font-size:var(--s-m);color:var(--leise);margin-top:var(--a-xs)">
       <span>3 Spiele · 36,10 € Kosten</span><span>Bezahlt 224,90 €</span>
     </div>
+    <div class="balken"><i class="ist" style="width:46%"></i><i class="offen" style="width:54%"></i></div>
+    <div class="balken-text"><span>224,90 € bezahlt</span><span>261,00 € offen</span></div>
   </div>
 
   <div class="ab">
     <div class="mitte"><b>So. 04.10. · Dinslaken</b><span>U13 LL · 21,1 km</span></div>
+    <span class="punkt offen" title="offen"></span>
     <div class="geld">80,00 €<small>Vergütung</small></div>
     <button class="pruef">prüfen</button>
   </div>
   <div class="ab">
     <div class="mitte"><b>So. 27.09. · Krefeld</b><span>U11 RL · 28,4 km</span></div>
-    <div class="geld">85,00 €<small>bestätigt</small></div>
+    <span class="punkt bezahlt" title="bezahlt"></span>
+    <div class="geld bezahlt">85,00 €<small>bezahlt</small></div>
   </div>
 
   <div class="leiste">
