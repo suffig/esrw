@@ -90,9 +90,16 @@ window.Mitglieder = (function () {
   function datum(d) { return WT[d.getDay()] + ". " + d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }); }
   // "heute", "gestern", "vor 3 Tagen" - fuer Listen, in denen das genaue
   // Datum nicht interessiert, das Alter aber schon.
+  // Kalendertage, keine 24-Stunden-Bloecke: was gestern um 17 Uhr war, ist
+  // heute um 13 Uhr "gestern" und nicht "heute".
+  function tageSeit(wann) {
+    var b = new Date(wann); if (isNaN(b.getTime())) return -1;
+    var a = new Date(); a.setHours(0, 0, 0, 0); b.setHours(0, 0, 0, 0);
+    return Math.round((a.getTime() - b.getTime()) / 86400000);
+  }
   function seitText(iso) {
     if (!iso) return "";
-    var t = Math.floor((Date.now() - new Date(iso).getTime()) / 86400000);
+    var t = tageSeit(iso);
     if (t < 0) return "";
     if (t === 0) return "heute";
     if (t === 1) return "gestern";
@@ -1246,7 +1253,10 @@ window.Mitglieder = (function () {
                                        lat: Math.round(zeile.heimat_lat * 100) / 100, lon: Math.round(zeile.heimat_lon * 100) / 100,
                                        geaendert: new Date().toISOString() }, { onConflict: "user_id" })
             .then(function (r2) { if (r2.error) meldung(fehlerText(r2.error) + (/wohnorte/.test(r2.error.message || "") ? ", schema.sql (v15) ausführen." : ""), "warn"); });
-        } else sb.from("wohnorte").delete().eq("user_id", session.user.id).then(function () {}).catch(function () {});
+        } else sb.from("wohnorte").delete().eq("user_id", session.user.id)
+          // Stillschweigen hiess: Teilen ausgeschaltet, Wohnort weiter in der Karte
+          .then(function (r4) { if (r4 && r4.error) meldung("Der geteilte Wohnort konnte nicht entfernt werden: " + fehlerText(r4.error), "warn"); })
+          .catch(function (e4) { meldung("Der geteilte Wohnort konnte nicht entfernt werden: " + fehlerText(e4), "warn"); });
         // Nummer und Anschrift fuer die Kollegen: eine Zeile, aus demselben Formular
         var nr = telefon.value.trim();
         // Ohne Namen steht man in keiner Kollegenliste - und die Tabelle
@@ -3197,7 +3207,14 @@ window.Mitglieder = (function () {
           h("span", {}, [
             h("b", { text: euro(r.liga[k]) }),
             h("button", { type: "button", class: "rund", title: "Regel entfernen", text: "×", onclick: function () {
-              delete r.liga[k]; regelnSpeichern(r.liga, r.halle).then(function () { rendern(); rendereAbrechnung(); });
+              // Scheitert das Speichern, muss der Wert zurueck in den Zwischenspeicher -
+              // sonst zeigt die Oberflaeche geloescht, was die Datenbank noch kennt
+              var alt = r.liga[k];
+              delete r.liga[k];
+              regelnSpeichern(r.liga, r.halle).then(function (ok) {
+                if (!ok) { r.liga[k] = alt; meldung("Regel konnte nicht gelöscht werden.", "warn"); }
+                rendern(); rendereAbrechnung();
+              });
             } })])]));
       });
 
@@ -3229,7 +3246,12 @@ window.Mitglieder = (function () {
           h("span", { text: k }),
           h("span", {}, [h("b", { text: r.halle[k] + " km" }),
             h("button", { type: "button", class: "rund", title: "Regel entfernen", text: "×", onclick: function () {
-              delete r.halle[k]; regelnSpeichern(r.liga, r.halle).then(function () { rendern(); rendereAbrechnung(); });
+              var alt = r.halle[k];
+              delete r.halle[k];
+              regelnSpeichern(r.liga, r.halle).then(function (ok) {
+                if (!ok) { r.halle[k] = alt; meldung("Regel konnte nicht gelöscht werden.", "warn"); }
+                rendern(); rendereAbrechnung();
+              });
             } })])]));
       });
       var hallen = []; spiele.forEach(function (sp) { if (sp.halle && hallen.indexOf(sp.halle) < 0) hallen.push(sp.halle); });
@@ -3502,9 +3524,16 @@ window.Mitglieder = (function () {
       sp.privat ? h("div", { class: "zweit" }, [h("button", { type: "button", style: "color:var(--rot)", text: "Eintrag löschen", onclick: function () {
         if (!confirm("Dieses selbst eingetragene Spiel samt Abrechnung und Belegen löschen?")) return;
         var belege = (einsaetze[sp.kennung] || {}).belege || [];
-        (belege.length ? sb.storage.from("belege").remove(belege) : Promise.resolve()).catch(function () {})
+        (belege.length ? sb.storage.from("belege").remove(belege) : Promise.resolve(null))
+          // Verwaiste Dateien bleiben liegen und zaehlen weiter - das soll man erfahren
+          .then(function (rb) { if (rb && rb.error) meldung("Die Belegdateien blieben liegen: " + fehlerText(rb.error), "warn"); },
+                function (eb) { meldung("Die Belegdateien blieben liegen: " + fehlerText(eb), "warn"); })
           .then(function () { return sb.from("einsaetze").delete().eq("user_id", session.user.id).eq("kennung", sp.kennung); })
-          .then(function () { delete einsaetze[sp.kennung]; rendereAbrechnung(); });
+          .then(function (rd) {
+            if (rd && rd.error) { meldung("Eintrag konnte nicht gelöscht werden: " + fehlerText(rd.error), "warn"); return; }
+            delete einsaetze[sp.kennung]; rendereAbrechnung();
+          })
+          .catch(function (ed) { meldung("Eintrag konnte nicht gelöscht werden: " + fehlerText(ed), "warn"); });
       } })]) : null
     ].forEach(function (x) { if (x) details.appendChild(x); });
 
@@ -3587,9 +3616,17 @@ window.Mitglieder = (function () {
       });
       if (erledigen.length) {
         return Promise.all(erledigen.map(function (g) {
-          g.status = "erledigt";
-          return sb.from("gesuche").update({ status: "erledigt", erledigt_am: new Date().toISOString() }).eq("id", g.id);
-        })).then(function () { kurzMeldung("Auf esrw.de steht schon jemand anderes, " + erledigen.length + " Gesuch(e) als erledigt markiert.", "gut"); return d; });
+          // Frueher galt das Gesuch schon vor der Antwort als erledigt - beim
+          // naechsten Aufruf stand es wieder offen da, ohne ein Wort dazu
+          return sb.from("gesuche").update({ status: "erledigt", erledigt_am: new Date().toISOString() }).eq("id", g.id)
+            .then(function (r) { if (!r.error) g.status = "erledigt"; return !r.error; })
+            .catch(function () { return false; });
+        })).then(function (oks) {
+          var gut = oks.filter(Boolean).length;
+          if (gut) kurzMeldung("Auf esrw.de steht schon jemand anderes, " + gut + " Gesuch(e) als erledigt markiert.", "gut");
+          if (gut < oks.length) meldung((oks.length - gut) + " Gesuch(e) konnten nicht als erledigt markiert werden.", "warn");
+          return d;
+        });
       }
       return d;
     }).then(function (d) {
@@ -4046,6 +4083,19 @@ window.Mitglieder = (function () {
     return a;
   }
 
+  // push_gesendet merkt sich "art|kennung" - die Art steht vorn (push_senden.py)
+  var PUSH_ART = { spieltag: "Erinnerung am Spieltag", abfahrt: "Abfahrt", woche: "Wochenvorschau",
+                   abrechnung: "Abrechnung", gespann: "Gespannwechsel" };
+  function pushArt(schluessel) {
+    return PUSH_ART[String(schluessel || "").split("|")[0]] || "Mitteilung";
+  }
+  // Neben einer Uhrzeit ist "vor 9 Tagen" unhandlich - ab vorgestern das Datum.
+  function tagText(d) {
+    var t = tageSeit(d);
+    if (t === 0) return "heute";
+    if (t === 1) return "gestern";
+    return d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" });
+  }
   function pushRendern(box) {
     var status = box.querySelector(".status"), text = box.querySelector("p");
     function setze(lage, txt, knopfText, aktion) {
@@ -4053,9 +4103,12 @@ window.Mitglieder = (function () {
       status.textContent = lage === "an" ? "an" : lage === "aus" ? "aus" : "nicht möglich";
       text.textContent = txt;
       Array.prototype.forEach.call(box.querySelectorAll("button"), function (b) { b.remove(); });
+      // Vier Felder haengen hier, querySelector traf nur das erste: nach dem
+      // Ausschalten standen Wochenvorschau, Abrechnung, Gespann und Vorlauf
+      // weiter da, beim Wiedereinschalten doppelt.
+      Array.prototype.forEach.call(box.querySelectorAll(".mg-woche, .mg-quittung"), function (x) { x.remove(); });
       if (knopfText) box.appendChild(h("button", { type: "button", class: "haupt", text: knopfText, onclick: aktion }));
       if (lage === "an") {
-        var alt = box.querySelector(".mg-woche"); if (alt) alt.remove();
         var w = h("input", { type: "checkbox" }); w.checked = !(ctx && ctx.lesen && ctx.lesen("pushwoche") === "0");
         w.addEventListener("change", function () { if (ctx && ctx.schreiben) ctx.schreiben("pushwoche", w.checked ? null : "0"); if (ctx && ctx.einstellungenSync) ctx.einstellungenSync(); kurzMeldung(w.checked ? "Wochenvorschau an, sie kommt sonntags ab 18 Uhr." : "Wochenvorschau aus.", ""); });
         box.appendChild(h("label", { class: "mg-check mg-woche", style: "display:flex;gap:8px;align-items:center;margin-top:10px" }, [w, " Sonntags die Vorschau auf deine Woche"]));
@@ -4092,6 +4145,24 @@ window.Mitglieder = (function () {
           h("span", {}, [h("b", { text: "Erinnerung ans Spiel" }),
             h("small", { style: "display:block", text: "Uhrzeit, Treffpunkt, Halle und Abfahrt - wann sie kommt, bestimmst du." })]),
           stufen]));
+
+        // Der Verlauf unten zeigt nur, was auf diesem Geraet angekommen ist.
+        // Ob der Server ueberhaupt etwas geschickt hat, weiss push_gesendet.
+        var quittung = h("small", { class: "meta mg-quittung", style: "display:block;margin-top:8px", text: "Letzte Erinnerung: wird nachgesehen \u2026" });
+        box.appendChild(quittung);
+        sb.from("push_gesendet").select("schluessel,gesendet").eq("user_id", session.user.id)
+          .order("gesendet", { ascending: false }).limit(1)
+          .then(function (rq) {
+            if (!quittung.isConnected) return;
+            if (rq.error) { quittung.textContent = "Letzte Erinnerung: nicht abrufbar (" + fehlerText(rq.error) + ")"; return; }
+            var z = rq.data && rq.data[0];
+            if (!z) { quittung.textContent = "Der Server hat dir noch keine Erinnerung geschickt."; return; }
+            var d = new Date(z.gesendet);
+            quittung.textContent = "Letzte Erinnerung: " + tagText(d) + ", " + uhr(d) + " \u00b7 " + pushArt(z.schluessel);
+          })
+          .catch(function (eq) {
+            if (quittung.isConnected) quittung.textContent = "Letzte Erinnerung: nicht abrufbar (" + fehlerText(eq) + ")";
+          });
       }
       if (lage === "an") box.appendChild(h("button", { type: "button", class: "mg-neben", style: "margin-top:8px;width:100%", text: "Testnachricht auf diesem Gerät", onclick: function () {
         navigator.serviceWorker.ready.then(function (reg) {
@@ -4407,29 +4478,38 @@ window.Mitglieder = (function () {
           if (kennungen.indexOf(k) < 0 && !cache.geladen["k|" + k]) kennungen.push(k);
         });
         var laeufe = [];
+        // Ein Fehler darf nichts als geladen markieren: der leere Zwischenspeicher
+        // sah sonst wie eine leere Notiz aus und wurde beim Speichern ueber die echte geschrieben
         if (hallen.length) laeufe.push(sb.from("hallen_notizen").select("*").in("halle", hallen).order("angelegt").then(function (r) {
+          if (r.error) return;
           hallen.forEach(function (x) { cache.hallen[x] = []; cache.geladen["h|" + x] = 1; });
           (r.data || []).forEach(function (z) { (cache.hallen[z.halle] = cache.hallen[z.halle] || []).push(z); });
         }));
         if (slugs.length && !cache.geladen.kontakte) laeufe.push(sb.from("kontakte").select("*").then(function (r) {
+          if (r.error) return;
           cache.kontakte = {}; (r.data || []).forEach(function (z) { cache.kontakte[z.slug] = z; }); cache.geladen.kontakte = 1;
         }));
         if (slugs.length && !cache.geladen.wohnorte) laeufe.push(sb.from("wohnorte").select("slug,ort,lat,lon").then(function (r) {
+          if (r.error) return;
           cache.wohnorte = {}; (r.data || []).forEach(function (z) { cache.wohnorte[z.slug] = z; }); cache.geladen.wohnorte = 1;
         }).catch(function () {}));
         if (slugs.length && !cache.geladen.telefon) laeufe.push(sb.from("telefonliste").select("slug,name,telefon").then(function (r) {
+          if (r.error) return;
           cache.telefon = {}; (r.data || []).forEach(function (z) { cache.telefon[z.slug] = { slug: z.slug, telefon: z.telefon, hinweis: "Telefonliste" }; }); cache.geladen.telefon = 1;
         }).catch(function () {}));
         if (kennungen.length) {
           laeufe.push(sb.from("mitfahrten").select("*").in("kennung", kennungen).then(function (r) {
+            if (r.error) return;
             kennungen.forEach(function (k) { cache.mitfahrten[k] = []; });
             (r.data || []).forEach(function (z) { (cache.mitfahrten[z.kennung] = cache.mitfahrten[z.kennung] || []).push(z); });
           }));
           laeufe.push(sb.from("spielnotizen").select("*").eq("user_id", session.user.id).in("kennung", kennungen).then(function (r) {
+            if (r.error) return;
             (r.data || []).forEach(function (z) { cache.notizen[z.kennung] = z; });
             kennungen.forEach(function (k) { cache.geladen["k|" + k] = 1; });
           }));
           laeufe.push(sb.from("spielkommentare").select("*").in("kennung", kennungen).order("angelegt").then(function (r) {
+            if (r.error) return;
             kennungen.forEach(function (k) { cache.kommentare[k] = []; });
             (r.data || []).forEach(function (z) { (cache.kommentare[z.kennung] = cache.kommentare[z.kennung] || []).push(z); });
           }).catch(function () {}));
@@ -6304,10 +6384,13 @@ window.Mitglieder = (function () {
     var tabellen = [["einsaetze", "user_id"], ["spielnotizen", "user_id"], ["gesuche", "user_id"], ["angebote", "user_id"],
                     ["sperren", "user_id"], ["hallen_notizen", "user_id"], ["kontakte", "user_id"], ["mitfahrten", "user_id"], ["push_abos", "user_id"], ["spielkommentare", "user_id"]];
     var aus = { exportiert: new Date().toISOString(), email: session.user.email, profil: profil };
-    var dateien = [];
+    var dateien = [], fehlerTab = [], belegFehler = 0;
     function text(name, inhalt) { dateien.push({ name: name, bytes: new TextEncoder().encode(inhalt) }); }
     return Promise.all(tabellen.map(function (t) {
-      return sb.from(t[0]).select("*").eq(t[1], uid).then(function (r) { aus[t[0]] = r.error ? { fehler: r.error.message } : r.data; }).catch(function () {});
+      return sb.from(t[0]).select("*").eq(t[1], uid).then(function (r) {
+        if (r.error) fehlerTab.push(t[0]);
+        aus[t[0]] = r.error ? { fehler: r.error.message } : r.data;
+      }).catch(function (e) { fehlerTab.push(t[0]); aus[t[0]] = { fehler: fehlerText(e) }; });
     })).then(function () {
       text("daten.json", JSON.stringify(aus, null, 2));
       // Abrechnung als CSV (alle Saisons)
@@ -6332,12 +6415,18 @@ window.Mitglieder = (function () {
       return belege.reduce(function (p, pfad) {
         return p.then(function () {
           return sb.storage.from("belege").createSignedUrl(pfad, 300).then(function (r) {
-            if (!r.data || !r.data.signedUrl) return;
-            return fetch(r.data.signedUrl).then(function (a) { return a.arrayBuffer(); }).then(function (buf) {
+            if (!r.data || !r.data.signedUrl) { belegFehler++; return; }
+            return fetch(r.data.signedUrl).then(function (a) {
+              // Ohne diese Pruefung landete der Fehlertext des Speichers als
+              // Belegdatei im Archiv - ein PDF, das keines ist
+              if (!a.ok) return null;
+              return a.arrayBuffer();
+            }).then(function (buf) {
+              if (!buf) { belegFehler++; return; }
               // Ordner mit in den Namen, sonst ueberschreiben sich gleichnamige Belege
               dateien.push({ name: "belege/" + pfad.split("/").slice(-2).join("_"), bytes: new Uint8Array(buf) });
             });
-          }).catch(function () {});
+          }).catch(function () { belegFehler++; });
         });
       }, Promise.resolve());
     }).then(function () {
@@ -6347,6 +6436,12 @@ window.Mitglieder = (function () {
       document.body.appendChild(a); a.click(); document.body.removeChild(a);
       setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
       kurzMeldung("Export fertig ✓ (" + dateien.length + " Dateien)", "gut");
+      // Ein unvollstaendiger Export sah fertig aus - wer ihn als Sicherung
+      // nimmt, merkt das Fehlen erst, wenn er die Daten braucht
+      var luecken = [];
+      if (fehlerTab.length) luecken.push(fehlerTab.length + (fehlerTab.length === 1 ? " Bereich" : " Bereiche") + " nicht gelesen (" + fehlerTab.join(", ") + ")");
+      if (belegFehler) luecken.push(belegFehler + (belegFehler === 1 ? " Beleg" : " Belege") + " nicht geladen");
+      if (luecken.length) meldung("Der Export ist unvollständig: " + luecken.join(", ") + ".", "warn");
     }).catch(function (e) { meldung("Export fehlgeschlagen: " + fehlerText(e), "warn"); });
   }
 

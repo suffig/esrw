@@ -3930,14 +3930,22 @@
     var roh = name === "alles" ? start.concat(konto) : name === "konto" ? konto : start;
     return roh.filter(function (sch) { return !sch[5] || funktion(sch[5]); });
   }
+  // Anleitung und Filterblatt sperren beide das Scrollen. Mit einem
+  // gemeinsamen body.style.overflow nahm das zweite Zugehen dem ersten die
+  // Sperre weg - die Seite rollte hinter dem offenen Dialog mit.
+  var scrollSperren = {};
+  function scrollSperre(wer, an) {
+    if (an) scrollSperren[wer] = 1; else delete scrollSperren[wer];
+    document.body.style.overflow = Object.keys(scrollSperren).length ? "hidden" : "";
+  }
   var tourSchritte = [], tourPos = 0, tourName = "";
   function tourOeffnen(name) {
     tourSchritte = tourBauen(name);
     if (!tourSchritte.length) return;
-    tourName = name; tourPos = 0; tourZeigen(); el("tour").classList.remove("versteckt"); document.body.style.overflow = "hidden";
+    tourName = name; tourPos = 0; tourZeigen(); el("tour").classList.remove("versteckt"); scrollSperre("tour", true);
   }
   function tourSchliessen() {
-    el("tour").classList.add("versteckt"); document.body.style.overflow = "";
+    el("tour").classList.add("versteckt"); scrollSperre("tour", false);
     if (tourName === "start" || tourName === "alles") schreiben("tour-start", "1");
     if (tourName === "konto" || tourName === "alles") schreiben("tour-konto", "1");
     // Mit ins Konto, sonst faengt das naechste Geraet wieder von vorne an
@@ -4779,7 +4787,10 @@
         if (!e) return;
         var kopf = e.previousElementSibling && e.previousElementSibling.classList.contains("abschnitt") ? e.previousElementSibling : e;
         var y = kopf.getBoundingClientRect().top + window.scrollY - 70;
-        window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+        // Dieselbe Weiche wie beim Sprung in die Einstellungen: ab anderthalb
+        // Bildschirmen ist weiches Rollen nur Wartezeit
+        var weit = Math.abs(kopf.getBoundingClientRect().top) > window.innerHeight * 1.5;
+        window.scrollTo({ top: Math.max(0, y), behavior: weit ? "auto" : "smooth" });
       });
       leiste.appendChild(c);
     });
@@ -5472,7 +5483,11 @@
     clearTimeout(syncTimer);
     syncTimer = setTimeout(function () {
       if (!sitzungVorhanden() || !window.Mitglieder) return;
-      window.Mitglieder.einstellungenSpeichern(einstellungenSammeln()).catch(function () {});
+      // Ein stilles false liess Kalenderwuensche und Push-Vorlauf auf dem
+      // Geraet, wo der Server sie braucht
+      var gescheitert = function () { toast("Einstellungen konnten nicht im Konto gespeichert werden - auf diesem Gerät gelten sie trotzdem.", "warn"); };
+      window.Mitglieder.einstellungenSpeichern(einstellungenSammeln())
+        .then(function (ok) { if (!ok) gescheitert(); }).catch(gescheitert);
     }, 800);
   }
   var kontoEinstellungenDa = false;
@@ -5662,8 +5677,8 @@
   document.body.appendChild(el("plan-filter-blatt"));
   function filterBlatt(offen) {
     var b = el("plan-filter-blatt"), hg = el("blatt-hintergrund");
-    if (offen) { b.classList.remove("versteckt"); hg.classList.remove("versteckt"); setTimeout(function () { b.classList.add("offen"); }, 20); document.body.style.overflow = "hidden"; }
-    else { b.classList.remove("offen"); hg.classList.add("versteckt"); document.body.style.overflow = ""; setTimeout(function () { if (!b.classList.contains("offen")) b.classList.add("versteckt"); }, 300); }
+    if (offen) { b.classList.remove("versteckt"); hg.classList.remove("versteckt"); setTimeout(function () { b.classList.add("offen"); }, 20); scrollSperre("filter", true); }
+    else { b.classList.remove("offen"); hg.classList.add("versteckt"); scrollSperre("filter", false); setTimeout(function () { if (!b.classList.contains("offen")) b.classList.add("versteckt"); }, 300); }
     filterHoehe();
   }
   el("plan-filter-knopf").addEventListener("click", function () { filterBlatt(el("plan-filter-blatt").classList.contains("versteckt")); });
