@@ -683,6 +683,45 @@ def test_vereinsnamen():
            "ein Strich allein ist kein Gast", E.paarung_aus("Turnier Herford", "-"))
 
 
+def test_seitenumbau():
+    """Wird eine Spalte auf esrw.de umbenannt, fallen die Zeilen still durch
+    und der Lauf veroeffentlicht den Rest als die Wahrheit: halbe Daten,
+    falsche "Abgesetzt"-Meldungen und am Ende ein Archiv ohne Gespanne.
+    Lieber ein roter Lauf - der naechste holt es in 15 Minuten nach."""
+    print("\nSeitenumbau faellt auf")
+    E = esrw_ical_modul()
+    roh = beispielseite()
+    spiele = E.parse_seite(roh)
+    pruefe(len(spiele) == 7, "die Beispielseite wird ganz gelesen", len(spiele))
+    pruefe(all(any(s["besetzung"].values()) for s in spiele), "und zwar mit Gespann")
+
+    # Spalte umbenannt: keine Zeile kommt mehr durch
+    try:
+        E.parse_seite(roh.replace('data-title="Begegnung"', 'data-title="Partie"'))
+        pruefe(False, "umbenannte Spalte bricht den Lauf ab")
+    except SystemExit:
+        pruefe(True, "umbenannte Spalte bricht den Lauf ab")
+
+    # Nur die Gespann-Spalten umbenannt: die Spiele kommen durch, aber leer.
+    # Das faengt erst ergaenze_historie - bevor das Archiv Schaden nimmt.
+    leer = E.parse_seite(roh.replace('data-title="HSR"', 'data-title="Hauptschiri"')
+                            .replace('data-title="(L)SR"', 'data-title="Linie"'))
+    pruefe(len(leer) == 7 and not any(any(s["besetzung"].values()) for s in leer),
+           "Gespann-Spalte umbenannt: Spiele ohne Besetzung")
+    venues = {"hallen": {}, "orte": {}, "vereine": {}}
+    stand = spiele[0]["start"]
+    historie = {}
+    E.ergaenze_historie(historie, spiele, venues, stand)
+    pruefe(len(historie) == 7, "erst stehen sie mit Gespann im Archiv", len(historie))
+    try:
+        E.ergaenze_historie(historie, leer, venues, stand)
+        pruefe(False, "Gespannverlust bricht den Lauf ab")
+    except SystemExit:
+        pruefe(True, "Gespannverlust bricht den Lauf ab")
+    pruefe(all(any((e.get("besetzung") or {}).values()) for e in historie.values()),
+           "und das Archiv behaelt seine Gespanne")
+
+
 def test_kalenderwuensche():
     """Jeder stellt seinen Kalender selbst ein. Die Wuensche liegen im
     Konto und kommen als JSON-Text an - die App kennt nur Zeichenketten."""
@@ -963,7 +1002,7 @@ def main():
                  test_korrektur_uid, test_gespannwechsel, test_ehemalige,
                  test_besetzung_korrektur, test_csp,
                  test_rechnungsvorlage, test_sicherung, test_erinnerungszeit, test_zurueckspielen, test_obmann_rechte,
-                 test_kalenderwuensche, test_vereinsnamen,
+                 test_kalenderwuensche, test_vereinsnamen, test_seitenumbau,
                  test_funktionstexte,
                  test_tresor):
         test()

@@ -86,6 +86,7 @@ jobs:
       # Secrets; fehlen sie, meldet das Skript das nur. Ein Fehler hier darf
       # die Feeds nicht aufhalten (continue-on-error).
       - name: Push senden
+        id: push
         continue-on-error: true
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
@@ -103,6 +104,7 @@ jobs:
       # sicherungen/ ab (Details in sicherung.py). Ein Fehler hier darf die
       # Feeds nicht aufhalten.
       - name: Datenbank sichern
+        id: sicherung
         continue-on-error: true
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
@@ -157,6 +159,34 @@ jobs:
             git commit -m "Einteilungen aktualisiert ($(TZ=Europe/Berlin date +'%d.%m.%Y %H:%M'))"
             git push
           fi
+
+      # continue-on-error haelt die Feeds am Leben, macht den Fehler aber
+      # auch unsichtbar: der Lauf bleibt gruen, und "Bei Fehler
+      # benachrichtigen" unten greift nur auf if: failure(). Ein Absturz in
+      # push_senden.py blieb so monatelang unentdeckt - die Erinnerungen
+      # einer Stunde sind dann weg, denn aenderungen.json wird neu gebaut.
+      - name: Bei stillem Fehler in Push oder Sicherung benachrichtigen
+        if: steps.push.outcome == 'failure' || steps.sicherung.outcome == 'failure'
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          LAUF: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          PUSH: ${{ steps.push.outcome }}
+          SICHERUNG: ${{ steps.sicherung.outcome }}
+        run: |
+          WAS=""
+          [ "$PUSH" = "failure" ] && WAS="Push"
+          [ "$SICHERUNG" = "failure" ] && WAS="${WAS:+$WAS und }Sicherung"
+          echo "Stiller Fehler in: $WAS"
+          if [ -z "$NTFY_TOPIC" ]; then
+            echo "Kein NTFY_TOPIC hinterlegt - keine Benachrichtigung moeglich."
+            exit 0
+          fi
+          curl -sS --fail-with-body \
+            -H "Title: Einteilungen: $WAS fehlgeschlagen" \
+            -H "Priority: high" \
+            -H "Tags: warning" \
+            -d "Die Feeds stehen, aber $WAS ist durchgefallen. Details: $LAUF" \
+            "https://ntfy.sh/$NTFY_TOPIC"
 
       # Ohne diesen Schritt wuerde ein Ausfall unbemerkt bleiben: die Feeds
       # frieren dann einfach ein, ohne dass jemand etwas merkt.

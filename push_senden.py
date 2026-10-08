@@ -268,7 +268,7 @@ def gesuche_pflegen(url, service, daten, jetzt, nachrichten, nachtragen):
                 "text": "%s nimmt dein Angebot für %s (%s Uhr) an. Der Obmann wird informiert – warte auf die Umteilung auf esrw.de." % (
                     g.get("name", "?"), g.get("paarung", ""), uhr(g["beginn"]) if g.get("beginn") else "?"),
                 "url": "./#mitglieder/tausch"}))
-        api(url, service, "gesuche?id=eq." + urllib.parse.quote(g["id"]), "PATCH", {"vereinbart_gemeldet": True})
+        nachtragen.append(("gesuche?id=eq." + urllib.parse.quote(g["id"]), {"vereinbart_gemeldet": True}))
     zu_melden = api(url, service, "gesuche?select=id,name,paarung,beginn&status=eq.erledigt&gemeldet=eq.false") or []
     for g in zu_melden:
         helfer = api(url, service, "angebote?select=user_id&gesuch_id=eq." + urllib.parse.quote(g["id"])) or []
@@ -403,12 +403,17 @@ def main():
     except Exception as e:
         print("Push: Ankuendigungen nicht lesbar: %s" % str(e)[:120], file=sys.stderr)
     for a in ank:
-        an = a.get("an_slugs") or None
+        # Nicht "an" nennen: so hiess die Funktion, die weiter unten fragt,
+        # ob eine Funktion eingeschaltet ist. Eine wartende Ankuendigung hat
+        # sie ueberschrieben, und ab da stand in an("gespann") ein TypeError.
+        # Der Lauf starb vor dem Senden, die Ankuendigung blieb unmarkiert -
+        # also jede Stunde aufs Neue, und keine einzige Nachricht ging raus.
+        ziel_slugs = a.get("an_slugs") or None
         for uid in ids:
-            if an and (profil_von.get(uid) or {}).get("slug") not in an:
+            if ziel_slugs and (profil_von.get(uid) or {}).get("slug") not in ziel_slugs:
                 continue
             nachrichten.setdefault(uid, []).append((None, {
-                "titel": ("Nachricht: " if an else "Ankündigung: ") + a["titel"], "text": (a.get("text") or "")[:900], "url": "./#mitglieder/info"}))
+                "titel": ("Nachricht: " if ziel_slugs else "Ankündigung: ") + a["titel"], "text": (a.get("text") or "")[:900], "url": "./#mitglieder/info"}))
 
     # Termine vom Betreiber: am Vortag (ab 17 Uhr) an alle erinnern
     if jetzt.hour >= 17:
@@ -631,7 +636,16 @@ def main():
                 fehler_n += 1
                 print("Push an %s nicht moeglich: %s" % (abo["user_id"][:8], str(e)[:120]), file=sys.stderr)
 
-    haken_setzen()
+    # Nur haken, wenn auch etwas rausging. Ging alles schief (VAPID, Netz,
+    # ein Dienst lehnt ab), bleiben die Zeilen offen und der naechste Lauf
+    # versucht es wieder - sonst waere die Nachricht endgueltig weg, obwohl
+    # sie nie jemand gesehen hat. Ohne jeden Fehler haken wir auch, wenn
+    # nichts gesendet wurde: dann hat der Empfaenger einfach kein Geraet.
+    if gesendet_n or not fehler_n:
+        haken_setzen()
+    else:
+        print("Push: %d Fehler und nichts gesendet - die Haken bleiben offen, "
+              "der naechste Lauf versucht es erneut." % fehler_n, file=sys.stderr)
 
     # Nur vermerken, wenn wirklich etwas rausging - sonst gilt eine
     # Ankuendigung als verschickt, die kein Geraet erreicht hat.

@@ -211,7 +211,8 @@ def saison_von(zeitpunkt):
 def parse_seite(roh):
     """Liest die Tabellenzeilen der Contao-Einteilungsseite."""
     spiele = []
-    for zeile in re.findall(r'<tr class="einteilung_spiel.*?</tr>', roh, re.S):
+    zeilen = re.findall(r'<tr class="einteilung_spiel.*?</tr>', roh, re.S)
+    for zeile in zeilen:
         zeit = re.search(r'<time datetime="([^"]+)"', zeile)
         begegnung = re.search(r'data-title="Begegnung">(.*?)</td>', zeile, re.S)
         if not zeit or not begegnung:
@@ -234,6 +235,13 @@ def parse_seite(roh):
             "begegnung": text_aus(begegnung.group(1)),
             "besetzung": besetzung,
         })
+
+    # "Keine Spiele" faellt auf, "ein Teil der Spiele" nicht: wird eine
+    # Spalte umbenannt, fallen die Zeilen hier still durch das continue und
+    # der Lauf veroeffentlicht den Rest als die ganze Wahrheit.
+    if zeilen and len(spiele) < len(zeilen) * 0.8:
+        sys.exit("FEHLER: von %d Zeilen kamen nur %d Spiele durch - hat sich der "
+                 "Seitenaufbau geaendert?" % (len(zeilen), len(spiele)))
     return spiele
 
 
@@ -454,6 +462,21 @@ def ergaenze_historie(historie, spiele, venues, stand):
     """Traegt neu gesehene Spiele dauerhaft ein. esrw.de zeigt nur wenige Tage
     rueckwaerts - hier bleibt die ganze Saison erhalten."""
     heute = stand.date().isoformat()
+
+    # Erst zaehlen, dann schreiben: ein einzelnes Spiel kann der Betreiber
+    # ausgetragen haben, aber verlieren die Haelfte aller bekannten Spiele
+    # ihr Gespann, steht die Spalte auf esrw.de anders als erwartet. Dann
+    # waere das Archiv dauerhaft leer, denn ein vergangenes Spiel wird nie
+    # wieder frisch gelesen - und zwar leer, bevor es jemand merkt.
+    verloren = 0
+    for s in spiele:
+        alt = historie.get(spiel_id(s["start"].isoformat(), s["begegnung"]))
+        if alt and any((alt.get("besetzung") or {}).values()) and not any(s["besetzung"].values()):
+            verloren += 1
+    if verloren >= max(3, int(len(spiele) * 0.5)):
+        sys.exit("FEHLER: %d von %d Spielen haben ihr Gespann verloren - stehen die "
+                 "Spalten HSR und (L)SR noch so in der Seite?" % (verloren, len(spiele)))
+
     neu = 0
     for s in spiele:
         kennung = spiel_id(s["start"].isoformat(), s["begegnung"])
@@ -758,11 +781,30 @@ def pruefe_konflikte(termine, cfg):
                             % (a["paarung"], a["halle_name"] or "anderer Halle", luecke))
 
 
+def _tabelle_fehlt(pfad, e):
+    """Eine leere Liste sah aus wie "da ist nichts eingetragen".
+
+    Ein einziger Aussetzer genuegte: manuelle Spiele verschwanden aus
+    daten.json und den Feeds, die Korrekturen des Betreibers fielen weg -
+    und verarbeite_aenderungen schickte dafuer ein falsches "Abgesetzt"
+    oder "Korrektur zurueckgenommen" an die Betroffenen. Danach stand das
+    Zerrbild in state.json, und beim naechsten Lauf kippte alles zurueck:
+    dieselben Meldungen nochmal, nur umgekehrt. Ein roter Lauf dagegen
+    meldet sich von selbst, und der naechste holt es in 15 Minuten nach.
+    """
+    raise SystemExit("Tabelle %s nicht lesbar (%s) - Abbruch, damit keine halben "
+                     "Daten veroeffentlicht werden." % (pfad.split("?")[0], str(e)[:120]))
+
+
 def tabelle_laden(cfg, pfad):
     """Liest eine Supabase-Tabelle - mit dem Service-Schluessel aus dem
     Workflow, sonst mit dem oeffentlichen anon-Schluessel aus
-    docs/supabase.json (die Zugriffsregeln erlauben das Lesen). Ohne
-    Zugang oder bei Fehlern: leere Liste."""
+    docs/supabase.json (die Zugriffsregeln erlauben das Lesen).
+
+    Ohne Zugang: leere Liste - so laeuft es beim Arbeiten ohne Supabase.
+    Gibt es die Tabelle noch nicht (400/404, ein Schema-Abschnitt fehlt):
+    auch leere Liste, mit Hinweis. Bei allem anderen Abbruch; warum, steht
+    unten am except."""
     url = os.environ.get("SUPABASE_URL", "").strip()
     schluessel = os.environ.get("SUPABASE_SERVICE_KEY", "").strip()
     if not url or not schluessel:
@@ -776,9 +818,17 @@ def tabelle_laden(cfg, pfad):
             headers={"apikey": schluessel, "Authorization": "Bearer " + schluessel})
         with urllib.request.urlopen(anfrage, timeout=20) as antwort:
             return json.loads(antwort.read().decode("utf-8")) or []
+    except urllib.error.HTTPError as e:
+        # 400/404: Tabelle oder Spalte fehlt, weil ein Abschnitt aus
+        # schema.sql noch nicht eingespielt ist. Das ist ein bekannter
+        # Zwischenzustand und keine kaputte Verbindung.
+        if e.code in (400, 404):
+            print("  ! Tabelle %s gibt es (noch) nicht (%s) - schema.sql schon eingespielt?"
+                  % (pfad.split("?")[0], e.code), file=sys.stderr)
+            return []
+        _tabelle_fehlt(pfad, e)
     except Exception as e:
-        print("  ! Tabelle %s nicht lesbar: %s" % (pfad.split("?")[0], str(e)[:100]), file=sys.stderr)
-        return []
+        _tabelle_fehlt(pfad, e)
 
 
 # Was jeder fuer seinen Kalender eingestellt hat. Die Feeds werden hier

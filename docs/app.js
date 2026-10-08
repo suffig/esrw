@@ -1683,12 +1683,6 @@
     }
   }
 
-  function hochzaehlen(el, ziel) {
-    var start = performance.now(), dauer = 500;
-    function schritt(t) { var f = Math.min(1, (t - start) / dauer); el.textContent = Math.round(ziel * (1 - Math.pow(1 - f, 3))); if (f < 1) requestAnimationFrame(schritt); }
-    requestAnimationFrame(schritt);
-  }
-
   // Vertretungs-Radar: fremde Gesuche und unbesetzte Spiele, die zu dir passen
   function zeigeRadar(p) {
     var ziel = el("radar"); ziel.innerHTML = "";
@@ -1786,18 +1780,6 @@
   }
 
   // Hallen-Wiki, Kontakte, Fahrgemeinschaft, Notiz - nur angemeldet
-  function extrasFuellen(karten, istIch) {
-    if (!karten.length) return;
-    ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) {
-      if (!st.eingerichtet || !st.session) return;
-      var spiele = karten.map(function (k) { return k._spiel; });
-      return window.Mitglieder.extrasLaden(spiele).then(function (ok) {
-        if (!ok) return;
-        karten.forEach(function (k) { if (k.isConnected) window.Mitglieder.spielExtras(k._spiel, k.querySelector(".extras-ziel"), istIch); });
-      });
-    }).catch(function () {});
-  }
-
   // "muster-max" -> "Muster, Max". Nur ein Notnagel: die Daten liefern
   // den Namen sonst mit.
   function namenAusSlug(slug) {
@@ -2779,7 +2761,6 @@
     }
     return null;
   }
-  function tabDritter() { return tabFuerPlatz(PLAETZE[1]) || ["plan", "i-list", "Spielplan"]; }
   function tabsAnwenden() {
     PLAETZE.forEach(function (p) {
       var b = el(p.knopf); if (!b) return;
