@@ -2231,6 +2231,26 @@
     background:var(--warn); opacity:1; }
   :root[data-design="neu"] .mg-eintrag.bezahlt .kopfzeile .datum::before {
     background:var(--gut); opacity:1; }
+
+  /* ===== Runde 25: Dichte oben in der Abrechnung ===================== */
+
+  /* Vier Reiter brauchen 406 px, die Zeile hat 343 - also brach sie um und
+     kostete 94 px statt 40. Eine Zeile zum Wischen bleibt vollstaendig und
+     zeigt am angeschnittenen letzten Reiter, dass es weitergeht. */
+  :root[data-design="neu"] .mg-untertabs { flex-wrap:nowrap; overflow-x:auto;
+    gap:var(--abstand-xs); scrollbar-width:none; -webkit-overflow-scrolling:touch; }
+  :root[data-design="neu"] .mg-untertabs::-webkit-scrollbar { display:none; }
+  :root[data-design="neu"] .mg-untertabs > button { flex:none;
+    padding:var(--abstand-s); }
+
+  /* Die vier Summenkacheln standen 2x2 mit viel Luft. Die Zahlen bleiben
+     gross genug, um sie im Vorbeigehen zu lesen. */
+  :root[data-design="neu"] .mg-saldo .zahl { padding:var(--halb) var(--abstand-m); }
+  :root[data-design="neu"] .mg-saldo .zahl b { font-size:var(--s-2xl); }
+
+  /* Der Name steht auf jeder Seite des Mitgliederbereichs - er darf flach
+     sein. */
+  :root[data-design="neu"] .profilzeile { padding:var(--halb) var(--abstand-m); }
 </style>
 </head>
 <body>
@@ -2695,6 +2715,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=134"></script>
+<script src="app.js?v=135"></script>
 </body>
 </html>
