@@ -2438,7 +2438,7 @@
       }
       ziel.appendChild(kompakt ? planZeile(s, beginn) : planKarte(s, beginn));
     });
-    el("plan-zaehler").textContent = treffer !== gesamt ? treffer + " von " + gesamt + " Spielen" : gesamt + (gesamt === 1 ? " Spiel" : " Spiele");
+    el("plan-zaehler").textContent = treffer !== gesamt ? treffer + " von " + gesamt : gesamt + (gesamt === 1 ? " Spiel" : " Spiele");
     var fk = el("plan-filter-fertig");
     if (fk) fk.textContent = "Fertig \u00b7 " + treffer + (treffer === 1 ? " Spiel" : " Spiele") + " zeigen";
     if (!treffer) ziel.appendChild(leerZustand(f || treffer !== gesamt ? "Nichts gefunden." : "Keine kommenden Spiele."));
