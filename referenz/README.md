@@ -12,6 +12,7 @@ nicht darin), kosten also nichts im Offline-Vorrat.
 | Ordner | Tag | Stand |
 |---|---|---|
 | `design-v126/` | `design-v126` | 08.10.2026, `app.js?v=126`, `sw.js v117` |
+| `vor-umbau-b1-c1/` | `vor-umbau-b1-c1` | 08.10.2026, vor dem Umbau der Navigation und der CSS-Sortierung |
 
 ## Zurückkehren
 
