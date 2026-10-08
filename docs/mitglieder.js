@@ -97,6 +97,17 @@ window.Mitglieder = (function () {
     var a = new Date(); a.setHours(0, 0, 0, 0); b.setHours(0, 0, 0, 0);
     return Math.round((a.getTime() - b.getTime()) / 86400000);
   }
+  // Ein Knopf, der eine Anfrage ausloest, bleibt bis zur Antwort gesperrt -
+  // sonst legt ein zweiter Tipp denselben Eintrag noch einmal an.
+  function sperren(knopf, auchText) {
+    if (!knopf) return;
+    knopf._text = auchText || knopf.textContent;
+    knopf.disabled = true; knopf.textContent = "sende \u2026";
+  }
+  function freigeben(knopf) {
+    if (!knopf || !knopf.isConnected) return;
+    knopf.disabled = false; if (knopf._text) knopf.textContent = knopf._text;
+  }
   function seitText(iso) {
     if (!iso) return "";
     var t = tageSeit(iso);
@@ -3772,11 +3783,15 @@ window.Mitglieder = (function () {
       } }));
     } else {
       var hinweis = h("input", { type: "text", placeholder: "Kurz dazu (optional), z. B. Handynummer", maxlength: "120" });
-      knoepfe.appendChild(h("button", { type: "button", text: "Ich kann übernehmen", onclick: function () {
+      var kUebernehmen = h("button", { type: "button", text: "Ich kann übernehmen", onclick: function () {
+        sperren(kUebernehmen, "Ich kann übernehmen");
         sb.from("angebote").insert({ gesuch_id: g.id, user_id: session.user.id, slug: profil.slug, name: profil.name || profil.slug,
                                      text: hinweis.value.trim() || null })
-          .then(function (r) { if (r.error) { meldung(fehlerText(r.error), "warn"); return; } kurzMeldung("Gemeldet ✓", "gut"); zeigeTausch(); });
-      } }));
+          .then(function (r) { freigeben(kUebernehmen);
+            if (r.error) { meldung(fehlerText(r.error), "warn"); return; } kurzMeldung("Gemeldet ✓", "gut"); zeigeTausch(); })
+          .catch(function (e) { freigeben(kUebernehmen); meldung(fehlerText(e), "warn"); });
+      } });
+      knoepfe.appendChild(kUebernehmen);
       karte.appendChild(h("div", { class: "mg-form" }, [hinweis]));
     }
     karte.appendChild(knoepfe);
@@ -4577,13 +4592,17 @@ window.Mitglieder = (function () {
           innen.appendChild(z);
         });
         var neu = h("textarea", { rows: "2", placeholder: "Hinweis zur Halle hinzufügen …", maxlength: "500" });
-        innen.appendChild(h("div", { class: "mg-form" }, [neu, h("button", { type: "button", class: "anfrage", text: "Hinweis speichern", onclick: function () {
+        var hSpeichern = h("button", { type: "button", class: "anfrage", text: "Hinweis speichern", onclick: function () {
           var t = neu.value.trim(); if (!t) return;
+          sperren(hSpeichern, "Hinweis speichern");
           sb.from("hallen_notizen").insert({ user_id: session.user.id, slug: profil.slug, name: profil.name || profil.slug, halle: spiel.halle, text: t }).select()
-            .then(function (r) { if (r.error) { meldung(fehlerText(r.error), "warn"); return; }
+            .then(function (r) { freigeben(hSpeichern);
+              if (r.error) { meldung(fehlerText(r.error), "warn"); return; }
               (cache.hallen[spiel.halle] = cache.hallen[spiel.halle] || []).push((r.data && r.data[0]) || { user_id: session.user.id, name: profil.name, text: t, angelegt: new Date().toISOString() });
-              kurzMeldung("Hinweis gespeichert ✓", "gut"); spielExtras(spiel, ziel, istIch); ziel.querySelector("details").open = true; });
-        } })]));
+              kurzMeldung("Hinweis gespeichert ✓", "gut"); spielExtras(spiel, ziel, istIch); ziel.querySelector("details").open = true; })
+            .catch(function (e) { freigeben(hSpeichern); meldung(fehlerText(e), "warn"); });
+        } });
+        innen.appendChild(h("div", { class: "mg-form" }, [neu, hSpeichern]));
       }
 
       // Kontakte im Gespann (auf der Spielseite oben in der Kopfkarte)
@@ -4651,14 +4670,20 @@ window.Mitglieder = (function () {
         innen.appendChild(verlauf);
         try { if (kommentare.length) localStorage.setItem("gespann-gelesen:" + kennung, String(Date.now())); } catch (e) {}
         var ki = h("input", { type: "text", placeholder: "Nachricht ans Gespann …", maxlength: "300" });
-        innen.appendChild(h("div", { class: "mg-form" }, [ki, h("button", { type: "button", class: "anfrage", text: "Ans Gespann schicken", onclick: function () {
+        // Ohne Sperre schickte ein zweiter Tipp dieselbe Nachricht noch
+        // einmal - und mit ihr einen zweiten Push an das ganze Gespann.
+        var kSenden = h("button", { type: "button", class: "anfrage", text: "Ans Gespann schicken", onclick: function () {
           var t = ki.value.trim(); if (!t) return;
           var slugs = (spiel.gespann || []).map(function (g) { return g.slug; }).filter(Boolean).concat([profil.slug]);
+          sperren(kSenden, "Ans Gespann schicken");
           sb.from("spielkommentare").insert({ user_id: session.user.id, slug: profil.slug, name: profil.name || profil.slug, kennung: kennung, beginn: spiel.beginn, paarung: spiel.paarung, gespann: slugs, text: t })
-            .then(function (r) { if (r.error) { meldung(fehlerText(r.error), "warn"); return; }
+            .then(function (r) { freigeben(kSenden);
+              if (r.error) { meldung(fehlerText(r.error), "warn"); return; }
               kurzMeldung("Geschickt ✓ Push geht beim nächsten Lauf raus.", "gut"); delete cache.geladen["k|" + kennung];
-              extrasLaden([spiel]).then(function () { spielExtras(spiel, ziel, istIch); var d = ziel.querySelector("details"); if (d) d.open = true; }); });
-        } })]));
+              extrasLaden([spiel]).then(function () { spielExtras(spiel, ziel, istIch); var d = ziel.querySelector("details"); if (d) d.open = true; }); })
+            .catch(function (e) { freigeben(kSenden); meldung(fehlerText(e), "warn"); });
+        } });
+        innen.appendChild(h("div", { class: "mg-form" }, [ki, kSenden]));
       }
 
       // Private Notiz
@@ -6662,12 +6687,16 @@ window.Mitglieder = (function () {
         box.appendChild(h("div", { class: "kandidat" }, [h("div", { text: n.text }), h("div", { class: "meta", text: n.name + " · " + new Date(n.angelegt).toLocaleDateString("de-DE") })]));
       });
       var neu = h("textarea", { rows: "2", placeholder: "Hinweis hinzufügen …", maxlength: "500" });
-      box.appendChild(h("div", { class: "mg-form", style: "margin-top:8px" }, [neu, h("button", { type: "button", class: "anfrage", text: "Hinweis speichern", onclick: function () {
+      var hhSpeichern = h("button", { type: "button", class: "anfrage", text: "Hinweis speichern", onclick: function () {
         var t = neu.value.trim(); if (!t) return;
+        sperren(hhSpeichern, "Hinweis speichern");
         sb.from("hallen_notizen").insert({ user_id: session.user.id, slug: profil.slug, name: profil.name || profil.slug, halle: halle, text: t }).select()
-          .then(function (r) { if (r.error) { meldung(fehlerText(r.error), "warn"); return; }
-            delete cache.geladen["h|" + halle]; kurzMeldung("Hinweis gespeichert ✓", "gut"); hallenHinweise(halle, ziel); });
-      } })]));
+          .then(function (r) { freigeben(hhSpeichern);
+            if (r.error) { meldung(fehlerText(r.error), "warn"); return; }
+            delete cache.geladen["h|" + halle]; kurzMeldung("Hinweis gespeichert ✓", "gut"); hallenHinweise(halle, ziel); })
+          .catch(function (e) { freigeben(hhSpeichern); meldung(fehlerText(e), "warn"); });
+      } });
+      box.appendChild(h("div", { class: "mg-form", style: "margin-top:8px" }, [neu, hhSpeichern]));
       ziel.appendChild(box);
     });
   }

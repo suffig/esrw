@@ -1485,7 +1485,7 @@
       }
     }
     // Aenderungsverlauf aus dem Protokoll (14 Tage): was wurde wann geaendert
-    if (sitzungVorhanden()) hole("protokoll.json").then(function (pl) {
+    if (sitzungVorhanden()) holeProtokoll().then(function (pl) {
       if (inhalt._lauf !== lauf) return;
       var meine = (pl || []).filter(function (e) { return e.kennung && e.kennung === kennungVon(s); });
       if (!meine.length) return;
@@ -2387,7 +2387,7 @@
     var k = el("plan-aenderungen"); if (!k) return;
     k.classList.toggle("versteckt", gesperrtFuerMich("#aenderungen"));
     var z = el("plan-aend-zahl"); if (!z || !sitzungVorhanden()) return;
-    hole("protokoll.json").then(function (pl) {
+    holeProtokoll().then(function (pl) {
       var gesehen = parseInt(lesen("aenderungen-gesehen") || "0", 10) || 0;
       var frisch = (pl || []).filter(function (e) {
         if (!e.stand || new Date(e.stand).getTime() <= gesehen) return false;
@@ -2478,6 +2478,15 @@
   // ---------------------------------------------------- Statistik/Saison
 
   var archivDaten = null;
+  // Das Protokoll ist ueber 100 kB und wurde viermal je Durchgang geholt und
+  // entschluesselt: Spielseite, Spielplan, "Mehr" und die Aenderungsliste
+  // fragen es jeweils einzeln. Zwei Minuten reichen fuer ein Durchklicken,
+  // und der Workflow schreibt ohnehin nur stuendlich.
+  var protokollDaten = null, protokollZeit = 0;
+  function holeProtokoll() {
+    if (protokollDaten && Date.now() - protokollZeit < 120000) return Promise.resolve(protokollDaten);
+    return hole("protokoll.json").then(function (p) { protokollDaten = p; protokollZeit = Date.now(); return p; });
+  }
   function balken(titel, eintraege) {
     if (!eintraege || !eintraege.length) return null;
     var hoechste = eintraege[0][1] || 1;
@@ -3642,7 +3651,7 @@
     aendGesehen = parseInt(lesen("aenderungen-gesehen") || "0", 10) || 0;
     aendKopfBauen();
     var ziel = el("aenderungen-liste"); ziel.innerHTML = ""; ziel.appendChild(skelettKarte(90));
-    Promise.all([hole("protokoll.json").catch(function () { return []; }), supabaseRest("spiel_korrekturen?select=kennung,halle,beginn,treffpunkt,hinweis,abgesagt,von,geaendert").catch(function () { return []; })])
+    Promise.all([holeProtokoll().catch(function () { return []; }), supabaseRest("spiel_korrekturen?select=kennung,halle,beginn,treffpunkt,hinweis,abgesagt,von,geaendert").catch(function () { return []; })])
       .then(function (r) {
         var eintraege = [];
         function spielZu(kennung) { return kennung ? (daten.spiele || []).filter(function (x) { return kennungVon(x) === kennung; })[0] : null; }
@@ -4816,7 +4825,7 @@
       setze("#mitfahren", bald ? bald + " in 14 Tagen" : "");
     }
     if (!sitzungVorhanden()) return;
-    hole("protokoll.json").then(function (pl) {
+    holeProtokoll().then(function (pl) {
       var grenze = Date.now() - 14 * 86400000;
       var meine = (pl || []).filter(function (e) {
         if (!e.stand || new Date(e.stand).getTime() < grenze) return false;
@@ -6029,6 +6038,7 @@
   ziehenEinrichten();
 
   function neuLaden() {
+    protokollDaten = null;
     return Promise.all([hole("daten.json"), hole("stand.json").catch(function () { return null; })])
       .then(function (b) {
         daten = b[0]; standAnzeigen(daten, b[1]); betreiberAnwenden(); korrekturenAnwenden(); betreiberLaden(false).then(function () { korrekturenLaden(false); });
