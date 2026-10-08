@@ -2267,6 +2267,23 @@
   :root[data-design="neu"] .modus::-webkit-scrollbar { display:none; }
   :root[data-design="neu"] .stufen > *,
   :root[data-design="neu"] .modus > * { flex:none; }
+
+  /* ===== Runde 27: ein Kopf je Seite (Phase 3, erster Teil) ========== */
+
+  /* App-Kopf und Seitentitel kosten zusammen rund 110 px, bevor Inhalt
+     kommt. Auf einer Unterseite steht der Seitenname gleich darunter -
+     dort ist der Stand der Einteilungen Wiederholung, und die Marke darf
+     kleiner sein. Auf Start und Spielplan bleibt beides, da zaehlt es. */
+  :root[data-design="neu"] .kopf .stand { display:none; }
+  :root[data-design="neu"][data-ansicht="detail"] .kopf .stand,
+  :root[data-design="neu"][data-ansicht="plan"] .kopf .stand { display:block; }
+
+  :root[data-design="neu"] .kopf .logo { width:34px; height:34px; }
+  :root[data-design="neu"] .kopf h1 { font-size:var(--s-3xl); }
+  :root[data-design="neu"][data-ansicht="detail"] .kopf .logo,
+  :root[data-design="neu"][data-ansicht="plan"] .kopf .logo { width:44px; height:44px; }
+  :root[data-design="neu"][data-ansicht="detail"] .kopf h1,
+  :root[data-design="neu"][data-ansicht="plan"] .kopf h1 { font-size:var(--titel); }
 </style>
 </head>
 <body>
@@ -2731,6 +2748,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=136"></script>
+<script src="app.js?v=137"></script>
 </body>
 </html>

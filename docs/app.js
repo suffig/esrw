@@ -3201,6 +3201,7 @@
   var letzteAnsicht = "auswahl";
   function ansicht(name) {
     letzteAnsicht = name;
+    document.documentElement.setAttribute("data-ansicht", name);
     el("detail").classList.remove("start-laedt");
     ["auswahl", "detail", "plan", "mitglieder", "halle", "status", "spiel", "mehr", "einstellungen", "karte", "statseite", "aenderungen", "mitfahren", "archiv", "regeln", "rechner", "gesperrt"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
     if (name !== "plan" && typeof filterBlatt === "function" && !el("plan-filter-blatt").classList.contains("versteckt")) filterBlatt(false);
