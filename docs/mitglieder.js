@@ -3703,7 +3703,8 @@ window.Mitglieder = (function () {
   }
 
   // Fuer den Hinweis auf der Startseite: vergangene Spiele der letzten
-  // `tage` Tage ohne eingetragene Verguetung.
+  // `tage` Tage ohne eingetragene Verguetung. Je Spiel kommt der Sollbetrag
+  // mit, damit die Handlungszeile im neuen Design die Zahlen nennen kann.
   function offeneAbrechnungen(slug, tage) {
     return bereit().then(function (st) {
       if (!st.eingerichtet || !session) return [];
@@ -3717,7 +3718,11 @@ window.Mitglieder = (function () {
             if (!s.vergangen || new Date(s.beginn).getTime() < grenze) return false;
             var e = einsaetze[kennungVon(s)];
             return !e || e.verguetung == null;
-          }).map(function (s) { return datum(new Date(s.beginn)) + " " + s.paarung; });
+          }).map(function (s) {
+            var b = sollBetrag(s);
+            return { text: datum(new Date(s.beginn)) + " " + s.paarung,
+                     betrag: b, betragText: b != null ? euro(b) : null };
+          });
         });
       });
     }).catch(function () { return []; });

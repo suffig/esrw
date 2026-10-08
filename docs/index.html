@@ -2147,6 +2147,38 @@
   :root[data-design="neu"] .zweit button,
   :root[data-design="neu"] .mg-neben,
   :root[data-design="neu"] .mg-haupt { min-height:44px; }
+
+  /* ===== Runde 22: die drei Bausteine mit eigenem Markup ============== */
+
+  /* Losfahren statt Treffpunkt. Am Spieltag ist die Abfahrtszeit die Zahl,
+     die zaehlt - deshalb bekommt sie eine Flaeche und eine eigene Groesse. */
+  :root[data-design="neu"] .abfahrt.losfahren { margin-top:var(--abstand-s);
+    padding:var(--halb) var(--abstand-m); border-radius:var(--radius-s);
+    background:rgba(255,255,255,.14); font-size:var(--s-xl); opacity:1; }
+  :root[data-design="neu"] .abfahrt.losfahren b { font-size:var(--s-2xl); font-weight:800; }
+
+  /* Die Handlungszeile. Was zu tun ist, gehoert nach oben und nicht in einen
+     Reiter - also eine ganze Zeile zum Antippen, 44 px hoch. */
+  :root[data-design="neu"] .tun { display:flex; align-items:center; gap:var(--abstand-m);
+    padding:var(--abstand-m); margin:var(--abstand-s) 0; min-height:44px;
+    border-radius:var(--radius-m); background:var(--warn-bg); color:var(--warn);
+    text-decoration:none; }
+  :root[data-design="neu"] .tun > span:nth-child(2) { flex:1; min-width:0; }
+  :root[data-design="neu"] .tun b { display:block; font-size:var(--s-xl); font-weight:700; }
+  :root[data-design="neu"] .tun small { display:block; font-size:var(--s-m); opacity:.85; }
+  :root[data-design="neu"] .tun .punkt { width:10px; height:10px; flex:none;
+    border-radius:50%; background:var(--warn); }
+  :root[data-design="neu"] .tun .pfeil { font-size:var(--s-3xl); opacity:.6; flex:none; }
+
+  /* Zeitraum statt nacktem Datum. Der Kopf gibt die Antwort schon, bevor man
+     die Liste liest - dafuer darf er groesser sein als der alte Tageskopf. */
+  :root[data-design="neu"] .tag.zeitraum { align-items:baseline;
+    text-transform:none; letter-spacing:0; color:var(--text);
+    margin:var(--abstand-l) 0 var(--abstand-s); }
+  :root[data-design="neu"] .tag.zeitraum > span:first-child { font-size:var(--s-3xl); font-weight:700; }
+  :root[data-design="neu"] .tag.zeitraum > span + span { font-size:var(--s-s);
+    color:var(--dim); font-weight:600; }
+  :root[data-design="neu"] .tag.zeitraum.heute > span:first-child { color:var(--akzent); }
 </style>
 </head>
 <body>
@@ -2611,6 +2643,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=131"></script>
+<script src="app.js?v=132"></script>
 </body>
 </html>

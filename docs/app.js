@@ -1950,7 +1950,15 @@
         var ab = new Date(new Date(s.treffpunkt).getTime() - st.minuten * 60000);
         if (h._abfahrtSetzen) h._abfahrtSetzen(ab);
         var z = document.createElement("div"); z.className = "abfahrt"; z.appendChild(ikone("i-route"));
-        z.appendChild(document.createTextNode("Abfahrt ca. " + uhr(ab) + " Uhr · " + st.minuten + " Min., " + st.km + " km, " + verkehrText()));
+        if (designNeu()) {
+          z.classList.add("losfahren");
+          z.appendChild(document.createTextNode("Losfahren um "));
+          var zb = document.createElement("b"); zb.textContent = uhr(ab); z.appendChild(zb);
+          z.appendChild(document.createTextNode(" · " + st.minuten + " Min., " + st.km + " km"));
+          if (ak && ak.parentNode === h) { h.insertBefore(z, ak); return; }
+        } else {
+          z.appendChild(document.createTextNode("Abfahrt ca. " + uhr(ab) + " Uhr · " + st.minuten + " Min., " + st.km + " km, " + verkehrText()));
+        }
         h.appendChild(z);
       }).catch(function () {});
     }
@@ -1968,14 +1976,43 @@
       return window.Mitglieder.offeneAbrechnungen(p.slug, 21);
     }).then(function (offen) {
       if (!offen || !offen.length || ziel._lauf !== lauf) return;
+      if (designNeu()) { ziel.appendChild(handlungszeile(offen)); return; }
       var h = document.createElement("div"); h.className = "hinweis warn";
       h.appendChild(ikone("i-check"));
       var t = document.createElement("span");
-      t.appendChild(document.createTextNode(offen.length === 1 ? "Ein Spiel ohne Abrechnung: " + offen[0] + ". "
+      t.appendChild(document.createTextNode(offen.length === 1 ? "Ein Spiel ohne Abrechnung: " + offen[0].text + ". "
         : offen.length + " Spiele ohne Abrechnung. "));
       var a = document.createElement("a"); a.href = "#mitglieder"; a.textContent = "Jetzt nachtragen"; t.appendChild(a);
       h.appendChild(t); ziel.appendChild(h);
     }).catch(function () {});
+  }
+
+  // Nur im neuen Design: eine Zeile, die sagt, was ansteht, samt den
+  // Betraegen, um die es geht. Bis zu zwei werden genannt, danach die Summe -
+  // "80,00 € und 85,00 €" liest sich, eine Aufzaehlung von acht nicht mehr.
+  function handlungszeile(offen) {
+    var mit = offen.filter(function (o) { return o.betrag != null; });
+    var a = document.createElement("a"); a.className = "tun"; a.href = "#mitglieder";
+    var punkt = document.createElement("span"); punkt.className = "punkt offen"; a.appendChild(punkt);
+    var mitte = document.createElement("span");
+    var b = document.createElement("b");
+    b.textContent = offen.length === 1 ? "Ein Spiel abrechnen" : offen.length + " Spiele abrechnen";
+    mitte.appendChild(b);
+    var s = document.createElement("small");
+    if (!mit.length) s.textContent = offen.length === 1 ? offen[0].text : "seit " + offen[offen.length - 1].text;
+    else if (mit.length === 1) s.textContent = mit[0].betragText + " wartet auf dich";
+    else if (mit.length === 2) s.textContent = mit[0].betragText + " und " + mit[1].betragText + " warten auf dich";
+    else {
+      var summe = 0; mit.forEach(function (o) { summe += o.betrag; });
+      s.textContent = "zusammen " + euroText(summe) + " warten auf dich";
+    }
+    mitte.appendChild(s); a.appendChild(mitte);
+    var pf = document.createElement("span"); pf.className = "pfeil"; pf.textContent = "\u203a"; a.appendChild(pf);
+    return a;
+  }
+  function euroText(n) {
+    return (Math.round((n || 0) * 100) / 100).toLocaleString("de-DE",
+      { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
   }
 
   // ------------------------------------------------------ Tauschoptionen
@@ -2154,6 +2191,24 @@
     if (diff === 1) return ["Morgen", datum, false];
     if (diff === -1) return ["Gestern", datum, false];
     return [datum, "", false];
+  }
+  // Nur im neuen Design: statt eines Kopfes je Tag ein Kopf je Zeitraum.
+  // Der Abschnittskopf beantwortet die Frage schon ("Dieses Wochenende · 2
+  // Spiele"), bevor man die Liste liest. Rueckgabe: [Schluessel, Titel].
+  function zeitraum(d) {
+    var heute = new Date(); heute.setHours(0, 0, 0, 0);
+    var tag = new Date(d); tag.setHours(0, 0, 0, 0);
+    var diff = Math.round((tag - heute) / 86400000);
+    if (diff < 0) return ["war", "Vergangen"];
+    if (diff === 0) return ["heute", "Heute"];
+    if (diff === 1) return ["morgen", "Morgen"];
+    // Tage bis zum Sonntag dieser Woche; am Montag sind es sechs.
+    var bisSo = 6 - ((heute.getDay() + 6) % 7);
+    if (diff <= bisSo) return tag.getDay() === 0 || tag.getDay() === 6
+      ? ["we", "Dieses Wochenende"] : ["woche", "Diese Woche"];
+    if (diff <= bisSo + 7) return ["naechste", "Nächste Woche"];
+    return ["m" + tag.getFullYear() + "-" + tag.getMonth(),
+            tag.toLocaleDateString("de-DE", { month: "long", year: "numeric" })];
   }
   function istMeins(s) { return !!(profil && profil.slug && s.besetzung && s.besetzung.some(function (b) { return b.slug === profil.slug; })); }
   function planModus() { var m = lesen("plan-modus"); return m === "liste" || m === "monat" || m === "woche" ? m : (lesen("plan-kompakt") === "1" ? "liste" : "karten"); }
@@ -2428,23 +2483,46 @@
     var kompakt = modus === "liste";
     ziel.classList.toggle("raster", !kompakt);
     var f = ohneZeichen(el("plan-filter").value);
-    var letzterTag = null, treffer = 0, heuteGesetzt = false;
+    var letzteGruppe = null, treffer = 0, heuteGesetzt = false;
     var spiele = planGefiltert(false), gesamt = (daten.spiele || []).filter(function (s) { return !s.vergangen || el("plan-vergangene").checked; }).length;
+    // Neues Design: der Zeitraum-Kopf nennt die Anzahl, also vorab zaehlen.
+    // Altes Design: ein Kopf je Tag, kein Vorlauf noetig.
+    var gruppiert = designNeu(), jeGruppe = {};
+    if (gruppiert) spiele.forEach(function (s) {
+      var k = zeitraum(new Date(s.beginn))[0]; jeGruppe[k] = (jeGruppe[k] || 0) + 1;
+    });
 
     spiele.forEach(function (s) {
       treffer++;
       var beginn = new Date(s.beginn), tagKey = beginn.toDateString();
-      if (tagKey !== letzterTag) {
-        letzterTag = tagKey;
-        var t = tagTitel(beginn);
-        var h = document.createElement("div"); h.className = "tag" + (t[2] ? " heute" : "");
-        if (!heuteGesetzt && beginn >= new Date(new Date().setHours(0, 0, 0, 0))) { h.id = "plan-ab-heute"; heuteGesetzt = true; }
-        h.setAttribute("data-tag", tagKey);
-        var links = document.createElement("span"); links.textContent = t[0];
-        var rechts = document.createElement("span"); rechts.textContent = t[1];
-        h.appendChild(links); h.appendChild(rechts); ziel.appendChild(h);
+      var abHeute = beginn >= new Date(new Date().setHours(0, 0, 0, 0));
+      var zr = gruppiert ? zeitraum(beginn) : null;
+      var kopfKey = gruppiert ? zr[0] : tagKey;
+      if (kopfKey !== letzteGruppe) {
+        letzteGruppe = kopfKey;
+        var h = document.createElement("div");
+        if (gruppiert) {
+          h.className = "tag zeitraum" + (zr[0] === "heute" ? " heute" : "");
+          var n = jeGruppe[zr[0]] || 0;
+          var gl = document.createElement("span"); gl.textContent = zr[1];
+          var gr = document.createElement("span"); gr.textContent = n + (n === 1 ? " Spiel" : " Spiele");
+          h.appendChild(gl); h.appendChild(gr);
+        } else {
+          var t = tagTitel(beginn);
+          h.className = "tag" + (t[2] ? " heute" : "");
+          h.setAttribute("data-tag", tagKey);
+          var links = document.createElement("span"); links.textContent = t[0];
+          var rechts = document.createElement("span"); rechts.textContent = t[1];
+          h.appendChild(links); h.appendChild(rechts);
+        }
+        if (!heuteGesetzt && abHeute) { h.id = "plan-ab-heute"; heuteGesetzt = true; }
+        ziel.appendChild(h);
       }
-      ziel.appendChild(kompakt ? planZeile(s, beginn) : planKarte(s, beginn));
+      var karte = kompakt ? planZeile(s, beginn) : planKarte(s, beginn);
+      // Der Wochenstreifen springt ueber [data-tag] an den Tag. Ohne Tageskopf
+      // traegt die erste Karte des Tages die Marke.
+      if (gruppiert && !ziel.querySelector('[data-tag="' + tagKey + '"]')) karte.setAttribute("data-tag", tagKey);
+      ziel.appendChild(karte);
     });
     el("plan-zaehler").textContent = treffer !== gesamt ? treffer + " von " + gesamt : gesamt + (gesamt === 1 ? " Spiel" : " Spiele");
     var fk = el("plan-filter-fertig");
@@ -5217,10 +5295,14 @@
   // Reihenfolge der Bloecke auf Start (die uebrigen sitzen fest in der Kopfkarte)
   var START_ORDNUNG = ["schnellzugriff", "einrichtung", "pins", "uebersicht", "radar", "nachtrag", "spiele", "kalender-box"];
   var START_NAMEN = { schnellzugriff: "Schnellzugriff", einrichtung: "„Alles eingerichtet?“", pins: "Angepinnte Kollegen", uebersicht: "Kacheln und Termine", radar: "Vertretungs-Radar", nachtrag: "Hinweis zur Abrechnung", spiele: "Deine Spiele", "kalender-box": "Kalender-Karte" };
+  function startVorgabe() {
+    if (!designNeu()) return START_ORDNUNG;
+    return ["nachtrag"].concat(START_ORDNUNG.filter(function (x) { return x !== "nachtrag"; }));
+  }
   function startOrdnung() {
     var o = []; try { o = JSON.parse(lesen("start-ordnung") || "[]") || []; } catch (e) {}
     o = o.filter(function (x) { return START_ORDNUNG.indexOf(x) >= 0; });
-    START_ORDNUNG.forEach(function (x) { if (o.indexOf(x) < 0) o.push(x); });
+    startVorgabe().forEach(function (x) { if (o.indexOf(x) < 0) o.push(x); });
     return o;
   }
   function startOrdnungAnwenden() {
