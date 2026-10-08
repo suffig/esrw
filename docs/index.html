@@ -2109,6 +2109,44 @@
     font-size:var(--s-s); background:none; border:0; }
   :root[data-design="neu"] .spiel .avatar { width:18px; height:18px; font-size:9px; }
   :root[data-design="neu"] .spiel .rolle { padding:3px var(--abstand-s); font-size:var(--s-xs); }
+
+  /* --- Ein Kopf, nicht zwei. Zusammen kosteten App-Kopf und Seitentitel
+     rund 110 px, bevor irgendein Inhalt kam. */
+  :root[data-design="neu"] .seitentitel { margin:var(--eng) 0 var(--abstand-s); }
+  :root[data-design="neu"] .kopf { padding-bottom:var(--halb); }
+  :root[data-design="neu"] .profilzeile { padding:var(--abstand-s) var(--abstand-m); }
+
+  /* --- Der Spielplan hatte vier Steuerzeilen uebereinander. Enger
+     gesetzt und ohne Kaesten wirkt die Leiste wie eine. */
+  :root[data-design="neu"] .filterleiste { padding-top:var(--eng); }
+  :root[data-design="neu"] .schalterzeile { gap:var(--halb); }
+  :root[data-design="neu"] .filterknopf,
+  :root[data-design="neu"] .modus button { min-height:36px; }
+  :root[data-design="neu"] .modus { background:var(--karte); border:1px solid var(--linie); }
+  /* Die Wochentagsleiste ist ein Sprungwerkzeug, kein Kalender - sie darf
+     flacher sein und braucht keine Kaesten um jeden Tag. */
+  :root[data-design="neu"] .woche { gap:var(--abstand-xs); padding:var(--halb) 0; }
+  :root[data-design="neu"] .woche button { border:0; background:none; padding:var(--abstand-xs) var(--halb);
+    min-width:40px; }
+  :root[data-design="neu"] .woche button.heute { background:var(--akzent-hell); }
+
+  /* --- Die Leiste unten traegt Beschriftung, aber nicht so viel Luft */
+  :root[data-design="neu"] .leiste button { padding-top:var(--halb); }
+
+  /* --- Flaechen statt Rahmen, ueberall wo bisher beides war */
+  :root[data-design="neu"] .zahl,
+  :root[data-design="neu"] .gesuch,
+  :root[data-design="neu"] .abschnitt-karte,
+  :root[data-design="neu"] .einstellungen-liste,
+  :root[data-design="neu"] .status-liste,
+  :root[data-design="neu"] .menue,
+  :root[data-design="neu"] .onboarding { border:0; box-shadow:none; }
+
+  /* --- Chips und Knoepfe bleiben greifbar: 44 px, auch mit Handschuhen */
+  :root[data-design="neu"] .chip { min-height:36px; }
+  :root[data-design="neu"] .zweit button,
+  :root[data-design="neu"] .mg-neben,
+  :root[data-design="neu"] .mg-haupt { min-height:44px; }
 </style>
 </head>
 <body>
@@ -2573,6 +2611,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=130"></script>
+<script src="app.js?v=131"></script>
 </body>
 </html>
