@@ -2251,6 +2251,22 @@
   /* Der Name steht auf jeder Seite des Mitgliederbereichs - er darf flach
      sein. */
   :root[data-design="neu"] .profilzeile { padding:var(--halb) var(--abstand-m); }
+
+  /* ===== Runde 26: abgeschnittene Knopfreihen ======================== */
+
+  /* Drei Reihen passen nicht in ihre Zeile und standen auf overflow:hidden -
+     die letzte Wahl war angeschnitten und auf keinem Weg zu erreichen:
+     "Bestimmungen" bei den Regeln (394 in 339 px), der Verkehrspuffer
+     "30 %" in den Einstellungen (152 in 94) und dort "Abends" bei der
+     Themenwahl (232 in 227). Jetzt laesst sich wischen, wie bei den
+     Reitern der Abrechnung. Der Fehler steckt auch im alten Design. */
+  :root[data-design="neu"] .stufen,
+  :root[data-design="neu"] .modus { overflow-x:auto; scrollbar-width:none;
+    -webkit-overflow-scrolling:touch; }
+  :root[data-design="neu"] .stufen::-webkit-scrollbar,
+  :root[data-design="neu"] .modus::-webkit-scrollbar { display:none; }
+  :root[data-design="neu"] .stufen > *,
+  :root[data-design="neu"] .modus > * { flex:none; }
 </style>
 </head>
 <body>
@@ -2715,6 +2731,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=135"></script>
+<script src="app.js?v=136"></script>
 </body>
 </html>
