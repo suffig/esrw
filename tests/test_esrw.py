@@ -994,6 +994,55 @@ def esrw_ical_modul():
     return sys.modules["esrw_ical"]
 
 
+def test_dunkles_thema():
+    """Das dunkle Thema steht zweimal in der Seite: einmal fuer den
+    Schalter in den Einstellungen (:root[data-theme="dark"]) und einmal
+    fuer die Systemeinstellung (@media prefers-color-scheme). CSS kann
+    das ohne Bauschritt nicht teilen - also muss ein Test dafuer sorgen,
+    dass die beiden nicht auseinanderlaufen. Sonst sieht die App je
+    nachdem, wie man ins Dunkle kam, unterschiedlich aus.
+
+    light-dark() waere der elegante Weg, kommt aber erst mit Safari 17.5;
+    aeltere iPhones bekaemen dann gar kein dunkles Thema mehr."""
+    print("\nDunkles Thema")
+    wurzel = os.path.dirname(HIER)
+    seite = os.path.join(wurzel, "docs", "index.html")
+    if not os.path.exists(seite):
+        pruefe(False, "index.html vorhanden")
+        return
+    with open(seite, encoding="utf-8") as f:
+        html = f.read()
+
+    def block(start):
+        i = html.find(start)
+        if i < 0:
+            return None
+        return dict(re.findall(r"(--[a-z0-9-]+)\s*:\s*([^;]+);", html[i:html.index("}", i)]))
+
+    schalter = block(':root[data-theme="dark"] {')
+    system = block(':root:not([data-theme="light"]) {')
+    pruefe(bool(schalter), "Schalter-Block gefunden")
+    pruefe(bool(system), "Block fuer die Systemeinstellung gefunden")
+    if not (schalter and system):
+        return
+    pruefe(len(schalter) >= 15, "der Block setzt die Farben (%d Variablen)" % len(schalter))
+    fehlt = sorted(set(schalter) - set(system))
+    zuviel = sorted(set(system) - set(schalter))
+    anders = sorted(k for k in set(schalter) & set(system)
+                    if schalter[k].strip() != system[k].strip())
+    pruefe(not fehlt, "jede Variable des Schalters steht auch im Systemblock", str(fehlt))
+    pruefe(not zuviel, "und umgekehrt", str(zuviel))
+    pruefe(not anders, "beide Bloecke setzen dieselben Werte",
+           str([(k, schalter[k], system[k]) for k in anders]))
+
+    # Dasselbe fuer die drei waehlbaren Akzentfarben
+    for farbe in ("gruen", "rot", "orange"):
+        s2 = block(':root[data-theme="dark"][data-akzent="%s"] {' % farbe)
+        m2 = block(':root:not([data-theme="light"])[data-akzent="%s"] {' % farbe)
+        pruefe(bool(s2) and s2 == m2, "Akzent %s stimmt in beiden Bloecken ueberein" % farbe,
+               str((s2, m2)))
+
+
 def main():
     print("Regressionstest esrw_ical")
     for test in (test_parsen, test_hallen, test_namen, test_rollen, test_aliase,
@@ -1003,7 +1052,7 @@ def main():
                  test_besetzung_korrektur, test_csp,
                  test_rechnungsvorlage, test_sicherung, test_erinnerungszeit, test_zurueckspielen, test_obmann_rechte,
                  test_kalenderwuensche, test_vereinsnamen, test_seitenumbau,
-                 test_funktionstexte,
+                 test_funktionstexte, test_dunkles_thema,
                  test_tresor):
         test()
     print("\n" + "-" * 58)
