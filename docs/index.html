@@ -2208,6 +2208,29 @@
   :root[data-design="neu"] .reihe-knopf .pfeil { flex:none; }
   :root[data-design="neu"] .abfahrt-gross { padding:var(--halb) var(--abstand-m);
     margin-bottom:var(--abstand-s); }
+
+  /* ===== Runde 24: die Abrechnung ===================================== */
+
+  /* Zwei Zahlen sagen nicht, wie weit die Saison ist. Der Balken schon. */
+  :root[data-design="neu"] .mg-fortschritt { margin-top:var(--abstand-s); }
+  :root[data-design="neu"] .balken-geld { display:flex; height:8px; overflow:hidden;
+    border-radius:var(--radius-pille); background:var(--bg); }
+  :root[data-design="neu"] .balken-geld i { display:block; height:100%; }
+  :root[data-design="neu"] .balken-geld .ist { background:var(--gut); }
+  :root[data-design="neu"] .balken-geld .noch { background:var(--warn); }
+  :root[data-design="neu"] .balken-text { display:flex; justify-content:space-between;
+    margin-top:var(--abstand-xs); font-size:var(--s-s); color:var(--dim); font-weight:600; }
+
+  /* Ein Punkt je Zeile: grau nichts eingetragen, orange erfasst aber offen,
+     gruen bezahlt. Beim Scrollen sieht man, wo noch etwas fehlt, ohne zu
+     lesen. Die Zustaende stehen schon als Klassen an der Zeile. */
+  :root[data-design="neu"] .mg-eintrag .kopfzeile .datum::before { content:"";
+    display:inline-block; width:8px; height:8px; margin-right:var(--halb);
+    border-radius:50%; background:var(--dim); opacity:.45; }
+  :root[data-design="neu"] .mg-eintrag.erfasst .kopfzeile .datum::before {
+    background:var(--warn); opacity:1; }
+  :root[data-design="neu"] .mg-eintrag.bezahlt .kopfzeile .datum::before {
+    background:var(--gut); opacity:1; }
 </style>
 </head>
 <body>
@@ -2672,6 +2695,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=133"></script>
+<script src="app.js?v=134"></script>
 </body>
 </html>

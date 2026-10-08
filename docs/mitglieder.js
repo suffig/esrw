@@ -73,6 +73,9 @@ window.Mitglieder = (function () {
   }
 
   function leeren(el) { while (el.firstChild) el.removeChild(el.firstChild); }
+  // Das neue Design entsteht Ansicht fuer Ansicht. app.js setzt die Marke
+  // am <html>, hier wird sie nur gelesen.
+  function designNeu() { return document.documentElement.getAttribute("data-design") === "neu"; }
   function ikone(name) { return ctx && ctx.ikone ? ctx.ikone(name) : document.createTextNode(""); }
 
   function euro(n) {
@@ -1794,11 +1797,11 @@ window.Mitglieder = (function () {
     var kosten = sS.fahrt + sS.verpf + sS.ausl;
     // Was noch nicht abgehakt ist - die eigentliche Frage beim Blick in
     // die Abrechnung: was steht noch aus?
-    var jetzt = new Date(), offenBetrag = 0, offenN = 0;
+    var jetzt = new Date(), offenBetrag = 0, offenN = 0, bezahltBetrag = 0;
     spiele.forEach(function (sp) {
       if (new Date(sp.beginn) > jetzt) return;
       var e = einsaetze[sp.kennung];
-      if (e && e.bezahlt) return;
+      if (e && e.bezahlt) { bezahltBetrag += betragFuer(sp, e).betrag || 0; return; }
       offenN++;
       offenBetrag += e ? (betragFuer(sp, e).betrag || 0) : 0;
     });
@@ -1814,10 +1817,29 @@ window.Mitglieder = (function () {
       saldo.appendChild(k);
     });
     var neu = h("div", { class: "mg-summenblock" }, [saldo]);
+    // Nur im neuen Design: der Balken sagt das Verhaeltnis, das die vier
+    // Kacheln nur als Zahlen nennen - wieviel der Saison bezahlt ist und
+    // wieviel noch aussteht.
+    if (designNeu()) { var fb = fortschritt(bezahltBetrag, offenBetrag); if (fb) neu.appendChild(fb); }
     alt.parentNode.replaceChild(neu, alt);
     // Offenes Detail-Panel mitziehen
     var panel = wurzel.querySelector(".mg-panel");
     if (panel && abrechnungPanel === "detail") { leeren(panel); panel.appendChild(summenDetails()); }
+  }
+  function fortschritt(bezahlt, offen) {
+    var ganz = bezahlt + offen;
+    if (ganz <= 0) return null;
+    var anteil = Math.round(bezahlt / ganz * 100);
+    return h("div", { class: "mg-fortschritt" }, [
+      h("div", { class: "balken-geld" }, [
+        h("i", { class: "ist", style: "width:" + anteil + "%" }),
+        h("i", { class: "noch", style: "width:" + (100 - anteil) + "%" })
+      ]),
+      h("div", { class: "balken-text" }, [
+        h("span", { text: euro(bezahlt) + " bezahlt" }),
+        h("span", { text: euro(offen) + " offen" })
+      ])
+    ]);
   }
   function summenDetails() {
     var spiele = saisonSpiele(gewaehlteSaison), alle = alleSpiele(), sS = summen(spiele);
