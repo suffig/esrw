@@ -27,6 +27,18 @@
     --schatten:0 1px 2px rgba(16,24,40,.06), 0 1px 3px rgba(16,24,40,.04);
     --held-schatten:0 8px 24px rgba(15,61,110,.25);
     --radius:14px;
+    /* Jede Seite hat einen Kopf in derselben Groesse, egal ob er als Karte
+       (Spiel, Archiv, Karte, Regeln) oder schlicht (Spielplan, Mehr) kommt. */
+    --titel:1.3rem;
+    /* Eckenradien: Pille, Kreis und vier Stufen - vorher standen hier
+       zwanzig verschiedene Einzelwerte nebeneinander. Zusammengesetzte
+       Radien (z.B. die Sprechblasen) bleiben, die sind formgebend. */
+    --radius-xs:4px; --radius-s:10px; --radius-m:12px; --radius-gross:18px; --radius-pille:99px;
+    /* Abstaende in Vierer-Schritten, dazu 2 und 6 fuer enge Stellen.
+       Neue Regeln nehmen diese Stufen, keine krummen Zwischenwerte. */
+    --eng:2px; --halb:6px;
+    --abstand-xs:4px; --abstand-s:8px; --abstand-m:12px; --abstand-l:16px;
+    --abstand-xl:24px; --abstand-2xl:32px;
     color-scheme: light;
   }
   :root[data-theme="dark"] {
@@ -108,7 +120,7 @@
 
   /* Held: naechstes Spiel */
   .held { background:linear-gradient(135deg, var(--held-1, #0f3d6e) 0%, var(--held-2, #1d5a99) 100%); color:#fff;
-          border-radius:18px; padding:18px 18px 16px; margin-bottom:12px;
+          border-radius:var(--radius-gross); padding:18px 18px 16px; margin-bottom:12px;
           box-shadow:var(--held-schatten); position:relative; overflow:hidden; }
   .held .wann { font-size:.78rem; font-weight:700; opacity:.85; text-transform:uppercase; letter-spacing:.08em; padding-right:56px; }
   .held .zeit { font-size:2rem; font-weight:800; letter-spacing:-.03em; line-height:1.1; margin:4px 0 2px; }
@@ -117,15 +129,15 @@
   .held .aktionen { display:flex; gap:8px; margin-top:14px; flex-wrap:wrap; align-items:center; }
   .held .aktionen a { display:inline-flex; align-items:center; gap:6px;
     background:rgba(255,255,255,.16); color:#fff; border:1px solid rgba(255,255,255,.3);
-    border-radius:99px; padding:8px 14px; text-decoration:none; font-weight:700; font-size:.88rem; }
+    border-radius:var(--radius-pille); padding:8px 14px; text-decoration:none; font-weight:700; font-size:.88rem; }
   .held .aktionen span { display:inline-flex; align-items:center; gap:6px; font-size:.88rem; opacity:.9; padding:8px 4px; }
   .held .rolle { position:absolute; top:16px; right:16px; background:rgba(255,255,255,.22); color:#fff; }
 
   /* Namensauswahl */
   .frage { font-weight:800; font-size:1.2rem; margin:8px 0 10px; }
   input[type=search] {
-    width:100%; padding:13px 14px 13px 40px; font:inherit; color:var(--text);
-    background:var(--karte); border:1px solid var(--linie); border-radius:12px;
+    width:100%; padding:12px 14px 12px 40px; font:inherit; color:var(--text);
+    background:var(--karte); border:1px solid var(--linie); border-radius:var(--radius-m);
     -webkit-appearance:none; appearance:none;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235f6774' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E");
     background-repeat:no-repeat; background-position:12px center; background-size:18px;
@@ -134,7 +146,7 @@
   .namen { list-style:none; margin:12px 0 0; padding:0; overflow:hidden; }
   .namen li + li { border-top:1px solid var(--linie); }
   .namen button { display:flex; justify-content:space-between; align-items:center; gap:12px;
-    width:100%; padding:13px 15px; background:none; border:0; cursor:pointer; color:inherit; text-align:left; font-weight:600; }
+    width:100%; padding:12px 16px; background:none; border:0; cursor:pointer; color:inherit; text-align:left; font-weight:600; }
   .namen button:hover { background:var(--akzent-hell); }
   .anzahl { color:var(--dim); font-size:.82rem; white-space:nowrap; font-weight:500; }
   .leer { color:var(--dim); padding:28px 16px; text-align:center; }
@@ -142,71 +154,71 @@
 
   .profilzeile { display:flex; justify-content:space-between; align-items:center; gap:12px;
                  padding:12px 16px; margin-bottom:12px; }
-  .profilzeile b { font-size:1.05rem; font-weight:800; }
+  .profilzeile b { font-size:var(--titel); font-weight:800; letter-spacing:-.02em; }
   .profilzeile small { display:block; color:var(--dim); font-size:.76rem; }
   .textknopf { background:none; border:0; color:var(--akzent); font:inherit; font-weight:700;
                padding:0; cursor:pointer; white-space:nowrap; }
 
   .abo { display:flex; align-items:center; justify-content:center; gap:8px;
          background:var(--akzent); color:var(--akzent-text); text-decoration:none;
-         padding:14px 18px; border-radius:12px; font-weight:800; }
+         padding:14px 18px; border-radius:var(--radius-m); font-weight:800; }
   .zweit { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
-  .zweit button { flex:1 1 calc(50% - 4px); min-width:0; padding:11px 8px; cursor:pointer; background:var(--karte); color:var(--text);
-                  border:1px solid var(--linie); border-radius:10px; font-weight:600; white-space:normal; }
+  .zweit button { flex:1 1 calc(50% - 4px); min-width:0; padding:12px 8px; cursor:pointer; background:var(--karte); color:var(--text);
+                  border:1px solid var(--linie); border-radius:var(--radius-s); font-weight:600; white-space:normal; }
   .zweit button:hover { border-color:var(--akzent); }
 
-  .hinweis { display:flex; gap:10px; align-items:flex-start; padding:12px 14px; border-radius:12px;
+  .hinweis { display:flex; gap:10px; align-items:flex-start; padding:12px 14px; border-radius:var(--radius-m);
              margin:12px 0; font-size:.9rem; }
   .hinweis.warn { background:var(--warn-bg); color:var(--warn); }
   .hinweis.gut { background:var(--gut-bg); color:var(--gut); }
   .hinweis a { color:inherit; font-weight:700; }
 
   .melde { padding:14px 16px; margin-top:12px; }
-  .melde h4 { margin:0 0 5px; font-size:.95rem; font-weight:800; }
+  .melde h4 { margin:0 0 6px; font-size:.95rem; font-weight:800; }
   .melde p { margin:0 0 10px; color:var(--dim); font-size:.87rem; }
-  .melde button.haupt { width:100%; padding:11px; cursor:pointer; background:var(--akzent);
-                        color:var(--akzent-text); border:0; border-radius:10px; font-weight:700; }
-  .status { display:inline-block; font-size:.74rem; font-weight:800; padding:2px 9px; border-radius:99px; }
+  .melde button.haupt { width:100%; padding:12px; cursor:pointer; background:var(--akzent);
+                        color:var(--akzent-text); border:0; border-radius:var(--radius-s); font-weight:700; }
+  .status { display:inline-block; font-size:.74rem; font-weight:800; padding:2px 8px; border-radius:var(--radius-pille); }
   .status.an { background:var(--gut-bg); color:var(--gut); }
   .status.aus { background:var(--warn-bg); color:var(--warn); }
 
   details.karte { padding:0 16px; margin-top:12px; }
-  details.karte summary { cursor:pointer; padding:13px 0; font-weight:700; font-size:.95rem; list-style:none; display:flex; justify-content:space-between; align-items:center; }
+  details.karte summary { cursor:pointer; padding:12px 0; font-weight:700; font-size:.95rem; list-style:none; display:flex; justify-content:space-between; align-items:center; }
   details.karte summary::-webkit-details-marker { display:none; }
   details.karte summary::after { content:"›"; color:var(--dim); transform:rotate(90deg); transition:transform .15s; font-size:1.2rem; }
   details.karte[open] summary::after { transform:rotate(-90deg); }
   details ol { margin:0 0 14px; padding-left:20px; }
-  details li { margin-bottom:7px; }
+  details li { margin-bottom:8px; }
   details p { margin:0 0 12px; color:var(--dim); font-size:.9rem; }
-  mark { background:#ffe9a8; color:#3a2c00; padding:0 3px; border-radius:3px; }
+  mark { background:#ffe9a8; color:#3a2c00; padding:0 4px; border-radius:var(--radius-xs); }
   :root[data-theme="dark"] mark { background:#5c4a13; color:#ffeab4; }
 
   /* Spielkarten */
-  .spiel { padding:13px 15px; margin-bottom:9px; }
+  .spiel { padding:12px 16px; margin-bottom:8px; }
   .spiel.war { opacity:.6; }
   .spiel.neu { border-color:var(--warn); }
   .kopfzeile { display:flex; justify-content:space-between; gap:10px; align-items:center; }
   .datum { font-weight:800; display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
-  .rolle { font-size:.7rem; font-weight:800; padding:3px 9px; border-radius:99px; white-space:nowrap;
+  .rolle { font-size:.7rem; font-weight:800; padding:4px 8px; border-radius:var(--radius-pille); white-space:nowrap;
            background:var(--sr-bg); color:var(--sr); letter-spacing:.03em; }
   .rolle.HSR { background:var(--hsr-bg); color:var(--hsr); }
   .rolle.LSR { background:var(--lsr-bg); color:var(--lsr); }
   .liga { font-size:.7rem; font-weight:700; color:var(--dim); border:1px solid var(--linie);
-          padding:1px 7px; border-radius:99px; white-space:nowrap; }
+          padding:2px 8px; border-radius:var(--radius-pille); white-space:nowrap; }
   .paarung { margin:6px 0 4px; font-weight:700; font-size:1.02rem; }
   .meta { color:var(--dim); font-size:.86rem; display:flex; gap:6px; align-items:flex-start; }
-  .meta + .meta { margin-top:3px; }
+  .meta + .meta { margin-top:4px; }
   .meta a { color:var(--akzent); }
   .achtung { color:var(--warn); background:var(--warn-bg); font-size:.85rem;
-             padding:7px 10px; border-radius:9px; margin-top:8px; }
+             padding:8px 10px; border-radius:var(--radius-s); margin-top:8px; }
   .geaendert { color:var(--warn); background:var(--warn-bg); font-size:.85rem;
-               font-weight:700; padding:7px 10px; border-radius:9px; margin:8px 0 0; }
-  .chips { display:flex; flex-wrap:wrap; gap:6px; margin-top:9px; }
+               font-weight:700; padding:8px 10px; border-radius:var(--radius-s); margin:8px 0 0; }
+  .chips { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
   .chip { display:inline-flex; align-items:center; gap:6px; font-size:.84rem; font-weight:600;
-          background:var(--bg); border:1px solid var(--linie); border-radius:99px;
+          background:var(--bg); border:1px solid var(--linie); border-radius:var(--radius-pille);
           padding:4px 10px; color:var(--text); text-decoration:none; }
   a.chip:hover { border-color:var(--akzent); }
-  .chip b { font-size:.66rem; font-weight:800; padding:1px 6px; border-radius:99px; background:var(--sr-bg); color:var(--sr); }
+  .chip b { font-size:.66rem; font-weight:800; padding:2px 6px; border-radius:var(--radius-pille); background:var(--sr-bg); color:var(--sr); }
   .chip b.HSR { background:var(--hsr-bg); color:var(--hsr); }
   .chip b.LSR { background:var(--lsr-bg); color:var(--lsr); }
   .chip.ich { border-color:var(--akzent); background:var(--akzent-hell); }
@@ -214,29 +226,29 @@
   .chip.gern { border-color:var(--gut); }
 
   /* Statistik */
-  .zahlen { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin-bottom:10px; }
+  .zahlen { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:10px; }
   .zahl { padding:12px 8px; text-align:center; }
   .zahl b { display:block; font-size:clamp(1rem, 4.4vw, 1.45rem); white-space:nowrap; line-height:1.1; font-weight:800; letter-spacing:-.02em; }
   .zahl span { color:var(--dim); font-size:.72rem; font-weight:600; }
-  .balken { padding:12px 15px; }
-  .balken + .balken { margin-top:9px; }
-  .balken h4 { margin:0 0 9px; font-size:.74rem; text-transform:uppercase; letter-spacing:.06em; color:var(--dim); font-weight:800; }
-  .reihe { display:grid; grid-template-columns:1fr auto; gap:8px; align-items:center; margin-bottom:7px; font-size:.9rem; }
+  .balken { padding:12px 16px; }
+  .balken + .balken { margin-top:8px; }
+  .balken h4 { margin:0 0 8px; font-size:.74rem; text-transform:uppercase; letter-spacing:.06em; color:var(--dim); font-weight:800; }
+  .reihe { display:grid; grid-template-columns:1fr auto; gap:8px; align-items:center; margin-bottom:8px; font-size:.9rem; }
   .reihe:last-child { margin-bottom:0; }
-  .reihe i { display:block; height:6px; border-radius:3px; background:var(--akzent); margin-top:3px; }
+  .reihe i { display:block; height:6px; border-radius:var(--radius-xs); background:var(--akzent); margin-top:4px; }
   .reihe em { font-style:normal; color:var(--dim); font-size:.85rem; font-weight:600; }
 
   /* Spielplan */
   .filterleiste { position:sticky; top:0; z-index:5; background:var(--bg); padding:6px 16px 8px; margin:0 -16px; }
   .schalterzeile { display:flex; flex-wrap:wrap; gap:6px 14px; align-items:center; margin:8px 2px 0; }
-  .schalter { color:var(--dim); font-size:.84rem; font-weight:600; display:inline-flex; align-items:center; gap:5px; }
+  .schalter { color:var(--dim); font-size:.84rem; font-weight:600; display:inline-flex; align-items:center; gap:6px; }
   .schalter input { margin:0; }
   #plan-zaehler { margin-left:auto; }
   .tag { font-size:.74rem; text-transform:uppercase; letter-spacing:.08em; color:var(--dim);
          margin:20px 0 8px; font-weight:800; display:flex; justify-content:space-between; }
   .tag.heute { color:var(--akzent); }
   .zeit { font-weight:800; min-width:5.2em; }
-  .zeile { display:grid; grid-template-columns:3.4em 1fr; gap:2px 10px; padding:9px 4px;
+  .zeile { display:grid; grid-template-columns:3.4em 1fr; gap:2px 10px; padding:8px 4px;
            border-top:1px solid var(--linie); font-size:.92rem; }
   .tag + .zeile { border-top:0; }
   .zeile.war { opacity:.6; }
@@ -251,41 +263,41 @@
   .saisonzeile small { display:block; color:var(--dim); }
 
   /* Tausch */
-  .tausch { margin:10px 0 0; padding:0 12px; background:var(--bg); border:1px solid var(--linie); border-radius:12px; }
-  .tausch summary { padding:9px 0; font-size:.88rem; color:var(--akzent); font-weight:700; cursor:pointer; list-style:none; }
+  .tausch { margin:10px 0 0; padding:0 12px; background:var(--bg); border:1px solid var(--linie); border-radius:var(--radius-m); }
+  .tausch summary { padding:8px 0; font-size:.88rem; color:var(--akzent); font-weight:700; cursor:pointer; list-style:none; }
   .tausch summary::-webkit-details-marker { display:none; }
   .tausch h4 { margin:10px 0 6px; font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--dim); font-weight:800; }
   .tausch > div { padding-bottom:10px; }
   .kandidat { padding:8px 0; border-top:1px solid var(--linie); }
   .kandidat-kopf { display:flex; justify-content:space-between; align-items:center; gap:8px; }
-  .kandidat .meta { font-size:.8rem; margin-top:3px; }
-  .anfrage { font-size:.8rem; font-weight:800; padding:5px 12px; background:var(--akzent); color:var(--akzent-text);
-             border:0; border-radius:99px; cursor:pointer; white-space:nowrap; display:inline-flex; align-items:center; gap:5px; }
+  .kandidat .meta { font-size:.8rem; margin-top:4px; }
+  .anfrage { font-size:.8rem; font-weight:800; padding:6px 12px; background:var(--akzent); color:var(--akzent-text);
+             border:0; border-radius:var(--radius-pille); cursor:pointer; white-space:nowrap; display:inline-flex; align-items:center; gap:6px; }
   .anfrage.zweit { background:var(--karte); color:var(--akzent); border:1px solid var(--akzent); margin-top:6px; white-space:normal; max-width:100%; text-align:left; }
 
   /* Mitglieder (Stile fuer mitglieder.js) */
-  .mg-meldung { padding:10px 12px; border-radius:10px; font-size:.88rem; margin-bottom:10px; background:var(--karte); border:1px solid var(--linie); }
+  .mg-meldung { padding:10px 12px; border-radius:var(--radius-s); font-size:.88rem; margin-bottom:10px; background:var(--karte); border:1px solid var(--linie); }
   .mg-meldung.gut { color:var(--gut); background:var(--gut-bg); border-color:transparent; }
   .mg-meldung.warn { color:var(--warn); background:var(--warn-bg); border-color:transparent; }
-  .mg-form { display:flex; flex-direction:column; gap:9px; }
+  .mg-form { display:flex; flex-direction:column; gap:8px; }
   .mg-form h4 { margin:0 0 4px; font-size:1.05rem; font-weight:800; }
   .mg-form label { font-size:.78rem; color:var(--dim); margin-top:4px; font-weight:600; }
   .mg-form input, .mg-form select, .mg-felder input, .mg-form textarea {
     width:100%; padding:10px 12px; font:inherit; color:var(--text); background:var(--bg);
-    border:1px solid var(--linie); border-radius:10px; -webkit-appearance:none; appearance:none; }
+    border:1px solid var(--linie); border-radius:var(--radius-s); -webkit-appearance:none; appearance:none; }
   .mg-form input:focus, .mg-felder input:focus, .mg-form textarea:focus { outline:2px solid var(--akzent); outline-offset:-1px; }
   .mg-form input[type=checkbox] { width:auto; padding:0; }
   .mg-form .schalterzeile { margin:2px 0 0; }
   .mg-zeile { display:flex; gap:8px; }
   .mg-zeile input { flex:1; }
-  .mg-haupt { padding:12px; font-weight:800; cursor:pointer; margin-top:6px; background:var(--akzent); color:var(--akzent-text); border:0; border-radius:10px; }
+  .mg-haupt { padding:12px; font-weight:800; cursor:pointer; margin-top:6px; background:var(--akzent); color:var(--akzent-text); border:0; border-radius:var(--radius-s); }
   .mg-haupt:disabled { opacity:.6; }
-  .mg-neben { padding:9px 12px; cursor:pointer; white-space:nowrap; background:var(--karte); color:var(--text); border:1px solid var(--linie); border-radius:10px; font-weight:600; }
+  .mg-neben { padding:8px 12px; cursor:pointer; white-space:nowrap; background:var(--karte); color:var(--text); border:1px solid var(--linie); border-radius:var(--radius-s); font-weight:600; }
   .mg-wechsel { margin:10px 0 6px; }
-  .mg-eintrag .mg-felder { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:9px; }
-  .mg-eintrag .mg-felder label, .mg-form .mg-felder label { font-size:.72rem; color:var(--dim); display:flex; flex-direction:column; gap:3px; font-weight:600; }
+  .mg-eintrag .mg-felder { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-top:8px; }
+  .mg-eintrag .mg-felder label, .mg-form .mg-felder label { font-size:.72rem; color:var(--dim); display:flex; flex-direction:column; gap:4px; font-weight:600; }
   .mg-form .mg-felder { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
-  .mg-eintrag .mg-felder input { padding:7px 9px; font-size:.9rem; }
+  .mg-eintrag .mg-felder input { padding:8px 8px; font-size:.9rem; }
   .mg-eintrag .mg-notiz { grid-column:1 / 4; }
   .mg-eintrag .mg-notiz:not(:only-child) { grid-column:1 / 3; }
   .mg-schalter { display:flex; flex-wrap:wrap; gap:6px 16px; margin-top:8px; }
@@ -296,7 +308,7 @@
   .mg-monat { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:6px 12px; margin:18px 0 8px; }
   .mg-monat > span:first-child b { display:block; font-size:1rem; }
   .mg-monat > span:first-child small { color:var(--dim); font-weight:500; }
-  .mg-monat-aktion .anfrage { padding:7px 12px; }
+  .mg-monat-aktion .anfrage { padding:8px 12px; }
   .mg-abrechnung-kopf { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:10px; }
   .mg-leiste { display:flex; gap:6px; overflow-x:auto; padding:2px 0 6px; margin:10px 0 4px; scrollbar-width:none; }
   .mg-leiste::-webkit-scrollbar { display:none; }
@@ -304,15 +316,15 @@
   .mg-panel { margin:4px 0 10px; }
   .mg-panel .abschnitt { margin-top:4px; }
   .mg-panel .spiel-eintragen, .mg-panel .melde.karte { margin:0; padding:0; box-shadow:none; background:transparent; }
-  .mg-abrechnung-kopf .mg-select { flex:1 1 160px; margin:0; padding:9px 10px; border-radius:10px; border:1px solid var(--linie); background:var(--karte); color:var(--text); font-size:.9rem; font-family:inherit; }
+  .mg-abrechnung-kopf .mg-select { flex:1 1 160px; margin:0; padding:8px 10px; border-radius:var(--radius-s); border:1px solid var(--linie); background:var(--karte); color:var(--text); font-size:.9rem; font-family:inherit; }
   .mg-abrechnung-kopf .mg-chips { margin:0; display:flex; gap:6px; }
-  .mg-status { border:1px solid var(--linie); background:var(--rot-hell); color:var(--rot); font-weight:800; font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; padding:3px 9px; border-radius:99px; cursor:pointer; font-family:inherit; }
+  .mg-status { border:1px solid var(--linie); background:var(--rot-hell); color:var(--rot); font-weight:800; font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; padding:4px 8px; border-radius:var(--radius-pille); cursor:pointer; font-family:inherit; }
   .mg-status.fertig { background:var(--gut-bg); color:var(--gut); }
   .mg-status.kommt { background:var(--akzent-hell); color:var(--dim); cursor:default; }
   .schnellzugriff { display:flex; gap:8px; overflow-x:auto; padding:2px 0 8px; margin:0 0 6px; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
   .schnellzugriff::-webkit-scrollbar { display:none; }
   .schnellzugriff button { border:0; font-family:inherit; cursor:pointer; }
-  .schnellzugriff a, .schnellzugriff button { flex:none; display:flex; flex-direction:column; align-items:center; gap:5px; min-width:64px; padding:8px 6px; border-radius:14px; background:var(--karte); box-shadow:var(--schatten); color:var(--text); text-decoration:none; font-size:.68rem; font-weight:700; }
+  .schnellzugriff a, .schnellzugriff button { flex:none; display:flex; flex-direction:column; align-items:center; gap:6px; min-width:64px; padding:8px 6px; border-radius:var(--radius); background:var(--karte); box-shadow:var(--schatten); color:var(--text); text-decoration:none; font-size:.68rem; font-weight:700; }
   .schnellzugriff a svg.i, .schnellzugriff button svg.i { width:22px; height:22px; color:var(--akzent); }
   .schnellzugriff a .punkt { position:absolute; }
   #detail.start-ruhig #schnellzugriff { display:none; }
@@ -322,13 +334,13 @@
   .mg-datei { font-size:.8rem; color:var(--akzent); font-weight:700; cursor:pointer; }
   .mg-datei input { display:none; }
   .mg-untertabs { display:flex; gap:6px; margin:0 0 14px; overflow-x:auto; }
-  .mg-untertabs button { padding:8px 13px; border-radius:99px; border:1px solid var(--linie); background:var(--karte); color:var(--dim); font-weight:700; cursor:pointer; white-space:nowrap; font-size:.88rem; }
+  .mg-untertabs button { padding:8px 12px; border-radius:var(--radius-pille); border:1px solid var(--linie); background:var(--karte); color:var(--dim); font-weight:700; cursor:pointer; white-space:nowrap; font-size:.88rem; }
   .mg-untertabs button.aktiv { background:var(--akzent); color:var(--akzent-text); border-color:var(--akzent); }
-  .gesuch { padding:12px 15px; margin-bottom:9px; }
+  .gesuch { padding:12px 16px; margin-bottom:8px; }
   .gesuch .kopfzeile { align-items:flex-start; }
   .gesuch .wer { font-size:.8rem; color:var(--dim); font-weight:600; }
   .gesuch .angebote { margin-top:8px; font-size:.85rem; }
-  .gesuch .angebote span { display:inline-block; background:var(--gut-bg); color:var(--gut); border-radius:99px; padding:2px 9px; margin:2px 4px 2px 0; font-weight:700; font-size:.8rem; }
+  .gesuch .angebote span { display:inline-block; background:var(--gut-bg); color:var(--gut); border-radius:var(--radius-pille); padding:2px 8px; margin:2px 4px 2px 0; font-weight:700; font-size:.8rem; }
   .sperre { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:6px 10px; padding:8px 0; border-top:1px solid var(--linie); font-size:.9rem; }
   .sperre .mg-untertabs { margin:0; padding-right:0; -webkit-mask-image:none; mask-image:none; flex:none; }
   .sperre .mg-untertabs button { padding:6px 10px; font-size:.8rem; }
@@ -344,7 +356,7 @@
   .spiel.zeit-links .wann { display:flex; flex-direction:column; align-items:center; text-align:center; padding:2px 8px 0 0; border-right:1px solid var(--linie); }
   .wann b { font-size:.68rem; text-transform:uppercase; color:var(--dim); letter-spacing:.06em; }
   .wann span { font-size:.82rem; font-weight:700; white-space:nowrap; }
-  .wann em { font-style:normal; font-weight:800; font-size:1.02rem; margin-top:3px; letter-spacing:-.02em; }
+  .wann em { font-style:normal; font-weight:800; font-size:1.02rem; margin-top:4px; letter-spacing:-.02em; }
   .spiel.zeit-links > .extras-ziel, .spiel.zeit-links > .tausch { grid-column:1 / -1; }
   .spiel.zeit-links .kopfzeile { min-height:22px; }
   .spiel.zeit-links .paarung { margin-top:2px; }
@@ -355,7 +367,7 @@
   /* Skelett waehrend des Ladens */
   .skelett-zeile, .skelett-karte { position:relative; overflow:hidden; background:var(--linie); }
   .skelett-zeile { height:46px; }
-  .skelett-karte { height:120px; margin-bottom:9px; border:0; }
+  .skelett-karte { height:120px; margin-bottom:8px; border:0; }
   .skelett-zeile::after, .skelett-karte::after { content:""; position:absolute; inset:0; transform:translateX(-100%);
     background:linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent); animation:schimmer 1.3s infinite; }
   :root[data-theme="dark"] .skelett-zeile::after, :root[data-theme="dark"] .skelett-karte::after { background:linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent); }
@@ -364,11 +376,11 @@
   /* Was ist neu */
   .neu { padding:12px 14px; margin-bottom:12px; border-color:var(--akzent); }
   .neu ul { margin:6px 0 0; padding-left:18px; font-size:.88rem; }
-  .neu li { margin-bottom:3px; }
+  .neu li { margin-bottom:4px; }
 
   /* Spielplan: Modus, Liga-Chips, Monat */
-  .modus { display:inline-flex; border:1px solid var(--linie); border-radius:99px; overflow:hidden; background:var(--karte); }
-  .modus button { border:0; background:none; color:var(--dim); font-size:.8rem; font-weight:700; padding:5px 10px; cursor:pointer; }
+  .modus { display:inline-flex; border:1px solid var(--linie); border-radius:var(--radius-pille); overflow:hidden; background:var(--karte); }
+  .modus button { border:0; background:none; color:var(--dim); font-size:.8rem; font-weight:700; padding:6px 10px; cursor:pointer; }
   .modus button.aktiv { background:var(--akzent); color:var(--akzent-text); }
   .ligen { display:flex; gap:6px; overflow-x:auto; padding:4px 0 6px; scrollbar-width:none; }
   .ligen::-webkit-scrollbar { display:none; }
@@ -379,13 +391,13 @@
   .monat-kopf button { width:36px; height:36px; }
   .monat { display:grid; grid-template-columns:repeat(7, minmax(0, 1fr)); gap:4px; }
   .monat .wt { text-align:center; font-size:.68rem; color:var(--dim); font-weight:800; text-transform:uppercase; padding:2px 0 4px; }
-  .monat .zelle { aspect-ratio:1; border-radius:10px; background:var(--karte); border:1px solid var(--linie); padding:4px 0 0; text-align:center;
+  .monat .zelle { aspect-ratio:1; border-radius:var(--radius-s); background:var(--karte); border:1px solid var(--linie); padding:4px 0 0; text-align:center;
                   font-size:.82rem; font-weight:600; cursor:pointer; position:relative; display:flex; flex-direction:column; align-items:center; gap:2px; }
   .monat .zelle.leer { background:none; border-color:transparent; cursor:default; }
   .monat .zelle.war { opacity:.55; }
   .monat .zelle.heute { border-color:var(--akzent); color:var(--akzent); }
   .monat .zelle.gewaehlt { background:var(--akzent-hell); border-color:var(--akzent); }
-  .monat .punkte { display:flex; gap:3px; }
+  .monat .punkte { display:flex; gap:4px; }
   .monat .punkte i { width:6px; height:6px; border-radius:50%; background:var(--dim); }
   .monat .punkte i.ich { background:var(--akzent); }
   .monat .punkte i.offen { background:var(--warn); }
@@ -443,7 +455,7 @@
   /* Wochenleiste im Spielplan */
   .woche { display:flex; gap:6px; overflow-x:auto; padding:6px 0 4px; scrollbar-width:none; }
   .woche::-webkit-scrollbar { display:none; }
-  .woche button { flex:none; width:44px; border:1px solid var(--linie); background:var(--karte); color:var(--text); border-radius:12px; padding:5px 0 4px; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:2px; font-size:.7rem; font-weight:700; }
+  .woche button { flex:none; width:44px; border:1px solid var(--linie); background:var(--karte); color:var(--text); border-radius:var(--radius-m); padding:6px 0 4px; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:2px; font-size:.7rem; font-weight:700; }
   .woche button b { font-size:.95rem; font-weight:800; }
   .woche button.heute { border-color:var(--akzent); color:var(--akzent); }
   .woche button i { width:5px; height:5px; border-radius:50%; background:var(--dim); }
@@ -453,10 +465,10 @@
   /* Einstellungen im Fuss */
   .einstellungen { display:flex; flex-wrap:wrap; gap:8px 18px; margin-bottom:12px; font-size:.82rem; color:var(--dim); font-weight:600; }
   .einstellungen label { display:inline-flex; align-items:center; gap:6px; }
-  .einstellungen select { font:inherit; color:var(--text); background:var(--karte); border:1px solid var(--linie); border-radius:8px; padding:3px 6px; }
-  body.kompakt .spiel { padding:9px 11px; margin-bottom:6px; }
+  .einstellungen select { font:inherit; color:var(--text); background:var(--karte); border:1px solid var(--linie); border-radius:var(--radius-s); padding:4px 6px; }
+  body.kompakt .spiel { padding:8px 12px; margin-bottom:6px; }
   body.kompakt .meta { font-size:.8rem; }
-  body.kompakt .paarung { font-size:.95rem; margin:3px 0 2px; }
+  body.kompakt .paarung { font-size:.95rem; margin:4px 0 2px; }
   body.kompakt .held { padding:14px 14px 12px; }
   body.kompakt .zahl { padding:8px 6px; }
   body.kompakt .abschnitt { margin:16px 0 8px; }
@@ -466,7 +478,7 @@
 
   /* Rueckblick */
   .rueckblick-knopf { margin-top:10px; }
-  .rueckblick-bild { width:100%; border-radius:12px; margin-top:10px; display:block; }
+  .rueckblick-bild { width:100%; border-radius:var(--radius-m); margin-top:10px; display:block; }
 
   /* Fahrtenbuch */
   .fahrtenbuch table { width:100%; border-collapse:collapse; font-size:.85rem; }
@@ -494,8 +506,8 @@
   .status-liste span:first-child { flex:none; font-weight:600; }
 
   /* Schrift und Akzent im Fuss */
-  .stufen { display:inline-flex; border:1px solid var(--linie); border-radius:99px; overflow:hidden; background:var(--karte); }
-  .stufen button { border:0; background:none; color:var(--dim); font-weight:800; padding:3px 10px; cursor:pointer; }
+  .stufen { display:inline-flex; border:1px solid var(--linie); border-radius:var(--radius-pille); overflow:hidden; background:var(--karte); }
+  .stufen button { border:0; background:none; color:var(--dim); font-weight:800; padding:4px 10px; cursor:pointer; }
   .stufen button.aktiv { background:var(--akzent); color:var(--akzent-text); }
   .farben { display:inline-flex; gap:6px; }
   .farben button { width:22px; height:22px; border-radius:50%; border:2px solid transparent; cursor:pointer; padding:0; }
@@ -510,10 +522,10 @@
   }
 
   /* Filter-Blatt im Spielplan */
-  .filterknopf { display:inline-flex; align-items:center; gap:5px; border:1px solid var(--linie); background:var(--karte); color:var(--text);
-                 border-radius:99px; padding:5px 11px; font-size:.8rem; font-weight:700; cursor:pointer; }
+  .filterknopf { display:inline-flex; align-items:center; gap:6px; border:1px solid var(--linie); background:var(--karte); color:var(--text);
+                 border-radius:var(--radius-pille); padding:6px 12px; font-size:.8rem; font-weight:700; cursor:pointer; }
   .filterknopf.aktiv { border-color:var(--akzent); color:var(--akzent); }
-  .filterknopf .zaehler { background:var(--akzent); color:var(--akzent-text); border-radius:99px; font-size:.66rem; padding:1px 6px; }
+  .filterknopf .zaehler { background:var(--akzent); color:var(--akzent-text); border-radius:var(--radius-pille); font-size:.66rem; padding:2px 6px; }
   .filterblatt { padding:10px 14px; margin-top:8px; display:flex; flex-direction:column; gap:8px; }
   .filterblatt .zweit { margin-top:4px; }
 
@@ -525,13 +537,13 @@
   .uebersicht .zahl.neu-markiert b { color:var(--warn); }
 
   /* Spiel-Detailseite */
-  .spiel-kopf { padding:16px 18px; border-radius:18px; color:#fff; background:linear-gradient(135deg, var(--held-1, #0f3d6e) 0%, var(--held-2, #1d5a99) 100%); margin-bottom:12px; }
+  .spiel-kopf { padding:16px 18px; border-radius:var(--radius-gross); color:#fff; background:linear-gradient(135deg, var(--held-1, #0f3d6e) 0%, var(--held-2, #1d5a99) 100%); margin-bottom:12px; }
   .spiel-kopf .wann { font-size:.78rem; font-weight:700; opacity:.85; text-transform:uppercase; letter-spacing:.08em; }
   .spiel-kopf .zeit { font-size:1.9rem; font-weight:800; letter-spacing:-.03em; line-height:1.1; margin:4px 0 2px; }
   .spiel-kopf .paarung { font-size:1.05rem; font-weight:700; margin:0; }
   .spiel-kopf .aktionen { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
   .spiel-kopf .aktionen a, .spiel-kopf .aktionen button { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.16); color:#fff; border:1px solid rgba(255,255,255,.3);
-    border-radius:99px; padding:8px 14px; text-decoration:none; font-weight:700; font-size:.88rem; cursor:pointer; }
+    border-radius:var(--radius-pille); padding:8px 14px; text-decoration:none; font-weight:700; font-size:.88rem; cursor:pointer; }
   .spiel-kopf .liga { background:rgba(255,255,255,.2); color:#fff; border-color:transparent; }
   .abschnitt-karte { padding:12px 14px; margin-bottom:10px; }
   .abschnitt-karte h4 { margin:0 0 8px; font-size:.74rem; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); }
@@ -549,7 +561,7 @@
   .menue a:first-child { border-top:0; }
   .menue a svg.i { width:1.3rem; height:1.3rem; color:var(--akzent); }
   .menue a small { display:block; color:var(--dim); font-weight:500; font-size:.78rem; }
-  .menue a .zaehler { margin-left:auto; background:var(--warn); color:#fff; border-radius:99px; font-size:.7rem; padding:2px 8px; }
+  .menue a .zaehler { margin-left:auto; background:var(--warn); color:#fff; border-radius:var(--radius-pille); font-size:.7rem; padding:2px 8px; }
   .menue a::after { content:"›"; color:var(--dim); margin-left:auto; font-size:1.2rem; }
   .menue a .zaehler + ::after { margin-left:8px; }
 
@@ -557,7 +569,7 @@
   .einstellungen-liste { padding:4px 14px; }
   .einstellungen-liste label { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:12px 0; border-top:1px solid var(--linie); font-weight:600; }
   .einstellungen-liste label:first-child { border-top:0; }
-  .einstellungen-liste select, .einstellungen-liste input[type=number] { font:inherit; color:var(--text); background:var(--bg); border:1px solid var(--linie); border-radius:8px; padding:5px 8px; }
+  .einstellungen-liste select, .einstellungen-liste input[type=number] { font:inherit; color:var(--text); background:var(--bg); border:1px solid var(--linie); border-radius:var(--radius-s); padding:6px 8px; }
 
   /* Hallenkarte */
   #karte-div { height:min(70vh, 640px); overflow:hidden; }
@@ -565,12 +577,12 @@
   .leaflet-popup-content { font-size:.9rem; }
 
   /* Saisonziel */
-  .ziel { padding:12px 15px; margin-bottom:10px; }
+  .ziel { padding:12px 16px; margin-bottom:10px; }
   .ziel .kopfzeile .meta { white-space:nowrap; }
-  .ziel .balkenrahmen { height:10px; border-radius:5px; background:var(--linie); overflow:hidden; margin:8px 0 6px; }
-  .ziel .balkenrahmen i { display:block; height:100%; background:var(--akzent); border-radius:5px; }
+  .ziel .balkenrahmen { height:10px; border-radius:var(--radius-xs); background:var(--linie); overflow:hidden; margin:8px 0 6px; }
+  .ziel .balkenrahmen i { display:block; height:100%; background:var(--akzent); border-radius:var(--radius-xs); }
 
-  .leiste button { font-size:.64rem; padding:6px 3px; }
+  .leiste button { font-size:.64rem; padding:6px 4px; }
 
   /* Untere Leiste */
   .leiste { position:fixed; left:0; right:0; bottom:0; z-index:10;
@@ -578,20 +590,20 @@
             padding:6px 8px calc(8px + env(safe-area-inset-bottom)); }
   .leiste div { max-width:640px; margin:0 auto; display:flex; }
   .leiste button { flex:1; background:none; border:0; color:var(--dim); cursor:pointer;
-                   display:flex; flex-direction:column; align-items:center; gap:3px;
-                   padding:6px 4px; font-size:.7rem; font-weight:800; border-radius:10px; }
+                   display:flex; flex-direction:column; align-items:center; gap:4px;
+                   padding:6px 4px; font-size:.7rem; font-weight:800; border-radius:var(--radius-s); }
   .leiste button svg.i { width:1.35rem; height:1.35rem; }
   .leiste button.aktiv { color:var(--akzent); }
   .leiste button.aktiv svg.i { stroke-width:2.4; }
   .leiste button { position:relative; }
-  .leiste .punkt { position:absolute; top:4px; left:calc(50% + 8px); min-width:8px; height:8px; border-radius:99px; background:var(--gut); }
-  .leiste .punkt.zahl { min-width:17px; height:17px; top:0; padding:0 5px; background:var(--warn); color:#fff; font-size:.66rem; font-weight:800;
+  .leiste .punkt { position:absolute; top:4px; left:calc(50% + 8px); min-width:8px; height:8px; border-radius:var(--radius-pille); background:var(--gut); }
+  .leiste .punkt.zahl { min-width:17px; height:17px; top:0; padding:0 6px; background:var(--warn); color:#fff; font-size:.66rem; font-weight:800;
                        display:flex; align-items:center; justify-content:center; line-height:1; }
   .held .danach { margin-top:10px; padding-top:10px; border-top:1px solid rgba(255,255,255,.2); font-size:.84rem; opacity:.9; display:flex; gap:6px; align-items:center; }
   .held.tippbar { cursor:pointer; }
-  .mg-untertabs button { display:inline-flex; align-items:center; gap:5px; position:relative; }
+  .mg-untertabs button { display:inline-flex; align-items:center; gap:6px; position:relative; }
   .mg-untertabs button svg.i { width:1rem; height:1rem; }
-  .mg-untertabs .zaehler { background:var(--warn); color:#fff; border-radius:99px; font-size:.66rem; padding:1px 6px; margin-left:2px; }
+  .mg-untertabs .zaehler { background:var(--warn); color:#fff; border-radius:var(--radius-pille); font-size:.66rem; padding:2px 6px; margin-left:2px; }
   .mg-untertabs button.aktiv .zaehler { background:rgba(255,255,255,.3); }
   .mg-untertabs { -webkit-mask-image:linear-gradient(90deg, #000 90%, transparent); mask-image:linear-gradient(90deg, #000 90%, transparent); padding-right:24px; scrollbar-width:none; }
   .mg-untertabs::-webkit-scrollbar { display:none; }
@@ -600,7 +612,7 @@
 
   /* Kurze Rueckmeldung ueber der Leiste, damit sie auch beim Scrollen sichtbar ist */
   .toast { position:fixed; z-index:70; left:50%; bottom:calc(84px + env(safe-area-inset-bottom)); transform:translateX(-50%) translateY(8px);
-           z-index:20; max-width:min(92vw, 520px); background:var(--text); color:var(--bg); padding:10px 16px; border-radius:12px;
+           z-index:20; max-width:min(92vw, 520px); background:var(--text); color:var(--bg); padding:10px 16px; border-radius:var(--radius-m);
            font-size:.9rem; font-weight:700; box-shadow:0 6px 20px rgba(0,0,0,.25); opacity:0; pointer-events:none;
            transition:opacity .18s, transform .18s; }
   .toast.zeigt { opacity:1; transform:translateX(-50%) translateY(0); }
@@ -609,7 +621,7 @@
 
   /* Hinweis, die Seite auf den Home-Bildschirm zu legen */
   .install { display:flex; gap:12px; align-items:center; padding:12px 14px; margin:0 0 12px; }
-  .install img { width:40px; height:40px; border-radius:10px; flex:none; }
+  .install img { width:40px; height:40px; border-radius:var(--radius-s); flex:none; }
   .install p { margin:0; font-size:.86rem; }
   .install p b { display:block; font-size:.92rem; }
   .install button { flex:none; }
@@ -658,7 +670,7 @@
   /* Kopf: Avatar statt Mond, Stand als Pille */
   .kopf { padding:calc(14px + env(safe-area-inset-top)) 0 10px; }
   .kopf h1 { font-size:1.35rem; }
-  .kopf .stand { display:inline-block; margin-top:5px; padding:3px 10px; border-radius:99px; background:var(--karte); box-shadow:var(--schatten); font-size:.74rem; }
+  .kopf .stand { display:inline-block; margin-top:6px; padding:4px 10px; border-radius:var(--radius-pille); background:var(--karte); box-shadow:var(--schatten); font-size:.74rem; }
   .kopf .stand.alt { background:var(--warn-bg); }
   .avatar-knopf { width:44px; height:44px; border-radius:50%; border:0; cursor:pointer; color:#fff; font-weight:800; font-size:.95rem;
                   background:var(--akzent); box-shadow:var(--schatten); display:inline-flex; align-items:center; justify-content:center; flex:none; }
@@ -669,7 +681,7 @@
   .abschnitt small { font-size:.78rem; font-weight:500; color:var(--dim); letter-spacing:0; text-transform:none; }
   .abschnitt-karte h4, .balken h4, .tausch h4 { font-size:.72rem; letter-spacing:.06em; }
   .seitentitel { margin:6px 0 12px; }
-  .seitentitel h2 { font-size:1.5rem; font-weight:800; letter-spacing:-.02em; margin:0; }
+  .seitentitel h2 { font-size:var(--titel); font-weight:800; letter-spacing:-.02em; margin:0; }
   .seitentitel p { margin:2px 0 0; color:var(--dim); font-size:.88rem; }
   .frage { font-size:1.5rem; letter-spacing:-.02em; }
   .frage + .meta { margin:-6px 0 12px; }
@@ -682,7 +694,7 @@
   .profilzeile > span:first-child:not(:has(.avatar-gross)):not(:has(.kopf-i)) { display:block; }
   /* Jahresblatt (Steuer) */
   .jahresblatt table { width:100%; border-collapse:collapse; font-size:.8rem; }
-  .jahresblatt th, .jahresblatt td { padding:5px 6px; border-bottom:1px solid var(--linie); text-align:left; vertical-align:top; }
+  .jahresblatt th, .jahresblatt td { padding:6px 6px; border-bottom:1px solid var(--linie); text-align:left; vertical-align:top; }
   .jahresblatt td.zahl, .jahresblatt th.zahl { text-align:right; white-space:nowrap; }
   body.druck-fahrtenbuch .jahresblatt { display:block !important; }
   /* Zusammen fahren */
@@ -694,7 +706,7 @@
   .fahrt .wer b { display:block; }
   .fahrt .wer small { color:var(--dim); display:block; }
   .fahrt .knoepfe { display:flex; gap:6px; flex-wrap:wrap; }
-  .fahrt .status { font-size:.7rem; font-weight:800; text-transform:uppercase; letter-spacing:.06em; padding:2px 8px; border-radius:99px; background:var(--akzent-hell); color:var(--akzent); }
+  .fahrt .status { font-size:.7rem; font-weight:800; text-transform:uppercase; letter-spacing:.06em; padding:2px 8px; border-radius:var(--radius-pille); background:var(--akzent-hell); color:var(--akzent); }
   .fahrt .status.suche { background:var(--rot-hell); color:var(--rot); }
   .fahrt .meins { margin-top:10px; padding-top:10px; border-top:1px solid var(--linie);
                   display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
@@ -729,20 +741,20 @@
   .tour-karte { position:relative; width:100%; max-width:480px; background:var(--karte); color:var(--text); border-radius:22px; padding:22px 20px 18px; box-shadow:0 20px 60px -10px rgba(0,0,0,.5); animation:tourAuf .28s ease-out; }
   @keyframes tourAuf { from { transform:translateY(24px); opacity:0; } to { transform:none; opacity:1; } }
   .tour-weg { position:absolute; right:12px; top:12px; }
-  .tour-symbol { width:56px; height:56px; border-radius:16px; background:var(--akzent-hell); color:var(--akzent); display:flex; align-items:center; justify-content:center; margin-bottom:10px; }
+  .tour-symbol { width:56px; height:56px; border-radius:var(--radius); background:var(--akzent-hell); color:var(--akzent); display:flex; align-items:center; justify-content:center; margin-bottom:10px; }
   .tour-symbol svg.i { width:28px; height:28px; }
   .tour-schritt { font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); }
   .tour-karte h3 { margin:4px 0 8px; font-size:1.25rem; letter-spacing:-.01em; }
   .tour-karte p { margin:0; color:var(--text); line-height:1.5; white-space:pre-line; }
   .tour-aktion { margin-top:12px; }
-  .tour-aktion a, .tour-aktion button { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:99px; background:var(--akzent-hell); color:var(--akzent); font-weight:700; text-decoration:none; border:0; font-size:.9rem; cursor:pointer; }
+  .tour-aktion a, .tour-aktion button { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:var(--radius-pille); background:var(--akzent-hell); color:var(--akzent); font-weight:700; text-decoration:none; border:0; font-size:.9rem; cursor:pointer; }
   .tour-fuss { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:18px; }
-  .tour-fuss .haupt { background:var(--akzent); color:#fff; border:0; border-radius:12px; padding:10px 18px; font-weight:800; cursor:pointer; }
+  .tour-fuss .haupt { background:var(--akzent); color:#fff; border:0; border-radius:var(--radius-m); padding:10px 18px; font-weight:800; cursor:pointer; }
   .tour-fuss .mg-neben { padding:10px 14px; }
   .tour-fuss .mg-neben[disabled] { opacity:.35; }
-  .tour-punkte { display:flex; gap:5px; }
+  .tour-punkte { display:flex; gap:6px; }
   .tour-punkte i { width:7px; height:7px; border-radius:50%; background:var(--linie); }
-  .tour-punkte i.aktiv { background:var(--akzent); width:18px; border-radius:4px; }
+  .tour-punkte i.aktiv { background:var(--akzent); width:18px; border-radius:var(--radius-xs); }
   @media (prefers-reduced-motion: reduce) { .tour-karte { animation:none; } }
   /* Runde 16: Kopfzeile unter der Insel, Filter-Blatt, Hallenzeile, Summen */
   /* iPhone mit Insel: der Titel braucht Luft nach oben, sonst schneidet die
@@ -753,14 +765,14 @@
   .blatt-kopf .rund { width:34px; height:34px; }
   .blatt-fertig { position:sticky; bottom:0; margin:10px -16px -16px; padding:10px 16px calc(12px + env(safe-area-inset-bottom));
                   background:linear-gradient(to top, var(--karte) 72%, transparent); }
-  .blatt-fertig button { width:100%; min-height:48px; border-radius:14px; border:0; background:var(--akzent); color:var(--akzent-text);
+  .blatt-fertig button { width:100%; min-height:48px; border-radius:var(--radius); border:0; background:var(--akzent); color:var(--akzent-text);
                          font:inherit; font-weight:800; font-size:1rem; cursor:pointer; }
   .blatt h5 { margin:12px 0 6px; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); }
   .blatt .ligen { display:flex; flex-wrap:wrap; gap:6px; }
   .blatt .ligen .chip { cursor:pointer; }
   /* Zeile zur Halle: kein nackter Link mehr, sondern eine Reihe zum Antippen */
-  .reihe-knopf { display:flex; align-items:center; gap:10px; width:100%; margin-top:10px; padding:11px 12px; border:1px solid var(--linie);
-                 border-radius:14px; background:var(--bg); color:inherit; text-decoration:none; font:inherit; font-weight:700; text-align:left; }
+  .reihe-knopf { display:flex; align-items:center; gap:10px; width:100%; margin-top:10px; padding:12px 12px; border:1px solid var(--linie);
+                 border-radius:var(--radius); background:var(--bg); color:inherit; text-decoration:none; font:inherit; font-weight:700; text-align:left; }
   .reihe-knopf svg.i { color:var(--akzent); }
   .reihe-knopf > span { min-width:0; flex:1; }
   .reihe-knopf small { display:block; color:var(--dim); font-weight:600; font-size:.76rem; }
@@ -771,7 +783,7 @@
   .summenliste .kopfzahl { display:flex; align-items:baseline; justify-content:space-between; gap:10px; padding-bottom:8px; border-bottom:1px solid var(--linie); }
   .summenliste .kopfzahl b { font-size:1.5rem; font-weight:800; letter-spacing:-.02em; font-variant-numeric:tabular-nums; }
   .summenliste .kopfzahl span { color:var(--dim); font-size:.8rem; font-weight:700; }
-  .summenliste .reihe-zahl { display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding:7px 0; border-bottom:1px solid var(--linie); font-size:.92rem; }
+  .summenliste .reihe-zahl { display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding:8px 0; border-bottom:1px solid var(--linie); font-size:.92rem; }
   .summenliste .reihe-zahl:last-child { border-bottom:0; }
   .summenliste .reihe-zahl span { color:var(--dim); font-weight:600; min-width:0; }
   .summenliste .reihe-zahl b { font-weight:800; font-variant-numeric:tabular-nums; white-space:nowrap; }
@@ -780,7 +792,7 @@
   .zahl b { font-size:clamp(.95rem, 4vw, 1.35rem); overflow-wrap:anywhere; }
   .zahl span { display:block; line-height:1.25; }
   .mitfahr-form { display:flex; gap:6px; margin-top:8px; }
-  .mitfahr-form input { flex:1; min-width:0; font:inherit; padding:9px 10px; border-radius:12px; border:1px solid var(--linie); background:var(--bg); color:var(--text); }
+  .mitfahr-form input { flex:1; min-width:0; font:inherit; padding:8px 10px; border-radius:var(--radius-m); border:1px solid var(--linie); background:var(--bg); color:var(--text); }
   .fahrt .meins { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:8px; }
   /* Kartenlegende */
   .karten-legende { display:flex; flex-wrap:wrap; gap:10px 16px; margin:10px 2px 0; font-size:.78rem; color:var(--dim); font-weight:600; }
@@ -788,17 +800,17 @@
   .karten-legende i { width:11px; height:11px; border-radius:50%; display:inline-block; border:2px solid #fff; box-shadow:0 0 0 1px var(--linie); }
   /* Runde 15: Aenderungen mit Filter, Leiste unten waehlbar, Seitenkoepfe */
   /* Kopf einer Unterseite: Zeichen, Titel, Zweck - in jeder Seite gleich */
-  .kopf-i { width:42px; height:42px; border-radius:14px; background:var(--akzent-hell); color:var(--akzent);
+  .kopf-i { width:42px; height:42px; border-radius:var(--radius); background:var(--akzent-hell); color:var(--akzent);
             display:inline-flex; align-items:center; justify-content:center; flex:none; }
   .kopf-i svg.i { width:1.3rem; height:1.3rem; }
   /* Filterband: Chips scrollen quer, darunter Zeitraum/Sortierung und Suche */
   .filterchips { display:flex; gap:6px; overflow-x:auto; padding:0 0 8px; scrollbar-width:none; }
   .filterchips::-webkit-scrollbar { display:none; }
   .filterchips .filterknopf { flex:none; }
-  .filterchips .filterknopf i { font-style:normal; font-size:.68rem; font-weight:800; background:var(--bg); color:var(--dim); border-radius:99px; padding:1px 6px; }
+  .filterchips .filterknopf i { font-style:normal; font-size:.68rem; font-weight:800; background:var(--bg); color:var(--dim); border-radius:var(--radius-pille); padding:2px 6px; }
   .filterchips .filterknopf.aktiv i { background:var(--akzent); color:var(--akzent-text); }
   .filterzeile { display:flex; gap:8px; margin-bottom:8px; }
-  .filterzeile select, .filterzeile input { flex:1; min-width:0; font:inherit; padding:9px 10px; border-radius:12px;
+  .filterzeile select, .filterzeile input { flex:1; min-width:0; font:inherit; padding:8px 10px; border-radius:var(--radius-m);
                                             border:1px solid var(--linie); background:var(--karte); color:var(--text); }
   .aend-neu-hinweis { margin:2px 0 8px; font-size:.8rem; font-weight:700; color:var(--akzent); }
   .protokoll .zeile.frisch { background:var(--akzent-hell); }
@@ -818,11 +830,11 @@
   .rund.klein { width:34px; height:34px; font-size:1rem; font-weight:800; }
   .rund.klein[disabled] { opacity:.35; }
   .gespann-verlauf { display:flex; flex-direction:column; gap:8px; margin:6px 0 10px; }
-  .gespann-verlauf .blase { background:var(--bg); border:1px solid var(--linie); border-radius:14px 14px 14px 4px; padding:8px 11px; max-width:85%; font-size:.92rem; }
+  .gespann-verlauf .blase { background:var(--bg); border:1px solid var(--linie); border-radius:14px 14px 14px 4px; padding:8px 12px; max-width:85%; font-size:.92rem; }
   .gespann-verlauf .blase.ich { align-self:flex-end; border-radius:14px 14px 4px 14px; background:var(--akzent-hell); }
   .gespann-verlauf .blase.neu { border-color:var(--rot); box-shadow:0 0 0 2px var(--rot-hell); }
   .gespann-verlauf .blase b { display:block; font-size:.76rem; color:var(--dim); }
-  .gespann-verlauf .blase .zeit { font-size:.7rem; color:var(--dim); margin-top:3px; }
+  .gespann-verlauf .blase .zeit { font-size:.7rem; color:var(--dim); margin-top:4px; }
   /* "Am Spieltag gross": alles ausser der Kopfkarte wartet hinter einem Tipp.
      Nur auf schmalen Geraeten - auf dem Desktop bleibt die zweite Spalte sinnvoll. */
   @media (max-width: 899px) {
@@ -838,7 +850,7 @@
     .spieltag #neu,
     .spieltag #install { display:none !important; }
   }
-  .vollbild-mehr { margin-top:18px; align-self:center; background:rgba(255,255,255,.18); color:#fff; border:1px solid rgba(255,255,255,.35); border-radius:99px; padding:9px 16px; font:inherit; font-weight:800; cursor:pointer; }
+  .vollbild-mehr { margin-top:18px; align-self:center; background:rgba(255,255,255,.18); color:#fff; border:1px solid rgba(255,255,255,.35); border-radius:var(--radius-pille); padding:8px 16px; font:inherit; font-weight:800; cursor:pointer; }
   /* Karten im Dunkelmodus abdunkeln (OSM hat keine dunklen Kacheln).
      Einmal fuer "Dunkel erzwungen", einmal fuer die Systemeinstellung. */
   :root[data-theme="dark"] .leaflet-tile-pane { filter:invert(1) hue-rotate(180deg) brightness(.92) contrast(.9) saturate(.8); }
@@ -857,7 +869,7 @@
   .sprungleiste { display:flex; gap:6px; overflow-x:auto; padding:2px 0 8px; margin:0 0 4px; scrollbar-width:none; }
   .sprungleiste::-webkit-scrollbar { display:none; }
   .sprungleiste .chip { flex:none; background:var(--karte); border:1px solid var(--linie); font-weight:700; cursor:pointer; font-family:inherit; }
-  .kachel-zahl { position:absolute; top:10px; right:10px; font-size:.68rem; font-weight:800; color:var(--dim); background:var(--bg); border-radius:99px; padding:3px 8px; }
+  .kachel-zahl { position:absolute; top:10px; right:10px; font-size:.68rem; font-weight:800; color:var(--dim); background:var(--bg); border-radius:var(--radius-pille); padding:4px 8px; }
   .menue a { position:relative; }
   .such-verlauf { margin:0 0 8px; }
   .such-verlauf .chip { cursor:pointer; font-family:inherit; }
@@ -908,7 +920,7 @@
   .wochenansicht .zeile-wer .chip { font-size:0; padding:2px; gap:0; }
   .wochenansicht .zeile-wer .chip .avatar { width:22px; height:22px; font-size:.62rem; }
   .wochenansicht .zeile-wer .chip b { display:none; }
-  .wochenansicht .zeile { padding:7px 0; }
+  .wochenansicht .zeile { padding:8px 0; }
   .wochenansicht .zeile-wer { gap:4px; }
   /* Feinschliff-Runde: Kacheln, Formulare, Extras-Abschnitte, Zeilen-Links */
   .zahlen { grid-template-columns:repeat(auto-fit, minmax(70px, 1fr)); }
@@ -939,7 +951,7 @@
   section:not(#detail):not(#mitglieder) > .profilzeile.karte > span:first-child b { font-size:1.45rem; letter-spacing:-.02em; line-height:1.15; }
   section:not(#detail):not(#mitglieder) > .profilzeile.karte small { font-size:.85rem; margin-top:2px; }
   section:not(#detail):not(#mitglieder) > .profilzeile.karte .avatar-gross { width:48px; height:48px; font-size:1rem; }
-  .profilzeile .zurueck { background:var(--karte); border:1px solid var(--linie); border-radius:99px; padding:8px 12px 8px 8px; box-shadow:var(--schatten); color:var(--text); font-size:.85rem; flex:none; margin-top:2px; }
+  .profilzeile .zurueck { background:var(--karte); border:1px solid var(--linie); border-radius:var(--radius-pille); padding:8px 12px 8px 8px; box-shadow:var(--schatten); color:var(--text); font-size:.85rem; flex:none; margin-top:2px; }
   .profilzeile .zurueck svg.i { width:16px; height:16px; }
   #spiel > .profilzeile.karte > span:first-child b { font-size:1.15rem; }
   .spiel.zeit-links .wann { min-width:56px; padding-right:6px; }
@@ -956,14 +968,14 @@
   .mg-kopf:has(.mg-wahlfeld:not(.versteckt)) { display:grid; grid-template-columns:auto 1fr; column-gap:10px; }
   .mg-wahlfeld { grid-row:1 / span 3; align-self:center; }
   .mg-eintrag.gewaehlt { outline:2px solid var(--akzent); }
-  .mg-auswahlleiste { position:fixed; left:0; right:0; bottom:calc(72px + env(safe-area-inset-bottom)); z-index:30; margin:0 auto; max-width:600px; display:flex; gap:6px; align-items:center; flex-wrap:wrap; padding:10px 12px; background:var(--karte); border:1px solid var(--linie); border-radius:16px; box-shadow:0 10px 30px rgba(0,0,0,.25); }
+  .mg-auswahlleiste { position:fixed; left:0; right:0; bottom:calc(72px + env(safe-area-inset-bottom)); z-index:30; margin:0 auto; max-width:600px; display:flex; gap:6px; align-items:center; flex-wrap:wrap; padding:10px 12px; background:var(--karte); border:1px solid var(--linie); border-radius:var(--radius); box-shadow:0 10px 30px rgba(0,0,0,.25); }
   .mg-auswahlleiste > span { font-weight:800; margin-right:auto; }
   .mg-auswahlleiste button { min-height:34px; }
   /* Bottom-Sheet (Filter), Wisch-Aktionen, Rollen-Kante, Einrichtungs-Check, Abrechnungs-Kalender */
   .blatt { position:fixed; left:0; right:0; bottom:0; z-index:45; margin:0 auto; max-width:640px; max-height:82vh; overflow:auto; border-radius:22px 22px 0 0; padding:8px 16px calc(16px + env(safe-area-inset-bottom)); box-shadow:0 -12px 40px rgba(0,0,0,.25); transform:translateY(102%); transition:transform .28s cubic-bezier(.2,.8,.2,1); }
   .blatt.versteckt { display:flex !important; pointer-events:none; }
   .blatt.offen { transform:none; }
-  .blatt-griff { width:40px; height:5px; border-radius:3px; background:var(--linie); margin:2px auto 8px; }
+  .blatt-griff { width:40px; height:5px; border-radius:var(--radius-xs); background:var(--linie); margin:2px auto 8px; }
   .blatt-kopf { display:flex; justify-content:space-between; align-items:center; padding-bottom:6px; }
   .blatt-kopf b { font-size:1.05rem; }
   .blatt-hintergrund { position:fixed; inset:0; z-index:44; background:rgba(8,12,24,.45); backdrop-filter:blur(2px); }
@@ -981,18 +993,18 @@
   .spiel.karte.rolle-LSR { border-left:4px solid var(--lsr); }
   .einrichtung { margin-bottom:14px; }
   .einrichtung h4 { margin:0 0 6px; display:flex; align-items:center; gap:8px; font-size:.95rem; }
-  .einrichtung a.punkt { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:9px 0; border-top:1px solid var(--linie); text-decoration:none; color:inherit; font-size:.9rem; }
+  .einrichtung a.punkt { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:8px 0; border-top:1px solid var(--linie); text-decoration:none; color:inherit; font-size:.9rem; }
   .einrichtung a.punkt:first-of-type { border-top:0; }
   .einrichtung a.punkt b { display:block; }
   .einrichtung a.punkt small { color:var(--dim); display:block; }
-  .einrichtung .fortschritt { height:6px; border-radius:3px; background:var(--linie); overflow:hidden; margin:4px 0 8px; }
+  .einrichtung .fortschritt { height:6px; border-radius:var(--radius-xs); background:var(--linie); overflow:hidden; margin:4px 0 8px; }
   .einrichtung .fortschritt i { display:block; height:100%; background:var(--gut); }
   .einrichtung .kopfzeile { display:flex; justify-content:space-between; align-items:center; }
   .mg-kal { }
   .mg-kal .kopf2 { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
   .mg-kal .raster { display:grid; grid-template-columns:repeat(7, 1fr); gap:4px; }
   .mg-kal .wt { font-size:.68rem; font-weight:800; color:var(--dim); text-align:center; text-transform:uppercase; }
-  .mg-kal .tag { min-height:52px; border-radius:10px; background:var(--bg); padding:4px 3px; font-size:.7rem; display:flex; flex-direction:column; align-items:center; gap:2px; border:1px solid transparent; }
+  .mg-kal .tag { min-height:52px; border-radius:var(--radius-s); background:var(--bg); padding:4px 4px; font-size:.7rem; display:flex; flex-direction:column; align-items:center; gap:2px; border:1px solid transparent; }
   .mg-kal .tag.leer { background:transparent; }
   .mg-kal .tag.hat { background:var(--karte); border-color:var(--linie); cursor:pointer; }
   .mg-kal .tag.hat.offen { border-color:var(--rot); }
@@ -1003,7 +1015,7 @@
   /* Design 9: Schalter statt Haekchen, grosse Checks in Listen, ruhigere Karten */
   input[type=checkbox] { -webkit-appearance:none; appearance:none; margin:0; flex:none; cursor:pointer; }
   /* Schalter (Einstellungen, Filter, Optionen) */
-  input[type=checkbox]:not(.check) { width:46px; height:28px; border-radius:99px; background:var(--linie); position:relative; transition:background .18s; border:0; }
+  input[type=checkbox]:not(.check) { width:46px; height:28px; border-radius:var(--radius-pille); background:var(--linie); position:relative; transition:background .18s; border:0; }
   input[type=checkbox]:not(.check)::after { content:""; position:absolute; top:3px; left:3px; width:22px; height:22px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.35); transition:transform .18s; }
   input[type=checkbox]:not(.check):checked { background:var(--akzent); }
   input[type=checkbox]:not(.check):checked::after { transform:translateX(18px); }
@@ -1035,7 +1047,7 @@
   .abschnitt small { font-weight:500; }
   .melde.karte h4, .abschnitt-karte h4 { font-size:1rem; letter-spacing:-.01em; }
   .menue a { padding:16px 14px; }
-  .menue a svg.i { width:40px; height:40px; padding:9px; border-radius:12px; background:var(--akzent-hell); color:var(--akzent); }
+  .menue a svg.i { width:40px; height:40px; padding:8px; border-radius:var(--radius-m); background:var(--akzent-hell); color:var(--akzent); }
   .menue-gruppe { margin:18px 4px 8px; }
   .zahl.karte { padding:14px 10px; }
   .zahl.karte b { font-size:1.35rem; letter-spacing:-.02em; }
@@ -1057,7 +1069,7 @@
     .textknopf { min-height:32px; }
     .leiste button { min-height:54px; gap:4px; padding:6px 2px 4px; }
     .leiste button svg.i { width:1.5rem; height:1.5rem; }
-    .leiste button.aktiv svg.i { padding:4px 14px; border-radius:99px; }
+    .leiste button.aktiv svg.i { padding:4px 14px; border-radius:var(--radius-pille); }
     .kopf { padding-top:calc(env(safe-area-inset-top) + 14px); }
     .profilzeile.karte { padding:12px 14px; }
     .spiel-kopf .zeit { font-size:1.7rem; }
@@ -1080,8 +1092,8 @@
     .held .zeit { font-size:1.6rem; }
   }
   .toast.mit-aktion { display:flex; align-items:center; gap:12px; padding-right:8px; }
-  .toast button { background:rgba(255,255,255,.18); color:#fff; border:1px solid rgba(255,255,255,.4); border-radius:99px; padding:6px 12px; font:inherit; font-weight:800; cursor:pointer; white-space:nowrap; }
-  .mg-foto { display:inline-flex; align-items:center; gap:4px; background:var(--akzent-hell); color:var(--text); border:0; border-radius:99px; padding:4px 9px; cursor:pointer; font:inherit; font-size:.72rem; font-weight:800; }
+  .toast button { background:rgba(255,255,255,.18); color:#fff; border:1px solid rgba(255,255,255,.4); border-radius:var(--radius-pille); padding:6px 12px; font:inherit; font-weight:800; cursor:pointer; white-space:nowrap; }
+  .mg-foto { display:inline-flex; align-items:center; gap:4px; background:var(--akzent-hell); color:var(--text); border:0; border-radius:var(--radius-pille); padding:4px 8px; cursor:pointer; font:inherit; font-size:.72rem; font-weight:800; }
   .mg-foto svg.i { width:16px; height:16px; }
   .ligen-schnell .chip { border-left:4px solid var(--linie); }
   .ligen-schnell:empty { display:none; }
@@ -1097,12 +1109,12 @@
   .archiv-filter { padding:12px 14px; display:flex; flex-direction:column; gap:8px; }
   .archiv-filter input[type="search"] { width:100%; }
   .archiv-selects { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
-  .archiv-selects select { width:100%; min-width:0; font-size:.85rem; padding:8px 10px; border-radius:10px; border:1px solid var(--linie); background:var(--karte); color:var(--text); }
+  .archiv-selects select { width:100%; min-width:0; font-size:.85rem; padding:8px 10px; border-radius:var(--radius-s); border:1px solid var(--linie); background:var(--karte); color:var(--text); }
   .archiv-admin { display:flex; flex-direction:column; gap:6px; padding-top:4px; border-top:1px solid var(--linie); }
-  .archiv-admin select { width:100%; font-size:.85rem; padding:8px 10px; border-radius:10px; border:1px solid var(--linie); background:var(--karte); color:var(--text); }
+  .archiv-admin select { width:100%; font-size:.85rem; padding:8px 10px; border-radius:var(--radius-s); border:1px solid var(--linie); background:var(--karte); color:var(--text); }
   .archiv-zahlen { margin:12px 0 4px; }
   .archiv-monat { margin:14px 0 6px; font-weight:800; font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); display:flex; justify-content:space-between; }
-  .archiv-liste .zeile { display:grid; grid-template-columns:3.4em auto 1fr; gap:10px; align-items:start; padding:9px 14px; border-top:1px solid var(--linie); text-decoration:none; color:inherit; }
+  .archiv-liste .zeile { display:grid; grid-template-columns:3.4em auto 1fr; gap:10px; align-items:start; padding:8px 14px; border-top:1px solid var(--linie); text-decoration:none; color:inherit; }
   .archiv-liste .zeile:first-child { border-top:0; }
   .archiv-liste .zeile .datum { font-weight:800; line-height:1.15; }
   .archiv-liste .zeile .datum small { display:block; color:var(--dim); font-weight:500; }
@@ -1110,8 +1122,8 @@
   .archiv-liste .zeile .text b { display:block; font-weight:700; }
   .archiv-liste .zeile .text small { display:block; color:var(--dim); }
   /* Aenderungsprotokoll: Vorher -> Nachher */
-  .protokoll .felder, .verlauf .felder { display:block; margin-top:3px; }
-  .protokoll .felder span, .verlauf .felder span { display:inline-block; font-size:.78rem; background:var(--akzent-hell); color:var(--text); border-radius:8px; padding:2px 7px; margin:2px 4px 0 0; }
+  .protokoll .felder, .verlauf .felder { display:block; margin-top:4px; }
+  .protokoll .felder span, .verlauf .felder span { display:inline-block; font-size:.78rem; background:var(--akzent-hell); color:var(--text); border-radius:var(--radius-s); padding:2px 8px; margin:2px 4px 0 0; }
   .protokoll .felder span b, .verlauf .felder span b { font-weight:800; }
   .protokoll .felder span s, .verlauf .felder span s { color:var(--dim); }
   .verlauf { margin-top:6px; }
@@ -1122,12 +1134,12 @@
   .protokoll-tag { margin:14px 0 6px; font-weight:800; font-size:.8rem; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); }
   .protokoll .zeile { display:flex; gap:10px; align-items:flex-start; padding:10px 14px; border-top:1px solid var(--linie); text-decoration:none; color:inherit; }
   .protokoll .zeile:first-child { border-top:0; }
-  .protokoll .art { flex:none; font-size:.7rem; font-weight:800; text-transform:uppercase; letter-spacing:.06em; padding:3px 8px; border-radius:99px; background:var(--akzent-hell); color:var(--akzent); margin-top:2px; }
+  .protokoll .art { flex:none; font-size:.7rem; font-weight:800; text-transform:uppercase; letter-spacing:.06em; padding:4px 8px; border-radius:var(--radius-pille); background:var(--akzent-hell); color:var(--akzent); margin-top:2px; }
   .protokoll .art.entfallen, .protokoll .art.abgesagt { background:var(--rot-hell); color:var(--rot); }
   .protokoll .art.neu { background:#e3f5e8; color:#1a7f37; }
   .protokoll .zeile small { display:block; color:var(--dim); }
   .hinweis.offiziell { border-left:4px solid var(--akzent); }
-  .offiziell-badge { font-size:.68rem; font-weight:800; text-transform:uppercase; letter-spacing:.06em; background:var(--akzent); color:#fff; padding:2px 7px; border-radius:99px; margin-right:6px; vertical-align:middle; }
+  .offiziell-badge { font-size:.68rem; font-weight:800; text-transform:uppercase; letter-spacing:.06em; background:var(--akzent); color:#fff; padding:2px 8px; border-radius:var(--radius-pille); margin-right:6px; vertical-align:middle; }
   .mg-besetzung { display:grid; grid-template-columns:1fr 5.5em; gap:6px; margin-bottom:6px; }
   .termin-antwort { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:8px; }
   .termin-antwort button.aktiv { background:var(--akzent); color:#fff; border-color:var(--akzent); }
@@ -1136,7 +1148,7 @@
   .spiel.abgesagt { border-left:4px solid var(--rot); }
   /* Heute-Modus, Kollegen-Karte, Suche, Onboarding kurz */
   .held.heute { box-shadow:0 0 0 3px rgba(255,255,255,.35), var(--held-schatten, none); }
-  .held .countdown { margin-top:12px; padding:10px 12px; border-radius:12px; background:rgba(255,255,255,.14); font-weight:700; display:flex; align-items:center; gap:8px; }
+  .held .countdown { margin-top:12px; padding:10px 12px; border-radius:var(--radius-m); background:rgba(255,255,255,.14); font-weight:700; display:flex; align-items:center; gap:8px; }
   .held .countdown b { font-size:1.2rem; letter-spacing:-.02em; }
   .held .countdown small { font-weight:500; opacity:.85; display:block; }
   .held .aktionen a.kontakt { background:rgba(255,255,255,.22); }
@@ -1188,11 +1200,11 @@
   /* Karte oben */
   .held { border-radius:22px; padding:20px 18px 16px; }
   .held .zeit { font-size:2.4rem; }
-  .held .aktionen a { padding:9px 15px; }
+  .held .aktionen a { padding:8px 16px; }
 
   /* Spielkarten */
   .spiel { padding:14px 16px; margin-bottom:10px; border:1px solid var(--linie); }
-  .spiel.zeit-links .wann { border-right:0; padding-right:0; background:var(--bg); border-radius:12px; padding:8px 4px; justify-content:center; align-self:start; }
+  .spiel.zeit-links .wann { border-right:0; padding-right:0; background:var(--bg); border-radius:var(--radius-m); padding:8px 4px; justify-content:center; align-self:start; }
   .spiel.zeit-links { grid-template-columns:3.8em 1fr; column-gap:14px; }
   .wann em { font-size:1.05rem; }
   .spiel .kopfzeile { margin-bottom:2px; }
@@ -1204,27 +1216,27 @@
 
   /* Eingaben und Knoepfe */
   input[type=search] { border-radius:var(--radius-klein); padding:14px 14px 14px 42px; box-shadow:var(--schatten); border-color:transparent; }
-  .abo { border-radius:var(--radius-klein); padding:15px 18px; box-shadow:0 8px 20px -10px var(--akzent); }
+  .abo { border-radius:var(--radius-klein); padding:16px 18px; box-shadow:0 8px 20px -10px var(--akzent); }
   .zweit button, .mg-neben, .mg-haupt, .melde button.haupt, .mg-untertabs button, .filterknopf, .textknopf { border-radius:var(--radius-klein); min-height:44px; }
   .textknopf { min-height:0; padding:6px 2px; }
-  .mg-untertabs button { border-radius:99px; }
-  .mg-form input, .mg-form select, .mg-felder input, .mg-form textarea { border-radius:var(--radius-klein); padding:12px 13px; }
+  .mg-untertabs button { border-radius:var(--radius-pille); }
+  .mg-form input, .mg-form select, .mg-felder input, .mg-form textarea { border-radius:var(--radius-klein); padding:12px 12px; }
   .modus { border-radius:var(--radius-klein); }
   .modus button { padding:8px 12px; }
-  .filterknopf { padding:8px 13px; }
+  .filterknopf { padding:8px 12px; }
   .woche button { border-radius:var(--radius-klein); }
   .zahlen { gap:10px; }
   .zahl { padding:14px 8px; }
 
   /* Namensliste */
-  .namen li button { padding:15px 16px; }
+  .namen li button { padding:16px 16px; }
   .namen { border-radius:var(--radius); }
 
   /* Untere Leiste: Glas, aktiver Reiter mit Pille */
   .leiste { background:color-mix(in srgb, var(--karte) 82%, transparent); -webkit-backdrop-filter:saturate(1.4) blur(14px); backdrop-filter:saturate(1.4) blur(14px);
             border-top:1px solid var(--linie); padding:8px 6px calc(10px + env(safe-area-inset-bottom)); }
   .leiste button { font-size:.66rem; gap:4px; padding:4px 2px 2px; }
-  .leiste button svg.i { width:1.5rem; height:1.5rem; padding:5px 12px; box-sizing:content-box; border-radius:99px; transition:background .15s; }
+  .leiste button svg.i { width:1.5rem; height:1.5rem; padding:6px 12px; box-sizing:content-box; border-radius:var(--radius-pille); transition:background .15s; }
   .leiste button.aktiv svg.i { background:var(--akzent-hell); stroke-width:2.2; }
   .leiste .punkt { top:2px; left:calc(50% + 12px); }
 
@@ -1232,8 +1244,8 @@
   .toast { bottom:calc(96px + env(safe-area-inset-bottom)); border-radius:var(--radius-klein); }
 
   /* Mehr-Menue */
-  .menue a { padding:15px 14px; }
-  .menue a svg.i { width:1.45rem; height:1.45rem; padding:8px; box-sizing:content-box; border-radius:12px; background:var(--akzent-hell); }
+  .menue a { padding:16px 14px; }
+  .menue a svg.i { width:1.45rem; height:1.45rem; padding:8px; box-sizing:content-box; border-radius:var(--radius-m); background:var(--akzent-hell); }
 
   /* Anmeldung */
   .anmelde-kopf { text-align:center; padding:8px 0 14px; }
@@ -1246,7 +1258,7 @@
   .leer svg.i { width:2.4rem; height:2.4rem; opacity:.35; margin-bottom:10px; }
 
   @media (min-width: 900px) {
-    .leiste button svg.i { padding:5px 16px; }
+    .leiste button svg.i { padding:6px 16px; }
   }
 
   /* Design 8: Schwarz, Weiss, Rot - aus dem ESRW-Logo (Streifen, Armbinde, Puck) */
@@ -1260,7 +1272,7 @@
   @media (prefers-color-scheme: dark) { :root:not([data-theme="light"])[data-akzent="blau"] { --akzent:#6ea3ff; --akzent-hell:#15264a; --sr:#6ea3ff; --sr-bg:#15264a; --akzent-text:#061334; --held-1:#082a73; --held-2:#1a5fd0; } }
   .kopf h1::after { color:var(--rot); }
   .marke { display:flex; align-items:center; gap:12px; min-width:0; }
-  .marke .logo { width:44px; height:44px; border-radius:12px; box-shadow:var(--schatten); flex:none; }
+  .marke .logo { width:44px; height:44px; border-radius:var(--radius-m); box-shadow:var(--schatten); flex:none; }
   .kopf h1 { font-size:1.25rem; }
   /* Der Name heisst jetzt "ESRW App" - der rote Zusatz am Titel entfaellt. */
   .leiste .punkt.zahl, .zaehler, .mg-untertabs .zaehler, .filterknopf .zaehler { background:var(--rot); color:#fff; }
@@ -1300,11 +1312,11 @@
   .kopf h1 { white-space:nowrap; font-size:1.15rem; }
   .kopf .stand { max-width:min(46vw, 240px); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:block; }
   .profilzeile > span:last-child { display:flex; flex-direction:column; align-items:flex-end; gap:2px; flex:none; }
-  .profilzeile > span:last-child .textknopf { font-size:.85rem; padding:3px 2px; }
+  .profilzeile > span:last-child .textknopf { font-size:.85rem; padding:4px 2px; }
 
   /* Design 6: einheitliche Kartenkoepfe, Kachel-Menue, Pins, Checkliste */
   .melde h4, .abschnitt-karte h4, .radar h4, .balken h4, .hinweiskopf { display:flex; align-items:center; gap:8px; margin:0 0 8px; font-size:.86rem; font-weight:800; color:var(--text); text-transform:none; letter-spacing:0; }
-  .melde h4 svg.i, .abschnitt-karte h4 svg.i, .radar h4 svg.i { width:1rem; height:1rem; padding:6px; box-sizing:content-box; border-radius:10px; background:var(--akzent-hell); color:var(--akzent); }
+  .melde h4 svg.i, .abschnitt-karte h4 svg.i, .radar h4 svg.i { width:1rem; height:1rem; padding:6px; box-sizing:content-box; border-radius:var(--radius-s); background:var(--akzent-hell); color:var(--akzent); }
   .melde h4 .status { margin-left:auto; }
   .melde { padding:14px 16px; }
   .abschnitt-karte { padding:14px 16px; }
@@ -1316,16 +1328,16 @@
   .menue a small { margin-top:2px; }
   .menue a.breit { grid-column:1 / -1; flex-direction:row; align-items:center; }
   .pins { display:flex; gap:10px; margin:0 0 12px; overflow-x:auto; scrollbar-width:none; }
-  .pins button { flex:none; border:0; background:var(--karte); border-radius:99px; padding:6px 12px 6px 6px; display:inline-flex; align-items:center; gap:8px; font-weight:700; font-size:.86rem; color:var(--text); box-shadow:var(--schatten); cursor:pointer; }
+  .pins button { flex:none; border:0; background:var(--karte); border-radius:var(--radius-pille); padding:6px 12px 6px 6px; display:inline-flex; align-items:center; gap:8px; font-weight:700; font-size:.86rem; color:var(--text); box-shadow:var(--schatten); cursor:pointer; }
   .pins button .avatar { width:26px; height:26px; font-size:.68rem; }
   .checkliste label { display:flex; align-items:center; gap:10px; padding:8px 0; border-top:1px solid var(--linie); font-weight:600; cursor:pointer; }
   .checkliste label:first-of-type { border-top:0; }
   .checkliste label.erledigt { color:var(--dim); text-decoration:line-through; }
   .checkliste input { width:20px; height:20px; accent-color:var(--akzent); }
-  .checkliste .fortschritt { height:6px; border-radius:3px; background:var(--linie); overflow:hidden; margin:6px 0 4px; }
+  .checkliste .fortschritt { height:6px; border-radius:var(--radius-xs); background:var(--linie); overflow:hidden; margin:6px 0 4px; }
   .checkliste .fortschritt i { display:block; height:100%; background:var(--gut); }
   .kontakt-knoepfe { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
-  .kontakt-knoepfe a { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.16); color:#fff; border:1px solid rgba(255,255,255,.3); border-radius:99px; padding:7px 12px; text-decoration:none; font-weight:700; font-size:.82rem; }
+  .kontakt-knoepfe a { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.16); color:#fff; border:1px solid rgba(255,255,255,.3); border-radius:var(--radius-pille); padding:8px 12px; text-decoration:none; font-weight:700; font-size:.82rem; }
 
   /* Design 5: ruhigere Startseite, Offline, Animationen, Ligafarbe auf der Spielseite */
   .offline { position:sticky; top:0; z-index:30; margin:0 -16px 10px; padding:8px 16px; background:var(--warn); color:#fff; font-size:.84rem; font-weight:700; display:flex; gap:8px; align-items:center; }
@@ -1342,14 +1354,14 @@
   .held .start-woche button i.ich { background:#fff; width:7px; height:7px; }
   .held .start-woche button i.keins { background:transparent; }
   .kalender-box:not([open]) { margin-bottom:10px; }
-  .kalender-box:not([open]) > summary { padding:9px 0; font-size:.92rem; }
+  .kalender-box:not([open]) > summary { padding:8px 0; font-size:.92rem; }
   .radar { padding:12px 14px; margin-bottom:12px; }
   .radar h4 { margin:0 0 6px; font-size:.95rem; display:flex; gap:6px; align-items:center; }
   .radar .kandidat-kopf { gap:8px; }
   .radar .kandidat .meta { font-size:.8rem; }
   .spiel-kopf.liga-farbe { background:linear-gradient(135deg, var(--liga-dunkel-1) 0%, var(--liga-dunkel-2) 100%); }
   .spiel-kopf .grosse-pillen { display:flex; gap:8px; margin:8px 0 2px; flex-wrap:wrap; }
-  .spiel-kopf .grosse-pillen span { background:rgba(255,255,255,.18); color:#fff; border:1px solid rgba(255,255,255,.3); border-radius:99px; padding:4px 12px; font-weight:800; font-size:.8rem; letter-spacing:.03em; }
+  .spiel-kopf .grosse-pillen span { background:rgba(255,255,255,.18); color:#fff; border:1px solid rgba(255,255,255,.3); border-radius:var(--radius-pille); padding:4px 12px; font-weight:800; font-size:.8rem; letter-spacing:.03em; }
   @media (prefers-reduced-motion: no-preference) {
     section { animation:seite-rein .22s ease-out; }
     #spiel.versteckt { animation:none; }
@@ -1412,16 +1424,16 @@
   html.abgemeldet body { padding-bottom:24px; }
   html.abgemeldet .kopf .stand { background:none; box-shadow:none; padding-left:0; }
   /* ---- Runde 17: Liga-Chips, Rechnung ---- */
-  .liga-chip { display:inline-flex; align-items:center; gap:0; padding:0 0 0 11px; overflow:hidden; }
-  .liga-chip .liga-name { padding:5px 0; font-weight:700; }
-  .liga-chip .liga-zahl { font-style:normal; margin-left:9px; padding:5px 9px; background:var(--bg); color:var(--dim);
+  .liga-chip { display:inline-flex; align-items:center; gap:0; padding:0 0 0 12px; overflow:hidden; }
+  .liga-chip .liga-name { padding:6px 0; font-weight:700; }
+  .liga-chip .liga-zahl { font-style:normal; margin-left:8px; padding:6px 8px; background:var(--bg); color:var(--dim);
                           font-size:.74rem; font-weight:800; border-left:1px solid var(--linie); align-self:stretch; display:flex; align-items:center; }
   .liga-chip.aktiv .liga-zahl { background:var(--akzent); color:var(--akzent-text); border-left-color:transparent; }
-  .rechnung-zeile { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:9px 0; border-top:1px solid var(--linie); }
+  .rechnung-zeile { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:8px 0; border-top:1px solid var(--linie); }
   .rechnung-wahl .rechnung-zeile:first-child { border-top:0; }
   .rechnung-zeile b { display:block; font-weight:700; font-size:.9rem; }
   .rechnung-zeile small { color:var(--dim); }
-  .rechnung-wahl { max-height:270px; overflow:auto; border:1px solid var(--linie); border-radius:14px; padding:0 12px; }
+  .rechnung-wahl { max-height:270px; overflow:auto; border:1px solid var(--linie); border-radius:var(--radius); padding:0 12px; }
   /* ---- Runde 21: Name, Leiste, Telefonliste ---- */
   .rechnung-gruppe { border-top:1px solid var(--linie); padding-top:8px; margin-top:8px; }
   .rechnung-gruppe:first-of-type { border-top:0; margin-top:0; padding-top:0; }
@@ -1436,13 +1448,13 @@
      quetschen sich Auswahl und Nummernfeld auf dem Handy in eine Zeile. */
   .mg-zeile > *, .mg-zeile > input, .mg-zeile > select { flex:1 1 12em; min-width:0; width:auto; }
   /* Telefonliste: Nummer, dann die drei Wege dahin */
-  .telefon-zeile { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:9px 0; border-top:1px solid var(--linie); flex-wrap:wrap; }
+  .telefon-zeile { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:8px 0; border-top:1px solid var(--linie); flex-wrap:wrap; }
   .telefon-zeile:first-of-type { border-top:0; }
   .telefon-zeile > span:first-child { min-width:0; flex:1 1 10em; }
   .telefon-zeile b { display:block; }
   .telefon-zeile small { color:var(--dim); display:block; font-variant-numeric:tabular-nums; }
   .telefon-wege { display:flex; gap:6px; flex:none; }
-  .telefon-wege a, .telefon-wege button { font-size:.78rem; padding:6px 10px; border-radius:99px; border:1px solid var(--linie);
+  .telefon-wege a, .telefon-wege button { font-size:.78rem; padding:6px 10px; border-radius:var(--radius-pille); border:1px solid var(--linie);
                                           background:var(--bg); color:var(--text); text-decoration:none; font-weight:700; cursor:pointer; }
   /* ---- Runde 20: Rechnungsblatt, Adminseite, Anmeldung ---- */
   .rechnungsblatt > * { margin-bottom:10px; }
@@ -1450,16 +1462,16 @@
   .rechnung-karte { padding:14px; }
   .rechnung-karte h4 { margin:0 0 8px; font-size:.78rem; text-transform:uppercase; letter-spacing:.07em; color:var(--dim); }
   .rechnung-feld { display:block; margin-bottom:8px; }
-  .rechnung-feld > span { display:block; font-size:.76rem; color:var(--dim); font-weight:600; margin-bottom:3px; }
-  .rechnung-feld input { width:100%; font:inherit; padding:10px 12px; border-radius:12px; border:1px solid var(--linie); background:var(--bg); color:var(--text); }
+  .rechnung-feld > span { display:block; font-size:.76rem; color:var(--dim); font-weight:600; margin-bottom:4px; }
+  .rechnung-feld input { width:100%; font:inherit; padding:10px 12px; border-radius:var(--radius-m); border:1px solid var(--linie); background:var(--bg); color:var(--text); }
   .rechnung-paarung { display:grid; grid-template-columns:1fr auto 1fr; gap:6px; align-items:center; margin-bottom:6px; }
-  .rechnung-paarung input { width:100%; min-width:0; font:inherit; padding:9px 10px; border-radius:12px; border:1px solid var(--linie); background:var(--bg); color:var(--text); }
+  .rechnung-paarung input { width:100%; min-width:0; font:inherit; padding:8px 10px; border-radius:var(--radius-m); border:1px solid var(--linie); background:var(--bg); color:var(--text); }
   .rechnung-paarung span { color:var(--dim); font-weight:800; }
   /* Adminseite: eine Leiste, ein Bereich - wie in der Abrechnung */
   .admin-leiste { display:flex; gap:6px; overflow-x:auto; padding:2px 0 10px; scrollbar-width:none; }
   .admin-leiste::-webkit-scrollbar { display:none; }
   .admin-leiste .filterknopf { flex:none; }
-  .admin-leiste .filterknopf i { font-style:normal; margin-left:6px; background:var(--rot); color:#fff; border-radius:99px; padding:1px 6px; font-size:.68rem; font-weight:800; }
+  .admin-leiste .filterknopf i { font-style:normal; margin-left:6px; background:var(--rot); color:#fff; border-radius:var(--radius-pille); padding:2px 6px; font-size:.68rem; font-weight:800; }
   .admin-kopf { margin:0 0 10px; }
   /* Anmeldung: drei Schritte, sonst nichts */
   .schritte { list-style:none; margin:0; padding:0; counter-reset:schritt; }
@@ -1496,7 +1508,7 @@
   .schritt-nr.fertig { background:var(--gut-bg); color:var(--gut); border-color:transparent; }
   .schritt-nr.fehlt  { background:var(--warn-bg); color:var(--warn); border-color:transparent; }
   /* Suchfeld ueber langen Listen (Telefonliste, Vereine) */
-  .mg-suche { width:100%; font:inherit; padding:10px 12px; border-radius:12px; border:1px solid var(--linie);
+  .mg-suche { width:100%; font:inherit; padding:10px 12px; border-radius:var(--radius-m); border:1px solid var(--linie);
               background:var(--bg); color:var(--text); margin:0 0 8px; }
   .verein-liste > details { border-top:1px solid var(--linie); }
   .verein-liste > details:first-child { border-top:0; }
@@ -1548,7 +1560,7 @@
   .ikon-knopf:active { transform:scale(.94); }
   /* Abzeichen an Vereinsadressen: Vorschlag oder geprueft */
   .merkzeichen { display:inline-block; font-size:.66rem; font-weight:800; text-transform:uppercase; letter-spacing:.05em;
-                 padding:2px 7px; border-radius:99px; margin-right:6px; vertical-align:2px; }
+                 padding:2px 8px; border-radius:var(--radius-pille); margin-right:6px; vertical-align:2px; }
   .merkzeichen.gut  { background:var(--gut-bg);  color:var(--gut); }
   .merkzeichen.warn { background:var(--warn-bg); color:var(--warn); }
   /* Strafenmatrix: Name links, je Strafart eine Spalte mit Punkt.
@@ -1576,7 +1588,7 @@
   .farbe-ms { --straf:var(--straf-ms); }
   .strafen-matrix { padding:10px 12px; }
   .matrix-kopf, .matrix-zeile { display:grid; grid-template-columns:minmax(0,1fr) repeat(var(--spalten,6), 1.85rem);
-                                align-items:center; gap:1px; }
+                                align-items:center; gap:2px; }
   @media (min-width: 560px) {
     .matrix-kopf, .matrix-zeile { grid-template-columns:minmax(0,1fr) repeat(var(--spalten,6), 3rem); gap:4px; }
   }
@@ -1587,7 +1599,7 @@
                    word-break:keep-all; overflow-wrap:normal; letter-spacing:-.02em; }
   .matrix-spalte { color:var(--straf, var(--dim)); }
   .matrix-spalte.aktiv { text-decoration:underline; text-underline-offset:3px; }
-  .matrix-zeile { padding:7px 0; border-top:1px solid var(--linie); }
+  .matrix-zeile { padding:8px 0; border-top:1px solid var(--linie); }
   .matrix-name b { display:block; font-size:.88rem; line-height:1.25; hyphens:auto; }
   .matrix-name small { display:block; color:var(--dim); font-size:.74rem; margin-top:2px; }
   .matrix-feld { text-align:center; color:var(--linie); font-size:1rem; line-height:1; }
@@ -1606,15 +1618,15 @@
                         color:var(--straf, var(--text)); border-color:color-mix(in srgb, var(--straf, var(--linie)) 40%, var(--linie)); }
   .regeln-arten .chip.ich { background:color-mix(in srgb, var(--straf, var(--akzent)) 16%, transparent);
                             border-color:var(--straf, var(--akzent)); }
-  .strafmarke { font-size:.7rem; font-weight:800; padding:2px 7px; border-radius:99px; white-space:nowrap;
+  .strafmarke { font-size:.7rem; font-weight:800; padding:2px 8px; border-radius:var(--radius-pille); white-space:nowrap;
                 background:color-mix(in srgb, var(--straf, var(--akzent)) 18%, transparent);
                 color:var(--straf, var(--akzent)); }
   .rollen-strafe { color:var(--straf, var(--text)); }
   .regeln-kopf { margin:14px 0 2px; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--dim); font-weight:800; }
   /* Spieltag-Modus: der Weg zurueck steht unter der Kopfkarte */
-  .spieltag-an { margin-top:14px; align-self:flex-start; display:inline-flex; align-items:center; gap:7px;
+  .spieltag-an { margin-top:14px; align-self:flex-start; display:inline-flex; align-items:center; gap:8px;
                  background:rgba(255,255,255,.14); color:#fff; border:1px solid rgba(255,255,255,.3);
-                 border-radius:99px; padding:8px 14px; font:inherit; font-size:.85rem; font-weight:800; cursor:pointer; }
+                 border-radius:var(--radius-pille); padding:8px 14px; font:inherit; font-size:.85rem; font-weight:800; cursor:pointer; }
   .spieltag-an svg.i { width:1rem; height:1rem; }
   /* Bestimmungen: ein Bereich je Karte, zum Aufklappen */
   .bestimmung-block { padding:6px 14px 10px; }
@@ -1627,11 +1639,11 @@
   .bestimmung-block[open] > summary::after { transform:rotate(-90deg); }
   .bestimmung-block[open] > summary { border-bottom:1px solid var(--linie); }
   .fundstelle { display:inline-block; margin-top:4px; font-size:.7rem; font-weight:800; letter-spacing:.03em;
-                background:var(--akzent-hell); color:var(--akzent); border-radius:99px; padding:2px 8px; }
+                background:var(--akzent-hell); color:var(--akzent); border-radius:var(--radius-pille); padding:2px 8px; }
   .bestimmung-punkt { padding:10px 0; border-top:1px solid var(--linie); }
   .bestimmung-punkt:first-child { border-top:0; }
   .bestimmung-punkt > span { display:block; }
-  .bestimmung-punkt small { display:block; color:var(--dim); margin-top:3px; }
+  .bestimmung-punkt small { display:block; color:var(--dim); margin-top:4px; }
   /* Erster Moment nach dem Start: der eigene Name steht schon da, der Rest
      wartet als Platzhalter, bis die Einteilungen entschluesselt sind. */
   .start-platz { display:none; }
@@ -1642,10 +1654,10 @@
   .start-kopf { display:flex; gap:10px; align-items:baseline; justify-content:space-between; margin-bottom:10px; }
   .start-kopf b { font-size:1.02rem; font-weight:800; }
   .start-kopf span { flex:none; font-size:.8rem; font-weight:700; color:var(--dim); }
-  .start-lade small { display:block; margin-top:9px; font-size:.8rem; color:var(--dim); line-height:1.35; }
-  .start-balken { display:block; height:10px; border-radius:99px; overflow:hidden; position:relative;
+  .start-lade small { display:block; margin-top:8px; font-size:.8rem; color:var(--dim); line-height:1.35; }
+  .start-balken { display:block; height:10px; border-radius:var(--radius-pille); overflow:hidden; position:relative;
     background:color-mix(in srgb, var(--akzent) 14%, transparent); }
-  .start-balken i { display:block; height:100%; width:8%; border-radius:99px;
+  .start-balken i { display:block; height:100%; width:8%; border-radius:var(--radius-pille);
     background:linear-gradient(90deg, var(--akzent), color-mix(in srgb, var(--akzent) 55%, #fff));
     transition:width .4s cubic-bezier(.4,0,.2,1); }
   /* Ein Schimmer laeuft mit - so sieht man, dass etwas passiert, auch
@@ -1664,13 +1676,13 @@
   .ziehen.da { opacity:1; }
   .ziehen.bereit { color:var(--gut); background:var(--gut-bg); }
   /* Spielzeiten: je Liga eine Zeile, darunter die Werte als Paare */
-  .zeiten-zeile { padding:11px 0; border-top:1px solid var(--linie); }
+  .zeiten-zeile { padding:12px 0; border-top:1px solid var(--linie); }
   .zeiten-zeile:first-of-type { border-top:0; }
   .zeiten-zeile > b { display:block; margin-bottom:6px; }
-  .zeiten-wert { display:flex; align-items:baseline; gap:10px; padding:3px 0; }
+  .zeiten-wert { display:flex; align-items:baseline; gap:10px; padding:4px 0; }
   .zeiten-wert span { flex:0 0 40%; color:var(--dim); font-size:.8rem; font-weight:700; }
   .zeiten-wert b { flex:1; font-size:.9rem; }
-  .zeiten-hinweis { display:block; color:var(--dim); margin-top:5px; line-height:1.45; }
+  .zeiten-hinweis { display:block; color:var(--dim); margin-top:6px; line-height:1.45; }
   /* Die Karten der Regelseite klebten aneinander */
   #regeln-liste, #rechner-inhalt { display:flex; flex-direction:column; gap:12px; }
   .rechner-karte { padding:12px 14px; }
@@ -1683,7 +1695,7 @@
   .hallen-anschrift { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:0 0 10px; }
   /* Anfahrt: wann losfahren, gross genug zum Lesen im Vorbeigehen */
   .abfahrt-gross { display:flex; align-items:center; gap:10px; margin:0 0 10px; padding:10px 12px;
-                   border-radius:14px; background:var(--akzent-hell); color:var(--akzent); }
+                   border-radius:var(--radius); background:var(--akzent-hell); color:var(--akzent); }
   .abfahrt-gross svg.i { width:1.3rem; height:1.3rem; flex:none; }
   .abfahrt-gross b { display:block; font-size:1rem; }
   .abfahrt-gross small { display:block; color:var(--akzent); opacity:.85; font-weight:600; }
@@ -1737,17 +1749,17 @@
   .zeile-lauf:first-of-type { border-top:0; }
   .zeile-lauf > span:first-child { flex:1; min-width:0; }
   .zeile-lauf b { display:block; font-size:.82rem; color:var(--dim); letter-spacing:.01em; }
-  .zeile-lauf .zeile-paarung { display:block; font-weight:700; line-height:1.3; margin-top:1px; }
+  .zeile-lauf .zeile-paarung { display:block; font-weight:700; line-height:1.3; margin-top:2px; }
   .zeile-lauf small { display:block; color:var(--dim); font-size:.8rem; margin-top:2px; }
   .zeile-lauf .pfeil { flex:none; color:var(--dim); font-size:1.2rem; }
   /* Profilbild: ueberall dasselbe runde Zeichen, mit Bild statt Buchstaben */
   .mit-bild { background-size:cover; background-position:center; color:transparent !important; text-indent:-999px; overflow:hidden; }
   .avatar-klein { display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px;
                   border-radius:50%; background:var(--akzent); color:#fff; font-weight:800; font-size:.76rem;
-                  flex:none; margin-right:9px; }
+                  flex:none; margin-right:8px; }
   .kontakt-kopf { display:flex; align-items:center; gap:0; }
   .kontakt-kopf > b { min-width:0; overflow-wrap:anywhere; }
-  .kontakt-marke { margin-left:43px; }
+  .kontakt-marke { margin-left:44px; }
   .profil-bildzeile { display:flex; align-items:center; gap:14px; margin:10px 0 4px; }
   .profil-bildzeile .avatar-gross { width:64px; height:64px; border-radius:50%; background:var(--akzent);
                                     color:#fff; font-weight:800; font-size:1.1rem; flex:none;
@@ -1761,18 +1773,18 @@
      die runden Knoepfe - der Titel stand quer ueber dem Admin-Schalter. */
   .kopf .marke > div { min-width:0; }
   @media (max-width: 430px) {
-    .kopf-knoepfe { gap:5px; }
+    .kopf-knoepfe { gap:6px; }
     .kopf .rund, .kopf .avatar-knopf { width:36px; height:36px; }
     .kopf h1 { font-size:1rem; }
     .kopf .stand { font-size:.7rem; padding:2px 8px; }
     /* Sieben Strafarten in eine Zeile, sonst haengt "MS" halb im Rand */
-    .regeln-arten { gap:5px; }
+    .regeln-arten { gap:6px; }
     .regeln-arten .chip { padding:4px 8px; font-size:.78rem; }
   }
   @media (max-width: 360px) {
     /* Ganz schmal passen sieben Chips nicht in eine Zeile - dann umbrechen */
     .regeln-arten { flex-wrap:wrap; overflow-x:visible; }
-    .regeln-arten .chip { padding:4px 7px; font-size:.75rem; }
+    .regeln-arten .chip { padding:4px 8px; font-size:.75rem; }
   }
   /* Strafenmatrix: "5+SPD" war genauso breit wie seine Spalte und stand
      deshalb auf den Nachbarn. Etwas schmaler, dafuer mit Luft dazwischen. */
@@ -1793,31 +1805,31 @@
   /* Fundstelle ist eine Marke, kein Balken ueber die ganze Breite */
   .bestimmung-punkt .fundstelle, .zeiten-zeile .fundstelle { display:inline-block; width:auto; }
   /* Die Liga des naechsten Spiels wird in den Spielzeiten hervorgehoben */
-  .zeiten-zeile.meine { border-left:3px solid var(--akzent); padding-left:10px; margin-left:-13px; }
+  .zeiten-zeile.meine { border-left:3px solid var(--akzent); padding-left:10px; margin-left:-12px; }
   .zeiten-marke { display:inline-block; margin-left:8px; font-size:.68rem; font-weight:800;
-                  color:var(--akzent); background:var(--akzent-hell); border-radius:99px; padding:2px 8px; }
+                  color:var(--akzent); background:var(--akzent-hell); border-radius:var(--radius-pille); padding:2px 8px; }
   /* Strafrechner: je Mannschaft ein Block, darunter das Ergebnis */
   .rechner-team { padding:10px 0; border-top:1px solid var(--linie); }
   .rechner-team > b { display:block; margin-bottom:6px; font-size:.9rem; }
   .rechner-chips, .rechner-gewaehlt { display:flex; flex-wrap:wrap; gap:6px; }
-  .rechner-gewaehlt { margin-top:7px; min-height:26px; align-items:center; }
+  .rechner-gewaehlt { margin-top:8px; min-height:26px; align-items:center; }
   .rechner-gewaehlt small { color:var(--dim); }
-  .rechner-lauf { display:flex; align-items:center; gap:10px; margin-top:9px; }
+  .rechner-lauf { display:flex; align-items:center; gap:10px; margin-top:8px; }
   .rechner-lauf span { color:var(--dim); font-size:.8rem; font-weight:700; }
   .rechner-lauf > b { min-width:1.2em; text-align:center; }
-  .schrittknopf { width:30px; height:30px; border-radius:9px; border:1px solid var(--linie);
+  .schrittknopf { width:30px; height:30px; border-radius:var(--radius-s); border:1px solid var(--linie);
                   background:var(--karte); color:inherit; font:inherit; font-weight:800; cursor:pointer; }
-  .rechner-ergebnis { margin-top:12px; padding:12px 14px; border-radius:14px; background:var(--akzent-hell); }
+  .rechner-ergebnis { margin-top:12px; padding:12px 14px; border-radius:var(--radius); background:var(--akzent-hell); }
   .rechner-staerke { display:block; font-size:1.5rem; letter-spacing:-.02em; color:var(--akzent); }
   .rechner-ergebnis > small { display:block; color:var(--dim); margin-bottom:6px; }
   .rechner-ergebnis .zeiten-wert span { flex:0 0 46%; }
-  .dok-liste a { display:flex; align-items:center; gap:10px; padding:11px 0; border-top:1px solid var(--linie);
+  .dok-liste a { display:flex; align-items:center; gap:10px; padding:12px 0; border-top:1px solid var(--linie);
                  color:inherit; text-decoration:none; font-weight:700; }
   .dok-liste a:first-child { border-top:0; }
   .dok-liste small { color:var(--dim); font-weight:500; display:block; }
   .dok-liste a::after { content:"\2197"; margin-left:auto; color:var(--dim); }
   /* Anmeldung: Beschriftungen und das Auge im Passwortfeld */
-  .anmelde-label { display:block; font-size:.78rem; color:var(--dim); font-weight:700; margin:10px 0 3px; }
+  .anmelde-label { display:block; font-size:.78rem; color:var(--dim); font-weight:700; margin:10px 0 4px; }
   .pw-feld { position:relative; }
   .pw-feld > input { width:100%; box-sizing:border-box; padding-right:46px; }
   .pw-auge { position:absolute; right:4px; top:50%; transform:translateY(-50%); width:38px; height:38px;
@@ -1829,7 +1841,7 @@
   .adress-feld { position:relative; }
   .adress-feld > input { width:100%; box-sizing:border-box; }
   .adress-liste { position:absolute; left:0; right:0; top:calc(100% + 4px); z-index:40; max-height:260px; overflow:auto;
-                  background:var(--karte); border:1px solid var(--linie); border-radius:14px; box-shadow:var(--schatten); }
+                  background:var(--karte); border:1px solid var(--linie); border-radius:var(--radius); box-shadow:var(--schatten); }
   .adress-vorschlag { display:block; width:100%; text-align:left; background:none; border:0; border-top:1px solid var(--linie);
                       padding:10px 12px; font:inherit; color:var(--text); cursor:pointer; }
   .adress-vorschlag:first-child { border-top:0; }
@@ -1845,7 +1857,7 @@
                  color:var(--dim); font-weight:800; }
   .telefon-liste .listen-kopf:first-child { margin-top:4px; }
   #plan-aenderungen { text-decoration:none; }
-  #plan-aenderungen .zaehler { background:var(--rot); color:#fff; border-radius:99px; font-size:.68rem; padding:1px 6px; font-weight:800; }
+  #plan-aenderungen .zaehler { background:var(--rot); color:#fff; border-radius:var(--radius-pille); font-size:.68rem; padding:2px 6px; font-weight:800; }
   /* Zweizeilige Beschriftung in den Einstellungen (wie unter "Bereiche") */
   .einstellungen-liste label > span > small { display:block; color:var(--dim); font-weight:500; }
   /* Adminbereich: die sechs Knoepfe lieber umbrechen als wegscrollen */
@@ -1857,7 +1869,7 @@
   .hinweis.warteschlange button { align-self:flex-start; }
 
   /* Runde 47: Schnelleingabe, eigene Regeln, Pruefung */
-  .mg-schnellliste { display:flex; flex-direction:column; gap:1px; background:var(--linie);
+  .mg-schnellliste { display:flex; flex-direction:column; gap:2px; background:var(--linie);
     border:1px solid var(--linie); border-radius:var(--radius); overflow:hidden; margin-top:10px; }
   .mg-schnellkopf, .mg-schnellzeile { display:grid; grid-template-columns:1fr 4.2rem 4.6rem 4.6rem;
     gap:6px; align-items:center; background:var(--karte); padding:6px 8px; }
@@ -1865,10 +1877,10 @@
     color:var(--dim); background:var(--bg); padding:6px 8px; }
   .mg-schnellkopf span + span, .mg-schnellzeile input { text-align:right; }
   .mg-schnellzeile.erfasst { background:color-mix(in srgb, var(--gut-bg) 40%, var(--karte)); }
-  .mg-schnellzeile input { width:100%; min-height:40px; padding:6px 7px; font-size:.9rem;
-    border:1px solid var(--linie); border-radius:9px; background:var(--karte); color:inherit; }
+  .mg-schnellzeile input { width:100%; min-height:40px; padding:6px 8px; font-size:.9rem;
+    border:1px solid var(--linie); border-radius:var(--radius-s); background:var(--karte); color:inherit; }
   .mg-schnellzeile input:focus { outline:2px solid var(--akzent); outline-offset:-1px; }
-  .mg-schnellspiel { display:flex; flex-direction:column; align-items:flex-start; gap:1px;
+  .mg-schnellspiel { display:flex; flex-direction:column; align-items:flex-start; gap:2px;
     min-height:40px; padding:2px 0; background:none; border:0; color:inherit; text-align:left; width:100%; }
   .mg-schnellspiel b { font-size:.82rem; font-weight:700; }
   .mg-schnellspiel small { font-size:.72rem; color:var(--dim); line-height:1.25;
@@ -1877,14 +1889,14 @@
   .mg-regel-neu { display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-top:6px; }
   .mg-regel-neu select { flex:1 1 8rem; min-width:0; }
   .mg-regel-neu input { flex:0 0 4.6rem; min-height:40px; padding:6px 8px; text-align:right;
-    border:1px solid var(--linie); border-radius:9px; background:var(--karte); color:inherit; }
+    border:1px solid var(--linie); border-radius:var(--radius-s); background:var(--karte); color:inherit; }
   .mg-regel-neu button { min-height:40px; }
 
   .mg-fund { display:flex; flex-direction:column; align-items:flex-start; gap:2px;
     width:100%; text-align:left; margin-bottom:10px; padding:10px 12px;
-    border:1px solid var(--linie); border-radius:12px; background:var(--karte); }
+    border:1px solid var(--linie); border-radius:var(--radius-m); background:var(--karte); }
   .mg-fund-aktion { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
-  .mg-fund-aktion button { min-height:40px; padding:8px 12px; border-radius:10px;
+  .mg-fund-aktion button { min-height:40px; padding:8px 12px; border-radius:var(--radius-s);
     border:1px solid var(--linie); background:var(--karte); color:inherit; font:inherit;
     font-size:.82rem; font-weight:700; }
   .mg-fund-aktion button.anfrage { border-color:var(--akzent); }
@@ -1893,16 +1905,16 @@
   .mg-fund b, .mg-fund small { white-space:normal; overflow-wrap:anywhere; max-width:100%; }
 
   /* Runde 48: Fuellstandsbalken im Adminbereich */
-  .mg-balken { height:8px; border-radius:99px; background:var(--linie); overflow:hidden; margin:6px 0 0; }
-  .mg-balken i { display:block; height:100%; background:var(--akzent); border-radius:99px; }
+  .mg-balken { height:8px; border-radius:var(--radius-pille); background:var(--linie); overflow:hidden; margin:6px 0 0; }
+  .mg-balken i { display:block; height:100%; background:var(--akzent); border-radius:var(--radius-pille); }
   .mg-balken.voll i { background:var(--warn); }
 
 
   /* Runde 50: Ansicht der Abrechnung als ein Schalter mit drei Stellungen */
-  .mg-ansicht { display:flex; flex:1 1 100%; gap:2px; padding:2px; border-radius:11px;
+  .mg-ansicht { display:flex; flex:1 1 100%; gap:2px; padding:2px; border-radius:var(--radius-m);
     background:var(--bg); border:1px solid var(--linie); }
   .mg-ansicht button { flex:1 1 0; min-width:0; min-height:36px; padding:6px 4px;
-    border:0; border-radius:9px; background:none; color:var(--dim);
+    border:0; border-radius:var(--radius-s); background:none; color:var(--dim);
     font:inherit; font-size:.82rem; font-weight:700; white-space:nowrap; }
   .mg-ansicht button.aktiv { background:var(--karte); color:var(--text); box-shadow:var(--schatten); }
 
@@ -1910,7 +1922,7 @@
   .mg-leiste .filterknopf { padding-left:12px; padding-right:12px; font-size:.84rem; }
 
   /* Runde 52: Rechte eines Obmanns ankreuzen */
-  .obmann-rechte { margin-top:8px; padding:8px 10px; border-radius:10px;
+  .obmann-rechte { margin-top:8px; padding:8px 10px; border-radius:var(--radius-s);
     background:var(--bg); border:1px solid var(--linie); }
   .obmann-rechte label { display:flex; gap:8px; align-items:center;
     min-height:38px; font-size:.86rem; font-weight:600; }
@@ -1920,12 +1932,12 @@
 
   /* Runde 55: Balken waehrend des Testmodus */
   .testbalken { display:flex; gap:10px; align-items:center; flex-wrap:wrap;
-    margin:0 0 12px; padding:10px 14px; border-radius:12px;
+    margin:0 0 12px; padding:10px 14px; border-radius:var(--radius-m);
     background:var(--warn-bg); color:var(--warn);
     border-left:4px solid var(--warn); font-size:.86rem; font-weight:600; }
   .testbalken.versteckt { display:none; }
   .testbalken span { flex:1 1 12rem; min-width:0; }
-  .testbalken button { min-height:40px; padding:8px 14px; border-radius:10px;
+  .testbalken button { min-height:40px; padding:8px 14px; border-radius:var(--radius-s);
     border:1px solid currentColor; background:none; color:inherit;
     font:inherit; font-weight:700; }
 
@@ -1960,8 +1972,8 @@
   @keyframes lade-lauf { to { transform:translateX(350%); } }
 
   .skelett-karte { display:flex; flex-direction:column; justify-content:center;
-    gap:9px; height:auto; min-height:104px; padding:16px; border-radius:var(--radius); }
-  .skelett-karte i { display:block; height:11px; border-radius:99px;
+    gap:8px; height:auto; min-height:104px; padding:16px; border-radius:var(--radius); }
+  .skelett-karte i { display:block; height:11px; border-radius:var(--radius-pille);
     background:color-mix(in srgb, var(--dim) 28%, transparent); }
   .skelett-karte i.s1 { width:42%; }
   .skelett-karte i.s2 { width:78%; height:14px; }
@@ -1982,9 +1994,9 @@
 
   /* Runde 59: Hinweis vor der Abrechnung */
   .tor-punkte { display:flex; flex-direction:column; gap:10px; margin-top:4px; }
-  .tor-punkt { padding:11px 13px; border-radius:12px; background:var(--bg);
+  .tor-punkt { padding:12px 12px; border-radius:var(--radius-m); background:var(--bg);
     border:1px solid var(--linie); }
-  .tor-punkt b { display:block; font-size:.92rem; margin-bottom:3px; }
+  .tor-punkt b { display:block; font-size:.92rem; margin-bottom:4px; }
   .tor-punkt small { display:block; font-size:.84rem; line-height:1.45; color:var(--dim); }
   .abrechnung-tor .mg-check { font-size:.92rem; font-weight:700; gap:10px; min-height:44px; }
 
@@ -2007,14 +2019,14 @@
   .staerke-kopf span + span, .staerke-zeile b { text-align:center; }
   .staerke-zeile span { font-size:.9rem; overflow-wrap:anywhere; }
   .staerke-zeile b { font-size:1.05rem; font-weight:800; }
-  .staerke-zeile.meine { background:var(--akzent-hell); border-radius:9px;
+  .staerke-zeile.meine { background:var(--akzent-hell); border-radius:var(--radius-s);
     padding-left:8px; padding-right:8px; margin:0 -8px; }
   .staerke-zusatz { display:block; font-size:.78rem; color:var(--dim);
     line-height:1.35; padding:0 0 8px; }
   .zeiten-wert b.aus { color:var(--dim); font-weight:600; }
 
   /* Runde 62: Kalender-Einstellungen */
-  .kal-vorschau { margin:0 0 10px; padding:9px 11px; border-radius:10px;
+  .kal-vorschau { margin:0 0 10px; padding:8px 12px; border-radius:var(--radius-s);
     background:var(--bg); border:1px solid var(--linie);
     font-size:.84rem; font-weight:600; color:var(--text); overflow-wrap:anywhere; }
   .kal-alarme { flex-wrap:wrap; }
@@ -2119,7 +2131,7 @@
 
   <!-- Spielplan: alle Spiele nach Tag und Uhrzeit -->
   <section id="plan" class="versteckt">
-    <div class="seitentitel"><h2>Spielplan</h2><p>Alle Spiele von esrw.de. Tipp auf ein Spiel für Details.</p></div>
+    <div class="seitentitel"><h2>Spielplan</h2></div>
     <div class="filterleiste">
       <div class="plan-suchzeile versteckt" id="plan-suchzeile">
         <label for="plan-filter" class="versteckt">Spielplan filtern</label>
@@ -2267,7 +2279,7 @@
 
   <!-- Mehr: alles, was nicht in die Leiste passt -->
   <section id="mehr" class="versteckt">
-    <div class="seitentitel"><h2>Mehr</h2><p>Alles, was nicht in die Leiste passt.</p></div>
+    <div class="seitentitel"><h2>Mehr</h2></div>
     <div class="mehr-ansicht" id="mehr-ansicht"></div>
     <div class="menue karte" id="mehr-liste"></div>
   </section>
