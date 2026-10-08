@@ -2807,17 +2807,43 @@ window.Mitglieder = (function () {
 
   // Vergangene Spiele ohne Zeile bekommen von selbst eine: km aus der
   // gemerkten Strecke, Verguetung nach Ordnung. Uebrig bleibt "bezahlt".
-  function automatischVorbelegen(spiele) {
+  function automatischVorbelegen(spiele, ohneSchaetzung) {
     var n = 0, jetzt = new Date();
     spiele.forEach(function (sp) {
       if (einsaetze[sp.kennung] || new Date(sp.beginn) > jetzt) return;
       var v = kmVorschlag(sp), g = sollBetrag(sp);
+      // Solange eine echte Route unterwegs ist, keine Luftlinie eintragen -
+      // sie bliebe sonst stehen, obwohl Sekunden spaeter der genaue Wert da ist.
+      if (ohneSchaetzung && v && v.art === "luftlinie") v = null;
       if (v == null && g == null) return;
       var vp = verpflegungVorschlag(sp);
-      speichereEinsatz(sp, Object.assign({ km: v && v.art === "route" ? v.km : null, verguetung: g }, vp != null ? { verpflegung: vp } : {}));
+      // Frueher zaehlte hier nur eine echte Route. Eine eigene Regel je
+      // Halle hat der Mensch selbst gesetzt, und die Luftlinie ist besser
+      // als ein leeres Feld - beides wurde stillschweigend verworfen.
+      speichereEinsatz(sp, Object.assign({ km: v ? v.km : null, verguetung: g }, vp != null ? { verpflegung: vp } : {}));
       n++;
     });
     if (n) kurzMeldung(n + (n === 1 ? " Spiel" : " Spiele") + " automatisch vorbelegt. Bitte prüfen und Auslagen oder Belege ergänzen.", "gut");
+    return n;
+  }
+
+  // Ohne gemerkte Strecke gab es keine Kilometer, und Strecken entstanden
+  // nur, wenn jemand den Knopf unter "Weitere" fand. Wer seine Adresse
+  // hinterlegt hat, soll nichts mehr suchen muessen.
+  function hallenOhneRoute(spiele) {
+    if (!profil || profil.heimat_lat == null) return [];
+    var offen = [];
+    spiele.forEach(function (sp) {
+      if (!sp.halle || offen.indexOf(sp.halle) >= 0) return;
+      var g = streckeGespeichert(sp.halle);
+      if (!(g && g.art === "route" && g.minuten)) offen.push(sp.halle);
+    });
+    return offen;
+  }
+  function streckenNachladen(spiele) {
+    var offen = hallenOhneRoute(spiele);
+    if (!offen.length) return Promise.resolve(false);
+    return streckenFuer(offen).then(function () { return true; }, function () { return false; });
   }
 
   // Monatsraster mit Betraegen je Tag; Tipp oeffnet die Zeile
@@ -2969,10 +2995,28 @@ window.Mitglieder = (function () {
       knopf]);
   }
 
+  var streckenLaeuft = false;
   function rendereAbrechnung() {
     leeren(inhalt);
     var spiele = saisonSpiele(gewaehlteSaison);
-    automatischVorbelegen(spiele);
+    automatischVorbelegen(spiele, hallenOhneRoute(spiele).length > 0);
+    // Die Strecken kommen nach - die Seite steht schon, waehrend der
+    // Routendienst antwortet (350 ms Pause je Halle).
+    if (!streckenLaeuft) {
+      streckenLaeuft = true;
+      streckenNachladen(spiele).then(function (neu) {
+        streckenLaeuft = false;
+        if (!neu || !inhalt.isConnected) return;
+        var nachgetragen = 0;
+        spiele.forEach(function (sp) {
+          var e = einsaetze[sp.kennung];
+          if (!e || e.km != null) return;
+          var v = kmVorschlag(sp);
+          if (v) { speichereEinsatz(sp, { km: v.km }); nachgetragen++; }
+        });
+        if (automatischVorbelegen(spiele) || nachgetragen) rendereAbrechnung();
+      });
+    }
 
     var saisonWahl = h("select", { class: "mg-select", onchange: function (ev) { gewaehlteSaison = ev.target.value; saisonLaden(gewaehlteSaison).then(rendereAbrechnung); } },
       saisonen().map(function (s) { var o = h("option", { value: s, text: "Saison " + s }); if (s === gewaehlteSaison) o.selected = true; return o; }));
@@ -2993,6 +3037,17 @@ window.Mitglieder = (function () {
     inhalt.appendChild(h("div", { class: "mg-abrechnung-kopf" }, [saisonWahl, chips]));
     var wartet = warteBanner();
     if (wartet) inhalt.appendChild(wartet);
+
+    // Ohne Adresse rechnet die App keine Strecke - das stand bisher nur in
+    // einer Meldung an einem Knopf, den man erst finden musste.
+    if (profil && profil.heimat_lat == null
+        && spiele.some(function (sp) { return sp.halle && new Date(sp.beginn) < new Date(); })) {
+      inhalt.appendChild(h("div", { class: "hinweis" }, [
+        h("span", {}, [h("b", { text: "Kilometer fehlen" }),
+          h("small", { style: "display:block", text: "Trag deine Heimatadresse ein, dann rechnet die App die Strecke zu jeder Halle selbst aus." })]),
+        h("button", { type: "button", class: "textknopf", text: "Zum Profil",
+          onclick: function () { zeigeEinrichtung(true); } })]));
+    }
 
     inhalt.appendChild(h("div", { class: "mg-summenblock" }));
 
