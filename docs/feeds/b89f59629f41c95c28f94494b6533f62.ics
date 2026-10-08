@@ -72,15 +72,15 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
  .937979,6.98935
 END:VEVENT
 BEGIN:VEVENT
-UID:8558322f2eeb88bcf48594a3c0e153b314a33a03@esrw.de
-SEQUENCE:1
-DTSTAMP:20261006T161529Z
-LAST-MODIFIED:20261006T161529Z
-DTSTART:20261010T144500Z
-DTEND:20261010T181500Z
+UID:a8dc7b38ee34c8e8c9ce68c9a8e645d89547d724@esrw.de
+SEQUENCE:0
+DTSTAMP:20261008T171530Z
+LAST-MODIFIED:20261008T171530Z
+DTSTART:20261010T061500Z
+DTEND:20261010T094500Z
 SUMMARY:SR · U13 RLB: Iserlohner EC 1b – EJ Kassel
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:45 Uhr\nTreffpunkt:
-  16:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Emscher-Lippe-H
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:15 Uhr\nTreffpunkt:
+  08:15 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Emscher-Lippe-H
  alle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\nGesp
  ann: Kalischke\, Christian (N)\n\nQuelle: https://www.esrw.de/einteilungen
  .html
@@ -158,16 +158,16 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:7ad6e4dcab4eae0d2ee6ca623580bc9ce3e6a29f@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
+SEQUENCE:1
+DTSTAMP:20261008T171530Z
+LAST-MODIFIED:20261008T171530Z
 DTSTART:20261018T093000Z
 DTEND:20261018T130000Z
 SUMMARY:SR · U17 RL: Dinslakener Kobras – Herforder EV
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
   11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eissporthalle Di
- nslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Marks\, Marcel
- \n\nQuelle: https://www.esrw.de/einteilungen.html
+ nslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Schmidt\, Wald
+ emar\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

@@ -110,17 +110,17 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:40ca9613795ae38478217ad48e2d3d554b59a887@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
+SEQUENCE:1
+DTSTAMP:20261008T171530Z
+LAST-MODIFIED:20261008T171530Z
 DTSTART:20261018T160000Z
 DTEND:20261018T193000Z
 SUMMARY:SR · Senioren LL: Eisadler Dortmund 1b – EHC Troisdorf
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
   18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissportzen
- trum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Schmid
- t\, Waldemar\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.
- de/einteilungen.html
+ trum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Marks\
+ , Marcel\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/e
+ inteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

@@ -1488,6 +1488,34 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Herforder EV – S
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:8214420433bc513b55c8cdd893266ac2c3c6d728@esrw.de
+SEQUENCE:0
+DTSTAMP:20261008T171530Z
+LAST-MODIFIED:20261008T171530Z
+DTSTART:20261010T061500Z
+DTEND:20261010T094500Z
+SUMMARY:SR · U13 RLB: Iserlohner EC 1b – EJ Kassel
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:15 Uhr\nTreffpunkt:
+  08:15 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Emscher-Lippe-H
+ alle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\nGesp
+ ann: Quint\, Sascha\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Emscher-Lippe-Halle Gelsenkirchen\, Adenauerallee 118\, 45891 Gels
+ enkirchen
+GEO:51.553483;7.073102
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Emscher-Lippe-Halle Gelsen
+ kirchen, Adenauerallee 118, 45891 Gelsenkirchen";X-APPLE-RADIUS=100;X-TITL
+ E="Emscher-Lippe-Halle Gelsenkirchen":geo:51.553483,7.073102
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB: Iserlohner EC 1b 
+ – EJ Kassel
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:a935f4cc464beedd9c789efc9cc1f66430542752@esrw.de
 SEQUENCE:0
 DTSTAMP:20261002T111527Z
@@ -1951,34 +1979,6 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: SpG Neusser EV 1b
   / GSC Moers 1b – EC Bergisch Land
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
-UID:e2bbe0e679817e4009c1923f925aa11b23cc08f3@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T161529Z
-LAST-MODIFIED:20261006T161529Z
-DTSTART:20261010T144500Z
-DTEND:20261010T181500Z
-SUMMARY:SR · U13 RLB: Iserlohner EC 1b – EJ Kassel
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:45 Uhr\nTreffpunkt:
-  16:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Emscher-Lippe-H
- alle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\nGesp
- ann: Quint\, Sascha\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Emscher-Lippe-Halle Gelsenkirchen\, Adenauerallee 118\, 45891 Gels
- enkirchen
-GEO:51.553483;7.073102
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Emscher-Lippe-Halle Gelsen
- kirchen, Adenauerallee 118, 45891 Gelsenkirchen";X-APPLE-RADIUS=100;X-TITL
- E="Emscher-Lippe-Halle Gelsenkirchen":geo:51.553483,7.073102
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB: Iserlohner EC 1b 
- – EJ Kassel
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -3957,15 +3957,15 @@ END:VEVENT
 BEGIN:VEVENT
 UID:ad7f16f0a24d596b46d8213059317a245f7ec6f9@esrw.de
 SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
+DTSTAMP:20261008T171530Z
+LAST-MODIFIED:20261008T171530Z
 DTSTART:20261018T093000Z
 DTEND:20261018T130000Z
 SUMMARY:SR · U17 RL: Dinslakener Kobras – Herforder EV
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
   11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eissporthalle Di
- nslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Quint\, Sascha
- \n\nQuelle: https://www.esrw.de/einteilungen.html
+ nslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Schmidt\, Wald
+ emar\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -4254,16 +4254,16 @@ END:VEVENT
 BEGIN:VEVENT
 UID:9bbd2b8dda709af20c4e46e70e4466574952dd6a@esrw.de
 SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
+DTSTAMP:20261008T171530Z
+LAST-MODIFIED:20261008T171530Z
 DTSTART:20261018T160000Z
 DTEND:20261018T193000Z
 SUMMARY:SR · Senioren LL: Eisadler Dortmund 1b – EHC Troisdorf
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
   18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissportzen
- trum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Schmid
- t\, Waldemar\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.
- de/einteilungen.html
+ trum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Marks\
+ , Marcel\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/e
+ inteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
