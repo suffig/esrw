@@ -2393,3 +2393,23 @@ update public.rechnungen r
    and exists (select 1 from unnest(r.kennungen) k where k <> public.kennung_sauber(k));
 
 drop function if exists public.kennung_sauber(text);
+
+
+-- ======================================================================
+-- v48: Woher ein Wert in der Abrechnung stammt
+-- ======================================================================
+-- Die App traegt Kilometer und Verguetung von selbst ein (Route, eigene
+-- Regel, Luftlinie, Gebuehrenordnung). Bisher sah ein gerechneter Wert
+-- genauso aus wie ein selbst eingetippter - beim Einreichen beim Verein
+-- ist das ein Unterschied.
+--
+-- herkunft haelt je Feld fest, woher der Wert kommt:
+--   {"km": "route" | "luftlinie" | "regel", "verguetung": "ordnung" | "regel"}
+-- Ein Feld, das jemand von Hand aendert, verliert seinen Eintrag - was
+-- nicht drinsteht, gilt als bestaetigt. Die App schickt die Spalte nur
+-- mit, wenn sie gefuellt ist; ohne diesen Abschnitt laeuft sie weiter,
+-- nur ohne den Vermerk.
+alter table public.einsaetze add column if not exists herkunft jsonb;
+
+-- Zugriffsregeln der Tabelle gelten unveraendert fuer die neue Spalte:
+-- lesen, anlegen, aendern und loeschen nur die eigenen Zeilen.

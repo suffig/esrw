@@ -513,7 +513,7 @@ window.Mitglieder = (function () {
       return p.then(function () {
         var zeile = Object.assign({}, q[k]);
         delete zeile.id; delete zeile._versuche; delete zeile._grund;
-        return sb.from("einsaetze").upsert(zeile, { onConflict: "user_id,kennung" }).select().then(function (r) {
+        return sb.from("einsaetze").upsert(zumSenden(zeile), { onConflict: "user_id,kennung" }).select().then(function (r) {
           if (r.error) {
             // Frueher flog der Eintrag bei jedem Fehler raus, der nicht nach
             // Netz aussah - auch bei abgelaufener Anmeldung oder einer
@@ -1507,6 +1507,19 @@ window.Mitglieder = (function () {
     return !!(e && ((e.klasse === "senioren" && e.stufe === "RL") || (e.klasse === "frauen" && e.stufe === "2LIGA")));
   }
 
+  // Welche Felder dieser Zeile hat die App gerechnet und niemand bestaetigt?
+  var HERKUNFT_TEXT = { route: "Kilometer aus der berechneten Route",
+                        luftlinie: "Kilometer aus der Luftlinie geschätzt",
+                        regel: "aus deiner eigenen Regel",
+                        ordnung: "Vergütung nach der Gebührenordnung" };
+  function gerechnetText(e) {
+    var her = (e && e.herkunft) || {}, teile = [];
+    if (her.km) teile.push(HERKUNFT_TEXT[her.km] || "Kilometer gerechnet");
+    if (her.verguetung) teile.push(her.verguetung === "regel"
+      ? "Vergütung aus deiner eigenen Regel" : HERKUNFT_TEXT.ordnung);
+    if (!teile.length) return "";
+    return teile.join(" · ") + ". Tipp den Wert an, wenn er so stimmt oder geändert gehört.";
+  }
   function betragFuer(spiel, e) {
     // Reihenfolge (Annahme, die Ordnung sagt es nicht): Zeitzuschlag auf die
     // Grundgebuehr, dann der Zuschlag fuer uebergreifenden Einsatz, zum
@@ -1551,6 +1564,7 @@ window.Mitglieder = (function () {
       .then(function (r) {
         if (r.error) throw r.error;
         einsaetze = {};
+        if (r.data && r.data.length) herkunftSpalte = ("herkunft" in r.data[0]);
         (r.data || []).forEach(function (z) { einsaetze[z.kennung] = z; });
         // Offline-Aenderungen liegen ueber dem Serverstand, bis sie nachgereicht sind
         var q = warteschlange(); Object.keys(q).forEach(function (k) { einsaetze[k] = Object.assign({}, einsaetze[k] || {}, ohneMerkmale(q[k])); });
@@ -1636,6 +1650,16 @@ window.Mitglieder = (function () {
     return alleSpiele().filter(function (s) { return !saison || s.saison === saison; });
   }
 
+  // Ob die Spalte herkunft (v48) schon existiert, zeigt die erste
+  // geladene Zeile. Solange das nicht feststeht, bleibt sie beim Senden
+  // weg - die Anzeige nutzt sie trotzdem, sie steht ja im Speicher.
+  var herkunftSpalte = false;
+  function zumSenden(zeile) {
+    if (herkunftSpalte || zeile.herkunft === undefined) return zeile;
+    var kopie = Object.assign({}, zeile);
+    delete kopie.herkunft;
+    return kopie;
+  }
   function speichereEinsatz(spiel, aenderung) {
     var alt = einsaetze[spiel.kennung] || {};
     var zeile = Object.assign({
@@ -1653,12 +1677,22 @@ window.Mitglieder = (function () {
        // Wie bei verpflegung: nur mitschicken, wenn gesetzt - sonst
        // scheitert jedes Speichern, solange v41 nicht eingespielt ist
        alt.bezahlt != null ? { bezahlt: alt.bezahlt } : {}, aenderung);
+    // Woher ein Wert stammt (v48). Wer ein Feld von Hand aendert,
+    // bestaetigt es damit - der Vermerk faellt weg. Was nicht drinsteht,
+    // gilt als geprueft.
+    var herkunft = Object.assign({}, alt.herkunft || {});
+    if (aenderung.herkunft) Object.assign(herkunft, aenderung.herkunft);
+    else Object.keys(aenderung).forEach(function (f) { delete herkunft[f]; });
+    Object.keys(herkunft).forEach(function (f) { if (!herkunft[f]) delete herkunft[f]; });
+    // Wie bei verpflegung und bezahlt: nur mitschicken, wenn gefuellt -
+    // sonst scheitert jedes Speichern, solange v48 nicht eingespielt ist.
+    if (Object.keys(herkunft).length) zeile.herkunft = herkunft; else delete zeile.herkunft;
     einsaetze[spiel.kennung] = zeile;
     aktualisiereSummen();
     aktualisiereZeile(spiel);
     clearTimeout(speicherTimer[spiel.kennung]);
     speicherTimer[spiel.kennung] = setTimeout(function () {
-      sb.from("einsaetze").upsert(zeile, { onConflict: "user_id,kennung" }).select().then(function (r) {
+      sb.from("einsaetze").upsert(zumSenden(zeile), { onConflict: "user_id,kennung" }).select().then(function (r) {
         if (r.error) {
           inWarteschlange(zeile, netzFehler(r.error) ? "netz" : "fehler");
           if (!netzFehler(r.error)) meldung("Speichern hat gerade nicht geklappt (" + fehlerText(r.error) + "). Die Änderung liegt auf Wiedervorlage.", "warn");
@@ -2636,6 +2670,17 @@ window.Mitglieder = (function () {
       marke.remove();
     }
     if (marke && e && e.bezahlt) marke.title = "Abgehakt am " + new Date(e.bezahlt).toLocaleDateString("de-DE");
+    // Ebenso der Vermerk, dass hier noch Gerechnetes steht: ein Tipp ins
+    // Feld bestaetigt den Wert, und sobald nichts mehr offen ist, faellt
+    // das Abzeichen weg - ohne dass die Liste neu gebaut werden muss.
+    var wie = gerechnetText(e), gr = karte.querySelector(".mg-status.gerechnet");
+    if (wie && !gr) {
+      gr = h("span", { class: "mg-status gerechnet", text: "gerechnet" });
+      if (kurz && kurz.parentNode) kurz.parentNode.insertBefore(gr, kurz.nextSibling);
+    } else if (gr && !wie) {
+      gr.remove();
+    }
+    if (gr && wie) gr.title = wie;
   }
 
   function betragText(spiel, e, b) {
@@ -2820,7 +2865,11 @@ window.Mitglieder = (function () {
       // Frueher zaehlte hier nur eine echte Route. Eine eigene Regel je
       // Halle hat der Mensch selbst gesetzt, und die Luftlinie ist besser
       // als ein leeres Feld - beides wurde stillschweigend verworfen.
-      speichereEinsatz(sp, Object.assign({ km: v ? v.km : null, verguetung: g }, vp != null ? { verpflegung: vp } : {}));
+      var her = {};
+      if (v) her.km = v.art;
+      if (g != null) her.verguetung = regelBetrag(sp) != null ? "regel" : "ordnung";
+      speichereEinsatz(sp, Object.assign({ km: v ? v.km : null, verguetung: g, herkunft: her },
+                                         vp != null ? { verpflegung: vp } : {}));
       n++;
     });
     if (n) kurzMeldung(n + (n === 1 ? " Spiel" : " Spiele") + " automatisch vorbelegt. Bitte prüfen und Auslagen oder Belege ergänzen.", "gut");
@@ -3012,7 +3061,7 @@ window.Mitglieder = (function () {
           var e = einsaetze[sp.kennung];
           if (!e || e.km != null) return;
           var v = kmVorschlag(sp);
-          if (v) { speichereEinsatz(sp, { km: v.km }); nachgetragen++; }
+          if (v) { speichereEinsatz(sp, { km: v.km, herkunft: { km: v.art } }); nachgetragen++; }
         });
         if (automatischVorbelegen(spiele) || nachgetragen) rendereAbrechnung();
       });
@@ -3058,13 +3107,14 @@ window.Mitglieder = (function () {
       streckenNachladen(spiele).then(function () {
         var km = 0, verg = 0, offen = 0;
         spiele.forEach(function (sp) {
-          var e = einsaetze[sp.kennung], aend = {};
-          if (!e || e.km == null) { var v = kmVorschlag(sp); if (v) { aend.km = v.km; km++; } }
+          var e = einsaetze[sp.kennung], aend = {}, her = {};
+          if (!e || e.km == null) { var v = kmVorschlag(sp); if (v) { aend.km = v.km; her.km = v.art; km++; } }
           if (!e || e.verguetung == null) {
             var g = sollBetrag(sp);
-            if (g == null) offen++; else { aend.verguetung = g; verg++; }
+            if (g == null) offen++;
+            else { aend.verguetung = g; her.verguetung = regelBetrag(sp) != null ? "regel" : "ordnung"; verg++; }
           }
-          if (Object.keys(aend).length) speichereEinsatz(sp, aend);
+          if (Object.keys(aend).length) { aend.herkunft = her; speichereEinsatz(sp, aend); }
         });
         var teile = [];
         if (km) teile.push(km + (km === 1 ? " Kilometerangabe" : " Kilometerangaben"));
@@ -3555,6 +3605,7 @@ window.Mitglieder = (function () {
         h("div", { class: "paarung", text: (sp.liga ? sp.liga + ": " : "") + sp.paarung }),
         h("div", { class: "mg-summe" }, [
           h("span", { class: "meta mg-betrag-kurz", text: b.betrag != null ? euro(b.betrag) + (e.km != null ? " · " + e.km + " km" : "") : "Betrag fehlt" }),
+          gerechnetText(e) ? h("span", { class: "mg-status gerechnet", title: gerechnetText(e), text: "gerechnet" }) : null,
           e.bezahlt ? h("span", { class: "mg-status bezahlt", title: "Abgehakt am " + new Date(e.bezahlt).toLocaleDateString("de-DE"), text: "bezahlt" }) : null,
           vergangen ? null : h("span", { class: "mg-status kommt", text: "kommt" }),
           vergangen ? fotoKnopf : null, foto,
