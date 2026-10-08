@@ -70,7 +70,12 @@
   .held .zeit { font-size:2rem; font-weight:800; letter-spacing:-.03em; line-height:1.1; margin:var(--a-xs) 0; }
   .held .wer { font-size:var(--s-2xl); font-weight:700; }
   .held .wo { font-size:var(--s-l); opacity:.8; margin-top:var(--a-xs); }
-  .held .zeile { display:flex; gap:var(--a-s); margin-top:var(--a-l); }
+  /* Die wichtigste Zahl am Spieltag ist nicht der Anpfiff, sondern wann
+     man losfahren muss. Die App rechnet sie ohnehin schon aus. */
+  .held .losfahren { margin-top:var(--a-m); padding:var(--a-s) var(--a-m);
+    background:rgba(255,255,255,.12); border-radius:var(--radius-s); font-size:var(--s-l); }
+  .held .losfahren b { font-size:var(--s-2xl); }
+  .held .zeile { display:flex; gap:var(--a-s); margin-top:var(--a-m); }
   .held .knopf { background:rgba(255,255,255,.16); color:inherit; flex:1; }
 
   /* ---------- Spielzeile: 203 px werden 72 ---------- */
@@ -112,6 +117,13 @@
     font-size:var(--s-s); padding:0 var(--a-m); min-height:36px; border-radius:var(--radius-pille); cursor:pointer; }
   .segment button.an { background:var(--akzent); color:var(--akzent-text); }
   .steuer .rund { width:36px; height:36px; margin-left:auto; background:var(--erhaben); border:1px solid var(--linie); }
+  /* Ein Zahnrad sagt niemandem, was es tut - das Wort schon. */
+  .wortknopf { margin-left:auto; min-height:36px; padding:0 var(--a-m); border-radius:var(--radius-pille);
+    border:1px solid var(--linie); background:var(--erhaben); color:var(--text);
+    font:inherit; font-size:var(--s-s); font-weight:700; cursor:pointer;
+    display:inline-flex; align-items:center; gap:6px; }
+  .wortknopf .zahl { background:var(--akzent); color:var(--akzent-text); border-radius:var(--radius-pille);
+    min-width:18px; height:18px; display:grid; place-items:center; font-size:10px; }
   .zaehler { font-size:var(--s-s); color:var(--leise); padding:0 0 var(--a-s); }
 
   /* ---------- Abrechnungszeile ---------- */
@@ -133,6 +145,14 @@
     color:var(--leise); margin-top:var(--a-xs); }
   .pruef { background:var(--warn-bg); color:var(--warn); border:0; font:inherit; font-weight:700;
     font-size:var(--s-xs); border-radius:var(--radius-pille); min-height:32px; padding:0 var(--a-m); cursor:pointer; }
+
+  /* Ein leerer Bildschirm soll sagen, was los ist und was man tun kann -
+     nicht nur, dass nichts da ist. */
+  .leer { background:var(--karte); border-radius:var(--radius); padding:var(--a-xl) var(--a-l);
+    text-align:center; }
+  .leer .gross { font-size:var(--s-2xl); font-weight:700; }
+  .leer p { color:var(--leise); font-size:var(--s-l); margin:var(--a-s) 0 var(--a-l); }
+  .leer b { color:var(--text); }
 
   /* ---------- Leiste unten ---------- */
   .leiste { position:sticky; bottom:0; display:flex; background:var(--karte);
@@ -160,6 +180,7 @@
     <div class="zeit">08:30 Uhr</div>
     <div class="wer">Herner EV – Iserlohner EC 1b</div>
     <div class="wo">Gysenberghalle Herne · Treffpunkt 07:30</div>
+    <div class="losfahren">Losfahren um <b>06:45</b> · 45 Min., 46 km</div>
     <div class="wo" style="opacity:.7">mit Heu, Alexander und Störmann, Manuel</div>
     <div class="zeile">
       <button class="knopf">Route</button>
@@ -189,7 +210,7 @@
     <span class="segment">
       <button class="an">Meine</button><button>Alle</button><button>Woche</button>
     </span>
-    <button class="rund" aria-label="Filter">⚙</button>
+    <button class="wortknopf">Filter <span class="zahl">2</span></button>
   </div>
   <div class="zaehler">3 von 101 · ab heute</div>
 
@@ -208,6 +229,13 @@
     <div class="mitte"><b>12:30 · Dinslakener Kobras – Eisadler Dortmund</b><span>Eissporthalle Dinslaken · U13 LL</span><div class="gespann">mit <b>Störmann</b></div></div>
     <div class="rolle">SR</div>
   </a>
+
+  <h2 class="trenner">2b · Wenn nichts ansteht</h2>
+  <div class="leer">
+    <div class="gross">Diese Woche pfeifst du nicht.</div>
+    <p>Dein nächstes Spiel ist am <b>So. 12.10. um 09:30</b> in Krefeld.</p>
+    <button class="knopf leise">Zu diesem Spiel</button>
+  </div>
 
   <h2 class="trenner">3 · Abrechnung</h2>
   <div class="kopf">
