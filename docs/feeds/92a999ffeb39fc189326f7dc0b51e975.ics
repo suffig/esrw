@@ -50,33 +50,6 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
  e":geo:51.532602,7.254372
 END:VEVENT
 BEGIN:VEVENT
-UID:aa264ab677dd15667cae597e05251c0d21869719@esrw.de
-SEQUENCE:1
-DTSTAMP:20261007T215052Z
-LAST-MODIFIED:20261007T215052Z
-DTSTART:20261011T150000Z
-DTEND:20261011T183000Z
-SUMMARY:⚠ SR · U9 LL Lila: SpG GSC Moers 1b – Aachener EC
-DESCRIPTION:Geändert: Ansetzung\n\nRolle: Schiedsrichter (SR)\nSpielbeginn
- : 18:00 Uhr\nTreffpunkt: 17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL L
- ila\nHalle: 100'5 Arena Aachen\nAdresse: Hubert-Wienen-Straße 8\, 52070 A
- achen\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:100'5 Arena Aachen\, Hubert-Wienen-Straße 8\, 52070 Aachen
-GEO:50.79546;6.100933
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="100'5 Arena Aachen, Hubert
- -Wienen-Straße 8, 52070 Aachen";X-APPLE-RADIUS=100;X-TITLE="100'5 Arena A
- achen":geo:50.79546,6.100933
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · U9 LL Lila: SpG GSC Mo
- ers 1b – Aachener EC
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:d4b24296a490cc782d6fe78be143156156d0b04b@esrw.de
 SEQUENCE:0
 DTSTAMP:20261006T110047Z
