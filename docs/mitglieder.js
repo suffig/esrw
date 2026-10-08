@@ -1244,8 +1244,8 @@ window.Mitglieder = (function () {
                     bild: bildStand,
                     rufname: rufname.value.trim() || null,
                     // Neue Adresse -> alte Strecken sind wertlos
-                    // Neue Adresse -> alte Strecken sind wertlos
                     strecken: heimat.value.trim() === (p.heimat || "") ? (p.strecken || {}) : {} };
+      var umgezogen = heimat.value.trim() !== (p.heimat || "");
       sb.from("profile").upsert(zeile).then(function (r) {
         speichernKnopf.disabled = false;
         if (r.error) {
@@ -1257,6 +1257,10 @@ window.Mitglieder = (function () {
           return;
         }
         profil = Object.assign({}, profil || {}, zeile);
+        // Nach einem Umzug stimmen die gerechneten Kilometer nicht mehr.
+        // Sie werden geleert, damit die Abrechnung sie beim naechsten
+        // Oeffnen neu holt; was von Hand drinsteht, bleibt unberuehrt.
+        if (umgezogen) kilometerNeuRechnen();
         // Wohnort fuer Fahrgemeinschaften: nur Ort und Lage auf ~1 km gerundet
         if (teilen.checked && zeile.heimat_lat != null && zeile.heimat_lon != null) {
           var ort = (heimat.value.split(",").pop() || "").replace(/\d{5}/, "").trim() || null;
@@ -1514,8 +1518,10 @@ window.Mitglieder = (function () {
                         ordnung: "Vergütung nach der Gebührenordnung" };
   function gerechnetText(e) {
     var her = (e && e.herkunft) || {}, teile = [];
-    if (her.km) teile.push(HERKUNFT_TEXT[her.km] || "Kilometer gerechnet");
-    if (her.verguetung) teile.push(her.verguetung === "regel"
+    // Nur melden, was auch dasteht - nach einem Adresswechsel sind die
+    // Kilometer kurz leer, der alte Vermerk soll dann schweigen.
+    if (her.km && e.km != null) teile.push(HERKUNFT_TEXT[her.km] || "Kilometer gerechnet");
+    if (her.verguetung && e.verguetung != null) teile.push(her.verguetung === "regel"
       ? "Vergütung aus deiner eigenen Regel" : HERKUNFT_TEXT.ordnung);
     if (!teile.length) return "";
     return teile.join(" · ") + ". Tipp den Wert an, wenn er so stimmt oder geändert gehört.";
@@ -1681,12 +1687,18 @@ window.Mitglieder = (function () {
     // bestaetigt es damit - der Vermerk faellt weg. Was nicht drinsteht,
     // gilt als geprueft.
     var herkunft = Object.assign({}, alt.herkunft || {});
-    if (aenderung.herkunft) Object.assign(herkunft, aenderung.herkunft);
+    if (aenderung.herkunft === null) herkunft = {};          // alles bestaetigt
+    else if (aenderung.herkunft) Object.assign(herkunft, aenderung.herkunft);
     else Object.keys(aenderung).forEach(function (f) { delete herkunft[f]; });
     Object.keys(herkunft).forEach(function (f) { if (!herkunft[f]) delete herkunft[f]; });
     // Wie bei verpflegung und bezahlt: nur mitschicken, wenn gefuellt -
     // sonst scheitert jedes Speichern, solange v48 nicht eingespielt ist.
-    if (Object.keys(herkunft).length) zeile.herkunft = herkunft; else delete zeile.herkunft;
+    if (Object.keys(herkunft).length) zeile.herkunft = herkunft;
+    // Leer heisst bestaetigt - das muss ausdruecklich hin, sonst bleibt der
+    // alte Vermerk in der Datenbank stehen (ein Upsert schreibt nur, was
+    // mitkommt). Ohne die Spalte bleibt das Feld ganz weg.
+    else if (herkunftSpalte) zeile.herkunft = null;
+    else delete zeile.herkunft;
     einsaetze[spiel.kennung] = zeile;
     aktualisiereSummen();
     aktualisiereZeile(spiel);
@@ -2675,7 +2687,8 @@ window.Mitglieder = (function () {
     // das Abzeichen weg - ohne dass die Liste neu gebaut werden muss.
     var wie = gerechnetText(e), gr = karte.querySelector(".mg-status.gerechnet");
     if (wie && !gr) {
-      gr = h("span", { class: "mg-status gerechnet", text: "gerechnet" });
+      gr = h("button", { type: "button", class: "mg-status gerechnet", text: "gerechnet ✓?",
+        onclick: function () { speichereEinsatz(spiel, { herkunft: null }); kurzMeldung("Als geprüft vermerkt ✓", "gut"); } });
       if (kurz && kurz.parentNode) kurz.parentNode.insertBefore(gr, kurz.nextSibling);
     } else if (gr && !wie) {
       gr.remove();
@@ -2879,6 +2892,34 @@ window.Mitglieder = (function () {
   // Ohne gemerkte Strecke gab es keine Kilometer, und Strecken entstanden
   // nur, wenn jemand den Knopf unter "Weitere" fand. Wer seine Adresse
   // hinterlegt hat, soll nichts mehr suchen muessen.
+  // Nach einem Umzug stimmen die gerechneten Kilometer nicht mehr. Sie
+  // werden geleert, damit die Abrechnung sie beim naechsten Oeffnen neu
+  // holt; was von Hand drinsteht, hat keinen Vermerk und bleibt stehen.
+  // Gefragt wird der Server, nicht der Zwischenspeicher - wer seine
+  // Adresse aendert, hat die Abrechnung oft gar nicht offen gehabt.
+  function kilometerNeuRechnen() {
+    return sb.from("einsaetze").select("kennung,km,herkunft").eq("user_id", session.user.id)
+      .then(function (r) {
+        if (r.error) throw r.error;
+        var treffer = (r.data || []).filter(function (z) {
+          return z.km != null && z.herkunft && z.herkunft.km;
+        }).map(function (z) { return z.kennung; });
+        if (!treffer.length) return 0;
+        treffer.forEach(function (k) { if (einsaetze[k]) einsaetze[k].km = null; });
+        return sb.from("einsaetze").update({ km: null })
+          .eq("user_id", session.user.id).in("kennung", treffer)
+          .then(function (r2) { if (r2.error) throw r2.error; return treffer.length; });
+      })
+      .then(function (n) {
+        if (n) kurzMeldung(n + (n === 1 ? " Kilometerangabe wird" : " Kilometerangaben werden")
+          + " neu berechnet, sobald du die Abrechnung öffnest.", "");
+        return n;
+      })
+      .catch(function (e) {
+        meldung("Die gerechneten Kilometer konnten nicht zurückgesetzt werden: " + fehlerText(e), "warn");
+        return 0;
+      });
+  }
   function hallenOhneRoute(spiele) {
     if (!profil || profil.heimat_lat == null) return [];
     var offen = [];
@@ -3605,7 +3646,9 @@ window.Mitglieder = (function () {
         h("div", { class: "paarung", text: (sp.liga ? sp.liga + ": " : "") + sp.paarung }),
         h("div", { class: "mg-summe" }, [
           h("span", { class: "meta mg-betrag-kurz", text: b.betrag != null ? euro(b.betrag) + (e.km != null ? " · " + e.km + " km" : "") : "Betrag fehlt" }),
-          gerechnetText(e) ? h("span", { class: "mg-status gerechnet", title: gerechnetText(e), text: "gerechnet" }) : null,
+          gerechnetText(e) ? h("button", { type: "button", class: "mg-status gerechnet",
+            title: gerechnetText(e), text: "gerechnet ✓?",
+            onclick: function () { speichereEinsatz(sp, { herkunft: null }); kurzMeldung("Als geprüft vermerkt ✓", "gut"); } }) : null,
           e.bezahlt ? h("span", { class: "mg-status bezahlt", title: "Abgehakt am " + new Date(e.bezahlt).toLocaleDateString("de-DE"), text: "bezahlt" }) : null,
           vergangen ? null : h("span", { class: "mg-status kommt", text: "kommt" }),
           vergangen ? fotoKnopf : null, foto,
