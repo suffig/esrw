@@ -42,6 +42,11 @@
     padding:var(--a-s) var(--a-m); border-radius:var(--radius-s); margin:var(--a-xl) 0 var(--a-s); }
   h2.trenner { font-size:var(--s-m); text-transform:uppercase; letter-spacing:.08em;
     color:var(--leise); margin:var(--a-xl) 0 var(--a-s); font-weight:700; }
+  /* Ein Abschnittskopf, der schon die Antwort gibt: wie viele, wie viel. */
+  .abschnitt { display:flex; justify-content:space-between; align-items:baseline;
+    margin:var(--a-l) 0 var(--a-s); }
+  .abschnitt b { font-size:var(--s-xl); font-weight:700; }
+  .abschnitt span { font-size:var(--s-s); color:var(--leise); }
 
   /* ---------- Kopf: einer, nicht zwei ---------- */
   .kopf { display:flex; align-items:center; gap:var(--a-m); padding:var(--a-l) 0 var(--a-m); }
@@ -146,6 +151,15 @@
   .pruef { background:var(--warn-bg); color:var(--warn); border:0; font:inherit; font-weight:700;
     font-size:var(--s-xs); border-radius:var(--radius-pille); min-height:32px; padding:0 var(--a-m); cursor:pointer; }
 
+  /* Was jetzt zu tun ist, steht oben - nicht versteckt in einem Reiter. */
+  .tun { display:flex; align-items:center; gap:var(--a-m); background:var(--warn-bg);
+    border-radius:var(--radius); padding:var(--a-m) var(--a-l); margin-bottom:var(--a-m);
+    text-decoration:none; color:var(--warn); min-height:56px; }
+  .tun b { display:block; font-size:var(--s-xl); }
+  .tun small { font-size:var(--s-s); opacity:.85; }
+  .tun span:nth-child(2) { flex:1; min-width:0; }
+  .tun .pfeil { font-size:var(--s-2xl); opacity:.6; }
+
   /* Ein leerer Bildschirm soll sagen, was los ist und was man tun kann -
      nicht nur, dass nichts da ist. */
   .leer { background:var(--karte); border-radius:var(--radius); padding:var(--a-xl) var(--a-l);
@@ -188,6 +202,12 @@
     </div>
   </div>
 
+  <a class="tun" href="#">
+    <span class="punkt offen"></span>
+    <span><b>2 Spiele abrechnen</b><small>80,00 € und 85,00 € warten auf dich</small></span>
+    <span class="pfeil">›</span>
+  </a>
+
   <h2 class="trenner">Danach</h2>
   <a class="spiel heute" href="#">
     <div class="tag"><b>27</b><span>So</span></div>
@@ -214,6 +234,7 @@
   </div>
   <div class="zaehler">3 von 101 · ab heute</div>
 
+  <div class="abschnitt"><b>Dieses Wochenende</b><span>2 Spiele</span></div>
   <a class="spiel" href="#">
     <div class="tag"><b>26</b><span>Sa</span></div>
     <div class="mitte"><b>08:30 · Herner EV – Iserlohner EC 1b</b><span>Gysenberghalle Herne · U13 RLB</span><div class="gespann">mit <b>Heu</b> und <b>Störmann</b></div></div>
@@ -224,6 +245,7 @@
     <div class="mitte"><b>10:00 · EV Duisburg</b><span>Rheinlandhalle Krefeld · U11 RL</span><div class="gespann">mit <b>Heu</b></div></div>
     <div class="rolle">SR</div>
   </a>
+  <div class="abschnitt"><b>Nächste Woche</b><span>1 Spiel</span></div>
   <a class="spiel" href="#">
     <div class="tag"><b>04</b><span>So</span></div>
     <div class="mitte"><b>12:30 · Dinslakener Kobras – Eisadler Dortmund</b><span>Eissporthalle Dinslaken · U13 LL</span><div class="gespann">mit <b>Störmann</b></div></div>
@@ -270,6 +292,7 @@
   <div class="leiste">
     <a href="#" class="an"><i>⌂</i>Start</a>
     <a href="#"><i>☰</i>Spielplan</a>
+    <a href="#"><i>⇄</i>Tausch</a>
     <a href="#"><i>€</i>Abrechnung</a>
     <a href="#"><i>⋯</i>Mehr</a>
   </div>
