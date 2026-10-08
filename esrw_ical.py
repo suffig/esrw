@@ -551,11 +551,14 @@ def saisonarchiv_einfrieren(historie, personen, stand):
     for saison, eintraege in je_saison.items():
         pfad = os.path.join(BASIS, saison_datei(saison))
         vorhanden = {}
-        try:
+        if os.path.exists(pfad + ".bin") or os.path.exists(pfad):
+            # Kein except hier: wer eine kaputte Saisondatei ueberschreibt,
+            # verliert jedes Spiel darin - und zwar fuer immer, denn
+            # historie.json gibt die eingefrorenen Saisons nicht zurueck.
+            # Lieber ein roter Lauf, dann holt man die Datei aus der
+            # Git-Historie.
             inhalt = tresor.json_lesen(pfad, SCHLUESSEL, None) or {}
             vorhanden = {z[0] + "|" + z[2]: z for z in inhalt.get("spiele", [])}
-        except (OSError, ValueError):
-            vorhanden = {}
         for kennung, e in eintraege:
             bes = [[n, schluessel_slug.get(personen_schluessel(n)) or slug_aus(n), r]
                    for n, r in rollen_fuer(e.get("besetzung") or {})]

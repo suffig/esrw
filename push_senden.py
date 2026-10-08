@@ -69,6 +69,31 @@ def api(url, schluessel, pfad, methode="GET", daten=None, prefer="return=minimal
         return json.loads(roh) if roh else None
 
 
+def alle(url, schluessel, pfad, ordnung):
+    """Eine Tabelle vollstaendig - PostgREST gibt hoechstens 1000 Zeilen.
+
+    Ohne das fehlten ab etwa 1000 Zeilen stillschweigend Eintraege, und
+    zwar an der schlimmsten Stelle: steht eine Erinnerung nicht in
+    push_gesendet, gilt sie als nicht verschickt und kommt ein zweites
+    Mal. Dieselbe Rechnung wie in sicherung.hole, mit fester Reihenfolge -
+    ohne order= wandern Zeilen zwischen den Seiten.
+    """
+    alles, schritt, von = [], 1000, 0
+    trenner = "&" if "?" in pfad else "?"
+    while True:
+        req = urllib.request.Request(
+            url.rstrip("/") + "/rest/v1/" + pfad + trenner + "order=" + ordnung,
+            headers={"apikey": schluessel, "Authorization": "Bearer " + schluessel,
+                     "Range-Unit": "items", "Range": "%d-%d" % (von, von + schritt - 1)})
+        with urllib.request.urlopen(req, timeout=30) as r:
+            roh = r.read().decode("utf-8")
+            teil = json.loads(roh) if roh else []
+        alles.extend(teil)
+        if len(teil) < schritt:
+            return alles
+        von += schritt
+
+
 def lade_json(name, standard):
     """Liest eine Datei - verschluesselt (.bin) oder im Klartext. Den
     Schluessel liefert die Umgebung (DATEN_SCHLUESSEL), siehe tresor.py."""
@@ -309,7 +334,7 @@ def main():
     jetzt = datetime.now(BERLIN)
 
     # Alle Profile mit Push-Abo - ohne Abo gibt es nichts zu schicken
-    abos = api(url, service, "push_abos?select=id,user_id,endpoint,p256dh,auth") or []
+    abos = alle(url, service, "push_abos?select=id,user_id,endpoint,p256dh,auth", "id")
     if not abos:
         print("Push: niemand hat Push an.")
         return 0
@@ -319,17 +344,25 @@ def main():
 
     # Abgeschaltete Funktionen (Admin -> Funktionen) bekommen keinen Push
     funktionen = {}
+    buch_fehler = []
     try:
         for z in api(url, service, "funktionen?select=schluessel,aktiv") or []:
             funktionen[z["schluessel"]] = bool(z["aktiv"])
-    except Exception:
-        pass
+    except Exception as e:
+        # Ohne die Tabelle gilt alles als eingeschaltet. Abgeschaltete
+        # Funktionen schicken dann trotzdem Push - das Verhalten lassen wir
+        # (sonst kaeme bei einem Aussetzer gar nichts mehr), aber still darf
+        # es nicht sein.
+        buch_fehler.append("funktionen nicht lesbar: %s" % str(e)[:90])
+        print("Push: Funktionstabelle nicht lesbar (%s) - es gilt alles als "
+              "eingeschaltet." % str(e)[:90], file=sys.stderr)
     def an(schluessel, standard=True):
         return funktionen.get(schluessel, standard)
 
     # Was heute schon rausging (Erinnerungen), damit nichts doppelt kommt
     seit = (jetzt - timedelta(days=2)).astimezone(timezone.utc).isoformat()
-    gesendet = api(url, service, "push_gesendet?select=user_id,schluessel&gesendet=gte." + urllib.parse.quote(seit)) or []
+    gesendet = alle(url, service, "push_gesendet?select=user_id,schluessel&gesendet=gte."
+                    + urllib.parse.quote(seit), "id")
     schon = {}
     for g in gesendet:
         schon.setdefault(g["user_id"], set()).add(g["schluessel"])
@@ -593,6 +626,7 @@ def main():
             try:
                 api(url, service, pfad, "PATCH", nutzlast)
             except Exception as e:
+                buch_fehler.append("Haken %s: %s" % (pfad[:48], str(e)[:60]))
                 print("Push: Haken nicht gesetzt (%s): %s" % (pfad[:48], str(e)[:90]),
                       file=sys.stderr)
         del nachtragen[:]
@@ -654,6 +688,7 @@ def main():
             api(url, service, "ankuendigungen?id=in.(%s)" % ",".join(a["id"] for a in ank), "PATCH",
                 {"push_gesendet": jetzt.astimezone(timezone.utc).isoformat()})
         except Exception as e:
+            buch_fehler.append("Ankuendigung nicht markiert: %s" % str(e)[:60])
             print("Push: Ankuendigung nicht als gesendet markiert: %s" % str(e)[:120], file=sys.stderr)
 
     # Erinnerungen als verschickt merken; alte Eintraege wegraeumen
@@ -664,6 +699,7 @@ def main():
             api(url, service, "push_gesendet?on_conflict=user_id,schluessel", "POST",
                 list(einmal.values()), prefer="resolution=ignore-duplicates,return=minimal")
         except Exception as e:
+            buch_fehler.append("Historie nicht gespeichert: %s" % str(e)[:60])
             print("Push: Historie nicht gespeichert: %s" % str(e)[:120], file=sys.stderr)
     try:
         alt = (jetzt - timedelta(days=7)).astimezone(timezone.utc).isoformat()
@@ -683,6 +719,14 @@ def main():
     except Exception as e:
         print("Push: Lauf nicht protokolliert: %s" % str(e)[:120], file=sys.stderr)
     print("Push: %d gesendet, %d tote Abos entfernt, %d Fehler." % (gesendet_n, tot, fehler_n))
+    # Scheitert die Buchfuehrung, kommt beim naechsten Lauf alles noch
+    # einmal: push_gesendet kennt die Erinnerung nicht, der Haken fehlt.
+    # Der Rueckgabewert ist das einzige Signal, das der Workflow noch
+    # auswerten kann - der Schritt traegt continue-on-error.
+    if buch_fehler:
+        print("Push: Buchfuehrung unvollstaendig, naechster Lauf wiederholt "
+              "moeglicherweise:\n- " + "\n- ".join(buch_fehler), file=sys.stderr)
+        return 1
     return 0
 
 

@@ -224,9 +224,14 @@ def sichern():
 
     passt, wer = schluessel_passt(k)
     if not passt:
-        print("ACHTUNG: %s laesst sich mit dem jetzigen DATEN_SCHLUESSEL nicht mehr oeffnen. "
-              "Wurde der Schluessel gewechselt? Dann sind alle aelteren Sicherungen wertlos - "
-              "bitte den alten Schluessel aufheben, sonst kommt niemand mehr an sie heran." % wer)
+        # Nur ins Protokoll zu schreiben hiess: niemand erfaehrt es. Der
+        # Schritt traegt continue-on-error, und auffallen wuerde es erst,
+        # wenn man eine alte Sicherung wirklich braucht - dann ist sie weg.
+        alarm("Sicherung: alte Dateien nicht mehr lesbar",
+              "%s laesst sich mit dem jetzigen DATEN_SCHLUESSEL nicht mehr oeffnen.\n\n"
+              "Wurde der Schluessel gewechselt? Dann sind alle aelteren Sicherungen "
+              "wertlos - bitte den alten Schluessel aufheben, sonst kommt niemand mehr "
+              "an sie heran." % wer)
 
     heute = datetime.date.today()
     pfad = os.path.join(ORDNER, heute.isoformat() + ".json")
