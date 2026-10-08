@@ -12,6 +12,7 @@
     --flaeche:#f4f5f7; --karte:#fff; --erhaben:#fff;
     --text:#14181f; --leise:#687283; --linie:#e4e7ec;
     --akzent:#111418; --akzent-text:#fff;
+    --held:#111418; --held-text:#fff;   /* die grosse Flaeche, hell wie dunkel ruhig */
     --gut:#1d6b3f; --gut-bg:#e6f4ec; --warn:#9a4a15; --warn-bg:#fdf1e6;
     --radius-s:10px; --radius:14px; --radius-gross:18px; --radius-pille:99px;
     --a-xs:4px; --a-s:8px; --a-m:12px; --a-l:16px; --a-xl:24px;
@@ -23,6 +24,7 @@
     :root { --flaeche:#0e1116; --karte:#171b22; --erhaben:#1f242d;
       --text:#eceff3; --leise:#98a1ad; --linie:#2a303a;
       --akzent:#fff; --akzent-text:#14181f;
+      --held:#20262f; --held-text:#eceff3;
       --gut:#7ed09c; --gut-bg:#17281d; --warn:#e6a76b; --warn-bg:#2e2417;
       color-scheme: dark; }
   }
@@ -57,7 +59,7 @@
   .knopf.leise { background:var(--erhaben); color:var(--text); border:1px solid var(--linie); }
 
   /* ---------- Das naechste Spiel: eine Sache, gross ---------- */
-  .held { background:var(--akzent); color:var(--akzent-text); border-radius:var(--radius-gross);
+  .held { background:var(--held); color:var(--held-text); border-radius:var(--radius-gross);
     padding:var(--a-l); margin-bottom:var(--a-m); }
   .held .wann { font-size:var(--s-s); opacity:.75; font-weight:700; text-transform:uppercase; letter-spacing:.08em; }
   .held .zeit { font-size:2rem; font-weight:800; letter-spacing:-.03em; line-height:1.1; margin:var(--a-xs) 0; }
@@ -74,10 +76,17 @@
   .spiel .tag b { display:block; font-size:var(--s-2xl); font-weight:800; line-height:1.1; }
   .spiel .tag span { font-size:var(--s-xs); color:var(--leise); text-transform:uppercase; font-weight:700; }
   .spiel .mitte { flex:1; min-width:0; }
-  .spiel .mitte b { display:block; font-size:var(--s-xl); font-weight:700; }
-  .spiel .mitte span { display:block; font-size:var(--s-m); color:var(--leise);
+  /* Direkte Kinder, sonst greift die Regel auch in die Kollegenzeile */
+  .spiel .mitte > b { display:block; font-size:var(--s-xl); font-weight:700; }
+  .spiel .mitte > span { display:block; font-size:var(--s-m); color:var(--leise);
     white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .spiel .rolle { font-size:var(--s-xs); font-weight:800; color:var(--leise); flex:none; }
+  /* Kollegen auf der Kachel. Wer mit wem pfeift, ist die haeufigste
+     Rueckfrage - als Text, weil Initialen-Kreise in der schmalen Spalte
+     umbrechen und der Name ohnehin das Wichtige ist. */
+  .gespann { margin-top:2px; font-size:var(--s-s); color:var(--leise);
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .gespann b { font-weight:700; color:var(--text); }
 
   /* ---------- Spielplan: eine Steuerzeile statt vier ---------- */
   .steuer { display:flex; gap:var(--a-s); align-items:center; padding:var(--a-s) 0 var(--a-m); }
@@ -125,7 +134,8 @@
     <div class="wann">Samstag, 26. September</div>
     <div class="zeit">08:30 Uhr</div>
     <div class="wer">Herner EV – Iserlohner EC 1b</div>
-    <div class="wo">Gysenberghalle Herne · Treffpunkt 07:30 · du pfeifst</div>
+    <div class="wo">Gysenberghalle Herne · Treffpunkt 07:30</div>
+    <div class="wo" style="opacity:.7">mit Heu, Alexander und Störmann, Manuel</div>
     <div class="zeile">
       <button class="knopf">Route</button>
       <button class="knopf">In Kalender</button>
@@ -135,12 +145,12 @@
   <h2 class="trenner">Danach</h2>
   <a class="spiel" href="#">
     <div class="tag"><b>27</b><span>So</span></div>
-    <div class="mitte"><b>10:00 · EV Duisburg</b><span>Rheinlandhalle Krefeld · U11 RL</span></div>
+    <div class="mitte"><b>10:00 · EV Duisburg</b><span>Rheinlandhalle Krefeld · U11 RL</span><div class="gespann">mit <b>Heu</b></div></div>
     <div class="rolle">SR</div>
   </a>
   <a class="spiel" href="#">
     <div class="tag"><b>04</b><span>So</span></div>
-    <div class="mitte"><b>12:30 · Dinslakener Kobras – Eisadler Dortmund</b><span>Eissporthalle Dinslaken · U13 LL</span></div>
+    <div class="mitte"><b>12:30 · Dinslakener Kobras – Eisadler Dortmund</b><span>Eissporthalle Dinslaken · U13 LL</span><div class="gespann">mit <b>Störmann</b></div></div>
     <div class="rolle">SR</div>
   </a>
 
@@ -160,17 +170,17 @@
 
   <a class="spiel" href="#">
     <div class="tag"><b>26</b><span>Sa</span></div>
-    <div class="mitte"><b>08:30 · Herner EV – Iserlohner EC 1b</b><span>Gysenberghalle Herne · U13 RLB</span></div>
+    <div class="mitte"><b>08:30 · Herner EV – Iserlohner EC 1b</b><span>Gysenberghalle Herne · U13 RLB</span><div class="gespann">mit <b>Heu</b> und <b>Störmann</b></div></div>
     <div class="rolle">SR</div>
   </a>
   <a class="spiel" href="#">
     <div class="tag"><b>27</b><span>So</span></div>
-    <div class="mitte"><b>10:00 · EV Duisburg</b><span>Rheinlandhalle Krefeld · U11 RL</span></div>
+    <div class="mitte"><b>10:00 · EV Duisburg</b><span>Rheinlandhalle Krefeld · U11 RL</span><div class="gespann">mit <b>Heu</b></div></div>
     <div class="rolle">SR</div>
   </a>
   <a class="spiel" href="#">
     <div class="tag"><b>04</b><span>So</span></div>
-    <div class="mitte"><b>12:30 · Dinslakener Kobras – Eisadler Dortmund</b><span>Eissporthalle Dinslaken · U13 LL</span></div>
+    <div class="mitte"><b>12:30 · Dinslakener Kobras – Eisadler Dortmund</b><span>Eissporthalle Dinslaken · U13 LL</span><div class="gespann">mit <b>Störmann</b></div></div>
     <div class="rolle">SR</div>
   </a>
 
