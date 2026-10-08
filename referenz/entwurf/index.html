@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Entwurf – Einteilungen ESRW</title>
+<style>
+  /* Entwurf, keine App. Nur zum Ansehen bei 375 px.
+     Token sind dieselben wie in docs/index.html, damit die Uebernahme
+     spaeter nur Verschieben ist, kein Neuerfinden. */
+  :root {
+    --flaeche:#f4f5f7; --karte:#fff; --erhaben:#fff;
+    --text:#14181f; --leise:#687283; --linie:#e4e7ec;
+    --akzent:#111418; --akzent-text:#fff;
+    --gut:#1d6b3f; --gut-bg:#e6f4ec; --warn:#9a4a15; --warn-bg:#fdf1e6;
+    --radius-s:10px; --radius:14px; --radius-gross:18px; --radius-pille:99px;
+    --a-xs:4px; --a-s:8px; --a-m:12px; --a-l:16px; --a-xl:24px;
+    --s-xs:.68rem; --s-s:.74rem; --s-m:.8rem; --s-l:.88rem;
+    --s-xl:.95rem; --s-2xl:1.05rem; --s-3xl:1.2rem; --titel:1.3rem;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --flaeche:#0e1116; --karte:#171b22; --erhaben:#1f242d;
+      --text:#eceff3; --leise:#98a1ad; --linie:#2a303a;
+      --akzent:#fff; --akzent-text:#14181f;
+      --gut:#7ed09c; --gut-bg:#17281d; --warn:#e6a76b; --warn-bg:#2e2417;
+      color-scheme: dark; }
+  }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body { margin:0; background:var(--flaeche); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    font-size:16px; line-height:1.45; }
+  .rahmen { max-width:420px; margin:0 auto; padding:0 var(--a-l) 80px; }
+  .notiz { background:var(--warn-bg); color:var(--warn); font-size:var(--s-s);
+    padding:var(--a-s) var(--a-m); border-radius:var(--radius-s); margin:var(--a-xl) 0 var(--a-s); }
+  h2.trenner { font-size:var(--s-m); text-transform:uppercase; letter-spacing:.08em;
+    color:var(--leise); margin:var(--a-xl) 0 var(--a-s); font-weight:700; }
+
+  /* ---------- Kopf: einer, nicht zwei ---------- */
+  .kopf { display:flex; align-items:center; gap:var(--a-m); padding:var(--a-l) 0 var(--a-m); }
+  .kopf .logo { width:36px; height:36px; border-radius:var(--radius-s); background:var(--akzent);
+    color:var(--akzent-text); display:grid; place-items:center; font-weight:800; font-size:var(--s-s); flex:none; }
+  .kopf h1 { font-size:var(--titel); font-weight:800; letter-spacing:-.02em; margin:0; flex:1; }
+  .kopf .stand { font-size:var(--s-xs); color:var(--leise); display:block; font-weight:500; letter-spacing:0; }
+  .rund { width:40px; height:40px; border-radius:50%; border:0; background:var(--karte);
+    color:var(--text); display:grid; place-items:center; font-size:var(--s-l); cursor:pointer; flex:none; }
+
+  /* ---------- Bausteine ---------- */
+  .karte { background:var(--karte); border-radius:var(--radius); padding:var(--a-l); }
+  .chip { display:inline-flex; align-items:center; min-height:32px; padding:0 var(--a-m);
+    border-radius:var(--radius-pille); background:var(--erhaben); color:var(--leise);
+    font-size:var(--s-s); font-weight:700; border:1px solid var(--linie); }
+  .chip.an { background:var(--akzent); color:var(--akzent-text); border-color:var(--akzent); }
+  .knopf { min-height:44px; padding:0 var(--a-l); border-radius:var(--radius-pille); border:0;
+    background:var(--akzent); color:var(--akzent-text); font:inherit; font-weight:700;
+    font-size:var(--s-l); cursor:pointer; }
+  .knopf.leise { background:var(--erhaben); color:var(--text); border:1px solid var(--linie); }
+
+  /* ---------- Das naechste Spiel: eine Sache, gross ---------- */
+  .held { background:var(--akzent); color:var(--akzent-text); border-radius:var(--radius-gross);
+    padding:var(--a-l); margin-bottom:var(--a-m); }
+  .held .wann { font-size:var(--s-s); opacity:.75; font-weight:700; text-transform:uppercase; letter-spacing:.08em; }
+  .held .zeit { font-size:2rem; font-weight:800; letter-spacing:-.03em; line-height:1.1; margin:var(--a-xs) 0; }
+  .held .wer { font-size:var(--s-2xl); font-weight:700; }
+  .held .wo { font-size:var(--s-l); opacity:.8; margin-top:var(--a-xs); }
+  .held .zeile { display:flex; gap:var(--a-s); margin-top:var(--a-l); }
+  .held .knopf { background:rgba(255,255,255,.16); color:inherit; flex:1; }
+
+  /* ---------- Spielzeile: 203 px werden 72 ---------- */
+  .spiel { display:flex; gap:var(--a-m); align-items:center; background:var(--karte);
+    border-radius:var(--radius); padding:var(--a-m) var(--a-l); margin-bottom:var(--a-s);
+    min-height:72px; text-decoration:none; color:inherit; }
+  .spiel .tag { text-align:center; flex:none; width:44px; }
+  .spiel .tag b { display:block; font-size:var(--s-2xl); font-weight:800; line-height:1.1; }
+  .spiel .tag span { font-size:var(--s-xs); color:var(--leise); text-transform:uppercase; font-weight:700; }
+  .spiel .mitte { flex:1; min-width:0; }
+  .spiel .mitte b { display:block; font-size:var(--s-xl); font-weight:700; }
+  .spiel .mitte span { display:block; font-size:var(--s-m); color:var(--leise);
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .spiel .rolle { font-size:var(--s-xs); font-weight:800; color:var(--leise); flex:none; }
+
+  /* ---------- Spielplan: eine Steuerzeile statt vier ---------- */
+  .steuer { display:flex; gap:var(--a-s); align-items:center; padding:var(--a-s) 0 var(--a-m); }
+  .segment { display:inline-flex; background:var(--erhaben); border:1px solid var(--linie);
+    border-radius:var(--radius-pille); padding:2px; }
+  .segment button { border:0; background:none; color:var(--leise); font:inherit; font-weight:700;
+    font-size:var(--s-s); padding:0 var(--a-m); min-height:36px; border-radius:var(--radius-pille); cursor:pointer; }
+  .segment button.an { background:var(--akzent); color:var(--akzent-text); }
+  .steuer .rund { width:36px; height:36px; margin-left:auto; background:var(--erhaben); border:1px solid var(--linie); }
+  .zaehler { font-size:var(--s-s); color:var(--leise); padding:0 0 var(--a-s); }
+
+  /* ---------- Abrechnungszeile ---------- */
+  .ab { display:flex; align-items:center; gap:var(--a-m); background:var(--karte);
+    border-radius:var(--radius); padding:var(--a-m) var(--a-l); margin-bottom:var(--a-s); min-height:64px; }
+  .ab .mitte { flex:1; min-width:0; }
+  .ab .mitte b { display:block; font-size:var(--s-l); }
+  .ab .mitte span { font-size:var(--s-s); color:var(--leise); }
+  .ab .geld { font-size:var(--s-xl); font-weight:800; text-align:right; }
+  .ab .geld small { display:block; font-size:var(--s-xs); font-weight:600; color:var(--leise); }
+  .pruef { background:var(--warn-bg); color:var(--warn); border:0; font:inherit; font-weight:700;
+    font-size:var(--s-xs); border-radius:var(--radius-pille); min-height:32px; padding:0 var(--a-m); cursor:pointer; }
+
+  /* ---------- Leiste unten ---------- */
+  .leiste { position:sticky; bottom:0; display:flex; background:var(--karte);
+    border-top:1px solid var(--linie); margin:var(--a-xl) calc(var(--a-l) * -1) 0; }
+  .leiste a { flex:1; text-align:center; padding:var(--a-s) 0 var(--a-m); text-decoration:none;
+    color:var(--leise); font-size:var(--s-xs); font-weight:700; }
+  .leiste a.an { color:var(--text); }
+  .leiste a i { display:block; font-size:1.1rem; font-style:normal; margin-bottom:2px; }
+</style>
+</head>
+<body>
+<div class="rahmen">
+
+  <div class="notiz">Entwurf zum Ansehen – nicht die App. Drei Bildschirme untereinander.</div>
+
+  <h2 class="trenner">1 · Start</h2>
+  <div class="kopf">
+    <div class="logo">ESRW</div>
+    <h1>Einteilungen<span class="stand">Stand vor 14 Min.</span></h1>
+    <button class="rund" aria-label="Konto">FB</button>
+  </div>
+
+  <div class="held">
+    <div class="wann">Samstag, 26. September</div>
+    <div class="zeit">08:30 Uhr</div>
+    <div class="wer">Herner EV – Iserlohner EC 1b</div>
+    <div class="wo">Gysenberghalle Herne · Treffpunkt 07:30 · du pfeifst</div>
+    <div class="zeile">
+      <button class="knopf">Route</button>
+      <button class="knopf">In Kalender</button>
+    </div>
+  </div>
+
+  <h2 class="trenner">Danach</h2>
+  <a class="spiel" href="#">
+    <div class="tag"><b>27</b><span>So</span></div>
+    <div class="mitte"><b>10:00 · EV Duisburg</b><span>Rheinlandhalle Krefeld · U11 RL</span></div>
+    <div class="rolle">SR</div>
+  </a>
+  <a class="spiel" href="#">
+    <div class="tag"><b>04</b><span>So</span></div>
+    <div class="mitte"><b>12:30 · Dinslakener Kobras – Eisadler Dortmund</b><span>Eissporthalle Dinslaken · U13 LL</span></div>
+    <div class="rolle">SR</div>
+  </a>
+
+  <h2 class="trenner">2 · Spielplan</h2>
+  <div class="kopf">
+    <div class="logo">ESRW</div>
+    <h1>Spielplan<span class="stand">101 Spiele</span></h1>
+    <button class="rund" aria-label="Suchen">🔍</button>
+  </div>
+  <div class="steuer">
+    <span class="segment">
+      <button class="an">Meine</button><button>Alle</button><button>Woche</button>
+    </span>
+    <button class="rund" aria-label="Filter">⚙</button>
+  </div>
+  <div class="zaehler">3 von 101 · ab heute</div>
+
+  <a class="spiel" href="#">
+    <div class="tag"><b>26</b><span>Sa</span></div>
+    <div class="mitte"><b>08:30 · Herner EV – Iserlohner EC 1b</b><span>Gysenberghalle Herne · U13 RLB</span></div>
+    <div class="rolle">SR</div>
+  </a>
+  <a class="spiel" href="#">
+    <div class="tag"><b>27</b><span>So</span></div>
+    <div class="mitte"><b>10:00 · EV Duisburg</b><span>Rheinlandhalle Krefeld · U11 RL</span></div>
+    <div class="rolle">SR</div>
+  </a>
+  <a class="spiel" href="#">
+    <div class="tag"><b>04</b><span>So</span></div>
+    <div class="mitte"><b>12:30 · Dinslakener Kobras – Eisadler Dortmund</b><span>Eissporthalle Dinslaken · U13 LL</span></div>
+    <div class="rolle">SR</div>
+  </a>
+
+  <h2 class="trenner">3 · Abrechnung</h2>
+  <div class="kopf">
+    <div class="logo">ESRW</div>
+    <h1>Abrechnung<span class="stand">Saison 2026/27</span></h1>
+    <button class="rund" aria-label="Mehr">⋯</button>
+  </div>
+  <div class="karte" style="margin-bottom:var(--a-m)">
+    <div style="display:flex;justify-content:space-between;align-items:baseline">
+      <span style="font-size:var(--s-m);color:var(--leise)">Offen</span>
+      <b style="font-size:1.6rem;font-weight:800">261,00 €</b>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:var(--s-m);color:var(--leise);margin-top:var(--a-xs)">
+      <span>3 Spiele · 36,10 € Kosten</span><span>Bezahlt 224,90 €</span>
+    </div>
+  </div>
+
+  <div class="ab">
+    <div class="mitte"><b>So. 04.10. · Dinslaken</b><span>U13 LL · 21,1 km</span></div>
+    <div class="geld">80,00 €<small>Vergütung</small></div>
+    <button class="pruef">prüfen</button>
+  </div>
+  <div class="ab">
+    <div class="mitte"><b>So. 27.09. · Krefeld</b><span>U11 RL · 28,4 km</span></div>
+    <div class="geld">85,00 €<small>bestätigt</small></div>
+  </div>
+
+  <div class="leiste">
+    <a href="#" class="an"><i>⌂</i>Start</a>
+    <a href="#"><i>☰</i>Spielplan</a>
+    <a href="#"><i>€</i>Abrechnung</a>
+    <a href="#"><i>⋯</i>Mehr</a>
+  </div>
+</div>
+</body>
+</html>
