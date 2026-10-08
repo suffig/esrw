@@ -1408,8 +1408,12 @@
           abfahrtZeile.innerHTML = "";
           abfahrtZeile.appendChild(ikone("i-route"));
           var t1 = document.createElement("span");
-          var b1 = document.createElement("b"); b1.textContent = "Abfahrt ca. " + uhr(ab) + " Uhr"; t1.appendChild(b1);
-          var s1 = document.createElement("small"); s1.textContent = sk.minuten + " Min., " + sk.km + " km, " + verkehrText() + " · Treffpunkt " + uhr(treff) + " Uhr";
+          var b1 = document.createElement("b");
+          b1.textContent = designNeu() ? "Losfahren um " + uhr(ab) : "Abfahrt ca. " + uhr(ab) + " Uhr";
+          t1.appendChild(b1);
+          var s1 = document.createElement("small");
+          s1.textContent = designNeu() ? sk.minuten + " Min., " + sk.km + " km"
+            : sk.minuten + " Min., " + sk.km + " km, " + verkehrText() + " · Treffpunkt " + uhr(treff) + " Uhr";
           t1.appendChild(s1); abfahrtZeile.appendChild(t1);
           abfahrtZeile.classList.remove("versteckt");
         }).catch(function () {});

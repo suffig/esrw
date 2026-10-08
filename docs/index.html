@@ -2179,6 +2179,35 @@
   :root[data-design="neu"] .tag.zeitraum > span + span { font-size:var(--s-s);
     color:var(--dim); font-weight:600; }
   :root[data-design="neu"] .tag.zeitraum.heute > span:first-child { color:var(--akzent); }
+
+  /* ===== Runde 23: Ligafarbe zurueckgenommen, Spielseite enger ======= */
+
+  /* C2: Die groesste Flaeche jeder Spielkarte trug die Ligafarbe - einen
+     Farbton, den das Ligakuerzel bestimmt, nicht die Marke. Auf der
+     Spielseite ist das schon zurueckgenommen; hier folgt die Datumskachel.
+     Erkennbar bleibt die Liga an ihrem Chip, die Flaeche traegt die
+     gewaehlte Akzentfarbe - sie steht fuer "das sind deine Spiele". */
+  :root[data-design="neu"] .spiel.zeit-links .wann { background:var(--akzent-hell);
+    color:var(--akzent); }
+  :root[data-design="neu"] .spiel.zeit-links .wann b { color:inherit; opacity:.7; }
+
+  /* Dichte der Spielseite. Die Kopfkarte und jede Abschnittskarte hatten
+     16-18 px Polster, der Hallenknopf brach zweizeilig um (108 px fuer eine
+     Zeile Text). Nichts entfaellt, alles rueckt zusammen. */
+  :root[data-design="neu"] .spiel-kopf { padding:var(--abstand-m) var(--abstand-l); }
+  :root[data-design="neu"] .spiel-kopf .grosse-pillen { margin:var(--halb) 0 0; }
+  :root[data-design="neu"] .spiel-kopf .aktionen { margin-top:var(--abstand-s); }
+  :root[data-design="neu"] #spiel-inhalt > .karte { padding:var(--abstand-m) var(--abstand-l);
+    margin-bottom:var(--abstand-s); }
+  :root[data-design="neu"] .reihe-knopf { padding:var(--abstand-s) var(--abstand-m);
+    gap:var(--abstand-s); }
+  :root[data-design="neu"] .reihe-knopf b { font-size:var(--s-xl); line-height:1.25; }
+  /* Der Pfeil teilte sich die Zeile zur Haelfte mit dem Text, deshalb brach
+     schon "ICEDOME Troisdorf" zweizeilig um. */
+  :root[data-design="neu"] .reihe-knopf > span:not(.pfeil) { flex:1; min-width:0; }
+  :root[data-design="neu"] .reihe-knopf .pfeil { flex:none; }
+  :root[data-design="neu"] .abfahrt-gross { padding:var(--halb) var(--abstand-m);
+    margin-bottom:var(--abstand-s); }
 </style>
 </head>
 <body>
@@ -2643,6 +2672,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=132"></script>
+<script src="app.js?v=133"></script>
 </body>
 </html>
