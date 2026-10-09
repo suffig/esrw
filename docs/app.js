@@ -4483,7 +4483,26 @@
   // Strafrechner: was bleibt bei mehreren Strafen auf dem Eis? Regel 19.4
   // gibt die Reihenfolge vor - erst Grosse streichen, dann Kleine. Was sich
   // aufhebt, wird sofort ersetzt und zaehlt nicht fuer die Staerke.
-  var rechner = { a: [], b: [], laufA: 0, laufB: 0, offen: false };
+  // "laufA"/"laufB" waren eine blosse Anzahl. Fuer die Staerke reicht das,
+  // fuer alles andere nicht: ob eine laufende Strafe eine Kleine oder eine
+  // Grosse ist, entscheidet, ob ein Tor sie beendet (Regel 18.4), und ohne
+  // Restzeit laesst sich nicht sagen, wer zuerst zurueckkommt. Jetzt steht
+  // je laufender Strafe { k: "2"|"5", rest: "1:24" } - die Restzeit darf
+  // leer bleiben, dann rechnet der Rechner eben ohne sie.
+  var rechner = { a: [], b: [], laufA: [], laufB: [], offen: false };
+  // "1:24" -> 84. Leer, unvollstaendig oder Unsinn gibt null; die Zeile
+  // bleibt dann stehen, sie zaehlt nur nicht fuer die Reihenfolge.
+  function restSekunden(t) {
+    var m = /^\s*(\d{1,2})[:.](\d{1,2})\s*$/.exec(String(t || ""));
+    if (m) return parseInt(m[1], 10) * 60 + parseInt(m[2], 10);
+    m = /^\s*(\d{1,2})\s*$/.exec(String(t || ""));
+    return m ? parseInt(m[1], 10) * 60 : null;
+  }
+  function restText(s) {
+    if (s == null) return "";
+    var mi = Math.floor(s / 60), se = s % 60;
+    return mi + ":" + (se < 10 ? "0" : "") + se;
+  }
   var R_ARTEN = [
     { k: "2", t: "Kleine Strafe", e: [2] },
     { k: "2+2", t: "Doppelte kleine", e: [2, 2] },
@@ -4510,10 +4529,27 @@
       for (var j = 0; j < z.gross; j++) l.push("5 Min");
       return l;
     }
-    var sichtA = rechner.laufA + A2.gross + A2.klein, sichtB = rechner.laufB + B2.gross + B2.klein;
+    var sichtA = rechner.laufA.length + A2.gross + A2.klein;
+    var sichtB = rechner.laufB.length + B2.gross + B2.klein;
+    // Auf der Uhr stehen hoechstens zwei - eine dritte Strafe laeuft erst
+    // an, wenn eine der beiden ersten abgelaufen ist (Regel 26). Welche
+    // beiden das sind, sagt die kuerzeste Restzeit; ohne Zeitangabe
+    // bleibt die Reihenfolge so, wie sie eingetippt wurde.
+    function sortiert(liste) {
+      return liste.map(function (p, i) { return { p: p, i: i, s: restSekunden(p.rest) }; })
+        .sort(function (x, y) {
+          if (x.s == null && y.s == null) return x.i - y.i;
+          if (x.s == null) return 1;
+          if (y.s == null) return -1;
+          return x.s - y.s || x.i - y.i;
+        });
+    }
+    var lA = sortiert(rechner.laufA), lB = sortiert(rechner.laufB);
+    function naechste(l) { var t = l.filter(function (x) { return x.s != null; })[0]; return t ? t.s : null; }
     return {
       a: A2, b: B2, uhrA: uhr(A2), uhrB: uhr(B2), sichtA: sichtA, sichtB: sichtB,
       wegGross: wegGross, wegKlein: wegKlein,
+      laufA: lA, laufB: lB, zurueckA: naechste(lA), zurueckB: naechste(lB),
       staerkeA: 5 - Math.min(2, sichtA), staerkeB: 5 - Math.min(2, sichtB)
     };
   }
@@ -4554,21 +4590,43 @@
 
       var lauf = document.createElement("div"); lauf.className = "rechner-lauf";
       var lt = document.createElement("span"); lt.textContent = "läuft schon"; lauf.appendChild(lt);
-      function schritt(zeichen, wert) {
-        var b = document.createElement("button"); b.type = "button"; b.className = "schrittknopf";
-        b.textContent = zeichen;
+      [["2", "Kleine Strafe, laeuft schon"], ["5", "Grosse Strafe, laeuft schon"]].forEach(function (p) {
+        var b = document.createElement("button"); b.type = "button";
+        b.className = "chip " + strafFarbe(p[0]);
+        b.textContent = "+ " + p[0]; b.title = p[1];
         b.addEventListener("click", function () {
-          rechner[laufSchluessel] = Math.max(0, Math.min(3, rechner[laufSchluessel] + wert)); zeichne();
+          if (rechner[laufSchluessel].length >= 3) return;
+          rechner[laufSchluessel].push({ k: p[0], rest: "" }); zeichne();
         });
-        return b;
-      }
-      lauf.appendChild(schritt("\u2212", -1));
-      var z = document.createElement("b"); z.textContent = String(rechner[laufSchluessel]); lauf.appendChild(z);
-      lauf.appendChild(schritt("+", 1));
+        lauf.appendChild(b);
+      });
       kasten.appendChild(lauf);
+
+      // Je laufende Strafe eine Zeile: Art, Restzeit, weg damit. Die
+      // Restzeit darf leer bleiben - fuer die Staerke zaehlt die Strafe
+      // trotzdem, nur die Reihenfolge der Rueckkehr weiss sie dann nicht.
+      rechner[laufSchluessel].forEach(function (p, i) {
+        var zeile = document.createElement("div"); zeile.className = "rechner-laufzeile";
+        var art = document.createElement("span"); art.className = "chip " + strafFarbe(p.k);
+        art.textContent = p.k + " Min"; zeile.appendChild(art);
+        var feld = document.createElement("input");
+        feld.type = "text"; feld.inputMode = "numeric"; feld.maxLength = 5;
+        feld.placeholder = "Rest, z. B. 1:24"; feld.value = p.rest || "";
+        feld.setAttribute("aria-label", "Restzeit der laufenden Strafe");
+        // Nur das Ergebnis neu zeichnen, nicht den ganzen Kasten: sonst
+        // verliert das Feld nach jedem Zeichen die Schreibmarke.
+        feld.addEventListener("input", function () { p.rest = feld.value; ergebnisZeichnen(); });
+        zeile.appendChild(feld);
+        var weg = document.createElement("button"); weg.type = "button"; weg.className = "schrittknopf";
+        weg.textContent = "\u00d7"; weg.title = "Diese laufende Strafe entfernen";
+        weg.addEventListener("click", function () { rechner[laufSchluessel].splice(i, 1); zeichne(); });
+        zeile.appendChild(weg);
+        kasten.appendChild(zeile);
+      });
       return kasten;
     }
 
+    var ergKasten = document.createElement("div");
     function zeichne() {
       while (koerper.firstChild) koerper.removeChild(koerper.firstChild);
       var hinweis = document.createElement("p"); hinweis.className = "meta"; hinweis.style.margin = "0 0 8px";
@@ -4576,7 +4634,25 @@
       koerper.appendChild(hinweis);
       koerper.appendChild(team("Heim", "a", "laufA"));
       koerper.appendChild(team("Gast", "b", "laufB"));
+      koerper.appendChild(ergKasten);
+      ergebnisZeichnen();
 
+      if (rechner.a.length || rechner.b.length || rechner.laufA.length || rechner.laufB.length) {
+        var zurueck = document.createElement("button"); zurueck.type = "button"; zurueck.className = "textknopf";
+        zurueck.style.marginTop = "8px";
+        zurueck.textContent = "Zurücksetzen";
+        zurueck.addEventListener("click", function () {
+          rechner.a = []; rechner.b = []; rechner.laufA = []; rechner.laufB = []; zeichne();
+        });
+        koerper.appendChild(zurueck);
+      }
+    }
+
+    // Die Restzeiten aendern am Ergebnis nur die Reihenfolge - dafuer den
+    // ganzen Kasten neu zu bauen, kostet bei jedem Zeichen die Schreibmarke.
+    function ergebnisZeichnen() {
+      while (ergKasten.firstChild) ergKasten.removeChild(ergKasten.firstChild);
+      var koerper = ergKasten;
       var e = rechnerErgebnis();
       var erg = document.createElement("div"); erg.className = "rechner-ergebnis";
       var gross = document.createElement("b"); gross.className = "rechner-staerke";
@@ -4587,14 +4663,30 @@
         (e.staerkeA > e.staerkeB ? "Heim in Überzahl" : "Gast in Überzahl");
       erg.appendChild(wer);
 
-      [["Heim", e.uhrA, rechner.laufA], ["Gast", e.uhrB, rechner.laufB]].forEach(function (paar) {
+      [["Heim", e.uhrA, e.laufA, e.zurueckA], ["Gast", e.uhrB, e.laufB, e.zurueckB]].forEach(function (paar) {
         var z = document.createElement("div"); z.className = "zeiten-wert";
         var k = document.createElement("span"); k.textContent = paar[0] + " auf die Uhr"; z.appendChild(k);
         var v = document.createElement("b");
         v.textContent = paar[1].length ? paar[1].join(" + ") : "nichts Neues";
-        if (paar[2]) v.textContent += " (dazu " + paar[2] + " laufend)";
         z.appendChild(v);
         erg.appendChild(z);
+        if (!paar[2].length) return;
+        // Was schon laeuft, in der Reihenfolge, in der es endet. Ab der
+        // dritten steht "wartet" - die laeuft erst an, wenn eine der
+        // beiden ersten abgelaufen ist (Regel 26).
+        var l = document.createElement("div"); l.className = "zeiten-wert";
+        var lk = document.createElement("span"); lk.textContent = paar[0] + " läuft schon"; l.appendChild(lk);
+        var lv = document.createElement("b");
+        lv.textContent = paar[2].map(function (x, i) {
+          return x.p.k + " Min" + (x.s != null ? " (" + restText(x.s) + ")" : "") + (i > 1 ? ", wartet" : "");
+        }).join(" · ");
+        l.appendChild(lv); erg.appendChild(l);
+        if (paar[3] != null) {
+          var r = document.createElement("div"); r.className = "zeiten-wert";
+          var rk = document.createElement("span"); rk.textContent = paar[0] + " nächste Rückkehr"; r.appendChild(rk);
+          var rv = document.createElement("b"); rv.textContent = "in " + restText(paar[3]);
+          r.appendChild(rv); erg.appendChild(r);
+        }
       });
       koerper.appendChild(erg);
 
@@ -4619,20 +4711,17 @@
         saetze.push("Spieldauer und Disziplinarstrafe stehen nicht auf der Strafzeituhr, die Mannschaft ist "
           + "dadurch nicht in Unterzahl.");
       }
+      // Welche Strafe ein Tor beendet, haengt an ihrer Art - genau deshalb
+      // steht bei den laufenden Strafen jetzt eine Art und nicht nur eine
+      // Anzahl.
+      if (e.laufA.concat(e.laufB).some(function (x) { return x.p.k === "2"; })) {
+        saetze.push("Fällt in Unterzahl ein Tor, endet die zuerst angezeigte laufende Kleine Strafe der "
+          + "bestraften Mannschaft (Regel 18.4). Grosse, Match- und Disziplinarstrafen laufen weiter.");
+      }
       saetze.forEach(function (t) {
         var p2 = document.createElement("small"); p2.className = "zeiten-hinweis"; p2.textContent = t;
         koerper.appendChild(p2);
       });
-
-      if (rechner.a.length || rechner.b.length || rechner.laufA || rechner.laufB) {
-        var zurueck = document.createElement("button"); zurueck.type = "button"; zurueck.className = "textknopf";
-        zurueck.style.marginTop = "8px";
-        zurueck.textContent = "Zurücksetzen";
-        zurueck.addEventListener("click", function () {
-          rechner.a = []; rechner.b = []; rechner.laufA = 0; rechner.laufB = 0; zeichne();
-        });
-        koerper.appendChild(zurueck);
-      }
     }
     zeichne();
     return d;

@@ -1931,6 +1931,11 @@
   .rechner-lauf { display:flex; align-items:center; gap:10px; margin-top:8px; }
   .rechner-lauf span { color:var(--dim); font-size:var(--s-m); font-weight:700; }
   .rechner-lauf > b { min-width:1.2em; text-align:center; }
+  /* Je laufende Strafe eine Zeile: Art, Restzeit, weg damit. */
+  .rechner-laufzeile { display:flex; align-items:center; gap:8px; margin-top:6px; }
+  .rechner-laufzeile input { flex:1; min-width:0; min-height:38px;
+    padding:6px 10px; border:1px solid var(--linie); border-radius:var(--radius-klein);
+    background:var(--karte); color:inherit; font:inherit; }
   .schrittknopf { width:30px; height:30px; border-radius:var(--radius-s); border:1px solid var(--linie);
                   background:var(--karte); color:inherit; font:inherit; font-weight:800; cursor:pointer; }
   .rechner-ergebnis { margin-top:12px; padding:12px 14px; border-radius:var(--radius); background:var(--akzent-hell); }
@@ -3072,6 +3077,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=156"></script>
+<script src="app.js?v=157"></script>
 </body>
 </html>
