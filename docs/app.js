@@ -39,9 +39,15 @@
   // das Geraet und wandert mit dem Konto auf die anderen.
   // Voreingestellt ist die einfache Ansicht: "0" heisst ausdruecklich aus,
   // alles andere (auch ein frisches Geraet) heisst an.
-  function einfachAn() { return lesen("einfach") !== "0"; }
+  function einfachAn() { return designNeu() || lesen("einfach") !== "0"; }
   function einfachAnwenden() {
     document.documentElement.classList.toggle("einfach", einfachAn());
+    // Im neuen Design gibt es den Schalter nicht mehr - weder im Kopf noch
+    // in den Einstellungen. Ein Schalter, der wenig tut, kostet mehr
+    // Verstaendnis, als er spart.
+    var weg = designNeu(), feld = el("einfach"), zeile = feld && feld.closest("label");
+    if (el("einfachmodus")) el("einfachmodus").classList.toggle("versteckt", weg);
+    if (zeile) zeile.classList.toggle("versteckt", weg);
     var k = el("einfachmodus");
     if (k) {
       k.classList.toggle("aktiv", einfachAn());
@@ -4260,7 +4266,8 @@
 
     // Umschalter oben: einfache Ansicht oder alles
     var wahl = el("mehr-ansicht");
-    if (wahl) {
+    if (wahl) wahl.classList.toggle("versteckt", designNeu());
+    if (wahl && !designNeu()) {
       wahl.innerHTML = "";
       [["Einfach", true], ["Alles", false]].forEach(function (w) {
         var b = document.createElement("button"); b.type = "button";
