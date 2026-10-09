@@ -452,7 +452,12 @@
     if (gewaehlt === "dark" || gewaehlt === "light") document.documentElement.setAttribute("data-theme", gewaehlt);
     else document.documentElement.removeAttribute("data-theme");
     var dunkel = gewaehlt === "dark" || (!gewaehlt && window.matchMedia("(prefers-color-scheme: dark)").matches);
-    el("thema").querySelector("use").setAttribute("href", dunkel ? "#i-sun" : "#i-moon");
+    var tk = el("thema");
+    tk.querySelector("use").setAttribute("href", dunkel ? "#i-sun" : "#i-moon");
+    // Das Symbol zeigt, was kommt, nicht was ist - sonst tippt man zweimal
+    // und wundert sich. Der Titel sagt es ausdruecklich dazu.
+    tk.title = dunkel ? "Hell machen" : "Dunkel machen";
+    tk.setAttribute("aria-label", tk.title);
     var wahl = el("thema-wahl");
     if (wahl) Array.prototype.forEach.call(wahl.querySelectorAll("button"), function (b) {
       b.classList.toggle("aktiv", (b.getAttribute("data-thema") || "") === (t || ""));
@@ -4796,6 +4801,15 @@
     var s = p && (p.spiele || []).filter(function (x) { return !x.vergangen; })[0];
     return (s && s.liga) || "";
   }
+  // "2026/27" -> "2027/28". Was nicht so aussieht, bekommt einen
+  // ehrlichen Platzhalter statt einer erfundenen Jahreszahl.
+  function naechsteSaison(s) {
+    var m = /^(\d{4})\/(\d{2})$/.exec(String(s || ""));
+    if (!m) return "Saison darauf";
+    var a = parseInt(m[1], 10) + 1;
+    var b = (a + 1) % 100;
+    return a + "/" + (b < 10 ? "0" + b : String(b));
+  }
   function ligaPasst(eintrag, liga) {
     if (!liga || !eintrag) return false;
     var lg = ohneZeichen(liga);
@@ -4848,10 +4862,16 @@
         if (!g) { g = { titel: l.saison || "ohne Saison", zeilen: [] }; saisons.push(g); }
         g.zeilen.push(l);
       });
+      // Die laufende Saison ist die, die am Spieltag gilt - sie steht
+      // zuerst, auch wenn die naechste schon eingetragen ist. Absteigend
+      // sortiert stuende sonst die Zukunft oben.
       var jetzt = (daten && daten.saison) || "";
-      saisons.forEach(function (g, nr) {
+      if (jetzt) {
+        var lauf = saisons.filter(function (g) { return g.titel === jetzt; });
+        if (lauf.length) saisons = lauf.concat(saisons.filter(function (g) { return g.titel !== jetzt; }));
+      }
+      saisons.forEach(function (g) {
         var d = document.createElement("details"); d.className = "karte bestimmung-block";
-        d.open = jetzt ? g.titel === jetzt : !nr;
         var sm = document.createElement("summary");
         var t = document.createElement("span");
         var b = document.createElement("b"); b.textContent = "Saison " + g.titel; t.appendChild(b);
@@ -4899,7 +4919,10 @@
         ein.forEach(function (e) {
           var z2 = document.createElement("div"); z2.className = "zeiten-zeile";
           var k2 = document.createElement("b"); k2.textContent = e.was; z2.appendChild(k2);
-          [["2026/27", e.saison_a], ["2027/28", e.saison_b]].forEach(function (paar) {
+          // Frueher standen hier "2026/27" und "2027/28" fest im Code -
+          // ab der naechsten Saison haetten sie das Falsche behauptet.
+          // saison_a ist die laufende, saison_b die darauf folgende.
+          [[jetzt || "diese Saison", e.saison_a], [naechsteSaison(jetzt), e.saison_b]].forEach(function (paar) {
             var r3 = document.createElement("div"); r3.className = "zeiten-wert";
             var ks = document.createElement("span"); ks.textContent = paar[0]; r3.appendChild(ks);
             var vs = document.createElement("b"); vs.textContent = paar[1] || "nicht möglich"; r3.appendChild(vs);
@@ -4923,13 +4946,19 @@
         if (!g) { g = { titel: l.gruppe || "Ligen", zeilen: [] }; gruppen.push(g); }
         g.zeilen.push(l);
       });
+      // Die Gruppe mit der eigenen Liga steht vorne, aber zugeklappt wie
+      // alle anderen - dieselbe Entscheidung wie bei den Bestimmungen in
+      // Fassung 148: nichts klappt von selbst auf, sonst schiebt es auf
+      // dem Handy den Rest aus dem Bild. Wer etwas sucht, tippt.
       var offeneGruppe = null;
       gruppen.forEach(function (g) {
         g.zeilen.forEach(function (l) { if (!offeneGruppe && ligaPasst(l.liga, meine)) offeneGruppe = g; });
       });
-      gruppen.forEach(function (g, nr) {
+      if (offeneGruppe) {
+        gruppen = [offeneGruppe].concat(gruppen.filter(function (g) { return g !== offeneGruppe; }));
+      }
+      gruppen.forEach(function (g) {
         var d = document.createElement("details"); d.className = "karte bestimmung-block";
-        d.open = offeneGruppe ? g === offeneGruppe : !nr;
         var sm = document.createElement("summary");
         var t = document.createElement("span");
         var b = document.createElement("b"); b.textContent = g.titel; t.appendChild(b);
@@ -5740,9 +5769,12 @@
     if (!p) return sk;
     return { minuten: Math.round(sk.minuten * (1 + p / 100)), km: sk.km, art: sk.art };
   }
+  // "ohne Verkehr" las sich wie "gerade ist frei". Gemeint ist das
+  // Gegenteil: Stau steckt nicht drin. Der Puffer steht in den
+  // Einstellungen unter "Verkehr".
   function verkehrText() {
     var p = verkehrPuffer();
-    return p ? "inkl. " + p + " % Puffer" : "ohne Verkehr";
+    return p ? "inkl. " + p + " % Puffer" : "Stau nicht eingerechnet";
   }
   function verkehrLaden(nurAnwenden) {
     var box = el("verkehr"); if (!box) return;
