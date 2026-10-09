@@ -921,10 +921,18 @@ window.Mitglieder = (function () {
   function rahmen() {
     leeren(wurzel);
     var initialen = (function (n) { var t = (n || "?").split(","); return (((t[1] || "").trim()[0] || "") + ((t[0] || "").trim()[0] || "")).toUpperCase() || "?"; })(profil.name);
-    wurzel.appendChild(h("div", { class: "profilzeile karte" }, [
-      h("span", {}, [h("span", { class: "avatar-gross", text: initialen }), h("span", {}, [h("b", { text: profil.name || profil.slug }), h("small", { text: session.user.email })])]),
-      h("button", { type: "button", class: "textknopf", text: "Abmelden", onclick: abmelden })
-    ]));
+    // Name, Bild und Konto standen auf jedem Reiter noch einmal - oben
+    // rechts im Kopf stehen sie ohnehin, und der Avatar dort fuehrt zum
+    // Profil. Im neuen Design traegt der App-Kopf den Seitennamen (siehe
+    // KOPFTITEL in app.js), diese Zeile entfaellt deshalb ganz.
+    // "Abmelden" ist dafuer auf die Profilseite gezogen; es war der
+    // einzige Weg hinaus und haette sonst gefehlt.
+    if (!designNeu()) {
+      wurzel.appendChild(h("div", { class: "profilzeile karte" }, [
+        h("span", {}, [h("span", { class: "avatar-gross", text: initialen }), h("span", {}, [h("b", { text: profil.name || profil.slug }), h("small", { text: session.user.email })])]),
+        h("button", { type: "button", class: "textknopf", text: "Abmelden", onclick: abmelden })
+      ]));
+    }
     if (!frei()) {
       var sofort = [fn("abrechnung") ? "Abrechnung" : "", fn("notizen") ? "Notizen" : "", fn("push") ? "Push" : ""].filter(Boolean);
       var spaeter = [fn("tausch") ? "Tauschbörse" : "", fn("frei") ? "Verfügbarkeit" : "", fn("hallen") ? "Hallen-Hinweise" : "", fn("gespann") ? "Kontakte" : "", fn("mitfahren") ? "Zusammen fahren" : "", fn("info") ? "Ankündigungen" : ""].filter(Boolean);
@@ -1399,6 +1407,15 @@ window.Mitglieder = (function () {
       ]);
       rdBox.appendChild(stammdatenFormular(function () { zeigeReiter("profil"); }));
       ziel.appendChild(rdBox);
+    }
+    // Das Konto und der Weg hinaus. Stand frueher auf jedem Reiter oben;
+    // hierher gehoert es, denn das ist die Profilseite - genau die, zu
+    // der der Avatar im Kopf fuehrt.
+    if (designNeu() && session && session.user) {
+      ziel.appendChild(h("div", { class: "melde karte mg-konto-fuss" }, [
+        h("span", {}, [h("b", { text: "Angemeldet" }), h("small", { text: session.user.email })]),
+        h("button", { type: "button", class: "textknopf", text: "Abmelden", onclick: abmelden })
+      ]));
     }
   }
 

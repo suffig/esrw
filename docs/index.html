@@ -2616,6 +2616,24 @@
     width:44px; height:44px; line-height:44px; font-size:1.2rem; }
   :root[data-design="neu"] .leaflet-bottom.leaflet-right {
     margin-bottom:22px; }
+
+  /* ===== Runde 35: das Profil steht nur noch oben rechts ============= */
+
+  /* Das Konto und der Weg hinaus, am Fuss der Profilseite. Frueher stand
+     beides auf jedem Reiter des Mitgliederbereichs. */
+  :root[data-design="neu"] .mg-konto-fuss { display:flex; align-items:center;
+    justify-content:space-between; gap:var(--abstand-m); }
+  :root[data-design="neu"] .mg-konto-fuss b { display:block; }
+  :root[data-design="neu"] .mg-konto-fuss small { color:var(--dim); }
+
+  /* Die Losfahr-Zeile traegt jetzt zwei Zeilen: Uhrzeit und woraus sie
+     entsteht. Die Reihe ist flex mit nowrap - ohne eigenen Block draengt
+     sich der Zusatz neben die Uhrzeit und bricht mitten im Satz um. */
+  :root[data-design="neu"] .abfahrt.losfahren { align-items:flex-start; }
+  :root[data-design="neu"] .losfahren-text { display:flex; flex-direction:column;
+    gap:1px; min-width:0; }
+  :root[data-design="neu"] .losfahren-text small { color:var(--dim);
+    font-size:var(--s-s); font-weight:600; }
 </style>
 </head>
 <body>
@@ -3078,6 +3096,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=161"></script>
+<script src="app.js?v=165"></script>
 </body>
 </html>

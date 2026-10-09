@@ -483,13 +483,24 @@
   // der Name oben im App-Kopf, der Block darunter entfaellt. Seiten mit
   // eigener Kopfkarte (Untertitel, Zurueck-Knopf) behalten ihre; dort
   // bleibt oben die Marke.
-  var KOPFTITEL = { plan: "Spielplan", mehr: "Mehr" };
+  var KOPFTITEL = { plan: "Spielplan", mehr: "Mehr", mitglieder: "Mitglieder",
+    "mitglieder/abrechnung": "Abrechnung", "mitglieder/info": "Info",
+    "mitglieder/tausch": "Tausch", "mitglieder/frei": "Verfügbarkeit",
+    "mitglieder/notizen": "Notizen", "mitglieder/kollegen": "Kollegen",
+    "mitglieder/admin": "Admin", "mitglieder/konto": "Dein Profil",
+    "mitglieder/profil": "Dein Profil" };
   // Auf schmalen Geraeten ist neben Knoepfen und Zeichen kein Platz fuer
   // "Einteilungen ESRW". Statt ihn abzuschneiden, steht dort die Kurzform.
   function titelAnpassen() {
     var h = el("titel");
     if (!h || !daten) return;
-    var eigen = designNeu() ? KOPFTITEL[document.documentElement.getAttribute("data-ansicht")] : null;
+    // Der Mitgliederbereich hat Reiter, und jeder davon ist fuer sich eine
+    // Seite. Der Reiter steht in der Adresse; zeigeReiter() schreibt ihn
+    // dorthin und loest ueber "mg-reiter" ein ansicht() aus, das hier
+    // wieder landet - der Kopf wechselt also mit.
+    var wo = document.documentElement.getAttribute("data-ansicht") || "";
+    var unter = (location.hash.split("/")[1] || "").split("?")[0];
+    var eigen = designNeu() ? (KOPFTITEL[wo + "/" + unter] || KOPFTITEL[wo]) : null;
     var voll = eigen || daten.titel || "ESRW App";
     var kurz = voll.split(/\s+/).slice(-1)[0] || voll;
     h.textContent = voll;
@@ -1458,7 +1469,11 @@
           b1.textContent = designNeu() ? "Losfahren um " + uhr(ab) : "Abfahrt ca. " + uhr(ab) + " Uhr";
           t1.appendChild(b1);
           var s1 = document.createElement("small");
-          s1.textContent = designNeu() ? sk.minuten + " Min., " + sk.km + " km"
+          // Im neuen Design stand hier nur "34 Min., 41 km" - eine Abfahrtszeit
+          // ohne jeden Vorbehalt, als waere sie gemessen. Sie ist gerechnet,
+          // und zwar ohne Stau. Das gehoert dazu, sonst steht da eine
+          // Genauigkeit, die es nicht gibt.
+          s1.textContent = designNeu() ? sk.minuten + " Min., " + sk.km + " km · " + verkehrText()
             : sk.minuten + " Min., " + sk.km + " km, " + verkehrText() + " · Treffpunkt " + uhr(treff) + " Uhr";
           t1.appendChild(s1); abfahrtZeile.appendChild(t1);
           abfahrtZeile.classList.remove("versteckt");
@@ -2002,9 +2017,21 @@
         var z = document.createElement("div"); z.className = "abfahrt"; z.appendChild(ikone("i-route"));
         if (designNeu()) {
           z.classList.add("losfahren");
-          z.appendChild(document.createTextNode("Losfahren um "));
-          var zb = document.createElement("b"); zb.textContent = uhr(ab); z.appendChild(zb);
-          z.appendChild(document.createTextNode(" · " + st.minuten + " Min., " + st.km + " km"));
+          // Zwei Zeilen statt einer langen: oben die Uhrzeit, darunter,
+          // woraus sie entsteht. In einer Zeile gab das bei "Stau nicht
+          // eingerechnet" einen Umbruch mitten im Satz - die Reihe ist
+          // flex mit nowrap, da draengen sich vier Teile um denselben Platz.
+          var zt = document.createElement("span"); zt.className = "losfahren-text";
+          var zo = document.createElement("span");
+          zo.appendChild(document.createTextNode("Losfahren um "));
+          var zb = document.createElement("b"); zb.textContent = uhr(ab); zo.appendChild(zb);
+          zt.appendChild(zo);
+          // Die Zeit ist gerechnet, nicht gemessen, und zwar ohne Stau. Das
+          // gehoert dazu, sonst steht da eine Genauigkeit, die es nicht gibt.
+          var zs = document.createElement("small");
+          zs.textContent = st.minuten + " Min., " + st.km + " km · " + verkehrText();
+          zt.appendChild(zs);
+          z.appendChild(zt);
           if (ak && ak.parentNode === h) { h.insertBefore(z, ak); return; }
         } else {
           z.appendChild(document.createTextNode("Abfahrt ca. " + uhr(ab) + " Uhr · " + st.minuten + " Min., " + st.km + " km, " + verkehrText()));
@@ -2849,6 +2876,17 @@
     el("wechseln").classList.toggle("versteckt", !meins || kontoGebunden());
     var pz = el("detail").querySelector(".spalte-haupt > .profilzeile"), haupt = pz && pz.parentNode;
     if (haupt) { if (meins) haupt.insertBefore(pz, el("start-anpassen")); else haupt.insertBefore(pz, haupt.firstChild); }
+    // Beim eigenen Profil wiederholt die Zeile nur, was oben rechts im
+    // Kopf steht. Sie bleibt genau dann, wenn sie etwas kann, was der
+    // Kopf nicht kann: ein fremdes Profil benennen, oder - ohne Konto -
+    // den Namen wechseln. Traegt sie keinen sichtbaren Knopf mehr, ist
+    // sie nur noch ein zweiter Avatar.
+    if (pz && designNeu()) {
+      var stumm = meins && ["wechseln", "uebernehmen", "pin"].every(function (id) {
+        return el(id).classList.contains("versteckt");
+      });
+      pz.classList.toggle("versteckt", stumm);
+    }
     zeigeKollege(p, meins);
     pinKnopf(p); kalenderSpalte();
     // Die Adresse der Kalenderdatei haengt am Schluessel - erst ausrechnen
@@ -5371,7 +5409,11 @@
           var hm = L.circleMarker([heim.lat, heim.lon], { radius: 8, color: "#fff", fillColor: "#d97706", fillOpacity: 1, weight: 3 }).addTo(m).bindPopup("Zuhause");
           [25, 50].forEach(function (km) { L.circle([heim.lat, heim.lon], { radius: km * 1000, color: "#d97706", weight: 1, fill: false, dashArray: "4 6" }).addTo(m); });
           punkte.push([heim.lat, heim.lon]);
-          el("karte-unter").textContent = "Ringe: 25 und 50 km von zu Hause";
+          // Hier stand danach dauerhaft nur noch "Ringe: 25 und 50 km von
+          // zu Hause". Die Unterzeile sagte dann nicht mehr, was die Seite
+          // zeigt, sondern was einmal dazukam - und zurueckgesetzt hat sie
+          // niemand. Die Ringe sind ein Zusatz, kein Thema der Seite.
+          el("karte-unter").textContent = "alle Hallen · Ringe 25 und 50 km von zu Hause";
         }
         // Nah ranzoomen: mit Heimat die Hallen im Umkreis von 120 km, sonst der
         // Kern der Hallen. Ohne das zieht ein einzelnes Auswaertsspiel (Berlin)
