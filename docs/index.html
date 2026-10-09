@@ -2203,9 +2203,11 @@
     gap:var(--abstand-s); }
   :root[data-design="neu"] .reihe-knopf b { font-size:var(--s-xl); line-height:1.25; }
   /* Der Pfeil teilte sich die Zeile zur Haelfte mit dem Text, deshalb brach
-     schon "ICEDOME Troisdorf" zweizeilig um. */
-  :root[data-design="neu"] .reihe-knopf > span:not(.pfeil) { flex:1; min-width:0; }
-  :root[data-design="neu"] .reihe-knopf .pfeil { flex:none; }
+     schon "ICEDOME Troisdorf" zweizeilig um: ".reihe-knopf > span" weiter
+     oben gibt flex:1 an beide Spans. Gilt in beiden Designs - der Fehler
+     steckt in beiden, und beide sind in Gebrauch. */
+  :root .reihe-knopf > span:not(.pfeil) { flex:1; min-width:0; }
+  :root .reihe-knopf .pfeil { flex:none; }
   :root[data-design="neu"] .abfahrt-gross { padding:var(--halb) var(--abstand-m);
     margin-bottom:var(--abstand-s); }
 
@@ -2259,14 +2261,15 @@
      "Bestimmungen" bei den Regeln (394 in 339 px), der Verkehrspuffer
      "30 %" in den Einstellungen (152 in 94) und dort "Abends" bei der
      Themenwahl (232 in 227). Jetzt laesst sich wischen, wie bei den
-     Reitern der Abrechnung. Der Fehler steckt auch im alten Design. */
-  :root[data-design="neu"] .stufen,
-  :root[data-design="neu"] .modus { overflow-x:auto; scrollbar-width:none;
+     Reitern der Abrechnung. Gilt in beiden Designs - der Fehler steckt in
+     beiden, und beide sind in Gebrauch. */
+  :root .stufen,
+  :root .modus { overflow-x:auto; scrollbar-width:none;
     -webkit-overflow-scrolling:touch; }
-  :root[data-design="neu"] .stufen::-webkit-scrollbar,
-  :root[data-design="neu"] .modus::-webkit-scrollbar { display:none; }
-  :root[data-design="neu"] .stufen > *,
-  :root[data-design="neu"] .modus > * { flex:none; }
+  :root .stufen::-webkit-scrollbar,
+  :root .modus::-webkit-scrollbar { display:none; }
+  :root .stufen > *,
+  :root .modus > * { flex:none; }
 
   /* ===== Runde 27: ein Kopf je Seite (Phase 3, erster Teil) ========== */
 
@@ -2748,6 +2751,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=137"></script>
+<script src="app.js?v=138"></script>
 </body>
 </html>
