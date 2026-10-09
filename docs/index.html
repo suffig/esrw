@@ -2471,6 +2471,50 @@
     :root:not([data-theme="light"]) .stufen,
     :root:not([data-theme="light"]) .modus { --wisch:rgba(255,255,255,.30); }
   }
+
+  /* ===== Runde 30: die Abrechnung sagt zuerst, was zu tun ist ========= */
+
+  /* Links was man sieht, rechts wie. Beide Gruppen umbrechen lieber, als
+     sich gegenseitig zu quetschen - "Nicht abgehakt" ist ein langes Wort. */
+  :root[data-design="neu"] .mg-filterzeile { display:flex; flex-wrap:wrap;
+    gap:var(--abstand-s); align-items:center; justify-content:space-between;
+    margin:0 0 var(--abstand-s); }
+  :root[data-design="neu"] .mg-filterzeile .mg-ansicht { flex:1 1 auto; margin:0; }
+  :root[data-design="neu"] .mg-filterzeile .mg-darstellung { flex:none; }
+  /* flex:1 1 0 gab jedem Knopf gleich viel Platz - "Nicht abgehakt" braucht
+     aber mehr als "Alle", und die Zahl dahinter fiel aus der Zeile. Mit der
+     Breite des Inhalts als Grundlage passen alle drei nebeneinander. */
+  :root[data-design="neu"] .mg-filterzeile .mg-ansicht { flex-wrap:wrap; }
+  :root[data-design="neu"] .mg-ansicht button { display:inline-flex; align-items:center;
+    justify-content:center; gap:var(--abstand-xs); white-space:nowrap;
+    flex:1 1 auto; padding-left:var(--abstand-s); padding-right:var(--abstand-s); }
+  :root[data-design="neu"] .mg-ansicht .zaehler { font-size:var(--s-xs); font-weight:800;
+    padding:1px 6px; border-radius:var(--radius-pille); }
+
+  /* Der Saldo ist die eine Zahl, auf die es ankommt - also gross und
+     allein, statt als eine von vier gleich grossen Kacheln. */
+  :root[data-design="neu"] .mg-kopfsaldo { display:flex; flex-direction:column;
+    gap:2px; padding:var(--abstand-m) var(--abstand-l); cursor:pointer; }
+  :root[data-design="neu"] .mg-kopfsaldo b { font-size:2rem;
+    font-weight:800; letter-spacing:-.02em; line-height:1.05;
+    font-variant-numeric:tabular-nums; }
+  :root[data-design="neu"] .mg-kopfsaldo span { color:var(--dim);
+    font-size:var(--s-m); font-weight:600; }
+
+  /* Darunter die eigentliche Frage: was steht noch aus? Als Knopf, denn
+     genau danach will man dann filtern. */
+  :root[data-design="neu"] .mg-offenzeile { display:block; width:100%;
+    margin:var(--abstand-s) 0 0; padding:var(--abstand-s) var(--abstand-m);
+    border:1px solid var(--linie); border-radius:var(--radius-klein);
+    background:var(--karte); color:var(--warn); font:inherit;
+    font-size:var(--s-l); font-weight:700; text-align:left; cursor:pointer;
+    min-height:44px; }
+  :root[data-design="neu"] .mg-offenzeile.fertig { color:var(--gut);
+    cursor:default; }
+
+  /* Ein fehlender Betrag ist kein Nebensatz - er ist das, was zu tun ist. */
+  :root[data-design="neu"] .mg-betrag-kurz.fehlt { color:var(--warn);
+    font-weight:700; }
 </style>
 </head>
 <body>
@@ -2935,6 +2979,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=145"></script>
+<script src="app.js?v=146"></script>
 </body>
 </html>

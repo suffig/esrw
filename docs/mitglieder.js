@@ -1872,10 +1872,29 @@ window.Mitglieder = (function () {
       saldo.appendChild(k);
     });
     var neu = h("div", { class: "mg-summenblock" }, [saldo]);
-    // Nur im neuen Design: der Balken sagt das Verhaeltnis, das die vier
-    // Kacheln nur als Zahlen nennen - wieviel der Saison bezahlt ist und
-    // wieviel noch aussteht.
-    if (designNeu()) { var fb = fortschritt(bezahltBetrag, offenBetrag); if (fb) neu.appendChild(fb); }
+    // Vier Kacheln, ein Balken, drei Knoepfe - erst dann das erste Spiel.
+    // Im neuen Design steht oben nur, was man wissen will: was unterm
+    // Strich bleibt, und was noch aussteht. Verguetung, Kosten und die
+    // Aufschluesselung stehen einen Tipp weiter unter "Weitere".
+    if (designNeu()) {
+      var kopf = h("div", { class: "karte mg-kopfsaldo tippbar" }, [
+        h("b", { text: euro(sS.verg - kosten) }),
+        h("span", { text: "Saldo · Vergütung minus Kosten" })
+      ]);
+      kopf.title = "Antippen: Vergütung, Kosten und Steuerjahre";
+      kopf.addEventListener("click", function () { abrechnungPanel = "detail"; rendereAbrechnung(); });
+      neu = h("div", { class: "mg-summenblock" }, [kopf]);
+      var fb = fortschritt(bezahltBetrag, offenBetrag); if (fb) neu.appendChild(fb);
+      var zz = h("button", { type: "button", class: "mg-offenzeile" + (offenN ? "" : " fertig"),
+        title: offenN ? "Antippen: nur diese zeigen" : "Nichts steht mehr aus",
+        text: offenN
+          ? offenN + (offenN === 1 ? " Spiel ist noch nicht abgehakt · " : " Spiele sind noch nicht abgehakt · ") + euro(offenBetrag)
+          : "Alles abgehakt ✓" });
+      if (offenN) zz.addEventListener("click", function () {
+        nurUnbezahlt = true; nurOffene = false; rendereAbrechnung();
+      });
+      neu.appendChild(zz);
+    }
     alt.parentNode.replaceChild(neu, alt);
     // Offenes Detail-Panel mitziehen
     var panel = wurzel.querySelector(".mg-panel");
@@ -3139,6 +3158,19 @@ window.Mitglieder = (function () {
     ]);
     document.body.appendChild(leiste);
   }
+  // Die zwei Fragen der Abrechnung, je als eine Funktion: danach filtert
+  // die Liste, und danach zaehlt der Knopf. Getrennt gezaehlt hatten sich
+  // beide schon widersprochen.
+  function hatLuecke(sp) {
+    var e = einsaetze[sp.kennung];
+    if (new Date(sp.beginn) >= new Date()) return false;
+    // km zaehlt nur als "fehlt", wenn eine Heimatadresse da ist - sonst waere jedes Spiel unvollstaendig
+    return !e || e.verguetung == null || (e.km == null && profil.heimat_lat != null);
+  }
+  function nichtAbgehakt(sp) {
+    var e = einsaetze[sp.kennung];
+    return new Date(sp.beginn) < new Date() && !(e && e.bezahlt);
+  }
   function abrechnungSprung(kennung) { abrechnungZiel = kennung; nurOffene = false; nurUnbezahlt = false; schnellModus = false; }
   var schnellModus = false, nurUnbezahlt = false;
   // Wartet etwas auf das Netz, soll man das sehen - nicht nur eine
@@ -3187,20 +3219,52 @@ window.Mitglieder = (function () {
 
     var saisonWahl = h("select", { class: "mg-select", onchange: function (ev) { gewaehlteSaison = ev.target.value; saisonLaden(gewaehlteSaison).then(rendereAbrechnung); } },
       saisonen().map(function (s) { var o = h("option", { value: s, text: "Saison " + s }); if (s === gewaehlteSaison) o.selected = true; return o; }));
-    var offenN = spiele.filter(function (sp) { var e = einsaetze[sp.kennung]; return new Date(sp.beginn) < new Date() && (!e || e.verguetung == null || (e.km == null && profil.heimat_lat != null)); }).length;
-    var chips = h("div", { class: "mg-ansicht" }, [
-      h("button", { type: "button", class: !nurOffene && !schnellModus && !nurUnbezahlt ? "aktiv" : "", text: "Alle",
-        onclick: function () { nurOffene = false; nurUnbezahlt = false; schnellModus = false; rendereAbrechnung(); } }),
-      h("button", { type: "button", class: nurOffene && !schnellModus ? "aktiv" : "", title: "Nur Spiele, bei denen noch etwas fehlt",
-        text: "Lücken" + (offenN ? " " + offenN : ""),
-        onclick: function () { nurOffene = true; nurUnbezahlt = false; schnellModus = false; rendereAbrechnung(); } }),
-      h("button", { type: "button", class: nurUnbezahlt ? "aktiv" : "", title: "Nur Spiele, die noch nicht abgehakt sind",
-        text: "Offen",
-        onclick: function () { nurUnbezahlt = true; nurOffene = false; schnellModus = false; rendereAbrechnung(); } }),
-      h("button", { type: "button", class: schnellModus ? "aktiv" : "", title: "Eine Zeile je Spiel, alles nebeneinander",
-        text: "Schnell",
-        onclick: function () { schnellModus = true; nurOffene = false; nurUnbezahlt = false; rendereAbrechnung(); } })
-    ]);
+    var offenN = spiele.filter(hatLuecke).length;
+    var unbezahltN = spiele.filter(nichtAbgehakt).length;
+    var chips;
+    if (!designNeu()) {
+      chips = h("div", { class: "mg-ansicht" }, [
+        h("button", { type: "button", class: !nurOffene && !schnellModus && !nurUnbezahlt ? "aktiv" : "", text: "Alle",
+          onclick: function () { nurOffene = false; nurUnbezahlt = false; schnellModus = false; rendereAbrechnung(); } }),
+        h("button", { type: "button", class: nurOffene && !schnellModus ? "aktiv" : "", title: "Nur Spiele, bei denen noch etwas fehlt",
+          text: "Lücken" + (offenN ? " " + offenN : ""),
+          onclick: function () { nurOffene = true; nurUnbezahlt = false; schnellModus = false; rendereAbrechnung(); } }),
+        h("button", { type: "button", class: nurUnbezahlt ? "aktiv" : "", title: "Nur Spiele, die noch nicht abgehakt sind",
+          text: "Offen",
+          onclick: function () { nurUnbezahlt = true; nurOffene = false; schnellModus = false; rendereAbrechnung(); } }),
+        h("button", { type: "button", class: schnellModus ? "aktiv" : "", title: "Eine Zeile je Spiel, alles nebeneinander",
+          text: "Schnell",
+          onclick: function () { schnellModus = true; nurOffene = false; nurUnbezahlt = false; rendereAbrechnung(); } })
+      ]);
+    } else {
+      // Drei der vier Knoepfe filterten, der vierte stellte um - und warf
+      // dabei den Filter weg, ohne dass das irgendwo stand. Jetzt steht
+      // links, WAS man sieht, und rechts, WIE. Beides unabhaengig.
+      // Die Zahl am Knopf kommt aus derselben Funktion wie die Liste
+      // darunter; vorher zaehlten beide getrennt und widersprachen sich.
+      var filterKnopf = function (an, text, zahl, titel, fn) {
+        var k = h("button", { type: "button", class: an ? "aktiv" : "", title: titel,
+          onclick: function () { fn(); rendereAbrechnung(); } }, [h("span", { text: text })]);
+        if (zahl) k.appendChild(h("span", { class: "zaehler", text: String(zahl) }));
+        return k;
+      };
+      chips = h("div", { class: "mg-filterzeile" }, [
+        h("div", { class: "mg-ansicht" }, [
+          filterKnopf(!nurOffene && !nurUnbezahlt, "Alle", 0, "Alle Spiele der Saison",
+            function () { nurOffene = false; nurUnbezahlt = false; }),
+          filterKnopf(nurOffene, "Lücken", offenN, "Gespielt, aber km oder Vergütung fehlt",
+            function () { nurOffene = true; nurUnbezahlt = false; }),
+          filterKnopf(nurUnbezahlt, "Nicht abgehakt", unbezahltN, "Gespielt und noch nicht als bezahlt vermerkt",
+            function () { nurUnbezahlt = true; nurOffene = false; })
+        ]),
+        h("div", { class: "modus mg-darstellung" }, [
+          h("button", { type: "button", class: schnellModus ? "" : "aktiv", title: "Eine Karte je Spiel, zum Aufklappen",
+            text: "Karten", onclick: function () { schnellModus = false; rendereAbrechnung(); } }),
+          h("button", { type: "button", class: schnellModus ? "aktiv" : "", title: "Eine Zeile je Spiel, alles nebeneinander",
+            text: "Zeilen", onclick: function () { schnellModus = true; rendereAbrechnung(); } })
+        ])
+      ]);
+    }
     inhalt.appendChild(h("div", { class: "mg-abrechnung-kopf" }, [saisonWahl, chips]));
     var wartet = warteBanner();
     if (wartet) inhalt.appendChild(wartet);
@@ -3296,22 +3360,17 @@ window.Mitglieder = (function () {
       inhalt.appendChild(panel);
     }
 
+    // Erst filtern, dann entscheiden, wie es aussieht. Vorher sprang die
+    // Schnellansicht vor den Filter und zeigte immer alles.
+    var liste = spiele;
+    if (nurUnbezahlt) liste = spiele.filter(nichtAbgehakt);
+    else if (nurOffene) liste = spiele.filter(hatLuecke);
+
     if (schnellModus) {
-      inhalt.appendChild(schnellListe(spiele));
+      inhalt.appendChild(schnellListe(liste));
       aktualisiereSummen();
       return;
     }
-
-    var liste = spiele;
-    if (nurUnbezahlt) liste = spiele.filter(function (sp) {
-      var e = einsaetze[sp.kennung];
-      return new Date(sp.beginn) < new Date() && !(e && e.bezahlt);
-    });
-    else if (nurOffene) liste = spiele.filter(function (sp) {
-      var e = einsaetze[sp.kennung];
-      // km zaehlt nur als "fehlt", wenn eine Heimatadresse da ist - sonst waere jedes Spiel unvollstaendig
-      return new Date(sp.beginn) < new Date() && (!e || e.verguetung == null || (e.km == null && profil.heimat_lat != null));
-    });
     // Nach dem Speichern eines privaten Spiels die Liste neu laden
     if (!spiele.length) inhalt.appendChild(h("p", { class: "leer" }, ["Keine Spiele in dieser Saison. ", h("button", { type: "button", class: "anfrage", style: "margin-top:10px", text: "+ Spiel selbst eintragen", onclick: function () { abrechnungPanel = "eintragen"; rendereAbrechnung(); } })]));
     else if (!liste.length) inhalt.appendChild(h("p", { class: "leer", text: "Alle Spiele vollständig erfasst ✓" }));
@@ -3722,12 +3781,15 @@ window.Mitglieder = (function () {
         ]),
         h("div", { class: "paarung", text: (sp.liga ? sp.liga + ": " : "") + sp.paarung }),
         h("div", { class: "mg-summe" }, [
-          h("span", { class: "meta mg-betrag-kurz", text: b.betrag != null ? euro(b.betrag) + (e.km != null ? " · " + e.km + " km" : "") : "Betrag fehlt" }),
+          h("span", { class: "meta mg-betrag-kurz" + (b.betrag == null && vergangen ? " fehlt" : ""),
+            text: b.betrag != null ? euro(b.betrag) + (e.km != null ? " · " + e.km + " km" : "") : "Betrag fehlt" }),
           gerechnetText(e) ? h("button", { type: "button", class: "mg-status gerechnet",
             title: gerechnetText(e), text: "gerechnet ✓?",
             onclick: function () { speichereEinsatz(sp, { herkunft: null }); kurzMeldung("Als geprüft vermerkt ✓", "gut"); } }) : null,
           e.bezahlt ? h("span", { class: "mg-status bezahlt", title: "Abgehakt am " + new Date(e.bezahlt).toLocaleDateString("de-DE"), text: "bezahlt" }) : null,
-          vergangen ? null : h("span", { class: "mg-status kommt", text: "kommt" }),
+          // "kommt" sagt dasselbe wie das Datum zwei Zeilen darueber. In
+          // der Abrechnung ist die Frage ohnehin eine andere.
+          vergangen || designNeu() ? null : h("span", { class: "mg-status kommt", text: "kommt" }),
           vergangen ? fotoKnopf : null, foto,
           h("span", { class: "meta mg-auf", text: "Details ›" })
         ])
