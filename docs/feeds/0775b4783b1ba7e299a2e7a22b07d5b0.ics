@@ -7,27 +7,4 @@ X-WR-CALNAME:Einteilungen – Kissing\, Andreas
 X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
-BEGIN:VEVENT
-UID:28cec7460675a2fc24be994041b9c4adbfede522@esrw.de
-SEQUENCE:1
-DTSTAMP:20261009T175042Z
-LAST-MODIFIED:20261009T175042Z
-DTSTART:20261002T170000Z
-DTEND:20261002T203000Z
-SUMMARY:⚠ SR · U17 RL: Lippe Hockey Hamm – EHC Troisdorf
-DESCRIPTION:Geändert: Halle (vorher HELINET Eissportarena Hamm)\n\nRolle: 
- Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt: 19:00 Uhr (60 Min
-  vor Spielbeginn)\nLiga: U17 RL\nHalle: beta FINANZ Eissportarena Hamm\nAd
- resse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Zynda\, Nick\n\nQuel
- le: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:beta FINANZ Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 H
- amm
-GEO:51.686934;7.886138
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena 
- Hamm, Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="bet
- a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
-END:VEVENT
 END:VCALENDAR
