@@ -2547,20 +2547,26 @@
     if (!treffer) ziel.appendChild(planLeer(!!f || treffer !== gesamt, gesamt));
   }
   // "Nichts gefunden." sagt nur, dass man weitersuchen muss. Im neuen
-  // Design steht hier, warum die Liste leer ist und wo es weitergeht:
-  // meistens ist ein Filter gesetzt, waehrend das naechste eigene Spiel
-  // schon feststeht. Im alten Design bleibt der kurze Satz.
+  // Design steht hier, warum die Liste leer ist und wo es weitergeht.
+  //
+  // Die Reihenfolge der Faelle ist der ganze Witz: steht eine Auswahl,
+  // dann ist SIE der Grund - auch wenn nebenbei ein eigenes Spiel
+  // ansteht. Andersherum las sich der Spielplan an einem spielfreien Tag
+  // so: oben "0 von 43", unten "Dein naechstes Spiel ist am Montag" und
+  // kein Wort darueber, dass die Tagesauswahl die Liste leerraeumt.
+  // Im alten Design bleibt der kurze Satz.
   function planLeer(gefiltert, gesamt) {
     if (!designNeu()) return leerZustand(gefiltert ? "Nichts gefunden." : "Keine kommenden Spiele.");
     var n = naechstesEigenes();
-    if (n) {
-      var d = new Date(n.beginn);
-      return leerZustand("Hier steht gerade nichts. Dein nächstes Spiel ist am " + datumKurz(d),
-        { label: "Zu dem Spiel", href: "#spiel/" + encodeURIComponent(kennungVon(n)) });
-    }
-    if (gefiltert) return leerZustand(gesamt === 1
-      ? "Kein Treffer - im Plan steht ein Spiel, die Filter oben lassen es nicht durch."
-      : "Kein Treffer unter " + gesamt + " Spielen. Die Filter oben schränken die Liste ein.");
+    var hin = n ? { label: "Zu dem Spiel", href: "#spiel/" + encodeURIComponent(kennungVon(n)) } : null;
+    // datumKurz() endet selbst auf einen Punkt ("Mo. 12.10.") - kein zweiter.
+    var dann = n ? " Dein nächstes ist am " + datumKurz(new Date(n.beginn)) : "";
+    if (gefiltert) return leerZustand(
+      (gesamt === 1
+        ? "Kein Treffer. Im Plan steht ein Spiel, die Auswahl oben lässt es nicht durch."
+        : "Kein Treffer. Von " + gesamt + " Spielen lässt die Auswahl oben gerade keines durch.") + dann,
+      hin);
+    if (n) return leerZustand("Hier steht gerade nichts." + dann, hin);
     return leerZustand("Im Datenfenster steht kein kommendes Spiel. Was war, zeigt das Archiv.",
       { label: "Zum Archiv", href: "#archiv" });
   }

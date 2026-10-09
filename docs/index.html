@@ -1951,6 +1951,9 @@
              color:var(--dim); cursor:pointer; border-radius:50%; }
   .pw-auge.an { color:var(--akzent); }
   .pw-auge svg.i { width:1.1rem; height:1.1rem; }
+  /* Das Auge misst 38 px und soll es bleiben - groesser sprengt das Feld.
+     Die Tippflaeche reicht trotzdem auf 44, wie ueberall sonst. */
+  .pw-auge::after { content:""; position:absolute; inset:-3px; }
   /* Adressfeld mit Vorschlagsliste - wie im Bestellformular */
   .adress-feld { position:relative; }
   .adress-feld > input { width:100%; box-sizing:border-box; }
@@ -2411,8 +2414,10 @@
      klein und leise; sie soll die Zahl nicht ueberstimmen. */
   /* Vier Kacheln nebeneinander lassen auf 375 px rund 80 px Breite - die
      dritte Zeile bricht dort nach jedem Wort um. Zwei mal zwei liest sich
-     ruhiger und kostet kaum Hoehe, weil die Kacheln flacher werden. */
-  :root[data-design="neu"] .zahlen { grid-template-columns:1fr 1fr; }
+     ruhiger und kostet kaum Hoehe, weil die Kacheln flacher werden.
+     Nur in der Statistik: das Archiv traegt dieselbe Klasse, hat aber drei
+     Kacheln - zwei mal zwei liesse die dritte allein stehen. */
+  :root[data-design="neu"] #statistik .zahlen { grid-template-columns:1fr 1fr; }
   :root[data-design="neu"] .zahl .woher {
     display:block; margin-top:3px; font-size:var(--s-xs); font-weight:600;
     line-height:1.25; color:var(--dim); letter-spacing:0; white-space:normal; }
@@ -2883,6 +2888,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=143"></script>
+<script src="app.js?v=144"></script>
 </body>
 </html>
