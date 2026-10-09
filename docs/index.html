@@ -18,6 +18,61 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
+  /* ==================================================================
+     GLIEDERUNG DIESER DATEI
+
+     Das ganze CSS der App steht hier, in 26 Schichten. Es gilt die
+     Kaskade: bei gleicher Spezifitaet gewinnt die SPAETERE Regel, bei
+     hoeherer die spezifischere (.mg-zeile input schlaegt .mg-zeile > *).
+     Eine Korrektur gehoert also immer HINTER die Regel, die sie
+     ueberschreiben soll - nie davor.
+
+     Die Schichten sind gewachsen, und ihre alten Namen stimmen nicht mit
+     ihrer Reihenfolge ueberein: "Design 3" steht weiter unten als
+     "Runde 16" und gewinnt deshalb gegen sie. Wer nach der Nummer geht,
+     liest die Datei falsch herum. Darum zaehlen die Ueberschriften jetzt
+     nach Position - Schicht 1 bis 26, in Lesereihenfolge, also in
+     Kaskadenreihenfolge. Die Klammer nennt die alte Bezeichnung, damit
+     man den Stand in der Historie wiederfindet.
+
+     Die Reihenfolge der Schichten ist Teil der Kaskade und darf nicht
+     geaendert werden. Umsortieren hiesse umgestalten:
+     werkzeuge/css_schichten.py findet 112 Selektoren, die mehrfach
+     vorkommen, und bei keinem einzigen laesst sich das gefahrlos
+     zusammenziehen.
+
+       1  Grundlage: Farben, Tokens, Grundbausteine jeder Ansicht
+       2  Weichere Flaechen, groessere Tipp-Ziele          (Design 2)
+       3  Kopfzeile, Filter-Blatt, Hallenzeile, Summen     (Runde 16)
+       4  Aenderungen, waehlbare Leiste, Seitenkoepfe      (Runde 15)
+       5  Reihenfolge, Gespann, Vollbild am Spieltag       (Runde 14)
+       6  Sprungleisten, Kachel-Zahlen, Suchverlauf        (Runde 13)
+       7  Admin-Modus und Typografie                       (Runde 12)
+       8  Ladebalken, Spielplan-Kopf, Archiv-Chips         (Runde 11)
+       9  Seitenkoepfe, Spielkarten, leere Zustaende       (Design 10)
+      10  Schalter statt Haekchen, ruhigere Karten         (Design 9)
+      11  Schwarz, Weiss, Rot - die Farben aus dem Logo    (Design 8)
+      12  Kartenkoepfe, Kachel-Menue, Pins, Checkliste     (Design 6)
+      13  Ruhige Startseite, Offline, Animationen          (Design 5)
+      14  Schnellfilter, Wochenansicht, Mini-Kalender      (Design 4)
+      15  Akzentschimmer, Datumskachel, Kopfknoepfe        (Design 3)
+      16  Abgemeldet: nur der Anmeldeschirm                (Runde 19)
+      17  Liga-Chips und Rechnung                          (Runde 17)
+      18  Name, Leiste, Telefonliste                       (Runde 21)
+      19  Rechnungsblatt, Adminseite, Anmeldung            (Runde 20)
+      20  Der Titel im Kopf, gegen alle Schichten darueber (Runde 16)
+      21  Schritte im Rechnungsblatt, Suchfelder, Vereine  (Runde 22)
+      22  Einfache Ansicht, Menues, Regelseite, Start      (Runde 23)
+      23  Abstaende, Raender, Tippflaechen                 (Runde 42)
+      24  Ueberschneidungen, Strafenmatrix, Strafrechner   (Runde 36)
+      25  Mitgliederbereich, nachgewachsen            (Runden 46 bis 65)
+      26  Neues Design, alles unter [data-design="neu"]
+     ================================================================== */
+
+  /* ===== Schicht 1 - Grundlage ========================================
+     Farben, Tokens und die Grundbausteine, die jede Ansicht benutzt.
+     Was hier steht, gilt ueberall - jede spaetere Schicht ist eine
+     Ausnahme davon, keine Wiederholung. */
   :root {
     --bg:#f3f4f6; --karte:#ffffff; --text:#151a22; --dim:#5f6774; --linie:#e2e5ea;
     --akzent:#0f3d6e; --akzent-hell:#e3ecf7; --akzent-text:#ffffff;
@@ -670,10 +725,8 @@
     a { color:#000; text-decoration:none; }
   }
 
-  /* ==================================================================
-     Design 2: weichere Flaechen, klarere Hierarchie, groessere Tipp-Ziele.
-     Liegt als Schicht ueber den Regeln oben - spaetere Regeln gewinnen.
-     ================================================================== */
+  /* ===== Schicht 2 - Weichere Flaechen, groessere Tipp-Ziele ==========
+     (frueher "Design 2") Liegt ueber Schicht 1 und gewinnt gegen sie. */
   :root { --radius:20px; --radius-klein:14px; --bg:#f2f4f8; --karte:#ffffff; --linie:#e6e9ef;
           --schatten:0 1px 2px rgba(20,28,45,.05), 0 6px 20px -8px rgba(20,28,45,.12); }
   :root[data-theme="dark"] { --bg:#0e1116; --karte:#171b22; --linie:#262c36; --schatten:0 1px 0 rgba(255,255,255,.03); }
@@ -774,7 +827,8 @@
   .tour-punkte i { width:7px; height:7px; border-radius:50%; background:var(--linie); }
   .tour-punkte i.aktiv { background:var(--akzent); width:18px; border-radius:var(--radius-xs); }
   @media (prefers-reduced-motion: reduce) { .tour-karte { animation:none; } }
-  /* Runde 16: Kopfzeile unter der Insel, Filter-Blatt, Hallenzeile, Summen */
+  /* ===== Schicht 3 - Kopfzeile, Filter-Blatt, Hallenzeile, Summen ==== */
+  /* (frueher "Runde 16") */
   /* iPhone mit Insel: der Titel braucht Luft nach oben, sonst schneidet die
      Statusleiste ihn an (die Seite laeuft wegen viewport-fit=cover darunter).
      Die schmale Ansicht weiter unten setzt denselben Abstand noch einmal. */
@@ -816,7 +870,8 @@
   .karten-legende { display:flex; flex-wrap:wrap; gap:10px 16px; margin:10px 2px 0; font-size:var(--s-m); color:var(--dim); font-weight:600; }
   .karten-legende span { display:inline-flex; align-items:center; gap:6px; }
   .karten-legende i { width:11px; height:11px; border-radius:50%; display:inline-block; border:2px solid #fff; box-shadow:0 0 0 1px var(--linie); }
-  /* Runde 15: Aenderungen mit Filter, Leiste unten waehlbar, Seitenkoepfe */
+  /* ===== Schicht 4 - Aenderungen, waehlbare Leiste, Seitenkoepfe ===== */
+  /* (frueher "Runde 15") */
   /* Kopf einer Unterseite: Zeichen, Titel, Zweck - in jeder Seite gleich */
   .kopf-i { width:42px; height:42px; border-radius:var(--radius); background:var(--akzent-hell); color:var(--akzent);
             display:inline-flex; align-items:center; justify-content:center; flex:none; }
@@ -838,7 +893,8 @@
   /* Leiste unten: der aktive Platz bekommt einen Strich - sonst sieht man auf
      kleinen Bildschirmen kaum, wo man ist */
   .leiste button.aktiv { font-weight:800; }
-  /* Runde 14: Reihenfolge, Gespann-Verlauf, Vollbild am Spieltag, dunkle Karte */
+  /* ===== Schicht 5 - Reihenfolge, Gespann, Vollbild am Spieltag ====== */
+  /* (frueher "Runde 14") */
   .ordnung-zeile { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:8px 0; border-top:1px solid var(--linie); font-weight:600; }
   .ordnung-zeile:first-child { border-top:0; }
   .ordnung-zeile .knoepfe { display:flex; gap:6px; flex:none; }
@@ -889,7 +945,8 @@
   }
   .stand.laedt { opacity:.6; }
   .stand { cursor:pointer; }
-  /* Runde 13: Sprungleisten, Kachel-Zahlen, Suchverlauf */
+  /* ===== Schicht 6 - Sprungleisten, Kachel-Zahlen, Suchverlauf ======= */
+  /* (frueher "Runde 13") */
   .sprungleiste { display:flex; gap:6px; overflow-x:auto; padding:2px 0 8px; margin:0 0 4px; scrollbar-width:none; }
   .sprungleiste::-webkit-scrollbar { display:none; }
   .sprungleiste .chip { flex:none; background:var(--karte); border:1px solid var(--linie); font-weight:700; cursor:pointer; font-family:inherit; }
@@ -897,7 +954,8 @@
   .menue a { position:relative; }
   .such-verlauf { margin:0 0 8px; }
   .such-verlauf .chip { cursor:pointer; font-family:inherit; }
-  /* Runde 12: Admin-Modus, Typografie (Ziffern, Trennung, ruhigere Grossbuchstaben) */
+  /* ===== Schicht 7 - Admin-Modus und Typografie ====================== */
+  /* (frueher "Runde 12") Ziffern, Trennung, ruhigere Grossbuchstaben */
   /* Kopf: Titel darf schrumpfen, Knoepfe bleiben rechts - sonst deckt der
      Admin-Schalter auf schmalen Geraeten das "ESRW" zu */
   .kopf > .marke { flex:1 1 auto; min-width:0; }
@@ -928,7 +986,8 @@
   .tour-karte p, .leer { hyphens:auto; -webkit-hyphens:auto; }
   .leer { margin-left:auto; margin-right:auto; }
   .rolle { font-variant-numeric:tabular-nums; }
-  /* Runde 11: Ladebalken, kompakter Spielplan-Kopf, Archiv-Chips, Schnellzugriff */
+  /* ===== Schicht 8 - Ladebalken, Spielplan-Kopf, Archiv-Chips ======== */
+  /* (frueher "Runde 11") */
   .ladebalken { position:fixed; top:0; left:0; right:0; height:3px; z-index:70; pointer-events:none; overflow:hidden; }
   .ladebalken i { display:block; height:100%; width:40%; background:var(--rot); border-radius:0 3px 3px 0; transform:translateX(-45%); opacity:0; transition:opacity .2s; }
   .ladebalken.laeuft i { opacity:1; animation:ladeLauf 1.1s ease-in-out infinite; }
@@ -970,7 +1029,8 @@
   .mg-eintrag .mg-felder { grid-template-columns:repeat(3, minmax(0, 1fr)); }
   .mg-felder label > input, .mg-felder label > select { min-width:0; width:100%; box-sizing:border-box; }
   input[type=date], input[type=datetime-local] { min-width:0; -webkit-appearance:none; appearance:none; }
-  /* Design 10: einheitliche Seitenkoepfe, kompaktere Spielkarten, leere Zustaende mit Aktion, Mehrfachauswahl */
+  /* ===== Schicht 9 - Seitenkoepfe, Spielkarten, leere Zustaende ====== */
+  /* (frueher "Design 10") auch: Mehrfachauswahl */
   section:not(#detail):not(#mitglieder) > .profilzeile.karte { background:transparent; box-shadow:none; border:0; padding:6px 2px 12px; align-items:flex-start; }
   section:not(#detail):not(#mitglieder) > .profilzeile.karte > span:first-child b { font-size:1.45rem; letter-spacing:-.02em; line-height:1.15; }
   section:not(#detail):not(#mitglieder) > .profilzeile.karte small { font-size:var(--s-l); margin-top:2px; }
@@ -1039,7 +1099,8 @@
   .mg-kal .tag b { font-size:var(--s-m); }
   .mg-kal .tag em { font-style:normal; font-weight:800; font-size:var(--s-xs); }
   .mg-kal .tag.heute b { color:var(--rot); }
-  /* Design 9: Schalter statt Haekchen, grosse Checks in Listen, ruhigere Karten */
+  /* ===== Schicht 10 - Schalter statt Haekchen, ruhigere Karten ======= */
+  /* (frueher "Design 9") auch: grosse Checks in Listen */
   input[type=checkbox] { -webkit-appearance:none; appearance:none; margin:0; flex:none; cursor:pointer; }
   /* Schalter (Einstellungen, Filter, Optionen) */
   input[type=checkbox]:not(.check) { width:46px; height:28px; border-radius:var(--radius-pille); background:var(--linie); position:relative; transition:background .18s; border:0; }
@@ -1292,7 +1353,8 @@
     .leiste button svg.i { padding:6px 16px; }
   }
 
-  /* Design 8: Schwarz, Weiss, Rot - aus dem ESRW-Logo (Streifen, Armbinde, Puck) */
+  /* ===== Schicht 11 - Schwarz, Weiss, Rot - die Farben aus dem Logo == */
+  /* (frueher "Design 8") Streifen, Armbinde, Puck */
   :root { --akzent:#15161a; --akzent-hell:#ebebee; --akzent-text:#ffffff; --sr:#15161a; --sr-bg:#ebebee; --held-1:#0c0d10; --held-2:#33353d;
           --held-schatten:0 12px 28px -10px rgba(0,0,0,.55); --rot:#e30613; --rot-hell:#fde7e9; --bg:#f1f1f3; --hsr:#b0000c; --hsr-bg:#fde7e9; --lsr:#3a3c44; --lsr-bg:#ebebee; }
   :root[data-theme="dark"] { --akzent:#f5f5f7; --akzent-hell:#26272d; --sr:#f5f5f7; --sr-bg:#26272d; --akzent-text:#0c0d10; --bg:#08080a; --karte:#141417; --linie:#26272d; --dim:#9a9ca6; --rot:#ff3b47; --rot-hell:#3a1216; --held-1:#0a0a0c; --held-2:#2a2b31; --hsr:#ff6b74; --hsr-bg:#3a1216; --lsr:#c9cbd3; --lsr-bg:#26272d; }
@@ -1343,7 +1405,8 @@
   .profilzeile > span:last-child { display:flex; flex-direction:column; align-items:flex-end; gap:2px; flex:none; }
   .profilzeile > span:last-child .textknopf { font-size:var(--s-l); padding:4px 2px; }
 
-  /* Design 6: einheitliche Kartenkoepfe, Kachel-Menue, Pins, Checkliste */
+  /* ===== Schicht 12 - Kartenkoepfe, Kachel-Menue, Pins, Checkliste === */
+  /* (frueher "Design 6") */
   .melde h4, .abschnitt-karte h4, .radar h4, .balken h4, .hinweiskopf { display:flex; align-items:center; gap:8px; margin:0 0 8px; font-size:var(--s-l); font-weight:800; color:var(--text); text-transform:none; letter-spacing:0; }
   .melde h4 svg.i, .abschnitt-karte h4 svg.i, .radar h4 svg.i { width:1rem; height:1rem; padding:6px; box-sizing:content-box; border-radius:var(--radius-s); background:var(--akzent-hell); color:var(--akzent); }
   .melde h4 .status { margin-left:auto; }
@@ -1368,7 +1431,8 @@
   .kontakt-knoepfe { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
   .kontakt-knoepfe a { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.16); color:#fff; border:1px solid rgba(255,255,255,.3); border-radius:var(--radius-pille); padding:8px 12px; text-decoration:none; font-weight:700; font-size:var(--s-m); }
 
-  /* Design 5: ruhigere Startseite, Offline, Animationen, Ligafarbe auf der Spielseite */
+  /* ===== Schicht 13 - Ruhige Startseite, Offline, Animationen ======== */
+  /* (frueher "Design 5") auch: Ligafarbe auf der Spielseite */
   .offline { position:sticky; top:0; z-index:30; margin:0 -16px 10px; padding:8px 16px; background:var(--warn); color:#fff; font-size:var(--s-l); font-weight:700; display:flex; gap:8px; align-items:center; }
   .uebersicht { grid-template-columns:repeat(3, minmax(0, 1fr)); gap:8px; }
   .uebersicht .zahl { padding:10px 10px; }
@@ -1400,7 +1464,8 @@
     @keyframes karte-rein { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
   }
 
-  /* Design 4: Schnellfilter, Nach-oben, Wochenansicht, kompakte Abrechnung, Mini-Kalender */
+  /* ===== Schicht 14 - Schnellfilter, Wochenansicht, Mini-Kalender ==== */
+  /* (frueher "Design 4") auch: Nach-oben, kompakte Abrechnung */
   .schnell { margin:2px 0 4px; }
   .schnell .chip { white-space:nowrap; }
   @media (max-width: 420px) { .abschnitt { flex-wrap:wrap; } .abschnitt small { flex:1 1 100%; margin-top:2px; } }
@@ -1431,7 +1496,9 @@
   .monat.mini .zelle.gern { background:var(--gut-bg); color:var(--gut); border-color:transparent; }
   .monat.mini .punkte i { width:5px; height:5px; }
 
-  /* Design 3: Akzentschimmer oben, Datumskachel in Ligafarbe, Kopfknoepfe */
+  /* ===== Schicht 15 - Akzentschimmer, Datumskachel, Kopfknoepfe ====== */
+  /* (frueher "Design 3" - und gewinnt trotz der kleinen Nummer gegen
+     alle Schichten darueber, weil sie weiter unten steht) */
   body { position:relative; }
   body::before { content:""; position:fixed; inset:0 0 auto 0; height:260px; pointer-events:none; z-index:-1;
     background:radial-gradient(60% 120% at 20% -20%, color-mix(in srgb, var(--akzent) 16%, transparent), transparent 70%); }
@@ -1447,11 +1514,13 @@
   .spiel.zeit-links .wann { background:var(--liga-bg, var(--bg)); color:var(--liga-fg, inherit); }
   .spiel.zeit-links .wann b { color:inherit; opacity:.75; }
   .gruppe-anfrage { margin-top:6px; }
-  /* ---- Runde 19: ohne Anmeldung gibt es nur den Anmeldeschirm ---- */
+  /* ===== Schicht 16 - Abgemeldet: nur der Anmeldeschirm ============== */
+  /* (frueher "Runde 19") */
   html.abgemeldet .leiste, html.abgemeldet .kopf button, html.abgemeldet #hoch { display:none !important; }   /* Zustandsklasse, s.o. */
   html.abgemeldet body { padding-bottom:24px; }
   html.abgemeldet .kopf .stand { background:none; box-shadow:none; padding-left:0; }
-  /* ---- Runde 17: Liga-Chips, Rechnung ---- */
+  /* ===== Schicht 17 - Liga-Chips und Rechnung ======================== */
+  /* (frueher "Runde 17") */
   .liga-chip { display:inline-flex; align-items:center; gap:0; padding:0 0 0 12px; overflow:hidden; }
   .liga-chip .liga-name { padding:6px 0; font-weight:700; }
   .liga-chip .liga-zahl { font-style:normal; margin-left:8px; padding:6px 8px; background:var(--bg); color:var(--dim);
@@ -1462,7 +1531,8 @@
   .rechnung-zeile b { display:block; font-weight:700; font-size:var(--s-xl); }
   .rechnung-zeile small { color:var(--dim); }
   .rechnung-wahl { max-height:270px; overflow:auto; border:1px solid var(--linie); border-radius:var(--radius); padding:0 12px; }
-  /* ---- Runde 21: Name, Leiste, Telefonliste ---- */
+  /* ===== Schicht 18 - Name, Leiste, Telefonliste ===================== */
+  /* (frueher "Runde 21") */
   .rechnung-gruppe { border-top:1px solid var(--linie); padding-top:8px; margin-top:8px; }
   .rechnung-gruppe:first-of-type { border-top:0; margin-top:0; padding-top:0; }
   .rechnung-gruppe > summary b { font-size:var(--s-m); text-transform:uppercase; letter-spacing:.07em; color:var(--dim); display:block; }
@@ -1484,7 +1554,8 @@
   .telefon-wege { display:flex; gap:6px; flex:none; }
   .telefon-wege a, .telefon-wege button { font-size:var(--s-m); padding:6px 10px; border-radius:var(--radius-pille); border:1px solid var(--linie);
                                           background:var(--bg); color:var(--text); text-decoration:none; font-weight:700; cursor:pointer; }
-  /* ---- Runde 20: Rechnungsblatt, Adminseite, Anmeldung ---- */
+  /* ===== Schicht 19 - Rechnungsblatt, Adminseite, Anmeldung ========== */
+  /* (frueher "Runde 20") */
   .rechnungsblatt > * { margin-bottom:10px; }
   .rechnungsblatt > details > summary { font-weight:700; }
   .rechnung-karte { padding:14px; }
@@ -1514,7 +1585,8 @@
     .rechnung-gruppe > .rechnung-feld { display:inline-block; width:calc(50% - 6px); vertical-align:top; }
     .rechnung-gruppe > .rechnung-feld:nth-of-type(odd) { margin-right:8px; }
   }
-  /* ---- Runde 16, Nachtrag: gewinnt gegen alle Schichten darueber ----
+  /* ===== Schicht 20 - Der Titel im Kopf ==============================
+     (frueher "Runde 16, Nachtrag") gewinnt gegen alle Schichten darueber.
      Auf schmalen Geraeten blieb vom Titel "Einteilungen ESRW" nur
      "Einteilungen ESR" uebrig - das rote ESRW lief unter den Knoepfen durch.
      Dort steht jetzt nur "Einteilungen"; die Marke traegt das Logo daneben.
@@ -1526,7 +1598,8 @@
     .marke .logo { width:40px; height:40px; }
     .kopf { padding-top:calc(env(safe-area-inset-top) + 14px); }
   }
-  /* ---- Runde 22: Schritte im Rechnungsblatt, Suchfelder, Vereine ---- */
+  /* ===== Schicht 21 - Schritte im Rechnungsblatt, Suchfelder ========= */
+  /* (frueher "Runde 22") auch: Vereine */
   .rechnung-gruppe > summary, .rechnung-steller > summary { display:flex; gap:10px; align-items:flex-start; }
   .rechnung-gruppe > summary > span:last-child,
   .rechnung-steller > summary > span:last-child { min-width:0; flex:1 1 auto; }
@@ -1545,7 +1618,10 @@
   /* Im Adminbereich stehen zwei Knoepfe mehr in der Zeile - sie duerfen
      umbrechen, sonst steht "Loeschen" halb ausserhalb der Karte. */
   .telefon-wege { flex:1 1 auto; flex-wrap:wrap; justify-content:flex-end; }
-  /* ---- Runde 23: einfache Ansicht, Menues ---- */
+  /* ===== Schicht 22 - Einfache Ansicht, Menues, Regelseite, Start ====
+     (frueher "Runde 23") Die laengste Schicht: einfache Ansicht und
+     Kachelmenues, dann Kollegen- und Regelseite, Strafenmatrix,
+     Bestimmungen, Spielzeiten und der erste Moment nach dem Start. */
   .mehr-ansicht { display:flex; gap:6px; margin:0 0 10px; }
   /* "Selten gebraucht": eine Ueberschrift zum Antippen. Die Kacheln bleiben
      Geschwister im Raster - in einem <details> wuerden sie einspaltig stehen. */
@@ -1728,7 +1804,9 @@
   .abfahrt-gross svg.i { width:1.3rem; height:1.3rem; flex:none; }
   .abfahrt-gross b { display:block; font-size:var(--s-2xl); }
   .abfahrt-gross small { display:block; color:var(--akzent); opacity:.85; font-weight:600; }
-  /* ---- Nachtrag Runde 42: Abstaende, Raender, Tippflaechen ---------- */
+  /* ===== Schicht 23 - Abstaende, Raender, Tippflaechen ===============
+     (frueher "Nachtrag Runde 42") Ein Durchgang quer durch die App, der
+     ueberall dieselben Masse durchsetzt - darum steht er so weit unten. */
   /* Karten, die ihren Innenabstand nie bekommen haben - Inhalt klebte am Rand */
   .karte.archiv-liste { padding:2px 14px; }
   .karte.einrichtung { padding:12px 14px; }
@@ -1801,7 +1879,9 @@
   .profil-vorschau { border:1px dashed var(--linie); border-radius:var(--radius); padding:10px 12px; }
   .avatar-knopf.mit-bild { border:0; }
   #regeln-liste > .meta, #rechner-inhalt > .meta { margin:0 4px; }
-  /* --- Nachtrag Runde 36: Ueberschneidungen --- */
+  /* ===== Schicht 24 - Ueberschneidungen, Strafenmatrix, Rechner ======
+     (frueher "Nachtrag Runde 36") Was sich gegenseitig in den Rand
+     geschoben hat, wird hier auseinandergezogen. */
   /* Kopfzeile: der Block mit Titel und Stand muss mitschrumpfen duerfen.
      Ohne min-width:0 behaelt er seine Textbreite und schiebt sich unter
      die runden Knoepfe - der Titel stand quer ueber dem Admin-Schalter. */
@@ -1896,6 +1976,11 @@
   .einstellungen-liste label > span > small { display:block; color:var(--dim); font-weight:500; }
   /* Adminbereich: die sechs Knoepfe lieber umbrechen als wegscrollen */
   .admin-leiste { flex-wrap:wrap; overflow-x:visible; }
+
+  /* ===== Schicht 25 - Mitgliederbereich, nachgewachsen ===============
+     Runden 46 bis 65, in der Reihenfolge, in der sie entstanden sind.
+     Hier steht, was der Mitgliederbereich nach seinem Umbau noch
+     bekommen hat; die Rundennummern bleiben als Fundstelle stehen. */
 
   /* Runde 46: wartende Aenderungen */
   .hinweis.warteschlange { flex-direction:column; gap:6px; align-items:stretch; }
@@ -2086,8 +2171,7 @@
   .mg-status.gerechnet { background:var(--warn-bg); color:var(--warn); border:0; font:inherit;
     font-size:var(--s-xs); font-weight:700; cursor:pointer; }
 
-  /* ==================================================================
-     Neues Design (im Aufbau)
+  /* ===== Schicht 26 - Neues Design (im Aufbau) =======================
      Alles unter :root[data-design="neu"]. Das alte Design bleibt
      unberuehrt, der Schalter steht in den Einstellungen und ist nur fuer
      den Betreiber sichtbar. Hier entsteht Ansicht fuer Ansicht das, was
@@ -2799,6 +2883,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=142"></script>
+<script src="app.js?v=143"></script>
 </body>
 </html>
