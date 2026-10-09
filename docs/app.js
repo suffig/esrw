@@ -4431,6 +4431,7 @@
       funktion("statistik") ? ["#statistik", "i-balken", "Statistik", "Saison, Ligen, Hallen, Partner, Saisonziel"] : null,
       funktion("aenderungen") ? ["#aenderungen", "i-list", "\u00c4nderungen", "Was sich in 14 Tagen getan hat \u2013 mit Vorher/Nachher"] : null,
       funktion("notizen") ? ["#mitglieder/notizen", "i-note", "Notizen", "Private Spielnotizen"] : null,
+      funktion("abrechnung") && sitzungVorhanden() ? ["#rechnung", "i-euro", "Rechnung schreiben", "Gebührenabrechnung als PDF – Spiele wählst du im Formular"] : null,
       funktion("regeln") ? ["#regeln", "i-buch", "Regeln", "Strafenmatrix, Spielzeiten und Bestimmungen, auch offline"] : null,
       funktion("rechner") ? ["#rechner", "i-rechner", "Strafrechner", "Wer sitzt, wer spielt: die Stärke auf dem Eis"] : null,
       ["Gemeinsam"],
@@ -5621,6 +5622,15 @@
     if (slug === "mitglieder/konto") { location.hash = "einstellungen"; return; }
     if (slug === "aenderungen") { if (!funktion("aenderungen")) { location.hash = "mehr"; return; } zeigeAenderungen(); return; }
     if (slug === "archiv" || slug.indexOf("archiv/") === 0) { if (!funktion("archiv")) { location.hash = "mehr"; return; } zeigeArchiv(slug.split("/")[1] || ""); return; }
+    // Ohne Kennung: das leere Formular. Der Weg dahin fuehrte sonst nur
+    // ueber das Menue am Ende der Abrechnungsliste - bei vierzig Spielen
+    // eine lange Rolle, bevor man ihn sieht.
+    if (slug === "rechnung") {
+      if (!funktion("abrechnung") || !sitzungVorhanden()) { location.hash = "mitglieder"; return; }
+      ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
+        .then(function () { return window.Mitglieder.rechnungOeffnen(); }).catch(function () {});
+      location.hash = "mitglieder/abrechnung"; return;
+    }
     if (slug.indexOf("rechnung/") === 0) {
       var rk = decodeURIComponent(slug.slice(9));
       ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })

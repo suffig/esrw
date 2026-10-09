@@ -2199,6 +2199,24 @@ window.Mitglieder = (function () {
 
   // Von aussen (Spielseite, Abrechnungsliste): dieses Spiel vormerken und das
   // Rechnungsblatt oeffnen.
+  // Die Rechnung oeffnen, ohne vorher ein Spiel zu waehlen. Ein schon
+  // angefangener Entwurf bleibt stehen - wer hierher kommt, will weiter
+  // machen, nicht von vorn anfangen. Welche Spiele daraufkommen, waehlt
+  // man im Formular selbst (Schritt "Spiele").
+  function rechnungOeffnen() {
+    return ladeArchiv().then(function () {
+      if (!rechnungForm) rechnungForm = rechnungFormAusWahl();
+      abrechnungPanel = "rechnung"; panelUnten = false;
+      reiter = "abrechnung";
+      rendereAbrechnung();
+      setTimeout(function () {
+        var p = wurzel.querySelector(".mg-panel");
+        if (p) p.scrollIntoView({ block: "start", behavior: "smooth" });
+      }, 80);
+      return true;
+    }).catch(function () { return false; });
+  }
+
   function rechnungSprung(kennung) {
     return ladeArchiv().then(function () {
       var sp = alleSpiele().filter(function (x) { return x.kennung === kennung; })[0];
@@ -7369,7 +7387,7 @@ window.Mitglieder = (function () {
            sperrenAm: sperrenAm, gesuchAnlegen: gesuchAnlegen, offeneAbrechnungen: offeneAbrechnungen,
            extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat, obmann: obmann, termine: termine,
            einstellungenSpeichern: einstellungenSpeichern, radar: radar, angebotMachen: angebotMachen,
-           kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl, kontoRendern: kontoRendern, kontaktVon: kontaktVon, istAdmin: istAdmin, adminRecht: adminRecht, tresorSchluessel: tresorSchluessel, kontoKurz: kontoKurz, rechnungSprung: rechnungSprung, korrekturSpeichern: korrekturSpeichern, spielManuellLoeschen: spielManuellLoeschen,
+           kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl, kontoRendern: kontoRendern, kontaktVon: kontaktVon, istAdmin: istAdmin, adminRecht: adminRecht, tresorSchluessel: tresorSchluessel, kontoKurz: kontoKurz, rechnungSprung: rechnungSprung, rechnungOeffnen: rechnungOeffnen, korrekturSpeichern: korrekturSpeichern, spielManuellLoeschen: spielManuellLoeschen,
            mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, telefonVon: telefonVon, spielzeiten: spielzeiten, rechnungEinlesen: rechnungEinlesen, bilder: bilder, bildVon: bildVon, rufnameVon: rufnameVon, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb, wohnortEigen: wohnortEigen, notizenFuerSuche: notizenFuerSuche, zugang: zugang, darfKorrigieren: darfKorrigieren, antrittsstaerken: antrittsstaerken,
            darfAlleSpiele: darfAlleSpiele, funktionSetzen: funktionSetzen };
 })();
