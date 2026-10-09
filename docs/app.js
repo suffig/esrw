@@ -445,12 +445,19 @@
       });
     });
   })();
+  // Spielplan und Mehr haben einen Titelblock, der nichts traegt als eine
+  // Ueberschrift - zweimal ein Kopf uebereinander. Im neuen Design steht
+  // der Name oben im App-Kopf, der Block darunter entfaellt. Seiten mit
+  // eigener Kopfkarte (Untertitel, Zurueck-Knopf) behalten ihre; dort
+  // bleibt oben die Marke.
+  var KOPFTITEL = { plan: "Spielplan", mehr: "Mehr" };
   // Auf schmalen Geraeten ist neben Knoepfen und Zeichen kein Platz fuer
   // "Einteilungen ESRW". Statt ihn abzuschneiden, steht dort die Kurzform.
   function titelAnpassen() {
     var h = el("titel");
     if (!h || !daten) return;
-    var voll = daten.titel || "ESRW App";
+    var eigen = designNeu() ? KOPFTITEL[document.documentElement.getAttribute("data-ansicht")] : null;
+    var voll = eigen || daten.titel || "ESRW App";
     var kurz = voll.split(/\s+/).slice(-1)[0] || voll;
     h.textContent = voll;
     h.title = voll;
@@ -3208,6 +3215,7 @@
   function ansicht(name) {
     letzteAnsicht = name;
     document.documentElement.setAttribute("data-ansicht", name);
+    titelAnpassen();
     el("detail").classList.remove("start-laedt");
     ["auswahl", "detail", "plan", "mitglieder", "halle", "status", "spiel", "mehr", "einstellungen", "karte", "statseite", "aenderungen", "mitfahren", "archiv", "regeln", "rechner", "gesperrt"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
     if (name !== "plan" && typeof filterBlatt === "function" && !el("plan-filter-blatt").classList.contains("versteckt")) filterBlatt(false);

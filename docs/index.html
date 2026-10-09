@@ -2287,6 +2287,10 @@
   :root[data-design="neu"][data-ansicht="plan"] .kopf .logo { width:44px; height:44px; }
   :root[data-design="neu"][data-ansicht="detail"] .kopf h1,
   :root[data-design="neu"][data-ansicht="plan"] .kopf h1 { font-size:var(--titel); }
+
+  /* Wo der Name jetzt oben im Kopf steht, braucht es den Block darunter
+     nicht mehr - er trug nichts ausser der Ueberschrift. */
+  :root[data-design="neu"] .seitentitel { display:none; }
 </style>
 </head>
 <body>
@@ -2751,6 +2755,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=138"></script>
+<script src="app.js?v=139"></script>
 </body>
 </html>
