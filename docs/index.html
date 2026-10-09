@@ -1566,6 +1566,8 @@
   .rechnung-feld { display:block; margin-bottom:8px; }
   .rechnung-feld > span { display:block; font-size:var(--s-s); color:var(--dim); font-weight:600; margin-bottom:4px; }
   .rechnung-feld input { width:100%; font:inherit; padding:10px 12px; border-radius:var(--radius-m); border:1px solid var(--linie); background:var(--bg); color:var(--text); }
+  /* Erklaerung unter einem Feld - dort hat sie Platz, im Platzhalter nicht. */
+  .feld-hinweis { display:block; margin:-4px 0 10px; color:var(--dim); font-size:var(--s-s); }
   .rechnung-paarung { display:grid; grid-template-columns:1fr auto 1fr; gap:6px; align-items:center; margin-bottom:6px; }
   .rechnung-paarung input { width:100%; min-width:0; font:inherit; padding:8px 10px; border-radius:var(--radius-m); border:1px solid var(--linie); background:var(--bg); color:var(--text); }
   .rechnung-paarung span { color:var(--dim); font-weight:800; }
@@ -3096,6 +3098,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=165"></script>
+<script src="app.js?v=167"></script>
 </body>
 </html>

@@ -1892,7 +1892,7 @@ window.Mitglieder = (function () {
     });
     [["Vergütung", euro(sS.verg), null, "", sS.spiele + (sS.spiele === 1 ? " Spiel" : " Spiele") + " mit Betrag"],
      ["Kosten", euro(kosten), null, "", "Fahrt, Verpflegung, Auslagen"],
-     ["Saldo", euro(sS.verg - kosten), function () { abrechnungPanel = "detail"; rendereAbrechnung(); }, sS.verg - kosten < 0 ? "offen" : "offen fertig", "Vergütung minus Kosten"],
+     ["Saldo", euro(sS.verg - kosten), function () { panelOeffnen("detail", false); }, sS.verg - kosten < 0 ? "offen" : "offen fertig", "Vergütung minus Kosten"],
      [offenN ? "Offen · " + offenN + (offenN === 1 ? " Spiel" : " Spiele") : "Alles abgehakt",
       offenN ? euro(offenBetrag) : "✓",
       function () { nurUnbezahlt = !nurUnbezahlt; nurOffene = false; schnellModus = false; rendereAbrechnung(); },
@@ -1918,7 +1918,7 @@ window.Mitglieder = (function () {
         h("span", { text: "Saldo · Vergütung minus Kosten" })
       ]);
       kopf.title = "Antippen: Vergütung, Kosten und Steuerjahre";
-      kopf.addEventListener("click", function () { abrechnungPanel = "detail"; rendereAbrechnung(); });
+      kopf.addEventListener("click", function () { panelOeffnen("detail", false); });
       neu = h("div", { class: "mg-summenblock" }, [kopf]);
       var fb = fortschritt(bezahltBetrag, offenBetrag); if (fb) neu.appendChild(fb);
       var zz = h("button", { type: "button", class: "mg-offenzeile" + (offenN ? "" : " fertig"),
@@ -1941,7 +1941,7 @@ window.Mitglieder = (function () {
           title: "Antippen: die Fundstellen ansehen",
           text: pruefN === 1 ? "1 Stelle zum Nachsehen" : pruefN + " Stellen zum Nachsehen" });
         pz.addEventListener("click", function () {
-          abrechnungPanel = abrechnungPanel === "pruefen" ? null : "pruefen"; rendereAbrechnung();
+          panelOeffnen("pruefen", false);
         });
         neu.appendChild(pz);
       }
@@ -1953,7 +1953,7 @@ window.Mitglieder = (function () {
         var rz = h("button", { type: "button", class: "mg-offenzeile pruef",
           title: "Antippen: weiter an der Rechnung",
           text: "Rechnung angefangen · " + rwN + (rwN === 1 ? " Spiel vorgemerkt" : " Spiele vorgemerkt") });
-        rz.addEventListener("click", function () { abrechnungPanel = "rechnung"; rendereAbrechnung(); });
+        rz.addEventListener("click", function () { abrechnungPanel = "rechnung"; panelUnten = false; rendereAbrechnung(); });
         neu.appendChild(rz);
       }
     }
@@ -1990,13 +1990,30 @@ window.Mitglieder = (function () {
         var s = summen(alle, function (sp) { var d = new Date(sp.beginn); return d.getFullYear() === jahr && d.getMonth() === m; });
         monate.push({ monat: m, spiele: s.spiele, verg: s.verg, km: s.km });
       }
-      var jahrBox = summenBox("Steuerjahr " + jahr, summen(alle, function (sp) { return new Date(sp.beginn).getFullYear() === jahr; }), monate);
+      var sJ = summen(alle, function (sp) { return new Date(sp.beginn).getFullYear() === jahr; });
+      var jahrBox = summenBox("Steuerjahr " + jahr, sJ, monate);
       var imJahr = alle.filter(function (sp) { return new Date(sp.beginn).getFullYear() === jahr; });
       jahrBox.appendChild(h("div", { class: "zweit", style: "margin-top:8px" }, [
         h("button", { type: "button", text: "Jahr " + jahr + " als CSV", onclick: function () { csvExport(imJahr.slice().sort(function (a, b) { return a.beginn < b.beginn ? -1 : 1; }), "Steuerjahr_" + jahr); } }),
         h("button", { type: "button", text: "Jahresblatt drucken", onclick: function () { zeigeJahresblatt(jahr); } })
       ]));
-      det.appendChild(jahrBox);
+      // Je Steuerjahr ein Block mit Zahlen, Monatsbalken und zwei Knoepfen -
+      // offen uebereinander sind das drei Bildschirme, bevor man beim
+      // naechsten Jahr ist. Zugeklappt steht die eine Zahl im Deckel, die
+      // man sucht; aufgeklappt wird, was man braucht.
+      if (designNeu()) {
+        var jd = h("details", { class: "karte bestimmung-block" }, [
+          h("summary", {}, [h("span", {}, [
+            h("b", { text: "Steuerjahr " + jahr }),
+            h("small", { text: sJ.spiele + (sJ.spiele === 1 ? " Spiel · " : " Spiele · ")
+              + euro(sJ.verg - sJ.fahrt - sJ.verpf - sJ.ausl) })])])
+        ]);
+        // Die Ueberschrift steckt jetzt im Deckel, im Block waere sie doppelt.
+        var ueber = jahrBox.querySelector("h3.abschnitt");
+        if (ueber) ueber.remove();
+        jd.appendChild(jahrBox);
+        det.appendChild(jd);
+      } else det.appendChild(jahrBox);
     });
     return det;
   }
@@ -2549,7 +2566,11 @@ window.Mitglieder = (function () {
   function stammdatenFormular(fertig) {
     var d = rechnungDaten();
     var fVer = h("input", { type: "text", value: d.verein || "ESRW", placeholder: "Verein" });
-    var fNr = h("input", { type: "text", value: d.sr_nummer || "", placeholder: "z. B. 12345, steht in Klammern hinter deinem Namen" });
+    // Der Platzhalter war 50 Zeichen lang und wurde im Feld mitten im Wort
+    // abgeschnitten ("steht in Klammern hinte..."). Ein abgeschnittener
+    // Hinweis hilft niemandem - er steht jetzt unter dem Feld, wo er
+    // stehenbleiben darf.
+    var fNr = h("input", { type: "text", value: d.sr_nummer || "", placeholder: "z. B. 12345" });
     var fSt = h("input", { type: "text", value: d.steuernummer || "", placeholder: "Steuernummer" });
     var fKlein = h("input", { type: "checkbox" }); fKlein.checked = d.klein !== false;
     var fPraefix = h("input", { type: "text", value: d.praefix || (new Date().getFullYear() + "-"), style: "width:7em" });
@@ -2562,6 +2583,7 @@ window.Mitglieder = (function () {
            onclick: function () { zeigeReiter("profil"); } })]),
       h("label", { text: "Verein" }), fVer,
       h("label", { text: "Schiedsrichternummer" }), fNr,
+      h("small", { class: "feld-hinweis", text: "Steht auf esrw.de in Klammern hinter deinem Namen." }),
       h("label", { text: "Steuernummer" }), fSt,
       h("label", { class: "schalter", style: "margin-top:8px" }, [fKlein, " Kleinunternehmer nach § 19 UStG"]),
       h("label", { text: "Nächste Rechnungsnummer" }),
@@ -2788,8 +2810,10 @@ window.Mitglieder = (function () {
     var box = h("div", { class: "zweit" }, [
       h("button", { type: "button", text: "Auf die Rechnung", onclick: function () {
         rechnungWahl[sp.kennung] = sp; rechnungForm = rechnungFormAusWahl();
-        abrechnungPanel = "rechnung"; rendereAbrechnung();
-        kurzMeldung("Vorgemerkt, steht unten unter „Rechnung“.", "gut");
+        abrechnungPanel = "rechnung"; panelUnten = false; rendereAbrechnung();
+        // Seit Fassung 165 steht die Rechnung oben, nicht mehr "unten unter
+        // Rechnung" - der Satz haette ins Leere gezeigt.
+        kurzMeldung("Vorgemerkt. Die Rechnung steht oben.", "gut");
       } })
     ]);
     rechnungenLaden().then(function (liste) {
@@ -3209,7 +3233,16 @@ window.Mitglieder = (function () {
       h("div", { class: "mg-form" }, [h("div", { class: "mg-felder mg-zwei" }, [h("label", {}, ["Datum und Anstoß", beginn]), h("label", {}, ["Liga", liga])]), paarung, halle, rolle, h("div", { class: "zweit" }, [speichern, h("button", { type: "button", class: "mg-neben", text: "Abbrechen", onclick: zurueck })])])]);
   }
 
-  var abrechnungZiel = null, abrechnungPanel = null;
+  // Merkt sich, ob das zuletzt geoeffnete Blatt von unten kam (aus dem
+  // Menue am Listenende) oder von oben (Saldo-Kopf, Pruefzeile,
+  // Entwurfszeile). Danach richtet sich, wo es gezeichnet wird - das Blatt
+  // soll dort aufgehen, wo getippt wurde.
+  var abrechnungZiel = null, abrechnungPanel = null, panelUnten = false;
+  function panelOeffnen(name, vonUnten) {
+    abrechnungPanel = abrechnungPanel === name ? null : name;
+    panelUnten = !!vonUnten;
+    rendereAbrechnung();
+  }
   // Mehrfachauswahl in der Abrechnung
   var auswahl = {}, auswahlModus = false;
   function auswahlStarten(sp) {
@@ -3247,7 +3280,7 @@ window.Mitglieder = (function () {
           rechnungWahl = {};
           liste.forEach(function (sp) { rechnungWahl[sp.kennung] = sp; });
           rechnungForm = rechnungFormAusWahl();
-          abrechnungPanel = "rechnung";
+          abrechnungPanel = "rechnung"; panelUnten = false;
           auswahlEnde();
         } }) : null,
       h("button", { type: "button", text: "CSV", disabled: n ? null : "disabled", onclick: function () { csvExport(liste.slice().sort(function (a, b) { return a.beginn < b.beginn ? -1 : 1; }), "Auswahl"); } }),
@@ -3434,14 +3467,25 @@ window.Mitglieder = (function () {
     panelInhalt.rechnung = rechnungPanel;
     // Sieben Knoepfe nebeneinander hat niemand gelesen: vorne steht, was
     // staendig gebraucht wird, der Rest liegt unter "Weitere".
+    // "Rechnung schreiben" steht hier seit Fassung 165 wieder: in Fassung
+    // 153 war sie nur noch ueber die Auswahlleiste zu erreichen, und die
+    // erscheint erst, wenn man ein Spiel lange antippt. Wer das nicht
+    // weiss, fand die Rechnung nicht mehr. Ueber die Auswahl geht sie
+    // weiterhin - das ist der schnelle Weg, nicht der einzige.
     var WEITERE = [["kalender", "Kalender"], ["eigeneregeln", "Eigene Regeln"], ["art", "Abrechnungsart"], ["werkzeuge", "Werkzeuge"], ["eintragen", "+ Spiel eintragen"], ["regeln", "Wie gerechnet wird"]];
+    // Im alten Design steht "Rechnung" in der Knopfreihe darueber - dort
+    // waere sie hier doppelt. Im neuen gibt es die Reihe nicht mehr: seit
+    // Fassung 153 fuehrte nur noch die Auswahlleiste hin, und die
+    // erscheint erst, wenn man ein Spiel lange antippt. Wer das nicht
+    // weiss, fand die Rechnung nicht mehr.
+    if (designNeu()) WEITERE.unshift(["rechnung", "Rechnung schreiben"]);
     if (!einfach()) WEITERE.unshift(["detail", "Steuerjahre"]);
     panelInhalt.weiteres = function () {
       return h("div", { class: "mg-form" }, [
         h("p", { class: "meta", style: "margin:0 0 8px", text: "Seltener gebraucht \u2013 einmal antippen:" })
       ].concat(WEITERE.map(function (p) {
         return h("button", { type: "button", class: "mg-neben", style: "width:100%;text-align:left",
-          text: p[1], onclick: function () { abrechnungPanel = p[0]; rendereAbrechnung(); } });
+          text: p[1], onclick: function () { abrechnungPanel = p[0]; panelUnten = true; rendereAbrechnung(); } });
       })));
     };
     // Im neuen Design ist diese Reihe aufgeloest: "Pruefen" steht oben bei
@@ -3463,7 +3507,11 @@ window.Mitglieder = (function () {
     // "Weitere" werden unten getippt - ihr Blatt gehoert also auch unten
     // hin, sonst springt die Antwort aus dem Bild. "Steuerjahre" nicht: das
     // kommt vom Saldo-Kopf oben.
-    var unten = designNeu() && !!abrechnungPanel && abrechnungPanel !== "detail"
+    // "Steuerjahre" kommt vom Saldo-Kopf oben, und die Rechnung ist ein
+    // langes Formular - beide gehoeren nach oben, auch wenn sie im Menue
+    // am Listenende stehen. Am Fuss der Liste geoeffnet waere die Rechnung
+    // nur noch mit Scrollen zu ueberblicken.
+    var unten = designNeu() && !!abrechnungPanel && panelUnten
       && (abrechnungPanel === "weiteres"
         || WEITERE.filter(function (w) { return w[0] === abrechnungPanel; }).length > 0);
     if (abrechnungPanel && panelInhalt[abrechnungPanel] && !unten) {
@@ -3482,7 +3530,7 @@ window.Mitglieder = (function () {
       inhalt.appendChild(h("button", { type: "button", class: "mg-weitere-zeile" + (unten ? " auf" : ""),
         title: "Kalender, eigene Regeln, Werkzeuge, Spiel eintragen",
         text: "Weitere Werkzeuge",
-        onclick: function () { abrechnungPanel = abrechnungPanel === "weiteres" ? null : "weiteres"; rendereAbrechnung(); } }));
+        onclick: function () { panelOeffnen("weiteres", true); } }));
       if (unten) inhalt.appendChild(h("div", { class: "melde karte mg-panel" }, [panelInhalt[abrechnungPanel]()]));
     }
 
