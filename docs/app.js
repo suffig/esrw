@@ -2561,11 +2561,14 @@
     var hin = n ? { label: "Zu dem Spiel", href: "#spiel/" + encodeURIComponent(kennungVon(n)) } : null;
     // datumKurz() endet selbst auf einen Punkt ("Mo. 12.10.") - kein zweiter.
     var dann = n ? " Dein nächstes ist am " + datumKurz(new Date(n.beginn)) : "";
+    // Gefiltert und nichts gefunden: der Weg zurueck ist wichtiger als der
+    // Weg zum naechsten Spiel - sonst kommt man aus der Filterung nur
+    // heraus, indem man sie im Blatt oben einzeln zuruecknimmt.
     if (gefiltert) return leerZustand(
       (gesamt === 1
         ? "Kein Treffer. Im Plan steht ein Spiel, die Auswahl oben lässt es nicht durch."
         : "Kein Treffer. Von " + gesamt + " Spielen lässt die Auswahl oben gerade keines durch.") + dann,
-      hin);
+      { label: "Filter zurücksetzen", fn: planFilterLeeren });
     if (n) return leerZustand("Hier steht gerade nichts." + dann, hin);
     return leerZustand("Im Datenfenster steht kein kommendes Spiel. Was war, zeigt das Archiv.",
       { label: "Zum Archiv", href: "#archiv" });
@@ -3598,7 +3601,7 @@
   // Alle Spiele einer Person ueber alle Saisons: aktuelles Datenfenster,
   // archiv.json (laufende Saison), eingefrorene Saison-Dateien, Datenbank.
   // Admins koennen alle Spiele aller Kollegen sehen.
-  var archivStand = { spiele: [], modus: "", lauf: null };
+  var archivStand = { spiele: [], modus: "", lauf: null, geladen: false };
   function archivSaisonAus(beginn) { var d = new Date(beginn), j = d.getFullYear(); return d.getMonth() >= 6 ? j + "/" + String(j + 1).slice(2) : (j - 1) + "/" + String(j).slice(2); }
   function zeigeArchiv(modus) {
     ansicht("archiv"); aktuell = null; window.scrollTo(0, 0);
@@ -3664,6 +3667,7 @@
       archivKorrigieren();
       archivStand.spiele = Object.keys(karte).map(function (k) { return karte[k]; }).sort(function (a, b) { return a.beginn < b.beginn ? 1 : -1; });
       archivStand.modus = modus;
+      archivStand.geladen = true;
       // Filterlisten fuellen
       function fuellen(id, werte, leer) { var sel = el(id), alt = sel.value; sel.innerHTML = ""; var o0 = document.createElement("option"); o0.value = ""; o0.textContent = leer; sel.appendChild(o0); werte.forEach(function (w) { var o = document.createElement("option"); o.value = w[0]; o.textContent = w[1]; sel.appendChild(o); }); sel.value = werte.some(function (w) { return w[0] === alt; }) ? alt : ""; }
       var saisons = {}, ligen = {}, hallen = {}, personen = {};
@@ -3699,6 +3703,10 @@
   // Wie bei den Aenderungen gilt das in beiden Designs - es ist Hilfe,
   // keine Gestaltung.
   function archivLeer(imArchiv, gefiltert) {
+    // Wer waehrend des Ladens ins Suchfeld tippt, loest ein Rendern aus,
+    // bevor etwas da ist. "Noch keine Spiele im Archiv" waere dann schlicht
+    // gelogen - es weiss ja noch niemand.
+    if (!archivStand.geladen) return leerZustand("Das Archiv wird noch geladen …");
     if (!imArchiv) return leerZustand("Noch keine Spiele im Archiv. Es füllt sich mit jedem stündlichen Lauf; esrw.de selbst zeigt nur wenige Tage.");
     if (!gefiltert) return leerZustand("Kein Spiel gefunden.");
     return leerZustand("Kein Treffer unter " + imArchiv + (imArchiv === 1 ? " Spiel" : " Spielen") + " im Archiv. Die Filter oben schränken die Liste ein.",
@@ -5929,10 +5937,16 @@
     else if (navigator.clipboard) navigator.clipboard.writeText(text).then(function () { toast("Spielplan kopiert ✓", "gut"); });
     else prompt("Spielplan:", text);
   });
-  el("plan-filter-leeren").addEventListener("click", function () {
+  // Der Knopf sass im Filter-Blatt und war damit genau dort versteckt, wo
+  // man ihn sucht, wenn die Liste leer ist. Jetzt ist es eine Funktion, die
+  // auch der leere Zustand anbietet - und sie raeumt den gewaehlten Tag der
+  // Monatsansicht mit weg, den sie bisher stehen liess.
+  function planFilterLeeren() {
     ["plan-vergangene", "plan-offen", "plan-hallen", "plan-meine"].forEach(function (id) { el(id).checked = false; });
-    ligenWahl = {}; schnellWahl = null; el("plan-filter").value = ""; zeigePlan();
-  });
+    ligenWahl = {}; schnellWahl = null; planTag = null; el("plan-filter").value = "";
+    zeigePlan();
+  }
+  el("plan-filter-leeren").addEventListener("click", planFilterLeeren);
   el("plan-meine").addEventListener("change", function () { schreiben("plan-meine-aus", el("plan-meine").checked ? null : "1"); zeigePlan(); });
   // Wischen zwischen den Wochen (Wochenansicht) und Monaten (Monatsansicht)
   (function () {
