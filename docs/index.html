@@ -2653,6 +2653,24 @@
      sein als eine Korrektur am Treffpunkt. */
   :root[data-design="neu"] .protokoll .zeile:has(.art.abgesagt) .aend-was {
     color:var(--rot); }
+
+  /* ===== Runde 37: Tippflaechen im Kopf ============================== */
+
+  /* Auf schmalen Geraeten schrumpfen die runden Knoepfe im Kopf auf 36 px,
+     damit bis zu fuenf nebeneinander passen (Regel oben, max-width 430).
+     36 px sind zum Tippen knapp. Statt sie zu vergroessern - dann passen
+     sie nicht mehr - waechst nur die Flaeche, die Tipps annimmt. Dasselbe
+     Mittel wie beim Blatt-Griff in Fassung 148.
+     Waagerecht sind es 3 px je Seite: der Abstand zwischen zwei Knoepfen
+     ist 6 px, mehr wuerde dem Nachbarn Tipps wegnehmen. Bleibt 42 x 44
+     statt 36 x 36 - nicht ganz die 44 in der Breite, aber ohne dass sich
+     zwei Knoepfe in die Quere kommen. Gilt in beiden Designs: eine zu
+     kleine Tippflaeche ist ein Fehler, kein Geschmack. */
+  @media (max-width: 430px) {
+    .kopf .rund, .kopf .avatar-knopf { position:relative; }
+    .kopf .rund::after, .kopf .avatar-knopf::after {
+      content:""; position:absolute; inset:-4px -3px; border-radius:inherit; }
+  }
 </style>
 </head>
 <body>
@@ -3115,6 +3133,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=169"></script>
+<script src="app.js?v=170"></script>
 </body>
 </html>
