@@ -1906,6 +1906,32 @@ window.Mitglieder = (function () {
         nurUnbezahlt = true; nurOffene = false; rendereAbrechnung();
       });
       neu.appendChild(zz);
+      // "Pruefen" stand als Knopf in einer Reihe ueber der Liste, ohne zu
+      // sagen, ob es etwas zu pruefen gibt. Es ist eine Fundstelle wie die
+      // Zeile darueber - also steht es daneben, und nur wenn es etwas zu
+      // sehen gibt.
+      var abgeh = abgehakt();
+      var pruefN = abrechnungPruefen(spiele).filter(function (f) { return !abgeh[f.id]; }).length;
+      if (pruefN) {
+        var pz = h("button", { type: "button", class: "mg-offenzeile pruef",
+          title: "Antippen: die Fundstellen ansehen",
+          text: pruefN === 1 ? "1 Stelle zum Nachsehen" : pruefN + " Stellen zum Nachsehen" });
+        pz.addEventListener("click", function () {
+          abrechnungPanel = abrechnungPanel === "pruefen" ? null : "pruefen"; rendereAbrechnung();
+        });
+        neu.appendChild(pz);
+      }
+      // Ein angefangener Rechnungsentwurf ist ebenfalls etwas, das aussteht.
+      // Ohne diese Zeile waere er nach dem Zuklappen des Blattes nur noch
+      // ueber die Auswahlleiste wiederzufinden.
+      var rwN = Object.keys(rechnungWahl).length;
+      if (rwN && abrechnungPanel !== "rechnung") {
+        var rz = h("button", { type: "button", class: "mg-offenzeile pruef",
+          title: "Antippen: weiter an der Rechnung",
+          text: "Rechnung angefangen · " + rwN + (rwN === 1 ? " Spiel vorgemerkt" : " Spiele vorgemerkt") });
+        rz.addEventListener("click", function () { abrechnungPanel = "rechnung"; rendereAbrechnung(); });
+        neu.appendChild(rz);
+      }
     }
     alt.parentNode.replaceChild(neu, alt);
     // Offenes Detail-Panel mitziehen
@@ -3164,6 +3190,19 @@ window.Mitglieder = (function () {
         liste.forEach(function (sp) { speichereEinsatz(sp, { bezahlt: null }, true); });
         auswahlEnde();
       } }),
+      // Eine Rechnung ist eine Handlung auf einer Auswahl - sie gehoert
+      // dorthin, wo die Auswahl steht, nicht in eine Knopfreihe ueber der
+      // Liste. Drei Zeilen hat das Formular, mehr nimmt es nicht.
+      designNeu() ? h("button", { type: "button", text: "Rechnung", disabled: n ? null : "disabled",
+        title: "Die gewählten Spiele auf eine Rechnung setzen (höchstens drei)",
+        onclick: function () {
+          if (n > 3) { kurzMeldung("Mehr als drei Spiele passen nicht auf das Formular.", "warn"); return; }
+          rechnungWahl = {};
+          liste.forEach(function (sp) { rechnungWahl[sp.kennung] = sp; });
+          rechnungForm = rechnungFormAusWahl();
+          abrechnungPanel = "rechnung";
+          auswahlEnde();
+        } }) : null,
       h("button", { type: "button", text: "CSV", disabled: n ? null : "disabled", onclick: function () { csvExport(liste.slice().sort(function (a, b) { return a.beginn < b.beginn ? -1 : 1; }), "Auswahl"); } }),
       h("button", { type: "button", text: "Alle", onclick: function () { saisonSpiele(gewaehlteSaison).forEach(function (sp) { if (new Date(sp.beginn) < new Date()) auswahl[sp.kennung] = sp; }); rendereAbrechnung(); } }),
       h("button", { type: "button", class: "textknopf", text: "Fertig", onclick: auswahlEnde })
@@ -3358,18 +3397,46 @@ window.Mitglieder = (function () {
           text: p[1], onclick: function () { abrechnungPanel = p[0]; rendereAbrechnung(); } });
       })));
     };
-    var abgeh = abgehakt();
-    var offenP = abrechnungPruefen(spiele).filter(function (f) { return !abgeh[f.id]; }).length;
-    var KNOEPFE = [["pruefen", "Prüfen" + (offenP ? " " + offenP : "")], ["rechnung", "Rechnung"], ["weiteres", "Weitere"]];
-    KNOEPFE.forEach(function (p) {
-      var offen = abrechnungPanel === p[0]
-        || (p[0] === "weiteres" && WEITERE.filter(function (w) { return w[0] === abrechnungPanel; }).length);
-      leiste.appendChild(h("button", { type: "button", class: "filterknopf" + (offen ? " aktiv" : ""), text: p[1], onclick: function () { abrechnungPanel = abrechnungPanel === p[0] ? null : p[0]; rendereAbrechnung(); } }));
-    });
-    inhalt.appendChild(leiste);
-    if (abrechnungPanel && panelInhalt[abrechnungPanel]) {
+    // Im neuen Design ist diese Reihe aufgeloest: "Pruefen" steht oben bei
+    // den Fundstellen (und nur, wenn es Funde gibt), "Rechnung" an der
+    // Auswahlleiste, "Weitere" als Zeile am Ende der Liste. Vor der Liste
+    // stand bisher ein Block, den man jedes Mal ueberlesen musste.
+    if (!designNeu()) {
+      var abgeh = abgehakt();
+      var offenP = abrechnungPruefen(spiele).filter(function (f) { return !abgeh[f.id]; }).length;
+      var KNOEPFE = [["pruefen", "Prüfen" + (offenP ? " " + offenP : "")], ["rechnung", "Rechnung"], ["weiteres", "Weitere"]];
+      KNOEPFE.forEach(function (p) {
+        var offen = abrechnungPanel === p[0]
+          || (p[0] === "weiteres" && WEITERE.filter(function (w) { return w[0] === abrechnungPanel; }).length);
+        leiste.appendChild(h("button", { type: "button", class: "filterknopf" + (offen ? " aktiv" : ""), text: p[1], onclick: function () { abrechnungPanel = abrechnungPanel === p[0] ? null : p[0]; rendereAbrechnung(); } }));
+      });
+      inhalt.appendChild(leiste);
+    }
+    // Ein Blatt oeffnet sich dort, wo man getippt hat. Die Menuepunkte aus
+    // "Weitere" werden unten getippt - ihr Blatt gehoert also auch unten
+    // hin, sonst springt die Antwort aus dem Bild. "Steuerjahre" nicht: das
+    // kommt vom Saldo-Kopf oben.
+    var unten = designNeu() && !!abrechnungPanel && abrechnungPanel !== "detail"
+      && (abrechnungPanel === "weiteres"
+        || WEITERE.filter(function (w) { return w[0] === abrechnungPanel; }).length > 0);
+    if (abrechnungPanel && panelInhalt[abrechnungPanel] && !unten) {
       var panel = h("div", { class: "melde karte mg-panel" }, [panelInhalt[abrechnungPanel]()]);
+      // Frueher schloss der Knopf in der Reihe das Blatt wieder. Den gibt
+      // es im neuen Design nicht mehr - also traegt das Blatt sein Kreuz
+      // selbst, sonst bleibt es offen stehen.
+      if (designNeu()) panel.insertBefore(h("button", { type: "button", class: "mg-blatt-zu",
+        "aria-label": "Schließen", title: "Schließen", text: "×",
+        onclick: function () { abrechnungPanel = null; rendereAbrechnung(); } }), panel.firstChild);
       inhalt.appendChild(panel);
+    }
+    // Die Zeile am Listenende - in beiden Darstellungen, Karten wie Zeilen.
+    function weitereAnhaengen() {
+      if (!designNeu()) return;
+      inhalt.appendChild(h("button", { type: "button", class: "mg-weitere-zeile" + (unten ? " auf" : ""),
+        title: "Kalender, eigene Regeln, Werkzeuge, Spiel eintragen",
+        text: "Weitere Werkzeuge",
+        onclick: function () { abrechnungPanel = abrechnungPanel === "weiteres" ? null : "weiteres"; rendereAbrechnung(); } }));
+      if (unten) inhalt.appendChild(h("div", { class: "melde karte mg-panel" }, [panelInhalt[abrechnungPanel]()]));
     }
 
     // Erst filtern, dann entscheiden, wie es aussieht. Vorher sprang die
@@ -3380,6 +3447,7 @@ window.Mitglieder = (function () {
 
     if (schnellModus) {
       inhalt.appendChild(schnellListe(liste));
+      weitereAnhaengen();
       aktualisiereSummen();
       return;
     }
@@ -3404,6 +3472,7 @@ window.Mitglieder = (function () {
       inhalt.appendChild(eintrag(sp));
     });
 
+    weitereAnhaengen();
     aktualisiereSummen();
     auswahlLeiste();
     if (abrechnungZiel) {

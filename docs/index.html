@@ -2560,6 +2560,40 @@
     font-size:var(--s-s); text-transform:uppercase; letter-spacing:.04em;
     color:var(--dim); font-weight:800; }
   :root[data-design="neu"] .telefon-liste .listen-kopf:first-child { margin-top:0; }
+
+  /* ===== Runde 33: die drei Knoepfe der Abrechnung an ihren Platz ===== */
+
+  /* "Pruefen" und ein angefangener Rechnungsentwurf sind Fundstellen wie
+     "noch nicht abgehakt" - gleiche Zeile, aber nicht in Warnfarbe: keiner
+     der Funde ist zwingend falsch. */
+  :root[data-design="neu"] .mg-offenzeile.pruef { color:var(--text);
+    font-weight:600; }
+
+  /* Das Menue "Weitere" stand vor der Liste und musste jedes Mal
+     ueberlesen werden. Als Zeile am Ende steht es da, wo man ohnehin
+     ankommt, wenn man durch ist. */
+  :root[data-design="neu"] .mg-weitere-zeile { display:flex; width:100%;
+    align-items:center; justify-content:space-between;
+    margin:var(--abstand-l) 0 var(--abstand-s);
+    padding:var(--abstand-m); min-height:48px;
+    border:1px solid var(--linie); border-radius:var(--radius-klein);
+    background:var(--karte); color:var(--dim); font:inherit;
+    font-size:var(--s-l); font-weight:700; text-align:left; cursor:pointer; }
+  :root[data-design="neu"] .mg-weitere-zeile::after { content:"\203A";
+    font-size:1.3em; line-height:1; transition:transform .15s; }
+  :root[data-design="neu"] .mg-weitere-zeile.auf { color:var(--text); }
+  :root[data-design="neu"] .mg-weitere-zeile.auf::after {
+    transform:rotate(90deg); }
+
+  /* Das Kreuz sitzt in der Ecke des Blattes, nicht darueber - sonst
+     schoebe es den Inhalt jedes Mal um eine Zeile nach unten. */
+  :root[data-design="neu"] .mg-panel { position:relative; }
+  :root[data-design="neu"] .mg-blatt-zu { position:absolute;
+    top:var(--abstand-xs); right:var(--abstand-xs);
+    width:40px; height:40px; padding:0; border:0; border-radius:50%;
+    background:transparent; color:var(--dim); font:inherit; font-size:1.5rem;
+    line-height:1; cursor:pointer; z-index:1; }
+  :root[data-design="neu"] .mg-blatt-zu:hover { color:var(--text); }
 </style>
 </head>
 <body>
@@ -3024,6 +3058,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=151"></script>
+<script src="app.js?v=153"></script>
 </body>
 </html>
