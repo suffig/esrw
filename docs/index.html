@@ -105,6 +105,12 @@
   button { font:inherit; }
   svg.i { width:1.05em; height:1.05em; vertical-align:-.18em; fill:none; stroke:currentColor;
           stroke-width:2; stroke-linecap:round; stroke-linejoin:round; flex:none; }
+  /* Die einzige Hilfsklasse, die alles schlagen muss - auch Inline-Stile,
+     die das JS setzt. Ohne !important bliebe Verstecktes stellenweise
+     stehen. Alle weiteren !important in dieser Datei gehoeren zu einer von
+     fuenf Familien, jeweils am Ort begruendet: Druck, Bewegung aus,
+     Zustandsklassen gegen Inline-Stile, fremdes CSS (Leaflet), und zwei
+     Einzelfaelle (.blatt.versteckt, select). */
   .versteckt { display:none !important; }
 
   /* Kopf */
@@ -492,6 +498,8 @@
   .fahrtenbuch th, .fahrtenbuch td { text-align:left; padding:6px 6px; border-bottom:1px solid var(--linie); vertical-align:top; }
   .fahrtenbuch th { font-size:var(--s-xs); text-transform:uppercase; letter-spacing:.06em; color:var(--dim); }
   .fahrtenbuch td.zahl, .fahrtenbuch th.zahl { text-align:right; white-space:nowrap; }
+  /* Druck: die Papierfassung muss jede Bildschirmregel schlagen, auch die
+     mit Kennung oder mehreren Klassen - deshalb hier durchgehend !important. */
   @media print {
     body.druck-fahrtenbuch main > *:not(#mitglieder), body.druck-fahrtenbuch .kopf, body.druck-fahrtenbuch #mitglieder > *:not(.mg-inhalt), body.druck-fahrtenbuch .mg-inhalt > *:not(.fahrtenbuch) { display:none !important; }
     .fahrtenbuch .zweit { display:none !important; }
@@ -520,7 +528,7 @@
   .farben button { width:22px; height:22px; border-radius:50%; border:2px solid transparent; cursor:pointer; padding:0; }
   .farben button.aktiv { border-color:var(--text); }
 
-  /* Druck: Spielplan als Wochenzettel */
+  /* Druck: Spielplan als Wochenzettel - !important wie oben */
   @media print {
     body.druck-plan main > *:not(#plan), body.druck-plan .kopf button, body.druck-plan .filterleiste, body.druck-plan #plan-woche, body.druck-plan #plan-ligen, body.druck-plan .chip.offen { display:none !important; }
     body.druck-plan #plan-liste.raster { display:block; }
@@ -648,9 +656,12 @@
   button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline:none; }
   section { animation:einblenden .16s ease-out; }
   @keyframes einblenden { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
+  /* Wer Bewegung abgeschaltet hat, bekommt keine - das gilt gegen jede
+     einzelne Animationsregel, darum !important. */
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation:none !important; transition:none !important; } }
 
-  /* Druck: Abrechnung fuer den Steuerberater, ohne Bedienelemente */
+  /* Druck: Abrechnung fuer den Steuerberater, ohne Bedienelemente.
+     !important wie oben; das Jahresblatt muss umgekehrt sichtbar werden. */
   @media print {
     body { background:#fff; color:#000; padding:0; font-size:11pt; }
     .leiste, .kopf button, .filterleiste, .zweit, .mg-untertabs, .toast, .install, .abo, .melde, details.karte, .tausch, .mg-datei, .profilzeile button { display:none !important; }
@@ -718,7 +729,7 @@
   .fahrt .meins { margin-top:10px; padding-top:10px; border-top:1px solid var(--linie);
                   display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
   .fahrt .meins > .meta { flex-basis:100%; margin:0 0 2px; }
-  .fahrt > .meta { margin:0 0 8px !important; }
+  .fahrt > .meta { margin:0 0 8px; }
   .fahrt .wer:first-of-type { border-top:1px solid var(--linie); }
   .fahrt .reihe-knopf { margin-top:10px; }
   /* Die Karte schob die Seite beim Aufbauen kurz auf die doppelte Breite */
@@ -844,6 +855,10 @@
   .gespann-verlauf .blase .zeit { font-size:var(--s-xs); color:var(--dim); margin-top:4px; }
   /* "Am Spieltag gross": alles ausser der Kopfkarte wartet hinter einem Tipp.
      Nur auf schmalen Geraeten - auf dem Desktop bleibt die zweite Spalte sinnvoll. */
+  /* Zustandsklasse gegen Inline-Stil: das JS setzt an mehreren Stellen
+     style.display = "flex"/"block" (Hinweiszeilen, Kollegenkarten). Ein
+     Inline-Stil schlaegt jede Regel ohne !important - deshalb steht es an
+     allen Zustandsklassen, die etwas ausblenden. */
   @media (max-width: 899px) {
     #detail.start-vollbild .spalte-haupt > *:not(#held):not(#heute) { display:none !important; }
     #detail.start-vollbild .spalten > *:not(.spalte-haupt) { display:none !important; }
@@ -855,11 +870,13 @@
     .spieltag #onboarding,
     .spieltag #onboarding-kurz,
     .spieltag #neu,
-    .spieltag #install { display:none !important; }
+    .spieltag #install { display:none; }
   }
   .vollbild-mehr { margin-top:18px; align-self:center; background:rgba(255,255,255,.18); color:#fff; border:1px solid rgba(255,255,255,.35); border-radius:var(--radius-pille); padding:8px 16px; font:inherit; font-weight:800; cursor:pointer; }
   /* Karten im Dunkelmodus abdunkeln (OSM hat keine dunklen Kacheln).
-     Einmal fuer "Dunkel erzwungen", einmal fuer die Systemeinstellung. */
+     Einmal fuer "Dunkel erzwungen", einmal fuer die Systemeinstellung.
+     Leaflet bringt sein eigenes CSS von der CDN mit und laedt nach uns -
+     gegen fremdes CSS hilft nur !important. */
   :root[data-theme="dark"] .leaflet-tile-pane { filter:invert(1) hue-rotate(180deg) brightness(.92) contrast(.9) saturate(.8); }
   :root[data-theme="dark"] .leaflet-control-attribution { background:rgba(20,20,23,.8) !important; color:var(--dim) !important; }
   :root[data-theme="dark"] .leaflet-control-attribution a { color:var(--akzent) !important; }
@@ -894,7 +911,7 @@
   }
   #adminmodus { color:var(--dim); }
   #adminmodus.aktiv { background:var(--rot); color:#fff; box-shadow:0 0 0 2px var(--karte), 0 0 0 4px color-mix(in srgb, var(--rot) 35%, transparent); }
-  html.admin-aus .nur-admin { display:none !important; }
+  html.admin-aus .nur-admin { display:none !important; }   /* Zustandsklasse, s.o. */
   /* Zahlen laufen nicht mehr - gleiche Breite fuer Uhrzeiten, Betraege, Tabellen */
   .spiel .wann, .spiel .zeit, .zeile .zeit, .zahl.karte b, .mg-betrag-kurz, .mg-saldo .zahl b, .mg-kal .tag,
   .jahresblatt td, .jahresblatt th, .stand, .held .zeit, .spiel-kopf .zeit, .archiv-liste .datum, .fortschritt + .meta {
@@ -980,6 +997,9 @@
   .mg-auswahlleiste button { min-height:34px; }
   /* Bottom-Sheet (Filter), Wisch-Aktionen, Rollen-Kante, Einrichtungs-Check, Abrechnungs-Kalender */
   .blatt { position:fixed; left:0; right:0; bottom:0; z-index:45; margin:0 auto; max-width:640px; max-height:82vh; overflow:auto; border-radius:22px 22px 0 0; padding:8px 16px calc(16px + env(safe-area-inset-bottom)); box-shadow:0 -12px 40px rgba(0,0,0,.25); transform:translateY(102%); transition:transform .28s cubic-bezier(.2,.8,.2,1); }
+  /* Einzelfall: .versteckt traegt selbst !important. Das Blatt soll aber
+     nicht verschwinden, sondern nach unten fahren - also muss es hier
+     zurueckgeholt werden, und das geht nur mit !important. */
   .blatt.versteckt { display:flex !important; pointer-events:none; }
   .blatt.offen { transform:none; }
   .blatt-griff { width:40px; height:5px; border-radius:var(--radius-xs); background:var(--linie); margin:2px auto 8px; }
@@ -1060,6 +1080,10 @@
   .zahl.karte b { font-size:1.35rem; letter-spacing:-.02em; }
   .zahl.karte span { font-size:var(--s-s); letter-spacing:.02em; }
   select, .mg-select { -webkit-appearance:none; appearance:none; background-image:linear-gradient(45deg, transparent 50%, var(--dim) 50%), linear-gradient(135deg, var(--dim) 50%, transparent 50%); background-position:calc(100% - 18px) 55%, calc(100% - 13px) 55%; background-size:5px 5px, 5px 5px; background-repeat:no-repeat; padding-right:30px !important; }
+  /* Einzelfall: der gezeichnete Pfeil braucht rechts Platz. Mehrere spaetere
+     Regeln setzen padding auf Auswahlfelder und sind spezifischer
+     (.archiv-selects select, .mg-abrechnung-kopf .mg-select) - ohne
+     !important laege der Pfeil auf dem Text. */
   .mg-eintrag.offen { border-color:var(--akzent); }
   .mg-eintrag .mg-kopf { padding-bottom:2px; }
   .mg-summe { gap:10px; }
@@ -1110,7 +1134,7 @@
   .termin-heute .titel { font-size:var(--s-2xl); font-weight:800; display:flex; align-items:center; gap:8px; margin:4px 0 2px; }
   .termin-heute .meta { font-size:var(--s-m); }
   /* Ruhige Startseite: nur Kopfkarte und Spiele */
-  #detail.start-ruhig #uebersicht, #detail.start-ruhig #radar, #detail.start-ruhig #nachtrag, #detail.start-ruhig #pins, #detail.start-ruhig #kalender-box, #detail.start-ruhig #start-woche, #detail.start-ruhig #onboarding-kurz, #detail.start-ruhig .kollege { display:none !important; }
+  #detail.start-ruhig #uebersicht, #detail.start-ruhig #radar, #detail.start-ruhig #nachtrag, #detail.start-ruhig #pins, #detail.start-ruhig #kalender-box, #detail.start-ruhig #start-woche, #detail.start-ruhig #onboarding-kurz, #detail.start-ruhig .kollege { display:none !important; }   /* Zustandsklasse, s.o. */
   #detail.start-ruhig .held .danach, #detail.start-ruhig .held .woche { display:none; }
   /* Archiv */
   .archiv-filter { padding:12px 14px; display:flex; flex-direction:column; gap:8px; }
@@ -1179,7 +1203,7 @@
   /* Der dritte Platz haengt nicht mehr an der Tauschboerse - er zeigt, was
      in den Einstellungen gewaehlt ist. Nur die Abrechnung verschwindet noch,
      wenn der Betreiber sie abschaltet. */
-  html.ohne-abrechnung #tab-abrechnung { display:none !important; }
+  html.ohne-abrechnung #tab-abrechnung { display:none !important; }   /* Zustandsklasse, s.o. */
   #uebersicht .termine-karte { display:block; }
   #uebersicht .termine-karte .zahl { text-align:left; }
   #uebersicht .hinweis { text-decoration:none; color:inherit; margin-top:8px; }
@@ -1277,7 +1301,6 @@
   :root[data-akzent="blau"] { --akzent:#0d47a8; --akzent-hell:#e4ecfb; --akzent-text:#ffffff; --sr:#0d47a8; --sr-bg:#e4ecfb; --held-1:#082a73; --held-2:#1a5fd0; --held-schatten:0 10px 26px -8px rgba(13,71,168,.45); --hsr:#8a4b00; --hsr-bg:#fbeedd; --lsr:#0b6e6e; --lsr-bg:#dff3f3; }
   :root[data-theme="dark"][data-akzent="blau"] { --akzent:#6ea3ff; --akzent-hell:#15264a; --sr:#6ea3ff; --sr-bg:#15264a; --akzent-text:#061334; --held-1:#082a73; --held-2:#1a5fd0; }
   @media (prefers-color-scheme: dark) { :root:not([data-theme="light"])[data-akzent="blau"] { --akzent:#6ea3ff; --akzent-hell:#15264a; --sr:#6ea3ff; --sr-bg:#15264a; --akzent-text:#061334; --held-1:#082a73; --held-2:#1a5fd0; } }
-  .kopf h1::after { color:var(--rot); }
   .marke { display:flex; align-items:center; gap:12px; min-width:0; }
   .marke .logo { width:44px; height:44px; border-radius:var(--radius-m); box-shadow:var(--schatten); flex:none; }
   .kopf h1 { font-size:var(--s-3xl); }
@@ -1312,7 +1335,6 @@
   .rolle.SR { background:var(--sr-bg); color:var(--sr); }
   :root[data-theme="dark"] .rolle.SR, :root:not([data-theme="light"]) .rolle.SR { background:#f5f5f7; color:#0c0d10; }
   .held .rolle, .held .rolle.SR, .held .rolle.HSR, .held .rolle.LSR, :root .held .rolle.SR { background:var(--rot); color:#fff; }
-  .kopf h1::after { color:var(--rot); }
   .start-anpassen { text-align:center; margin:14px 0 4px; }
   .menue-gruppe { grid-column:1 / -1; margin:8px 0 -2px; font-size:var(--s-s); text-transform:uppercase; letter-spacing:.08em; color:var(--dim); font-weight:800; }
   .menue-gruppe:first-child { margin-top:0; }
@@ -1426,7 +1448,7 @@
   .spiel.zeit-links .wann b { color:inherit; opacity:.75; }
   .gruppe-anfrage { margin-top:6px; }
   /* ---- Runde 19: ohne Anmeldung gibt es nur den Anmeldeschirm ---- */
-  html.abgemeldet .leiste, html.abgemeldet .kopf button, html.abgemeldet #hoch { display:none !important; }
+  html.abgemeldet .leiste, html.abgemeldet .kopf button, html.abgemeldet #hoch { display:none !important; }   /* Zustandsklasse, s.o. */
   html.abgemeldet body { padding-bottom:24px; }
   html.abgemeldet .kopf .stand { background:none; box-shadow:none; padding-left:0; }
   /* ---- Runde 17: Liga-Chips, Rechnung ---- */
@@ -1495,9 +1517,10 @@
   /* ---- Runde 16, Nachtrag: gewinnt gegen alle Schichten darueber ----
      Auf schmalen Geraeten blieb vom Titel "Einteilungen ESRW" nur
      "Einteilungen ESR" uebrig - das rote ESRW lief unter den Knoepfen durch.
-     Dort steht jetzt nur "Einteilungen"; die Marke traegt das Logo daneben. */
+     Dort steht jetzt nur "Einteilungen"; die Marke traegt das Logo daneben.
+     Das rote "W" hing frueher an .kopf h1::after; seit der Titel aus dem JS
+     kommt, gibt es dort kein content mehr - die drei Regeln dazu sind weg. */
   @media (max-width: 480px) {
-    .kopf h1::after { content:none !important; }
     .kopf h1 { font-size:var(--s-3xl); }
     .kopf .rund { width:38px; height:38px; }
     .marke .logo { width:40px; height:40px; }
@@ -1674,7 +1697,7 @@
   :root[data-theme="dark"] .start-balken::after { background:linear-gradient(90deg, transparent, rgba(255,255,255,.14), transparent); }
   #detail.start-laedt .start-platz { display:block; }
   #detail.start-laedt .spalte-haupt > *:not(.profilzeile):not(.start-platz) { display:none !important; }
-  #detail.start-laedt .spalten > *:not(.spalte-haupt) { display:none !important; }
+  #detail.start-laedt .spalten > *:not(.spalte-haupt) { display:none !important; }   /* Zustandsklasse, s.o. */
   /* Ziehen zum Aktualisieren: das Band haengt oben und kommt beim Ziehen mit */
   .ziehen { position:fixed; top:0; left:0; right:0; z-index:60; padding:10px 14px; text-align:center;
             font-size:var(--s-m); font-weight:800; color:var(--akzent); background:var(--akzent-hell);
@@ -1748,6 +1771,9 @@
   .start-anpassen a::after, #ziel-zeile .textknopf::after, #ziel-zeile a::after {
     content:""; position:absolute; left:0; right:0; top:-11px; bottom:-11px; z-index:1;
   }
+  /* Ein Knopf, der nur ein Zeichen traegt, soll schmal sein.
+     .spiel-kopf .aktionen button setzt padding:8px 14px und ist
+     spezifischer - ohne !important bliebe der Knopf breit. */
   .nur-zeichen { padding-left:12px !important; padding-right:12px !important; }
   /* Gemeinsame Spiele auf der Kollegenseite: Datum fett, Paarung darunter */
   .zeile-lauf { display:flex; align-items:center; gap:10px; padding:10px 2px;
@@ -1759,6 +1785,8 @@
   .zeile-lauf small { display:block; color:var(--dim); font-size:var(--s-m); margin-top:2px; }
   .zeile-lauf .pfeil { flex:none; color:var(--dim); font-size:var(--s-3xl); }
   /* Profilbild: ueberall dasselbe runde Zeichen, mit Bild statt Buchstaben */
+  /* Mit Bild verschwindet der Buchstabe. .profil-bildzeile .avatar-gross
+     setzt color:#fff, steht weiter unten und ist spezifischer. */
   .mit-bild { background-size:cover; background-position:center; color:transparent !important; text-indent:-999px; overflow:hidden; }
   .avatar-klein { display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px;
                   border-radius:50%; background:var(--akzent); color:#fff; font-weight:800; font-size:var(--s-s);
@@ -2771,6 +2799,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=141"></script>
+<script src="app.js?v=142"></script>
 </body>
 </html>
