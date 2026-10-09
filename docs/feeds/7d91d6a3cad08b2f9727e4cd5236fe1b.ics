@@ -72,29 +72,31 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Möhnesee,
 END:VEVENT
 BEGIN:VEVENT
 UID:6d2e581a64ee46c9321e52cc2d71dcc329c2fda0@esrw.de
-SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
+SEQUENCE:1
+DTSTAMP:20261009T175042Z
+LAST-MODIFIED:20261009T175042Z
 DTSTART:20261010T063000Z
 DTEND:20261010T100000Z
-SUMMARY:SR · U11 LL Lila: Lippe Hockey Hamm
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
-  08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Lila\nHalle: HELINET Eis
- sportarena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Z
- ynda\, Jayden\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ SR · U11 LL Lila: Lippe Hockey Hamm
+DESCRIPTION:Geändert: Halle (vorher HELINET Eissportarena Hamm)\n\nRolle: 
+ Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt: 08:30 Uhr (60 Min
+  vor Spielbeginn)\nLiga: U11 LL Lila\nHalle: beta FINANZ Eissportarena Ham
+ m\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Zynda\, Jayden\
+ n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-LOCATION:HELINET Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 Hamm
+LOCATION:beta FINANZ Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 H
+ amm
 GEO:51.686934;7.886138
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
- , Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="HELINET
-  Eissportarena Hamm":geo:51.686934,7.886138
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena 
+ Hamm, Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="bet
+ a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Lila: Lippe Hockey 
- Hamm
+DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · U11 LL Lila: Lippe Hoc
+ key Hamm
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

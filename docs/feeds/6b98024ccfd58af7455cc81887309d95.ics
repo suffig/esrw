@@ -30,29 +30,31 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West,
 END:VEVENT
 BEGIN:VEVENT
 UID:9097c0667ddf389d3b5543fd1023e6cc84152f8e@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
+SEQUENCE:1
+DTSTAMP:20261009T175042Z
+LAST-MODIFIED:20261009T175042Z
 DTSTART:20261017T073000Z
 DTEND:20261017T110000Z
-SUMMARY:SR · U15 LL: Lippe Hockey Hamm – Herforder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
-  09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: HELINET Eissport
- arena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Warnke
- \, Christoph\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ SR · U15 LL: Lippe Hockey Hamm – Herforder EV
+DESCRIPTION:Geändert: Halle (vorher HELINET Eissportarena Hamm)\n\nRolle: 
+ Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt: 09:30 Uhr (60 Min
+  vor Spielbeginn)\nLiga: U15 LL\nHalle: beta FINANZ Eissportarena Hamm\nAd
+ resse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Warnke\, Christoph\n
+ \nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-LOCATION:HELINET Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 Hamm
+LOCATION:beta FINANZ Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 H
+ amm
 GEO:51.686934;7.886138
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
- , Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="HELINET
-  Eissportarena Hamm":geo:51.686934,7.886138
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena 
+ Hamm, Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="bet
+ a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Lippe Hockey Hamm 
- – Herforder EV
+DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · U15 LL: Lippe Hockey H
+ amm – Herforder EV
 END:VALARM
 END:VEVENT
 END:VCALENDAR

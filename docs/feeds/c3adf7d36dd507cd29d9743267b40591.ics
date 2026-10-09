@@ -74,23 +74,25 @@ END:VEVENT
 BEGIN:VEVENT
 UID:60c7cb957011d4b51fee982d028be266e6bf6671@esrw.de
 SEQUENCE:0
-DTSTAMP:20260921T153038Z
-LAST-MODIFIED:20260921T153038Z
+DTSTAMP:20261009T175042Z
+LAST-MODIFIED:20261009T175042Z
 DTSTART:20261002T170000Z
 DTEND:20261002T203000Z
-SUMMARY:SR · U17 RL: Lippe Hockey Hamm – EHC Troisdorf
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
-  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: HELINET Eissport
- arena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Zynda\
- , Nick\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ SR · U17 RL: Lippe Hockey Hamm – EHC Troisdorf
+DESCRIPTION:Geändert: Halle (vorher HELINET Eissportarena Hamm)\n\nRolle: 
+ Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt: 19:00 Uhr (60 Min
+  vor Spielbeginn)\nLiga: U17 RL\nHalle: beta FINANZ Eissportarena Hamm\nAd
+ resse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Zynda\, Nick\n\nQuel
+ le: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-LOCATION:HELINET Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 Hamm
+LOCATION:beta FINANZ Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 H
+ amm
 GEO:51.686934;7.886138
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
- , Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="HELINET
-  Eissportarena Hamm":geo:51.686934,7.886138
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena 
+ Hamm, Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="bet
+ a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
 END:VEVENT
 BEGIN:VEVENT
 UID:10082780360b29efc85df1f9873df18c02aa722b@esrw.de
@@ -203,23 +205,25 @@ END:VEVENT
 BEGIN:VEVENT
 UID:28c7cb66ca1b6f3f3df449fe5f6e60473785612f@esrw.de
 SEQUENCE:0
-DTSTAMP:20260921T153038Z
-LAST-MODIFIED:20260921T153038Z
+DTSTAMP:20261009T175042Z
+LAST-MODIFIED:20261009T175042Z
 DTSTART:20261003T060000Z
 DTEND:20261003T093000Z
-SUMMARY:SR · U13 LL: Lippe Hockey Hamm – EC Bergisch Land
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
-  08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: HELINET Eissport
- arena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Steeg\
- , Cedric\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ SR · U13 LL: Lippe Hockey Hamm – EC Bergisch Land
+DESCRIPTION:Geändert: Halle (vorher HELINET Eissportarena Hamm)\n\nRolle: 
+ Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt: 08:00 Uhr (60 Min
+  vor Spielbeginn)\nLiga: U13 LL\nHalle: beta FINANZ Eissportarena Hamm\nAd
+ resse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Steeg\, Cedric\n\nQu
+ elle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-LOCATION:HELINET Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 Hamm
+LOCATION:beta FINANZ Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 H
+ amm
 GEO:51.686934;7.886138
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
- , Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="HELINET
-  Eissportarena Hamm":geo:51.686934,7.886138
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena 
+ Hamm, Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="bet
+ a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
 END:VEVENT
 BEGIN:VEVENT
 UID:eae5cad48c9e14f0fa97bb86554d8b8591eae02f@esrw.de
@@ -1289,24 +1293,29 @@ END:VEVENT
 BEGIN:VEVENT
 UID:68f9dd0739f8bc2d7e9a0d5eed09e71806eb5781@esrw.de
 SEQUENCE:0
-DTSTAMP:20261007T171528Z
-LAST-MODIFIED:20261007T171528Z
+DTSTAMP:20261009T175042Z
+LAST-MODIFIED:20261009T175042Z
 DTSTART:20261009T171500Z
 DTEND:20261009T204500Z
-SUMMARY:LSR · Senioren RLW: EG Diez-Limburg – GSC Moers Diez
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
-  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\n!! Halle nicht au
- tomatisch erkannt - bitte selbst pruefen !!\nGespann: Steeg\, Cedric (HSR)
-  / RLP (LSR)\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.
- de/einteilungen.html
+SUMMARY:⚠ LSR · Senioren RLW: EG Diez-Limburg – GSC Moers Diez
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Linienrichter (LSR)\nSpi
+ elbeginn: 20:15 Uhr\nTreffpunkt: 19:15 Uhr (60 Min vor Spielbeginn)\nLiga:
+  Senioren RLW\nHalle: Eissporthalle Diez\nAdresse: Am Hallenbad 4\, 65582 
+ Diez\nGespann: Steeg\, Cedric (HSR) / RLP (LSR)\nVergütung lt. Ordnung: 1
+ 00 €\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Eissporthalle Diez\, Am Hallenbad 4\, 65582 Diez
+GEO:50.37572;8.032397
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Diez, Am Hal
+ lenbad 4, 65582 Diez";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Diez":geo:
+ 50.37572,8.032397
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: EG Diez-Lim
- burg – GSC Moers Diez
+DESCRIPTION:In einer Stunde an der Halle - ⚠ LSR · Senioren RLW: EG Diez
+ -Limburg – GSC Moers Diez
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1528,28 +1537,30 @@ END:VEVENT
 BEGIN:VEVENT
 UID:3b79f01e24d59b2728d34ddb5f7b4bf0b65c8a34@esrw.de
 SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
+DTSTAMP:20261009T175042Z
+LAST-MODIFIED:20261009T175042Z
 DTSTART:20261010T063000Z
 DTEND:20261010T100000Z
-SUMMARY:SR · U11 LL Lila: Lippe Hockey Hamm
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
-  08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Lila\nHalle: HELINET Eis
- sportarena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Z
- ynda\, Jayden\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ SR · U11 LL Lila: Lippe Hockey Hamm
+DESCRIPTION:Geändert: Halle (vorher HELINET Eissportarena Hamm)\n\nRolle: 
+ Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt: 08:30 Uhr (60 Min
+  vor Spielbeginn)\nLiga: U11 LL Lila\nHalle: beta FINANZ Eissportarena Ham
+ m\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Zynda\, Jayden\
+ n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-LOCATION:HELINET Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 Hamm
+LOCATION:beta FINANZ Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 H
+ amm
 GEO:51.686934;7.886138
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
- , Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="HELINET
-  Eissportarena Hamm":geo:51.686934,7.886138
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena 
+ Hamm, Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="bet
+ a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Lila: Lippe Hockey 
- Hamm
+DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · U11 LL Lila: Lippe Hoc
+ key Hamm
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2478,28 +2489,30 @@ END:VEVENT
 BEGIN:VEVENT
 UID:996a38014be326c0c13445f82cc7f31123b2e1fc@esrw.de
 SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
+DTSTAMP:20261009T175042Z
+LAST-MODIFIED:20261009T175042Z
 DTSTART:20261011T153000Z
 DTEND:20261011T190000Z
-SUMMARY:SR · U17 RL: Lippe Hockey Hamm – TuS Wiehl
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
-  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: HELINET Eissport
- arena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Naust\
- , Marc André\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ SR · U17 RL: Lippe Hockey Hamm – TuS Wiehl
+DESCRIPTION:Geändert: Halle (vorher HELINET Eissportarena Hamm)\n\nRolle: 
+ Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt: 17:30 Uhr (60 Min
+  vor Spielbeginn)\nLiga: U17 RL\nHalle: beta FINANZ Eissportarena Hamm\nAd
+ resse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Naust\, Marc André\
+ n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-LOCATION:HELINET Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 Hamm
+LOCATION:beta FINANZ Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 H
+ amm
 GEO:51.686934;7.886138
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
- , Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="HELINET
-  Eissportarena Hamm":geo:51.686934,7.886138
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena 
+ Hamm, Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="bet
+ a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Lippe Hockey Hamm 
- – TuS Wiehl
+DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · U17 RL: Lippe Hockey H
+ amm – TuS Wiehl
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -3215,28 +3228,30 @@ END:VEVENT
 BEGIN:VEVENT
 UID:a75e19003da2791c634367d6712048a05933cb90@esrw.de
 SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
+DTSTAMP:20261009T175042Z
+LAST-MODIFIED:20261009T175042Z
 DTSTART:20261017T073000Z
 DTEND:20261017T110000Z
-SUMMARY:SR · U15 LL: Lippe Hockey Hamm – Herforder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
-  09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: HELINET Eissport
- arena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Warnke
- \, Christoph\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ SR · U15 LL: Lippe Hockey Hamm – Herforder EV
+DESCRIPTION:Geändert: Halle (vorher HELINET Eissportarena Hamm)\n\nRolle: 
+ Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt: 09:30 Uhr (60 Min
+  vor Spielbeginn)\nLiga: U15 LL\nHalle: beta FINANZ Eissportarena Hamm\nAd
+ resse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Warnke\, Christoph\n
+ \nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-LOCATION:HELINET Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 Hamm
+LOCATION:beta FINANZ Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 H
+ amm
 GEO:51.686934;7.886138
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
- , Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="HELINET
-  Eissportarena Hamm":geo:51.686934,7.886138
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena 
+ Hamm, Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="bet
+ a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Lippe Hockey Hamm 
- – Herforder EV
+DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · U15 LL: Lippe Hockey H
+ amm – Herforder EV
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

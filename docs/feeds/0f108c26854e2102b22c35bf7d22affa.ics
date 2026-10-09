@@ -9,24 +9,26 @@ REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
 UID:3ce6e611873b05d85c94194a31d029659a2742e4@esrw.de
-SEQUENCE:0
-DTSTAMP:20260921T153038Z
-LAST-MODIFIED:20260921T153038Z
+SEQUENCE:1
+DTSTAMP:20261009T175042Z
+LAST-MODIFIED:20261009T175042Z
 DTSTART:20261003T060000Z
 DTEND:20261003T093000Z
-SUMMARY:SR · U13 LL: Lippe Hockey Hamm – EC Bergisch Land
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
-  08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: HELINET Eissport
- arena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Kalisc
- hke\, Christian (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ SR · U13 LL: Lippe Hockey Hamm – EC Bergisch Land
+DESCRIPTION:Geändert: Halle (vorher HELINET Eissportarena Hamm)\n\nRolle: 
+ Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt: 08:00 Uhr (60 Min
+  vor Spielbeginn)\nLiga: U13 LL\nHalle: beta FINANZ Eissportarena Hamm\nAd
+ resse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Kalischke\, Christia
+ n (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-LOCATION:HELINET Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 Hamm
+LOCATION:beta FINANZ Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 H
+ amm
 GEO:51.686934;7.886138
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="HELINET Eissportarena Hamm
- , Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="HELINET
-  Eissportarena Hamm":geo:51.686934,7.886138
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena 
+ Hamm, Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="bet
+ a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
 END:VEVENT
 BEGIN:VEVENT
 UID:ffae9fdc75ac437d9f8adce78a83d21106ad514a@esrw.de
@@ -73,25 +75,30 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
 END:VEVENT
 BEGIN:VEVENT
 UID:250585a48418c4e2dc28e47fbdd7b7aeaa79acbe@esrw.de
-SEQUENCE:0
-DTSTAMP:20261007T171528Z
-LAST-MODIFIED:20261007T171528Z
+SEQUENCE:1
+DTSTAMP:20261009T175042Z
+LAST-MODIFIED:20261009T175042Z
 DTSTART:20261009T171500Z
 DTEND:20261009T204500Z
-SUMMARY:HSR · Senioren RLW: EG Diez-Limburg – GSC Moers Diez
-DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:15 Uhr\nTreff
- punkt: 19:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\n!! Halle ni
- cht automatisch erkannt - bitte selbst pruefen !!\nGespann: Garbsch\, Ren
- é (LSR) / RLP (LSR)\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://w
- ww.esrw.de/einteilungen.html
+SUMMARY:⚠ HSR · Senioren RLW: EG Diez-Limburg – GSC Moers Diez
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Hauptschiedsrichter (HSR
+ )\nSpielbeginn: 20:15 Uhr\nTreffpunkt: 19:15 Uhr (60 Min vor Spielbeginn)\
+ nLiga: Senioren RLW\nHalle: Eissporthalle Diez\nAdresse: Am Hallenbad 4\, 
+ 65582 Diez\nGespann: Garbsch\, René (LSR) / RLP (LSR)\nVergütung lt. Ord
+ nung: 100 €\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Eissporthalle Diez\, Am Hallenbad 4\, 65582 Diez
+GEO:50.37572;8.032397
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Diez, Am Hal
+ lenbad 4, 65582 Diez";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Diez":geo:
+ 50.37572,8.032397
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: EG Diez-Lim
- burg – GSC Moers Diez
+DESCRIPTION:In einer Stunde an der Halle - ⚠ HSR · Senioren RLW: EG Diez
+ -Limburg – GSC Moers Diez
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
