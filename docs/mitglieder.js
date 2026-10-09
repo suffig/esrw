@@ -936,10 +936,22 @@ window.Mitglieder = (function () {
     }
     if (istAdminAn()) reiterListe.push(["admin", "Admin", "i-shield"]);
     else if (hatRechte()) reiterListe.push(["admin", profil && profil.obmann ? "Obmann" : "Freigaben", "i-shield"]);
+    // Was unten in der Leiste steht, braucht hier oben keinen zweiten
+    // Knopf - auf "Kollegen" standen so "Abrechnung" und "Notizen" ein
+    // zweites Mal. Der Reiter, auf dem man gerade steht, bleibt immer:
+    // sonst verschwindet die Marke unter den Fuessen. "Admin" steht nie
+    // unten und bleibt deshalb auch immer.
+    if (designNeu() && ctx.reiterInLeiste) {
+      reiterListe = reiterListe.filter(function (t) {
+        return t[0] === reiter || t[0] === "admin" || !ctx.reiterInLeiste(t[0]);
+      });
+    }
     reiterListe.forEach(function (t) {
       leiste.appendChild(h("button", { type: "button", "data-reiter": t[0], onclick: function () { zeigeReiter(t[0]); } }, [ikone(t[2]), t[1], h("span", { class: "zaehler versteckt" })]));
     });
-    wurzel.appendChild(leiste);
+    // Eine Zeile mit einem einzigen Reiter sagt nichts - sie zeigt nur,
+    // wo man ohnehin ist.
+    if (reiterListe.length > 1) wurzel.appendChild(leiste);
     inhalt = h("div", { class: "mg-inhalt" });
     wurzel.appendChild(inhalt);
     zaehler().then(zaehlerAnzeigen);

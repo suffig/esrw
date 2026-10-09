@@ -2949,6 +2949,29 @@
   }
   function tabDritterAnwenden() { tabsAnwenden(); }
   // Passt das Ziel eines Platzes zur gerade gezeigten Ansicht?
+  // Welche Reiter des Mitgliederbereichs stehen schon unten in der Leiste?
+  // Der Mitgliederbereich laesst sie dann oben weg, statt denselben Weg
+  // zweimal anzubieten. Die Leiste ist einstellbar - also wird gefragt und
+  // nicht geraten: legt jemand "Notizen" nach unten, verschwindet der
+  // Reiter von selbst, und umgekehrt bleibt er stehen.
+  // Achtung: inLeiste(ziel) gibt es schon weiter unten fuer die
+  // Schnellziele. Zwei Funktionsdeklarationen gleichen Namens im selben
+  // Gueltigkeitsbereich - die letzte gewinnt, und die erste ist still weg.
+  // Deshalb traegt diese hier einen eigenen Namen.
+  function reiterInLeiste(reiter) {
+    var gesucht = reiter ? "mitglieder/" + reiter : "mitglieder";
+    return PLAETZE.some(function (p) {
+      // Die gewaehlte Einstellung, nicht der gerade gezeichnete Zustand:
+      // der Mitgliederbereich baut seine Reiterzeile frueher, als
+      // tabFuerPlatz() entscheiden kann (Sitzung und Funktionen sind dann
+      // noch nicht da) - und bekam deshalb immer "steht nicht unten".
+      var w = lesen(p.schluessel) || p.standard;
+      if (w) return w === gesucht;
+      if (p.schluessel !== "tab3") return false;
+      var d = tabStandardDrei();
+      return !!d && d[0] === gesucht;
+    });
+  }
   function tabZielAktiv(ziel, name, reiter) {
     var t = String(ziel || "").split("/");
     if (!t[0]) return false;
@@ -3370,7 +3393,7 @@
   // Leeres Geruest statt null: der Mitgliederbereich soll auch dann seinen
   // Anmeldeschirm zeichnen koennen, wenn noch keine Daten geladen sind.
   var LEER = { personen: [], spiele: [], hallen: {}, adressen: {}, hallen_hinweise: {}, saison: "", titel: "Einteilungen" };
-  function mitgliederKontext() { return { gespannKorrektur: gespannKorrektur, gespannGehoert: gespannGehoert, daten: daten || LEER, slug: profil && profil.slug, personMit: personMit, hole: hole, ikone: ikone, funktion: funktion, funktionen: FUNKTIONEN, einstellungenSync: einstellungenSync, lesen: lesen, schreiben: schreiben }; }
+  function mitgliederKontext() { return { gespannKorrektur: gespannKorrektur, gespannGehoert: gespannGehoert, daten: daten || LEER, slug: profil && profil.slug, personMit: personMit, hole: hole, ikone: ikone, funktion: funktion, funktionen: FUNKTIONEN, einstellungenSync: einstellungenSync, lesen: lesen, schreiben: schreiben, reiterInLeiste: reiterInLeiste }; }
   function zeigeMitglieder(reiter) {
     aktuell = null; ansicht("mitglieder");
     ladeMitglieder().then(function (M) { M.oeffnen(el("mitglieder"), mitgliederKontext(), reiter); })

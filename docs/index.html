@@ -2537,6 +2537,29 @@
      niemand. Die Flaeche darum zaehlt mit, das Aussehen bleibt. */
   :root .blatt-griff { position:relative; }
   :root .blatt-griff::after { content:""; position:absolute; inset:-14px -40px; }
+
+  /* ===== Runde 32: Kollegenliste dichter ============================= */
+
+  /* Ein Kollege stand auf bis zu vier Zeilen: Name, Hinweis, Nummer mit
+     drei Knoepfen, Anschrift mit zweien. Bei sechzig Kollegen ist das eine
+     sehr lange Rolle. Die Wege-Knoepfe sind jetzt kleiner und stehen
+     buendig rechts, Nummer und Anschrift bekommen je eine knappe Zeile. */
+  :root[data-design="neu"] .telefon-zeile { padding:var(--abstand-s) 0; }
+  :root[data-design="neu"] .kontakt-wert { margin-top:var(--abstand-xs); }
+  :root[data-design="neu"] .kontakt-wert > span:first-child {
+    font-size:var(--s-l); }
+  :root[data-design="neu"] .ikon-knopf { width:36px; height:36px; }
+  :root[data-design="neu"] .telefon-wege { gap:var(--abstand-xs); }
+
+  /* Die drei Zwischenueberschriften tragen die Ordnung der Liste -
+     Gespann zuerst, dann wer schon zusammen gepfiffen hat, dann der Rest.
+     Sie duerfen deshalb auffallen, ohne laut zu sein. */
+  :root[data-design="neu"] .telefon-liste .listen-kopf {
+    position:sticky; top:0; z-index:1; margin:var(--abstand-m) 0 var(--abstand-xs);
+    padding:var(--abstand-xs) 0; background:var(--karte);
+    font-size:var(--s-s); text-transform:uppercase; letter-spacing:.04em;
+    color:var(--dim); font-weight:800; }
+  :root[data-design="neu"] .telefon-liste .listen-kopf:first-child { margin-top:0; }
 </style>
 </head>
 <body>
@@ -3001,6 +3024,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=148"></script>
+<script src="app.js?v=151"></script>
 </body>
 </html>
