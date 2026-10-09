@@ -4008,14 +4008,25 @@
           var s = spielZu(k.kennung);
           var teile = []; if (k.abgesagt) teile.push("abgesagt"); if (k.halle) teile.push("Halle: " + k.halle); if (k.beginn) teile.push("Anstoß " + uhr(new Date(k.beginn)) + " Uhr"); if (k.treffpunkt) teile.push("Treffpunkt " + uhr(new Date(k.treffpunkt)) + " Uhr"); if (k.hinweis) teile.push(k.hinweis);
           var d = s ? new Date(s.beginn) : (k.beginn ? new Date(k.beginn) : null);
+          // Zuerst stand hier das Spiel und ganz am Ende, hinter einem
+          // Doppelpunkt, was sich geaendert hat - also das, wofuer man die
+          // Seite aufschlaegt. "spielText" traegt die Kennzeichnung des
+          // Spiels, "titel" die Aenderung; welche Zeile welche wird,
+          // entscheidet aendZeile().
+          var spielText = s ? datumKurz(d) + " " + uhr(d) + " · " + (s.liga ? s.liga + ": " : "") + s.paarung
+                            : (k.kennung.split("|")[1] || k.kennung);
           eintraege.push({ zeit: k.geaendert, art: k.abgesagt ? "abgesagt" : "korrektur",
-            titel: (s ? datumKurz(d) + " " + uhr(d) + " · " + (s.liga ? s.liga + ": " : "") + s.paarung : k.kennung.split("|")[1] || k.kennung) + ": " + teile.join(", "),
+            titel: spielText + ": " + teile.join(", "),
+            aenderung: teile.join(", "), spielText: spielText,
             wer: "Betreiber" + (k.von ? " (" + k.von + ")" : ""), href: s ? "#spiel/" + encodeURIComponent(kennungVon(s)) : null,
             spiel: d ? d.getTime() : 0 });
         });
         betreiber.spiele.forEach(function (z) {
           var d = new Date(z.beginn);
-          eintraege.push({ zeit: z.angelegt, art: "angelegt", titel: datumKurz(d) + " " + uhr(d) + " · " + (z.liga ? z.liga + ": " : "") + z.paarung + (z.halle ? " · " + z.halle : ""),
+          eintraege.push({ zeit: z.angelegt, art: "angelegt",
+            titel: datumKurz(d) + " " + uhr(d) + " · " + (z.liga ? z.liga + ": " : "") + z.paarung + (z.halle ? " · " + z.halle : ""),
+            aenderung: "Spiel angelegt",
+            spielText: datumKurz(d) + " " + uhr(d) + " · " + (z.liga ? z.liga + ": " : "") + z.paarung + (z.halle ? " · " + z.halle : ""),
             wer: "Betreiber" + (z.von ? " (" + z.von + ")" : ""), was: z.besetzung && z.besetzung.length ? "Gespann: " + z.besetzung.map(function (b) { return b.name; }).join(", ") : "",
             href: "#spiel/" + encodeURIComponent("m:" + z.id), spiel: d.getTime() });
         });
@@ -4228,7 +4239,18 @@
     if (aendGesehen && d.getTime() > aendGesehen) z.classList.add("frisch");
     var art = document.createElement("span"); art.className = "art " + e.art; art.textContent = AEND_NAMEN[e.art] || e.art; z.appendChild(art);
     var txt = document.createElement("span"); txt.style.minWidth = "0";
-    txt.appendChild(document.createTextNode(e.titel));
+    // Im neuen Design steht oben, WAS sich geaendert hat, darunter, an
+    // welchem Spiel. Vorher lief beides in einem Satz, und die Aenderung
+    // stand am Ende - nach Datum, Liga und Paarung, in derselben Schrift.
+    // Wer wissen will, was los ist, liest sonst jedes Mal erst an der
+    // Spielkennung vorbei.
+    if (designNeu() && e.aenderung && e.spielText) {
+      var kopf = document.createElement("b"); kopf.className = "aend-was";
+      kopf.textContent = e.aenderung.charAt(0).toUpperCase() + e.aenderung.slice(1);
+      txt.appendChild(kopf);
+      var wo = document.createElement("span"); wo.className = "aend-wo"; wo.textContent = e.spielText;
+      txt.appendChild(wo);
+    } else txt.appendChild(document.createTextNode(e.titel));
     if (e.felder && e.felder.length) {
       var fl = document.createElement("span"); fl.className = "felder";
       e.felder.forEach(function (f) {
