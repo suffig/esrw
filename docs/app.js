@@ -4798,12 +4798,12 @@
     if (regelnTeil === "bestimmungen") {
       el("regeln-unter").textContent = bestimmungenDaten ? "EHV NRW, " + bestimmungenDaten.stand : "Bestimmungen";
       if (!bestimmungenDaten) { ziel.appendChild(hinweisKarte("Bestimmungen nicht geladen.")); return; }
-      // Ein Bereich je Karte, zugeklappt bis auf den ersten. Auf dem Handy
-      // ist die Seite sonst eine einzige lange Rolle.
-      bestimmungenDaten.bereiche.forEach(function (b, nr) {
+      // Ein Bereich je Karte, alle zugeklappt. Der erste stand frueher
+      // offen - er ist aber nicht wichtiger als die anderen, und auf dem
+      // Handy schob er den Rest aus dem Bild. Wer etwas sucht, tippt.
+      bestimmungenDaten.bereiche.forEach(function (b) {
         var d = document.createElement("details");
         d.className = "karte bestimmung-block";
-        if (!nr) d.open = true;
         var sm = document.createElement("summary");
         var t = document.createElement("span");
         var bb = document.createElement("b"); bb.textContent = b.titel; t.appendChild(bb);

@@ -2515,6 +2515,28 @@
   /* Ein fehlender Betrag ist kein Nebensatz - er ist das, was zu tun ist. */
   :root[data-design="neu"] .mg-betrag-kurz.fehlt { color:var(--warn);
     font-weight:700; }
+
+  /* ===== Runde 31: Blaetter schrumpfen nicht mehr, sie scrollen ======= */
+
+  /* Ein Blatt ist eine Flex-Spalte mit max-height:82vh. Reicht der Platz
+     nicht, schrumpfen Flex-Kinder von sich aus - und zwar die mit eigenem
+     overflow am staerksten. Gemessen im Filterblatt des Spielplans:
+
+       Schnellwahl  brauchte  88 px, bekam 16
+       Ligen        brauchte 130 px, bekam 20
+       Griff oben   brauchte   5 px, bekam  0
+
+     Von den Chips blieb ein Streifen stehen, und das Blatt meldete
+     scrollHeight == clientHeight, also "nichts zu scrollen", obwohl der
+     Inhalt doppelt so hoch war. Mit flex:none behalten die Reihen ihre
+     Hoehe, und das Blatt scrollt, wie es immer sollte.
+     Gilt in beiden Designs - das ist ein Fehler, keine Gestaltung. */
+  :root .blatt > * { flex:none; }
+
+  /* Der Griff ist der Ort, an dem man ein Blatt zuzieht - 5 px trifft
+     niemand. Die Flaeche darum zaehlt mit, das Aussehen bleibt. */
+  :root .blatt-griff { position:relative; }
+  :root .blatt-griff::after { content:""; position:absolute; inset:-14px -40px; }
 </style>
 </head>
 <body>
@@ -2979,6 +3001,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=147"></script>
+<script src="app.js?v=148"></script>
 </body>
 </html>
