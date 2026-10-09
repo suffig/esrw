@@ -2544,7 +2544,34 @@
     el("plan-zaehler").textContent = treffer !== gesamt ? treffer + " von " + gesamt : gesamt + (gesamt === 1 ? " Spiel" : " Spiele");
     var fk = el("plan-filter-fertig");
     if (fk) fk.textContent = "Fertig \u00b7 " + treffer + (treffer === 1 ? " Spiel" : " Spiele") + " zeigen";
-    if (!treffer) ziel.appendChild(leerZustand(f || treffer !== gesamt ? "Nichts gefunden." : "Keine kommenden Spiele."));
+    if (!treffer) ziel.appendChild(planLeer(!!f || treffer !== gesamt, gesamt));
+  }
+  // "Nichts gefunden." sagt nur, dass man weitersuchen muss. Im neuen
+  // Design steht hier, warum die Liste leer ist und wo es weitergeht:
+  // meistens ist ein Filter gesetzt, waehrend das naechste eigene Spiel
+  // schon feststeht. Im alten Design bleibt der kurze Satz.
+  function planLeer(gefiltert, gesamt) {
+    if (!designNeu()) return leerZustand(gefiltert ? "Nichts gefunden." : "Keine kommenden Spiele.");
+    var n = naechstesEigenes();
+    if (n) {
+      var d = new Date(n.beginn);
+      return leerZustand("Hier steht gerade nichts. Dein nächstes Spiel ist am " + datumKurz(d),
+        { label: "Zu dem Spiel", href: "#spiel/" + encodeURIComponent(kennungVon(n)) });
+    }
+    if (gefiltert) return leerZustand(gesamt === 1
+      ? "Kein Treffer - im Plan steht ein Spiel, die Filter oben lassen es nicht durch."
+      : "Kein Treffer unter " + gesamt + " Spielen. Die Filter oben schränken die Liste ein.");
+    return leerZustand("Im Datenfenster steht kein kommendes Spiel. Was war, zeigt das Archiv.",
+      { label: "Zum Archiv", href: "#archiv" });
+  }
+  // Das naechste eigene Spiel, unabhaengig von Suche und Filtern.
+  // daten.spiele ist nach Beginn sortiert, der erste Treffer genuegt.
+  function naechstesEigenes() {
+    if (!profil || !profil.slug) return null;
+    var jetzt = Date.now();
+    return (daten.spiele || []).filter(function (s) {
+      return !s.vergangen && new Date(s.beginn).getTime() >= jetzt && istMeins(s);
+    })[0] || null;
   }
   function besetzungOder(s, ziel) {
     if (s.besetzung.length) s.besetzung.forEach(function (b) { ziel.appendChild(chip(b, s.system >= 3)); });
