@@ -3491,6 +3491,16 @@
       liste.innerHTML = "";
       if (!r || !r[0]) { liste.appendChild(leerZustand("Mitfahrten gibt es nach der Freischaltung durch den Betreiber.", { label: "Wohnort schon mal teilen", href: "#einstellungen" })); return; }
       var mitfahrten = r[0], heim = r[1];
+      // Frueher stand hier jeder, der an dem Tag in derselben Halle ein
+      // Spiel hatte. Zwischen zwei Anstossen liegen aber meist Stunden -
+      // zusammen fahren kann man mit dem eigenen Gespann. Wer von sich aus
+      // eine Mitfahrt eingetragen hat, bleibt stehen: das ist keine
+      // Zufallsnaehe, sondern eine Absicht, und sie waere sonst unsichtbar.
+      gruppen.forEach(function (g) {
+        var eingetragen = {};
+        g.dort.forEach(function (x) { (mitfahrten[kennungVon(x)] || []).forEach(function (m) { eingetragen[m.slug] = 1; }); });
+        g.leute = g.leute.filter(function (k) { return k.gespann || eingetragen[k.slug]; });
+      });
       // Der Hinweis auf die Heimatadresse stand bisher in jeder Karte - einmal
       // oben reicht, sonst liest ihn niemand mehr.
       if (!heim) {
@@ -3525,7 +3535,7 @@
         var angebote = {}; g.dort.forEach(function (x) { (mitfahrten[kennungVon(x)] || []).forEach(function (m) { angebote[m.slug] = m; }); });
         var meinEintrag = angebote[profil.slug] || null;
         var vorschlaege = window.Mitglieder.vorschlaegeFuer(s, g.leute.map(function (k) { return k.slug; }));
-        if (!g.leute.length) { var l0 = document.createElement("p"); l0.className = "meta"; l0.textContent = "Sonst niemand aus der Liste an dem Tag dort."; box.appendChild(l0); }
+        if (!g.leute.length) { var l0 = document.createElement("p"); l0.className = "meta"; l0.textContent = "Sonst niemand im Gespann, und keiner hat für den Tag eine Mitfahrt eingetragen."; box.appendChild(l0); }
         g.leute.sort(function (a, b) { return ((vorschlaege[b.slug] ? 2 : 0) + (b.gespann ? 1 : 0)) - ((vorschlaege[a.slug] ? 2 : 0) + (a.gespann ? 1 : 0)) || a.name.localeCompare(b.name, "de"); }).forEach(function (k) {
           var z = document.createElement("div"); z.className = "wer";
           var links = document.createElement("span"); var b = document.createElement("b"); b.textContent = k.name; links.appendChild(b);
@@ -5118,13 +5128,39 @@
     return leafletGeladen;
   }
   var karteObjekt = null;
+  // Gemessen bei 375 px: die Karte war 568 px hoch und begann bei 163 -
+  // die Legende darunter lag unter der Leiste, und weil Leaflet auf seinem
+  // Kasten "touch-action:none" setzt, verschluckt die Karte jede Wischgeste.
+  // Man kam also mit dem Finger gar nicht an das, was unter ihr stand.
+  // Deshalb bekommt sie genau den Platz zwischen Kopf und Leiste: dann gibt
+  // es nichts mehr, wohin gescrollt werden muesste.
+  function kartenHoeheSetzen(div) {
+    if (!designNeu()) return false;
+    var leiste = document.querySelector("nav.leiste");
+    // Nicht ueber offsetParent pruefen: die Leiste steht "fixed", da ist
+    // offsetParent immer null - die Hoehe sagt es ehrlicher.
+    var lr = leiste && leiste.getBoundingClientRect();
+    var unten = lr && lr.height > 0 ? lr.top : window.innerHeight;
+    var legende = el("karte").querySelector(".karten-legende");
+    // Beide Masse im selben Bezug: die Leiste steht fest am Fensterrand,
+    // die Karte wandert beim Scrollen. Ohne das "+ scrollY" wuchs die
+    // Karte um genau den Betrag, um den die Seite gerade gescrollt war.
+    var oben = div.getBoundingClientRect().top + window.scrollY;
+    var frei = unten - oben - (legende ? legende.offsetHeight + 8 : 0) - 12;
+    var neu = Math.max(260, Math.round(frei));
+    if (Math.abs(neu - div.offsetHeight) < 2) return false;
+    div.style.height = neu + "px";
+    return true;
+  }
   function zeigeKarte() {
     ansicht("karte"); aktuell = null; window.scrollTo(0, 0);
     var div = el("karte-div");
     ladeLeaflet().then(function (L) {
       if (karteObjekt) { karteObjekt.remove(); karteObjekt = null; }
       div.innerHTML = "";
-      var m = L.map(div, { scrollWheelZoom: false });
+      // Oben links erreicht ein Daumen auf einem langen Telefon nicht.
+      var m = L.map(div, { scrollWheelZoom: false, zoomControl: !designNeu() });
+      if (designNeu()) L.control.zoom({ position: "bottomright" }).addTo(m);
       karteObjekt = m;
       L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "© OpenStreetMap" }).addTo(m);
       var meine = {};
@@ -5166,11 +5202,21 @@
         // Erst Groesse melden, dann einpassen - sonst rechnet Leaflet mit einem
         // Kasten von 0 Pixeln und zeigt halb Europa.
         function einpassen() {
+          kartenHoeheSetzen(div);
           m.invalidateSize();
           if (nah.length) m.fitBounds(nah, { padding: [24, 24], maxZoom: 11 }); else m.setView([51.4, 7.3], 8);
         }
         einpassen();
         setTimeout(einpassen, 250);
+        // Drehen des Telefons oder die ein- und ausfahrende Adresszeile
+        // aendern die freie Hoehe - sonst bliebe die Karte auf dem alten Mass.
+        if (!div._hoehenLauscher) {
+          div._hoehenLauscher = true;
+          window.addEventListener("resize", function () {
+            if (el("karte").classList.contains("versteckt") || !karteObjekt) return;
+            if (kartenHoeheSetzen(div)) karteObjekt.invalidateSize();
+          });
+        }
       }
       if (sitzungVorhanden()) ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
         .then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.heimat() : null; }).then(fertig).catch(function () { fertig(null); });

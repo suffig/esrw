@@ -2594,6 +2594,20 @@
     background:transparent; color:var(--dim); font:inherit; font-size:1.5rem;
     line-height:1; cursor:pointer; z-index:1; }
   :root[data-design="neu"] .mg-blatt-zu:hover { color:var(--text); }
+
+  /* ===== Runde 34: die Hallenkarte auf dem Handy ====================== */
+
+  /* Die Hoehe setzt app.js, weil sie vom freien Platz abhaengt - hier
+     steht nur, was ohne Rechnen gilt. Der Hinweistext unter der Karte
+     entfaellt: er stand unter der Leiste und war mit dem Finger nicht
+     erreichbar, und was er sagt, zeigt der erste Tipp auf einen Punkt. */
+  :root[data-design="neu"] #karte > p.meta { display:none; }
+  :root[data-design="neu"] #karte .karten-legende { margin-top:var(--abstand-s); }
+  /* Leaflets Knoepfe sind 30 px gross - fuer einen Daumen zu klein. */
+  :root[data-design="neu"] .leaflet-touch .leaflet-bar a {
+    width:44px; height:44px; line-height:44px; font-size:1.2rem; }
+  :root[data-design="neu"] .leaflet-bottom.leaflet-right {
+    margin-bottom:22px; }
 </style>
 </head>
 <body>
@@ -3058,6 +3072,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=153"></script>
+<script src="app.js?v=156"></script>
 </body>
 </html>
