@@ -35,34 +35,6 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Kölner Junghaie
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:0d3dfac3461d8f285a19669a5631d450adbbd09b@esrw.de
-SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
-DTSTART:20261010T161500Z
-DTEND:20261010T194500Z
-SUMMARY:SR · Frauen BZL: KEC "Die Haie" 1c – ESV Bergisch Gladbach 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:15 Uhr\nTreffpunkt:
-  18:15 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Kölnarena 2
- \nAdresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: van Himbeeck\, 
- Frederic\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/ei
- nteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
-GEO:50.937979;6.98935
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
- r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
- .937979,6.98935
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL: KEC "Die Haie"
-  1c – ESV Bergisch Gladbach 1b
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:114e4bd688096c69d41d09f700fd13ec2449507b@esrw.de
 SEQUENCE:0
 DTSTAMP:20261006T110047Z
