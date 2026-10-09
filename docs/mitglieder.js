@@ -262,7 +262,14 @@ window.Mitglieder = (function () {
   // Funktion vom Betreiber eingeschaltet? (Schalter kommen aus app.js)
   function fn(k) { return ctx && ctx.funktion ? ctx.funktion(k) : true; }
   // Einfache Ansicht (Schalter in den Einstellungen, siehe app.js)
-  function einfach() { return !(ctx && ctx.lesen && ctx.lesen("einfach") === "0"); }
+  // Dieselbe Frage wie einfachAn() in app.js - und bis hierher nicht
+  // dieselbe Antwort: dort gilt die einfache Ansicht im neuen Design
+  // immer (den Schalter gibt es da nicht mehr), hier zaehlte nur der
+  // gespeicherte Schluessel. Wer ihn frueher einmal auf "0" gestellt
+  // hatte, bekam im neuen Design zwei Dateien mit zwei Meinungen.
+  function einfach() {
+    return designNeu() || !(ctx && ctx.lesen && ctx.lesen("einfach") === "0");
+  }
   var REITER_FUNKTION = { abrechnung: "abrechnung", info: "info", tausch: "tausch", frei: "frei", notizen: "notizen", kollegen: "telefon" };
 
   // --------------------------------------------------------- Attrappe
@@ -2199,6 +2206,29 @@ window.Mitglieder = (function () {
     // erledigt" - dann hat der Hinweis dazu nichts mehr zu sagen.
     rechnungOffenBox = box;
     rechnungOffenZeigen();
+
+    // In der Abrechnungsliste traegt eine Zeile mit gerechneten Werten das
+    // Abzeichen "gerechnet ✓?". Hier stand bisher nichts - und das ist die
+    // Stelle, an der ein ungepruefter Betrag das Haus verlaesst.
+    var ungeprueft = (f.kennungen || []).map(function (k) { return rechnungWahl[k]; })
+      .filter(function (sp) {
+        if (!sp) return false;
+        var b = rechnungBetrag(sp);
+        return !!((b && b.geschaetzt) || gerechnetText(einsaetze[sp.kennung]));
+      });
+    if (ungeprueft.length) {
+      box.appendChild(h("div", { class: "hinweis warn" }, [
+        h("span", {}, [
+          h("b", { text: ungeprueft.length === 1
+            ? "Ein Betrag ist gerechnet, nicht geprüft"
+            : ungeprueft.length + " Beträge sind gerechnet, nicht geprüft" }),
+          h("small", { style: "display:block", text:
+            ungeprueft.map(function (sp) { return sp.paarung; }).join(" · ")
+            + " – die App hat die Werte selbst eingetragen. In der Liste steht dazu "
+            + "„gerechnet ✓?“; ein Tipp auf den Wert bestätigt ihn." })
+        ])
+      ]));
+    }
 
     // ---- Was fehlt noch? ------------------------------------------------
     function betraege() {
