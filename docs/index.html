@@ -639,6 +639,9 @@
   .einstellungen-liste { padding:4px 14px; }
   .einstellungen-liste label { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:12px 0; border-top:1px solid var(--linie); font-weight:600; }
   .einstellungen-liste label:first-child { border-top:0; }
+  /* Eine Einstellung, die kein Ja/Nein ist, sondern drei Stufen - sie
+     traegt keinen Schalter rechts und ist deshalb kein <label>. */
+  .einstellung-block { padding:12px 0; border-top:1px solid var(--linie); font-weight:600; }
   .einstellungen-liste select, .einstellungen-liste input[type=number] { font:inherit; color:var(--text); background:var(--bg); border:1px solid var(--linie); border-radius:var(--radius-s); padding:6px 8px; }
 
   /* Hallenkarte */
@@ -3077,6 +3080,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=158"></script>
+<script src="app.js?v=160"></script>
 </body>
 </html>

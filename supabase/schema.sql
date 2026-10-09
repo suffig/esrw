@@ -2413,3 +2413,28 @@ alter table public.einsaetze add column if not exists herkunft jsonb;
 
 -- Zugriffsregeln der Tabelle gelten unveraendert fuer die neue Spalte:
 -- lesen, anlegen, aendern und loeschen nur die eigenen Zeilen.
+
+
+-- ======================================================================
+-- v49: Das neue Design fuer alle
+-- ======================================================================
+-- Das neue Design lag bisher nur im localStorage des Betreibers - ein
+-- Schalter fuer ein Geraet. Fuer alle gilt es, wenn es in der Tabelle
+-- "funktionen" steht: die darf jeder lesen, schreiben darf nur ein
+-- Admin. Genau dieser Zuschnitt wird gebraucht, deshalb keine neue
+-- Tabelle und keine neue Regel - nur eine weitere Zeile.
+--
+-- Die Leseregel schliesst anon ein, die App nutzt das hier aber nicht:
+-- ohne Sitzung zeigt sie nur den Anmeldeschirm und liest die Tabelle
+-- gar nicht. Gemeint sind die Mitglieder.
+--
+--   schluessel = 'design', aktiv = true  ->  neues Design fuer alle
+--
+-- Die App kennt daneben eine Ausnahme je Geraet ("neu" / "alt" im
+-- localStorage), die diese Zeile ueberstimmt. Sie ist zum Ansehen
+-- gedacht und nur fuer Admins erreichbar.
+--
+-- Standard ist aus: ohne diesen Abschnitt - und ohne die Zeile - bleibt
+-- alles beim bisherigen Design.
+insert into public.funktionen (schluessel, aktiv) values ('design', false)
+  on conflict (schluessel) do nothing;

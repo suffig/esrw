@@ -151,6 +151,10 @@
       if (war !== ist) (ist ? dazu : weg).push(f[1]);
     });
     funktionenStand = obj || {}; schreiben("funktionen", JSON.stringify(funktionenStand));
+    // Das Design haengt an derselben Zeile wie die Bereiche: wenn sie
+    // hereinkommt, muss es sofort gelten - sonst saehe ein abgemeldeter
+    // Besucher beim ersten Aufruf noch das alte.
+    designAnwenden(); einfachAnwenden();
     FUNKTIONEN.forEach(function (f) { document.documentElement.classList.toggle("ohne-" + f[0], !funktion(f[0])); });
     if (el("tab-tausch")) tabDritterAnwenden();
     if (neuZeichnen && vorher !== JSON.stringify(funktionenStand) && typeof ausHash === "function" && daten) ausHash();
@@ -413,7 +417,31 @@
   // Das neue Design entsteht Ansicht fuer Ansicht. Bis es fertig ist,
   // laeuft das alte weiter; der Betreiber kann zwischen beiden wechseln
   // und jederzeit zurueck. Fuer alle anderen gibt es den Schalter nicht.
-  function designNeu() { return lesen("design") === "neu"; }
+  // Zwei Schalter, einer davon fuer alle:
+  //
+  //   designGlobal()  steht in der Tabelle "funktionen" - dieselbe, die
+  //                   die Bereiche schaltet. Jeder darf sie lesen, auch
+  //                   abgemeldet; schreiben darf nur ein Admin. Das ist
+  //                   genau der Zuschnitt, den ein Schalter fuer alle
+  //                   braucht, deshalb liegt das Design dort und nicht in
+  //                   einer eigenen Tabelle.
+  //
+  //   lesen("design") ist die Ausnahme fuer dieses eine Geraet: "neu"
+  //                   oder "alt" ueberstimmen die Einstellung fuer alle,
+  //                   leer heisst "wie fuer alle". Damit kann der
+  //                   Betreiber das neue Design ansehen, ohne es schon
+  //                   fuer alle anzuschalten - und nach dem Anschalten
+  //                   noch einmal nachsehen, wie es vorher aussah.
+  function designGlobal() {
+    var f = funktionenLesen();
+    return f.design !== undefined ? !!f.design : false;
+  }
+  function designNeu() {
+    var eigen = lesen("design");
+    if (eigen === "neu") return true;
+    if (eigen === "alt") return false;
+    return designGlobal();
+  }
   function designAnwenden() {
     if (designNeu()) document.documentElement.setAttribute("data-design", "neu");
     else document.documentElement.removeAttribute("data-design");
@@ -3164,9 +3192,10 @@
       .then(function (st) { return st.eingerichtet && st.session && window.Mitglieder.adminRecht ? window.Mitglieder.adminRecht() : false; })
       .then(function (ja) {
         if (!ja) {
-          // Ohne Adminrecht gibt es den Schalter nicht - dann darf auch das
-          // neue Design nicht haengen bleiben, sonst kaeme man nicht zurueck.
-          if (designNeu()) { schreiben("design", null); designAnwenden(); }
+          // Ohne Adminrecht gibt es den Schalter nicht - dann darf auch die
+          // Ausnahme fuer dieses Geraet nicht haengen bleiben, sonst kaeme
+          // man nicht zurueck. Was fuer alle gilt, bleibt unberuehrt.
+          if (lesen("design")) { schreiben("design", null); designAnwenden(); einfachAnwenden(); if (daten) ausHash(); }
           return;
         }
         var h3 = document.createElement("h3"); h3.className = "abschnitt"; h3.textContent = "Betreiber";
@@ -3181,21 +3210,53 @@
         c.addEventListener("change", function () { schreiben("adminaus", c.checked ? null : "1"); adminKnopfStand(); zaehlerHolen(); toast(c.checked ? "Admin-Modus an." : "Admin-Modus aus.", "gut"); });
         l.appendChild(t); l.appendChild(c); karte.appendChild(l);
 
-        // Zweiter Schalter: das neue Design. Es entsteht Stueck fuer Stueck,
-        // deshalb sieht man es nur hier - und kommt jederzeit zurueck.
+        // Zweiter Schalter: das neue Design fuer alle. Schreibt in die
+        // Tabelle "funktionen" und gilt fuer jeden, sobald die App bei ihm
+        // neu laedt. (Nicht fuer Abgemeldete - die sehen nur den
+        // Anmeldeschirm, startLaden() laeuft bei ihnen gar nicht.)
         var ld = document.createElement("label"); var td = document.createElement("span");
-        var bd = document.createElement("b"); bd.textContent = "Neues Design"; bd.style.display = "block";
+        var bd = document.createElement("b"); bd.textContent = "Neues Design für alle"; bd.style.display = "block";
         var sd = document.createElement("small");
-        sd.textContent = "Im Aufbau. Was noch nicht umgestellt ist, sieht aus wie bisher.";
+        sd.textContent = "Gilt für alle Mitglieder, sobald die App bei ihnen neu lädt. Jederzeit zurückzunehmen.";
         sd.style.color = "var(--dim)"; sd.style.fontWeight = "500";
         td.appendChild(bd); td.appendChild(sd);
-        var cd = document.createElement("input"); cd.type = "checkbox"; cd.checked = designNeu();
+        var cd = document.createElement("input"); cd.type = "checkbox"; cd.checked = designGlobal();
         cd.addEventListener("change", function () {
-          schreiben("design", cd.checked ? "neu" : null);
-          designAnwenden();
-          toast(cd.checked ? "Neues Design an." : "Zurück zum bisherigen Design.", "gut");
+          var an = cd.checked; cd.disabled = true;
+          var setzen = window.Mitglieder && window.Mitglieder.funktionSetzen
+            ? window.Mitglieder.funktionSetzen("design", an) : Promise.resolve(false);
+          setzen.then(function (ok) {
+            cd.disabled = false;
+            if (!ok) { cd.checked = !an; toast("Umschalten hat nicht geklappt. Steht die Tabelle „funktionen“?", "warn"); return; }
+            toast(an ? "Neues Design ist für alle an." : "Für alle zurück zum bisherigen Design.", "gut");
+          });
         });
         ld.appendChild(td); ld.appendChild(cd); karte.appendChild(ld);
+
+        // Dritter Schalter: die Ausnahme fuer dieses Geraet. Drei Stufen,
+        // weil "aus" und "wie fuer alle" zweierlei sind - ohne die mittlere
+        // Stufe koennte man eine einmal gesetzte Ausnahme nie mehr loswerden.
+        var lx = document.createElement("div"); lx.className = "einstellung-block";
+        var bx = document.createElement("b"); bx.textContent = "Auf diesem Gerät"; bx.style.display = "block";
+        var sx = document.createElement("small");
+        sx.textContent = "Zum Ansehen, bevor du es für alle anschaltest. Gilt nur hier und wandert nicht aufs Handy.";
+        sx.style.color = "var(--dim)"; sx.style.fontWeight = "500"; sx.style.display = "block";
+        lx.appendChild(bx); lx.appendChild(sx);
+        var stufen = document.createElement("div"); stufen.className = "stufen";
+        stufen.style.marginTop = "8px";
+        [["", "Wie für alle"], ["neu", "Neu"], ["alt", "Bisher"]].forEach(function (o) {
+          var b2 = document.createElement("button"); b2.type = "button"; b2.textContent = o[1];
+          b2.className = (lesen("design") || "") === o[0] ? "aktiv" : "";
+          b2.addEventListener("click", function () {
+            schreiben("design", o[0] || null);
+            designAnwenden(); einfachAnwenden();
+            [].forEach.call(stufen.children, function (x) { x.classList.remove("aktiv"); });
+            b2.classList.add("aktiv");
+            ausHash();
+          });
+          stufen.appendChild(b2);
+        });
+        lx.appendChild(stufen); karte.appendChild(lx);
 
         box.appendChild(karte);
         box.classList.remove("versteckt");

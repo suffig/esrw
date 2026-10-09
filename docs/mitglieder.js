@@ -6437,7 +6437,14 @@ window.Mitglieder = (function () {
             c.disabled = false;
             if (r2.error) { c.checked = !c.checked; meldung(fehlerText(r2.error), "warn"); return; }
             stand[f[0]] = c.checked;
-            var alle = {}; liste.forEach(function (g) { alle[g[0]] = aktiv(g[0]); });
+            // Erst alles, was in der Tabelle steht, dann die Liste darueber:
+            // in der Tabelle stehen auch Schluessel, die hier nicht
+            // aufgefuehrt sind - "design" zum Beispiel. Wer sie wegliesse,
+            // schaltete das neue Design beim Umlegen einer beliebigen
+            // Funktion still wieder ab.
+            var alle = {};
+            Object.keys(stand).forEach(function (k) { alle[k] = stand[k]; });
+            liste.forEach(function (g) { alle[g[0]] = aktiv(g[0]); });
             kurzMeldung(f[1] + (c.checked ? " eingeschaltet ✓" : " abgeschaltet"), "gut");
             document.dispatchEvent(new CustomEvent("mg-funktionen", { detail: alle }));
           });
@@ -7246,6 +7253,28 @@ window.Mitglieder = (function () {
     }).catch(function () { return null; });
   }
 
+  // Einen Schalter in der Tabelle "funktionen" setzen - dieselbe, die die
+  // Bereiche schaltet: lesen darf jeder, schreiben nur ein Admin (die Regel
+  // steht in schema.sql, nicht hier). Danach wird die ganze Tabelle noch
+  // einmal gelesen und weitergereicht, damit der Abzug im Browser
+  // vollstaendig bleibt - auch die Schluessel, die diese Seite nicht kennt.
+  function funktionSetzen(schluessel, aktiv) {
+    return bereit().then(function (st) {
+      if (!st.eingerichtet || !session) return false;
+      return sb.from("funktionen")
+        .upsert({ schluessel: schluessel, aktiv: !!aktiv, geaendert: new Date().toISOString() }, { onConflict: "schluessel" })
+        .then(function (r) {
+          if (r.error) return false;
+          return sb.from("funktionen").select("schluessel,aktiv").then(function (r2) {
+            if (r2.error || !r2.data) return true;
+            var alle = {}; r2.data.forEach(function (z) { alle[z.schluessel] = !!z.aktiv; });
+            document.dispatchEvent(new CustomEvent("mg-funktionen", { detail: alle }));
+            return true;
+          });
+        });
+    }).catch(function () { return false; });
+  }
+
   // Heimatkoordinaten fuer Hallenkarte und Abfahrtsdatei
   function heimat() {
     return bereit().then(function (st) {
@@ -7277,5 +7306,5 @@ window.Mitglieder = (function () {
            einstellungenSpeichern: einstellungenSpeichern, radar: radar, angebotMachen: angebotMachen,
            kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl, kontoRendern: kontoRendern, kontaktVon: kontaktVon, istAdmin: istAdmin, adminRecht: adminRecht, tresorSchluessel: tresorSchluessel, kontoKurz: kontoKurz, rechnungSprung: rechnungSprung, korrekturSpeichern: korrekturSpeichern, spielManuellLoeschen: spielManuellLoeschen,
            mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, telefonVon: telefonVon, spielzeiten: spielzeiten, rechnungEinlesen: rechnungEinlesen, bilder: bilder, bildVon: bildVon, rufnameVon: rufnameVon, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb, wohnortEigen: wohnortEigen, notizenFuerSuche: notizenFuerSuche, zugang: zugang, darfKorrigieren: darfKorrigieren, antrittsstaerken: antrittsstaerken,
-           darfAlleSpiele: darfAlleSpiele };
+           darfAlleSpiele: darfAlleSpiele, funktionSetzen: funktionSetzen };
 })();
