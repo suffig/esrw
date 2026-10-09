@@ -1750,6 +1750,8 @@ window.Mitglieder = (function () {
       h("b", { text: euro(s.verg - s.fahrt - s.verpf - s.ausl) }),
       h("span", { text: "Saldo · " + s.spiele + (s.spiele === 1 ? " Spiel" : " Spiele") })
     ]));
+    // Die fuenf Zeilen darunter sind die Rechnung - der Satz sagt, welche.
+    if (designNeu()) karte.appendChild(h("p", { class: "woher-zeile", text: "Vergütung minus Fahrtkosten, Verpflegungsmehraufwand und Auslagen." }));
     [["Vergütung", euro(s.verg)],
      ["Fahrtkosten", euro(s.fahrt)],
      [einfach ? "Strecke (einfach)" : "Strecke (hin und zurück)", Math.round(einfach ? s.km : s.km * 2) + " km"],
@@ -1805,14 +1807,20 @@ window.Mitglieder = (function () {
       offenN++;
       offenBetrag += e ? (betragFuer(sp, e).betrag || 0) : 0;
     });
-    [["Vergütung", euro(sS.verg), null, ""], ["Kosten", euro(kosten), null, ""],
-     ["Saldo", euro(sS.verg - kosten), function () { abrechnungPanel = "detail"; rendereAbrechnung(); }, sS.verg - kosten < 0 ? "offen" : "offen fertig"],
+    [["Vergütung", euro(sS.verg), null, "", sS.spiele + (sS.spiele === 1 ? " Spiel" : " Spiele") + " mit Betrag"],
+     ["Kosten", euro(kosten), null, "", "Fahrt, Verpflegung, Auslagen"],
+     ["Saldo", euro(sS.verg - kosten), function () { abrechnungPanel = "detail"; rendereAbrechnung(); }, sS.verg - kosten < 0 ? "offen" : "offen fertig", "Vergütung minus Kosten"],
      [offenN ? "Offen · " + offenN + (offenN === 1 ? " Spiel" : " Spiele") : "Alles abgehakt",
       offenN ? euro(offenBetrag) : "✓",
       function () { nurUnbezahlt = !nurUnbezahlt; nurOffene = false; schnellModus = false; rendereAbrechnung(); },
-      offenN ? "offen" : "offen fertig"]
+      offenN ? "offen" : "offen fertig",
+      offenN ? "gespielt, nicht abgehakt" : "nichts steht aus"]
     ].forEach(function (p) {
       var k = h("div", { class: "zahl karte " + p[3] + (p[2] ? " tippbar" : "") }, [h("b", { text: p[1] }), h("span", { text: p[0] })]);
+      // Vier Betraege nebeneinander, und keiner sagt, wie er zustande kam.
+      // Im neuen Design steht es unter der Zahl - dieselbe Antwort wie beim
+      // Vermerk an der Abrechnungszeile seit Fassung 129.
+      if (designNeu()) k.appendChild(h("small", { class: "woher", text: p[4] }));
       if (p[2]) { k.style.cursor = "pointer"; k.title = "Antippen"; k.addEventListener("click", p[2]); }
       saldo.appendChild(k);
     });

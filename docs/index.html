@@ -2291,6 +2291,22 @@
   /* Wo der Name jetzt oben im Kopf steht, braucht es den Block darunter
      nicht mehr - er trug nichts ausser der Ueberschrift. */
   :root[data-design="neu"] .seitentitel { display:none; }
+
+  /* ===== Runde 28: Zahlen erklaeren sich selbst (Phase 3, Punkt 4) ==== */
+
+  /* Eine Kachel trug Zahl und Beschriftung, aber nicht die Herkunft - die
+     stand, wenn ueberhaupt, als Absatz weiter unten. Die dritte Zeile ist
+     klein und leise; sie soll die Zahl nicht ueberstimmen. */
+  /* Vier Kacheln nebeneinander lassen auf 375 px rund 80 px Breite - die
+     dritte Zeile bricht dort nach jedem Wort um. Zwei mal zwei liest sich
+     ruhiger und kostet kaum Hoehe, weil die Kacheln flacher werden. */
+  :root[data-design="neu"] .zahlen { grid-template-columns:1fr 1fr; }
+  :root[data-design="neu"] .zahl .woher {
+    display:block; margin-top:3px; font-size:var(--s-xs); font-weight:600;
+    line-height:1.25; color:var(--dim); letter-spacing:0; white-space:normal; }
+  :root[data-design="neu"] .mg-saldo .zahl { padding-bottom:12px; }
+  :root[data-design="neu"] .summenliste .woher-zeile {
+    margin:8px 0 0; font-size:var(--s-s); line-height:1.35; color:var(--dim); }
 </style>
 </head>
 <body>
@@ -2755,6 +2771,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=140"></script>
+<script src="app.js?v=141"></script>
 </body>
 </html>

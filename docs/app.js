@@ -2617,6 +2617,10 @@
     if (protokollDaten && Date.now() - protokollZeit < 120000) return Promise.resolve(protokollDaten);
     return hole("protokoll.json").then(function (p) { protokollDaten = p; protokollZeit = Date.now(); return p; });
   }
+  // Die kleine Zeile unter einer Zahl, die sagt, woraus sie entstand.
+  function woher(text) {
+    var w = document.createElement("small"); w.className = "woher"; w.textContent = text; return w;
+  }
   function balken(titel, eintraege) {
     if (!eintraege || !eintraege.length) return null;
     var hoechste = eintraege[0][1] || 1;
@@ -2647,15 +2651,29 @@
     var ziel = el("statistik"); ziel.innerHTML = "";
     var s = p.statistik; if (!s) return;
     var h = document.createElement("h3"); h.className = "abschnitt"; h.textContent = "Statistik";
-    var hs2 = document.createElement("small"); hs2.textContent = "aus dem Archiv, seit " + (s.erste || "?").split("-").reverse().join("."); h.appendChild(hs2); ziel.appendChild(h);
+    // Seit wann gezaehlt wird, stand dreimal auf der Seite: hier, an der
+    // Kachel "Insgesamt" und im Fuss. Im neuen Design nur noch an der Zahl,
+    // zu der es gehoert.
+    var seit = (s.erste || "?").split("-").reverse().join(".");
+    var hs2 = document.createElement("small"); hs2.textContent = designNeu() ? "aus dem Archiv" : "aus dem Archiv, seit " + seit; h.appendChild(hs2); ziel.appendChild(h);
     saisonziel(p, ziel);
     var zahlen = document.createElement("div"); zahlen.className = "zahlen";
     var heute = new Date(); heute.setHours(0, 0, 0, 0);
     var inSieben = p.spiele.filter(function (x) { var d = new Date(x.beginn); return d >= heute && d < new Date(heute.getTime() + 7 * 86400000); }).length;
-    [["in 7 Tagen", inSieben], ["Saison " + (daten.saison || ""), s.saison], ["Insgesamt", s.gesamt], ["als HSR", (s.rollen && s.rollen["HSR"]) || 0]].forEach(function (paar) {
+    var hsrK = (s.rollen && s.rollen.HSR) || 0, lsrK = (s.rollen && s.rollen.LSR) || 0;
+    [["in 7 Tagen", inSieben, "aus deinem Plan"],
+     ["Saison " + (daten.saison || ""), s.saison, "aus dem Archiv"],
+     ["Insgesamt", s.gesamt, "seit " + seit],
+     ["als HSR", hsrK, hsrK + lsrK ? "von " + (hsrK + lsrK) + " im 3er/4er" : "im 3er/4er-System"]
+    ].forEach(function (paar) {
       var k = document.createElement("div"); k.className = "zahl karte";
       var b = document.createElement("b"); b.textContent = paar[1]; var t = document.createElement("span"); t.textContent = paar[0];
-      k.appendChild(b); k.appendChild(t); zahlen.appendChild(k);
+      k.appendChild(b); k.appendChild(t);
+      // "4 als HSR" laedt zum Falschlesen ein - von wievielen? Im neuen
+      // Design steht die Herkunft unter der Zahl, nicht in einem Absatz
+      // weiter unten, den niemand der Kachel zuordnet.
+      if (designNeu()) k.appendChild(woher(paar[2]));
+      zahlen.appendChild(k);
     });
     ziel.appendChild(zahlen);
     [balken("Meiste Ligen", s.ligen), balken("Meiste Hallen", s.hallen), balken("Meiste Gespannpartner", s.partner),
@@ -2669,7 +2687,7 @@
       ziel.appendChild(q);
     }
     var fuss = document.createElement("p"); fuss.className = "meta"; fuss.style.marginTop = "10px";
-    fuss.textContent = "Gezählt seit " + (s.erste || "?").split("-").reverse().join(".") + ". Das Archiv wächst mit jedem Lauf, esrw.de selbst zeigt nur wenige Tage.";
+    fuss.textContent = (designNeu() ? "" : "Gezählt seit " + seit + ". ") + "Das Archiv wächst mit jedem Lauf, esrw.de selbst zeigt nur wenige Tage.";
     ziel.appendChild(fuss);
     if (s.gesamt) {
       var rk = document.createElement("button"); rk.type = "button"; rk.className = "mg-neben rueckblick-knopf"; rk.style.width = "100%";
@@ -3372,7 +3390,10 @@
     if (sitzungVorhanden()) { var hsk = document.createElement("div"); hsk.className = "skelett-karte"; hsk.style.height = "90px"; hw.appendChild(hsk); }
     var liste = el("halle-spiele"); liste.innerHTML = "";
     var spiele = (daten.spiele || []).filter(function (sp) { return sp.halle === name; });
-    if (!spiele.length) liste.appendChild(leerZustand("Im Datenfenster kein Spiel in dieser Halle."));
+    // Das Datenfenster reicht nur wenige Wochen - in einer Halle, in der
+    // gerade nichts ansteht, ist das Archiv die richtige Antwort.
+    if (!spiele.length) liste.appendChild(leerZustand("Im Datenfenster steht kein Spiel in dieser Halle. Was dort war, zeigt das Archiv.",
+      { label: "Zum Archiv", href: "#archiv" }));
     var letzterTag = null;
     spiele.forEach(function (sp) {
       var beginn = new Date(sp.beginn), tagKey = beginn.toDateString();
@@ -3667,6 +3688,16 @@
     if (navigator.share) navigator.share({ title: titel, text: titel + "\n" + text }).catch(function () {});
     else if (navigator.clipboard) navigator.clipboard.writeText(titel + "\n" + text).then(function () { toast("Liste kopiert.", "gut"); }).catch(function () {});
   }
+  // Ein leeres Archiv und eine zu enge Filterung sehen gleich aus, sind
+  // aber verschiedene Lagen: einmal hilft nur Warten, einmal ein Griff.
+  // Wie bei den Aenderungen gilt das in beiden Designs - es ist Hilfe,
+  // keine Gestaltung.
+  function archivLeer(imArchiv, gefiltert) {
+    if (!imArchiv) return leerZustand("Noch keine Spiele im Archiv. Es füllt sich mit jedem stündlichen Lauf; esrw.de selbst zeigt nur wenige Tage.");
+    if (!gefiltert) return leerZustand("Kein Spiel gefunden.");
+    return leerZustand("Kein Treffer unter " + imArchiv + (imArchiv === 1 ? " Spiel" : " Spielen") + " im Archiv. Die Filter oben schränken die Liste ein.",
+      { label: "Filter zurücksetzen", fn: function () { archivFilterSetzen({}); } });
+  }
   function archivFilterStand() {
     return { q: el("archiv-suche").value.trim(), s: el("archiv-saison").value, l: el("archiv-liga").value, r: el("archiv-rolle").value, h: el("archiv-halle").value };
   }
@@ -3735,9 +3766,14 @@
     var rollen = {}, km = 0, hsr = 0;
     treffer.forEach(function (s) { var ich = wer ? s.besetzung.filter(function (b) { return b.slug === wer; })[0] : null; if (ich) rollen[ich.rolle] = (rollen[ich.rolle] || 0) + 1; });
     var hallenN = Object.keys(treffer.reduce(function (o, s) { if (s.halle) o[s.halle] = 1; return o; }, {})).length;
-    [[treffer.length, treffer.length === 1 ? "Spiel" : "Spiele", "liga"], [hallenN, hallenN === 1 ? "Halle" : "Hallen", "halle"], [wer ? ((rollen.HSR || 0) + " / " + (rollen.LSR || 0)) : Object.keys(treffer.reduce(function (o, s) { s.besetzung.forEach(function (b) { if (b.slug) o[b.slug] = 1; }); return o; }, {})).length, wer ? "HSR / LSR" : "Kollegen", "partner"]].forEach(function (p) {
+    var gefiltert = !!(f || sn || lg || rl || hl);
+    [[treffer.length, treffer.length === 1 ? "Spiel" : "Spiele", "liga", gefiltert ? "nach deinen Filtern" : "im ganzen Archiv"],
+     [hallenN, hallenN === 1 ? "Halle" : "Hallen", "halle", "verschiedene Orte"],
+     [wer ? ((rollen.HSR || 0) + " / " + (rollen.LSR || 0)) : Object.keys(treffer.reduce(function (o, s) { s.besetzung.forEach(function (b) { if (b.slug) o[b.slug] = 1; }); return o; }, {})).length, wer ? "HSR / LSR" : "Kollegen", "partner", wer ? "in diesen Spielen" : "verschiedene Namen"]
+    ].forEach(function (p) {
       var k = document.createElement("div"); k.className = "zahl karte tippbar" + (archivAufschluesselung === p[2] ? " neu-markiert" : ""); k.title = "Antippen: Aufschlüsselung"; k.style.cursor = "pointer";
       var b = document.createElement("b"); b.textContent = p[0]; var sp = document.createElement("span"); sp.textContent = p[1] + " ›"; k.appendChild(b); k.appendChild(sp);
+      if (designNeu()) k.appendChild(woher(p[3]));
       k.addEventListener("click", function () { archivAufschluesselung = archivAufschluesselung === p[2] ? null : p[2]; archivRendern(); });
       z.appendChild(k);
     });
@@ -3760,7 +3796,7 @@
     c2.appendChild(document.createTextNode(navigator.share ? "Liste teilen" : "Liste kopieren"));
     c2.addEventListener("click", function () { archivTeilen(treffer, wer); }); ex.appendChild(c2);
     liste.appendChild(ex);
-    if (!treffer.length) { liste.appendChild(leerZustand(archivStand.spiele.length ? "Nichts passt zu den Filtern." : "Noch keine Spiele im Archiv.")); return; }
+    if (!treffer.length) { liste.appendChild(archivLeer(archivStand.spiele.length, gefiltert)); return; }
     var monat = null, box = null, n = 0;
     treffer.forEach(function (s) {
       var d = new Date(s.beginn), m = d.getFullYear() + "-" + d.getMonth();
