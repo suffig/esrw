@@ -4764,6 +4764,35 @@
       koerper.appendChild(ergKasten);
       ergebnisZeichnen();
 
+      // Ein Tor ist das, was waehrend einer Strafe am haeufigsten passiert.
+      // Es beendet die zuerst angezeigte laufende Kleine der bestraften
+      // Mannschaft (Regel 18.4) - Grosse, Match- und Disziplinarstrafen
+      // laufen weiter. Das ist keine Uhr: ein Tipp, ein Schritt, und die
+      // Momentaufnahme stimmt wieder.
+      var e2 = rechnerErgebnis();
+      function torKnopf(wer, liste, schluessel) {
+        var erste = liste.filter(function (x) { return x.p.k === "2"; })[0];
+        if (!erste) return null;
+        var b = document.createElement("button"); b.type = "button"; b.className = "anfrage";
+        b.textContent = "Tor für " + wer;
+        b.title = "Beendet die zuerst angezeigte laufende Kleine der Gegenseite (Regel 18.4)";
+        b.addEventListener("click", function () {
+          // Der Eintrag steht in der nach Restzeit sortierten Liste; weg
+          // muss er aus der urspruenglichen, deshalb ueber den Index.
+          rechner[schluessel].splice(erste.i, 1);
+          zeichne();
+          toast("Kleine Strafe beendet: " + wer + " hat getroffen.", "gut");
+        });
+        return b;
+      }
+      var tore = [torKnopf("Heim", e2.laufB, "laufB"), torKnopf("Gast", e2.laufA, "laufA")].filter(Boolean);
+      if (tore.length) {
+        var tz = document.createElement("div"); tz.className = "rechner-tore";
+        var tl = document.createElement("span"); tl.textContent = "Tor gefallen?"; tz.appendChild(tl);
+        tore.forEach(function (b) { tz.appendChild(b); });
+        koerper.appendChild(tz);
+      }
+
       if (rechner.a.length || rechner.b.length || rechner.laufA.length || rechner.laufB.length) {
         var zurueck = document.createElement("button"); zurueck.type = "button"; zurueck.className = "textknopf";
         zurueck.style.marginTop = "8px";
@@ -6107,9 +6136,33 @@
   document.addEventListener("mg-reiter", function () { if (!el("mitglieder").classList.contains("versteckt")) ansicht("mitglieder"); });
 
   // Punkt/Zahl am Reiter "Mitglieder": angemeldet, offene Gesuche, wartende Konten
+  // Nicht gespeicherte Abrechnungseintraege: eine Marke an dem Platz, der
+  // zur Abrechnung fuehrt. Steht die Abrechnung nicht in der Leiste, kommt
+  // sie an "Mehr" - dort geht es auch hin.
+  var wartetOffen = 0;
+  document.addEventListener("mg-wartet", function (e) {
+    wartetOffen = (e.detail && e.detail.offen) || 0;
+    warteMarke();
+  });
+  function warteMarke() {
+    var ziel = null;
+    PLAETZE.forEach(function (p) {
+      var t = tabFuerPlatz(p);
+      if (t && t[0] === "mitglieder/abrechnung") ziel = el(p.knopf);
+    });
+    if (!ziel) ziel = el("tab-mitglieder");
+    [].forEach.call(document.querySelectorAll(".leiste .wartet"), function (x) { x.remove(); });
+    if (!wartetOffen || !ziel) return;
+    var m = document.createElement("span"); m.className = "punkt zahl wartet";
+    m.textContent = wartetOffen > 9 ? "9+" : String(wartetOffen);
+    m.title = wartetOffen === 1 ? "Eine Änderung ist noch nicht gespeichert"
+                                : wartetOffen + " Änderungen sind noch nicht gespeichert";
+    ziel.appendChild(m);
+  }
   function leisteZaehler(z) {
-    var b = el("tab-mitglieder"), alt = b.querySelector(".punkt");
+    var b = el("tab-mitglieder"), alt = b.querySelector(".punkt:not(.wartet)");
     if (alt) alt.remove();
+    if (z.offen !== undefined) { wartetOffen = z.offen; warteMarke(); }
     if (!z.angemeldet) return;
     var n = (z.gesuche || 0) + (z.wartend || 0);
     try { if (navigator.setAppBadge) { if ((z.info || 0) + n > 0) navigator.setAppBadge((z.info || 0) + n); else if (navigator.clearAppBadge) navigator.clearAppBadge(); } } catch (e) {}

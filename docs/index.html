@@ -670,6 +670,10 @@
   .leiste button.aktiv svg.i { stroke-width:2.4; }
   .leiste button { position:relative; }
   .leiste .punkt { position:absolute; top:4px; left:calc(50% + 8px); min-width:8px; height:8px; border-radius:var(--radius-pille); background:var(--gut); }
+  /* Steht die Abrechnung nicht in der Leiste, landet die Warte-Marke an
+     "Mehr" - dort sitzt schon der Anmelde-Punkt. Versetzt, damit sich die
+     beiden nicht uebereinanderlegen. */
+  .leiste .punkt.wartet { left:calc(50% - 26px); }
   .leiste .punkt.zahl { min-width:17px; height:17px; top:0; padding:0 6px; background:var(--warn); color:#fff; font-size:var(--s-xs); font-weight:800;
                        display:flex; align-items:center; justify-content:center; line-height:1; }
   .held .danach { margin-top:10px; padding-top:10px; border-top:1px solid rgba(255,255,255,.2); font-size:var(--s-l); opacity:.9; display:flex; gap:6px; align-items:center; }
@@ -1937,6 +1941,10 @@
   .rechner-lauf span { color:var(--dim); font-size:var(--s-m); font-weight:700; }
   .rechner-lauf > b { min-width:1.2em; text-align:center; }
   /* Je laufende Strafe eine Zeile: Art, Restzeit, weg damit. */
+  /* "Tor gefallen?" - eine Reihe unter dem Ergebnis, nicht bei den
+     Strafen: es ist eine Folge, keine Eingabe. */
+  .rechner-tore { display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin-top:10px; }
+  .rechner-tore > span { color:var(--dim); font-size:var(--s-m); font-weight:700; }
   .rechner-laufzeile { display:flex; align-items:center; gap:8px; margin-top:6px; }
   .rechner-laufzeile input { flex:1; min-width:0; min-height:38px;
     padding:6px 10px; border:1px solid var(--linie); border-radius:var(--radius-klein);
@@ -3133,6 +3141,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=170"></script>
+<script src="app.js?v=172"></script>
 </body>
 </html>

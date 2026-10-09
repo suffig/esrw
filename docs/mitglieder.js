@@ -564,8 +564,11 @@ window.Mitglieder = (function () {
     });
   }
   window.addEventListener("online", function () { setTimeout(function () { nachreichen(); }, 1500); });
-  document.addEventListener("mg-warteschlange", function () {
+  document.addEventListener("mg-warteschlange", function (e) {
     if (reiter === "abrechnung" && inhalt && inhalt.isConnected) rendereAbrechnung();
+    // Auch die Leiste unten soll es sofort wissen, nicht erst beim
+    // naechsten Zaehlerlauf.
+    document.dispatchEvent(new CustomEvent("mg-wartet", { detail: { offen: (e.detail && e.detail.anzahl) || 0 } }));
   });
 
   function ladeProfil() {
@@ -1200,7 +1203,7 @@ window.Mitglieder = (function () {
     bildWahl.addEventListener("change", function () {
       var f = bildWahl.files && bildWahl.files[0];
       if (!f) return;
-      bildVerkleinern(f).then(function (url) {
+      profilbildVerkleinern(f).then(function (url) {
         bildSetzen(url); bildZeigen.checked = true; vorschauNeu();
         kurzMeldung("Bild übernommen, jetzt noch speichern.", "gut");
       }).catch(function (e) { meldung(e.message || "Bild konnte nicht gelesen werden.", "warn"); });
@@ -3597,8 +3600,17 @@ window.Mitglieder = (function () {
 
   // ---- Belege (Storage-Bucket "belege", Ordner je Nutzer)
 
-  // Fotos vor dem Upload verkleinern (max. 1600 px, JPEG) - spart Speicher und Zeit
-  function bildVerkleinern(datei) {
+  // Fotos vor dem Upload verkleinern (max. 1600 px, JPEG) - spart Speicher und Zeit.
+  //
+  // Hiess bis Fassung 171 "bildVerkleinern" - genau wie die Funktion fuer
+  // das Profilbild weiter unten. Zwei Funktionsdeklarationen gleichen
+  // Namens im selben Gueltigkeitsbereich: die letzte gewinnt, die erste
+  // ist still weg. Dadurch bekam der Beleg-Upload die Profilbild-Fassung:
+  // ein quadratisches 128-Pixel-Bild als Zeichenkette statt der Datei.
+  // Der Dateiname wurde "undefined", und ein PDF lehnte sie mit "Das ist
+  // kein Bild" ganz ab. Derselbe Fehler wie bei inLeiste() in Fassung 151 -
+  // deshalb traegt sie jetzt einen eigenen Namen.
+  function belegVerkleinern(datei) {
     if (!/^image\//.test(datei.type) || datei.size < 400000) return Promise.resolve(datei);
     return new Promise(function (ok) {
       var url = URL.createObjectURL(datei), img = new Image();
@@ -3614,7 +3626,7 @@ window.Mitglieder = (function () {
     });
   }
   function belegHochladen(sp, dateiRoh, zeile) {
-    return bildVerkleinern(dateiRoh).then(function (datei) {
+    return belegVerkleinern(dateiRoh).then(function (datei) {
     var pfad = session.user.id + "/" + sicher(sp.kennung) + "/" + Date.now() + "_" + sicher(datei.name);
     kurzMeldung("Lade " + datei.name + " hoch …", "");
     return sb.storage.from("belege").upload(pfad, datei, { upsert: false }).then(function (r) {
@@ -6545,7 +6557,10 @@ window.Mitglieder = (function () {
   function zaehler() {
     if (!session) return Promise.resolve({ angemeldet: false });
     return ladeProfil().then(function () {
-      var z = { angemeldet: true, gesuche: 0, wartend: 0, info: 0, admin: darfBereich(), nurObmann: !istAdminAn() && hatRechte(), obmann: !!(profil && profil.obmann), adminRecht: !!(profil && profil.admin) };
+      // "offen" sind Aenderungen, die noch nicht beim Server sind. Sie
+      // stehen bisher nur im Banner auf der Abrechnungsseite - wer die App
+      // zumacht, erfaehrt sonst nirgends, dass Geldeintraege haengen.
+      var z = { angemeldet: true, gesuche: 0, wartend: 0, info: 0, offen: warteZahl(), admin: darfBereich(), nurObmann: !istAdminAn() && hatRechte(), obmann: !!(profil && profil.obmann), adminRecht: !!(profil && profil.admin) };
       var laeufe = [];
       if (frei() && fn("tausch")) laeufe.push(sb.from("gesuche").select("id,user_id").eq("status", "offen").gte("beginn", new Date(Date.now() - 6 * 3600000).toISOString())
         .then(function (r) { z.gesuche = (r.data || []).filter(function (g) { return g.user_id !== session.user.id; }).length; }));
@@ -7251,7 +7266,7 @@ window.Mitglieder = (function () {
   // Bild klein rechnen, bevor es in die Datenbank geht: quadratisch auf
   // 128 Pixel, als JPEG. Aus vier Megabyte vom Handy werden so ein paar
   // Kilobyte - das laedt auch im Hallenfunkloch.
-  function bildVerkleinern(datei) {
+  function profilbildVerkleinern(datei) {
     return new Promise(function (fertig, schiefgegangen) {
       if (!datei || !/^image\//.test(datei.type)) { schiefgegangen(new Error("Das ist kein Bild.")); return; }
       var leser = new FileReader();
