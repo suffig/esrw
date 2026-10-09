@@ -1,6 +1,48 @@
 {
   "_hinweis": "Hallen-Adressen aus dem offiziellen Hallenverzeichnis des Eishockeyverbands NRW (https://ehv-nrw.de/club/rinklist/), abgerufen am 09.09.2026. Neue Vereine einfach unter 'vereine' ergaenzen. Schluessel werden vor dem Vergleich normalisiert (klein, ohne Umlaute/Satzzeichen) - Schreibweise ist also egal.",
   "hallen": {
+    "arena-aachen": {
+      "name": "100'5 Arena Aachen",
+      "adresse": "Hubert-Wienen-Straße 8, 52070 Aachen",
+      "koordinaten": [
+        50.79546,
+        6.100933
+      ]
+    },
+    "colonel-knight-stadion": {
+      "name": "Colonel-Knight-Stadion",
+      "adresse": "Nördlicher Park 18, 61231 Bad Nauheim",
+      "quelle": "Stadt Bad Nauheim und EC Bad Nauheim (ec-bn.de). Der EHV nennt Hausnummer 25 - dieselbe Strasse, fuer die Strecke ohne Belang.",
+      "koordinaten": [
+        50.372547,
+        8.738446
+      ]
+    },
+    "der-eisschuppen": {
+      "name": "Der Eisschuppen Lippstadt",
+      "adresse": "Grasweg 5, 59557 Lippstadt",
+      "koordinaten": [
+        51.656859,
+        8.354724
+      ]
+    },
+    "eisbahn-paderborn": {
+      "name": "Eisbahn Paderborn",
+      "adresse": "Pamplonastraße 15, 33106 Paderborn",
+      "koordinaten": [
+        51.685351,
+        8.719409
+      ]
+    },
+    "eisbahn-stellingen": {
+      "name": "Eisbahn Stellingen",
+      "adresse": "Hagenbeckstraße 124, 22527 Hamburg",
+      "quelle": "eisbahn-stellingen.de (Anfahrt)",
+      "koordinaten": [
+        53.590358,
+        9.943534
+      ]
+    },
     "eishalle-brehmstrasse": {
       "name": "Eishalle Brehmstraße",
       "adresse": "Brehmstraße 27a, 40239 Düsseldorf",
@@ -25,12 +67,30 @@
         8.652028
       ]
     },
+    "eisland-farmsen": {
+      "name": "Eisland Farmsen",
+      "adresse": "Berner Heerweg 152, 22159 Hamburg",
+      "quelle": "hamburg-tourism.de; Baederland",
+      "koordinaten": [
+        53.604416,
+        10.120432
+      ]
+    },
     "eislaufcenter-wesel": {
       "name": "Eislaufcenter Wesel",
       "adresse": "Ackerstraße 149, 46483 Wesel",
       "koordinaten": [
         51.681561,
         6.602407
+      ]
+    },
+    "eissport-arena-lauterbach": {
+      "name": "Eissport-Arena Lauterbach",
+      "adresse": "Am Sportfeld 7a, 36341 Lauterbach",
+      "quelle": "eishalle-lauterbach.de (Kontaktseite der Halle)",
+      "koordinaten": [
+        50.628205,
+        9.39322
       ]
     },
     "eissporthalle-benrath": {
@@ -57,6 +117,24 @@
         7.626858
       ]
     },
+    "eissporthalle-darmstadt": {
+      "name": "Eissporthalle Darmstadt",
+      "adresse": "Alsfelder Straße 45, 64289 Darmstadt",
+      "quelle": "frizzmag.de; eurohockey.com",
+      "koordinaten": [
+        49.890111,
+        8.664553
+      ]
+    },
+    "eissporthalle-diez": {
+      "name": "Eissporthalle Diez",
+      "adresse": "Am Hallenbad 4, 65582 Diez",
+      "quelle": "rlp-tourismus.com; badems-nassau.info",
+      "koordinaten": [
+        50.37572,
+        8.032397
+      ]
+    },
     "eissporthalle-dorsten": {
       "name": "Eissporthalle Dorsten",
       "adresse": "Crawleystraße 10-12, 46282 Dorsten",
@@ -81,12 +159,36 @@
         6.976731
       ]
     },
+    "eissporthalle-frankfurt": {
+      "name": "Eissporthalle Frankfurt",
+      "adresse": "Am Bornheimer Hang 4, 60386 Frankfurt am Main",
+      "koordinaten": [
+        50.125485,
+        8.721619
+      ]
+    },
+    "eissporthalle-kassel": {
+      "name": "Eissporthalle Kassel",
+      "adresse": "Am Auestadion 1, 34121 Kassel",
+      "koordinaten": [
+        51.298003,
+        9.48235
+      ]
+    },
     "eissporthalle-moers": {
       "name": "Eissporthalle Moers",
       "adresse": "Filderstraße 140, 47447 Moers",
       "koordinaten": [
         51.43973,
         6.6198
+      ]
+    },
+    "eissporthalle-neuss": {
+      "name": "Eissporthalle Neuss",
+      "adresse": "Jakob-Koch-Straße 1, 41466 Neuss",
+      "koordinaten": [
+        51.175806,
+        6.680258
       ]
     },
     "eissporthalle-ratingen": {
@@ -137,28 +239,30 @@
         7.458288
       ]
     },
-    "der-eisschuppen": {
-      "name": "Der Eisschuppen Lippstadt",
-      "adresse": "Grasweg 5, 59557 Lippstadt",
+    "eisstadion-am-pferdeturm": {
+      "name": "Eisstadion am Pferdeturm",
+      "adresse": "Am Pferdeturm 7, 30625 Hannover",
+      "quelle": "eisstadion-hannover.de",
       "koordinaten": [
-        51.656859,
-        8.354724
+        52.372333,
+        9.780395
       ]
     },
-    "seilersee-iserlohn": {
-      "name": "Eissporthalle am Seilersee",
-      "adresse": "Seeuferstraße 25, 58636 Iserlohn",
+    "emscher-lippe-halle": {
+      "name": "Emscher-Lippe-Halle Gelsenkirchen",
+      "adresse": "Adenauerallee 118, 45891 Gelsenkirchen",
       "koordinaten": [
-        51.384598,
-        7.713829
+        51.553483,
+        7.073102
       ]
     },
-    "eissporthalle-neuss": {
-      "name": "Eissporthalle Neuss",
-      "adresse": "Jakob-Koch-Straße 1, 41466 Neuss",
+    "erika-hess-eisstadion": {
+      "name": "Erika-Heß-Eisstadion",
+      "adresse": "Müllerstraße 185, 13353 Berlin",
+      "quelle": "berlin.de (Bezirksamt Mitte)",
       "koordinaten": [
-        51.175806,
-        6.680258
+        52.537529,
+        13.369867
       ]
     },
     "gysenberghalle-herne": {
@@ -170,11 +274,29 @@
       ]
     },
     "helinet-eissportarena": {
-      "name": "HELINET Eissportarena Hamm",
+      "name": "beta FINANZ Eissportarena Hamm",
       "adresse": "Karl-Koßmann-Straße 1, 59071 Hamm",
       "koordinaten": [
         51.686934,
         7.886138
+      ]
+    },
+    "ice-house-neuwied": {
+      "name": "Ice House Neuwied",
+      "adresse": "Andernacher Straße 111, 56564 Neuwied",
+      "quelle": "icehouse.de (Seite der Halle)",
+      "koordinaten": [
+        50.438714,
+        7.465227
+      ]
+    },
+    "ice-skating-center-mechelen": {
+      "name": "Ice Skating Center Mechelen",
+      "adresse": "Spuibeekstraat 1, 2800 Mechelen",
+      "quelle": "iscm.be (Kontaktseite)",
+      "koordinaten": [
+        51.025333,
+        4.496732
       ]
     },
     "icedome-troisdorf": {
@@ -209,6 +331,33 @@
         8.496038
       ]
     },
+    "patinoire-kockelscheuer": {
+      "name": "Patinoire Kockelscheuer",
+      "adresse": "42 route de Bettembourg, L-1899 Luxembourg",
+      "quelle": "kockelscheuer.com; Koordinaten aus Nominatim (Patinoire, 42 Route de Bettembourg, L-1899)",
+      "koordinaten": [
+        49.5684943,
+        6.1087187
+      ]
+    },
+    "patinoire-mediacite-liege": {
+      "name": "Patinoire Médiacité",
+      "adresse": "Boulevard Raymond Poincaré 7/112, 4020 Liège",
+      "quelle": "patinoire-liege.be (Kontaktseite)",
+      "koordinaten": [
+        50.632488,
+        5.579612
+      ]
+    },
+    "rheiner-eissporthalle": {
+      "name": "Rheiner Eissporthalle",
+      "adresse": "Kopernikusstraße 34, 48429 Rheine",
+      "quelle": "eissporthalle-rheine.de (Seite der Halle)",
+      "koordinaten": [
+        52.281013,
+        7.455599
+      ]
+    },
     "rheinlandhalle-krefeld": {
       "name": "Rheinlandhalle Krefeld",
       "adresse": "Westparkstraße 126, 47803 Krefeld",
@@ -217,52 +366,39 @@
         6.540168
       ]
     },
-    "yayla-arena-krefeld": {
-      "name": "Yayla Arena Krefeld",
-      "adresse": "Westparkstraße 111, 47803 Krefeld",
+    "sap-arena-mannheim": {
+      "name": "SAP Arena",
+      "adresse": "An der Arena 1, 68163 Mannheim",
+      "quelle": "mannheim.de; eventim.de",
       "koordinaten": [
-        51.340907,
-        6.540218
+        49.464117,
+        8.51796
       ]
     },
-    "emscher-lippe-halle": {
-      "name": "Emscher-Lippe-Halle Gelsenkirchen",
-      "adresse": "Adenauerallee 118, 45891 Gelsenkirchen",
+    "seilersee-iserlohn": {
+      "name": "Eissporthalle am Seilersee",
+      "adresse": "Seeuferstraße 25, 58636 Iserlohn",
       "koordinaten": [
-        51.553483,
-        7.073102
+        51.384598,
+        7.713829
       ]
     },
-    "arena-aachen": {
-      "name": "100'5 Arena Aachen",
-      "adresse": "Hubert-Wienen-Straße 8, 52070 Aachen",
+    "volksbank-arena-hamburg": {
+      "name": "Volksbank Arena",
+      "adresse": "Hellgrundweg 50, 22525 Hamburg",
+      "quelle": "hamburg-web.de; eversports.de",
       "koordinaten": [
-        50.79546,
-        6.100933
+        53.590538,
+        9.89901
       ]
     },
-    "eisbahn-paderborn": {
-      "name": "Eisbahn Paderborn",
-      "adresse": "Pamplonastraße 15, 33106 Paderborn",
+    "walter-maack-eisstadion": {
+      "name": "Walter-Maack-Eisstadion",
+      "adresse": "Scharnebecker Weg 21, 21365 Adendorf",
+      "quelle": "Flyer der Gemeinde; eurohockey.com",
       "koordinaten": [
-        51.685351,
-        8.719409
-      ]
-    },
-    "eissporthalle-frankfurt": {
-      "name": "Eissporthalle Frankfurt",
-      "adresse": "Am Bornheimer Hang 4, 60386 Frankfurt am Main",
-      "koordinaten": [
-        50.125485,
-        8.721619
-      ]
-    },
-    "eissporthalle-kassel": {
-      "name": "Eissporthalle Kassel",
-      "adresse": "Am Auestadion 1, 34121 Kassel",
-      "koordinaten": [
-        51.298003,
-        9.48235
+        53.289886,
+        10.456879
       ]
     },
     "wellblechpalast-berlin": {
@@ -271,6 +407,14 @@
       "koordinaten": [
         52.541033,
         13.480632
+      ]
+    },
+    "yayla-arena-krefeld": {
+      "name": "Yayla Arena Krefeld",
+      "adresse": "Westparkstraße 111, 47803 Krefeld",
+      "koordinaten": [
+        51.340907,
+        6.540218
       ]
     }
   },
@@ -309,41 +453,69 @@
     "ESC Panthers Paderborn": "eisbahn-paderborn"
   },
   "orte": {
-    "Duisburg": "eissporthalle-duisburg",
-    "Düsseldorf": "eishalle-brehmstrasse",
-    "Brehmstraße": "eishalle-brehmstrasse",
+    "100'5 Arena": "arena-aachen",
+    "Aachen": "arena-aachen",
+    "Adendorf": "walter-maack-eisstadion",
+    "Bad Nauheim": "colonel-knight-stadion",
     "Benrath": "eissporthalle-benrath",
-    "Iserlohn": "seilersee-iserlohn",
-    "Seilersee": "seilersee-iserlohn",
-    "Krefeld": "rheinlandhalle-krefeld",
-    "Rheinlandhalle": "rheinlandhalle-krefeld",
-    "Yayla Arena": "yayla-arena-krefeld",
-    "Köln": "koelnarena-2",
-    "Kölnarena 2": "koelnarena-2",
-    "Lentpark": "lentpark-koeln",
-    "Troisdorf": "icedome-troisdorf",
-    "Herne": "gysenberghalle-herne",
-    "Gysenberg": "gysenberghalle-herne",
-    "Gelsenkirchen": "emscher-lippe-halle",
-    "Essen": "eissporthalle-essen-west",
-    "Dinslaken": "eishalle-dinslaken",
-    "Ratingen": "eissporthalle-ratingen",
-    "Herford": "eishalle-im-kleinen-felde",
-    "Hamm": "helinet-eissportarena",
-    "Dortmund": "eissportzentrum-westfalen",
-    "Neuss": "eissporthalle-neuss",
-    "Möhnesee": "eissportzentrum-moehnesee",
-    "Lippstadt": "der-eisschuppen",
-    "Wiehl": "eissporthalle-wiehl",
-    "Solingen": "eissporthalle-solingen",
-    "Moers": "eissporthalle-moers",
-    "Wesel": "eislaufcenter-wesel",
-    "Dorsten": "eissporthalle-dorsten",
-    "Grefrath": "eissportzentrum-grefrath",
     "Bergisch Gladbach": "eissporthalle-bergisch-gladbach",
     "Bergkamen": "eissporthalle-bergkamen",
-    "Aachen": "arena-aachen",
+    "Bielefeld": "oetker-eisbahn",
+    "Brehmstraße": "eishalle-brehmstrasse",
+    "Darmstadt": "eissporthalle-darmstadt",
+    "Diez": "eissporthalle-diez",
+    "Dinslaken": "eishalle-dinslaken",
+    "Dorsten": "eissporthalle-dorsten",
+    "Dortmund": "eissportzentrum-westfalen",
+    "Duisburg": "eissporthalle-duisburg",
+    "Düsseldorf": "eishalle-brehmstrasse",
+    "Eis-Arena Herne": "gysenberghalle-herne",
+    "Eisparadies": "emscher-lippe-halle",
+    "Erika-Heß": "erika-hess-eisstadion",
+    "Essen": "eissporthalle-essen-west",
+    "Farmsen": "eisland-farmsen",
+    "Gelsenkirchen": "emscher-lippe-halle",
+    "Grefrath": "eissportzentrum-grefrath",
+    "Gysenberg": "gysenberghalle-herne",
+    "HELINET Eissportarena": "helinet-eissportarena",
+    "Hamm": "helinet-eissportarena",
+    "Hannibal Arena": "gysenberghalle-herne",
+    "Hannover": "eisstadion-am-pferdeturm",
+    "Herford": "eishalle-im-kleinen-felde",
+    "Herne": "gysenberghalle-herne",
+    "Iserlohn": "seilersee-iserlohn",
+    "Kockelscheuer": "patinoire-kockelscheuer",
+    "Krefeld": "rheinlandhalle-krefeld",
+    "Köln": "koelnarena-2",
+    "Kölnarena 2": "koelnarena-2",
+    "Lauterbach": "eissport-arena-lauterbach",
+    "Lentpark": "lentpark-koeln",
+    "Lippstadt": "der-eisschuppen",
+    "Lüttich": "patinoire-mediacite-liege",
+    "Mannheim": "sap-arena-mannheim",
+    "Maximilian Eissporthalle": "helinet-eissportarena",
+    "Mechelen": "ice-skating-center-mechelen",
+    "Moers": "eissporthalle-moers",
+    "Médiacité": "patinoire-mediacite-liege",
+    "Möhnesee": "eissportzentrum-moehnesee",
+    "Neuss": "eissporthalle-neuss",
+    "Neuwied": "ice-house-neuwied",
     "Paderborn": "eisbahn-paderborn",
-    "Bielefeld": "oetker-eisbahn"
+    "Pferdeturm": "eisstadion-am-pferdeturm",
+    "Ratingen": "eissporthalle-ratingen",
+    "Rheine": "rheiner-eissporthalle",
+    "Rheinlandhalle": "rheinlandhalle-krefeld",
+    "Seilersee": "seilersee-iserlohn",
+    "Solingen": "eissporthalle-solingen",
+    "Sportparadies": "emscher-lippe-halle",
+    "Stellingen": "eisbahn-stellingen",
+    "Tivoli Eissporthalle": "arena-aachen",
+    "Troisdorf": "icedome-troisdorf",
+    "Volksbank Arena": "volksbank-arena-hamburg",
+    "Wesel": "eislaufcenter-wesel",
+    "Wiehl": "eissporthalle-wiehl",
+    "Yayla Arena": "yayla-arena-krefeld",
+    "beta FINANZ Eissportarena": "helinet-eissportarena",
+    "q.beyond Arena": "volksbank-arena-hamburg"
   }
 }
