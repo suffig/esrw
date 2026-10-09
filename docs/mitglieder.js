@@ -506,6 +506,20 @@ window.Mitglieder = (function () {
       ? "Konnte gerade nicht gespeichert werden, liegt auf Wiedervorlage."
       : "Offline gespeichert, es geht raus, sobald wieder Netz da ist.", "");
   }
+  // Unterwegs: abgeschickt, aber noch nicht bestaetigt - und alles, was
+  // noch auf seine 600 ms wartet. Beim naechsten Start gilt so ein Eintrag
+  // als nicht angekommen und wandert in die Warteschlange. Lieber einmal
+  // zu viel schicken (ein Upsert mit denselben Werten aendert nichts) als
+  // einen Haken verlieren, weil jemand die App gleich nach dem Tippen
+  // weggeschoben hat.
+  function unterwegs() { return lokalLesen("mg_offen", {}); }
+  function vormerken(zeile) {
+    var o = unterwegs(); o[zeile.kennung] = zeile; lokalSchreiben("mg_offen", o);
+  }
+  function vormerkenWeg(kennung) {
+    var o = unterwegs(); if (!(kennung in o)) return;
+    delete o[kennung]; lokalSchreiben("mg_offen", o);
+  }
   var nachreichenLaeuft = false;
   function nachreichen() {
     var q = warteschlange(), keys = Object.keys(q);
@@ -1577,6 +1591,7 @@ window.Mitglieder = (function () {
         (r.data || []).forEach(function (z) { einsaetze[z.kennung] = z; });
         // Offline-Aenderungen liegen ueber dem Serverstand, bis sie nachgereicht sind
         var q = warteschlange(); Object.keys(q).forEach(function (k) { einsaetze[k] = Object.assign({}, einsaetze[k] || {}, ohneMerkmale(q[k])); });
+        uebernehmeUnterwegs();
         if (!sb._attrappe) lokalSchreiben("mg_einsaetze_cache", r.data || []);
         nachreichen();
       })
@@ -1585,7 +1600,23 @@ window.Mitglieder = (function () {
         einsaetze = {};
         lokalLesen("mg_einsaetze_cache", []).forEach(function (z) { einsaetze[z.kennung] = z; });
         var q = warteschlange(); Object.keys(q).forEach(function (k) { einsaetze[k] = Object.assign({}, einsaetze[k] || {}, ohneMerkmale(q[k])); });
+        uebernehmeUnterwegs();
       });
+  }
+  // Was beim letzten Lauf unterwegs war, hat nie eine Bestaetigung bekommen -
+  // sonst waere es geloescht worden. Also gilt es als nicht angekommen: in
+  // die Warteschlange damit, nachreichen() erledigt den Rest. Die neuere
+  // Fassung gewinnt, deshalb ueberschreibt sie einen Eintrag von dort.
+  function uebernehmeUnterwegs() {
+    var o = unterwegs(), keys = Object.keys(o);
+    if (!keys.length) return;
+    var q = warteschlange();
+    keys.forEach(function (k) {
+      q[k] = o[k];
+      einsaetze[k] = Object.assign({}, einsaetze[k] || {}, ohneMerkmale(o[k]));
+    });
+    lokalSchreiben("mg_queue", q);
+    lokalSchreiben("mg_offen", {});
   }
 
   var dbArchiv = null;
@@ -1669,7 +1700,11 @@ window.Mitglieder = (function () {
     delete kopie.herkunft;
     return kopie;
   }
-  function speichereEinsatz(spiel, aenderung) {
+  // "sofort" ist fuer Schalter: bezahlt, ausgefallen, uebergreifend. Das
+  // sind Entscheidungen, kein Getippe - wer danach die App wegschiebt,
+  // darf sie nicht verlieren. Zahlenfelder behalten ihre 600 ms, sonst
+  // schickt jede Ziffer eine eigene Zeile.
+  function speichereEinsatz(spiel, aenderung, sofort) {
     var alt = einsaetze[spiel.kennung] || {};
     var zeile = Object.assign({
       user_id: session.user.id, kennung: spiel.kennung, beginn: spiel.beginn,
@@ -1705,21 +1740,28 @@ window.Mitglieder = (function () {
     einsaetze[spiel.kennung] = zeile;
     aktualisiereSummen();
     aktualisiereZeile(spiel);
+    // Ab hier ist die Aenderung sicher: sie liegt lokal, bevor sie losgeht.
+    vormerken(zeile);
     clearTimeout(speicherTimer[spiel.kennung]);
-    speicherTimer[spiel.kennung] = setTimeout(function () {
+    function senden() {
       sb.from("einsaetze").upsert(zumSenden(zeile), { onConflict: "user_id,kennung" }).select().then(function (r) {
         if (r.error) {
+          vormerkenWeg(spiel.kennung);
           inWarteschlange(zeile, netzFehler(r.error) ? "netz" : "fehler");
           if (!netzFehler(r.error)) meldung("Speichern hat gerade nicht geklappt (" + fehlerText(r.error) + "). Die Änderung liegt auf Wiedervorlage.", "warn");
           return;
         }
+        vormerkenWeg(spiel.kennung);
         if (r.data && r.data[0] && r.data[0].id) einsaetze[spiel.kennung].id = r.data[0].id;
         kurzMeldung("Gespeichert ✓", "gut");
       }).catch(function (e) {
+        vormerkenWeg(spiel.kennung);
         inWarteschlange(zeile, netzFehler(e) ? "netz" : "fehler");
         if (!netzFehler(e)) meldung("Speichern hat gerade nicht geklappt (" + fehlerText(e) + "). Die Änderung liegt auf Wiedervorlage.", "warn");
       });
-    }, 600);
+    }
+    if (sofort) senden();
+    else speicherTimer[spiel.kennung] = setTimeout(senden, 600);
   }
 
   // Die Abrechnung ist eine private Aufstellung - es gibt keinen Status
@@ -1799,11 +1841,16 @@ window.Mitglieder = (function () {
     var kosten = sS.fahrt + sS.verpf + sS.ausl;
     // Was noch nicht abgehakt ist - die eigentliche Frage beim Blick in
     // die Abrechnung: was steht noch aus?
+    // Abgehakt ist abgehakt - auch ein Spiel, das erst noch kommt. Vorher
+    // fiel die Zukunft ganz heraus: die Zeile trug gross "bezahlt", der
+    // Balken darueber sagte "0,00 € bezahlt". Was noch aussteht, zaehlt
+    // dagegen weiter nur bei gespielten Spielen - das ist die Frage, die
+    // man beim Blick in die Abrechnung hat.
     var jetzt = new Date(), offenBetrag = 0, offenN = 0, bezahltBetrag = 0;
     spiele.forEach(function (sp) {
-      if (new Date(sp.beginn) > jetzt) return;
       var e = einsaetze[sp.kennung];
       if (e && e.bezahlt) { bezahltBetrag += betragFuer(sp, e).betrag || 0; return; }
+      if (new Date(sp.beginn) > jetzt) return;
       offenN++;
       offenBetrag += e ? (betragFuer(sp, e).betrag || 0) : 0;
     });
@@ -2500,7 +2547,7 @@ window.Mitglieder = (function () {
         // selbst, zuruecknehmen kann man sie am Spiel.
         (f.kennungen || []).forEach(function (k) {
           var sp = alleSpiele().filter(function (x) { return x.kennung === k; })[0];
-          if (sp) speichereEinsatz(sp, { bezahlt: new Date().toISOString() });
+          if (sp) speichereEinsatz(sp, { bezahlt: new Date().toISOString() }, true);
         });
         return speichern(sb.from("rechnungen").insert({
           user_id: session.user.id, nummer: nummer, datum: wann.toISOString().slice(0, 10),
@@ -2617,7 +2664,7 @@ window.Mitglieder = (function () {
         title: ist ? "Marke wieder entfernen" : "Für dich erledigt - taucht dann nicht mehr unter „Offen“ auf",
         onclick: function () {
           var wert = ist ? null : new Date().toISOString();
-          speichereEinsatz(sp, { bezahlt: wert });
+          speichereEinsatz(sp, { bezahlt: wert }, true);
           e = einsaetze[sp.kennung] || {};
           neu(); aktualisiereSummen(); aktualisiereZeile(sp); rechnungOffenZeigen();
         } }));
@@ -3078,12 +3125,12 @@ window.Mitglieder = (function () {
       h("button", { type: "button", class: "anfrage", text: "bezahlt", title: "Alle gewählten Spiele abhaken",
         disabled: n ? null : "disabled", onclick: function () {
           var wann = new Date().toISOString();
-          liste.forEach(function (sp) { speichereEinsatz(sp, { bezahlt: wann }); });
+          liste.forEach(function (sp) { speichereEinsatz(sp, { bezahlt: wann }, true); });
           kurzMeldung(n + (n === 1 ? " Spiel abgehakt ✓" : " Spiele abgehakt ✓"), "gut");
           auswahlEnde();
         } }),
       h("button", { type: "button", text: "nicht bezahlt", disabled: n ? null : "disabled", onclick: function () {
-        liste.forEach(function (sp) { speichereEinsatz(sp, { bezahlt: null }); });
+        liste.forEach(function (sp) { speichereEinsatz(sp, { bezahlt: null }, true); });
         auswahlEnde();
       } }),
       h("button", { type: "button", text: "CSV", disabled: n ? null : "disabled", onclick: function () { csvExport(liste.slice().sort(function (a, b) { return a.beginn < b.beginn ? -1 : 1; }), "Auswahl"); } }),
@@ -3650,9 +3697,9 @@ window.Mitglieder = (function () {
     var ausl = h("input", { type: "number", step: "0.5", min: "0", inputmode: "decimal",
       value: e.auslagen != null ? e.auslagen : "", placeholder: "€",
       onchange: function (ev) { speichereEinsatz(sp, { auslagen: zahl(ev.target.value) }); } });
-    var ausf = h("input", { type: "checkbox", onchange: function (ev) { speichereEinsatz(sp, { ausgefallen: ev.target.checked }); } });
+    var ausf = h("input", { type: "checkbox", onchange: function (ev) { speichereEinsatz(sp, { ausgefallen: ev.target.checked }, true); } });
     ausf.checked = !!e.ausgefallen;
-    var ueb = h("input", { type: "checkbox", onchange: function (ev) { speichereEinsatz(sp, { uebergreifend: ev.target.checked }); } });
+    var ueb = h("input", { type: "checkbox", onchange: function (ev) { speichereEinsatz(sp, { uebergreifend: ev.target.checked }, true); } });
     ueb.checked = !!e.uebergreifend;
     var notiz = h("input", { type: "text", value: e.notiz || "", placeholder: "Notiz",
       onchange: function (ev) { speichereEinsatz(sp, { notiz: ev.target.value.trim() || null }); } });
