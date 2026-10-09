@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:19bdcb0b90b40bfa1227455421cae24bb0400442@esrw.de
-SEQUENCE:0
-DTSTAMP:20260921T153038Z
-LAST-MODIFIED:20260921T153038Z
-DTSTART:20261002T171500Z
-DTEND:20261002T204500Z
-SUMMARY:SR · U15 BZL: EC Bergisch Land – Eisadler Dortmund 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
-  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Eissporthalle S
- olingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Braun\, B
- enjamin\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
-GEO:51.165932;7.086769
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
- ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
- le Solingen":geo:51.165932,7.086769
-END:VEVENT
-BEGIN:VEVENT
 UID:a47b43d1235dc79854592283c3eb69fedf5d7d9c@esrw.de
 SEQUENCE:0
 DTSTAMP:20260921T153038Z
@@ -112,12 +91,6 @@ GEO:51.165932;7.086769
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
  ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
  le Solingen":geo:51.165932,7.086769
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · LL FS: EC Bergisch Land 
- – EHC Essen Ruhr
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:2f3a6d78274d3bddb12d8f083d1c7d1b15286f34@esrw.de

@@ -8,70 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:50a0b02ad8f7180dedcc344b46823af2b9476c39@esrw.de
-SEQUENCE:0
-DTSTAMP:20260921T153038Z
-LAST-MODIFIED:20260921T153038Z
-DTSTART:20261002T171500Z
-DTEND:20261002T204500Z
-SUMMARY:SR · U15 BZL: EC Bergisch Land – Eisadler Dortmund 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
-  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Eissporthalle S
- olingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Henkels\,
-  André\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
-GEO:51.165932;7.086769
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
- ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
- le Solingen":geo:51.165932,7.086769
-END:VEVENT
-BEGIN:VEVENT
-UID:b507737421055606c9171a018945c6582ca21c66@esrw.de
-SEQUENCE:0
-DTSTAMP:20260921T153038Z
-LAST-MODIFIED:20260921T153038Z
-DTSTART:20261002T171500Z
-DTEND:20261002T204500Z
-SUMMARY:SR · U15 RLB: EHC Troisdorf – Düsseldorfer EG 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
-  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: ICEDOME Troisdo
- rf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Moritz\, 
- Alexander\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
-GEO:50.811945;7.109233
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
- rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
- isdorf":geo:50.811945,7.109233
-END:VEVENT
-BEGIN:VEVENT
-UID:12fa21f3be55fb8e7c5d606e8f90902f69593cb4@esrw.de
-SEQUENCE:0
-DTSTAMP:20260930T133044Z
-LAST-MODIFIED:20260930T133044Z
-DTSTART:20261002T171500Z
-DTEND:20261002T204500Z
-SUMMARY:SR · Senioren LL: Dinslakener Kobras 1b – EHC Troisdorf
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
-  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissporthal
- le Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Störmann
- \, Manuel\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/
- einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
-GEO:51.574578;6.735361
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
- m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
- inslaken":geo:51.574578,6.735361
-END:VEVENT
-BEGIN:VEVENT
 UID:65ec06e1d9ed68be1ae05b6aec6526e853369e54@esrw.de
 SEQUENCE:0
 DTSTAMP:20260921T153038Z
@@ -1195,12 +1131,6 @@ GEO:50.37572;8.032397
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Diez, Am Hal
  lenbad 4, 65582 Diez";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Diez":geo:
  50.37572,8.032397
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - ⚠ LSR · Senioren RLW: EG Diez
- -Limburg – GSC Moers Diez
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:ecf65055ab490606ce0b195420897e448575fbc9@esrw.de
@@ -1222,12 +1152,6 @@ GEO:51.165932;7.086769
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
  ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
  le Solingen":geo:51.165932,7.086769
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · LL FS: EC Bergisch Land 
- – EHC Essen Ruhr
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:22517ec05e0b98dead1a39379e43786e8b0a53f8@esrw.de
@@ -1250,12 +1174,6 @@ GEO:51.574578;6.735361
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
  m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
  inslaken":geo:51.574578,6.735361
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: Dinslakener
-  Kobras – TuS Wiehl
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:5a1f47846287985e319a5f2bdc7ee764c3c60fad@esrw.de
@@ -1278,12 +1196,6 @@ GEO:50.811945;7.109233
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
  rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
  isdorf":geo:50.811945,7.109233
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: EHC Troisdorf –
-  Eisadler Dortmund
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:2197d7b2c4fbf1d121f873072d3b96f5a673bba0@esrw.de

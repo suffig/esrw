@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:ecd94039670af1ac84568831433801fc46df7be7@esrw.de
-SEQUENCE:0
-DTSTAMP:20260921T153038Z
-LAST-MODIFIED:20260921T153038Z
-DTSTART:20261002T171500Z
-DTEND:20261002T204500Z
-SUMMARY:SR · U15 BZL: EC Bergisch Land – Eisadler Dortmund 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
-  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Eissporthalle S
- olingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Henkels\,
-  André\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
-GEO:51.165932;7.086769
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
- ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
- le Solingen":geo:51.165932,7.086769
-END:VEVENT
-BEGIN:VEVENT
 UID:c72c978b63ceeab836c66bd196dd99e338170ee5@esrw.de
 SEQUENCE:0
 DTSTAMP:20260921T153038Z
