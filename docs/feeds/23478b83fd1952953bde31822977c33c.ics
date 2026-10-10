@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:9a9175c2a1d632305a5ffebcd404cb9ffcecde8b@esrw.de
-SEQUENCE:0
-DTSTAMP:20260921T153038Z
-LAST-MODIFIED:20260921T153038Z
-DTSTART:20261003T164500Z
-DTEND:20261003T201500Z
-SUMMARY:SR · U15 RLA: Kölner Junghaie – Iserlohner EC
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:45 Uhr\nTreffpunkt:
-  18:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Kölnarena 2\nA
- dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Rieneck\, Maximili
- an\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
-GEO:50.937979;6.98935
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
- r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
- .937979,6.98935
-END:VEVENT
-BEGIN:VEVENT
 UID:769e91154f144fd92493ddca4b9e3ce26b1d1ce0@esrw.de
 SEQUENCE:0
 DTSTAMP:20260930T093037Z
