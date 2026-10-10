@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:8ee8302dbb6bfde257d608c9a8b1ae2236023797@esrw.de
-SEQUENCE:0
-DTSTAMP:20260921T153038Z
-LAST-MODIFIED:20260921T153038Z
-DTSTART:20261003T150000Z
-DTEND:20261003T183000Z
-SUMMARY:SR · U13 LL: Neusser EV – EHC Essen Ruhr
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
-  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Ne
- uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Schmidt\, Walde
- mar\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
-GEO:51.175806;6.680258
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
- -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
- uss":geo:51.175806,6.680258
-END:VEVENT
-BEGIN:VEVENT
 UID:522dbe0f052a2eaf7e3053f86488954f3040f098@esrw.de
 SEQUENCE:0
 DTSTAMP:20260921T153038Z
