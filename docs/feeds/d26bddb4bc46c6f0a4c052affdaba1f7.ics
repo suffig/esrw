@@ -31,85 +31,109 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
 END:VEVENT
 BEGIN:VEVENT
 UID:7214ea6865c8aa4914d671110bc1765f81bf955c@esrw.de
-SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
+SEQUENCE:1
+DTSTAMP:20261010T203039Z
+LAST-MODIFIED:20261010T203039Z
 DTSTART:20261010T050000Z
 DTEND:20261010T083000Z
-SUMMARY:SR · U13 BZL Gr.A: ESC Rheine Young Cats – Eisadler Dortmund 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
-  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\n!! Halle nicht au
- tomatisch erkannt - bitte selbst pruefen !!\nGespann: Brücker\, Tobias\n\
- nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ SR · U13 BZL Gr.A: ESC Rheine Young Cats – Eisadler Dortmund
+  1b
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
+ elbeginn: 08:00 Uhr\nTreffpunkt: 07:00 Uhr (60 Min vor Spielbeginn)\nLiga:
+  U13 BZL Gr.A\nHalle: Rheiner Eissporthalle\nAdresse: Kopernikusstraße 34
+ \, 48429 Rheine\nGespann: Brücker\, Tobias\n\nQuelle: https://www.esrw.de
+ /einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Rheiner Eissporthalle\, Kopernikusstraße 34\, 48429 Rheine
+GEO:52.281013;7.455599
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheiner Eissporthalle, Kop
+ ernikusstraße 34, 48429 Rheine";X-APPLE-RADIUS=100;X-TITLE="Rheiner Eissp
+ orthalle":geo:52.281013,7.455599
 END:VEVENT
 BEGIN:VEVENT
 UID:44a5a142d19acad11db4aedf4d2edbd758550c67@esrw.de
-SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
+SEQUENCE:1
+DTSTAMP:20261010T203039Z
+LAST-MODIFIED:20261010T203039Z
 DTSTART:20261011T170000Z
 DTEND:20261011T203000Z
-SUMMARY:SR · Frauen Pokal Gr.B: TSVE Bielefeld – KEC "Die Haie"
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
-  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen Pokal Gr.B\n!! Halle nic
- ht automatisch erkannt - bitte selbst pruefen !!\nGespann: Zynda\, Jayden\
- nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/einteilunge
- n.html
+SUMMARY:⚠ SR · Frauen Pokal Gr.B: TSVE Bielefeld – KEC "Die Haie"
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
+ elbeginn: 20:00 Uhr\nTreffpunkt: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga:
+  Frauen Pokal Gr.B\nHalle: Oetker Eisbahn Bielefeld\nAdresse: Duisburger S
+ tr. 14\, 33647 Bielefeld\nGespann: Zynda\, Jayden\nVergütung lt. Ordnung:
+  95 €\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Oetker Eisbahn Bielefeld\, Duisburger Str. 14\, 33647 Bielefeld
+GEO:51.979731;8.496038
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
+ Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
+ sbahn Bielefeld":geo:51.979731,8.496038
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Frauen Pokal Gr.B: TSVE Bi
- elefeld – KEC "Die Haie"
+DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · Frauen Pokal Gr.B: TSV
+ E Bielefeld – KEC "Die Haie"
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:31a888ceddb034a9c5306eda846f86935e32d3ea@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
+SEQUENCE:1
+DTSTAMP:20261010T203039Z
+LAST-MODIFIED:20261010T203039Z
 DTSTART:20261017T050000Z
 DTEND:20261017T083000Z
-SUMMARY:SR · U13 BZL Gr.A: ESC Rheine Young Cats – Mädchen W.I.N. 2
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
-  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\n!! Halle nicht au
- tomatisch erkannt - bitte selbst pruefen !!\nGespann: Brücker\, Tobias\n\
- nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ SR · U13 BZL Gr.A: ESC Rheine Young Cats – Mädchen W.I.N. 2
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
+ elbeginn: 08:00 Uhr\nTreffpunkt: 07:00 Uhr (60 Min vor Spielbeginn)\nLiga:
+  U13 BZL Gr.A\nHalle: Rheiner Eissporthalle\nAdresse: Kopernikusstraße 34
+ \, 48429 Rheine\nGespann: Brücker\, Tobias\n\nQuelle: https://www.esrw.de
+ /einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Rheiner Eissporthalle\, Kopernikusstraße 34\, 48429 Rheine
+GEO:52.281013;7.455599
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheiner Eissporthalle, Kop
+ ernikusstraße 34, 48429 Rheine";X-APPLE-RADIUS=100;X-TITLE="Rheiner Eissp
+ orthalle":geo:52.281013,7.455599
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: ESC Rheine Y
- oung Cats – Mädchen W.I.N. 2
+DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · U13 BZL Gr.A: ESC Rhei
+ ne Young Cats – Mädchen W.I.N. 2
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:e7d018b6a272b794774297c50e5f4f4b206344e7@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
+SEQUENCE:1
+DTSTAMP:20261010T203039Z
+LAST-MODIFIED:20261010T203039Z
 DTSTART:20261018T160000Z
 DTEND:20261018T193000Z
-SUMMARY:SR · Senioren LL: ESC Rheine – Soester EG
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
-  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\n!! Halle nicht aut
- omatisch erkannt - bitte selbst pruefen !!\nGespann: Zynda\, Nick\nVergüt
- ung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ SR · Senioren LL: ESC Rheine – Soester EG
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
+ elbeginn: 19:00 Uhr\nTreffpunkt: 18:00 Uhr (60 Min vor Spielbeginn)\nLiga:
+  Senioren LL\nHalle: Rheiner Eissporthalle\nAdresse: Kopernikusstraße 34\
+ , 48429 Rheine\nGespann: Zynda\, Nick\nVergütung lt. Ordnung: 100 €\n\n
+ Quelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Rheiner Eissporthalle\, Kopernikusstraße 34\, 48429 Rheine
+GEO:52.281013;7.455599
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheiner Eissporthalle, Kop
+ ernikusstraße 34, 48429 Rheine";X-APPLE-RADIUS=100;X-TITLE="Rheiner Eissp
+ orthalle":geo:52.281013,7.455599
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: ESC Rheine 
- – Soester EG
+DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · Senioren LL: ESC Rhein
+ e – Soester EG
 END:VALARM
 END:VEVENT
 END:VCALENDAR

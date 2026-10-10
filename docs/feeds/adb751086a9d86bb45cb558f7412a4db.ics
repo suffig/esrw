@@ -106,25 +106,30 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:e9b8d34b65ae4bf8ff0e196e657c9bedefef694b@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
+SEQUENCE:1
+DTSTAMP:20261010T203039Z
+LAST-MODIFIED:20261010T203039Z
 DTSTART:20261018T160000Z
 DTEND:20261018T193000Z
-SUMMARY:SR · Senioren LL: ESC Rheine – Soester EG
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
-  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\n!! Halle nicht aut
- omatisch erkannt - bitte selbst pruefen !!\nGespann: Keller\, Alexander\nV
- ergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/einteilungen
- .html
+SUMMARY:⚠ SR · Senioren LL: ESC Rheine – Soester EG
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
+ elbeginn: 19:00 Uhr\nTreffpunkt: 18:00 Uhr (60 Min vor Spielbeginn)\nLiga:
+  Senioren LL\nHalle: Rheiner Eissporthalle\nAdresse: Kopernikusstraße 34\
+ , 48429 Rheine\nGespann: Keller\, Alexander\nVergütung lt. Ordnung: 100 
+ €\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Rheiner Eissporthalle\, Kopernikusstraße 34\, 48429 Rheine
+GEO:52.281013;7.455599
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheiner Eissporthalle, Kop
+ ernikusstraße 34, 48429 Rheine";X-APPLE-RADIUS=100;X-TITLE="Rheiner Eissp
+ orthalle":geo:52.281013,7.455599
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: ESC Rheine 
- – Soester EG
+DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · Senioren LL: ESC Rhein
+ e – Soester EG
 END:VALARM
 END:VEVENT
 END:VCALENDAR

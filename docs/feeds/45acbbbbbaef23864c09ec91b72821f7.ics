@@ -86,24 +86,30 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:cfb318d24dc252fc9c70e6416fb4210866613033@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
+SEQUENCE:1
+DTSTAMP:20261010T203039Z
+LAST-MODIFIED:20261010T203039Z
 DTSTART:20261018T170000Z
 DTEND:20261018T203000Z
-SUMMARY:SR · U15 LL: SpG Neusser EV / GSC Moers – EV Duisburg 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
-  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\n!! Halle nicht automati
- sch erkannt - bitte selbst pruefen !!\nGespann: Beckford\, Emanuel\n\nQuel
- le: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ SR · U15 LL: SpG Neusser EV / GSC Moers – EV Duisburg 1b
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
+ elbeginn: 20:00 Uhr\nTreffpunkt: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga:
+  U15 LL\nHalle: Eissporthalle Neuss\nAdresse: Jakob-Koch-Straße 1\, 41466
+  Neuss\nGespann: Beckford\, Emanuel\n\nQuelle: https://www.esrw.de/einteil
+ ungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
+GEO:51.175806;6.680258
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
+ -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
+ uss":geo:51.175806,6.680258
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: SpG Neusser EV / G
- SC Moers – EV Duisburg 1b
+DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · U15 LL: SpG Neusser EV
+  / GSC Moers – EV Duisburg 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
