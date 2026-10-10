@@ -44,12 +44,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: ESC Rheine Y
- oung Cats – Eisadler Dortmund 1b
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:f70714244d3cf97e5b971d3f262a3ff6a13e7a62@esrw.de

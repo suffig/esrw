@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:5538b3623330f49aae5038e281b9ff2f3caf7b78@esrw.de
-SEQUENCE:0
-DTSTAMP:20260921T153038Z
-LAST-MODIFIED:20260921T153038Z
-DTSTART:20261003T050000Z
-DTEND:20261003T083000Z
-SUMMARY:SR · U17 RL: Herforder EV – Herner EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
-  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eishalle Im Klei
- nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Berger\, Eu
- gen\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eishalle Im Kleinen Felde\, Im Kleinen Felde\, 32051 Herford
-GEO:52.114893;8.652028
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
-  Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
- Kleinen Felde":geo:52.114893,8.652028
-END:VEVENT
-BEGIN:VEVENT
 UID:86bbecf658ce78512f837f46f8c742cd00d32bd0@esrw.de
 SEQUENCE:0
 DTSTAMP:20260921T153038Z
@@ -86,12 +65,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: ESC Rheine Y
- oung Cats – Eisadler Dortmund 1b
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:44a5a142d19acad11db4aedf4d2edbd758550c67@esrw.de
