@@ -2679,6 +2679,37 @@
     .kopf .rund::after, .kopf .avatar-knopf::after {
       content:""; position:absolute; inset:-4px -3px; border-radius:inherit; }
   }
+
+  /* ===== Runde 38: was man trifft und was man liest ================== */
+
+  /* Gemessen bei 375 px im neuen Design: der Hallenlink in einer
+     Spielzeile ist 18 px hoch, die Fusszeilen-Links ebenso, der Vermerk
+     "gerechnet ✓?" 24 px. Mit Handschuhen, im Dunkeln, einhaendig trifft
+     das niemand zuverlaessig.
+     Bei einem Link mitten im Text geht der ::after-Trick aus Fassung 170
+     nicht gut - er haengt an der ersten Zeilenbox. Es geht aber einfacher:
+     senkrechter Innenabstand an einem Inline-Element zaehlt zur
+     Trefferflaeche, ohne die Zeilenhoehe zu veraendern. Kein
+     inline-block, kein negativer Aussenabstand, keine Verschiebung - und
+     anders als inline-block bleibt ein langer Link an jeder Stelle
+     umbrechbar. */
+  :root[data-design="neu"] .hallenlink,
+  :root[data-design="neu"] footer a,
+  :root[data-design="neu"] p > a,
+  :root[data-design="neu"] li > a,
+  :root[data-design="neu"] .spiel .inhalt a:not(.chip):not(.reihe-knopf) {
+    padding-top:9px; padding-bottom:9px; }
+
+  /* Knoepfe, die als Marke aussehen, sind trotzdem Knoepfe. */
+  :root[data-design="neu"] .mg-status.gerechnet { padding-top:7px; padding-bottom:7px;
+    margin-top:-5px; margin-bottom:-5px; }
+  :root[data-design="neu"] .textknopf { min-height:36px; }
+
+  /* Die kleinste Schrift war .68rem, also knapp 11 px - sie traegt
+     ausgerechnet die Marken, die man im Vorbeigehen liest: Rolle, Liga,
+     Zaehler, die Beschriftung der unteren Leiste. Eine Stufe groesser;
+     die Zeichen daneben bleiben, wie sie sind. */
+  :root[data-design="neu"] { --s-xs:.75rem; }
 </style>
 </head>
 <body>
@@ -3141,6 +3172,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=174"></script>
+<script src="app.js?v=176"></script>
 </body>
 </html>
