@@ -52,16 +52,16 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
 END:VEVENT
 BEGIN:VEVENT
 UID:25331faa0b6db26e7acc5d565343e4f4c767f164@esrw.de
-SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
+SEQUENCE:1
+DTSTAMP:20261010T103036Z
+LAST-MODIFIED:20261010T103036Z
 DTSTART:20261011T060000Z
 DTEND:20261011T093000Z
 SUMMARY:SR · U9 LL Grün: ESV Grizzlys Bergkamen
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
   08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Grün\nHalle: Eissporthal
- le Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Galeske\,
-  Jonas\n\nQuelle: https://www.esrw.de/einteilungen.html
+ le Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: n.n.\n\nQ
+ uelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
