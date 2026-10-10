@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:e80dc4bb736dca7f56f6640aeee188746f544fc5@esrw.de
-SEQUENCE:0
-DTSTAMP:20260930T093037Z
-LAST-MODIFIED:20260930T093037Z
-DTSTART:20261003T144500Z
-DTEND:20261003T181500Z
-SUMMARY:SR · FS U15: SPG NEV / GSC – Aachener EC In Moers !!!
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:45 Uhr\nTreffpunkt:
-  16:45 Uhr (60 Min vor Spielbeginn)\nLiga: FS U15\nHalle: Eissporthalle Mo
- ers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Heffler\, Zsolt\n\
- nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
-GEO:51.43973;6.6198
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
- rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
- ":geo:51.43973,6.6198
-END:VEVENT
-BEGIN:VEVENT
 UID:8ee8302dbb6bfde257d608c9a8b1ae2236023797@esrw.de
 SEQUENCE:0
 DTSTAMP:20260921T153038Z
@@ -1281,12 +1260,6 @@ GEO:51.43973;6.6198
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
  rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
  ":geo:51.43973,6.6198
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: SpG Neusser EV 1b
-  / GSC Moers 1b – EC Bergisch Land
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:d46bf8cc387e04ab9fba6608951c8a1f6c0e894e@esrw.de
