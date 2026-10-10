@@ -2211,8 +2211,33 @@ window.Mitglieder = (function () {
       var n = parseInt(s.slice(praefix.length).replace(/\D/g, ""), 10);
       if (n > hoechste) hoechste = n;
     });
-    var zahl = Math.max(hoechste + 1, parseInt(stamm.nummer, 10) || 1);
+    // Frueher stand hier Math.max(hoechste + 1, stamm.nummer). Damit
+    // verlor die Einstellung im Profil immer, sobald sie kleiner war als
+    // die hoechste schon vergebene Nummer - wer von 005 auf 002 zurueck
+    // wollte, bekam weiter 005, ohne jeden Hinweis.
+    //
+    // Der gespeicherte Zaehler ist die Ansage des Nutzers: rechnungErzeugen()
+    // zaehlt ihn nach jeder Rechnung selbst hoch, er ist also im Normalfall
+    // ohnehin hoechste + 1. Weicht er ab, hat ihn jemand absichtlich
+    // gesetzt. Nur wenn gar keiner da ist, zaehlt die Liste.
+    // Doppelte Nummern faengt nummerPruefen() ab - mit einem Knopf auf die
+    // naechste freie.
+    var gesetzt = parseInt(stamm.nummer, 10);
+    var zahl = gesetzt > 0 ? gesetzt : hoechste + 1;
     return praefix + String(zahl).padStart(3, "0");
+  }
+  // Die naechste Nummer, die es mit diesem Praefix noch nicht gibt.
+  function naechsteFreieNummer(f) {
+    var vor = nummerVorschlag(f);
+    var praefix = String(vor).replace(/\d+\s*$/, "");
+    var hoechste = 0;
+    (rechnungListe || []).forEach(function (rg) {
+      var s = String(rg.nummer || "");
+      if (s.indexOf(praefix) !== 0) return;
+      var n = parseInt(s.slice(praefix.length).replace(/\D/g, ""), 10);
+      if (n > hoechste) hoechste = n;
+    });
+    return praefix + String(hoechste + 1).padStart(3, "0");
   }
 
   // Von aussen (Spielseite, Abrechnungsliste): dieses Spiel vormerken und das
@@ -2499,9 +2524,23 @@ window.Mitglieder = (function () {
       var doppelt = (rechnungListe || []).filter(function (rg) { return String(rg.nummer) === String(f.nummer); }).length;
       nummerHinweis.className = doppelt ? "achtung" : "meta";
       nummerHinweis.style.margin = "-4px 0 8px";
-      nummerHinweis.textContent = doppelt
-        ? "Diese Nummer hast du schon einmal vergeben."
-        : (f.nummerManuell ? "Von Hand gesetzt." : "Vorgeschlagen aus dem Spiel und deinen bisherigen Rechnungen.");
+      leeren(nummerHinweis);
+      nummerHinweis.appendChild(document.createTextNode(doppelt
+        ? "Diese Nummer hast du schon einmal vergeben. "
+        : (f.nummerManuell ? "Von Hand gesetzt." : "Vorgeschlagen aus dem Profil; nach jeder Rechnung zählt sie weiter.")));
+      // Eine doppelte Nummer darf man wollen (korrigierte Rechnung), aber
+      // meistens ist sie ein Versehen. Ein Tipp auf die naechste freie.
+      if (doppelt) {
+        var frei = naechsteFreieNummer(f);
+        var k = h("button", { type: "button", class: "textknopf", text: frei + " nehmen" });
+        k.addEventListener("click", function () {
+          f.nummer = frei; f.nummerManuell = true;
+          nummerFeld.value = frei;
+          pdfKnopf.textContent = "Rechnung " + frei + " als PDF";
+          nummerPruefen();
+        });
+        nummerHinweis.appendChild(k);
+      }
     }
     nummerFeld.addEventListener("input", function () {
       f.nummer = nummerFeld.value.trim(); f.nummerManuell = true;
@@ -2600,12 +2639,67 @@ window.Mitglieder = (function () {
           h("span", {}, [h("b", { text: rg.nummer + " · " + (rg.verein || "") }),
             h("small", { text: new Date(rg.datum).toLocaleDateString("de-DE") + " · " + euro(rg.betrag || 0) })]),
           h("span", { class: "telefon-wege" }, [
-            h("button", { type: "button", text: "PDF laden", onclick: function () { rechnungNochmal(rg); } })])]));
+            h("button", { type: "button", text: "PDF laden", onclick: function () { rechnungNochmal(rg); } }),
+            h("button", { type: "button", text: "Nummer", title: "Rechnungsnummer nachträglich ändern",
+              onclick: function (ev) { nummerAendern(rg, ev.target.closest(".telefon-zeile")); } })])]));
       });
       vb.appendChild(k2); box.appendChild(vb);
     });
     return box;
   }
+
+  // Eine geschriebene Rechnung nachtraeglich umnummerieren. Kommt vor:
+  // vertippt, oder die Buchhaltung will eine andere Reihe. Die
+  // Zugriffsregel erlaubt es laengst (Richtlinie "eigene Rechnungen",
+  // for all) - es fehlte nur der Weg dorthin.
+  // Kein Systemdialog: prompt() verschluckt auf dem Handy den Text, das
+  // stand schon bei den Mitfahrten im Weg. Die Zeile wird stattdessen
+  // kurz selbst zum Formular.
+  function nummerAendern(rg, zeile) {
+    if (!zeile || zeile.querySelector(".nummer-aendern")) return;
+    var feld = h("input", { type: "text", value: rg.nummer || "", style: "width:9em" });
+    var hinweis = h("small", { class: "meta" });
+    function pruefen() {
+      var wert = feld.value.trim();
+      var doppelt = (rechnungListe || []).some(function (x) {
+        return x.id !== rg.id && String(x.nummer) === wert;
+      });
+      hinweis.className = doppelt ? "achtung" : "meta";
+      hinweis.textContent = !wert ? "Die Nummer darf nicht leer sein."
+        : doppelt ? "Diese Nummer hat schon eine andere Rechnung." : "";
+      return !!wert && !doppelt;
+    }
+    feld.addEventListener("input", pruefen);
+    var speichernKnopf = h("button", { type: "button", class: "anfrage", text: "Übernehmen" });
+    speichernKnopf.addEventListener("click", function () {
+      if (!pruefen()) return;
+      var wert = feld.value.trim();
+      speichernKnopf.disabled = true; speichernKnopf.textContent = "speichert …";
+      speichern(sb.from("rechnungen").update({ nummer: wert }).eq("id", rg.id))
+        .then(function (r) {
+          if (r && r.error) {
+            speichernKnopf.disabled = false; speichernKnopf.textContent = "Übernehmen";
+            meldung("Nummer konnte nicht geändert werden: " + fehlerText(r.error), "warn");
+            return;
+          }
+          // Die Liste neu holen: daraus entsteht auch der naechste Vorschlag.
+          rechnungListe = null;
+          kurzMeldung("Rechnung heißt jetzt " + wert + " ✓", "gut");
+          nochmalRechnung();
+        });
+    });
+    var box = h("div", { class: "nummer-aendern" }, [
+      h("div", { class: "zweit" }, [feld, speichernKnopf,
+        h("button", { type: "button", class: "textknopf", text: "Abbrechen",
+          onclick: function () { box.remove(); } })]),
+      hinweis,
+      h("small", { class: "meta", text: "Ändert nur den Eintrag hier. Ein schon verschicktes PDF trägt weiter die alte Nummer." })
+    ]);
+    zeile.appendChild(box);
+    feld.focus();
+  }
+  // Das Rechnungsblatt neu zeichnen, ohne von aussen etwas zu wissen.
+  function nochmalRechnung() { abrechnungPanel = "rechnung"; rendereAbrechnung(); }
 
   // Die eigenen Daten stehen an zwei Stellen (Rechnungsblatt und Konto) -
   // deshalb einmal gebaut.
