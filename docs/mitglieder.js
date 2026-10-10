@@ -1806,7 +1806,12 @@ window.Mitglieder = (function () {
   // Die Abrechnung ist eine private Aufstellung - es gibt keinen Status
   // "offen/abgerechnet" mehr; zaehlt nur, ob Vergütung und km erfasst sind.
   function summen(spiele, filter) {
-    var s = { spiele: 0, km: 0, fahrt: 0, verg: 0, ausl: 0, verpf: 0 };
+    // "spiele" sind alle mit einem Eintrag - sie gehen in den Saldo ein,
+    // auch wenn nur Kilometer drinstehen. "mitBetrag" sind die, bei denen
+    // wirklich eine Verguetung steht. Beides getrennt zu zaehlen klingt
+    // kleinlich, war aber noetig: die Zeile hiess "Spiele mit Betrag" und
+    // zeigte die erste Zahl.
+    var s = { spiele: 0, mitBetrag: 0, km: 0, fahrt: 0, verg: 0, ausl: 0, verpf: 0 };
     spiele.forEach(function (sp) {
       if (filter && !filter(sp)) return;
       var e = einsaetze[sp.kennung];
@@ -1814,9 +1819,9 @@ window.Mitglieder = (function () {
       s.spiele++;
       s.km += e.km || 0;
       s.fahrt += fahrtkosten(e);
-      var b = betragFuer(sp, e).betrag || 0;
-      s.verg += b; s.ausl += e.auslagen || 0; s.verpf += e.verpflegung || 0;
-
+      var roh = betragFuer(sp, e).betrag;
+      if (roh != null) s.mitBetrag++;
+      s.verg += roh || 0; s.ausl += e.auslagen || 0; s.verpf += e.verpflegung || 0;
     });
     return s;
   }
@@ -1841,7 +1846,9 @@ window.Mitglieder = (function () {
     ].forEach(function (p) {
       karte.appendChild(h("div", { class: "reihe-zahl" }, [h("span", { text: p[0] }), h("b", { text: String(p[1]) })]));
     });
-    var z = h("div", { class: "reihe-zahl tippbar" }, [h("span", { text: "Spiele mit Betrag" }), h("b", { text: String(s.spiele) })]);
+    var z = h("div", { class: "reihe-zahl tippbar" }, [
+      h("span", { text: s.mitBetrag === s.spiele ? "Spiele mit Betrag" : "Spiele mit Betrag (von " + s.spiele + ")" }),
+      h("b", { text: String(s.mitBetrag) })]);
     z.title = "Antippen: alle Spiele zeigen";
     z.addEventListener("click", function () { nurOffene = false; rendereAbrechnung(); });
     karte.appendChild(z);
@@ -1893,7 +1900,7 @@ window.Mitglieder = (function () {
       offenN++;
       offenBetrag += e ? (betragFuer(sp, e).betrag || 0) : 0;
     });
-    [["Vergütung", euro(sS.verg), null, "", sS.spiele + (sS.spiele === 1 ? " Spiel" : " Spiele") + " mit Betrag"],
+    [["Vergütung", euro(sS.verg), null, "", sS.mitBetrag + (sS.mitBetrag === 1 ? " Spiel" : " Spiele") + " mit Betrag"],
      ["Kosten", euro(kosten), null, "", "Fahrt, Verpflegung, Auslagen"],
      ["Saldo", euro(sS.verg - kosten), function () { panelOeffnen("detail", false); }, sS.verg - kosten < 0 ? "offen" : "offen fertig", "Vergütung minus Kosten"],
      [offenN ? "Offen · " + offenN + (offenN === 1 ? " Spiel" : " Spiele") : "Alles abgehakt",
@@ -2132,7 +2139,15 @@ window.Mitglieder = (function () {
       var b = betragFuer(sp, e);
       if (b.betrag != null) { b.geschaetzt = false; return b; }
     }
-    var g = grundgebuehr(sp);
+    // Hier stand grundgebuehr() - die Gebuehrenordnung allein. Alle sechs
+    // anderen Stellen rechnen mit sollBetrag(): erst die eigene Regel,
+    // dann die Ordnung. Die Rechnung war die einzige Ausnahme, und sie
+    // ist die, die das Haus verlaesst. Zwei Folgen hatte das:
+    //   * ein eigener Satz stand ueberall, nur nicht auf der Rechnung,
+    //   * und wo die Ordnung nichts hergibt (unbekannte Liga - genau
+    //     dafuer gibt es eigene Regeln), fehlte das Spiel in der Auswahl
+    //     ganz, weil rechnungSpiele() nach "Betrag != null" filtert.
+    var g = sollBetrag(sp);
     if (g == null) return null;
     var zeit = zeitzuschlag(sp) && gebuehren && gebuehren.zuschlag_zeit
       ? g * ((gebuehren.zuschlag_zeit.prozent || 0) / 100) : 0;
@@ -2379,7 +2394,19 @@ window.Mitglieder = (function () {
       // beim ersten Zeichnen zaehlt nur die Marke.
       (e.bezahlt || rechnungZu(sp.kennung) ? erledigt : offeneSp).push(sp);
     });
+    // Frueher endete die Liste stumm nach 25. Sortiert ist sie nach Datum
+    // absteigend - versteckt waren also die aeltesten, und das sind die,
+    // die am dringendsten auf eine Rechnung gehoeren.
     offeneSp.slice(0, 25).forEach(function (sp) { wahlBox.appendChild(wahlZeile(sp)); });
+    if (offeneSp.length > 25) {
+      var mehrKnopf = h("button", { type: "button", class: "mg-neben", style: "margin:6px 0",
+        text: "Weitere " + (offeneSp.length - 25) + " zeigen (die älteren)" });
+      mehrKnopf.addEventListener("click", function () {
+        offeneSp.slice(25).forEach(function (sp) { wahlBox.insertBefore(wahlZeile(sp), mehrKnopf); });
+        mehrKnopf.remove();
+      });
+      wahlBox.appendChild(mehrKnopf);
+    }
     if (liste.length && !offeneSp.length) {
       wahlBox.appendChild(h("p", { class: "meta", text: "Alles abgehakt - was noch einmal auf eine Rechnung soll, steht unten." }));
     }
@@ -3866,6 +3893,10 @@ window.Mitglieder = (function () {
       var teil = funde.filter(function (f) { return f.art === art; });
       if (!teil.length) return;
       box.appendChild(h("h4", { style: "margin:10px 0 4px", text: TITEL[art] + " (" + teil.length + ")" }));
+      // Die Ueberschrift nannte die volle Zahl, die Liste zeigte hoechstens
+      // 40 - wer 47 las und 40 zaehlte, suchte die fehlenden sieben.
+      if (teil.length > 40) box.appendChild(h("p", { class: "meta", style: "margin:0 0 6px",
+        text: "Die ersten 40 von " + teil.length + ". Hak welche ab oder übernimm Vorschläge, dann rücken die übrigen nach." }));
       teil.slice(0, 40).forEach(function (f) {
         var d = new Date(f.sp.beginn);
         var knoepfe = h("div", { class: "mg-fund-aktion" });
