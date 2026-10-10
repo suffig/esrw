@@ -8,29 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:3ce6e611873b05d85c94194a31d029659a2742e4@esrw.de
-SEQUENCE:1
-DTSTAMP:20261009T175042Z
-LAST-MODIFIED:20261009T175042Z
-DTSTART:20261003T060000Z
-DTEND:20261003T093000Z
-SUMMARY:⚠ SR · U13 LL: Lippe Hockey Hamm – EC Bergisch Land
-DESCRIPTION:Geändert: Halle (vorher HELINET Eissportarena Hamm)\n\nRolle: 
- Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt: 08:00 Uhr (60 Min
-  vor Spielbeginn)\nLiga: U13 LL\nHalle: beta FINANZ Eissportarena Hamm\nAd
- resse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Kalischke\, Christia
- n (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:beta FINANZ Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 H
- amm
-GEO:51.686934;7.886138
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena 
- Hamm, Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="bet
- a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
-END:VEVENT
-BEGIN:VEVENT
 UID:ffae9fdc75ac437d9f8adce78a83d21106ad514a@esrw.de
 SEQUENCE:0
 DTSTAMP:20260921T153038Z
