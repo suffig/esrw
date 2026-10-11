@@ -93,12 +93,6 @@ GEO:51.515208;8.159069
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Möhnesee,
   Teigelhof 4, 59519 Möhnesee";X-APPLE-RADIUS=100;X-TITLE="Eissportzentrum
   Möhnesee":geo:51.515208,8.159069
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: Soester EG 
- – ESC Rheine
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:f3fa44392b2e1a6d328bf30f7faffe87f064d6c8@esrw.de
