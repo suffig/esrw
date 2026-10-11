@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:e568538c112106f5955b64db97d6a9ed57db83b4@esrw.de
-SEQUENCE:0
-DTSTAMP:20260921T171526Z
-LAST-MODIFIED:20260921T171526Z
-DTSTART:20261004T151500Z
-DTEND:20261004T184500Z
-SUMMARY:LSR · RL FS: GSC Moers – Jadehaie Sande
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:15 Uhr\nTreffpunkt:
-  17:15 Uhr (60 Min vor Spielbeginn)\nLiga: RL FS\nHalle: Eissporthalle Moe
- rs\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Stocker\, Quirin (H
- SR) / Solbach\, Carsten (LSR)\n\nQuelle: https://www.esrw.de/einteilungen.
- html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
-GEO:51.43973;6.6198
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
- rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
- ":geo:51.43973,6.6198
-END:VEVENT
-BEGIN:VEVENT
 UID:a86553376b52c9f0df19ee05e4672bd31550fcc9@esrw.de
 SEQUENCE:0
 DTSTAMP:20260921T153038Z
@@ -1228,12 +1206,6 @@ GEO:51.43973;6.6198
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
  rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
  ":geo:51.43973,6.6198
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: GSC Moers 
- – Dinslakener Kobras
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:996a38014be326c0c13445f82cc7f31123b2e1fc@esrw.de
