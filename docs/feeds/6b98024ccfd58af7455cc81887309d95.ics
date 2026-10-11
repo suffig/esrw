@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:cebf0c419b06be2047ad872dcfbfeb71cda7e81f@esrw.de
-SEQUENCE:0
-DTSTAMP:20260921T153038Z
-LAST-MODIFIED:20260921T153038Z
-DTSTART:20261004T071500Z
-DTEND:20261004T104500Z
-SUMMARY:SR · U15 LL: EHC Essen Ruhr – Lippe Hockey Hamm
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:15 Uhr\nTreffpunkt:
-  09:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Es
- sen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Hindley\, David\n
- \nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Essen-West\, Curtiusstr. 2\, 45144 Essen
-GEO:51.454179;6.976731
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
- Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
- n-West":geo:51.454179,6.976731
-END:VEVENT
-BEGIN:VEVENT
 UID:9097c0667ddf389d3b5543fd1023e6cc84152f8e@esrw.de
 SEQUENCE:1
 DTSTAMP:20261009T175042Z
