@@ -50,6 +50,33 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
  alle am Seilersee":geo:51.384598,7.713829
 END:VEVENT
 BEGIN:VEVENT
+UID:67a4899c8ead2b2297f0dba0b5fa5725498d5884@esrw.de
+SEQUENCE:0
+DTSTAMP:20261011T154529Z
+LAST-MODIFIED:20261011T154529Z
+DTSTART:20261013T140000Z
+DTEND:20261013T173000Z
+SUMMARY:SR · NRW: EHV NRW – Iserlohner EC
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:00 Uhr\nTreffpunkt:
+  16:00 Uhr (60 Min vor Spielbeginn)\nLiga: NRW\nHalle: Eissporthalle am Se
+ ilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Steeg\, Ced
+ ric\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
+GEO:51.384598;7.713829
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
+ , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
+ alle am Seilersee":geo:51.384598,7.713829
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · NRW: EHV NRW – Iserlohne
+ r EC
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:6821a0745f83f12f4b5dd56cb82af5757eb60d30@esrw.de
 SEQUENCE:0
 DTSTAMP:20261006T110047Z
