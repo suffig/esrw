@@ -29,11 +29,5 @@ GEO:51.168801;6.858999
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Düsseldorf-
  Benrath, Kappeler Str. 107, 40597 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE=
  "Eissporthalle Düsseldorf-Benrath":geo:51.168801,6.858999
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: DEC Düsseldorf
- er Devils – Eisadler Dortmund
-END:VALARM
 END:VEVENT
 END:VCALENDAR
