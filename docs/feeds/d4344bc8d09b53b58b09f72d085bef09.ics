@@ -8,22 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:96308fc464f45c85be5ea330ee05ccde77a335f5@esrw.de
-SEQUENCE:0
-DTSTAMP:20261002T082808Z
-LAST-MODIFIED:20261002T082808Z
-DTSTART:20261005T151500Z
-DTEND:20261005T184500Z
-SUMMARY:SR · U14 NRW: EHV NRW U14 – Kölner Junghaie U15 In Köln !!!!
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:15 Uhr\nTreffpunkt:
-  17:15 Uhr (60 Min vor Spielbeginn)\nLiga: U14 NRW\n!! Halle nicht automat
- isch erkannt - bitte selbst pruefen !!\nGespann: Schöche\, Gian-Carlo\n\n
- Quelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
 UID:86adc82a956f25e34c27bba35b559dd6f8be5e50@esrw.de
 SEQUENCE:0
 DTSTAMP:20261002T111527Z
