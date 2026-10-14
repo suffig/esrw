@@ -8,15 +8,15 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:13116afb4ec4acd94b0a089d5bfab58f44bbd6c0@esrw.de
+UID:4e1415556dd92d6937ddbf3fef564ad2302f8f53@esrw.de
 SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261017T144500Z
-DTEND:20261017T181500Z
+DTSTAMP:20261014T064529Z
+LAST-MODIFIED:20261014T064529Z
+DTSTART:20261017T134500Z
+DTEND:20261017T171500Z
 SUMMARY:SR · U13 RLA: Iserlohner EC – Krefelder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:45 Uhr\nTreffpunkt:
-  16:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLA\nHalle: Emscher-Lippe-H
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:45 Uhr\nTreffpunkt:
+  15:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLA\nHalle: Emscher-Lippe-H
  alle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\nGesp
  ann: Zynda\, Jayden\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html

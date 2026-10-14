@@ -74,15 +74,15 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld,
  sbahn Bielefeld":geo:51.979731,8.496038
 END:VEVENT
 BEGIN:VEVENT
-UID:4b2c7b9935fec2c27ffb31fbfd7cf8e393386ac3@esrw.de
+UID:f6287948f936f4a02a20b86f02934c20bd0a0747@esrw.de
 SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261017T144500Z
-DTEND:20261017T181500Z
+DTSTAMP:20261014T064529Z
+LAST-MODIFIED:20261014T064529Z
+DTSTART:20261017T134500Z
+DTEND:20261017T171500Z
 SUMMARY:SR · U13 RLA: Iserlohner EC – Krefelder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:45 Uhr\nTreffpunkt:
-  16:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLA\nHalle: Emscher-Lippe-H
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:45 Uhr\nTreffpunkt:
+  15:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLA\nHalle: Emscher-Lippe-H
  alle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\nGesp
  ann: Kaminski-Balsam\, Marcel\n\nQuelle: https://www.esrw.de/einteilungen.
  html

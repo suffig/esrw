@@ -2001,6 +2001,34 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: Eisadler Dortmu
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:676e352fbe6c49ebb377d622f3de0514bdd15556@esrw.de
+SEQUENCE:0
+DTSTAMP:20261014T064529Z
+LAST-MODIFIED:20261014T064529Z
+DTSTART:20261017T134500Z
+DTEND:20261017T171500Z
+SUMMARY:SR · U13 RLA: Iserlohner EC – Krefelder EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:45 Uhr\nTreffpunkt:
+  15:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLA\nHalle: Emscher-Lippe-H
+ alle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\nGesp
+ ann: Zynda\, Jayden\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Emscher-Lippe-Halle Gelsenkirchen\, Adenauerallee 118\, 45891 Gels
+ enkirchen
+GEO:51.553483;7.073102
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Emscher-Lippe-Halle Gelsen
+ kirchen, Adenauerallee 118, 45891 Gelsenkirchen";X-APPLE-RADIUS=100;X-TITL
+ E="Emscher-Lippe-Halle Gelsenkirchen":geo:51.553483,7.073102
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLA: Iserlohner EC –
+  Krefelder EV
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:574fb9e8406cf7774fdd0f7622f1982aed493a31@esrw.de
 SEQUENCE:0
 DTSTAMP:20261006T110047Z
@@ -2053,34 +2081,6 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - HSR · OsWeNo Pokal: ESV Grizzly
  s Bergkamen – FASS Berlin
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
-UID:b1d6ecb1ad9c9360d7acc9b9ff7c9756a463d774@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261017T144500Z
-DTEND:20261017T181500Z
-SUMMARY:SR · U13 RLA: Iserlohner EC – Krefelder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:45 Uhr\nTreffpunkt:
-  16:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLA\nHalle: Emscher-Lippe-H
- alle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\nGesp
- ann: Zynda\, Jayden\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Emscher-Lippe-Halle Gelsenkirchen\, Adenauerallee 118\, 45891 Gels
- enkirchen
-GEO:51.553483;7.073102
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Emscher-Lippe-Halle Gelsen
- kirchen, Adenauerallee 118, 45891 Gelsenkirchen";X-APPLE-RADIUS=100;X-TITL
- E="Emscher-Lippe-Halle Gelsenkirchen":geo:51.553483,7.073102
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLA: Iserlohner EC –
-  Krefelder EV
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
