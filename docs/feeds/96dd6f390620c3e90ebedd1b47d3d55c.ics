@@ -35,4 +35,31 @@ DESCRIPTION:In einer Stunde an der Halle - HSR · U20 RL: Ratinger Ice Alie
  ns – EHC Troisdorf
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:0d3bb37084c344f4ea47d294ee29b22e3abe3802@esrw.de
+SEQUENCE:0
+DTSTAMP:20261014T174529Z
+LAST-MODIFIED:20261014T174529Z
+DTSTART:20261020T153000Z
+DTEND:20261020T190000Z
+SUMMARY:SR · U15 RLA: Düsseldorfer EG – Kölner Junghaie
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
+  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eishalle Brehms
+ traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Kudal\, La
+ rs\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA: Düsseldorfer EG 
+ – Kölner Junghaie
+END:VALARM
+END:VEVENT
 END:VCALENDAR

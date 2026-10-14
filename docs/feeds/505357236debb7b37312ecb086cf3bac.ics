@@ -37,16 +37,16 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:1e5bf00a526a5aaeae5902144297e635447f23a6@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
+SEQUENCE:1
+DTSTAMP:20261014T174529Z
+LAST-MODIFIED:20261014T174529Z
 DTSTART:20261020T153000Z
 DTEND:20261020T190000Z
 SUMMARY:SR · U15 RLA: Düsseldorfer EG – Kölner Junghaie
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
   17:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eishalle Brehms
- traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Caelers\, 
- Fabian\n\nQuelle: https://www.esrw.de/einteilungen.html
+ traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Stocker\, 
+ Quirin\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
