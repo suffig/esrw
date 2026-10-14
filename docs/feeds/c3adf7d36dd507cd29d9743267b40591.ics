@@ -1259,13 +1259,13 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
  alle am Seilersee":geo:51.384598,7.713829
 END:VEVENT
 BEGIN:VEVENT
-UID:ab04aae76c1cf01f874ac5e72aaceed9f01bc8cb@esrw.de
+UID:10df505765bc79dfe527756f22ee5861c24f8213@esrw.de
 SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
+DTSTAMP:20261014T074530Z
+LAST-MODIFIED:20261014T074530Z
 DTSTART:20261015T153000Z
 DTEND:20261015T190000Z
-SUMMARY:SR · U15 LL: EV Duisburg 1b – Ratinger Ice Aliens
+SUMMARY:SR · U15 LL: EV Duisburg 1b – EHC Essen
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
   17:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: PreZero Rheinlan
  dhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: 
@@ -1283,7 +1283,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: EV Duisburg 1b –
-  Ratinger Ice Aliens
+  EHC Essen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1533,34 +1533,6 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: Dinslakener K
  obras 1b – ESC Rheine
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
-UID:a1f006c56908d61991dabc0c75d317510a3c49ed@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261016T171500Z
-DTEND:20261016T204500Z
-SUMMARY:SR · Senioren LL: EC Bergisch Land – ESV Grizzlys Bergkamen 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
-  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissporthal
- le Solingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Solba
- ch\, Carsten\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.
- de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
-GEO:51.165932;7.086769
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
- ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
- le Solingen":geo:51.165932,7.086769
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: EC Bergisch L
- and – ESV Grizzlys Bergkamen 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
