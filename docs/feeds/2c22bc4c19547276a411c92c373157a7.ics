@@ -51,15 +51,15 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
  ":geo:51.43973,6.6198
 END:VEVENT
 BEGIN:VEVENT
-UID:9b91b9ea60c257704e217482cb1554daa0e678f0@esrw.de
+UID:99f64510b66017c45a046ef05f1219f0cba625a1@esrw.de
 SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261018T143000Z
-DTEND:20261018T180000Z
+DTSTAMP:20261014T063039Z
+LAST-MODIFIED:20261014T063039Z
+DTSTART:20261018T140000Z
+DTEND:20261018T173000Z
 SUMMARY:SR · Frauen BZL: EHC Gelsenkirchen – ESV Grizzlys Bergkamen
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
-  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Emscher-Lipp
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:00 Uhr\nTreffpunkt:
+  16:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Emscher-Lipp
  e-Halle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\nG
  espann: Honselmann\, Tom (N)\nVergütung lt. Ordnung: 95 €\n\nQuelle: ht
  tps://www.esrw.de/einteilungen.html

@@ -57,15 +57,15 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB: Herner EV – Dü
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:a23afac0f18293ed7deb1ac6d45416d6bebb439d@esrw.de
+UID:39c3ef72767f0c10449d4f02cc1ba16742c6f35f@esrw.de
 SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261018T143000Z
-DTEND:20261018T180000Z
+DTSTAMP:20261014T063039Z
+LAST-MODIFIED:20261014T063039Z
+DTSTART:20261018T140000Z
+DTEND:20261018T173000Z
 SUMMARY:SR · Frauen BZL: EHC Gelsenkirchen – ESV Grizzlys Bergkamen
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
-  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Emscher-Lipp
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:00 Uhr\nTreffpunkt:
+  16:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Emscher-Lipp
  e-Halle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\nG
  espann: Vorgeitz\, Benny\nVergütung lt. Ordnung: 95 €\n\nQuelle: https:
  //www.esrw.de/einteilungen.html
