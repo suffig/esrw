@@ -52,16 +52,16 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
 END:VEVENT
 BEGIN:VEVENT
 UID:418473f911760e5d46419544edff0e06a0bf74f4@esrw.de
-SEQUENCE:0
-DTSTAMP:20261014T074530Z
-LAST-MODIFIED:20261014T074530Z
+SEQUENCE:1
+DTSTAMP:20261014T204531Z
+LAST-MODIFIED:20261014T204531Z
 DTSTART:20261015T153000Z
 DTEND:20261015T190000Z
 SUMMARY:SR · U15 LL: EV Duisburg 1b – EHC Essen
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
   17:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: PreZero Rheinlan
  dhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: 
- Caelers\, Fabian\n\nQuelle: https://www.esrw.de/einteilungen.html
+ Baum\, Fabian (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
