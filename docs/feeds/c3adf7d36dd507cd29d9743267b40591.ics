@@ -1452,35 +1452,6 @@ DESCRIPTION:In einer Stunde an der Halle - SR · BZL FS: EHC Essen Ruhr –
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:82f99d762e81d5cf40f5673ab59f95c91dbc3564@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261016T171500Z
-DTEND:20261016T204500Z
-SUMMARY:LSR · Senioren RLW: ESV Bergisch Gladbach – GSC Moers
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
-  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
- lle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbac
- h\nGespann: Pernt\, Hendrik (HSR) / Leibfried\, Raphael (LSR)\nVergütung 
- lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
- ch Gladbach
-GEO:50.967548;7.135355
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
- dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
- TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: ESV Bergisc
- h Gladbach – GSC Moers
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:d184c9ba1280ae1092df9b02e5723d3606b69719@esrw.de
 SEQUENCE:0
 DTSTAMP:20261006T110047Z
@@ -2791,36 +2762,6 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Grefrather 
  EG – EG Diez-Limburg
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
-UID:f0be0123d8d8b1b39971b3ce508c6f52d9c86450@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261018T163000Z
-DTEND:20261018T200000Z
-SUMMARY:HSR · Senioren RLW: ESV Bergisch Gladbach – TuS Wiehl
-DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 19:30 Uhr\nTreff
- punkt: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
- porthalle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch G
- ladbach\nGespann: Solbach\, Carsten (LSR) / Rieneck\, Maximilian (LSR)\nVe
- rgütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/einteilungen.
- html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
- ch Gladbach
-GEO:50.967548;7.135355
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
- dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
- TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: ESV Bergisc
- h Gladbach – TuS Wiehl
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

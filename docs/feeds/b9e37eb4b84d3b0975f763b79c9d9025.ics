@@ -73,35 +73,6 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
  ergkamen":geo:51.602578,7.626858
 END:VEVENT
 BEGIN:VEVENT
-UID:03d4bcbd0859d6ff01281e9edfd1dab39c5ed870@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261016T171500Z
-DTEND:20261016T204500Z
-SUMMARY:LSR · Senioren RLW: ESV Bergisch Gladbach – GSC Moers
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
-  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
- lle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbac
- h\nGespann: Pernt\, Hendrik (HSR) / Leibfried\, Raphael (LSR)\nVergütung 
- lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
- ch Gladbach
-GEO:50.967548;7.135355
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
- dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
- TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: ESV Bergisc
- h Gladbach – GSC Moers
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:e3f22839bef8e8331dafe6481f8dd3a85414b5a4@esrw.de
 SEQUENCE:0
 DTSTAMP:20261006T110047Z
