@@ -1581,6 +1581,30 @@
   .admin-leiste .filterknopf { flex:none; }
   .admin-leiste .filterknopf i { font-style:normal; margin-left:6px; background:var(--rot); color:#fff; border-radius:var(--radius-pille); padding:2px 6px; font-size:var(--s-xs); font-weight:800; }
   .admin-kopf { margin:0 0 10px; }
+  /* Pflegeseite: "Was ansteht" oben, darunter die Gruppen. Die
+     Knopfreihe (.admin-leiste) ist damit weg - sie war bei 375 px sechs
+     Zeilen und 268 Pixel hoch. Ihre Regeln bleiben stehen, falls sie
+     wieder gebraucht wird. */
+  .admin-lage h4, .admin-gruppe h4 { margin:0 0 6px; display:flex; align-items:center; gap:8px; }
+  .admin-gruppe { margin-top:10px; }
+  .admin-zurueck { margin:0 0 8px; font-weight:800; }
+  .admin-zuletzt { margin:10px 0 0; }
+  .lage-liste { display:flex; flex-direction:column; }
+  /* Die Zahl steht vorn, wo der Blick ohnehin anfaengt. Null wird zum
+     Haken und bleibt stehen: "nichts zu tun" ist die Auskunft, auf die es
+     ankommt, und eine fehlende Zeile gibt sie nicht. */
+  .lage-zahl { flex:none; min-width:30px; height:30px; display:flex; align-items:center; justify-content:center;
+               border-radius:var(--radius-pille); background:var(--linie); color:var(--dim);
+               font-weight:800; font-size:var(--s-m); padding:0 8px; }
+  /* Der Haken fuer "nichts zu tun" ist gruen, nicht grau - sonst sieht
+     eine saubere Zeile aus wie eine abgeschaltete. */
+  .lage-zeile:not(.offen) .lage-zahl { background:var(--gut-bg); color:var(--gut); }
+  .lage-zeile.offen .lage-zahl { background:var(--rot); color:#fff; }
+  .lage-zeile.offen b { font-weight:800; }
+  .lage-zeile[disabled] { opacity:1; }
+  .gut-text { color:var(--gut); font-weight:700; }
+  /* Eine Hallenluecke mit vergangenen Spielen kostet schon Geld. */
+  .sperre.dringend { border-left:3px solid var(--rot); padding-left:8px; }
   /* Anmeldung: drei Schritte, sonst nichts */
   .schritte { list-style:none; margin:0; padding:0; counter-reset:schritt; }
   .schritte li { counter-increment:schritt; display:flex; gap:12px; align-items:flex-start; padding:10px 0; border-top:1px solid var(--linie); }
@@ -3178,6 +3202,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=179"></script>
+<script src="app.js?v=180"></script>
 </body>
 </html>

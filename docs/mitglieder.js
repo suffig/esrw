@@ -237,7 +237,7 @@ window.Mitglieder = (function () {
     ["ankuendigungen", "Ankündigungen und Termine", "Nachrichten an alle schreiben, Termine mit Zu- und Absage",
       "#mitglieder/info", "Mehr → Info"],
     ["stammdaten", "Stammdaten pflegen", "Telefonliste, Hallen, Vereine, Spielzeiten, Hallen-Hinweise als offiziell markieren",
-      "#mitglieder/admin", "Hier unter „Hallen & Vereine“, „Telefonliste“, „Spielzeiten“"],
+      "#mitglieder/admin", "Hier unter „Hallen und Zuordnung“, „Telefonliste“, „Spielzeiten“"],
     ["archiv", "Alle Spiele sehen", "Das ganze Archiv aller Kollegen statt nur der eigenen Spiele",
       "#archiv", "Mehr → Archiv, Schalter „Alle Spiele aller Kollegen“"],
     ["freischalten", "Konten freischalten", "Neue Anmeldungen freischalten und Einladungen anlegen. Rechte vergeben kann weiterhin nur der Betreiber.",
@@ -5879,66 +5879,296 @@ window.Mitglieder = (function () {
 
   // Adminseite: eine Leiste oben, darunter genau ein Bereich. Vorher standen
   // fuenf Karten untereinander - auf dem Handy eine endlose Rolle.
-  var adminBereich = null;
-  function zeigeAdmin() {
-    if (!adminBereich) adminBereich = (ctx && ctx.lesen && ctx.lesen("adminbereich")) || "freischaltung";
-    // Das fuenfte Feld sagt, welches Recht der Bereich braucht; ohne es
-    // sieht ihn nur der Betreiber.
-    var BEREICHE = [
-      ["uebersicht", "Übersicht", "i-shield", uebersichtRendern, "*"],
-      ["freischaltung", "Freischaltung", "i-check", adminRendern, "freischalten"],
-      ["funktionen", "Funktionen", "i-shield", funktionenRendern, "funktionen"],
-      ["spiel", "Spiel anlegen", "i-cal", spielAnlegenRendern, "spiele"],
-      ["hallen", "Hallen & Vereine", "i-pin", hallenPflegeRendern, "stammdaten"],
-      ["adressen", "Vereine", "i-note", vereinsAdressenRendern, "stammdaten"],
-      ["telefon", "Telefonliste", "i-users", telefonlisteRendern, "stammdaten"],
-      ["zeiten", "Spielzeiten", "i-clock", spielzeitenRendern, "stammdaten"],
-      ["staerken", "Antrittsstärken", "i-users", staerkenRendern, "stammdaten"],
-      ["korrekturen", "Korrekturen", "i-note", korrekturenRendern, "korrekturen"],
-      ["push", "Push", "i-bell", pushLaufRendern],
-      ["speicher", "Speicher", "i-note", speicherRendern],
-      ["abo", "Abo", "i-euro", aboRendern],
-      ["ansehen", "Ansehen als", "i-auge", ansehenRendern]
-    ].filter(function (b) {
-      // Die Uebersicht ist nur fuer die, die nicht ohnehin alles sehen
-      if (b[4] === "*") return !istAdminAn();
-      return istAdminAn() || (b[4] && darf(b[4]));
-    });
-    if (!BEREICHE.length) { inhalt.appendChild(h("p", { class: "leer", text: "Für dich ist hier zurzeit nichts freigegeben." })); return; }
-    if (!BEREICHE.filter(function (b) { return b[0] === adminBereich; }).length) adminBereich = BEREICHE[0][0];
+  // ------------------------------------------------ Betreiber: Pflegeseite
+  // Die Bereiche standen als Knopfreihe nebeneinander. Bei 375 px waren
+  // das sechs Zeilen und 268 Pixel Navigation, bevor der erste Inhalt
+  // kam - ungruppiert, und ohne Startseite, die sagt, was ansteht.
+  //
+  // Jetzt: "Was ansteht" oben, darunter die Bereiche in vier Gruppen.
+  // Hinein mit einem Tipp, zurueck mit einem Knopf.
+  var adminBereich = null;   // null = Startseite
 
+  // [Kennung, Titel, Ikone, Zeichner, Recht (null = nur Betreiber), Unterzeile]
+  function adminAbschnitte() {
+    return [
+      ["freischaltung", "Freischaltung", "i-check", adminRendern, "freischalten",
+       "Neue Anmeldungen freigeben, Rechte vergeben, Einladungen"],
+      ["funktionen", "Funktionen", "i-shield", funktionenRendern, "funktionen",
+       "Welche Teile der App für alle an sind"],
+      ["ansehen", "Ansehen als", "i-auge", ansehenRendern, null,
+       "Die App einmal mit den Augen eines Kollegen sehen"],
+      ["spiel", "Spiel anlegen", "i-cal", spielAnlegenRendern, "spiele",
+       "Spiele nachtragen, die auf esrw.de fehlen, und gemeldete Ausfälle"],
+      ["korrekturen", "Korrekturen", "i-note", korrekturenRendern, "korrekturen",
+       "Halle, Anstoß, Treffpunkt, Hinweis, Absage, Gespann"],
+      // Zwei Bereiche hiessen "Hallen & Vereine" und "Vereine". Welcher
+      // welcher ist, kann sich niemand merken - der zweite musste im Text
+      // auf den ersten verweisen. Jetzt sagt der Name, was drin ist: der
+      // eine ordnet Vereinsnamen einer Halle zu (damit die Pipeline die
+      // Halle findet), der andere pflegt Anschriften fuer die Rechnung.
+      ["hallen", "Hallen und Zuordnung", "i-pin", hallenPflegeRendern, "stammdaten",
+       "Welcher Vereinsname zu welcher Halle gehört, und neue Hallen"],
+      ["adressen", "Vereinsanschriften", "i-note", vereinsAdressenRendern, "stammdaten",
+       "Name und Anschrift für die Gebührenabrechnung"],
+      ["telefon", "Telefonliste", "i-users", telefonlisteRendern, "stammdaten",
+       "Handynummern der Kollegen"],
+      ["zeiten", "Spielzeiten", "i-clock", spielzeitenRendern, "stammdaten",
+       "Spieldauer und Drittel je Liga"],
+      ["staerken", "Antrittsstärken", "i-users", staerkenRendern, "stammdaten",
+       "Wie viele Offizielle eine Liga braucht"],
+      ["push", "Push", "i-bell", pushLaufRendern, null,
+       "Was der Workflow verschickt hat, und wie viele Geräte dranhängen"],
+      ["speicher", "Speicher", "i-note", speicherRendern, null,
+       "Platz in der Datenbank und die tägliche Sicherung"],
+      ["abo", "Abo", "i-euro", aboRendern, null,
+       "Kosten und Grenzen des Supabase-Plans"]
+    ].filter(function (b) { return istAdminAn() || (b[4] && darf(b[4])); });
+  }
+  // Reihenfolge nach Haeufigkeit des Gebrauchs, nicht alphabetisch.
+  var ADMIN_GRUPPEN = [
+    ["Konten und Rechte", "i-users", ["freischaltung", "funktionen", "ansehen"]],
+    ["Spiele", "i-cal", ["spiel", "korrekturen"]],
+    ["Stammdaten", "i-pin", ["hallen", "adressen", "telefon", "zeiten", "staerken"]],
+    ["System", "i-shield", ["push", "speicher", "abo"]]
+  ];
+  var ADMIN_FUSS = "Freigeschaltete sehen Tauschbörse, Verfügbarkeiten, Hallen-Hinweise, Kontakte und Mitfahrten. "
+    + "Admins können außerdem freischalten und weitere Admins ernennen. Das eigene Admin-Recht lässt sich hier "
+    + "nicht entfernen, das geht nur per SQL im Supabase-Dashboard.";
+
+  // Heimvereine, deren Halle die Pipeline nicht erkannt hat. Ohne Halle
+  // fehlen Adresse und Kilometer - bei einem vergangenen Spiel fehlt
+  // damit Geld in der Abrechnung. Die Liste in "Hallen und Zuordnung"
+  // sprang ueber vergangene Spiele hinweg und verschwieg also genau die
+  // Faelle, die schon wehtun.
+  function hallenLuecken() {
+    var offen = {};
+    ((ctx && ctx.daten && ctx.daten.spiele) || []).forEach(function (s) {
+      if (s.halle_erkannt) return;
+      var heim = heimVereinVon(s);
+      if (!heim) return;
+      if (!offen[heim]) offen[heim] = { spiele: 0, vergangen: 0 };
+      offen[heim].spiele++;
+      if (s.vergangen) offen[heim].vergangen++;
+    });
+    return offen;
+  }
+  // Heimvereine im Spielplan, zu denen keine Anschrift hinterlegt ist.
+  // Ohne die laesst sich keine Rechnung an den Verein schreiben.
+  function vereineOhneAnschrift(map) {
+    var fehlt = {};
+    ((ctx && ctx.daten && ctx.daten.spiele) || []).forEach(function (s) {
+      var heim = heimVereinVon(s);
+      if (!heim) return;
+      var a = (map || {})[heim] || (map || {})[vereinHaupt(heim)];
+      if (!a || !a.strasse) fehlt[heim] = (fehlt[heim] || 0) + 1;
+    });
+    return fehlt;
+  }
+
+  function zeigeAdmin() {
+    var abschnitte = adminAbschnitte();
+    if (!abschnitte.length) {
+      inhalt.appendChild(h("p", { class: "leer", text: "Für dich ist hier zurzeit nichts freigegeben." }));
+      return;
+    }
+    // Ein gemerkter Bereich, den es nicht mehr gibt (Recht entzogen),
+    // darf nicht in eine leere Seite fuehren.
+    if (adminBereich && !abschnitte.filter(function (b) { return b[0] === adminBereich; }).length) adminBereich = null;
+    if (adminBereich) adminEinBereich(abschnitte);
+    else adminStartseite(abschnitte);
+  }
+
+  function adminHinein(kennung) {
+    adminBereich = kennung;
+    if (ctx && ctx.schreiben) ctx.schreiben("adminbereich", kennung);
+    zeigeReiter("admin");
+  }
+
+  function adminEinBereich(abschnitte) {
+    var b = abschnitte.filter(function (x) { return x[0] === adminBereich; })[0];
+    var zurueck = h("button", { type: "button", class: "textknopf admin-zurueck",
+      onclick: function () { adminBereich = null; zeigeReiter("admin"); } },
+      [h("span", { class: "pfeil", text: "‹" }), " Pflege"]);
+    inhalt.appendChild(zurueck);
+    var box = h("div", { class: "melde karte" }, [skelett(1)]);
+    inhalt.appendChild(box);
+    b[3](box);
+    inhalt.appendChild(h("p", { class: "meta mg-fuss", text: ADMIN_FUSS }));
+  }
+
+  function adminStartseite(abschnitte) {
     inhalt.appendChild(h("p", { class: "meta admin-kopf", text: istAdminAn()
       ? "Betreiber-Werkzeuge. Was du hier änderst, sehen alle."
       : "Für dich freigegeben. Was du hier änderst, sehen alle - dein Name steht dabei." }));
-    var leiste = h("div", { class: "admin-leiste" });
-    var zaehlKnopf = null;
-    BEREICHE.forEach(function (b) {
-      var k = h("button", { type: "button", class: "filterknopf" + (adminBereich === b[0] ? " aktiv" : ""), onclick: function () {
-        adminBereich = b[0];
-        if (ctx && ctx.schreiben) ctx.schreiben("adminbereich", b[0]);
-        zeigeReiter("admin");
-      } }, [ikone(b[2]), " " + b[1]]);
-      if (b[0] === "freischaltung") zaehlKnopf = k;
-      leiste.appendChild(k);
+
+    var lage = h("div", { class: "karte admin-lage" }, [
+      h("h4", {}, [ikone("i-shield"), " Was ansteht"]),
+      h("div", { class: "lade-flaeche" }, [skelett(1)])]);
+    inhalt.appendChild(lage);
+    adminLage(lage, abschnitte);
+
+    // Wer staendig denselben Bereich braucht, soll nicht jedes Mal durch
+    // die Startseite - aber auch nicht in ihm landen, ohne die Lage
+    // gesehen zu haben. Deshalb ein Kurzweg, keine Wiederherstellung.
+    var zuletzt = ctx && ctx.lesen && ctx.lesen("adminbereich");
+    var zb = zuletzt && abschnitte.filter(function (x) { return x[0] === zuletzt; })[0];
+    if (zb) inhalt.appendChild(h("p", { class: "meta admin-zuletzt" }, [
+      h("button", { type: "button", class: "textknopf",
+        text: "Weiter bei „" + zb[1] + "“",
+        onclick: function () { adminHinein(zb[0]); } })]));
+
+    ADMIN_GRUPPEN.forEach(function (g) {
+      var drin = g[2].map(function (k) {
+        return abschnitte.filter(function (x) { return x[0] === k; })[0];
+      }).filter(Boolean);
+      if (!drin.length) return;
+      var karte = h("div", { class: "karte admin-gruppe" }, [h("h4", {}, [ikone(g[1]), " " + g[0]])]);
+      drin.forEach(function (b) {
+        karte.appendChild(h("button", { type: "button", class: "reihe-knopf",
+          onclick: function () { adminHinein(b[0]); } }, [
+          ikone(b[2]),
+          h("span", {}, [h("b", { text: b[1] }), h("small", { text: b[5] })]),
+          h("span", { class: "pfeil", text: "›" })]));
+      });
+      inhalt.appendChild(karte);
     });
-    inhalt.appendChild(leiste);
 
-    // Wartende Konten stehen als Zahl am Knopf - dafuer muss man nicht
-    // erst hineinschauen.
-    if (istAdminAn()) sb.from("profile").select("id,freigeschaltet,admin").eq("freigeschaltet", false).then(function (r) {
-      var n = (r.data || []).filter(function (p) { return !p.admin; }).length;
-      if (!n || !zaehlKnopf || !zaehlKnopf.isConnected) return;
-      zaehlKnopf.appendChild(h("i", { text: String(n) }));
-    }).catch(function () {});
-
-    var box = h("div", { class: "melde karte" }, [skelett(1)]);
-    inhalt.appendChild(box);
-    var gewaehlt = BEREICHE.filter(function (b) { return b[0] === adminBereich; })[0];
-    gewaehlt[3](box);
-
-    inhalt.appendChild(h("p", { class: "meta mg-fuss", text: "Freigeschaltete sehen Tauschbörse, Verfügbarkeiten, Hallen-Hinweise, Kontakte und Mitfahrten. " +
-      "Admins können außerdem freischalten und weitere Admins ernennen. Das eigene Admin-Recht lässt sich hier nicht entfernen, das geht nur per SQL im Supabase-Dashboard." }));
+    // Helfer sehen hier weiter, was sie duerfen - fuer sie war die alte
+    // "Uebersicht" gedacht.
+    if (!istAdminAn()) {
+      var rechte = h("div", { class: "karte" });
+      inhalt.appendChild(rechte);
+      uebersichtRendern(rechte);
+    }
+    inhalt.appendChild(h("p", { class: "meta mg-fuss", text: ADMIN_FUSS }));
   }
+
+  // Was ansteht: eine Zeile je Posten, mit Zahl und Weg dorthin.
+  //
+  // Zeilen mit Null bleiben stehen. "Nichts zu tun" ist die Auskunft, auf
+  // die es ankommt, und eine verschwundene Zeile gibt sie nicht - man
+  // wuesste nicht, ob nichts ansteht oder nichts geladen wurde.
+  //
+  // Jede Zeile haengt am Recht ihres Bereichs: ein Helfer sieht nur, was
+  // er auch abarbeiten darf.
+  // stand.json aendert sich einmal in der Stunde, die Pflegeseite wird
+  // oefter betreten und verlassen - einmal holen reicht.
+  var adminStand = null;
+  function adminStandHolen() {
+    if (adminStand) return Promise.resolve(adminStand);
+    if (!ctx || !ctx.hole) return Promise.resolve(null);
+    return ctx.hole("stand.json").then(function (s) { adminStand = s; return s; },
+                                       function () { return null; });
+  }
+  function adminLage(karte, abschnitte) {
+    function offenFuer(recht) { return istAdminAn() || (recht && darf(recht)); }
+    function frage(recht, aufruf) { return offenFuer(recht) ? speichern(aufruf) : Promise.resolve(null); }
+    Promise.all([
+      frage("freischalten", sb.from("profile").select("id,freigeschaltet,admin")),
+      frage("spiele", sb.from("spiel_meldungen").select("kennung")),
+      frage("korrekturen", sb.from("spiel_korrekturen").select("kennung,geloescht")),
+      frage("stammdaten", sb.from("vereine_adressen").select("verein,name,strasse")),
+      adminStandHolen()
+    ]).then(function (r) {
+      if (!karte.isConnected) return;
+      var profile = (r[0] && r[0].data) || null;
+      var meldungen = (r[1] && r[1].data) || null;
+      var korrekturen = (r[2] && r[2].data) || null;
+      var adressen = (r[3] && r[3].data) || null;
+      var stand = r[4];
+
+      var liste = h("div", { class: "lage-liste" });
+      var offeneZeilen = 0, alleZeilen = 0;
+
+      // Eine Zeile ist entweder eine Aufgabe oder eine Auskunft.
+      //
+      // Gezaehlt werden Zeilen, nicht Einzelposten: die Summe aller
+      // Zahlen addierte 36 Vereine ohne Anschrift zu 2 wartenden Konten
+      // und ergab "41 Posten" - eine Zahl, die nichts bedeutet und
+      // erschreckt.
+      //
+      // "art" ist "auskunft" (ruhig, zaehlt nicht) oder nichts (Aufgabe).
+      // Hinterlegte Korrekturen sind eine Auskunft: dass es sie gibt, ist
+      // der Normalzustand und keine Mahnung.
+      //
+      // Der Titel nennt den Gegenstand, die Unterzeile den Stand - auch
+      // wenn etwas offen ist. Ein Titel in der Mahnform ("Hallen nicht
+      // erkannt") liest sich schief, sobald der Haken daneben steht.
+      function zeile(zahl, titel, stand, ziel, art) {
+        // Nur zeigen, was der Betreffende auch oeffnen kann - sonst steht
+        // da eine Zahl ohne Weg.
+        if (ziel && !abschnitte.filter(function (x) { return x[0] === ziel; }).length) return;
+        var aufgabe = art !== "auskunft" && zahl > 0;
+        if (art !== "auskunft") { alleZeilen++; if (aufgabe) offeneZeilen++; }
+        var z = h("button", { type: "button", class: "reihe-knopf lage-zeile" + (aufgabe ? " offen" : ""),
+          onclick: ziel ? function () { adminHinein(ziel); } : null }, [
+          h("span", { class: "lage-zahl", text: zahl > 0 ? String(zahl) : "✓" }),
+          h("span", {}, [h("b", { text: titel }), h("small", { text: stand })]),
+          ziel ? h("span", { class: "pfeil", text: "›" }) : null]);
+        if (!ziel) z.disabled = true;
+        liste.appendChild(z);
+      }
+
+      if (profile) {
+        var wartend = profile.filter(function (p) { return !p.freigeschaltet && !p.admin; }).length;
+        zeile(wartend, "Freischaltung",
+          wartend ? (wartend === 1 ? "ein Konto wartet" : wartend + " Konten warten")
+                  : "niemand wartet", "freischaltung");
+      }
+
+      if (meldungen) {
+        // Abgearbeitet heisst: zu der Kennung steht eine Korrektur mit
+        // "geloescht" - dann ist das Spiel aus der App raus.
+        var raus = {};
+        (korrekturen || []).forEach(function (k) { if (k.geloescht) raus[k.kennung] = 1; });
+        var offeneM = meldungen.filter(function (m) { return !raus[m.kennung]; }).length;
+        zeile(offeneM, "Gemeldete Ausfälle",
+          offeneM ? "noch nicht entschieden" : "keine offenen Meldungen", "spiel");
+      }
+
+      if (offenFuer("stammdaten")) {
+        var luecken = hallenLuecken();
+        var schluessel = Object.keys(luecken);
+        var vergangen = schluessel.filter(function (k) { return luecken[k].vergangen; }).length;
+        zeile(schluessel.length, "Hallen ohne Zuordnung",
+          !schluessel.length ? "alle Hallen im Spielplan erkannt"
+            : vergangen ? "bei " + vergangen + " fehlen schon km in einer Abrechnung"
+            : "ohne Halle fehlen Adresse und km", "hallen");
+      }
+
+      if (adressen) {
+        var map = {};
+        adressen.forEach(function (a) { map[a.verein] = a; });
+        var ohneA = Object.keys(vereineOhneAnschrift(map)).length;
+        zeile(ohneA, "Vereine ohne Anschrift",
+          ohneA ? "an die lässt sich keine Rechnung schreiben"
+                : "jeder Verein im Spielplan hat eine", "adressen");
+      }
+
+      // Auskunft, keine Aufgabe - eine hinterlegte Korrektur soll ja so
+      // bleiben, bis der Betreiber sie zuruecknimmt.
+      if (korrekturen) zeile(korrekturen.length, "Korrekturen",
+        korrekturen.length ? "hinterlegt und gültig" : "keine hinterlegt",
+        "korrekturen", "auskunft");
+
+      leeren(karte);
+      karte.appendChild(h("h4", {}, [ikone("i-shield"), " Was ansteht"]));
+      karte.appendChild(h("p", { class: offeneZeilen ? "meta" : "meta gut-text", style: "margin:0 0 8px",
+        text: !alleZeilen ? ""
+          : offeneZeilen ? offeneZeilen + " von " + alleZeilen + " Punkten brauchen etwas."
+          : "Nichts zu tun – alle " + alleZeilen + " Punkte sind sauber." }));
+      karte.appendChild(liste);
+      if (stand && stand.stand) {
+        var d = new Date(stand.stand), min = Math.round((Date.now() - d.getTime()) / 60000);
+        karte.appendChild(h("p", { class: "meta", style: "margin:8px 0 0", text:
+          "Letzter Lauf " + (min < 1 ? "gerade eben" : min < 60 ? "vor " + min + " Min."
+            : min < 1440 ? "vor " + Math.round(min / 60) + " Std."
+            : d.toLocaleString("de-DE", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }))
+          + " · " + stand.spiele + " Spiele, " + stand.personen + " SR, " + stand.archiv + " im Archiv." }));
+      }
+    });
+  }
+
 
   // Admin -> Spiel anlegen: Spiele, die auf esrw.de fehlen
   function spielManuellLoeschen(id) {
@@ -6066,19 +6296,27 @@ window.Mitglieder = (function () {
   function hallenPflegeRendern(box) {
     var hallenNamen = Object.keys(ctx.daten.adressen || {}).sort(function (a, b) { return a.localeCompare(b, "de"); });
     function hallenWahl() { return h("select", { class: "mg-select" }, [h("option", { value: "", text: "Halle wählen" })].concat(hallenNamen.map(function (n) { return h("option", { value: n, text: n }); }))); }
-    function neu() { leeren(box); box.appendChild(h("h4", {}, [ikone("i-pin"), " Hallen und Vereine"])); hallenPflegeRendern(box); }
-    leeren(box); box.appendChild(h("h4", {}, [ikone("i-pin"), " Hallen und Vereine"]));
+    function neu() { leeren(box); box.appendChild(h("h4", {}, [ikone("i-pin"), " Hallen und Zuordnung"])); hallenPflegeRendern(box); }
+    leeren(box); box.appendChild(h("h4", {}, [ikone("i-pin"), " Hallen und Zuordnung"]));
     box.appendChild(h("p", { class: "meta", style: "margin:0 0 6px", text: "Wenn eine Halle nicht erkannt wird: Verein einer Halle zuordnen oder eine neue Halle anlegen. Wirkt in der App sofort, in Kalendern und der Hallen-Erkennung beim nächsten Lauf." }));
     // Unerkannte Spiele: Heimverein -> Halle
-    var offen = {};
-    (ctx.daten.spiele || []).forEach(function (s) { if (s.halle_erkannt || s.vergangen) return; var heim = (s.paarung || "").split(/\s[–-]\s/)[0].trim(); if (heim) offen[heim] = (offen[heim] || 0) + 1; });
-    var offenListe = Object.keys(offen);
+    // Frueher stand hier "if (s.halle_erkannt || s.vergangen) return" -
+    // vergangene Spiele fielen also aus der Liste. Genau bei denen fehlen
+    // aber Adresse und Kilometer schon in einer Abrechnung; sie gehoeren
+    // zuerst hierher, nicht gar nicht.
+    var offen = hallenLuecken();
+    var offenListe = Object.keys(offen).sort(function (a, b) {
+      return (offen[b].vergangen - offen[a].vergangen) || (offen[b].spiele - offen[a].spiele);
+    });
     if (offenListe.length) {
       box.appendChild(h("p", { text: "Nicht erkannt (" + offenListe.length + "):" }));
       offenListe.forEach(function (heim) {
         var wahl = hallenWahl();
-        box.appendChild(h("div", { class: "sperre" }, [
-          h("span", {}, [h("b", { text: heim }), h("small", { class: "meta", style: "display:block", text: offen[heim] + (offen[heim] === 1 ? " Spiel" : " Spiele") })]),
+        var z = offen[heim];
+        var sagt = z.spiele + (z.spiele === 1 ? " Spiel" : " Spiele")
+          + (z.vergangen ? " \u00b7 " + z.vergangen + " schon vorbei, dort fehlen km" : "");
+        box.appendChild(h("div", { class: "sperre" + (z.vergangen ? " dringend" : "") }, [
+          h("span", {}, [h("b", { text: heim }), h("small", { class: "meta", style: "display:block", text: sagt })]),
           h("span", { style: "display:flex;gap:6px;align-items:center" }, [wahl, h("button", { type: "button", class: "anfrage", text: "Zuordnen", onclick: function () {
             if (!wahl.value) return;
             sb.from("vereine_extra").upsert({ verein: heim, halle: wahl.value, von: profil.name || profil.slug }, { onConflict: "verein" }).then(function (r) {
@@ -6261,10 +6499,10 @@ window.Mitglieder = (function () {
   }
   function vereinsAdressenRendern(box) {
     function neu() { vereinAdressen = null; leeren(box); vereinsAdressenRendern(box); }
-    leeren(box); box.appendChild(h("h4", {}, [ikone("i-pin"), " Vereine"]));
+    leeren(box); box.appendChild(h("h4", {}, [ikone("i-pin"), " Vereinsanschriften"]));
     box.appendChild(h("p", { class: "meta", style: "margin:0 0 8px", text:
       "Name und Anschrift stehen auf der Gebührenabrechnung. Kollegen können Anschriften vorschlagen; "
-      + "bestätigte lassen sich nur noch hier ändern. Welche Halle zu einem Verein gehört, steht unter „Hallen & Vereine“." }));
+      + "bestätigte lassen sich nur noch hier ändern. Welche Halle zu einem Verein gehört, steht unter „Hallen und Zuordnung“." }));
 
     // Verein von Hand anlegen - fuer alles, was nicht im Spielplan steht
     var nVerein = h("input", { type: "text", placeholder: "Verein, wie er im Spielplan steht" });
