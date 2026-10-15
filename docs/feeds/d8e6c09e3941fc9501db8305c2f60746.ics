@@ -72,17 +72,17 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
 END:VEVENT
 BEGIN:VEVENT
 UID:6821a0745f83f12f4b5dd56cb82af5757eb60d30@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
+SEQUENCE:1
+DTSTAMP:20261015T163043Z
+LAST-MODIFIED:20261015T163043Z
 DTSTART:20261017T073000Z
 DTEND:20261017T110000Z
 SUMMARY:SR · U15 BZL: ESV Grizzlys Bergkamen 1b – SpG Neusser EV 1b / GS
  C Moers 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
   09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Eissporthalle B
- ergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Rosier\, Cedr
- ic (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+ ergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Budzynski\, M
+ ika (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

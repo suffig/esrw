@@ -1279,12 +1279,6 @@ GEO:51.405718;6.780082
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
  sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
  reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: EV Duisburg 1b –
-  EHC Essen
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:54884e6009f2ef0f27445a5b3fc33205fdb6bcb7@esrw.de
@@ -1294,10 +1288,12 @@ LAST-MODIFIED:20261006T110047Z
 DTSTART:20261016T143000Z
 DTEND:20261016T180000Z
 SUMMARY:SR · U13 LL: EC Bergisch Land – Eisadler Dortmund
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
-  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle So
- lingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Solbach\, 
- Carsten\n\nQuelle: https://www.esrw.de/einteilungen.html
+DESCRIPTION:!! Danach EC Bergisch Land – ESV Grizzlys Bergkamen 1b in Eis
+ sporthalle am Seilersee – nur 165 Min bis zum nächsten Anstoß !!\n\nRo
+ lle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt: 16:30 Uhr (6
+ 0 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Solingen\nAdres
+ se: Brühler Straße 20\, 42657 Solingen\nGespann: Solbach\, Carsten\n\nQu
+ elle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1311,6 +1307,34 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: EC Bergisch Land 
  – Eisadler Dortmund
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:c1157deba05572208da5d739f66ac952e828dfa4@esrw.de
+SEQUENCE:0
+DTSTAMP:20261015T163043Z
+LAST-MODIFIED:20261015T163043Z
+DTSTART:20261016T163000Z
+DTEND:20261016T200000Z
+SUMMARY:SR · U13 LL: EV Duisburg 1b – Dinslakener Kobras
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: PreZero Rheinlan
+ dhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: 
+ Marks\, Marcel\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: EV Duisburg 1b –
+  Dinslakener Kobras
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1338,34 +1362,6 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Ratinger Ice Alien
  s – Herforder EV
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
-UID:c1157deba05572208da5d739f66ac952e828dfa4@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261016T163000Z
-DTEND:20261016T200000Z
-SUMMARY:SR · U13 LL: EV Duisburg 1b – Dinslakener Kobras
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
-  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: PreZero Rheinlan
- dhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: 
- Rosier\, Cedric (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
- sburg
-GEO:51.405718;6.780082
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
- sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
- reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: EV Duisburg 1b –
-  Dinslakener Kobras
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1504,6 +1500,35 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: Dinslakener K
  obras 1b – ESC Rheine
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:0a9ba96123c0e1cd2e22f368f8ed3baaae58c6b5@esrw.de
+SEQUENCE:0
+DTSTAMP:20261015T163043Z
+LAST-MODIFIED:20261015T163043Z
+DTSTART:20261016T171500Z
+DTEND:20261016T204500Z
+SUMMARY:SR · Senioren LL: EC Bergisch Land – ESV Grizzlys Bergkamen 1b
+DESCRIPTION:!! Davor EC Bergisch Land – Eisadler Dortmund in Eissporthall
+ e Solingen – nur 165 Min nach dem vorigen Anstoß !!\n\nRolle: Schiedsri
+ chter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt: 19:15 Uhr (60 Min vor Spie
+ lbeginn)\nLiga: Senioren LL\nHalle: Eissporthalle am Seilersee\nAdresse: S
+ eeuferstraße 25\, 58636 Iserlohn\nGespann: Solbach\, Carsten\nVergütung 
+ lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
+GEO:51.384598;7.713829
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
+ , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
+ alle am Seilersee":geo:51.384598,7.713829
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: EC Bergisch L
+ and – ESV Grizzlys Bergkamen 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1707,11 +1732,12 @@ LAST-MODIFIED:20261009T175042Z
 DTSTART:20261017T073000Z
 DTEND:20261017T110000Z
 SUMMARY:⚠ SR · U15 LL: Lippe Hockey Hamm – Herforder EV
-DESCRIPTION:Geändert: Halle (vorher HELINET Eissportarena Hamm)\n\nRolle: 
- Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt: 09:30 Uhr (60 Min
-  vor Spielbeginn)\nLiga: U15 LL\nHalle: beta FINANZ Eissportarena Hamm\nAd
- resse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Warnke\, Christoph\n
- \nQuelle: https://www.esrw.de/einteilungen.html
+DESCRIPTION:Geändert: Halle (vorher HELINET Eissportarena Hamm)\n\n!! Glei
+ chzeitig angesetzt: ESV Grizzlys Bergkamen 1b – SpG Neusser EV 1b / GSC 
+ Moers 1b !!\n\nRolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpu
+ nkt: 09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: beta FINANZ 
+ Eissportarena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann
+ : Warnke\, Christoph\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1731,16 +1757,17 @@ END:VEVENT
 BEGIN:VEVENT
 UID:724939f3afcc0c56044aa7e1a0cc563588c8519b@esrw.de
 SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
+DTSTAMP:20261015T163043Z
+LAST-MODIFIED:20261015T163043Z
 DTSTART:20261017T073000Z
 DTEND:20261017T110000Z
 SUMMARY:SR · U15 BZL: ESV Grizzlys Bergkamen 1b – SpG Neusser EV 1b / GS
  C Moers 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
-  09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Eissporthalle B
- ergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Rosier\, Cedr
- ic (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+DESCRIPTION:!! Gleichzeitig angesetzt: Lippe Hockey Hamm – Herforder EV !
+ !\n\nRolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt: 09:30
+  Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Eissporthalle Bergkam
+ en\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Galeske\, Jonas\n\n
+ Quelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
