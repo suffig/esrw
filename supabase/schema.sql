@@ -2456,3 +2456,57 @@ insert into public.funktionen (schluessel, aktiv) values ('design', false)
 -- der Abschnitt nur einmal von Hand laeuft.
 insert into public.funktionen (schluessel, aktiv) values ('design', true)
   on conflict (schluessel) do update set aktiv = true, geaendert = now();
+
+
+-- ======================================================================
+-- v51: Die Spielkennung haelt still (Registratur)
+-- ======================================================================
+-- Die Kennung eines Spiels ist "beginn|paarung". "paarung" ist nicht die
+-- Rohangabe von esrw.de, sondern unsere Auslegung davon: die Pipeline
+-- zerlegt den Begegnungstext in Heim und Gast und raeumt ihn auf. Aendern
+-- wir daran etwas, bekommt dasselbe Spiel eine andere Kennung - und
+-- alles, was daran haengt, zeigt ins Leere: einsaetze (Kilometer,
+-- Verguetung, bezahlt-Marke), gesuche, mitfahrten, spielnotizen,
+-- spielkommentare, spiel_meldungen, rechnungen.kennungen,
+-- spiel_korrekturen, spiele_archiv, push_gesendet. Zehn Tabellen.
+--
+-- Genau das ist der Reststrich-Vorfall: "U17 I: Herner EV 1b -" (mit
+-- Gedankenstrich) ergab vorher "Herner EV 1b -" und nachher "Herner EV
+-- 1b". Ein Spiel, zwei Kennungen. venues.json hat damit nichts zu tun,
+-- das bestimmt nur die Halle.
+--
+-- Diese Tabelle haelt fest, welche Kennung ein Spiel bei der ersten
+-- Sichtung bekam. "quelle" ist der SHA1 ueber Zeitstempel und die ROHE
+-- Begegnung, so wie sie auf der Seite steht - daran drehen wir nicht.
+-- Danach gilt die eingetragene Kennung, egal was aus beginn|paarung
+-- heute wuerde.
+--
+-- Umgeschluesselt wird nichts. Der erste Lauf fuellt die Tabelle aus
+-- historie.json, deren "paarung" die vom letzten Lauf ist - also genau
+-- die Kennung, unter der die Eintraege der Kollegen schon liegen. Der
+-- erste Lauf ist deshalb ein Nullschritt, und eine Sicherung vorher
+-- braucht es nicht: es wird nichts veraendert, nur festgehalten.
+--
+-- Nicht abgedeckt: aendert esrw.de selbst etwas - den Anstoss (18:30 ->
+-- 19:00) oder die Schreibweise der Begegnung -, ist es eine neue Quelle
+-- und damit eine neue Kennung. Das laesst sich nicht trennen; woran
+-- sollte ein Spiel sonst wiedererkannt werden. Tagesgenau zu schluesseln
+-- waere jedenfalls schlimmer: am 03.10.2026 stand "U17 I: Duesseldorfer
+-- EG - ESC Dresden" zweimal auf der Seite, und aus zwei Spielen duerfen
+-- nicht eines und aus zwei Abrechnungen nicht eine werden.
+create table if not exists public.spiel_kennungen (
+  quelle     text primary key,            -- SHA1("<beginn-iso>|<begegnung>")
+  kennung    text not null,               -- die App-Kennung, ab jetzt fest
+  begegnung  text,                        -- Rohtext von esrw.de, zum Nachsehen
+  beginn     text,                        -- ISO-8601 mit Zeitzone, zum Nachsehen
+  erstmals   timestamptz not null default now()
+);
+create index if not exists spiel_kennungen_kennung on public.spiel_kennungen (kennung);
+alter table public.spiel_kennungen enable row level security;
+-- Geschrieben wird nur vom Workflow (Service-Schluessel, umgeht RLS) -
+-- deshalb keine Schreibregel. Lesen duerfen Freigeschaltete: die Zeilen
+-- verraten nichts, was nicht ohnehin im Spielplan steht, und wer einer
+-- verschwundenen Abrechnung nachgeht, braucht sie.
+drop policy if exists "Kennungen lesen" on public.spiel_kennungen;
+create policy "Kennungen lesen" on public.spiel_kennungen for select to authenticated
+  using (public.ist_freigeschaltet());

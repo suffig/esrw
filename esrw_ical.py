@@ -939,7 +939,101 @@ def tabelle_schreiben(pfad, zeilen):
     return True
 
 
-def archiv_in_db(historie, uebersicht, personen, stand):
+# --------------------------------------------------- Kennungs-Registratur
+
+def kennungen_laden(cfg, historie):
+    """Zu jedem Spiel die Kennung, die es bei der ersten Sichtung bekam.
+
+    Geschluesselt ueber spiel_id() - Zeitstempel und ROHE Begegnung von
+    esrw.de, so wie sie auf der Seite steht. Die "paarung" dagegen ist
+    unsere Auslegung davon: finde_halle() zerlegt den Text in heim und
+    gast, verein_sauber() raeumt auf. Aendern wir daran etwas, aendert
+    sich die Paarung - und damit die Kennung jedes betroffenen Spiels.
+    Nachgestellt: "U17 I: Herner EV 1b -" (mit Gedankenstrich) ergab vor
+    dem Reststrich-Fix "Herner EV 1b -", danach "Herner EV 1b". Das war
+    der Reststrich-Vorfall, und er hing an unserem Code, nicht an
+    venues.json - das bestimmt nur die Halle, nicht die Paarung.
+
+    Abgedeckt ist damit genau dieser Fall: unsere eigenen Aenderungen an
+    Zerlegung und Bereinigung koennen keine Kennung mehr verschieben.
+    Nicht abgedeckt ist der andere - schreibt esrw.de den Text selbst
+    anders, ist es eine neue Quelle. Das laesst sich nicht trennen: woran
+    sollte man ein Spiel sonst wiedererkennen.
+
+    Der volle Zeitstempel, nicht der Tag: am 03.10.2026 steht "U17 I:
+    Duesseldorfer EG - ESC Dresden" zweimal auf der Seite. Tagesgenau
+    wuerden aus zwei Spielen eines, und aus zwei Abrechnungen eine. Dass
+    deshalb eine Verlegung von 18:30 auf 19:00 weiter eine neue Kennung
+    gibt, ist der Preis - die ist seltener und faellt auf, eine
+    verschmolzene Doppelansetzung nicht.
+
+    Zwei Quellen. Erst die Tabelle: was dort steht, gilt. Dann die
+    fortgeschriebene historie.json - ihre "paarung" ist die vom letzten
+    Lauf, also genau die Kennung, unter der die Eintraege der Kollegen
+    jetzt liegen. Damit wechselt beim ersten Lauf mit dieser Registratur
+    kein einziges Spiel die Kennung, und von da an kann es keine
+    Aenderung an venues.json mehr.
+
+    Eingefrorene Saisons bleiben aussen vor. Ihre Paarung liegt in
+    docs/archiv/ auf der Platte und wird nicht neu gerechnet, ihre
+    Kennung ist also schon stabil. Ihre "begegnung" ist ausserdem nur aus
+    liga und paarung nachgebaut, nicht die echte - ein Eintrag daraus
+    waere schlicht falsch.
+    """
+    reg = {"bekannt": {}, "neu": []}
+    try:
+        zeilen = tabelle_laden(cfg, "spiel_kennungen?select=quelle,kennung")
+    except Exception as e:
+        # Ohne Registratur rechnet alles weiter wie vorher. Lieber das als
+        # ein roter Lauf, der die Kalender nicht erneuert.
+        print("  ! Kennungen nicht geladen (%s) - dieser Lauf rechnet ohne."
+              % str(e)[:80], file=sys.stderr)
+        return None
+    for z in zeilen:
+        if z.get("quelle") and z.get("kennung"):
+            reg["bekannt"][z["quelle"]] = z["kennung"]
+    vorher = len(reg["bekannt"])
+    for e in (historie or {}).values():
+        if e.get("eingefroren") or not e.get("begegnung") or not e.get("beginn"):
+            continue
+        quelle = spiel_id(e["beginn"], e["begegnung"])
+        if quelle in reg["bekannt"]:
+            continue
+        kennung = e["beginn"] + "|" + e.get("paarung", "")
+        reg["bekannt"][quelle] = kennung
+        reg["neu"].append({"quelle": quelle, "kennung": kennung,
+                           "begegnung": e["begegnung"], "beginn": e["beginn"]})
+    print("Kennungen: %d aus der Tabelle, %d aus dem Archiv uebernommen."
+          % (vorher, len(reg["bekannt"]) - vorher))
+    return reg
+
+
+def kennung_fuer(reg, beginn_iso, begegnung, vorschlag):
+    """Die gueltige Kennung eines Spiels.
+
+    Steht sie in der Registratur, gilt sie - auch wenn aus beginn|paarung
+    heute etwas anderes wuerde. Sonst wird der Vorschlag eingetragen und
+    von jetzt an festgehalten.
+    """
+    if reg is None:
+        return vorschlag
+    quelle = spiel_id(beginn_iso, begegnung)
+    if quelle in reg["bekannt"]:
+        return reg["bekannt"][quelle]
+    reg["bekannt"][quelle] = vorschlag
+    reg["neu"].append({"quelle": quelle, "kennung": vorschlag,
+                       "begegnung": begegnung, "beginn": beginn_iso})
+    return vorschlag
+
+
+def kennungen_schreiben(reg):
+    if not reg or not reg["neu"]:
+        return
+    if tabelle_schreiben("spiel_kennungen?on_conflict=quelle", reg["neu"]):
+        print("%d Kennung(en) neu festgehalten." % len(reg["neu"]))
+
+
+def archiv_in_db(historie, uebersicht, personen, stand, kennungen=None):
     """Alle Spiele aller Personen dauerhaft in der Datenbank (spiele_archiv):
     das komplette Archiv plus das aktuelle Datenfenster, je Lauf per Upsert."""
     schluessel_slug = {p["schluessel"]: p["slug"] for p in personen}
@@ -952,7 +1046,16 @@ def archiv_in_db(historie, uebersicht, personen, stand):
         except (KeyError, ValueError):
             continue
         besetzung = [{"name": n, "rolle": r, "slug": slug_fuer(n)} for n, r in rollen_fuer(e.get("besetzung") or {})]
-        kennung = e["beginn"] + "|" + e.get("paarung", "")
+        # Diese Zeile war die gefaehrlichste: die Archivkennung wurde bei
+        # JEDEM Lauf neu aus der Paarung gebaut, und die entsteht jedes Mal
+        # frisch aus dem Rohtext (ergaenze_historie). Eine Aenderung an
+        # unserer Zerlegung schrieb damit stillschweigend neue Zeilen und
+        # liess die alten als Waisen stehen - samt allem, was die Kollegen
+        # daran haengen haben. Eingefrorene Saisons tragen ihre Paarung
+        # auf der Platte und brauchen das nicht.
+        kennung = (e["beginn"] + "|" + e.get("paarung", "")) if e.get("eingefroren") \
+            else kennung_fuer(kennungen, e["beginn"], e.get("begegnung", ""),
+                              e["beginn"] + "|" + e.get("paarung", ""))
         zeilen[kennung] = {
             "kennung": kennung, "beginn": e["beginn"], "liga": e.get("liga") or None, "paarung": e.get("paarung") or None,
             "halle": e.get("halle") or None, "system": len(besetzung), "besetzung": besetzung,
@@ -1053,7 +1156,7 @@ def historie_umbesetzen(historie, korrekturen):
     return geaendert
 
 
-def besetzung_korrigieren(spiele, korrekturen, venues):
+def besetzung_korrigieren(spiele, korrekturen, venues, kennungen=None):
     """Der Betreiber kann das Gespann in der App aendern. Diese Aenderung
     gewinnt gegen esrw.de - in den Feeds, im Push, im Archiv und in der
     Statistik. Sie bleibt, bis er sie auf der Spielseite wieder freigibt.
@@ -1068,7 +1171,11 @@ def besetzung_korrigieren(spiele, korrekturen, venues):
             continue
         _halle, heim, gast, _sicher = finde_halle(s["begegnung"], venues)
         paarung = paarung_aus(heim, gast)
-        k = korrekturen.get(s["start"].isoformat() + "|" + paarung)
+        # Ueber die Registratur: eine Gespann-Korrektur zeigt auf die
+        # Kennung von damals. Die wuerde sonst nicht mehr gefunden, sobald
+        # sich die Paarung anders aufloest als bei ihrer Eintragung.
+        k = korrekturen.get(kennung_fuer(kennungen, s["start"].isoformat(), s["begegnung"],
+                                         s["start"].isoformat() + "|" + paarung))
         neu = (k or {}).get("besetzung")
         if not neu:
             continue
@@ -1080,7 +1187,7 @@ def besetzung_korrigieren(spiele, korrekturen, venues):
     return geaendert
 
 
-def sammle_personen(spiele, cfg, venues, jetzt, bevorzugt=frozenset(), gebuehren=None, korrekturen=None, hallen_hinweise=None):
+def sammle_personen(spiele, cfg, venues, jetzt, bevorzugt=frozenset(), gebuehren=None, korrekturen=None, hallen_hinweise=None, kennungen=None):
     vorlauf = timedelta(minutes=cfg["vorlauf_minuten"])
     dauer = timedelta(minutes=cfg["spieldauer_minuten"])
     personen = {}
@@ -1095,8 +1202,13 @@ def sammle_personen(spiele, cfg, venues, jetzt, bevorzugt=frozenset(), gebuehren
         paarung = paarung_aus(heim, gast)
         besetzung = rollen_fuer(spiel["besetzung"])
         kennung = spiel_id(anstoss.isoformat(), spiel["begegnung"])
-        # Kennung der App (Original-Beginn|Paarung) - darauf zeigen Korrekturen
-        app_id = anstoss.isoformat() + "|" + paarung
+        # Kennung der App - darauf zeigen Korrekturen und alles, was die
+        # Kollegen zu einem Spiel gespeichert haben. Frueher stand hier
+        # einfach Beginn|Paarung; damit wanderte die Kennung mit, sobald
+        # wir an der Zerlegung des Begegnungstexts etwas aenderten. Die
+        # Registratur haelt sie fest.
+        app_id = kennung_fuer(kennungen, anstoss.isoformat(), spiel["begegnung"],
+                              anstoss.isoformat() + "|" + paarung)
         manuell = spiel.get("manuell")
         if manuell:
             app_id = "m:" + manuell["id"]
@@ -1639,10 +1751,15 @@ def main():
         print("%d Korrektur(en) vom Betreiber." % len(korrekturen))
     manuell, hallen_hinweise = betreiber_daten(cfg, venues)
     spiele += manuell
-    umbesetzt = besetzung_korrigieren(spiele, korrekturen, venues)
+    # Die Historie wird hier schon gebraucht: aus ihr kommt die
+    # Registratur der Kennungen, und die muss stehen, bevor die erste
+    # Kennung gebildet wird. Fortgeschrieben wird sie weiter unten.
+    historie = lade("historie.json", {})
+    kennungen = kennungen_laden(cfg, historie)
+    umbesetzt = besetzung_korrigieren(spiele, korrekturen, venues, kennungen)
     if umbesetzt:
         print("%d Spiel(e) mit Gespann vom Betreiber." % umbesetzt)
-    personen, uebersicht = sammle_personen(spiele, cfg, venues, stand, bevorzugt, gebuehren, korrekturen, hallen_hinweise)
+    personen, uebersicht = sammle_personen(spiele, cfg, venues, stand, bevorzugt, gebuehren, korrekturen, hallen_hinweise, kennungen)
     print("%d Personen." % len(personen))
 
     unklar = sorted({t["paarung"] for p in personen for t in p["termine"]
@@ -1665,7 +1782,7 @@ def main():
         return
 
     # Archiv fortschreiben und daraus die Statistik rechnen
-    historie = lade("historie.json", {})
+    # (historie ist oben geladen - die Registratur brauchte sie zuerst)
     frisch = ergaenze_historie(historie, spiele, venues, stand)
     # Abgeschlossene Saisons einfrieren (docs/archiv/), Arbeitsdatei bleibt klein
     saison_index = saisonarchiv_einfrieren(historie, personen, stand)
@@ -1683,7 +1800,7 @@ def main():
           % (len(historie_alle), frisch, len(historie_alle) - len(historie), saison))
 
     try:
-        archiv_in_db(historie_alle, uebersicht, personen, stand)
+        archiv_in_db(historie_alle, uebersicht, personen, stand, kennungen)
     except Exception as e:
         print("  ! Archiv nicht in die Datenbank geschrieben: %s" % str(e)[:120], file=sys.stderr)
 
@@ -1702,6 +1819,16 @@ def main():
     if args.dry:
         print("\n--dry: nichts geschrieben. Feeds waeren: %d" % (len(personen) + 1))
         return
+
+    # Erst hinter --dry: ein Probelauf soll keine Kennung festschreiben,
+    # die hinterher gilt.
+    try:
+        kennungen_schreiben(kennungen)
+    except Exception as e:
+        # Nicht festgehalten heisst nur: beim naechsten Lauf noch einmal
+        # versucht. Die Kennungen dieses Laufs stimmen trotzdem, sie kamen
+        # aus derselben Historie.
+        print("  ! Kennungen nicht festgehalten: %s" % str(e)[:120], file=sys.stderr)
 
     ziel = os.path.join(BASIS, cfg["ausgabe_verzeichnis"])
     feeds = os.path.join(ziel, "feeds")

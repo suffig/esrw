@@ -1043,6 +1043,88 @@ def test_dunkles_thema():
                str((s2, m2)))
 
 
+def test_kennungen():
+    """Die Spielkennung haelt still, auch wenn wir die Zerlegung aendern.
+
+    "paarung" ist unsere Auslegung des Begegnungstexts (finde_halle,
+    verein_sauber), nicht die Rohangabe. Ohne Registratur bekommt ein
+    Spiel nach einer Aenderung daran eine neue Kennung - und Einsaetze,
+    Rechnungen, Notizen und Korrekturen zeigen ins Leere. So ist der
+    Reststrich-Vorfall entstanden.
+    """
+    print("\nKennungen halten still")
+    E = esrw_ical_modul()
+    beginn = "2026-09-16T19:30:00+02:00"
+    begegnung = "U15 RLA: Iserlohner EC - Krefelder EV"
+    alt = beginn + "|Iserlohner EC – Krefelder EV"
+    neu = beginn + "|Iserlohner EC – Krefelder EV –"       # mit Reststrich, wie vor dem Fix
+
+    # Ohne Registratur bleibt alles wie vorher - der Parameter ist optional,
+    # ein Lauf ohne Tabelle rechnet weiter.
+    pruefe(E.kennung_fuer(None, beginn, begegnung, alt) == alt,
+           "ohne Registratur gilt der Vorschlag")
+
+    # Leere Registratur: der erste Vorschlag wird festgehalten ...
+    reg = {"bekannt": {}, "neu": []}
+    pruefe(E.kennung_fuer(reg, beginn, begegnung, alt) == alt,
+           "erste Sichtung haelt den Vorschlag fest")
+    pruefe(len(reg["neu"]) == 1 and reg["neu"][0]["kennung"] == alt,
+           "und merkt ihn zum Schreiben vor", str(reg["neu"]))
+    # ... und gilt danach, auch wenn die Paarung heute anders aussieht.
+    pruefe(E.kennung_fuer(reg, beginn, begegnung, neu) == alt,
+           "loest die Paarung sich anders auf, bleibt die alte Kennung")
+    pruefe(len(reg["neu"]) == 1, "nichts doppelt vorgemerkt", str(len(reg["neu"])))
+
+    # Doppelansetzung: dieselbe Begegnung, derselbe Tag, zwei Anstosszeiten.
+    # Am 03.10.2026 stand "U17 I: Duesseldorfer EG - ESC Dresden" zweimal
+    # auf der Seite. Tagesgenau zu schluesseln wuerde daraus ein Spiel
+    # machen - und aus zwei Abrechnungen eine.
+    reg2 = {"bekannt": {}, "neu": []}
+    b1, b2 = "2026-10-03T11:00:00+02:00", "2026-10-03T16:30:00+02:00"
+    doppelt = "U17 I: Duesseldorfer EG - ESC Dresden"
+    k1 = E.kennung_fuer(reg2, b1, doppelt, b1 + "|x")
+    k2 = E.kennung_fuer(reg2, b2, doppelt, b2 + "|x")
+    pruefe(k1 != k2, "Doppelansetzung behaelt zwei Kennungen", "%s / %s" % (k1, k2))
+
+    # Die Registratur aus der fortgeschriebenen Historie fuellen: deren
+    # "paarung" ist die vom letzten Lauf. Genau deshalb wechselt beim
+    # ersten Lauf keine Kennung.
+    historie = {
+        "a": {"beginn": beginn, "begegnung": begegnung, "paarung": "Iserlohner EC – Krefelder EV"},
+        # Eingefrorene Saisons bleiben aussen vor: ihre "begegnung" ist nur
+        # aus liga und paarung nachgebaut, ein Eintrag daraus waere falsch.
+        "b": {"beginn": "2025-01-05T18:00:00+01:00", "begegnung": "U15: A – B",
+              "paarung": "A – B", "eingefroren": True},
+        # Ohne Begegnung laesst sich kein Schluessel bilden.
+        "c": {"beginn": "2026-02-02T18:00:00+01:00", "paarung": "C – D"},
+    }
+    echt = E.tabelle_laden
+    E.tabelle_laden = lambda cfg, pfad: []          # der Test laeuft ohne Netz
+    try:
+        reg3 = E.kennungen_laden({"ausgabe_verzeichnis": "docs"}, historie)
+    finally:
+        E.tabelle_laden = echt
+    pruefe(len(reg3["bekannt"]) == 1, "nur der lebende Eintrag kommt in die Registratur",
+           str(sorted(reg3["bekannt"].values())))
+    pruefe(E.kennung_fuer(reg3, beginn, begegnung, neu) == alt,
+           "aus der Historie uebernommen heisst: die Kennung von damals gilt")
+
+    # Und die Gespann-Korrektur des Betreibers findet ihr Spiel wieder,
+    # obwohl die Paarung heute anders aussieht als bei ihrer Eintragung.
+    from datetime import datetime as _dt
+    venues = json.load(open(os.path.join(os.path.dirname(HIER), "venues.json"), encoding="utf-8"))
+    spiel = {"start": _dt.fromisoformat(beginn), "begegnung": begegnung,
+             "besetzung": {"HSR": [], "(L)SR": ["Alt, Anton"]}}
+    gestern = spiel["start"].isoformat() + "|Ganz Anderer Name"
+    reg4 = {"bekannt": {E.spiel_id(beginn, begegnung): gestern}, "neu": []}
+    korr = {gestern: {"besetzung": [{"name": "Neu, Nina", "rolle": "SR"}]}}
+    pruefe(E.besetzung_korrigieren([spiel], korr, venues) == 0,
+           "ohne Registratur greift die alte Korrektur nicht (das war der Fehler)")
+    spiel["besetzung"] = {"HSR": [], "(L)SR": ["Alt, Anton"]}
+    pruefe(E.besetzung_korrigieren([spiel], korr, venues, reg4) == 1,
+           "mit Registratur greift sie wieder")
+
+
 def main():
     print("Regressionstest esrw_ical")
     for test in (test_parsen, test_hallen, test_namen, test_rollen, test_aliase,
@@ -1052,7 +1134,7 @@ def main():
                  test_besetzung_korrektur, test_csp,
                  test_rechnungsvorlage, test_sicherung, test_erinnerungszeit, test_zurueckspielen, test_obmann_rechte,
                  test_kalenderwuensche, test_vereinsnamen, test_seitenumbau,
-                 test_funktionstexte, test_dunkles_thema,
+                 test_funktionstexte, test_dunkles_thema, test_kennungen,
                  test_tresor):
         test()
     print("\n" + "-" * 58)
