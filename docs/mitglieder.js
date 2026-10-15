@@ -2389,6 +2389,16 @@ window.Mitglieder = (function () {
       .map(function (z) { return z[1] ? (z[0] || "?") + " gegen " + z[1] : (z[0] || "?"); });
     var g1 = gruppe(1, "Spiele", paarungen.length ? paarungen.join(" · ") : "noch keins gewählt", hatSpiele);
     g1.appendChild(h("p", { class: "meta", style: "margin:0 0 6px", text: "Bis zu drei Spiele, ein Verein, ein Tag. Kommende Spiele gehen auch, der Betrag kommt dann aus der Gebührenordnung." }));
+    // Wer hier steht und acht offene Spiele bei fuenf Vereinen hat, geht
+    // diesen Weg fuenfmal. Dann lieber der Lauf.
+    var laufOffen = laufBauen();
+    if (laufOffen.length > 1) g1.appendChild(h("p", { class: "meta", style: "margin:0 0 6px" }, [
+      h("button", { type: "button", class: "textknopf",
+        text: "Oder alle " + laufOffen.length + " offenen Rechnungen auf einmal schreiben",
+        onclick: function () {
+          laufListe = null; laufFertig = null;
+          abrechnungPanel = "lauf"; panelUnten = false; rendereAbrechnung();
+        } })]));
     var liste = rechnungSpiele();
     var wahlBox = h("div", { class: "rechnung-wahl" });
     if (!liste.length) wahlBox.appendChild(h("p", { class: "meta", text: "Kein Spiel gefunden, zu dem sich ein Betrag ermitteln lässt." }));
@@ -2783,35 +2793,403 @@ window.Mitglieder = (function () {
       .then(function (r) { ladeAus(); return r; });
   }
 
+  // --------------------------------------------------------- Rechnungslauf
+  // Bewusst nicht still: zuerst steht die ganze Liste da, mit Nummer,
+  // Empfaenger und Betrag, und einzelne lassen sich abwaehlen. Geschrieben
+  // wird erst auf Ansage. Was dann passiert, ist genau das, was eine
+  // einzelne Rechnung auch tut - gleiche Felder (rechnungWerte), gleiche
+  // Zeile in "rechnungen", gleiche Marke am Spiel.
+  var laufListe = null, laufLaeuft = false, laufFertig = null;
+
+  function laufPraefix(jahr) {
+    var stamm = rechnungDaten();
+    var p = stamm.praefix != null && stamm.praefix !== "" ? String(stamm.praefix) : jahr + "-";
+    return /\d{4}/.test(p) ? p.replace(/\d{4}/, String(jahr)) : p;
+  }
+  function laufHoechste(praefix) {
+    var hoch = 0;
+    (rechnungListe || []).forEach(function (rg) {
+      var s = String(rg.nummer || "");
+      if (s.indexOf(praefix) !== 0) return;
+      var n = parseInt(s.slice(praefix.length).replace(/\D/g, ""), 10);
+      if (n > hoch) hoch = n;
+    });
+    return hoch;
+  }
+  // Die Nummern im Voraus vergeben, damit in der Liste steht, was
+  // hinterher wirklich auf den Rechnungen steht.
+  //
+  // Je Praefix ein eigener Zaehler: ein Spiel im Dezember und eines im
+  // Januar gehoeren in verschiedene Jahre. Der Zaehler aus dem Profil gilt
+  // fuer das Praefix der ersten Rechnung - das ist die Ansage des Nutzers,
+  // genauso wie in nummerVorschlag(); weitere Praefixe zaehlen von ihrer
+  // hoechsten weiter. Schon vergebene Nummern werden uebersprungen, sonst
+  // schriebe ein Lauf eine Nummer zum zweiten Mal.
+  function laufNummern(buendel) {
+    var stamm = rechnungDaten(), vergeben = {}, zaehler = {}, erstes = true;
+    (rechnungListe || []).forEach(function (rg) { vergeben[String(rg.nummer)] = 1; });
+    buendel.forEach(function (b) {
+      if (!b.gewaehlt) { b.nummer = null; return; }
+      var praefix = laufPraefix(b.tag.getFullYear());
+      if (zaehler[praefix] === undefined) {
+        var gesetzt = parseInt(stamm.nummer, 10);
+        zaehler[praefix] = erstes && gesetzt > 0 ? gesetzt : laufHoechste(praefix) + 1;
+        erstes = false;
+      }
+      var n;
+      do { n = praefix + String(zaehler[praefix]++).padStart(3, "0"); } while (vergeben[n]);
+      vergeben[n] = 1; b.nummer = n;
+    });
+  }
+  // Offene Spiele zu Buendeln: ein Verein, ein Tag. Genau die Gruppe, die
+  // rechnungFormAusWahl() auf ein Blatt bringt.
+  function laufBauen() {
+    var offen = rechnungSpiele().filter(function (sp) {
+      var e = einsaetze[sp.kennung] || {};
+      return !e.bezahlt && !rechnungZu(sp.kennung);
+    });
+    var gruppen = {}, reihe = [];
+    offen.forEach(function (sp) {
+      var k = heimVereinVon(sp) + "|" + new Date(sp.beginn).toDateString();
+      if (!gruppen[k]) { gruppen[k] = []; reihe.push(k); }
+      gruppen[k].push(sp);
+    });
+    var buendel = [];
+    reihe.forEach(function (k) {
+      var g = gruppen[k].slice().sort(function (a, b) { return a.beginn < b.beginn ? -1 : 1; });
+      // Mehr als drei Spiele passen nicht auf ein Blatt. Dann zwei
+      // Rechnungen an denselben Verein, mit aufeinanderfolgenden Nummern.
+      for (var i = 0; i < g.length; i += 3) {
+        var teil = g.slice(i, i + 3), p = 0, z = 0, geschaetzt = false;
+        teil.forEach(function (sp) {
+          var x = rechnungBetrag(sp);
+          p += (x.betrag || 0) - (x.zeit || 0); z += x.zeit || 0;
+          if (x.geschaetzt) geschaetzt = true;
+        });
+        buendel.push({ verein: heimVereinVon(teil[0]), tag: new Date(teil[0].beginn), spiele: teil,
+                       pauschale: Math.round(p * 100) / 100, zuschlag: Math.round(z * 100) / 100,
+                       geschaetzt: geschaetzt, gewaehlt: true });
+      }
+    });
+    // Das aelteste zuerst - dann laufen die Nummern in der Reihenfolge der
+    // Spiele und nicht in der, in der die Vereine zufaellig auftauchen.
+    buendel.sort(function (a, b) { return a.tag - b.tag; });
+    laufNummern(buendel);
+    return buendel;
+  }
+  function laufAdresse(verein) {
+    var m = vereinAdressen || {};
+    return m[verein] || m[vereinHaupt(verein)] || null;
+  }
+  // Das Formular eines Buendels, wie rechnungFormAusWahl() es fuer die
+  // Auswahl baut - nur ohne Oberflaeche und mit der Anschrift direkt aus
+  // der Vereinsliste.
+  function laufForm(b, stamm) {
+    var a = laufAdresse(b.verein) || {};
+    return {
+      verein: b.verein, name: a.name || b.verein, strasse: a.strasse || "", plz_ort: a.plz_ort || "",
+      zeilen: [0, 1, 2].map(function (i) {
+        var sp = b.spiele[i];
+        return sp ? [heimVereinVon(sp), gastVereinVon(sp)] : ["", ""];
+      }),
+      datum: b.tag.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" }),
+      ort: b.spiele[0].halle || "", klasse: b.spiele[0].liga || "",
+      pauschale: b.pauschale, zuschlag: b.zuschlag, klein: stamm.klein !== false,
+      kennungen: b.spiele.map(function (sp) { return sp.kennung; })
+    };
+  }
+  // Der Dateiname einer Rechnung. Umlaute erst umschreiben, dann den Rest
+  // wegwerfen: /[^\w]+/ kennt kein oe und machte aus "Kölner Junghaie"
+  // ein "KlnerJunghaie". Der Name landet beim Verein im Postfach, also
+  // soll er lesbar sein. Gross- und Kleinschreibung bleibt - ohneUmlaut()
+  // weiter unten ist fuer Suchtext und macht alles klein.
+  function rechnungDateiname(nummer, verein) {
+    var v = String(verein || "Verein")
+      .replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue")
+      .replace(/Ä/g, "Ae").replace(/Ö/g, "Oe").replace(/Ü/g, "Ue")
+      .replace(/ß/g, "ss")
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^\w]+/g, "");
+    return "Abrechnung_" + String(nummer).replace(/[^\w-]+/g, "_") + "_" + (v || "Verein") + ".pdf";
+  }
+
+  // Eine Rechnung des Laufs: PDF bauen, Zeile schreiben, Spiele abhaken.
+  // Das PDF wird nicht geladen, sondern behalten - der Browser laesst
+  // mehrere Downloads hintereinander nicht zuverlaessig durch, also
+  // entscheidet hinterher der Nutzer, wann sie kommen.
+  function laufEine(b, stamm, R) {
+    var f = laufForm(b, stamm);
+    var s = rechnungSummeAus(f.pauschale, f.zuschlag, f.klein);
+    return R.bauen(rechnungWerte(stamm, f, s, b.nummer)).then(function (blob) {
+      var name = rechnungDateiname(b.nummer, f.verein || f.name);
+      return speichern(sb.from("rechnungen").insert({
+        user_id: session.user.id, nummer: b.nummer,
+        // isoTag() statt toISOString(): letzteres rechnet in UTC und wuerde
+        // ein Spiel kurz nach Mitternacht auf den Vortag schreiben.
+        datum: isoTag(b.tag),
+        verein: f.verein || f.name, betrag: Math.round(s.gesamt * 100) / 100,
+        kennungen: f.kennungen,
+        felder: { name: f.name, strasse: f.strasse, plz_ort: f.plz_ort, verein: f.verein,
+                  zeilen: f.zeilen, datum: f.datum, ort: f.ort, klasse: f.klasse,
+                  pauschale: s.pauschale, zuschlag: s.zuschlag, klein: s.klein }
+      })).then(function (r) {
+        if (r && r.error) throw new Error(fehlerText(r.error));
+        // Erst wenn die Zeile steht, ist das Spiel abgerechnet. Anders
+        // herum waere das Spiel abgehakt und die Rechnung nirgends.
+        b.spiele.forEach(function (sp) {
+          speichereEinsatz(sp, { bezahlt: new Date().toISOString() }, true);
+          delete rechnungWahl[sp.kennung];
+        });
+        return { nummer: b.nummer, verein: f.verein, blob: blob, name: name, betrag: s.gesamt };
+      });
+    });
+  }
+  function laufStarten(buendel, stamm) {
+    var zu = buendel.filter(function (b) { return b.gewaehlt; });
+    if (!zu.length || laufLaeuft) return;
+    laufLaeuft = true;
+    laufFertig = { fertig: [], fehler: null, gesamt: zu.length };
+    abrechnungPanel = "lauf"; rendereAbrechnung();
+    ladeRechnung().then(function (R) {
+      // Hintereinander, nicht gleichzeitig: die Nummern haengen an der
+      // Reihenfolge. Beim ersten Fehler wird abgebrochen - die uebrigen
+      // Spiele bleiben offen, statt halb abgerechnet zu sein.
+      return zu.reduce(function (kette, b) {
+        return kette.then(function () {
+          if (laufFertig.fehler) return null;
+          kurzMeldung("Rechnung " + b.nummer + " (" + (laufFertig.fertig.length + 1)
+                      + " von " + laufFertig.gesamt + ") …", "");
+          return laufEine(b, stamm, R).then(function (e) {
+            laufFertig.fertig.push(e);
+          }, function (fehler) {
+            laufFertig.fehler = { nummer: b.nummer, verein: b.verein,
+                                  text: fehler && fehler.message ? fehler.message : String(fehler) };
+          });
+        });
+      }, Promise.resolve());
+    }).then(function () { laufAbschliessen(stamm); },
+            function (e) {
+              laufFertig.fehler = { text: e && e.message ? e.message : String(e) };
+              laufAbschliessen(stamm);
+            });
+  }
+  function laufAbschliessen(stamm) {
+    laufLaeuft = false;
+    laufListe = null;      // beim naechsten Oeffnen neu bilden
+    rechnungListe = null;  // die geschriebenen Nummern neu holen
+    if (rechnungForm) rechnungForm = rechnungFormAusWahl();
+    var letzte = laufFertig.fertig[laufFertig.fertig.length - 1];
+    var weiter = Promise.resolve(true);
+    if (letzte) {
+      // Der Zaehler im Profil steht hinterher auf der naechsten Nummer -
+      // einmal am Ende, nicht nach jeder einzelnen Rechnung.
+      var neu = {}; Object.keys(stamm).forEach(function (k) { neu[k] = stamm[k]; });
+      var hinten = String(letzte.nummer).match(/(\d+)\s*$/);
+      neu.nummer = (hinten ? parseInt(hinten[1], 10) : 0) + 1;
+      weiter = rechnungDatenSpeichern(neu);
+    }
+    weiter.then(function () {
+      if (laufFertig.fehler) {
+        meldung(laufFertig.fertig.length + " von " + laufFertig.gesamt + " geschrieben, dann ging es nicht weiter: "
+                + laufFertig.fehler.text + " Die übrigen Spiele sind unverändert offen.", "warn");
+      } else {
+        kurzMeldung(laufFertig.fertig.length + (laufFertig.fertig.length === 1 ? " Rechnung" : " Rechnungen")
+                    + " geschrieben ✓", "gut");
+      }
+      abrechnungPanel = "lauf"; rendereAbrechnung();
+    });
+  }
+
+  function rechnungLaufPanel() {
+    var box = h("div", { class: "mg-form rechnungslauf" });
+    var stamm = rechnungDaten();
+    function nochmal() { abrechnungPanel = "lauf"; rendereAbrechnung(); }
+
+    // ---- laeuft gerade ---------------------------------------------------
+    if (laufLaeuft) {
+      box.appendChild(h("p", { text: "Schreibt " + laufFertig.gesamt
+        + (laufFertig.gesamt === 1 ? " Rechnung" : " Rechnungen") + " …" }));
+      box.appendChild(h("p", { class: "meta", text: "Fertig: " + laufFertig.fertig.length
+        + ". Bitte die Seite nicht verlassen." }));
+      return box;
+    }
+
+    // ---- gerade gelaufen -------------------------------------------------
+    if (laufFertig && laufFertig.fertig.length) {
+      var n = laufFertig.fertig.length;
+      box.appendChild(h("h4", { style: "margin:0 0 4px",
+        text: n + (n === 1 ? " Rechnung geschrieben" : " Rechnungen geschrieben") + " ✓" }));
+      box.appendChild(h("p", { class: "meta", style: "margin:0 0 8px", text:
+        "Die Zeilen stehen und die Spiele sind abgehakt. Fehlen die PDFs – die lädt der "
+        + "Browser nicht alle von selbst, mehrere Downloads auf einmal lässt er nicht durch." }));
+      var alle = h("button", { type: "button", class: "anfrage",
+        text: "Alle " + n + " PDFs laden" });
+      alle.addEventListener("click", function () {
+        // Mit Abstand hintereinander. Fragt der Browser, reicht ein
+        // "zulassen"; sonst bleiben die Knoepfe darunter stehen.
+        laufFertig.fertig.forEach(function (e, i) {
+          setTimeout(function () { pdfHerunterladen(e.blob, e.name); }, i * 700);
+        });
+      });
+      box.appendChild(h("div", { class: "zweit" }, [alle]));
+      laufFertig.fertig.forEach(function (e) {
+        box.appendChild(h("label", { class: "rechnung-zeile" }, [
+          h("span", {}, [h("b", { text: e.nummer + " · " + e.verein }),
+                         h("small", { text: euro(e.betrag) })]),
+          h("button", { type: "button", text: "PDF",
+            onclick: function () { pdfHerunterladen(e.blob, e.name); } })]));
+      });
+      box.appendChild(h("p", { class: "meta", style: "margin:8px 0 0", text:
+        "Jede dieser Rechnungen lässt sich später unter „Geschriebene Rechnungen“ "
+        + "wieder laden und umnummerieren." }));
+      box.appendChild(h("div", { class: "zweit" }, [
+        h("button", { type: "button", class: "mg-neben", text: "Weitere schreiben",
+          onclick: function () { laufFertig = null; laufListe = null; nochmal(); } })]));
+      return box;
+    }
+
+    // ---- die Liste erst bauen, wenn Archiv und Anschriften da sind -------
+    if (laufListe === null) {
+      box.appendChild(h("p", { class: "meta", text: "Sucht die offenen Spiele …" }));
+      Promise.all([ladeArchiv(), rechnungenLaden(), vereinAdressenLaden()]).then(function () {
+        if (!box.isConnected) return;
+        laufListe = laufBauen();
+        // Ohne Anschrift ist die Rechnung nicht verschickbar, und im Lauf
+        // kann man sie nicht nachtragen. Solche Buendel stehen da, aber
+        // abgewaehlt, mit dem Satz darunter, woran es liegt.
+        laufListe.forEach(function (b) {
+          var a = laufAdresse(b.verein);
+          if (!a || !a.strasse) b.gewaehlt = false;
+        });
+        laufNummern(laufListe);
+        nochmal();
+      });
+      return box;
+    }
+
+    var buendel = laufListe;
+    box.appendChild(h("p", { class: "meta", style: "margin:0 0 8px", text:
+      "Je Verein und Spieltag eine Rechnung, höchstens drei Spiele darauf – so, wie das "
+      + "Formular sie einzeln auch bauen würde. Nichts wird geschrieben, bis du es unten sagst." }));
+
+    if (!buendel.length) {
+      box.appendChild(h("p", { text: "Nichts offen: zu jedem Spiel mit Betrag gibt es schon eine "
+        + "Rechnung oder einen Haken." }));
+      box.appendChild(h("p", { class: "meta", text: "Eine zweite Rechnung zu einem schon abgehakten "
+        + "Spiel schreibst du einzeln über „Rechnung schreiben“." }));
+      return box;
+    }
+    // Ohne Namen und Anschrift des Absenders ist jede dieser Rechnungen
+    // Altpapier - das gehoert vor die Liste, nicht hinter den Lauf.
+    if (!stamm.name || (!stamm.strasse && !stamm.plz_ort)) {
+      box.appendChild(h("p", { class: "achtung", text: "Im Profil fehlen Name oder Anschrift – "
+        + "ohne die kann der Lauf keine brauchbaren Rechnungen schreiben." }));
+      return box;
+    }
+
+    buendel.forEach(function (b) {
+      var s = rechnungSummeAus(b.pauschale, b.zuschlag, stamm.klein !== false);
+      var a = laufAdresse(b.verein);
+      var c = h("input", { type: "checkbox" });
+      c.checked = b.gewaehlt;
+      c.addEventListener("change", function () {
+        b.gewaehlt = c.checked;
+        laufNummern(buendel);   // die Nummern ruecken nach
+        nochmal();
+      });
+      var zweit = [];
+      if (b.nummer) zweit.push("Nr. " + b.nummer);
+      zweit.push(euro(s.gesamt));
+      if (b.geschaetzt) zweit.push("Betrag nach Ordnung");
+      if (!a || !a.strasse) zweit.push("Anschrift fehlt");
+      box.appendChild(h("label", { class: "rechnung-zeile lauf-zeile" + (b.gewaehlt ? "" : " erledigt") }, [
+        h("span", {}, [
+          h("b", { text: b.verein + " · " + datumLang(b.tag) }),
+          h("small", { text: zweit.join(" · ") }),
+          h("small", { class: "lauf-spiele", text: b.spiele.map(function (sp) {
+            return (sp.liga ? sp.liga + ": " : "") + sp.paarung; }).join(" · ") })]),
+        c]));
+    });
+
+    var ohne = buendel.filter(function (b) { var a = laufAdresse(b.verein); return !a || !a.strasse; });
+    if (ohne.length) box.appendChild(h("p", { class: "achtung", style: "margin:8px 0 0",
+      text: ohne.length + (ohne.length === 1 ? " Verein hat" : " Vereine haben") + " keine Anschrift "
+        + "– abgewählt. Die trägst du unter „Vereinsadressen“ nach "
+        + "(oder schreibst die Rechnung einzeln, dort sind die Felder ausfüllbar)." }));
+
+    var gewaehlt = buendel.filter(function (b) { return b.gewaehlt; });
+    var summe = 0, spiele = 0;
+    gewaehlt.forEach(function (b) {
+      summe += rechnungSummeAus(b.pauschale, b.zuschlag, stamm.klein !== false).gesamt;
+      spiele += b.spiele.length;
+    });
+    box.appendChild(h("p", { class: "meta", style: "margin:8px 0 4px", text: !gewaehlt.length
+      ? "Nichts ausgewählt."
+      : gewaehlt.length + (gewaehlt.length === 1 ? " Rechnung über " : " Rechnungen über ")
+        + spiele + (spiele === 1 ? " Spiel" : " Spiele") + ", zusammen " + euro(summe) + "." }));
+    var start = h("button", { type: "button", class: "anfrage", text: !gewaehlt.length
+      ? "Rechnungen schreiben"
+      : gewaehlt.length + (gewaehlt.length === 1 ? " Rechnung schreiben" : " Rechnungen schreiben") });
+    if (!gewaehlt.length) start.disabled = true;
+    start.addEventListener("click", function () {
+      if (!confirm(gewaehlt.length + (gewaehlt.length === 1 ? " Rechnung" : " Rechnungen")
+                   + " über zusammen " + euro(summe) + " schreiben?\n\n"
+                   + "Die Nummern " + gewaehlt[0].nummer + " bis "
+                   + gewaehlt[gewaehlt.length - 1].nummer + " werden vergeben und die "
+                   + spiele + " Spiele als bezahlt abgehakt. Die PDFs lädst du danach.")) return;
+      laufStarten(buendel, stamm);
+    });
+    box.appendChild(h("div", { class: "zweit" }, [start,
+      h("button", { type: "button", class: "textknopf", text: "Neu bilden",
+        onclick: function () { laufListe = null; nochmal(); } })]));
+    return box;
+  }
+
+  // Die Felder der Vorlage aus Stammdaten, Formular und Betraegen. Die
+  // Namen sind die der Vorlage ("4" ist das Spieldatum, "Dropdown3" die
+  // Spielklasse) - sie kommen aus abrechnung/vorlage.json und sind nicht
+  // frei gewaehlt.
+  function rechnungWerte(stamm, f, b, nummer) {
+    var werte = {
+      "undefined": nummer,
+      "Rechnungssteller Schiedsrichter": stamm.name + (stamm.sr_nummer ? " (" + stamm.sr_nummer + ")" : ""),
+      "Straße und Nr": stamm.strasse,
+      "PLZ und Ort 1": stamm.plz_ort,
+      "PLZ und Ort 2": stamm.verein,
+      "Steuernummer": stamm.steuernummer,
+      "Rechnungsempfänger Verein": f.name,
+      "Straße und Nr_2": f.strasse,
+      "PLZ und Ort": f.plz_ort,
+      "4": f.datum,
+      "Spielort": f.ort,
+      "Dropdown3": f.klasse,
+      "€": { text: euroZahl(b.pauschale), ausrichtung: "rechts" },
+      "€_4": { text: euroZahl(b.gesamt), ausrichtung: "rechts" }
+    };
+    if (b.zuschlag) werte["€_2"] = { text: euroZahl(b.zuschlag), ausrichtung: "rechts" };
+    if (b.klein) werte._kreuz = "Kleinunternehmer nach  19 UStG";
+    else werte["€_3"] = { text: euroZahl(b.ust), ausrichtung: "rechts" };
+    var reihen = [["1", "undefined_2"], ["2", "undefined_3"], ["3", "undefined_4"]];
+    (f.zeilen || []).slice(0, 3).forEach(function (z, i) {
+      if (z[0]) werte[reihen[i][0]] = z[0];
+      if (z[1]) werte[reihen[i][1]] = z[1];
+    });
+    return werte;
+  }
+  // Umsatzsteuer und Gesamtbetrag aus Pauschale und Zuschlag. Stand an
+  // zwei Stellen gleich, der Lauf braucht es als dritte.
+  function rechnungSummeAus(pauschale, zuschlag, klein) {
+    var b = { pauschale: Number(pauschale) || 0, zuschlag: Number(zuschlag) || 0, klein: !!klein };
+    b.ust = b.klein ? 0 : (b.pauschale + b.zuschlag) * 0.19;
+    b.gesamt = b.pauschale + b.zuschlag + b.ust;
+    return b;
+  }
+
   function rechnungErzeugen(stamm, f, betraege, nummer) {
     kurzMeldung("Rechnung wird gebaut …", "");
     ladeRechnung().then(function (R) {
-      var werte = {
-        "undefined": nummer,
-        "Rechnungssteller Schiedsrichter": stamm.name + (stamm.sr_nummer ? " (" + stamm.sr_nummer + ")" : ""),
-        "Straße und Nr": stamm.strasse,
-        "PLZ und Ort 1": stamm.plz_ort,
-        "PLZ und Ort 2": stamm.verein,
-        "Steuernummer": stamm.steuernummer,
-        "Rechnungsempfänger Verein": f.name,
-        "Straße und Nr_2": f.strasse,
-        "PLZ und Ort": f.plz_ort,
-        "4": f.datum,
-        "Spielort": f.ort,
-        "Dropdown3": f.klasse,
-        "€": { text: euroZahl(betraege.pauschale), ausrichtung: "rechts" },
-        "€_4": { text: euroZahl(betraege.gesamt), ausrichtung: "rechts" }
-      };
-      if (betraege.zuschlag) werte["€_2"] = { text: euroZahl(betraege.zuschlag), ausrichtung: "rechts" };
-      if (betraege.klein) werte._kreuz = "Kleinunternehmer nach  19 UStG";
-      else werte["€_3"] = { text: euroZahl(betraege.ust), ausrichtung: "rechts" };
-      var reihen = [["1", "undefined_2"], ["2", "undefined_3"], ["3", "undefined_4"]];
-      (f.zeilen || []).slice(0, 3).forEach(function (z, i) {
-        if (z[0]) werte[reihen[i][0]] = z[0];
-        if (z[1]) werte[reihen[i][1]] = z[1];
-      });
-      return R.bauen(werte).then(function (blob) {
-        var name = "Abrechnung_" + nummer.replace(/[^\w-]+/g, "_") + "_" + (f.verein || f.name || "Verein").replace(/[^\w]+/g, "") + ".pdf";
+      return R.bauen(rechnungWerte(stamm, f, betraege, nummer)).then(function (blob) {
+        var name = rechnungDateiname(nummer, f.verein || f.name);
         pdfHerunterladen(blob, name);
         // Ab hier ist die Rechnung fertig - was jetzt schiefgeht, darf sie
         // nicht mehr in Frage stellen.
@@ -2984,31 +3362,11 @@ window.Mitglieder = (function () {
     var f = rg.felder;
     if (!f) { meldung("Diese Rechnung stammt aus einer alten Fassung, bitte neu ausfüllen.", "warn"); return; }
     var stamm = rechnungDaten();
-    var b = { pauschale: Number(f.pauschale) || 0, zuschlag: Number(f.zuschlag) || 0, klein: !!f.klein };
-    b.ust = b.klein ? 0 : (b.pauschale + b.zuschlag) * 0.19;
-    b.gesamt = b.pauschale + b.zuschlag + b.ust;
+    var b = rechnungSummeAus(f.pauschale, f.zuschlag, f.klein);
     kurzMeldung("Rechnung " + rg.nummer + " wird gebaut …", "");
     ladeRechnung().then(function (R) {
-      var werte = {
-        "undefined": rg.nummer,
-        "Rechnungssteller Schiedsrichter": stamm.name + (stamm.sr_nummer ? " (" + stamm.sr_nummer + ")" : ""),
-        "Straße und Nr": stamm.strasse, "PLZ und Ort 1": stamm.plz_ort, "PLZ und Ort 2": stamm.verein,
-        "Steuernummer": stamm.steuernummer,
-        "Rechnungsempfänger Verein": f.name, "Straße und Nr_2": f.strasse, "PLZ und Ort": f.plz_ort,
-        "4": f.datum, "Spielort": f.ort, "Dropdown3": f.klasse,
-        "€": { text: euroZahl(b.pauschale), ausrichtung: "rechts" },
-        "€_4": { text: euroZahl(b.gesamt), ausrichtung: "rechts" }
-      };
-      if (b.zuschlag) werte["€_2"] = { text: euroZahl(b.zuschlag), ausrichtung: "rechts" };
-      if (b.klein) werte._kreuz = "Kleinunternehmer nach  19 UStG";
-      else werte["€_3"] = { text: euroZahl(b.ust), ausrichtung: "rechts" };
-      var reihen = [["1", "undefined_2"], ["2", "undefined_3"], ["3", "undefined_4"]];
-      (f.zeilen || []).slice(0, 3).forEach(function (z, i) {
-        if (z[0]) werte[reihen[i][0]] = z[0];
-        if (z[1]) werte[reihen[i][1]] = z[1];
-      });
-      return R.bauen(werte).then(function (blob) {
-        pdfHerunterladen(blob, "Abrechnung_" + String(rg.nummer).replace(/[^\w-]+/g, "_") + ".pdf");
+      return R.bauen(rechnungWerte(stamm, f, b, rg.nummer)).then(function (blob) {
+        pdfHerunterladen(blob, rechnungDateiname(rg.nummer, f.verein || f.name));
         kurzMeldung("Rechnung " + rg.nummer + " noch einmal geladen ✓", "gut");
       });
     }).catch(function (e) { meldung("Ging nicht: " + (e && e.message ? e.message : e), "warn"); });
@@ -3618,6 +3976,7 @@ window.Mitglieder = (function () {
     var leiste = h("div", { class: "mg-leiste" });
     panelInhalt.kalender = function () { return abrechnungKalender(spiele); };
     panelInhalt.rechnung = rechnungPanel;
+    panelInhalt.lauf = rechnungLaufPanel;
     // Sieben Knoepfe nebeneinander hat niemand gelesen: vorne steht, was
     // staendig gebraucht wird, der Rest liegt unter "Weitere".
     // "Rechnung schreiben" steht hier seit Fassung 165 wieder: in Fassung
@@ -3631,7 +3990,11 @@ window.Mitglieder = (function () {
     // Fassung 153 fuehrte nur noch die Auswahlleiste hin, und die
     // erscheint erst, wenn man ein Spiel lange antippt. Wer das nicht
     // weiss, fand die Rechnung nicht mehr.
-    if (designNeu()) WEITERE.unshift(["rechnung", "Rechnung schreiben"]);
+    // Der Lauf steht neben der einzelnen Rechnung: wer eine schreiben
+    // will, findet dort auch den Weg, alle zu schreiben. Im alten Design
+    // steht "Rechnung" in der Knopfreihe, der Lauf nur hier.
+    if (designNeu()) WEITERE.unshift(["rechnung", "Rechnung schreiben"], ["lauf", "Rechnungslauf"]);
+    else WEITERE.unshift(["lauf", "Rechnungslauf"]);
     if (!einfach()) WEITERE.unshift(["detail", "Steuerjahre"]);
     panelInhalt.weiteres = function () {
       return h("div", { class: "mg-form" }, [
