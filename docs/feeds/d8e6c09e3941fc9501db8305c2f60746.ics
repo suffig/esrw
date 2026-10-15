@@ -100,16 +100,16 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:f0db891015434f6f787c043d19822038ffc948d6@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
+SEQUENCE:1
+DTSTAMP:20261015T111529Z
+LAST-MODIFIED:20261015T111529Z
 DTSTART:20261018T134500Z
 DTEND:20261018T171500Z
 SUMMARY:SR · U20 LL: Herner EV – ESV Grizzlys Bergkamen
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:45 Uhr\nTreffpunkt:
   15:45 Uhr (60 Min vor Spielbeginn)\nLiga: U20 LL\nHalle: Gysenberghalle H
- erne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Warnke\, Christoph
- \n\nQuelle: https://www.esrw.de/einteilungen.html
+ erne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Rieneck\, Maximili
+ an\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
