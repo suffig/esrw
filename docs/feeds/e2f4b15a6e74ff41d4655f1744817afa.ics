@@ -82,12 +82,10 @@ LAST-MODIFIED:20261006T110047Z
 DTSTART:20261016T143000Z
 DTEND:20261016T180000Z
 SUMMARY:SR · U13 LL: EC Bergisch Land – Eisadler Dortmund
-DESCRIPTION:!! Danach EC Bergisch Land – ESV Grizzlys Bergkamen 1b in Eis
- sporthalle am Seilersee – nur 165 Min bis zum nächsten Anstoß !!\n\nRo
- lle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt: 16:30 Uhr (6
- 0 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Solingen\nAdres
- se: Brühler Straße 20\, 42657 Solingen\nGespann: Solbach\, Carsten\n\nQu
- elle: https://www.esrw.de/einteilungen.html
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
+  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle So
+ lingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Solbach\, 
+ Carsten\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -104,27 +102,26 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: EC Bergisch Land
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:dcee3829d781197988b0954954e9d2168cc54bd7@esrw.de
+UID:2bdc91b6e8abea32a3ea674a4baf762fe35ed7c4@esrw.de
 SEQUENCE:0
-DTSTAMP:20261015T163043Z
-LAST-MODIFIED:20261015T163043Z
+DTSTAMP:20261015T164526Z
+LAST-MODIFIED:20261015T164526Z
 DTSTART:20261016T171500Z
 DTEND:20261016T204500Z
 SUMMARY:SR · Senioren LL: EC Bergisch Land – ESV Grizzlys Bergkamen 1b
-DESCRIPTION:!! Davor EC Bergisch Land – Eisadler Dortmund in Eissporthall
- e Solingen – nur 165 Min nach dem vorigen Anstoß !!\n\nRolle: Schiedsri
- chter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt: 19:15 Uhr (60 Min vor Spie
- lbeginn)\nLiga: Senioren LL\nHalle: Eissporthalle am Seilersee\nAdresse: S
- eeuferstraße 25\, 58636 Iserlohn\nGespann: Solbach\, Carsten\nVergütung 
- lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/einteilungen.html
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
+  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissporthal
+ le Solingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Solba
+ ch\, Carsten\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.
+ de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
-GEO:51.384598;7.713829
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
- , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
- alle am Seilersee":geo:51.384598,7.713829
+LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
+GEO:51.165932;7.086769
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
+ ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
+ le Solingen":geo:51.165932,7.086769
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H

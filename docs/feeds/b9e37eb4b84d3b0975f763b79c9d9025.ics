@@ -101,16 +101,16 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:cef3ba63ff1c20366c3a7a953005dd230b085318@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
+SEQUENCE:1
+DTSTAMP:20261015T164526Z
+LAST-MODIFIED:20261015T164526Z
 DTSTART:20261018T060000Z
 DTEND:20261018T093000Z
 SUMMARY:SR · U15 RLA: Iserlohner EC – Kölner Junghaie
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
   08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eissporthalle a
- m Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Pernt\,
-  Hendrik\n\nQuelle: https://www.esrw.de/einteilungen.html
+ m Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Bergman
+ n\, Tobias\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -128,16 +128,16 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:49aa41c336d2d9acebfd863f1163bf1a4a571f23@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
+SEQUENCE:1
+DTSTAMP:20261015T164526Z
+LAST-MODIFIED:20261015T164526Z
 DTSTART:20261018T090000Z
 DTEND:20261018T123000Z
 SUMMARY:SR · U17 I: Iserlohner EC – ESC Dresden
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
   11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eissporthalle am 
- Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Pernt\, H
- endrik\n\nQuelle: https://www.esrw.de/einteilungen.html
+ Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: van Himbe
+ eck\, Frederic\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
