@@ -1739,7 +1739,7 @@
     p.spiele.forEach(function (s) { var k = new Date(s.beginn).toDateString(); (jeTag[k] = jeTag[k] || []).push(s); });
     for (var i = 0; i < 7; i++) {
       (function (i) {
-        var d = new Date(heute.getTime() + i * 86400000), key = d.toDateString(), liste = jeTag[key] || [];
+        var d = tagePlus(heute, i), key = d.toDateString(), liste = jeTag[key] || [];
         var b = document.createElement("button"); b.type = "button"; b.className = i === 0 ? "heute" : "";
         var wt = document.createElement("span"); wt.textContent = wochentag[d.getDay()];
         var nr = document.createElement("b"); nr.textContent = d.getDate();
@@ -2299,19 +2299,19 @@
     var ziel = el("plan-wochenansicht"); ziel.innerHTML = ""; ziel.classList.remove("versteckt");
     var heute = new Date(); heute.setHours(0, 0, 0, 0);
     if (!planWocheStart) { var mo = new Date(heute); mo.setDate(heute.getDate() - ((heute.getDay() + 6) % 7)); planWocheStart = mo; }
-    var start = planWocheStart, ende = new Date(start.getTime() + 7 * 86400000);
+    var start = planWocheStart, ende = tagePlus(start, 7);
     var spiele = planGefiltert(true).filter(function (s) { var d = new Date(s.beginn); return d >= start && d < ende; });
     var kopf = document.createElement("div"); kopf.className = "wochenansicht-kopf";
     var z = document.createElement("button"); z.type = "button"; z.className = "rund"; z.textContent = "‹"; z.setAttribute("aria-label", "Vorwoche");
-    var t = document.createElement("b"); t.textContent = "KW " + kalenderwoche(start) + " · " + start.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }) + " bis " + new Date(ende.getTime() - 86400000).toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" });
+    var t = document.createElement("b"); t.textContent = "KW " + kalenderwoche(start) + " · " + start.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }) + " bis " + tagePlus(ende, -1).toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" });
     var v = document.createElement("button"); v.type = "button"; v.className = "rund"; v.textContent = "›"; v.setAttribute("aria-label", "Nächste Woche");
-    z.addEventListener("click", function () { planWocheStart = new Date(start.getTime() - 7 * 86400000); zeigeWochenansicht(); });
-    v.addEventListener("click", function () { planWocheStart = new Date(start.getTime() + 7 * 86400000); zeigeWochenansicht(); });
+    z.addEventListener("click", function () { planWocheStart = tagePlus(start, -7); zeigeWochenansicht(); });
+    v.addEventListener("click", function () { planWocheStart = tagePlus(start, 7); zeigeWochenansicht(); });
     kopf.appendChild(z); kopf.appendChild(t); kopf.appendChild(v); ziel.appendChild(kopf);
     var raster = document.createElement("div"); raster.className = "wochenansicht";
     for (var i = 0; i < 7; i++) {
       (function (i) {
-        var d = new Date(start.getTime() + i * 86400000), key = d.toDateString();
+        var d = tagePlus(start, i), key = d.toDateString();
         var liste = spiele.filter(function (s) { return new Date(s.beginn).toDateString() === key; });
         var box = document.createElement("div"); box.className = "karte wtag" + (key === heute.toDateString() ? " heute" : "");
         var tk = document.createElement("div"); tk.className = "tagkopf";
@@ -2326,6 +2326,21 @@
     ziel.appendChild(raster);
     el("plan-zaehler").textContent = spiele.length + (spiele.length === 1 ? " Spiel" : " Spiele");
   }
+  // Einen Tag weiter heisst nicht "plus 24 Stunden". In der Nacht der
+  // Zeitumstellung hat der Tag 23 oder 25 Stunden; mit Millisekunden
+  // gerechnet kam dann derselbe Tag zweimal und einer fiel ganz aus.
+  // Nachgerechnet fuer den 25.10.2026: ein Tagesstreifen ab Samstag
+  // zeigte "Sa, So, So, Mo, Di, Mi, Do" - Freitag fehlte, und alles nach
+  // der Umstellung sass auf 23:00 des Vortags. "Naechste Woche" landete
+  // auf Sonntag 23:00 statt Montag 00:00.
+  // setDate() rechnet im Kalender, nicht in Millisekunden, und behaelt
+  // die Uhrzeit - in beide Richtungen, auch im Maerz.
+  function tagePlus(d, n) {
+    var x = new Date(d.getTime());
+    x.setDate(x.getDate() + n);
+    return x;
+  }
+
   function kalenderwoche(d) {
     var t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())); var tag = t.getUTCDay() || 7;
     t.setUTCDate(t.getUTCDate() + 4 - tag); var jahr = new Date(Date.UTC(t.getUTCFullYear(), 0, 1));
@@ -2388,14 +2403,14 @@
     if (schnellWahl === "wochenende") {
       // Freitag bis Sonntag der laufenden Woche; ab Montag das kommende
       var tag = heute.getDay(), bisFreitag = (5 - tag + 7) % 7;
-      var fr = new Date(heute.getTime() + (tag >= 5 || tag === 0 ? (tag === 0 ? -2 : 5 - tag) : bisFreitag) * 86400000);
-      wochenende = [fr, new Date(fr.getTime() + 3 * 86400000)];
+      var fr = tagePlus(heute, tag >= 5 || tag === 0 ? (tag === 0 ? -2 : 5 - tag) : bisFreitag);
+      wochenende = [fr, tagePlus(fr, 3)];
     }
     return (daten.spiele || []).filter(function (s) {
       if (s.vergangen && !mitVergangenen) return false;
       var d = new Date(s.beginn);
       if (schnellWahl === "wochenende" && (d < wochenende[0] || d >= wochenende[1])) return false;
-      if (schnellWahl === "woche" && (d < heute || d >= new Date(heute.getTime() + 7 * 86400000))) return false;
+      if (schnellWahl === "woche" && (d < heute || d >= tagePlus(heute, 7))) return false;
       if (schnellWahl === "abends" && d.getHours() < 18) return false;
       if (schnellWahl === "frueh" && d.getHours() >= 13) return false;
       if (nurMeine && hallen.indexOf(s.halle) < 0) return false;
@@ -2417,7 +2432,7 @@
     (daten.spiele || []).forEach(function (sp) { var k = new Date(sp.beginn).toDateString(); (jeTag[k] = jeTag[k] || []).push(sp); });
     for (var i = 0; i < 14; i++) {
       (function (i) {
-        var d = new Date(heute.getTime() + i * 86400000), key = d.toDateString(), liste = jeTag[key] || [];
+        var d = tagePlus(heute, i), key = d.toDateString(), liste = jeTag[key] || [];
         var b = document.createElement("button"); b.type = "button"; b.className = i === 0 ? "heute" : "";
         var wt = document.createElement("span"); wt.textContent = wochentag[d.getDay()];
         var nr = document.createElement("b"); nr.textContent = d.getDate();
@@ -2728,7 +2743,7 @@
     saisonziel(p, ziel);
     var zahlen = document.createElement("div"); zahlen.className = "zahlen";
     var heute = new Date(); heute.setHours(0, 0, 0, 0);
-    var inSieben = p.spiele.filter(function (x) { var d = new Date(x.beginn); return d >= heute && d < new Date(heute.getTime() + 7 * 86400000); }).length;
+    var inSieben = p.spiele.filter(function (x) { var d = new Date(x.beginn); return d >= heute && d < tagePlus(heute, 7); }).length;
     var hsrK = (s.rollen && s.rollen.HSR) || 0, lsrK = (s.rollen && s.rollen.LSR) || 0;
     [["in 7 Tagen", inSieben, "aus deinem Plan"],
      ["Saison " + (daten.saison || ""), s.saison, "aus dem Archiv"],
@@ -3183,7 +3198,7 @@
     if (!profil || !profil.slug || !daten) return "";
     var p = personMit(profil.slug);
     if (!p) return "";
-    var jetzt = new Date(), bis = new Date(jetzt.getTime() + 7 * 86400000);
+    var jetzt = new Date(), bis = tagePlus(jetzt, 7);
     var liste = (p.spiele || []).filter(function (s) {
       var d = new Date(s.beginn);
       return !s.vergangen && d >= jetzt && d <= bis && !istGeloescht(s);
@@ -6335,7 +6350,7 @@
       var dx = ev.changedTouches[0].clientX - x0, dy = ev.changedTouches[0].clientY - y0; x0 = y0 = null;
       if (Math.abs(dx) < 70 || Math.abs(dy) > 50) return;
       var modus = planModus();
-      if (modus === "woche" && planWocheStart) { planWocheStart = new Date(planWocheStart.getTime() + (dx < 0 ? 7 : -7) * 86400000); zeigeWochenansicht(); }
+      if (modus === "woche" && planWocheStart) { planWocheStart = tagePlus(planWocheStart, dx < 0 ? 7 : -7); zeigeWochenansicht(); }
       else if (modus === "monat" && planMonatStart) { planMonatStart = new Date(planMonatStart.getFullYear(), planMonatStart.getMonth() + (dx < 0 ? 1 : -1), 1); planTag = null; zeigeMonat(); }
     }, { passive: true });
   })();
@@ -6403,7 +6418,7 @@
     if (reiter) { var k = el(reiter); if (k && getComputedStyle(k).display !== "none") { ev.preventDefault(); k.click(); } return; }
     if ((ev.key === "ArrowLeft" || ev.key === "ArrowRight") && !el("plan").classList.contains("versteckt")) {
       var vor = ev.key === "ArrowRight", modus = planModus();
-      if (modus === "woche" && planWocheStart) { ev.preventDefault(); planWocheStart = new Date(planWocheStart.getTime() + (vor ? 7 : -7) * 86400000); zeigeWochenansicht(); }
+      if (modus === "woche" && planWocheStart) { ev.preventDefault(); planWocheStart = tagePlus(planWocheStart, vor ? 7 : -7); zeigeWochenansicht(); }
       else if (modus === "monat" && planMonatStart) { ev.preventDefault(); planMonatStart = new Date(planMonatStart.getFullYear(), planMonatStart.getMonth() + (vor ? 1 : -1), 1); planTag = null; zeigeMonat(); }
     }
   });

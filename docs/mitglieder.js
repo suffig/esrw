@@ -122,6 +122,17 @@ window.Mitglieder = (function () {
     return "vor " + Math.round(t / 30) + " Monaten";
   }
   function datumLang(d) { return WT[d.getDay()] + ". " + d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" }); }
+  // Siehe tagePlus() in app.js: ueber die Zeitumstellung hinweg sind
+  // 24 Stunden nicht ein Tag. Hier haengt eine Datenfrage daran - der
+  // gesperrte Zeitraum in der Verfuegbarkeit entsteht Tag fuer Tag, und
+  // mit Millisekunden gerechnet waere ein Tag doppelt und einer gar nicht
+  // gesperrt gewesen.
+  function tagePlus(d, n) {
+    var x = new Date(d.getTime());
+    x.setDate(x.getDate() + n);
+    return x;
+  }
+
   function isoTag(d) {
     return d.getFullYear() + "-" + ("0" + (d.getMonth() + 1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2);
   }
@@ -4476,7 +4487,7 @@ window.Mitglieder = (function () {
       // Naechste 4 Wochenenden als Schnellzeile; der Rest im Mini-Kalender
       var tage = [], d = new Date(); d.setHours(12, 0, 0, 0);
       for (var i = 0; i < 28; i++) {
-        var t = new Date(d.getTime() + i * 86400000);
+        var t = tagePlus(d, i);
         if (t.getDay() === 0 || t.getDay() === 6) tage.push(isoTag(t));
       }
       Object.keys(meine).forEach(function (k) { if (tage.indexOf(k) < 0) tage.push(k); });
@@ -4498,7 +4509,7 @@ window.Mitglieder = (function () {
           var a = new Date(von.value + "T12:00:00"), b = new Date((bis.value || von.value) + "T12:00:00");
           if (b < a) { meldung("„bis“ liegt vor „von“.", "warn"); return; }
           var tage = [];
-          for (var t = new Date(a); t <= b && tage.length < 120; t = new Date(t.getTime() + 86400000)) tage.push(isoTag(t));
+          for (var t = new Date(a); t <= b && tage.length < 120; t = tagePlus(t, 1)) tage.push(isoTag(t));
           var kette = Promise.resolve();
           tage.forEach(function (tag) { kette = kette.then(function () { return sperreSetzen(tag, art.value, true); }); });
           kette.then(function () { kurzMeldung(tage.length + (tage.length === 1 ? " Tag" : " Tage") + " eingetragen ✓", "gut"); zeigeVerfuegbarkeit(); });
