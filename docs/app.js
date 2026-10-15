@@ -434,7 +434,11 @@
   //                   noch einmal nachsehen, wie es vorher aussah.
   function designGlobal() {
     var f = funktionenLesen();
-    return f.design !== undefined ? !!f.design : false;
+    // Seit Fassung 178 ist das neue Design die Voreinstellung: wer nichts
+    // eingestellt hat, bekommt es. Ein ausdrueckliches "aus" in der
+    // Tabelle gilt weiterhin - der Schalter unter "Betreiber" bleibt der
+    // Weg zurueck, und er muss staerker sein als diese Vorgabe.
+    return f.design !== undefined ? !!f.design : true;
   }
   function designNeu() {
     var eigen = lesen("design");
@@ -3275,7 +3279,7 @@
         var ld = document.createElement("label"); var td = document.createElement("span");
         var bd = document.createElement("b"); bd.textContent = "Neues Design für alle"; bd.style.display = "block";
         var sd = document.createElement("small");
-        sd.textContent = "Gilt für alle Mitglieder, sobald die App bei ihnen neu lädt. Jederzeit zurückzunehmen.";
+        sd.textContent = "Ist an, solange du es nicht abschaltest. Gilt für alle Mitglieder, sobald die App bei ihnen neu lädt.";
         sd.style.color = "var(--dim)"; sd.style.fontWeight = "500";
         td.appendChild(bd); td.appendChild(sd);
         var cd = document.createElement("input"); cd.type = "checkbox"; cd.checked = designGlobal();

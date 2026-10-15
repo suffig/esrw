@@ -2438,3 +2438,21 @@ alter table public.einsaetze add column if not exists herkunft jsonb;
 -- alles beim bisherigen Design.
 insert into public.funktionen (schluessel, aktiv) values ('design', false)
   on conflict (schluessel) do nothing;
+
+
+-- ======================================================================
+-- v50: Das neue Design ist die Voreinstellung
+-- ======================================================================
+-- v49 hat die Zeile mit aktiv = false angelegt, weil das Design damals
+-- noch im Aufbau war. Es ist fertig und gemessen: keine Tippflaeche
+-- unter 30 Pixeln, kein Knopf ohne Namen fuer die Sprachausgabe, kein
+-- waagerechter Ueberlauf auf zehn Ansichten bei 375 px.
+--
+-- Die App behandelt eine fehlende Zeile seit Fassung 178 als "an". Wer
+-- diesen Abschnitt nie eingespielt hat, braucht also nichts zu tun.
+-- Wer v49 eingespielt hat, hat eine Zeile mit false - die zieht dieser
+-- Abschnitt nach. Danach bleibt der Schalter unter Betreiber der Weg
+-- zurueck; ein spaeteres Abschalten ueberschreibt das hier nicht, weil
+-- der Abschnitt nur einmal von Hand laeuft.
+insert into public.funktionen (schluessel, aktiv) values ('design', true)
+  on conflict (schluessel) do update set aktiv = true, geaendert = now();
