@@ -3178,13 +3178,30 @@
       var zu = document.createElement("button"); zu.type = "button"; zu.className = "textknopf"; zu.textContent = "Später"; zu.addEventListener("click", function () { schreiben("einrichtung-weg", String(Date.now())); einstellungenSync(); box.className = "versteckt"; }); kz.appendChild(zu);
       box.appendChild(kz);
       var fort = document.createElement("div"); fort.className = "fortschritt"; var fi = document.createElement("i"); fi.style.width = Math.round((punkte.length - offen.length) / punkte.length * 100) + "%"; fort.appendChild(fi); box.appendChild(fort);
-      offen.forEach(function (x) {
-        var a = document.createElement("a"); a.className = "punkt"; a.href = x.href;
+      offen.forEach(function (x, i) {
+        // Nur der erste steht offen da, der Rest wartet hinter dem Knopf
+        // darunter - siehe den Kommentar dort.
+        var a = document.createElement("a"); a.className = "punkt" + (i ? " spaeter" : ""); a.href = x.href;
         if (x.tu) a.addEventListener("click", function (ev) { ev.preventDefault(); x.tu(); });
         var t = document.createElement("span"); var b = document.createElement("b"); b.textContent = x.titel; var sm = document.createElement("small"); sm.textContent = x.text; t.appendChild(b); t.appendChild(sm); a.appendChild(t);
         var pf = document.createElement("span"); pf.className = "meta"; pf.textContent = "›"; a.appendChild(pf);
         box.appendChild(a);
       });
+      // Mit vier offenen Punkten war die Karte 390 von 812 Pixeln hoch -
+      // die halbe Startseite, bevor das erste Spiel kam. Und das ist kein
+      // kurzer Zustand: "Wohnort teilen" ist freiwillig, bleibt also
+      // womoeglich dauerhaft offen.
+      // Ein Schritt nach dem anderen ist ausserdem die freundlichere
+      // Ansage als eine Liste von vier Pflichten. Weggenommen wird
+      // nichts: ein Tipp, und alles steht wieder da.
+      if (offen.length > 1) {
+        var mehr = document.createElement("button");
+        mehr.type = "button"; mehr.className = "textknopf einrichtung-mehr";
+        mehr.textContent = "noch " + (offen.length - 1)
+          + (offen.length === 2 ? " weiterer Schritt" : " weitere Schritte");
+        mehr.addEventListener("click", function () { box.classList.add("alle"); mehr.remove(); });
+        box.appendChild(mehr);
+      }
     }
   }
 

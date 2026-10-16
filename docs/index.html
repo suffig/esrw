@@ -2780,6 +2780,25 @@
      blitzen die Buchstaben am Rand des Fotos durch. */
   .avatar.mit-bild { font-size:0; }
 
+  /* ===== Runde 40: die Einrichtung zeigt einen Schritt =============== */
+
+  /* Gemessen bei 375 px: vier offene Punkte ergaben 390 von 812 Pixeln.
+     Jetzt steht der naechste Schritt da, der Rest hinter einem Knopf.
+     Die Punkte bleiben im Dokument - sie werden nur nicht gezeigt, damit
+     ein Tipp sie ohne Neuaufbau hervorholt. */
+  .einrichtung a.punkt.spaeter { display:none; }
+  .einrichtung.alle a.punkt.spaeter { display:flex; }
+  /* Als blosser .textknopf stand die Zeile in var(--akzent) - im dunklen
+     Thema ist der fast weiss, sie sah also aus wie ein weiterer Eintrag
+     und nicht wie etwas, das man antippt (gemessen: beide weiss und 700,
+     16 gegen 15,2 px). Sie bekommt deshalb die Form der Eintraege
+     darueber - Trennlinie und Pfeil -, aber gedaempft: es ist der
+     zweitrangige Weg, nicht der naechste Schritt. */
+  .einrichtung-mehr { display:flex; align-items:center; justify-content:space-between;
+    width:100%; margin:0; padding:8px 0; border-top:1px solid var(--linie);
+    color:var(--dim); font-weight:700; }
+  .einrichtung-mehr::after { content:"\203a"; color:var(--dim); font-weight:800; }
+
 </style>
 </head>
 <body>
@@ -3242,6 +3261,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=185"></script>
+<script src="app.js?v=186"></script>
 </body>
 </html>
