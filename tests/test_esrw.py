@@ -1125,6 +1125,77 @@ def test_kennungen():
            "mit Registratur greift sie wieder")
 
 
+def test_archivkennung():
+    """Die Saisonlisten in archiv.json tragen die Kennung.
+
+    Ohne sie faellt der Mitgliederbereich auf "beginn|paarung" zurueck -
+    bei einem verlegten Spiel also auf die alte Zeit. Dann steht dasselbe
+    Spiel in der Abrechnung zweimal, und weder das Zusammenfuehren in der
+    Datenbank noch der Doppelt-Finder kommen dagegen an: beide kennen
+    diese Datei nicht. Genau so ist das U17-Spiel mit 08:30 und 09:30
+    dreimal zurueckgekommen.
+    """
+    print("\nKennung in archiv.json")
+    E = esrw_ical_modul()
+    from datetime import datetime as _dt, timedelta as _td, timezone as _tz
+    STAND = _dt(2026, 10, 21, 12, 0, tzinfo=_tz.utc)
+
+    B = "U17 I: ESC Dresden - Eisloewen U17"
+    PAARUNG = "ESC Dresden - Eisloewen U17"
+    alt = "2026-10-20T08:30:00+02:00"
+    neu = "2026-10-20T09:30:00+02:00"
+    app_alt = alt + "|" + PAARUNG
+    app_neu = neu + "|" + PAARUNG
+
+    def eintrag(beginn):
+        return {"beginn": beginn, "begegnung": B, "paarung": PAARUNG,
+                "liga": "U17 I", "halle": "Arena",
+                "besetzung": {"(L)SR": ["Melchert, Philip"]}}
+
+    def listen(historie, reg):
+        stats, _ = E.statistik_aus_historie(historie, STAND, reg)
+        schluessel = E.personen_schluessel("Melchert, Philip")
+        return stats[schluessel]["spiele_saison"]
+
+    # Ohne Registratur bleibt es bei beginn|paarung - aber das Feld muss da sein.
+    zeilen = listen({E.spiel_id(neu, B): eintrag(neu)}, None)
+    pruefe(len(zeilen) == 1 and zeilen[0].get("id") == app_neu,
+           "jede Zeile traegt eine Kennung",
+           "ist %r" % (zeilen[0].get("id") if zeilen else None))
+
+    # Mit Registratur gilt die festgehaltene Kennung, auch wenn der
+    # Eintrag auf einer anderen Zeit steht - das ist der verlegte Fall.
+    reg = {"bekannt": {E.spiel_id(neu, B): app_alt}, "neu": [], "merkmal": {},
+           "fortsetzung": {}, "zusammen": {}}
+    zeilen = listen({E.spiel_id(neu, B): eintrag(neu)}, reg)
+    pruefe(zeilen[0].get("id") == app_alt,
+           "die Registratur schlaegt beginn|paarung",
+           "ist %r" % zeilen[0].get("id"))
+
+    # Und was der Betreiber zusammengelegt hat, zaehlt: beide Eintraege
+    # muessen dieselbe Kennung bekommen, sonst steht das Spiel zweimal da.
+    reg = {"bekannt": {E.spiel_id(alt, B): app_alt, E.spiel_id(neu, B): app_neu},
+           "neu": [], "merkmal": {}, "fortsetzung": {},
+           "zusammen": {app_alt: app_neu}}
+    zeilen = listen({E.spiel_id(alt, B): eintrag(alt),
+                     E.spiel_id(neu, B): eintrag(neu)}, reg)
+    kennungen = {z["id"] for z in zeilen}
+    pruefe(len(zeilen) == 2 and kennungen == {app_neu},
+           "zusammengefuehrte Eintraege bekommen dieselbe Kennung",
+           "sind %r" % sorted(kennungen))
+
+    # Eingefrorene Saisons tragen ihre Paarung auf der Platte; die
+    # Registratur kennt sie nicht mehr, spiel_zusammen muss trotzdem gelten.
+    alt_eintrag = eintrag(alt)
+    alt_eintrag["eingefroren"] = True
+    reg = {"bekannt": {}, "neu": [], "merkmal": {}, "fortsetzung": {},
+           "zusammen": {app_alt: app_neu}}
+    zeilen = listen({"egal": alt_eintrag}, reg)
+    pruefe(zeilen[0].get("id") == app_neu,
+           "auch eine eingefrorene Saison folgt dem Zusammenfuehren",
+           "ist %r" % zeilen[0].get("id"))
+
+
 def test_verlegt():
     """Ein verlegtes Spiel ist geaendert, nicht entfallen und neu.
 
@@ -1266,6 +1337,7 @@ def main():
                  test_rechnungsvorlage, test_sicherung, test_erinnerungszeit, test_zurueckspielen, test_obmann_rechte,
                  test_kalenderwuensche, test_vereinsnamen, test_seitenumbau,
                  test_funktionstexte, test_dunkles_thema, test_kennungen, test_verlegt,
+                 test_archivkennung,
                  test_tresor):
         test()
     print("\n" + "-" * 58)

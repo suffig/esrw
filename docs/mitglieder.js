@@ -1723,6 +1723,29 @@ window.Mitglieder = (function () {
     lokalSchreiben("mg_offen", {});
   }
 
+  // Was der Betreiber zusammengelegt hat (spiel_zusammen, Schema v55).
+  // archiv.json und die eingefrorenen Saison-Dateien tragen die alte
+  // Zeit; ohne diese Abbildung stuende das Spiel in der Abrechnung
+  // weiter zweimal, obwohl es in der Datenbank laengst eines ist.
+  var zusammen = null;
+  function zusammenLaden() {
+    if (zusammen || !sb || !session) return Promise.resolve(zusammen || {});
+    return sb.from("spiel_zusammen").select("alt,neu")
+      .then(function (r) {
+        var m = {};
+        ((r && r.data) || []).forEach(function (z) { if (z.alt && z.neu) m[z.alt] = z.neu; });
+        zusammen = m; return m;
+      }).catch(function () { zusammen = {}; return zusammen; });
+  }
+  // Ketten zieht die Datenbank schon beim Eintragen gerade (v55), hier
+  // reicht ein Schritt - die Schleifengrenze ist trotzdem drin, damit
+  // eine von Hand verbogene Tabelle die App nicht haengen laesst.
+  function echteKennung(k) {
+    var m = zusammen, n = 0;
+    while (m && m[k] && n < 10) { k = m[k]; n++; }
+    return k;
+  }
+
   var dbArchiv = null;
   function ladeArchiv() {
     var web = archivDaten ? Promise.resolve(archivDaten)
@@ -1732,7 +1755,7 @@ window.Mitglieder = (function () {
     var db = dbArchiv || !profil || !profil.slug ? Promise.resolve(dbArchiv || []) :
       sb.from("spiele_archiv").select("kennung,beginn,liga,paarung,halle,system,besetzung,saison").contains("slugs", [profil.slug])
         .then(function (r) { dbArchiv = r.data || []; return dbArchiv; }).catch(function () { dbArchiv = []; return dbArchiv; });
-    return Promise.all([web, db]).then(function (r) { return r[0]; });
+    return Promise.all([web, db, zusammenLaden()]).then(function (r) { return r[0]; });
   }
   // Eingefrorene Saison-Dateien (docs/archiv/<saison>.json), je Saison einmal
   var saisonDateien = {};
@@ -1764,13 +1787,13 @@ window.Mitglieder = (function () {
     // 1) Datenbank-Archiv (alle Spiele aller Personen, vom Workflow gepflegt)
     (dbArchiv || []).forEach(function (s) {
       var ich = (s.besetzung || []).filter(function (b) { return b.slug === profil.slug; })[0];
-      karte[s.kennung] = { beginn: s.beginn, liga: s.liga, paarung: s.paarung, halle: s.halle, rolle: ich ? ich.rolle : "SR", system: s.system, saison: s.saison || saisonAus(s.beginn) };
+      karte[echteKennung(s.kennung)] = { beginn: s.beginn, liga: s.liga, paarung: s.paarung, halle: s.halle, rolle: ich ? ich.rolle : "SR", system: s.system, saison: s.saison || saisonAus(s.beginn) };
     });
     // 2) Archiv der Webseite (laufende Saison) und eingefrorene Saison-Dateien
     var archiv = ((archivDaten && archivDaten.personen && archivDaten.personen[profil.slug]) || []);
     Object.keys(saisonDateien).forEach(function (sn) { archiv = archiv.concat(saisonDateien[sn] || []); });
     archiv.forEach(function (s) {
-      karte[kennungVon(s)] = { beginn: s.beginn, liga: s.liga, paarung: s.paarung, halle: s.halle, rolle: s.rolle, system: s.system, saison: s.saison || ctx.daten.saison };
+      karte[echteKennung(kennungVon(s))] = { beginn: s.beginn, liga: s.liga, paarung: s.paarung, halle: s.halle, rolle: s.rolle, system: s.system, saison: s.saison || ctx.daten.saison };
     });
     // 3) Selbst eingetragene Spiele (nur fuer die Abrechnung)
     Object.keys(einsaetze).forEach(function (k) {
@@ -1778,9 +1801,9 @@ window.Mitglieder = (function () {
       karte[k] = { beginn: e.beginn, liga: e.liga, paarung: e.paarung, halle: e.halle, rolle: e.rolle, system: e.rolle === "SR" ? 2 : 3, saison: saisonAus(e.beginn), privat: true };
     });
     if (person) person.spiele.forEach(function (s) {
-      var alt = karte[kennungVon(s)];
-      karte[kennungVon(s)] = { beginn: s.beginn, liga: s.liga, paarung: s.paarung, halle: s.halle, rolle: s.rolle, system: s.system,
-                               saison: (alt && alt.saison) || ctx.daten.saison };
+      var k = echteKennung(kennungVon(s)), alt = karte[k];
+      karte[k] = { beginn: s.beginn, liga: s.liga, paarung: s.paarung, halle: s.halle, rolle: s.rolle, system: s.system,
+                   saison: (alt && alt.saison) || ctx.daten.saison };
     });
     // Hat der Betreiber das Gespann geaendert, zaehlt das auch hier -
     // Archiv und Datenbank wissen bis zum naechsten Lauf nichts davon.
@@ -6110,10 +6133,26 @@ window.Mitglieder = (function () {
       .catch(function () { return []; })
       .then(function (ausArchiv) {
         var karte = {};
-        ausArchiv.forEach(function (z) { if (z.kennung) karte[z.kennung] = z; });
+        ausArchiv.forEach(function (z) {
+          if (!z.kennung) return;
+          var k = echteKennung(z.kennung);
+          karte[k] = { kennung: k, beginn: z.beginn, liga: z.liga, paarung: z.paarung, halle: z.halle };
+        });
+        // archiv.json, ueber alle Personen. Diese Datei hat die
+        // Abrechnung doppelt gezeigt, waehrend der Finder nichts meldete
+        // - er kannte sie nicht.
+        var ausWeb = (archivDaten && archivDaten.personen) || {};
+        Object.keys(ausWeb).forEach(function (slug) {
+          (ausWeb[slug] || []).forEach(function (s) {
+            var k = echteKennung(s.id || (s.beginn + "|" + s.paarung));
+            if (karte[k]) return;
+            karte[k] = { kennung: k, beginn: s.beginn, liga: s.liga, paarung: s.paarung,
+                         halle: s.halle, ausDatei: true };
+          });
+        });
         // ctx.daten.spiele ist der ganze Spielplan, nicht nur der eigene.
         ((ctx && ctx.daten && ctx.daten.spiele) || []).forEach(function (s) {
-          var k = s.id || (s.beginn + "|" + s.paarung);
+          var k = echteKennung(s.id || (s.beginn + "|" + s.paarung));
           karte[k] = { kennung: k, beginn: s.beginn, liga: s.liga, paarung: s.paarung,
                        halle: s.halle, imPlan: true };
         });
@@ -6240,7 +6279,8 @@ window.Mitglieder = (function () {
           r.addEventListener("change", function () { if (r.checked) wahl = s.kennung; });
           var zusatz = [];
           if (s.halle) zusatz.push(s.halle);
-          zusatz.push(s.imPlan ? "steht im Spielplan" : "nur noch im Archiv");
+          zusatz.push(s.imPlan ? "steht im Spielplan"
+                      : s.ausDatei ? "nur in der Archivdatei" : "nur noch im Archiv");
           var anhang = h("small", { class: "meta", text: "…" });
           anhangLaden(s.kennung).then(function (a) {
             if (anhang.isConnected) anhang.textContent = anhangText(a);

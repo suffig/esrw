@@ -628,11 +628,21 @@ def ergaenze_ehemalige(personen, stats, bevorzugt=frozenset()):
     return len(dazu)
 
 
-def statistik_aus_historie(historie, stand):
-    """Zaehlt je Person die Einsaetze im gesamten Archiv."""
+def statistik_aus_historie(historie, stand, kennungen=None):
+    """Zaehlt je Person die Einsaetze im gesamten Archiv.
+
+    "kennungen" ist die Registratur. Ohne sie bekommen die Saisonlisten
+    keine Kennung, und der Mitgliederbereich baut sie sich aus Beginn und
+    Paarung zusammen - bei einem verlegten Spiel also aus der alten Zeit.
+    Dann steht dasselbe Spiel in der Abrechnung zweimal, und kein
+    Zusammenfuehren in der Datenbank hilft dagegen, weil diese Datei
+    davon nichts weiss. Genau das ist passiert.
+    """
     jetzt_saison = saison_von(stand)
     werte = {}
-    for eintrag in historie.values():
+    # .items(), nicht .values(): der Schluessel IST die Quelle, und ohne
+    # die laesst sich die gueltige Kennung nicht nachschlagen.
+    for quelle, eintrag in historie.items():
         try:
             beginn = datetime.fromisoformat(eintrag["beginn"])
         except (ValueError, KeyError):
@@ -675,6 +685,14 @@ def statistik_aus_historie(historie, stand):
                 "halle": eintrag.get("halle", ""),
                 "rolle": rolle,
                 "system": len(rollen_fuer(eintrag.get("besetzung") or {})),
+                # Wie in archiv_in_db: eingefrorene Saisons tragen ihre
+                # Paarung auf der Platte, alles andere geht ueber die
+                # Registratur - samt dem, was der Betreiber zusammengelegt
+                # hat.
+                "id": zusammen_fuer(kennungen, eintrag["beginn"] + "|" + eintrag.get("paarung", ""))
+                      if eintrag.get("eingefroren")
+                      else kennung_fuer(kennungen, eintrag["beginn"], eintrag.get("begegnung", ""),
+                                        eintrag["beginn"] + "|" + eintrag.get("paarung", "")),
             })
             s["rollen"][rolle] += 1
             if eintrag.get("liga"):
@@ -2064,7 +2082,7 @@ def main():
     rueck += historie_umbesetzen(historie_alle, korrekturen)
     if rueck:
         print("%d Archiveintrag/-eintraege mit dem Gespann vom Betreiber." % rueck)
-    stats, saison = statistik_aus_historie(historie_alle, stand)
+    stats, saison = statistik_aus_historie(historie_alle, stand, kennungen)
     nachgetragen = ergaenze_ehemalige(personen, stats, bevorzugt)
     if nachgetragen:
         print("%d Kollege(n) ohne aktuelles Spiel aus dem Archiv nachgetragen." % nachgetragen)
