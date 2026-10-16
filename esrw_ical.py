@@ -1082,7 +1082,19 @@ def kennungen_laden(cfg, historie):
     """
     # "merkmal" haelt zu jeder Quelle, woran das Spiel wiederzuerkennen
     # ist - daraus paart kennungen_paaren() Verlegungen.
-    reg = {"bekannt": {}, "neu": [], "merkmal": {}, "fortsetzung": {}}
+    reg = {"bekannt": {}, "neu": [], "merkmal": {}, "fortsetzung": {}, "zusammen": {}}
+    # Was der Betreiber zusammengefuehrt hat (Schema v55). Ohne das legt
+    # der naechste Lauf das Phantom wieder an, und sein Aufraeumen waere
+    # umsonst gewesen.
+    try:
+        for z in tabelle_laden(cfg, "spiel_zusammen?select=alt,neu"):
+            if z.get("alt") and z.get("neu"):
+                reg["zusammen"][z["alt"]] = z["neu"]
+        if reg["zusammen"]:
+            print("Zusammengefuehrt: %d Kennung(en) zeigen auf eine andere."
+                  % len(reg["zusammen"]))
+    except Exception as e:
+        print("  ! Zusammenfuehrungen nicht geladen (%s)." % str(e)[:80], file=sys.stderr)
     try:
         zeilen = tabelle_laden(cfg, "spiel_kennungen?select=quelle,kennung,begegnung,beginn")
     except Exception as e:
@@ -1219,6 +1231,18 @@ def kennungen_paaren(reg, spiele, venues, historie=None, stand=None,
     return fortsetzung
 
 
+def zusammen_fuer(reg, kennung):
+    """Die Kennung, auf die der Betreiber dieses Spiel gelegt hat.
+
+    Steht sie in spiel_zusammen, ist sie in Wahrheit eine andere - dann
+    gilt die andere. Ketten zieht die Funktion in v55 schon beim
+    Eintragen gerade, hier reicht ein Schritt.
+    """
+    if not reg:
+        return kennung
+    return (reg.get("zusammen") or {}).get(kennung, kennung)
+
+
 def quelle_fuer(reg, beginn_iso, begegnung):
     """Die Quelle eines Spiels, ueber eine Verlegung hinweg.
 
@@ -1244,11 +1268,11 @@ def kennung_fuer(reg, beginn_iso, begegnung, vorschlag):
         return vorschlag
     quelle = quelle_fuer(reg, beginn_iso, begegnung)
     if quelle in reg["bekannt"]:
-        return reg["bekannt"][quelle]
+        return zusammen_fuer(reg, reg["bekannt"][quelle])
     reg["bekannt"][quelle] = vorschlag
     reg["neu"].append({"quelle": quelle, "kennung": vorschlag,
                        "begegnung": begegnung, "beginn": beginn_iso})
-    return vorschlag
+    return zusammen_fuer(reg, vorschlag)
 
 
 def kennungen_schreiben(reg):
@@ -1278,7 +1302,8 @@ def archiv_in_db(historie, uebersicht, personen, stand, kennungen=None):
         # liess die alten als Waisen stehen - samt allem, was die Kollegen
         # daran haengen haben. Eingefrorene Saisons tragen ihre Paarung
         # auf der Platte und brauchen das nicht.
-        kennung = (e["beginn"] + "|" + e.get("paarung", "")) if e.get("eingefroren") \
+        kennung = zusammen_fuer(kennungen, e["beginn"] + "|" + e.get("paarung", "")) \
+            if e.get("eingefroren") \
             else kennung_fuer(kennungen, e["beginn"], e.get("begegnung", ""),
                               e["beginn"] + "|" + e.get("paarung", ""))
         zeilen[kennung] = {

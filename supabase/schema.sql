@@ -2614,3 +2614,122 @@ create policy "Betrieb pflegen" on public.betrieb_einstellungen for all to authe
 -- da. Gepflegt wird sie von dem, dem die Rechnung gehoert; die
 -- Zugriffsregel "eigene Rechnungen" (for all) deckt das schon ab.
 alter table public.rechnungen add column if not exists gezahlt_am date;
+
+
+-- ======================================================================
+-- v55: Doppelt angelegte Spiele zusammenfuehren
+-- ======================================================================
+-- Wird ein Spiel verlegt und die Pipeline erkennt es nicht als Verlegung,
+-- entsteht ein zweites Spiel. Dann steht dieselbe Begegnung am selben Tag
+-- zweimal da, mit verschiedenen Anstosszeiten - und die Kilometer, die
+-- Verguetung und die Notizen haengen an der falschen Zeit.
+--
+-- Bis hierher gab es keinen Weg zurueck: "geloescht" liess sich nur
+-- setzen, wenn jemand das Spiel vorher ueber die Spielseite als
+-- ausgefallen gemeldet hatte. Fuer ein Phantom im Archiv ging das nicht.
+--
+-- Zwei Teile:
+--
+--   spiel_zusammen           haelt fest, dass eine Kennung in Wahrheit
+--                            eine andere ist. Die Pipeline liest das und
+--                            bildet die Kennung von da an nur noch
+--                            einmal - damit faellt die Doppelung nicht
+--                            wieder an.
+--   spiele_zusammenfuehren() haengt um, was am falschen Spiel haengt.
+--
+-- Das Umhaengen braucht security definer: "einsaetze" und die uebrigen
+-- Tabellen lassen nur die eigenen Zeilen zu, der Betreiber kaeme an die
+-- Eintraege der Kollegen sonst nicht heran. Genau deshalb prueft die
+-- Funktion selbst, dass nur ein Admin sie aufrufen darf.
+create table if not exists public.spiel_zusammen (
+  alt        text primary key,          -- diese Kennung gibt es nicht mehr
+  neu        text not null,             -- sie ist in Wahrheit diese
+  von        text,
+  geaendert  timestamptz not null default now()
+);
+create index if not exists spiel_zusammen_neu on public.spiel_zusammen (neu);
+alter table public.spiel_zusammen enable row level security;
+drop policy if exists "Zusammen lesen"  on public.spiel_zusammen;
+drop policy if exists "Zusammen pflegen" on public.spiel_zusammen;
+create policy "Zusammen lesen" on public.spiel_zusammen for select to authenticated
+  using (public.ist_freigeschaltet());
+create policy "Zusammen pflegen" on public.spiel_zusammen for all to authenticated
+  using (public.ist_admin()) with check (public.ist_admin());
+
+-- Haengt alles um, was an der alten Kennung haengt, und haelt die
+-- Zuordnung fest. Die Reihenfolge ist ueberall dieselbe wie im Abschnitt
+-- v47: erst die Zeile wegnehmen, die am Ziel schon existiert (sonst
+-- verletzt das Umschreiben die Eindeutigkeit), dann umschreiben.
+create or replace function public.spiele_zusammenfuehren(p_alt text, p_neu text)
+returns jsonb language plpgsql security definer set search_path = public as $$
+declare
+  ergebnis jsonb := '{}'::jsonb;
+  n int;
+begin
+  if not public.ist_admin() then
+    raise exception 'Nur der Betreiber darf Spiele zusammenfuehren.';
+  end if;
+  if p_alt is null or p_neu is null or p_alt = p_neu then
+    raise exception 'Alte und neue Kennung muessen verschieden und gesetzt sein.';
+  end if;
+
+  -- Tabellen mit unique (user_id, kennung)
+  delete from public.einsaetze a where a.kennung = p_alt
+    and exists (select 1 from public.einsaetze b where b.user_id = a.user_id and b.kennung = p_neu);
+  update public.einsaetze set kennung = p_neu where kennung = p_alt;
+  get diagnostics n = row_count; ergebnis := ergebnis || jsonb_build_object('einsaetze', n);
+
+  delete from public.gesuche a where a.kennung = p_alt
+    and exists (select 1 from public.gesuche b where b.user_id = a.user_id and b.kennung = p_neu);
+  update public.gesuche set kennung = p_neu where kennung = p_alt;
+  get diagnostics n = row_count; ergebnis := ergebnis || jsonb_build_object('gesuche', n);
+
+  delete from public.mitfahrten a where a.kennung = p_alt
+    and exists (select 1 from public.mitfahrten b where b.user_id = a.user_id and b.kennung = p_neu);
+  update public.mitfahrten set kennung = p_neu where kennung = p_alt;
+  get diagnostics n = row_count; ergebnis := ergebnis || jsonb_build_object('mitfahrten', n);
+
+  delete from public.spielnotizen a where a.kennung = p_alt
+    and exists (select 1 from public.spielnotizen b where b.user_id = a.user_id and b.kennung = p_neu);
+  update public.spielnotizen set kennung = p_neu where kennung = p_alt;
+  get diagnostics n = row_count; ergebnis := ergebnis || jsonb_build_object('notizen', n);
+
+  delete from public.spiel_meldungen a where a.kennung = p_alt
+    and exists (select 1 from public.spiel_meldungen b where b.user_id = a.user_id and b.kennung = p_neu);
+  update public.spiel_meldungen set kennung = p_neu where kennung = p_alt;
+
+  -- Ohne Eindeutigkeit je Nutzer: alles umschreiben
+  update public.spielkommentare set kennung = p_neu where kennung = p_alt;
+  get diagnostics n = row_count; ergebnis := ergebnis || jsonb_build_object('kommentare', n);
+
+  -- Rechnungen fuehren die Kennungen als Feld
+  update public.rechnungen
+     set kennungen = array_replace(kennungen, p_alt, p_neu)
+   where kennungen @> array[p_alt];
+  get diagnostics n = row_count; ergebnis := ergebnis || jsonb_build_object('rechnungen', n);
+
+  -- Push-Merker tragen "praefix|kennung"
+  update public.push_gesendet set schluessel = replace(schluessel, p_alt, p_neu)
+   where schluessel like '%' || p_alt;
+
+  -- Korrektur des alten Spiels nur uebernehmen, wenn das neue keine hat
+  delete from public.spiel_korrekturen where kennung = p_alt
+    and exists (select 1 from public.spiel_korrekturen b where b.kennung = p_neu);
+  update public.spiel_korrekturen set kennung = p_neu where kennung = p_alt;
+
+  -- Die Archivzeile des Phantoms kann weg: der naechste Lauf schreibt die
+  -- des bleibenden Spiels ohnehin neu.
+  delete from public.spiele_archiv where kennung = p_alt;
+
+  insert into public.spiel_zusammen (alt, neu, von)
+       values (p_alt, p_neu, coalesce((select name from public.profile where id = auth.uid()), 'Betreiber'))
+  on conflict (alt) do update set neu = excluded.neu, geaendert = now();
+
+  -- Eine Kette alt -> mitte -> neu zu einem Schritt machen, damit die
+  -- Pipeline nicht mehrfach aufloesen muss.
+  update public.spiel_zusammen set neu = p_neu where neu = p_alt;
+
+  return ergebnis;
+end $$;
+revoke all on function public.spiele_zusammenfuehren(text, text) from public;
+grant execute on function public.spiele_zusammenfuehren(text, text) to authenticated;

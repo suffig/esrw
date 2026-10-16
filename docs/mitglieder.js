@@ -428,7 +428,40 @@ window.Mitglieder = (function () {
       },
       from: tabelle,
       storage: { from: ablage },
-      rpc: function (name) {
+      rpc: function (name, args) {
+        // Nachgebaut wie die Funktion in schema.sql (v55): umhaengen,
+        // was an der alten Kennung haengt, und die Zuordnung merken.
+        if (name === "spiele_zusammenfuehren") {
+          var a = (args || {}).p_alt, b = (args || {}).p_neu;
+          if (!a || !b || a === b) return Promise.resolve({ error: { message: "Kennungen muessen verschieden sein" } });
+          var erg = {}, PAARE = [["einsaetze", "einsaetze"], ["gesuche", "gesuche"],
+            ["mitfahrten", "mitfahrten"], ["spielnotizen", "notizen"],
+            ["spiel_meldungen", null], ["spielkommentare", "kommentare"]];
+          PAARE.forEach(function (p) {
+            var zeilen = lies(p[0], []), n = 0;
+            // erst die Zeile weg, die am Ziel schon existiert
+            zeilen = zeilen.filter(function (z) {
+              return !(z.kennung === a && zeilen.some(function (y) {
+                return y.kennung === b && y.user_id === z.user_id; }));
+            });
+            zeilen.forEach(function (z) { if (z.kennung === a) { z.kennung = b; n++; } });
+            schreib(p[0], zeilen);
+            if (p[1]) erg[p[1]] = n;
+          });
+          var rg = lies("rechnungen", []), nr = 0;
+          rg.forEach(function (z) {
+            if ((z.kennungen || []).indexOf(a) >= 0) {
+              z.kennungen = z.kennungen.map(function (k) { return k === a ? b : k; }); nr++;
+            }
+          });
+          schreib("rechnungen", rg); erg.rechnungen = nr;
+          schreib("spiele_archiv", lies("spiele_archiv", []).filter(function (z) { return z.kennung !== a; }));
+          var zu = lies("spiel_zusammen", []).filter(function (z) { return z.alt !== a; });
+          zu.forEach(function (z) { if (z.neu === a) z.neu = b; });
+          zu.push({ alt: a, neu: b, von: "Attrappe", geaendert: new Date().toISOString() });
+          schreib("spiel_zusammen", zu);
+          return Promise.resolve({ data: erg, error: null });
+        }
         if (name !== "konto_loeschen") return Promise.resolve({ error: { message: "unbekannt" } });
         var s = sitzung(); if (!s) return Promise.resolve({ error: { message: "nicht angemeldet" } });
         ["profile", "einsaetze", "gesuche", "angebote", "sperren", "push_abos", "hallen_notizen", "kontakte", "mitfahrten", "spielnotizen"].forEach(function (t) {
@@ -6028,6 +6061,162 @@ window.Mitglieder = (function () {
 
   // Adminseite: eine Leiste oben, darunter genau ein Bereich. Vorher standen
   // fuenf Karten untereinander - auf dem Handy eine endlose Rolle.
+  // ------------------------------------------------- Doppelte Spiele
+  // Ein verlegtes Spiel, das die Pipeline nicht als Verlegung erkannt
+  // hat, steht zweimal da: gleiche Begegnung, gleicher Tag,
+  // verschiedene Anstosszeiten. Kilometer, Verguetung und Notizen
+  // haengen dann an der falschen Zeit.
+  //
+  // Hier werden die Gruppen gefunden und zusammengefuehrt. Das Umhaengen
+  // macht die Datenbankfunktion aus Schema v55 - aus der App allein
+  // ginge es nicht, weil einsaetze und die uebrigen Tabellen nur die
+  // eigenen Zeilen zulassen und hier die Eintraege aller Kollegen
+  // betroffen sind.
+  var doppelteListe = null;
+
+  function doppelteSpieleLaden(nochmal) {
+    if (doppelteListe && !nochmal) return Promise.resolve(doppelteListe);
+    if (!sb || !session) return Promise.resolve([]);
+    return sb.from("spiele_archiv").select("kennung,beginn,liga,paarung,halle")
+      .order("beginn", { ascending: false }).limit(2000)
+      .then(function (r) { doppelteListe = (r && r.data) || []; return doppelteListe; })
+      .catch(function () { doppelteListe = []; return doppelteListe; });
+  }
+
+  // Gruppen: gleicher Tag, gleiche Liga, gleiche Paarung - aber mehr als
+  // eine Kennung und mehr als eine Uhrzeit. Gleiche Zeit zaehlt nicht
+  // mit; das waere dieselbe Ansetzung zweimal und kein Verlegungsfehler.
+  function doppelteGruppen(zeilen) {
+    var nach = {};
+    (zeilen || []).forEach(function (z) {
+      if (!z.beginn || !z.paarung) return;
+      var k = String(z.beginn).slice(0, 10) + "|" + (z.liga || "") + "|" + z.paarung;
+      (nach[k] = nach[k] || []).push(z);
+    });
+    var raus = [];
+    Object.keys(nach).forEach(function (k) {
+      var gesehen = {}, g = [];
+      nach[k].forEach(function (z) {
+        if (gesehen[z.kennung]) return;
+        gesehen[z.kennung] = 1; g.push(z);
+      });
+      if (g.length < 2) return;
+      var zeiten = {};
+      g.forEach(function (z) { zeiten[String(z.beginn).slice(11, 16)] = 1; });
+      if (Object.keys(zeiten).length < 2) return;
+      g.sort(function (a, b) { return a.beginn < b.beginn ? -1 : 1; });
+      raus.push({ tag: String(g[0].beginn).slice(0, 10), liga: g[0].liga || "",
+                  paarung: g[0].paarung, spiele: g });
+    });
+    raus.sort(function (a, b) { return a.tag < b.tag ? 1 : -1; });
+    return raus;
+  }
+
+  // Steht die Kennung noch im aktuellen Spielplan, ist das die lebende
+  // Ansetzung - und damit der Vorschlag, welches bleibt.
+  function lebendeKennungen() {
+    var m = {};
+    ((ctx && ctx.daten && ctx.daten.spiele) || []).forEach(function (s) {
+      if (s.id) m[s.id] = 1;
+    });
+    return m;
+  }
+
+  function zusammenfuehren(bleibt, weg) {
+    // Nacheinander, damit ein Fehler nicht die halbe Gruppe halb
+    // zusammengefuehrt zuruecklaesst und die Meldung am Ende die Summe
+    // nennen kann.
+    var summe = {};
+    return weg.reduce(function (kette, alt) {
+      return kette.then(function () {
+        return sb.rpc("spiele_zusammenfuehren", { p_alt: alt, p_neu: bleibt })
+          .then(function (r) {
+            if (r && r.error) throw r.error;
+            var d = (r && r.data) || {};
+            Object.keys(d).forEach(function (k) { summe[k] = (summe[k] || 0) + (d[k] || 0); });
+          });
+      });
+    }, Promise.resolve()).then(function () { return summe; });
+  }
+
+  function doppelteRendern(box) {
+    function neu() { leeren(box); doppelteRendern(box); }
+    leeren(box);
+    box.appendChild(h("h4", {}, [ikone("i-cal"), " Doppelte Spiele"]));
+    box.appendChild(h("p", { class: "meta", style: "margin:0 0 8px", text:
+      "Dieselbe Begegnung am selben Tag mit verschiedenen Anstoßzeiten. Meist eine Verlegung, "
+      + "die als zweites Spiel angelegt wurde – dann hängen Kilometer und Vergütung an der "
+      + "falschen Zeit. Es kann auch eine echte Doppelansetzung sein; das entscheidest du." }));
+
+    var innen = h("div", {}, [skelett(1)]);
+    box.appendChild(innen);
+    doppelteSpieleLaden(true).then(function (zeilen) {
+      if (!innen.isConnected) return;
+      var gruppen = doppelteGruppen(zeilen);
+      var lebt = lebendeKennungen();
+      leeren(innen);
+      if (!gruppen.length) {
+        innen.appendChild(h("p", { class: "meta gut-text", text:
+          "Keine Doppelungen gefunden – jede Begegnung steht an ihrem Tag nur einmal." }));
+        return;
+      }
+      innen.appendChild(h("p", { class: "meta", style: "margin:0 0 8px",
+        text: gruppen.length + (gruppen.length === 1 ? " Fall gefunden." : " Fälle gefunden.") }));
+
+      gruppen.forEach(function (g, gi) {
+        var karte = h("div", { class: "karte doppelt-gruppe" });
+        karte.appendChild(h("b", { text: datumLang(new Date(g.tag + "T12:00:00"))
+          + " · " + (g.liga ? g.liga + ": " : "") + g.paarung }));
+        // Vorschlag: das, was noch auf esrw.de steht.
+        var vorschlag = g.spiele.filter(function (s) { return lebt[s.kennung]; })[0]
+          || g.spiele[g.spiele.length - 1];
+        var wahl = vorschlag.kennung;
+        g.spiele.forEach(function (s) {
+          var r = h("input", { type: "radio", name: "doppelt-" + gi });
+          r.checked = s.kennung === wahl;
+          r.addEventListener("change", function () { if (r.checked) wahl = s.kennung; });
+          var zusatz = [];
+          if (s.halle) zusatz.push(s.halle);
+          zusatz.push(lebt[s.kennung] ? "steht auf esrw.de" : "nur noch im Archiv");
+          karte.appendChild(h("label", { class: "doppelt-zeile" + (lebt[s.kennung] ? " lebt" : "") }, [
+            r, h("span", {}, [h("b", { text: String(s.beginn).slice(11, 16) + " Uhr" }),
+                              h("small", { text: zusatz.join(" · ") })])]));
+        });
+
+        var knopf = h("button", { type: "button", class: "anfrage",
+          text: "Auf das gewählte zusammenführen" });
+        knopf.addEventListener("click", function () {
+          var weg = g.spiele.map(function (s) { return s.kennung; })
+            .filter(function (k) { return k !== wahl; });
+          if (!weg.length) return;
+          var zeit = (g.spiele.filter(function (s) { return s.kennung === wahl; })[0] || {}).beginn;
+          if (!confirm("Die übrigen " + weg.length + (weg.length === 1 ? " Ansetzung" : " Ansetzungen")
+                       + " auf " + String(zeit).slice(11, 16) + " Uhr zusammenführen?\n\n"
+                       + "Kilometer, Vergütung, Notizen und Rechnungsbezüge aller Kollegen werden "
+                       + "mitgenommen. Zurücknehmen geht nur von Hand in der Datenbank.")) return;
+          knopf.disabled = true; knopf.textContent = "führt zusammen …";
+          zusammenfuehren(wahl, weg).then(function (summe) {
+            var teile = Object.keys(summe).filter(function (k) { return summe[k]; })
+              .map(function (k) { return summe[k] + " " + k; });
+            kurzMeldung("Zusammengeführt ✓" + (teile.length ? " (" + teile.join(", ") + " umgehängt)" : ""), "gut");
+            doppelteListe = null;
+            neu();
+          }, function (e) {
+            knopf.disabled = false; knopf.textContent = "Auf das gewählte zusammenführen";
+            meldung(fehlerText(e) + (/spiele_zusammenfuehren|does not exist/.test((e && e.message) || "")
+              ? " – schema.sql (v55) ausführen." : ""), "warn");
+          });
+        });
+        karte.appendChild(h("div", { class: "zweit" }, [knopf]));
+        innen.appendChild(karte);
+      });
+
+      innen.appendChild(h("p", { class: "meta mg-fuss", style: "margin-top:10px", text:
+        "Was zusammengeführt wurde, hält die App fest – der stündliche Lauf legt das Spiel "
+        + "dann nicht wieder doppelt an." }));
+    });
+  }
+
   // --------------------------------------------- Betriebseinstellungen
   // Drei Zahlen aus config.json. Abweichungen liegen in der Tabelle
   // betrieb_einstellungen; die Pipeline nimmt nur diese drei Schluessel
@@ -6324,6 +6513,9 @@ window.Mitglieder = (function () {
        "Spiele nachtragen, die auf esrw.de fehlen, und gemeldete Ausfälle"],
       ["korrekturen", "Korrekturen", "i-note", korrekturenRendern, "korrekturen",
        "Halle, Anstoß, Treffpunkt, Hinweis, Absage, Gespann"],
+      // Haengt Eintraege aller Kollegen um - kein delegierbares Recht.
+      ["doppelt", "Doppelte Spiele", "i-cal", doppelteRendern, null,
+       "Dieselbe Begegnung zweimal am selben Tag zusammenführen"],
       // Zwei Bereiche hiessen "Hallen & Vereine" und "Vereine". Welcher
       // welcher ist, kann sich niemand merken - der zweite musste im Text
       // auf den ersten verweisen. Jetzt sagt der Name, was drin ist: der
@@ -6357,7 +6549,7 @@ window.Mitglieder = (function () {
   // Reihenfolge nach Haeufigkeit des Gebrauchs, nicht alphabetisch.
   var ADMIN_GRUPPEN = [
     ["Konten und Rechte", "i-users", ["freischaltung", "funktionen", "ansehen"]],
-    ["Spiele", "i-cal", ["spiel", "korrekturen"]],
+    ["Spiele", "i-cal", ["spiel", "korrekturen", "doppelt"]],
     ["Stammdaten", "i-pin", ["hallen", "adressen", "telefon", "zeiten", "staerken", "gebuehren"]],
     ["System", "i-shield", ["betrieb", "push", "speicher", "abo"]]
   ];
@@ -6574,6 +6766,20 @@ window.Mitglieder = (function () {
           ohneA ? "an die lässt sich keine Rechnung schreiben"
                 : "jeder Verein im Spielplan hat eine", "adressen");
       }
+
+      // Doppelt angelegte Spiele: eine Aufgabe, und eine mit Geld daran -
+      // die Kilometer haengen an der falschen Zeit.
+      if (istAdminAn()) doppelteSpieleLaden().then(function (zeilen) {
+        if (!karte.isConnected) return;
+        var dg = doppelteGruppen(zeilen);
+        if (!dg.length) return;
+        liste.appendChild(h("button", { type: "button", class: "reihe-knopf lage-zeile offen",
+          onclick: function () { adminHinein("doppelt"); } }, [
+          h("span", { class: "lage-zahl", text: String(dg.length) }),
+          h("span", {}, [h("b", { text: "Doppelte Spiele" }),
+            h("small", { text: "dieselbe Begegnung zweimal an einem Tag" })]),
+          h("span", { class: "pfeil", text: "›" })]));
+      });
 
       // Auskunft, keine Aufgabe - eine hinterlegte Korrektur soll ja so
       // bleiben, bis der Betreiber sie zuruecknimmt.

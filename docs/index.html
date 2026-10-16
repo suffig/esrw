@@ -2810,6 +2810,17 @@
   .einrichtung.alle a.punkt.spaeter:nth-of-type(3) { animation-delay:.05s; }
   .einrichtung.alle a.punkt.spaeter:nth-of-type(4) { animation-delay:.1s; }
 
+  /* ===== Runde 42: doppelte Spiele zusammenfuehren =================== */
+
+  .doppelt-gruppe { margin-top:10px; }
+  .doppelt-gruppe > b { display:block; margin-bottom:6px; }
+  .doppelt-zeile { display:flex; align-items:center; gap:10px; padding:8px 0;
+                   border-top:1px solid var(--linie); }
+  .doppelt-zeile > span { min-width:0; flex:1; }
+  .doppelt-zeile small { display:block; color:var(--dim); }
+  /* Was noch auf esrw.de steht, ist der Vorschlag - das soll man sehen. */
+  .doppelt-zeile.lebt b { color:var(--gut); }
+
 </style>
 </head>
 <body>
@@ -3272,6 +3283,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=187"></script>
+<script src="app.js?v=188"></script>
 </body>
 </html>
