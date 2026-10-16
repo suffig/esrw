@@ -222,7 +222,8 @@
   // Spiele, die es nie gab: ausgefallen, standen aber weiter auf esrw.de.
   // Der Betreiber setzt die Marke, die Zeile in der Datenbank bleibt stehen -
   // in der App ist das Spiel weg, auch in Abrechnung und Archiv.
-  function istGeloescht(s) { var k = korrekturen[kennungVon(s)]; return !!(k && k.geloescht); }
+  function istAusgeblendet(kennung) { var k = korrekturen[kennung]; return !!(k && k.geloescht); }
+  function istGeloescht(s) { return istAusgeblendet(kennungVon(s)); }
   function korrekturenAnwenden() {
     if (!daten) return;
     daten.spiele = (daten.spiele || []).filter(function (s) { return !istGeloescht(s); });
@@ -3533,7 +3534,7 @@
   // Leeres Geruest statt null: der Mitgliederbereich soll auch dann seinen
   // Anmeldeschirm zeichnen koennen, wenn noch keine Daten geladen sind.
   var LEER = { personen: [], spiele: [], hallen: {}, adressen: {}, hallen_hinweise: {}, saison: "", titel: "Einteilungen" };
-  function mitgliederKontext() { return { gespannKorrektur: gespannKorrektur, gespannGehoert: gespannGehoert, daten: daten || LEER, slug: profil && profil.slug, personMit: personMit, hole: hole, ikone: ikone, funktion: funktion, funktionen: FUNKTIONEN, einstellungenSync: einstellungenSync, lesen: lesen, schreiben: schreiben, reiterInLeiste: reiterInLeiste }; }
+  function mitgliederKontext() { return { gespannKorrektur: gespannKorrektur, gespannGehoert: gespannGehoert, istAusgeblendet: istAusgeblendet, daten: daten || LEER, slug: profil && profil.slug, personMit: personMit, hole: hole, ikone: ikone, funktion: funktion, funktionen: FUNKTIONEN, einstellungenSync: einstellungenSync, lesen: lesen, schreiben: schreiben, reiterInLeiste: reiterInLeiste }; }
   function zeigeMitglieder(reiter) {
     aktuell = null; ansicht("mitglieder");
     ladeMitglieder().then(function (M) { M.oeffnen(el("mitglieder"), mitgliederKontext(), reiter); })
@@ -3793,6 +3794,9 @@
     }
     function archivKorrigieren() {
       Object.keys(karte).forEach(function (k) {
+        // Die Marke steht an der Kennung, nicht an der Archivzeile - das
+        // Archiv kommt aus Dateien, die davon nichts wissen.
+        if (istAusgeblendet(k)) { delete karte[k]; return; }
         var neu = gespannKorrektur(k);
         if (neu) { karte[k].besetzung = neu; karte[k].system = neu.length; }
         if (!alle && gespannGehoert(k, slug) === false) delete karte[k];
@@ -6704,6 +6708,10 @@
   }
   function startLaden() {
     document.documentElement.classList.remove("abgemeldet");
+    // Nicht erst nach daten.json: sonst gilt keine Korrektur, wenn die
+    // Datei einmal nicht kommt - und am wenigsten dort, wo es weh tut
+    // (Archiv und Abrechnung bauen ihre Liste aus eigenen Dateien).
+    korrekturenLaden(false);
     return Promise.all([hole("daten.json"), hole("stand.json").catch(function () { return null; })])
     .then(function (b) {
       startStufe(5);

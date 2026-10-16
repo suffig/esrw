@@ -462,6 +462,22 @@ window.Mitglieder = (function () {
           schreib("spiel_zusammen", zu);
           return Promise.resolve({ data: erg, error: null });
         }
+        if (name === "spiel_anhang") {
+          var kk = (args || {}).p_kennung;
+          function zaehl(t, pruef) {
+            return lies(t, []).filter(function (z) {
+              return z.kennung === kk && (!pruef || pruef(z)); }).length;
+          }
+          return Promise.resolve({ data: {
+            einsaetze: zaehl("einsaetze"),
+            bezahlt: zaehl("einsaetze", function (z) { return z.bezahlt != null; }),
+            mit_betrag: zaehl("einsaetze", function (z) { return z.verguetung != null; }),
+            notizen: zaehl("spielnotizen"), mitfahrten: zaehl("mitfahrten"),
+            gesuche: zaehl("gesuche"), kommentare: zaehl("spielkommentare"),
+            rechnungen: lies("rechnungen", []).filter(function (z) {
+              return (z.kennungen || []).indexOf(kk) >= 0; }).length
+          }, error: null });
+        }
         if (name !== "konto_loeschen") return Promise.resolve({ error: { message: "unbekannt" } });
         var s = sitzung(); if (!s) return Promise.resolve({ error: { message: "nicht angemeldet" } });
         ["profile", "einsaetze", "gesuche", "angebote", "sperren", "push_abos", "hallen_notizen", "kontakte", "mitfahrten", "spielnotizen"].forEach(function (t) {
@@ -1770,6 +1786,13 @@ window.Mitglieder = (function () {
     // Archiv und Datenbank wissen bis zum naechsten Lauf nichts davon.
     if (ctx.gespannGehoert) Object.keys(karte).forEach(function (k) {
       if (ctx.gespannGehoert(k, profil.slug) === false) delete karte[k];
+    });
+    // Ausgeblendete Spiele gehoeren auch hier weg. Die Punkte 1 und 2
+    // oben kommen aus spiele_archiv und archiv.json - dort steht das
+    // Spiel weiter, bis der Workflow laeuft, und bei eingefrorenen
+    // Saisons fuer immer.
+    if (ctx.istAusgeblendet) Object.keys(karte).forEach(function (k) {
+      if (ctx.istAusgeblendet(k)) delete karte[k];
     });
     return Object.keys(karte).map(function (k) { var s = karte[k]; s.kennung = k; return s; })
       .sort(function (a, b) { return a.beginn < b.beginn ? 1 : -1; });
@@ -6074,13 +6097,60 @@ window.Mitglieder = (function () {
   // betroffen sind.
   var doppelteListe = null;
 
+  // Archiv UND aktueller Spielplan. Der erste Entwurf las nur das
+  // Archiv - und fand deshalb nichts mehr, sobald dort eine Zeile
+  // zusammengefallen war, waehrend der Spielplan weiter zwei Spiele
+  // fuehrte. Die Abrechnung zeigt beides, also muss der Sucher es auch.
   function doppelteSpieleLaden(nochmal) {
     if (doppelteListe && !nochmal) return Promise.resolve(doppelteListe);
     if (!sb || !session) return Promise.resolve([]);
     return sb.from("spiele_archiv").select("kennung,beginn,liga,paarung,halle")
       .order("beginn", { ascending: false }).limit(2000)
-      .then(function (r) { doppelteListe = (r && r.data) || []; return doppelteListe; })
-      .catch(function () { doppelteListe = []; return doppelteListe; });
+      .then(function (r) { return (r && r.data) || []; })
+      .catch(function () { return []; })
+      .then(function (ausArchiv) {
+        var karte = {};
+        ausArchiv.forEach(function (z) { if (z.kennung) karte[z.kennung] = z; });
+        // ctx.daten.spiele ist der ganze Spielplan, nicht nur der eigene.
+        ((ctx && ctx.daten && ctx.daten.spiele) || []).forEach(function (s) {
+          var k = s.id || (s.beginn + "|" + s.paarung);
+          karte[k] = { kennung: k, beginn: s.beginn, liga: s.liga, paarung: s.paarung,
+                       halle: s.halle, imPlan: true };
+        });
+        doppelteListe = Object.keys(karte).filter(function (k) {
+          return !(ctx.istAusgeblendet && ctx.istAusgeblendet(k));
+        }).map(function (k) { return karte[k]; });
+        return doppelteListe;
+      });
+  }
+
+  // Was haengt an dieser Ansetzung? Zahlen ueber alle Kollegen; nur der
+  // Betreiber darf das sehen (Funktion mit security definer, v56).
+  function anhangLaden(kennung) {
+    return sb.rpc("spiel_anhang", { p_kennung: kennung })
+      .then(function (r) { return (r && !r.error && r.data) || null; })
+      .catch(function () { return null; });
+  }
+  function anhangText(a) {
+    if (!a) return "";
+    var t = [];
+    if (a.einsaetze) t.push(a.einsaetze + (a.einsaetze === 1 ? " Abrechnung" : " Abrechnungen")
+      + (a.bezahlt ? ", " + a.bezahlt + " abgehakt" : ""));
+    if (a.notizen) t.push(a.notizen + (a.notizen === 1 ? " Notiz" : " Notizen"));
+    if (a.mitfahrten) t.push(a.mitfahrten + " Mitfahrt" + (a.mitfahrten === 1 ? "" : "en"));
+    if (a.gesuche) t.push(a.gesuche + " Gesuch" + (a.gesuche === 1 ? "" : "e"));
+    if (a.kommentare) t.push(a.kommentare + " Kommentar" + (a.kommentare === 1 ? "" : "e"));
+    if (a.rechnungen) t.push(a.rechnungen + " Rechnung" + (a.rechnungen === 1 ? "" : "en"));
+    return t.length ? t.join(" · ") : "nichts eingetragen";
+  }
+
+  // Eine Ansetzung ganz ausblenden. Noetig, wenn esrw.de die falsche
+  // Zeit selbst weiterfuehrt - dann legt sie jeder Lauf wieder an, und
+  // Zusammenfuehren allein hilft nicht.
+  function ansetzungAusblenden(kennung) {
+    return speichern(sb.from("spiel_korrekturen").upsert({ kennung: kennung, geloescht: true,
+      von: (profil && (profil.name || profil.slug)) || "Betreiber",
+      geaendert: new Date().toISOString() }, { onConflict: "kennung" }));
   }
 
   // Gruppen: gleicher Tag, gleiche Liga, gleiche Paarung - aber mehr als
@@ -6112,16 +6182,6 @@ window.Mitglieder = (function () {
     return raus;
   }
 
-  // Steht die Kennung noch im aktuellen Spielplan, ist das die lebende
-  // Ansetzung - und damit der Vorschlag, welches bleibt.
-  function lebendeKennungen() {
-    var m = {};
-    ((ctx && ctx.daten && ctx.daten.spiele) || []).forEach(function (s) {
-      if (s.id) m[s.id] = 1;
-    });
-    return m;
-  }
-
   function zusammenfuehren(bleibt, weg) {
     // Nacheinander, damit ein Fehler nicht die halbe Gruppe halb
     // zusammengefuehrt zuruecklaesst und die Meldung am Ende die Summe
@@ -6147,13 +6207,16 @@ window.Mitglieder = (function () {
       "Dieselbe Begegnung am selben Tag mit verschiedenen Anstoßzeiten. Meist eine Verlegung, "
       + "die als zweites Spiel angelegt wurde – dann hängen Kilometer und Vergütung an der "
       + "falschen Zeit. Es kann auch eine echte Doppelansetzung sein; das entscheidest du." }));
+    box.appendChild(h("p", { class: "meta", style: "margin:0 0 8px", text:
+      "Zusammenführen nimmt mit, was dranhängt. Ausblenden nimmt die Ansetzung nur weg – "
+      + "das brauchst du, wenn esrw.de die falsche Zeit selbst weiterführt und jeder Lauf "
+      + "sie neu anlegt." }));
 
     var innen = h("div", {}, [skelett(1)]);
     box.appendChild(innen);
     doppelteSpieleLaden(true).then(function (zeilen) {
       if (!innen.isConnected) return;
       var gruppen = doppelteGruppen(zeilen);
-      var lebt = lebendeKennungen();
       leeren(innen);
       if (!gruppen.length) {
         innen.appendChild(h("p", { class: "meta gut-text", text:
@@ -6168,7 +6231,7 @@ window.Mitglieder = (function () {
         karte.appendChild(h("b", { text: datumLang(new Date(g.tag + "T12:00:00"))
           + " · " + (g.liga ? g.liga + ": " : "") + g.paarung }));
         // Vorschlag: das, was noch auf esrw.de steht.
-        var vorschlag = g.spiele.filter(function (s) { return lebt[s.kennung]; })[0]
+        var vorschlag = g.spiele.filter(function (s) { return s.imPlan; })[0]
           || g.spiele[g.spiele.length - 1];
         var wahl = vorschlag.kennung;
         g.spiele.forEach(function (s) {
@@ -6177,10 +6240,34 @@ window.Mitglieder = (function () {
           r.addEventListener("change", function () { if (r.checked) wahl = s.kennung; });
           var zusatz = [];
           if (s.halle) zusatz.push(s.halle);
-          zusatz.push(lebt[s.kennung] ? "steht auf esrw.de" : "nur noch im Archiv");
-          karte.appendChild(h("label", { class: "doppelt-zeile" + (lebt[s.kennung] ? " lebt" : "") }, [
+          zusatz.push(s.imPlan ? "steht im Spielplan" : "nur noch im Archiv");
+          var anhang = h("small", { class: "meta", text: "…" });
+          anhangLaden(s.kennung).then(function (a) {
+            if (anhang.isConnected) anhang.textContent = anhangText(a);
+          });
+          var ausblenden = h("button", { type: "button", class: "textknopf",
+            text: "ausblenden", title: "Diese Ansetzung ganz aus der App nehmen" });
+          ausblenden.addEventListener("click", function (ev) {
+            ev.preventDefault();
+            if (!confirm("Diese Ansetzung (" + String(s.beginn).slice(11, 16)
+                         + " Uhr) ganz ausblenden?\n\nSie verschwindet für alle aus App, "
+                         + "Abrechnung und Archiv. Was daran hängt, bleibt liegen – wenn du "
+                         + "das mitnehmen willst, führ stattdessen zusammen.")) return;
+            ausblenden.disabled = true;
+            ansetzungAusblenden(s.kennung).then(function (rr) {
+              if (rr && rr.error) {
+                ausblenden.disabled = false;
+                meldung(fehlerText(rr.error), "warn"); return;
+              }
+              kurzMeldung("Ausgeblendet ✓ Beim nächsten Laden ist es bei allen weg.", "gut");
+              document.dispatchEvent(new CustomEvent("mg-betreiber"));
+              doppelteListe = null; neu();
+            });
+          });
+          karte.appendChild(h("label", { class: "doppelt-zeile" + (s.imPlan ? " lebt" : "") }, [
             r, h("span", {}, [h("b", { text: String(s.beginn).slice(11, 16) + " Uhr" }),
-                              h("small", { text: zusatz.join(" · ") })])]));
+                              h("small", { text: zusatz.join(" · ") }), anhang]),
+            ausblenden]));
         });
 
         var knopf = h("button", { type: "button", class: "anfrage",

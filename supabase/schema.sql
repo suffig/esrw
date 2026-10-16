@@ -2733,3 +2733,130 @@ begin
 end $$;
 revoke all on function public.spiele_zusammenfuehren(text, text) from public;
 grant execute on function public.spiele_zusammenfuehren(text, text) to authenticated;
+
+
+-- ======================================================================
+-- v56: Zusammenfuehren verschmilzt, statt wegzuwerfen
+-- ======================================================================
+-- Der Abschnitt v55 hat bei jeder Tabelle mit unique (user_id, kennung)
+-- erst die Zeile am Ziel gesucht und die alte dann geloescht. Hat ein
+-- Kollege an BEIDEN Ansetzungen etwas eingetragen - der Normalfall, wenn
+-- er das Spiel vor und nach der Verlegung geoeffnet hat -, war der
+-- Eintrag am Phantom damit weg. Stand dort die bezahlt-Marke, der Betrag
+-- oder die Kilometer, sind sie verloren gegangen. Genau das ist
+-- passiert, und es ist der unangenehmste Fehler in dieser App: stiller
+-- Verlust an einer Stelle, an der Geld steht.
+--
+-- Richtig ist verschmelzen: was am Ziel leer ist, kommt von der alten
+-- Zeile; was dort schon steht, bleibt stehen. Erst danach faellt die
+-- alte Zeile weg. coalesce() macht genau das.
+--
+-- Dazu spiel_anhang(): zaehlt, was an einer Kennung haengt - damit die
+-- Oberflaeche vor dem Zusammenfuehren zeigen kann, worum es geht. Auch
+-- das braucht security definer, sonst saehe der Betreiber nur sein
+-- eigenes.
+create or replace function public.spiele_zusammenfuehren(p_alt text, p_neu text)
+returns jsonb language plpgsql security definer set search_path = public as $$
+declare
+  ergebnis jsonb := '{}'::jsonb;
+  n int;
+begin
+  if not public.ist_admin() then
+    raise exception 'Nur der Betreiber darf Spiele zusammenfuehren.';
+  end if;
+  if p_alt is null or p_neu is null or p_alt = p_neu then
+    raise exception 'Alte und neue Kennung muessen verschieden und gesetzt sein.';
+  end if;
+
+  -- Einsaetze: erst verschmelzen, dann die alte Zeile weg. Jedes Feld
+  -- einzeln - was am Ziel fehlt, kommt von der alten Zeile.
+  update public.einsaetze z set
+      km            = coalesce(z.km, a.km),
+      km_satz       = coalesce(z.km_satz, a.km_satz),
+      verguetung    = coalesce(z.verguetung, a.verguetung),
+      auslagen      = coalesce(z.auslagen, a.auslagen),
+      verpflegung   = coalesce(z.verpflegung, a.verpflegung),
+      bezahlt       = coalesce(z.bezahlt, a.bezahlt),
+      abgerechnet   = z.abgerechnet or a.abgerechnet,
+      ausgefallen   = z.ausgefallen or a.ausgefallen,
+      uebergreifend = z.uebergreifend or a.uebergreifend,
+      notiz         = coalesce(nullif(z.notiz, ''), a.notiz),
+      belege        = case when coalesce(array_length(z.belege, 1), 0) > 0
+                           then z.belege else a.belege end
+    from public.einsaetze a
+   where z.kennung = p_neu and a.kennung = p_alt and a.user_id = z.user_id;
+  delete from public.einsaetze a where a.kennung = p_alt
+    and exists (select 1 from public.einsaetze b where b.user_id = a.user_id and b.kennung = p_neu);
+  update public.einsaetze set kennung = p_neu where kennung = p_alt;
+  get diagnostics n = row_count; ergebnis := ergebnis || jsonb_build_object('einsaetze', n);
+
+  -- Notizen: zwei Texte gehen nicht ineinander - beide behalten.
+  update public.spielnotizen z set text = a.text || E'\n\n' || z.text
+    from public.spielnotizen a
+   where z.kennung = p_neu and a.kennung = p_alt and a.user_id = z.user_id
+     and a.text is not null and a.text <> '' and a.text <> z.text;
+  delete from public.spielnotizen a where a.kennung = p_alt
+    and exists (select 1 from public.spielnotizen b where b.user_id = a.user_id and b.kennung = p_neu);
+  update public.spielnotizen set kennung = p_neu where kennung = p_alt;
+  get diagnostics n = row_count; ergebnis := ergebnis || jsonb_build_object('notizen', n);
+
+  -- Hier gibt es nichts zu verschmelzen: ein Gesuch oder eine Mitfahrt
+  -- ist entweder da oder nicht.
+  delete from public.gesuche a where a.kennung = p_alt
+    and exists (select 1 from public.gesuche b where b.user_id = a.user_id and b.kennung = p_neu);
+  update public.gesuche set kennung = p_neu where kennung = p_alt;
+  get diagnostics n = row_count; ergebnis := ergebnis || jsonb_build_object('gesuche', n);
+
+  delete from public.mitfahrten a where a.kennung = p_alt
+    and exists (select 1 from public.mitfahrten b where b.user_id = a.user_id and b.kennung = p_neu);
+  update public.mitfahrten set kennung = p_neu where kennung = p_alt;
+  get diagnostics n = row_count; ergebnis := ergebnis || jsonb_build_object('mitfahrten', n);
+
+  delete from public.spiel_meldungen a where a.kennung = p_alt
+    and exists (select 1 from public.spiel_meldungen b where b.user_id = a.user_id and b.kennung = p_neu);
+  update public.spiel_meldungen set kennung = p_neu where kennung = p_alt;
+
+  -- Ohne Eindeutigkeit je Nutzer: alles umschreiben
+  update public.spielkommentare set kennung = p_neu where kennung = p_alt;
+  get diagnostics n = row_count; ergebnis := ergebnis || jsonb_build_object('kommentare', n);
+
+  update public.rechnungen
+     set kennungen = array_replace(kennungen, p_alt, p_neu)
+   where kennungen @> array[p_alt];
+  get diagnostics n = row_count; ergebnis := ergebnis || jsonb_build_object('rechnungen', n);
+
+  update public.push_gesendet set schluessel = replace(schluessel, p_alt, p_neu)
+   where schluessel like '%' || p_alt;
+
+  delete from public.spiel_korrekturen where kennung = p_alt
+    and exists (select 1 from public.spiel_korrekturen b where b.kennung = p_neu);
+  update public.spiel_korrekturen set kennung = p_neu where kennung = p_alt;
+
+  delete from public.spiele_archiv where kennung = p_alt;
+
+  insert into public.spiel_zusammen (alt, neu, von)
+       values (p_alt, p_neu, coalesce((select name from public.profile where id = auth.uid()), 'Betreiber'))
+  on conflict (alt) do update set neu = excluded.neu, geaendert = now();
+  update public.spiel_zusammen set neu = p_neu where neu = p_alt;
+
+  return ergebnis;
+end $$;
+revoke all on function public.spiele_zusammenfuehren(text, text) from public;
+grant execute on function public.spiele_zusammenfuehren(text, text) to authenticated;
+
+-- Was haengt an dieser Kennung? Zahlen, keine Inhalte - der Betreiber
+-- soll sehen, worum es geht, nicht was die Kollegen eingetragen haben.
+create or replace function public.spiel_anhang(p_kennung text)
+returns jsonb language sql stable security definer set search_path = public as $$
+  select jsonb_build_object(
+    'einsaetze',  (select count(*) from public.einsaetze       where kennung = p_kennung),
+    'bezahlt',    (select count(*) from public.einsaetze       where kennung = p_kennung and bezahlt is not null),
+    'mit_betrag', (select count(*) from public.einsaetze       where kennung = p_kennung and verguetung is not null),
+    'notizen',    (select count(*) from public.spielnotizen    where kennung = p_kennung),
+    'mitfahrten', (select count(*) from public.mitfahrten      where kennung = p_kennung),
+    'gesuche',    (select count(*) from public.gesuche         where kennung = p_kennung),
+    'kommentare', (select count(*) from public.spielkommentare where kennung = p_kennung),
+    'rechnungen', (select count(*) from public.rechnungen      where kennungen @> array[p_kennung]))
+$$;
+revoke all on function public.spiel_anhang(text) from public;
+grant execute on function public.spiel_anhang(text) to authenticated;
