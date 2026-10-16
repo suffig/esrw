@@ -62,4 +62,59 @@ DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · U15 LL: SpG Neusser EV
   / GSC Moers – EHC Die Bären Neuwied
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:d2f18acaa3045caf17b9e1ab212de2ac61d16c27@esrw.de
+SEQUENCE:0
+DTSTAMP:20261016T090052Z
+LAST-MODIFIED:20261016T090052Z
+DTSTART:20261024T150000Z
+DTEND:20261024T183000Z
+SUMMARY:SR · U13 LL: Neusser EV – Dinslakener Kobras
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
+  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Ne
+ uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Marks\, Marcel\
+ n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
+GEO:51.175806;6.680258
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
+ -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
+ uss":geo:51.175806,6.680258
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: Neusser EV – Din
+ slakener Kobras
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:8fcc1903d842ae721330728edf3ab8e396c995f7@esrw.de
+SEQUENCE:0
+DTSTAMP:20261016T090052Z
+LAST-MODIFIED:20261016T090052Z
+DTSTART:20261024T173000Z
+DTEND:20261024T210000Z
+SUMMARY:SR · U17 LL: SpG Neusser EV / GSC Moers – EHC Die Bären Neu
+ wied
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
+  19:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\nHalle: Eissporthalle Ne
+ uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Marks\, Marcel\
+ n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
+GEO:51.175806;6.680258
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
+ -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
+ uss":geo:51.175806,6.680258
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: SpG Neusser EV / G
+ SC Moers – EHC Die Bären Neuwied
+END:VALARM
+END:VEVENT
 END:VCALENDAR

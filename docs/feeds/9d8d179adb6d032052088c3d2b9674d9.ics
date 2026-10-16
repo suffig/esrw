@@ -35,4 +35,32 @@ DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: Neusser EV
  – ESV Grizzlys Bergkamen
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:47aab79b8875a1b70458eba2e92e14d79089e23e@esrw.de
+SEQUENCE:0
+DTSTAMP:20261016T090052Z
+LAST-MODIFIED:20261016T090052Z
+DTSTART:20261025T151500Z
+DTEND:20261025T184500Z
+SUMMARY:HSR · Senioren RLW: GSC Moers – TuS Wiehl
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 17:15 Uhr\nTreff
+ punkt: 16:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ porthalle Moers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Quint\
+ , Sascha (LSR) / Stockenschneider\, Lars (LSR)\nVergütung lt. Ordnung: 10
+ 0 €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
+GEO:51.43973;6.6198
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
+ rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
+ ":geo:51.43973,6.6198
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: GSC Moers 
+ – TuS Wiehl
+END:VALARM
+END:VEVENT
 END:VCALENDAR

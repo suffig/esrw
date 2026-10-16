@@ -78,4 +78,33 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: ESV Grizzlys
   Bergkamen 1c – EHC Essen Ruhr
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:bc3edf8d1f82dc4b223500ccb37f51e9d48c3e0c@esrw.de
+SEQUENCE:0
+DTSTAMP:20261016T090052Z
+LAST-MODIFIED:20261016T090052Z
+DTSTART:20261025T153000Z
+DTEND:20261025T190000Z
+SUMMARY:LSR · Senioren RLW: ESV Grizzlys Bergkamen – ESV Bergisch Gladba
+ ch
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
+  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
+ lle Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Naust\, 
+ Marc André (HSR) / Warnke\, Christoph (LSR)\nVergütung lt. Ordnung: 100 
+ €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: ESV Grizzly
+ s Bergkamen – ESV Bergisch Gladbach
+END:VALARM
+END:VEVENT
 END:VCALENDAR

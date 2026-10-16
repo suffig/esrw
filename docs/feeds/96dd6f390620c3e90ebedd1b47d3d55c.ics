@@ -62,4 +62,32 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA: Düsseldorfer EG
  – Kölner Junghaie
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:8fec7de2bb18ae4034c36dd1122850043d18eba9@esrw.de
+SEQUENCE:0
+DTSTAMP:20261016T090052Z
+LAST-MODIFIED:20261016T090052Z
+DTSTART:20261025T150000Z
+DTEND:20261025T183000Z
+SUMMARY:HSR · Senioren RLW: Ratinger Ice Aliens – Lauterbach Luchse
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 17:00 Uhr\nTreff
+ punkt: 16:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ porthalle Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Hof
+ er\, Carsten (LSR) / Solbach\, Carsten (LSR)\nVergütung lt. Ordnung: 100 
+ €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
+GEO:51.295808;6.834624
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
+  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
+ tingen":geo:51.295808,6.834624
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: Ratinger Ic
+ e Aliens – Lauterbach Luchse
+END:VALARM
+END:VEVENT
 END:VCALENDAR

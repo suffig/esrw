@@ -104,4 +104,62 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLA: Krefelder EV –
  Iserlohner EC
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:8e44fdabe03f2033355950f92826d8536ee42fb3@esrw.de
+SEQUENCE:0
+DTSTAMP:20261016T090052Z
+LAST-MODIFIED:20261016T090052Z
+DTSTART:20261024T070000Z
+DTEND:20261024T103000Z
+SUMMARY:SR · U15 RLB: EV Duisburg – Krefelder EV 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: PreZero Rheinla
+ ndhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann:
+  Kalischke\, Christian (N)\n\nQuelle: https://www.esrw.de/einteilungen.htm
+ l
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB: EV Duisburg – K
+ refelder EV 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:416413667ee3d591f5ee49e46fb74968f2865ddb@esrw.de
+SEQUENCE:0
+DTSTAMP:20261016T090052Z
+LAST-MODIFIED:20261016T090052Z
+DTSTART:20261026T173000Z
+DTEND:20261026T210000Z
+SUMMARY:SR · Frauen LL: DEC Düsseldorfer Devils – ESV Bergisch Gladbach
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen LL\nHalle: Eissporthalle
+  Düsseldorf-Benrath\nAdresse: Kappeler Str. 107\, 40597 Düsseldorf\nGesp
+ ann: Hartmann\, Marius\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://
+ www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Düsseldorf-Benrath\, Kappeler Str. 107\, 40597 Düs
+ seldorf
+GEO:51.168801;6.858999
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Düsseldorf-
+ Benrath, Kappeler Str. 107, 40597 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE=
+ "Eissporthalle Düsseldorf-Benrath":geo:51.168801,6.858999
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: DEC Düsseldorf
+ er Devils – ESV Bergisch Gladbach
+END:VALARM
+END:VEVENT
 END:VCALENDAR
