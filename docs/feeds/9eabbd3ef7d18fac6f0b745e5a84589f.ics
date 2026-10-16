@@ -98,6 +98,33 @@ DESCRIPTION:In einer Stunde an der Halle - SR · BZL FS: EHC Essen Ruhr –
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:193865441b7b406e1059129923d0b6df017aac1c@esrw.de
+SEQUENCE:0
+DTSTAMP:20261016T093904Z
+LAST-MODIFIED:20261016T093904Z
+DTSTART:20261017T103000Z
+DTEND:20261017T140000Z
+SUMMARY:SR · U17 I: Krefelder EV – Kölner Junghaie Yayla Krefeld
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
+  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Rheinlandhalle Kr
+ efeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Priebsch\, J
+ an Philipp\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
+GEO:51.339877;6.540168
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
+ stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
+ le Krefeld":geo:51.339877,6.540168
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Krefelder EV – K
+ ölner Junghaie Yayla Krefeld
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:bc4fd6dbf8599bccf55753fb30e6e433d0cb22f2@esrw.de
 SEQUENCE:0
 DTSTAMP:20261006T110047Z

@@ -31,16 +31,16 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
 END:VEVENT
 BEGIN:VEVENT
 UID:15e3c205055e4e0227fa9165bdde5a30bfe81069@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
+SEQUENCE:1
+DTSTAMP:20261016T093904Z
+LAST-MODIFIED:20261016T093904Z
 DTSTART:20261017T103000Z
 DTEND:20261017T140000Z
 SUMMARY:SR · U17 I: Krefelder EV – Kölner Junghaie Yayla Krefeld
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
   12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Rheinlandhalle Kr
- efeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Dietrich\, J
- onas\n\nQuelle: https://www.esrw.de/einteilungen.html
+ efeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Schlüter\, 
+ Thomas\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
