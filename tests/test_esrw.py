@@ -1125,6 +1125,103 @@ def test_kennungen():
            "mit Registratur greift sie wieder")
 
 
+def test_verlegt():
+    """Ein verlegtes Spiel ist geaendert, nicht entfallen und neu.
+
+    spiel_id() haengt am rohen Anstoss und am Begegnungstext. Rutscht ein
+    Spiel auf eine andere Zeit oder in eine andere Halle, kommt es als
+    neue Quelle an und die alte verschwindet - ohne Paarung galt es als
+    entfallen plus neu. Im Kalender verschwand der Termin und ein anderer
+    kam, in "Aenderungen" stand es zweimal, und die Abrechnung verlor
+    ihren Eintrag.
+    """
+    print("\nVerlegte Spiele")
+    E = esrw_ical_modul()
+    venues = json.load(open(os.path.join(os.path.dirname(HIER), "venues.json"), encoding="utf-8"))
+    from datetime import datetime as _dt, timedelta as _td, timezone as _tz
+    MEZ = _tz(_td(hours=2))
+
+    B = "U15 RLA: Iserlohner EC - Krefelder EV"
+    alt_zeit = _dt(2026, 11, 4, 18, 30, tzinfo=MEZ)
+
+    def reg_mit(*eintraege):
+        """Registratur mit bekannten Spielen (Quelle -> Kennung, Merkmal)."""
+        r = {"bekannt": {}, "neu": [], "merkmal": {}, "fortsetzung": {}}
+        for beginn, begegnung in eintraege:
+            q = E.spiel_id(beginn.isoformat(), begegnung)
+            r["bekannt"][q] = beginn.isoformat() + "|app"
+            r["merkmal"][q] = {"begegnung": begegnung, "beginn": beginn.isoformat()}
+        return r
+
+    def spiel(beginn, begegnung=B):
+        return {"start": beginn, "begegnung": begegnung,
+                "besetzung": {"HSR": [], "(L)SR": ["Alt, Anton"]}}
+
+    alt_quelle = E.spiel_id(alt_zeit.isoformat(), B)
+
+    # --- andere Uhrzeit --------------------------------------------------
+    neu_zeit = alt_zeit.replace(hour=19, minute=0)
+    r = reg_mit((alt_zeit, B))
+    f = E.kennungen_paaren(r, [spiel(neu_zeit)], venues)
+    pruefe(len(f) == 1, "andere Uhrzeit: als Fortsetzung erkannt", str(f))
+    pruefe(E.quelle_fuer(r, neu_zeit.isoformat(), B) == alt_quelle,
+           "und behaelt die Kennung von vorher")
+    pruefe(E.kennung_fuer(r, neu_zeit.isoformat(), B, "neuer-vorschlag")
+           == alt_zeit.isoformat() + "|app",
+           "also auch die App-Kennung - Abrechnung und Notizen bleiben dran")
+
+    # --- anderer Tag -----------------------------------------------------
+    r = reg_mit((alt_zeit, B))
+    f = E.kennungen_paaren(r, [spiel(alt_zeit + _td(days=2))], venues)
+    pruefe(len(f) == 1, "anderer Tag: als Fortsetzung erkannt", str(f))
+
+    # --- andere Halle: der Ort steht im Begegnungstext -------------------
+    r = reg_mit((alt_zeit, B))
+    f = E.kennungen_paaren(r, [spiel(alt_zeit, B + " in Essen !!!")], venues)
+    pruefe(len(f) == 1, "andere Halle: als Fortsetzung erkannt", str(f))
+
+    # --- das alte Spiel steht noch auf der Seite -------------------------
+    # Dann ist das neue ein zweites Spiel, keine Verlegung.
+    r = reg_mit((alt_zeit, B))
+    f = E.kennungen_paaren(r, [spiel(alt_zeit), spiel(neu_zeit)], venues)
+    pruefe(not f, "altes Spiel noch da: nicht gepaart", str(f))
+
+    # --- nicht eindeutig: zwei Verschwundene, einer kommt zurueck --------
+    # Doppelansetzung wie am 03.10.2026. Welches der beiden es ist, laesst
+    # sich nicht entscheiden - dann lieber neu als falsch zugeordnet.
+    zweit = alt_zeit.replace(hour=11)
+    r = reg_mit((alt_zeit, B), (zweit, B))
+    f = E.kennungen_paaren(r, [spiel(neu_zeit)], venues)
+    pruefe(not f, "zwei Kandidaten: nicht geraten", str(f))
+
+    # --- zu weit weg: Rueckrunde, nicht Verlegung ------------------------
+    r = reg_mit((alt_zeit, B))
+    f = E.kennungen_paaren(r, [spiel(alt_zeit + _td(days=90))], venues)
+    pruefe(not f, "drei Monate spaeter: nicht gepaart", str(f))
+
+    # --- andere Paarung: einfach ein neues Spiel -------------------------
+    r = reg_mit((alt_zeit, B))
+    f = E.kennungen_paaren(r, [spiel(neu_zeit, "U15 RLA: Herner EV - EV Duisburg")], venues)
+    pruefe(not f, "andere Paarung: nicht gepaart", str(f))
+
+    # --- der Aenderungstext nennt den alten Termin ----------------------
+    # Frueher verglich beschreibe_aenderung() nur die Uhrzeit; ein Spiel,
+    # das den Tag wechselt und zur selben Zeit anfaengt, hiess damit nur
+    # "Angaben angepasst".
+    vorher = {"titel": "SR · Iserlohner EC – Krefelder EV",
+              "ort": "Eissporthalle am Seilersee, Seilersee 1",
+              "treffpunkt": alt_zeit.isoformat()}
+    jetzt = {"titel": "SR · Iserlohner EC – Krefelder EV",
+             "ort": "Eissporthalle am Seilersee, Seilersee 1",
+             "treffpunkt": alt_zeit + _td(days=2), "rolle": "SR"}
+    text = E.beschreibe_aenderung(vorher, jetzt)
+    pruefe("Termin" in text and "angepasst" not in text,
+           "anderer Tag steht im Aenderungstext", text)
+    jetzt2 = dict(jetzt, treffpunkt=alt_zeit.replace(hour=19))
+    text2 = E.beschreibe_aenderung(vorher, jetzt2)
+    pruefe("18:30" in text2, "andere Uhrzeit steht im Aenderungstext", text2)
+
+
 def main():
     print("Regressionstest esrw_ical")
     for test in (test_parsen, test_hallen, test_namen, test_rollen, test_aliase,
@@ -1134,7 +1231,7 @@ def main():
                  test_besetzung_korrektur, test_csp,
                  test_rechnungsvorlage, test_sicherung, test_erinnerungszeit, test_zurueckspielen, test_obmann_rechte,
                  test_kalenderwuensche, test_vereinsnamen, test_seitenumbau,
-                 test_funktionstexte, test_dunkles_thema, test_kennungen,
+                 test_funktionstexte, test_dunkles_thema, test_kennungen, test_verlegt,
                  test_tresor):
         test()
     print("\n" + "-" * 58)

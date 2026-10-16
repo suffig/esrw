@@ -458,7 +458,7 @@ def paarung_aus(heim, gast):
     return "%s – %s" % (heim, gast) if gast else heim
 
 
-def ergaenze_historie(historie, spiele, venues, stand):
+def ergaenze_historie(historie, spiele, venues, stand, kennungen=None):
     """Traegt neu gesehene Spiele dauerhaft ein. esrw.de zeigt nur wenige Tage
     rueckwaerts - hier bleibt die ganze Saison erhalten."""
     heute = stand.date().isoformat()
@@ -470,7 +470,7 @@ def ergaenze_historie(historie, spiele, venues, stand):
     # wieder frisch gelesen - und zwar leer, bevor es jemand merkt.
     verloren = 0
     for s in spiele:
-        alt = historie.get(spiel_id(s["start"].isoformat(), s["begegnung"]))
+        alt = historie.get(quelle_fuer(kennungen, s["start"].isoformat(), s["begegnung"]))
         if alt and any((alt.get("besetzung") or {}).values()) and not any(s["besetzung"].values()):
             verloren += 1
     if verloren >= max(3, int(len(spiele) * 0.5)):
@@ -479,7 +479,10 @@ def ergaenze_historie(historie, spiele, venues, stand):
 
     neu = 0
     for s in spiele:
-        kennung = spiel_id(s["start"].isoformat(), s["begegnung"])
+        # Ueber quelle_fuer(): ein verlegtes Spiel schreibt seinen
+        # vorhandenen Eintrag fort, statt daneben einen zweiten anzulegen -
+        # sonst stuende es im Archiv und in der Statistik doppelt.
+        kennung = quelle_fuer(kennungen, s["start"].isoformat(), s["begegnung"])
         halle, heim, gast, erkannt = finde_halle(s["begegnung"], venues)
         eintrag = historie.get(kennung)
         daten = {
@@ -1029,9 +1032,11 @@ def kennungen_laden(cfg, historie):
     liga und paarung nachgebaut, nicht die echte - ein Eintrag daraus
     waere schlicht falsch.
     """
-    reg = {"bekannt": {}, "neu": []}
+    # "merkmal" haelt zu jeder Quelle, woran das Spiel wiederzuerkennen
+    # ist - daraus paart kennungen_paaren() Verlegungen.
+    reg = {"bekannt": {}, "neu": [], "merkmal": {}, "fortsetzung": {}}
     try:
-        zeilen = tabelle_laden(cfg, "spiel_kennungen?select=quelle,kennung")
+        zeilen = tabelle_laden(cfg, "spiel_kennungen?select=quelle,kennung,begegnung,beginn")
     except Exception as e:
         # Ohne Registratur rechnet alles weiter wie vorher. Lieber das als
         # ein roter Lauf, der die Kalender nicht erneuert.
@@ -1041,6 +1046,7 @@ def kennungen_laden(cfg, historie):
     for z in zeilen:
         if z.get("quelle") and z.get("kennung"):
             reg["bekannt"][z["quelle"]] = z["kennung"]
+            reg["merkmal"][z["quelle"]] = {"begegnung": z.get("begegnung"), "beginn": z.get("beginn")}
     vorher = len(reg["bekannt"])
     for e in (historie or {}).values():
         if e.get("eingefroren") or not e.get("begegnung") or not e.get("beginn"):
@@ -1050,11 +1056,114 @@ def kennungen_laden(cfg, historie):
             continue
         kennung = e["beginn"] + "|" + e.get("paarung", "")
         reg["bekannt"][quelle] = kennung
+        reg["merkmal"][quelle] = {"begegnung": e["begegnung"], "beginn": e["beginn"]}
         reg["neu"].append({"quelle": quelle, "kennung": kennung,
                            "begegnung": e["begegnung"], "beginn": e["beginn"]})
     print("Kennungen: %d aus der Tabelle, %d aus dem Archiv uebernommen."
           % (vorher, len(reg["bekannt"]) - vorher))
     return reg
+
+
+def _paarungsmerkmal(begegnung, venues):
+    """Woran ein Spiel ueber eine Verlegung hinweg zu erkennen ist: Liga
+    und Paarung.
+
+    Die Ortsangabe bleibt bewusst draussen. esrw.de schreibt einen
+    abweichenden Spielort in den Begegnungstext ("... in Essen !!!");
+    finde_halle() trennt ihn ab, bevor Heim und Gast genommen werden. Nur
+    deshalb erkennt die Paarung ein Spiel auch dann wieder, wenn allein
+    die Halle gewechselt hat - und genau das ist einer der beiden Faelle,
+    um die es hier geht.
+    """
+    _halle, heim, gast, _sicher = finde_halle(begegnung, venues)
+    liga = begegnung.split(":", 1)[0].strip() if ":" in begegnung else ""
+    return "%s|%s" % (liga, paarung_aus(heim, gast))
+
+
+def kennungen_paaren(reg, spiele, venues, fenster_tage=21):
+    """Verlegte Spiele wiedererkennen und als Fortsetzung eintragen.
+
+    Ein Spiel, das auf einen anderen Anstoss oder in eine andere Halle
+    rutscht, kommt als neue Quelle an (spiel_id haengt am rohen Anstoss
+    und am Begegnungstext). Gleichzeitig verschwindet die alte. Diese
+    beiden gehoeren zusammen.
+
+    Gepaart wird nur bei Eindeutigkeit in beide Richtungen: genau ein
+    verschwundenes Spiel zu genau einem neuen, bei gleichem Merkmal und
+    hoechstens fenster_tage Abstand. Sonst muesste geraten werden, und
+    geraten wird hier nicht - die Folge waere eine Abrechnung am falschen
+    Spiel.
+
+    Das Fenster ist nicht beliebig: dieselbe Paarung kann in einer Saison
+    ein zweites Mal angesetzt sein. Drei Wochen deckt eine Verlegung,
+    trifft aber kein Rueckrundenspiel drei Monate spaeter.
+    """
+    if reg is None:
+        return {}
+    fenster = timedelta(days=fenster_tage)
+    # Was in diesem Lauf wirklich auf der Seite steht. Von Hand angelegte
+    # Spiele bleiben draussen, ihre Kennung ist ohnehin stabil ("m:...").
+    vorhanden = set()
+    for s in spiele:
+        if not s.get("manuell"):
+            vorhanden.add(spiel_id(s["start"].isoformat(), s["begegnung"]))
+
+    # Bekannt, aber heute nicht mehr da - die Kandidaten.
+    weg = {}
+    for quelle, m in (reg.get("merkmal") or {}).items():
+        if quelle in vorhanden or not m.get("begegnung") or not m.get("beginn"):
+            continue
+        try:
+            wann = datetime.fromisoformat(m["beginn"])
+        except ValueError:
+            continue
+        weg.setdefault(_paarungsmerkmal(m["begegnung"], venues), []).append((quelle, wann))
+
+    # Heute da, aber unbekannt - die Suchenden.
+    paare = []
+    for s in spiele:
+        if s.get("manuell"):
+            continue
+        quelle = spiel_id(s["start"].isoformat(), s["begegnung"])
+        if quelle in reg["bekannt"]:
+            continue
+        for alt_quelle, wann in weg.get(_paarungsmerkmal(s["begegnung"], venues), []):
+            if abs(wann - s["start"]) <= fenster:
+                paare.append((quelle, alt_quelle))
+
+    # Eindeutig in beide Richtungen, sonst nicht. Erst zaehlen, dann
+    # entscheiden - so haengt das Ergebnis nicht an der Reihenfolge.
+    neu_zahl, alt_zahl = {}, {}
+    for neu, alt in paare:
+        neu_zahl[neu] = neu_zahl.get(neu, 0) + 1
+        alt_zahl[alt] = alt_zahl.get(alt, 0) + 1
+    fortsetzung = {}
+    for neu, alt in paare:
+        if neu_zahl[neu] == 1 and alt_zahl[alt] == 1:
+            fortsetzung[neu] = alt
+    unklar = len({n for n, a in paare if neu_zahl[n] > 1 or alt_zahl[a] > 1})
+    reg["fortsetzung"] = fortsetzung
+    if fortsetzung:
+        print("%d verlegte(s) Spiel(e) wiedererkannt - gilt als geaendert, nicht als neu."
+              % len(fortsetzung))
+    if unklar:
+        print("  ! %d Spiel(e) koennten verlegt sein, aber nicht eindeutig - bleiben neu."
+              % unklar, file=sys.stderr)
+    return fortsetzung
+
+
+def quelle_fuer(reg, beginn_iso, begegnung):
+    """Die Quelle eines Spiels, ueber eine Verlegung hinweg.
+
+    Ist dieses Spiel die Fortsetzung eines verlegten, zaehlt die Quelle
+    von damals. Daran haengen Kalender-UID, Aenderungserkennung und
+    Historie - sie bleiben damit dieselben, und der Termin wird im Handy
+    verschoben statt geloescht und neu angelegt.
+    """
+    quelle = spiel_id(beginn_iso, begegnung)
+    if not reg:
+        return quelle
+    return (reg.get("fortsetzung") or {}).get(quelle, quelle)
 
 
 def kennung_fuer(reg, beginn_iso, begegnung, vorschlag):
@@ -1066,7 +1175,7 @@ def kennung_fuer(reg, beginn_iso, begegnung, vorschlag):
     """
     if reg is None:
         return vorschlag
-    quelle = spiel_id(beginn_iso, begegnung)
+    quelle = quelle_fuer(reg, beginn_iso, begegnung)
     if quelle in reg["bekannt"]:
         return reg["bekannt"][quelle]
     reg["bekannt"][quelle] = vorschlag
@@ -1250,7 +1359,11 @@ def sammle_personen(spiele, cfg, venues, jetzt, bevorzugt=frozenset(), gebuehren
         anstoss = spiel["start"]
         paarung = paarung_aus(heim, gast)
         besetzung = rollen_fuer(spiel["besetzung"])
-        kennung = spiel_id(anstoss.isoformat(), spiel["begegnung"])
+        # quelle_fuer() statt spiel_id(): ist das Spiel die Fortsetzung
+        # eines verlegten, behaelt es die Kennung von damals. Daran haengt
+        # ueber t["uid"] der Kalendertermin - er wird dann verschoben und
+        # nicht geloescht und neu angelegt.
+        kennung = quelle_fuer(kennungen, anstoss.isoformat(), spiel["begegnung"])
         # Kennung der App - darauf zeigen Korrekturen und alles, was die
         # Kollegen zu einem Spiel gespeichert haben. Frueher stand hier
         # einfach Beginn|Paarung; damit wanderte die Kennung mit, sobald
@@ -1519,9 +1632,20 @@ def aenderungs_details(vorher, jetzt):
 def beschreibe_aenderung(vorher, jetzt):
     """Kurztext, was sich seit dem letzten Lauf geaendert hat."""
     teile = []
-    alt_zeit = (vorher.get("treffpunkt") or "")[11:16]
-    neu_zeit = jetzt["treffpunkt"].isoformat()[11:16]
-    if alt_zeit and alt_zeit != neu_zeit:
+    # Verglichen wurde nur die Uhrzeit. Ein Spiel, das von Mittwoch auf
+    # Freitag rutscht, aber zur selben Uhrzeit anfaengt, galt damit als
+    # "Angaben angepasst" - und das ist die Aenderung, die am meisten
+    # zaehlt. Steht ein anderer Tag an, wird er genannt.
+    alt_voll = vorher.get("treffpunkt") or ""
+    alt_zeit, alt_tag = alt_voll[11:16], alt_voll[:10]
+    neu_voll = jetzt["treffpunkt"].isoformat()
+    neu_zeit, neu_tag = neu_voll[11:16], neu_voll[:10]
+    if alt_tag and alt_tag != neu_tag:
+        try:
+            teile.append("Termin (vorher %s)" % kurz_datum(datetime.fromisoformat(alt_voll)))
+        except ValueError:
+            teile.append("Termin (vorher %s %s Uhr)" % (alt_tag, alt_zeit))
+    elif alt_zeit and alt_zeit != neu_zeit:
         teile.append("Zeit (vorher %s Uhr)" % alt_zeit)
     if vorher.get("ort") and vorher["ort"] != jetzt["ort"]:
         alte_halle = vorher["ort"].split(",")[0]
@@ -1806,6 +1930,9 @@ def main():
     # Kennung gebildet wird. Fortgeschrieben wird sie weiter unten.
     historie = lade("historie.json", {})
     kennungen = kennungen_laden(cfg, historie)
+    # Erst jetzt, mit der vollstaendigen Spielliste: welche der neuen
+    # Spiele sind verlegte alte. Muss vor der ersten Kennung stehen.
+    kennungen_paaren(kennungen, spiele, venues)
     umbesetzt = besetzung_korrigieren(spiele, korrekturen, venues, kennungen)
     if umbesetzt:
         print("%d Spiel(e) mit Gespann vom Betreiber." % umbesetzt)
@@ -1833,7 +1960,7 @@ def main():
 
     # Archiv fortschreiben und daraus die Statistik rechnen
     # (historie ist oben geladen - die Registratur brauchte sie zuerst)
-    frisch = ergaenze_historie(historie, spiele, venues, stand)
+    frisch = ergaenze_historie(historie, spiele, venues, stand, kennungen)
     # Abgeschlossene Saisons einfrieren (docs/archiv/), Arbeitsdatei bleibt klein
     saison_index = saisonarchiv_einfrieren(historie, personen, stand)
     rueck = historie_umbesetzen(historie, korrekturen)
