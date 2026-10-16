@@ -2055,7 +2055,7 @@
   /* Runde 47: Schnelleingabe, eigene Regeln, Pruefung */
   .mg-schnellliste { display:flex; flex-direction:column; gap:2px; background:var(--linie);
     border:1px solid var(--linie); border-radius:var(--radius); overflow:hidden; margin-top:10px; }
-  .mg-schnellkopf, .mg-schnellzeile { display:grid; grid-template-columns:1fr 4.2rem 4.6rem 4.6rem;
+  .mg-schnellkopf, .mg-schnellzeile { display:grid; grid-template-columns:1fr 3.7rem 4.1rem 4.1rem 1.9rem;
     gap:6px; align-items:center; background:var(--karte); padding:6px 8px; }
   .mg-schnellkopf { font-size:var(--s-s); text-transform:uppercase; letter-spacing:.04em;
     color:var(--dim); background:var(--bg); padding:6px 8px; }
@@ -2891,6 +2891,20 @@
   .zweifel-zeile > span { flex:1 1 100%; }
   .zweifel-zeile > button { margin-left:auto; }
 
+  /* Abgehakt ist mehr als erfasst: der Betrag steht nicht nur da, das
+     Geld ist auch gekommen. Die Zeile tritt zurueck, damit das Auge
+     beim Durchhaken an dem haengenbleibt, was noch offen ist. */
+  .mg-schnellzeile.bezahlt { background:transparent; opacity:.62; }
+  .mg-schnellzeile.bezahlt:focus-within { opacity:1; }
+  /* Das label nimmt den Tipp, nicht die Checkbox: ein ::after am input
+     traegt nicht (ersetztes Element - gemessen 23 x 41 statt 30 x 44).
+     So ist die ganze Gitterzelle tippbar. */
+  .mg-hakenfeld { display:flex; align-items:center; justify-content:center;
+                  min-height:44px; cursor:pointer; }
+  .mg-schnellzeile input.mg-schnellhaken { width:22px; height:22px; margin:0; }
+  .mg-schnellkopf .mg-schnellhaken { text-align:center; }
+
+
 
 </style>
 </head>
@@ -3354,6 +3368,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=192"></script>
+<script src="app.js?v=193"></script>
 </body>
 </html>

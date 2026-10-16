@@ -4591,7 +4591,8 @@ window.Mitglieder = (function () {
     if (!liste.length) return h("p", { class: "leer", text: "Noch keine vergangenen Spiele in dieser Saison." });
 
     box.appendChild(h("div", { class: "mg-schnellkopf" }, [
-      h("span", { text: "Spiel" }), h("span", { text: "km" }), h("span", { text: "Vergütung" }), h("span", { text: "Auslagen" })]));
+      h("span", { text: "Spiel" }), h("span", { text: "km" }), h("span", { text: "Betrag" }),
+      h("span", { text: "Auslagen" }), h("span", { class: "mg-schnellhaken", text: "✓", title: "bezahlt" })]));
 
     liste.forEach(function (sp) {
       var e = einsaetze[sp.kennung] || {};
@@ -4614,7 +4615,27 @@ window.Mitglieder = (function () {
             if (i >= 0 && alle[i + 1]) alle[i + 1].focus();
           } });
       }
-      var zeile = h("div", { class: "mg-schnellzeile" + (e.verguetung != null ? " erfasst" : "") }, [
+      // Bezahlt ist ein eigener Moment - man traegt nach dem Spiel ein
+      // und hakt ab, wenn das Geld da ist. Beides passiert aber in
+      // derselben Liste, also gehoert der Haken hierher und nicht nur
+      // in die Detailansicht.
+      var haken = h("input", { type: "checkbox", class: "mg-schnellhaken",
+        title: "Als bezahlt abhaken" });
+      haken.checked = !!e.bezahlt;
+      haken.addEventListener("change", function () {
+        speichereEinsatz(sp, { bezahlt: haken.checked ? new Date().toISOString() : null }, true);
+        zeile.classList.toggle("bezahlt", haken.checked);
+        // Die Zahlen oben (Filterknoepfe und Summen) zaehlen dieses
+        // Spiel jetzt anders. Nur einen Zaehler nachzufuehren hiesse,
+        // dass er der Summenbox widerspricht - also alles neu, aber an
+        // derselben Stelle. Wer zwanzig Spiele durchhakt, soll nicht
+        // jedes Mal die Liste suchen muessen.
+        var wo = window.scrollY;
+        rendereAbrechnung();
+        window.scrollTo(0, wo);
+      });
+      var zeile = h("div", { class: "mg-schnellzeile" + (e.verguetung != null ? " erfasst" : "")
+                             + (e.bezahlt ? " bezahlt" : "") }, [
         h("button", { type: "button", class: "mg-schnellspiel", onclick: function () {
           schnellModus = false; abrechnungSprung(sp.kennung); rendereAbrechnung();
         } }, [
@@ -4622,7 +4643,8 @@ window.Mitglieder = (function () {
           h("small", { text: (sp.liga ? sp.liga + " · " : "") + sp.paarung })]),
         feld(e.km, vor ? "~" + vor.km : "km", "0.1", "km"),
         feld(e.verguetung, soll != null ? "~" + soll : "€", "0.5", "verguetung"),
-        feld(e.auslagen, "€", "0.5", "auslagen")]);
+        feld(e.auslagen, "€", "0.5", "auslagen"),
+        h("label", { class: "mg-hakenfeld", title: "Als bezahlt abhaken" }, [haken])]);
       box.appendChild(zeile);
     });
     return box;
