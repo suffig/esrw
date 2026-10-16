@@ -1128,7 +1128,8 @@ def _paarungsmerkmal(begegnung, venues):
     return "%s|%s" % (liga, paarung_aus(heim, gast))
 
 
-def kennungen_paaren(reg, spiele, venues, fenster_tage=21):
+def kennungen_paaren(reg, spiele, venues, historie=None, stand=None,
+                     fenster_tage=21, frisch_tage=4):
     """Verlegte Spiele wiedererkennen und als Fortsetzung eintragen.
 
     Ein Spiel, das auf einen anderen Anstoss oder in eine andere Halle
@@ -1136,15 +1137,24 @@ def kennungen_paaren(reg, spiele, venues, fenster_tage=21):
     und am Begegnungstext). Gleichzeitig verschwindet die alte. Diese
     beiden gehoeren zusammen.
 
-    Gepaart wird nur bei Eindeutigkeit in beide Richtungen: genau ein
-    verschwundenes Spiel zu genau einem neuen, bei gleichem Merkmal und
-    hoechstens fenster_tage Abstand. Sonst muesste geraten werden, und
-    geraten wird hier nicht - die Folge waere eine Abrechnung am falschen
-    Spiel.
+    **Kandidat ist nur, was seit dem letzten Lauf verschwunden ist.**
+    Das war der Fehler der ersten Fassung: sie nahm jede jemals erfasste
+    Quelle. Wird ein Spiel zweimal verlegt (07:30 -> 08:30 -> 09:30),
+    stehen beim zweiten Mal zwei alte Zeiten mit demselben Merkmal in der
+    Registratur, die Eindeutigkeit scheitert, und es entsteht ein zweites
+    Spiel - genau das ist passiert. Eine Zeit, die vor drei Wochen
+    zuletzt gesehen wurde, ist kein Kandidat; die ist abgehandelt.
+    "zuletzt_gesehen" fuehrt historie.json ohnehin mit.
+
+    Gepaart wird weiter nur bei Eindeutigkeit in beide Richtungen: genau
+    ein verschwundenes Spiel zu genau einem neuen, bei gleichem Merkmal
+    und hoechstens fenster_tage Abstand. Sonst muesste geraten werden,
+    und geraten wird hier nicht - die Folge waere eine Abrechnung am
+    falschen Spiel.
 
     Das Fenster ist nicht beliebig: dieselbe Paarung kann in einer Saison
-    ein zweites Mal angesetzt sein. Drei Wochen deckt eine Verlegung,
-    trifft aber kein Rueckrundenspiel drei Monate spaeter.
+    ein zweites Mal angesetzt sein. Drei Wochen decken eine Verlegung,
+    treffen aber kein Rueckrundenspiel drei Monate spaeter.
     """
     if reg is None:
         return {}
@@ -1156,16 +1166,25 @@ def kennungen_paaren(reg, spiele, venues, fenster_tage=21):
         if not s.get("manuell"):
             vorhanden.add(spiel_id(s["start"].isoformat(), s["begegnung"]))
 
-    # Bekannt, aber heute nicht mehr da - die Kandidaten.
+    # Kandidaten: zuletzt kuerzlich gesehen, jetzt nicht mehr da.
+    # Der Schluessel der Historie IST die Quelle - bei einem schon einmal
+    # verlegten Spiel die von damals, waehrend "beginn" die neue Zeit
+    # traegt. Beides wird gebraucht: der Schluessel als Kennung, "beginn"
+    # fuer das Zeitfenster.
+    grenze = (stand.date() - timedelta(days=frisch_tage)).isoformat() if stand else None
     weg = {}
-    for quelle, m in (reg.get("merkmal") or {}).items():
-        if quelle in vorhanden or not m.get("begegnung") or not m.get("beginn"):
+    for quelle, e in (historie or {}).items():
+        if quelle in vorhanden or e.get("eingefroren"):
+            continue
+        if not e.get("begegnung") or not e.get("beginn"):
+            continue
+        if grenze and (e.get("zuletzt_gesehen") or "") < grenze:
             continue
         try:
-            wann = datetime.fromisoformat(m["beginn"])
+            wann = datetime.fromisoformat(e["beginn"])
         except ValueError:
             continue
-        weg.setdefault(_paarungsmerkmal(m["begegnung"], venues), []).append((quelle, wann))
+        weg.setdefault(_paarungsmerkmal(e["begegnung"], venues), []).append((quelle, wann))
 
     # Heute da, aber unbekannt - die Suchenden.
     paare = []
@@ -1980,8 +1999,10 @@ def main():
     historie = lade("historie.json", {})
     kennungen = kennungen_laden(cfg, historie)
     # Erst jetzt, mit der vollstaendigen Spielliste: welche der neuen
-    # Spiele sind verlegte alte. Muss vor der ersten Kennung stehen.
-    kennungen_paaren(kennungen, spiele, venues)
+    # Spiele sind verlegte alte. Muss vor der ersten Kennung stehen -
+    # und vor ergaenze_historie(), denn die Kandidaten kommen aus dem
+    # Stand des LETZTEN Laufs ("zuletzt_gesehen").
+    kennungen_paaren(kennungen, spiele, venues, historie, stand)
     umbesetzt = besetzung_korrigieren(spiele, korrekturen, venues, kennungen)
     if umbesetzt:
         print("%d Spiel(e) mit Gespann vom Betreiber." % umbesetzt)

@@ -1144,14 +1144,33 @@ def test_verlegt():
     B = "U15 RLA: Iserlohner EC - Krefelder EV"
     alt_zeit = _dt(2026, 11, 4, 18, 30, tzinfo=MEZ)
 
+    # Der Lauf von heute; "gesehen" ist, wann ein Spiel zuletzt auf der
+    # Seite stand. Kandidat fuer eine Verlegung ist nur, was seit dem
+    # letzten Lauf verschwunden ist - deshalb gehoert beides dazu.
+    STAND = _dt(2026, 11, 2, 12, 0, tzinfo=_tz.utc)
+    GESTERN = "2026-11-01"
+    LANGE_HER = "2026-09-20"
+
     def reg_mit(*eintraege):
-        """Registratur mit bekannten Spielen (Quelle -> Kennung, Merkmal)."""
+        """Registratur und Historie mit bekannten Spielen.
+
+        Jeder Eintrag ist (beginn, begegnung) oder (beginn, begegnung,
+        zuletzt_gesehen).
+        """
         r = {"bekannt": {}, "neu": [], "merkmal": {}, "fortsetzung": {}}
-        for beginn, begegnung in eintraege:
+        hist = {}
+        for e in eintraege:
+            beginn, begegnung = e[0], e[1]
+            gesehen = e[2] if len(e) > 2 else GESTERN
             q = E.spiel_id(beginn.isoformat(), begegnung)
             r["bekannt"][q] = beginn.isoformat() + "|app"
             r["merkmal"][q] = {"begegnung": begegnung, "beginn": beginn.isoformat()}
-        return r
+            hist[q] = {"beginn": beginn.isoformat(), "begegnung": begegnung,
+                       "zuletzt_gesehen": gesehen}
+        return r, hist
+
+    def paare(r, hist, spiele):
+        return E.kennungen_paaren(r, spiele, venues, hist, STAND)
 
     def spiel(beginn, begegnung=B):
         return {"start": beginn, "begegnung": begegnung,
@@ -1161,8 +1180,8 @@ def test_verlegt():
 
     # --- andere Uhrzeit --------------------------------------------------
     neu_zeit = alt_zeit.replace(hour=19, minute=0)
-    r = reg_mit((alt_zeit, B))
-    f = E.kennungen_paaren(r, [spiel(neu_zeit)], venues)
+    r, hi = reg_mit((alt_zeit, B))
+    f = paare(r, hi, [spiel(neu_zeit)])
     pruefe(len(f) == 1, "andere Uhrzeit: als Fortsetzung erkannt", str(f))
     pruefe(E.quelle_fuer(r, neu_zeit.isoformat(), B) == alt_quelle,
            "und behaelt die Kennung von vorher")
@@ -1171,37 +1190,52 @@ def test_verlegt():
            "also auch die App-Kennung - Abrechnung und Notizen bleiben dran")
 
     # --- anderer Tag -----------------------------------------------------
-    r = reg_mit((alt_zeit, B))
-    f = E.kennungen_paaren(r, [spiel(alt_zeit + _td(days=2))], venues)
+    r, hi = reg_mit((alt_zeit, B))
+    f = paare(r, hi, [spiel(alt_zeit + _td(days=2))])
     pruefe(len(f) == 1, "anderer Tag: als Fortsetzung erkannt", str(f))
 
     # --- andere Halle: der Ort steht im Begegnungstext -------------------
-    r = reg_mit((alt_zeit, B))
-    f = E.kennungen_paaren(r, [spiel(alt_zeit, B + " in Essen !!!")], venues)
+    r, hi = reg_mit((alt_zeit, B))
+    f = paare(r, hi, [spiel(alt_zeit, B + " in Essen !!!")])
     pruefe(len(f) == 1, "andere Halle: als Fortsetzung erkannt", str(f))
+
+    # --- ZWEIMAL verlegt: der gemeldete Fehler ---------------------------
+    # "U17 RL: Herner EV - Herforder EV" am 25.10. lief 07:30 -> 08:30 ->
+    # 09:30. Beim zweiten Mal zaehlte die laengst erledigte 07:30 als
+    # zweiter Kandidat mit, die Eindeutigkeit scheiterte, und es entstand
+    # ein zweites Spiel - in der Abrechnung zweimal dasselbe, unter
+    # Aenderungen "NEU" plus "ABGESETZT".
+    # Jetzt ist Kandidat nur, was seit dem letzten Lauf verschwunden ist.
+    vorvorige = alt_zeit.replace(hour=17, minute=30)
+    r, hi = reg_mit((vorvorige, B, LANGE_HER), (alt_zeit, B, GESTERN))
+    f = paare(r, hi, [spiel(neu_zeit)])
+    pruefe(len(f) == 1, "zweimal verlegt: trotzdem erkannt", str(f))
+    pruefe(f.get(E.spiel_id(neu_zeit.isoformat(), B)) == alt_quelle,
+           "und zwar auf die zuletzt gesehene Zeit, nicht auf die alte")
 
     # --- das alte Spiel steht noch auf der Seite -------------------------
     # Dann ist das neue ein zweites Spiel, keine Verlegung.
-    r = reg_mit((alt_zeit, B))
-    f = E.kennungen_paaren(r, [spiel(alt_zeit), spiel(neu_zeit)], venues)
+    r, hi = reg_mit((alt_zeit, B))
+    f = paare(r, hi, [spiel(alt_zeit), spiel(neu_zeit)])
     pruefe(not f, "altes Spiel noch da: nicht gepaart", str(f))
 
     # --- nicht eindeutig: zwei Verschwundene, einer kommt zurueck --------
-    # Doppelansetzung wie am 03.10.2026. Welches der beiden es ist, laesst
-    # sich nicht entscheiden - dann lieber neu als falsch zugeordnet.
+    # Doppelansetzung wie am 03.10.2026, beide seit gestern weg. Welches
+    # der beiden es ist, laesst sich nicht entscheiden - dann lieber neu
+    # als falsch zugeordnet.
     zweit = alt_zeit.replace(hour=11)
-    r = reg_mit((alt_zeit, B), (zweit, B))
-    f = E.kennungen_paaren(r, [spiel(neu_zeit)], venues)
-    pruefe(not f, "zwei Kandidaten: nicht geraten", str(f))
+    r, hi = reg_mit((alt_zeit, B), (zweit, B))
+    f = paare(r, hi, [spiel(neu_zeit)])
+    pruefe(not f, "zwei frische Kandidaten: nicht geraten", str(f))
 
     # --- zu weit weg: Rueckrunde, nicht Verlegung ------------------------
-    r = reg_mit((alt_zeit, B))
-    f = E.kennungen_paaren(r, [spiel(alt_zeit + _td(days=90))], venues)
+    r, hi = reg_mit((alt_zeit, B))
+    f = paare(r, hi, [spiel(alt_zeit + _td(days=90))])
     pruefe(not f, "drei Monate spaeter: nicht gepaart", str(f))
 
     # --- andere Paarung: einfach ein neues Spiel -------------------------
-    r = reg_mit((alt_zeit, B))
-    f = E.kennungen_paaren(r, [spiel(neu_zeit, "U15 RLA: Herner EV - EV Duisburg")], venues)
+    r, hi = reg_mit((alt_zeit, B))
+    f = paare(r, hi, [spiel(neu_zeit, "U15 RLA: Herner EV - EV Duisburg")])
     pruefe(not f, "andere Paarung: nicht gepaart", str(f))
 
     # --- der Aenderungstext nennt den alten Termin ----------------------
