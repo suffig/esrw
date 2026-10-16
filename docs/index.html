@@ -2754,6 +2754,32 @@
      Zaehler, die Beschriftung der unteren Leiste. Eine Stufe groesser;
      die Zeichen daneben bleiben, wie sie sind. */
   :root[data-design="neu"] { --s-xs:.75rem; }
+  /* ===== Runde 39: Tippflaeche im Blatt, lesbare Initialen =========== */
+
+  /* Gemessen bei 375 px mit elementFromPoint - nicht mit
+     getBoundingClientRect: das sieht ein ::after nicht und meldet die
+     Kopfknoepfe falsch als zu klein (sie haben 42-52 x 53).
+     Echter Fund: das Schliesskreuz im Blatt ist 34 x 34, sichtbar und
+     tippbar. Es bekam keinen Ring, weil Runde 37 nur ".kopf .rund"
+     ansprach. Hier ist Platz - oben rechts im Blatt liegt nichts daneben,
+     was man versehentlich trifft -, also 5 px je Seite: 44 x 44. */
+  .blatt-kopf .rund { position:relative; }
+  .blatt-kopf .rund::after { content:""; position:absolute; inset:-5px; border-radius:inherit; }
+
+  /* font-size:9px war die einzige Stelle der App unter der eigenen Grenze
+     von 11,5 px. "MS" in einem 18-px-Kreis liest niemand, das wirkt als
+     Textur neben dem Namen, der ohnehin daneben steht.
+     Die Initialen bleiben - sie weichen erst, wenn jemand ein Bild
+     einstellt (bildAnwenden setzt dann mit-bild). Also lesbar machen:
+     --s-xs ist im neuen Design .75rem = 12 px und raeumt die Grenze, der
+     Kreis waechst auf 22 px, damit zwei Buchstaben hineinpassen.
+     Das alte Design bleibt, wie es ist: dort sind es 10,88 px - knapp
+     unter der Grenze, aber kein 9-px-Fall, und es wird ohnehin abgebaut. */
+  :root[data-design="neu"] .spiel .avatar { width:22px; height:22px; font-size:var(--s-xs); }
+  /* Liegt ein Bild darunter, braucht es keine Schrift darauf - sonst
+     blitzen die Buchstaben am Rand des Fotos durch. */
+  .avatar.mit-bild { font-size:0; }
+
 </style>
 </head>
 <body>
@@ -3216,6 +3242,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=184"></script>
+<script src="app.js?v=185"></script>
 </body>
 </html>

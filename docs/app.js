@@ -5646,6 +5646,10 @@
     pins.forEach(function (s) {
       var q = personMit(s), b = document.createElement("button"); b.type = "button";
       var av = document.createElement("i"); av.className = "avatar"; av.textContent = initialen(q.name); av.style.background = farbeFuer(q.slug);
+      // data-slug fehlte: bilderAnwenden() geht ueber [data-slug], und ohne
+      // das blieben hier die Initialen stehen, auch wenn der Kollege ein
+      // Bild eingestellt hat - ueberall sonst in der App ersetzt es sie.
+      av.setAttribute("data-slug", q.slug); bildAnwenden(av, q.slug);
       var n = q.spiele.filter(function (x) { return !x.vergangen; }).length;
       b.appendChild(av); b.appendChild(document.createTextNode(q.name.split(",")[1] ? q.name.split(",")[1].trim() : q.name));
       var z = document.createElement("span"); z.className = "anzahl"; z.textContent = n ? " · " + n : ""; b.appendChild(z);
