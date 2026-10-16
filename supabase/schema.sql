@@ -2556,3 +2556,42 @@ create policy "Gebuehren lesen" on public.gebuehren_saetze for select to authent
 -- delegieren kann - eine falsche Zahl hier steht auf jeder Rechnung.
 create policy "Gebuehren pflegen" on public.gebuehren_saetze for all to authenticated
   using (public.ist_admin()) with check (public.ist_admin());
+
+
+-- ======================================================================
+-- v53: Betriebseinstellungen der Pipeline
+-- ======================================================================
+-- Vorlauf, Spieldauer und wie weit zurueck gelesen wird stehen in
+-- config.json im Repository. Zum Aendern musste der Betreiber die Datei
+-- bearbeiten und veroeffentlichen.
+--
+-- Diese Tabelle haelt Abweichungen davon, je Zeile ein Schluessel und
+-- eine Zahl. Gleiches Muster wie gebuehren_saetze (v52): die Datei bleibt
+-- die Vorgabe, eine leere Tabelle heisst "es gilt config.json", und jede
+-- Zeile ist eine sichtbare Abweichung, die sich zuruecknehmen laesst.
+--
+-- Nur Zahlen, und nur die drei betrieblichen. Die Quell-Adressen von
+-- esrw.de, die Namenslisten und das Ausgabeverzeichnis bleiben in der
+-- Datei: eine vertippte Adresse legt den ganzen Lauf lahm, und so etwas
+-- gehoert nicht auf ein Handy. Die Pipeline nimmt deshalb nur Zeilen an,
+-- deren Schluessel auf ihrer Liste steht - eine andere Zeile wird
+-- gemeldet und uebersprungen, nicht angewandt.
+--
+-- Gelesen wird sie nur von esrw_ical.py. Die App zeigt die geltenden
+-- Werte aus daten.json an und schreibt hier hinein; wirksam wird eine
+-- Aenderung mit dem naechsten stuendlichen Lauf.
+create table if not exists public.betrieb_einstellungen (
+  schluessel text primary key,          -- vorlauf_minuten, spieldauer_minuten, vergangene_tage
+  wert       numeric not null,
+  von        text,
+  geaendert  timestamptz not null default now()
+);
+alter table public.betrieb_einstellungen enable row level security;
+drop policy if exists "Betrieb lesen"  on public.betrieb_einstellungen;
+drop policy if exists "Betrieb pflegen" on public.betrieb_einstellungen;
+-- Lesen: Freigeschaltete, damit die Oberflaeche die Abweichung anzeigen kann.
+create policy "Betrieb lesen" on public.betrieb_einstellungen for select to authenticated
+  using (public.ist_freigeschaltet());
+-- Schreiben: nur der Betreiber. Das wirkt auf die Termine aller Kollegen.
+create policy "Betrieb pflegen" on public.betrieb_einstellungen for all to authenticated
+  using (public.ist_admin()) with check (public.ist_admin());

@@ -717,6 +717,54 @@ def liga_einordnen(liga):
     return None
 
 
+# Was sich aus der App einstellen laesst. Bewusst eine kurze Liste und
+# bewusst nur Zahlen: eine vertippte Quell-Adresse legt den ganzen Lauf
+# lahm, und Namenslisten sind keine Betriebseinstellung.
+BETRIEB_ERLAUBT = ("vorlauf_minuten", "spieldauer_minuten", "vergangene_tage")
+
+
+def betrieb_ueberschreiben(cfg):
+    """Abweichungen aus der Tabelle betrieb_einstellungen in cfg einsetzen.
+
+    config.json bleibt die Vorgabe - eine leere Tabelle heisst "es gilt
+    die Datei". Angenommen wird nur, was in BETRIEB_ERLAUBT steht; alles
+    andere wird gemeldet und uebersprungen, damit eine Zeile in der
+    Datenbank nicht die Quell-Adresse verbiegen kann.
+    """
+    try:
+        zeilen = tabelle_laden(cfg, "betrieb_einstellungen?select=schluessel,wert")
+    except Exception as e:
+        print("  ! Betriebseinstellungen nicht geladen (%s) - es gilt config.json."
+              % str(e)[:80], file=sys.stderr)
+        return 0
+    gesetzt = []
+    for z in zeilen:
+        k = (z.get("schluessel") or "").strip()
+        if z.get("wert") is None:
+            continue
+        if k not in BETRIEB_ERLAUBT:
+            print("  ! Betriebseinstellung '%s' ist nicht einstellbar - uebersprungen." % k,
+                  file=sys.stderr)
+            continue
+        try:
+            wert = int(round(float(z["wert"])))
+        except (TypeError, ValueError):
+            print("  ! Betriebseinstellung '%s' ist keine Zahl - uebersprungen." % k,
+                  file=sys.stderr)
+            continue
+        if wert < 0:
+            print("  ! Betriebseinstellung '%s' ist negativ - uebersprungen." % k,
+                  file=sys.stderr)
+            continue
+        if cfg.get(k) == wert:
+            continue
+        gesetzt.append("%s %s statt %s" % (k, wert, cfg.get(k)))
+        cfg[k] = wert
+    if gesetzt:
+        print("Betrieb: %s (aus der Tabelle)." % ", ".join(gesetzt))
+    return len(gesetzt)
+
+
 def gebuehren_ueberschreiben(cfg, gebuehren):
     """Abweichungen aus der Tabelle gebuehren_saetze in die Ordnung
     einsetzen.
@@ -1896,6 +1944,7 @@ def main():
     args = ap.parse_args()
 
     cfg = lade("config.json")
+    betrieb_ueberschreiben(cfg)
     venues = lade("venues.json")
     stand = datetime.now(timezone.utc)
 
@@ -2070,6 +2119,9 @@ def main():
         "titel": cfg.get("titel", "Einteilungen"),
         "quelle": cfg["quelle"],
         "vorlauf_minuten": cfg["vorlauf_minuten"],
+        # Damit die Pflegeseite den geltenden Wert zeigen kann - config.json
+        # liegt nicht unter docs/ und ist fuer die App nicht erreichbar.
+        "vergangene_tage": int(cfg.get("vergangene_tage", 0)),
         "spiele_gesamt": len(gesehen),
         "saison": saison,
         "archiv_spiele": len(historie),

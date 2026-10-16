@@ -5884,6 +5884,101 @@ window.Mitglieder = (function () {
 
   // Adminseite: eine Leiste oben, darunter genau ein Bereich. Vorher standen
   // fuenf Karten untereinander - auf dem Handy eine endlose Rolle.
+  // --------------------------------------------- Betriebseinstellungen
+  // Drei Zahlen aus config.json. Abweichungen liegen in der Tabelle
+  // betrieb_einstellungen; die Pipeline nimmt nur diese drei Schluessel
+  // an (BETRIEB_ERLAUBT in esrw_ical.py) - die Quell-Adressen von esrw.de
+  // bleiben in der Datei, eine vertippte Adresse legt den ganzen Lauf lahm.
+  //
+  // Der geltende Wert kommt aus daten.json: config.json liegt nicht unter
+  // docs/ und ist fuer den Browser nicht erreichbar.
+  var BETRIEB = [
+    ["vorlauf_minuten", "Vorlauf", "Minuten",
+     "So lange vor dem Anstoß beginnt der Termin im Kalender – die Zeit für Anfahrt und Umziehen."],
+    ["spieldauer_minuten", "Termindauer", "Minuten",
+     "So lange ist der Termin lang. Nicht die Spielzeit, sondern was im Kalender blockiert wird."],
+    ["vergangene_tage", "Rückblick", "Tage",
+     "So weit zurück liest der Lauf die Seite der vergangenen Einteilungen – dort kommen Spiele nach, die vorher niemand gesehen hat."]
+  ];
+  var betriebZeilen = null;
+  function betriebLaden(nochmal) {
+    if (betriebZeilen && !nochmal) return Promise.resolve(betriebZeilen);
+    if (!sb || !session) return Promise.resolve([]);
+    return sb.from("betrieb_einstellungen").select("schluessel,wert,von")
+      .then(function (r) { betriebZeilen = (r && r.data) || []; return betriebZeilen; })
+      .catch(function () { betriebZeilen = []; return betriebZeilen; });
+  }
+
+  function betriebRendern(box) {
+    function neu() { leeren(box); betriebRendern(box); }
+    leeren(box);
+    box.appendChild(h("h4", {}, [ikone("i-clock"), " Betrieb"]));
+    box.appendChild(h("p", { class: "meta", style: "margin:0 0 8px", text:
+      "Wie der stündliche Lauf arbeitet. Vorgabe ist config.json im Repository; was du hier "
+      + "änderst, überschreibt sie." }));
+    box.appendChild(h("p", { class: "meta achtung", style: "margin:0 0 8px", text:
+      "Wirkt erst mit dem nächsten Lauf, und dann für alle Kollegen: Vorlauf und Dauer stehen "
+      + "in jedem Kalendertermin, den die App ausliefert." }));
+
+    var innen = h("div", {}, [skelett(1)]);
+    box.appendChild(innen);
+    betriebLaden(true).then(function (zeilen) {
+      if (!innen.isConnected) return;
+      var gesetzt = {};
+      zeilen.forEach(function (z) { gesetzt[z.schluessel] = z; });
+      leeren(innen);
+      BETRIEB.forEach(function (b) {
+        // Der geltende Wert, so wie der letzte Lauf ihn benutzt hat.
+        var gilt = ctx && ctx.daten ? ctx.daten[b[0]] : null;
+        var a = gesetzt[b[0]];
+        var feld = h("input", { type: "number", step: "1", min: "0", inputmode: "numeric",
+          value: String(a ? a.wert : (gilt != null ? gilt : "")) });
+        var hinweis = h("small", { class: a ? "achtung" : "meta" });
+        hinweis.textContent = a
+          ? "von Hand gesetzt" + (a.von ? " von " + a.von : "")
+            + (gilt != null ? " · im letzten Lauf galt " + gilt : "")
+          : (gilt != null ? "nach config.json · im letzten Lauf galt " + gilt : "noch kein Lauf");
+        function fertig() { betriebZeilen = null; betriebLaden(true).then(neu); }
+        function zurueck() {
+          speichern(sb.from("betrieb_einstellungen").delete().eq("schluessel", b[0]))
+            .then(function (r) {
+              if (r && r.error) { meldung(fehlerText(r.error), "warn"); return; }
+              kurzMeldung(b[1] + " wieder nach config.json ✓", "gut");
+              fertig();
+            });
+        }
+        var uebernehmen = h("button", { type: "button", class: "anfrage", text: "Übernehmen" });
+        uebernehmen.addEventListener("click", function () {
+          var n = parseInt(String(feld.value).replace(/\D/g, ""), 10);
+          if (!isFinite(n) || n < 0) { meldung("Das ist keine Zahl.", "warn"); return; }
+          uebernehmen.disabled = true;
+          speichern(sb.from("betrieb_einstellungen").upsert({ schluessel: b[0], wert: n,
+            von: (profil && (profil.name || profil.slug)) || null,
+            geaendert: new Date().toISOString() }, { onConflict: "schluessel" })).then(function (r) {
+            uebernehmen.disabled = false;
+            if (r && r.error) {
+              meldung(fehlerText(r.error) + (/betrieb_einstellungen/.test(r.error.message || "")
+                ? ", schema.sql (v53) ausführen." : ""), "warn");
+              return;
+            }
+            kurzMeldung(b[1] + " = " + n + " " + b[2] + " ✓ (ab dem nächsten Lauf)", "gut");
+            fertig();
+          });
+        });
+        var knoepfe = [feld, h("span", { class: "meta", text: b[2] }), uebernehmen];
+        if (a) knoepfe.push(h("button", { type: "button", class: "textknopf",
+          text: "Zurück auf config.json", onclick: zurueck }));
+        innen.appendChild(h("div", { class: "gebuehr-zeile" + (a ? " anders" : "") }, [
+          h("span", {}, [h("b", { text: b[1] }), h("small", { class: "meta", text: b[3] }), hinweis]),
+          h("span", { class: "zweit" }, knoepfe)]));
+      });
+      innen.appendChild(h("p", { class: "meta mg-fuss", style: "margin-top:10px", text:
+        "Quell-Adressen von esrw.de, Namenslisten und das Ausgabeverzeichnis bleiben in "
+        + "config.json. Eine vertippte Adresse legt den ganzen Lauf lahm – das gehört nicht "
+        + "auf ein Handy. Die Pipeline nimmt deshalb nur diese drei Werte an." }));
+    });
+  }
+
   // ------------------------------------------------- Gebuehrensaetze
   // Die Ordnung steht in gebuehren.json. Abweichungen davon liegen in der
   // Tabelle gebuehren_saetze, je Zeile ein Pfad ("senioren.RL.HSR") und
@@ -6109,7 +6204,10 @@ window.Mitglieder = (function () {
       ["speicher", "Speicher", "i-note", speicherRendern, null,
        "Platz in der Datenbank und die tägliche Sicherung"],
       ["abo", "Abo", "i-euro", aboRendern, null,
-       "Kosten und Grenzen des Supabase-Plans"]
+       "Kosten und Grenzen des Supabase-Plans"],
+      // Wirkt auf die Termine aller Kollegen - kein delegierbares Recht.
+      ["betrieb", "Betrieb", "i-clock", betriebRendern, null,
+       "Vorlauf, Termindauer und wie weit zurück gelesen wird"]
     ].filter(function (b) { return istAdminAn() || (b[4] && darf(b[4])); });
   }
   // Reihenfolge nach Haeufigkeit des Gebrauchs, nicht alphabetisch.
@@ -6117,7 +6215,7 @@ window.Mitglieder = (function () {
     ["Konten und Rechte", "i-users", ["freischaltung", "funktionen", "ansehen"]],
     ["Spiele", "i-cal", ["spiel", "korrekturen"]],
     ["Stammdaten", "i-pin", ["hallen", "adressen", "telefon", "zeiten", "staerken", "gebuehren"]],
-    ["System", "i-shield", ["push", "speicher", "abo"]]
+    ["System", "i-shield", ["betrieb", "push", "speicher", "abo"]]
   ];
   var ADMIN_FUSS = "Freigeschaltete sehen Tauschbörse, Verfügbarkeiten, Hallen-Hinweise, Kontakte und Mitfahrten. "
     + "Admins können außerdem freischalten und weitere Admins ernennen. Das eigene Admin-Recht lässt sich hier "
