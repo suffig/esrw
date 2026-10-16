@@ -2856,6 +2856,42 @@
     .mg-summenblock { animation:karte-rein .3s ease-out both; }
   }
 
+
+  /* ===== Runde 44: Initialen, Standzeile, Tippflaechen =============== */
+
+  /* Die Standzeile hat bei 375 px nur 113 px, und jede Formulierung
+     braucht mehr (117 bis 142) - sie war immer abgeschnitten. Der Kopf
+     ist randvoll, also faellt hier das Wort "Stand" weg; der volle Text
+     steht im title. Gleiche Technik wie bei .stand-mehr darueber. */
+  @media (max-width: 480px) { .stand-wort { display:none; } }
+
+  /* Runde 37 hat die Kopfknoepfe auf 41 x 43 gebracht. Die uebrigen
+     wiederkehrenden Bedienelemente liegen bei 35 bis 38 px - genug fuer
+     WCAG 2.5.8, aber nicht fuer eine Hand mit Handschuh an der Bande.
+     Hier ist Platz dafuer, anders als im Kopf. */
+  .modus button, .schalterzeile button, .filterchips button,
+  .ligen button.textknopf, .archiv-selects select, .filterzeile select,
+  .menue button.menue-gruppe { min-height:44px; }
+  .chips .chip { min-height:44px; box-sizing:border-box; }
+  /* Der Knopf sitzt in der Kopfzeile jeder Spielkarte - 101-mal auf der
+     Planseite. Ihn hoeher zu machen wuerde jede Karte strecken, also
+     waechst nur die Flaeche, die Tipps annimmt (wie Runde 37). */
+  .kopfzeile .teilen-knopf { position:relative; }
+  .kopfzeile .teilen-knopf::after { content:""; position:absolute; inset:-4px -2px; }
+
+  /* Was die Pipeline nicht entscheiden konnte, steht oben im Abschnitt
+     und hebt sich ab - es wiegt schwerer als das, was die App selbst
+     gefunden hat. */
+  .zweifel-gruppe { border:1px solid var(--warn); background:var(--warn-bg); }
+  .zweifel-gruppe > b { display:flex; align-items:center; gap:6px; }
+  /* Der Text ist hier laenger als bei einer gewoehnlichen Doppelung
+     ("koennte sein: ... oder ..."), der Knopf breiter. Nebeneinander
+     wird beides bei 375 px gequetscht, also darf der Knopf umbrechen. */
+  .zweifel-zeile { flex-wrap:wrap; }
+  .zweifel-zeile > span { flex:1 1 100%; }
+  .zweifel-zeile > button { margin-left:auto; }
+
+
 </style>
 </head>
 <body>
@@ -3318,6 +3354,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=191"></script>
+<script src="app.js?v=192"></script>
 </body>
 </html>

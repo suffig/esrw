@@ -998,10 +998,36 @@
     var nach = (t[0] || "").trim(), vor = (t[1] || "").trim();
     return ((vor[0] || "") + (nach[0] || "")).toUpperCase() || "?";
   }
+  // Weiss auf hsl(h, 45%, 42%) traegt nicht ueber alle Farbtoene: bei
+  // gleicher HSL-Helligkeit ist Gelb weit heller als Blau. Nachgerechnet
+  // verfehlten 166 von 360 Farbtoenen die geforderten 4,5:1, Oliv lag
+  // bei 2,94 - die Initialen standen dann kaum lesbar auf dem Kreis.
+  // Einheitlich abzusenken wuerde auch Blau und Violett verdunkeln, die
+  // schon bei 7 liegen; die Farbvielfalt ist aber das, woran man die
+  // Kollegen auseinanderhaelt. Also je Farbton nur so weit wie noetig -
+  // 194 von 360 bleiben dadurch unveraendert.
+  function hslLeuchtdichte(h, s, l) {
+    h /= 360; s /= 100; l /= 100;
+    var q = l < 0.5 ? l * (1 + s) : l + s - l * s, p = 2 * l - q;
+    function teil(t) {
+      if (t < 0) t += 1;
+      if (t > 1) t -= 1;
+      if (t < 1 / 6) return p + (q - p) * 6 * t;
+      if (t < 1 / 2) return q;
+      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+      return p;
+    }
+    var c = [teil(h + 1 / 3), teil(h), teil(h - 1 / 3)].map(function (v) {
+      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+  }
   function farbeFuer(text) {
     text = String(text == null ? "" : text);
     var hsum = 0; for (var i = 0; i < text.length; i++) hsum = (hsum * 31 + text.charCodeAt(i)) % 360;
-    return "hsl(" + hsum + ", 45%, 42%)";
+    var l = 42;
+    while (l > 22 && 1.05 / (hslLeuchtdichte(hsum, 45, l) + 0.05) < 4.5) l--;
+    return "hsl(" + hsum + ", 45%, " + l + "%)";
   }
 
   function zuletztLesen() { try { return JSON.parse(lesen("zuletzt") || "[]"); } catch (e) { return []; } }
@@ -6622,7 +6648,11 @@
     if (lauf && lauf.stand) {
       var stand = new Date(lauf.stand), alter = (Date.now() - stand.getTime()) / 3600000, min = Math.round(alter * 60);
       var relativ = min < 1 ? "gerade eben" : min < 60 ? "vor " + min + " Min." : alter < 24 ? "vor " + Math.round(alter) + " Std." : stand.toLocaleString("de-DE", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
-      s.appendChild(document.createTextNode("Stand " + relativ));
+      // "Stand" hat auf 375 px keinen Platz mehr - die Zeile war sonst
+      // immer abgeschnitten. Der ganze Text steht im title.
+      var wort = document.createElement("span"); wort.className = "stand-wort"; wort.textContent = "Stand ";
+      s.appendChild(wort);
+      s.appendChild(document.createTextNode(relativ));
       var mehr = document.createElement("span"); mehr.className = "stand-mehr"; mehr.textContent = " · " + zahlen; s.appendChild(mehr);
       s.title = "Letzter Lauf: " + stand.toLocaleString("de-DE") + " · " + zahlen;
       if (alter > 6) { s.className = "stand alt"; var w = document.createElement("span"); w.className = "stand-mehr"; w.textContent = ", lange nicht aktualisiert"; s.appendChild(w); }

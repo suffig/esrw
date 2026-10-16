@@ -2860,3 +2860,41 @@ returns jsonb language sql stable security definer set search_path = public as $
 $$;
 revoke all on function public.spiel_anhang(text) from public;
 grant execute on function public.spiel_anhang(text) to authenticated;
+
+
+-- ======================================================================
+-- v57: Zweifelsfaelle aus der Paarung sichtbar machen
+-- ======================================================================
+-- kennungen_paaren() paart ein verschwundenes Spiel nur dann mit einem
+-- neuen, wenn die Zuordnung in beide Richtungen eindeutig ist. Sonst
+-- wird nicht geraten - die Folge waere eine Abrechnung am falschen
+-- Spiel. Bisher blieb so ein Fall nur als Zeile auf stderr zurueck und
+-- landete im Workflow-Protokoll, das niemand liest; sichtbar wurde er
+-- erst Wochen spaeter als doppeltes Spiel in der Abrechnung.
+--
+-- Hier stehen sie jetzt. Der Betreiber sieht im Pflege-Bereich, was die
+-- Pipeline nicht entscheiden konnte, und entscheidet selbst - entweder
+-- zusammenfuehren oder als eigenstaendiges Spiel abhaken.
+create table if not exists public.spiel_zweifel (
+  kennung    text primary key,
+  beginn     timestamptz,
+  liga       text,
+  paarung    text,
+  -- Die moeglichen Vorgaenger: [{"kennung": "...", "beginn": "..."}, ...]
+  kandidaten jsonb not null default '[]'::jsonb,
+  erkannt    timestamptz not null default now(),
+  erledigt   boolean not null default false,
+  geaendert  timestamptz not null default now()
+);
+alter table public.spiel_zweifel enable row level security;
+
+-- Lesen darf, wer freigeschaltet ist - im Pflege-Bereich sieht es
+-- ohnehin nur der Betreiber, aber die Zeile verraet nichts Privates.
+drop policy if exists "Zweifel lesen" on public.spiel_zweifel;
+create policy "Zweifel lesen" on public.spiel_zweifel for select to authenticated
+  using (public.ist_freigeschaltet());
+-- Abhaken und loeschen darf nur der Betreiber.
+drop policy if exists "Zweifel pflegen" on public.spiel_zweifel;
+create policy "Zweifel pflegen" on public.spiel_zweifel for all to authenticated
+  using (public.ist_admin()) with check (public.ist_admin());
+-- Die Pipeline schreibt mit dem Service-Schluessel und umgeht RLS.

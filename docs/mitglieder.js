@@ -6195,27 +6195,85 @@ window.Mitglieder = (function () {
   // Gruppen: gleicher Tag, gleiche Liga, gleiche Paarung - aber mehr als
   // eine Kennung und mehr als eine Uhrzeit. Gleiche Zeit zaehlt nicht
   // mit; das waere dieselbe Ansetzung zweimal und kein Verlegungsfehler.
+  // Zweifelsfaelle der Pipeline (spiel_zweifel, v57): sie hat eine
+  // Verlegung vermutet, sich aber nicht festgelegt - zu Recht, denn
+  // geraten hiesse eine Abrechnung am falschen Spiel. Hier entscheidet
+  // der Betreiber.
+  var zweifelListe = null;
+  function zweifelLaden(nochmal) {
+    if (zweifelListe && !nochmal) return Promise.resolve(zweifelListe);
+    if (!sb || !session) return Promise.resolve([]);
+    return sb.from("spiel_zweifel").select("kennung,beginn,liga,paarung,kandidaten")
+      .eq("erledigt", false).order("beginn", { ascending: false })
+      .then(function (r) { zweifelListe = (r && r.data) || []; return zweifelListe; })
+      .catch(function () { zweifelListe = []; return zweifelListe; });
+  }
+  // "Ist ein eigenes Spiel": die Zeile bleibt stehen, aber abgehakt -
+  // so meldet die Pipeline denselben Fall nicht jeden Lauf neu.
+  function zweifelErledigen(kennung) {
+    return speichern(sb.from("spiel_zweifel")
+      .update({ erledigt: true, geaendert: new Date().toISOString() }).eq("kennung", kennung));
+  }
+
+  // Drei Wochen, dasselbe Fenster, das die Pipeline beim Paaren benutzt
+  // (kennungen_paaren). Ein Rueckrundenspiel drei Monate spaeter faellt
+  // damit heraus, eine Verlegung um eine Woche nicht mehr.
+  var DOPPELT_FENSTER_TAGE = 21;
+
+  // Zwei Ansetzungen derselben Begegnung sind nur dann verdaechtig, wenn
+  // nicht beide im Spielplan stehen. Stehen beide drin, ist es ein
+  // Doppelspieltag - im Nachwuchs spielt man Samstag und Sonntag gegen
+  // dieselbe Mannschaft, und in den echten Daten sind das acht von acht
+  // Paaren innerhalb von drei Wochen. Ohne diese Pruefung waere das
+  // weitere Fenster nur eine Fehlalarm-Quelle, in der die eine echte
+  // Verlegung untergeht.
+  function paarVerdaechtig(a, b) {
+    if (a.imPlan && b.imPlan) return false;
+    var ta = new Date(a.beginn).getTime(), tb = new Date(b.beginn).getTime();
+    if (!ta || !tb) return false;
+    return Math.abs(ta - tb) <= DOPPELT_FENSTER_TAGE * 86400000;
+  }
+
   function doppelteGruppen(zeilen) {
     var nach = {};
     (zeilen || []).forEach(function (z) {
       if (!z.beginn || !z.paarung) return;
-      var k = String(z.beginn).slice(0, 10) + "|" + (z.liga || "") + "|" + z.paarung;
+      var k = (z.liga || "") + "|" + z.paarung;
       (nach[k] = nach[k] || []).push(z);
     });
     var raus = [];
     Object.keys(nach).forEach(function (k) {
-      var gesehen = {}, g = [];
+      var gesehen = {}, alle = [];
       nach[k].forEach(function (z) {
         if (gesehen[z.kennung]) return;
-        gesehen[z.kennung] = 1; g.push(z);
+        gesehen[z.kennung] = 1; alle.push(z);
       });
-      if (g.length < 2) return;
-      var zeiten = {};
-      g.forEach(function (z) { zeiten[String(z.beginn).slice(11, 16)] = 1; });
-      if (Object.keys(zeiten).length < 2) return;
-      g.sort(function (a, b) { return a.beginn < b.beginn ? -1 : 1; });
-      raus.push({ tag: String(g[0].beginn).slice(0, 10), liga: g[0].liga || "",
-                  paarung: g[0].paarung, spiele: g });
+      if (alle.length < 2) return;
+      alle.sort(function (a, b) { return a.beginn < b.beginn ? -1 : 1; });
+      // Verdaechtige Paare zu Haufen verbinden: haengt c an b und b an a,
+      // gehoeren alle drei in denselben Fall (zweimal verlegt).
+      var haufen = alle.map(function (z) { return [z]; });
+      for (var i = 0; i < alle.length; i++) {
+        for (var j = i + 1; j < alle.length; j++) {
+          if (!paarVerdaechtig(alle[i], alle[j])) continue;
+          var hi = null, hj = null;
+          haufen.forEach(function (h) {
+            if (h.indexOf(alle[i]) >= 0) hi = h;
+            if (h.indexOf(alle[j]) >= 0) hj = h;
+          });
+          if (hi && hj && hi !== hj) {
+            hi.push.apply(hi, hj);
+            haufen.splice(haufen.indexOf(hj), 1);
+          }
+        }
+      }
+      haufen.forEach(function (g) {
+        if (g.length < 2) return;
+        g.sort(function (a, b) { return a.beginn < b.beginn ? -1 : 1; });
+        raus.push({ tag: String(g[0].beginn).slice(0, 10), liga: g[0].liga || "",
+                    paarung: g[0].paarung, spiele: g,
+                    ueberTage: String(g[0].beginn).slice(0, 10) !== String(g[g.length - 1].beginn).slice(0, 10) });
+      });
     });
     raus.sort(function (a, b) { return a.tag < b.tag ? 1 : -1; });
     return raus;
@@ -6238,18 +6296,67 @@ window.Mitglieder = (function () {
     }, Promise.resolve()).then(function () { return summe; });
   }
 
+  // Oben im Abschnitt, vor der eigenen Suche: was die Pipeline selbst
+  // nicht entscheiden konnte, wiegt schwerer als das, was die App
+  // gefunden hat.
+  function zweifelBlock(box, neu) {
+    var innen = h("div", {});
+    box.appendChild(innen);
+    zweifelLaden(true).then(function (liste) {
+      if (!innen.isConnected || !liste.length) return;
+      var karte = h("div", { class: "karte doppelt-gruppe zweifel-gruppe" });
+      karte.appendChild(h("b", {}, [ikone("i-bell"), " " + liste.length
+        + (liste.length === 1 ? " Fall aus dem letzten Lauf" : " Fälle aus den letzten Läufen")]));
+      karte.appendChild(h("p", { class: "meta", style: "margin:4px 0 8px", text:
+        "Die Einteilung sah nach einer Verlegung aus, war aber nicht eindeutig – deshalb "
+        + "steht das Spiel neu in der App. Du entscheidest." }));
+      liste.forEach(function (z) {
+        var zeile = h("div", { class: "doppelt-zeile zweifel-zeile" });
+        var wann = new Date(z.beginn);
+        var kand = (z.kandidaten || []).map(function (k) {
+          return k.beginn ? new Date(k.beginn).toLocaleDateString("de-DE",
+            { weekday: "short", day: "2-digit", month: "2-digit" }) + ", "
+            + String(k.beginn).slice(11, 16) + " Uhr" : k.kennung;
+        });
+        zeile.appendChild(h("span", {}, [
+          h("b", { text: (z.liga ? z.liga + ": " : "") + (z.paarung || z.kennung) }),
+          h("small", { class: "meta", style: "display:block", text:
+            "neu: " + wann.toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" })
+            + ", " + String(z.beginn).slice(11, 16) + " Uhr"
+            + (kand.length ? " · könnte sein: " + kand.join(" oder ") : "") })]));
+        var ok = h("button", { type: "button", class: "textknopf",
+          text: "ist ein eigenes Spiel", title: "Nicht mehr melden" });
+        ok.addEventListener("click", function () {
+          ok.disabled = true;
+          zweifelErledigen(z.kennung).then(function (r) {
+            if (r && r.error) { ok.disabled = false; meldung(fehlerText(r.error), "warn"); return; }
+            kurzMeldung("Abgehakt ✓", "gut");
+            zweifelListe = null; neu();
+          });
+        });
+        zeile.appendChild(ok);
+        karte.appendChild(zeile);
+      });
+      karte.appendChild(h("p", { class: "meta", style: "margin:8px 0 0", text:
+        "Gehört es doch zusammen, such es unten im Fall und führ es zusammen." }));
+      innen.appendChild(karte);
+    });
+  }
+
   function doppelteRendern(box) {
     function neu() { leeren(box); doppelteRendern(box); }
     leeren(box);
     box.appendChild(h("h4", {}, [ikone("i-cal"), " Doppelte Spiele"]));
     box.appendChild(h("p", { class: "meta", style: "margin:0 0 8px", text:
-      "Dieselbe Begegnung am selben Tag mit verschiedenen Anstoßzeiten. Meist eine Verlegung, "
+      "Dieselbe Begegnung zweimal innerhalb von drei Wochen, und nicht beide stehen im Spielplan. Meist eine Verlegung, "
       + "die als zweites Spiel angelegt wurde – dann hängen Kilometer und Vergütung an der "
       + "falschen Zeit. Es kann auch eine echte Doppelansetzung sein; das entscheidest du." }));
     box.appendChild(h("p", { class: "meta", style: "margin:0 0 8px", text:
       "Zusammenführen nimmt mit, was dranhängt. Ausblenden nimmt die Ansetzung nur weg – "
       + "das brauchst du, wenn esrw.de die falsche Zeit selbst weiterführt und jeder Lauf "
       + "sie neu anlegt." }));
+
+    zweifelBlock(box, neu);
 
     var innen = h("div", {}, [skelett(1)]);
     box.appendChild(innen);
@@ -6267,7 +6374,9 @@ window.Mitglieder = (function () {
 
       gruppen.forEach(function (g, gi) {
         var karte = h("div", { class: "karte doppelt-gruppe" });
+        var letzter = String(g.spiele[g.spiele.length - 1].beginn).slice(0, 10);
         karte.appendChild(h("b", { text: datumLang(new Date(g.tag + "T12:00:00"))
+          + (g.ueberTage ? " bis " + datumLang(new Date(letzter + "T12:00:00")) : "")
           + " · " + (g.liga ? g.liga + ": " : "") + g.paarung }));
         // Vorschlag: das, was noch auf esrw.de steht.
         var vorschlag = g.spiele.filter(function (s) { return s.imPlan; })[0]
@@ -6304,8 +6413,12 @@ window.Mitglieder = (function () {
               doppelteListe = null; neu();
             });
           });
+          var wann = g.ueberTage
+            ? new Date(s.beginn).toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" })
+              + ", " + String(s.beginn).slice(11, 16) + " Uhr"
+            : String(s.beginn).slice(11, 16) + " Uhr";
           karte.appendChild(h("label", { class: "doppelt-zeile" + (s.imPlan ? " lebt" : "") }, [
-            r, h("span", {}, [h("b", { text: String(s.beginn).slice(11, 16) + " Uhr" }),
+            r, h("span", {}, [h("b", { text: wann }),
                               h("small", { text: zusatz.join(" · ") }), anhang]),
             ausblenden]));
         });
@@ -6816,6 +6929,7 @@ window.Mitglieder = (function () {
       frage("freischalten", sb.from("profile").select("id,freigeschaltet,admin")),
       frage("spiele", sb.from("spiel_meldungen").select("kennung")),
       frage("korrekturen", sb.from("spiel_korrekturen").select("kennung,geloescht")),
+      frage("spiele", sb.from("spiel_zweifel").select("kennung").eq("erledigt", false)),
       frage("stammdaten", sb.from("vereine_adressen").select("verein,name,strasse")),
       adminStandHolen()
     ]).then(function (r) {
@@ -6823,8 +6937,9 @@ window.Mitglieder = (function () {
       var profile = (r[0] && r[0].data) || null;
       var meldungen = (r[1] && r[1].data) || null;
       var korrekturen = (r[2] && r[2].data) || null;
-      var adressen = (r[3] && r[3].data) || null;
-      var stand = r[4];
+      var zweifel = (r[3] && r[3].data) || null;
+      var adressen = (r[4] && r[4].data) || null;
+      var stand = r[5];
 
       var liste = h("div", { class: "lage-liste" });
       var offeneZeilen = 0, alleZeilen = 0;
@@ -6873,6 +6988,13 @@ window.Mitglieder = (function () {
         var offeneM = meldungen.filter(function (m) { return !raus[m.kennung]; }).length;
         zeile(offeneM, "Gemeldete Ausfälle",
           offeneM ? "noch nicht entschieden" : "keine offenen Meldungen", "spiel");
+      }
+
+      // Was die Pipeline nicht entscheiden konnte. Bleibt es liegen,
+      // steht das Spiel irgendwann doppelt in der Abrechnung.
+      if (zweifel) {
+        zeile(zweifel.length, "Mögliche Verlegungen",
+          zweifel.length ? "die Einteilung war nicht eindeutig" : "nichts offen", "doppelt");
       }
 
       if (offenFuer("stammdaten")) {

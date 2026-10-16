@@ -1238,15 +1238,61 @@ def kennungen_paaren(reg, spiele, venues, historie=None, stand=None,
     for neu, alt in paare:
         if neu_zahl[neu] == 1 and alt_zahl[alt] == 1:
             fortsetzung[neu] = alt
-    unklar = len({n for n, a in paare if neu_zahl[n] > 1 or alt_zahl[a] > 1})
+    # Nicht nur zaehlen: der Betreiber soll sehen, worum es geht.
+    zweifel = {}
+    for neu, alt in paare:
+        if neu_zahl[neu] > 1 or alt_zahl[alt] > 1:
+            zweifel.setdefault(neu, []).append(alt)
+    unklar = len(zweifel)
+    reg["zweifel"] = zweifel
     reg["fortsetzung"] = fortsetzung
     if fortsetzung:
         print("%d verlegte(s) Spiel(e) wiedererkannt - gilt als geaendert, nicht als neu."
               % len(fortsetzung))
     if unklar:
-        print("  ! %d Spiel(e) koennten verlegt sein, aber nicht eindeutig - bleiben neu."
-              % unklar, file=sys.stderr)
+        print("  ! %d Spiel(e) koennten verlegt sein, aber nicht eindeutig - bleiben neu "
+              "und stehen im Pflege-Bereich." % unklar, file=sys.stderr)
     return fortsetzung
+
+
+def zweifel_schreiben(reg, uebersicht, historie):
+    """Die unklaren Faelle aus der Paarung in die Datenbank.
+
+    Der Pflege-Bereich zeigt sie; der Betreiber entscheidet, ob es
+    dasselbe Spiel ist oder zwei. Vorher standen sie nur auf stderr -
+    und wurden Wochen spaeter als doppeltes Spiel in der Abrechnung
+    sichtbar.
+    """
+    offen = (reg or {}).get("zweifel") or {}
+    if not offen:
+        return
+    # Beginn, Liga und Paarung des neuen Spiels stehen in der Uebersicht.
+    nach_id = {s["id"]: s for s in uebersicht}
+    bekannt = (reg.get("bekannt") or {})
+    zeilen = []
+    for quelle, kandidaten in offen.items():
+        kennung = zusammen_fuer(reg, bekannt.get(quelle) or "")
+        s = nach_id.get(kennung)
+        if not s:
+            continue
+        liste = []
+        for alt in kandidaten:
+            alt_kennung = zusammen_fuer(reg, bekannt.get(alt) or "")
+            e = (historie or {}).get(alt) or {}
+            if alt_kennung and alt_kennung != kennung:
+                liste.append({"kennung": alt_kennung, "beginn": e.get("beginn") or ""})
+        if not liste:
+            continue
+        # "erledigt" steht hier bewusst nicht: der Upsert laeuft mit
+        # merge-duplicates, und mitgeschickt wuerde es das Haekchen des
+        # Betreibers bei jedem Lauf wieder entfernen. Beim Einfuegen
+        # greift der Default der Spalte.
+        zeilen.append({"kennung": kennung, "beginn": s["anstoss"].isoformat(),
+                       "liga": s["liga"] or None, "paarung": s["paarung"],
+                       "kandidaten": liste,
+                       "geaendert": datetime.now(timezone.utc).isoformat()})
+    if zeilen and tabelle_schreiben("spiel_zweifel?on_conflict=kennung", zeilen):
+        print("%d Zweifelsfall/-faelle an den Pflege-Bereich gemeldet." % len(zeilen))
 
 
 def zusammen_fuer(reg, kennung):
@@ -2093,6 +2139,11 @@ def main():
         archiv_in_db(historie_alle, uebersicht, personen, stand, kennungen)
     except Exception as e:
         print("  ! Archiv nicht in die Datenbank geschrieben: %s" % str(e)[:120], file=sys.stderr)
+
+    try:
+        zweifel_schreiben(kennungen, uebersicht, historie_alle)
+    except Exception as e:
+        print("  ! Zweifelsfaelle nicht gemeldet: %s" % str(e)[:120], file=sys.stderr)
 
     eigene_slugs = {slug_aus(n) for n in cfg.get("eigene_namen", [])}
     eigene_slugs |= {p["slug"] for p in personen
