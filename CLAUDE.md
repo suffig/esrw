@@ -61,8 +61,14 @@ spezifischere: `.mg-zeile input` schlägt `.mg-zeile > *`.
 
 ## Prüfen
 
-* `node --check docs/*.js` und `python tests/test_esrw.py` – beides läuft
-  auch als Hook automatisch.
+* `node --check docs/*.js`, `python tests/test_esrw.py` und
+  `node tests/test_abrechnung.js` – die ersten beiden laufen auch als
+  Hook automatisch.
+* Der Abrechnungstest lädt `docs/mitglieder.js` mit der Browser-Attrappe
+  aus `tests/attrappe_browser.js` in Node und rechnet über die Luke
+  `window.Mitglieder.pruefstand`. Beträge, Zuschläge, eigene Regeln,
+  Fahrtkosten und Rechnungsnummern stehen dort. **Jeder Fall, der einmal
+  falsch gerechnet hat, gehört danach als Zeile hinein.**
 * Aussehen immer im Browser-Pane: `preview_start {name: "docs"}`,
   Ansicht 375 px, einmal angemeldet und einmal abgemeldet durchklicken,
   Konsole auf Fehler, `document.documentElement.scrollWidth` gegen die

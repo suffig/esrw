@@ -689,7 +689,7 @@
 
   /* Kurze Rueckmeldung ueber der Leiste, damit sie auch beim Scrollen sichtbar ist */
   .toast { position:fixed; z-index:70; left:50%; bottom:calc(84px + env(safe-area-inset-bottom)); transform:translateX(-50%) translateY(8px);
-           z-index:20; max-width:min(92vw, 520px); background:var(--text); color:var(--bg); padding:10px 16px; border-radius:var(--radius-m);
+           z-index:20; width:max-content; max-width:min(92vw, 520px); background:var(--text); color:var(--bg); padding:10px 16px; border-radius:var(--radius-m);
            font-size:var(--s-xl); font-weight:700; box-shadow:0 6px 20px rgba(0,0,0,.25); opacity:0; pointer-events:none;
            transition:opacity .18s, transform .18s; }
   .toast.zeigt { opacity:1; transform:translateX(-50%) translateY(0); }
@@ -766,7 +766,7 @@
 
   /* Profilzeile mit Avatar */
   .profilzeile { padding:12px 14px; gap:10px; }
-  .profilzeile .avatar-gross { width:42px; height:42px; border-radius:50%; background:var(--akzent); color:#fff; font-weight:800; display:inline-flex; align-items:center; justify-content:center; flex:none; font-size:var(--s-xl); }
+  .profilzeile .avatar-gross { width:42px; height:42px; border-radius:50%; background:var(--akzent); color:var(--akzent-text); font-weight:800; display:inline-flex; align-items:center; justify-content:center; flex:none; font-size:var(--s-xl); }
   .profilzeile > span:first-child { display:flex; align-items:center; gap:10px; min-width:0; }
   .profilzeile > span:first-child > span { min-width:0; }
   .profilzeile > span:first-child:not(:has(.avatar-gross)):not(:has(.kopf-i)) { display:block; }
@@ -812,7 +812,7 @@
   .konto-zeile small { display:block; color:var(--dim); margin-top:2px; overflow-wrap:anywhere; }
   .konto-zeile .zweit-klein { justify-content:flex-start; margin-top:8px; }
   .konto-zeile .mg-select { margin-top:8px; width:100%; }
-  .fahrt .meins button.aktiv { background:var(--akzent); color:#fff; border-color:var(--akzent); }
+  .fahrt .meins button.aktiv { background:var(--akzent); color:var(--akzent-text); border-color:var(--akzent); }
   /* Anleitung (Tour) */
   .tour { position:fixed; inset:0; z-index:60; background:rgba(8,12,24,.55); backdrop-filter:blur(4px); display:flex; align-items:flex-end; justify-content:center; padding:16px; padding-bottom:calc(16px + env(safe-area-inset-bottom)); }
   @media (min-width: 600px) { .tour { align-items:center; } }
@@ -827,7 +827,7 @@
   .tour-aktion { margin-top:12px; }
   .tour-aktion a, .tour-aktion button { display:inline-flex; align-items:center; gap:6px; padding:8px 14px; border-radius:var(--radius-pille); background:var(--akzent-hell); color:var(--akzent); font-weight:700; text-decoration:none; border:0; font-size:var(--s-xl); cursor:pointer; }
   .tour-fuss { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:18px; }
-  .tour-fuss .haupt { background:var(--akzent); color:#fff; border:0; border-radius:var(--radius-m); padding:10px 18px; font-weight:800; cursor:pointer; }
+  .tour-fuss .haupt { background:var(--akzent); color:var(--akzent-text); border:0; border-radius:var(--radius-m); padding:10px 18px; font-weight:800; cursor:pointer; }
   .tour-fuss .mg-neben { padding:10px 14px; }
   .tour-fuss .mg-neben[disabled] { opacity:.35; }
   .tour-punkte { display:flex; gap:6px; }
@@ -1238,10 +1238,10 @@
   .protokoll .art.neu { background:#e3f5e8; color:#1a7f37; }
   .protokoll .zeile small { display:block; color:var(--dim); }
   .hinweis.offiziell { border-left:4px solid var(--akzent); }
-  .offiziell-badge { font-size:var(--s-xs); font-weight:800; text-transform:uppercase; letter-spacing:.06em; background:var(--akzent); color:#fff; padding:2px 8px; border-radius:var(--radius-pille); margin-right:6px; vertical-align:middle; }
+  .offiziell-badge { font-size:var(--s-xs); font-weight:800; text-transform:uppercase; letter-spacing:.06em; background:var(--akzent); color:var(--akzent-text); padding:2px 8px; border-radius:var(--radius-pille); margin-right:6px; vertical-align:middle; }
   .mg-besetzung { display:grid; grid-template-columns:1fr 5.5em; gap:6px; margin-bottom:6px; }
   .termin-antwort { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:8px; }
-  .termin-antwort button.aktiv { background:var(--akzent); color:#fff; border-color:var(--akzent); }
+  .termin-antwort button.aktiv { background:var(--akzent); color:var(--akzent-text); border-color:var(--akzent); }
   /* Korrekturen vom Admin */
   .spiel.abgesagt .paarung, #spiel-kopf.abgesagt .paarung { text-decoration:line-through; opacity:.75; }
   .spiel.abgesagt { border-left:4px solid var(--rot); }
@@ -1348,7 +1348,7 @@
 
   /* Anmeldung */
   .anmelde-kopf { text-align:center; padding:8px 0 14px; }
-  .anmelde-kopf .avatar-gross { width:56px; height:56px; margin:0 auto 10px; font-size:var(--s-3xl); background:var(--akzent); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+  .anmelde-kopf .avatar-gross { width:56px; height:56px; margin:0 auto 10px; font-size:var(--s-3xl); background:var(--akzent); color:var(--akzent-text); border-radius:50%; display:flex; align-items:center; justify-content:center; }
   .anmelde-kopf h2 { margin:0; font-size:1.35rem; letter-spacing:-.02em; }
   .anmelde-kopf p { margin:4px 0 0; color:var(--dim); font-size:var(--s-xl); }
 
@@ -1914,7 +1914,7 @@
      setzt color:#fff, steht weiter unten und ist spezifischer. */
   .mit-bild { background-size:cover; background-position:center; color:transparent !important; text-indent:-999px; overflow:hidden; }
   .avatar-klein { display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px;
-                  border-radius:50%; background:var(--akzent); color:#fff; font-weight:800; font-size:var(--s-s);
+                  border-radius:50%; background:var(--akzent); color:var(--akzent-text); font-weight:800; font-size:var(--s-s);
                   flex:none; margin-right:8px; }
   .kontakt-kopf { display:flex; align-items:center; gap:0; }
   .kontakt-kopf > b { min-width:0; overflow-wrap:anywhere; }
@@ -2821,6 +2821,41 @@
   /* Was noch auf esrw.de steht, ist der Vorschlag - das soll man sehen. */
   .doppelt-zeile.lebt b { color:var(--gut); }
 
+
+  /* ===== Runde 43: Dunkelmodus, Meldungsbreite, Tippflaechen ========= */
+
+  /* Runde 37 hat die Tippflaechen auf 44 px gebracht. Diese fuenf sind
+     durchgerutscht und blieben bei 37 bis 39 - nachgemessen mit
+     elementFromPoint, weil getBoundingClientRect die ::after-Flaechen
+     nicht sieht. */
+  .mg-leiste button, .mg-ansicht button { min-height:44px; }
+  .profilzeile .textknopf { min-height:44px; padding-left:12px; padding-right:12px; }
+  .mg-untertabs button { min-height:44px; }
+  .mg-select { min-height:44px; }
+  /* Die Links in der Fusszeile bleiben klein: Fliesstext-Links nimmt
+     auch WCAG 2.5.8 aus, und 44 px wuerden den Satz zerreissen. */
+
+  /* Im Spielplan blenden die Karten gestaffelt ein (Schicht 13), in der
+     Abrechnung sprang die Liste hart ins Bild. Dieselbe Liste, dieselbe
+     Bewegung. Gestaffelt ueber nth-child, weil mitglieder.js keinen
+     Zaehler --i setzt; ab der achten Karte ohne weitere Verzoegerung,
+     weiter unten sieht sie ohnehin niemand kommen. */
+  @media (prefers-reduced-motion: no-preference) {
+    .mg-inhalt > .karte, .mg-inhalt > .mg-monat {
+      animation:karte-rein .3s ease-out both;
+    }
+    .mg-inhalt > :nth-child(2) { animation-delay:.03s; }
+    .mg-inhalt > :nth-child(3) { animation-delay:.06s; }
+    .mg-inhalt > :nth-child(4) { animation-delay:.09s; }
+    .mg-inhalt > :nth-child(5) { animation-delay:.12s; }
+    .mg-inhalt > :nth-child(6) { animation-delay:.15s; }
+    .mg-inhalt > :nth-child(7) { animation-delay:.18s; }
+    .mg-inhalt > :nth-child(n+8) { animation-delay:.2s; }
+    /* Die Summenkacheln gehoeren zusammen und kommen als Block, nicht
+       einzeln - sonst flimmert der Kopf bei jedem Tippen im Betragsfeld. */
+    .mg-summenblock { animation:karte-rein .3s ease-out both; }
+  }
+
 </style>
 </head>
 <body>
@@ -3283,6 +3318,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=189"></script>
+<script src="app.js?v=190"></script>
 </body>
 </html>

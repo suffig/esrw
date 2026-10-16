@@ -8858,7 +8858,32 @@ window.Mitglieder = (function () {
     }).catch(function () { return null; });
   }
 
-  return { oeffnen: oeffnen, bereit: bereit, angemeldet: angemeldet,
+  // In der Abrechnung entsteht Geld, und Geld gehoert geprueft. Die
+  // Rechenfunktionen liegen in dieser IIFE - herausloesen wuerde sie
+  // verdoppeln, und der Test pruefte dann eine Kopie. Also diese Luke:
+  // Verweise auf die echten Funktionen plus ein Setzer fuer den
+  // Modulzustand, an dem sie haengen. tests/test_abrechnung.js laedt die
+  // Datei damit in Node. Nur rechnen und lesen - nichts davon schreibt.
+  var pruefstand = {
+    setze: function (o) {
+      if (o.profil !== undefined) profil = o.profil;
+      if (o.gebuehren !== undefined) gebuehren = o.gebuehren;
+      if (o.einsaetze !== undefined) einsaetze = o.einsaetze;
+      if (o.rechnungListe !== undefined) rechnungListe = o.rechnungListe;
+      if (o.rechnungWahl !== undefined) rechnungWahl = o.rechnungWahl;
+      if (o.ctx !== undefined) ctx = o.ctx;
+    },
+    ligaEinordnen: ligaEinordnen, grundgebuehr: grundgebuehr,
+    sollBetrag: sollBetrag, regelBetrag: regelBetrag, regelKm: regelKm,
+    kmVorschlag: kmVorschlag, zeitzuschlag: zeitzuschlag,
+    uebergreifendMoeglich: uebergreifendMoeglich, betragFuer: betragFuer,
+    fahrtkosten: fahrtkosten, summen: summen,
+    rechnungSummeAus: rechnungSummeAus, rechnungDateiname: rechnungDateiname,
+    nummerVorschlag: nummerVorschlag, laufNummern: laufNummern,
+    heimVereinVon: heimVereinVon
+  };
+
+  return { oeffnen: oeffnen, bereit: bereit, angemeldet: angemeldet, pruefstand: pruefstand,
            sperrenAm: sperrenAm, gesuchAnlegen: gesuchAnlegen, offeneAbrechnungen: offeneAbrechnungen,
            extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat, obmann: obmann, termine: termine,
            einstellungenSpeichern: einstellungenSpeichern, radar: radar, angebotMachen: angebotMachen,
