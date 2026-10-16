@@ -56,4 +56,30 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: EHC Troisdorf –
  Eisadler Dortmund
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:5085dc333efaa854c3d8a1be986155e6f7fc8ed4@esrw.de
+SEQUENCE:0
+DTSTAMP:20261016T083039Z
+LAST-MODIFIED:20261016T083039Z
+DTSTART:20261017T074500Z
+DTEND:20261017T111500Z
+SUMMARY:SR · U11 LL Grün: TuS Wiehl
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:45 Uhr\nTreffpunkt:
+  09:45 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Grün\nHalle: Eissportha
+ lle Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Bocklemünd\
+ , Cid\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
+GEO:50.947034;7.5553
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
+ enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
+ ":geo:50.947034,7.5553
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Grün: TuS Wiehl
+END:VALARM
+END:VEVENT
 END:VCALENDAR
