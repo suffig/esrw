@@ -2510,3 +2510,49 @@ alter table public.spiel_kennungen enable row level security;
 drop policy if exists "Kennungen lesen" on public.spiel_kennungen;
 create policy "Kennungen lesen" on public.spiel_kennungen for select to authenticated
   using (public.ist_freigeschaltet());
+
+
+-- ======================================================================
+-- v52: Gebuehrensaetze pflegen, ohne das Repository anzufassen
+-- ======================================================================
+-- Die Saetze stehen in docs/gebuehren.json, abgetippt aus der
+-- Gebuehrenordnung. Aendert der ESRW etwas, musste der Betreiber bisher
+-- die Datei im Repository bearbeiten und veroeffentlichen.
+--
+-- Diese Tabelle haelt Abweichungen davon - je Zeile ein Pfad in die
+-- Datei und der neue Wert:
+--
+--   pfad                       wert
+--   senioren.RL.HSR            165
+--   kilometer.satz_einfach     0.40
+--
+-- Bewusst so und nicht als Kopie der ganzen Ordnung:
+--   * Die Datei bleibt die Vorgabe und bleibt im Repository nachlesbar.
+--     Eine leere Tabelle heisst "es gilt die Ordnung".
+--   * Jede Zeile hier ist eine sichtbare Abweichung. Die Oberflaeche
+--     zeigt sie als solche an und nimmt sie mit einem Griff zurueck
+--     (Zeile loeschen) - das ist wichtig, weil diese Zahlen ueber
+--     sollBetrag() direkt auf Rechnungen an Vereine gehen. Ein Tippfehler
+--     ist hier kein Schoenheitsfehler.
+--   * Neue Posten in der Datei erscheinen von selbst in der Oberflaeche,
+--     ohne Schema-Aenderung.
+--
+-- Gelesen wird sie von beiden Seiten, sonst laufen sie auseinander: die
+-- App rechnet die Abrechnung damit, und esrw_ical.py schreibt dieselbe
+-- Gebuehr in daten.json (Spielseite). Stand jeweils beim naechsten Lauf.
+create table if not exists public.gebuehren_saetze (
+  pfad       text primary key,          -- Pfad in gebuehren.json, z.B. "senioren.RL.HSR"
+  wert       numeric not null,
+  von        text,
+  geaendert  timestamptz not null default now()
+);
+alter table public.gebuehren_saetze enable row level security;
+drop policy if exists "Gebuehren lesen"  on public.gebuehren_saetze;
+drop policy if exists "Gebuehren pflegen" on public.gebuehren_saetze;
+-- Lesen: alle Freigeschalteten - sie rechnen damit ihre eigene Abrechnung.
+create policy "Gebuehren lesen" on public.gebuehren_saetze for select to authenticated
+  using (public.ist_freigeschaltet());
+-- Schreiben: nur der Betreiber. Es gibt bewusst kein Recht, das man
+-- delegieren kann - eine falsche Zahl hier steht auf jeder Rechnung.
+create policy "Gebuehren pflegen" on public.gebuehren_saetze for all to authenticated
+  using (public.ist_admin()) with check (public.ist_admin());

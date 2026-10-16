@@ -714,6 +714,55 @@ def liga_einordnen(liga):
     return None
 
 
+def gebuehren_ueberschreiben(cfg, gebuehren):
+    """Abweichungen aus der Tabelle gebuehren_saetze in die Ordnung
+    einsetzen.
+
+    Je Zeile ein Pfad in gebuehren.json ("senioren.RL.HSR") und der neue
+    Wert. Die Datei bleibt die Vorgabe - eine leere Tabelle heisst "es
+    gilt die Ordnung". Dieselbe Rechnung macht die App in
+    gebuehrenAnwenden(); liefe nur eine der beiden Seiten darueber, zeigte
+    die Spielseite einen anderen Betrag als die Rechnung.
+
+    Angelegt werden keine neuen Zweige: ein Pfad, den die Datei nicht
+    kennt, ist ein Tippfehler und wird gemeldet, nicht stillschweigend
+    erfunden.
+    """
+    if not gebuehren:
+        return 0
+    try:
+        zeilen = tabelle_laden(cfg, "gebuehren_saetze?select=pfad,wert")
+    except Exception as e:
+        print("  ! Gebuehrensaetze nicht geladen (%s) - es gilt die Datei."
+              % str(e)[:80], file=sys.stderr)
+        return 0
+    gesetzt = 0
+    for z in zeilen:
+        pfad = (z.get("pfad") or "").strip()
+        if not pfad or z.get("wert") is None:
+            continue
+        teile = pfad.split(".")
+        ziel = gebuehren
+        for t in teile[:-1]:
+            if not isinstance(ziel, dict) or t not in ziel:
+                ziel = None
+                break
+            ziel = ziel[t]
+        if not isinstance(ziel, dict) or teile[-1] not in ziel:
+            print("  ! Gebuehrensatz '%s' gibt es in gebuehren.json nicht - uebersprungen."
+                  % pfad, file=sys.stderr)
+            continue
+        try:
+            ziel[teile[-1]] = float(z["wert"])
+        except (TypeError, ValueError):
+            print("  ! Gebuehrensatz '%s' ist keine Zahl - uebersprungen." % pfad, file=sys.stderr)
+            continue
+        gesetzt += 1
+    if gesetzt:
+        print("Gebuehren: %d Satz/Saetze aus der Tabelle statt aus der Datei." % gesetzt)
+    return gesetzt
+
+
 def grundgebuehr(gebuehren, liga, rolle, system):
     """Spielleitungsgebuehr laut Ordnung oder None, wenn nicht zuzuordnen."""
     if not gebuehren:
@@ -1746,6 +1795,7 @@ def main():
 
     bevorzugt = aliase_laden(cfg)
     gebuehren = lade(os.path.join(cfg["ausgabe_verzeichnis"], "gebuehren.json"), {})
+    gebuehren_ueberschreiben(cfg, gebuehren)
     korrekturen = korrekturen_laden(cfg)
     if korrekturen:
         print("%d Korrektur(en) vom Betreiber." % len(korrekturen))

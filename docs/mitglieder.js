@@ -592,6 +592,11 @@ window.Mitglieder = (function () {
         profil = r.data;
         if (profil && !sb._attrappe) lokalSchreiben("mg_profil_cache", profil);
         try { rechnungRetten(); } catch (e2) {}
+        // Die Gebuehrenabweichungen gehoeren hierher: ohne sie rechnete
+        // die Abrechnung mit der Datei, waehrend die Spielseite schon die
+        // geaenderten Saetze aus der Pipeline zeigt. Faellt der Abruf aus,
+        // gilt die Datei - gerechnet wird weiter.
+        gebuehrenAbweichungLaden();
         return profil;
       })
       .catch(function (e) {
@@ -5879,6 +5884,185 @@ window.Mitglieder = (function () {
 
   // Adminseite: eine Leiste oben, darunter genau ein Bereich. Vorher standen
   // fuenf Karten untereinander - auf dem Handy eine endlose Rolle.
+  // ------------------------------------------------- Gebuehrensaetze
+  // Die Ordnung steht in gebuehren.json. Abweichungen davon liegen in der
+  // Tabelle gebuehren_saetze, je Zeile ein Pfad ("senioren.RL.HSR") und
+  // der neue Wert.
+  //
+  // Die Datei bleibt die Vorgabe: eine leere Tabelle heisst "es gilt die
+  // Ordnung". So ist jede Abweichung eine sichtbare Zeile und mit einem
+  // Griff zurueckzunehmen - noetig, weil diese Zahlen ueber sollBetrag()
+  // direkt auf Rechnungen an Vereine gehen.
+  //
+  // Dieselbe Rechnung macht gebuehren_ueberschreiben() in esrw_ical.py.
+  // Beide Seiten muessen es tun: die Pipeline schreibt die Gebuehr in
+  // daten.json (Spielseite), die App rechnet die Abrechnung selbst.
+  var gebuehrenAbweichung = null, gebuehrenOrdnung = null;
+
+  // Alle Zahlen der Ordnung, mit Pfad. Abgeleitet, nicht einprogrammiert:
+  // ein neuer Satz in der Datei erscheint von selbst. Nur Zahlen - Texte
+  // wie "09:14" oder die Liste "gilt_fuer" aendert man in der Datei.
+  function gebuehrenPosten(obj, vorne, raus) {
+    raus = raus || [];
+    Object.keys(obj || {}).forEach(function (k) {
+      if (k.indexOf("_") === 0) return;        // _hinweis und Co.
+      var pfad = vorne ? vorne + "." + k : k;
+      var v = obj[k];
+      if (v && typeof v === "object" && !Array.isArray(v)) gebuehrenPosten(v, pfad, raus);
+      else if (typeof v === "number") raus.push({ pfad: pfad, datei: v });
+    });
+    return raus;
+  }
+  // Die Abweichungen in die geladene Ordnung einsetzen. Einen Zweig, den
+  // die Datei nicht kennt, legt das nicht an - ein solcher Pfad ist ein
+  // Tippfehler, kein neuer Satz.
+  function gebuehrenAnwenden(zeilen) {
+    if (!gebuehren) return;
+    // Erst die Datei wiederherstellen: sonst bliebe eine zurueckgenommene
+    // Abweichung beim zweiten Lauf stehen.
+    if (!gebuehrenOrdnung) gebuehrenOrdnung = JSON.parse(JSON.stringify(gebuehren));
+    Object.keys(gebuehrenOrdnung).forEach(function (k) {
+      gebuehren[k] = JSON.parse(JSON.stringify(gebuehrenOrdnung[k]));
+    });
+    (zeilen || []).forEach(function (z) {
+      var teile = String(z.pfad || "").split("."), ziel = gebuehren;
+      for (var i = 0; i < teile.length - 1; i++) {
+        if (!ziel || typeof ziel !== "object" || !(teile[i] in ziel)) return;
+        ziel = ziel[teile[i]];
+      }
+      var letzter = teile[teile.length - 1];
+      if (!ziel || typeof ziel !== "object" || !(letzter in ziel)) return;
+      var n = Number(z.wert);
+      if (isFinite(n)) ziel[letzter] = n;
+    });
+  }
+  function gebuehrenAbweichungLaden(nochmal) {
+    if (gebuehrenAbweichung && !nochmal) return Promise.resolve(gebuehrenAbweichung);
+    if (!sb || !session) return Promise.resolve([]);
+    return sb.from("gebuehren_saetze").select("pfad,wert,von,geaendert")
+      .then(function (r) {
+        gebuehrenAbweichung = (r && r.data) || [];
+        gebuehrenAnwenden(gebuehrenAbweichung);
+        return gebuehrenAbweichung;
+      })
+      .catch(function () {
+        // Tabelle fehlt (Schema nicht eingespielt) oder kein Netz: dann
+        // gilt die Datei, und gerechnet wird weiter.
+        gebuehrenAbweichung = [];
+        return gebuehrenAbweichung;
+      });
+  }
+
+  function gebuehrenRendern(box) {
+    function neu() { leeren(box); gebuehrenRendern(box); }
+    leeren(box);
+    box.appendChild(h("h4", {}, [ikone("i-euro"), " Gebührensätze"]));
+    if (!gebuehren) {
+      box.appendChild(h("p", { class: "achtung", text: "gebuehren.json konnte nicht geladen werden." }));
+      return;
+    }
+    box.appendChild(h("p", { class: "meta", style: "margin:0 0 8px", text:
+      "Vorgabe ist die Gebührenordnung in gebuehren.json ("
+      + ((gebuehrenOrdnung && gebuehrenOrdnung.stand) || gebuehren.stand || "ohne Stand")
+      + "). Hier änderst du einzelne Sätze, ohne die Datei anzufassen. Was du änderst, gilt für "
+      + "alle Kollegen und steht auf jeder Rechnung – auf der Spielseite erst nach dem nächsten "
+      + "stündlichen Lauf." }));
+    // Nachgestellt: Satz geaendert, Abrechnung geoeffnet, Satz
+    // zurueckgenommen - der alte Betrag stand weiter da. Die Abrechnung
+    // hatte ihn beim Oeffnen gespeichert. Das ist richtig (es ist die
+    // Aufzeichnung des Kollegen), aber ohne diesen Satz haelt man die
+    // Aenderung fuer wirkungslos.
+    box.appendChild(h("p", { class: "meta achtung", style: "margin:0 0 8px", text:
+      "Wirkt nur auf Spiele, die noch nicht erfasst sind. Wo ein Kollege den Betrag schon "
+      + "stehen hat – die Abrechnung legt ihn beim Öffnen eines vergangenen Spiels selbst an –, "
+      + "bleibt der alte; ändern kann ihn dort nur er selbst." }));
+
+    var innen = h("div", {}, [skelett(1)]);
+    box.appendChild(innen);
+    gebuehrenAbweichungLaden(true).then(function (zeilen) {
+      if (!innen.isConnected) return;
+      var abw = {};
+      zeilen.forEach(function (z) { abw[z.pfad] = z; });
+      var posten = gebuehrenPosten(gebuehrenOrdnung || gebuehren);
+      leeren(innen);
+
+      var anders = posten.filter(function (p) { return abw[p.pfad]; }).length;
+      innen.appendChild(h("p", { class: anders ? "meta" : "meta gut-text", style: "margin:0 0 8px",
+        text: anders ? anders + (anders === 1 ? " Satz weicht" : " Sätze weichen") + " von der Ordnung ab."
+                     : "Alle " + posten.length + " Sätze stehen wie in der Ordnung." }));
+
+      // Nach Abschnitt gruppiert - senioren, nachwuchs, kilometer ...
+      var gruppen = {}, reihe = [];
+      posten.forEach(function (p) {
+        var g = p.pfad.split(".")[0];
+        if (!gruppen[g]) { gruppen[g] = []; reihe.push(g); }
+        gruppen[g].push(p);
+      });
+
+      reihe.forEach(function (g) {
+        var geaendert = gruppen[g].filter(function (p) { return abw[p.pfad]; }).length;
+        var det = h("details", { class: "tausch" },
+          [h("summary", {}, [h("b", { text: g }),
+            h("small", { text: gruppen[g].length + (gruppen[g].length === 1 ? " Satz" : " Sätze")
+              + (geaendert ? " · " + geaendert + " geändert" : "") })])]);
+        // Ein Abschnitt mit einer Abweichung ist offen - da sieht man nach.
+        det.open = !!geaendert;
+        gruppen[g].forEach(function (p) {
+          var a = abw[p.pfad];
+          var feld = h("input", { type: "number", step: "0.01", min: "0",
+            value: String(a ? a.wert : p.datei), inputmode: "decimal" });
+          var hinweis = h("small", { class: a ? "achtung" : "meta" });
+          hinweis.textContent = a
+            ? "Ordnung: " + p.datei + (a.von ? " · geändert von " + a.von : "")
+            : "wie in der Ordnung";
+          function fertig() {
+            gebuehrenAbweichung = null;
+            gebuehrenAbweichungLaden(true).then(neu);
+          }
+          function zurueck() {
+            speichern(sb.from("gebuehren_saetze").delete().eq("pfad", p.pfad)).then(function (r) {
+              if (r && r.error) { meldung(fehlerText(r.error), "warn"); return; }
+              kurzMeldung(p.pfad + " wieder nach der Ordnung ✓", "gut");
+              fertig();
+            });
+          }
+          var uebernehmen = h("button", { type: "button", class: "anfrage", text: "Übernehmen" });
+          uebernehmen.addEventListener("click", function () {
+            var n = Number(String(feld.value).replace(",", "."));
+            if (!isFinite(n) || n < 0) { meldung("Das ist keine Zahl.", "warn"); return; }
+            // Gleich der Ordnung heisst: keine Zeile in der Tabelle.
+            if (n === p.datei) { if (a) zurueck(); else kurzMeldung("Steht schon so in der Ordnung.", ""); return; }
+            uebernehmen.disabled = true;
+            speichern(sb.from("gebuehren_saetze").upsert({ pfad: p.pfad, wert: n,
+              von: (profil && (profil.name || profil.slug)) || null,
+              geaendert: new Date().toISOString() }, { onConflict: "pfad" })).then(function (r) {
+              uebernehmen.disabled = false;
+              if (r && r.error) {
+                meldung(fehlerText(r.error) + (/gebuehren_saetze/.test(r.error.message || "")
+                  ? ", schema.sql (v52) ausführen." : ""), "warn");
+                return;
+              }
+              kurzMeldung(p.pfad + " = " + n + " ✓", "gut");
+              fertig();
+            });
+          });
+          var knoepfe = [feld, uebernehmen];
+          if (a) knoepfe.push(h("button", { type: "button", class: "textknopf",
+            text: "Zurück auf die Ordnung", onclick: zurueck }));
+          det.appendChild(h("div", { class: "gebuehr-zeile" + (a ? " anders" : "") }, [
+            h("span", {}, [h("b", { text: p.pfad.split(".").slice(1).join(" · ") || p.pfad }), hinweis]),
+            h("span", { class: "zweit" }, knoepfe)]));
+        });
+        innen.appendChild(det);
+      });
+
+      innen.appendChild(h("p", { class: "meta mg-fuss", style: "margin-top:10px", text:
+        "Nur Zahlen stehen hier. Uhrzeiten (ab wann der Zeitzuschlag gilt) und Listen (für welche "
+        + "Ligen der übergreifende Zuschlag gilt) ändert man weiter in gebuehren.json – dort steht "
+        + "auch die Begründung je Satz." }));
+    });
+  }
+
   // ------------------------------------------------ Betreiber: Pflegeseite
   // Die Bereiche standen als Knopfreihe nebeneinander. Bei 375 px waren
   // das sechs Zeilen und 268 Pixel Navigation, bevor der erste Inhalt
@@ -5916,6 +6100,10 @@ window.Mitglieder = (function () {
        "Spieldauer und Drittel je Liga"],
       ["staerken", "Antrittsstärken", "i-users", staerkenRendern, "stammdaten",
        "Wie viele Offizielle eine Liga braucht"],
+      // Kein delegierbares Recht: eine falsche Zahl hier steht auf jeder
+      // Rechnung an einen Verein.
+      ["gebuehren", "Gebührensätze", "i-euro", gebuehrenRendern, null,
+       "Sätze je Liga und Rolle, Zuschläge, Kilometersatz"],
       ["push", "Push", "i-bell", pushLaufRendern, null,
        "Was der Workflow verschickt hat, und wie viele Geräte dranhängen"],
       ["speicher", "Speicher", "i-note", speicherRendern, null,
@@ -5928,7 +6116,7 @@ window.Mitglieder = (function () {
   var ADMIN_GRUPPEN = [
     ["Konten und Rechte", "i-users", ["freischaltung", "funktionen", "ansehen"]],
     ["Spiele", "i-cal", ["spiel", "korrekturen"]],
-    ["Stammdaten", "i-pin", ["hallen", "adressen", "telefon", "zeiten", "staerken"]],
+    ["Stammdaten", "i-pin", ["hallen", "adressen", "telefon", "zeiten", "staerken", "gebuehren"]],
     ["System", "i-shield", ["push", "speicher", "abo"]]
   ];
   var ADMIN_FUSS = "Freigeschaltete sehen Tauschbörse, Verfügbarkeiten, Hallen-Hinweise, Kontakte und Mitfahrten. "

@@ -1588,6 +1588,15 @@
   .admin-lage h4, .admin-gruppe h4 { margin:0 0 6px; display:flex; align-items:center; gap:8px; }
   .admin-gruppe { margin-top:10px; }
   .admin-zurueck { margin:0 0 8px; font-weight:800; }
+  /* Gebuehrensaetze: Name links, Zahl und Knoepfe rechts. Eine Abweichung
+     von der Ordnung ist markiert - sie steht auf jeder Rechnung. */
+  .gebuehr-zeile { display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:space-between;
+                   padding:8px 0; border-top:1px solid var(--linie); }
+  .gebuehr-zeile > span:first-child { min-width:0; flex:1; }
+  .gebuehr-zeile b { display:block; font-size:var(--s-l); }
+  .gebuehr-zeile small { display:block; }
+  .gebuehr-zeile input { width:6.5em; }
+  .gebuehr-zeile.anders { border-left:3px solid var(--warn); padding-left:8px; }
   .admin-zuletzt { margin:10px 0 0; }
   .lage-liste { display:flex; flex-direction:column; }
   /* Die Zahl steht vorn, wo der Blick ohnehin anfaengt. Null wird zum
@@ -3202,6 +3211,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=180"></script>
+<script src="app.js?v=181"></script>
 </body>
 </html>
