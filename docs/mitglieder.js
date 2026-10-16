@@ -4376,7 +4376,7 @@ window.Mitglieder = (function () {
                    id: art + "|" + sp.kennung + "|" + text.slice(0, 20) });
     }
 
-    var nachTag = {};
+    var nachTag = {}, nachPaarung = {};
     spiele.forEach(function (sp) {
       var d = new Date(sp.beginn);
       if (d > jetzt) return;
@@ -4410,12 +4410,32 @@ window.Mitglieder = (function () {
 
       var tag = d.toDateString() + "|" + uhr(d);
       (nachTag[tag] = nachTag[tag] || []).push(sp);
+      var paarTag = d.toDateString() + "|" + (sp.liga || "") + "|" + (sp.paarung || "");
+      (nachPaarung[paarTag] = nachPaarung[paarTag] || []).push(sp);
     });
 
     Object.keys(nachTag).forEach(function (t) {
       if (nachTag[t].length < 2) return;
       fund("doppelt", nachTag[t][0], "Zur gleichen Zeit stehen " + nachTag[t].length + " Spiele: "
         + nachTag[t].map(function (x) { return x.paarung; }).join(" / ") + ".");
+    });
+
+    // Dieselbe Paarung, derselbe Tag, aber verschiedene Zeiten. Der Fund
+    // oben greift nur bei gleicher Zeit und laesst genau das durch, was
+    // bei einer verlegten Ansetzung herauskommt: 07:30 und 08:30 und
+    // 09:30 derselben Begegnung, weil die Verlegung als zweites Spiel
+    // angelegt wurde statt als Aenderung.
+    // Es kann auch ein echter Doppelspieltag sein - den gibt es. Welches
+    // von beidem, entscheidet ein Mensch, deshalb kein Loesungsknopf.
+    Object.keys(nachPaarung).forEach(function (k) {
+      var g = nachPaarung[k];
+      if (g.length < 2 || !g[0].paarung) return;
+      var zeiten = g.map(function (x) { return uhr(new Date(x.beginn)); })
+        .filter(function (z, i, a) { return a.indexOf(z) === i; }).sort();
+      if (zeiten.length < 2) return;        // gleiche Zeit hat der Fund oben
+      fund("doppelt", g[0], g[0].paarung + " steht an diesem Tag " + g.length + "-mal: "
+        + zeiten.join(", ") + " Uhr. Ist das keine Doppelansetzung, sondern eine Verlegung, "
+        + "lass die alte Zeit vom Betreiber ausblenden (Korrekturen).");
     });
     return funde;
   }

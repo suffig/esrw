@@ -2799,6 +2799,17 @@
     color:var(--dim); font-weight:700; }
   .einrichtung-mehr::after { content:"\203a"; color:var(--dim); font-weight:800; }
 
+  /* ===== Runde 41: die Einrichtung klappt sichtbar auf =============== */
+
+  /* Die weiteren Schritte erschienen schlagartig. Eine kurze Einblendung
+     zeigt, dass sie hinter dem Knopf hervorkommen - nacheinander, damit
+     man die Reihenfolge sieht. "einblenden" gibt es schon (Deckkraft und
+     4 px von unten), und wer Bewegung abgeschaltet hat, bekommt sie
+     nicht: die Regel ganz oben schaltet jede Animation ab. */
+  .einrichtung.alle a.punkt.spaeter { animation:einblenden .22s ease-out both; }
+  .einrichtung.alle a.punkt.spaeter:nth-of-type(3) { animation-delay:.05s; }
+  .einrichtung.alle a.punkt.spaeter:nth-of-type(4) { animation-delay:.1s; }
+
 </style>
 </head>
 <body>
@@ -3261,6 +3272,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=186"></script>
+<script src="app.js?v=187"></script>
 </body>
 </html>
