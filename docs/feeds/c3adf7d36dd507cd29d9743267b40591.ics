@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:02a67be95920c6e1464069e263d1810e5ee01f95@esrw.de
-SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
-DTSTART:20261009T163000Z
-DTEND:20261009T200000Z
-SUMMARY:SR · U15 RLB: Iserlohner EC 1b – EHC Troisdorf
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
-  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Eissporthalle a
- m Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Warnke\
- , Christoph\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
-GEO:51.384598;7.713829
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
- , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
- alle am Seilersee":geo:51.384598,7.713829
-END:VEVENT
-BEGIN:VEVENT
 UID:2b0f70213d19bb58a693439d4d1ad96331753ea3@esrw.de
 SEQUENCE:0
 DTSTAMP:20261002T111527Z
@@ -1301,12 +1280,6 @@ GEO:51.405718;6.780082
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
  sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
  reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: EV Duisburg 1b –
-  Dinslakener Kobras
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:7f231d19333ea0ac3f90f019d818afa43dba85e9@esrw.de
@@ -1328,12 +1301,6 @@ GEO:51.295808;6.834624
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
   Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
  tingen":geo:51.295808,6.834624
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Ratinger Ice Alien
- s – Herforder EV
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:c6a19fc063e384679fb88ca987a628c4a72763a2@esrw.de
