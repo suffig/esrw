@@ -2595,3 +2595,22 @@ create policy "Betrieb lesen" on public.betrieb_einstellungen for select to auth
 -- Schreiben: nur der Betreiber. Das wirkt auf die Termine aller Kollegen.
 create policy "Betrieb pflegen" on public.betrieb_einstellungen for all to authenticated
   using (public.ist_admin()) with check (public.ist_admin());
+
+
+-- ======================================================================
+-- v54: Zahlungseingang zu einer geschriebenen Rechnung
+-- ======================================================================
+-- Bisher endete der Weg mit der Rechnung. Die Marke "bezahlt" an einem
+-- Einsatz (Tabelle einsaetze) wird von rechnungErzeugen() gesetzt, sobald
+-- die Rechnung geschrieben ist - sie heisst also "abgerechnet", nicht
+-- "Geld da". Der Kommentar im Code sagt es selbst: "fuer dich erledigt".
+--
+-- Damit gab es nirgends eine Antwort auf die Frage, die am Ende zaehlt:
+-- welcher Verein hat noch nicht gezahlt. Seit dem Rechnungslauf
+-- (Fassung 179) entstehen fuenf Rechnungen in einem Zug statt einer -
+-- das Verfolgen wird dadurch wichtiger, nicht unwichtiger.
+--
+-- Eine Spalte reicht: null = offen, ein Datum = an dem Tag war das Geld
+-- da. Gepflegt wird sie von dem, dem die Rechnung gehoert; die
+-- Zugriffsregel "eigene Rechnungen" (for all) deckt das schon ab.
+alter table public.rechnungen add column if not exists gezahlt_am date;

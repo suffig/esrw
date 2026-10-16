@@ -2055,7 +2055,7 @@ window.Mitglieder = (function () {
   var rechnungGeladen = null, rechnungWahl = {}, vereinAdressen = null, rechnungListe = null, rechnungFertig = null, rechnungForm = null;
   function rechnungenLaden() {
     if (rechnungListe) return Promise.resolve(rechnungListe);
-    return sb.from("rechnungen").select("nummer,datum,verein,betrag,kennungen,felder").order("datum", { ascending: false }).limit(40)
+    return sb.from("rechnungen").select("id,nummer,datum,verein,betrag,kennungen,felder,gezahlt_am").order("datum", { ascending: false }).limit(40)
       .then(function (r) { rechnungListe = r.data || []; return rechnungListe; })
       .catch(function () { rechnungListe = []; return rechnungListe; });
   }
@@ -2658,20 +2658,99 @@ window.Mitglieder = (function () {
       // schon, also die Auswahl einmal neu aufbauen, damit berechnete
       // Spiele unter den Aufklapper wandern.
       if (!listeWarDa) { nochmal(); return; }
+      // Was noch aussteht, gehoert vor die Liste - danach sucht man.
+      var o = offeneRechnungen(liste2);
+      if (o.zeilen.length) {
+        box.appendChild(h("p", { class: "meta achtung", style: "margin:8px 0 0", text:
+          o.zeilen.length + (o.zeilen.length === 1 ? " Rechnung ohne Zahlungseingang, " : " Rechnungen ohne Zahlungseingang, ")
+          + euro(o.summe) + (o.tage > 0 ? " · die älteste von vor " + o.tage + " Tagen" : "") + "." }));
+      } else if (liste2.length) {
+        box.appendChild(h("p", { class: "meta gut-text", style: "margin:8px 0 0",
+          text: "Alle geschriebenen Rechnungen sind bezahlt." }));
+      }
       var vb = h("details", { class: "tausch rechnung-verlauf" }, [h("summary", { text: "Geschriebene Rechnungen (" + liste2.length + ")" })]);
-      var k2 = h("div", { class: "karte" });
-      liste2.slice(0, 12).forEach(function (rg) {
-        k2.appendChild(h("div", { class: "telefon-zeile" }, [
-          h("span", {}, [h("b", { text: rg.nummer + " · " + (rg.verein || "") }),
-            h("small", { text: new Date(rg.datum).toLocaleDateString("de-DE") + " · " + euro(rg.betrag || 0) })]),
-          h("span", { class: "telefon-wege" }, [
-            h("button", { type: "button", text: "PDF laden", onclick: function () { rechnungNochmal(rg); } }),
-            h("button", { type: "button", text: "Nummer", title: "Rechnungsnummer nachträglich ändern",
-              onclick: function (ev) { nummerAendern(rg, ev.target.closest(".telefon-zeile")); } })])]));
+      // Offene zuerst - wer hier nachsieht, sucht das Fehlende, nicht das
+      // Erledigte. Innerhalb der offenen die aelteste oben: der schuldet
+      // am laengsten, und hinterher zu telefonieren lohnt dort zuerst.
+      // Bei den bezahlten umgekehrt, da ist die letzte die interessante.
+      var sortiert = liste2.slice().sort(function (a, b) {
+        if (!a.gezahlt_am !== !b.gezahlt_am) return a.gezahlt_am ? 1 : -1;
+        if (!a.gezahlt_am) return a.datum < b.datum ? -1 : 1;
+        return a.datum < b.datum ? 1 : -1;
       });
+      var k2 = h("div", { class: "karte" });
+      // Die beiden Marken heissen fast gleich und bedeuten Verschiedenes.
+      // Ohne diesen Satz haelt man "abgehakt" weiter fuer "bezahlt".
+      k2.appendChild(h("p", { class: "meta", style: "margin:0 0 8px", text:
+        "„Abgehakt“ am Spiel heißt: abgerechnet. Ob das Geld da ist, steht hier." }));
+      sortiert.slice(0, 12).forEach(function (rg) { k2.appendChild(rechnungVerlaufZeile(rg)); });
       vb.appendChild(k2); box.appendChild(vb);
     });
     return box;
+  }
+
+  // Eine Zeile unter "Geschriebene Rechnungen": PDF, Nummer, Eingang.
+  function rechnungVerlaufZeile(rg) {
+    var zeile = h("div", {});
+    function neu() {
+      leeren(zeile);
+      zeile.className = "telefon-zeile" + (rg.gezahlt_am ? "" : " offen-rechnung");
+      var alter = Math.floor((new Date() - new Date(rg.datum)) / 86400000);
+      var zweit = new Date(rg.datum).toLocaleDateString("de-DE") + " · " + euro(rg.betrag || 0);
+      zweit += rg.gezahlt_am
+        ? " · bezahlt am " + new Date(rg.gezahlt_am).toLocaleDateString("de-DE")
+        : " · offen" + (alter > 0 ? " seit " + alter + (alter === 1 ? " Tag" : " Tagen") : "");
+      var eingang = h("button", { type: "button", class: rg.gezahlt_am ? "" : "anfrage",
+        text: rg.gezahlt_am ? "Doch nicht bezahlt" : "Bezahlt",
+        title: rg.gezahlt_am ? "Zahlungseingang zurücknehmen" : "Das Geld ist da" });
+      eingang.addEventListener("click", function () {
+        var warOffen = !rg.gezahlt_am;
+        eingang.disabled = true;
+        zahlungSetzen(rg, warOffen ? isoTag(new Date()) : null).then(function (ok) {
+          eingang.disabled = false;
+          if (!ok) return;
+          kurzMeldung(warOffen ? "Rechnung " + rg.nummer + " ist bezahlt ✓" : "Eingang zurückgenommen.",
+                      warOffen ? "gut" : "");
+          neu();
+        });
+      });
+      zeile.appendChild(h("span", {}, [h("b", { text: rg.nummer + " · " + (rg.verein || "") }),
+        h("small", { text: zweit })]));
+      zeile.appendChild(h("span", { class: "telefon-wege" }, [
+        eingang,
+        h("button", { type: "button", text: "PDF laden", onclick: function () { rechnungNochmal(rg); } }),
+        h("button", { type: "button", text: "Nummer", title: "Rechnungsnummer nachträglich ändern",
+          onclick: function () { nummerAendern(rg, zeile); } })]));
+    }
+    neu();
+    return zeile;
+  }
+
+  // Offene Rechnungen: geschrieben, aber kein Zahlungseingang vermerkt.
+  // "gezahlt_am" ist null, solange nichts da ist.
+  function offeneRechnungen(liste) {
+    var offen = (liste || []).filter(function (rg) { return !rg.gezahlt_am; });
+    var summe = 0, aeltester = null;
+    offen.forEach(function (rg) {
+      summe += Number(rg.betrag) || 0;
+      var d = new Date(rg.datum);
+      if (!aeltester || d < aeltester) aeltester = d;
+    });
+    return { zeilen: offen, summe: summe,
+             tage: aeltester ? Math.floor((new Date() - aeltester) / 86400000) : 0 };
+  }
+  function zahlungSetzen(rg, datum) {
+    return speichern(sb.from("rechnungen").update({ gezahlt_am: datum }).eq("id", rg.id))
+      .then(function (r) {
+        if (r && r.error) {
+          meldung(fehlerText(r.error) + (/gezahlt_am/.test(r.error.message || "")
+            ? ", schema.sql (v54) ausführen." : ""), "warn");
+          return false;
+        }
+        rg.gezahlt_am = datum;
+        rechnungListe = null;      // damit die Übersicht neu rechnet
+        return true;
+      });
   }
 
   // Eine geschriebene Rechnung nachtraeglich umnummerieren. Kommt vor:
