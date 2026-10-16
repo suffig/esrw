@@ -158,16 +158,16 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: ESV Grizzlys
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:89ea067a2419acba3150fffd980d2d20fa7819ed@esrw.de
+UID:c443a2c9a407f865c0eb5eeaf3b2562142419f9d@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T060000Z
-DTEND:20261025T093000Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T070000Z
+DTEND:20261025T103000Z
 SUMMARY:SR · U15 LL: SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats 
  – EHC Die Bären Neuwied
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
-  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Be
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
+  08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Be
  rgkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Rosier\, Cedri
  c (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html

@@ -50,15 +50,15 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
  .937979,6.98935
 END:VEVENT
 BEGIN:VEVENT
-UID:fd372fbe8ec1e0c66398b103ebf95c4e4ec903e8@esrw.de
+UID:835dd6afb931be7897888ed4c78365b5c273244a@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T150000Z
-DTEND:20261025T183000Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T160000Z
+DTEND:20261025T193000Z
 SUMMARY:SR · Senioren LL: EHC Troisdorf – TSVE Bielefeld
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:00 Uhr\nTreffpunkt:
-  16:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: ICEDOME Tro
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
+  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: ICEDOME Tro
  isdorf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Henke
  ls\, André\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.d
  e/einteilungen.html

@@ -36,15 +36,15 @@ DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: Neusser EV
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:47aab79b8875a1b70458eba2e92e14d79089e23e@esrw.de
+UID:e9bd43184b68c23df44d0f98c9f5537e56db863e@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T151500Z
-DTEND:20261025T184500Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T161500Z
+DTEND:20261025T194500Z
 SUMMARY:HSR · Senioren RLW: GSC Moers – TuS Wiehl
-DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 17:15 Uhr\nTreff
- punkt: 16:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 18:15 Uhr\nTreff
+ punkt: 17:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
  porthalle Moers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Quint\
  , Sascha (LSR) / Stockenschneider\, Lars (LSR)\nVergütung lt. Ordnung: 10
  0 €\n\nQuelle: https://www.esrw.de/einteilungen.html

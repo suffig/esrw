@@ -139,15 +139,15 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: Neusser EV 1
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:cc4c2aee6a7a6cf597d0bff2eea87b05ff3575ff@esrw.de
+UID:4fd78424ebb5810762c5479682214180342e3ed0@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T150000Z
-DTEND:20261025T183000Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T160000Z
+DTEND:20261025T193000Z
 SUMMARY:LSR · Senioren RLW: Ratinger Ice Aliens – Lauterbach Luchse
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 17:00 Uhr\nTreffpunkt:
-  16:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
+  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
  lle Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Stocker\,
   Quirin (HSR) / Solbach\, Carsten (LSR)\nVergütung lt. Ordnung: 100 €\n
  \nQuelle: https://www.esrw.de/einteilungen.html

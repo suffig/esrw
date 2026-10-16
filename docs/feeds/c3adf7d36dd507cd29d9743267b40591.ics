@@ -1781,15 +1781,15 @@ END:VEVENT
 BEGIN:VEVENT
 UID:fc2e15c9a96c905c215bf18918cc596d9e9d5c84@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T083039Z
-LAST-MODIFIED:20261016T083039Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
 DTSTART:20261017T074500Z
 DTEND:20261017T111500Z
 SUMMARY:SR · U11 LL Grün: TuS Wiehl
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:45 Uhr\nTreffpunkt:
   09:45 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Grün\nHalle: Eissportha
- lle Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Hauerwaas\, 
- Gabriel\n\nQuelle: https://www.esrw.de/einteilungen.html
+ lle Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: n. n.\n\nQue
+ lle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -3507,16 +3507,16 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: SpG Neusser EV / G
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:21d9105913357ca77aee28b4668d73a5982c8ed6@esrw.de
+UID:4ebc6b5fc31a2d6a32a97a0252f6a42a24d4ba7e@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T060000Z
-DTEND:20261025T093000Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T070000Z
+DTEND:20261025T103000Z
 SUMMARY:SR · U15 LL: SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats 
  – EHC Die Bären Neuwied
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
-  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Be
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
+  08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Be
  rgkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Zynda\, Jayden
  \n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
@@ -3535,15 +3535,15 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: SpG ESV Grizzlys B
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:b3f8de796eea6eecfae2c80d864f141da8a3ecd6@esrw.de
+UID:5c891ec217fbb56230c5bf6425bb7de69530fbfe@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T063000Z
-DTEND:20261025T100000Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T073000Z
+DTEND:20261025T110000Z
 SUMMARY:SR · U17 RL: Herner EV – Herforder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:30 Uhr\nTreffpunkt:
-  07:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Gysenberghalle H
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
+  08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Gysenberghalle H
  erne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Melchert\, Philip\
  n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
@@ -3562,15 +3562,15 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Herner EV – Herf
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:76317da9f98ad0c106f9f3e984b487af0b35b59b@esrw.de
+UID:dd777901b4727d8fe557390723096af200e9beec@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T070000Z
-DTEND:20261025T103000Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T080000Z
+DTEND:20261025T113000Z
 SUMMARY:SR · U17 II: EV Duisburg – EHC Young Dragons Erfurt
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
-  08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 II\nHalle: PreZero Rheinlan
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 II\nHalle: PreZero Rheinlan
  dhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: 
  Lindemans\, Pepe\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
@@ -3590,15 +3590,15 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U17 II: EV Duisburg – EH
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:7f70799dff6ec3fc296ac9f5a794a74541be7b4a@esrw.de
+UID:a4b8025d1b5b355400cb64930b41e88bb337aab1@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T114500Z
-DTEND:20261025T151500Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T124500Z
+DTEND:20261025T161500Z
 SUMMARY:SR · U13 RLA: Kölner Junghaie – Düsseldorfer EG
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:45 Uhr\nTreffpunkt:
-  12:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLA\nHalle: Kölnarena 2\nA
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:45 Uhr\nTreffpunkt:
+  13:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLA\nHalle: Kölnarena 2\nA
  dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Steensen\, Robin\n
  \nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
@@ -3617,15 +3617,15 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLA: Kölner Junghaie
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:9d347e6fbd47f81d14dd9aff185aa1710e5da179@esrw.de
+UID:3d15f17e9c85185139741e4db6530a087a143004@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T140000Z
-DTEND:20261025T173000Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T150000Z
+DTEND:20261025T183000Z
 SUMMARY:SR · U15 RLA: Krefelder EV – Iserlohner EC
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:00 Uhr\nTreffpunkt:
-  15:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Rheinlandhalle 
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:00 Uhr\nTreffpunkt:
+  16:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Rheinlandhalle 
  Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Schlüter\
  , Thomas\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
@@ -3644,15 +3644,15 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA: Krefelder EV –
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:9c141d497c86ce14eef1ee19166e2ab8d802589d@esrw.de
+UID:7c8fcd185ceca521ed970589df1790d9e960c1c3@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T141500Z
-DTEND:20261025T174500Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T151500Z
+DTEND:20261025T184500Z
 SUMMARY:SR · Senioren BZL: TuS Wiehl 1b – EHC Essen Ruhr
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:15 Uhr\nTreffpunkt:
-  15:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eissportha
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
+  16:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eissportha
  lle Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Schöche\, G
  ian-Carlo\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/
  einteilungen.html
@@ -3672,15 +3672,15 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: TuS Wiehl 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:d8c47c44f3ee9d108087aefd120f3a623720ea31@esrw.de
+UID:c20c52207e2c57bceef8ae61930369a25d5afbcd@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T143000Z
-DTEND:20261025T180000Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T153000Z
+DTEND:20261025T190000Z
 SUMMARY:SR · U13 RLB: Kölner Junghaie 1b – EHC Troisdorf
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
-  15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Kölnarena 2\nA
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
+  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Kölnarena 2\nA
  dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Steensen\, Robin\n
  \nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
@@ -3699,15 +3699,15 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB: Kölner Junghaie
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:a5641c2ed1e7e332d0a6c162b04d69e15eb69db7@esrw.de
+UID:c8cdfd5a76b89fbd0018eb0336832e622c0ef421@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T150000Z
-DTEND:20261025T183000Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T160000Z
+DTEND:20261025T193000Z
 SUMMARY:SR · Senioren LL: EHC Troisdorf – TSVE Bielefeld
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:00 Uhr\nTreffpunkt:
-  16:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: ICEDOME Tro
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
+  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: ICEDOME Tro
  isdorf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Henke
  ls\, André\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.d
  e/einteilungen.html
@@ -3727,15 +3727,15 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: EHC Troisdorf
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:fd842928053fd5408b9fb16514080a012cdaec80@esrw.de
+UID:2081356386c9dc8448ceb12ab46a3317a8c6765c@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T150000Z
-DTEND:20261025T183000Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T160000Z
+DTEND:20261025T193000Z
 SUMMARY:LSR · Senioren RLW: Ratinger Ice Aliens – Lauterbach Luchse
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 17:00 Uhr\nTreffpunkt:
-  16:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
+  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
  lle Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Stocker\,
   Quirin (HSR) / Solbach\, Carsten (LSR)\nVergütung lt. Ordnung: 100 €\n
  \nQuelle: https://www.esrw.de/einteilungen.html
@@ -3755,15 +3755,15 @@ DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Ratinger Ic
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:508f620b1d1cfabd122cb1b31239d15ec24981db@esrw.de
+UID:23fa004f2ec7be9e1dfdcaedaa304d25be86d428@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T151500Z
-DTEND:20261025T184500Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T161500Z
+DTEND:20261025T194500Z
 SUMMARY:HSR · Senioren RLW: GSC Moers – TuS Wiehl
-DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 17:15 Uhr\nTreff
- punkt: 16:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 18:15 Uhr\nTreff
+ punkt: 17:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
  porthalle Moers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Quint\
  , Sascha (LSR) / Stockenschneider\, Lars (LSR)\nVergütung lt. Ordnung: 10
  0 €\n\nQuelle: https://www.esrw.de/einteilungen.html
@@ -3783,16 +3783,16 @@ DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: GSC Moers
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:c57bf6cb27e8de19616213fa894638c3dacb2726@esrw.de
+UID:079e0b3857ee464250db37a7073c87e6755ff5ec@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T153000Z
-DTEND:20261025T190000Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T163000Z
+DTEND:20261025T200000Z
 SUMMARY:HSR · Senioren RLW: ESV Grizzlys Bergkamen – ESV Bergisch Gladba
  ch
-DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 17:30 Uhr\nTreff
- punkt: 16:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 18:30 Uhr\nTreff
+ punkt: 17:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
  porthalle Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Sk
  alecki\, Martin (LSR) / Warnke\, Christoph (LSR)\nVergütung lt. Ordnung: 
  100 €\n\nQuelle: https://www.esrw.de/einteilungen.html
@@ -3812,15 +3812,15 @@ DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: ESV Grizzly
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:e73226992f80b6ae130354fa8f9aaa55cc79ef92@esrw.de
+UID:547b2ccc32dc899c591a547431d6c6e828b0a71e@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T160000Z
-DTEND:20261025T193000Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T170000Z
+DTEND:20261025T203000Z
 SUMMARY:LSR · Senioren RLW: Dinslakener Kobras – Grefrather EG
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
-  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
+  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
  lle Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Licau\, 
  Sebastian (HSR) / Störmann\, Manuel (LSR)\nVergütung lt. Ordnung: 100 
  €\n\nQuelle: https://www.esrw.de/einteilungen.html
@@ -3840,15 +3840,15 @@ DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Dinslakener
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:d8c0dcaad2f0015c236f0d67fecc84fe9131e113@esrw.de
+UID:c0a3624cd0ea2b4befc44028621dcc537a0be7d3@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T160000Z
-DTEND:20261025T193000Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T170000Z
+DTEND:20261025T203000Z
 SUMMARY:SR · Senioren LL: ESC Rheine – Eisadler Dortmund 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
-  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Rheiner Eis
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
+  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Rheiner Eis
  sporthalle\nAdresse: Kopernikusstraße 34\, 48429 Rheine\nGespann: Steeg\,
   Cedric\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/ei
  nteilungen.html
@@ -3868,15 +3868,15 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: ESC Rheine
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:1d2aaea98198fad1c83b03dce7e1b87ed462417b@esrw.de
+UID:547fcb6e3143e1e0ea65e3cf7b39e9c3da4ee3da@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T170000Z
-DTEND:20261025T203000Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T180000Z
+DTEND:20261025T213000Z
 SUMMARY:LSR · Senioren RLW: Neusser EV – EG Diez-Limburg
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
-  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
  lle Neuss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Kyei-Nima
  ko\, Denis (HSR) / Pacalaj\, Erik (LSR)\nVergütung lt. Ordnung: 100 €\n
  \nQuelle: https://www.esrw.de/einteilungen.html

@@ -79,15 +79,15 @@ DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: EHC Troisdorf –
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:e41efc0c8b5441fcf3c8af5c6f2b4def2ceb68ed@esrw.de
+UID:7470d07e76ff6e0488ba44d2962195b7f23f73a1@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T141500Z
-DTEND:20261025T174500Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T151500Z
+DTEND:20261025T184500Z
 SUMMARY:SR · Senioren BZL: TuS Wiehl 1b – EHC Essen Ruhr
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:15 Uhr\nTreffpunkt:
-  15:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eissportha
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
+  16:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eissportha
  lle Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Hauerwaas\, 
  Gabriel\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/ei
  nteilungen.html

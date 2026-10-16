@@ -83,15 +83,15 @@ DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: ESV Bergisc
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:689dfbf85d988c001ec33208546bd9de615a19ed@esrw.de
+UID:770d6eb9508994a35ad95a680c726fc81b691467@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T170000Z
-DTEND:20261025T203000Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T180000Z
+DTEND:20261025T213000Z
 SUMMARY:HSR · Senioren RLW: Neusser EV – EG Diez-Limburg
-DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 19:00 Uhr\nTreff
- punkt: 18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:00 Uhr\nTreff
+ punkt: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
  porthalle Neuss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Gar
  cia Nieto\, Dario (LSR) / Pacalaj\, Erik (LSR)\nVergütung lt. Ordnung: 10
  0 €\n\nQuelle: https://www.esrw.de/einteilungen.html

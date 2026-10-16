@@ -141,15 +141,15 @@ DESCRIPTION:In einer Stunde an der Halle - SR · DFEL2 Nord: Dinslakener Ko
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:1e51859b9f9fb19674024ab3dc308ea96bdfda1b@esrw.de
+UID:4ba59d6091a860e6684053591b32f9065fc56bc5@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T151500Z
-DTEND:20261025T184500Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T161500Z
+DTEND:20261025T194500Z
 SUMMARY:LSR · Senioren RLW: GSC Moers – TuS Wiehl
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
-  16:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:15 Uhr\nTreffpunkt:
+  17:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
  lle Moers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Caelers\, Fa
  bian (HSR) / Stockenschneider\, Lars (LSR)\nVergütung lt. Ordnung: 100 
  €\n\nQuelle: https://www.esrw.de/einteilungen.html

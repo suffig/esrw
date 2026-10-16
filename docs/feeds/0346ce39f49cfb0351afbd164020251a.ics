@@ -163,15 +163,15 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: EHC Gelsenki
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:a035c9e08db46ffc2b9acb1557fdeccff56acdbf@esrw.de
+UID:c7d893419b57f73fce5f947f92610005acae49de@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T150000Z
-DTEND:20261025T183000Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T160000Z
+DTEND:20261025T193000Z
 SUMMARY:LSR · Senioren RLW: Ratinger Ice Aliens – Lauterbach Luchse
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 17:00 Uhr\nTreffpunkt:
-  16:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
+  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
  lle Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Stocker\,
   Quirin (HSR) / Hofer\, Carsten (LSR)\nVergütung lt. Ordnung: 100 €\n\n
  Quelle: https://www.esrw.de/einteilungen.html

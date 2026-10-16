@@ -108,15 +108,15 @@ DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Eisadler Do
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:25b5f28426f51b4dfa749a7da1946a08f990ee3c@esrw.de
+UID:050ada2fe9dd107a660c364f180dd09f8071c156@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T070000Z
-DTEND:20261025T103000Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T080000Z
+DTEND:20261025T113000Z
 SUMMARY:SR · U17 II: EV Duisburg – EHC Young Dragons Erfurt
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
-  08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 II\nHalle: PreZero Rheinlan
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 II\nHalle: PreZero Rheinlan
  dhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: 
  Lindemans\, Pepe\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html

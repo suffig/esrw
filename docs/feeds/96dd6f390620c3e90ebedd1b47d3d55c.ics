@@ -63,15 +63,15 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA: Düsseldorfer EG
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:8fec7de2bb18ae4034c36dd1122850043d18eba9@esrw.de
+UID:3af16fc30bb164ce0d9d2a598a2f00c34c3ef742@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T150000Z
-DTEND:20261025T183000Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T160000Z
+DTEND:20261025T193000Z
 SUMMARY:HSR · Senioren RLW: Ratinger Ice Aliens – Lauterbach Luchse
-DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 17:00 Uhr\nTreff
- punkt: 16:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 18:00 Uhr\nTreff
+ punkt: 17:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
  porthalle Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Hof
  er\, Carsten (LSR) / Solbach\, Carsten (LSR)\nVergütung lt. Ordnung: 100 
  €\n\nQuelle: https://www.esrw.de/einteilungen.html

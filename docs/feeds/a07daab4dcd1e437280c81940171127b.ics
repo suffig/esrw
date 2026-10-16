@@ -56,15 +56,15 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Rot: EHC Troisdorf 1
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:43b20136d535ba77e054e14c37355c0f9d2fa10e@esrw.de
+UID:3fbc9ae73e13315595b56e7f2f2ab619c3430aaf@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T114500Z
-DTEND:20261025T151500Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T124500Z
+DTEND:20261025T161500Z
 SUMMARY:SR · U13 RLA: Kölner Junghaie – Düsseldorfer EG
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:45 Uhr\nTreffpunkt:
-  12:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLA\nHalle: Kölnarena 2\nA
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:45 Uhr\nTreffpunkt:
+  13:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLA\nHalle: Kölnarena 2\nA
  dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Steensen\, Robin\n
  \nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
@@ -83,15 +83,15 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLA: Kölner Junghaie
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:4516f7574a54921addacb2e1730a5f84c0b39f19@esrw.de
+UID:a9938feef3e8ad48d25755863b7023cb5974c41a@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T143000Z
-DTEND:20261025T180000Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T153000Z
+DTEND:20261025T190000Z
 SUMMARY:SR · U13 RLB: Kölner Junghaie 1b – EHC Troisdorf
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
-  15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Kölnarena 2\nA
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
+  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Kölnarena 2\nA
  dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Steensen\, Robin\n
  \nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html

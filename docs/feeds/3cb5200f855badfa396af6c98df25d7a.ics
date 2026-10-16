@@ -107,15 +107,15 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: Neusser EV 1
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:7c1815c6228c13f8d6eed43083dd3c634387808e@esrw.de
+UID:cb6e81f900dcf86eba205534237eb54924ce838d@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T160000Z
-DTEND:20261025T193000Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T170000Z
+DTEND:20261025T203000Z
 SUMMARY:LSR · Senioren RLW: Dinslakener Kobras – Grefrather EG
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
-  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
+  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
  lle Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Licau\, 
  Sebastian (HSR) / Kratschmar\, Jocelyn (LSR)\nVergütung lt. Ordnung: 100 
  €\n\nQuelle: https://www.esrw.de/einteilungen.html

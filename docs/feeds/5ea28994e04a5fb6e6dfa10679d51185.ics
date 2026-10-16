@@ -104,15 +104,15 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: Grefrather EG –
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:48379e6e917762c215a439ca83043a3223ed7466@esrw.de
+UID:35059c3e5715dd5a3770ef1fedf8afbd92545889@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T063000Z
-DTEND:20261025T100000Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T073000Z
+DTEND:20261025T110000Z
 SUMMARY:SR · U17 RL: Herner EV – Herforder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:30 Uhr\nTreffpunkt:
-  07:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Gysenberghalle H
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
+  08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Gysenberghalle H
  erne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Heu\, Alexander\n\
  nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html

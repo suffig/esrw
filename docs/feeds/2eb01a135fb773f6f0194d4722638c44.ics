@@ -9,9 +9,9 @@ REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
 UID:25331faa0b6db26e7acc5d565343e4f4c767f164@esrw.de
-SEQUENCE:1
-DTSTAMP:20261010T103036Z
-LAST-MODIFIED:20261010T103036Z
+SEQUENCE:2
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
 DTSTART:20261011T060000Z
 DTEND:20261011T093000Z
 SUMMARY:SR · U9 LL Grün: ESV Grizzlys Bergkamen
@@ -79,16 +79,16 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: ESV Grizzlys
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:bc3edf8d1f82dc4b223500ccb37f51e9d48c3e0c@esrw.de
+UID:7990b0587660529e6bc3e8c6cb30da2d6d45bf10@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T153000Z
-DTEND:20261025T190000Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T163000Z
+DTEND:20261025T200000Z
 SUMMARY:LSR · Senioren RLW: ESV Grizzlys Bergkamen – ESV Bergisch Gladba
  ch
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
-  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
+  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
  lle Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Naust\, 
  Marc André (HSR) / Warnke\, Christoph (LSR)\nVergütung lt. Ordnung: 100 
  €\n\nQuelle: https://www.esrw.de/einteilungen.html

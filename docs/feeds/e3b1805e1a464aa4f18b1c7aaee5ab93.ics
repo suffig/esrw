@@ -35,15 +35,15 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA: Kölner Junghaie
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:da146689a0c6dc417d9782eab67b0616a24546ff@esrw.de
+UID:9825f5f8256af4b6065e138c4ee183688694da25@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T170000Z
-DTEND:20261025T203000Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T180000Z
+DTEND:20261025T213000Z
 SUMMARY:LSR · Senioren RLW: Neusser EV – EG Diez-Limburg
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
-  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
  lle Neuss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Kyei-Nima
  ko\, Denis (HSR) / Pacalaj\, Erik (LSR)\nVergütung lt. Ordnung: 100 €\n
  \nQuelle: https://www.esrw.de/einteilungen.html

@@ -152,15 +152,15 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: EHC Troisdorf 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:0744fb7ab88c0fecd2a294a3f79991aa6d168e2e@esrw.de
+UID:a8daa1bdae358283a82cc3cab2a3f0c67df6b669@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261025T150000Z
-DTEND:20261025T183000Z
+DTSTAMP:20261016T091530Z
+LAST-MODIFIED:20261016T091530Z
+DTSTART:20261025T160000Z
+DTEND:20261025T193000Z
 SUMMARY:SR · Senioren LL: EHC Troisdorf – TSVE Bielefeld
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:00 Uhr\nTreffpunkt:
-  16:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: ICEDOME Tro
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
+  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: ICEDOME Tro
  isdorf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Helli
  ngrath\, Luca\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw
  .de/einteilungen.html
