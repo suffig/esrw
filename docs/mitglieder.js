@@ -5195,8 +5195,15 @@ window.Mitglieder = (function () {
         if (abo) {
           setze("an", "Dieses Gerät bekommt eine Nachricht, wenn für " + (profil.name || "dich") + " eine Einteilung dazukommt, sich ändert oder wegfällt, auch bei geschlossener App.",
                 "Push ausschalten", function () { pushAus(abo).then(function () { pushRendern(box); }); });
-          // Abo sicherheitshalber (wieder) eintragen, falls die Zeile fehlt
-          pushEintragen(abo).catch(function () {});
+          // Abo sicherheitshalber (wieder) eintragen, falls die Zeile fehlt.
+          // Das kommt wirklich vor: push_senden.py loescht sie, wenn der
+          // Push-Dienst 404 oder 410 meldet - das Abo im Browser bleibt
+          // davon unberuehrt. Scheitert die Reparatur, darf daneben nicht
+          // "dieses Geraet bekommt eine Nachricht" stehenbleiben: es
+          // bekommt dann keine, und zwar unbemerkt.
+          pushEintragen(abo).catch(function (e) {
+            if (box.isConnected) pushWarnung(box, abo, e);
+          });
         } else {
           setze("aus", "Echte Push-Nachricht bei neuen Einteilungen, auch wenn die App zu ist.",
                 "Push einschalten", function () {
@@ -5206,6 +5213,37 @@ window.Mitglieder = (function () {
         }
       });
     }).catch(function () { setze("nein", "Service Worker nicht bereit, bitte die Seite neu laden."); });
+  }
+
+  // Das Abo liegt im Browser, aber die Zeile in der Datenbank fehlt und
+  // liess sich nicht nachtragen. Ohne Zeile verschickt der Workflow
+  // nichts. Die Marke oben wechselt deshalb auf "gestoert" - sie ist das,
+  // worauf man schaut.
+  function pushWarnung(box, abo, fehler) {
+    var alt = box.querySelector(".push-warnung");
+    if (alt) alt.remove();
+    var marke = box.querySelector(".status");
+    if (marke) { marke.className = "status aus"; marke.textContent = "gestört"; }
+    var nochmal = h("button", { type: "button", class: "anfrage", text: "Nochmal versuchen" });
+    nochmal.addEventListener("click", function () {
+      nochmal.disabled = true;
+      nochmal.textContent = "versucht …";
+      pushEintragen(abo).then(function () {
+        kurzMeldung("Gerät wieder angemeldet ✓", "gut");
+        pushRendern(box);
+      }, function (e2) {
+        nochmal.disabled = false;
+        nochmal.textContent = "Nochmal versuchen";
+        meldung("Ging nicht: " + fehlerText(e2), "warn");
+      });
+    });
+    box.appendChild(h("div", { class: "hinweis warn push-warnung" }, [
+      h("span", {}, [
+        h("b", { text: "Dieses Gerät ist beim Server nicht angemeldet." }),
+        h("small", { style: "display:block", text:
+          "Die Mitteilungen sind im Browser erlaubt, aber die Zeile in der Datenbank fehlt – "
+          + "so verschickt der stündliche Lauf nichts an dich. " + fehlerText(fehler) }),
+        nochmal])]));
   }
 
   function pushEintragen(abo) {
@@ -5227,7 +5265,14 @@ window.Mitglieder = (function () {
 
   function pushAus(abo) {
     return sb.from("push_abos").delete().eq("endpoint", abo.endpoint).then(function () { return abo.unsubscribe(); })
-      .then(function () { kurzMeldung("Push ist aus.", ""); }).catch(function () {});
+      .then(function () { kurzMeldung("Push ist aus.", ""); })
+      // Verschluckt sah das aus wie ein kaputter Knopf: die Ansicht zeigte
+      // weiter "an", ohne ein Wort dazu. Nicht weitergeworfen - der
+      // Aufrufer zeichnet danach neu, und "an" ist dann richtig.
+      .catch(function (e) {
+        meldung("Push ließ sich nicht ausschalten: " + fehlerText(e)
+                + " Das Gerät bekommt weiter Nachrichten.", "warn");
+      });
   }
 
   // ---- Telefonlink (tel: und wa.me) fuer Kollegenkarten
