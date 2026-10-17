@@ -1338,12 +1338,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:15 Uhr\nTreffpunkt:
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: SpG Soester EG / T
- SVE Bielefeld – SpG Neusser EV / GSC Moers
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:bb47097cbaf36538ab651898769e997271845439@esrw.de
