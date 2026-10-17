@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:5662b045edfd7ab067aa466a90713b28ee47d599@esrw.de
-SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
-DTSTART:20261010T173000Z
-DTEND:20261010T210000Z
-SUMMARY:SR · U20 LL: GSC Moers – EC Bergisch Land
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
-  19:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 LL\nHalle: Eissporthalle Mo
- ers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Heu\, Alexander\n\
- nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
-GEO:51.43973;6.6198
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
- rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
- ":geo:51.43973,6.6198
-END:VEVENT
-BEGIN:VEVENT
 UID:99f64510b66017c45a046ef05f1219f0cba625a1@esrw.de
 SEQUENCE:0
 DTSTAMP:20261014T063039Z
