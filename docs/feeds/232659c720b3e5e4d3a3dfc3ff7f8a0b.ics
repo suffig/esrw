@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:9439f6e4f07acdb9aee492b4130ee8057dba497d@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T161529Z
-LAST-MODIFIED:20261006T161529Z
-DTSTART:20261010T073000Z
-DTEND:20261010T110000Z
-SUMMARY:SR · U15 LL: SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats 
- – ESC Darmstadt
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
-  09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Be
- rgkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Naust\, Marc A
- ndré\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
-GEO:51.602578;7.626858
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
- äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
- ergkamen":geo:51.602578,7.626858
-END:VEVENT
-BEGIN:VEVENT
 UID:abebf498c4b1efa954f7ff945b36989c5b54ac42@esrw.de
 SEQUENCE:0
 DTSTAMP:20261006T110047Z

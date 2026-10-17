@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:257bfc242f84a11dcaaa2ff7ed1cc4e5e358ae2f@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T161529Z
-LAST-MODIFIED:20261006T161529Z
-DTSTART:20261010T073000Z
-DTEND:20261010T110000Z
-SUMMARY:SR · U15 LL: SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats 
- – ESC Darmstadt
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
-  09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Be
- rgkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Naust\, Marc A
- ndré\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
-GEO:51.602578;7.626858
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
- äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
- ergkamen":geo:51.602578,7.626858
-END:VEVENT
-BEGIN:VEVENT
 UID:2e228aa2735db33bfd4f3fc1b36feebad1ed5013@esrw.de
 SEQUENCE:0
 DTSTAMP:20261002T111527Z
@@ -1320,12 +1298,6 @@ GEO:51.602578;7.626858
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
  äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
  ergkamen":geo:51.602578,7.626858
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: ESV Grizzlys Berg
- kamen 1b – SpG Neusser EV 1b / GSC Moers 1b
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:a75e19003da2791c634367d6712048a05933cb90@esrw.de
@@ -1348,12 +1320,6 @@ GEO:51.686934;7.886138
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena 
  Hamm, Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="bet
  a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Lippe Hockey Hamm 
- – Herforder EV
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:fc2e15c9a96c905c215bf18918cc596d9e9d5c84@esrw.de
