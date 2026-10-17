@@ -4156,8 +4156,10 @@ window.Mitglieder = (function () {
     // Der Lauf steht neben der einzelnen Rechnung: wer eine schreiben
     // will, findet dort auch den Weg, alle zu schreiben. Im alten Design
     // steht "Rechnung" in der Knopfreihe, der Lauf nur hier.
-    if (designNeu()) WEITERE.unshift(["rechnung", "Rechnung schreiben"], ["lauf", "Rechnungslauf"]);
-    else WEITERE.unshift(["lauf", "Rechnungslauf"]);
+    // "Rechnung schreiben" hat jetzt einen eigenen Knopf am Listenende -
+    // hier waere sie doppelt. Der Lauf bleibt: alle auf einmal zu
+    // schreiben ist wirklich seltener.
+    WEITERE.unshift(["lauf", "Rechnungslauf"]);
     if (!einfach()) WEITERE.unshift(["detail", "Steuerjahre"]);
     panelInhalt.weiteres = function () {
       return h("div", { class: "mg-form" }, [
@@ -4206,6 +4208,13 @@ window.Mitglieder = (function () {
     // Die Zeile am Listenende - in beiden Darstellungen, Karten wie Zeilen.
     function weitereAnhaengen() {
       if (!designNeu()) return;
+      // Der Abschluss des Vorgangs steht da, wo man nach dem Durchgehen
+      // der Liste ankommt - und nicht unter "Seltener gebraucht".
+      inhalt.appendChild(h("button", { type: "button",
+        class: "mg-rechnung-zeile" + (abrechnungPanel === "rechnung" ? " auf" : ""),
+        title: "Gebührenabrechnung als PDF, für bis zu drei Spiele eines Vereins an einem Tag",
+        text: "Rechnung schreiben",
+        onclick: function () { panelOeffnen("rechnung", true); } }));
       inhalt.appendChild(h("button", { type: "button", class: "mg-weitere-zeile" + (unten ? " auf" : ""),
         title: "Kalender, eigene Regeln, Werkzeuge, Spiel eintragen",
         text: "Weitere Werkzeuge",

@@ -2644,6 +2644,17 @@
   :root[data-design="neu"] .mg-weitere-zeile::after { content:"\203A";
     font-size:1.3em; line-height:1; transition:transform .15s; }
   :root[data-design="neu"] .mg-weitere-zeile.auf { color:var(--text); }
+
+  /* Der Abschluss des Vorgangs: dieselbe Zeilenform wie "Weitere
+     Werkzeuge", aber in der Textfarbe statt gedimmt - er gehoert zum
+     Weg, nicht in die Schublade darunter. */
+  :root[data-design="neu"] .mg-rechnung-zeile { display:flex; width:100%;
+    align-items:center; gap:8px; min-height:48px; padding:12px 14px; margin-top:10px;
+    border:1px solid var(--linie); border-radius:var(--radius-m); background:var(--karte);
+    color:var(--text); font:inherit; font-weight:700; cursor:pointer; text-align:left; }
+  :root[data-design="neu"] .mg-rechnung-zeile::after { content:"\203A";
+    margin-left:auto; color:var(--dim); font-weight:700; }
+  :root[data-design="neu"] .mg-rechnung-zeile.auf { border-color:var(--akzent); }
   :root[data-design="neu"] .mg-weitere-zeile.auf::after {
     transform:rotate(90deg); }
 
@@ -2903,6 +2914,74 @@
                   min-height:44px; cursor:pointer; }
   .mg-schnellzeile input.mg-schnellhaken { width:22px; height:22px; margin:0; }
   .mg-schnellkopf .mg-schnellhaken { text-align:center; }
+
+
+
+
+  /* ===== Runde 45: der Kopf auf 320 px ============================== */
+
+  /* Auf dem iPhone SE bleiben von 288 px Kopfbreite nur 58 fuer Titel
+     und Stand - vier Knoepfe nehmen 162. Gemessen braucht "Spielplan"
+     dort 93 px und "vor 19 Std." 77; beides war abgeschnitten, auf
+     jeder Seite.
+     Kleinere Knoepfe und ein engerer Abstand machen 22 px frei, der
+     kleinere Titel braucht 67 statt 93 - danach passt beides. */
+  @media (max-width: 360px) {
+    .kopf-knoepfe { gap:4px; }
+    .kopf .rund, .kopf .avatar-knopf { width:32px; height:32px; }
+    /* Senkrecht die vollen 44, waagerecht nur bis an den Nachbarn: der
+       Abstand ist 4 px, mehr wuerde ihm Tipps wegnehmen. */
+    .kopf .rund::after, .kopf .avatar-knopf::after { inset:-6px -2px; }
+    /* Zwei Regeln setzen den Titel spezifischer als eine blosse
+       Media-Query: :root[data-design="neu"] .kopf h1 und, auf dem
+       Spielplan, dieselbe mit [data-ansicht]. Gleiche Spezifitaet,
+       spaeter im Blatt - damit gewinnt diese hier. */
+    :root[data-design="neu"] .kopf h1,
+    :root[data-design="neu"][data-ansicht] .kopf h1 { font-size:var(--s-xl); }
+  }
+
+
+  /* ===== Runde 46: Flex-Kinder duerfen schrumpfen ================== */
+
+  /* Gemessen bei 320 px und grosser Schrift: die fuenf Knoepfe der
+     unteren Leiste brauchen 325 px, verfuegbar sind 308 - "Mehr" stand
+     11 px ausserhalb des Fensters, auf jeder Seite.
+     Die Knoepfe haben flex:1 und sollten sich das teilen. In einem
+     Flex-Container gilt aber min-width:auto, und damit schrumpft kein
+     Element unter seine Inhaltsbreite; "Abrechnung" allein belegt
+     86 px. Aus demselben Grund konnte die Ellipse an .tab-text nie
+     greifen - der Knopf wurde ja nicht schmaler. */
+  /* flex:1 (Basis 0) macht alle Knoepfe gleich breit - 73 px, und
+     "Abrechnung" braucht 79. Mit der Inhaltsbreite als Ausgangspunkt
+     steht jeder Text vollstaendig da, solange Platz ist, und erst bei
+     Enge schrumpfen alle anteilig. */
+  .leiste button { flex:1 1 auto; min-width:0; }
+
+  /* Dieselbe Ursache: die Liga-Pille stand bei langen Namen
+     ("Frauen Pokal Gr.A") im rechten Rand. */
+  .spiel .liga { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+  /* Die Menueeintraege auf der Mehr-Seite sind Grid-Kinder - auch dort
+     gilt min-width:auto. "Aenderungen - Was sich in 14 Tagen getan hat"
+     stand 35 px im Rand. */
+  .menue a { min-width:0; }
+  .menue a > span { min-width:0; }
+  /* Ein Kasten wird nie schmaler als das laengste Wort darin:
+     "Gebuehrenabrechnung" ist 149 px breit, die Kachel hat innen 111.
+     Hier darf deshalb im Wort umgebrochen werden (gemessen 149 -> 109).
+     Nur hier - in Listen und Karten sollen Vereinsnamen heil bleiben. */
+  .menue a b, .menue a small { min-width:0; overflow-wrap:anywhere; }
+
+  /* Die Zustandspille ("abgelehnt", "wartet") sitzt in einer Flex-Zeile
+     und schob sie auf schmalen Geraeten auseinander. */
+  .status { max-width:100%; overflow:hidden; text-overflow:ellipsis; }
+
+  /* Ein Knopftext soll in einer Zeile stehen - aber nicht um den Preis,
+     dass er aus dem Bild laeuft. "Hinweis zur Abrechnung nachlesen"
+     braucht bei 320 px mehr Platz, als da ist. */
+  @media (max-width: 360px) {
+    .textknopf { white-space:normal; }
+  }
 
 
 
@@ -3368,6 +3447,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=193"></script>
+<script src="app.js?v=199"></script>
 </body>
 </html>

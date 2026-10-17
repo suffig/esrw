@@ -314,10 +314,53 @@ gleich(P.heimVereinVon({ paarung: "Turnier" }), "Turnier", "ohne Gegner der ganz
 gleich(P.heimVereinVon({}), "", "ohne Paarung leer");
 
 
-console.log("\n----------------------------------------------------------");
-if (fehler.length) {
-  console.log(fehler.length + " Pruefung" + (fehler.length === 1 ? "" : "en") + " fehlgeschlagen:");
-  fehler.forEach(function (f) { console.log("  - " + f); });
-  process.exit(1);
-}
-console.log("Alle Pruefungen bestanden.");
+// ------------------------------------------------- PDF-Schreiber
+//
+// docs/rechnung.js haengt einen zweiten Inhaltsstrom an die Vorlage des
+// EHV NRW. Geht daran etwas kaputt, entsteht die Datei trotzdem - sie
+// laesst sich nur nicht mehr oeffnen, oder die Umlaute sind zerstoert.
+// Beides faellt ohne Pruefung erst dem Verein auf. test_esrw.py prueft
+// die Vorlage, hier geht es um das, was daraus gemacht wird.
+abschnitt("Rechnung als PDF");
+require(path.join(WURZEL, "docs", "rechnung.js"));
+
+var pdfFertig = window.Rechnung.felder().then(function (felder) {
+  pruefe(Object.keys(felder).length > 15, "die Vorlage bringt ihre Felder mit",
+         Object.keys(felder).length + " Felder");
+  return window.Rechnung.bauen({
+    "1": "Müller, Jörg", "2": "Straße 3", "3": "40210 Düsseldorf",
+    "4": "04.10.2026", "Dropdown3": "LL FS",
+    "Rechnungsempfänger Verein": "Soester EG", "PLZ und Ort": "59494 Soest"
+  });
+}).then(function (blob) {
+  return blob.arrayBuffer();
+}).then(function (buf) {
+  var roh = Buffer.from(buf);
+  var text = roh.toString("latin1");
+  gleich(text.slice(0, 5), "%PDF-", "die Datei faengt als PDF an");
+  pruefe(text.lastIndexOf("%%EOF") > roh.length - 40, "und hoert als PDF auf",
+         "letztes %%EOF bei " + text.lastIndexOf("%%EOF") + " von " + roh.length);
+  pruefe(roh.length > 50000, "die Vorlage steckt drin, nicht nur der Anhang",
+         roh.length + " Bytes");
+  // Der eingetragene Text steht unkomprimiert im angehaengten Strom.
+  pruefe(text.indexOf("Soester EG") >= 0, "der Verein steht im PDF");
+  pruefe(text.indexOf("59494 Soest") >= 0, "die Anschrift steht im PDF");
+  // WinAnsi, nicht UTF-8: sonst steht im Formular Kauderwelsch.
+  pruefe(text.indexOf("M\u00fcller, J\u00f6rg") >= 0,
+         "Umlaute stehen als WinAnsi im PDF");
+  pruefe(text.indexOf("Stra\u00dfe 3") >= 0, "auch das scharfe s");
+}).catch(function (e) {
+  pruefe(false, "das PDF laesst sich bauen", e && e.message);
+});
+
+
+// Erst wenn das PDF fertig ist, steht das Ergebnis fest.
+pdfFertig.then(function () {
+  console.log("\n----------------------------------------------------------");
+  if (fehler.length) {
+    console.log(fehler.length + " Pruefung" + (fehler.length === 1 ? "" : "en") + " fehlgeschlagen:");
+    fehler.forEach(function (f) { console.log("  - " + f); });
+    process.exit(1);
+  }
+  console.log("Alle Pruefungen bestanden.");
+});

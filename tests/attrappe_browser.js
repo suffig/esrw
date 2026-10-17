@@ -67,7 +67,32 @@ global.matchMedia = function () {
 };
 // Kein Netz im Test. Wer es doch versucht, soll scheitern und nicht
 // stillschweigend auf das echte Supabase gehen.
-global.fetch = function () { return Promise.reject(new Error("kein Netz im Test")); };
+//
+// Ausnahme sind die Dateien aus docs/: der PDF-Schreiber holt sich so
+// seine Vorlage (abrechnung/vorlage.json und blanko.pdf), und ohne sie
+// liesse er sich gar nicht pruefen. Alles ausserhalb von docs/ bleibt
+// gesperrt, damit kein Test versehentlich ins Netz geht.
+var pfadmodul = require("path");
+var dateimodul = require("fs");
+var DOCS = pfadmodul.join(pfadmodul.dirname(__dirname), "docs");
+global.fetch = function (url) {
+  var name = String(url).replace(/^https?:\/\/[^/]*/, "").replace(/^\//, "").split("?")[0];
+  var ziel = pfadmodul.resolve(DOCS, name);
+  if (ziel.indexOf(DOCS) !== 0 || !dateimodul.existsSync(ziel)) {
+    return Promise.reject(new Error("kein Netz im Test: " + url));
+  }
+  var roh = dateimodul.readFileSync(ziel);
+  return Promise.resolve({
+    ok: true, status: 200,
+    text: function () { return Promise.resolve(roh.toString("utf-8")); },
+    json: function () { return Promise.resolve(JSON.parse(roh.toString("utf-8"))); },
+    arrayBuffer: function () {
+      return Promise.resolve(roh.buffer.slice(roh.byteOffset, roh.byteOffset + roh.byteLength));
+    }
+  });
+};
+// Der PDF-Schreiber liest daraus seinen Basispfad.
+global.document.currentScript = { src: "rechnung.js" };
 global.CustomEvent = function (name, opt) { this.type = name; this.detail = opt && opt.detail; };
 global.Event = global.CustomEvent;
 global.requestAnimationFrame = function (f) { return setTimeout(f, 0); };
