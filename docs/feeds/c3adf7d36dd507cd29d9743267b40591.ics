@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:7fcf54c05d30e60f7cdefa0a32d48342c35bd189@esrw.de
-SEQUENCE:0
-DTSTAMP:20261010T103036Z
-LAST-MODIFIED:20261010T103036Z
-DTSTART:20261011T060000Z
-DTEND:20261011T093000Z
-SUMMARY:SR · U9 LL Grün: ESV Grizzlys Bergkamen
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
-  08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Grün\nHalle: Eissporthal
- le Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Skalecki\
- , Martin\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
-GEO:51.602578;7.626858
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
- äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
- ergkamen":geo:51.602578,7.626858
-END:VEVENT
-BEGIN:VEVENT
 UID:ded189b9959a97f8e6943e15c78e871ecbe40233@esrw.de
 SEQUENCE:0
 DTSTAMP:20261002T111527Z
@@ -1311,12 +1290,6 @@ GEO:51.384598;7.713829
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
  , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
  alle am Seilersee":geo:51.384598,7.713829
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA: Iserlohner EC –
-  Kölner Junghaie
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:dcf01ca5997bd6e17928a28321b320962afdc954@esrw.de
@@ -1338,12 +1311,6 @@ GEO:51.602578;7.626858
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
  äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
  ergkamen":geo:51.602578,7.626858
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: ESV Grizzlys Bergk
- amen – Neusser EV
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:78ef5e0d941b4c2dc524f0ce4f596bc526471506@esrw.de
