@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:5a3bf03d11b2413b3220d24f7b1118bbfa3e5b24@esrw.de
-SEQUENCE:0
-DTSTAMP:20261010T203039Z
-LAST-MODIFIED:20261010T203039Z
-DTSTART:20261011T044500Z
-DTEND:20261011T081500Z
-SUMMARY:SR · U13 BZL Gr.A: TSVE Bielefeld – GSC Moers
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 07:45 Uhr\nTreffpunkt:
-  06:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\nHalle: Oetker Eis
- bahn Bielefeld\nAdresse: Duisburger Str. 14\, 33647 Bielefeld\nGespann: Fu
- nk\, Marvin\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Oetker Eisbahn Bielefeld\, Duisburger Str. 14\, 33647 Bielefeld
-GEO:51.979731;8.496038
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
- Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
- sbahn Bielefeld":geo:51.979731,8.496038
-END:VEVENT
-BEGIN:VEVENT
 UID:2fbbeb48e60bfbddb1cb8caca821f8ee24fac87c@esrw.de
 SEQUENCE:0
 DTSTAMP:20261006T120050Z
