@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:c2ed8a7e705bc5f08ed425f08c9758be8c0e8566@esrw.de
-SEQUENCE:0
-DTSTAMP:20261010T203039Z
-LAST-MODIFIED:20261010T203039Z
-DTSTART:20261011T170000Z
-DTEND:20261011T203000Z
-SUMMARY:SR · Frauen Pokal Gr.B: TSVE Bielefeld – KEC "Die Haie"
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
-  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen Pokal Gr.B\nHalle: Oetke
- r Eisbahn Bielefeld\nAdresse: Duisburger Str. 14\, 33647 Bielefeld\nGespan
- n: Zynda\, Jayden\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.e
- srw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Oetker Eisbahn Bielefeld\, Duisburger Str. 14\, 33647 Bielefeld
-GEO:51.979731;8.496038
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
- Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
- sbahn Bielefeld":geo:51.979731,8.496038
-END:VEVENT
-BEGIN:VEVENT
 UID:e80d5d9ac78a32530f600aa7d327c0228642ebab@esrw.de
 SEQUENCE:0
 DTSTAMP:20261002T111527Z
@@ -1312,12 +1290,6 @@ GEO:51.175806;6.680258
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
  -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
  uss":geo:51.175806,6.680258
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: SpG Neusser EV / G
- SC Moers – EV Duisburg 1b
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:74f4aca23d23708a4de137ae1a20f6a57c1c096d@esrw.de

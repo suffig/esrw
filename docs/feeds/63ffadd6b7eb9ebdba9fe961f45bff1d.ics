@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:e9c3ad2cc1fdf15c0c51156c2c55326bda106e69@esrw.de
-SEQUENCE:1
-DTSTAMP:20261010T203039Z
-LAST-MODIFIED:20261010T203039Z
-DTSTART:20261011T170000Z
-DTEND:20261011T203000Z
-SUMMARY:SR · Frauen Pokal Gr.B: TSVE Bielefeld – KEC "Die Haie"
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
-  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen Pokal Gr.B\nHalle: Oetke
- r Eisbahn Bielefeld\nAdresse: Duisburger Str. 14\, 33647 Bielefeld\nGespan
- n: Keller\, Alexander\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://w
- ww.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Oetker Eisbahn Bielefeld\, Duisburger Str. 14\, 33647 Bielefeld
-GEO:51.979731;8.496038
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
- Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
- sbahn Bielefeld":geo:51.979731,8.496038
-END:VEVENT
-BEGIN:VEVENT
 UID:f6287948f936f4a02a20b86f02934c20bd0a0747@esrw.de
 SEQUENCE:0
 DTSTAMP:20261014T064529Z
