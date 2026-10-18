@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:9ec7b193093ee10e70042ae034ef6098dcf06f2a@esrw.de
-SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
-DTSTART:20261011T153000Z
-DTEND:20261011T190000Z
-SUMMARY:HSR · Senioren RLW: ESV Grizzlys Bergkamen – TuS Wiehl
-DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 18:30 Uhr\nTreff
- punkt: 17:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
- porthalle Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Ga
- rbsch\, René (LSR) / Warnke\, Christoph (LSR)\nVergütung lt. Ordnung: 10
- 0 €\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
-GEO:51.602578;7.626858
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
- äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
- ergkamen":geo:51.602578,7.626858
-END:VEVENT
-BEGIN:VEVENT
 UID:7072adfbafb8f6972a97a43487de37330f930786@esrw.de
 SEQUENCE:0
 DTSTAMP:20261006T110047Z
