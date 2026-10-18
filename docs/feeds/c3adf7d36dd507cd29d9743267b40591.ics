@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:09b89194c1ed025cc30d65edeb46bdf9a8c48ecc@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T120050Z
-LAST-MODIFIED:20261006T120050Z
-DTSTART:20261011T051500Z
-DTEND:20261011T084500Z
-SUMMARY:SR · U11 LL Grau: TuS Wiehl 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:15 Uhr\nTreffpunkt:
-  07:15 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Grau\nHalle: Eissporthal
- le Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\n\nQuelle: https://www.
- esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
-GEO:50.947034;7.5553
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
- enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
- ":geo:50.947034,7.5553
-END:VEVENT
-BEGIN:VEVENT
 UID:7fcf54c05d30e60f7cdefa0a32d48342c35bd189@esrw.de
 SEQUENCE:0
 DTSTAMP:20261010T103036Z
