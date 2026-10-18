@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:e077ec751626d64af204aa80b6dcf4d9929e4289@esrw.de
-SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
-DTSTART:20261011T154500Z
-DTEND:20261011T191500Z
-SUMMARY:SR · Senioren LL: Soester EG – ESC Rheine
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:45 Uhr\nTreffpunkt:
-  17:45 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissportzen
- trum Möhnesee\nAdresse: Teigelhof 4\, 59519 Möhnesee\nGespann: Steeg\, C
- edric\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/eint
- eilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Möhnesee\, Teigelhof 4\, 59519 Möhnesee
-GEO:51.515208;8.159069
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Möhnesee,
-  Teigelhof 4, 59519 Möhnesee";X-APPLE-RADIUS=100;X-TITLE="Eissportzentrum
-  Möhnesee":geo:51.515208,8.159069
-END:VEVENT
-BEGIN:VEVENT
 UID:1507f424186f18472d691587283ee83e93076176@esrw.de
 SEQUENCE:0
 DTSTAMP:20261002T111527Z
