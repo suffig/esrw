@@ -8,29 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:3ad33f11fe41acf275a4a5d82d29fd1ce7c16d2c@esrw.de
-SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
-DTSTART:20261011T070000Z
-DTEND:20261011T103000Z
-SUMMARY:LSR · DNL III: EV Duisburg – Crocodiles Hamburg
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
-  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero Rheinla
- ndhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann:
-  Kyei-Nimako\, Denis (HSR) / Schmidt\, Waldemar (LSR)\n\nQuelle: https://w
- ww.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
- sburg
-GEO:51.405718;6.780082
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
- sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
- reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
-END:VEVENT
-BEGIN:VEVENT
 UID:433f07d6d1bba1bd69c6b88d57fc048e96d1220f@esrw.de
 SEQUENCE:0
 DTSTAMP:20261006T110047Z
