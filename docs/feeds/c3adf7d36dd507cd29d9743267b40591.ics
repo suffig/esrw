@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:cb33b37033dbb90066b7cd921aefbf1b0236b5c8@esrw.de
-SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
-DTSTART:20261011T163000Z
-DTEND:20261011T200000Z
-SUMMARY:LSR · Senioren RLW: Grefrather EG – ESV Bergisch Gladbach
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
-  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportze
- ntrum Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespann: Ste
- ven\, Patrick (HSR) / Menzel\, Joey-Max (LSR)\nVergütung lt. Ordnung: 100
-  €\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Grefrath\, Stadionstraße 161\, 47929 Grefrath
-GEO:51.348547;6.341019
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath, 
- Stadionstraße 161, 47929 Grefrath";X-APPLE-RADIUS=100;X-TITLE="Eissportze
- ntrum Grefrath":geo:51.348547,6.341019
-END:VEVENT
-BEGIN:VEVENT
 UID:c2ed8a7e705bc5f08ed425f08c9758be8c0e8566@esrw.de
 SEQUENCE:0
 DTSTAMP:20261010T203039Z
@@ -1313,12 +1291,6 @@ GEO:51.348547;6.341019
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath, 
  Stadionstraße 161, 47929 Grefrath";X-APPLE-RADIUS=100;X-TITLE="Eissportze
  ntrum Grefrath":geo:51.348547,6.341019
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Grefrather 
- EG – EG Diez-Limburg
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:a5ca595f15f27a40bd660fb5779c31478ac7a016@esrw.de
