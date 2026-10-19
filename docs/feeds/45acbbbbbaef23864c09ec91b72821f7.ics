@@ -72,6 +72,33 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
  uss":geo:51.175806,6.680258
 END:VEVENT
 BEGIN:VEVENT
+UID:37773b54a4b750236f2f82414ff399d387f0107d@esrw.de
+SEQUENCE:0
+DTSTAMP:20261019T090049Z
+LAST-MODIFIED:20261019T090049Z
+DTSTART:20261019T141500Z
+DTEND:20261019T174500Z
+SUMMARY:SR · NRW U14: NRW U14 – Krefelder EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
+  16:15 Uhr (60 Min vor Spielbeginn)\nLiga: NRW U14\nHalle: Rheinlandhalle 
+ Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Kudal\, La
+ rs\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
+GEO:51.339877;6.540168
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
+ stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
+ le Krefeld":geo:51.339877,6.540168
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · NRW U14: NRW U14 – Krefe
+ lder EV
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:a51d6d8ab8b8dec868557316c05d89e9d3218f8f@esrw.de
 SEQUENCE:0
 DTSTAMP:20261006T110047Z
@@ -124,6 +151,33 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: Grefrather EG – 
  ESC Darmstadt
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:4d9ec71f5a5c8e26cb3c2f81ba9df8fbb7a2d005@esrw.de
+SEQUENCE:0
+DTSTAMP:20261019T090049Z
+LAST-MODIFIED:20261019T090049Z
+DTSTART:20261025T043000Z
+DTEND:20261025T080000Z
+SUMMARY:SR · U17 LL: ESC Darmstadt – Grefrather EG
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 06:30 Uhr\nTreffpunkt:
+  05:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\nHalle: Eissportzentrum 
+ Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespann: Kuriata\,
+  Florian-Nikita\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Grefrath\, Stadionstraße 161\, 47929 Grefrath
+GEO:51.348547;6.341019
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath, 
+ Stadionstraße 161, 47929 Grefrath";X-APPLE-RADIUS=100;X-TITLE="Eissportze
+ ntrum Grefrath":geo:51.348547,6.341019
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: ESC Darmstadt – 
+ Grefrather EG
 END:VALARM
 END:VEVENT
 END:VCALENDAR
