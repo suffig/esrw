@@ -39,16 +39,17 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:e5aa6657a509486e7195350c233a77c8000dc35e@esrw.de
-SEQUENCE:0
-DTSTAMP:20261019T090049Z
-LAST-MODIFIED:20261019T090049Z
-DTSTART:20261025T043000Z
-DTEND:20261025T080000Z
-SUMMARY:SR · U17 LL: ESC Darmstadt – Grefrather EG
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 06:30 Uhr\nTreffpunkt:
-  05:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\nHalle: Eissportzentrum 
- Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespann: Hartmann\
- , Marius\n\nQuelle: https://www.esrw.de/einteilungen.html
+SEQUENCE:1
+DTSTAMP:20261019T133044Z
+LAST-MODIFIED:20261019T133044Z
+DTSTART:20261025T053000Z
+DTEND:20261025T090000Z
+SUMMARY:⚠ SR · U17 LL: ESC Darmstadt – Grefrather EG
+DESCRIPTION:Geändert: Zeit (vorher 05:30 Uhr)\n\nRolle: Schiedsrichter (SR
+ )\nSpielbeginn: 07:30 Uhr\nTreffpunkt: 06:30 Uhr (60 Min vor Spielbeginn)\
+ nLiga: U17 LL\nHalle: Eissportzentrum Grefrath\nAdresse: Stadionstraße 16
+ 1\, 47929 Grefrath\nGespann: Hartmann\, Marius\n\nQuelle: https://www.esrw
+ .de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -60,8 +61,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: ESC Darmstadt – 
- Grefrather EG
+DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · U17 LL: ESC Darmstadt 
+ – Grefrather EG
 END:VALARM
 END:VEVENT
 END:VCALENDAR
