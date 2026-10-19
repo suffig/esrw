@@ -7,27 +7,4 @@ X-WR-CALNAME:Einteilungen – Moritz\, Alexander
 X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
-BEGIN:VEVENT
-UID:b846f04916999ca4eb6cbf4c8b54552668c6d899@esrw.de
-SEQUENCE:0
-DTSTAMP:20261002T111527Z
-LAST-MODIFIED:20261002T111527Z
-DTSTART:20261012T163000Z
-DTEND:20261012T200000Z
-SUMMARY:SR · Frauen LL: DEC Düsseldorfer Devils – Eisadler Dortmund
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
-  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen LL\nHalle: Eissporthalle
-  Düsseldorf-Benrath\nAdresse: Kappeler Str. 107\, 40597 Düsseldorf\nGesp
- ann: Wunsch\, Philipp\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://w
- ww.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Düsseldorf-Benrath\, Kappeler Str. 107\, 40597 Düs
- seldorf
-GEO:51.168801;6.858999
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Düsseldorf-
- Benrath, Kappeler Str. 107, 40597 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE=
- "Eissporthalle Düsseldorf-Benrath":geo:51.168801,6.858999
-END:VEVENT
 END:VCALENDAR
