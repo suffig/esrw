@@ -1346,15 +1346,15 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Eisadler Dortmund
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:c499bede9a6ca6192be83d7ddd09cd0db52e3f4f@esrw.de
+UID:183710394ab2c42ef687cb78bf213b4e1c59297f@esrw.de
 SEQUENCE:0
-DTSTAMP:20261014T174529Z
-LAST-MODIFIED:20261014T174529Z
-DTSTART:20261020T153000Z
-DTEND:20261020T190000Z
+DTSTAMP:20261019T144527Z
+LAST-MODIFIED:20261019T144527Z
+DTSTART:20261020T140000Z
+DTEND:20261020T173000Z
 SUMMARY:SR · U15 RLA: Düsseldorfer EG – Kölner Junghaie
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
-  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eishalle Brehms
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:00 Uhr\nTreffpunkt:
+  16:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eishalle Brehms
  traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Stocker\, 
  Quirin\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html

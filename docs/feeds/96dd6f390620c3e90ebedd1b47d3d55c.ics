@@ -30,15 +30,15 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
  tingen":geo:51.295808,6.834624
 END:VEVENT
 BEGIN:VEVENT
-UID:0d3bb37084c344f4ea47d294ee29b22e3abe3802@esrw.de
+UID:2a7c7b4c1da9d42a7a206eb0a30e4d610a033da7@esrw.de
 SEQUENCE:0
-DTSTAMP:20261014T174529Z
-LAST-MODIFIED:20261014T174529Z
-DTSTART:20261020T153000Z
-DTEND:20261020T190000Z
+DTSTAMP:20261019T144527Z
+LAST-MODIFIED:20261019T144527Z
+DTSTART:20261020T140000Z
+DTEND:20261020T173000Z
 SUMMARY:SR · U15 RLA: Düsseldorfer EG – Kölner Junghaie
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
-  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eishalle Brehms
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:00 Uhr\nTreffpunkt:
+  16:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eishalle Brehms
  traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Kudal\, La
  rs\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
