@@ -1985,18 +1985,17 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: SpG Neusser EV / G
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:c8f603f67863c42d588c5c603b4625dbd3edde72@esrw.de
+UID:58d7c9f3461f0b349441e0b6dd7d2a77a259b3a5@esrw.de
 SEQUENCE:0
-DTSTAMP:20261019T133044Z
-LAST-MODIFIED:20261019T133044Z
+DTSTAMP:20261019T134531Z
+LAST-MODIFIED:20261019T134531Z
 DTSTART:20261025T053000Z
 DTEND:20261025T090000Z
-SUMMARY:⚠ SR · U17 LL: ESC Darmstadt – Grefrather EG
-DESCRIPTION:Geändert: Zeit (vorher 05:30 Uhr)\n\nRolle: Schiedsrichter (SR
- )\nSpielbeginn: 07:30 Uhr\nTreffpunkt: 06:30 Uhr (60 Min vor Spielbeginn)\
- nLiga: U17 LL\nHalle: Eissportzentrum Grefrath\nAdresse: Stadionstraße 16
- 1\, 47929 Grefrath\nGespann: Kuriata\, Florian-Nikita\n\nQuelle: https://w
- ww.esrw.de/einteilungen.html
+SUMMARY:SR · U17 LL: ESC Darmstadt – Grefrather EG
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 07:30 Uhr\nTreffpunkt:
+  06:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\nHalle: Eissportzentrum 
+ Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespann: Kuriata\,
+  Florian-Nikita\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2008,8 +2007,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · U17 LL: ESC Darmstadt 
- – Grefrather EG
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: ESC Darmstadt – 
+ Grefrather EG
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
