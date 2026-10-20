@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:1358a3e137873e39a22fb2fadc6e39fcbd87f022@esrw.de
-SEQUENCE:0
-DTSTAMP:20261011T154529Z
-LAST-MODIFIED:20261011T154529Z
-DTSTART:20261013T140000Z
-DTEND:20261013T173000Z
-SUMMARY:SR · NRW: EHV NRW – Iserlohner EC
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:00 Uhr\nTreffpunkt:
-  16:00 Uhr (60 Min vor Spielbeginn)\nLiga: NRW\nHalle: Eissporthalle am Se
- ilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Steeg\, Ced
- ric\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
-GEO:51.384598;7.713829
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
- , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
- alle am Seilersee":geo:51.384598,7.713829
-END:VEVENT
-BEGIN:VEVENT
 UID:10df505765bc79dfe527756f22ee5861c24f8213@esrw.de
 SEQUENCE:0
 DTSTAMP:20261014T204531Z
@@ -1330,12 +1309,6 @@ GEO:51.242557;6.802144
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
  hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
  hmstraße":geo:51.242557,6.802144
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA: Düsseldorfer EG 
- – Kölner Junghaie
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:5df67b7a2a6b9eda7be4b310139d4f54873c73f0@esrw.de
