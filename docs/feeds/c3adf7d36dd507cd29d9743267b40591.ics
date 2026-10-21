@@ -1366,6 +1366,33 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: EV Duisburg 1b –
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:52a348a8f96ae4418b0861742a1799fe1ab20836@esrw.de
+SEQUENCE:0
+DTSTAMP:20261021T090048Z
+LAST-MODIFIED:20261021T090048Z
+DTSTART:20261023T110000Z
+DTEND:20261023T143000Z
+SUMMARY:SR · U15 RLA: Düsseldorfer EG – Iserlohner EC
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:00 Uhr\nTreffpunkt:
+  13:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Eishalle Brehms
+ traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Fenke\, Ma
+ tthias\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA: Düsseldorfer EG 
+ – Iserlohner EC
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:3e1c5acbec2c4267d1226fc2754df8ab7bd244c7@esrw.de
 SEQUENCE:0
 DTSTAMP:20261016T090052Z
