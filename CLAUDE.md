@@ -59,6 +59,25 @@ die sie überschreiben soll; im Zweifel ans Ende ("Nachtrag"). Bei
 gleicher Spezifität gewinnt die letzte Regel, bei höherer die
 spezifischere: `.mg-zeile input` schlägt `.mg-zeile > *`.
 
+### Der Präfix `:root[data-design="neu"]` bleibt
+
+Seit Fassung 204 gibt es nur ein Design, und das Attribut steht fest
+am `<html>`-Tag – die 146 Selektoren mit diesem Präfix sehen deshalb
+nach Altlast aus. Sie sind keine: der Präfix trägt Spezifität, auf die
+sich andere Regeln verlassen.
+
+Gemessen (Fassung 206, Browser-Pane, alle berechneten Stile vorher und
+nachher verglichen): pauschal entfernt ändern sich **1018 von 1128
+Elementpositionen**. Auch die vorsichtige Auswahl – nur die 72 Regeln
+ohne gleichlautendes präfixloses Gegenstück – ändert über 14 Seiten
+noch an drei Stellen etwas, darunter die 44-px-Tippflächen der
+Leaflet-Knöpfe: Leaflet bringt dieselbe Regel mit, und sein Stylesheet
+kommt per JS, also später.
+
+Ein Selektorvergleich findet das nicht. Wer den Präfix doch anfassen
+will, misst vorher – Regel für Regel, in jedem Thema und jeder
+Fensterbreite.
+
 ## Prüfen
 
 * `node --check docs/*.js`, `python tests/test_esrw.py` und

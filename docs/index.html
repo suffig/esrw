@@ -2686,7 +2686,11 @@
      erreichbar, und was er sagt, zeigt der erste Tipp auf einen Punkt. */
   :root[data-design="neu"] #karte > p.meta { display:none; }
   :root[data-design="neu"] #karte .karten-legende { margin-top:var(--abstand-s); }
-  /* Leaflets Knoepfe sind 30 px gross - fuer einen Daumen zu klein. */
+  /* Leaflets Knoepfe sind 30 px gross - fuer einen Daumen zu klein.
+     Der Praefix muss hier stehen: Leaflet bringt dieselbe Regel mit
+     derselben Spezifitaet mit, und sein Stylesheet wird per JS
+     nachgeladen - also spaeter als dieses. Ohne den Praefix gewinnt
+     Leaflet, und die Knoepfe sind wieder 30 px. Gemessen. */
   :root[data-design="neu"] .leaflet-touch .leaflet-bar a {
     width:44px; height:44px; line-height:44px; font-size:1.2rem; }
   :root[data-design="neu"] .leaflet-bottom.leaflet-right {
@@ -3485,6 +3489,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=206"></script>
+<script src="app.js?v=207"></script>
 </body>
 </html>
