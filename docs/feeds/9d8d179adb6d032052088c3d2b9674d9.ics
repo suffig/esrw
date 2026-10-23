@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:c991619446a1185cf2f54b15899709a87246857d@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261016T170000Z
-DTEND:20261016T203000Z
-SUMMARY:HSR · Senioren RLW: Neusser EV – ESV Grizzlys Bergkamen
-DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:00 Uhr\nTreff
- punkt: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
- porthalle Neuss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Hor
- nig\, Matthias (LSR) / Stockenschneider\, Lars (LSR)\nVergütung lt. Ordnu
- ng: 100 €\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
-GEO:51.175806;6.680258
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
- -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
- uss":geo:51.175806,6.680258
-END:VEVENT
-BEGIN:VEVENT
 UID:e9bd43184b68c23df44d0f98c9f5537e56db863e@esrw.de
 SEQUENCE:0
 DTSTAMP:20261016T091530Z

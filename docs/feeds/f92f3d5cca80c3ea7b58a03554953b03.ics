@@ -28,12 +28,6 @@ GEO:51.49525;7.458288
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
   Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
  rum Westfalen":geo:51.49525,7.458288
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: Eisadler Do
- rtmund – GSC Moers
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:3514300e2c1eef94e1be8f7d6d6bed41d1e09d7d@esrw.de

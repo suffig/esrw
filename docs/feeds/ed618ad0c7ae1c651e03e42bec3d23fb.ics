@@ -7,25 +7,4 @@ X-WR-CALNAME:Einteilungen – Scholz\, Arien
 X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
-BEGIN:VEVENT
-UID:75be28f823f6d639dd4d16ebc0745cf9982251ae@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261016T170000Z
-DTEND:20261016T203000Z
-SUMMARY:SR · BZL FS: EHC Essen Ruhr – Neusser EV 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
-  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: BZL FS\nHalle: Eissporthalle Es
- sen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Schlüter\, Thoma
- s\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Essen-West\, Curtiusstr. 2\, 45144 Essen
-GEO:51.454179;6.976731
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
- Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
- n-West":geo:51.454179,6.976731
-END:VEVENT
 END:VCALENDAR
