@@ -2641,7 +2641,7 @@
         if (!heuteGesetzt && abHeute) { h.id = "plan-ab-heute"; heuteGesetzt = true; }
         ziel.appendChild(h);
       }
-      var karte = kompakt ? planZeile(s, beginn) : planKarte(s, beginn);
+      var karte = kompakt ? planZeile(s, beginn) : planKarte(s, beginn, gruppiert);
       // Der Wochenstreifen springt ueber [data-tag] an den Tag. Ohne Tageskopf
       // traegt die erste Karte des Tages die Marke.
       if (gruppiert && !ziel.querySelector('[data-tag="' + tagKey + '"]')) karte.setAttribute("data-tag", tagKey);
@@ -2692,9 +2692,18 @@
     if (s.besetzung.length) s.besetzung.forEach(function (b) { ziel.appendChild(chip(b, s.system >= 3)); });
     else { var offen = document.createElement("span"); offen.className = "chip offen"; offen.textContent = "noch nicht besetzt"; ziel.appendChild(offen); }
   }
-  function planKarte(s, beginn) {
+  // "mitDatum" setzt der Spielplan: dort gruppiert das neue Design nur
+  // nach Zeitraum, und unter "Vergangen" stehen hundert Karten ohne
+  // jeden Hinweis, wann der Tag wechselt. Wer ueber die Hallenseite
+  // oder ein Profil kommt, hat den Tageskopf darueber - da waere es
+  // doppelt.
+  function planKarte(s, beginn, mitDatum) {
     var d = document.createElement("div"); d.className = "spiel karte" + (s.vergangen ? " war" : "") + (istMeins(s) ? " meins" : "");
     var kopf = document.createElement("div"); kopf.className = "kopfzeile";
+    if (mitDatum) {
+      var wt = document.createElement("span"); wt.className = "wanntag";
+      wt.textContent = datumKurz(beginn); kopf.appendChild(wt);
+    }
     var zeit = document.createElement("span"); zeit.className = "zeit"; zeit.textContent = uhr(beginn) + " Uhr"; kopf.appendChild(zeit);
     kopf.appendChild(teilenKnopf(s));
     if (s.liga) kopf.appendChild(ligaPille(s.liga));
@@ -3840,7 +3849,12 @@
       Object.keys(pers).forEach(function (ps) {
         if (!alle && ps !== slug) return;
         pers[ps].forEach(function (e) {
-          var k = e.beginn + "|" + e.paarung, vorhanden = karte[k];
+          // Die Kennung, nicht beginn|paarung: bei einem verlegten Spiel
+          // haelt die Registratur die alte Kennung fest, waehrend beginn
+          // schon die neue Zeit traegt. Ohne das zaehlt dasselbe Spiel
+          // hier zweimal - einmal unter der Kennung aus daten.json,
+          // einmal unter der neuen Zeit.
+          var k = e.id || (e.beginn + "|" + e.paarung), vorhanden = karte[k];
           var bes = (vorhanden && vorhanden.besetzung) ? vorhanden.besetzung.slice() : [];
           var p = personMit(ps); if (!bes.some(function (b) { return b.slug === ps; })) bes.push({ name: p ? p.name : ps, slug: ps, rolle: e.rolle });
           merge({ kennung: k, beginn: e.beginn, liga: e.liga, paarung: e.paarung, halle: e.halle, system: e.system, besetzung: bes, saison: e.saison });

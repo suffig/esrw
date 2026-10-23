@@ -2957,6 +2957,11 @@
      Enge schrumpfen alle anteilig. */
   .leiste button { flex:1 1 auto; min-width:0; }
 
+  /* Der Tag an der Karte. Er steht vor der Uhrzeit und tritt zurueck -
+     die Uhrzeit bleibt das, was man sucht. */
+  .kopfzeile .wanntag { color:var(--dim); font-weight:700; font-size:var(--s-m);
+    white-space:nowrap; flex:none; }
+
   /* Dieselbe Ursache: die Liga-Pille stand bei langen Namen
      ("Frauen Pokal Gr.A") im rechten Rand. */
   .spiel .liga { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
@@ -3447,6 +3452,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=199"></script>
+<script src="app.js?v=200"></script>
 </body>
 </html>
