@@ -100,6 +100,33 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: Neusser EV 1
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:131cddf34ec4f2a75e2fbe447869c28ddbbd248b@esrw.de
+SEQUENCE:0
+DTSTAMP:20261023T101533Z
+LAST-MODIFIED:20261023T101533Z
+DTSTART:20261024T163000Z
+DTEND:20261024T200000Z
+SUMMARY:SR · U17 LL: Grefrather EG – ESC Darmstadt
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\nHalle: Eissportzentrum 
+ Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespann: Hartmann\
+ , Marius\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Grefrath\, Stadionstraße 161\, 47929 Grefrath
+GEO:51.348547;6.341019
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath, 
+ Stadionstraße 161, 47929 Grefrath";X-APPLE-RADIUS=100;X-TITLE="Eissportze
+ ntrum Grefrath":geo:51.348547,6.341019
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: Grefrather EG – 
+ ESC Darmstadt
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:4fd78424ebb5810762c5479682214180342e3ed0@esrw.de
 SEQUENCE:0
 DTSTAMP:20261016T091530Z

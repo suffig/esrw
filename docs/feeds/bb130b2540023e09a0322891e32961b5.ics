@@ -9,16 +9,16 @@ REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
 UID:5db5da845d8e74979e3cecf798519375847e1d09@esrw.de
-SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
+SEQUENCE:1
+DTSTAMP:20261023T101533Z
+LAST-MODIFIED:20261023T101533Z
 DTSTART:20261024T130000Z
 DTEND:20261024T163000Z
 SUMMARY:SR · U17 II: EV Duisburg – EHC Young Dragons Erfurt
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:00 Uhr\nTreffpunkt:
   15:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 II\nHalle: PreZero Rheinlan
  dhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: 
- Reuter\, Fynn\n\nQuelle: https://www.esrw.de/einteilungen.html
+ Schmidt\, Waldemar\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

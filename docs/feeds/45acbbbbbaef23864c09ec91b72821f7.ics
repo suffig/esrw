@@ -116,16 +116,16 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
 END:VEVENT
 BEGIN:VEVENT
 UID:0af8d31f5f00461fddad9f1c909b936f5df7cf82@esrw.de
-SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
+SEQUENCE:1
+DTSTAMP:20261023T101533Z
+LAST-MODIFIED:20261023T101533Z
 DTSTART:20261024T163000Z
 DTEND:20261024T200000Z
 SUMMARY:SR · U17 LL: Grefrather EG – ESC Darmstadt
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
   18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\nHalle: Eissportzentrum 
- Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespann: Reuter\, 
- Fynn\n\nQuelle: https://www.esrw.de/einteilungen.html
+ Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespann: Hofer\, C
+ arsten\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

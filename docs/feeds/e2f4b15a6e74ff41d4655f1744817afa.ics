@@ -121,4 +121,32 @@ DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Eisadler Do
  rtmund – GSC Moers
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:0952767817722e62671e590409078c221b523e6b@esrw.de
+SEQUENCE:0
+DTSTAMP:20261023T101533Z
+LAST-MODIFIED:20261023T101533Z
+DTSTART:20261024T130000Z
+DTEND:20261024T163000Z
+SUMMARY:SR · U17 II: EV Duisburg – EHC Young Dragons Erfurt
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:00 Uhr\nTreffpunkt:
+  15:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 II\nHalle: PreZero Rheinlan
+ dhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: 
+ Kratschmar\, Jocelyn\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 II: EV Duisburg – EH
+ C Young Dragons Erfurt
+END:VALARM
+END:VEVENT
 END:VCALENDAR

@@ -1751,15 +1751,15 @@ END:VEVENT
 BEGIN:VEVENT
 UID:ef035da59eddff64189b3a7c4a18b1af034c552a@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
+DTSTAMP:20261023T101533Z
+LAST-MODIFIED:20261023T101533Z
 DTSTART:20261024T130000Z
 DTEND:20261024T163000Z
 SUMMARY:SR · U17 II: EV Duisburg – EHC Young Dragons Erfurt
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:00 Uhr\nTreffpunkt:
   15:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 II\nHalle: PreZero Rheinlan
  dhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: 
- Reuter\, Fynn\n\nQuelle: https://www.esrw.de/einteilungen.html
+ Schmidt\, Waldemar\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1890,15 +1890,15 @@ END:VEVENT
 BEGIN:VEVENT
 UID:798cb1ad3c11fa0c59e52ad80f230e334c9742db@esrw.de
 SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
+DTSTAMP:20261023T101533Z
+LAST-MODIFIED:20261023T101533Z
 DTSTART:20261024T163000Z
 DTEND:20261024T200000Z
 SUMMARY:SR · U17 LL: Grefrather EG – ESC Darmstadt
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
   18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\nHalle: Eissportzentrum 
- Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespann: Reuter\, 
- Fynn\n\nQuelle: https://www.esrw.de/einteilungen.html
+ Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespann: Hofer\, C
+ arsten\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
