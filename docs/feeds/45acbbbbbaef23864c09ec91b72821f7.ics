@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:05402877450d6bbc10bc52c8b339ece86a65056b@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261016T173000Z
-DTEND:20261016T210000Z
-SUMMARY:SR · Frauen Pokal Gr.B: KEC "Die Haie" – Dinslakener Kobras
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
-  19:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen Pokal Gr.B\nHalle: Köln
- arena 2\nAdresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Bocklem
- ünd\, Cid\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/
- einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
-GEO:50.937979;6.98935
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
- r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
- .937979,6.98935
-END:VEVENT
-BEGIN:VEVENT
 UID:7f60338c7cf073b58a7758ddb428ab3a9ca9cb25@esrw.de
 SEQUENCE:0
 DTSTAMP:20261006T110047Z
