@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:b18178ccbb4c622d0393b9b8d2aa5a1037d7db0c@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261016T171500Z
-DTEND:20261016T204500Z
-SUMMARY:SR · Senioren LL: Dinslakener Kobras 1b – ESC Rheine
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
-  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissporthal
- le Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Quint\, S
- ascha\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/eint
- eilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
-GEO:51.574578;6.735361
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
- m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
- inslaken":geo:51.574578,6.735361
-END:VEVENT
-BEGIN:VEVENT
 UID:78e5a1a4e4327b13119832c5e7c65d3aeab4436f@esrw.de
 SEQUENCE:0
 DTSTAMP:20261016T090052Z

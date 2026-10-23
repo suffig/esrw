@@ -8,71 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:d184c9ba1280ae1092df9b02e5723d3606b69719@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261016T171500Z
-DTEND:20261016T204500Z
-SUMMARY:SR · U17 RL: EHC Troisdorf – Eisadler Dortmund
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
-  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: ICEDOME Troisdor
- f\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Henkels\, 
- André\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
-GEO:50.811945;7.109233
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
- rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
- isdorf":geo:50.811945,7.109233
-END:VEVENT
-BEGIN:VEVENT
-UID:bb7cbc30011cc89e3cb8c1965ecd13fae08176be@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261016T171500Z
-DTEND:20261016T204500Z
-SUMMARY:SR · Senioren LL: Dinslakener Kobras 1b – ESC Rheine
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
-  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissporthal
- le Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Störmann
- \, Manuel\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/
- einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
-GEO:51.574578;6.735361
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
- m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
- inslaken":geo:51.574578,6.735361
-END:VEVENT
-BEGIN:VEVENT
-UID:a1f006c56908d61991dabc0c75d317510a3c49ed@esrw.de
-SEQUENCE:0
-DTSTAMP:20261015T164526Z
-LAST-MODIFIED:20261015T164526Z
-DTSTART:20261016T171500Z
-DTEND:20261016T204500Z
-SUMMARY:SR · Senioren LL: EC Bergisch Land – ESV Grizzlys Bergkamen 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
-  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissporthal
- le Solingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Solba
- ch\, Carsten\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.
- de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
-GEO:51.165932;7.086769
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
- ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
- le Solingen":geo:51.165932,7.086769
-END:VEVENT
-BEGIN:VEVENT
 UID:1edce2fe67f1e193b9e956da6158d47cadf9e8f0@esrw.de
 SEQUENCE:0
 DTSTAMP:20261006T110047Z
@@ -1331,12 +1266,6 @@ GEO:50.811945;7.109233
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
  rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
  isdorf":geo:50.811945,7.109233
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: EHC Troisdorf –
-  Neusser EV
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:872f0f089c586ee55aef1e408747ee55452cff4f@esrw.de
@@ -1361,12 +1290,6 @@ GEO:50.967548;7.135355
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
  dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
  TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: ESV Bergisc
- h Gladbach – Lauterbach Luchse
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:2ac4ead78b4794cf6a6a3704aab3e23ab26b2854@esrw.de
