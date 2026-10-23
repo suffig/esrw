@@ -1125,6 +1125,54 @@ def test_kennungen():
            "mit Registratur greift sie wieder")
 
 
+def test_spielschluessel():
+    """Der Schluessel eines Spiels entsteht ueberall gleich.
+
+    Ein Spiel wird ueber "beginn|paarung" angesprochen - aber nur, wenn
+    es keine Kennung mitbringt. Bei einem verlegten Spiel haelt die
+    Registratur die alte Kennung fest, waehrend "beginn" schon die neue
+    Zeit traegt. Wer sich den Schluessel selbst zusammenbaut, bekommt
+    dann einen anderen als der Rest der App - und dasselbe Spiel steht
+    zweimal da.
+
+    Genau das ist dreimal passiert: im Archiv (Fassung 200), in
+    archiv.json (191) und im Doppelt-Finder (189). Deshalb steht hier,
+    was gilt.
+    """
+    print("\nSpielschluessel einheitlich")
+    wurzel = os.path.dirname(HIER)
+
+    # Was sich den Schluessel bauen DARF, und warum:
+    erlaubt = (
+        ("kennungVon", "kennungVon() ist die Quelle der Wahrheit"),
+        ("if (!s.id)", "legt die Kennung an, wenn sie fehlt"),
+        ("schluesselVon", "Schluessel einer Aenderung, nicht eines Spiels"),
+        ('z[0] + "|" + z[2]', "eingefrorene Saison - dort gibt es keine Kennung"),
+    )
+
+    gefunden, verdaechtig = 0, []
+    for name in ("app.js", "mitglieder.js"):
+        pfad = os.path.join(wurzel, "docs", name)
+        if not os.path.exists(pfad):
+            continue
+        with open(pfad, encoding="utf-8") as f:
+            zeilen = f.read().splitlines()
+        for nr, zeile in enumerate(zeilen, 1):
+            if not re.search(r'beginn\s*\+\s*"\|"', zeile) and 'z[0] + "|" + z[2]' not in zeile:
+                continue
+            gefunden += 1
+            if re.search(r'id\s*\|\|', zeile):
+                continue
+            if any(marke in zeile for marke, _ in erlaubt):
+                continue
+            verdaechtig.append("%s:%d %s" % (name, nr, zeile.strip()[:70]))
+
+    pruefe(gefunden >= 5, "die Stellen werden gefunden", "%d gefunden" % gefunden)
+    pruefe(not verdaechtig,
+           "jeder Spielschluessel nimmt erst die Kennung",
+           "; ".join(verdaechtig) if verdaechtig else "")
+
+
 def test_archivkennung():
     """Die Saisonlisten in archiv.json tragen die Kennung.
 
@@ -1337,7 +1385,7 @@ def main():
                  test_rechnungsvorlage, test_sicherung, test_erinnerungszeit, test_zurueckspielen, test_obmann_rechte,
                  test_kalenderwuensche, test_vereinsnamen, test_seitenumbau,
                  test_funktionstexte, test_dunkles_thema, test_kennungen, test_verlegt,
-                 test_archivkennung,
+                 test_archivkennung, test_spielschluessel,
                  test_tresor):
         test()
     print("\n" + "-" * 58)

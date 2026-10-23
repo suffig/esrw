@@ -1,5 +1,15 @@
 <!doctype html>
-<html lang="de">
+<!-- class="einfach": dieselbe App, nur weniger auf einmal. Was selten
+     gebraucht wird, steht eine Ebene tiefer statt in der ersten Reihe -
+     nichts verschwindet, nichts ist abgeschaltet. Das war bis Fassung
+     203 ein Schalter; im neuen Design versteckte er sich selbst, und
+     seit es nur ein Design gibt, war er nicht mehr erreichbar.
+
+     data-design="neu": es gibt nur dieses eine. Das Attribut steht
+     hier, weil 150 CSS-Regeln daran haengen und es sonst erst gilt,
+     wenn die Daten da sind - der Anmeldeschirm zeigte bis Fassung 203
+     das Aussehen von vor Fassung 178. -->
+<html lang="de" class="einfach" data-design="neu">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
@@ -1669,7 +1679,6 @@
      (frueher "Runde 23") Die laengste Schicht: einfache Ansicht und
      Kachelmenues, dann Kollegen- und Regelseite, Strafenmatrix,
      Bestimmungen, Spielzeiten und der erste Moment nach dem Start. */
-  .mehr-ansicht { display:flex; gap:6px; margin:0 0 10px; }
   /* "Selten gebraucht": eine Ueberschrift zum Antippen. Die Kacheln bleiben
      Geschwister im Raster - in einem <details> wuerden sie einspaltig stehen. */
   .menue-mehr { font:inherit; background:none; border:0; cursor:pointer; text-align:left; width:100%;
@@ -1686,8 +1695,6 @@
      Sprungleiste - es ist ohnehin nur eine Seite zum Durchscrollen. */
   .einfach .sprungleiste { display:none; }
   /* Kopfzeile: derselbe Stil wie der Admin-Schild, nur in der Akzentfarbe */
-  #einfachmodus { color:var(--dim); }
-  #einfachmodus.aktiv { background:var(--akzent); color:var(--akzent-text); }
   /* Feineinstellungen: in der einfachen Ansicht erst auf Wunsch */
   .fein-knopf { display:none; width:100%; margin:12px 0 0; }
   .einfach .fein-knopf { display:block; }
@@ -2990,6 +2997,29 @@
 
 
 
+
+  /* ===== Runde 47: Querformat ====================================== */
+
+  /* Gemessen auf einem gedrehten Telefon (667 x 375): Kopfzeile 83 px
+     und untere Leiste 81 px belegten zusammen 164 - 44 Prozent der
+     Hoehe. Nach Filterzeile und Wochenstreifen blieben 65 px fuer die
+     Liste, und eine Spielkarte ist 145 hoch. Man sah weniger als eine
+     halbe Karte.
+     Was hier wegfaellt, ist Polsterung oder steht woanders: der volle
+     Standtext zum Beispiel im title. Der Wochenstreifen bleibt - er
+     zeigt im Querformat dreizehn Tage statt sieben, das ist dort seine
+     beste Form.
+     Der Block steht am Ende, weil die Regeln fuer .kopf und .leiste
+     weiter oben sonst gewinnen. */
+  @media (max-height: 460px) and (orientation: landscape) {
+    .kopf { padding-top:6px; padding-bottom:6px; }
+    .kopf .logo { width:32px; height:32px; }
+    .kopf .stand { display:none; }
+    .leiste { padding-top:4px; padding-bottom:calc(4px + env(safe-area-inset-bottom)); }
+    .leiste button { min-height:38px; gap:2px; }
+    .leiste button svg.i { padding:3px 10px; }
+  }
+
 </style>
 </head>
 <body>
@@ -3041,7 +3071,6 @@
   <span class="kopf-knoepfe">
     <button type="button" class="rund versteckt" id="adminmodus" title="Admin-Modus" aria-label="Admin-Modus umschalten" aria-pressed="true"><svg class="i"><use href="#i-shield"/></svg></button>
     <button type="button" class="rund" id="thema" title="Hell / Dunkel" aria-label="Hell oder Dunkel"><svg class="i"><use href="#i-moon"/></svg></button>
-    <button type="button" class="rund" id="einfachmodus" title="Einfache Ansicht" aria-label="Einfache Ansicht umschalten" aria-pressed="true"><svg class="i"><use href="#i-auge"/></svg></button>
     <button type="button" class="rund" id="suche-knopf" title="Spielplan durchsuchen" aria-label="Suchen"><svg class="i"><use href="#i-suche"/></svg></button>
     <button type="button" class="avatar-knopf leer" id="avatar" title="Profil und mehr" aria-label="Profil und mehr">?</button>
   </span>
@@ -3223,7 +3252,6 @@
   <!-- Mehr: alles, was nicht in die Leiste passt -->
   <section id="mehr" class="versteckt">
     <div class="seitentitel"><h2>Mehr</h2></div>
-    <div class="mehr-ansicht" id="mehr-ansicht"></div>
     <div class="menue karte" id="mehr-liste"></div>
   </section>
 
@@ -3237,7 +3265,6 @@
     <div id="konto-bereich"></div>
     <h3 class="abschnitt">Aussehen<small>gilt für dieses Gerät, mit Konto auf allen</small></h3>
     <div class="karte einstellungen-liste">
-      <label><span><b>Einfache Ansicht</b><small>Weniger auf einmal, Selteneres steht eine Ebene tiefer</small></span><input type="checkbox" id="einfach"></label>
       <label>Schrift <span class="stufen" id="schrift"><button type="button" data-stufe="klein">A−</button><button type="button" data-stufe="normal">A</button><button type="button" data-stufe="gross">A+</button></span></label>
       <label>Farbe <span class="farben" id="akzent"><button type="button" data-akzent="logo" style="background:linear-gradient(135deg,#15161a 55%,#e30613 55%)" aria-label="Schwarz-Rot (Logo)"></button><button type="button" data-akzent="blau" style="background:#0f3d6e" aria-label="Blau"></button><button type="button" data-akzent="gruen" style="background:#1d6b3f" aria-label="Grün"></button><button type="button" data-akzent="rot" style="background:#a12a2a" aria-label="Rot"></button><button type="button" data-akzent="orange" style="background:#b55a12" aria-label="Orange"></button></span></label>
       <label>Aussehen <span class="stufen" id="thema-wahl"><button type="button" data-thema="">System</button><button type="button" data-thema="light">Hell</button><button type="button" data-thema="dark">Dunkel</button><button type="button" data-thema="abend">Abends</button></span></label>
@@ -3452,6 +3479,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=200"></script>
+<script src="app.js?v=204"></script>
 </body>
 </html>

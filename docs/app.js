@@ -33,38 +33,6 @@
   function lesen(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function schreiben(k, v) { try { v === null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (e) {} }
 
-  // Einfache Ansicht: dieselbe App, nur weniger auf einmal. Was selten
-  // gebraucht wird, steht dann eine Ebene tiefer statt in der ersten Reihe -
-  // nichts verschwindet, nichts wird abgeschaltet. Der Schalter gilt fuer
-  // das Geraet und wandert mit dem Konto auf die anderen.
-  // Voreingestellt ist die einfache Ansicht: "0" heisst ausdruecklich aus,
-  // alles andere (auch ein frisches Geraet) heisst an.
-  function einfachAn() { return designNeu() || lesen("einfach") !== "0"; }
-  function einfachAnwenden() {
-    document.documentElement.classList.toggle("einfach", einfachAn());
-    // Im neuen Design gibt es den Schalter nicht mehr - weder im Kopf noch
-    // in den Einstellungen. Ein Schalter, der wenig tut, kostet mehr
-    // Verstaendnis, als er spart.
-    var weg = designNeu(), feld = el("einfach"), zeile = feld && feld.closest("label");
-    if (el("einfachmodus")) el("einfachmodus").classList.toggle("versteckt", weg);
-    if (zeile) zeile.classList.toggle("versteckt", weg);
-    var k = el("einfachmodus");
-    if (k) {
-      k.classList.toggle("aktiv", einfachAn());
-      k.setAttribute("aria-pressed", einfachAn() ? "true" : "false");
-      k.title = einfachAn() ? "Einfache Ansicht \u2013 antippen zeigt alles" : "Alles sichtbar \u2013 antippen vereinfacht";
-    }
-    if (el("einfach")) el("einfach").checked = einfachAn();
-  }
-  function einfachSetzen(an, still) {
-    if (einfachAn() === !!an) return;
-    schreiben("einfach", an ? null : "0");
-    einfachAnwenden(); einstellungenSync();
-    if (!el("mehr").classList.contains("versteckt")) zeigeMehr();
-    if (!el("einstellungen").classList.contains("versteckt")) setTimeout(einstellungenSprung, 60);
-    if (!still) toast(an ? "Einfache Ansicht \u2013 Selteneres steht eine Ebene tiefer." : "Jetzt ist alles sichtbar.", "gut");
-  }
-
   // Texte, die Funktionen aufzaehlen, muessen mitgehen, wenn der Betreiber
   // eine abschaltet - sonst steht unter den Spielen "Tipp fuer Route,
   // Tausch, Notiz", waehrend es die Tauschboerse gar nicht gibt.
@@ -151,10 +119,6 @@
       if (war !== ist) (ist ? dazu : weg).push(f[1]);
     });
     funktionenStand = obj || {}; schreiben("funktionen", JSON.stringify(funktionenStand));
-    // Das Design haengt an derselben Zeile wie die Bereiche: wenn sie
-    // hereinkommt, muss es sofort gelten - sonst saehe ein abgemeldeter
-    // Besucher beim ersten Aufruf noch das alte.
-    designAnwenden(); einfachAnwenden();
     FUNKTIONEN.forEach(function (f) { document.documentElement.classList.toggle("ohne-" + f[0], !funktion(f[0])); });
     if (el("tab-tausch")) tabDritterAnwenden();
     if (neuZeichnen && vorher !== JSON.stringify(funktionenStand) && typeof ausHash === "function" && daten) ausHash();
@@ -415,42 +379,6 @@
     var st = new Date().getHours();
     return st >= ABEND_VON || st < ABEND_BIS;
   }
-  // Das neue Design entsteht Ansicht fuer Ansicht. Bis es fertig ist,
-  // laeuft das alte weiter; der Betreiber kann zwischen beiden wechseln
-  // und jederzeit zurueck. Fuer alle anderen gibt es den Schalter nicht.
-  // Zwei Schalter, einer davon fuer alle:
-  //
-  //   designGlobal()  steht in der Tabelle "funktionen" - dieselbe, die
-  //                   die Bereiche schaltet. Jeder darf sie lesen, auch
-  //                   abgemeldet; schreiben darf nur ein Admin. Das ist
-  //                   genau der Zuschnitt, den ein Schalter fuer alle
-  //                   braucht, deshalb liegt das Design dort und nicht in
-  //                   einer eigenen Tabelle.
-  //
-  //   lesen("design") ist die Ausnahme fuer dieses eine Geraet: "neu"
-  //                   oder "alt" ueberstimmen die Einstellung fuer alle,
-  //                   leer heisst "wie fuer alle". Damit kann der
-  //                   Betreiber das neue Design ansehen, ohne es schon
-  //                   fuer alle anzuschalten - und nach dem Anschalten
-  //                   noch einmal nachsehen, wie es vorher aussah.
-  function designGlobal() {
-    var f = funktionenLesen();
-    // Seit Fassung 178 ist das neue Design die Voreinstellung: wer nichts
-    // eingestellt hat, bekommt es. Ein ausdrueckliches "aus" in der
-    // Tabelle gilt weiterhin - der Schalter unter "Betreiber" bleibt der
-    // Weg zurueck, und er muss staerker sein als diese Vorgabe.
-    return f.design !== undefined ? !!f.design : true;
-  }
-  function designNeu() {
-    var eigen = lesen("design");
-    if (eigen === "neu") return true;
-    if (eigen === "alt") return false;
-    return designGlobal();
-  }
-  function designAnwenden() {
-    if (designNeu()) document.documentElement.setAttribute("data-design", "neu");
-    else document.documentElement.removeAttribute("data-design");
-  }
   function themaAnwenden() {
     var t = lesen("thema");
     var gewaehlt = t === "abend" ? (abendDunkel() ? "dark" : "light") : t;
@@ -505,7 +433,7 @@
     // wieder landet - der Kopf wechselt also mit.
     var wo = document.documentElement.getAttribute("data-ansicht") || "";
     var unter = (location.hash.split("/")[1] || "").split("?")[0];
-    var eigen = designNeu() ? (KOPFTITEL[wo + "/" + unter] || KOPFTITEL[wo]) : null;
+    var eigen = KOPFTITEL[wo + "/" + unter] || KOPFTITEL[wo];
     var voll = eigen || daten.titel || "ESRW App";
     var kurz = voll.split(/\s+/).slice(-1)[0] || voll;
     h.textContent = voll;
@@ -634,7 +562,6 @@
       // gerade so, als waere man jemand ohne ihn
       .then(function (ja) { el("adminmodus").classList.toggle("versteckt", !ja || !!lesen("testrolle")); adminKnopfStand(); }).catch(function () {});
   }
-  if (el("einfachmodus")) el("einfachmodus").addEventListener("click", function () { einfachSetzen(!einfachAn()); });
   if (el("fein-knopf")) el("fein-knopf").addEventListener("click", function () {
     var auf = document.documentElement.classList.toggle("fein-an");
     el("fein-knopf").textContent = auf ? "Feineinstellungen ausblenden" : "Mehr einstellen \u2026";
@@ -795,11 +722,6 @@
     kalenderEinstRendern();
     el("karten-app").value = lesen("karten") || "auto";
     if (!nurAnwenden) el("karten-app").addEventListener("change", function (e) { schreiben("karten", e.target.value === "auto" ? null : e.target.value); if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true); toast("Karten-App: " + e.target.options[e.target.selectedIndex].text, ""); einstellungenSync(); });
-    einfachAnwenden();
-    if (el("einfach")) {
-      el("einfach").checked = einfachAn();
-      if (!nurAnwenden) el("einfach").addEventListener("change", function (e) { einfachSetzen(e.target.checked); });
-    }
     var k = lesen("kompakt") === "1"; el("kompakt").checked = k; document.body.classList.toggle("kompakt", k);
     if (!nurAnwenden) el("kompakt").addEventListener("change", function (e) { schreiben("kompakt", e.target.checked ? "1" : null); document.body.classList.toggle("kompakt", e.target.checked); einstellungenSync(); });
     function schriftSetzen(stufe) {
@@ -1497,15 +1419,14 @@
           abfahrtZeile.appendChild(ikone("i-route"));
           var t1 = document.createElement("span");
           var b1 = document.createElement("b");
-          b1.textContent = designNeu() ? "Losfahren um " + uhr(ab) : "Abfahrt ca. " + uhr(ab) + " Uhr";
+          b1.textContent = "Losfahren um " + uhr(ab);
           t1.appendChild(b1);
           var s1 = document.createElement("small");
-          // Im neuen Design stand hier nur "34 Min., 41 km" - eine Abfahrtszeit
-          // ohne jeden Vorbehalt, als waere sie gemessen. Sie ist gerechnet,
-          // und zwar ohne Stau. Das gehoert dazu, sonst steht da eine
+          // Hier stand einmal nur "34 Min., 41 km" - eine Abfahrtszeit ohne
+          // jeden Vorbehalt, als waere sie gemessen. Sie ist gerechnet, und
+          // zwar ohne Stau. Das gehoert dazu, sonst steht da eine
           // Genauigkeit, die es nicht gibt.
-          s1.textContent = designNeu() ? sk.minuten + " Min., " + sk.km + " km · " + verkehrText()
-            : sk.minuten + " Min., " + sk.km + " km, " + verkehrText() + " · Treffpunkt " + uhr(treff) + " Uhr";
+          s1.textContent = sk.minuten + " Min., " + sk.km + " km · " + verkehrText();
           t1.appendChild(s1); abfahrtZeile.appendChild(t1);
           abfahrtZeile.classList.remove("versteckt");
         }).catch(function () {});
@@ -2046,27 +1967,23 @@
         var ab = new Date(new Date(s.treffpunkt).getTime() - st.minuten * 60000);
         if (h._abfahrtSetzen) h._abfahrtSetzen(ab);
         var z = document.createElement("div"); z.className = "abfahrt"; z.appendChild(ikone("i-route"));
-        if (designNeu()) {
-          z.classList.add("losfahren");
-          // Zwei Zeilen statt einer langen: oben die Uhrzeit, darunter,
-          // woraus sie entsteht. In einer Zeile gab das bei "Stau nicht
-          // eingerechnet" einen Umbruch mitten im Satz - die Reihe ist
-          // flex mit nowrap, da draengen sich vier Teile um denselben Platz.
-          var zt = document.createElement("span"); zt.className = "losfahren-text";
-          var zo = document.createElement("span");
-          zo.appendChild(document.createTextNode("Losfahren um "));
-          var zb = document.createElement("b"); zb.textContent = uhr(ab); zo.appendChild(zb);
-          zt.appendChild(zo);
-          // Die Zeit ist gerechnet, nicht gemessen, und zwar ohne Stau. Das
-          // gehoert dazu, sonst steht da eine Genauigkeit, die es nicht gibt.
-          var zs = document.createElement("small");
-          zs.textContent = st.minuten + " Min., " + st.km + " km · " + verkehrText();
-          zt.appendChild(zs);
-          z.appendChild(zt);
-          if (ak && ak.parentNode === h) { h.insertBefore(z, ak); return; }
-        } else {
-          z.appendChild(document.createTextNode("Abfahrt ca. " + uhr(ab) + " Uhr · " + st.minuten + " Min., " + st.km + " km, " + verkehrText()));
-        }
+        z.classList.add("losfahren");
+        // Zwei Zeilen statt einer langen: oben die Uhrzeit, darunter,
+        // woraus sie entsteht. In einer Zeile gab das bei "Stau nicht
+        // eingerechnet" einen Umbruch mitten im Satz - die Reihe ist
+        // flex mit nowrap, da draengen sich vier Teile um denselben Platz.
+        var zt = document.createElement("span"); zt.className = "losfahren-text";
+        var zo = document.createElement("span");
+        zo.appendChild(document.createTextNode("Losfahren um "));
+        var zb = document.createElement("b"); zb.textContent = uhr(ab); zo.appendChild(zb);
+        zt.appendChild(zo);
+        // Die Zeit ist gerechnet, nicht gemessen, und zwar ohne Stau. Das
+        // gehoert dazu, sonst steht da eine Genauigkeit, die es nicht gibt.
+        var zs = document.createElement("small");
+        zs.textContent = st.minuten + " Min., " + st.km + " km · " + verkehrText();
+        zt.appendChild(zs);
+        z.appendChild(zt);
+        if (ak && ak.parentNode === h) { h.insertBefore(z, ak); return; }
         h.appendChild(z);
       }).catch(function () {});
     }
@@ -2084,19 +2001,12 @@
       return window.Mitglieder.offeneAbrechnungen(p.slug, 21);
     }).then(function (offen) {
       if (!offen || !offen.length || ziel._lauf !== lauf) return;
-      if (designNeu()) { ziel.appendChild(handlungszeile(offen)); return; }
-      var h = document.createElement("div"); h.className = "hinweis warn";
-      h.appendChild(ikone("i-check"));
-      var t = document.createElement("span");
-      t.appendChild(document.createTextNode(offen.length === 1 ? "Ein Spiel ohne Abrechnung: " + offen[0].text + ". "
-        : offen.length + " Spiele ohne Abrechnung. "));
-      var a = document.createElement("a"); a.href = "#mitglieder"; a.textContent = "Jetzt nachtragen"; t.appendChild(a);
-      h.appendChild(t); ziel.appendChild(h);
+      ziel.appendChild(handlungszeile(offen));
     }).catch(function () {});
   }
 
-  // Nur im neuen Design: eine Zeile, die sagt, was ansteht, samt den
-  // Betraegen, um die es geht. Bis zu zwei werden genannt, danach die Summe -
+  // Eine Zeile, die sagt, was ansteht, samt den Betraegen, um die es
+  // geht. Bis zu zwei werden genannt, danach die Summe -
   // "80,00 € und 85,00 €" liest sich, eine Aufzaehlung von acht nicht mehr.
   function handlungszeile(offen) {
     var mit = offen.filter(function (o) { return o.betrag != null; });
@@ -2608,10 +2518,9 @@
     var f = ohneZeichen(el("plan-filter").value);
     var letzteGruppe = null, treffer = 0, heuteGesetzt = false;
     var spiele = planGefiltert(false), gesamt = (daten.spiele || []).filter(function (s) { return !s.vergangen || el("plan-vergangene").checked; }).length;
-    // Neues Design: der Zeitraum-Kopf nennt die Anzahl, also vorab zaehlen.
-    // Altes Design: ein Kopf je Tag, kein Vorlauf noetig.
-    var gruppiert = designNeu(), jeGruppe = {};
-    if (gruppiert) spiele.forEach(function (s) {
+    // Der Zeitraum-Kopf nennt die Anzahl, also vorab zaehlen.
+    var jeGruppe = {};
+    spiele.forEach(function (s) {
       var k = zeitraum(new Date(s.beginn))[0]; jeGruppe[k] = (jeGruppe[k] || 0) + 1;
     });
 
@@ -2619,32 +2528,23 @@
       treffer++;
       var beginn = new Date(s.beginn), tagKey = beginn.toDateString();
       var abHeute = beginn >= new Date(new Date().setHours(0, 0, 0, 0));
-      var zr = gruppiert ? zeitraum(beginn) : null;
-      var kopfKey = gruppiert ? zr[0] : tagKey;
-      if (kopfKey !== letzteGruppe) {
-        letzteGruppe = kopfKey;
+      var zr = zeitraum(beginn);
+      if (zr[0] !== letzteGruppe) {
+        letzteGruppe = zr[0];
         var h = document.createElement("div");
-        if (gruppiert) {
-          h.className = "tag zeitraum" + (zr[0] === "heute" ? " heute" : "");
-          var n = jeGruppe[zr[0]] || 0;
-          var gl = document.createElement("span"); gl.textContent = zr[1];
-          var gr = document.createElement("span"); gr.textContent = n + (n === 1 ? " Spiel" : " Spiele");
-          h.appendChild(gl); h.appendChild(gr);
-        } else {
-          var t = tagTitel(beginn);
-          h.className = "tag" + (t[2] ? " heute" : "");
-          h.setAttribute("data-tag", tagKey);
-          var links = document.createElement("span"); links.textContent = t[0];
-          var rechts = document.createElement("span"); rechts.textContent = t[1];
-          h.appendChild(links); h.appendChild(rechts);
-        }
+        h.className = "tag zeitraum" + (zr[0] === "heute" ? " heute" : "");
+        var n = jeGruppe[zr[0]] || 0;
+        var gl = document.createElement("span"); gl.textContent = zr[1];
+        var gr = document.createElement("span"); gr.textContent = n + (n === 1 ? " Spiel" : " Spiele");
+        h.appendChild(gl); h.appendChild(gr);
         if (!heuteGesetzt && abHeute) { h.id = "plan-ab-heute"; heuteGesetzt = true; }
         ziel.appendChild(h);
       }
-      var karte = kompakt ? planZeile(s, beginn) : planKarte(s, beginn, gruppiert);
-      // Der Wochenstreifen springt ueber [data-tag] an den Tag. Ohne Tageskopf
-      // traegt die erste Karte des Tages die Marke.
-      if (gruppiert && !ziel.querySelector('[data-tag="' + tagKey + '"]')) karte.setAttribute("data-tag", tagKey);
+      var karte = kompakt ? planZeile(s, beginn) : planKarte(s, beginn, true);
+      // Der Wochenstreifen springt ueber [data-tag] an den Tag. Die Koepfe
+      // sind nach Zeitraum gruppiert, nicht nach Tag - also traegt die
+      // erste Karte des Tages die Marke.
+      if (!ziel.querySelector('[data-tag="' + tagKey + '"]')) karte.setAttribute("data-tag", tagKey);
       ziel.appendChild(karte);
     });
     el("plan-zaehler").textContent = treffer !== gesamt ? treffer + " von " + gesamt : gesamt + (gesamt === 1 ? " Spiel" : " Spiele");
@@ -2660,9 +2560,7 @@
   // ansteht. Andersherum las sich der Spielplan an einem spielfreien Tag
   // so: oben "0 von 43", unten "Dein naechstes Spiel ist am Montag" und
   // kein Wort darueber, dass die Tagesauswahl die Liste leerraeumt.
-  // Im alten Design bleibt der kurze Satz.
   function planLeer(gefiltert, gesamt) {
-    if (!designNeu()) return leerZustand(gefiltert ? "Nichts gefunden." : "Keine kommenden Spiele.");
     var n = naechstesEigenes();
     var hin = n ? { label: "Zu dem Spiel", href: "#spiel/" + encodeURIComponent(kennungVon(n)) } : null;
     // datumKurz() endet selbst auf einen Punkt ("Mo. 12.10.") - kein zweiter.
@@ -2776,10 +2674,9 @@
     var s = p.statistik; if (!s) return;
     var h = document.createElement("h3"); h.className = "abschnitt"; h.textContent = "Statistik";
     // Seit wann gezaehlt wird, stand dreimal auf der Seite: hier, an der
-    // Kachel "Insgesamt" und im Fuss. Im neuen Design nur noch an der Zahl,
-    // zu der es gehoert.
-    var seit = (s.erste || "?").split("-").reverse().join(".");
-    var hs2 = document.createElement("small"); hs2.textContent = designNeu() ? "aus dem Archiv" : "aus dem Archiv, seit " + seit; h.appendChild(hs2); ziel.appendChild(h);
+    // Kachel "Insgesamt" und im Fuss. Jetzt nur noch an der Zahl, zu der
+    // es gehoert.
+    var hs2 = document.createElement("small"); hs2.textContent = "aus dem Archiv"; h.appendChild(hs2); ziel.appendChild(h);
     saisonziel(p, ziel);
     var zahlen = document.createElement("div"); zahlen.className = "zahlen";
     var heute = new Date(); heute.setHours(0, 0, 0, 0);
@@ -2796,7 +2693,7 @@
       // "4 als HSR" laedt zum Falschlesen ein - von wievielen? Im neuen
       // Design steht die Herkunft unter der Zahl, nicht in einem Absatz
       // weiter unten, den niemand der Kachel zuordnet.
-      if (designNeu()) k.appendChild(woher(paar[2]));
+      k.appendChild(woher(paar[2]));
       zahlen.appendChild(k);
     });
     ziel.appendChild(zahlen);
@@ -2811,7 +2708,7 @@
       ziel.appendChild(q);
     }
     var fuss = document.createElement("p"); fuss.className = "meta"; fuss.style.marginTop = "10px";
-    fuss.textContent = (designNeu() ? "" : "Gezählt seit " + seit + ". ") + "Das Archiv wächst mit jedem Lauf, esrw.de selbst zeigt nur wenige Tage.";
+    fuss.textContent = "Das Archiv wächst mit jedem Lauf, esrw.de selbst zeigt nur wenige Tage.";
     ziel.appendChild(fuss);
     if (s.gesamt) {
       var rk = document.createElement("button"); rk.type = "button"; rk.className = "mg-neben rueckblick-knopf"; rk.style.width = "100%";
@@ -2936,7 +2833,7 @@
     // Kopf nicht kann: ein fremdes Profil benennen, oder - ohne Konto -
     // den Namen wechseln. Traegt sie keinen sichtbaren Knopf mehr, ist
     // sie nur noch ein zweiter Avatar.
-    if (pz && designNeu()) {
+    if (pz) {
       var stumm = meins && ["wechseln", "uebernehmen", "pin"].every(function (id) {
         return el(id).classList.contains("versteckt");
       });
@@ -3306,13 +3203,7 @@
     ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
       .then(function (st) { return st.eingerichtet && st.session && window.Mitglieder.adminRecht ? window.Mitglieder.adminRecht() : false; })
       .then(function (ja) {
-        if (!ja) {
-          // Ohne Adminrecht gibt es den Schalter nicht - dann darf auch die
-          // Ausnahme fuer dieses Geraet nicht haengen bleiben, sonst kaeme
-          // man nicht zurueck. Was fuer alle gilt, bleibt unberuehrt.
-          if (lesen("design")) { schreiben("design", null); designAnwenden(); einfachAnwenden(); if (daten) ausHash(); }
-          return;
-        }
+        if (!ja) return;
         var h3 = document.createElement("h3"); h3.className = "abschnitt"; h3.textContent = "Betreiber";
         var sm = document.createElement("small"); sm.textContent = "Admin-Funktionen ein- oder ausblenden, die Rechte bleiben"; h3.appendChild(sm);
         box.appendChild(h3);
@@ -3324,54 +3215,6 @@
         var c = document.createElement("input"); c.type = "checkbox"; c.checked = adminModusAn();
         c.addEventListener("change", function () { schreiben("adminaus", c.checked ? null : "1"); adminKnopfStand(); zaehlerHolen(); toast(c.checked ? "Admin-Modus an." : "Admin-Modus aus.", "gut"); });
         l.appendChild(t); l.appendChild(c); karte.appendChild(l);
-
-        // Zweiter Schalter: das neue Design fuer alle. Schreibt in die
-        // Tabelle "funktionen" und gilt fuer jeden, sobald die App bei ihm
-        // neu laedt. (Nicht fuer Abgemeldete - die sehen nur den
-        // Anmeldeschirm, startLaden() laeuft bei ihnen gar nicht.)
-        var ld = document.createElement("label"); var td = document.createElement("span");
-        var bd = document.createElement("b"); bd.textContent = "Neues Design für alle"; bd.style.display = "block";
-        var sd = document.createElement("small");
-        sd.textContent = "Ist an, solange du es nicht abschaltest. Gilt für alle Mitglieder, sobald die App bei ihnen neu lädt.";
-        sd.style.color = "var(--dim)"; sd.style.fontWeight = "500";
-        td.appendChild(bd); td.appendChild(sd);
-        var cd = document.createElement("input"); cd.type = "checkbox"; cd.checked = designGlobal();
-        cd.addEventListener("change", function () {
-          var an = cd.checked; cd.disabled = true;
-          var setzen = window.Mitglieder && window.Mitglieder.funktionSetzen
-            ? window.Mitglieder.funktionSetzen("design", an) : Promise.resolve(false);
-          setzen.then(function (ok) {
-            cd.disabled = false;
-            if (!ok) { cd.checked = !an; toast("Umschalten hat nicht geklappt. Steht die Tabelle „funktionen“?", "warn"); return; }
-            toast(an ? "Neues Design ist für alle an." : "Für alle zurück zum bisherigen Design.", "gut");
-          });
-        });
-        ld.appendChild(td); ld.appendChild(cd); karte.appendChild(ld);
-
-        // Dritter Schalter: die Ausnahme fuer dieses Geraet. Drei Stufen,
-        // weil "aus" und "wie fuer alle" zweierlei sind - ohne die mittlere
-        // Stufe koennte man eine einmal gesetzte Ausnahme nie mehr loswerden.
-        var lx = document.createElement("div"); lx.className = "einstellung-block";
-        var bx = document.createElement("b"); bx.textContent = "Auf diesem Gerät"; bx.style.display = "block";
-        var sx = document.createElement("small");
-        sx.textContent = "Zum Ansehen, bevor du es für alle anschaltest. Gilt nur hier und wandert nicht aufs Handy.";
-        sx.style.color = "var(--dim)"; sx.style.fontWeight = "500"; sx.style.display = "block";
-        lx.appendChild(bx); lx.appendChild(sx);
-        var stufen = document.createElement("div"); stufen.className = "stufen";
-        stufen.style.marginTop = "8px";
-        [["", "Wie für alle"], ["neu", "Neu"], ["alt", "Bisher"]].forEach(function (o) {
-          var b2 = document.createElement("button"); b2.type = "button"; b2.textContent = o[1];
-          b2.className = (lesen("design") || "") === o[0] ? "aktiv" : "";
-          b2.addEventListener("click", function () {
-            schreiben("design", o[0] || null);
-            designAnwenden(); einfachAnwenden();
-            [].forEach.call(stufen.children, function (x) { x.classList.remove("aktiv"); });
-            b2.classList.add("aktiv");
-            ausHash();
-          });
-          stufen.appendChild(b2);
-        });
-        lx.appendChild(stufen); karte.appendChild(lx);
 
         box.appendChild(karte);
         box.classList.remove("versteckt");
@@ -4004,7 +3847,7 @@
     ].forEach(function (p) {
       var k = document.createElement("div"); k.className = "zahl karte tippbar" + (archivAufschluesselung === p[2] ? " neu-markiert" : ""); k.title = "Antippen: Aufschlüsselung"; k.style.cursor = "pointer";
       var b = document.createElement("b"); b.textContent = p[0]; var sp = document.createElement("span"); sp.textContent = p[1] + " ›"; k.appendChild(b); k.appendChild(sp);
-      if (designNeu()) k.appendChild(woher(p[3]));
+      k.appendChild(woher(p[3]));
       k.addEventListener("click", function () { archivAufschluesselung = archivAufschluesselung === p[2] ? null : p[2]; archivRendern(); });
       z.appendChild(k);
     });
@@ -4324,7 +4167,7 @@
     // stand am Ende - nach Datum, Liga und Paarung, in derselben Schrift.
     // Wer wissen will, was los ist, liest sonst jedes Mal erst an der
     // Spielkennung vorbei.
-    if (designNeu() && e.aenderung && e.spielText) {
+    if (e.aenderung && e.spielText) {
       var kopf = document.createElement("b"); kopf.className = "aend-was";
       kopf.textContent = e.aenderung.charAt(0).toUpperCase() + e.aenderung.slice(1);
       txt.appendChild(kopf);
@@ -4550,7 +4393,7 @@
     ];
     var links = {}, selten = [];
     eintraege = eintraege.filter(Boolean).filter(function (e) { return e.length === 1 || !gesperrtFuerMich(e[0]); });
-    if (einfachAn()) eintraege = eintraege.filter(function (e) {
+    eintraege = eintraege.filter(function (e) {
       if (e.length > 1 && MEHR_SELTEN[e[0]]) { selten.push(e); return false; }
       return true;
     });
@@ -4586,20 +4429,6 @@
         var auf = kacheln[0].classList.contains("versteckt");
         kacheln.forEach(function (a) { a.classList.toggle("versteckt", !auf); });
         kopf.classList.toggle("offen", auf);
-      });
-    }
-
-    // Umschalter oben: einfache Ansicht oder alles
-    var wahl = el("mehr-ansicht");
-    if (wahl) wahl.classList.toggle("versteckt", designNeu());
-    if (wahl && !designNeu()) {
-      wahl.innerHTML = "";
-      [["Einfach", true], ["Alles", false]].forEach(function (w) {
-        var b = document.createElement("button"); b.type = "button";
-        b.className = "filterknopf" + (einfachAn() === w[1] ? " aktiv" : "");
-        b.textContent = w[0];
-        b.addEventListener("click", function () { einfachSetzen(w[1]); });
-        wahl.appendChild(b);
       });
     }
 
@@ -5351,12 +5180,11 @@
   }
 
   // Sprungleiste: Chips, die zu den Abschnitten einer langen Seite springen
-  // Die Leiste zeigt nur, was gerade sichtbar ist. Sie muss also mitgehen,
-  // wenn die einfache Ansicht die halbe Seite ein- oder ausblendet - sonst
-  // fehlt hinterher der halbe Wegweiser.
+  // Die Leiste zeigt nur, was gerade sichtbar ist - ein Chip auf einen
+  // ausgeblendeten Abschnitt fuehrte ins Leere.
   function einstellungenSprung() {
     sprungleiste("einstellungen-sprung", "einstellungen", [["konto-bereich", "Konto"], ["konto-profil", "Profil"], ["konto-push", "Push"],
-       ["konto-daten", "Daten"], ["einfach", "Aussehen"], ["kalender-einst", "Kalender"], ["karten-app", "Unterwegs"], ["start-bausteine", "Startseite"], ["start-ordnung", "Reihenfolge"], ["schnell-wahl", "Schnellzugriff"], ["tab-wahl", "Leiste"], ["bereiche", "Bereiche"], ["sicherung-raus", "Sicherung"], ["adminzeile", "Betreiber"]]);
+       ["konto-daten", "Daten"], ["schrift", "Aussehen"], ["kalender-einst", "Kalender"], ["karten-app", "Unterwegs"], ["start-bausteine", "Startseite"], ["start-ordnung", "Reihenfolge"], ["schnell-wahl", "Schnellzugriff"], ["tab-wahl", "Leiste"], ["bereiche", "Bereiche"], ["sicherung-raus", "Sicherung"], ["adminzeile", "Betreiber"]]);
   }
 
   // Ein Chip-Titel darf kurz sein, aber nicht mitten im Wort enden -
@@ -5484,7 +5312,6 @@
   // Deshalb bekommt sie genau den Platz zwischen Kopf und Leiste: dann gibt
   // es nichts mehr, wohin gescrollt werden muesste.
   function kartenHoeheSetzen(div) {
-    if (!designNeu()) return false;
     var leiste = document.querySelector("nav.leiste");
     // Nicht ueber offsetParent pruefen: die Leiste steht "fixed", da ist
     // offsetParent immer null - die Hoehe sagt es ehrlicher.
@@ -5508,8 +5335,8 @@
       if (karteObjekt) { karteObjekt.remove(); karteObjekt = null; }
       div.innerHTML = "";
       // Oben links erreicht ein Daumen auf einem langen Telefon nicht.
-      var m = L.map(div, { scrollWheelZoom: false, zoomControl: !designNeu() });
-      if (designNeu()) L.control.zoom({ position: "bottomright" }).addTo(m);
+      var m = L.map(div, { scrollWheelZoom: false, zoomControl: false });
+      L.control.zoom({ position: "bottomright" }).addTo(m);
       karteObjekt = m;
       L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "© OpenStreetMap" }).addTo(m);
       var meine = {};
@@ -5828,7 +5655,6 @@
   var START_ORDNUNG = ["schnellzugriff", "einrichtung", "pins", "uebersicht", "radar", "nachtrag", "spiele", "kalender-box"];
   var START_NAMEN = { schnellzugriff: "Schnellzugriff", einrichtung: "„Alles eingerichtet?“", pins: "Angepinnte Kollegen", uebersicht: "Kacheln und Termine", radar: "Vertretungs-Radar", nachtrag: "Hinweis zur Abrechnung", spiele: "Deine Spiele", "kalender-box": "Kalender-Karte" };
   function startVorgabe() {
-    if (!designNeu()) return START_ORDNUNG;
     return ["nachtrag"].concat(START_ORDNUNG.filter(function (x) { return x !== "nachtrag"; }));
   }
   function startOrdnung() {
@@ -5890,7 +5716,7 @@
   }
   // Sicherung: alles, was nur hier liegt und nach einem verlorenen Konto
   // oder einem neuen Handy sonst neu getippt werden muesste.
-  var SICHER_SCHLUESSEL = ["einfach", "karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche",
+  var SICHER_SCHLUESSEL = ["karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche",
     "pushwoche", "pushabrechnung", "pushvorlauf", "pushgespann", "kalender", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4", "thema", "funktionen", "verkehr"];
   function sicherungBauen() {
     var app = {};
@@ -5924,7 +5750,7 @@
         if (SICHER_SCHLUESSEL.indexOf(k) >= 0) schreiben(k, d.app[k]);
       });
       if (d.rechnung && window.Mitglieder && window.Mitglieder.rechnungEinlesen) window.Mitglieder.rechnungEinlesen(d.rechnung);
-      einstellungenLaden(true); themaAnwenden(); einfachAnwenden(); tabsAnwenden();
+      einstellungenLaden(true); themaAnwenden(); tabsAnwenden();
       funktionenAnwenden(funktionenLesen()); einstellungenSync();
       toast("Sicherung eingelesen.", "gut");
       setTimeout(function () { location.reload(); }, 900);
@@ -5984,7 +5810,7 @@
   // frueher stand sie einmal hier und einmal beim Anwenden, und was man
   // nur an einer Stelle eintrug, wurde nie gespeichert (so ging es
   // "pushvorlauf", "pushgespann" und den Kalenderwuenschen).
-  var SYNC_SCHLUESSEL = ["verkehr", "einfach", "karten", "schrift", "akzent", "kompakt",
+  var SYNC_SCHLUESSEL = ["verkehr", "karten", "schrift", "akzent", "kompakt",
     "ziel", "start", "bereiche", "pushwoche", "pushabrechnung", "pushvorlauf", "pushgespann",
     "kalender", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4",
     // Die Anleitung lief einmal, die Einrichtungsliste ist weggetippt - das
@@ -6158,7 +5984,7 @@
       // Dass die Anleitung schon lief, ist keine Meldung wert
       if (k.indexOf("tour-") !== 0 && k !== "einrichtung-weg") sichtbar = true;
     });
-    if (geaendert) { einstellungenLaden(true); themaAnwenden(); einfachAnwenden(); tabsAnwenden(); funktionenAnwenden(funktionenLesen()); if (sichtbar) toast("Einstellungen vom Konto übernommen", ""); if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true); }
+    if (geaendert) { einstellungenLaden(true); themaAnwenden(); tabsAnwenden(); funktionenAnwenden(funktionenLesen()); if (sichtbar) toast("Einstellungen vom Konto übernommen", ""); if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true); }
   }
   // Das eigene Bild liegt zusaetzlich auf dem Geraet, damit die Kopfzeile
   // beim naechsten Start sofort stimmt - start.js liest es von dort.
@@ -6763,7 +6589,7 @@
       document.title = daten.titel || "ESRW App"; titelAnpassen(); setTimeout(titelAnpassen, 800); el("quelle").href = daten.quelle;
       standAnzeigen(daten, b[1]);
       el("fuss").textContent = "Termine beginnen " + daten.vorlauf_minuten + " Minuten vor Spielbeginn, damit du rechtzeitig an der Halle bist.";
-      einstellungenLaden(); filterLaden(); designAnwenden();
+      einstellungenLaden(); filterLaden();
       // Der gemerkte Name aus dem Konto gilt, sobald die Einteilungen offen
       // sind - vor dem Routen, sonst zeigt die App kurz die Namensliste.
       kontoNamenAnwenden();

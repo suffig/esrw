@@ -75,7 +75,6 @@ window.Mitglieder = (function () {
   function leeren(el) { while (el.firstChild) el.removeChild(el.firstChild); }
   // Das neue Design entsteht Ansicht fuer Ansicht. app.js setzt die Marke
   // am <html>, hier wird sie nur gelesen.
-  function designNeu() { return document.documentElement.getAttribute("data-design") === "neu"; }
   function ikone(name) { return ctx && ctx.ikone ? ctx.ikone(name) : document.createTextNode(""); }
 
   function euro(n) {
@@ -272,15 +271,10 @@ window.Mitglieder = (function () {
   function darfBereich() { return istAdminAn() || hatRechte(); }
   // Funktion vom Betreiber eingeschaltet? (Schalter kommen aus app.js)
   function fn(k) { return ctx && ctx.funktion ? ctx.funktion(k) : true; }
-  // Einfache Ansicht (Schalter in den Einstellungen, siehe app.js)
-  // Dieselbe Frage wie einfachAn() in app.js - und bis hierher nicht
-  // dieselbe Antwort: dort gilt die einfache Ansicht im neuen Design
-  // immer (den Schalter gibt es da nicht mehr), hier zaehlte nur der
-  // gespeicherte Schluessel. Wer ihn frueher einmal auf "0" gestellt
-  // hatte, bekam im neuen Design zwei Dateien mit zwei Meinungen.
-  function einfach() {
-    return designNeu() || !(ctx && ctx.lesen && ctx.lesen("einfach") === "0");
-  }
+  // Einfache Ansicht - sie gilt immer; die Klasse steht fest am
+  // <html>-Tag, siehe index.html. Die Funktion bleibt, weil zwoelf
+  // Stellen sie fragen; sie macht aus dem "immer" eine Stelle.
+  function einfach() { return true; }
   var REITER_FUNKTION = { abrechnung: "abrechnung", info: "info", tausch: "tausch", frei: "frei", notizen: "notizen", kollegen: "telefon" };
 
   // --------------------------------------------------------- Attrappe
@@ -991,16 +985,9 @@ window.Mitglieder = (function () {
     var initialen = (function (n) { var t = (n || "?").split(","); return (((t[1] || "").trim()[0] || "") + ((t[0] || "").trim()[0] || "")).toUpperCase() || "?"; })(profil.name);
     // Name, Bild und Konto standen auf jedem Reiter noch einmal - oben
     // rechts im Kopf stehen sie ohnehin, und der Avatar dort fuehrt zum
-    // Profil. Im neuen Design traegt der App-Kopf den Seitennamen (siehe
-    // KOPFTITEL in app.js), diese Zeile entfaellt deshalb ganz.
-    // "Abmelden" ist dafuer auf die Profilseite gezogen; es war der
+    // Profil. Den Seitennamen traegt der App-Kopf (siehe KOPFTITEL in
+    // app.js), "Abmelden" steht auf der Profilseite - es war der
     // einzige Weg hinaus und haette sonst gefehlt.
-    if (!designNeu()) {
-      wurzel.appendChild(h("div", { class: "profilzeile karte" }, [
-        h("span", {}, [h("span", { class: "avatar-gross", text: initialen }), h("span", {}, [h("b", { text: profil.name || profil.slug }), h("small", { text: session.user.email })])]),
-        h("button", { type: "button", class: "textknopf", text: "Abmelden", onclick: abmelden })
-      ]));
-    }
     if (!frei()) {
       var sofort = [fn("abrechnung") ? "Abrechnung" : "", fn("notizen") ? "Notizen" : "", fn("push") ? "Push" : ""].filter(Boolean);
       var spaeter = [fn("tausch") ? "Tauschbörse" : "", fn("frei") ? "Verfügbarkeit" : "", fn("hallen") ? "Hallen-Hinweise" : "", fn("gespann") ? "Kontakte" : "", fn("mitfahren") ? "Zusammen fahren" : "", fn("info") ? "Ankündigungen" : ""].filter(Boolean);
@@ -1024,7 +1011,7 @@ window.Mitglieder = (function () {
     // zweites Mal. Der Reiter, auf dem man gerade steht, bleibt immer:
     // sonst verschwindet die Marke unter den Fuessen. "Admin" steht nie
     // unten und bleibt deshalb auch immer.
-    if (designNeu() && ctx.reiterInLeiste) {
+    if (ctx.reiterInLeiste) {
       reiterListe = reiterListe.filter(function (t) {
         return t[0] === reiter || t[0] === "admin" || !ctx.reiterInLeiste(t[0]);
       });
@@ -1479,7 +1466,7 @@ window.Mitglieder = (function () {
     // Das Konto und der Weg hinaus. Stand frueher auf jedem Reiter oben;
     // hierher gehoert es, denn das ist die Profilseite - genau die, zu
     // der der Avatar im Kopf fuehrt.
-    if (designNeu() && session && session.user) {
+    if (session && session.user) {
       ziel.appendChild(h("div", { class: "melde karte mg-konto-fuss" }, [
         h("span", {}, [h("b", { text: "Angemeldet" }), h("small", { text: session.user.email })]),
         h("button", { type: "button", class: "textknopf", text: "Abmelden", onclick: abmelden })
@@ -1932,7 +1919,7 @@ window.Mitglieder = (function () {
       h("span", { text: "Saldo · " + s.spiele + (s.spiele === 1 ? " Spiel" : " Spiele") })
     ]));
     // Die fuenf Zeilen darunter sind die Rechnung - der Satz sagt, welche.
-    if (designNeu()) karte.appendChild(h("p", { class: "woher-zeile", text: "Vergütung minus Fahrtkosten, Verpflegungsmehraufwand und Auslagen." }));
+    karte.appendChild(h("p", { class: "woher-zeile", text: "Vergütung minus Fahrtkosten, Verpflegungsmehraufwand und Auslagen." }));
     [["Vergütung", euro(s.verg)],
      ["Fahrtkosten", euro(s.fahrt)],
      [einfach ? "Strecke (einfach)" : "Strecke (hin und zurück)", Math.round(einfach ? s.km : s.km * 2) + " km"],
@@ -2005,10 +1992,10 @@ window.Mitglieder = (function () {
       offenN ? "gespielt, nicht abgehakt" : "nichts steht aus"]
     ].forEach(function (p) {
       var k = h("div", { class: "zahl karte " + p[3] + (p[2] ? " tippbar" : "") }, [h("b", { text: p[1] }), h("span", { text: p[0] })]);
-      // Vier Betraege nebeneinander, und keiner sagt, wie er zustande kam.
-      // Im neuen Design steht es unter der Zahl - dieselbe Antwort wie beim
+      // Vier Betraege nebeneinander, und keiner sagte, wie er zustande
+      // kam. Jetzt steht es unter der Zahl - dieselbe Antwort wie beim
       // Vermerk an der Abrechnungszeile seit Fassung 129.
-      if (designNeu()) k.appendChild(h("small", { class: "woher", text: p[4] }));
+      k.appendChild(h("small", { class: "woher", text: p[4] }));
       if (p[2]) { k.style.cursor = "pointer"; k.title = "Antippen"; k.addEventListener("click", p[2]); }
       saldo.appendChild(k);
     });
@@ -2017,50 +2004,48 @@ window.Mitglieder = (function () {
     // Im neuen Design steht oben nur, was man wissen will: was unterm
     // Strich bleibt, und was noch aussteht. Verguetung, Kosten und die
     // Aufschluesselung stehen einen Tipp weiter unter "Weitere".
-    if (designNeu()) {
-      var kopf = h("div", { class: "karte mg-kopfsaldo tippbar" }, [
-        h("b", { text: euro(sS.verg - kosten) }),
-        h("span", { text: "Saldo · Vergütung minus Kosten" })
-      ]);
-      kopf.title = "Antippen: Vergütung, Kosten und Steuerjahre";
-      kopf.addEventListener("click", function () { panelOeffnen("detail", false); });
-      neu = h("div", { class: "mg-summenblock" }, [kopf]);
-      var fb = fortschritt(bezahltBetrag, offenBetrag); if (fb) neu.appendChild(fb);
-      var zz = h("button", { type: "button", class: "mg-offenzeile" + (offenN ? "" : " fertig"),
-        title: offenN ? "Antippen: nur diese zeigen" : "Nichts steht mehr aus",
-        text: offenN
-          ? offenN + (offenN === 1 ? " Spiel ist noch nicht abgehakt · " : " Spiele sind noch nicht abgehakt · ") + euro(offenBetrag)
-          : "Alles abgehakt ✓" });
-      if (offenN) zz.addEventListener("click", function () {
-        nurUnbezahlt = true; nurOffene = false; rendereAbrechnung();
+    var kopf = h("div", { class: "karte mg-kopfsaldo tippbar" }, [
+      h("b", { text: euro(sS.verg - kosten) }),
+      h("span", { text: "Saldo · Vergütung minus Kosten" })
+    ]);
+    kopf.title = "Antippen: Vergütung, Kosten und Steuerjahre";
+    kopf.addEventListener("click", function () { panelOeffnen("detail", false); });
+    neu = h("div", { class: "mg-summenblock" }, [kopf]);
+    var fb = fortschritt(bezahltBetrag, offenBetrag); if (fb) neu.appendChild(fb);
+    var zz = h("button", { type: "button", class: "mg-offenzeile" + (offenN ? "" : " fertig"),
+      title: offenN ? "Antippen: nur diese zeigen" : "Nichts steht mehr aus",
+      text: offenN
+        ? offenN + (offenN === 1 ? " Spiel ist noch nicht abgehakt · " : " Spiele sind noch nicht abgehakt · ") + euro(offenBetrag)
+        : "Alles abgehakt ✓" });
+    if (offenN) zz.addEventListener("click", function () {
+      nurUnbezahlt = true; nurOffene = false; rendereAbrechnung();
+    });
+    neu.appendChild(zz);
+    // "Pruefen" stand als Knopf in einer Reihe ueber der Liste, ohne zu
+    // sagen, ob es etwas zu pruefen gibt. Es ist eine Fundstelle wie die
+    // Zeile darueber - also steht es daneben, und nur wenn es etwas zu
+    // sehen gibt.
+    var abgeh = abgehakt();
+    var pruefN = abrechnungPruefen(spiele).filter(function (f) { return !abgeh[f.id]; }).length;
+    if (pruefN) {
+      var pz = h("button", { type: "button", class: "mg-offenzeile pruef",
+        title: "Antippen: die Fundstellen ansehen",
+        text: pruefN === 1 ? "1 Stelle zum Nachsehen" : pruefN + " Stellen zum Nachsehen" });
+      pz.addEventListener("click", function () {
+        panelOeffnen("pruefen", false);
       });
-      neu.appendChild(zz);
-      // "Pruefen" stand als Knopf in einer Reihe ueber der Liste, ohne zu
-      // sagen, ob es etwas zu pruefen gibt. Es ist eine Fundstelle wie die
-      // Zeile darueber - also steht es daneben, und nur wenn es etwas zu
-      // sehen gibt.
-      var abgeh = abgehakt();
-      var pruefN = abrechnungPruefen(spiele).filter(function (f) { return !abgeh[f.id]; }).length;
-      if (pruefN) {
-        var pz = h("button", { type: "button", class: "mg-offenzeile pruef",
-          title: "Antippen: die Fundstellen ansehen",
-          text: pruefN === 1 ? "1 Stelle zum Nachsehen" : pruefN + " Stellen zum Nachsehen" });
-        pz.addEventListener("click", function () {
-          panelOeffnen("pruefen", false);
-        });
-        neu.appendChild(pz);
-      }
-      // Ein angefangener Rechnungsentwurf ist ebenfalls etwas, das aussteht.
-      // Ohne diese Zeile waere er nach dem Zuklappen des Blattes nur noch
-      // ueber die Auswahlleiste wiederzufinden.
-      var rwN = Object.keys(rechnungWahl).length;
-      if (rwN && abrechnungPanel !== "rechnung") {
-        var rz = h("button", { type: "button", class: "mg-offenzeile pruef",
-          title: "Antippen: weiter an der Rechnung",
-          text: "Rechnung angefangen · " + rwN + (rwN === 1 ? " Spiel vorgemerkt" : " Spiele vorgemerkt") });
-        rz.addEventListener("click", function () { abrechnungPanel = "rechnung"; panelUnten = false; rendereAbrechnung(); });
-        neu.appendChild(rz);
-      }
+      neu.appendChild(pz);
+    }
+    // Ein angefangener Rechnungsentwurf ist ebenfalls etwas, das aussteht.
+    // Ohne diese Zeile waere er nach dem Zuklappen des Blattes nur noch
+    // ueber die Auswahlleiste wiederzufinden.
+    var rwN = Object.keys(rechnungWahl).length;
+    if (rwN && abrechnungPanel !== "rechnung") {
+      var rz = h("button", { type: "button", class: "mg-offenzeile pruef",
+        title: "Antippen: weiter an der Rechnung",
+        text: "Rechnung angefangen · " + rwN + (rwN === 1 ? " Spiel vorgemerkt" : " Spiele vorgemerkt") });
+      rz.addEventListener("click", function () { abrechnungPanel = "rechnung"; panelUnten = false; rendereAbrechnung(); });
+      neu.appendChild(rz);
     }
     alt.parentNode.replaceChild(neu, alt);
     // Offenes Detail-Panel mitziehen
@@ -2106,19 +2091,17 @@ window.Mitglieder = (function () {
       // offen uebereinander sind das drei Bildschirme, bevor man beim
       // naechsten Jahr ist. Zugeklappt steht die eine Zahl im Deckel, die
       // man sucht; aufgeklappt wird, was man braucht.
-      if (designNeu()) {
-        var jd = h("details", { class: "karte bestimmung-block" }, [
-          h("summary", {}, [h("span", {}, [
-            h("b", { text: "Steuerjahr " + jahr }),
-            h("small", { text: sJ.spiele + (sJ.spiele === 1 ? " Spiel · " : " Spiele · ")
-              + euro(sJ.verg - sJ.fahrt - sJ.verpf - sJ.ausl) })])])
-        ]);
-        // Die Ueberschrift steckt jetzt im Deckel, im Block waere sie doppelt.
-        var ueber = jahrBox.querySelector("h3.abschnitt");
-        if (ueber) ueber.remove();
-        jd.appendChild(jahrBox);
-        det.appendChild(jd);
-      } else det.appendChild(jahrBox);
+      var jd = h("details", { class: "karte bestimmung-block" }, [
+        h("summary", {}, [h("span", {}, [
+          h("b", { text: "Steuerjahr " + jahr }),
+          h("small", { text: sJ.spiele + (sJ.spiele === 1 ? " Spiel · " : " Spiele · ")
+            + euro(sJ.verg - sJ.fahrt - sJ.verpf - sJ.ausl) })])])
+      ]);
+      // Die Ueberschrift steckt jetzt im Deckel, im Block waere sie doppelt.
+      var ueber = jahrBox.querySelector("h3.abschnitt");
+      if (ueber) ueber.remove();
+      jd.appendChild(jahrBox);
+      det.appendChild(jd);
     });
     return det;
   }
@@ -3947,7 +3930,7 @@ window.Mitglieder = (function () {
       // Eine Rechnung ist eine Handlung auf einer Auswahl - sie gehoert
       // dorthin, wo die Auswahl steht, nicht in eine Knopfreihe ueber der
       // Liste. Drei Zeilen hat das Formular, mehr nimmt es nicht.
-      designNeu() ? h("button", { type: "button", text: "Rechnung", disabled: n ? null : "disabled",
+      h("button", { type: "button", text: "Rechnung", disabled: n ? null : "disabled",
         title: "Die gewählten Spiele auf eine Rechnung setzen (höchstens drei)",
         onclick: function () {
           if (n > 3) { kurzMeldung("Mehr als drei Spiele passen nicht auf das Formular.", "warn"); return; }
@@ -3956,7 +3939,7 @@ window.Mitglieder = (function () {
           rechnungForm = rechnungFormAusWahl();
           abrechnungPanel = "rechnung"; panelUnten = false;
           auswahlEnde();
-        } }) : null,
+        } }),
       h("button", { type: "button", text: "CSV", disabled: n ? null : "disabled", onclick: function () { csvExport(liste.slice().sort(function (a, b) { return a.beginn < b.beginn ? -1 : 1; }), "Auswahl"); } }),
       h("button", { type: "button", text: "Alle", onclick: function () { saisonSpiele(gewaehlteSaison).forEach(function (sp) { if (new Date(sp.beginn) < new Date()) auswahl[sp.kennung] = sp; }); rendereAbrechnung(); } }),
       h("button", { type: "button", class: "textknopf", text: "Fertig", onclick: auswahlEnde })
@@ -4027,49 +4010,33 @@ window.Mitglieder = (function () {
     var offenN = spiele.filter(hatLuecke).length;
     var unbezahltN = spiele.filter(nichtAbgehakt).length;
     var chips;
-    if (!designNeu()) {
-      chips = h("div", { class: "mg-ansicht" }, [
-        h("button", { type: "button", class: !nurOffene && !schnellModus && !nurUnbezahlt ? "aktiv" : "", text: "Alle",
-          onclick: function () { nurOffene = false; nurUnbezahlt = false; schnellModus = false; rendereAbrechnung(); } }),
-        h("button", { type: "button", class: nurOffene && !schnellModus ? "aktiv" : "", title: "Nur Spiele, bei denen noch etwas fehlt",
-          text: "Lücken" + (offenN ? " " + offenN : ""),
-          onclick: function () { nurOffene = true; nurUnbezahlt = false; schnellModus = false; rendereAbrechnung(); } }),
-        h("button", { type: "button", class: nurUnbezahlt ? "aktiv" : "", title: "Nur Spiele, die noch nicht abgehakt sind",
-          text: "Offen",
-          onclick: function () { nurUnbezahlt = true; nurOffene = false; schnellModus = false; rendereAbrechnung(); } }),
+    // Drei der vier Knoepfe filterten, der vierte stellte um - und warf
+    // dabei den Filter weg, ohne dass das irgendwo stand. Jetzt steht
+    // links, WAS man sieht, und rechts, WIE. Beides unabhaengig.
+    // Die Zahl am Knopf kommt aus derselben Funktion wie die Liste
+    // darunter; vorher zaehlten beide getrennt und widersprachen sich.
+    var filterKnopf = function (an, text, zahl, titel, fn) {
+      var k = h("button", { type: "button", class: an ? "aktiv" : "", title: titel,
+        onclick: function () { fn(); rendereAbrechnung(); } }, [h("span", { text: text })]);
+      if (zahl) k.appendChild(h("span", { class: "zaehler", text: String(zahl) }));
+      return k;
+    };
+    chips = h("div", { class: "mg-filterzeile" }, [
+      h("div", { class: "mg-ansicht" }, [
+        filterKnopf(!nurOffene && !nurUnbezahlt, "Alle", 0, "Alle Spiele der Saison",
+          function () { nurOffene = false; nurUnbezahlt = false; }),
+        filterKnopf(nurOffene, "Lücken", offenN, "Gespielt, aber km oder Vergütung fehlt",
+          function () { nurOffene = true; nurUnbezahlt = false; }),
+        filterKnopf(nurUnbezahlt, "Nicht abgehakt", unbezahltN, "Gespielt und noch nicht als bezahlt vermerkt",
+          function () { nurUnbezahlt = true; nurOffene = false; })
+      ]),
+      h("div", { class: "modus mg-darstellung" }, [
+        h("button", { type: "button", class: schnellModus ? "" : "aktiv", title: "Eine Karte je Spiel, zum Aufklappen",
+          text: "Karten", onclick: function () { schnellModus = false; rendereAbrechnung(); } }),
         h("button", { type: "button", class: schnellModus ? "aktiv" : "", title: "Eine Zeile je Spiel, alles nebeneinander",
-          text: "Schnell",
-          onclick: function () { schnellModus = true; nurOffene = false; nurUnbezahlt = false; rendereAbrechnung(); } })
-      ]);
-    } else {
-      // Drei der vier Knoepfe filterten, der vierte stellte um - und warf
-      // dabei den Filter weg, ohne dass das irgendwo stand. Jetzt steht
-      // links, WAS man sieht, und rechts, WIE. Beides unabhaengig.
-      // Die Zahl am Knopf kommt aus derselben Funktion wie die Liste
-      // darunter; vorher zaehlten beide getrennt und widersprachen sich.
-      var filterKnopf = function (an, text, zahl, titel, fn) {
-        var k = h("button", { type: "button", class: an ? "aktiv" : "", title: titel,
-          onclick: function () { fn(); rendereAbrechnung(); } }, [h("span", { text: text })]);
-        if (zahl) k.appendChild(h("span", { class: "zaehler", text: String(zahl) }));
-        return k;
-      };
-      chips = h("div", { class: "mg-filterzeile" }, [
-        h("div", { class: "mg-ansicht" }, [
-          filterKnopf(!nurOffene && !nurUnbezahlt, "Alle", 0, "Alle Spiele der Saison",
-            function () { nurOffene = false; nurUnbezahlt = false; }),
-          filterKnopf(nurOffene, "Lücken", offenN, "Gespielt, aber km oder Vergütung fehlt",
-            function () { nurOffene = true; nurUnbezahlt = false; }),
-          filterKnopf(nurUnbezahlt, "Nicht abgehakt", unbezahltN, "Gespielt und noch nicht als bezahlt vermerkt",
-            function () { nurUnbezahlt = true; nurOffene = false; })
-        ]),
-        h("div", { class: "modus mg-darstellung" }, [
-          h("button", { type: "button", class: schnellModus ? "" : "aktiv", title: "Eine Karte je Spiel, zum Aufklappen",
-            text: "Karten", onclick: function () { schnellModus = false; rendereAbrechnung(); } }),
-          h("button", { type: "button", class: schnellModus ? "aktiv" : "", title: "Eine Zeile je Spiel, alles nebeneinander",
-            text: "Zeilen", onclick: function () { schnellModus = true; rendereAbrechnung(); } })
-        ])
-      ]);
-    }
+          text: "Zeilen", onclick: function () { schnellModus = true; rendereAbrechnung(); } })
+      ])
+    ]);
     inhalt.appendChild(h("div", { class: "mg-abrechnung-kopf" }, [saisonWahl, chips]));
     var wartet = warteBanner();
     if (wartet) inhalt.appendChild(wartet);
@@ -4169,21 +4136,6 @@ window.Mitglieder = (function () {
           text: p[1], onclick: function () { abrechnungPanel = p[0]; panelUnten = true; rendereAbrechnung(); } });
       })));
     };
-    // Im neuen Design ist diese Reihe aufgeloest: "Pruefen" steht oben bei
-    // den Fundstellen (und nur, wenn es Funde gibt), "Rechnung" an der
-    // Auswahlleiste, "Weitere" als Zeile am Ende der Liste. Vor der Liste
-    // stand bisher ein Block, den man jedes Mal ueberlesen musste.
-    if (!designNeu()) {
-      var abgeh = abgehakt();
-      var offenP = abrechnungPruefen(spiele).filter(function (f) { return !abgeh[f.id]; }).length;
-      var KNOEPFE = [["pruefen", "Prüfen" + (offenP ? " " + offenP : "")], ["rechnung", "Rechnung"], ["weiteres", "Weitere"]];
-      KNOEPFE.forEach(function (p) {
-        var offen = abrechnungPanel === p[0]
-          || (p[0] === "weiteres" && WEITERE.filter(function (w) { return w[0] === abrechnungPanel; }).length);
-        leiste.appendChild(h("button", { type: "button", class: "filterknopf" + (offen ? " aktiv" : ""), text: p[1], onclick: function () { abrechnungPanel = abrechnungPanel === p[0] ? null : p[0]; rendereAbrechnung(); } }));
-      });
-      inhalt.appendChild(leiste);
-    }
     // Ein Blatt oeffnet sich dort, wo man getippt hat. Die Menuepunkte aus
     // "Weitere" werden unten getippt - ihr Blatt gehoert also auch unten
     // hin, sonst springt die Antwort aus dem Bild. "Steuerjahre" nicht: das
@@ -4192,22 +4144,21 @@ window.Mitglieder = (function () {
     // langes Formular - beide gehoeren nach oben, auch wenn sie im Menue
     // am Listenende stehen. Am Fuss der Liste geoeffnet waere die Rechnung
     // nur noch mit Scrollen zu ueberblicken.
-    var unten = designNeu() && !!abrechnungPanel && panelUnten
+    var unten = !!abrechnungPanel && panelUnten
       && (abrechnungPanel === "weiteres"
         || WEITERE.filter(function (w) { return w[0] === abrechnungPanel; }).length > 0);
     if (abrechnungPanel && panelInhalt[abrechnungPanel] && !unten) {
       var panel = h("div", { class: "melde karte mg-panel" }, [panelInhalt[abrechnungPanel]()]);
-      // Frueher schloss der Knopf in der Reihe das Blatt wieder. Den gibt
-      // es im neuen Design nicht mehr - also traegt das Blatt sein Kreuz
-      // selbst, sonst bleibt es offen stehen.
-      if (designNeu()) panel.insertBefore(h("button", { type: "button", class: "mg-blatt-zu",
+      // Frueher schloss ein Knopf in einer Reihe ueber der Liste das
+      // Blatt wieder. Den gibt es nicht mehr - also traegt das Blatt
+      // sein Kreuz selbst, sonst bleibt es offen stehen.
+      panel.insertBefore(h("button", { type: "button", class: "mg-blatt-zu",
         "aria-label": "Schließen", title: "Schließen", text: "×",
         onclick: function () { abrechnungPanel = null; rendereAbrechnung(); } }), panel.firstChild);
       inhalt.appendChild(panel);
     }
     // Die Zeile am Listenende - in beiden Darstellungen, Karten wie Zeilen.
     function weitereAnhaengen() {
-      if (!designNeu()) return;
       // Der Abschluss des Vorgangs steht da, wo man nach dem Durchgehen
       // der Liste ankommt - und nicht unter "Seltener gebraucht".
       inhalt.appendChild(h("button", { type: "button",
@@ -4706,9 +4657,6 @@ window.Mitglieder = (function () {
             title: gerechnetText(e), text: "gerechnet ✓?",
             onclick: function () { speichereEinsatz(sp, { herkunft: null }); kurzMeldung("Als geprüft vermerkt ✓", "gut"); } }) : null,
           e.bezahlt ? h("span", { class: "mg-status bezahlt", title: "Abgehakt am " + new Date(e.bezahlt).toLocaleDateString("de-DE"), text: "bezahlt" }) : null,
-          // "kommt" sagt dasselbe wie das Datum zwei Zeilen darueber. In
-          // der Abrechnung ist die Frage ohnehin eine andere.
-          vergangen || designNeu() ? null : h("span", { class: "mg-status kommt", text: "kommt" }),
           vergangen ? fotoKnopf : null, foto,
           h("span", { class: "meta mg-auf", text: "Details ›" })
         ])
