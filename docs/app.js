@@ -779,24 +779,41 @@
   }
 
   var letzterStand = null;
+  // Zwei Quellen, eine Antwort. navigator.onLine meldet, ob ueberhaupt
+  // eine Verbindung besteht; der Service Worker meldet, ob der Server
+  // tatsaechlich antwortet. Gemessen mit abgeschaltetem Server bei
+  // aktivem WLAN: onLine sagte "ja", waehrend die App vollstaendig aus
+  // dem Zwischenspeicher lief - und nichts davon stand auf dem Schirm.
+  var netzErreichbar = true;
+  function netzDa() { return navigator.onLine && netzErreichbar; }
   function netzAnzeigen() {
     var s = el("stand");
-    el("offline").classList.toggle("versteckt", !!navigator.onLine);
-    if (!navigator.onLine) {
-      s.className = "stand alt"; s.textContent = "Offline, gespeicherter Stand" + (letzterStand ? " von " + letzterStand : "");
+    el("offline").classList.toggle("versteckt", netzDa());
+    if (!netzDa()) {
+      s.className = "stand alt"; s.textContent = "Ohne Verbindung, gespeicherter Stand" + (letzterStand ? " von " + letzterStand : "");
       var q = 0; try { q = Object.keys(JSON.parse(localStorage.getItem("mg_queue") || "{}")).length; } catch (e) {}
       var geht = funktionsText([[null, "Spielplan"], [null, "Spielseiten"], [null, "Kalender"],
         ["abrechnung", "Abrechnung"], ["notizen", "Notizen"], ["regeln", "Regeln"]], "und");
       var netz = funktionsText([["push", "Push"], ["wetter", "Wetter"], ["tausch", "Tausch"],
         ["hallen", "Karte"], ["mitfahren", "Zusammen fahren"]], "und");
-      el("offline-text").textContent = "Offline, Stand von " + (letzterStand || "?") + ". Geht: " + geht + " (gespeicherter Stand)."
+      el("offline-text").textContent = "Ohne Verbindung, Stand von " + (letzterStand || "?") + ". Geht: " + geht + " (gespeicherter Stand)."
         + (netz ? " Braucht Netz: " + netz + "." : "")
         + (q ? " " + q + (q === 1 ? " Änderung wartet" : " Änderungen warten") + " aufs Nachreichen." : "");
     }
     else if (daten) standAnzeigen(daten, letzterLauf);
   }
-  window.addEventListener("online", netzAnzeigen);
+  window.addEventListener("online", function () { netzErreichbar = true; netzAnzeigen(); });
   window.addEventListener("offline", netzAnzeigen);
+  // Der Service Worker sagt, ob der Server wirklich antwortet - siehe
+  // netzMelden() in sw.js.
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.addEventListener("message", function (ev) {
+      if (!ev.data || ev.data.art !== "netz") return;
+      if (netzErreichbar === ev.data.erreichbar) return;
+      netzErreichbar = ev.data.erreichbar;
+      netzAnzeigen();
+    });
+  }
 
   // Karten-App: Android-Handys haben selten Apple Karten
   function kartenApp() {

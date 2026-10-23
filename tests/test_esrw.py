@@ -1125,6 +1125,47 @@ def test_kennungen():
            "mit Registratur greift sie wieder")
 
 
+def test_netzstand():
+    """Der Offline-Balken haengt an beiden Quellen.
+
+    navigator.onLine meldet nur, ob eine Netzwerkschnittstelle aktiv
+    ist. Gemessen mit abgeschaltetem Server bei aktivem WLAN: es sagte
+    "online", waehrend die App vollstaendig aus dem Zwischenspeicher
+    lief - 49 Spielkarten, kein Hinweis, oben "Stand vor 4 Std.".
+
+    Wissen kann es nur der Service Worker, denn er faellt auf den
+    Zwischenspeicher zurueck. Hier steht, dass er es meldet und dass
+    das Fenster zuhoert.
+    """
+    print("\nNetzzustand aus beiden Quellen")
+    wurzel = os.path.dirname(HIER)
+    sw = os.path.join(wurzel, "docs", "sw.js")
+    js = os.path.join(wurzel, "docs", "app.js")
+    if not (os.path.exists(sw) and os.path.exists(js)):
+        pruefe(False, "sw.js und app.js sind da")
+        return
+
+    with open(sw, encoding="utf-8") as f:
+        worker = f.read()
+    with open(js, encoding="utf-8") as f:
+        code = f.read()
+
+    pruefe("netzMelden(true)" in worker,
+           "der Service Worker meldet, wenn der Server antwortet")
+    pruefe("netzMelden(false)" in worker,
+           "und wenn er auf den Zwischenspeicher zurueckfaellt")
+    pruefe('postMessage({ art: "netz"' in worker,
+           "die Meldung geht an die offenen Fenster")
+
+    pruefe('ev.data.art !== "netz"' in code,
+           "das Fenster hoert auf die Meldung")
+    # Der Balken darf nicht wieder allein an navigator.onLine haengen
+    pruefe('el("offline").classList.toggle("versteckt", netzDa())' in code,
+           "der Balken fragt netzDa(), nicht navigator.onLine")
+    pruefe("return navigator.onLine && netzErreichbar" in code,
+           "netzDa() fuehrt beide Quellen zusammen")
+
+
 def test_blattfokus():
     """Jedes modale Blatt nimmt den Fokus mit.
 
@@ -1449,7 +1490,7 @@ def main():
                  test_rechnungsvorlage, test_sicherung, test_erinnerungszeit, test_zurueckspielen, test_obmann_rechte,
                  test_kalenderwuensche, test_vereinsnamen, test_seitenumbau,
                  test_funktionstexte, test_dunkles_thema, test_kennungen, test_verlegt,
-                 test_archivkennung, test_spielschluessel, test_blattfokus,
+                 test_archivkennung, test_spielschluessel, test_blattfokus, test_netzstand,
                  test_tresor):
         test()
     print("\n" + "-" * 58)

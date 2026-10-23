@@ -5,7 +5,7 @@
  * Parkhaus, Zug - kommt die zuletzt gespeicherte Fassung zum Zug.
  */
 
-const VERSION = "v196";
+const VERSION = "v197";
 const CACHE = "einteilungen-" + VERSION;
 
 // Wird beim ersten Besuch gespeichert, damit die App auch dann startet,
@@ -129,6 +129,22 @@ self.addEventListener("notificationclick", (e) => {
   );
 });
 
+// Ob der Server gerade antwortet. navigator.onLine im Fenster weiss das
+// nicht - es meldet nur, ob ueberhaupt eine Verbindung besteht, und sagt
+// "online", waehrend in der Halle nichts durchkommt. Hier faellt die
+// Entscheidung, also wird sie von hier gemeldet.
+//
+// Nur beim Wechsel: ein Seitenaufruf holt zwanzig Dateien, und zwanzigmal
+// dieselbe Meldung waere nur Laerm.
+let netzGeht = null;
+function netzMelden(geht) {
+  if (netzGeht === geht) return;
+  netzGeht = geht;
+  self.clients.matchAll({ type: "window", includeUncontrolled: true })
+    .then((fenster) => fenster.forEach((f) => f.postMessage({ art: "netz", erreichbar: geht })))
+    .catch(() => {});
+}
+
 self.addEventListener("fetch", (e) => {
   const anfrage = e.request;
   if (anfrage.method !== "GET") return;
@@ -144,6 +160,7 @@ self.addEventListener("fetch", (e) => {
   e.respondWith(
     fetch(anfrage)
       .then((antwort) => {
+        netzMelden(true);
         if (antwort && antwort.ok) {
           const kopie = antwort.clone();
           // Ohne ?v=... ablegen, sonst liegt dieselbe Datei unter jeder
@@ -154,7 +171,9 @@ self.addEventListener("fetch", (e) => {
         return antwort;
       })
       // ?v=... in der Adresse ignorieren, sonst findet der Cache app.js nicht
-      .catch(() => caches.match(anfrage, { ignoreSearch: true }).then((treffer) => {
+      .catch(() => {
+        netzMelden(false);
+        return caches.match(anfrage, { ignoreSearch: true }).then((treffer) => {
         if (treffer) return treffer;
         // index.html als Notnagel gilt NUR fuer Seitenaufrufe. Frueher kam
         // sie auch als Antwort auf app.js oder mitglieder.js - der Browser
@@ -164,6 +183,7 @@ self.addEventListener("fetch", (e) => {
           return caches.match("./index.html");
         }
         return new Response("", { status: 504, statusText: "offline" });
-      }))
+        });
+      })
   );
 });
