@@ -1082,6 +1082,9 @@
   .blatt-griff { width:40px; height:5px; border-radius:var(--radius-xs); background:var(--linie); margin:2px auto 8px; }
   .blatt-kopf { display:flex; justify-content:space-between; align-items:center; padding-bottom:6px; }
   .blatt-kopf b { font-size:var(--s-2xl); }
+  /* Nicht display:none - was so versteckt ist, liest auch kein
+     Screenreader vor. Ein Punkt ausserhalb des Bildes bleibt lesbar. */
+  .nur-vorlesen { position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap; border:0; }
   .blatt-hintergrund { position:fixed; inset:0; z-index:44; background:rgba(8,12,24,.45); backdrop-filter:blur(2px); }
   .blatt-hintergrund.versteckt { display:none; }
   @media (prefers-reduced-motion: reduce) { .blatt { transition:none; } }
@@ -3119,7 +3122,7 @@
         <button type="button" class="textknopf" id="plan-heute">Heute ↓</button>
         <span class="schalter" id="plan-zaehler"></span>
       </div>
-      <div class="filterblatt karte blatt versteckt" id="plan-filter-blatt">
+      <div class="filterblatt karte blatt versteckt" id="plan-filter-blatt" role="dialog" aria-modal="true" aria-label="Filter">
         <div class="blatt-griff" aria-hidden="true"></div>
         <div class="blatt-kopf"><b>Filter</b><button type="button" class="rund" id="plan-filter-zu" aria-label="Filter schließen">✕</button></div>
         <h5>Schnell</h5>
@@ -3451,6 +3454,9 @@
 </main>
 
 <div class="ladebalken" id="ladebalken" aria-hidden="true"><i></i></div>
+<!-- Sagt den Seitennamen an, wenn die Ansicht wechselt. Sichtbar ist
+     sie nicht - der Name steht ja oben im Kopf. -->
+<p class="nur-vorlesen" id="ansage" aria-live="polite" aria-atomic="true"></p>
 <div class="blatt-hintergrund versteckt" id="blatt-hintergrund"></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <div class="tour versteckt" id="tour" role="dialog" aria-modal="true" aria-labelledby="tour-titel">
@@ -3479,6 +3485,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=204"></script>
+<script src="app.js?v=205"></script>
 </body>
 </html>

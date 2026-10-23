@@ -416,7 +416,24 @@
   // der Name oben im App-Kopf, der Block darunter entfaellt. Seiten mit
   // eigener Kopfkarte (Untertitel, Zurueck-Knopf) behalten ihre; dort
   // bleibt oben die Marke.
+  // Was oben im Kopf steht, Seite fuer Seite. Fehlt ein Eintrag, steht
+  // dort der Name der App - und das war lange auf der halben App so:
+  // Archiv, Einstellungen, Karte, Regeln, Strafrechner, Diagnose,
+  // Aenderungen, Zusammen fahren und Halle sagten alle "Einteilungen
+  // ESRW", auf schmalen Geraeten gekuerzt zu "ESRW".
+  //
+  // Kurz gehalten, weil der Kopf schmal ist: laengere Namen weichen
+  // ohnehin der Kurzform. Die ausfuehrliche Ueberschrift steht
+  // darunter auf der Seite selbst.
+  //
+  // Nicht aufgefuehrt sind die drei Seiten, deren Kopf etwas anderes
+  // zeigt als einen festen Namen: Personenseite, Spielseite und
+  // Statistik.
   var KOPFTITEL = { plan: "Spielplan", mehr: "Mehr", mitglieder: "Mitglieder",
+    archiv: "Archiv", einstellungen: "Einstellungen", karte: "Karte",
+    regeln: "Regeln", rechner: "Strafrechner", status: "Diagnose",
+    aenderungen: "Änderungen", mitfahren: "Mitfahren", halle: "Halle",
+    gesperrt: "Nur für Mitglieder",
     "mitglieder/abrechnung": "Abrechnung", "mitglieder/info": "Info",
     "mitglieder/tausch": "Tausch", "mitglieder/frei": "Verfügbarkeit",
     "mitglieder/notizen": "Notizen", "mitglieder/kollegen": "Kollegen",
@@ -439,6 +456,7 @@
     h.textContent = voll;
     h.title = voll;
     if (h.scrollWidth > h.clientWidth + 1) h.textContent = kurz;
+    return voll;
   }
   window.addEventListener("resize", titelAnpassen);
   // Die Schrift kommt nach - vorher misst der Browser die falsche Breite
@@ -3309,9 +3327,19 @@
 
   var letzteAnsicht = "auswahl";
   function ansicht(name) {
+    var vorher = letzteAnsicht;
     letzteAnsicht = name;
     document.documentElement.setAttribute("data-ansicht", name);
-    titelAnpassen();
+    var titel = titelAnpassen();
+    // Die Seite wechselt, ohne dass das Fenster neu laedt - ein
+    // Screenreader merkt davon nichts. Deshalb die Ansage, und nur bei
+    // einem echten Wechsel: dieselbe Ansicht noch einmal zu nennen,
+    // waere Laerm. Sie haengt hier statt am <h1>, weil titelAnpassen()
+    // dort zweimal schreibt und auch bei jedem resize laeuft.
+    if (name !== vorher && titel) {
+      var sagt = el("ansage");
+      if (sagt) sagt.textContent = titel;
+    }
     el("detail").classList.remove("start-laedt");
     ["auswahl", "detail", "plan", "mitglieder", "halle", "status", "spiel", "mehr", "einstellungen", "karte", "statseite", "aenderungen", "mitfahren", "archiv", "regeln", "rechner", "gesperrt"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
     if (name !== "plan" && typeof filterBlatt === "function" && !el("plan-filter-blatt").classList.contains("versteckt")) filterBlatt(false);
@@ -4234,13 +4262,69 @@
     if (an) scrollSperren[wer] = 1; else delete scrollSperren[wer];
     document.body.style.overflow = Object.keys(scrollSperren).length ? "hidden" : "";
   }
+  // Ein Blatt, das ueber allem liegt, muss auch den Fokus nehmen.
+  // Gemessen: vom Filterknopf bis zur ersten Einstellung im offenen
+  // Blatt waren es 64-mal Tab - quer durch die Spielliste, die der
+  // Hintergrund gerade verdeckt. Die Anleitung versprach sogar
+  // aria-modal="true", waehrend der Fokus auf dem body stand.
+  //
+  // Beim Oeffnen also hinein, beim Schliessen zurueck, und dazwischen
+  // bleibt Tab im Blatt. Ohne die Schleife laeuft man hinten heraus
+  // und bedient blind, was man nicht sieht.
+  var blattOffen = null, blattZurueck = null;
+  function blattTabbar(wurzel) {
+    var sel = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    return [].slice.call(wurzel.querySelectorAll(sel)).filter(function (e) {
+      var r = e.getBoundingClientRect();
+      return r.width > 0 && r.height > 0;
+    });
+  }
+  function blattTaste(ev) {
+    if (ev.key !== "Tab" || !blattOffen) return;
+    var liste = blattTabbar(blattOffen);
+    if (!liste.length) return;
+    var erst = liste[0], letzt = liste[liste.length - 1];
+    // Der Fokus kann ausserhalb stehen, wenn das Blatt gerade erst
+    // aufging oder ein Knopf darin verschwunden ist - dann zurueck an
+    // den Anfang, statt die Schleife ins Leere laufen zu lassen.
+    if (!blattOffen.contains(document.activeElement)) { ev.preventDefault(); erst.focus(); return; }
+    if (ev.shiftKey && document.activeElement === erst) { ev.preventDefault(); letzt.focus(); }
+    else if (!ev.shiftKey && document.activeElement === letzt) { ev.preventDefault(); erst.focus(); }
+  }
+  function blattFokus(blatt, an) {
+    if (an) {
+      blattZurueck = document.activeElement;
+      blattOffen = blatt;
+      document.addEventListener("keydown", blattTaste, true);
+      // Erst nach dem Aufblenden: ein Element ohne Hoehe laesst sich
+      // nicht fokussieren, und die Blaetter fahren herein.
+      setTimeout(function () {
+        if (blattOffen !== blatt) return;
+        var z = blattTabbar(blatt)[0];
+        if (z) z.focus();
+      }, 60);
+    } else {
+      if (blattOffen !== blatt) return;
+      blattOffen = null;
+      document.removeEventListener("keydown", blattTaste, true);
+      // Nur zurueckgeben, wenn es den Ausloeser noch gibt - sonst
+      // springt die Seite an eine Stelle, die nicht mehr da ist. Der
+      // body selbst ist kein Ziel: er "enthaelt" sich nicht, und ein
+      // Fokus auf ihm ist dasselbe wie gar keiner.
+      if (blattZurueck && blattZurueck !== document.body && document.body.contains(blattZurueck)) blattZurueck.focus();
+      else if (blatt.contains(document.activeElement)) document.activeElement.blur();
+      blattZurueck = null;
+    }
+  }
   var tourSchritte = [], tourPos = 0, tourName = "";
   function tourOeffnen(name) {
     tourSchritte = tourBauen(name);
     if (!tourSchritte.length) return;
     tourName = name; tourPos = 0; tourZeigen(); el("tour").classList.remove("versteckt"); scrollSperre("tour", true);
+    blattFokus(el("tour"), true);
   }
   function tourSchliessen() {
+    blattFokus(el("tour"), false);
     el("tour").classList.add("versteckt"); scrollSperre("tour", false);
     if (tourName === "start" || tourName === "alles") schreiben("tour-start", "1");
     if (tourName === "konto" || tourName === "alles") schreiben("tour-konto", "1");
@@ -6184,8 +6268,8 @@
   document.body.appendChild(el("plan-filter-blatt"));
   function filterBlatt(offen) {
     var b = el("plan-filter-blatt"), hg = el("blatt-hintergrund");
-    if (offen) { b.classList.remove("versteckt"); hg.classList.remove("versteckt"); setTimeout(function () { b.classList.add("offen"); }, 20); scrollSperre("filter", true); }
-    else { b.classList.remove("offen"); hg.classList.add("versteckt"); scrollSperre("filter", false); setTimeout(function () { if (!b.classList.contains("offen")) b.classList.add("versteckt"); }, 300); }
+    if (offen) { b.classList.remove("versteckt"); hg.classList.remove("versteckt"); setTimeout(function () { b.classList.add("offen"); }, 20); scrollSperre("filter", true); blattFokus(b, true); }
+    else { blattFokus(b, false); b.classList.remove("offen"); hg.classList.add("versteckt"); scrollSperre("filter", false); setTimeout(function () { if (!b.classList.contains("offen")) b.classList.add("versteckt"); }, 300); }
     filterHoehe();
   }
   el("plan-filter-knopf").addEventListener("click", function () { filterBlatt(el("plan-filter-blatt").classList.contains("versteckt")); });

@@ -1125,6 +1125,70 @@ def test_kennungen():
            "mit Registratur greift sie wieder")
 
 
+def test_blattfokus():
+    """Jedes modale Blatt nimmt den Fokus mit.
+
+    Ein Blatt, das ueber der Seite liegt, verdeckt sie - aber die
+    Tastatur merkt davon nichts. Gemessen am Filterblatt: vom
+    Filterknopf bis zur ersten Einstellung im offenen Blatt waren es
+    64-mal Tab, quer durch die Spielliste darunter. Die Anleitung trug
+    dabei schon role="dialog" und aria-modal="true"; das Versprechen
+    im Markup hat der Code nie gehalten.
+
+    Darum hier: wer aria-modal="true" sagt, geht in app.js durch
+    blattFokus() - beim Oeffnen hinein, beim Schliessen zurueck.
+    """
+    print("\nFokus in den modalen Blaettern")
+    wurzel = os.path.dirname(HIER)
+    html = os.path.join(wurzel, "docs", "index.html")
+    js = os.path.join(wurzel, "docs", "app.js")
+    if not (os.path.exists(html) and os.path.exists(js)):
+        pruefe(False, "index.html und app.js sind da")
+        return
+
+    with open(html, encoding="utf-8") as f:
+        markup = f.read()
+    with open(js, encoding="utf-8") as f:
+        code = f.read()
+
+    # Die Kennung des Elements, das aria-modal="true" traegt
+    modale = []
+    for treffer in re.finditer(r'<div[^>]*aria-modal="true"[^>]*>', markup):
+        kennung = re.search(r'id="([^"]+)"', treffer.group(0))
+        if kennung:
+            modale.append(kennung.group(1))
+
+    pruefe(len(modale) >= 2, "die modalen Blaetter werden gefunden",
+           "%d gefunden: %s" % (len(modale), ", ".join(modale)))
+
+    # Beide Richtungen, getrennt gezaehlt: hinein ohne zurueck laesst
+    # den Fokus im verschwundenen Blatt stehen, zurueck ohne hinein
+    # ist genau der Zustand von vorher. Das Blatt wird entweder direkt
+    # ueber el("...") angesprochen oder ueber eine Variable, die
+    # vorher genau dieses Element geholt hat.
+    uebrig = []
+    for k in modale:
+        namen = ['el("%s")' % k]
+        kurz = re.search(r'var (\w+) = el\("%s"\)' % re.escape(k), code)
+        if kurz:
+            namen.append(kurz.group(1))
+        auf = any(("blattFokus(%s, true)" % n) in code for n in namen)
+        zu = any(("blattFokus(%s, false)" % n) in code for n in namen)
+        if auf and zu:
+            continue
+        fehlt = "beides" if not (auf or zu) else ("Oeffnen" if not auf else "Schliessen")
+        uebrig.append("%s (%s fehlt)" % (k, fehlt))
+
+    pruefe(not uebrig, "jedes modale Blatt geht beim Oeffnen und Schliessen durch blattFokus()",
+           ", ".join(uebrig) if uebrig else "")
+
+    # Und der Helfer selbst muss beides koennen: hinein und zurueck
+    pruefe('document.addEventListener("keydown", blattTaste, true)' in code,
+           "Tab bleibt im offenen Blatt")
+    pruefe("blattZurueck.focus()" in code,
+           "nach dem Schliessen geht der Fokus zurueck")
+
+
 def test_spielschluessel():
     """Der Schluessel eines Spiels entsteht ueberall gleich.
 
@@ -1385,7 +1449,7 @@ def main():
                  test_rechnungsvorlage, test_sicherung, test_erinnerungszeit, test_zurueckspielen, test_obmann_rechte,
                  test_kalenderwuensche, test_vereinsnamen, test_seitenumbau,
                  test_funktionstexte, test_dunkles_thema, test_kennungen, test_verlegt,
-                 test_archivkennung, test_spielschluessel,
+                 test_archivkennung, test_spielschluessel, test_blattfokus,
                  test_tresor):
         test()
     print("\n" + "-" * 58)
