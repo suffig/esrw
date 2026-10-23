@@ -8,49 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:c1157deba05572208da5d739f66ac952e828dfa4@esrw.de
-SEQUENCE:0
-DTSTAMP:20261015T163043Z
-LAST-MODIFIED:20261015T163043Z
-DTSTART:20261016T163000Z
-DTEND:20261016T200000Z
-SUMMARY:SR · U13 LL: EV Duisburg 1b – Dinslakener Kobras
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
-  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: PreZero Rheinlan
- dhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: 
- Marks\, Marcel\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
- sburg
-GEO:51.405718;6.780082
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
- sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
- reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
-END:VEVENT
-BEGIN:VEVENT
-UID:7f231d19333ea0ac3f90f019d818afa43dba85e9@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261016T163000Z
-DTEND:20261016T200000Z
-SUMMARY:SR · U17 RL: Ratinger Ice Aliens – Herforder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
-  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eissporthalle Ra
- tingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Reuter\, Rick\n
- \nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
-GEO:51.295808;6.834624
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
-  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
- tingen":geo:51.295808,6.834624
-END:VEVENT
-BEGIN:VEVENT
 UID:c6a19fc063e384679fb88ca987a628c4a72763a2@esrw.de
 SEQUENCE:0
 DTSTAMP:20261006T110047Z
@@ -1352,12 +1309,6 @@ GEO:51.405718;6.780082
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
  sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
  reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB: EV Duisburg – H
- erner EV
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:cc82f7a3eac6cc8ca788ff35fa6a45e171570a1a@esrw.de
