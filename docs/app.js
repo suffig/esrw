@@ -3705,6 +3705,28 @@
   // Admins koennen alle Spiele aller Kollegen sehen.
   var archivStand = { spiele: [], modus: "", lauf: null, geladen: false };
   function archivSaisonAus(beginn) { var d = new Date(beginn), j = d.getFullYear(); return d.getMonth() >= 6 ? j + "/" + String(j + 1).slice(2) : (j - 1) + "/" + String(j).slice(2); }
+  // Vier Quellen, ein Spiel: Datenfenster, archiv.json, eingefrorene
+  // Saisondateien und die Datenbank. Wer dasselbe Spiel unter zwei
+  // Schluesseln einliefert, bekommt zwei Zeilen - das ist hier dreimal
+  // passiert (Fassungen 189, 191, 200). Deshalb steht das
+  // Zusammenfuehren ausserhalb von zeigeArchiv(): dort drinnen haengt
+  // es an vier fetch-Ketten und laesst sich nicht pruefen.
+  function archivMerge(karte, e) {
+    var k = e.kennung; if (!k) return;
+    var alt = karte[k] || {};
+    karte[k] = { kennung: k, beginn: e.beginn, liga: e.liga || alt.liga || "", paarung: e.paarung || alt.paarung || "", halle: e.halle || alt.halle || "", system: e.system || alt.system || 0,
+                 besetzung: (e.besetzung && e.besetzung.length ? e.besetzung : alt.besetzung) || [], saison: e.saison || alt.saison || archivSaisonAus(e.beginn), manuell: e.manuell || alt.manuell || false };
+  }
+  function archivKorrigieren(karte, slug, alle) {
+    Object.keys(karte).forEach(function (k) {
+      // Die Marke steht an der Kennung, nicht an der Archivzeile - das
+      // Archiv kommt aus Dateien, die davon nichts wissen.
+      if (istAusgeblendet(k)) { delete karte[k]; return; }
+      var neu = gespannKorrektur(k);
+      if (neu) { karte[k].besetzung = neu; karte[k].system = neu.length; }
+      if (!alle && gespannGehoert(k, slug) === false) delete karte[k];
+    });
+  }
   function zeigeArchiv(modus) {
     ansicht("archiv"); aktuell = null; window.scrollTo(0, 0);
     var slug = profil && profil.slug, alle = modus === "alle";
@@ -3714,22 +3736,7 @@
     if (!slug && !alle) { liste.innerHTML = ""; liste.appendChild(leerZustand("Wähle zuerst deinen Namen, dann stehen hier alle deine Spiele.", { label: "Namen wählen", fn: function () { zeigeAuswahl(false); location.hash = ""; } })); return; }
     var lauf = archivStand.lauf = {};
     var karte = {};
-    function merge(e) {
-      var k = e.kennung; if (!k) return;
-      var alt = karte[k] || {};
-      karte[k] = { kennung: k, beginn: e.beginn, liga: e.liga || alt.liga || "", paarung: e.paarung || alt.paarung || "", halle: e.halle || alt.halle || "", system: e.system || alt.system || 0,
-                   besetzung: (e.besetzung && e.besetzung.length ? e.besetzung : alt.besetzung) || [], saison: e.saison || alt.saison || archivSaisonAus(e.beginn), manuell: e.manuell || alt.manuell || false };
-    }
-    function archivKorrigieren() {
-      Object.keys(karte).forEach(function (k) {
-        // Die Marke steht an der Kennung, nicht an der Archivzeile - das
-        // Archiv kommt aus Dateien, die davon nichts wissen.
-        if (istAusgeblendet(k)) { delete karte[k]; return; }
-        var neu = gespannKorrektur(k);
-        if (neu) { karte[k].besetzung = neu; karte[k].system = neu.length; }
-        if (!alle && gespannGehoert(k, slug) === false) delete karte[k];
-      });
-    }
+    function merge(e) { archivMerge(karte, e); }
     // 1) Datenfenster
     (daten.spiele || []).forEach(function (s) {
       if (!alle && !(s.besetzung || []).some(function (b) { return b.slug === slug; })) return;
@@ -3742,12 +3749,14 @@
       Object.keys(pers).forEach(function (ps) {
         if (!alle && ps !== slug) return;
         pers[ps].forEach(function (e) {
-          // Die Kennung, nicht beginn|paarung: bei einem verlegten Spiel
-          // haelt die Registratur die alte Kennung fest, waehrend beginn
-          // schon die neue Zeit traegt. Ohne das zaehlt dasselbe Spiel
-          // hier zweimal - einmal unter der Kennung aus daten.json,
-          // einmal unter der neuen Zeit.
-          var k = e.id || (e.beginn + "|" + e.paarung), vorhanden = karte[k];
+          // kennungVon() und nicht die Formel abgeschrieben: bei einem
+          // verlegten Spiel haelt die Registratur die alte Kennung fest,
+          // waehrend beginn schon die neue Zeit traegt. Ohne das zaehlt
+          // dasselbe Spiel hier zweimal - einmal unter der Kennung aus
+          // daten.json, einmal unter der neuen Zeit. Zwei Kopien
+          // derselben Regel laufen auseinander; das ist der Weg, auf dem
+          // dieser Fehler dreimal zurueckkam.
+          var k = kennungVon(e), vorhanden = karte[k];
           var bes = (vorhanden && vorhanden.besetzung) ? vorhanden.besetzung.slice() : [];
           var p = personMit(ps); if (!bes.some(function (b) { return b.slug === ps; })) bes.push({ name: p ? p.name : ps, slug: ps, rolle: e.rolle });
           merge({ kennung: k, beginn: e.beginn, liga: e.liga, paarung: e.paarung, halle: e.halle, system: e.system, besetzung: bes, saison: e.saison });
@@ -3774,7 +3783,7 @@
     else el("archiv-admin").classList.add("versteckt");
     Promise.all(laeufe).then(function () {
       if (archivStand.lauf !== lauf) return;
-      archivKorrigieren();
+      archivKorrigieren(karte, slug, alle);
       archivStand.spiele = Object.keys(karte).map(function (k) { return karte[k]; }).sort(function (a, b) { return a.beginn < b.beginn ? 1 : -1; });
       archivStand.modus = modus;
       archivStand.geladen = true;
@@ -6761,6 +6770,8 @@
         if (o.korrekturen !== undefined) korrekturen = o.korrekturen;
       },
       kennungVon: kennungVon, istAusgeblendet: istAusgeblendet, istGeloescht: istGeloescht,
+      archivMerge: archivMerge, archivKorrigieren: archivKorrigieren,
+      archivSaisonAus: archivSaisonAus,
       zeitraum: zeitraum, tagTitel: tagTitel, ligaGruppe: ligaGruppe,
       ohneZeichen: ohneZeichen, ausgeschrieben: ausgeschrieben, suchtextVon: suchtextVon,
       datumKurz: datumKurz, uhr: uhr, farbeFuer: farbeFuer, mitPuffer: mitPuffer,

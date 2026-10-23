@@ -103,6 +103,110 @@ pruefe(!P.istGeloescht({ beginn: "2026-10-25T17:00:00+02:00", paarung: "A - B" }
 P.setze({ korrekturen: {} });
 
 
+// --------------------------------------------------- Archiv sammeln
+
+console.log("\nArchiv: vier Quellen, ein Spiel");
+
+// Dasselbe Spiel, wie es aus den vier Quellen kommt. Es wurde von 8:30
+// auf 9:30 verlegt: die Registratur haelt die alte Kennung fest,
+// waehrend beginn schon die neue Zeit traegt. Genau hier stand es
+// dreimal zweimal in der Liste (Fassungen 189, 191, 200).
+var KENNUNG = "2026-10-25T08:30:00+02:00|U17: Heim - Gast";
+var NEU = "2026-10-25T09:30:00+02:00";
+
+function ausDatenfenster() {
+  return { id: KENNUNG, beginn: NEU, liga: "U17", paarung: "U17: Heim - Gast",
+           halle: "Eishalle", system: 2,
+           besetzung: [{ name: "Ich", slug: "ich", rolle: "SR" }] };
+}
+function ausArchivJson() {
+  // So steht es in archiv.json: eigene Zeile je Person, mit id.
+  return { id: KENNUNG, beginn: NEU, liga: "U17", paarung: "U17: Heim - Gast",
+           halle: "Eishalle", system: 2, rolle: "SR", saison: "2026/27" };
+}
+
+var karte = {};
+var d1 = ausDatenfenster();
+P.archivMerge(karte, { kennung: P.kennungVon(d1), beginn: d1.beginn, liga: d1.liga,
+                       paarung: d1.paarung, halle: d1.halle, system: d1.system,
+                       besetzung: d1.besetzung });
+var a1 = ausArchivJson();
+P.archivMerge(karte, { kennung: P.kennungVon(a1), beginn: a1.beginn, liga: a1.liga,
+                       paarung: a1.paarung, halle: a1.halle, system: a1.system,
+                       besetzung: [{ name: "Ich", slug: "ich", rolle: a1.rolle }],
+                       saison: a1.saison });
+// Die Datenbank liefert die Kennung fertig mit.
+P.archivMerge(karte, { kennung: KENNUNG, beginn: NEU, liga: "U17",
+                       paarung: "U17: Heim - Gast", halle: "Eishalle", system: 2,
+                       besetzung: [{ name: "Ich", slug: "ich", rolle: "SR" }],
+                       saison: "2026/27" });
+
+gleich(Object.keys(karte).length, 1,
+       "verlegtes Spiel aus drei Quellen bleibt eine Zeile");
+gleich(Object.keys(karte)[0], KENNUNG, "und zwar unter der alten Kennung");
+
+// Hier steht die eine Haelfte: dass dieselbe Kennung zu einer Zeile
+// wird. Die andere - dass jede Quelle in app.js auch wirklich
+// kennungVon() fragt, statt die Formel abzuschreiben - steht in
+// test_esrw.py unter test_spielschluessel(). Gemessen: dieser Test
+// hier bleibt gruen, wenn man die Archivschleife auf die alte,
+// fehlerhafte Formel zurueckdreht; der dort faellt dann um. Beide
+// zusammen decken den Fall, keiner allein.
+
+// Zwei verschiedene Spiele bleiben zwei - sonst waere die Pruefung
+// oben auch gruen, wenn alles in einen Topf faellt.
+P.archivMerge(karte, { kennung: "ein-anderes", beginn: "2026-10-26T17:00:00+02:00",
+                       liga: "BL", paarung: "A - B", halle: "Halle 2", system: 2,
+                       besetzung: [{ name: "Ich", slug: "ich", rolle: "SR" }] });
+gleich(Object.keys(karte).length, 2, "zwei verschiedene Spiele bleiben zwei");
+
+// Ohne Kennung wird nichts eingetragen - sonst sammelten sich alle
+// Spiele ohne Schluessel unter "undefined".
+var vorher2 = Object.keys(karte).length;
+P.archivMerge(karte, { beginn: "2026-10-27T17:00:00+02:00", paarung: "Ohne - Schluessel" });
+gleich(Object.keys(karte).length, vorher2, "ohne Kennung kein Eintrag");
+
+// Die eingefrorene Saison ist die Ausnahme: dort stehen die Zeilen als
+// Feldliste auf der Platte, eine Kennung gibt es nicht. Der Schluessel
+// entsteht aus beginn und Paarung - und muss dasselbe Spiel treffen.
+var eingefroren = {};
+P.archivMerge(eingefroren, { kennung: "2025-11-02T18:00:00+01:00|Alt - Neu",
+                             beginn: "2025-11-02T18:00:00+01:00", liga: "BL",
+                             paarung: "Alt - Neu", halle: "Alte Halle", system: 2,
+                             besetzung: [{ name: "Ich", slug: "ich", rolle: "SR" }],
+                             saison: "2025/26" });
+gleich(Object.keys(eingefroren).length, 1, "eingefrorene Saison traegt ihren Schluessel selbst");
+
+// Spaetere Quellen fuellen Luecken, ueberschreiben aber nichts, was
+// schon dasteht - sonst loescht eine duenne Archivzeile die Besetzung.
+var fuellen = {};
+P.archivMerge(fuellen, { kennung: "k", beginn: NEU, liga: "U17", paarung: "A - B",
+                         halle: "Eishalle", system: 2,
+                         besetzung: [{ name: "Ich", slug: "ich", rolle: "SR" }] });
+P.archivMerge(fuellen, { kennung: "k", beginn: NEU, saison: "2026/27" });
+gleich(fuellen.k.besetzung.length, 1, "eine Zeile ohne Gespann loescht keines");
+gleich(fuellen.k.halle, "Eishalle", "und keine Halle");
+gleich(fuellen.k.saison, "2026/27", "die Saison kommt dazu");
+
+// Die Saison wird aus dem Datum erschlossen, wenn keine dabeisteht.
+gleich(P.archivSaisonAus("2026-10-25T17:00:00+02:00"), "2026/27", "Oktober gehoert zur neuen Saison");
+gleich(P.archivSaisonAus("2026-03-15T17:00:00+01:00"), "2025/26", "Maerz noch zur alten");
+gleich(P.archivSaisonAus("2026-07-01T17:00:00+02:00"), "2026/27", "Juli ist der Schnitt");
+
+// Ausgeblendete Spiele fliegen heraus, und zwar ueber die Kennung -
+// das Archiv kommt aus Dateien, die von der Korrektur nichts wissen.
+P.setze({ korrekturen: { "weg": { geloescht: true } } });
+var mitWeg = {};
+P.archivMerge(mitWeg, { kennung: "weg", beginn: NEU, paarung: "Geloescht - X",
+                        besetzung: [{ name: "Ich", slug: "ich", rolle: "SR" }] });
+P.archivMerge(mitWeg, { kennung: "bleibt", beginn: NEU, paarung: "Bleibt - X",
+                        besetzung: [{ name: "Ich", slug: "ich", rolle: "SR" }] });
+P.archivKorrigieren(mitWeg, "ich", true);
+pruefe(!mitWeg.weg, "ausgeblendetes Spiel faellt aus dem Archiv");
+pruefe(!!mitWeg.bleibt, "das andere bleibt");
+P.setze({ korrekturen: {} });
+
+
 // ------------------------------------------------------- Zeitraeume
 
 console.log("\nZeitraeume im Spielplan");
