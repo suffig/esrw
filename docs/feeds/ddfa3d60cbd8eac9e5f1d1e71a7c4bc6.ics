@@ -99,4 +99,31 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLA: Krefelder EV –
  Kölner Junghaie YAYLA Krefeld
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:d06229c11d36aa6e4d8cabe79fc9cc3199db8f3e@esrw.de
+SEQUENCE:0
+DTSTAMP:20261023T143044Z
+LAST-MODIFIED:20261023T143044Z
+DTSTART:20261103T170000Z
+DTEND:20261103T203000Z
+SUMMARY:SR · U17 RL: Herner EV – Eisadler Dortmund
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
+  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Gysenberghalle H
+ erne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Wunsch\, Philipp\n
+ \nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Gysenberghalle Herne\, Am Revierpark 22\, 44627 Herne
+GEO:51.532602;7.254372
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
+ evierpark 22, 44627 Herne";X-APPLE-RADIUS=100;X-TITLE="Gysenberghalle Hern
+ e":geo:51.532602,7.254372
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Herner EV – Eisa
+ dler Dortmund
+END:VALARM
+END:VEVENT
 END:VCALENDAR

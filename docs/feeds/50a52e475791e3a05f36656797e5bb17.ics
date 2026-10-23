@@ -29,4 +29,32 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
  r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
  .937979,6.98935
 END:VEVENT
+BEGIN:VEVENT
+UID:df0d9b653641b9bb97c20b177e17a8d42d786138@esrw.de
+SEQUENCE:0
+DTSTAMP:20261023T143044Z
+LAST-MODIFIED:20261023T143044Z
+DTSTART:20261031T171500Z
+DTEND:20261031T204500Z
+SUMMARY:SR · Frauen BZL: KEC "Die Haie" 1c – DSC Krefeld
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:15 Uhr\nTreffpunkt:
+  18:15 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Kölnarena 2
+ \nAdresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Hindley\, David
+ \nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/einteilung
+ en.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL: KEC "Die Haie"
+  1c – DSC Krefeld
+END:VALARM
+END:VEVENT
 END:VCALENDAR

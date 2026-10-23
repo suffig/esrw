@@ -7,4 +7,32 @@ X-WR-CALNAME:Einteilungen – Küper\, Sascha
 X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:be448b1ffdeefec298eedda2e3daf9783f8a59a4@esrw.de
+SEQUENCE:0
+DTSTAMP:20261023T143044Z
+LAST-MODIFIED:20261023T143044Z
+DTSTART:20261101T170000Z
+DTEND:20261101T203000Z
+SUMMARY:HSR · Senioren RLW: Dinslakener Kobras – ESV Bergisch Gladbach
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 19:00 Uhr\nTreff
+ punkt: 18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ porthalle Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Pl
+ uschkell\, Julian (LSR) / Krüger\, Martin (LSR)\nVergütung lt. Ordnung: 
+ 100 €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
+GEO:51.574578;6.735361
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
+ m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
+ inslaken":geo:51.574578,6.735361
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: Dinslakener
+  Kobras – ESV Bergisch Gladbach
+END:VALARM
+END:VEVENT
 END:VCALENDAR

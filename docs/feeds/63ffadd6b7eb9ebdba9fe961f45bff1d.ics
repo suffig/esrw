@@ -101,4 +101,32 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: SpG ESV Grizzlys B
  ergkamen / ESC Rheine Young Cats – EHC Die Bären Neuwied
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:414cb2162f0e79dd00b930c4d0ecc3567593085b@esrw.de
+SEQUENCE:0
+DTSTAMP:20261023T143044Z
+LAST-MODIFIED:20261023T143044Z
+DTSTART:20261101T163000Z
+DTEND:20261101T200000Z
+SUMMARY:LSR · Senioren RLW: ESV Grizzlys Bergkamen – Ratinger Ice Aliens
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
+  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
+ lle Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Pernt\, 
+ Hendrik (HSR) / Warnke\, Christoph (LSR)\nVergütung lt. Ordnung: 100 €\
+ n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: ESV Grizzly
+ s Bergkamen – Ratinger Ice Aliens
+END:VALARM
+END:VEVENT
 END:VCALENDAR

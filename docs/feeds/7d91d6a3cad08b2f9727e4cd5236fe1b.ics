@@ -79,4 +79,32 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: ESC Rheine
  – Eisadler Dortmund 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:d72e918ddb991c4f42d9d7e40a991e08490e5845@esrw.de
+SEQUENCE:0
+DTSTAMP:20261023T143044Z
+LAST-MODIFIED:20261023T143044Z
+DTSTART:20261030T180000Z
+DTEND:20261030T213000Z
+SUMMARY:HSR · OsWeNo Pokal: Eisadler Dortmund – Timmendorf Beach Devils
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:00 Uhr\nTreff
+ punkt: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: OsWeNo Pokal\nHalle: Eiss
+ portzentrum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann:
+  Licau\, Alexander (LSR) / Malik\, Orlando (LSR)\n\nQuelle: https://www.es
+ rw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · OsWeNo Pokal: Eisadler Do
+ rtmund – Timmendorf Beach Devils
+END:VALARM
+END:VEVENT
 END:VCALENDAR

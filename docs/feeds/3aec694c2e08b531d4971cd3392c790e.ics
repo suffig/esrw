@@ -99,4 +99,32 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB: EV Duisburg – K
  refelder EV 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:33b35d9d970ef8bb832ddbe563cd0f398ad4fd94@esrw.de
+SEQUENCE:0
+DTSTAMP:20261023T143044Z
+LAST-MODIFIED:20261023T143044Z
+DTSTART:20261101T170000Z
+DTEND:20261101T203000Z
+SUMMARY:SR · Senioren LL: EC Bergisch Land – TSVE Bielefeld
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
+  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissporthal
+ le Solingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Stock
+ enschneider\, Lars\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www
+ .esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
+GEO:51.165932;7.086769
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
+ ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
+ le Solingen":geo:51.165932,7.086769
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: EC Bergisch L
+ and – TSVE Bielefeld
+END:VALARM
+END:VEVENT
 END:VCALENDAR
