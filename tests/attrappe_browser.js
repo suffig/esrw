@@ -13,10 +13,14 @@
  */
 "use strict";
 
-function knoten() {
+function knoten(kennung) {
   return {
     style: {}, dataset: {}, children: [], childNodes: [],
     value: "", textContent: "", innerHTML: "", className: "", isConnected: false,
+    id: kennung || "", checked: false, disabled: false, href: "", src: "", title: "",
+    tagName: "DIV", nodeType: 1, parentNode: null, firstChild: null,
+    options: [], selectedIndex: 0, scrollWidth: 0, clientWidth: 0, offsetHeight: 0,
+    contains: function () { return false; },
     classList: { add: function () {}, remove: function () {}, toggle: function () {},
                  contains: function () { return false; } },
     appendChild: function (x) { this.children.push(x); return x; },
@@ -24,9 +28,16 @@ function knoten() {
     setAttribute: function () {}, removeAttribute: function () {},
     getAttribute: function () { return null; },
     addEventListener: function () {}, removeEventListener: function () {},
-    querySelector: function () { return null; }, querySelectorAll: function () { return []; },
+    // Ein Knoten statt null: app.js kettet oft weiter
+    // (tk.querySelector("use").setAttribute(...)), und eine Attrappe,
+    // die dort null gibt, bricht an Stellen ab, die im Browser nie
+    // leer sind. querySelectorAll bleibt leer - wer zaehlt, soll
+    // nicht zaehlen, was es nicht gibt.
+    querySelector: function () { return knoten(); }, querySelectorAll: function () { return []; },
     closest: function () { return null; },
     focus: function () {}, blur: function () {}, click: function () {},
+    dispatchEvent: function () { return true; },
+    hasAttribute: function () { return false; },
     remove: function () {}, scrollIntoView: function () {},
     getBoundingClientRect: function () {
       return { top: 0, left: 0, width: 0, height: 0, bottom: 0, right: 0 };
@@ -49,7 +60,16 @@ global.document = {
   createElement: knoten, createElementNS: knoten, createDocumentFragment: knoten,
   createTextNode: function (t) { var k = knoten(); k.textContent = t; return k; },
   querySelector: function () { return null; }, querySelectorAll: function () { return []; },
-  getElementById: function () { return null; },
+  // Je Kennung derselbe Knoten. app.js holt manche Elemente mehrfach
+  // und vergleicht sie (el("x") === ev.target); mit jedes Mal einem
+  // neuen Knoten liefe es in den falschen Zweig.
+  getElementById: (function () {
+    var gemerkt = {};
+    return function (kennung) {
+      if (!gemerkt[kennung]) gemerkt[kennung] = knoten(kennung);
+      return gemerkt[kennung];
+    };
+  })(),
   documentElement: knoten(), body: knoten(), head: knoten(),
   hidden: false, visibilityState: "visible"
 };

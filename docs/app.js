@@ -2614,6 +2614,11 @@
   }
   // Das naechste eigene Spiel, unabhaengig von Suche und Filtern.
   // daten.spiele ist nach Beginn sortiert, der erste Treffer genuegt.
+  // Nimmt das erste passende aus der Liste, nicht das zeitlich
+  // naechste - das ist dasselbe, solange die Liste nach beginn
+  // sortiert ist. Dafuer sorgt korrekturenAnwenden(), und genau das
+  // ist hier Voraussetzung: eine Verlegung nach vorn wirkt sonst
+  // nicht, und auf der Startseite stuende das uebernaechste Spiel.
   function naechstesEigenes() {
     if (!profil || !profil.slug) return null;
     var jetzt = Date.now();
@@ -6739,6 +6744,29 @@
     if (!an) { try { localStorage.removeItem("tresor"); } catch (x) {} schreiben("konto-slug", null); }
     location.reload();
   });
+
+  // Luke fuer die Tests - dieselbe wie window.Mitglieder.pruefstand in
+  // mitglieder.js. Die Datei ist eine geschlossene IIFE; ohne das hier
+  // laesst sich keine ihrer Rechenfunktionen pruefen, ausser von Hand
+  // im Browser. Beim Spielschluessel hat das dreimal nicht gereicht.
+  //
+  // Hier steht nur, was ohne DOM auskommt. planGefiltert() und
+  // Verwandte lesen die Filterfelder direkt - die gehoeren in den
+  // Browser-Durchgang, nicht an eine Attrappe.
+  window.ESRW = {
+    pruefstand: {
+      setze: function (o) {
+        if (o.daten !== undefined) daten = o.daten;
+        if (o.profil !== undefined) profil = o.profil;
+        if (o.korrekturen !== undefined) korrekturen = o.korrekturen;
+      },
+      kennungVon: kennungVon, istAusgeblendet: istAusgeblendet, istGeloescht: istGeloescht,
+      zeitraum: zeitraum, tagTitel: tagTitel, ligaGruppe: ligaGruppe,
+      ohneZeichen: ohneZeichen, ausgeschrieben: ausgeschrieben, suchtextVon: suchtextVon,
+      datumKurz: datumKurz, uhr: uhr, farbeFuer: farbeFuer, mitPuffer: mitPuffer,
+      naechstesEigenes: naechstesEigenes
+    }
+  };
 
   if ("serviceWorker" in navigator && location.protocol !== "file:") {
     var hatteController = !!navigator.serviceWorker.controller;

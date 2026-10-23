@@ -80,14 +80,20 @@ Fensterbreite.
 
 ## Prüfen
 
-* `node --check docs/*.js`, `python tests/test_esrw.py` und
-  `node tests/test_abrechnung.js` – die ersten beiden laufen auch als
-  Hook automatisch.
-* Der Abrechnungstest lädt `docs/mitglieder.js` mit der Browser-Attrappe
-  aus `tests/attrappe_browser.js` in Node und rechnet über die Luke
-  `window.Mitglieder.pruefstand`. Beträge, Zuschläge, eigene Regeln,
-  Fahrtkosten und Rechnungsnummern stehen dort. **Jeder Fall, der einmal
-  falsch gerechnet hat, gehört danach als Zeile hinein.**
+* `node --check docs/*.js`, `python tests/test_esrw.py`,
+  `node tests/test_abrechnung.js` und `node tests/test_spielplan.js` –
+  die ersten beiden laufen auch als Hook automatisch.
+* Die beiden Node-Tests laden `docs/mitglieder.js` bzw. `docs/app.js`
+  mit der Browser-Attrappe aus `tests/attrappe_browser.js` in Node und
+  rechnen über die Luken `window.Mitglieder.pruefstand` und
+  `window.ESRW.pruefstand`. Im Abrechnungstest stehen Beträge,
+  Zuschläge, eigene Regeln, Fahrtkosten und Rechnungsnummern; im
+  Spielplantest der Spielschlüssel, die Zeitraum-Gruppierung, die
+  Ligagruppen, die Suchtexte und die Chipfarben. **Jeder Fall, der
+  einmal falsch gerechnet hat, gehört danach als Zeile hinein.**
+* In die Luken kommt nur, was ohne DOM rechnet. Was die Felder der
+  Oberfläche liest – `planGefiltert()` etwa – gehört in den
+  Browser-Durchgang, nicht an eine Attrappe.
 * Aussehen immer im Browser-Pane: `preview_start {name: "docs"}`,
   Ansicht 375 px, einmal angemeldet und einmal abgemeldet durchklicken,
   Konsole auf Fehler, `document.documentElement.scrollWidth` gegen die
