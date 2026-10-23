@@ -28,4 +28,31 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
  stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
  le Krefeld":geo:51.339877,6.540168
 END:VEVENT
+BEGIN:VEVENT
+UID:5478c7357dd1ce92989aa7bc999dbc73bef57dc6@esrw.de
+SEQUENCE:0
+DTSTAMP:20261023T083040Z
+LAST-MODIFIED:20261023T083040Z
+DTSTART:20261024T133000Z
+DTEND:20261024T170000Z
+SUMMARY:SR · U17 I: Krefelder EV – Iserlohner EC
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
+  15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Rheinlandhalle Kr
+ efeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Stocker\, Qu
+ irin\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
+GEO:51.339877;6.540168
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
+ stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
+ le Krefeld":geo:51.339877,6.540168
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Krefelder EV – Is
+ erlohner EC
+END:VALARM
+END:VEVENT
 END:VCALENDAR
