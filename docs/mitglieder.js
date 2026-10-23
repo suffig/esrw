@@ -6501,8 +6501,18 @@ window.Mitglieder = (function () {
         }
         var uebernehmen = h("button", { type: "button", class: "anfrage", text: "Übernehmen" });
         uebernehmen.addEventListener("click", function () {
-          var n = parseInt(String(feld.value).replace(/\D/g, ""), 10);
-          if (!isFinite(n) || n < 0) { meldung("Das ist keine Zahl.", "warn"); return; }
+          // Nicht die Ziffern herausfiltern. Das Muster warf auch das
+          // Minuszeichen und den Punkt weg: aus "-50" wurde 50, aus
+          // "2.5" wurde 25, aus "1e3" wurde 13 - jedesmal gespeichert
+          // mit gruener Erfolgsmeldung. Der Vorlauf steht in jedem
+          // Kalendertermin, den die App ausliefert.
+          var roh = String(feld.value).replace(",", ".").trim();
+          var n = roh === "" ? NaN : Number(roh);
+          if (!isFinite(n)) { meldung("Bitte eine Zahl eintragen.", "warn"); return; }
+          if (n < 0) { meldung("Das muss 0 oder mehr sein.", "warn"); return; }
+          // Minuten und Tage sind ganze Zahlen. Runden statt abweisen:
+          // die Erfolgsmeldung nennt den Wert, der ankommt.
+          n = Math.round(n);
           uebernehmen.disabled = true;
           speichern(sb.from("betrieb_einstellungen").upsert({ schluessel: b[0], wert: n,
             von: (profil && (profil.name || profil.slug)) || null,
@@ -6675,8 +6685,14 @@ window.Mitglieder = (function () {
           }
           var uebernehmen = h("button", { type: "button", class: "anfrage", text: "Übernehmen" });
           uebernehmen.addEventListener("click", function () {
-            var n = Number(String(feld.value).replace(",", "."));
-            if (!isFinite(n) || n < 0) { meldung("Das ist keine Zahl.", "warn"); return; }
+            // Number("") ist 0, und ein leeres Feld wurde so zu einem
+            // Satz von null Euro - auf jeder Rechnung. Wer zuruecksetzen
+            // will, nimmt "wieder nach der Ordnung"; ein leeres Feld ist
+            // keine Eingabe.
+            var roh = String(feld.value).replace(",", ".").trim();
+            var n = roh === "" ? NaN : Number(roh);
+            if (!isFinite(n)) { meldung("Bitte einen Betrag eintragen.", "warn"); return; }
+            if (n < 0) { meldung("Ein Satz kann nicht unter 0 liegen.", "warn"); return; }
             // Gleich der Ordnung heisst: keine Zeile in der Tabelle.
             if (n === p.datei) { if (a) zurueck(); else kurzMeldung("Steht schon so in der Ordnung.", ""); return; }
             uebernehmen.disabled = true;
