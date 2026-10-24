@@ -8,49 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:2f469fa79a113800867a82c700f55c5c991d89ab@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261017T070000Z
-DTEND:20261017T103000Z
-SUMMARY:SR · U9 LL Rot: EHC Troisdorf 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
-  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Rot\nHalle: ICEDOME Trois
- dorf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Kremer\
- , Igor\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
-GEO:50.811945;7.109233
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
- rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
- isdorf":geo:50.811945,7.109233
-END:VEVENT
-BEGIN:VEVENT
-UID:a1ec1ad498924c097ae1c582e8a63dabfb8d83c2@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261017T070000Z
-DTEND:20261017T103000Z
-SUMMARY:SR · U11 RL: EV Duisburg
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
-  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 RL\nHalle: PreZero Rheinlan
- dhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: 
- Pluschkell\, Julian\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
- sburg
-GEO:51.405718;6.780082
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
- sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
- reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
-END:VEVENT
-BEGIN:VEVENT
 UID:724939f3afcc0c56044aa7e1a0cc563588c8519b@esrw.de
 SEQUENCE:0
 DTSTAMP:20261015T180051Z
@@ -1229,12 +1186,6 @@ GEO:51.405718;6.780082
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
  sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
  reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB: EV Duisburg – K
- refelder EV 1b
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:e2147b3b7e81d2259650d7149109f723bf352247@esrw.de
@@ -1256,12 +1207,6 @@ GEO:50.811945;7.109233
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
  rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
  isdorf":geo:50.811945,7.109233
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: EHC Troisdorf 1b 
- – ESV Grizzlys Bergkamen
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:855396d50eab9e1ba4475c4afbe0f6d0a7134f9c@esrw.de
