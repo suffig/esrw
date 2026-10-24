@@ -8,23 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:1c3f9db1dd6951fe62543a7ff4f54e1f6923412b@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261017T081500Z
-DTEND:20261017T114500Z
-SUMMARY:SR · U17 LL: SpG Soester EG / TSVE Bielefeld – SpG Neusser EV / 
- GSC Moers
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:15 Uhr\nTreffpunkt:
-  10:15 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\n!! Halle nicht automati
- sch erkannt - bitte selbst pruefen !!\nGespann: Steeg\, Cedric\n\nQuelle: 
- https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
 UID:bb47097cbaf36538ab651898769e997271845439@esrw.de
 SEQUENCE:0
 DTSTAMP:20261006T110047Z
