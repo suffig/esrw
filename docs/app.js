@@ -1024,6 +1024,52 @@
     b.appendChild(t); b.addEventListener("click", aktion); li.appendChild(b); liste.appendChild(li); return li;
   }
   function suchGruppe(liste, name) { var li = document.createElement("li"); li.className = "gruppe"; li.textContent = name; liste.appendChild(li); }
+  // Was die Suche findet, getrennt vom Anzeigen.
+  //
+  // Jede dieser Funktionen nimmt den schon durch ohneZeichen()
+  // gegangenen Suchtext und liefert Daten; Zeilen daraus macht
+  // zeigeListe(). Dass die Suche etwas nicht findet, faellt sonst
+  // niemandem auf - man haelt es fuer nicht vorhanden.
+  //
+  // Verglichen wird gegen suchtextVon(), nicht gegen ohneZeichen():
+  // das haelt beide Schreibungen bereit ("lowen arena loewen arena"),
+  // damit "Loewen" dieselbe Halle trifft wie "Löwen". Vorher stand
+  // hier ohneZeichen(), und wer den Umlaut ausschrieb, fand nichts -
+  // waehrend der Filter im Spielplan es die ganze Zeit richtig
+  // machte.
+  function suchHallen(f) {
+    return Object.keys(daten.hallen || {}).concat(Object.keys(daten.adressen || {}))
+      .filter(function (n, i, a) { return a.indexOf(n) === i; })
+      .filter(function (n) { return suchtextVon(n + " " + ((daten.adressen || {})[n] || "")).indexOf(f) >= 0; })
+      .slice(0, 6);
+  }
+  // Vereine stehen nirgends als Liste - sie werden aus den Paarungen
+  // gelesen. Gezaehlt wird, was noch kommt; wer nur vergangene Spiele
+  // hat, steht trotzdem da, aber hinten.
+  function suchVereine(f) {
+    var zaehler = {};
+    (daten.spiele || []).forEach(function (s) {
+      (s.paarung || "").split(/\s[–-]\s/).forEach(function (v) {
+        v = v.trim();
+        if (v && suchtextVon(v).indexOf(f) >= 0) zaehler[v] = (zaehler[v] || 0) + (s.vergangen ? 0 : 1);
+      });
+    });
+    var namen = Object.keys(zaehler).sort(function (a, b) { return zaehler[b] - zaehler[a]; });
+    if (namen.some(function (v) { return zaehler[v] > 0; })) {
+      namen = namen.filter(function (v) { return zaehler[v] > 0; });
+    }
+    return namen.slice(0, 6).map(function (v) { return { name: v, kommende: zaehler[v] }; });
+  }
+  function suchSpiele(f) {
+    return (daten.spiele || []).filter(function (s) {
+      return !s.vergangen && suchtextVon((s.liga || "") + " " + s.paarung + " " + (s.halle || "")).indexOf(f) >= 0;
+    }).slice(0, 8);
+  }
+  function suchSeiten(f, eintraege) {
+    return (eintraege || []).filter(function (e) {
+      return suchtextVon(e[2] + " " + (e[3] || "")).indexOf(f) >= 0;
+    }).slice(0, 5);
+  }
   function zeigeListe(filter) {
     var liste = el("namen"), treffer = 0;
     liste.innerHTML = "";
@@ -1031,31 +1077,23 @@
     var lauf = liste._lauf = {};
     if (suchModus && f.length >= 2) {
       // Hallen
-      var hallen = !funktion("hallen") ? [] :
-        Object.keys(daten.hallen || {}).concat(Object.keys(daten.adressen || {})).filter(function (n, i, a) { return a.indexOf(n) === i; })
-        .filter(function (n) { return ohneZeichen(n + " " + ((daten.adressen || {})[n] || "")).indexOf(f) >= 0; }).slice(0, 6);
+      var hallen = !funktion("hallen") ? [] : suchHallen(f);
       if (hallen.length) { suchGruppe(liste, "Hallen"); treffer += hallen.length; }
       hallen.forEach(function (n) { suchEintrag(liste, n, (daten.adressen || {})[n] || "", function () { location.hash = "halle/" + hallenSlug(n); }); });
       // Vereine (aus den Paarungen)
-      var vereine = {};
-      (daten.spiele || []).forEach(function (s) { (s.paarung || "").split(/\s[–-]\s/).forEach(function (v) { v = v.trim(); if (v && ohneZeichen(v).indexOf(f) >= 0) vereine[v] = (vereine[v] || 0) + (s.vergangen ? 0 : 1); }); });
-      var vl = Object.keys(vereine).sort(function (a, b) { return vereine[b] - vereine[a]; });
-      if (vl.some(function (v) { return vereine[v] > 0; })) vl = vl.filter(function (v) { return vereine[v] > 0; });
-      vl = vl.slice(0, 6);
+      var vl = suchVereine(f);
       if (vl.length) { suchGruppe(liste, "Vereine"); treffer += vl.length; }
-      vl.forEach(function (v) { suchEintrag(liste, v, vereine[v] ? vereine[v] + (vereine[v] === 1 ? " Spiel im Plan" : " Spiele im Plan") : "keine kommenden Spiele", function () {
-        location.hash = "plan"; setTimeout(function () { el("plan-filter").value = v; el("plan-filter").dispatchEvent(new Event("input", { bubbles: true })); }, 100);
+      vl.forEach(function (x) { suchEintrag(liste, x.name, x.kommende ? x.kommende + (x.kommende === 1 ? " Spiel im Plan" : " Spiele im Plan") : "keine kommenden Spiele", function () {
+        location.hash = "plan"; setTimeout(function () { el("plan-filter").value = x.name; el("plan-filter").dispatchEvent(new Event("input", { bubbles: true })); }, 100);
       }); });
       // Spiele
-      var spiele = (daten.spiele || []).filter(function (s) { return !s.vergangen && ohneZeichen((s.liga || "") + " " + s.paarung + " " + (s.halle || "")).indexOf(f) >= 0; }).slice(0, 8);
+      var spiele = suchSpiele(f);
       if (spiele.length) { suchGruppe(liste, "Spiele"); treffer += spiele.length; }
       spiele.forEach(function (s) { var d = new Date(s.beginn); suchEintrag(liste, datumKurz(d) + " " + uhr(d) + " · " + (s.liga ? s.liga + ": " : "") + s.paarung, (s.halle || "") + (s.besetzung && s.besetzung.length ? " · " + s.besetzung.map(function (b) { return b.name.split(",")[0]; }).join(", ") : " · unbesetzt"), function () { location.hash = "spiel/" + encodeURIComponent(kennungVon(s)); }); });
       // Seiten der App. Die Liste steht unter "Mehr"; ist sie noch nicht
       // aufgebaut worden, hilft ein Blick darauf - deshalb einmal bauen.
       if (!mehrEintraege.length && el("mehr")) { var offen = !el("mehr").classList.contains("versteckt"); zeigeMehr(); if (!offen) el("mehr").classList.add("versteckt"); }
-      var seiten = mehrEintraege.filter(function (e) {
-        return ohneZeichen(e[2] + " " + (e[3] || "")).indexOf(f) >= 0;
-      }).slice(0, 5);
+      var seiten = suchSeiten(f, mehrEintraege);
       if (seiten.length) { suchGruppe(liste, "Seiten"); treffer += seiten.length; }
       seiten.forEach(function (e) { suchEintrag(liste, e[2], e[3] || "", function () { location.hash = e[0].replace(/^#/, ""); }); });
 
@@ -6789,6 +6827,8 @@
       archivSaisonAus: archivSaisonAus,
       zeitraum: zeitraum, tagTitel: tagTitel, ligaGruppe: ligaGruppe,
       planFilter: planFilter,
+      suchHallen: suchHallen, suchVereine: suchVereine,
+      suchSpiele: suchSpiele, suchSeiten: suchSeiten,
       rechnerErgebnis: rechnerErgebnis, restSekunden: restSekunden,
       restText: restText, rArt: rArt, R_ARTEN: R_ARTEN,
       ohneZeichen: ohneZeichen, ausgeschrieben: ausgeschrieben, suchtextVon: suchtextVon,

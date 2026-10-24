@@ -438,6 +438,106 @@ gleich(P.planFilter([], {}).length, 0, "leere Liste");
 gleich(P.planFilter(null, {}).length, 0, "gar keine Liste");
 
 
+// ------------------------------------------------------------- Suche
+
+console.log("\nSuche: was sie findet");
+
+// Dass die Suche etwas nicht findet, faellt niemandem auf - man haelt
+// es fuer nicht vorhanden. Deshalb steht hier, was sie finden muss.
+var SUCHDATEN = {
+  hallen: { "Rheinlandhalle Krefeld": 1, "Eissporthalle am Seilersee": 1, "Löwen-Arena": 1 },
+  adressen: { "Rheinlandhalle Krefeld": "Westparkstraße 126, 47803 Krefeld",
+              "Löwen-Arena": "Am Ring 3, 60313 Frankfurt" },
+  spiele: [
+    { id: "s1", beginn: tagePlus(1, 17).toISOString(), liga: "U13 FS",
+      paarung: "Krefelder EV – Düsseldorfer EG", halle: "Rheinlandhalle Krefeld",
+      vergangen: false, besetzung: [{ name: "Meier, Hans", slug: "meier" }] },
+    { id: "s2", beginn: tagePlus(2, 19).toISOString(), liga: "BL FS",
+      paarung: "Iserlohner EC – Krefelder EV", halle: "Eissporthalle am Seilersee",
+      vergangen: false, besetzung: [] },
+    { id: "s3", beginn: tagePlus(-5, 17).toISOString(), liga: "U17 I",
+      paarung: "Löwen Frankfurt – Kölner Junghaie", halle: "Löwen-Arena",
+      vergangen: true, besetzung: [] }
+  ]
+};
+P.setze({ daten: SUCHDATEN });
+
+function hallen(wort) { return P.suchHallen(P.ohneZeichen(wort)).join("|"); }
+function vereine(wort) { return P.suchVereine(P.ohneZeichen(wort)).map(function (v) { return v.name; }).join("|"); }
+function spiele(wort) { return P.suchSpiele(P.ohneZeichen(wort)).map(function (s) { return s.id; }).join("|"); }
+
+// Hallen: ueber den Namen und ueber die Anschrift
+gleich(hallen("Rheinland"), "Rheinlandhalle Krefeld", "Halle ueber den Namen");
+gleich(hallen("Westparkstraße"), "Rheinlandhalle Krefeld", "Halle ueber die Strasse");
+gleich(hallen("47803"), "Rheinlandhalle Krefeld", "Halle ueber die Postleitzahl");
+gleich(hallen("Seilersee"), "Eissporthalle am Seilersee", "Halle ohne hinterlegte Anschrift");
+gleich(hallen("gibtesnicht"), "", "ohne Treffer nichts");
+
+// Eine Halle, die in beiden Listen steht, darf nur einmal kommen.
+gleich(hallen("Löwen"), "Löwen-Arena", "Halle aus beiden Listen steht einmal da");
+
+// Umlaute: beide Schreibungen muessen gehen
+gleich(hallen("Loewen"), "Löwen-Arena", "Halle mit ausgeschriebenem Umlaut");
+
+// Vereine werden aus den Paarungen gelesen, nicht aus einer Liste
+gleich(vereine("Krefelder"), "Krefelder EV", "Verein aus der Paarung");
+gleich(vereine("Düsseldorf"), "Düsseldorfer EG", "der zweite Verein auch");
+gleich(vereine("dusseldorf"), "Düsseldorfer EG", "Verein ohne Umlaut gesucht");
+gleich(vereine("duesseldorf"), "Düsseldorfer EG", "und ausgeschrieben");
+
+// Wer kommende Spiele hat, steht vor dem, der nur vergangene hat -
+// und solange es einen mit kommenden gibt, faellt der andere weg.
+var krefeld = P.suchVereine(P.ohneZeichen("Krefelder"))[0];
+gleich(krefeld.kommende, 2, "Krefeld hat zwei kommende Spiele");
+
+// Gibt es unter den Treffern keinen mit kommenden Spielen, bleiben
+// die ohne stehen - sonst fände man gar nichts. Erst wenn einer
+// kommende hat, fallen die anderen weg.
+var nurVergangen = P.suchVereine(P.ohneZeichen("Löwen"));
+gleich(nurVergangen.length, 1, "ein Verein nur mit vergangenem Spiel bleibt, wenn er allein ist");
+gleich(nurVergangen[0].kommende, 0, "und zwar ohne kommende Spiele");
+gleich(vereine("EV"), "Krefelder EV", "neben einem mit kommenden faellt er weg");
+
+// Spiele: ueber Liga, Paarung und Halle
+gleich(spiele("U13"), "s1", "Spiel ueber die Liga");
+gleich(spiele("Iserlohner"), "s2", "Spiel ueber die Paarung");
+gleich(spiele("Seilersee"), "s2", "Spiel ueber die Halle");
+gleich(spiele("Krefelder"), "s1|s2", "zwei Spiele desselben Vereins");
+gleich(spiele("Löwen"), "", "ein vergangenes Spiel wird nicht gefunden");
+gleich(spiele("gibtesnicht"), "", "ohne Treffer nichts");
+
+// Seiten der App
+var MENUE = [
+  ["#archiv", "i-cal", "Archiv", "alle deine Spiele, alle Saisons"],
+  ["#regeln", "i-buch", "Regeln", "Strafenmatrix, Spielzeiten und Bestimmungen"],
+  ["#rechner", "i-euro", "Strafrechner", "Stärke auf dem Eis ausrechnen"]
+];
+function seiten(wort) {
+  return P.suchSeiten(P.ohneZeichen(wort), MENUE).map(function (e) { return e[2]; }).join("|");
+}
+gleich(seiten("Archiv"), "Archiv", "Seite ueber den Titel");
+gleich(seiten("Strafenmatrix"), "Regeln", "Seite ueber die Unterzeile");
+gleich(seiten("Staerke"), "Strafrechner", "Unterzeile mit Umlaut");
+gleich(seiten("gibtesnicht"), "", "ohne Treffer nichts");
+gleich(P.suchSeiten(P.ohneZeichen("Archiv"), null).length, 0, "ohne Menue faellt nichts um");
+
+// Die Listen sind gedeckelt, damit die Trefferliste nicht ausufert.
+var vieleSpiele = [];
+for (var i = 0; i < 20; i++) {
+  vieleSpiele.push({ id: "v" + i, beginn: tagePlus(1, 12).toISOString(), liga: "BL",
+                     paarung: "Viele EV – Andere", halle: "Halle", vergangen: false, besetzung: [] });
+}
+P.setze({ daten: { spiele: vieleSpiele, hallen: {}, adressen: {} } });
+gleich(P.suchSpiele(P.ohneZeichen("Viele")).length, 8, "hoechstens acht Spiele");
+gleich(P.suchVereine(P.ohneZeichen("e")).length <= 6, true, "hoechstens sechs Vereine");
+
+// Leere Daten duerfen nicht umfallen
+P.setze({ daten: {} });
+gleich(P.suchHallen("irgendwas").length, 0, "ohne Hallen nichts");
+gleich(P.suchSpiele("irgendwas").length, 0, "ohne Spiele nichts");
+gleich(P.suchVereine("irgendwas").length, 0, "ohne Paarungen keine Vereine");
+
+
 // ------------------------------------------------------- Strafrechner
 
 console.log("\nStrafrechner: Stärke auf dem Eis");
