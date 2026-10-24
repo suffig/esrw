@@ -351,6 +351,93 @@ P.setze({ daten: { spiele: [] }, profil: { slug: "ich" } });
 gleich(P.naechstesEigenes(), null, "ohne Spiele auch nicht");
 
 
+// ------------------------------------------------------- Plan filtern
+
+console.log("\nFilter im Spielplan");
+
+// Ein kleiner Spielplan: je Fall genau ein unterscheidendes Merkmal.
+function sp(o) {
+  return {
+    id: o.id, beginn: o.beginn, liga: o.liga || "BL FS",
+    paarung: o.paarung || "Heim - Gast", halle: o.halle || "Halle A",
+    vergangen: !!o.vergangen,
+    besetzung: o.besetzung === undefined ? [{ name: "Ich", slug: "ich", rolle: "SR" }] : o.besetzung
+  };
+}
+var PLAN = [
+  sp({ id: "alt", beginn: tagePlus(-3).toISOString(), vergangen: true }),
+  sp({ id: "meins", beginn: tagePlus(1, 19).toISOString(), liga: "U13 FS" }),
+  sp({ id: "fremd", beginn: tagePlus(2, 10).toISOString(), liga: "Frauen BZL",
+       halle: "Halle B", besetzung: [{ name: "Andere", slug: "andere", rolle: "SR" }] }),
+  sp({ id: "offen", beginn: tagePlus(3, 20).toISOString(), liga: "U17 I",
+       paarung: "Düsseldorfer EG - Krefelder EV", halle: "Halle C", besetzung: [] })
+];
+P.setze({ profil: { slug: "ich" } });
+
+function ids(wahl) {
+  return P.planFilter(PLAN, wahl).map(function (s) { return s.id; }).sort().join(",");
+}
+
+gleich(ids({}), "fremd,meins,offen", "ohne Kriterien: alles ausser dem Vergangenen");
+gleich(ids({ mitVergangenen: true }), "alt,fremd,meins,offen", "mit Vergangenen: alle vier");
+gleich(ids({ nurIch: true }), "meins", "nur meine: das fremde faellt weg");
+gleich(ids({ nurOffen: true }), "offen", "nur unbesetzte");
+gleich(ids({ hallen: ["Halle B", "Halle C"] }), "fremd,offen", "nach Hallen");
+gleich(ids({ hallen: [] }), "", "leere Hallenliste zeigt nichts");
+
+// Ligen kommen als Gruppen, nicht als voller Name
+gleich(ids({ ligen: { U13: 1 } }), "meins", "eine Ligagruppe");
+gleich(ids({ ligen: { U13: 1, U17: 1 } }), "meins,offen", "zwei Gruppen");
+gleich(ids({ ligen: { Frauen: 1 } }), "fremd", "Frauen als Gruppe");
+gleich(ids({ ligen: {} }), "", "leere Ligawahl zeigt nichts");
+
+// Die Suche geht ueber Paarung, Liga, Halle und die Namen im Gespann
+gleich(ids({ suche: P.ohneZeichen("Krefelder") }), "offen", "Suche in der Paarung");
+gleich(ids({ suche: P.ohneZeichen("Halle B") }), "fremd", "Suche in der Halle");
+gleich(ids({ suche: P.ohneZeichen("Andere") }), "fremd", "Suche im Gespann");
+gleich(ids({ suche: P.ohneZeichen("gibtesnicht") }), "", "Suche ohne Treffer");
+
+// Umlaute: wer "duesseldorf" tippt, muss "Düsseldorfer" finden - und
+// wer "dusseldorf" tippt, auch. Das ist der Grund fuer die zwei
+// Schreibungen in suchtextVon().
+gleich(ids({ suche: P.ohneZeichen("duesseldorf") }), "offen", "Suche mit ausgeschriebenem Umlaut");
+gleich(ids({ suche: P.ohneZeichen("dusseldorf") }), "offen", "und ohne");
+
+// Mehrere Kriterien schraenken sich gegenseitig ein
+gleich(ids({ nurIch: true, ligen: { U13: 1 } }), "meins", "meine und U13");
+gleich(ids({ nurIch: true, ligen: { Frauen: 1 } }), "", "meine und Frauen: nichts");
+gleich(ids({ nurOffen: true, hallen: ["Halle A"] }), "", "unbesetzt in Halle A: nichts");
+
+// Die Schnellfilter nach Tageszeit
+gleich(ids({ schnell: "abends" }), "meins,offen", "abends ab 18 Uhr");
+gleich(ids({ schnell: "frueh" }), "fremd", "frueh bis 13 Uhr");
+
+// Die Grenzen selbst. Ohne ein Spiel in der fraglichen Stunde bleibt
+// der Test gruen, auch wenn die Grenze um eine Stunde verrutscht -
+// gemessen, der Fall fiel bei der Mutationsprobe durch.
+var GRENZEN = [
+  sp({ id: "kurzVorAbend", beginn: tagePlus(1, 17).toISOString() }),
+  sp({ id: "punktAbend", beginn: tagePlus(1, 18).toISOString() }),
+  sp({ id: "kurzVorMittag", beginn: tagePlus(1, 12).toISOString() }),
+  sp({ id: "punktMittag", beginn: tagePlus(1, 13).toISOString() })
+];
+function grenzIds(wahl) {
+  return P.planFilter(GRENZEN, wahl).map(function (s) { return s.id; }).sort().join(",");
+}
+gleich(grenzIds({ schnell: "abends" }), "punktAbend", "abends: 18 Uhr ja, 17 Uhr nein");
+gleich(grenzIds({ schnell: "frueh" }), "kurzVorMittag", "frueh: 12 Uhr ja, 13 Uhr nein");
+
+// Ohne Profil greift "nur meine" nicht mehr - istMeins() kann dann
+// niemanden erkennen, und die Liste bliebe leer statt vollstaendig.
+P.setze({ profil: null });
+gleich(ids({ nurIch: true }), "", "ohne Profil erkennt nur-meine niemanden");
+P.setze({ profil: { slug: "ich" } });
+
+// Leere Eingaben duerfen nicht umfallen
+gleich(P.planFilter([], {}).length, 0, "leere Liste");
+gleich(P.planFilter(null, {}).length, 0, "gar keine Liste");
+
+
 // ------------------------------------------------------------- Farben
 
 console.log("\nFarben der Liga-Chips");

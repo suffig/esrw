@@ -2366,38 +2366,52 @@
   }
   // ohneLigen: fuer die Zahlen an den Liga-Chips - sie sollen zeigen, was die
   // uebrigen Filter uebrig lassen, nicht was nach der Ligawahl bleibt.
-  function planGefiltert(fuerMonat, ohneLigen) {
-    var f = ohneZeichen(el("plan-filter").value);
-    var mitVergangenen = el("plan-vergangene").checked || fuerMonat;
-    var nurOffen = el("plan-offen").checked;
-    var hallen = meineHallen();
-    var nurMeine = hallen && el("plan-hallen").checked;
-    var nurIch = profil && profil.slug && el("plan-meine").checked;
-    var ligen = !ohneLigen && Object.keys(ligenWahl).length ? ligenWahl : null;
+  // Was der Spielplan zeigt, entscheiden acht Bedingungen - und die
+  // standen bisher in derselben Funktion, die die Felder der
+  // Oberflaeche ausliest. Getrennt laesst sich das Rechnen pruefen,
+  // ohne einen halben Browser nachzubauen.
+  //
+  // "wahl" traegt die Kriterien: suche (schon durch ohneZeichen
+  // gegangen), mitVergangenen, nurOffen, hallen (Liste oder null),
+  // nurIch, ligen (Objekt oder null), schnell.
+  function planFilter(spiele, wahl) {
     var heute = new Date(); heute.setHours(0, 0, 0, 0);
+    var schnell = wahl.schnell;
     var wochenende = null;
-    if (schnellWahl === "wochenende") {
+    if (schnell === "wochenende") {
       // Freitag bis Sonntag der laufenden Woche; ab Montag das kommende
       var tag = heute.getDay(), bisFreitag = (5 - tag + 7) % 7;
       var fr = tagePlus(heute, tag >= 5 || tag === 0 ? (tag === 0 ? -2 : 5 - tag) : bisFreitag);
       wochenende = [fr, tagePlus(fr, 3)];
     }
-    return (daten.spiele || []).filter(function (s) {
-      if (s.vergangen && !mitVergangenen) return false;
+    return (spiele || []).filter(function (s) {
+      if (s.vergangen && !wahl.mitVergangenen) return false;
       var d = new Date(s.beginn);
-      if (schnellWahl === "wochenende" && (d < wochenende[0] || d >= wochenende[1])) return false;
-      if (schnellWahl === "woche" && (d < heute || d >= tagePlus(heute, 7))) return false;
-      if (schnellWahl === "abends" && d.getHours() < 18) return false;
-      if (schnellWahl === "frueh" && d.getHours() >= 13) return false;
-      if (nurMeine && hallen.indexOf(s.halle) < 0) return false;
-      if (nurIch && !istMeins(s)) return false;
-      if (nurOffen && s.besetzung.length) return false;
-      if (ligen && !ligen[ligaGruppe(s.liga)]) return false;
-      if (f) {
+      if (schnell === "wochenende" && (d < wochenende[0] || d >= wochenende[1])) return false;
+      if (schnell === "woche" && (d < heute || d >= tagePlus(heute, 7))) return false;
+      if (schnell === "abends" && d.getHours() < 18) return false;
+      if (schnell === "frueh" && d.getHours() >= 13) return false;
+      if (wahl.hallen && wahl.hallen.indexOf(s.halle) < 0) return false;
+      if (wahl.nurIch && !istMeins(s)) return false;
+      if (wahl.nurOffen && s.besetzung.length) return false;
+      if (wahl.ligen && !wahl.ligen[ligaGruppe(s.liga)]) return false;
+      if (wahl.suche) {
         var text = suchtextVon([s.paarung, s.liga, s.halle].concat(s.besetzung.map(function (b) { return b.name; })).join(" "));
-        if (text.indexOf(f) === -1) return false;
+        if (text.indexOf(wahl.suche) === -1) return false;
       }
       return true;
+    });
+  }
+  function planGefiltert(fuerMonat, ohneLigen) {
+    var hallen = meineHallen();
+    return planFilter(daten.spiele, {
+      suche: ohneZeichen(el("plan-filter").value),
+      mitVergangenen: el("plan-vergangene").checked || fuerMonat,
+      nurOffen: el("plan-offen").checked,
+      hallen: hallen && el("plan-hallen").checked ? hallen : null,
+      nurIch: !!(profil && profil.slug && el("plan-meine").checked),
+      ligen: !ohneLigen && Object.keys(ligenWahl).length ? ligenWahl : null,
+      schnell: schnellWahl
     });
   }
   // Naechste 14 Tage als Leiste zum Springen
@@ -6773,6 +6787,7 @@
       archivMerge: archivMerge, archivKorrigieren: archivKorrigieren,
       archivSaisonAus: archivSaisonAus,
       zeitraum: zeitraum, tagTitel: tagTitel, ligaGruppe: ligaGruppe,
+      planFilter: planFilter,
       ohneZeichen: ohneZeichen, ausgeschrieben: ausgeschrieben, suchtextVon: suchtextVon,
       datumKurz: datumKurz, uhr: uhr, farbeFuer: farbeFuer, mitPuffer: mitPuffer,
       naechstesEigenes: naechstesEigenes
