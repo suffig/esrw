@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:08bda17764f9aee6ae79c443a1328430550fea71@esrw.de
-SEQUENCE:1
-DTSTAMP:20261010T203039Z
-LAST-MODIFIED:20261010T203039Z
-DTSTART:20261017T173000Z
-DTEND:20261017T210000Z
-SUMMARY:SR · U15 LL: SpG Neusser EV / GSC Moers – EHC Die Bären Neu
- wied
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
-  19:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Ne
- uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Pacalaj\, Erik\
- n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
-GEO:51.175806;6.680258
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
- -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
- uss":geo:51.175806,6.680258
-END:VEVENT
-BEGIN:VEVENT
 UID:d2f18acaa3045caf17b9e1ab212de2ac61d16c27@esrw.de
 SEQUENCE:0
 DTSTAMP:20261016T090052Z
@@ -71,12 +49,6 @@ GEO:51.175806;6.680258
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
  -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
  uss":geo:51.175806,6.680258
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: SpG Neusser EV / G
- SC Moers – EHC Die Bären Neuwied
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:027cc0c72485c7a86432243eba039cbf420ef108@esrw.de

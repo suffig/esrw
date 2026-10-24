@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:437c8c151a901fc0d15d620e49a47329af8964d9@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261017T173000Z
-DTEND:20261017T210000Z
-SUMMARY:SR · DFEL2 Nord: Soester EG – FASS Berlin
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
-  19:30 Uhr (60 Min vor Spielbeginn)\nLiga: DFEL2 Nord\nHalle: Eissportzent
- rum Möhnesee\nAdresse: Teigelhof 4\, 59519 Möhnesee\nGespann: Steeg\, Ce
- dric\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Möhnesee\, Teigelhof 4\, 59519 Möhnesee
-GEO:51.515208;8.159069
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Möhnesee,
-  Teigelhof 4, 59519 Möhnesee";X-APPLE-RADIUS=100;X-TITLE="Eissportzentrum
-  Möhnesee":geo:51.515208,8.159069
-END:VEVENT
-BEGIN:VEVENT
 UID:e9b8d34b65ae4bf8ff0e196e657c9bedefef694b@esrw.de
 SEQUENCE:1
 DTSTAMP:20261010T203039Z
