@@ -1166,6 +1166,166 @@ def test_netzstand():
            "netzDa() fuehrt beide Quellen zusammen")
 
 
+def test_push_nachrichten():
+    """Was eine Push-Nachricht sagt.
+
+    Sie geht an alle Kollegen und laesst sich nicht zurueckholen.
+    Geprueft war an push_senden.py bisher nur vorlauf_zeit().
+    """
+    print("\nPush: Text der Aenderungsmeldung")
+    try:
+        import push_senden as P
+    except Exception as e:
+        print("  --   push_senden nicht ladbar (%s), Test uebersprungen" % e)
+        return
+
+    leer = P.aenderungs_nachricht("ich", {})
+    pruefe(leer is None, "ohne Aenderung keine Nachricht")
+
+    nur_neu = P.aenderungs_nachricht("ich", {"neu": ["Sa. 25.10. 17:00 A - B"]})
+    pruefe(nur_neu is not None, "ein neues Spiel ergibt eine Nachricht")
+    if nur_neu:
+        pruefe("1 neu" in nur_neu["titel"], "der Titel zaehlt die neuen", nur_neu["titel"])
+        pruefe(nur_neu["text"].startswith("Neu: "), "der Text nennt es", nur_neu["text"][:40])
+        pruefe(nur_neu["url"] == "./#ich", "die Adresse fuehrt zur Person", nur_neu["url"])
+
+    gemischt = P.aenderungs_nachricht("ich", {
+        "neu": ["eins", "zwei"],
+        "geaendert": ["drei"],
+        "entfallen": ["vier"],
+    })
+    pruefe("2 neu" in gemischt["titel"] and "1 geändert" in gemischt["titel"]
+           and "1 abgesetzt" in gemischt["titel"],
+           "der Titel zaehlt jede Art einzeln", gemischt["titel"])
+    for stueck in ("Neu: eins", "Neu: zwei", "Geändert: drei", "Abgesetzt: vier"):
+        pruefe(stueck in gemischt["text"], "der Text enthaelt " + stueck)
+
+    # Wechselt jemand im Gespann, ist das eine eigene Zeile - und laesst
+    # sich abschalten, weil nicht jeder es wissen will.
+    mit_gespann = {"details": {"gespann": [{"text": "Sa. 25.10. A - B", "was": "Meier statt Schmidt"}]}}
+    mit = P.aenderungs_nachricht("ich", mit_gespann)
+    pruefe(mit is not None and "Gespann:" in mit["text"], "Gespannwechsel steht drin")
+    ohne = P.aenderungs_nachricht("ich", mit_gespann, mit_gespann=False)
+    pruefe(ohne is None, "abgeschaltet bleibt nur der Gespannwechsel weg")
+
+    # Push-Dienste nehmen keine beliebig langen Texte an.
+    viele = P.aenderungs_nachricht("ich", {"neu": ["Spiel %d" % i for i in range(200)]})
+    pruefe(len(viele["text"]) <= 900, "der Text ist auf 900 Zeichen gekuerzt",
+           str(len(viele["text"])))
+
+
+def test_push_erinnerungen():
+    """Wann eine Erinnerung faellig ist.
+
+    Zweimal dieselbe Erinnerung ist schlimmer als keine - deshalb
+    merkt sich der Lauf, was schon heraus ist, und diese Funktion
+    muss sich daran halten.
+    """
+    print("\nPush: Faelligkeit der Erinnerungen")
+    try:
+        import push_senden as P
+    except Exception as e:
+        print("  --   push_senden nicht ladbar (%s), Test uebersprungen" % e)
+        return
+
+    from datetime import datetime, timedelta
+
+    jetzt = datetime(2026, 10, 24, 9, 0, tzinfo=P.BERLIN)
+
+    def spiel(stunde, tage=0, halle="Eishalle"):
+        beginn = datetime(2026, 10, 24, stunde, 0, tzinfo=P.BERLIN) + timedelta(days=tage)
+        treff = beginn - timedelta(hours=1)
+        return {"beginn": beginn.isoformat(), "treffpunkt": treff.isoformat(),
+                "paarung": "A - B", "liga": "BL", "halle": halle, "rolle": "SR"}
+
+    # Ohne Strecke gibt es keine Abfahrt-Erinnerung, aber eine zum Spieltag.
+    person = {"slug": "ich", "spiele": [spiel(18)]}
+    profil = {"einstellungen": {"pushvorlauf": "0"}}
+    raus = P.erinnerungen(person, profil, jetzt, {})
+    arten = [k.split("|")[0] for k, _ in raus]
+    pruefe("spieltag" in arten, "Spiel heute abend: Erinnerung zum Spieltag", str(arten))
+    pruefe("abfahrt" not in arten, "ohne Strecke keine Abfahrt-Erinnerung")
+
+    # Was schon heraus ist, geht nicht noch einmal heraus.
+    schon = dict((k, 1) for k, _ in raus)
+    pruefe(not P.erinnerungen(person, profil, jetzt, schon),
+           "eine verschickte Erinnerung kommt nicht wieder")
+
+    # Ein vergangenes Spiel erinnert an nichts mehr.
+    vorbei = {"slug": "ich", "spiele": [spiel(7)]}
+    pruefe(not P.erinnerungen(vorbei, profil, jetzt, {}),
+           "ein Spiel von heute frueh erinnert nicht mehr")
+
+    # Mit Strecke und passendem Abstand kommt die Abfahrt dazu. Treffpunkt
+    # ist 17:00, 30 Minuten Fahrt, also Abfahrt 16:30 - um 16:00 sind das
+    # 30 Minuten, das Fenster sind 45.
+    mitStrecke = {"einstellungen": {"pushvorlauf": "0"},
+                  "strecken": {"Eishalle": {"minuten": 30, "km": 25}}}
+    kurzDavor = datetime(2026, 10, 24, 16, 0, tzinfo=P.BERLIN)
+    raus2 = P.erinnerungen(person, mitStrecke, kurzDavor, {})
+    arten2 = [k.split("|")[0] for k, _ in raus2]
+    pruefe("abfahrt" in arten2, "kurz vor der Abfahrt wird erinnert", str(arten2))
+    abf = [n for k, n in raus2 if k.startswith("abfahrt")][0]
+    pruefe("30 Min" in abf["titel"], "und sagt, wie lange es noch hin ist", abf["titel"])
+    pruefe(abf["tag"] == "abfahrt", "die Marke trennt sie von der Spieltag-Meldung")
+
+    # Zu frueh ist zu frueh: um 12:00 liegt die Abfahrt viereinhalb
+    # Stunden weg, das Fenster sind 45 Minuten.
+    frueh = datetime(2026, 10, 24, 12, 0, tzinfo=P.BERLIN)
+    arten3 = [k.split("|")[0] for k, _ in P.erinnerungen(person, mitStrecke, frueh, {})]
+    pruefe("abfahrt" not in arten3, "viereinhalb Stunden vorher noch nicht", str(arten3))
+
+    # Und zu spaet ist zu spaet. Um 17:00 ist die Abfahrt (16:30) eine
+    # halbe Stunde vorbei; ohne die untere Grenze stuende da "In ~-30
+    # Min. losfahren" - gemessen, der Fall fiel bei der Mutationsprobe
+    # durch.
+    zuSpaet = datetime(2026, 10, 24, 17, 0, tzinfo=P.BERLIN)
+    arten3b = [k.split("|")[0] for k, _ in P.erinnerungen(person, mitStrecke, zuSpaet, {})]
+    pruefe("abfahrt" not in arten3b,
+           "nach der Abfahrt wird nicht mehr zur Abfahrt erinnert", str(arten3b))
+
+    # Der Verkehrspuffer verlaengert die Fahrt und zieht die Abfahrt vor.
+    mitPuffer = {"einstellungen": {"pushvorlauf": "0", "verkehr": "20"},
+                 "strecken": {"Eishalle": {"minuten": 30, "km": 25}}}
+    raus4 = P.erinnerungen(person, mitPuffer, kurzDavor, {})
+    abf4 = [n for k, n in raus4 if k.startswith("abfahrt")]
+    if abf4:
+        pruefe("30 Min" not in abf4[0]["titel"],
+               "mit Puffer faellt die Abfahrt frueher", abf4[0]["titel"])
+
+    # Die Spieltag-Meldung sagt, wann: heute, morgen oder mit Datum.
+    #
+    # "Morgen" bekommt nur, wer den Vorlauf auf den Abend davor gestellt
+    # hat - mit der Voreinstellung erinnert der Lauf erst am Spieltag um
+    # sieben. Das ist Absicht und keine Luecke: ein Spiel von morgen ist
+    # heute um neun noch keine Nachricht wert.
+    abends = {"einstellungen": {"pushvorlauf": "abend"}}
+    abendZeit = datetime(2026, 10, 24, 19, 0, tzinfo=P.BERLIN)
+    morgen = {"slug": "ich", "spiele": [spiel(18, tage=1)]}
+    weit = {"slug": "ich", "spiele": [spiel(18, tage=9)]}
+    pruefe(not P.erinnerungen(morgen, profil, jetzt, {}),
+           "mit Vorgabe erinnert ein Spiel von morgen heute frueh noch nicht")
+    heute_n = [n for k, n in P.erinnerungen(person, profil, jetzt, {}) if k.startswith("spieltag")]
+    morgen_n = [n for k, n in P.erinnerungen(morgen, abends, abendZeit, {}) if k.startswith("spieltag")]
+    pruefe(heute_n and heute_n[0]["titel"].startswith("Heute"),
+           "heute heisst Heute", heute_n[0]["titel"] if heute_n else "")
+    pruefe(morgen_n and morgen_n[0]["titel"].startswith("Morgen"),
+           "morgen heisst Morgen", morgen_n[0]["titel"] if morgen_n else "")
+    # Ein Spiel in neun Tagen liegt weiter weg als jeder Vorlauf.
+    pruefe(not P.erinnerungen(weit, profil, jetzt, {}),
+           "ein Spiel in neun Tagen erinnert noch nicht")
+
+    # Ein Spiel ohne verwertbare Zeiten darf den ganzen Lauf nicht kippen.
+    kaputt = {"slug": "ich", "spiele": [{"paarung": "X - Y"},
+                                        {"beginn": "kein Datum", "treffpunkt": "auch nicht",
+                                         "paarung": "X - Y"}]}
+    try:
+        P.erinnerungen(kaputt, profil, jetzt, {})
+        pruefe(True, "ein kaputter Eintrag wird uebersprungen")
+    except Exception as e:
+        pruefe(False, "ein kaputter Eintrag wird uebersprungen", str(e))
+
+
 def test_blattfokus():
     """Jedes modale Blatt nimmt den Fokus mit.
 
@@ -1491,6 +1651,7 @@ def main():
                  test_kalenderwuensche, test_vereinsnamen, test_seitenumbau,
                  test_funktionstexte, test_dunkles_thema, test_kennungen, test_verlegt,
                  test_archivkennung, test_spielschluessel, test_blattfokus, test_netzstand,
+                 test_push_nachrichten, test_push_erinnerungen,
                  test_tresor):
         test()
     print("\n" + "-" * 58)
