@@ -438,6 +438,103 @@ gleich(P.planFilter([], {}).length, 0, "leere Liste");
 gleich(P.planFilter(null, {}).length, 0, "gar keine Liste");
 
 
+// ------------------------------------------------------- Strafrechner
+
+console.log("\nStrafrechner: Stärke auf dem Eis");
+
+// Jemand ruft das waehrend eines Spiels auf und entscheidet danach.
+// Die Regeln dahinter: gleichartige Strafen beider Mannschaften heben
+// sich auf, hoechstens zwei laufen gleichzeitig (Regel 26), und was
+// keine Spielzeit kostet (Spieldauer, Disziplinar) aendert die
+// Staerke nicht.
+
+function eis(a, b, laufA, laufB) {
+  P.setze({ rechner: { a: a || [], b: b || [], laufA: laufA || [], laufB: laufB || [], offen: true } });
+  var e = P.rechnerErgebnis();
+  return { a: e.staerkeA, b: e.staerkeB, e: e };
+}
+function staerke(a, b, laufA, laufB) {
+  var r = eis(a, b, laufA, laufB);
+  return r.a + " gegen " + r.b;
+}
+
+gleich(staerke([], []), "5 gegen 5", "ohne Strafen volle Staerke");
+gleich(staerke(["2"], []), "4 gegen 5", "eine Kleine: einer weniger");
+gleich(staerke(["2", "2"], []), "3 gegen 5", "zwei Kleine: zwei weniger");
+gleich(staerke(["2", "2", "2"], []), "3 gegen 5", "drei Kleine: trotzdem nur zwei (Regel 26)");
+gleich(staerke(["5"], []), "4 gegen 5", "eine Grosse");
+gleich(staerke(["2+2"], []), "3 gegen 5", "die doppelte Kleine zaehlt zweimal");
+
+// Gleichartige Strafen heben sich auf - der Klassiker nach einer
+// Rauferei. Ungleichartige nicht.
+gleich(staerke(["2"], ["2"]), "5 gegen 5", "Kleine gegen Kleine hebt sich auf");
+gleich(staerke(["5"], ["5"]), "5 gegen 5", "Grosse gegen Grosse auch");
+gleich(staerke(["2", "2"], ["2"]), "4 gegen 5", "zwei gegen eine: eine bleibt");
+gleich(staerke(["5"], ["2"]), "4 gegen 4", "Grosse gegen Kleine hebt sich nicht auf");
+gleich(staerke(["2+2"], ["2"]), "4 gegen 5", "doppelte Kleine gegen eine Kleine");
+
+var aufgehoben = eis(["2", "5"], ["2", "5"]).e;
+gleich(aufgehoben.wegKlein, 1, "eine Kleine wurde aufgehoben");
+gleich(aufgehoben.wegGross, 1, "und eine Grosse");
+
+// Was den Spieler vom Eis nimmt, ohne dass die Mannschaft jemanden
+// verliert: Spieldauer und Disziplinar werden ersetzt.
+gleich(staerke(["SPD"], []), "5 gegen 5", "Spieldauer kostet keinen Spieler auf dem Eis");
+gleich(staerke(["10"], []), "5 gegen 5", "Disziplinarstrafe auch nicht");
+gleich(staerke(["MS"], []), "4 gegen 5", "die Matchstrafe dagegen schon");
+gleich(staerke(["5+SPD"], []), "4 gegen 5", "Grosse mit Spieldauer ebenso");
+
+// Nie unter drei - mehr als zwei Strafen laufen nicht gleichzeitig.
+gleich(staerke(["2", "2", "2", "5", "5"], []), "3 gegen 5", "fuenf Strafen, trotzdem drei Spieler");
+
+// Schon laufende Strafen zaehlen mit, auch ohne neue.
+gleich(staerke([], [], [{ k: "2", rest: "1:24" }]), "4 gegen 5", "eine laufende Strafe");
+gleich(staerke([], [], [{ k: "2", rest: "1:24" }, { k: "5", rest: "3:00" }]), "3 gegen 5",
+       "zwei laufende");
+gleich(staerke(["2"], [], [{ k: "2", rest: "1:24" }]), "3 gegen 5",
+       "eine laufende und eine neue");
+
+// Wer zuerst zurueckkommt, sagt die kuerzeste Restzeit.
+var reihe = eis([], [], [{ k: "5", rest: "3:00" }, { k: "2", rest: "0:30" }]).e;
+gleich(reihe.zurueckA, 30, "der naechste kommt in 30 Sekunden");
+gleich(reihe.laufA[0].p.k, "2", "und es ist die Kleine");
+
+// Ohne Restzeit bleibt die Reihenfolge, wie eingetippt - und wer eine
+// Zeit hat, steht vor dem, der keine hat.
+var ohneZeit = eis([], [], [{ k: "2", rest: "" }, { k: "5", rest: "1:00" }]).e;
+gleich(ohneZeit.laufA[0].p.k, "5", "mit Zeit vor ohne Zeit");
+gleich(ohneZeit.zurueckA, 60, "die Zeit des einzigen, der eine hat");
+
+var garKeine = eis([], [], [{ k: "2", rest: "" }, { k: "5", rest: "" }]).e;
+gleich(garKeine.zurueckA, null, "ohne jede Zeit kein naechster");
+gleich(garKeine.laufA[0].p.k, "2", "und die Reihenfolge bleibt wie eingetippt");
+
+// Die Uhr zeigt, was laeuft.
+var uhr = eis(["2", "5"], []).e;
+gleich(uhr.uhrA.join(","), "2 Min,5 Min", "die Uhr nennt beide Strafen");
+gleich(uhr.uhrB.length, 0, "die andere Mannschaft hat keine");
+
+
+console.log("\nStrafrechner: Zeiten lesen und schreiben");
+
+gleich(P.restSekunden("1:24"), 84, "Minuten und Sekunden");
+gleich(P.restSekunden("1.24"), 84, "ein Punkt tut es auch");
+gleich(P.restSekunden("0:05"), 5, "unter einer Minute");
+gleich(P.restSekunden("2"), 120, "eine blosse Zahl sind Minuten");
+gleich(P.restSekunden(""), null, "leer gibt nichts");
+gleich(P.restSekunden("gleich"), null, "Text auch nicht");
+gleich(P.restSekunden(null), null, "und null erst recht");
+
+gleich(P.restText(84), "1:24", "zurueck in Minuten und Sekunden");
+gleich(P.restText(5), "0:05", "mit fuehrender Null");
+gleich(P.restText(0), "0:00", "null Sekunden");
+gleich(P.restText(null), "", "ohne Zeit bleibt es leer");
+
+// Ein unbekanntes Kuerzel darf nicht umfallen - es gilt als Kleine.
+gleich(P.rArt("2").t, "Kleine Strafe", "das Kuerzel findet seine Art");
+gleich(P.rArt("gibtesnicht").k, "2", "ein unbekanntes faellt auf die Kleine zurueck");
+
+
 // ------------------------------------------------------------- Farben
 
 console.log("\nFarben der Liga-Chips");

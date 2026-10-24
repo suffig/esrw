@@ -6782,12 +6782,15 @@
         if (o.daten !== undefined) daten = o.daten;
         if (o.profil !== undefined) profil = o.profil;
         if (o.korrekturen !== undefined) korrekturen = o.korrekturen;
+        if (o.rechner !== undefined) rechner = o.rechner;
       },
       kennungVon: kennungVon, istAusgeblendet: istAusgeblendet, istGeloescht: istGeloescht,
       archivMerge: archivMerge, archivKorrigieren: archivKorrigieren,
       archivSaisonAus: archivSaisonAus,
       zeitraum: zeitraum, tagTitel: tagTitel, ligaGruppe: ligaGruppe,
       planFilter: planFilter,
+      rechnerErgebnis: rechnerErgebnis, restSekunden: restSekunden,
+      restText: restText, rArt: rArt, R_ARTEN: R_ARTEN,
       ohneZeichen: ohneZeichen, ausgeschrieben: ausgeschrieben, suchtextVon: suchtextVon,
       datumKurz: datumKurz, uhr: uhr, farbeFuer: farbeFuer, mitPuffer: mitPuffer,
       naechstesEigenes: naechstesEigenes
