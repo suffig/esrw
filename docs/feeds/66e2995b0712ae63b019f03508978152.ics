@@ -7,25 +7,4 @@ X-WR-CALNAME:Einteilungen – n. n.
 X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
-BEGIN:VEVENT
-UID:cc845a4b39bb9a58f5435a2f7ec71c804cd138a8@esrw.de
-SEQUENCE:0
-DTSTAMP:20261016T091530Z
-LAST-MODIFIED:20261016T091530Z
-DTSTART:20261017T074500Z
-DTEND:20261017T111500Z
-SUMMARY:SR · U11 LL Grün: TuS Wiehl
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:45 Uhr\nTreffpunkt:
-  09:45 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Grün\nHalle: Eissportha
- lle Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Hauerwaas\, 
- Gabriel\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
-GEO:50.947034;7.5553
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
- enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
- ":geo:50.947034,7.5553
-END:VEVENT
 END:VCALENDAR
