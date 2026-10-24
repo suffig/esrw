@@ -87,6 +87,17 @@ window.Mitglieder = (function () {
     var n = parseFloat(String(s).replace(",", "."));
     return isNaN(n) ? null : n;
   }
+  // Wie zahl(), nur dass eine negative Zahl keine ist.
+  //
+  // Die Betragsfelder sind type="text", damit ein getipptes Komma
+  // ueberhaupt ankommt - ein type="number" schluckt es, auch auf
+  // de-DE. Damit faellt die Browser-Pruefung min="0" weg, und ein
+  // Kilometerstand von minus zwanzig waere plausibel wie jeder
+  // andere. Hier faellt er heraus, und das Feld gilt als leer.
+  function zahlAbNull(s) {
+    var n = zahl(s);
+    return n == null || n < 0 ? null : n;
+  }
 
   function uhr(d) { return d.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" }); }
   function datum(d) { return WT[d.getDay()] + ". " + d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }); }
@@ -1306,10 +1317,10 @@ window.Mitglieder = (function () {
       h("option", { value: "hinrueck", text: "Reisekosten, gefahrene km, hin und zurück" })
     ]);
     modell.value = p.km_modell || "einfach";
-    var satzEinfach = h("input", { type: "number", step: "0.01", min: "0",
+    var satzEinfach = h("input", { type: "text", inputmode: "decimal",
       value: p.satz_einfach != null ? p.satz_einfach : (kmStd.satz_einfach || 0.38) });
     var obmann = h("input", { type: "email", placeholder: "obmann@…", value: p.obmann_email || "", autocomplete: "off" });
-    var satzHinrueck = h("input", { type: "number", step: "0.01", min: "0",
+    var satzHinrueck = h("input", { type: "text", inputmode: "decimal",
       value: p.satz_hinrueck != null ? p.satz_hinrueck : (kmStd.satz_hinrueck || 0.30) });
 
     var speichernKnopf = h("button", { type: "submit", class: "mg-haupt", text: "Speichern" });
@@ -4337,10 +4348,10 @@ window.Mitglieder = (function () {
         h("option", { value: "", text: "alle Rollen" }),
         h("option", { value: "SR", text: "SR" }), h("option", { value: "LR", text: "LR" }),
         h("option", { value: "SRA", text: "SRA" }), h("option", { value: "SRB", text: "SRB" })]);
-      var betrag = h("input", { type: "number", step: "0.5", min: "0", inputmode: "decimal", placeholder: "€" });
+      var betrag = h("input", { type: "text", inputmode: "decimal", placeholder: "€" });
       box.appendChild(h("div", { class: "mg-regel-neu" }, [ligaWahl, rolleWahl, betrag,
         h("button", { type: "button", class: "anfrage", text: "Merken", onclick: function () {
-          var v = zahl(betrag.value);
+          var v = zahlAbNull(betrag.value);
           if (v == null) { meldung("Bitte einen Betrag eintragen.", "warn"); return; }
           r.liga[ligaWahl.value + "|" + rolleWahl.value] = v;
           regelnSpeichern(r.liga, r.halle).then(function (ok) {
@@ -4369,11 +4380,11 @@ window.Mitglieder = (function () {
       var hallen = []; spiele.forEach(function (sp) { if (sp.halle && hallen.indexOf(sp.halle) < 0) hallen.push(sp.halle); });
       hallen.sort();
       var halleWahl = h("select", { class: "mg-select" }, hallen.map(function (l) { return h("option", { value: l, text: l }); }));
-      var kmFeld = h("input", { type: "number", step: "0.1", min: "0", inputmode: "decimal", placeholder: "km" });
+      var kmFeld = h("input", { type: "text", inputmode: "decimal", placeholder: "km" });
       if (!hallen.length) box.appendChild(h("p", { class: "meta", style: "margin:0", text: "In dieser Saison steht zu keinem Spiel eine Halle." }));
       else box.appendChild(h("div", { class: "mg-regel-neu" }, [halleWahl, kmFeld,
         h("button", { type: "button", class: "anfrage", text: "Merken", onclick: function () {
-          var v = zahl(kmFeld.value);
+          var v = zahlAbNull(kmFeld.value);
           if (v == null) { meldung("Bitte eine Kilometerzahl eintragen.", "warn"); return; }
           r.halle[halleWahl.value] = v;
           regelnSpeichern(r.liga, r.halle).then(function (ok) {
@@ -4559,10 +4570,10 @@ window.Mitglieder = (function () {
       var d = new Date(sp.beginn);
       var soll = sollBetrag(sp), vor = kmVorschlag(sp);
       function feld(wert, platz, schritt, schluessel) {
-        return h("input", { type: "number", step: schritt, min: "0", inputmode: "decimal",
+        return h("input", { type: "text", inputmode: "decimal",
           value: wert != null ? wert : "", placeholder: platz,
           onchange: function (ev) {
-            var aend = {}; aend[schluessel] = zahl(ev.target.value);
+            var aend = {}; aend[schluessel] = zahlAbNull(ev.target.value);
             speichereEinsatz(sp, aend);
             zeile.classList.toggle("erfasst", (einsaetze[sp.kennung] || {}).verguetung != null);
           },
@@ -4617,23 +4628,23 @@ window.Mitglieder = (function () {
     var gebuehr = sollBetrag(sp);
     var vergangen = d < new Date();
 
-    var km = h("input", { type: "number", step: "0.1", min: "0", inputmode: "decimal",
+    var km = h("input", { type: "text", inputmode: "decimal",
       value: e.km != null ? e.km : "", placeholder: vorschlag ? "~" + vorschlag.km : "km",
-      onchange: function (ev) { speichereEinsatz(sp, { km: zahl(ev.target.value) }); } });
-    var verg = h("input", { type: "number", step: "0.5", min: "0", inputmode: "decimal",
+      onchange: function (ev) { speichereEinsatz(sp, { km: zahlAbNull(ev.target.value) }); } });
+    var verg = h("input", { type: "text", inputmode: "decimal",
       value: e.verguetung != null ? e.verguetung : "", placeholder: gebuehr != null ? "~" + gebuehr : "€",
-      onchange: function (ev) { speichereEinsatz(sp, { verguetung: zahl(ev.target.value) }); } });
-    var ausl = h("input", { type: "number", step: "0.5", min: "0", inputmode: "decimal",
+      onchange: function (ev) { speichereEinsatz(sp, { verguetung: zahlAbNull(ev.target.value) }); } });
+    var ausl = h("input", { type: "text", inputmode: "decimal",
       value: e.auslagen != null ? e.auslagen : "", placeholder: "€",
-      onchange: function (ev) { speichereEinsatz(sp, { auslagen: zahl(ev.target.value) }); } });
+      onchange: function (ev) { speichereEinsatz(sp, { auslagen: zahlAbNull(ev.target.value) }); } });
     var ausf = h("input", { type: "checkbox", onchange: function (ev) { speichereEinsatz(sp, { ausgefallen: ev.target.checked }, true); } });
     ausf.checked = !!e.ausgefallen;
     var ueb = h("input", { type: "checkbox", onchange: function (ev) { speichereEinsatz(sp, { uebergreifend: ev.target.checked }, true); } });
     ueb.checked = !!e.uebergreifend;
     var notiz = h("input", { type: "text", value: e.notiz || "", placeholder: "Notiz",
       onchange: function (ev) { speichereEinsatz(sp, { notiz: ev.target.value.trim() || null }); } });
-    var verpf = h("input", { type: "number", step: "0.5", min: "0", inputmode: "decimal", value: e.verpflegung != null ? e.verpflegung : "", placeholder: (profil.verpflegung_modus || "aus") === "aus" ? "" : "14",
-      onchange: function (ev) { speichereEinsatz(sp, { verpflegung: zahl(ev.target.value) }); } });
+    var verpf = h("input", { type: "text", inputmode: "decimal", value: e.verpflegung != null ? e.verpflegung : "", placeholder: (profil.verpflegung_modus || "aus") === "aus" ? "" : "14",
+      onchange: function (ev) { speichereEinsatz(sp, { verpflegung: zahlAbNull(ev.target.value) }); } });
 
     var b = betragFuer(sp, e);
     // Beleg-Foto direkt aus der Zeile: Kamera oeffnet sich, Bild wird verkleinert hochgeladen
@@ -6666,7 +6677,7 @@ window.Mitglieder = (function () {
         det.open = !!geaendert;
         gruppen[g].forEach(function (p) {
           var a = abw[p.pfad];
-          var feld = h("input", { type: "number", step: "0.01", min: "0",
+          var feld = h("input", { type: "text", inputmode: "decimal",
             value: String(a ? a.wert : p.datei), inputmode: "decimal" });
           var hinweis = h("small", { class: a ? "achtung" : "meta" });
           hinweis.textContent = a
@@ -6705,7 +6716,9 @@ window.Mitglieder = (function () {
                   ? ", schema.sql (v52) ausführen." : ""), "warn");
                 return;
               }
-              kurzMeldung(p.pfad + " = " + n + " ✓", "gut");
+              // euro() statt der nackten Zahl: wer "99,50" eintippt,
+              // soll nicht "= 99.5" zurueckgemeldet bekommen.
+              kurzMeldung(p.pfad + " = " + euro(n) + " ✓", "gut");
               fertig();
             });
           });
@@ -7992,12 +8005,12 @@ window.Mitglieder = (function () {
 
       // ---- Saison, Preis, Schonfrist
       var fSaison = h("input", { type: "text", value: ein.saison || (ctx.daten && ctx.daten.saison) || "", placeholder: "Saison" });
-      var fPreis = h("input", { type: "number", step: "0.5", min: "0", value: ein.preis != null ? ein.preis : "", placeholder: "€" });
+      var fPreis = h("input", { type: "text", inputmode: "decimal", value: ein.preis != null ? ein.preis : "", placeholder: "€" });
       var fFrist = h("input", { type: "number", min: "0", max: "120", value: ein.schonfrist_tage != null ? ein.schonfrist_tage : 21 });
       innen.appendChild(h("div", { class: "mg-regel-neu" }, [fSaison, fPreis, fFrist,
         h("button", { type: "button", class: "anfrage", text: "Merken", onclick: function () {
           speichern(sb.from("abo_einstellungen").upsert({ id: 1, saison: fSaison.value.trim() || null,
-            preis: fPreis.value === "" ? null : parseFloat(fPreis.value),
+            preis: zahlAbNull(fPreis.value),
             schonfrist_tage: parseInt(fFrist.value, 10) || 0, geaendert: new Date().toISOString() }))
             .then(function (r2) {
               if (r2 && r2.error) { meldung(fehlerText(r2.error), "warn"); return; }
