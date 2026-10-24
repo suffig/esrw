@@ -8,50 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:724939f3afcc0c56044aa7e1a0cc563588c8519b@esrw.de
-SEQUENCE:0
-DTSTAMP:20261015T180051Z
-LAST-MODIFIED:20261015T180051Z
-DTSTART:20261017T073000Z
-DTEND:20261017T110000Z
-SUMMARY:SR · U15 BZL: ESV Grizzlys Bergkamen 1b – SpG Neusser EV 1b / GS
- C Moers 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
-  09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Eissporthalle B
- ergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Galeske\, Jon
- as\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
-GEO:51.602578;7.626858
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
- äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
- ergkamen":geo:51.602578,7.626858
-END:VEVENT
-BEGIN:VEVENT
-UID:a75e19003da2791c634367d6712048a05933cb90@esrw.de
-SEQUENCE:0
-DTSTAMP:20261009T175042Z
-LAST-MODIFIED:20261009T175042Z
-DTSTART:20261017T073000Z
-DTEND:20261017T110000Z
-SUMMARY:SR · U15 LL: Lippe Hockey Hamm – Herforder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
-  09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: beta FINANZ Eiss
- portarena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Wa
- rnke\, Christoph\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:beta FINANZ Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 H
- amm
-GEO:51.686934;7.886138
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena 
- Hamm, Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="bet
- a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
-END:VEVENT
-BEGIN:VEVENT
 UID:fc2e15c9a96c905c215bf18918cc596d9e9d5c84@esrw.de
 SEQUENCE:0
 DTSTAMP:20261016T091530Z
@@ -1228,12 +1184,6 @@ GEO:51.602578;7.626858
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
  äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
  ergkamen":geo:51.602578,7.626858
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: ESV Grizzlys Berg
- kamen 1b – TSVE Bielefeld
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:996aa40eef84c4eacf50566c8732c852b3d6846e@esrw.de
