@@ -8,50 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:ac468ea7d3e5f8d73c69868f02ac2365052a0c9f@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261017T063000Z
-DTEND:20261017T100000Z
-SUMMARY:SR · U9 LL Blau: EC Bergisch Land
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
-  08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Blau\nHalle: Eissporthall
- e Solingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Hindle
- y\, David\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
-GEO:51.165932;7.086769
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
- ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
- le Solingen":geo:51.165932,7.086769
-END:VEVENT
-BEGIN:VEVENT
-UID:700a803167100cda2efdc17149fc15bc34e4eaf8@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261017T063000Z
-DTEND:20261017T100000Z
-SUMMARY:SR · U15 LL: SpG EHC Gelsenkirchen / Herner EV 1b – SpG ESV Griz
- zlys Bergkamen / ESC Rheine Young Cats
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
-  08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Emscher-Lippe-Ha
- lle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\nGespa
- nn: Schwarz\, Kjell (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Emscher-Lippe-Halle Gelsenkirchen\, Adenauerallee 118\, 45891 Gels
- enkirchen
-GEO:51.553483;7.073102
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Emscher-Lippe-Halle Gelsen
- kirchen, Adenauerallee 118, 45891 Gelsenkirchen";X-APPLE-RADIUS=100;X-TITL
- E="Emscher-Lippe-Halle Gelsenkirchen":geo:51.553483,7.073102
-END:VEVENT
-BEGIN:VEVENT
 UID:2f469fa79a113800867a82c700f55c5c991d89ab@esrw.de
 SEQUENCE:0
 DTSTAMP:20261006T110047Z
@@ -1250,12 +1206,6 @@ GEO:51.553483;7.073102
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Emscher-Lippe-Halle Gelsen
  kirchen, Adenauerallee 118, 45891 Gelsenkirchen";X-APPLE-RADIUS=100;X-TITL
  E="Emscher-Lippe-Halle Gelsenkirchen":geo:51.553483,7.073102
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: SpG EHC Gels
- enkirchen / Herner EV 1b – Mädchen W.I.N. 2
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:064edbcf7a742df78a9037b9a9b52ad16ff4aec2@esrw.de
