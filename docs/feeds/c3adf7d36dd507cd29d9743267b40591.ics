@@ -8,50 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:05b9ae0c7f7e098eb4a66a293d63324761e6c066@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261018T150000Z
-DTEND:20261018T183000Z
-SUMMARY:LSR · Senioren RLW: Ratinger Ice Aliens – GSC Moers
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
-  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
- lle Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Starke\, 
- Matthias (HSR) / Hornig\, Marius (LSR)\nVergütung lt. Ordnung: 100 €\n\
- nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
-GEO:51.295808;6.834624
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
-  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
- tingen":geo:51.295808,6.834624
-END:VEVENT
-BEGIN:VEVENT
-UID:13d57fcd504a286e93bda56fdd344e965bc7ba15@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261018T150000Z
-DTEND:20261018T183000Z
-SUMMARY:SR · Senioren BZL: EHC Troisdorf 1b – TuS Wiehl 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
-  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: ICEDOME Tr
- oisdorf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Schl
- üter\, Thomas\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esr
- w.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
-GEO:50.811945;7.109233
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
- rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
- isdorf":geo:50.811945,7.109233
-END:VEVENT
-BEGIN:VEVENT
 UID:3a2e3562f5ba777366fc47fdfdcbb738526ab153@esrw.de
 SEQUENCE:0
 DTSTAMP:20261006T110047Z
@@ -959,12 +915,6 @@ GEO:50.811945;7.109233
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
  rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
  isdorf":geo:50.811945,7.109233
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: EHC Troisdorf
-  – TSVE Bielefeld
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:2081356386c9dc8448ceb12ab46a3317a8c6765c@esrw.de
@@ -987,12 +937,6 @@ GEO:51.295808;6.834624
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
   Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
  tingen":geo:51.295808,6.834624
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Ratinger Ic
- e Aliens – Lauterbach Luchse
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:23fa004f2ec7be9e1dfdcaedaa304d25be86d428@esrw.de

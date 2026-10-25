@@ -51,12 +51,6 @@ GEO:51.295808;6.834624
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
   Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
  tingen":geo:51.295808,6.834624
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Ratinger Ic
- e Aliens – Lauterbach Luchse
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:fe1073739e960b2ef33286a64a6ca165d6329ef5@esrw.de

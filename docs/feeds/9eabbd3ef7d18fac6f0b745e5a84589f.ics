@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:c13365c8f3c3317a86ae2e40eddfbc62430f6cd5@esrw.de
-SEQUENCE:0
-DTSTAMP:20261006T110047Z
-LAST-MODIFIED:20261006T110047Z
-DTSTART:20261018T150000Z
-DTEND:20261018T183000Z
-SUMMARY:SR · Senioren BZL: EHC Troisdorf 1b – TuS Wiehl 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
-  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: ICEDOME Tr
- oisdorf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Kuda
- l\, Lars\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/e
- inteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
-GEO:50.811945;7.109233
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
- rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
- isdorf":geo:50.811945,7.109233
-END:VEVENT
-BEGIN:VEVENT
 UID:7718e7b1cd02cb63de4efd42dacac2d32931af29@esrw.de
 SEQUENCE:0
 DTSTAMP:20261007T080044Z
