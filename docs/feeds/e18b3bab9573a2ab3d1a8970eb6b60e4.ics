@@ -9,17 +9,17 @@ REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
 UID:222f9692059278b254077563b3862949245ae8a4@esrw.de
-SEQUENCE:0
-DTSTAMP:20261016T091530Z
-LAST-MODIFIED:20261016T091530Z
+SEQUENCE:1
+DTSTAMP:20261025T100045Z
+LAST-MODIFIED:20261025T100045Z
 DTSTART:20261025T170000Z
 DTEND:20261025T203000Z
 SUMMARY:HSR · Senioren RLW: Dinslakener Kobras – Grefrather EG
 DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 19:00 Uhr\nTreff
  punkt: 18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
- porthalle Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Kr
- atschmar\, Jocelyn (LSR) / Störmann\, Manuel (LSR)\nVergütung lt. Ordnun
- g: 100 €\n\nQuelle: https://www.esrw.de/einteilungen.html
+ porthalle Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Br
+ aun\, Benjamin (LSR) / Störmann\, Manuel (LSR)\nVergütung lt. Ordnung: 1
+ 00 €\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

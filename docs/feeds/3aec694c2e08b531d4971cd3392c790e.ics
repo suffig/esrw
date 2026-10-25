@@ -73,6 +73,34 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
  reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
 END:VEVENT
 BEGIN:VEVENT
+UID:e0fdce5afc7097407b95b8e526736d77f9b0f420@esrw.de
+SEQUENCE:0
+DTSTAMP:20261025T100045Z
+LAST-MODIFIED:20261025T100045Z
+DTSTART:20261025T170000Z
+DTEND:20261025T203000Z
+SUMMARY:LSR · Senioren RLW: Dinslakener Kobras – Grefrather EG
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
+  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
+ lle Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Licau\, 
+ Sebastian (HSR) / Störmann\, Manuel (LSR)\nVergütung lt. Ordnung: 100 
+ €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
+GEO:51.574578;6.735361
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
+ m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
+ inslaken":geo:51.574578,6.735361
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Dinslakener
+  Kobras – Grefrather EG
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:33b35d9d970ef8bb832ddbe563cd0f398ad4fd94@esrw.de
 SEQUENCE:0
 DTSTAMP:20261023T143044Z
