@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:62e5422033e9fbb170dab3f2cd548557cdecf049@esrw.de
-SEQUENCE:1
-DTSTAMP:20261011T114528Z
-LAST-MODIFIED:20261011T114528Z
-DTSTART:20261018T114500Z
-DTEND:20261018T151500Z
-SUMMARY:SR · U17 I: Kölner Junghaie – Krefelder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:45 Uhr\nTreffpunkt:
-  13:45 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Kölnarena 2\nAdr
- esse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Pluschkell\, Julian\
- n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
-GEO:50.937979;6.98935
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
- r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
- .937979,6.98935
-END:VEVENT
-BEGIN:VEVENT
 UID:6030d2258228ee7209521996e072c016f6b30c35@esrw.de
 SEQUENCE:1
 DTSTAMP:20261011T114528Z
