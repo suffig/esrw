@@ -919,33 +919,6 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
  uss":geo:51.175806,6.680258
 END:VEVENT
 BEGIN:VEVENT
-UID:a5c2fd3cd6b5af8bdc64c84fc947841371af7720@esrw.de
-SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261026T161500Z
-DTEND:20261026T194500Z
-SUMMARY:SR · U15 RLB: Kölner Junghaie 1b – Düsseldorfer EG 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:15 Uhr\nTreffpunkt:
-  17:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Kölnarena 2\nA
- dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Wunsch\, Philipp\n
- \nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
-GEO:50.937979;6.98935
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
- r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
- .937979,6.98935
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB: Kölner Junghaie 
- 1b – Düsseldorfer EG 1b
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:9df258fce40c4da03da7e38ee70c02f69ef8d64b@esrw.de
 SEQUENCE:0
 DTSTAMP:20261018T091526Z
