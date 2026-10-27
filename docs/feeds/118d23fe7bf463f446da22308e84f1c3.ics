@@ -9,17 +9,17 @@ REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
 UID:6f2c7c218452fe0cc13bf590440fd340bab57f08@esrw.de
-SEQUENCE:0
-DTSTAMP:20261023T143044Z
-LAST-MODIFIED:20261023T143044Z
+SEQUENCE:1
+DTSTAMP:20261027T114529Z
+LAST-MODIFIED:20261027T114529Z
 DTSTART:20261030T180000Z
 DTEND:20261030T213000Z
 SUMMARY:SR · Senioren BZL: Herforder EV 1b – Neusser EV 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
   19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eishalle I
- m Kleinen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Berge
- r\, Eugen\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/
- einteilungen.html
+ m Kleinen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Kelle
+ r\, Alexander\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw
+ .de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
