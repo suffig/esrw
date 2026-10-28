@@ -35,4 +35,31 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL: KEC "Die Haie"
   1c – DSC Krefeld
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:22533c0e28b3ba470d63e509ec02873cb2aea0ec@esrw.de
+SEQUENCE:0
+DTSTAMP:20261028T120056Z
+LAST-MODIFIED:20261028T120056Z
+DTSTART:20261101T060000Z
+DTEND:20261101T093000Z
+SUMMARY:SR · U15 BZL: Eisadler Dortmund 1b – TSVE Bielefeld
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Eissportzentrum
+  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Kalischke\
+ , Christian (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: Eisadler Dortmund
+  1b – TSVE Bielefeld
+END:VALARM
+END:VEVENT
 END:VCALENDAR
