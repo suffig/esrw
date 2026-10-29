@@ -1438,6 +1438,89 @@ def test_spielschluessel():
            "; ".join(verdaechtig) if verdaechtig else "")
 
 
+def test_statistik_zaehlt_einmal():
+    """Die Statistik zaehlt Spiele, nicht Historien-Eintraege.
+
+    Gemeldet: im Archiv stehen 13 Spiele, die Liste darunter zeigt 12.
+    Die Historie ist nach Quelle geschluesselt, und zwei Quellen
+    koennen dasselbe Spiel meinen - nach einer Verlegung, oder weil
+    der Betreiber sie ueber "Doppelte Spiele" zusammengelegt hat. Die
+    Kachelzahl zaehlte beide, die Liste fuehrte sie ueber die Kennung
+    zu einer Zeile zusammen.
+
+    Dieselbe Verwechslung wie in den Fassungen 189, 191 und 200.
+    """
+    print("\nStatistik zaehlt Spiele, nicht Eintraege")
+    from datetime import datetime
+
+    B = "U17 I: Heim - Gast"
+    PAARUNG = "Heim \u2013 Gast"
+    STAND = datetime.fromisoformat("2026-10-29T12:00:00+01:00")
+    WER = E.personen_schluessel("Melchert, Philip")
+
+    def eintrag(iso):
+        return {"beginn": iso, "begegnung": B, "liga": "U17 I",
+                "paarung": PAARUNG, "halle": "Eishalle",
+                "besetzung": {"(L)SR": ["Melchert, Philip"]}}
+
+    frueh = "2026-10-25T08:30:00+02:00"
+    spaet = "2026-10-25T09:30:00+02:00"
+    historie = {frueh + "|" + B: eintrag(frueh), spaet + "|" + B: eintrag(spaet)}
+
+    # Der Betreiber hat die spaetere Fassung auf die fruehere gelegt.
+    reg = {"bekannt": {}, "neu": [], "merkmal": {}, "fortsetzung": {},
+           "zusammen": {spaet + "|" + PAARUNG: frueh + "|" + PAARUNG}}
+
+    werte, _ = E.statistik_aus_historie(historie, STAND, reg)
+    s = werte[WER]
+    ids = [z["id"] for z in s["spiele_saison"]]
+
+    pruefe(s["gesamt"] == 1, "zusammengelegte Eintraege zaehlen einmal",
+           "gesamt ist %r" % s["gesamt"])
+    pruefe(len(set(ids)) == 1, "und tragen dieselbe Kennung",
+           "ids sind %r" % sorted(set(ids)))
+    # Die Liste behaelt beide Zeilen - welche gilt, entscheidet die App
+    # beim Zusammenfuehren, sie hat die vollstaendigeren Angaben.
+    pruefe(len(ids) == 2, "die Liste fuehrt beide Zeilen", "sind %d" % len(ids))
+
+    # Was mitzaehlt, muss auch mitzaehlen: Rollen, Ligen, Hallen,
+    # Wochentage und die Saisonzahl haengen an derselben Schleife.
+    pruefe(sum(s["rollen"].values()) == 1, "die Rollen zaehlen einmal",
+           repr(dict(s["rollen"])))
+    pruefe(sum(s["ligen"].values()) == 1, "die Ligen auch", repr(dict(s["ligen"])))
+    pruefe(sum(s["hallen"].values()) == 1, "die Hallen auch", repr(dict(s["hallen"])))
+    pruefe(sum(s["wochentage"].values()) == 1, "die Wochentage auch",
+           repr(dict(s["wochentage"])))
+    pruefe(s["saison"] == 1, "und die Saisonzahl", "ist %r" % s["saison"])
+
+    # Zwei wirklich verschiedene Spiele bleiben zwei - sonst waere die
+    # Pruefung oben auch gruen, wenn alles zu einem zusammenfiele.
+    anderes = "2026-10-26T18:00:00+02:00"
+    h2 = dict(historie)
+    h2[anderes + "|BL: A - B"] = {"beginn": anderes, "begegnung": "BL: A - B",
+                                  "liga": "BL", "paarung": "A \u2013 B",
+                                  "halle": "Andere Halle",
+                                  "besetzung": {"(L)SR": ["Melchert, Philip"]}}
+    werte2, _ = E.statistik_aus_historie(h2, STAND, reg)
+    pruefe(werte2[WER]["gesamt"] == 2, "zwei verschiedene Spiele bleiben zwei",
+           "gesamt ist %r" % werte2[WER]["gesamt"])
+
+    # Ohne Registratur gibt es nichts zusammenzufuehren - dann zaehlen
+    # zwei Eintraege auch zwei.
+    werte3, _ = E.statistik_aus_historie(historie, STAND, None)
+    pruefe(werte3[WER]["gesamt"] == 2,
+           "ohne Registratur bleibt es bei zwei Eintraegen",
+           "gesamt ist %r" % werte3[WER]["gesamt"])
+
+    # Die Zaehlung darf die Registratur nicht veraendern: beim Zaehlen
+    # laufen auch alte Saisons durch, und die gehoeren nicht als neue
+    # Kennungen in die Datenbank.
+    reg2 = {"bekannt": {}, "neu": [], "merkmal": {}, "fortsetzung": {}, "zusammen": {}}
+    E.statistik_aus_historie(historie, STAND, reg2)
+    pruefe(not reg2["neu"], "die Zaehlung traegt nichts in die Registratur ein",
+           "%d Eintraege" % len(reg2["neu"]))
+
+
 def test_archivkennung():
     """Die Saisonlisten in archiv.json tragen die Kennung.
 
@@ -1650,7 +1733,7 @@ def main():
                  test_rechnungsvorlage, test_sicherung, test_erinnerungszeit, test_zurueckspielen, test_obmann_rechte,
                  test_kalenderwuensche, test_vereinsnamen, test_seitenumbau,
                  test_funktionstexte, test_dunkles_thema, test_kennungen, test_verlegt,
-                 test_archivkennung, test_spielschluessel, test_blattfokus, test_netzstand,
+                 test_archivkennung, test_statistik_zaehlt_einmal, test_spielschluessel, test_blattfokus, test_netzstand,
                  test_push_nachrichten, test_push_erinnerungen,
                  test_tresor):
         test()

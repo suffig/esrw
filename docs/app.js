@@ -2885,7 +2885,20 @@
       (archivDaten ? Promise.resolve(archivDaten) : hole("archiv.json"))
         .then(function (a) {
           archivDaten = a;
-          var eigene = ((a.personen && a.personen[p.slug]) || []).slice();
+          // Ueber die Kennung zusammenfuehren, wie archivMerge() es
+          // tut: zwei Zeilen desselben Spiels - verlegt oder vom
+          // Betreiber zusammengelegt - sind eine Zeile. Ohne das
+          // zeigte diese Liste eine mehr als die Archivseite, und
+          // beide heissen "Archiv".
+          var jeKennung = {};
+          ((a.personen && a.personen[p.slug]) || []).forEach(function (e) {
+            var k = e.id || (e.beginn + "|" + (e.paarung || ""));
+            var alt = jeKennung[k];
+            // Die spaetere Fassung gewinnt - bei einer Verlegung ist
+            // das die neue Zeit.
+            if (!alt || (e.beginn || "") > (alt.beginn || "")) jeKennung[k] = e;
+          });
+          var eigene = Object.keys(jeKennung).map(function (k) { return jeKennung[k]; });
           var dateien = a.dateien || {};
           // Eingefrorene Saisons (docs/archiv/<saison>.json) dazuladen
           return Promise.all(Object.keys(dateien).map(function (sn) {

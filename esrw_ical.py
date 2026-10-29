@@ -649,6 +649,15 @@ def statistik_aus_historie(historie, stand, kennungen=None):
             continue
         saison = saison_von(beginn)
         paare = rollen_fuer(eintrag.get("besetzung") or {})
+        # Welches Spiel das ist - nicht, welcher Eintrag. Die Historie
+        # ist nach Quelle geschluesselt, und zwei Quellen koennen
+        # dasselbe Spiel meinen: nach einer Verlegung, oder weil der
+        # Betreiber sie zusammengelegt hat. Ohne das zaehlt die Kachel
+        # 13, waehrend die Liste darunter 12 zeigt.
+        kennung = (zusammen_fuer(kennungen, eintrag["beginn"] + "|" + eintrag.get("paarung", ""))
+                   if eintrag.get("eingefroren")
+                   else kennung_lesen(kennungen, eintrag["beginn"], eintrag.get("begegnung", ""),
+                                      eintrag["beginn"] + "|" + eintrag.get("paarung", "")))
         for name, rolle in paare:
             schluessel = personen_schluessel(name)
             if not schluessel:
@@ -658,21 +667,29 @@ def statistik_aus_historie(historie, stand, kennungen=None):
                 "ligen": Counter(), "hallen": Counter(),
                 "partner": Counter(), "partner_namen": {}, "je_saison": Counter(),
                 "erste": None, "letzte": None, "spiele_saison": [],
-                "schreibweisen": Counter(), "wochentage": Counter()})
-            s["gesamt"] += 1
-            # Ueber alle Saisons, nicht nur die laufende: an welchen Tagen
-            # jemand pfeift, sieht man erst nach ein paar Jahren
-            s["wochentage"][beginn.weekday()] += 1
-            s["schreibweisen"][name] += 1
-            s["je_saison"][saison] += 1
-            if saison == jetzt_saison:
-                s["saison"] += 1
-            # Mit wem man am haeufigsten im Gespann stand
-            for anderer, _ in paare:
-                k2 = personen_schluessel(anderer)
-                if k2 and k2 != schluessel:
-                    s["partner"][k2] += 1
-                    s["partner_namen"].setdefault(k2, anderer)
+                "schreibweisen": Counter(), "wochentage": Counter(),
+                "_gesehen": set()})
+            # Dasselbe Spiel aus zwei Quellen zaehlt einmal. Die Liste
+            # unten bekommt trotzdem beide Zeilen: welche davon gilt,
+            # entscheidet die App beim Zusammenfuehren ueber die
+            # Kennung - sie hat die vollstaendigeren Angaben.
+            doppelt = kennung in s["_gesehen"]
+            s["_gesehen"].add(kennung)
+            if not doppelt:
+                s["gesamt"] += 1
+                # Ueber alle Saisons, nicht nur die laufende: an welchen Tagen
+                # jemand pfeift, sieht man erst nach ein paar Jahren
+                s["wochentage"][beginn.weekday()] += 1
+                s["schreibweisen"][name] += 1
+                s["je_saison"][saison] += 1
+                if saison == jetzt_saison:
+                    s["saison"] += 1
+                # Mit wem man am haeufigsten im Gespann stand
+                for anderer, _ in paare:
+                    k2 = personen_schluessel(anderer)
+                    if k2 and k2 != schluessel:
+                        s["partner"][k2] += 1
+                        s["partner_namen"].setdefault(k2, anderer)
             # Fuer die Saisonlisten auf der Webseite - esrw.de zeigt nur
             # wenige Tage zurueck, das Archiv alle Saisons.
             if saison != jetzt_saison:
@@ -685,15 +702,12 @@ def statistik_aus_historie(historie, stand, kennungen=None):
                 "halle": eintrag.get("halle", ""),
                 "rolle": rolle,
                 "system": len(rollen_fuer(eintrag.get("besetzung") or {})),
-                # Wie in archiv_in_db: eingefrorene Saisons tragen ihre
-                # Paarung auf der Platte, alles andere geht ueber die
-                # Registratur - samt dem, was der Betreiber zusammengelegt
-                # hat.
-                "id": zusammen_fuer(kennungen, eintrag["beginn"] + "|" + eintrag.get("paarung", ""))
-                      if eintrag.get("eingefroren")
-                      else kennung_fuer(kennungen, eintrag["beginn"], eintrag.get("begegnung", ""),
-                                        eintrag["beginn"] + "|" + eintrag.get("paarung", "")),
+                # Dieselbe Kennung, nach der oben gezaehlt wird - sonst
+                # laufen Zahl und Liste wieder auseinander.
+                "id": kennung,
             })
+            if doppelt:
+                continue
             s["rollen"][rolle] += 1
             if eintrag.get("liga"):
                 s["ligen"][eintrag["liga"]] += 1
@@ -1319,6 +1333,22 @@ def quelle_fuer(reg, beginn_iso, begegnung):
     if not reg:
         return quelle
     return (reg.get("fortsetzung") or {}).get(quelle, quelle)
+
+
+def kennung_lesen(reg, beginn_iso, begegnung, vorschlag):
+    """Dieselbe Antwort wie kennung_fuer(), ohne Nebenwirkung.
+
+    kennung_fuer() traegt eine unbekannte Quelle in die Registratur
+    ein - richtig beim Bauen der Einteilungen, falsch beim blossen
+    Zaehlen: dort laufen auch alte Saisons durch, und die sollen nicht
+    als neue Kennungen in der Datenbank landen.
+    """
+    if not reg:
+        return zusammen_fuer(reg, vorschlag)
+    quelle = quelle_fuer(reg, beginn_iso, begegnung)
+    if quelle in reg["bekannt"]:
+        return zusammen_fuer(reg, reg["bekannt"][quelle])
+    return zusammen_fuer(reg, vorschlag)
 
 
 def kennung_fuer(reg, beginn_iso, begegnung, vorschlag):
