@@ -8,52 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:6e40bc6c7d357b1ac5ba37f6402a1d095b7c4ac6@esrw.de
-SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261023T171500Z
-DTEND:20261023T204500Z
-SUMMARY:LSR · U20 RL: EHC Troisdorf – Neusser EV
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
-  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: ICEDOME Troisdor
- f\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Schlüter\
- , Thomas (HSR) / Schöche\, Gian-Carlo (LSR)\n\nQuelle: https://www.esrw.d
- e/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
-GEO:50.811945;7.109233
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
- rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
- isdorf":geo:50.811945,7.109233
-END:VEVENT
-BEGIN:VEVENT
-UID:872f0f089c586ee55aef1e408747ee55452cff4f@esrw.de
-SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261023T171500Z
-DTEND:20261023T204500Z
-SUMMARY:HSR · Senioren RLW: ESV Bergisch Gladbach – Lauterbach Luchse
-DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:15 Uhr\nTreff
- punkt: 19:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
- porthalle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch G
- ladbach\nGespann: Pluschkell\, Julian (LSR) / Steensen\, Robin (LSR)\nVerg
- ütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/einteilungen.ht
- ml
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
- ch Gladbach
-GEO:50.967548;7.135355
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
- dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
- TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-END:VEVENT
-BEGIN:VEVENT
 UID:2ac4ead78b4794cf6a6a3704aab3e23ab26b2854@esrw.de
 SEQUENCE:0
 DTSTAMP:20261016T090052Z
@@ -899,12 +853,6 @@ GEO:50.967548;7.135355
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
  dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
  TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: ESV Bergisch
-  Gladbach 1b – ESV Grizzlys Bergkamen 1c
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:e790ee05261f40d82776232c05c06dfb4b03cf8c@esrw.de
@@ -927,12 +875,6 @@ GEO:50.811945;7.109233
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
  rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
  isdorf":geo:50.811945,7.109233
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: EHC Troisdorf
-  – Soester EG
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:f68c7cb7ada098a65fc577728bbdc0fcf48f31a6@esrw.de
