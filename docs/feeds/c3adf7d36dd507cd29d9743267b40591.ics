@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:61eb24be242abb962482c13729c638d8e22d832f@esrw.de
-SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261024T143000Z
-DTEND:20261024T180000Z
-SUMMARY:SR · Senioren LL: ESV Grizzlys Bergkamen 1b – Soester EG
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
-  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissporthal
- le Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Steeg\, C
- edric\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/eint
- eilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
-GEO:51.602578;7.626858
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
- äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
- ergkamen":geo:51.602578,7.626858
-END:VEVENT
-BEGIN:VEVENT
 UID:9c69f1fc6eed03efed5364173953279a036794d0@esrw.de
 SEQUENCE:0
 DTSTAMP:20261016T090052Z
