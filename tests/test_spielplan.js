@@ -438,6 +438,86 @@ gleich(P.planFilter([], {}).length, 0, "leere Liste");
 gleich(P.planFilter(null, {}).length, 0, "gar keine Liste");
 
 
+// ------------------------------------------------------ Anleitung
+
+// Dieselbe Frage auf zwei Geraeten stellen. Die Kennung steht in
+// navigator.userAgent, und die Attrappe laesst sie sich setzen.
+var IPHONE_UA = "Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15";
+var ANDROID_UA = "Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 Chrome/131";
+function mitGeraetTour(kennung, fn) {
+  var vorher = navigator.userAgent;
+  Object.defineProperty(navigator, "userAgent", { value: kennung, configurable: true });
+  try { return fn(); }
+  finally { Object.defineProperty(navigator, "userAgent", { value: vorher, configurable: true }); }
+}
+
+console.log("\nAnleitung für den ersten Besuch");
+
+// Wer zum ersten Mal hereinschaut, soll schnell verstehen, worum es
+// geht - nicht alles lesen, was die App kann. Die ausfuehrliche
+// Fassung steht unter Mehr -> Anleitung.
+var ersterBesuch = P.tourBauen("start");
+var vollstaendig = P.tourBauen("alles");
+
+pruefe(ersterBesuch.length <= 4, "der erste Besuch bekommt hoechstens vier Schritte",
+       ersterBesuch.length + " Schritte");
+pruefe(vollstaendig.length > ersterBesuch.length,
+       "unter Mehr steht die ausfuehrliche Fassung",
+       vollstaendig.length + " Schritte");
+
+// Kein Schritt darf eine Textwand sein - wer das sieht, klickt weg.
+var langeSchritte = ersterBesuch.filter(function (s) { return (s[2] || "").length > 230; });
+pruefe(!langeSchritte.length, "kein Schritt ist laenger als 230 Zeichen",
+       langeSchritte.map(function (s) { return s[1] + "=" + s[2].length; }).join(", "));
+
+// Jeder Schritt braucht Symbol, Titel und Text - sonst steht die
+// Karte halb leer da.
+var unvollstaendig = ersterBesuch.filter(function (s) { return !s[0] || !s[1] || !s[2]; });
+pruefe(!unvollstaendig.length, "jeder Schritt hat Symbol, Titel und Text",
+       String(unvollstaendig.length));
+
+// Der eine Schritt, ohne den nichts geht: den Namen waehlen.
+var nennen = ersterBesuch.map(function (s) { return s[1]; }).join(" | ");
+pruefe(/Namen/i.test(nennen), "der Namensschritt fehlt nicht", nennen);
+
+// Und sie muss auf beiden Geraeten das Richtige sagen. Vorher stand
+// dort zweimal nur der iPhone-Weg - auf Android fuehrte das ins
+// Leere, genau wie der Kalenderknopf.
+var aufApple2 = mitGeraetTour(IPHONE_UA, function () { return P.tourBauen("start"); });
+var aufAndroid2 = mitGeraetTour(ANDROID_UA, function () { return P.tourBauen("start"); });
+var appleText = aufApple2.map(function (s) { return s[2]; }).join(" ");
+var androidText = aufAndroid2.map(function (s) { return s[2]; }).join(" ");
+
+pruefe(/Safari/.test(appleText), "auf dem iPhone steht der Safari-Weg");
+pruefe(!/Safari/.test(androidText), "auf Android steht er nicht");
+pruefe(/Chrome/.test(androidText), "dort steht der Chrome-Weg");
+pruefe(/Google-Kalender/.test(androidText), "und der Google-Kalender");
+pruefe(!/Google-Kalender/.test(appleText), "auf dem iPhone nicht");
+
+
+// --------------------------------------------------- Kalender-Abo
+
+console.log("\nKalender abonnieren");
+
+// Gemeldet: auf Android tat der Knopf nichts. Er trug webcal: als
+// Adresse - das verstehen iOS und macOS, Android nicht: Chrome findet
+// keine App dafuer und tut gar nichts, ohne Fehler und ohne Meldung.
+var aufApple = mitGeraetTour(IPHONE_UA, function () { return P.aboAdresse("melchert-philip"); });
+var aufAndroid = mitGeraetTour(ANDROID_UA, function () { return P.aboAdresse("melchert-philip"); });
+
+pruefe(aufApple.indexOf("webcal:") === 0, "auf dem iPhone bleibt es bei webcal:", aufApple.slice(0, 40));
+pruefe(aufAndroid.indexOf("https://calendar.google.com/") === 0,
+       "auf Android fuehrt der Knopf zum Google-Kalender", aufAndroid.slice(0, 50));
+pruefe(aufAndroid.indexOf("webcal") < 0,
+       "und nicht mehr auf ein Schema, das Android nicht kennt", aufAndroid.slice(0, 60));
+
+// Die Feed-Adresse muss im Parameter stecken, sonst abonniert Google
+// nichts - und zwar kodiert, weil sie selbst eine Adresse ist.
+pruefe(aufAndroid.indexOf("cid=https%3A%2F%2F") > 0,
+       "die Feed-Adresse steckt kodiert im Parameter", aufAndroid.slice(0, 80));
+pruefe(aufAndroid.indexOf(".ics") > 0, "und zeigt auf die Kalenderdatei");
+
+
 // ------------------------------------------------------------- Suche
 
 console.log("\nSuche: was sie findet");

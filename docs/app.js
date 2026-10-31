@@ -629,6 +629,19 @@
     var name = tresorMarken[slug] || slug;
     return protokoll + "//" + basis.replace(/^https?:\/\//, "") + "feeds/" + name + ".ics";
   }
+  // Wohin der Knopf "Im Kalender abonnieren" fuehrt.
+  //
+  // webcal: verstehen iOS und macOS - sie oeffnen die Kalender-App und
+  // fragen nach. Android kennt das Schema nicht: Chrome findet keine
+  // App dafuer und tut gar nichts, ohne Fehler und ohne Meldung. Dort
+  // nimmt Google Kalender eine gewoehnliche Adresse entgegen und fragt
+  // dasselbe. Wer einen anderen Kalender benutzt, nimmt den Knopf
+  // daneben ("Einmalig laden") - der laedt die Datei und geht ueberall.
+  function aboAdresse(slug) {
+    if (!/Android/i.test(navigator.userAgent)) return feedUrl(slug, "webcal:");
+    return "https://calendar.google.com/calendar/r?cid="
+      + encodeURIComponent(feedUrl(slug, "https:"));
+  }
   // Kann vor dem ersten Laden gefragt werden - dann gibt es noch niemanden
   function personMit(slug) { return daten && daten.personen ? daten.personen.filter(function (p) { return p.slug === slug; })[0] : null; }
   function tagVon(iso) { return new Date(iso).toDateString(); }
@@ -2898,14 +2911,31 @@
             // das die neue Zeit.
             if (!alt || (e.beginn || "") > (alt.beginn || "")) jeKennung[k] = e;
           });
-          var eigene = Object.keys(jeKennung).map(function (k) { return jeKennung[k]; });
+          var eigene = Object.keys(jeKennung).filter(function (k) {
+            // Dieselbe Regel wie archivKorrigieren(): ausgeblendete
+            // Spiele sind weg, und wer nach einer Gespann-Korrektur
+            // nicht mehr dabei ist, sieht sein abgegebenes Spiel nicht
+            // mehr in der eigenen Liste. Die stuendliche Datei weiss
+            // davon nichts - die Korrekturen stehen in der Datenbank.
+            if (istAusgeblendet(k)) return false;
+            return gespannGehoert(k, p.slug) !== false;
+          }).map(function (k) { return jeKennung[k]; });
           var dateien = a.dateien || {};
           // Eingefrorene Saisons (docs/archiv/<saison>.json) dazuladen
           return Promise.all(Object.keys(dateien).map(function (sn) {
             return hole(dateien[sn]).then(function (d) {
               (d.spiele || []).forEach(function (z) { var ich = (z[4] || []).filter(function (b) { return b[1] === p.slug; })[0]; if (ich) eigene.push({ saison: sn, beginn: z[0], liga: z[1], paarung: z[2], halle: z[3], rolle: ich[2], system: z[4].length }); });
             }).catch(function () {});
-          })).then(function () { eigene.sort(function (x, y) { return x.beginn < y.beginn ? 1 : -1; }); rendern(eigene); });
+          })).then(function () {
+            eigene.sort(function (x, y) { return x.beginn < y.beginn ? 1 : -1; });
+            // Was dasteht, steht auch im Titel. Vorher nannte er
+            // statistik.gesamt aus der stuendlichen Datei, und die
+            // kennt weder Korrekturen noch Zusammenlegungen - so kamen
+            // "13 Spiele" ueber einer Liste mit zwoelf zustande.
+            el("saison-titel").textContent = "Alle " + eigene.length
+              + (eigene.length === 1 ? " Spiel" : " Spiele") + " im Archiv (filterbar unter Mehr → Archiv)";
+            rendern(eigene);
+          });
         })
         .catch(function () { liste.textContent = "Archiv konnte nicht geladen werden."; });
     };
@@ -2948,7 +2978,7 @@
     pinKnopf(p); kalenderSpalte();
     // Die Adresse der Kalenderdatei haengt am Schluessel - erst ausrechnen
     feedBereit(p.slug).then(function () {
-      el("abo").href = feedUrl(p.slug, "webcal:");
+      el("abo").href = aboAdresse(p.slug);
       el("laden").onclick = function () { location.href = feedUrl(p.slug, location.protocol); };
     });
     zeigeHeld(p);
@@ -4324,7 +4354,26 @@
   // fuenfte Feld eines Schritts ist der Funktionsschluessel, den er
   // braucht; fehlt es, gilt der Schritt immer.
   function tourBauen(name) {
-    var start = [
+    var android = /Android/i.test(navigator.userAgent);
+    // Vier Schritte fuer den ersten Besuch. Wer zum ersten Mal
+    // hereinschaut, will wissen, was das hier ist und was er tun muss
+    // - nicht alles, was die App kann. Das Ausfuehrliche steht unter
+    // Mehr -> Anleitung.
+    var kurz = [
+      ["i-home", "Deine Einteilungen",
+       "Alle deine Spiele von esrw.de: Halle, Treffpunkt, Route und Gespann. Immer aktuell, auch ohne Netz."],
+      ["i-users", "Tippe auf deinen Namen",
+       "Unten in der Liste. Danach zeigt „Start“ deine Spiele.\nÄndern kannst du das jederzeit über den Kreis oben rechts."],
+      ["i-cal", "Aufs Handy holen",
+       android
+         ? "Im Chrome-Menü „App installieren“ – dann liegt sie wie jede andere App auf dem Bildschirm.\nAuf „Start“ trägt „Im Kalender abonnieren“ deine Spiele in den Google-Kalender ein, mit Wecker zum Treffpunkt."
+         : "In Safari auf „Teilen“ und „Zum Home-Bildschirm“ – dann liegt sie wie jede andere App auf dem Bildschirm.\nAuf „Start“ trägt „Im Kalender abonnieren“ deine Spiele in den Kalender ein, mit Wecker zum Treffpunkt.",
+       "#", "Zur Startseite"],
+      ["i-check", "Das war's",
+       "Unten findest du Start, Spielplan, Kollegen und Mehr.\nAusführlicher steht alles unter Mehr → Anleitung. Ein Konto brauchst du nur für "
+         + funktionsText([["abrechnung", "die Abrechnung"], ["push", "Push"], ["notizen", "Notizen"]], "und") + "."]
+    ];
+    var ausfuehrlich = [
       ["i-home", "Willkommen bei den Einteilungen", "Diese App zeigt dir deine Schiedsrichter-Einteilungen von esrw.de, immer aktuell, mit Halle, Treffpunkt, Route und Gespann. Ein paar kurze Schritte, dann bist du startklar."],
       ["i-users", "Deinen Namen wählen", "Tippe unten in der Liste auf deinen Namen. Das ist dein Profil auf diesem Gerät, „Start“ zeigt dann deine Spiele.\nKollegen ansehen geht jederzeit über die Lupe oben."],
       ["i-cal", "Kalender abonnieren", "Auf „Start“ findest du die Kalender-Karte: „Im Kalender abonnieren“ legt ein Abo im iPhone-Kalender an. Neue oder geänderte Spiele kommen von allein aufs Handy, mit Wecker zum Treffpunkt.\nWas im Termin steht und wann der Wecker klingelt, stellst du dort unter „Anpassen“ selbst ein.", "#", "Zur Startseite"],
@@ -4347,7 +4396,11 @@
       ["i-sun", "Alles anpassbar", "Einstellungen → Startseite: welche Bausteine auf „Start“ stehen. Bereiche, die du nicht brauchst, blendest du aus. Schrift, Farbe und Karten-App wandern mit dem Konto auf jedes Gerät.", "#einstellungen", "Einstellungen öffnen"],
       ["i-bell", "Info und Termine", "Ankündigungen vom Betreiber unter Mehr → Info. Termine (Lehrgang, Sitzung) kannst du zu- oder absagen; am Vortag kommt eine Erinnerung.", "#mitglieder/info", "Zu Info", "info"]
     ];
-    var roh = name === "alles" ? start.concat(konto) : name === "konto" ? konto : start;
+    // Der erste Besuch bekommt die kurze Fassung, "Mehr -> Anleitung"
+    // die vollstaendige - dort schlaegt man nach, hier faengt man an.
+    var roh = name === "alles" ? ausfuehrlich.concat(konto)
+            : name === "konto" ? konto
+            : kurz;
     return roh.filter(function (sch) { return !sch[5] || funktion(sch[5]); });
   }
   // Anleitung und Filterblatt sperren beide das Scrollen. Mit einem
@@ -6839,7 +6892,7 @@
       archivMerge: archivMerge, archivKorrigieren: archivKorrigieren,
       archivSaisonAus: archivSaisonAus,
       zeitraum: zeitraum, tagTitel: tagTitel, ligaGruppe: ligaGruppe,
-      planFilter: planFilter,
+      planFilter: planFilter, aboAdresse: aboAdresse, tourBauen: tourBauen,
       suchHallen: suchHallen, suchVereine: suchVereine,
       suchSpiele: suchSpiele, suchSeiten: suchSeiten,
       rechnerErgebnis: rechnerErgebnis, restSekunden: restSekunden,
