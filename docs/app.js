@@ -625,10 +625,28 @@
   function suchtextVon(s) { return ohneZeichen(s) + " " + ausgeschrieben(s); }
   function uhr(d) { return d.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" }); }
   function datumKurz(d) { return wochentag[d.getDay()] + ". " + d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }); }
+  // Woher die Kachel "Insgesamt" ihre Zahl hat. Ohne erstes Spiel
+  // bleibt es bei "aus dem Archiv" - ein "seit ?" sagt niemandem was.
+  function seitText(iso) {
+    if (!iso) return "aus dem Archiv";
+    var d = new Date(iso);
+    if (isNaN(d.getTime())) return "aus dem Archiv";
+    return "seit " + d.toLocaleDateString("de-DE", { month: "long", year: "numeric" });
+  }
   function feedUrl(slug, protokoll) {
     var name = tresorMarken[slug] || slug;
     return protokoll + "//" + basis.replace(/^https?:\/\//, "") + "feeds/" + name + ".ics";
   }
+  // Was auf diesem Geraet gilt. Die Saetze standen an fuenf Stellen
+  // und sprachen ueberall vom iPhone - auf Android war die Haelfte
+  // davon schlicht falsch.
+  function istAndroid() { return /Android/i.test(navigator.userAgent); }
+  function appAblegen() {
+    return istAndroid()
+      ? "im Chrome-Menü „App installieren“"
+      : "in Safari auf „Teilen“ → „Zum Home-Bildschirm“";
+  }
+  function kalenderName() { return istAndroid() ? "Google-Kalender" : "iPhone-Kalender"; }
   // Wohin der Knopf "Im Kalender abonnieren" fuehrt.
   //
   // webcal: verstehen iOS und macOS - sie oeffnen die Kalender-App und
@@ -638,7 +656,7 @@
   // dasselbe. Wer einen anderen Kalender benutzt, nimmt den Knopf
   // daneben ("Einmalig laden") - der laedt die Datei und geht ueberall.
   function aboAdresse(slug) {
-    if (!/Android/i.test(navigator.userAgent)) return feedUrl(slug, "webcal:");
+    if (!istAndroid()) return feedUrl(slug, "webcal:");
     return "https://calendar.google.com/calendar/r?cid="
       + encodeURIComponent(feedUrl(slug, "https:"));
   }
@@ -1280,7 +1298,7 @@
       text.textContent = "Du hast Mitteilungen abgelehnt. Wieder erlauben in Einstellungen → Apps → Einteilungen → Mitteilungen.";
     } else if (lage === "erst-installieren") {
       status.textContent = "aus";
-      text.textContent = "Dafür muss die Seite auf dem Home-Bildschirm liegen: in Safari auf Teilen → Zum Home-Bildschirm.";
+      text.textContent = "Dafür muss die App auf dem Bildschirm liegen: " + appAblegen() + ".";
     } else {
       status.textContent = "nicht möglich";
       text.textContent = "Dieser Browser kennt keine Mitteilungen. Der Kalender funktioniert trotzdem.";
@@ -2789,7 +2807,7 @@
     var hsrK = (s.rollen && s.rollen.HSR) || 0, lsrK = (s.rollen && s.rollen.LSR) || 0;
     [["in 7 Tagen", inSieben, "aus deinem Plan"],
      ["Saison " + (daten.saison || ""), s.saison, "aus dem Archiv"],
-     ["Insgesamt", s.gesamt, "seit " + seit],
+     ["Insgesamt", s.gesamt, seitText(s.erste)],
      ["als HSR", hsrK, hsrK + lsrK ? "von " + (hsrK + lsrK) + " im 3er/4er" : "im 3er/4er-System"]
     ].forEach(function (paar) {
       var k = document.createElement("div"); k.className = "zahl karte";
@@ -2871,6 +2889,62 @@
       }
     }, "image/png");
   }
+  // Die eigene Saisonliste aus allen Archivquellen: ueber die Kennung
+  // zusammenfuehren wie archivMerge(), dann dieselben Korrekturen wie
+  // archivKorrigieren(). Eigene Funktion, weil das sonst in zwei
+  // fetch-Ketten haengt und sich nicht pruefen laesst - und weil der
+  // Fehler "ein abgegebenes Spiel steht noch drin" genau dort
+  // entsteht, wo eine Quelle vergessen wird.
+  //
+  // "eingefroren" ist eine Liste von { saison, daten } aus
+  // docs/archiv/<saison>.json; daten darf null sein, wenn die Datei
+  // nicht kam.
+  function saisonZeilen(a, eingefroren, slug) {
+    var jeKennung = {};
+    // Immer eine Kopie: die Zeilen aus a.personen gehoeren archivDaten,
+    // dem Cache fuer die ganze Sitzung. Eine Korrektur daran haette
+    // jede weitere Ansicht mitverstellt.
+    function dazu(k, e) {
+      var alt = jeKennung[k];
+      // Die spaetere Fassung gewinnt - bei einer Verlegung ist das die
+      // neue Zeit.
+      if (alt && (alt.beginn || "") >= (e.beginn || "")) return;
+      jeKennung[k] = { saison: e.saison, beginn: e.beginn, liga: e.liga || "", paarung: e.paarung || "",
+                       halle: e.halle || "", rolle: e.rolle, system: e.system };
+    }
+    ((a && a.personen && a.personen[slug]) || []).forEach(function (e) {
+      dazu(e.id || (e.beginn + "|" + (e.paarung || "")), e);
+    });
+    (eingefroren || []).forEach(function (f) {
+      ((f.daten && f.daten.spiele) || []).forEach(function (z) {
+        var ich = (z[4] || []).filter(function (b) { return b[1] === slug; })[0];
+        if (!ich) return;
+        // Dieselbe Kennung wie in zeigeArchiv(): beginn|paarung
+        dazu(z[0] + "|" + z[2], { saison: f.saison, beginn: z[0], liga: z[1], paarung: z[2],
+                                  halle: z[3], rolle: ich[2], system: (z[4] || []).length });
+      });
+    });
+    return Object.keys(jeKennung).filter(function (k) {
+      // Ausgeblendete Spiele sind weg, und wer nach einer
+      // Gespann-Korrektur nicht mehr dabei ist, sieht sein abgegebenes
+      // Spiel nicht mehr. Das gilt fuer alle Saisons: eine eingefrorene
+      // Datei aendert sich nie wieder, die Korrektur stand bis hierher
+      // also nur bis zum Saisonwechsel.
+      if (istAusgeblendet(k)) return false;
+      return gespannGehoert(k, slug) !== false;
+    }).map(function (k) {
+      var z = jeKennung[k], neu = gespannKorrektur(k);
+      // Mit dem Gespann kann sich die eigene Rolle aendern - wer vom
+      // zweiten zum ersten Schiedsrichter gemacht wurde, soll das auch
+      // hier sehen.
+      if (neu) {
+        var ich = neu.filter(function (x) { return x.slug === slug; })[0];
+        if (ich && ich.rolle) z.rolle = ich.rolle;
+        z.system = neu.length;
+      }
+      return z;
+    }).sort(function (x, y) { return x.beginn < y.beginn ? 1 : -1; });
+  }
   function zeigeSaison(p) {
     var box = el("saison"), liste = el("saison-liste"), s = p.statistik;
     if (!s || !s.gesamt) { box.classList.add("versteckt"); return; }
@@ -2898,42 +2972,25 @@
       (archivDaten ? Promise.resolve(archivDaten) : hole("archiv.json"))
         .then(function (a) {
           archivDaten = a;
-          // Ueber die Kennung zusammenfuehren, wie archivMerge() es
-          // tut: zwei Zeilen desselben Spiels - verlegt oder vom
-          // Betreiber zusammengelegt - sind eine Zeile. Ohne das
-          // zeigte diese Liste eine mehr als die Archivseite, und
-          // beide heissen "Archiv".
-          var jeKennung = {};
-          ((a.personen && a.personen[p.slug]) || []).forEach(function (e) {
-            var k = e.id || (e.beginn + "|" + (e.paarung || ""));
-            var alt = jeKennung[k];
-            // Die spaetere Fassung gewinnt - bei einer Verlegung ist
-            // das die neue Zeit.
-            if (!alt || (e.beginn || "") > (alt.beginn || "")) jeKennung[k] = e;
-          });
-          var eigene = Object.keys(jeKennung).filter(function (k) {
-            // Dieselbe Regel wie archivKorrigieren(): ausgeblendete
-            // Spiele sind weg, und wer nach einer Gespann-Korrektur
-            // nicht mehr dabei ist, sieht sein abgegebenes Spiel nicht
-            // mehr in der eigenen Liste. Die stuendliche Datei weiss
-            // davon nichts - die Korrekturen stehen in der Datenbank.
-            if (istAusgeblendet(k)) return false;
-            return gespannGehoert(k, p.slug) !== false;
-          }).map(function (k) { return jeKennung[k]; });
           var dateien = a.dateien || {};
-          // Eingefrorene Saisons (docs/archiv/<saison>.json) dazuladen
+          // Erst alle eingefrorenen Saisons holen, dann filtern. Vorher
+          // wurden sie nach dem Filtern angehaengt und blieben deshalb
+          // ungefiltert - ein abgegebenes Spiel kam mit dem
+          // Saisonwechsel zurueck.
           return Promise.all(Object.keys(dateien).map(function (sn) {
-            return hole(dateien[sn]).then(function (d) {
-              (d.spiele || []).forEach(function (z) { var ich = (z[4] || []).filter(function (b) { return b[1] === p.slug; })[0]; if (ich) eigene.push({ saison: sn, beginn: z[0], liga: z[1], paarung: z[2], halle: z[3], rolle: ich[2], system: z[4].length }); });
-            }).catch(function () {});
-          })).then(function () {
-            eigene.sort(function (x, y) { return x.beginn < y.beginn ? 1 : -1; });
+            return hole(dateien[sn]).then(function (d) { return { saison: sn, daten: d }; })
+              .catch(function () { return { saison: sn, daten: null }; });
+          })).then(function (eingefroren) {
+            var eigene = saisonZeilen(a, eingefroren, p.slug);
             // Was dasteht, steht auch im Titel. Vorher nannte er
             // statistik.gesamt aus der stuendlichen Datei, und die
             // kennt weder Korrekturen noch Zusammenlegungen - so kamen
             // "13 Spiele" ueber einer Liste mit zwoelf zustande.
-            el("saison-titel").textContent = "Alle " + eigene.length
-              + (eigene.length === 1 ? " Spiel" : " Spiele") + " im Archiv (filterbar unter Mehr → Archiv)";
+            el("saison-titel").textContent = eigene.length
+              ? "Alle " + eigene.length + (eigene.length === 1 ? " Spiel" : " Spiele")
+                + " im Archiv (filterbar unter Mehr → Archiv)"
+              : "Keine Spiele im Archiv";
+            if (!eigene.length) { liste.textContent = "Keine Spiele im Archiv."; return; }
             rendern(eigene);
           });
         })
@@ -3219,7 +3276,7 @@
     var weg = lesen("einrichtung-weg"); if (weg && Date.now() - parseInt(weg, 10) < 14 * 86400000) return;
     var lauf = box._lauf = {};
     var punkte = [];
-    punkte.push({ ok: lesen("abo-geklickt") === "1", titel: "Kalender abonnieren", text: "Spiele automatisch im iPhone-Kalender", href: "#", tu: function () { var kb = el("kalender-box"); if (kb) { kb.open = true; kb.scrollIntoView({ behavior: "smooth", block: "center" }); } } });
+    punkte.push({ ok: lesen("abo-geklickt") === "1", titel: "Kalender abonnieren", text: "Spiele automatisch im " + kalenderName(), href: "#", tu: function () { var kb = el("kalender-box"); if (kb) { kb.open = true; kb.scrollIntoView({ behavior: "smooth", block: "center" }); } } });
     var alsApp = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
     var pushOk = ("Notification" in window) && Notification.permission === "granted";
     if (funktion("push")) punkte.push({ ok: pushOk, titel: alsApp ? "Push einschalten" : "Als App ablegen und Push einschalten", text: "Änderungen, Spieltag, Abfahrt", href: "#einstellungen" });
@@ -3557,7 +3614,7 @@
   // Leeres Geruest statt null: der Mitgliederbereich soll auch dann seinen
   // Anmeldeschirm zeichnen koennen, wenn noch keine Daten geladen sind.
   var LEER = { personen: [], spiele: [], hallen: {}, adressen: {}, hallen_hinweise: {}, saison: "", titel: "Einteilungen" };
-  function mitgliederKontext() { return { gespannKorrektur: gespannKorrektur, gespannGehoert: gespannGehoert, istAusgeblendet: istAusgeblendet, daten: daten || LEER, slug: profil && profil.slug, personMit: personMit, hole: hole, ikone: ikone, funktion: funktion, funktionen: FUNKTIONEN, einstellungenSync: einstellungenSync, lesen: lesen, schreiben: schreiben, reiterInLeiste: reiterInLeiste }; }
+  function mitgliederKontext() { return { gespannKorrektur: gespannKorrektur, gespannGehoert: gespannGehoert, istAusgeblendet: istAusgeblendet, daten: daten || LEER, slug: profil && profil.slug, personMit: personMit, hole: hole, ikone: ikone, funktion: funktion, funktionen: FUNKTIONEN, einstellungenSync: einstellungenSync, lesen: lesen, schreiben: schreiben, reiterInLeiste: reiterInLeiste, appAblegen: appAblegen }; }
   function zeigeMitglieder(reiter) {
     aktuell = null; ansicht("mitglieder");
     ladeMitglieder().then(function (M) { M.oeffnen(el("mitglieder"), mitgliederKontext(), reiter); })
@@ -4354,7 +4411,7 @@
   // fuenfte Feld eines Schritts ist der Funktionsschluessel, den er
   // braucht; fehlt es, gilt der Schritt immer.
   function tourBauen(name) {
-    var android = /Android/i.test(navigator.userAgent);
+    var android = istAndroid();
     // Vier Schritte fuer den ersten Besuch. Wer zum ersten Mal
     // hereinschaut, will wissen, was das hier ist und was er tun muss
     // - nicht alles, was die App kann. Das Ausfuehrliche steht unter
@@ -4376,8 +4433,8 @@
     var ausfuehrlich = [
       ["i-home", "Willkommen bei den Einteilungen", "Diese App zeigt dir deine Schiedsrichter-Einteilungen von esrw.de, immer aktuell, mit Halle, Treffpunkt, Route und Gespann. Ein paar kurze Schritte, dann bist du startklar."],
       ["i-users", "Deinen Namen wählen", "Tippe unten in der Liste auf deinen Namen. Das ist dein Profil auf diesem Gerät, „Start“ zeigt dann deine Spiele.\nKollegen ansehen geht jederzeit über die Lupe oben."],
-      ["i-cal", "Kalender abonnieren", "Auf „Start“ findest du die Kalender-Karte: „Im Kalender abonnieren“ legt ein Abo im iPhone-Kalender an. Neue oder geänderte Spiele kommen von allein aufs Handy, mit Wecker zum Treffpunkt.\nWas im Termin steht und wann der Wecker klingelt, stellst du dort unter „Anpassen“ selbst ein.", "#", "Zur Startseite"],
-      ["i-bell", "Als App und Push", "Safari: Teilen → „Zum Home-Bildschirm“. Danach unter Einstellungen „Push einschalten“: dann meldet sich die App bei neuen und geänderten Einteilungen, am Spieltag und zur Abfahrt.", "#einstellungen", "Zu den Einstellungen", "push"],
+      ["i-cal", "Kalender abonnieren", "Auf „Start“ findest du die Kalender-Karte: „Im Kalender abonnieren“ legt ein Abo im " + kalenderName() + " an. Neue oder geänderte Spiele kommen von allein aufs Handy, mit Wecker zum Treffpunkt.\nWas im Termin steht und wann der Wecker klingelt, stellst du dort unter „Anpassen“ selbst ein.", "#", "Zur Startseite"],
+      ["i-bell", "Als App und Push", appAblegen().charAt(0).toUpperCase() + appAblegen().slice(1) + ". Danach unter Einstellungen „Push einschalten“: dann meldet sich die App bei neuen und geänderten Einteilungen, am Spieltag und zur Abfahrt.", "#einstellungen", "Zu den Einstellungen", "push"],
       ["i-key", "Konto (freiwillig)", "Mit Konto gibt es " + funktionsText([["abrechnung", "Abrechnung (km und Vergütung automatisch)"], ["notizen", "Notizen"], ["checkliste", "Checkliste"], ["info", "Ankündigungen"], ["push", "Push auf allen Geräten"]], "und") + ". Der Betreiber schaltet dich frei.", "#mitglieder", "Konto anlegen"],
       ["i-mehr", "Wo ist was", "Start: nächstes Spiel und deine Spiele · Spielplan: alle Spiele, Filter, Woche/Monat" + (funktion("abrechnung") ? " · Abrechnung" : "") + " · Mehr: " + funktionsText([["info", "Info"], ["statistik", "Statistik"], ["notizen", "Notizen"], [null, "Einstellungen"]]) + ".\nDiese Anleitung findest du jederzeit unter Mehr → Anleitung."]
     ];
@@ -6889,16 +6946,17 @@
         if (o.rechner !== undefined) rechner = o.rechner;
       },
       kennungVon: kennungVon, istAusgeblendet: istAusgeblendet, istGeloescht: istGeloescht,
-      archivMerge: archivMerge, archivKorrigieren: archivKorrigieren,
+      archivMerge: archivMerge, archivKorrigieren: archivKorrigieren, saisonZeilen: saisonZeilen,
       archivSaisonAus: archivSaisonAus,
       zeitraum: zeitraum, tagTitel: tagTitel, ligaGruppe: ligaGruppe,
       planFilter: planFilter, aboAdresse: aboAdresse, tourBauen: tourBauen,
+      istAndroid: istAndroid, appAblegen: appAblegen, kalenderName: kalenderName,
       suchHallen: suchHallen, suchVereine: suchVereine,
       suchSpiele: suchSpiele, suchSeiten: suchSeiten,
       rechnerErgebnis: rechnerErgebnis, restSekunden: restSekunden,
       restText: restText, rArt: rArt, R_ARTEN: R_ARTEN,
       ohneZeichen: ohneZeichen, ausgeschrieben: ausgeschrieben, suchtextVon: suchtextVon,
-      datumKurz: datumKurz, uhr: uhr, farbeFuer: farbeFuer, mitPuffer: mitPuffer,
+      datumKurz: datumKurz, uhr: uhr, farbeFuer: farbeFuer, mitPuffer: mitPuffer, seitText: seitText,
       naechstesEigenes: naechstesEigenes
     }
   };

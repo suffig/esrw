@@ -98,6 +98,23 @@ Fensterbreite.
   Ansicht 375 px, einmal angemeldet und einmal abgemeldet durchklicken,
   Konsole auf Fehler, `document.documentElement.scrollWidth` gegen die
   Fensterbreite (kein horizontaler Überlauf).
+* **Alle** Seiten, nicht nur die geänderten, und die Konsole auf
+  `Uncaught` ansehen. `seit is not defined` in `zeigeStatistik()` lag
+  von Fassung 204 bis 216 draussen und nahm die Statistikseite samt
+  der Saisonliste darunter mit: in 204 verschwand die Variable, der
+  Verweis blieb. `node --check` sieht das nicht – ein freier Name ist
+  gültiges JavaScript, der Fehler kommt erst beim Aufruf. Ein
+  Hash-Durchlauf über alle Ansichten kostet eine Minute:
+
+  ```js
+  for (var i = 0; i < ziele.length; i++) { location.hash = ziele[i]; await warte(650); }
+  ```
+* Die Attrappe für den Browser liegt nicht im Repository – `daten.json`
+  mit `personen[].spiele` (nicht `termine`), `statistik.gesamt`,
+  `rollen`, `hallen`, `adressen`, dazu `archiv.json`, ein leeres Array
+  in `protokoll.json` und `archiv/<saison>.json`. Dazu im localStorage
+  `mock_session` und `mock_funktionen` (ohne die sind alle Funktionen
+  aus und halbe App unsichtbar). Hinterher alle vier Dateien löschen.
 * Zum Testen `docs/supabase.json` auf `"mock": true` stellen – das ist
   die Attrappe im Browser. **Vor jedem Commit zurücksetzen.**
 * Verschlüsselte Daten testen: Klartext aus der Historie holen, mit dem

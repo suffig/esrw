@@ -5355,7 +5355,10 @@ window.Mitglieder = (function () {
     var alsApp = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
     if (!pushCfg || !pushCfg.public_key) return setze("nein", "Push ist vom Betreiber noch nicht eingerichtet (Anleitung Schritt 11).");
     if (!("PushManager" in window) || !("serviceWorker" in navigator) || !("Notification" in window)) {
-      return setze("nein", alsApp ? "Dieser Browser kann kein Web Push." : "Dafür muss die Seite auf dem Home-Bildschirm liegen: in Safari Teilen → Zum Home-Bildschirm, dann hier wieder öffnen.");
+      // Der Satz kommt aus app.js, damit er auf Android nicht von
+      // Safari redet. Ohne Kontext der alte Wortlaut.
+      var ablegen = (ctx && ctx.appAblegen) ? ctx.appAblegen() : "in Safari auf „Teilen“ → „Zum Home-Bildschirm“";
+      return setze("nein", alsApp ? "Dieser Browser kann kein Web Push." : "Dafür muss die App auf dem Bildschirm liegen: " + ablegen + ", dann hier wieder öffnen.");
     }
     if (Notification.permission === "denied") return setze("aus", "Mitteilungen sind abgelehnt. Wieder erlauben in Einstellungen → Apps → Einteilungen → Mitteilungen.");
     navigator.serviceWorker.ready.then(function (reg) {

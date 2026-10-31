@@ -207,6 +207,84 @@ pruefe(!!mitWeg.bleibt, "das andere bleibt");
 P.setze({ korrekturen: {} });
 
 
+// ------------------------------------------------- Eigene Saisonliste
+
+console.log("\nEigene Saisonliste (saisonZeilen)");
+
+// Die Form der eingefrorenen Dateien: [beginn, liga, paarung, halle,
+// [[name, slug, rolle], ...]]
+function gefroren(beginn, paarung, slug, rolle) {
+  return [beginn, "U17", paarung, "Halle A", [["Ich", slug, rolle || "SR"]]];
+}
+var LAUFEND = { personen: { ich: [
+  { id: "l1", saison: "2026/27", beginn: "2026-10-25T17:00:00+02:00", liga: "U17", paarung: "A - B", halle: "Halle A", rolle: "SR", system: 1 },
+  { id: "l2", saison: "2026/27", beginn: "2026-10-20T17:00:00+02:00", liga: "U17", paarung: "C - D", halle: "Halle B", rolle: "2. SR", system: 2 }
+] }, dateien: { "2025/26": "archiv/2025-26.json" } };
+var ALT_SAISON = [{ saison: "2025/26", daten: { spiele: [
+  gefroren("2026-02-10T18:00:00+01:00", "E - F", "ich"),
+  gefroren("2026-01-15T18:00:00+01:00", "G - H", "ich", "2. SR"),
+  gefroren("2026-01-10T18:00:00+01:00", "Fremd - Spiel", "andere")
+] } }];
+
+P.setze({ korrekturen: {} });
+var alleZeilen = P.saisonZeilen(LAUFEND, ALT_SAISON, "ich");
+gleich(alleZeilen.length, 4, "beide Saisons zusammen, fremdes Spiel nicht dabei");
+gleich(alleZeilen[0].paarung, "A - B", "neuestes zuerst");
+gleich(alleZeilen[3].paarung, "G - H", "aeltestes zuletzt");
+gleich(alleZeilen[2].saison, "2025/26", "die eingefrorene Saison steht dabei");
+gleich(alleZeilen[3].rolle, "2. SR", "die Rolle kommt aus der eingefrorenen Zeile");
+
+// Der gemeldete Fehler, eine Saison weiter: ausgeblendet gilt auch
+// dort. Die Kennung einer eingefrorenen Zeile ist beginn|paarung.
+P.setze({ korrekturen: { "2026-02-10T18:00:00+01:00|E - F": { geloescht: true } } });
+var ohneAlt = P.saisonZeilen(LAUFEND, ALT_SAISON, "ich");
+gleich(ohneAlt.length, 3, "ausgeblendet faellt auch aus einer eingefrorenen Saison");
+pruefe(!ohneAlt.some(function (z) { return z.paarung === "E - F"; }), "und zwar genau dieses");
+
+// Abgegeben: der Betreiber hat das Gespann geaendert, ich bin nicht
+// mehr dabei - auch in einer alten Saison nicht mehr sichtbar.
+P.setze({ korrekturen: { "2026-01-15T18:00:00+01:00|G - H": { besetzung: [{ name: "Kollege", slug: "kollege", rolle: "SR" }] } } });
+var abgegeben = P.saisonZeilen(LAUFEND, ALT_SAISON, "ich");
+gleich(abgegeben.length, 3, "abgegebenes Spiel faellt auch aus einer eingefrorenen Saison");
+pruefe(!abgegeben.some(function (z) { return z.paarung === "G - H"; }), "und zwar genau dieses");
+
+// Dasselbe fuer die laufende Saison - das ist die Regression zu 216.
+P.setze({ korrekturen: { "l1": { besetzung: [{ name: "Kollege", slug: "kollege", rolle: "SR" }] } } });
+var abgegebenJetzt = P.saisonZeilen(LAUFEND, ALT_SAISON, "ich");
+pruefe(!abgegebenJetzt.some(function (z) { return z.paarung === "A - B"; }), "abgegeben in der laufenden Saison faellt auch heraus");
+
+// Wer dazukommt, behaelt sein Spiel - gespannGehoert() sagt true.
+P.setze({ korrekturen: { "l2": { besetzung: [{ name: "Ich", slug: "ich", rolle: "SR" }, { name: "Kollege", slug: "kollege", rolle: "2. SR" }] } } });
+var dazu = P.saisonZeilen(LAUFEND, ALT_SAISON, "ich");
+var l2 = dazu.filter(function (z) { return z.paarung === "C - D"; })[0];
+pruefe(!!l2, "wer im korrigierten Gespann steht, behaelt das Spiel");
+gleich(l2.rolle, "SR", "und bekommt die Rolle aus der Korrektur");
+gleich(l2.system, 2, "das System kommt aus der Korrektur");
+
+// Die Zeilen aus archiv.json gehoeren dem Cache fuer die ganze
+// Sitzung - eine Korrektur daran duerfte nicht hineinschreiben.
+gleich(LAUFEND.personen.ich[1].rolle, "2. SR", "archivDaten bleibt unberuehrt");
+
+// Dieselbe Kennung aus zwei Quellen ist eine Zeile, und die spaetere
+// Fassung gewinnt - so sieht eine Verlegung aus.
+P.setze({ korrekturen: {} });
+var verlegt = { personen: { ich: [
+  { id: "v", saison: "2026/27", beginn: "2026-10-25T17:00:00+02:00", paarung: "A - B", rolle: "SR" },
+  { id: "v", saison: "2026/27", beginn: "2026-10-28T19:30:00+01:00", paarung: "A - B", rolle: "SR" }
+] } };
+var einmal = P.saisonZeilen(verlegt, [], "ich");
+gleich(einmal.length, 1, "zwei Zeilen derselben Kennung sind eine");
+gleich(einmal[0].beginn, "2026-10-28T19:30:00+01:00", "die spaetere Fassung gewinnt");
+
+// Eine Datei, die nicht kam, darf die Liste nicht abbrechen.
+var kaputt = P.saisonZeilen(LAUFEND, [{ saison: "2025/26", daten: null }], "ich");
+gleich(kaputt.length, 2, "fehlende Archivdatei laesst die laufende Saison stehen");
+gleich(P.saisonZeilen(null, null, "ich").length, 0, "ohne alles eine leere Liste");
+gleich(P.saisonZeilen(LAUFEND, ALT_SAISON, "niemand").length, 0, "wer nirgends vorkommt, hat nichts");
+
+P.setze({ korrekturen: {} });
+
+
 // ------------------------------------------------------- Zeitraeume
 
 console.log("\nZeitraeume im Spielplan");
@@ -516,6 +594,56 @@ pruefe(aufAndroid.indexOf("webcal") < 0,
 pruefe(aufAndroid.indexOf("cid=https%3A%2F%2F") > 0,
        "die Feed-Adresse steckt kodiert im Parameter", aufAndroid.slice(0, 80));
 pruefe(aufAndroid.indexOf(".ics") > 0, "und zeigt auf die Kalenderdatei");
+
+
+// --------------------------------------------- Seit wann gezaehlt
+
+console.log("\nKachel Insgesamt: seit wann");
+
+// Der Verweis auf eine geloeschte Variable hat hier einen
+// ReferenceError geworfen und die ganze Statistikseite mitgenommen,
+// samt der Saisonliste darunter - von Fassung 204 bis 216.
+gleich(P.seitText("2026-01-10T18:00:00+01:00"), "seit Januar 2026", "Monat und Jahr des ersten Spiels");
+gleich(P.seitText("2024-09-28T17:00:00+02:00"), "seit September 2024", "auch eine alte Saison");
+gleich(P.seitText(""), "aus dem Archiv", "ohne Datum kein halber Satz");
+gleich(P.seitText(null), "aus dem Archiv", "null genauso");
+gleich(P.seitText("kein Datum"), "aus dem Archiv", "und Unsinn auch");
+pruefe(P.seitText("2026-01-10T18:00:00+01:00").indexOf("undefined") < 0, "nie das Wort undefined");
+
+
+// --------------------------------------------- Geraetetexte
+
+console.log("\nGeraetetexte");
+
+pruefe(mitGeraetTour(ANDROID_UA, P.istAndroid), "Android wird erkannt");
+pruefe(!mitGeraetTour(IPHONE_UA, P.istAndroid), "ein iPhone ist kein Android");
+
+var ablegenApple = mitGeraetTour(IPHONE_UA, P.appAblegen);
+var ablegenAndroid = mitGeraetTour(ANDROID_UA, P.appAblegen);
+pruefe(ablegenApple.indexOf("Safari") >= 0, "auf dem iPhone fuehrt der Weg ueber Safari", ablegenApple);
+pruefe(ablegenAndroid.indexOf("Chrome") >= 0, "auf Android ueber das Chrome-Menue", ablegenAndroid);
+pruefe(ablegenAndroid.indexOf("Safari") < 0, "und redet dort nicht von Safari", ablegenAndroid);
+pruefe(ablegenAndroid.indexOf("Home-Bildschirm") < 0, "auch nicht vom Home-Bildschirm", ablegenAndroid);
+
+gleich(mitGeraetTour(IPHONE_UA, P.kalenderName), "iPhone-Kalender", "der Kalender heisst auf dem iPhone so");
+gleich(mitGeraetTour(ANDROID_UA, P.kalenderName), "Google-Kalender", "und auf Android so");
+
+// Kein Schritt der ausfuehrlichen Anleitung darf auf Android vom
+// iPhone oder von Safari reden - die kurze hatte das seit 216
+// richtig, die lange nicht.
+var langAndroid = mitGeraetTour(ANDROID_UA, function () { return P.tourBauen("alles"); });
+var textAndroid = langAndroid.map(function (x) { return x[1] + " " + x[2]; }).join(" | ");
+pruefe(textAndroid.indexOf("Safari") < 0, "die ausfuehrliche Anleitung nennt auf Android kein Safari");
+pruefe(textAndroid.indexOf("iPhone") < 0, "und kein iPhone");
+pruefe(textAndroid.indexOf("Google-Kalender") >= 0, "sie nennt den Google-Kalender");
+pruefe(textAndroid.indexOf("Chrome") >= 0, "und den Weg ueber Chrome");
+
+// Auf dem iPhone bleibt alles, wie es war.
+var langApple = mitGeraetTour(IPHONE_UA, function () { return P.tourBauen("alles"); });
+var textApple = langApple.map(function (x) { return x[1] + " " + x[2]; }).join(" | ");
+pruefe(textApple.indexOf("iPhone-Kalender") >= 0, "auf dem iPhone heisst er iPhone-Kalender");
+pruefe(textApple.indexOf("Safari") >= 0, "und der Weg geht ueber Safari");
+gleich(langApple.length, langAndroid.length, "gleich viele Schritte auf beiden Geraeten");
 
 
 // ------------------------------------------------------------- Suche
