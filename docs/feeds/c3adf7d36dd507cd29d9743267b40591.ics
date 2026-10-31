@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:855396d50eab9e1ba4475c4afbe0f6d0a7134f9c@esrw.de
-SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261024T073000Z
-DTEND:20261024T110000Z
-SUMMARY:SR · U15 BZL: ESV Grizzlys Bergkamen 1b – TSVE Bielefeld
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
-  09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Eissporthalle B
- ergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Steeg\, Cedri
- c\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
-GEO:51.602578;7.626858
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
- äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
- ergkamen":geo:51.602578,7.626858
-END:VEVENT
-BEGIN:VEVENT
 UID:996aa40eef84c4eacf50566c8732c852b3d6846e@esrw.de
 SEQUENCE:0
 DTSTAMP:20261016T090052Z
@@ -916,12 +895,6 @@ GEO:51.602578;7.626858
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
  äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
  ergkamen":geo:51.602578,7.626858
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: SpG ESV Grizzlys B
- ergkamen / ESC Rheine Young Cats – Eisadler Dortmund
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:757659e6b48e52e2203a15593ce5c86f07e6af59@esrw.de

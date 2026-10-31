@@ -7,25 +7,4 @@ X-WR-CALNAME:Einteilungen – Arntz\, Florian (N)
 X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
-BEGIN:VEVENT
-UID:ceff6a29dc00003884749a93b91187d2697d0f9e@esrw.de
-SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261024T073000Z
-DTEND:20261024T110000Z
-SUMMARY:SR · U15 BZL: ESV Grizzlys Bergkamen 1b – TSVE Bielefeld
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
-  09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Eissporthalle B
- ergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Steeg\, Cedri
- c\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
-GEO:51.602578;7.626858
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
- äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
- ergkamen":geo:51.602578,7.626858
-END:VEVENT
 END:VCALENDAR
