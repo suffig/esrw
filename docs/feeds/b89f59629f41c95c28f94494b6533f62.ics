@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:bc98e0f8fb4a1dc837bdefc32b5b5c934774958c@esrw.de
-SEQUENCE:0
-DTSTAMP:20261016T090052Z
-LAST-MODIFIED:20261016T090052Z
-DTSTART:20261024T093000Z
-DTEND:20261024T130000Z
-SUMMARY:SR · DFEL2 Nord: Dinslakener Kobras – KEC "Die Haie"
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
-  11:30 Uhr (60 Min vor Spielbeginn)\nLiga: DFEL2 Nord\nHalle: Eissporthall
- e Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Schlüchte
- r\, Isabell (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
-GEO:51.574578;6.735361
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
- m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
- inslaken":geo:51.574578,6.735361
-END:VEVENT
-BEGIN:VEVENT
 UID:4ba59d6091a860e6684053591b32f9065fc56bc5@esrw.de
 SEQUENCE:0
 DTSTAMP:20261016T091530Z
