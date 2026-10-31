@@ -128,25 +128,30 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:32a4901ab18376a2f17b9a2069ce121ebe156f11@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
+SEQUENCE:1
+DTSTAMP:20261031T230046Z
+LAST-MODIFIED:20261031T230046Z
 DTSTART:20261107T081500Z
 DTEND:20261107T114500Z
-SUMMARY:SR · Frauen BZL: DSC Krefeld – TSVE Bielefeld
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:15 Uhr\nTreffpunkt:
-  09:15 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\n!! Halle nicht auto
- matisch erkannt - bitte selbst pruefen !!\nGespann: Licau\, Alexander\nVer
- gütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/einteilungen.ht
- ml
+SUMMARY:⚠ SR · Frauen BZL: DSC Krefeld – TSVE Bielefeld
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
+ elbeginn: 10:15 Uhr\nTreffpunkt: 09:15 Uhr (60 Min vor Spielbeginn)\nLiga:
+  Frauen BZL\nHalle: Rheinlandhalle Krefeld\nAdresse: Westparkstraße 126\,
+  47803 Krefeld\nGespann: Licau\, Alexander\nVergütung lt. Ordnung: 95 €
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
+GEO:51.339877;6.540168
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
+ stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
+ le Krefeld":geo:51.339877,6.540168
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL: DSC Krefeld 
- – TSVE Bielefeld
+DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · Frauen BZL: DSC Krefel
+ d – TSVE Bielefeld
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

@@ -1879,24 +1879,29 @@ END:VEVENT
 BEGIN:VEVENT
 UID:7ce6b220cbd18e1048032ab15d4cbd9307d5f9db@esrw.de
 SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
+DTSTAMP:20261031T230046Z
+LAST-MODIFIED:20261031T230046Z
 DTSTART:20261107T081500Z
 DTEND:20261107T114500Z
-SUMMARY:SR · Frauen BZL: DSC Krefeld – TSVE Bielefeld
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:15 Uhr\nTreffpunkt:
-  09:15 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\n!! Halle nicht auto
- matisch erkannt - bitte selbst pruefen !!\nGespann: Melchert\, Philip\nVer
- gütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/einteilungen.ht
- ml
+SUMMARY:⚠ SR · Frauen BZL: DSC Krefeld – TSVE Bielefeld
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
+ elbeginn: 10:15 Uhr\nTreffpunkt: 09:15 Uhr (60 Min vor Spielbeginn)\nLiga:
+  Frauen BZL\nHalle: Rheinlandhalle Krefeld\nAdresse: Westparkstraße 126\,
+  47803 Krefeld\nGespann: Melchert\, Philip\nVergütung lt. Ordnung: 95 €
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
+GEO:51.339877;6.540168
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
+ stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
+ le Krefeld":geo:51.339877,6.540168
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL: DSC Krefeld 
- – TSVE Bielefeld
+DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · Frauen BZL: DSC Krefel
+ d – TSVE Bielefeld
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2439,10 +2444,10 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.B: Grefrather E
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:af8814d4dbaa1aff9ead302f6422641782028fbc@esrw.de
+UID:cb3a52b994b1654a3a7d6f3475ede77bd7d006d2@esrw.de
 SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
+DTSTAMP:20261031T230046Z
+LAST-MODIFIED:20261031T230046Z
 DTSTART:20261108T060000Z
 DTEND:20261108T093000Z
 SUMMARY:SR · U11 LL Rot: Düsseldorfer EG 1b
@@ -2769,22 +2774,28 @@ END:VEVENT
 BEGIN:VEVENT
 UID:8898f4156cfe37a20ab67c03f4680b3ac5afff56@esrw.de
 SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
+DTSTAMP:20261031T230046Z
+LAST-MODIFIED:20261031T230046Z
 DTSTART:20261108T160000Z
 DTEND:20261108T193000Z
-SUMMARY:SR · U11 LL Grau: Aachener EC
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
-  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Grau\n!! Halle nicht aut
- omatisch erkannt - bitte selbst pruefen !!\n\nQuelle: https://www.esrw.de/
- einteilungen.html
+SUMMARY:⚠ SR · U11 LL Grau: Aachener EC
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
+ elbeginn: 18:00 Uhr\nTreffpunkt: 17:00 Uhr (60 Min vor Spielbeginn)\nLiga:
+  U11 LL Grau\nHalle: 100'5 Arena Aachen\nAdresse: Hubert-Wienen-Straße 8\
+ , 52070 Aachen\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:100'5 Arena Aachen\, Hubert-Wienen-Straße 8\, 52070 Aachen
+GEO:50.79546;6.100933
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="100'5 Arena Aachen, Hubert
+ -Wienen-Straße 8, 52070 Aachen";X-APPLE-RADIUS=100;X-TITLE="100'5 Arena A
+ achen":geo:50.79546,6.100933
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Grau: Aachener EC
+DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · U11 LL Grau: Aachener 
+ EC
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
