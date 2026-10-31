@@ -29,4 +29,59 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
   Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
  tingen":geo:51.295808,6.834624
 END:VEVENT
+BEGIN:VEVENT
+UID:57734a22aba4b960012bb7860acf0f1a8fdf9bee@esrw.de
+SEQUENCE:0
+DTSTAMP:20261031T224530Z
+LAST-MODIFIED:20261031T224530Z
+DTSTART:20261107T104500Z
+DTEND:20261107T141500Z
+SUMMARY:SR · U9 LL Lila: Ratinger Ice Aliens 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:45 Uhr\nTreffpunkt:
+  11:45 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Lila\nHalle: Eissporthall
+ e Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\n\nQuelle: https://ww
+ w.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
+GEO:51.295808;6.834624
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
+  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
+ tingen":geo:51.295808,6.834624
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Lila: Ratinger Ice A
+ liens 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:6d2646310e58453ea51d1e6684bb0dc6948c1568@esrw.de
+SEQUENCE:0
+DTSTAMP:20261031T224530Z
+LAST-MODIFIED:20261031T224530Z
+DTSTART:20261108T161500Z
+DTEND:20261108T194500Z
+SUMMARY:HSR · Senioren RLW: GSC Moers – Neusser EV
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 18:15 Uhr\nTreff
+ punkt: 17:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ porthalle Moers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Menzel
+ \, Joey-Max (LSR) / Pluschkell\, Julian (LSR)\nVergütung lt. Ordnung: 100
+  €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
+GEO:51.43973;6.6198
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
+ rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
+ ":geo:51.43973,6.6198
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: GSC Moers 
+ – Neusser EV
+END:VALARM
+END:VEVENT
 END:VCALENDAR

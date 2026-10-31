@@ -34,4 +34,58 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Herner EV – TuS
  Wiehl
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:94c234aebe6586d72f3606ecaa25e20a64df4da2@esrw.de
+SEQUENCE:0
+DTSTAMP:20261031T224530Z
+LAST-MODIFIED:20261031T224530Z
+DTSTART:20261107T093000Z
+DTEND:20261107T130000Z
+SUMMARY:SR · U17 LL: ESV Grizzlys Bergkamen – SpG Neusser EV / GSC Moers
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:30 Uhr\nTreffpunkt:
+  10:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\nHalle: Eissporthalle Be
+ rgkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Kalischke\, Ch
+ ristian (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: ESV Grizzlys Bergk
+ amen – SpG Neusser EV / GSC Moers
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:9e452c5f19a8c119c734e1a612cc73854c40370f@esrw.de
+SEQUENCE:0
+DTSTAMP:20261031T224530Z
+LAST-MODIFIED:20261031T224530Z
+DTSTART:20261108T060000Z
+DTEND:20261108T093000Z
+SUMMARY:SR · U15 BZL: Eisadler Dortmund 1b – Aachener EC
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Eissportzentrum
+  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Schlüchte
+ r\, Isabell (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: Eisadler Dortmund
+  1b – Aachener EC
+END:VALARM
+END:VEVENT
 END:VCALENDAR

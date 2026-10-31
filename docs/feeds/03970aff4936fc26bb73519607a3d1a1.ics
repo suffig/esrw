@@ -57,4 +57,62 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: EC Bergisch L
  and – TSVE Bielefeld
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:5cf8dd8b2e96f5f0f45bf9fea69ef5feea8bb666@esrw.de
+SEQUENCE:0
+DTSTAMP:20261031T224530Z
+LAST-MODIFIED:20261031T224530Z
+DTSTART:20261106T181500Z
+DTEND:20261106T214500Z
+SUMMARY:SR · Senioren LL: Dinslakener Kobras 1b – ESV Grizzlys Bergkamen
+  1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
+  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissporthal
+ le Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Caelers\,
+  Fabian\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/ei
+ nteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
+GEO:51.574578;6.735361
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
+ m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
+ inslaken":geo:51.574578,6.735361
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: Dinslakener K
+ obras 1b – ESV Grizzlys Bergkamen 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:bf3ce7336384938ba45a8cea384ea3796131a54f@esrw.de
+SEQUENCE:0
+DTSTAMP:20261031T224530Z
+LAST-MODIFIED:20261031T224530Z
+DTSTART:20261108T144500Z
+DTEND:20261108T181500Z
+SUMMARY:SR · U15 LL: SpG EHC Gelsenkirchen / Herner EV 1b – EHC Essen Ru
+ hr
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:45 Uhr\nTreffpunkt:
+  15:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Emscher-Lippe-Ha
+ lle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\nGespa
+ nn: Scholz\, Arien\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Emscher-Lippe-Halle Gelsenkirchen\, Adenauerallee 118\, 45891 Gels
+ enkirchen
+GEO:51.553483;7.073102
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Emscher-Lippe-Halle Gelsen
+ kirchen, Adenauerallee 118, 45891 Gelsenkirchen";X-APPLE-RADIUS=100;X-TITL
+ E="Emscher-Lippe-Halle Gelsenkirchen":geo:51.553483,7.073102
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: SpG EHC Gelsenkirc
+ hen / Herner EV 1b – EHC Essen Ruhr
+END:VALARM
+END:VEVENT
 END:VCALENDAR

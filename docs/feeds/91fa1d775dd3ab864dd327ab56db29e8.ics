@@ -56,4 +56,31 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL: TSVE Bielefeld
   – ESV Grizzlys Bergkamen
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:601446bb5b540fb24cc0b076db0b71e0ec8354f2@esrw.de
+SEQUENCE:0
+DTSTAMP:20261031T224530Z
+LAST-MODIFIED:20261031T224530Z
+DTSTART:20261108T053000Z
+DTEND:20261108T090000Z
+SUMMARY:SR · U11 LL Lila: TSVE Bielefeld
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 07:30 Uhr\nTreffpunkt:
+  06:30 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Lila\nHalle: Oetker Eisb
+ ahn Bielefeld\nAdresse: Duisburger Str. 14\, 33647 Bielefeld\nGespann: Br
+ ücker\, Tobias\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Oetker Eisbahn Bielefeld\, Duisburger Str. 14\, 33647 Bielefeld
+GEO:51.979731;8.496038
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
+ Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
+ sbahn Bielefeld":geo:51.979731,8.496038
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Lila: TSVE Bielefel
+ d
+END:VALARM
+END:VEVENT
 END:VCALENDAR

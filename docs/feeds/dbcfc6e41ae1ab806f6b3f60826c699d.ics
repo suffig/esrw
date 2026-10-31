@@ -56,4 +56,31 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLA: Kölner Junghaie
  – Krefelder EV
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:db4d442a8b703d244f52aae0c4231291b0a1b2b4@esrw.de
+SEQUENCE:0
+DTSTAMP:20261031T224530Z
+LAST-MODIFIED:20261031T224530Z
+DTSTART:20261107T073000Z
+DTEND:20261107T110000Z
+SUMMARY:SR · U15 BZL: EC Bergisch Land – TSVE Bielefeld
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
+  08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Eissporthalle S
+ olingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Henkels\,
+  André\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
+GEO:51.165932;7.086769
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
+ ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
+ le Solingen":geo:51.165932,7.086769
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: EC Bergisch Land 
+ – TSVE Bielefeld
+END:VALARM
+END:VEVENT
 END:VCALENDAR

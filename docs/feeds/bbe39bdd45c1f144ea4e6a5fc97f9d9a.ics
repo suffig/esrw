@@ -35,4 +35,32 @@ DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: ESV Grizzly
  s Bergkamen – Ratinger Ice Aliens
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:739041fa67572b4acd850d8e1997a92b80de52ed@esrw.de
+SEQUENCE:0
+DTSTAMP:20261031T224530Z
+LAST-MODIFIED:20261031T224530Z
+DTSTART:20261108T163000Z
+DTEND:20261108T200000Z
+SUMMARY:HSR · Senioren RLW: ESV Grizzlys Bergkamen – Eisadler Dortmund
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 18:30 Uhr\nTreff
+ punkt: 17:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ porthalle Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Zy
+ nda\, Jayden (LSR) / Malik\, Orlando (LSR)\nVergütung lt. Ordnung: 100 
+ €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: ESV Grizzly
+ s Bergkamen – Eisadler Dortmund
+END:VALARM
+END:VEVENT
 END:VCALENDAR

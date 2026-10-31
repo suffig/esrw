@@ -35,4 +35,32 @@ DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Dinslakener
   Kobras – ESV Bergisch Gladbach
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:a8f43044926a8627a42c1ce0d082e734d54843fd@esrw.de
+SEQUENCE:0
+DTSTAMP:20261031T224530Z
+LAST-MODIFIED:20261031T224530Z
+DTSTART:20261108T161500Z
+DTEND:20261108T194500Z
+SUMMARY:LSR · Senioren RLW: GSC Moers – Neusser EV
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:15 Uhr\nTreffpunkt:
+  17:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
+ lle Moers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Stocker\, Qu
+ irin (HSR) / Menzel\, Joey-Max (LSR)\nVergütung lt. Ordnung: 100 €\n\nQ
+ uelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
+GEO:51.43973;6.6198
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
+ rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
+ ":geo:51.43973,6.6198
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: GSC Moers 
+ – Neusser EV
+END:VALARM
+END:VEVENT
 END:VCALENDAR
