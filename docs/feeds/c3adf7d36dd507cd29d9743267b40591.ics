@@ -1010,15 +1010,15 @@ END:VEVENT
 BEGIN:VEVENT
 UID:4924e0d55f36ae1432677c21f688d5ca73c773bb@esrw.de
 SEQUENCE:0
-DTSTAMP:20261023T143044Z
-LAST-MODIFIED:20261023T143044Z
+DTSTAMP:20261031T160048Z
+LAST-MODIFIED:20261031T160048Z
 DTSTART:20261031T183000Z
 DTEND:20261031T220000Z
 SUMMARY:SR · DFEL2 Nord: Soester EG – EC Hannover Indians
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
   19:30 Uhr (60 Min vor Spielbeginn)\nLiga: DFEL2 Nord\nHalle: Eissportzent
- rum Möhnesee\nAdresse: Teigelhof 4\, 59519 Möhnesee\nGespann: Warnke\, C
- hristoph\n\nQuelle: https://www.esrw.de/einteilungen.html
+ rum Möhnesee\nAdresse: Teigelhof 4\, 59519 Möhnesee\nGespann: Zynda\, Ni
+ ck\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1200,8 +1200,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:26f41117a0bee977b264a3c6f64da832558336d1@esrw.de
 SEQUENCE:0
-DTSTAMP:20261023T143044Z
-LAST-MODIFIED:20261023T143044Z
+DTSTAMP:20261031T160048Z
+LAST-MODIFIED:20261031T160048Z
 DTSTART:20261101T144500Z
 DTEND:20261101T181500Z
 SUMMARY:SR · U15 LL: SpG EHC Gelsenkirchen / Herner EV 1b – Lippe Hockey
@@ -1209,8 +1209,7 @@ SUMMARY:SR · U15 LL: SpG EHC Gelsenkirchen / Herner EV 1b – Lippe Hockey
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:45 Uhr\nTreffpunkt:
   15:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Emscher-Lippe-Ha
  lle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\nGespa
- nn: Schlüchter\, Isabell (N)\n\nQuelle: https://www.esrw.de/einteilungen.
- html
+ nn: Schlüter\, Thomas\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

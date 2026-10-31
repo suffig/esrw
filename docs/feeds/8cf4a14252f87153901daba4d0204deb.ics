@@ -74,9 +74,9 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
 END:VEVENT
 BEGIN:VEVENT
 UID:5968147112c29df762e46821d0e2938bfd8775f7@esrw.de
-SEQUENCE:0
-DTSTAMP:20261023T143044Z
-LAST-MODIFIED:20261023T143044Z
+SEQUENCE:1
+DTSTAMP:20261031T160048Z
+LAST-MODIFIED:20261031T160048Z
 DTSTART:20261101T144500Z
 DTEND:20261101T181500Z
 SUMMARY:SR · U15 LL: SpG EHC Gelsenkirchen / Herner EV 1b – Lippe Hockey
@@ -84,8 +84,7 @@ SUMMARY:SR · U15 LL: SpG EHC Gelsenkirchen / Herner EV 1b – Lippe Hockey
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:45 Uhr\nTreffpunkt:
   15:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Emscher-Lippe-Ha
  lle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\nGespa
- nn: Schlüchter\, Isabell (N)\n\nQuelle: https://www.esrw.de/einteilungen.
- html
+ nn: Schlüter\, Thomas\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
