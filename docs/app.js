@@ -466,11 +466,16 @@
   // erst nach dem Anmelden - deshalb erst Buchstaben, dann nachtragen.
   var bilder = {};
   function bildFuer(slug) { return (bilder[slug] && bilder[slug].bild) || null; }
+  // Anfuehrungszeichen: ohne sie zerbricht eine Adresse mit Klammer
+  // oder Leerzeichen das CSS still.
+  function bildUrl(b) { return b ? 'url("' + b + '")' : ""; }
   function bildAnwenden(e, slug) {
     var b = bildFuer(slug);
-    if (!b) return;
-    e.style.backgroundImage = "url(" + b + ")";
-    e.classList.add("mit-bild");
+    // Auch raeumen, wenn nichts da ist: feste Elemente werden fuer die
+    // naechste Person wiederverwendet - ohne das blieb auf der
+    // Statistikseite das Bild des Vorgaengers stehen.
+    e.classList.toggle("mit-bild", !!b);
+    e.style.backgroundImage = bildUrl(b);
   }
   function bilderAnwenden() {
     Array.prototype.forEach.call(document.querySelectorAll("[data-slug]"), function (e) {
@@ -488,11 +493,14 @@
 
   function avatarKopf() {
     var b = el("avatar");
-    if (profil && profil.name) { b.textContent = initialen(profil.name); b.classList.remove("leer"); b.style.background = farbeFuer(profil.slug); }
-    else { b.textContent = "?"; b.classList.add("leer"); b.style.background = ""; }
+    // backgroundColor und nicht background: die Kurzform setzt
+    // background-size inline auf auto zurueck und schlaegt damit das
+    // cover aus .mit-bild - das Bild landet ungeskaliert im Kreis.
+    if (profil && profil.name) { b.textContent = initialen(profil.name); b.classList.remove("leer"); b.style.backgroundColor = farbeFuer(profil.slug); }
+    else { b.textContent = "?"; b.classList.add("leer"); b.style.backgroundColor = ""; }
     var eigen = (profil && bildFuer(profil.slug)) || lesen("mein-bild");
     b.classList.toggle("mit-bild", !!eigen);
-    b.style.backgroundImage = eigen ? "url(" + eigen + ")" : "";
+    b.style.backgroundImage = bildUrl(eigen);
   }
   // Tipp auf die Stand-Anzeige holt frische Daten
   el("stand").addEventListener("click", function () {
@@ -1922,7 +1930,7 @@
     e.className = "chip" + (profil && person.slug === profil.slug ? " ich" : "") + (klasseExtra ? " " + klasseExtra : "");
     if (person.slug) e.href = "#" + person.slug;
     var av = document.createElement("i"); av.className = "avatar"; av.textContent = initialen(person.name || person.slug);
-    av.style.background = farbeFuer(person.slug || person.name);
+    av.style.backgroundColor = farbeFuer(person.slug || person.name);
     if (person.slug) { av.setAttribute("data-slug", person.slug); bildAnwenden(av, person.slug); }
     e.appendChild(av);
     // Fehlt der Name (eine Korrektur, die nur den Slug setzt), stand hier
@@ -1961,14 +1969,12 @@
     var h = document.createElement("div"); h.className = "held";
     var heuteModus = diff === 0 && new Date(s.beginn).getTime() + 3 * 3600000 > Date.now();
     if (heuteModus) h.classList.add("heute");
-    // "Am Spieltag gross": Kopfkarte fuellt den Bildschirm, der Rest kommt auf Tipp
-    // Spieltag-Modus: nur das Spiel, sonst nichts. Er geht am Spieltag von
-    // selbst an (wenn eingeschaltet) und laesst sich jederzeit beiderseits
-    // umschalten - der Zustand gilt nur fuer diesen Tag.
+    // Spieltag-Modus: nur das Spiel, sonst nichts. Er haengt allein am
+    // Schalter unter Einstellungen -> Startseite und ist von Haus aus
+    // aus - ohne ihn gibt es weder den Modus noch den Knopf dazu.
     var schluessel = heuteSchluessel(s);
-    var vollbild = heuteModus && !!(profil && profil.slug === p.slug)
-      && (lesen("vollbild-an") === schluessel
-          || (startEinstellung("vollbild") && lesen("vollbild-zu") !== schluessel));
+    var meinSpiel = !!(profil && profil.slug === p.slug);
+    var vollbild = spieltagOffen(schluessel, heuteModus, meinSpiel);
     el("detail").classList.toggle("start-vollbild", vollbild);
     document.documentElement.classList.toggle("spieltag", vollbild);
     var w = document.createElement("div"); w.className = "wann"; w.textContent = wann + " · " + datumKurz(d); h.appendChild(w);
@@ -1988,7 +1994,7 @@
       ak.appendChild(ge);
     }
     h.appendChild(ak);
-    if (heuteModus && !!(profil && profil.slug === p.slug)) {
+    if (spieltagErlaubt(heuteModus, meinSpiel)) {
       // Ein Knopf, zwei Richtungen: rein in den Spieltag-Modus und wieder
       // heraus. Die Karte wird dabei nicht neu aufgebaut.
       var umschalter = document.createElement("button");
@@ -3006,9 +3012,8 @@
     ansicht("detail");
     el("person").textContent = p.name;
     var pav = el("person-avatar");
-    pav.textContent = initialen(p.name); pav.style.background = farbeFuer(p.slug);
+    pav.textContent = initialen(p.name); pav.style.backgroundColor = farbeFuer(p.slug);
     pav.setAttribute("data-slug", p.slug);
-    pav.classList.remove("mit-bild"); pav.style.backgroundImage = "";
     bildAnwenden(pav, p.slug);
     avatarKopf();
     var meins = !!(profil && profil.slug === p.slug);
@@ -5809,7 +5814,8 @@
     var p = personMit(slug) || (profil && personMit(profil.slug));
     if (!p) return zeigeAuswahl(false);
     ansicht("statseite"); aktuell = p;
-    el("stat-name").textContent = p.name; el("stat-avatar").textContent = initialen(p.name); el("stat-avatar").style.background = farbeFuer(p.slug);
+    el("stat-name").textContent = p.name; el("stat-avatar").textContent = initialen(p.name); el("stat-avatar").style.backgroundColor = farbeFuer(p.slug);
+    el("stat-avatar").setAttribute("data-slug", p.slug); bildAnwenden(el("stat-avatar"), p.slug);
     zeigeStatistik(p); zeigeSaison(p);
     if (!p.statistik) el("statistik").appendChild(leerZustand("Noch keine Statistik, das Archiv füllt sich mit jedem Lauf."));
     if (sprungZiel === null) window.scrollTo(0, 0);
@@ -5823,7 +5829,7 @@
     box.classList.toggle("versteckt", !startEinstellung("pins") || !(profil && profil.slug === p.slug) || !pins.length);
     pins.forEach(function (s) {
       var q = personMit(s), b = document.createElement("button"); b.type = "button";
-      var av = document.createElement("i"); av.className = "avatar"; av.textContent = initialen(q.name); av.style.background = farbeFuer(q.slug);
+      var av = document.createElement("i"); av.className = "avatar"; av.textContent = initialen(q.name); av.style.backgroundColor = farbeFuer(q.slug);
       // data-slug fehlte: bilderAnwenden() geht ueber [data-slug], und ohne
       // das blieben hier die Initialen stehen, auch wenn der Kollege ein
       // Bild eingestellt hat - ueberall sonst in der App ersetzt es sie.
@@ -5925,7 +5931,7 @@
   var START_BAUSTEINE = [
     ["ruhig", "Nur nächstes Spiel", "ganz ruhige Startseite: Kopfkarte und deine Spiele, sonst nichts", false],
     ["schnell", "Schnellzugriff", "eine Reihe Knöpfe unter der Kopfkarte, ohne das, was unten schon in der Leiste steht", false],
-    ["vollbild", "Am Spieltag groß", "ist heute ein Spiel, füllt die Kopfkarte den Bildschirm, der Rest kommt auf Tipp", false],
+    ["vollbild", "Spieltag-Modus", "ist heute ein Spiel, füllt die Kopfkarte den Bildschirm, der Rest kommt auf Tipp – ohne diesen Schalter bleibt die Startseite, wie sie ist", false],
     ["einrichtung", "„Alles eingerichtet?“", "zeigt fehlende Schritte (Kalender, Push, Heimatadresse, Wohnort) mit Direktlink", true],
     ["danach", "„Danach“ auf der Karte oben", "das übernächste Spiel in einer Zeile", false],
     ["wetter", "Wetter auf der Karte oben", "zum Treffpunkt, mit Glättehinweis", true, "wetter"],
@@ -5937,6 +5943,20 @@
     ["kalender", "Kalender-Karte", "Abo, Link und Mitteilungen, zugeklappt wenn abonniert", true],
     ["vergangene", "Vergangene Spiele", "eingeklappt unter deinen Spielen", true]
   ];
+  // Gibt es den Spieltag-Modus auf dieser Karte ueberhaupt? Eine
+  // Stelle fuer Knopf und Ansicht, sonst laufen die beiden
+  // auseinander: frueher zeigte der Knopf den Modus auch dann, wenn
+  // der Schalter aus war.
+  function spieltagErlaubt(heuteModus, meins) {
+    return !!(heuteModus && meins && startEinstellung("vollbild"));
+  }
+  // Und steht er gerade offen? Zugeklappt gilt nur fuer diesen einen
+  // Spieltag - morgen faengt es wieder von vorn an.
+  function spieltagOffen(schluessel, heuteModus, meins) {
+    if (!spieltagErlaubt(heuteModus, meins)) return false;
+    if (lesen("vollbild-an") === schluessel) return true;
+    return lesen("vollbild-zu") !== schluessel;
+  }
   function startEinstellung(k) {
     try { var st = JSON.parse(lesen("start") || "{}"); if (st[k] !== undefined) return !!st[k]; } catch (e) {}
     var std = START_BAUSTEINE.filter(function (b) { return b[0] === k; })[0]; return std ? std[3] : true;
@@ -6956,7 +6976,8 @@
       rechnerErgebnis: rechnerErgebnis, restSekunden: restSekunden,
       restText: restText, rArt: rArt, R_ARTEN: R_ARTEN,
       ohneZeichen: ohneZeichen, ausgeschrieben: ausgeschrieben, suchtextVon: suchtextVon,
-      datumKurz: datumKurz, uhr: uhr, farbeFuer: farbeFuer, mitPuffer: mitPuffer, seitText: seitText,
+      datumKurz: datumKurz, uhr: uhr, farbeFuer: farbeFuer, mitPuffer: mitPuffer, seitText: seitText, bildUrl: bildUrl,
+      spieltagErlaubt: spieltagErlaubt, spieltagOffen: spieltagOffen, startEinstellung: startEinstellung,
       naechstesEigenes: naechstesEigenes
     }
   };

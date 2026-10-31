@@ -596,6 +596,65 @@ pruefe(aufAndroid.indexOf("cid=https%3A%2F%2F") > 0,
 pruefe(aufAndroid.indexOf(".ics") > 0, "und zeigt auf die Kalenderdatei");
 
 
+// ------------------------------------------------------- Profilbilder
+
+console.log("\nProfilbilder");
+
+// Ohne Anfuehrungszeichen zerbricht jede Adresse mit Klammer oder
+// Leerzeichen das CSS - still, das Bild fehlt dann einfach.
+gleich(P.bildUrl("data:image/png;base64,AAA"), 'url("data:image/png;base64,AAA")', "Data-URL in Anfuehrungszeichen");
+gleich(P.bildUrl("https://beispiel.test/b (1).png"), 'url("https://beispiel.test/b (1).png")', "auch mit Klammer und Leerzeichen");
+gleich(P.bildUrl(null), "", "ohne Bild ein leerer Wert");
+gleich(P.bildUrl(""), "", "und bei leerem Text auch");
+pruefe(P.bildUrl(null).indexOf("url") < 0, "nie url(null)");
+
+
+// ------------------------------------------------------ Spieltag-Modus
+
+console.log("\nSpieltag-Modus");
+
+localStorage.removeItem("start");
+localStorage.removeItem("vollbild-an");
+localStorage.removeItem("vollbild-zu");
+
+// Standardmaessig aus: kein Modus, kein Knopf - auch nicht am
+// eigenen Spieltag.
+pruefe(!P.startEinstellung("vollbild"), "der Schalter ist von Haus aus aus");
+pruefe(!P.spieltagErlaubt(true, true), "ohne Schalter gibt es den Modus nicht");
+pruefe(!P.spieltagOffen("2026-11-03", true, true), "und er steht auch nicht offen");
+
+// Eingeschaltet: am eigenen Spieltag geht er von selbst auf.
+localStorage.setItem("start", JSON.stringify({ vollbild: true }));
+pruefe(P.startEinstellung("vollbild"), "eingeschaltet gilt der Schalter");
+pruefe(P.spieltagErlaubt(true, true), "am eigenen Spieltag gibt es ihn");
+pruefe(P.spieltagOffen("2026-11-03", true, true), "und er steht offen");
+
+// Nicht mein Spiel, nicht heute: beides nichts.
+pruefe(!P.spieltagErlaubt(true, false), "fremdes Spiel bekommt keinen Modus");
+pruefe(!P.spieltagErlaubt(false, true), "an einem spielfreien Tag auch nicht");
+pruefe(!P.spieltagOffen("2026-11-03", false, true), "und offen steht dann nichts");
+
+// Zugeklappt gilt fuer diesen Tag - morgen faengt es von vorn an.
+localStorage.setItem("vollbild-zu", "2026-11-03");
+pruefe(!P.spieltagOffen("2026-11-03", true, true), "zugeklappt bleibt zu");
+pruefe(P.spieltagErlaubt(true, true), "den Knopf gibt es weiter");
+pruefe(P.spieltagOffen("2026-11-04", true, true), "am naechsten Spieltag wieder offen");
+
+// Von Hand aufgeklappt schlaegt das Zuklappen desselben Tages.
+localStorage.setItem("vollbild-an", "2026-11-03");
+pruefe(P.spieltagOffen("2026-11-03", true, true), "von Hand geoeffnet gewinnt");
+
+// Aber ohne Schalter nuetzt auch das nichts - das war der Fehler:
+// der Knopf schaltete den Modus frueher an der Einstellung vorbei.
+localStorage.setItem("start", JSON.stringify({ vollbild: false }));
+pruefe(!P.spieltagOffen("2026-11-03", true, true), "ohne Schalter bleibt alles aus");
+pruefe(!P.spieltagErlaubt(true, true), "und es gibt keinen Knopf dazu");
+
+localStorage.removeItem("start");
+localStorage.removeItem("vollbild-an");
+localStorage.removeItem("vollbild-zu");
+
+
 // --------------------------------------------- Seit wann gezaehlt
 
 console.log("\nKachel Insgesamt: seit wann");

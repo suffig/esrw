@@ -45,9 +45,20 @@ function knoten(kennung) {
   };
 }
 
+// Eine echte Ablage: ohne sie laesst sich nichts pruefen, was an
+// einer Einstellung haengt - und daran haengt die halbe Startseite.
+// Werte sind Text wie im Browser, damit JSON.parse(lesen(...)) im
+// Test dasselbe sieht.
 function speicher() {
-  return { getItem: function () { return null; }, setItem: function () {},
-           removeItem: function () {}, clear: function () {} };
+  var ablage = {};
+  return {
+    getItem: function (k) { return Object.prototype.hasOwnProperty.call(ablage, k) ? ablage[k] : null; },
+    setItem: function (k, v) { ablage[k] = String(v); },
+    removeItem: function (k) { delete ablage[k]; },
+    clear: function () { ablage = {}; },
+    get length() { return Object.keys(ablage).length; },
+    key: function (i) { var ks = Object.keys(ablage); return i < ks.length ? ks[i] : null; }
+  };
 }
 
 global.window = global;
