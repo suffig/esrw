@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:d7dcece8e66f15104f62c2f860548900505a59ff@esrw.de
-SEQUENCE:0
-DTSTAMP:20261016T091530Z
-LAST-MODIFIED:20261016T091530Z
-DTSTART:20261025T170000Z
-DTEND:20261025T203000Z
-SUMMARY:SR · Senioren LL: ESC Rheine – Eisadler Dortmund 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
-  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Rheiner Eis
- sporthalle\nAdresse: Kopernikusstraße 34\, 48429 Rheine\nGespann: Steeg\,
-  Cedric\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/ei
- nteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Rheiner Eissporthalle\, Kopernikusstraße 34\, 48429 Rheine
-GEO:52.281013;7.455599
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheiner Eissporthalle, Kop
- ernikusstraße 34, 48429 Rheine";X-APPLE-RADIUS=100;X-TITLE="Rheiner Eissp
- orthalle":geo:52.281013,7.455599
-END:VEVENT
-BEGIN:VEVENT
 UID:d72e918ddb991c4f42d9d7e40a991e08490e5845@esrw.de
 SEQUENCE:0
 DTSTAMP:20261023T143044Z
