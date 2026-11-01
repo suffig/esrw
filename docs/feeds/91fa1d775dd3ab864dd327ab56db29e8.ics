@@ -49,12 +49,6 @@ GEO:51.979731;8.496038
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
  Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
  sbahn Bielefeld":geo:51.979731,8.496038
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL: TSVE Bielefeld
-  – ESV Grizzlys Bergkamen
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:601446bb5b540fb24cc0b076db0b71e0ec8354f2@esrw.de
