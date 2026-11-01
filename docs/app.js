@@ -458,6 +458,23 @@
     if (h.scrollWidth > h.clientWidth + 1) h.textContent = kurz;
     return voll;
   }
+  // Sagt die Zeile unter dem Kopf dasselbe wie der Kopf? Dann ist sie
+  // Wiederholung. Verglichen wird der Text und nicht eine Liste von
+  // Seiten - so bleibt es richtig, wenn ein Titel sich aendert.
+  function titelDoppelt(kopf, zeile) {
+    if (!kopf || !zeile) return false;
+    return kopf.trim().toLowerCase() === zeile.trim().toLowerCase();
+  }
+  // Gemessen bei 375 px: fuenf Seiten nannten ihren Namen zweimal und
+  // verschenkten dafuer zusammen 385 px. Der Untertitel bleibt stehen,
+  // er erklaert - der Titel wiederholt nur.
+  function titelDoppelungPruefen(name, kopftitel) {
+    var ab = el(name); if (!ab) return;
+    var zeile = ab.querySelector(".profilzeile");
+    var b = zeile && zeile.querySelector("b");
+    if (!b) return;
+    zeile.classList.toggle("titel-doppelt", titelDoppelt(kopftitel, b.textContent));
+  }
   window.addEventListener("resize", titelAnpassen);
   // Die Schrift kommt nach - vorher misst der Browser die falsche Breite
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(titelAnpassen);
@@ -3510,6 +3527,7 @@
     letzteAnsicht = name;
     document.documentElement.setAttribute("data-ansicht", name);
     var titel = titelAnpassen();
+    titelDoppelungPruefen(name, titel);
     // Die Seite wechselt, ohne dass das Fenster neu laedt - ein
     // Screenreader merkt davon nichts. Deshalb die Ansage, und nur bei
     // einem echten Wechsel: dieselbe Ansicht noch einmal zu nennen,
@@ -4222,6 +4240,21 @@
     });
   }
 
+  // Laeuft die Reihe seitwaerts weiter? Dann nach rechts ausblenden,
+  // wie es .mg-untertabs im Mitgliederbereich tut.
+  //
+  // Zweimal gemessen: einmal sofort und einmal gleich danach. Beim
+  // ersten Aufbau steht die Breite oft noch auf null, weil die Ansicht
+  // in diesem Augenblick noch versteckt ist. requestAnimationFrame
+  // waere der uebliche Platz dafuer, laeuft aber nicht, solange die
+  // Seite im Hintergrund liegt - dann bliebe der Hinweis fuer immer
+  // aus, und das ist genau der Fall, wenn man die App aufweckt.
+  function rollhinweis(e) {
+    if (!e) return;
+    function messen() { e.classList.toggle("rollt", e.scrollWidth > e.clientWidth + 1); }
+    messen();
+    setTimeout(messen, 0);
+  }
   function aendKopfBauen() {
     var kopf = el("aenderungen-kopf"); if (!kopf) return;
     var f = aendFilterLesen();
@@ -4235,6 +4268,7 @@
         wer.appendChild(b);
       });
       kopf.appendChild(wer);
+      rollhinweis(wer);
     }
     // Art mit Zahlen - was es nicht gibt, steht auch nicht da
     var zahlen = {}; aendGefiltert(true).forEach(function (e) { var a = aendArt(e); zahlen[a] = (zahlen[a] || 0) + 1; zahlen.alle = (zahlen.alle || 0) + 1; });
@@ -4249,6 +4283,7 @@
       arten.appendChild(b);
     });
     kopf.appendChild(arten);
+    rollhinweis(arten);
     // Zeitraum, Sortierung, Person und Suche standen alle offen da - mehr
     // Bedienung als Inhalt. Jetzt liegen sie hinter einem Aufklapper, der
     // sagt, was gerade eingestellt ist.
@@ -7010,6 +7045,7 @@
       datumKurz: datumKurz, uhr: uhr, farbeFuer: farbeFuer, mitPuffer: mitPuffer, seitText: seitText, bildUrl: bildUrl,
       spieltagErlaubt: spieltagErlaubt, spieltagOffen: spieltagOffen, startEinstellung: startEinstellung,
       aendZerlegen: aendZerlegen, aendArt: aendArt, tourAngebote: tourAngebote,
+      titelDoppelt: titelDoppelt,
       naechstesEigenes: naechstesEigenes
     }
   };

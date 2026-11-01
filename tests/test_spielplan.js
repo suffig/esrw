@@ -601,6 +601,23 @@ pruefe(aufAndroid.indexOf("cid=https%3A%2F%2F") > 0,
 pruefe(aufAndroid.indexOf(".ics") > 0, "und zeigt auf die Kalenderdatei");
 
 
+// --------------------------------------------- Doppelte Seitennamen
+
+console.log("");
+console.log("Seitenname nicht zweimal");
+
+// Gemessen bei 375 px: fuenf Seiten nannten ihren Namen oben in der
+// Kopfleiste und gleich darunter noch einmal fett.
+pruefe(P.titelDoppelt("Archiv", "Archiv"), "gleicher Name ist Wiederholung");
+pruefe(P.titelDoppelt("Regeln", " regeln "), "Leerraum und Grossschreibung zaehlen nicht");
+pruefe(!P.titelDoppelt("Karte", "Hallenkarte"), "Hallenkarte sagt mehr als Karte");
+pruefe(!P.titelDoppelt("Mitfahren", "Zusammen fahren"), "und Zusammen fahren etwas anderes");
+pruefe(!P.titelDoppelt("ESRW App", "Probe Person"), "ein Personenname bleibt stehen");
+pruefe(!P.titelDoppelt("", "Archiv"), "ohne Kopftitel wird nichts versteckt");
+pruefe(!P.titelDoppelt("Archiv", ""), "und ohne Zeilentitel auch nicht");
+pruefe(!P.titelDoppelt(null, null), "null ist keine Wiederholung");
+
+
 // --------------------------------------------------- Aenderungszeilen
 
 console.log("\nAenderungen: was oben steht");
