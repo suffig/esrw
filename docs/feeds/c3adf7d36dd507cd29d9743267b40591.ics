@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:3d15f17e9c85185139741e4db6530a087a143004@esrw.de
-SEQUENCE:0
-DTSTAMP:20261016T091530Z
-LAST-MODIFIED:20261016T091530Z
-DTSTART:20261025T150000Z
-DTEND:20261025T183000Z
-SUMMARY:SR · U15 RLA: Krefelder EV – Iserlohner EC
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:00 Uhr\nTreffpunkt:
-  16:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Rheinlandhalle 
- Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Schlüter\
- , Thomas\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
-GEO:51.339877;6.540168
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
- stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
- le Krefeld":geo:51.339877,6.540168
-END:VEVENT
-BEGIN:VEVENT
 UID:7c8fcd185ceca521ed970589df1790d9e960c1c3@esrw.de
 SEQUENCE:0
 DTSTAMP:20261016T091530Z
@@ -975,12 +954,6 @@ GEO:51.295808;6.834624
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
   Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
  tingen":geo:51.295808,6.834624
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: Ratinger Ice Alien
- s – EC Bergisch Land
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:3c93e9890fa5a9b573a7771fe7b0bb0c6d7a7f05@esrw.de
