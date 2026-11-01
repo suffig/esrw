@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:896a95d3c165259bb34589dfcb1b0ba8f2ed2090@esrw.de
-SEQUENCE:0
-DTSTAMP:20261016T091530Z
-LAST-MODIFIED:20261016T091530Z
-DTSTART:20261025T073000Z
-DTEND:20261025T110000Z
-SUMMARY:SR · U17 RL: Herner EV – Herforder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
-  08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Gysenberghalle H
- erne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Melchert\, Philip\
- n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Gysenberghalle Herne\, Am Revierpark 22\, 44627 Herne
-GEO:51.532602;7.254372
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
- evierpark 22, 44627 Herne";X-APPLE-RADIUS=100;X-TITLE="Gysenberghalle Hern
- e":geo:51.532602,7.254372
-END:VEVENT
-BEGIN:VEVENT
 UID:b5555ab7af2bc0dbcf1bb3ca13bca5bc6a20ee4c@esrw.de
 SEQUENCE:0
 DTSTAMP:20261018T091526Z
