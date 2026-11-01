@@ -4111,6 +4111,20 @@
   // Besuch noch stehen, gehoeren aber nicht ins Konto.
   var AEND_NAMEN = { neu: "Neu", geaendert: "Geändert", gespann: "Gespann", entfallen: "Abgesetzt", korrektur: "Korrektur", abgesagt: "Abgesagt", angelegt: "Angelegt" };
   var AEND_ARTEN = [["alle", "Alles"], ["neu", "Neu"], ["geaendert", "Geändert"], ["gespann", "Gespann"], ["entfallen", "Abgesetzt"], ["betreiber", "Betreiber"]];
+  // Was oben steht und was darunter. Die stuendliche Datei nennt in
+  // "text" das Spiel und in "was" die Aenderung - fuer die Anzeige
+  // gilt die umgekehrte Reihenfolge: erst was los ist, dann wo.
+  // Wo es nichts zu vergleichen gibt (neu, abgesetzt), traegt die Art
+  // selbst den Satz.
+  var AEND_SATZ = { neu: "Neue Einteilung", entfallen: "Spiel entfällt", gespann: "Gespann geändert" };
+  function aendZerlegen(e) {
+    var spiel = e.text || "";
+    var was = (e.was || "").trim();
+    // Die Pipeline schreibt manchmal den ganzen Satz in "was", und der
+    // faengt dann mit dem Spiel an - das stuende sonst zweimal da.
+    if (was && spiel && was.indexOf(spiel) === 0) was = was.slice(spiel.length).replace(/^[\s:\u2013-]+/, "");
+    return { aenderung: was || AEND_SATZ[e.art] || "Geändert", spielText: spiel };
+  }
   var aendFilter = null, aendDaten = null, aendGesehen = 0;
   function aendFilterLesen() {
     if (aendFilter) return aendFilter;
@@ -4138,8 +4152,12 @@
         function spielZu(kennung) { return kennung ? (daten.spiele || []).filter(function (x) { return kennungVon(x) === kennung; })[0] : null; }
         (r[0] || []).forEach(function (e) {
           var s = spielZu(e.kennung);
+          var zerlegt = aendZerlegen(e);
+          // "was" wandert nach oben und steht deshalb nicht noch einmal
+          // klein darunter; die Felder mit Vorher/Nachher bleiben.
           eintraege.push({ zeit: e.stand, art: e.art, titel: e.text, wer: e.name, quelle: e.quelle || "",
-            halle: e.art === "neu" ? (e.halle || "") : "", felder: e.felder || null, was: e.was || null,
+            aenderung: zerlegt.aenderung, spielText: zerlegt.spielText,
+            halle: e.art === "neu" ? (e.halle || "") : "", felder: e.felder || null, was: null,
             href: s ? "#spiel/" + encodeURIComponent(kennungVon(s)) : "#" + e.slug, slug: e.slug,
             spiel: s ? new Date(s.beginn).getTime() : spielZeitAus(e.kennung) });
         });
@@ -4415,6 +4433,17 @@
   // ueber die Tauschboerse hat nichts zu suchen, wenn sie aus ist. Das
   // fuenfte Feld eines Schritts ist der Funktionsschluessel, den er
   // braucht; fehlt es, gilt der Schritt immer.
+  // Was man sich einrichten kann - als Angebot, nicht als Aufgabe.
+  // Genannt wird nur, was der Betreiber freigeschaltet hat: ein
+  // Angebot, das es gar nicht gibt, aergert mehr, als es hilft.
+  function tourAngebote() {
+    var z = ["• Kalender: deine Spiele wandern von allein in den " + kalenderName()
+             + ", mit Wecker zum Treffpunkt. Auf „Start“."];
+    if (funktion("push")) z.push("• Push: die App meldet sich, wenn sich etwas ändert, am Spieltag und zur Abfahrt.");
+    if (funktion("abrechnung")) z.push("• Deine Anschrift: einmal eintragen, dann rechnet die App Kilometer und Vergütung von selbst und schreibt die Rechnung.");
+    if (funktion("telefon") || funktion("gespann")) z.push("• Telefonnummer und Bild: sehen nur angemeldete Kollegen – damit man dich vor dem Spiel erreicht.");
+    return z;
+  }
   function tourBauen(name) {
     var android = istAndroid();
     // Vier Schritte fuer den ersten Besuch. Wer zum ersten Mal
@@ -4427,13 +4456,15 @@
       ["i-users", "Tippe auf deinen Namen",
        "Unten in der Liste. Danach zeigt „Start“ deine Spiele.\nÄndern kannst du das jederzeit über den Kreis oben rechts."],
       ["i-cal", "Aufs Handy holen",
-       android
-         ? "Im Chrome-Menü „App installieren“ – dann liegt sie wie jede andere App auf dem Bildschirm.\nAuf „Start“ trägt „Im Kalender abonnieren“ deine Spiele in den Google-Kalender ein, mit Wecker zum Treffpunkt."
-         : "In Safari auf „Teilen“ und „Zum Home-Bildschirm“ – dann liegt sie wie jede andere App auf dem Bildschirm.\nAuf „Start“ trägt „Im Kalender abonnieren“ deine Spiele in den Kalender ein, mit Wecker zum Treffpunkt.",
-       "#", "Zur Startseite"],
-      ["i-check", "Das war's",
-       "Unten findest du Start, Spielplan, Kollegen und Mehr.\nAusführlicher steht alles unter Mehr → Anleitung. Ein Konto brauchst du nur für "
-         + funktionsText([["abrechnung", "die Abrechnung"], ["push", "Push"], ["notizen", "Notizen"]], "und") + "."]
+       appAblegen().charAt(0).toUpperCase() + appAblegen().slice(1)
+         + " – dann liegt sie wie jede andere App auf dem Bildschirm und geht auch ohne Netz auf."],
+      ["i-check", "Wenn du magst",
+       "Nichts davon musst du – deine Einteilungen siehst du auch so.\n\n"
+         + tourAngebote().join("\n")
+         + "\n\nAlles einzeln an- und abschaltbar.",
+       "#einstellungen", "Zu den Einstellungen"],
+      ["i-mehr", "Das war's",
+       "Unten findest du Start, Spielplan, Kollegen und Mehr.\nAusführlicher steht alles unter Mehr → Anleitung."]
     ];
     var ausfuehrlich = [
       ["i-home", "Willkommen bei den Einteilungen", "Diese App zeigt dir deine Schiedsrichter-Einteilungen von esrw.de, immer aktuell, mit Halle, Treffpunkt, Route und Gespann. Ein paar kurze Schritte, dann bist du startklar."],
@@ -6978,6 +7009,7 @@
       ohneZeichen: ohneZeichen, ausgeschrieben: ausgeschrieben, suchtextVon: suchtextVon,
       datumKurz: datumKurz, uhr: uhr, farbeFuer: farbeFuer, mitPuffer: mitPuffer, seitText: seitText, bildUrl: bildUrl,
       spieltagErlaubt: spieltagErlaubt, spieltagOffen: spieltagOffen, startEinstellung: startEinstellung,
+      aendZerlegen: aendZerlegen, aendArt: aendArt, tourAngebote: tourAngebote,
       naechstesEigenes: naechstesEigenes
     }
   };

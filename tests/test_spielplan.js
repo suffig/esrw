@@ -537,14 +537,19 @@ console.log("\nAnleitung für den ersten Besuch");
 var ersterBesuch = P.tourBauen("start");
 var vollstaendig = P.tourBauen("alles");
 
-pruefe(ersterBesuch.length <= 4, "der erste Besuch bekommt hoechstens vier Schritte",
+pruefe(ersterBesuch.length <= 5, "der erste Besuch bekommt hoechstens fuenf Schritte",
        ersterBesuch.length + " Schritte");
 pruefe(vollstaendig.length > ersterBesuch.length,
        "unter Mehr steht die ausfuehrliche Fassung",
        vollstaendig.length + " Schritte");
 
 // Kein Schritt darf eine Textwand sein - wer das sieht, klickt weg.
-var langeSchritte = ersterBesuch.filter(function (s) { return (s[2] || "").length > 230; });
+// Gemessen wird die laengste Zeile, nicht die Gesamtlaenge: vier
+// kurze Punkte untereinander liest man, vier Saetze am Stueck nicht.
+function laengsteZeile(text) {
+  return (text || "").split("\n").reduce(function (m, z) { return Math.max(m, z.length); }, 0);
+}
+var langeSchritte = ersterBesuch.filter(function (s) { return laengsteZeile(s[2]) > 160; });
 pruefe(!langeSchritte.length, "kein Schritt ist laenger als 230 Zeichen",
        langeSchritte.map(function (s) { return s[1] + "=" + s[2].length; }).join(", "));
 
@@ -594,6 +599,65 @@ pruefe(aufAndroid.indexOf("webcal") < 0,
 pruefe(aufAndroid.indexOf("cid=https%3A%2F%2F") > 0,
        "die Feed-Adresse steckt kodiert im Parameter", aufAndroid.slice(0, 80));
 pruefe(aufAndroid.indexOf(".ics") > 0, "und zeigt auf die Kalenderdatei");
+
+
+// --------------------------------------------------- Aenderungszeilen
+
+console.log("\nAenderungen: was oben steht");
+
+var SPIEL = "So. 02.11. 18:00 Uhr – U17 Oberliga: TuS Probe - SV Muster";
+
+// Die stuendliche Datei nennt in "text" das Spiel und in "was" die
+// Aenderung. Angezeigt gehoert es andersherum - sonst liest man bei
+// jeder Zeile erst an der Spielkennung vorbei.
+var g = P.aendZerlegen({ art: "geaendert", text: SPIEL, was: "Anstoß 18:00 statt 17:00" });
+gleich(g.aenderung, "Anstoß 18:00 statt 17:00", "oben steht, was sich geaendert hat");
+gleich(g.spielText, SPIEL, "darunter das Spiel");
+
+// Schreibt die Pipeline das Spiel in "was" mit hinein, stuende es
+// zweimal da.
+var d = P.aendZerlegen({ art: "geaendert", text: SPIEL, was: SPIEL + ": Halle Ost statt Halle Nord" });
+gleich(d.aenderung, "Halle Ost statt Halle Nord", "das Spiel steht nicht zweimal da");
+gleich(d.spielText, SPIEL, "und unten weiterhin ganz");
+
+// Wo es nichts zu vergleichen gibt, traegt die Art den Satz.
+gleich(P.aendZerlegen({ art: "neu", text: SPIEL }).aenderung, "Neue Einteilung", "neu sagt es selbst");
+gleich(P.aendZerlegen({ art: "entfallen", text: SPIEL }).aenderung, "Spiel entfällt", "abgesetzt auch");
+gleich(P.aendZerlegen({ art: "gespann", text: SPIEL }).aenderung, "Gespann geändert", "und das Gespann");
+gleich(P.aendZerlegen({ art: "neu", text: SPIEL }).spielText, SPIEL, "das Spiel steht auch dort");
+
+// Nichts darf "undefined" werden - das stand frueher in Zeilen ohne Text.
+gleich(P.aendZerlegen({ art: "geaendert" }).spielText, "", "ohne Text ein leerer Wert");
+pruefe(P.aendZerlegen({ art: "geaendert" }).aenderung.indexOf("undefined") < 0, "nie undefined");
+pruefe(P.aendZerlegen({ art: "gibtsnicht", text: SPIEL }).aenderung.length > 0, "auch eine unbekannte Art bekommt einen Satz");
+
+
+// ------------------------------------------------- Anleitung: Angebote
+
+console.log("\nAnleitung: was man einrichten kann");
+
+var angebote = P.tourAngebote();
+function nennt(wort) { return angebote.join(" ").indexOf(wort) >= 0; }
+pruefe(nennt("Kalender"), "der Kalender wird genannt");
+pruefe(nennt("Push"), "Push auch");
+pruefe(nennt("Anschrift"), "und die eigene Anschrift");
+pruefe(nennt("Rechnung"), "samt Rechnung");
+pruefe(nennt("Telefonnummer"), "und die Telefonnummer");
+
+// Der Ton: ein Angebot, keine Aufgabe.
+var schritte = P.tourBauen("start");
+var angebotSchritt = schritte.filter(function (x) { return x[1] === "Wenn du magst"; })[0];
+pruefe(!!angebotSchritt, "die kurze Anleitung hat einen Schritt dafuer");
+pruefe(angebotSchritt[2].indexOf("musst du") >= 0, "und sagt, dass nichts davon Pflicht ist");
+pruefe(angebotSchritt[2].indexOf("Kalender") >= 0, "mit dem Kalender darin");
+pruefe(angebotSchritt[2].indexOf("Push") >= 0, "und Push");
+gleich(angebotSchritt[3], "#einstellungen", "der Knopf fuehrt zu den Einstellungen");
+
+// Schritt 3 erklaert nur noch die Installation - der Kalender hat
+// jetzt seinen eigenen Platz.
+var holen = schritte.filter(function (x) { return x[1] === "Aufs Handy holen"; })[0];
+pruefe(!!holen, "der Schritt zum Ablegen steht weiter da");
+pruefe(holen[2].indexOf("Kalender") < 0, "und redet nicht mehr vom Kalender");
 
 
 // ------------------------------------------------------- Profilbilder
