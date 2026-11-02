@@ -14,7 +14,8 @@ DTSTAMP:20261023T143044Z
 LAST-MODIFIED:20261023T143044Z
 DTSTART:20261103T170000Z
 DTEND:20261103T203000Z
-SUMMARY:SR · U17 RL: Herner EV – Eisadler Dortmund
+SUMMARY:SR · U17 RL: Herner EV – Eisadler Dortmund · Gysenberghalle Her
+ ne
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
   18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Gysenberghalle H
  erne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Wunsch\, Philipp\n
@@ -31,7 +32,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Herner EV – Eisa
- dler Dortmund
+ dler Dortmund · Gysenberghalle Herne
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -41,7 +42,8 @@ DTSTAMP:20261031T224530Z
 LAST-MODIFIED:20261031T224530Z
 DTSTART:20261108T150000Z
 DTEND:20261108T183000Z
-SUMMARY:SR · U13 LL: Ratinger Ice Aliens – Lippe Hockey Hamm
+SUMMARY:SR · U13 LL: Ratinger Ice Aliens – Lippe Hockey Hamm · Eissport
+ halle Ratingen
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:00 Uhr\nTreffpunkt:
   16:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Ra
  tingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Rieneck\, Maxim
@@ -58,7 +60,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: Ratinger Ice Alien
- s – Lippe Hockey Hamm
+ s – Lippe Hockey Hamm · Eissporthalle Ratingen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -68,7 +70,8 @@ DTSTAMP:20261031T224530Z
 LAST-MODIFIED:20261031T224530Z
 DTSTART:20261108T180000Z
 DTEND:20261108T213000Z
-SUMMARY:SR · U15 LL: Ratinger Ice Aliens – SpG Neusser EV / GSC Moers
+SUMMARY:SR · U15 LL: Ratinger Ice Aliens – SpG Neusser EV / GSC Moers ·
+  Eissporthalle Ratingen
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
   19:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Ra
  tingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Rieneck\, Maxim
@@ -85,7 +88,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Ratinger Ice Alien
- s – SpG Neusser EV / GSC Moers
+ s – SpG Neusser EV / GSC Moers · Eissporthalle Ratingen
 END:VALARM
 END:VEVENT
 END:VCALENDAR
