@@ -1553,34 +1553,6 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: ESV Grizzlys Bergk
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:ada1be419bbe975ac8c6a6661cadc713c6d92e97@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261107T093000Z
-DTEND:20261107T130000Z
-SUMMARY:LSR · U20 RL: Herforder EV – EHC Troisdorf
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 11:30 Uhr\nTreffpunkt:
-  10:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eishalle Im Klei
- nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Schmidt\, E
- ugen (HSR) / Thiel\, Mark (LSR)\n\nQuelle: https://www.esrw.de/einteilunge
- n.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eishalle Im Kleinen Felde\, Im Kleinen Felde\, 32051 Herford
-GEO:52.114893;8.652028
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
-  Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
- Kleinen Felde":geo:52.114893,8.652028
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: Herforder EV – 
- EHC Troisdorf
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:8cf0d57bc917c407bebca8e2f26aee25b7d8f04c@esrw.de
 SEQUENCE:0
 DTSTAMP:20261031T224530Z
