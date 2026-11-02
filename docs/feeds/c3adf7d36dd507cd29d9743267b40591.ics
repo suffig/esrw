@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:9df258fce40c4da03da7e38ee70c02f69ef8d64b@esrw.de
-SEQUENCE:0
-DTSTAMP:20261018T091526Z
-LAST-MODIFIED:20261018T091526Z
-DTSTART:20261026T180000Z
-DTEND:20261026T213000Z
-SUMMARY:SR · Frauen BZL: ESV Grizzlys Bergkamen – Herforder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
-  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Eissporthall
- e Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Zynda\, Ni
- ck\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/einteilu
- ngen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
-GEO:51.602578;7.626858
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
- äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
- ergkamen":geo:51.602578,7.626858
-END:VEVENT
-BEGIN:VEVENT
 UID:c5372ffea9914753499a48b782cc15a85443fba0@esrw.de
 SEQUENCE:0
 DTSTAMP:20261023T143044Z
