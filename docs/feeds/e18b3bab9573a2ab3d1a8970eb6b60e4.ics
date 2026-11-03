@@ -9,17 +9,17 @@ REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
 UID:882338a316628ccadbfdfa6584e03db86e55fef4@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
+SEQUENCE:1
+DTSTAMP:20261103T191548Z
+LAST-MODIFIED:20261103T191548Z
 DTSTART:20261108T171500Z
 DTEND:20261108T204500Z
 SUMMARY:SR · Frauen BZL: ESV Bergisch Gladbach 1b – KEC "Die Haie" 1c
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:15 Uhr\nTreffpunkt:
   18:15 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Eissporthall
  e Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbach\
- nGespann: Bocklemünd\, Cid\nVergütung lt. Ordnung: 95 €\n\nQuelle: htt
- ps://www.esrw.de/einteilungen.html
+ nGespann: Hindley David\nVergütung lt. Ordnung: 95 €\n\nQuelle: https:/
+ /www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

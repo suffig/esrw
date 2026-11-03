@@ -77,4 +77,33 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: TuS Wiehl – Eisa
  dler Dortmund
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:7125bed116950aa8fa5145d56ca152d900b4ec00@esrw.de
+SEQUENCE:0
+DTSTAMP:20261103T191548Z
+LAST-MODIFIED:20261103T191548Z
+DTSTART:20261108T171500Z
+DTEND:20261108T204500Z
+SUMMARY:SR · Frauen BZL: ESV Bergisch Gladbach 1b – KEC "Die Haie" 1c
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:15 Uhr\nTreffpunkt:
+  18:15 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Eissporthall
+ e Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbach\
+ nGespann: Licau\, Sebastian\nVergütung lt. Ordnung: 95 €\n\nQuelle: htt
+ ps://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
+ ch Gladbach
+GEO:50.967548;7.135355
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
+ dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
+ TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL: ESV Bergisch G
+ ladbach 1b – KEC "Die Haie" 1c
+END:VALARM
+END:VEVENT
 END:VCALENDAR
