@@ -9,16 +9,16 @@ REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
 UID:57734a22aba4b960012bb7860acf0f1a8fdf9bee@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
+SEQUENCE:1
+DTSTAMP:20261103T124527Z
+LAST-MODIFIED:20261103T124527Z
 DTSTART:20261107T104500Z
 DTEND:20261107T141500Z
 SUMMARY:SR · U9 LL Lila: Ratinger Ice Aliens 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:45 Uhr\nTreffpunkt:
   11:45 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Lila\nHalle: Eissporthall
- e Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\n\nQuelle: https://ww
- w.esrw.de/einteilungen.html
+ e Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Hartmann\, 
+ Marius\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

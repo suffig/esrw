@@ -64,16 +64,16 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:0b7ca74204ee1a44c4740f0fe7612894bd464537@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T230046Z
-LAST-MODIFIED:20261031T230046Z
+SEQUENCE:1
+DTSTAMP:20261103T124527Z
+LAST-MODIFIED:20261103T124527Z
 DTSTART:20261108T060000Z
 DTEND:20261108T093000Z
 SUMMARY:SR · U11 LL Rot: Düsseldorfer EG 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
   07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Rot\nHalle: Eishalle Bre
- hmstraße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\n\nQuelle: https:
- //www.esrw.de/einteilungen.html
+ hmstraße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Hartman
+ n\, Marius\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

@@ -86,4 +86,58 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: ESV Bergisch Gl
  adbach – Ratinger Ice Aliens
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:dd4c65033ba7f0c0dd800ae50784a02012411a88@esrw.de
+SEQUENCE:0
+DTSTAMP:20261103T124527Z
+LAST-MODIFIED:20261103T124527Z
+DTSTART:20261107T104500Z
+DTEND:20261107T141500Z
+SUMMARY:SR · U9 LL Lila: Ratinger Ice Aliens 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:45 Uhr\nTreffpunkt:
+  11:45 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Lila\nHalle: Eissporthall
+ e Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Stocker\, Q
+ uirin\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
+GEO:51.295808;6.834624
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
+  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
+ tingen":geo:51.295808,6.834624
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Lila: Ratinger Ice A
+ liens 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:ad3342e9f8ff386c560e9b70ae5138b0d0bdc947@esrw.de
+SEQUENCE:0
+DTSTAMP:20261103T124527Z
+LAST-MODIFIED:20261103T124527Z
+DTSTART:20261108T060000Z
+DTEND:20261108T093000Z
+SUMMARY:SR · U11 LL Rot: Düsseldorfer EG 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Rot\nHalle: Eishalle Bre
+ hmstraße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Kudal\,
+  Lars\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Rot: Düsseldorfer 
+ EG 1b
+END:VALARM
+END:VEVENT
 END:VCALENDAR

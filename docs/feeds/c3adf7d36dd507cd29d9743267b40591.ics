@@ -1562,15 +1562,15 @@ END:VEVENT
 BEGIN:VEVENT
 UID:e50f0d7012afcd59c5134046cd65ae028de90959@esrw.de
 SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
+DTSTAMP:20261103T124527Z
+LAST-MODIFIED:20261103T124527Z
 DTSTART:20261107T104500Z
 DTEND:20261107T141500Z
 SUMMARY:SR · U9 LL Lila: Ratinger Ice Aliens 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:45 Uhr\nTreffpunkt:
   11:45 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Lila\nHalle: Eissporthall
- e Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\n\nQuelle: https://ww
- w.esrw.de/einteilungen.html
+ e Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Stocker\, Q
+ uirin\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1941,15 +1941,15 @@ END:VEVENT
 BEGIN:VEVENT
 UID:cb3a52b994b1654a3a7d6f3475ede77bd7d006d2@esrw.de
 SEQUENCE:0
-DTSTAMP:20261031T230046Z
-LAST-MODIFIED:20261031T230046Z
+DTSTAMP:20261103T124527Z
+LAST-MODIFIED:20261103T124527Z
 DTSTART:20261108T060000Z
 DTEND:20261108T093000Z
 SUMMARY:SR · U11 LL Rot: Düsseldorfer EG 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
   07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Rot\nHalle: Eishalle Bre
- hmstraße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\n\nQuelle: https:
- //www.esrw.de/einteilungen.html
+ hmstraße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Kudal\,
+  Lars\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
