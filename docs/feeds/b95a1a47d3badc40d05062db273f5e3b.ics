@@ -30,17 +30,17 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
 END:VEVENT
 BEGIN:VEVENT
 UID:d6dc238fb0934a29d9a347c4cd0aaaa967f7f498@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
+SEQUENCE:1
+DTSTAMP:20261104T184531Z
+LAST-MODIFIED:20261104T184531Z
 DTSTART:20261106T180000Z
 DTEND:20261106T213000Z
 SUMMARY:LSR · Senioren RLW: Neusser EV – Lauterbach Luchse
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
   19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
- lle Neuss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Perlitz\,
-  Christian (HSR) / Kudal\, Lars (LSR)\nVergütung lt. Ordnung: 100 €\n\n
- Quelle: https://www.esrw.de/einteilungen.html
+ lle Neuss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Steven\, 
+ Patrick (HSR) / Kudal\, Lars (LSR)\nVergütung lt. Ordnung: 100 €\n\nQue
+ lle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
