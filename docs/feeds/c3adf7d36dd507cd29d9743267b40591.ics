@@ -1614,6 +1614,33 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: Eisadler Dortmund
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:cdc4acb3a2a5108a94887cbe2af054b4926c3caf@esrw.de
+SEQUENCE:0
+DTSTAMP:20261104T190052Z
+LAST-MODIFIED:20261104T190052Z
+DTSTART:20261107T143000Z
+DTEND:20261107T180000Z
+SUMMARY:SR · U15 ODM: Düsseldorfer EG – Krefelder EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
+  15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 ODM\nHalle: Eishalle Brehms
+ traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Hornig\, M
+ arius\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 ODM: Düsseldorfer EG 
+ – Krefelder EV
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:77fd90cf3c258e5fe9c6ffbff2d988c4710c6513@esrw.de
 SEQUENCE:0
 DTSTAMP:20261031T224530Z
@@ -1773,6 +1800,33 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · DFEL2 Nord: KEC "Die Haie"
   – EC Bergisch Land
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:215c18b2bfdba2766701ca22e58c9d82756af6e7@esrw.de
+SEQUENCE:0
+DTSTAMP:20261104T190052Z
+LAST-MODIFIED:20261104T190052Z
+DTSTART:20261107T173000Z
+DTEND:20261107T210000Z
+SUMMARY:SR · U15 ODM: Iserlohner EC – Kölner Junghaie
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 ODM\nHalle: Eissporthalle a
+ m Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Priebsc
+ h\, Jan Philipp\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
+GEO:51.384598;7.713829
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
+ , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
+ alle am Seilersee":geo:51.384598,7.713829
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 ODM: Iserlohner EC –
+  Kölner Junghaie
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2019,6 +2073,33 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Rot: Herner EV
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:3be3431f628521d9a4532d8957ebac1dc5621b31@esrw.de
+SEQUENCE:0
+DTSTAMP:20261104T190052Z
+LAST-MODIFIED:20261104T190052Z
+DTSTART:20261108T080000Z
+DTEND:20261108T113000Z
+SUMMARY:SR · U15 ODM: Krefelder EV – Düsseldorfer EG
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 ODM\nHalle: Rheinlandhalle 
+ Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Steven\, P
+ atrick\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
+GEO:51.339877;6.540168
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
+ stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
+ le Krefeld":geo:51.339877,6.540168
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 ODM: Krefelder EV – 
+ Düsseldorfer EG
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:e7a25d778beda1bdb4f35340a69beb1dabc21585@esrw.de
 SEQUENCE:0
 DTSTAMP:20261031T224530Z
@@ -2210,6 +2291,33 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: TuS Wiehl 
  – Grefrather EG
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:023c9ab81ccfa8eecf04395b56da748859ce17a2@esrw.de
+SEQUENCE:0
+DTSTAMP:20261104T190052Z
+LAST-MODIFIED:20261104T190052Z
+DTSTART:20261108T153000Z
+DTEND:20261108T190000Z
+SUMMARY:SR · U15 ODM: Kölner Junghaie – Iserlohner EC
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
+  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 ODM\nHalle: Kölnarena 2\nA
+ dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Schmidt\, Waldemar
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 ODM: Kölner Junghaie 
+ – Iserlohner EC
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

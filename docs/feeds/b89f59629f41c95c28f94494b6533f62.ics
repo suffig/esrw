@@ -55,4 +55,31 @@ DESCRIPTION:In einer Stunde an der Halle - SR · DFEL2 Nord: KEC "Die Haie"
   – EC Bergisch Land
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:211b5d20a950a0b86e7b887ddedc2c8ea52a71b7@esrw.de
+SEQUENCE:0
+DTSTAMP:20261104T190052Z
+LAST-MODIFIED:20261104T190052Z
+DTSTART:20261108T080000Z
+DTEND:20261108T113000Z
+SUMMARY:SR · U15 ODM: Krefelder EV – Düsseldorfer EG
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 ODM\nHalle: Rheinlandhalle 
+ Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Steven\, P
+ atrick\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
+GEO:51.339877;6.540168
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
+ stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
+ le Krefeld":geo:51.339877,6.540168
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 ODM: Krefelder EV – 
+ Düsseldorfer EG
+END:VALARM
+END:VEVENT
 END:VCALENDAR
