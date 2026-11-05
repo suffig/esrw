@@ -5747,8 +5747,16 @@ window.Mitglieder = (function () {
   function telefonZeile(z, zusatz) {
     var karte = h("div", { class: "telefon-zeile" });
     var titel = z.rufname ? z.name + " (" + z.rufname + ")" : z.name;
-    var kopf = h("div", { class: "kontakt-kopf" }, [
-      bildZeichen(z.name, z.slug, z.bild, "avatar-klein"), h("b", { text: titel })]);
+    // Bild und Name fuehren aufs Profil - dort stehen die gemeinsamen
+    // Spiele. Ohne Slug (eine Nummer aus der Telefonliste des
+    // Betreibers, zu der kein Profil gehoert) bleibt es ein Kopf ohne
+    // Link: ein Link ins Leere waere schlimmer als keiner.
+    var kopf = z.slug
+      ? h("a", { class: "kontakt-kopf kontakt-link", href: "#" + z.slug,
+                 title: "Profil von " + titel + " ansehen" },
+          [bildZeichen(z.name, z.slug, z.bild, "avatar-klein"), h("b", { text: titel })])
+      : h("div", { class: "kontakt-kopf" },
+          [bildZeichen(z.name, z.slug, z.bild, "avatar-klein"), h("b", { text: titel })]);
     if (z.kommt) kopf.appendChild(h("small", { class: "kontakt-marke",
       text: (z.naechstes ? "am " + datumLang(new Date(z.naechstes)).replace(/(\d{2}\.\d{2})\.\d{4}/, "$1.") + " zusammen" : "kommt zusammen")
         + (z.kommt > 1 ? " · noch " + (z.kommt - 1) + " weitere" : "") }));

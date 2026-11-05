@@ -1286,7 +1286,14 @@
       anzahl.textContent = n ? n + (n === 1 ? " Spiel" : " Spiele")
         : zuletzt ? "zuletzt " + zuletzt.split("-").reverse().join(".") : "kein Spiel";
       b.appendChild(name); b.appendChild(anzahl);
-      b.addEventListener("click", function () { if (suchModus) location.hash = p.slug; else profilSetzen(p); });
+      b.addEventListener("click", function () {
+        // Wer schon ein Profil hat, will einen Kollegen ansehen, nicht
+        // zu ihm werden. Das Uebernehmen steht auf dessen Seite als
+        // eigener Knopf. Nur beim ersten Mal ("Wer bist du?") und beim
+        // ausdruecklichen Wechseln setzt ein Tipp das Profil.
+        if (suchModus || (!wechselModus && profil && profil.slug && personMit(profil.slug))) location.hash = p.slug;
+        else profilSetzen(p);
+      });
       li.appendChild(b);
       liste.appendChild(li);
     });
@@ -3087,7 +3094,12 @@
     var ziel = el("spiele"); ziel.innerHTML = "";
     var kommend = p.spiele.filter(function (s) { return !s.vergangen; });
     var gewesen = p.spiele.filter(function (s) { return s.vergangen; }).reverse();
-    var h = document.createElement("h3"); h.className = "abschnitt"; h.textContent = "Deine nächsten Spiele";
+    var meinProfil = !!(profil && profil.slug === p.slug);
+    var h = document.createElement("h3"); h.className = "abschnitt";
+    // Auf einem fremden Profil standen seine Spiele unter "Deine
+    // naechsten Spiele".
+    h.textContent = meinProfil ? "Deine nächsten Spiele"
+                               : "Nächste Spiele von " + (p.name.split(",")[1] || p.name).trim();
     var hs = document.createElement("small");
     hs.textContent = "Tipp für " + funktionsText([[null, "Route"], ["tausch", "Tausch"], ["notizen", "Notiz"], ["checkliste", "Checkliste"]]);
     h.appendChild(hs); ziel.appendChild(h);
@@ -3123,7 +3135,14 @@
     }
     if (!profil || profil.slug !== p.slug) zuletztMerken(p.slug);
     zeigeMeldeKarte(); kalenderBoxStand(meins); onboardingStand(); zeigePins(p); startOrdnungAnwenden();
-    el("kalender-box").classList.toggle("versteckt", !startEinstellung("kalender") && lesen("abo-geklickt") === "1");
+    // Die Kalenderkarte abonniert den eigenen Feed - auf der Seite
+    // eines Kollegen hat sie nichts zu suchen, und mit 575 px war sie
+    // dort der groesste Block.
+    el("kalender-box").classList.toggle("versteckt",
+      !meins || (!startEinstellung("kalender") && lesen("abo-geklickt") === "1"));
+    // Woran man sieht, wo man ist: eine Kante an der Seite, nicht nur
+    // eine graue Zeile ganz oben.
+    el("detail").classList.toggle("fremdes-profil", !meins);
     el("start-anpassen").classList.toggle("versteckt", !meins);
     el("abfahrt-ics").classList.add("versteckt");
     if (profil && profil.slug === p.slug && sitzungVorhanden()) ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
@@ -3491,6 +3510,52 @@
     });
   }
 
+  // Alle gemeinsamen Spiele aus dem Archiv. p.spiele reicht nur ein
+  // paar Wochen zurueck - wer seit Jahren mit jemandem pfeift, sah
+  // davon fast nichts.
+  //
+  // Laufende Saison: beide Personen stehen in archiv.json.personen,
+  // geschnitten wird ueber die Kennung. Eingefrorene Saisons: dort
+  // steht die ganze Besetzung je Zeile.
+  function gemeinsamArchiv(a, eingefroren, slugA, slugB) {
+    var aus = [], gesehen = {};
+    // Zwei Schluessel je Zeile, und beide werden gemerkt: die Kennung
+    // aus der Registratur (id) und beginn|paarung. Die eingefrorenen
+    // Dateien kennen nur die zweite Form - ohne diesen Abgleich stuende
+    // dasselbe Spiel zweimal da, einmal je Quelle. Derselbe Fehler kam
+    // in diesem Projekt schon dreimal zurueck (Fassungen 189, 191, 200).
+    function schluessel(e) {
+      var zweit = (e.beginn || "") + "|" + (e.paarung || "");
+      return e.id ? [e.id, zweit] : [zweit];
+    }
+    function merken(ks) { ks.forEach(function (k) { gesehen[k] = 1; }); }
+    var meine = {};
+    ((a && a.personen && a.personen[slugA]) || []).forEach(function (e) {
+      schluessel(e).forEach(function (k) { meine[k] = e; });
+    });
+    ((a && a.personen && a.personen[slugB]) || []).forEach(function (e) {
+      var ks = schluessel(e), m = null;
+      ks.forEach(function (k) { if (!m) m = meine[k]; });
+      if (!m || ks.some(function (k) { return gesehen[k]; })) return;
+      merken(ks); merken(schluessel(m));
+      var k = ks[0];
+      aus.push({ kennung: k, beginn: m.beginn, liga: m.liga || "", paarung: m.paarung || "",
+                 halle: m.halle || "", saison: m.saison });
+    });
+    (eingefroren || []).forEach(function (f) {
+      ((f.daten && f.daten.spiele) || []).forEach(function (z) {
+        var bes = z[4] || [];
+        if (!bes.some(function (b) { return b[1] === slugA; })) return;
+        if (!bes.some(function (b) { return b[1] === slugB; })) return;
+        var k = z[0] + "|" + z[2];
+        if (gesehen[k]) return;
+        gesehen[k] = 1;
+        aus.push({ kennung: k, beginn: z[0], liga: z[1] || "", paarung: z[2] || "",
+                   halle: z[3] || "", saison: f.saison });
+      });
+    });
+    return aus.sort(function (x, y) { return x.beginn < y.beginn ? 1 : -1; });
+  }
   // Eine Zeile fuer ein gemeinsames Spiel. Das Datumsraster der
   // ".zeile" passt hier nicht - der Titel landete in der schmalen
   // Datumsspalte und brach mitten im Namen um.
@@ -3524,15 +3589,38 @@
     // vier gemeinsame Spiele ohne ein Wort dazu, welche.
     var vergangene = gemeinsam.filter(function (s) { return s.vergangen; })
       .sort(function (x, y) { return x.beginn < y.beginn ? 1 : -1; });
-    if (vergangene.length) {
-      var det = document.createElement("details"); det.className = "tausch";
-      var sum = document.createElement("summary");
-      sum.textContent = vergangene.length === 1 ? "Ein gemeinsames Spiel, schon gepfiffen"
-                                                : vergangene.length + " gemeinsame Spiele, schon gepfiffen";
-      det.appendChild(sum);
-      vergangene.forEach(function (s) { det.appendChild(gemeinsamZeile(s)); });
-      box.appendChild(det);
+    // Erst die aus dem Datenfenster, damit sofort etwas dasteht; das
+    // Archiv kommt nach und ersetzt die Liste, sobald es da ist.
+    var det = document.createElement("details"); det.className = "tausch";
+    var sum = document.createElement("summary");
+    det.appendChild(sum);
+    function listeFuellen(liste) {
+      while (det.childNodes.length > 1) det.removeChild(det.lastChild);
+      sum.textContent = liste.length === 1 ? "Ein gemeinsames Spiel, schon gepfiffen"
+                                           : liste.length + " gemeinsame Spiele, schon gepfiffen";
+      liste.forEach(function (s) { det.appendChild(gemeinsamZeile(s)); });
+      det.classList.toggle("versteckt", !liste.length);
     }
+    // Immer anhaengen, auch leer: dann steht die Stelle fest, an der die
+    // Liste erscheint, wenn das Archiv nachkommt. Ein leerer Aufklapper
+    // bleibt versteckt.
+    listeFuellen(vergangene);
+    box.appendChild(det);
+    (archivDaten ? Promise.resolve(archivDaten) : hole("archiv.json")).then(function (a) {
+      archivDaten = a;
+      var dateien = a.dateien || {};
+      return Promise.all(Object.keys(dateien).map(function (sn) {
+        return hole(dateien[sn]).then(function (d) { return { saison: sn, daten: d }; })
+          .catch(function () { return { saison: sn, daten: null }; });
+      })).then(function (eingefroren) {
+        if (!box.isConnected) return;
+        var alle = gemeinsamArchiv(a, eingefroren, profil.slug, p.slug);
+        // Nur ersetzen, wenn das Archiv mehr weiss - sonst flackert die
+        // Liste und wird womoeglich kuerzer.
+        if (alle.length <= vergangene.length) return;
+        listeFuellen(alle);
+      });
+    }).catch(function () {});
     // Erst anlegen, wenn wirklich Knoepfe kommen - sonst klaffte hier eine Luecke
     var zw = document.createElement("div"); zw.className = "zweit versteckt"; box.appendChild(zw);
     var pz = el("detail").querySelector(".spalte-haupt > .profilzeile");
@@ -3615,10 +3703,14 @@
     var suche = el("suche"); if (suche) suche.classList.add("versteckt");
   }
 
+  var wechselModus = false;
   function zeigeAuswahl(wechsel) {
     aktuell = null; ansicht("auswahl"); el("statistik").innerHTML = "";
     if (kontoObmann && !wechsel) { obmannHinweis(); return; }
     suchModus = wechsel === "suche";
+    // Gemerkt, weil die Liste danach entscheidet, was ein Tipp tut:
+    // ansehen oder uebernehmen.
+    wechselModus = wechsel === true;
     el("frage").textContent = suchModus ? "Suche" : wechsel ? "Profil wechseln" : "Wer bist du?";
     var quellen = funktionsText([[null, "Kollegen"], ["hallen", "Hallen"], [null, "Vereine"], [null, "Spiele"],
       [null, "Seiten"], ["notizen", "Notizen"], ["info", "Termine"], ["regeln", "Strafen"],
@@ -7078,6 +7170,7 @@
       },
       kennungVon: kennungVon, istAusgeblendet: istAusgeblendet, istGeloescht: istGeloescht,
       archivMerge: archivMerge, archivKorrigieren: archivKorrigieren, saisonZeilen: saisonZeilen,
+      gemeinsamArchiv: gemeinsamArchiv,
       archivSaisonAus: archivSaisonAus,
       zeitraum: zeitraum, tagTitel: tagTitel, ligaGruppe: ligaGruppe,
       planFilter: planFilter, aboAdresse: aboAdresse, tourBauen: tourBauen,

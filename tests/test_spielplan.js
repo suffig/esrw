@@ -601,6 +601,50 @@ pruefe(aufAndroid.indexOf("cid=https%3A%2F%2F") > 0,
 pruefe(aufAndroid.indexOf(".ics") > 0, "und zeigt auf die Kalenderdatei");
 
 
+// ------------------------------------------- Gemeinsame Spiele
+
+console.log("");
+console.log("Gemeinsame Spiele aus dem Archiv");
+
+// p.spiele reicht nur ein paar Wochen zurueck. Wer seit Jahren mit
+// jemandem pfeift, sah davon fast nichts.
+var ARCHIV = { personen: {
+  ich: [{ id: "x1", saison: "2026/27", beginn: "2026-10-25T17:00:00+02:00", liga: "U17", paarung: "A - B", halle: "Nord" },
+        { id: "x2", saison: "2026/27", beginn: "2026-10-20T17:00:00+02:00", liga: "LL", paarung: "C - D", halle: "Ost" },
+        { id: "x3", saison: "2026/27", beginn: "2026-10-10T17:00:00+02:00", liga: "LL", paarung: "E - F", halle: "West" }],
+  du:  [{ id: "x1", saison: "2026/27", beginn: "2026-10-25T17:00:00+02:00", liga: "U17", paarung: "A - B", halle: "Nord" },
+        { id: "x3", saison: "2026/27", beginn: "2026-10-10T17:00:00+02:00", liga: "LL", paarung: "E - F", halle: "West" },
+        { id: "x9", saison: "2026/27", beginn: "2026-09-01T17:00:00+02:00", liga: "LL", paarung: "Y - Z", halle: "Sued" }]
+} };
+var EINGEFROREN = [{ saison: "2025/26", daten: { spiele: [
+  ["2026-02-10T18:00:00+01:00", "U17", "Alt - Neu", "Sued", [["Ich", "ich", "SR"], ["Du", "du", "2. SR"]]],
+  ["2026-01-15T18:00:00+01:00", "LL", "Eins - Zwei", "Nord", [["Ich", "ich", "SR"], ["Dritter", "dritter", "2. SR"]]]
+] } }];
+
+var g = P.gemeinsamArchiv(ARCHIV, EINGEFROREN, "ich", "du");
+gleich(g.length, 3, "zwei aus der laufenden Saison und eines aus dem Archiv");
+gleich(g[0].paarung, "A - B", "neuestes zuerst");
+gleich(g[2].paarung, "Alt - Neu", "das eingefrorene zuletzt");
+gleich(g[2].saison, "2025/26", "mit seiner Saison");
+
+// Wo nur einer von beiden dabei war, zaehlt nicht.
+pruefe(!g.some(function (x) { return x.paarung === "C - D"; }), "ein Spiel ohne den anderen faellt weg");
+pruefe(!g.some(function (x) { return x.paarung === "Y - Z"; }), "und eines ohne mich auch");
+pruefe(!g.some(function (x) { return x.paarung === "Eins - Zwei"; }), "im Archiv ebenso");
+
+// Dieselbe Begegnung aus beiden Quellen nur einmal.
+var doppelt = P.gemeinsamArchiv(ARCHIV, [{ saison: "2026/27", daten: { spiele: [
+  ["2026-10-25T17:00:00+02:00", "U17", "A - B", "Nord", [["Ich", "ich", "SR"], ["Du", "du", "2. SR"]]]
+] } }], "ich", "du");
+gleich(doppelt.filter(function (x) { return x.paarung === "A - B"; }).length, 1, "kein Spiel doppelt");
+
+// Leere Eingaben brechen nichts.
+gleich(P.gemeinsamArchiv(null, null, "ich", "du").length, 0, "ohne Archiv eine leere Liste");
+gleich(P.gemeinsamArchiv(ARCHIV, [], "ich", "niemand").length, 0, "mit einem Fremden nichts gemeinsam");
+gleich(P.gemeinsamArchiv(ARCHIV, [{ saison: "x", daten: null }], "ich", "du").length, 2,
+       "eine fehlende Archivdatei laesst die laufende Saison stehen");
+
+
 // ------------------------------------- Einrichtung und Kalenderkarte
 
 console.log("");
