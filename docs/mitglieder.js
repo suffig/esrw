@@ -2045,7 +2045,6 @@ window.Mitglieder = (function () {
     if (!jahre.length) jahre.push(new Date().getFullYear());
     // Oben nur das Wesentliche: Vergütung, Fahrtkosten, offen. Der Rest klappt auf.
     var sS = summen(spiele);
-    var saldo = h("div", { class: "mg-saldo" });
     var kosten = sS.fahrt + sS.verpf + sS.ausl;
     // Was noch nicht abgehakt ist - die eigentliche Frage beim Blick in
     // die Abrechnung: was steht noch aus?
@@ -2062,24 +2061,6 @@ window.Mitglieder = (function () {
       offenN++;
       offenBetrag += e ? (betragFuer(sp, e).betrag || 0) : 0;
     });
-    [["Vergütung", euro(sS.verg), null, "", sS.mitBetrag + (sS.mitBetrag === 1 ? " Spiel" : " Spiele") + " mit Betrag"],
-     ["Kosten", euro(kosten), null, "", "Fahrt, Verpflegung, Auslagen"],
-     ["Saldo", euro(sS.verg - kosten), function () { panelOeffnen("detail", false); }, sS.verg - kosten < 0 ? "offen" : "offen fertig", "Vergütung minus Kosten"],
-     [offenN ? "Offen · " + offenN + (offenN === 1 ? " Spiel" : " Spiele") : "Alles abgehakt",
-      offenN ? euro(offenBetrag) : "✓",
-      function () { nurUnbezahlt = !nurUnbezahlt; nurOffene = false; schnellModus = false; rendereAbrechnung(); },
-      offenN ? "offen" : "offen fertig",
-      offenN ? "gespielt, nicht abgehakt" : "nichts steht aus"]
-    ].forEach(function (p) {
-      var k = h("div", { class: "zahl karte " + p[3] + (p[2] ? " tippbar" : "") }, [h("b", { text: p[1] }), h("span", { text: p[0] })]);
-      // Vier Betraege nebeneinander, und keiner sagte, wie er zustande
-      // kam. Jetzt steht es unter der Zahl - dieselbe Antwort wie beim
-      // Vermerk an der Abrechnungszeile seit Fassung 129.
-      k.appendChild(h("small", { class: "woher", text: p[4] }));
-      if (p[2]) { k.style.cursor = "pointer"; k.title = "Antippen"; k.addEventListener("click", p[2]); }
-      saldo.appendChild(k);
-    });
-    var neu = h("div", { class: "mg-summenblock" }, [saldo]);
     // Vier Kacheln, ein Balken, drei Knoepfe - erst dann das erste Spiel.
     // Im neuen Design steht oben nur, was man wissen will: was unterm
     // Strich bleibt, und was noch aussteht. Verguetung, Kosten und die
@@ -2090,8 +2071,12 @@ window.Mitglieder = (function () {
     ]);
     kopf.title = "Antippen: Vergütung, Kosten und Steuerjahre";
     kopf.addEventListener("click", function () { panelOeffnen("detail", false); });
-    neu = h("div", { class: "mg-summenblock" }, [kopf]);
-    var fb = fortschritt(bezahltBetrag, offenBetrag); if (fb) neu.appendChild(fb);
+    var neu = h("div", { class: "mg-summenblock" }, [kopf]);
+    // Nur zeigen, wenn es etwas zu zeigen gibt. Bei null Prozent sagt
+    // der Balken "0,00 EUR bezahlt - 1.320,00 EUR offen", und die Zeile
+    // direkt darunter sagt dieselbe Zahl noch einmal. Wer noch nie
+    // etwas abgehakt hat, saehe das bei jedem Oeffnen.
+    if (bezahltBetrag > 0) { var fb = fortschritt(bezahltBetrag, offenBetrag); if (fb) neu.appendChild(fb); }
     var zz = h("button", { type: "button", class: "mg-offenzeile" + (offenN ? "" : " fertig"),
       title: offenN ? "Antippen: nur diese zeigen" : "Nichts steht mehr aus",
       text: offenN
@@ -2127,6 +2112,28 @@ window.Mitglieder = (function () {
       rz.addEventListener("click", function () { abrechnungPanel = "rechnung"; panelUnten = false; rendereAbrechnung(); });
       neu.appendChild(rz);
     }
+    // Was noch keine Rechnung hat, ist die Frage, fuer die man die
+    // Seite aufschlaegt. Die Antwort stand nur im Rechnungs-Panel -
+    // das man erst oeffnet, wenn man schon weiss, dass etwas aussteht.
+    // Die Liste kommt nach; bis dahin steht die Zeile nicht da, statt
+    // kurz etwas Falsches zu behaupten.
+    var jetzt2 = Date.now();
+    rechnungenLaden().then(function (geschrieben) {
+      if (!neu.isConnected) return;
+      var drin = {};
+      (geschrieben || []).forEach(function (rg) { (rg.kennungen || []).forEach(function (k2) { drin[k2] = 1; }); });
+      var ohne = spiele.filter(function (sp) {
+        if (new Date(sp.beginn).getTime() >= jetzt2) return false;
+        if (drin[sp.kennung] || rechnungWahl[sp.kennung]) return false;
+        return (betragFuer(sp, einsaetze[sp.kennung] || {}).betrag || 0) > 0;
+      });
+      if (!ohne.length || neu.querySelector(".ohne-rechnung")) return;
+      var rz2 = h("button", { type: "button", class: "mg-offenzeile pruef ohne-rechnung",
+        title: "Antippen: Rechnung schreiben",
+        text: ohne.length === 1 ? "1 Spiel ohne Rechnung" : ohne.length + " Spiele ohne Rechnung" });
+      rz2.addEventListener("click", function () { panelOeffnen("rechnung", true); });
+      neu.appendChild(rz2);
+    });
     alt.parentNode.replaceChild(neu, alt);
     // Offenes Detail-Panel mitziehen
     var panel = wurzel.querySelector(".mg-panel");
@@ -4179,8 +4186,14 @@ window.Mitglieder = (function () {
       });
     }
 
-    var saisonWahl = h("select", { class: "mg-select", onchange: function (ev) { gewaehlteSaison = ev.target.value; saisonLaden(gewaehlteSaison).then(rendereAbrechnung); } },
-      saisonen().map(function (s) { var o = h("option", { value: s, text: "Saison " + s }); if (s === gewaehlteSaison) o.selected = true; return o; }));
+    // Ein Auswahlfeld mit einer Option ist keine Auswahl - es sieht nur
+    // aus wie eine, mit Rahmen und Pfeil, und kostet 44 px. Wer im
+    // ersten Jahr pfeift, hat genau eine Saison.
+    var saisonListe = saisonen();
+    var saisonWahl = saisonListe.length > 1
+      ? h("select", { class: "mg-select", onchange: function (ev) { gewaehlteSaison = ev.target.value; saisonLaden(gewaehlteSaison).then(rendereAbrechnung); } },
+          saisonListe.map(function (s) { var o = h("option", { value: s, text: "Saison " + s }); if (s === gewaehlteSaison) o.selected = true; return o; }))
+      : h("p", { class: "meta", style: "margin:0", text: "Saison " + (saisonListe[0] || gewaehlteSaison || "") });
     var offenN = spiele.filter(hatLuecke).length;
     var unbezahltN = spiele.filter(nichtAbgehakt).length;
     var chips;
