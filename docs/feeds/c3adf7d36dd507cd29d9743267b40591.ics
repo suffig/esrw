@@ -1211,18 +1211,17 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: ESV Bergisch Gl
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:e35c6e477a05c8041b44096e2b25855f4b406db1@esrw.de
+UID:201edf5b8510716a226c633f589437fbdc203f86@esrw.de
 SEQUENCE:0
-DTSTAMP:20261105T111536Z
-LAST-MODIFIED:20261105T111536Z
+DTSTAMP:20261105T113040Z
+LAST-MODIFIED:20261105T113040Z
 DTSTART:20261107T070000Z
 DTEND:20261107T103000Z
-SUMMARY:⚠ SR · U9 RL: Herforder EV
-DESCRIPTION:Geändert: Zeit (vorher 07:00 Uhr)\n\nRolle: Schiedsrichter (SR
- )\nSpielbeginn: 09:00 Uhr\nTreffpunkt: 08:00 Uhr (60 Min vor Spielbeginn)\
- nLiga: U9 RL\nHalle: Eishalle Im Kleinen Felde\nAdresse: Im Kleinen Felde\
- , 32051 Herford\nGespann: Thiel\, Mark\n\nQuelle: https://www.esrw.de/eint
- eilungen.html
+SUMMARY:SR · U9 RL: Herforder EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
+  08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: Eishalle Im Klein
+ en Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Thiel\, Mark
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1234,7 +1233,7 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · U9 RL: Herforder EV
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 RL: Herforder EV
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -1296,15 +1295,15 @@ END:VEVENT
 BEGIN:VEVENT
 UID:8f5ae8668348c84cef7c84420dbf8b2b21d5ba49@esrw.de
 SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
+DTSTAMP:20261105T113040Z
+LAST-MODIFIED:20261105T113040Z
 DTSTART:20261107T080000Z
 DTEND:20261107T113000Z
 SUMMARY:SR · U9 RL: EHC Troisdorf
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
   09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: ICEDOME Troisdorf
- \nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\n\nQuelle: https://ww
- w.esrw.de/einteilungen.html
+ \nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Schmidt\, W
+ aldemar\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1345,32 +1344,6 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB: EV Duisburg – E
  SC Darmstadt
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
-UID:2116d0679ffcec9293770b1e65a10af096d672fd@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261107T080000Z
-DTEND:20261107T113000Z
-SUMMARY:SR · U9 LL Blau: GSC Moers
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
-  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Blau\nHalle: Eissporthall
- e Moers\nAdresse: Filderstraße 140\, 47447 Moers\n\nQuelle: https://www.e
- srw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
-GEO:51.43973;6.6198
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
- rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
- ":geo:51.43973,6.6198
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Blau: GSC Moers
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

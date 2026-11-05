@@ -25,18 +25,17 @@ CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
 END:VEVENT
 BEGIN:VEVENT
-UID:b6b47aa6b83c958d34456f340cbd16631dcecf47@esrw.de
-SEQUENCE:1
-DTSTAMP:20261105T111536Z
-LAST-MODIFIED:20261105T111536Z
+UID:3115d4c03eb86bfb91b2d45229cc36c678522ec7@esrw.de
+SEQUENCE:0
+DTSTAMP:20261105T113040Z
+LAST-MODIFIED:20261105T113040Z
 DTSTART:20261107T070000Z
 DTEND:20261107T103000Z
-SUMMARY:⚠ SR · U9 RL: Herforder EV
-DESCRIPTION:Geändert: Zeit (vorher 07:00 Uhr)\n\nRolle: Schiedsrichter (SR
- )\nSpielbeginn: 09:00 Uhr\nTreffpunkt: 08:00 Uhr (60 Min vor Spielbeginn)\
- nLiga: U9 RL\nHalle: Eishalle Im Kleinen Felde\nAdresse: Im Kleinen Felde\
- , 32051 Herford\nGespann: Thiel\, Mark\n\nQuelle: https://www.esrw.de/eint
- eilungen.html
+SUMMARY:SR · U9 RL: Herforder EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
+  08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: Eishalle Im Klein
+ en Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Thiel\, Mark
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -48,7 +47,7 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · U9 RL: Herforder EV
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 RL: Herforder EV
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

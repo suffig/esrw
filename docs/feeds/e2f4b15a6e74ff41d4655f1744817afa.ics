@@ -58,29 +58,29 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: EV Duisburg 1b –
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:7327095d5fdfeff9ba56b49f542c68e13d307a99@esrw.de
+UID:458f58f7812f7c27c0b1c51de03c963223d70599@esrw.de
 SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
+DTSTAMP:20261105T113040Z
+LAST-MODIFIED:20261105T113040Z
 DTSTART:20261107T080000Z
 DTEND:20261107T113000Z
-SUMMARY:SR · U9 LL Blau: GSC Moers
+SUMMARY:SR · U9 RL: EHC Troisdorf
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
-  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Blau\nHalle: Eissporthall
- e Moers\nAdresse: Filderstraße 140\, 47447 Moers\n\nQuelle: https://www.e
- srw.de/einteilungen.html
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: ICEDOME Troisdorf
+ \nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Finke\, Gud
+ run\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
-GEO:51.43973;6.6198
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
- rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
- ":geo:51.43973,6.6198
+LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
+GEO:50.811945;7.109233
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
+ rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
+ isdorf":geo:50.811945,7.109233
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Blau: GSC Moers
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 RL: EHC Troisdorf
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
