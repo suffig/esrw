@@ -2142,7 +2142,10 @@ window.Mitglieder = (function () {
       if (!ohne.length || neu.querySelector(".ohne-rechnung")) return;
       var rz2 = h("button", { type: "button", class: "mg-offenzeile pruef ohne-rechnung",
         title: "Antippen: Rechnung schreiben",
-        text: "Rechnung schreiben · " + euro(ohne.reduce(function (n, sp) {
+        // Am Listenende steht schon ein Knopf "Rechnung schreiben".
+        // Zweimal derselbe Wortlaut auf einer Seite ist einer zu viel;
+        // hier steht, was noch aussteht.
+        text: "Noch abzurechnen: " + euro(ohne.reduce(function (n, sp) {
           return n + (betragFuer(sp, einsaetze[sp.kennung] || {}).betrag || 0); }, 0)) });
       rz2.addEventListener("click", function () { panelOeffnen("rechnung", true); });
       neu.appendChild(rz2);
@@ -3559,7 +3562,11 @@ window.Mitglieder = (function () {
       var schon = liste.indexOf(sp.kennung) >= 0;
       leeren(box);
       box.appendChild(h("button", { type: "button", class: schon ? "mg-neben" : "", disabled: schon ? "" : null,
-        text: schon ? "Als ausgefallen gemeldet ✓" : "Spiel ist ausgefallen", onclick: function () {
+        // Hiess "Spiel ist ausgefallen" - fast wie der Haken daneben,
+        // der die Gebuehr halbiert. Dieser hier schickt eine Meldung an
+        // den Betreiber.
+        title: "Der Betreiber prüft es und blendet das Spiel dann für alle aus",
+        text: schon ? "Dem Betreiber gemeldet ✓" : "Ausfall dem Betreiber melden", onclick: function () {
           if (!confirm("„" + sp.paarung + "“ dem Betreiber als ausgefallen melden?\n\n" +
                        "Er prüft es und blendet das Spiel dann für alle aus.")) return;
           var grund = prompt("Kurz warum (optional):", "") || null;
@@ -4264,14 +4271,19 @@ window.Mitglieder = (function () {
     chips = h("div", { class: "mg-filterzeile" }, [
       h("div", { class: "mg-ansicht mg-ablauf" }, stufen.filter(function (st) { return st[5]; })
         .map(function (st) { return filterKnopf(st[0], st[1], st[2], st[3], st[4]); })),
-      h("div", { class: "modus mg-darstellung" }, [
-        h("button", { type: "button", class: schnellModus ? "" : "aktiv", title: "Eine Karte je Spiel, zum Aufklappen",
-          text: "Karten", onclick: function () { schnellModus = false; rendereAbrechnung(); } }),
-        h("button", { type: "button", class: schnellModus ? "aktiv" : "", title: "Eine Zeile je Spiel, alles nebeneinander",
-          text: "Zeilen", onclick: function () { schnellModus = true; rendereAbrechnung(); } })
-      ])
     ]);
-    inhalt.appendChild(h("div", { class: "mg-abrechnung-kopf" }, [saisonWahl, chips]));
+    // Saison und Darstellung in eine Zeile: beide sind schmal, und der
+    // Kopf hatte vier Zeilen uebereinander. Gemessen bei 375 px: 210 px
+    // vorher, 158 danach - die Saisonwahl behaelt 154 px, genug fuer
+    // "Saison 2026/27".
+    var darstellung = h("div", { class: "modus mg-darstellung" }, [
+      h("button", { type: "button", class: schnellModus ? "" : "aktiv", title: "Eine Karte je Spiel, zum Aufklappen",
+        text: "Karten", onclick: function () { schnellModus = false; rendereAbrechnung(); } }),
+      h("button", { type: "button", class: schnellModus ? "aktiv" : "", title: "Eine Zeile je Spiel, alles nebeneinander",
+        text: "Zeilen", onclick: function () { schnellModus = true; rendereAbrechnung(); } })
+    ]);
+    inhalt.appendChild(h("div", { class: "mg-abrechnung-kopf" }, [
+      h("div", { class: "mg-kopfzeile" }, [saisonWahl, darstellung]), chips]));
     var wartet = warteBanner();
     if (wartet) inhalt.appendChild(wartet);
 
@@ -4908,7 +4920,9 @@ window.Mitglieder = (function () {
             onclick: function () { speichereEinsatz(sp, { herkunft: null }); kurzMeldung("Als geprüft vermerkt ✓", "gut"); } }) : null,
           e.bezahlt ? h("span", { class: "mg-status bezahlt", title: "Abgehakt am " + new Date(e.bezahlt).toLocaleDateString("de-DE"), text: "bezahlt" }) : null,
           vergangen ? fotoKnopf : null, foto,
-          h("span", { class: "meta mg-auf", text: "Details ›" })
+          // "Details" klang nach Nachschlagen. Dahinter liegen die
+          // Felder fuer Kilometer, Verguetung und Auslagen.
+          h("span", { class: "meta mg-auf", text: "Beträge eintragen ›" })
         ])
       ]),
       details
@@ -4921,7 +4935,8 @@ window.Mitglieder = (function () {
       ]),
 
       h("div", { class: "mg-schalter" }, [
-        h("label", { class: "mg-check" }, [ausf, " vor Ort ausgefallen"]),
+        h("label", { class: "mg-check", title: "Du warst da, gespielt wurde nicht - die Ordnung sieht dafür die halbe Gebühr vor" },
+          [ausf, " vor Ort ausgefallen (halbe Gebühr)"]),
         uebergreifendMoeglich(sp) ? h("label", { class: "mg-check" }, [ueb, " übergreifend"]) : null
       ]),
       h("div", { class: "mg-felder" }, [h("label", { class: "mg-notiz" }, ["Notiz", notiz]), (profil.verpflegung_modus || "aus") !== "aus" || e.verpflegung != null ? h("label", { title: "Verpflegungsmehraufwand, 14 € ab 8 Std. Abwesenheit" }, ["Verpflegung €", verpf]) : null]),

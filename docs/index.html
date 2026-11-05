@@ -3047,6 +3047,13 @@
   #detail.fremdes-profil #profil-hinweis { color:var(--akzent); font-weight:700; }
   /* Der Kopf einer Kollegenzeile fuehrt aufs Profil - er soll wie der
      Rest der Zeile aussehen, nicht wie ein Link im Fliesstext. */
+  /* Saison und Darstellung teilen sich eine Zeile - der Kopf der
+     Abrechnung hatte vier uebereinander. Gemessen bei 375 px: 210 px
+     vorher, 158 danach; die Saisonwahl behaelt 154 px. */
+  .mg-kopfzeile { display:flex; gap:8px; align-items:center; }
+  .mg-kopfzeile .mg-select { flex:1 1 auto; min-width:0; }
+  .mg-kopfzeile .mg-darstellung { flex:0 0 auto; }
+
   .kontakt-link { color:inherit; text-decoration:none; }
   .kontakt-link:hover b { text-decoration:underline; }
 
@@ -3608,6 +3615,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=239"></script>
+<script src="app.js?v=240"></script>
 </body>
 </html>
