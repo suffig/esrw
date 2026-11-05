@@ -745,10 +745,24 @@
     box.classList.remove("versteckt");
     el("onboarding-weg").onclick = function () { schreiben("onboarding-weg", "1"); box.classList.add("versteckt"); };
   }
-  function kalenderBoxStand() {
+  // Zeigt die Einrichtungs-Checkliste gerade? Eine Stelle fuer beide,
+  // die davon abhaengen - sonst stuende eine zugeklappte Kalenderkarte
+  // neben einer unsichtbaren Checkliste, und zum Kalender fuehrte
+  // nichts mehr.
+  function einrichtungSichtbar(meins) {
+    if (!meins || !startEinstellung("einrichtung") || startEinstellung("ruhig")) return false;
+    var weg = lesen("einrichtung-weg");
+    return !(weg && Date.now() - parseInt(weg, 10) < 14 * 86400000);
+  }
+  function kalenderBoxStand(meins) {
     var abo = lesen("abo-geklickt") === "1";
     var box = el("kalender-box");
-    if (!box._gesetzt) { box.open = !abo; box._gesetzt = true; }
+    // Offen nur, wenn nichts anderes zum Kalender fuehrt. Gemessen bei
+    // 375 px: die offene Karte ist 649 px hoch, die Checkliste daneben
+    // 189 - zusammen so viel wie naechstes Spiel und Spieleliste. Die
+    // Checkliste hat einen Knopf, der hierher fuehrt und aufklappt;
+    // zwei Wege zum selben Ziel braucht niemand.
+    if (!box._gesetzt) { box.open = !abo && !einrichtungSichtbar(meins); box._gesetzt = true; }
     var lage = ("Notification" in window) ? Notification.permission : "";
     el("kalender-stand").textContent = (abo ? "abonniert ✓" : "noch nicht abonniert") + (lage === "granted" ? " · Mitteilungen an" : "");
     if (aktuell && !box._pruefung) box.addEventListener("toggle", function () { if (box.open) feedPruefen(aktuell); });
@@ -820,7 +834,7 @@
     if (nurAnwenden) return;
     el("stand").style.cursor = "pointer"; el("stand").title = "Antippen: neu laden";
     el("stand").addEventListener("click", function () { neuLaden().then(function () { toast("Aktualisiert", "gut"); }); });
-    el("abo").addEventListener("click", function () { schreiben("abo-geklickt", "1"); setTimeout(function () { kalenderBoxStand(); onboardingStand(); }, 500); });
+    el("abo").addEventListener("click", function () { schreiben("abo-geklickt", "1"); setTimeout(function () { kalenderBoxStand(!!(profil && aktuell && profil.slug === aktuell.slug)); onboardingStand(); }, 500); });
   }
 
   function zeigeNeu() {
@@ -3103,7 +3117,7 @@
       ziel.appendChild(box);
     }
     if (!profil || profil.slug !== p.slug) zuletztMerken(p.slug);
-    zeigeMeldeKarte(); kalenderBoxStand(); onboardingStand(); zeigePins(p); startOrdnungAnwenden();
+    zeigeMeldeKarte(); kalenderBoxStand(meins); onboardingStand(); zeigePins(p); startOrdnungAnwenden();
     el("kalender-box").classList.toggle("versteckt", !startEinstellung("kalender") && lesen("abo-geklickt") === "1");
     el("start-anpassen").classList.toggle("versteckt", !meins);
     el("abfahrt-ics").classList.add("versteckt");
@@ -3294,8 +3308,7 @@
   // "Alles eingerichtet?": fehlende Schritte mit Direktlink, verschwindet, wenn alles da ist
   function zeigeEinrichtung(p, meins) {
     var box = el("einrichtung"); box.innerHTML = ""; box.className = "versteckt";
-    if (!meins || !startEinstellung("einrichtung") || startEinstellung("ruhig")) return;
-    var weg = lesen("einrichtung-weg"); if (weg && Date.now() - parseInt(weg, 10) < 14 * 86400000) return;
+    if (!einrichtungSichtbar(meins)) return;
     var lauf = box._lauf = {};
     var punkte = [];
     punkte.push({ ok: lesen("abo-geklickt") === "1", titel: "Kalender abonnieren", text: "Spiele automatisch im " + kalenderName(), href: "#", tu: function () { var kb = el("kalender-box"); if (kb) { kb.open = true; kb.scrollIntoView({ behavior: "smooth", block: "center" }); } } });
@@ -7045,7 +7058,7 @@
       datumKurz: datumKurz, uhr: uhr, farbeFuer: farbeFuer, mitPuffer: mitPuffer, seitText: seitText, bildUrl: bildUrl,
       spieltagErlaubt: spieltagErlaubt, spieltagOffen: spieltagOffen, startEinstellung: startEinstellung,
       aendZerlegen: aendZerlegen, aendArt: aendArt, tourAngebote: tourAngebote,
-      titelDoppelt: titelDoppelt,
+      titelDoppelt: titelDoppelt, einrichtungSichtbar: einrichtungSichtbar,
       naechstesEigenes: naechstesEigenes
     }
   };

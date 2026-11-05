@@ -601,6 +601,39 @@ pruefe(aufAndroid.indexOf("cid=https%3A%2F%2F") > 0,
 pruefe(aufAndroid.indexOf(".ics") > 0, "und zeigt auf die Kalenderdatei");
 
 
+// ------------------------------------- Einrichtung und Kalenderkarte
+
+console.log("");
+console.log("Wann die Einrichtungs-Checkliste dasteht");
+
+// Davon haengt ab, ob die Kalenderkarte aufgeklappt wird: beide
+// fuehren zum Kalender, und zusammen nahmen sie 838 von 1796 px der
+// Startseite.
+localStorage.removeItem("start");
+localStorage.removeItem("einrichtung-weg");
+
+pruefe(P.einrichtungSichtbar(true), "auf dem eigenen Profil steht sie da");
+pruefe(!P.einrichtungSichtbar(false), "auf einem fremden nicht");
+
+localStorage.setItem("start", JSON.stringify({ einrichtung: false }));
+pruefe(!P.einrichtungSichtbar(true), "abgeschaltet bleibt sie weg");
+
+localStorage.setItem("start", JSON.stringify({ ruhig: true }));
+pruefe(!P.einrichtungSichtbar(true), "in der ruhigen Ansicht auch");
+
+// Weggeklickt gilt vierzehn Tage, danach kommt sie wieder.
+localStorage.removeItem("start");
+localStorage.setItem("einrichtung-weg", String(Date.now()));
+pruefe(!P.einrichtungSichtbar(true), "weggeklickt bleibt sie weg");
+localStorage.setItem("einrichtung-weg", String(Date.now() - 13 * 86400000));
+pruefe(!P.einrichtungSichtbar(true), "nach dreizehn Tagen noch");
+localStorage.setItem("einrichtung-weg", String(Date.now() - 15 * 86400000));
+pruefe(P.einrichtungSichtbar(true), "nach fuenfzehn Tagen wieder");
+
+localStorage.removeItem("start");
+localStorage.removeItem("einrichtung-weg");
+
+
 // --------------------------------------------- Doppelte Seitennamen
 
 console.log("");
