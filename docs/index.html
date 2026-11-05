@@ -3036,6 +3036,24 @@
      Geraet aendert das nichts. */
   .tour-karte { max-height:calc(100dvh - 32px); overflow-y:auto; overscroll-behavior:contain; }
   @supports not (height: 100dvh) { .tour-karte { max-height:calc(100vh - 32px); } }
+  /* ===== Nachtrag: ein Profilbild bleibt formatfuellend =============
+     Fassung 218 hat die Inline-Kurzformen behoben; die im Stylesheet
+     blieben. ".mit-bild" ist eine Klasse, ".profilzeile
+     .avatar-gross" sind zwei - die Farbregel gewinnt und setzt
+     background-size auf auto zurueck. Gemessen auf der Seite eines
+     Kollegen: size auto, position 0% 0%, repeat. Ein 200-px-Bild in
+     einem 42-px-Kreis zeigt dann die linke obere Ecke; bei einem
+     Portraet ist das die Stirn.
+
+     Fuenf Klassen sind betroffen (.avatar-knopf, dreimal
+     .avatar-gross, .avatar-klein). Statt jede zu jagen - und die
+     naechste zu uebersehen - gilt die Regel fuer .mit-bild selbst.
+     Das !important ist hier kein Holzhammer, sondern die Aussage:
+     liegt ein Bild darauf, wird es formatfuellend gezeigt, und keine
+     Farbregel kippt das. Bei color steht dasselbe Mittel schon. */
+  .mit-bild { background-size:cover !important; background-position:center !important;
+              background-repeat:no-repeat !important; }
+
   /* ===== Nachtrag: 44 px fuer alles, was man antippt ================
      Gemessen bei 375 px mit elementFromPoint ueber Start, Spielplan,
      Kollegen und Mehr: 40 Ziele unter 44 px, die meisten genau 36.
@@ -3576,6 +3594,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=230"></script>
+<script src="app.js?v=232"></script>
 </body>
 </html>

@@ -9020,13 +9020,19 @@ window.Mitglieder = (function () {
   }
   function kontaktVon(slug) {
     if (!session || !frei() || !slug) return Promise.resolve(null);
-    return sb.from("kontakte").select("slug,telefon,hinweis").eq("slug", slug).maybeSingle().then(function (r) {
-      if (r.data && r.data.telefon) return r.data;
+    // Anschrift und Rufname stehen in derselben Zeile und sind
+    // ausdruecklich freigegeben ("Anschrift zeigen" im Profil) - wer
+    // sie freigibt, will, dass die Kollegen sie sehen.
+    return sb.from("kontakte").select("slug,telefon,hinweis,anschrift,rufname").eq("slug", slug).maybeSingle().then(function (r) {
+      // Auch ohne Nummer kann eine Anschrift freigegeben sein - die
+      // Zeile wurde bisher samt Anschrift verworfen.
+      if (r.data && (r.data.telefon || r.data.anschrift)) return r.data;
       return sb.from("telefonliste").select("slug,telefon").eq("slug", slug).maybeSingle().then(function (r2) { return r2.data && r2.data.telefon ? { telefon: r2.data.telefon, hinweis: "aus der Telefonliste" } : null; }).catch(function () { return null; });
     }).then(function (k) {
       if (!k) return null;
-      var l = telefonLink(k.telefon);
-      return { telefon: k.telefon, hinweis: k.hinweis || "", tel: l.tel, wa: l.wa };
+      var l = telefonLink(k.telefon || "");
+      return { telefon: k.telefon || "", hinweis: k.hinweis || "", tel: l.tel, wa: l.wa,
+               anschrift: k.anschrift || "", rufname: k.rufname || "" };
     }).catch(function () { return null; });
   }
   // Fuer die Seite "Zusammen fahren": Nummern und Mitfahrten mehrerer Spiele

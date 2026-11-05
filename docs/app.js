@@ -1430,7 +1430,12 @@
     karteEl.addEventListener("click", function (ev) { if (ev.target.closest("a, button") || karteEl._gewischt) return; location.hash = "spiel/" + encodeURIComponent(kennungVon(s)); });
     // Rollen-Kante: eigene Rolle (Start) oder meine Rolle in der Besetzung (Spielplan)
     var meineRolle = s.rolle || (profil && profil.slug && (s.besetzung || []).filter(function (b) { return b.slug === profil.slug; })[0] || {}).rolle;
-    if (meineRolle) karteEl.classList.add("rolle-" + meineRolle);
+    // Nur Buchstaben und Ziffern: classList.add wirft bei einem
+    // Leerzeichen im Namen, und der Wurf nimmt die ganze Spielkarte mit.
+    // Aus der Pipeline kommen nur SR, HSR und LSR, aber eine
+    // Gespann-Korrektur des Betreibers und selbst angelegte Spiele sind
+    // nicht begrenzt - "2. SR" reicht, und die Liste bleibt leer.
+    if (meineRolle) karteEl.classList.add("rolle-" + String(meineRolle).replace(/[^A-Za-z0-9]/g, ""));
     wischAktionen(karteEl, s);
     karteEl._spiel = s;
     return karteEl;
@@ -3486,6 +3491,21 @@
     });
   }
 
+  // Eine Zeile fuer ein gemeinsames Spiel. Das Datumsraster der
+  // ".zeile" passt hier nicht - der Titel landete in der schmalen
+  // Datumsspalte und brach mitten im Namen um.
+  function gemeinsamZeile(s) {
+    var d = new Date(s.beginn), a = document.createElement("a");
+    a.className = "zeile-lauf"; a.href = "#spiel/" + encodeURIComponent(kennungVon(s));
+    var l = document.createElement("span");
+    var b = document.createElement("b"); b.textContent = datumKurz(d) + " · " + uhr(d) + " Uhr"; l.appendChild(b);
+    var pa = document.createElement("span"); pa.className = "zeile-paarung";
+    pa.textContent = (s.liga ? s.liga + ": " : "") + s.paarung; l.appendChild(pa);
+    if (s.halle) { var sm = document.createElement("small"); sm.textContent = s.halle; l.appendChild(sm); }
+    a.appendChild(l);
+    var r = document.createElement("span"); r.className = "pfeil"; r.textContent = "›"; a.appendChild(r);
+    return a;
+  }
   // Fremdes Profil: gemeinsame Spiele, Kontakt, Mitfahrt anfragen
   function zeigeKollege(p, meins) {
     var alt = el("detail").querySelector(".kollege"); if (alt) alt.remove();
@@ -3499,17 +3519,20 @@
     box.appendChild(meta);
     // Das Datumsraster der ".zeile" passt hier nicht - der Titel landete in
     // der schmalen Datumsspalte und brach mitten im Namen um.
-    kommend.slice(0, 4).forEach(function (s) {
-      var d = new Date(s.beginn), a = document.createElement("a"); a.className = "zeile-lauf"; a.href = "#spiel/" + encodeURIComponent(kennungVon(s));
-      var l = document.createElement("span");
-      var b = document.createElement("b"); b.textContent = datumKurz(d) + " · " + uhr(d) + " Uhr"; l.appendChild(b);
-      var pa = document.createElement("span"); pa.className = "zeile-paarung";
-      pa.textContent = (s.liga ? s.liga + ": " : "") + s.paarung; l.appendChild(pa);
-      if (s.halle) { var sm = document.createElement("small"); sm.textContent = s.halle; l.appendChild(sm); }
-      a.appendChild(l);
-      var r = document.createElement("span"); r.className = "pfeil"; r.textContent = "›"; a.appendChild(r);
-      box.appendChild(a);
-    });
+    kommend.slice(0, 4).forEach(function (s) { box.appendChild(gemeinsamZeile(s)); });
+    // Was man zusammen schon gepfiffen hat, stand hier nur als Zahl -
+    // vier gemeinsame Spiele ohne ein Wort dazu, welche.
+    var vergangene = gemeinsam.filter(function (s) { return s.vergangen; })
+      .sort(function (x, y) { return x.beginn < y.beginn ? 1 : -1; });
+    if (vergangene.length) {
+      var det = document.createElement("details"); det.className = "tausch";
+      var sum = document.createElement("summary");
+      sum.textContent = vergangene.length === 1 ? "Ein gemeinsames Spiel, schon gepfiffen"
+                                                : vergangene.length + " gemeinsame Spiele, schon gepfiffen";
+      det.appendChild(sum);
+      vergangene.forEach(function (s) { det.appendChild(gemeinsamZeile(s)); });
+      box.appendChild(det);
+    }
     // Erst anlegen, wenn wirklich Knoepfe kommen - sonst klaffte hier eine Luecke
     var zw = document.createElement("div"); zw.className = "zweit versteckt"; box.appendChild(zw);
     var pz = el("detail").querySelector(".spalte-haupt > .profilzeile");
@@ -3519,6 +3542,15 @@
       .then(function (k) {
         if (!box.isConnected) return;
         if (!k) { var m3 = document.createElement("p"); m3.className = "meta"; m3.style.margin = "8px 0 0"; m3.textContent = "Keine Handynummer freigegeben."; box.appendChild(m3); return; }
+        // Wer seine Anschrift freigibt, will sie gesehen haben - sie
+        // stand in derselben Zeile und wurde bisher nicht gelesen.
+        if (k.anschrift) {
+          var ad = document.createElement("p"); ad.className = "meta"; ad.style.margin = "6px 0 0";
+          ad.appendChild(ikone("i-pin"));
+          ad.appendChild(document.createTextNode(" " + k.anschrift));
+          box.appendChild(ad);
+        }
+        if (!k.telefon) return;
         zw.classList.remove("versteckt");
         var a1 = document.createElement("a"); a1.className = "anfrage knopf-zeichen"; a1.href = k.tel;
         a1.appendChild(ikone("i-telefon")); a1.appendChild(document.createTextNode("Anrufen")); zw.appendChild(a1);
