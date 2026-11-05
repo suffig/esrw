@@ -1557,8 +1557,70 @@ window.Mitglieder = (function () {
     var k = regeln().halle[sp.halle || ""];
     return k != null ? k : null;
   }
-  // Was die App vorschlaegt: erst die eigene Regel, dann die Ordnung
-  function sollBetrag(sp) { var r = regelBetrag(sp); return r != null ? r : grundgebuehr(sp); }
+  // Was die Ordnung nicht kennt, hat der Mensch oft schon einmal
+  // selbst eingetragen - DNL, Auswahlspiele, alles ausserhalb des
+  // ESRW. Dann gilt beim naechsten Mal derselbe Betrag, statt wieder
+  // "Betrag fehlt". Dasselbe fuer Kilometer je Halle.
+  //
+  // Gelernt wird nur aus Zeilen ohne Herkunftsvermerk, also aus dem,
+  // was der Mensch selbst gesetzt oder bestaetigt hat. Was die App
+  // gerechnet hat, traegt den Vermerk und zaehlt nicht mit - sonst
+  // lernte sie von sich selbst, und ein einmal falscher Vorschlag
+  // bliebe fuer immer.
+  var gelernt = null;
+  // Bei mehreren Werten gewinnt der haeufigste, bei Gleichstand der
+  // zuerst gesehene. Die Liste kommt nach Datum absteigend herein,
+  // damit das der juengste ist: Gebuehren aendern sich, und ein
+  // Tippfehler soll nicht gegen drei richtige Eintraege gewinnen.
+  function haeufigster(werte) {
+    var zahl = {}, erst = {}, best = null;
+    (werte || []).forEach(function (w, i) {
+      zahl[w] = (zahl[w] || 0) + 1;
+      if (erst[w] === undefined) erst[w] = i;
+    });
+    Object.keys(zahl).forEach(function (w) {
+      if (best === null || zahl[w] > zahl[best] || (zahl[w] === zahl[best] && erst[w] < erst[best])) best = w;
+    });
+    return best === null ? null : Number(best);
+  }
+  function gelerntBauen(spiele) {
+    var b = {}, k = {};
+    (spiele || []).slice().sort(function (x, y) { return (x.beginn || "") < (y.beginn || "") ? 1 : -1; })
+      .forEach(function (sp) {
+        var e = einsaetze[sp.kennung]; if (!e) return;
+        var her = e.herkunft || {};
+        if (e.verguetung != null && !her.verguetung) {
+          var sl = ligaSchluessel(sp); (b[sl] = b[sl] || []).push(e.verguetung);
+        }
+        if (e.km != null && !her.km && sp.halle) (k[sp.halle] = k[sp.halle] || []).push(e.km);
+      });
+    var betrag = {}, km = {};
+    Object.keys(b).forEach(function (x) { betrag[x] = haeufigster(b[x]); });
+    Object.keys(k).forEach(function (x) { km[x] = haeufigster(k[x]); });
+    gelernt = { betrag: betrag, km: km };
+    return gelernt;
+  }
+  // Nur dieselbe Liga UND dieselbe Rolle. Zwischen SR und zweitem SR
+  // liegen in der Ordnung regelmaessig vierzig Euro - was fuer die eine
+  // Rolle galt, waere fuer die andere schlicht falsch.
+  function gelerntBetrag(sp) {
+    if (!gelernt) return null;
+    var w = gelernt.betrag[ligaSchluessel(sp)];
+    return w == null ? null : w;
+  }
+  function gelerntKm(sp) {
+    if (!gelernt || !sp.halle) return null;
+    var w = gelernt.km[sp.halle];
+    return w == null ? null : w;
+  }
+  // Was die App vorschlaegt: erst die eigene Regel, dann die Ordnung,
+  // zuletzt das aus eigenen Eintraegen Gelernte - so fuellt es die
+  // Luecken, ohne je einen amtlichen Satz zu uebergehen.
+  function sollBetrag(sp) {
+    var r = regelBetrag(sp); if (r != null) return r;
+    var g = grundgebuehr(sp); if (g != null) return g;
+    return gelerntBetrag(sp);
+  }
   function regelnSpeichern(liga, halle) {
     return einstellungenSpeichern({ regeln_liga: liga, regeln_halle: halle });
   }
@@ -1568,6 +1630,11 @@ window.Mitglieder = (function () {
     if (eigen != null) return { km: eigen, art: "regel" };
     var s = streckeGespeichert(spiel.halle);
     if (s) return s;
+    // Vor der Luftlinie: was fuer dieselbe Halle schon dastand. Ein
+    // selbst eingetragener Wert kennt Umwege, die die Luftlinie nicht
+    // kennt.
+    var g = gelerntKm(spiel);
+    if (g != null) return { km: g, art: "gelernt" };
     var l = luftlinie(spiel.halle);
     return l == null ? null : { km: l, art: "luftlinie" };
   }
@@ -1633,8 +1700,10 @@ window.Mitglieder = (function () {
   // Welche Felder dieser Zeile hat die App gerechnet und niemand bestaetigt?
   var HERKUNFT_TEXT = { route: "Kilometer aus der berechneten Route",
                         luftlinie: "Kilometer aus der Luftlinie geschätzt",
+                        gelernt: "Kilometer wie bei deinem letzten Spiel in dieser Halle",
                         regel: "aus deiner eigenen Regel",
-                        ordnung: "Vergütung nach der Gebührenordnung" };
+                        ordnung: "Vergütung nach der Gebührenordnung",
+                        gewohnt: "Vergütung wie bei deinem letzten Spiel in dieser Liga" };
   function gerechnetText(e) {
     var her = (e && e.herkunft) || {}, teile = [];
     // Nur melden, was auch dasteht - nach einem Adresswechsel sind die
@@ -2128,7 +2197,11 @@ window.Mitglieder = (function () {
   var rechnungGeladen = null, rechnungWahl = {}, vereinAdressen = null, rechnungListe = null, rechnungFertig = null, rechnungForm = null;
   function rechnungenLaden() {
     if (rechnungListe) return Promise.resolve(rechnungListe);
-    return sb.from("rechnungen").select("id,nummer,datum,verein,betrag,kennungen,felder,gezahlt_am").order("datum", { ascending: false }).limit(40)
+    // 500 statt 40: wer eine alte Rechnung noch einmal braucht, soll
+    // sie finden, und 40 reichten nicht einmal fuer zwei Saisons. Ganz
+    // ohne Grenze nicht - ein Fehler in den Daten soll nicht die ganze
+    // Seite laden.
+    return sb.from("rechnungen").select("id,nummer,datum,verein,betrag,kennungen,felder,gezahlt_am").order("datum", { ascending: false }).limit(500)
       .then(function (r) { rechnungListe = r.data || []; return rechnungListe; })
       .catch(function () { rechnungListe = []; return rechnungListe; });
   }
@@ -2392,7 +2465,7 @@ window.Mitglieder = (function () {
     rechnungOffenZeigen();
 
     // In der Abrechnungsliste traegt eine Zeile mit gerechneten Werten das
-    // Abzeichen "gerechnet ✓?". Hier stand bisher nichts - und das ist die
+    // Abzeichen "Vorschlag". Hier stand bisher nichts - und das ist die
     // Stelle, an der ein ungepruefter Betrag das Haus verlaesst.
     var ungeprueft = (f.kennungen || []).map(function (k) { return rechnungWahl[k]; })
       .filter(function (sp) {
@@ -2409,7 +2482,7 @@ window.Mitglieder = (function () {
           h("small", { style: "display:block", text:
             ungeprueft.map(function (sp) { return sp.paarung; }).join(" · ")
             + " – die App hat die Werte selbst eingetragen. In der Liste steht dazu "
-            + "„gerechnet ✓?“; ein Tipp auf den Wert bestätigt ihn." })
+            + "„Vorschlag“; ein Tipp auf den Wert bestätigt ihn." })
         ])
       ]));
     }
@@ -2756,8 +2829,72 @@ window.Mitglieder = (function () {
       // Ohne diesen Satz haelt man "abgehakt" weiter fuer "bezahlt".
       k2.appendChild(h("p", { class: "meta", style: "margin:0 0 8px", text:
         "„Abgehakt“ am Spiel heißt: abgerechnet. Ob das Geld da ist, steht hier." }));
+      // Die letzten zwoelf hier; alles Weitere steht unter "Meine
+      // Rechnungen", wo auch gesucht werden kann.
       sortiert.slice(0, 12).forEach(function (rg) { k2.appendChild(rechnungVerlaufZeile(rg)); });
+      if (sortiert.length > 12) k2.appendChild(h("p", { class: "meta", style: "margin:8px 0 0" }, [
+        h("button", { type: "button", class: "textknopf",
+          text: "Alle " + sortiert.length + " unter „Meine Rechnungen“ ansehen",
+          onclick: function () { abrechnungPanel = "rechnungen"; rendereAbrechnung(); } })]));
       vb.appendChild(k2); box.appendChild(vb);
+    });
+    return box;
+  }
+
+  // Alle geschriebenen Rechnungen an einem Ort. Gespeichert waren sie
+  // laengst - nur lagen sie unter einem Aufklapper in dem Panel, in
+  // dem man NEUE Rechnungen schreibt, und zeigten die letzten zwoelf.
+  // Wer die vom Vorjahr sucht, sucht sie nicht dort.
+  function rechnungSuchtext(rg) {
+    return [rg.nummer, rg.verein, rg.datum, (rg.felder && rg.felder.name) || ""]
+      .filter(Boolean).join(" ").toLowerCase();
+  }
+  function rechnungArchivRendern(box) {
+    leeren(box);
+    box.appendChild(h("p", { class: "meta", style: "margin:0 0 10px",
+      text: "Jede geschriebene Rechnung bleibt hier stehen. „PDF laden“ baut dasselbe Dokument wieder auf, mit denselben Zahlen." }));
+    var suche = h("input", { type: "search", class: "mg-feld", placeholder: "Nummer, Verein oder Datum suchen …",
+      style: "width:100%", oninput: function () { zeichnen(); } });
+    box.appendChild(suche);
+    var liste = h("div", {});
+    box.appendChild(liste);
+    var alle = null;
+    function zeichnen() {
+      leeren(liste);
+      if (alle === null) { liste.appendChild(skelett(2)); return; }
+      if (!alle.length) {
+        liste.appendChild(h("p", { class: "meta", style: "margin:12px 0",
+          text: "Noch keine Rechnung geschrieben. Sobald du eine als PDF baust, steht sie hier - und lässt sich jederzeit noch einmal laden." }));
+        return;
+      }
+      var wort = (suche.value || "").trim().toLowerCase();
+      var treffer = wort ? alle.filter(function (rg) { return rechnungSuchtext(rg).indexOf(wort) >= 0; }) : alle;
+      if (!treffer.length) {
+        liste.appendChild(h("p", { class: "meta", text: "Nichts gefunden zu „" + suche.value + "“." }));
+        return;
+      }
+      var offen = treffer.filter(function (rg) { return !rg.gezahlt_am; });
+      var summe = treffer.reduce(function (n, rg) { return n + (Number(rg.betrag) || 0); }, 0);
+      liste.appendChild(h("p", { class: "meta", style: "margin:10px 0 6px", text:
+        treffer.length + (treffer.length === 1 ? " Rechnung" : " Rechnungen") + " · " + euro(summe)
+        + (offen.length ? " · " + offen.length + " ohne Zahlungseingang" : "") }));
+      // Nach Jahr gruppiert - so findet man "die vom letzten Winter".
+      var jahr = null, karte = null;
+      treffer.forEach(function (rg) {
+        var j = (rg.datum || "").slice(0, 4) || "ohne Datum";
+        if (j !== jahr) {
+          jahr = j;
+          liste.appendChild(h("div", { class: "tag", text: j }));
+          karte = h("div", { class: "karte" }); liste.appendChild(karte);
+        }
+        karte.appendChild(rechnungVerlaufZeile(rg));
+      });
+    }
+    zeichnen();
+    rechnungenLaden().then(function (l) {
+      if (!box.isConnected) return;
+      alle = l.slice().sort(function (a, b) { return (a.datum || "") < (b.datum || "") ? 1 : -1; });
+      zeichnen();
     });
     return box;
   }
@@ -3560,7 +3697,7 @@ window.Mitglieder = (function () {
     // das Abzeichen weg - ohne dass die Liste neu gebaut werden muss.
     var wie = gerechnetText(e), gr = karte.querySelector(".mg-status.gerechnet");
     if (wie && !gr) {
-      gr = h("button", { type: "button", class: "mg-status gerechnet", text: "gerechnet ✓?",
+      gr = h("button", { type: "button", class: "mg-status gerechnet", text: "Vorschlag",
         onclick: function () { speichereEinsatz(spiel, { herkunft: null }); kurzMeldung("Als geprüft vermerkt ✓", "gut"); } });
       if (kurz && kurz.parentNode) kurz.parentNode.insertBefore(gr, kurz.nextSibling);
     } else if (gr && !wie) {
@@ -3741,24 +3878,45 @@ window.Mitglieder = (function () {
   function automatischVorbelegen(spiele, ohneSchaetzung) {
     var n = 0, jetzt = new Date();
     spiele.forEach(function (sp) {
-      if (einsaetze[sp.kennung] || new Date(sp.beginn) > jetzt) return;
-      var v = kmVorschlag(sp), g = sollBetrag(sp);
-      // Solange eine echte Route unterwegs ist, keine Luftlinie eintragen -
-      // sie bliebe sonst stehen, obwohl Sekunden spaeter der genaue Wert da ist.
-      if (ohneSchaetzung && v && v.art === "luftlinie") v = null;
-      if (v == null && g == null) return;
-      var vp = verpflegungVorschlag(sp);
-      // Frueher zaehlte hier nur eine echte Route. Eine eigene Regel je
-      // Halle hat der Mensch selbst gesetzt, und die Luftlinie ist besser
-      // als ein leeres Feld - beides wurde stillschweigend verworfen.
-      var her = {};
-      if (v) her.km = v.art;
-      if (g != null) her.verguetung = regelBetrag(sp) != null ? "regel" : "ordnung";
-      speichereEinsatz(sp, Object.assign({ km: v ? v.km : null, verguetung: g, herkunft: her },
-                                         vp != null ? { verpflegung: vp } : {}));
+      if (new Date(sp.beginn) > jetzt) return;
+      var e = einsaetze[sp.kennung];
+      // Je Feld entscheiden, nicht je Zeile. Frueher stand hier
+      // "hat schon eine Zeile? dann gar nichts" - und eine Zeile
+      // entsteht schon, sobald die Kilometer bekannt sind. Wessen
+      // Liga die Ordnung nicht kennt, trug den Betrag seitdem bei
+      // jedem Spiel von Hand nach, obwohl die App ihn inzwischen
+      // wusste. Was dasteht, bleibt unberuehrt.
+      var aend = {}, her = Object.assign({}, (e && e.herkunft) || {});
+      if (!e || e.km == null) {
+        var v = kmVorschlag(sp);
+        // Solange eine echte Route unterwegs ist, keine Luftlinie eintragen -
+        // sie bliebe sonst stehen, obwohl Sekunden spaeter der genaue Wert da ist.
+        if (ohneSchaetzung && v && v.art === "luftlinie") v = null;
+        // Eine eigene Regel je Halle hat der Mensch selbst gesetzt, und
+        // die Luftlinie ist besser als ein leeres Feld.
+        if (v) { aend.km = v.km; her.km = v.art; }
+      }
+      if (!e || e.verguetung == null) {
+        var g = sollBetrag(sp);
+        if (g != null) {
+          aend.verguetung = g;
+          her.verguetung = regelBetrag(sp) != null ? "regel"
+            : grundgebuehr(sp) != null ? "ordnung" : "gewohnt";
+        }
+      }
+      // Der Verpflegungssatz haengt an der Abwesenheit, nicht an einer
+      // Luecke - er wird nur bei einer neuen Zeile gesetzt, damit ein
+      // bewusst geleertes Feld nicht wieder vollaeuft.
+      if (!e) {
+        var vp = verpflegungVorschlag(sp);
+        if (vp != null) aend.verpflegung = vp;
+      }
+      if (!Object.keys(aend).length) return;
+      aend.herkunft = her;
+      speichereEinsatz(sp, aend);
       n++;
     });
-    if (n) kurzMeldung(n + (n === 1 ? " Spiel" : " Spiele") + " automatisch vorbelegt. Bitte prüfen und Auslagen oder Belege ergänzen.", "gut");
+    if (n) kurzMeldung(n + (n === 1 ? " Spiel" : " Spiele") + " automatisch ausgefüllt. Bitte prüfen und Auslagen oder Belege ergänzen.", "gut");
     return n;
   }
 
@@ -3997,6 +4155,11 @@ window.Mitglieder = (function () {
   function rendereAbrechnung() {
     leeren(inhalt);
     var spiele = saisonSpiele(gewaehlteSaison);
+    // Erst nachsehen, was schon dasteht, dann die Luecken fuellen -
+    // sonst lernt die App aus dem, was sie selbst gerade eingetragen
+    // hat. Ueber alle Saisons, nicht nur die gewaehlte: die Liga von
+    // vorletztem Jahr gilt weiter.
+    gelerntBauen(alleSpiele());
     automatischVorbelegen(spiele, hallenOhneRoute(spiele).length > 0);
     // Die Strecken kommen nach - die Seite steht schon, waehrend der
     // Routendienst antwortet (350 ms Pause je Halle).
@@ -4093,6 +4256,7 @@ window.Mitglieder = (function () {
     // Eine Leiste, ein Panel: Steuerjahre, Abrechnungsart, Werkzeuge, Spiel eintragen, Regeln
     var panelInhalt = {
       detail: function () { return summenDetails(); },
+      rechnungen: function () { return rechnungArchivRendern(h("div", {})); },
       art: function () { return abrechnungEinstellungen(spiele); },
       werkzeuge: function () {
         return h("div", {}, [
@@ -4125,7 +4289,7 @@ window.Mitglieder = (function () {
     // erscheint erst, wenn man ein Spiel lange antippt. Wer das nicht
     // weiss, fand die Rechnung nicht mehr. Ueber die Auswahl geht sie
     // weiterhin - das ist der schnelle Weg, nicht der einzige.
-    var WEITERE = [["kalender", "Kalender"], ["eigeneregeln", "Eigene Regeln"], ["art", "Abrechnungsart"], ["werkzeuge", "Werkzeuge"], ["eintragen", "+ Spiel eintragen"], ["regeln", "Wie gerechnet wird"]];
+    var WEITERE = [["rechnungen", "Meine Rechnungen"], ["kalender", "Kalender"], ["eigeneregeln", "Eigene Regeln"], ["art", "Abrechnungsart"], ["werkzeuge", "Werkzeuge"], ["eintragen", "+ Spiel eintragen"], ["regeln", "Wie gerechnet wird"]];
     // Im alten Design steht "Rechnung" in der Knopfreihe darueber - dort
     // waere sie hier doppelt. Im neuen gibt es die Reihe nicht mehr: seit
     // Fassung 153 fuehrte nur noch die Auswahlleiste hin, und die
@@ -4665,7 +4829,7 @@ window.Mitglieder = (function () {
           h("span", { class: "meta mg-betrag-kurz" + (b.betrag == null && vergangen ? " fehlt" : ""),
             text: b.betrag != null ? euro(b.betrag) + (e.km != null ? " · " + e.km + " km" : "") : "Betrag fehlt" }),
           gerechnetText(e) ? h("button", { type: "button", class: "mg-status gerechnet",
-            title: gerechnetText(e), text: "gerechnet ✓?",
+            title: gerechnetText(e), text: "Vorschlag",
             onclick: function () { speichereEinsatz(sp, { herkunft: null }); kurzMeldung("Als geprüft vermerkt ✓", "gut"); } }) : null,
           e.bezahlt ? h("span", { class: "mg-status bezahlt", title: "Abgehakt am " + new Date(e.bezahlt).toLocaleDateString("de-DE"), text: "bezahlt" }) : null,
           vergangen ? fotoKnopf : null, foto,
@@ -9046,6 +9210,9 @@ window.Mitglieder = (function () {
       if (o.rechnungWahl !== undefined) rechnungWahl = o.rechnungWahl;
       if (o.ctx !== undefined) ctx = o.ctx;
     },
+    gelerntBauen: gelerntBauen, gelerntBetrag: gelerntBetrag, gelerntKm: gelerntKm,
+    haeufigster: haeufigster, kmVorschlag: kmVorschlag,
+    rechnungSuchtext: rechnungSuchtext,
     ligaEinordnen: ligaEinordnen, grundgebuehr: grundgebuehr,
     sollBetrag: sollBetrag, regelBetrag: regelBetrag, regelKm: regelKm,
     kmVorschlag: kmVorschlag, zeitzuschlag: zeitzuschlag,

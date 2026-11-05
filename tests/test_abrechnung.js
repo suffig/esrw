@@ -356,7 +356,100 @@ var pdfFertig = window.Rechnung.felder().then(function (felder) {
 
 // Erst wenn das PDF fertig ist, steht das Ergebnis fest.
 pdfFertig.then(function () {
-  console.log("\n----------------------------------------------------------");
+  // ------------------------------------------------- Aus Eigenem lernen
+
+console.log("\nGelernte Betraege und Kilometer");
+
+// Die Ordnung kennt DNL und Auswahlspiele nicht - dort blieb das Feld
+// leer, und man trug jedes Mal dasselbe von Hand ein.
+P.setze({ gebuehren: GEBUEHREN, profil: { einstellungen: {} } });
+
+var dnlAlt = spiel({ kennung: "g1", liga: "DNL Division 1", rolle: "SR",
+                     halle: "Halle Ost", beginn: "2026-09-10T18:00:00" });
+var dnlNeu = spiel({ kennung: "g2", liga: "DNL Division 1", rolle: "SR",
+                     halle: "Halle Ost", beginn: "2026-11-01T18:00:00" });
+
+pruefe(P.grundgebuehr(dnlNeu) == null, "die Ordnung kennt die DNL nicht");
+
+// Nichts gelernt: nichts vorzuschlagen.
+P.setze({ einsaetze: {} });
+P.gelerntBauen([dnlAlt, dnlNeu]);
+pruefe(P.sollBetrag(dnlNeu) == null, "ohne Vorbild bleibt es leer");
+
+// Ein von Hand eingetragener Betrag (kein Herkunftsvermerk) zaehlt.
+P.setze({ einsaetze: { g1: { verguetung: 95, km: 42 } } });
+P.gelerntBauen([dnlAlt, dnlNeu]);
+gleich(P.gelerntBetrag(dnlNeu), 95, "der eigene Betrag gilt beim naechsten Mal");
+gleich(P.sollBetrag(dnlNeu), 95, "und sollBetrag gibt ihn weiter");
+gleich(P.gelerntKm(dnlNeu), 42, "die Kilometer derselben Halle auch");
+
+// Was die App selbst gerechnet hat, traegt einen Vermerk - daraus
+// darf sie nicht lernen, sonst zementiert sie ihren eigenen Fehler.
+P.setze({ einsaetze: { g1: { verguetung: 95, km: 42, herkunft: { verguetung: "ordnung", km: "luftlinie" } } } });
+P.gelerntBauen([dnlAlt, dnlNeu]);
+pruefe(P.gelerntBetrag(dnlNeu) == null, "aus Gerechnetem wird nicht gelernt");
+pruefe(P.gelerntKm(dnlNeu) == null, "auch nicht bei den Kilometern");
+
+// Gemischt: der bestaetigte Teil zaehlt, der gerechnete nicht.
+P.setze({ einsaetze: { g1: { verguetung: 95, km: 42, herkunft: { km: "luftlinie" } } } });
+P.gelerntBauen([dnlAlt, dnlNeu]);
+gleich(P.gelerntBetrag(dnlNeu), 95, "der bestaetigte Betrag zaehlt");
+pruefe(P.gelerntKm(dnlNeu) == null, "die gerechneten Kilometer nicht");
+
+// Ein amtlicher Satz geht immer vor - sonst ueberschriebe eine alte
+// Gewohnheit die Gebuehrenordnung.
+var ll = spiel({ kennung: "g3", liga: "Landesliga Herren", rolle: "SR", system: 2,
+                 halle: "Halle Ost", beginn: "2026-10-01T18:00:00" });
+var llAlt = spiel({ kennung: "g4", liga: "Landesliga Herren", rolle: "SR", system: 2,
+                    halle: "Halle Ost", beginn: "2026-08-01T18:00:00" });
+P.setze({ einsaetze: { g4: { verguetung: 5 } } });
+P.gelerntBauen([llAlt, ll]);
+gleich(P.sollBetrag(ll), P.grundgebuehr(ll), "die Ordnung schlaegt die Gewohnheit");
+pruefe(P.sollBetrag(ll) !== 5, "der alte Eigenwert gewinnt nicht");
+
+// Mehrere Werte: der haeufigste gewinnt.
+gleich(P.haeufigster([80, 95, 95]), 95, "der haeufigste Wert gewinnt");
+gleich(P.haeufigster([95, 95, 80, 80]), 95, "bei Gleichstand der zuerst gesehene");
+pruefe(P.haeufigster([]) == null, "aus nichts wird nichts");
+pruefe(P.haeufigster(null) == null, "und aus null auch nicht");
+
+// Drei richtige schlagen einen Tippfehler, auch wenn er juenger ist.
+var vier = ["h1", "h2", "h3", "h4"].map(function (k, i) {
+  return spiel({ kennung: k, liga: "Auswahlspiel Bezirk", rolle: "SR", halle: "Halle Ost",
+                 beginn: "2026-0" + (6 + i) + "-01T18:00:00" });
+});
+P.setze({ einsaetze: { h1: { verguetung: 70 }, h2: { verguetung: 70 },
+                       h3: { verguetung: 70 }, h4: { verguetung: 700 } } });
+P.gelerntBauen(vier);
+gleich(P.gelerntBetrag(vier[0]), 70, "ein Tippfehler gewinnt nicht gegen drei Eintraege");
+
+// Eine andere Rolle erbt nicht einfach mit.
+var zweiter = spiel({ kennung: "g5", liga: "DNL Division 1", rolle: "2. SR",
+                      halle: "Halle Ost", beginn: "2026-11-02T18:00:00" });
+P.setze({ einsaetze: { g1: { verguetung: 95 } } });
+P.gelerntBauen([dnlAlt, zweiter]);
+pruefe(P.gelerntBetrag(zweiter) == null, "eine andere Rolle erbt nicht einfach");
+
+// Die Kilometer haengen an der Halle, nicht an der Liga.
+var andereHalle = spiel({ kennung: "g6", liga: "DNL Division 1", rolle: "SR",
+                          halle: "Sporthalle Nord", beginn: "2026-11-03T18:00:00" });
+P.setze({ einsaetze: { g1: { verguetung: 95, km: 42 } } });
+P.gelerntBauen([dnlAlt, andereHalle]);
+pruefe(P.gelerntKm(andereHalle) == null, "eine andere Halle bekommt keine fremden Kilometer");
+
+// Und kmVorschlag reicht das Gelernte weiter - vor der Luftlinie.
+P.setze({ profil: { einstellungen: {}, heimat_lat: null, heimat_lon: null } });
+P.setze({ einsaetze: { g1: { km: 42 } } });
+P.gelerntBauen([dnlAlt, dnlNeu]);
+var v = P.kmVorschlag(dnlNeu);
+pruefe(!!v && v.km === 42, "kmVorschlag nimmt das Gelernte", v ? JSON.stringify(v) : "nichts");
+gleich(v && v.art, "gelernt", "und sagt, woher es kommt");
+
+P.setze({ einsaetze: {}, gebuehren: GEBUEHREN });
+P.gelerntBauen([]);
+
+
+console.log("\n----------------------------------------------------------");
   if (fehler.length) {
     console.log(fehler.length + " Pruefung" + (fehler.length === 1 ? "" : "en") + " fehlgeschlagen:");
     fehler.forEach(function (f) { console.log("  - " + f); });
