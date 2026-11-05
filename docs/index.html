@@ -3152,6 +3152,39 @@
      375 x 667: der Knopf lag bei 662 bis 706, also unter dem Rand. */
   .tour-fuss { position:sticky; bottom:-18px; background:var(--karte);
                padding-bottom:18px; margin-bottom:-18px; }
+
+  /* ===== Nachtrag: wo die App keinen Satz kennt =====================
+     Fuer HSR und LSR stehen Betraege nur bei RL, LL, BL und U20 RL.
+     Sonst schlaegt die App nichts vor - lieber nichts als der SR-Satz,
+     der bis Fassung 240 stillschweigend eingetragen wurde. Die Zeile
+     sagt es und bietet an, den eigenen Wert zu merken. In der Warnfarbe,
+     nicht in Rot: es ist kein Fehler, nur eine Luecke, die man selbst
+     schliesst - und die beiden Werte sind fuer helles und dunkles Thema
+     schon aufeinander abgestimmt. */
+  .mg-satzluecke { margin-top:6px; padding:7px 9px; border-radius:8px;
+                   background:var(--warn-bg); color:var(--warn);
+                   border-left:3px solid var(--warn); line-height:1.45; }
+  .mg-satzluecke .textknopf { display:inline-block; margin-top:2px; }
+
+  /* ===== Nachtrag: die Abrechnung wird mit dem Daumen bedient ========
+     Gemessen auf der Abrechnungsseite bei 375 px, elementFromPoint um
+     die Elementmitte, dreizehn Karten aufgeklappt:
+
+       60x  Eingabefeld km/Verguetung/Auslagen   42 px
+       17x  Haken "vor Ort ausgefallen"          40 px
+       13x  Beleg-Knopf (Kamera)                 38 px
+
+     Das sind genau die Felder, in die man nach jedem Spiel tippt.
+     Zwei bis sechs Pixel fehlten - unauffaellig, aber es ist die am
+     haeufigsten benutzte Seite der App. Die Kopfknoepfe bleiben bei
+     42 x 44: dort kostet jedes Pixel den Nachbarn. */
+  .mg-felder input, .mg-schnellzeile input[type="text"] { min-height:44px; }
+  /* label.mg-check statt .mg-check: Zeile 1138 setzt schon 44 px, aber
+     eine spaetere Schicht mit dem damaligen Ziel "40 Pixel" senkt sie
+     per label.mg-check wieder - Element plus Klasse schlaegt die Klasse
+     allein. Ein Haken ist aber dasselbe Ziel wie ein Knopf. */
+  label.mg-check, label.schalter { min-height:44px; }
+  .mg-foto { min-height:44px; min-width:44px; }
 </style>
 </head>
 <body>
@@ -3615,6 +3648,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=240"></script>
+<script src="app.js?v=241"></script>
 </body>
 </html>

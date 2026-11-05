@@ -1680,7 +1680,16 @@ window.Mitglieder = (function () {
     if (!satz) return null;
     if (satz.SR_allein != null && system <= 1) return satz.SR_allein;
     var betrag = satz[rolle];
-    if (betrag == null) betrag = satz.SR;
+    // Der Rueckfall auf den SR-Satz gilt nur fuer den SR selbst. Fuer
+    // HSR und LSR hat die Ordnung eigene Betraege - wo sie hier nicht
+    // stehen (Frauen, U17, U15, U13 und darunter), kennt die App sie
+    // schlicht nicht. Dann lieber nichts vorschlagen als den falschen
+    // Satz: ein Hauptschiedsrichter bekam bisher den SR-Betrag
+    // eingetragen, ohne dass irgendwo stand, dass das geraten ist.
+    // "Betrag fehlt" fuehrt zur Eingabe, und beim zweiten Spiel
+    // derselben Liga schlaegt die App den eigenen Wert wieder vor
+    // (gelerntBetrag, Fassung 228).
+    if (betrag == null && rolle === "SR") betrag = satz.SR;
     return betrag == null ? null : betrag;
   }
 
@@ -4312,7 +4321,15 @@ window.Mitglieder = (function () {
           if (!e || e.verguetung == null) {
             var g = sollBetrag(sp);
             if (g == null) offen++;
-            else { aend.verguetung = g; her.verguetung = regelBetrag(sp) != null ? "regel" : "ordnung"; verg++; }
+            // Nicht jeder gefundene Betrag kommt aus der Ordnung - er kann
+            // auch aus eigenen Eintraegen gelernt sein. Der Vermerk muss das
+            // sagen, sonst nimmt gelerntBauen() die Zeile vom Lernen aus.
+            else {
+              aend.verguetung = g;
+              her.verguetung = regelBetrag(sp) != null ? "regel"
+                : grundgebuehr(sp) != null ? "ordnung" : "gewohnt";
+              verg++;
+            }
           }
           if (Object.keys(aend).length) { aend.herkunft = her; speichereEinsatz(sp, aend); }
         });
@@ -4872,6 +4889,38 @@ window.Mitglieder = (function () {
     return box;
   }
 
+  // Fuer HSR und LSR nennt die Gebuehrenordnung eigene Betraege, aber in
+  // gebuehren.json stehen sie nur bei RL, LL, BL und U20 RL. Sonst kennt
+  // die App sie nicht und schlaegt - seit dem Wegfall des Rueckfalls auf
+  // den SR-Satz - nichts vor. Das soll man lesen koennen, statt vor
+  // einem leeren Feld zu stehen.
+  function satzLueckeZeile(sp) {
+    if (new Date(sp.beginn) >= new Date()) return null;
+    // sollBetrag() statt regelBetrag/grundgebuehr: gemessen im
+    // Browser-Durchgang stand der Hinweis sonst viermal untereinander
+    // in derselben Liga, obwohl die App nach dem ersten Eintrag schon
+    // aus Gewohnheit vorschlug (gelerntBetrag). Wo ein Vorschlag kommt,
+    // ist nichts zu erklaeren.
+    if (sollBetrag(sp) != null) return null;
+    var rolle = sp.rolle || "SR", liga = sp.liga || "diese Liga";
+    var merken = h("button", { type: "button", class: "textknopf",
+      title: "Gilt ab dem nächsten Spiel als " + rolle + " in " + liga,
+      text: "Diesen Betrag für " + rolle + " in " + liga + " merken",
+      onclick: function () {
+        var wert = (einsaetze[sp.kennung] || {}).verguetung;
+        if (wert == null) { kurzMeldung("Erst einen Betrag eintragen, dann merken.", "warn"); return; }
+        var r = regeln(), neu = Object.assign({}, r.liga);
+        neu[ligaSchluessel(sp)] = wert;
+        merken.disabled = true;
+        regelnSpeichern(neu, r.halle).then(function () {
+          kurzMeldung(euro(wert) + " gilt jetzt als " + rolle + " in " + liga + ".", "gut");
+          rendereAbrechnung();
+        }, function (f) { merken.disabled = false; meldung("Nicht gespeichert: " + fehlerText(f), "warn"); });
+      } });
+    return h("div", { class: "meta mg-satzluecke" }, [
+      "Für " + rolle + " in " + liga + " kennt die App keinen Satz – bitte selbst eintragen. ", merken]);
+  }
+
   function eintrag(sp) {
     var e = einsaetze[sp.kennung] || {};
     var d = new Date(sp.beginn);
@@ -4942,6 +4991,7 @@ window.Mitglieder = (function () {
       h("div", { class: "mg-felder" }, [h("label", { class: "mg-notiz" }, ["Notiz", notiz]), (profil.verpflegung_modus || "aus") !== "aus" || e.verpflegung != null ? h("label", { title: "Verpflegungsmehraufwand, 14 € ab 8 Std. Abwesenheit" }, ["Verpflegung €", verpf]) : null]),
       h("div", { class: "mg-belege" }),
       h("div", { class: "meta mg-betrag", text: betragText(sp, e, b) }),
+      satzLueckeZeile(sp),
       // Direkt von hier auf die Gebuehrenabrechnung - und, wenn es schon
       // eine gibt, dieselbe Rechnung noch einmal als PDF.
       rechnungZeile(sp),

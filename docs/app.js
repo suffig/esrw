@@ -2172,7 +2172,12 @@
     var s = document.createElement("small");
     if (!mit.length) s.textContent = offen.length === 1 ? offen[0].text : "seit " + offen[offen.length - 1].text;
     else if (mit.length === 1) s.textContent = mit[0].betragText + " wartet auf dich";
-    else if (mit.length === 2) s.textContent = mit[0].betragText + " und " + mit[1].betragText + " warten auf dich";
+    // "120,00 EUR und 120,00 EUR" sieht aus wie eine doppelt
+    // ausgegebene Zahl - im eigenen Durchgang erst fuer einen Fehler
+    // gehalten. Sind beide gleich, zaehlt die Zeile sie.
+    else if (mit.length === 2) s.textContent = mit[0].betragText === mit[1].betragText
+      ? "zweimal " + mit[0].betragText + " warten auf dich"
+      : mit[0].betragText + " und " + mit[1].betragText + " warten auf dich";
     else {
       var summe = 0; mit.forEach(function (o) { summe += o.betrag; });
       s.textContent = "zusammen " + euroText(summe) + " warten auf dich";
