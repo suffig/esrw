@@ -2077,13 +2077,15 @@ window.Mitglieder = (function () {
     // direkt darunter sagt dieselbe Zahl noch einmal. Wer noch nie
     // etwas abgehakt hat, saehe das bei jedem Oeffnen.
     if (bezahltBetrag > 0) { var fb = fortschritt(bezahltBetrag, offenBetrag); if (fb) neu.appendChild(fb); }
+    // Die Zahl der offenen Spiele steht seit der Ablaufleiste schon
+    // oben am Chip "Geld fehlt", und dort kann man sie auch antippen.
+    // Hier bleibt nur, was die Leiste nicht sagt: der Betrag - und die
+    // Nachricht, wenn nichts mehr aussteht.
     var zz = h("button", { type: "button", class: "mg-offenzeile" + (offenN ? "" : " fertig"),
       title: offenN ? "Antippen: nur diese zeigen" : "Nichts steht mehr aus",
-      text: offenN
-        ? offenN + (offenN === 1 ? " Spiel ist noch nicht abgehakt · " : " Spiele sind noch nicht abgehakt · ") + euro(offenBetrag)
-        : "Alles abgehakt ✓" });
+      text: offenN ? "Offen: " + euro(offenBetrag) : "Alles abgehakt ✓" });
     if (offenN) zz.addEventListener("click", function () {
-      nurUnbezahlt = true; nurOffene = false; rendereAbrechnung();
+      nurUnbezahlt = true; nurOffene = false; nurOhneRechnung = false; nurErledigt = false; rendereAbrechnung();
     });
     neu.appendChild(zz);
     // "Pruefen" stand als Knopf in einer Reihe ueber der Liste, ohne zu
@@ -2122,15 +2124,26 @@ window.Mitglieder = (function () {
       if (!neu.isConnected) return;
       var drin = {};
       (geschrieben || []).forEach(function (rg) { (rg.kennungen || []).forEach(function (k2) { drin[k2] = 1; }); });
+      // Dieselbe Karte braucht die Ablaufleiste fuer die Stufe
+      // "Abrechnen". Beim ersten Zeichnen steht sie noch nicht, also
+      // einmal nachziehen - danach ist aufRechnung gesetzt, und es
+      // bleibt bei diesem einen zusaetzlichen Durchgang.
+      var warLeer = !aufRechnung;
+      aufRechnung = drin;
+      if (warLeer) { rendereAbrechnung(); return; }
       var ohne = spiele.filter(function (sp) {
         if (new Date(sp.beginn).getTime() >= jetzt2) return false;
         if (drin[sp.kennung] || rechnungWahl[sp.kennung]) return false;
         return (betragFuer(sp, einsaetze[sp.kennung] || {}).betrag || 0) > 0;
       });
+      // Die Zahl steht seit der Ablaufleiste am Chip "Abrechnen". Hier
+      // bleibt nur der Weg zur Rechnung selbst - und der lohnt erst,
+      // wenn wirklich etwas offen ist.
       if (!ohne.length || neu.querySelector(".ohne-rechnung")) return;
       var rz2 = h("button", { type: "button", class: "mg-offenzeile pruef ohne-rechnung",
         title: "Antippen: Rechnung schreiben",
-        text: ohne.length === 1 ? "1 Spiel ohne Rechnung" : ohne.length + " Spiele ohne Rechnung" });
+        text: "Rechnung schreiben · " + euro(ohne.reduce(function (n, sp) {
+          return n + (betragFuer(sp, einsaetze[sp.kennung] || {}).betrag || 0); }, 0)) });
       rz2.addEventListener("click", function () { panelOeffnen("rechnung", true); });
       neu.appendChild(rz2);
     });
@@ -4137,6 +4150,26 @@ window.Mitglieder = (function () {
   }
   function abrechnungSprung(kennung) { abrechnungZiel = kennung; nurOffene = false; nurUnbezahlt = false; schnellModus = false; }
   var schnellModus = false, nurUnbezahlt = false;
+  // Die beiden Stufen, die bisher fehlten: "fertig zum Abrechnen"
+  // (gepfiffen, Angaben vollstaendig, keine Rechnung) und "erledigt"
+  // (Geld ist da).
+  var nurOhneRechnung = false, nurErledigt = false;
+  // Welche Kennungen stehen auf einer geschriebenen Rechnung? Wird
+  // beim Rendern nachgetragen; null heisst "noch nicht geladen".
+  var aufRechnung = null;
+  function hatRechnung(sp) { return !!(aufRechnung && aufRechnung[sp.kennung]); }
+  // Gepfiffen, nichts fehlt, noch keine Rechnung - hier wird man taetig.
+  function zumAbrechnen(sp) {
+    if (new Date(sp.beginn) >= new Date()) return false;
+    if (hatLuecke(sp)) return false;
+    var e = einsaetze[sp.kennung];
+    if (e && e.bezahlt) return false;
+    return !hatRechnung(sp);
+  }
+  function istErledigt(sp) {
+    var e = einsaetze[sp.kennung];
+    return !!(e && e.bezahlt);
+  }
   // Wartet etwas auf das Netz, soll man das sehen - nicht nur eine
   // Kurzmeldung, die nach drei Sekunden wieder weg ist.
   function warteBanner() {
@@ -4208,15 +4241,29 @@ window.Mitglieder = (function () {
       if (zahl) k.appendChild(h("span", { class: "zaehler", text: String(zahl) }));
       return k;
     };
+    // Die Leiste folgt dem Weg, den ein Spiel nimmt: gepfiffen,
+    // Angaben pruefen, Rechnung schreiben, Geld abhaken. Vorher hiess
+    // das "Luecken" und "Nicht abgehakt" - Woerter, die nur kennt, wer
+    // die App gebaut hat.
+    function alleAus() { nurOffene = false; nurUnbezahlt = false; nurOhneRechnung = false; nurErledigt = false; }
+    var abrechnenN = aufRechnung ? spiele.filter(zumAbrechnen).length : 0;
+    var erledigtN = spiele.filter(istErledigt).length;
+    var stufen = [
+      [!nurOffene && !nurUnbezahlt && !nurOhneRechnung && !nurErledigt, "Alle", 0,
+       "Alle Spiele der Saison", function () { alleAus(); }, true],
+      [nurOffene, "Angaben fehlen", offenN,
+       "Gespielt, aber Kilometer oder Vergütung fehlen", function () { alleAus(); nurOffene = true; }, true],
+      [nurOhneRechnung, "Abrechnen", abrechnenN,
+       "Gespielt, Angaben vollständig, noch keine Rechnung geschrieben",
+       function () { alleAus(); nurOhneRechnung = true; }, !!aufRechnung],
+      [nurUnbezahlt, "Geld fehlt", unbezahltN,
+       "Gespielt und noch nicht als bezahlt vermerkt", function () { alleAus(); nurUnbezahlt = true; }, true],
+      [nurErledigt, "Erledigt", erledigtN,
+       "Bezahlt und abgehakt", function () { alleAus(); nurErledigt = true; }, true]
+    ];
     chips = h("div", { class: "mg-filterzeile" }, [
-      h("div", { class: "mg-ansicht" }, [
-        filterKnopf(!nurOffene && !nurUnbezahlt, "Alle", 0, "Alle Spiele der Saison",
-          function () { nurOffene = false; nurUnbezahlt = false; }),
-        filterKnopf(nurOffene, "Lücken", offenN, "Gespielt, aber km oder Vergütung fehlt",
-          function () { nurOffene = true; nurUnbezahlt = false; }),
-        filterKnopf(nurUnbezahlt, "Nicht abgehakt", unbezahltN, "Gespielt und noch nicht als bezahlt vermerkt",
-          function () { nurUnbezahlt = true; nurOffene = false; })
-      ]),
+      h("div", { class: "mg-ansicht mg-ablauf" }, stufen.filter(function (st) { return st[5]; })
+        .map(function (st) { return filterKnopf(st[0], st[1], st[2], st[3], st[4]); })),
       h("div", { class: "modus mg-darstellung" }, [
         h("button", { type: "button", class: schnellModus ? "" : "aktiv", title: "Eine Karte je Spiel, zum Aufklappen",
           text: "Karten", onclick: function () { schnellModus = false; rendereAbrechnung(); } }),
@@ -4302,7 +4349,12 @@ window.Mitglieder = (function () {
     // erscheint erst, wenn man ein Spiel lange antippt. Wer das nicht
     // weiss, fand die Rechnung nicht mehr. Ueber die Auswahl geht sie
     // weiterhin - das ist der schnelle Weg, nicht der einzige.
-    var WEITERE = [["rechnungen", "Meine Rechnungen"], ["kalender", "Kalender"], ["eigeneregeln", "Eigene Regeln"], ["art", "Abrechnungsart"], ["werkzeuge", "Werkzeuge"], ["eintragen", "+ Spiel eintragen"], ["regeln", "Wie gerechnet wird"]];
+    // "Abrechnungsart" sagt nicht, dass dort der Kilometersatz steht,
+    // "Werkzeuge" nicht, dass es um Fahrtenbuch und CSV geht.
+    var WEITERE = [["rechnungen", "Geschriebene Rechnungen"], ["kalender", "Kalender"],
+      ["eigeneregeln", "Eigene Beträge je Liga"], ["art", "Kilometersatz und Pauschalen"],
+      ["werkzeuge", "Fahrtenbuch und Export"], ["eintragen", "+ Spiel nachtragen"],
+      ["regeln", "Wie die App rechnet"]];
     // Im alten Design steht "Rechnung" in der Knopfreihe darueber - dort
     // waere sie hier doppelt. Im neuen gibt es die Reihe nicht mehr: seit
     // Fassung 153 fuehrte nur noch die Auswahlleiste hin, und die
@@ -4366,6 +4418,8 @@ window.Mitglieder = (function () {
     var liste = spiele;
     if (nurUnbezahlt) liste = spiele.filter(nichtAbgehakt);
     else if (nurOffene) liste = spiele.filter(hatLuecke);
+    else if (nurOhneRechnung) liste = spiele.filter(zumAbrechnen);
+    else if (nurErledigt) liste = spiele.filter(istErledigt);
 
     if (schnellModus) {
       inhalt.appendChild(schnellListe(liste));
@@ -4375,7 +4429,15 @@ window.Mitglieder = (function () {
     }
     // Nach dem Speichern eines privaten Spiels die Liste neu laden
     if (!spiele.length) inhalt.appendChild(h("p", { class: "leer" }, ["Keine Spiele in dieser Saison. ", h("button", { type: "button", class: "anfrage", style: "margin-top:10px", text: "+ Spiel selbst eintragen", onclick: function () { abrechnungPanel = "eintragen"; rendereAbrechnung(); } })]));
-    else if (!liste.length) inhalt.appendChild(h("p", { class: "leer", text: "Alle Spiele vollständig erfasst ✓" }));
+    // Die Meldung gehoert zur gewaehlten Stufe. "Alle Spiele
+    // vollstaendig erfasst" stand auch unter "Erledigt", wo es
+    // bedeutet haette: nichts ist bezahlt.
+    else if (!liste.length) inhalt.appendChild(h("p", { class: "leer", text:
+      nurOffene ? "Bei allen Spielen sind Kilometer und Vergütung eingetragen ✓"
+      : nurOhneRechnung ? "Für alle gespielten Spiele ist eine Rechnung geschrieben ✓"
+      : nurUnbezahlt ? "Alles abgehakt – das Geld ist da ✓"
+      : nurErledigt ? "Noch nichts abgehakt. Sobald Geld ankommt, hakst du das Spiel ab."
+      : "Keine Spiele in dieser Auswahl." }));
 
     // Nach Monat gruppiert: Anzahl, Summe, fehlende Betraege
     var monat = null;
