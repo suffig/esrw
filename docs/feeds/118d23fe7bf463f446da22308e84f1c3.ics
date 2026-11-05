@@ -52,16 +52,17 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld,
 END:VEVENT
 BEGIN:VEVENT
 UID:bdab5d0cae1c0f65991c2d4b6973c4941885199a@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261107T060000Z
-DTEND:20261107T093000Z
-SUMMARY:SR · U9 RL: Herforder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
-  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: Eishalle Im Klein
- en Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Keller\, Ale
- xander\n\nQuelle: https://www.esrw.de/einteilungen.html
+SEQUENCE:1
+DTSTAMP:20261105T111536Z
+LAST-MODIFIED:20261105T111536Z
+DTSTART:20261107T070000Z
+DTEND:20261107T103000Z
+SUMMARY:⚠ SR · U9 RL: Herforder EV
+DESCRIPTION:Geändert: Zeit (vorher 07:00 Uhr)\n\nRolle: Schiedsrichter (SR
+ )\nSpielbeginn: 09:00 Uhr\nTreffpunkt: 08:00 Uhr (60 Min vor Spielbeginn)\
+ nLiga: U9 RL\nHalle: Eishalle Im Kleinen Felde\nAdresse: Im Kleinen Felde\
+ , 32051 Herford\nGespann: Keller\, Alexander\n\nQuelle: https://www.esrw.d
+ e/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -73,7 +74,7 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U9 RL: Herforder EV
+DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · U9 RL: Herforder EV
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
