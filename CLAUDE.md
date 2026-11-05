@@ -109,6 +109,20 @@ Fensterbreite.
   ```js
   for (var i = 0; i < ziele.length; i++) { location.hash = ziele[i]; await warte(650); }
   ```
+* Tippflächen: alles, was man antippt, ist 44 px hoch. Gemessen wird
+  mit `elementFromPoint` um die Elementmitte, **nicht** nur mit
+  `getBoundingClientRect` – das sieht ein `::after` nicht und meldet
+  die Kopfknöpfe falsch als zu klein. Die Kopfknöpfe liegen bei
+  42 × 44 (36 px plus `::after -4px -3px`, 6 px Lücke); mehr ginge
+  nur auf Kosten des Nachbarn. Für einen schnellen Überblick:
+
+  ```js
+  [].slice.call(document.querySelectorAll('button, a[href], input, select, summary'))
+    .filter(function (e) { var r = e.getBoundingClientRect();
+      return e.offsetParent && r.height && r.height < 44; }).length
+  ```
+
+  Node findet das nie – dort gibt es keine Layout-Engine.
 * Die Attrappe für den Browser liegt nicht im Repository – `daten.json`
   mit `personen[].spiele` (nicht `termine`), `statistik.gesamt`,
   `rollen`, `hallen`, `adressen`, dazu `archiv.json`, ein leeres Array

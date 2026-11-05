@@ -3036,6 +3036,35 @@
      Geraet aendert das nichts. */
   .tour-karte { max-height:calc(100dvh - 32px); overflow-y:auto; overscroll-behavior:contain; }
   @supports not (height: 100dvh) { .tour-karte { max-height:calc(100vh - 32px); } }
+  /* ===== Nachtrag: 44 px fuer alles, was man antippt ================
+     Gemessen bei 375 px mit elementFromPoint ueber Start, Spielplan,
+     Kollegen und Mehr: 40 Ziele unter 44 px, die meisten genau 36.
+     Im Spielplan allein 19.
+
+     Die 36 stammen aus den Runden 38 und 39, in denen der Spielplan
+     enger gesetzt wurde. Was das einbringt, steht gegen das, was es
+     kostet:
+
+                  Ziele unter 44 px      Seitenhoehe
+       Start        9  ->  5             2090 -> 2133  (+43 px, 2 %)
+       Spielplan   19  ->  5              931 ->  969  (+38 px, 4 %)
+       Kollegen     9  ->  5             2090 -> 2133  (+43 px, 2 %)
+       Mehr         3  ->  3             1518 -> 1518
+
+     Vier Prozent Hoehe gegen vierzehn Ziele, die man trifft. Kein
+     horizontaler Ueberlauf, keine Seite bricht um. Zwei Zeilen
+     weiter oben steht ohnehin schon "Chips und Knoepfe bleiben
+     greifbar: 44 px, auch mit Handschuhen" - die Regel darunter
+     setzte 36.
+
+     Der Praefix muss sein: die Regeln, die hier ueberschrieben
+     werden, tragen ihn, und ohne ihn aenderte dieselbe Probe keine
+     einzige Hoehe. */
+  :root[data-design="neu"] .filterknopf,
+  :root[data-design="neu"] .modus button,
+  :root[data-design="neu"] .chip,
+  :root[data-design="neu"] .textknopf { min-height:44px; }
+
   /* ===== Nachtrag: ein gesperrter Knopf sieht gesperrt aus ==========
      Gemessen am Hinweisschirm der Abrechnung: der Knopf "Verstanden,
      weiter zur Abrechnung" trug disabled, aber opacity 1 und
@@ -3547,6 +3576,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=228"></script>
+<script src="app.js?v=229"></script>
 </body>
 </html>
