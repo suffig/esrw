@@ -105,19 +105,28 @@ gleich(P.grundgebuehr(spiel({ liga: "U20 Landesliga" })), 90, "U20 ohne RL");
 // Im 1-Mann-System gilt der eigene, niedrigere Satz.
 gleich(P.grundgebuehr(spiel({ liga: "U11", system: 1 })), 80, "U11 allein");
 gleich(P.grundgebuehr(spiel({ liga: "U11", system: 2 })), 85, "U11 im Gespann");
-// Fuer HSR und LSR hat die Ordnung eigene Betraege. Wo sie hier nicht
-// stehen, kennt die App sie nicht - und traegt lieber nichts ein als
-// den SR-Satz. Frueher fiel es darauf zurueck, mit der Begruendung
-// "sonst stuende im Nachwuchs nie ein Betrag"; seit dem Lernen aus
-// eigenen Eintraegen (Fassung 228) stimmt die Begruendung nicht mehr:
-// wer einmal eintraegt, bekommt es beim naechsten Mal vorgeschlagen.
-gleich(P.grundgebuehr(spiel({ liga: "U15", rolle: "LSR", system: 3 })), null, "U15 LSR: kein Satz hinterlegt, also keiner geraten");
+// HSR und LSR gibt es laut Ordnung nur bei den Herren (RL, LL, BL)
+// und in der U20 RL - vom Betreiber bestaetigt. In allen anderen
+// Klassen pfeifen Schiedsrichter. Steht dort trotzdem ein HSR, fehlt
+// nicht der Satz, sondern die Einteilung passt nicht zur Klasse: dann
+// lieber nichts vorschlagen als den SR-Betrag, der frueher
+// stillschweigend eingetragen wurde.
+gleich(P.grundgebuehr(spiel({ liga: "U15", rolle: "LSR", system: 3 })), null, "U15 kennt keinen LSR, also kein Betrag");
 gleich(P.grundgebuehr(spiel({ liga: "U15", rolle: "HSR", system: 3 })), null, "U15 HSR ebenso");
 gleich(P.grundgebuehr(spiel({ liga: "U15", rolle: "SR", system: 2 })), 80, "der SR bekommt seinen Satz weiter");
-gleich(P.grundgebuehr(spiel({ liga: "Frauen 2. Liga Nord", rolle: "LSR", system: 3 })), null, "bei den Frauen steht nur der SR-Satz");
-// Wo die Ordnung sie nennt, gelten sie unveraendert.
-gleich(P.grundgebuehr(spiel({ liga: "RL West", rolle: "HSR", system: 3 })), 160, "RL HSR steht in der Ordnung");
-gleich(P.grundgebuehr(spiel({ liga: "RL West", rolle: "LSR", system: 3 })), 110, "RL LSR auch");
+gleich(P.grundgebuehr(spiel({ liga: "Frauen 2. Liga Nord", rolle: "LSR", system: 3 })), null, "bei den Frauen gibt es nur Schiedsrichter");
+// Wo die Ordnung sie nennt, gelten sie unveraendert - das sind genau
+// die Herren und die U20 RL.
+gleich(P.grundgebuehr(spiel({ liga: "RL West", rolle: "HSR", system: 3 })), 160, "RL West HSR");
+gleich(P.grundgebuehr(spiel({ liga: "RL West", rolle: "LSR", system: 3 })), 110, "RL West LSR");
+gleich(P.grundgebuehr(spiel({ liga: "Landesliga NRW", rolle: "HSR", system: 3 })), 160, "Landesliga HSR");
+gleich(P.grundgebuehr(spiel({ liga: "Landesliga NRW", rolle: "LSR", system: 3 })), 110, "Landesliga LSR");
+gleich(P.grundgebuehr(spiel({ liga: "Bezirksliga NRW", rolle: "HSR", system: 3 })), 100, "Bezirksliga HSR");
+gleich(P.grundgebuehr(spiel({ liga: "U20 RL West", rolle: "HSR", system: 3 })), 100, "U20 RL HSR");
+gleich(P.grundgebuehr(spiel({ liga: "U20 RL West", rolle: "LSR", system: 3 })), 80, "U20 RL LSR");
+// Und ausserhalb der RL kennt auch die U20 keine Linienrichter.
+gleich(P.grundgebuehr(spiel({ liga: "U20 Landesliga", rolle: "LSR", system: 3 })), null, "U20 Landesliga ohne LSR");
+gleich(P.grundgebuehr(spiel({ liga: "U20 Landesliga", rolle: "SR", system: 2 })), 90, "U20 Landesliga SR");
 gleich(P.grundgebuehr(spiel({ liga: "U17 I" })), null, "DEB-Liga bleibt leer");
 P.setze({ gebuehren: null });
 gleich(P.grundgebuehr(spiel()), null, "ohne Ordnung kein Betrag");

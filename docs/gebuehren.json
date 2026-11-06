@@ -1,15 +1,16 @@
 {
   "_hinweis": "Spielleitungsgebuehren des ESRW, abgetippt aus der Gebuehrenordnung. Wenn der ESRW etwas aendert, hier anpassen - die Abrechnung im Mitgliederbereich rechnet damit. Betraege in Euro je Schiedsrichter und Spiel.",
   "stand": "Saison 2026/27",
+  "_rollen": "HSR und LSR gibt es nur bei den Herren (RL, LL, BL) und in der U20 RL. In allen anderen Klassen pfeifen Schiedsrichter - dort fehlt kein Satz, die Rolle kommt dort nicht vor.",
 
   "senioren": {
     "RL": { "HSR": 160, "LSR": 110, "SR": 180, "_": "Regionalliga West. HSR/LSR im 3-Mann-System, SR im 2-Mann-System. Zusaetzlicher HSR im 4-Mann-System 160." },
-    "LL": { "SR": 120, "HSR": 160, "LSR": 110, "_": "Landesliga NRW. Zusaetzlicher SR im 3-Mann-System laut Ordnung 'wie RL West' - deshalb HSR/LSR wie dort." },
+    "LL": { "SR": 120, "HSR": 160, "LSR": 110, "_": "Landesliga NRW. HSR/LSR im 3-Mann-System wie RL West - vom Betreiber bestaetigt." },
     "BL": { "SR": 100, "HSR": 100, "LSR": 100, "_": "Bezirksliga NRW. Zusaetzlicher SR im 3-Mann-System 100." }
   },
-  "frauen": { "SR": 95, "_": "Frauen 2. Liga Nord, Landesliga, Bezirksliga - alle 95 im 2-Mann-System." },
+  "frauen": { "SR": 95, "_": "Frauen 2. Liga Nord, Landesliga, Bezirksliga - alle 95 im 2-Mann-System. Kein HSR/LSR." },
   "nachwuchs": {
-    "U20": { "RL": { "HSR": 100, "LSR": 80, "SR": 90 }, "sonst": { "SR": 90 }, "_": "U20 Regionalliga mit 3-Mann-System; Landes-/Bezirksliga 2-Mann." },
+    "U20": { "RL": { "HSR": 100, "LSR": 80, "SR": 90 }, "sonst": { "SR": 90 }, "_": "U20 Regionalliga mit 3-Mann-System; Landes-/Bezirksliga 2-Mann. HSR/LSR gibt es ausserhalb der RL nicht - dort pfeifen Schiedsrichter." },
     "U17": { "SR": 85 },
     "U15": { "SR": 80 },
     "U13": { "SR": 80 },

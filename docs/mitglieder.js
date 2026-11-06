@@ -2581,9 +2581,22 @@ window.Mitglieder = (function () {
     // Wer hier steht und acht offene Spiele bei fuenf Vereinen hat, geht
     // diesen Weg fuenfmal. Dann lieber der Lauf.
     var laufOffen = laufBauen();
+    // Wie viele Spiele stecken in den Buendeln, und kommt eines davon
+    // erst noch? Ohne das stand hier eine Zahl, die der Arbeitskopf
+    // zwei Zeilen hoeher anders nannte - er zaehlt Spiele, das hier
+    // zaehlt Rechnungen, und kommende Spiele laesst er aus.
+    var laufSpiele = 0, laufKuenftig = 0, laufJetzt = Date.now();
+    laufOffen.forEach(function (b2) {
+      (b2.spiele || []).forEach(function (sp2) {
+        laufSpiele++;
+        if (new Date(sp2.beginn).getTime() >= laufJetzt) laufKuenftig++;
+      });
+    });
     if (laufOffen.length > 1) g1.appendChild(h("p", { class: "meta", style: "margin:0 0 6px" }, [
       h("button", { type: "button", class: "textknopf",
-        text: "Oder alle " + laufOffen.length + " offenen Rechnungen auf einmal schreiben",
+        text: "Oder alle auf einmal: " + laufOffen.length + " Rechnungen für "
+          + laufSpiele + (laufSpiele === 1 ? " Spiel" : " Spiele")
+          + (laufKuenftig ? (laufKuenftig === 1 ? " (eins kommt noch)" : " (" + laufKuenftig + " kommen noch)") : ""),
         onclick: function () {
           laufListe = null; laufFertig = null;
           abrechnungPanel = "lauf"; panelUnten = false; rendereAbrechnung();
@@ -5196,11 +5209,18 @@ window.Mitglieder = (function () {
     return box;
   }
 
-  // Fuer HSR und LSR nennt die Gebuehrenordnung eigene Betraege, aber in
-  // gebuehren.json stehen sie nur bei RL, LL, BL und U20 RL. Sonst kennt
-  // die App sie nicht und schlaegt - seit dem Wegfall des Rueckfalls auf
-  // den SR-Satz - nichts vor. Das soll man lesen koennen, statt vor
-  // einem leeren Feld zu stehen.
+  // Kein Vorschlag - und warum, dafuer gibt es zwei Gruende, die
+  // verschieden zu beantworten sind:
+  //
+  //   Die Liga steht nicht in der ESRW-Ordnung (DNL, Auswahlspiele).
+  //   Dann ist der eigene Betrag die Antwort, und beim zweiten Spiel
+  //   derselben Liga schlaegt die App ihn wieder vor.
+  //
+  //   Die Liga steht drin, aber nicht mit dieser Rolle. HSR und LSR
+  //   gibt es laut Ordnung nur bei den Herren und in der U20 RL; in
+  //   allen anderen Klassen pfeifen Schiedsrichter. Dann fehlt nicht
+  //   der Satz, sondern die Einteilung passt nicht zur Klasse - und
+  //   "trag den Betrag selbst ein" waere der falsche Rat.
   function satzLueckeZeile(sp) {
     if (new Date(sp.beginn) >= new Date()) return null;
     // sollBetrag() statt regelBetrag/grundgebuehr: gemessen im
@@ -5210,6 +5230,12 @@ window.Mitglieder = (function () {
     // ist nichts zu erklaeren.
     if (sollBetrag(sp) != null) return null;
     var rolle = sp.rolle || "SR", liga = sp.liga || "diese Liga";
+    // Klasse bekannt, Rolle dort nicht vorgesehen
+    if (rolle !== "SR" && ligaEinordnen(sp.liga)) {
+      return h("div", { class: "meta mg-satzluecke" }, [
+        "In " + liga + " sieht die Gebührenordnung nur Schiedsrichter vor, kein " + rolle
+        + ". Stimmt die Rolle? Sonst trag den Betrag von Hand ein."]);
+    }
     var merken = h("button", { type: "button", class: "textknopf",
       title: "Gilt ab dem nächsten Spiel als " + rolle + " in " + liga,
       text: "Diesen Betrag für " + rolle + " in " + liga + " merken",
