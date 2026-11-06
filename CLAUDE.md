@@ -109,6 +109,16 @@ Fensterbreite.
   ```js
   for (var i = 0; i < ziele.length; i++) { location.hash = ziele[i]; await warte(650); }
   ```
+* **Wer einen Block aus der Seite nimmt, sieht nach, was darin geladen
+  wurde.** `aktualisiereSummen()` beginnt mit
+  `if (!wurzel.querySelector(".mg-summenblock")) return;` – und holte
+  darin die Rechnungsliste. Als der Summenblock in Fassung 250 nur noch
+  in den Stufen zum Nachsehen stand, blieb `aufRechnung` in jeder
+  Arbeitsstufe leer: die Stufen „Abrechnen" und „Unterwegs"
+  verschwanden aus der Leiste, der Geldweg teilte sich nicht mehr auf.
+  `node --check` und die Testläufe sahen davon nichts – gefunden hat es
+  erst der Durchgang im Pane. Laden gehört dorthin, wo die Seite
+  entsteht, nicht in einen Block, den es manchmal nicht gibt.
 * Tippflächen: alles, was man antippt, ist 44 px hoch. Gemessen wird
   mit `elementFromPoint` um die Elementmitte, **nicht** nur mit
   `getBoundingClientRect` – das sieht ein `::after` nicht und meldet

@@ -2130,32 +2130,9 @@ window.Mitglieder = (function () {
       rz.addEventListener("click", function () { abrechnungPanel = "rechnung"; panelUnten = false; rendereAbrechnung(); });
       neu.appendChild(rz);
     }
-    // Was noch keine Rechnung hat, ist die Frage, fuer die man die
-    // Seite aufschlaegt. Die Antwort stand nur im Rechnungs-Panel -
-    // das man erst oeffnet, wenn man schon weiss, dass etwas aussteht.
-    // Die Liste kommt nach; bis dahin steht die Zeile nicht da, statt
-    // kurz etwas Falsches zu behaupten.
-    var jetzt2 = Date.now();
-    rechnungenLaden().then(function (geschrieben) {
-      if (!neu.isConnected) return;
-      var drin = {};
-      (geschrieben || []).forEach(function (rg) { (rg.kennungen || []).forEach(function (k2) { drin[k2] = 1; }); });
-      // Dieselbe Karte braucht die Ablaufleiste fuer die Stufe
-      // "Abrechnen". Beim ersten Zeichnen steht sie noch nicht, also
-      // einmal nachziehen - danach ist aufRechnung gesetzt, und es
-      // bleibt bei diesem einen zusaetzlichen Durchgang.
-      var warLeer = !aufRechnung;
-      aufRechnung = drin;
-      if (warLeer) { rendereAbrechnung(); return; }
-      var ohne = spiele.filter(function (sp) {
-        if (new Date(sp.beginn).getTime() >= jetzt2) return false;
-        if (drin[sp.kennung] || rechnungWahl[sp.kennung]) return false;
-        return (betragFuer(sp, einsaetze[sp.kennung] || {}).betrag || 0) > 0;
-      });
-      // Der Betrag stand hier als dritte Zeile mit einer Summe im
-      // selben Block. Er ist jetzt der erste Posten des Balkens, und
-      // der fuehrt auch ins Rechnungsblatt.
-    });
+    // Die Rechnungsliste wird nicht mehr hier geholt: dieser Block
+    // steht nur in den Stufen zum Nachsehen, und aufRechnung wird in
+    // allen gebraucht. Siehe rechnungsstandLaden().
     alt.parentNode.replaceChild(neu, alt);
     // Offenes Detail-Panel mitziehen
     var panel = wurzel.querySelector(".mg-panel");
@@ -4310,6 +4287,10 @@ window.Mitglieder = (function () {
   // Beim ersten Oeffnen sucht die Seite sich die Stufe, an der etwas
   // zu tun ist. Danach gilt, was der Mensch gewaehlt hat.
   var anfangGesetzt = false;
+  // Dasselbe fuer die Darstellung: zum Eintragen sind die Zeilen
+  // richtig, zum Nachsehen die Karten. Sobald jemand selbst umschaltet,
+  // haelt die App still.
+  var darstellungGewaehlt = false;
   // Die beiden Stufen, die bisher fehlten: "fertig zum Abrechnen"
   // (gepfiffen, Angaben vollstaendig, keine Rechnung) und "erledigt"
   // (Geld ist da).
@@ -4374,10 +4355,120 @@ window.Mitglieder = (function () {
     if (spiele.filter(zumAbrechnen).length) nurOhneRechnung = true;
   }
 
+  // Welche Stufe gerade gilt. "alle" und "erledigt" sind zum Nachsehen,
+  // die drei anderen zum Arbeiten - und nur beim Nachsehen gehoert der
+  // Saldo an den Anfang.
+  function arbeitsStufe() {
+    if (nurOffene) return "fehlt";
+    if (nurOhneRechnung) return "abrechnen";
+    if (nurUnterwegs) return "unterwegs";
+    if (nurUnbezahlt) return "unbezahlt";
+    if (nurErledigt) return "erledigt";
+    return "alle";
+  }
+  function stufeZumNachsehen() {
+    var st = arbeitsStufe();
+    return st === "alle" || st === "erledigt";
+  }
+  // Ein Satz, der sagt, was in dieser Stufe ansteht, und die Summe, um
+  // die es dabei geht. Nicht die der Saison - die beantwortet eine
+  // andere Frage und stand bisher in jeder Stufe dieselbe.
+  function arbeitsKopf(liste) {
+    var st = arbeitsStufe(), n = liste.length;
+    if (!n) return null;
+    function summeVon(xs) {
+      var g = 0;
+      xs.forEach(function (sp) { g += betragFuer(sp, einsaetze[sp.kennung] || {}).betrag || 0; });
+      return g;
+    }
+    var satz = "", betrag = null, tun = null;
+    if (st === "fehlt") {
+      satz = n === 1 ? "Bei einem Spiel fehlen Kilometer oder Vergütung."
+                     : "Bei " + n + " Spielen fehlen Kilometer oder Vergütung.";
+    } else if (st === "abrechnen") {
+      satz = n === 1 ? "Ein Spiel wartet auf eine Rechnung." : n + " Spiele warten auf eine Rechnung.";
+      betrag = summeVon(liste);
+      tun = ["Rechnung schreiben", function () { panelOeffnen("rechnung", true); }];
+    } else if (st === "unterwegs") {
+      satz = n === 1 ? "Eine Rechnung ist geschrieben, das Geld fehlt noch."
+                     : n + " Spiele stehen auf einer Rechnung, das Geld fehlt noch.";
+      betrag = summeVon(liste);
+    } else if (st === "unbezahlt") {
+      satz = n === 1 ? "Ein Spiel ist noch nicht abgehakt." : n + " Spiele sind noch nicht abgehakt.";
+      betrag = summeVon(liste);
+    } else {
+      return null;
+    }
+    var box = h("div", { class: "karte mg-arbeitskopf" }, [
+      h("b", { text: satz }),
+      betrag != null ? h("span", { class: "mg-arbeitsbetrag", text: euro(betrag) }) : null
+    ].filter(Boolean));
+    if (tun) box.appendChild(h("button", { type: "button", class: "mg-arbeitsknopf",
+      text: tun[0], onclick: tun[1] }));
+    return box;
+  }
+
+  // Nach einer Eingabe stimmen die Zahlen neben der Liste nicht mehr:
+  // der Chip zaehlt noch zwei Luecken, der Kopf nennt zwei Spiele. Die
+  // Liste selbst bleibt stehen - sie darf nicht unter den Fingern
+  // wegspringen -, also werden nur die Zahlen nachgezogen.
+  function stufenZahlenNachfuehren() {
+    if (!inhalt || !inhalt.isConnected) return;
+    var spiele = saisonSpiele(gewaehlteSaison);
+    var zahlen = {
+      "Angaben fehlen": spiele.filter(hatLuecke).length,
+      "Abrechnen": aufRechnung ? spiele.filter(zumAbrechnen).length : 0,
+      "Unterwegs": spiele.filter(istUnterwegs).length,
+      "Geld fehlt": spiele.filter(nichtAbgehakt).length,
+      "Erledigt": spiele.filter(istErledigt).length
+    };
+    Array.prototype.forEach.call(inhalt.querySelectorAll(".mg-ablauf button"), function (b) {
+      var st = b.getAttribute("data-stufe");
+      if (!(st in zahlen)) return;
+      var z = b.querySelector(".zaehler");
+      if (zahlen[st]) {
+        if (z) z.textContent = String(zahlen[st]);
+        else b.appendChild(h("span", { class: "zaehler", text: String(zahlen[st]) }));
+      } else if (z) { z.remove(); }
+    });
+    // Der Arbeitskopf nennt dieselbe Zahl noch einmal als Satz.
+    var ak = inhalt.querySelector(".mg-arbeitskopf");
+    if (!ak) return;
+    var st2 = arbeitsStufe();
+    var liste = st2 === "fehlt" ? spiele.filter(hatLuecke)
+      : st2 === "abrechnen" ? spiele.filter(zumAbrechnen)
+      : st2 === "unterwegs" ? spiele.filter(istUnterwegs)
+      : st2 === "unbezahlt" ? spiele.filter(nichtAbgehakt) : [];
+    var frisch = arbeitsKopf(liste);
+    if (frisch) ak.parentNode.replaceChild(frisch, ak);
+    else ak.remove();
+  }
+
+  // Welche Spiele stehen schon auf einer geschriebenen Rechnung? Davon
+  // haengen zwei Stufen der Ablaufleiste ab, der Geldweg und die
+  // Anfangsstufe. Die Liste kommt vom Server, also steht sie beim
+  // ersten Zeichnen noch nicht - danach einmal nachziehen.
+  function rechnungsstandLaden() {
+    if (aufRechnung) return;
+    rechnungenLaden().then(function (geschrieben) {
+      if (!inhalt || !inhalt.isConnected) return;
+      var drin = {};
+      (geschrieben || []).forEach(function (rg) {
+        (rg.kennungen || []).forEach(function (k2) { drin[k2] = 1; });
+      });
+      aufRechnung = drin;
+      rendereAbrechnung();
+    });
+  }
+
   function rendereAbrechnung() {
     leeren(inhalt);
     var spiele = saisonSpiele(gewaehlteSaison);
+    rechnungsstandLaden();
     anfangsStufeSetzen(spiele);
+    // In der Eintrage-Stufe liegen die Felder offen; sonst die Karten,
+    // die mehr zeigen als drei Zahlen.
+    if (!darstellungGewaehlt) schnellModus = (arbeitsStufe() === "fehlt");
     // Erst nachsehen, was schon dasteht, dann die Luecken fuellen -
     // sonst lernt die App aus dem, was sie selbst gerade eingetragen
     // hat. Ueber alle Saisons, nicht nur die gewaehlte: die Liga von
@@ -4423,9 +4514,9 @@ window.Mitglieder = (function () {
     // waren rot, auch der an "Erledigt" - waehrend derselbe Posten
     // zwei Zeilen tiefer gruen leuchtete. Ohne "ton" bleibt es beim
     // roten Standard, den die Chips ausserhalb dieser Leiste tragen.
-    var filterKnopf = function (an, text, zahl, titel, fn, ton) {
+    var filterKnopf = function (an, text, zahl, titel, fn, ton, stufe) {
       var k = h("button", { type: "button", class: (an ? "aktiv" : "") + (ton ? " ton-" + ton : ""),
-        title: titel,
+        title: titel, "data-stufe": stufe || text,
         // Eine eigene Wahl schlaegt den Anfangsvorschlag - auch den,
         // der gleich mit der Rechnungsliste nachkommen wuerde.
         onclick: function () { anfangGesetzt = true; fn(); rendereAbrechnung(); } }, [h("span", { text: text })]);
@@ -4459,7 +4550,7 @@ window.Mitglieder = (function () {
     ];
     chips = h("div", { class: "mg-filterzeile" }, [
       h("div", { class: "mg-ansicht mg-ablauf" }, stufen.filter(function (st) { return st[5]; })
-        .map(function (st) { return filterKnopf(st[0], st[1], st[2], st[3], st[4], st[6]); })),
+        .map(function (st) { return filterKnopf(st[0], st[1], st[2], st[3], st[4], st[6], st[1]); })),
     ]);
     // Saison und Darstellung in eine Zeile: beide sind schmal, und der
     // Kopf hatte vier Zeilen uebereinander. Gemessen bei 375 px: 210 px
@@ -4467,9 +4558,9 @@ window.Mitglieder = (function () {
     // "Saison 2026/27".
     var darstellung = h("div", { class: "modus mg-darstellung" }, [
       h("button", { type: "button", class: schnellModus ? "" : "aktiv", title: "Eine Karte je Spiel, zum Aufklappen",
-        text: "Karten", onclick: function () { schnellModus = false; rendereAbrechnung(); } }),
-      h("button", { type: "button", class: schnellModus ? "aktiv" : "", title: "Eine Zeile je Spiel, alles nebeneinander",
-        text: "Zeilen", onclick: function () { schnellModus = true; rendereAbrechnung(); } })
+        text: "Karten", onclick: function () { darstellungGewaehlt = true; schnellModus = false; rendereAbrechnung(); } }),
+      h("button", { type: "button", class: schnellModus ? "aktiv" : "", title: "Eine Zeile je Spiel, km und Betrag gleich eintragen",
+        text: "Zeilen", onclick: function () { darstellungGewaehlt = true; schnellModus = true; rendereAbrechnung(); } })
     ]);
     inhalt.appendChild(h("div", { class: "mg-abrechnung-kopf" }, [
       h("div", { class: "mg-kopfzeile" }, [saisonWahl, darstellung]), chips]));
@@ -4492,7 +4583,10 @@ window.Mitglieder = (function () {
       inhalt.appendChild(kmh);
     }
 
-    inhalt.appendChild(h("div", { class: "mg-summenblock" }));
+    // Saldo und Geldweg beantworten "wie steht es insgesamt" - eine
+    // Frage zum Nachsehen. In den Arbeitsstufen standen sie bisher
+    // ebenfalls und kosteten dort 197 px vor dem ersten Spiel.
+    if (stufeZumNachsehen()) inhalt.appendChild(h("div", { class: "mg-summenblock" }));
 
     // Seit die Abrechnung beim Oeffnen selbst eintraegt, ist das hier nur
     // noch der Nachzuegler fuer Spiele, die damals nichts abbekommen haben.
@@ -4652,6 +4746,11 @@ window.Mitglieder = (function () {
         h("span", { text: liste.length + " von " + spiele.length
           + (spiele.length === 1 ? " Spiel" : " Spielen") }), zurueck]));
     }
+
+    // In den Arbeitsstufen steht hier, was ansteht - an der Stelle, an
+    // der sonst der Saldo stuende.
+    var ak = arbeitsKopf(liste);
+    if (ak) inhalt.appendChild(ak);
 
     if (schnellModus) {
       inhalt.appendChild(schnellListe(liste));
@@ -5051,6 +5150,7 @@ window.Mitglieder = (function () {
             var aend = {}; aend[schluessel] = zahlAbNull(ev.target.value);
             speichereEinsatz(sp, aend);
             zeile.classList.toggle("erfasst", (einsaetze[sp.kennung] || {}).verguetung != null);
+            stufenZahlenNachfuehren();
           },
           onkeydown: function (ev) {
             // Enter springt ins naechste Feld - schneller als tippen und zielen
@@ -5137,10 +5237,10 @@ window.Mitglieder = (function () {
 
     var km = h("input", { type: "text", inputmode: "decimal",
       value: e.km != null ? e.km : "", placeholder: vorschlag ? "~" + vorschlag.km : "km",
-      onchange: function (ev) { speichereEinsatz(sp, { km: zahlAbNull(ev.target.value) }); } });
+      onchange: function (ev) { speichereEinsatz(sp, { km: zahlAbNull(ev.target.value) }); stufenZahlenNachfuehren(); } });
     var verg = h("input", { type: "text", inputmode: "decimal",
       value: e.verguetung != null ? e.verguetung : "", placeholder: gebuehr != null ? "~" + gebuehr : "€",
-      onchange: function (ev) { speichereEinsatz(sp, { verguetung: zahlAbNull(ev.target.value) }); } });
+      onchange: function (ev) { speichereEinsatz(sp, { verguetung: zahlAbNull(ev.target.value) }); stufenZahlenNachfuehren(); } });
     var ausl = h("input", { type: "text", inputmode: "decimal",
       value: e.auslagen != null ? e.auslagen : "", placeholder: "€",
       onchange: function (ev) { speichereEinsatz(sp, { auslagen: zahlAbNull(ev.target.value) }); } });

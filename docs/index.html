@@ -3263,6 +3263,22 @@
   :root[data-design="neu"] .mg-auswahlhinweis { display:flex; align-items:center;
     justify-content:space-between; gap:var(--abstand-s);
     margin:var(--abstand-s) 0 0; }
+
+  /* ===== Nachtrag: der Kopf je Arbeitsschritt =======================
+     Saldo und Geldweg standen in jeder Stufe und kosteten dort 197 px
+     vor dem ersten Spiel - auch dann, wenn darunter nur zwei Spiele
+     zum Eintragen kamen. Sie stehen jetzt nur noch beim Nachsehen; in
+     den Arbeitsstufen steht dieser Kasten: ein Satz, die Summe dieser
+     Stufe, und - wo es eine gibt - die Handlung. */
+  :root[data-design="neu"] .mg-arbeitskopf { display:flex; flex-wrap:wrap;
+    align-items:center; gap:var(--abstand-xs) var(--abstand-s);
+    padding:var(--abstand-m); margin-top:var(--abstand-s); }
+  :root[data-design="neu"] .mg-arbeitskopf b { flex:1 1 60%; min-width:0;
+    font-size:var(--s-l); font-weight:700; line-height:1.35; }
+  :root[data-design="neu"] .mg-arbeitsbetrag { flex:0 0 auto; font-size:var(--s-xl);
+    font-weight:800; font-variant-numeric:tabular-nums; color:var(--warn); }
+  :root[data-design="neu"] .mg-arbeitsknopf { flex:1 1 100%; min-height:44px;
+    margin-top:var(--abstand-xs); }
 </style>
 </head>
 <body>
@@ -3726,6 +3742,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=246"></script>
+<script src="app.js?v=250"></script>
 </body>
 </html>
