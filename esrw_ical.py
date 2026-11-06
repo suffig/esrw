@@ -597,6 +597,53 @@ def saisonarchiv_einfrieren(historie, personen, stand):
     return index
 
 
+def namen_alias_laden(cfg):
+    """slug -> Anzeigename, vom Betreiber in der App gesetzt (v59).
+
+    esrw.de schreibt Namen so, wie sie dort stehen. Geaendert wird nur,
+    was angezeigt wird - der Slug und die Schreibweisen bleiben, sonst
+    fiele die Zuordnung zu esrw.de auseinander und jeder Link mit ihr."""
+    heraus = {}
+    for z in tabelle_laden(cfg, "namen_alias?select=slug,name"):
+        slug, name = (z.get("slug") or "").strip(), (z.get("name") or "").strip()
+        if slug and name:
+            heraus[slug] = name
+    return heraus
+
+
+def namen_ersetzen(personen, uebersicht, alias):
+    """Setzt die Anzeigenamen ueberall ein, wo ein Name steht.
+
+    Vier Stellen, und keine darf fehlen - sonst heisst dieselbe Person
+    im Spielplan anders als im Gespann darunter: die Personenliste, das
+    Gespann in jedem Termin, die Gesamtuebersicht und die Sortierung,
+    die dem Namen folgt.
+
+    "schluessel" und "varianten" bleiben unangetastet. An ihnen erkennt
+    der naechste Lauf die Person auf esrw.de wieder."""
+    if not alias:
+        return 0
+    n = 0
+    for p in personen:
+        neu = alias.get(p["slug"])
+        if neu and neu != p["name"]:
+            p["name"] = neu
+            n += 1
+        for t in p.get("termine", []):
+            for g in t.get("gespann", []):
+                g_neu = alias.get(g.get("slug"))
+                if g_neu:
+                    g["name"] = g_neu
+    for s in uebersicht or []:
+        for b in s.get("besetzung", []):
+            b_neu = alias.get(b.get("slug"))
+            if b_neu:
+                b["name"] = b_neu
+    # Die Liste war nach dem alten Namen sortiert.
+    personen.sort(key=lambda p: nkey(p["name"]))
+    return n
+
+
 def ergaenze_ehemalige(personen, stats, bevorzugt=frozenset()):
     """Traegt Kollegen nach, die gerade kein Spiel haben, aber schon eines
     hatten. esrw.de zeigt nur die naechsten Tage - ohne diesen Schritt
@@ -2127,6 +2174,12 @@ def main():
         print("%d Spiel(e) mit Gespann vom Betreiber." % umbesetzt)
     personen, uebersicht = sammle_personen(spiele, cfg, venues, stand, bevorzugt, gebuehren, korrekturen, hallen_hinweise, kennungen)
     print("%d Personen." % len(personen))
+    # Anzeigenamen des Betreibers (v59). Direkt hier, damit jede
+    # folgende Datei - Feeds, daten.json, Archiv, Protokoll - denselben
+    # Namen traegt.
+    geaendert_namen = namen_ersetzen(personen, uebersicht, namen_alias_laden(cfg))
+    if geaendert_namen:
+        print("%d Anzeigename(n) aus der App gesetzt." % geaendert_namen)
 
     unklar = sorted({t["paarung"] for p in personen for t in p["termine"]
                      if not t["halle_erkannt"]})

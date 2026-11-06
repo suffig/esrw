@@ -3592,6 +3592,118 @@ window.Mitglieder = (function () {
       return meldungenEigen;
     });
   }
+  // ---------------------------------------------------- Dokumente
+  //
+  // Spielberichte und Zusatzmeldungen haengen am Spiel, nicht am
+  // Einsatz: wer im Gespann stand, sieht sie. Wer sie sehen darf,
+  // entscheiden die Regeln in schema.sql (v58) - hier steht nur, wie
+  // sie hoch- und wieder herunterkommen.
+  var DOK_ARTEN = [["spielbericht", "Spielbericht"], ["zusatzmeldung", "Zusatzmeldung"], ["sonstiges", "Sonstiges"]];
+  function dokumenteLaden(kennung) {
+    return speichern(sb.from("spiel_dokumente").select("*").eq("kennung", kennung)
+      .order("angelegt", { ascending: false }));
+  }
+  function dokumentGroesse(n) {
+    if (n == null) return "";
+    return n < 1024 * 1024 ? Math.max(1, Math.round(n / 1024)) + " KB"
+                           : (Math.round(n / 1024 / 102.4) / 10) + " MB";
+  }
+  function dokumentOeffnen(pfad) {
+    sb.storage.from("dokumente").createSignedUrl(pfad, 300).then(function (r) {
+      if (r.error || !r.data || !r.data.signedUrl) { meldung("Das Dokument liess sich nicht abrufen.", "warn"); return; }
+      window.open(r.data.signedUrl, "_blank", "noopener");
+    });
+  }
+  function dokumentHochladen(sp, datei, art, fertig) {
+    var pfad = session.user.id + "/" + sicher(sp.kennung) + "/" + Date.now() + "_" + sicher(datei.name);
+    kurzMeldung("Lade " + datei.name + " hoch …", "");
+    return sb.storage.from("dokumente").upload(pfad, datei, { upsert: false }).then(function (r) {
+      if (r.error) { meldung("Nicht hochgeladen: " + fehlerText(r.error), "warn"); return; }
+      return speichern(sb.from("spiel_dokumente").insert({
+        user_id: session.user.id, slug: profil.slug, name: profil.name || profil.slug,
+        kennung: sp.kennung, beginn: sp.beginn, paarung: sp.paarung || null,
+        gespann: (sp.gespann || []).filter(Boolean),
+        pfad: pfad, titel: datei.name, art: art, groesse: datei.size || null
+      })).then(function (r2) {
+        if (r2 && r2.error) {
+          // Ohne Tabellenzeile sieht die Datei niemand mehr - auch der
+          // Betreiber nicht. Dann gehoert sie weg, nicht in den Speicher.
+          sb.storage.from("dokumente").remove([pfad]);
+          meldung(fehlerText(r2.error) + (/spiel_dokumente/.test(r2.error.message || "") ? ", schema.sql (v58) ausführen." : ""), "warn");
+          return;
+        }
+        kurzMeldung("Dokument angeheftet \✓", "gut");
+        if (fertig) fertig();
+      });
+    });
+  }
+  function dokumentLoeschen(z, fertig) {
+    if (!confirm("\„" + z.titel + "\“ entfernen?\n\nDie Datei wird gel\öscht; die Kollegen im Spiel sehen sie dann nicht mehr.")) return;
+    speichern(sb.from("spiel_dokumente").delete().eq("id", z.id)).then(function (r) {
+      if (r && r.error) { meldung("Nicht entfernt: " + fehlerText(r.error), "warn"); return; }
+      // Erst die Zeile, dann die Datei: bleibt die Datei liegen, sieht
+      // sie niemand mehr (die Lese-Regel fragt die Tabelle). Umgekehrt
+      // zeigte die Liste einen toten Eintrag.
+      sb.storage.from("dokumente").remove([z.pfad]);
+      kurzMeldung("Entfernt.", "gut");
+      if (fertig) fertig();
+    });
+  }
+  // sp braucht: kennung, beginn, paarung, gespann (Slugs im Spiel)
+  function dokumenteZeile(sp) {
+    var box = h("div", { class: "dok-box" });
+    function waehler() {
+      var art = h("select", { class: "mg-select dok-art" },
+        DOK_ARTEN.map(function (a) { return h("option", { value: a[0], text: a[1] }); }));
+      var datei = h("input", { type: "file", style: "display:none",
+        accept: ".pdf,.doc,.docx,.txt,image/*",
+        onchange: function (ev) {
+          var f = ev.target.files && ev.target.files[0];
+          ev.target.value = "";
+          if (!f) return;
+          if (f.size > 20 * 1024 * 1024) { meldung("H\öchstens 20 MB je Datei.", "warn"); return; }
+          dokumentHochladen(sp, f, art.value, neuLaden);
+        } });
+      return h("div", { class: "dok-neu" }, [art,
+        h("button", { type: "button", class: "textknopf",
+          title: "Spielbericht, Zusatzmeldung oder ein anderes Dokument anh\ängen",
+          text: "Datei anh\ängen", onclick: function () { datei.click(); } }), datei]);
+    }
+    function neuLaden() {
+      dokumenteLaden(sp.kennung).then(function (r) {
+        if (!box.isConnected) return;
+        leeren(box);
+        if (r && r.error) {
+          box.appendChild(h("p", { class: "meta", text: /spiel_dokumente/.test(r.error.message || "")
+            ? "Noch nicht eingerichtet \– schema.sql (v58) ausf\ühren." : fehlerText(r.error) }));
+          box.appendChild(waehler());
+          return;
+        }
+        var zeilen = (r && r.data) || [];
+        if (!zeilen.length) box.appendChild(h("p", { class: "meta", text: "Noch nichts angeheftet." }));
+        zeilen.forEach(function (z) {
+          var art = DOK_ARTEN.filter(function (a) { return a[0] === z.art; })[0];
+          var oeffnen = h("button", { type: "button", class: "dok-datei",
+            title: "\Öffnen", onclick: function () { dokumentOeffnen(z.pfad); } }, [
+            h("b", { text: z.titel }),
+            h("small", { text: (art ? art[1] : z.art) + " \· " + z.name
+              + (z.groesse ? " \· " + dokumentGroesse(z.groesse) : "")
+              + " \· " + new Date(z.angelegt).toLocaleDateString("de-DE") })]);
+          var zeile = h("div", { class: "dok-zeile" }, [oeffnen]);
+          if (z.user_id === session.user.id || istAdmin()) {
+            zeile.appendChild(h("button", { type: "button", class: "dok-weg",
+              title: "Entfernen", "aria-label": "Entfernen", text: "\×",
+              onclick: function () { dokumentLoeschen(z, neuLaden); } }));
+          }
+          box.appendChild(zeile);
+        });
+        box.appendChild(waehler());
+      });
+    }
+    neuLaden();
+    return box;
+  }
+
   function ausfallZeile(sp) {
     if (sp.privat) return null;
     var box = h("div", { class: "zweit" });
@@ -4195,6 +4307,9 @@ window.Mitglieder = (function () {
   }
   function abrechnungSprung(kennung) { abrechnungZiel = kennung; nurOffene = false; nurUnbezahlt = false; schnellModus = false; }
   var schnellModus = false, nurUnbezahlt = false;
+  // Beim ersten Oeffnen sucht die Seite sich die Stufe, an der etwas
+  // zu tun ist. Danach gilt, was der Mensch gewaehlt hat.
+  var anfangGesetzt = false;
   // Die beiden Stufen, die bisher fehlten: "fertig zum Abrechnen"
   // (gepfiffen, Angaben vollstaendig, keine Rechnung) und "erledigt"
   // (Geld ist da).
@@ -4242,9 +4357,27 @@ window.Mitglieder = (function () {
   }
 
   var streckenLaeuft = false;
+  // Die erste Stufe, an der etwas haengt. Reihenfolge wie im Ablauf:
+  // erst die Angaben, dann die Rechnung, dann das Geld. "Unterwegs"
+  // und "Erledigt" sind zum Nachsehen da, nicht zum Arbeiten - auf
+  // ihnen faengt niemand an.
+  function anfangsStufeSetzen(spiele) {
+    if (anfangGesetzt) return;
+    if (spiele.filter(hatLuecke).length) { anfangGesetzt = true; nurOffene = true; return; }
+    // Ohne Rechnungsliste laesst sich "Abrechnen" nicht beurteilen.
+    // Dann noch nichts festlegen: die Liste kommt gleich nach und ruft
+    // rendereAbrechnung() erneut. Wuerde hier schon anfangGesetzt
+    // stehen, bliebe es fuer immer bei "Alle" - auch wenn vier Spiele
+    // auf eine Rechnung warten.
+    if (!aufRechnung) return;
+    anfangGesetzt = true;
+    if (spiele.filter(zumAbrechnen).length) nurOhneRechnung = true;
+  }
+
   function rendereAbrechnung() {
     leeren(inhalt);
     var spiele = saisonSpiele(gewaehlteSaison);
+    anfangsStufeSetzen(spiele);
     // Erst nachsehen, was schon dasteht, dann die Luecken fuellen -
     // sonst lernt die App aus dem, was sie selbst gerade eingetragen
     // hat. Ueber alle Saisons, nicht nur die gewaehlte: die Liga von
@@ -4293,7 +4426,9 @@ window.Mitglieder = (function () {
     var filterKnopf = function (an, text, zahl, titel, fn, ton) {
       var k = h("button", { type: "button", class: (an ? "aktiv" : "") + (ton ? " ton-" + ton : ""),
         title: titel,
-        onclick: function () { fn(); rendereAbrechnung(); } }, [h("span", { text: text })]);
+        // Eine eigene Wahl schlaegt den Anfangsvorschlag - auch den,
+        // der gleich mit der Rechnungsliste nachkommen wuerde.
+        onclick: function () { anfangGesetzt = true; fn(); rendereAbrechnung(); } }, [h("span", { text: text })]);
       if (zahl) k.appendChild(h("span", { class: "zaehler", text: String(zahl) }));
       return k;
     };
@@ -4500,6 +4635,23 @@ window.Mitglieder = (function () {
     else if (nurOhneRechnung) liste = spiele.filter(zumAbrechnen);
     else if (nurUnterwegs) liste = spiele.filter(istUnterwegs);
     else if (nurErledigt) liste = spiele.filter(istErledigt);
+
+    // Die Seite oeffnet auf der Stufe, an der etwas zu tun ist - dann
+    // steht hier nicht die ganze Saison. Wer das nicht weiss, haelt
+    // acht Spiele fuer alle. Also: was man sieht, wovon, und zurueck.
+    if (liste.length !== spiele.length) {
+      var zurueck = h("button", { type: "button", class: "textknopf",
+        text: "Alle " + spiele.length + " zeigen",
+        onclick: function () {
+          anfangGesetzt = true;
+          nurOffene = false; nurUnbezahlt = false; nurOhneRechnung = false;
+          nurUnterwegs = false; nurErledigt = false;
+          rendereAbrechnung();
+        } });
+      inhalt.appendChild(h("div", { class: "meta mg-auswahlhinweis" }, [
+        h("span", { text: liste.length + " von " + spiele.length
+          + (spiele.length === 1 ? " Spiel" : " Spielen") }), zurueck]));
+    }
 
     if (schnellModus) {
       inhalt.appendChild(schnellListe(liste));
@@ -7145,6 +7297,8 @@ window.Mitglieder = (function () {
        "Name und Anschrift für die Gebührenabrechnung"],
       ["telefon", "Telefonliste", "i-users", telefonlisteRendern, "stammdaten",
        "Handynummern der Kollegen"],
+      ["namen", "Anzeigenamen", "i-users", namenPflegeRendern, "stammdaten",
+       "Wie ein Kollege in der App heißt – esrw.de bleibt unberührt"],
       ["zeiten", "Spielzeiten", "i-clock", spielzeitenRendern, "stammdaten",
        "Spieldauer und Drittel je Liga"],
       ["staerken", "Antrittsstärken", "i-users", staerkenRendern, "stammdaten",
@@ -7168,7 +7322,7 @@ window.Mitglieder = (function () {
   var ADMIN_GRUPPEN = [
     ["Konten und Rechte", "i-users", ["freischaltung", "funktionen", "ansehen"]],
     ["Spiele", "i-cal", ["spiel", "korrekturen", "doppelt"]],
-    ["Stammdaten", "i-pin", ["hallen", "adressen", "telefon", "zeiten", "staerken", "gebuehren"]],
+    ["Stammdaten", "i-pin", ["hallen", "adressen", "telefon", "namen", "zeiten", "staerken", "gebuehren"]],
     ["System", "i-shield", ["betrieb", "push", "speicher", "abo"]]
   ];
   var ADMIN_FUSS = "Freigeschaltete sehen Tauschbörse, Verfügbarkeiten, Hallen-Hinweise, Kontakte und Mitfahrten. "
@@ -7631,6 +7785,95 @@ window.Mitglieder = (function () {
 
   // Admin -> Telefonliste: Nummern aller Kollegen (Verbandsliste). Gelesen
   // wird sie im Reiter "Kollegen", geaendert nur hier.
+  // Anzeigenamen: esrw.de schreibt Namen so, wie sie dort stehen - mal
+  // mit Zweitnamen, mal in einer Schreibweise, die niemand benutzt.
+  // Hier aendert der Betreiber, was angezeigt wird.
+  //
+  // Was sich NICHT aendert: der Slug und die Schreibweisen, an denen
+  // die Pipeline die Person auf esrw.de wiedererkennt. Steht so auch
+  // in der Oberflaeche, denn es ist der Grund, warum das ueberhaupt
+  // geht - und die Frage, die jeder zuerst hat.
+  function namenPflegeRendern(box) {
+    function neu() { leeren(box); namenPflegeRendern(box); }
+    leeren(box);
+    box.appendChild(h("h4", {}, [ikone("i-users"), " Anzeigenamen"]));
+    box.appendChild(h("p", { class: "meta", style: "margin:0 0 10px", text:
+      "Ändert nur, was die App anzeigt. Von esrw.de werden die Kollegen "
+      + "weiter unter ihrem dortigen Namen geholt, und alle Links, Profile "
+      + "und Abrechnungen bleiben erhalten. Sichtbar wird es nach dem "
+      + "nächsten stündlichen Lauf." }));
+    var personen = (ctx.daten && ctx.daten.personen) || [];
+    if (!personen.length) { box.appendChild(h("p", { class: "meta", text: "Keine Kollegen geladen." })); return; }
+    var liste = h("div", { class: "mg-liste" });
+    box.appendChild(liste);
+    liste.appendChild(h("p", { class: "meta", text: "lädt …" }));
+    speichern(sb.from("namen_alias").select("*")).then(function (r) {
+      leeren(liste);
+      if (r && r.error) {
+        liste.appendChild(h("p", { class: "achtung", text: /namen_alias/.test(r.error.message || "")
+          ? "Noch nicht eingerichtet – schema.sql (v59) ausführen." : fehlerText(r.error) }));
+        return;
+      }
+      var alias = {};
+      ((r && r.data) || []).forEach(function (z) { alias[z.slug] = z; });
+      var suche = h("input", { type: "search", placeholder: "Name suchen", class: "mg-suche" });
+      liste.appendChild(suche);
+      var zeilen = h("div");
+      liste.appendChild(zeilen);
+      function malen() {
+        leeren(zeilen);
+        var f = (suche.value || "").toLowerCase().trim();
+        var geaendert = personen.filter(function (p) { return alias[p.slug]; });
+        if (geaendert.length) zeilen.appendChild(h("p", { class: "meta", text:
+          geaendert.length + (geaendert.length === 1 ? " Name ist geändert." : " Namen sind geändert.") }));
+        personen.forEach(function (p) {
+          var a = alias[p.slug];
+          // Der Name von esrw.de: steht in varianten, sonst ist es der
+          // angezeigte selbst (dann gibt es noch keine Aenderung).
+          var vonSeite = (p.varianten && p.varianten[0]) || p.name;
+          if (f && (p.name + " " + vonSeite).toLowerCase().indexOf(f) < 0) return;
+          var feld = h("input", { type: "text", value: a ? a.name : p.name });
+          var zeile = h("div", { class: "mg-zeile" + (a ? " geaendert" : "") }, [
+            h("div", { class: "mg-namenfeld" }, [
+              feld,
+              h("small", { class: a ? "achtung" : "meta",
+                text: a ? "auf esrw.de: " + vonSeite + (a.von ? " · geändert von " + a.von : "")
+                        : "wie auf esrw.de" })])]);
+          var knoepfe = h("div", { class: "zweit" });
+          knoepfe.appendChild(h("button", { type: "button", text: "Speichern", onclick: function () {
+            var wert = (feld.value || "").trim();
+            if (!wert) { meldung("Ein Name darf nicht leer sein.", "warn"); return; }
+            if (wert === vonSeite) {
+              // Zurueck auf den Namen von esrw.de heisst: keine Zeile.
+              speichern(sb.from("namen_alias").delete().eq("slug", p.slug)).then(function (rr) {
+                if (rr && rr.error) { meldung(fehlerText(rr.error), "warn"); return; }
+                kurzMeldung("Wieder wie auf esrw.de ✓", "gut"); neu();
+              });
+              return;
+            }
+            speichern(sb.from("namen_alias").upsert({ slug: p.slug, name: wert,
+              von: profil.name || profil.slug })).then(function (rr) {
+              if (rr && rr.error) { meldung(fehlerText(rr.error), "warn"); return; }
+              kurzMeldung("Gespeichert ✓ Sichtbar nach dem nächsten Lauf.", "gut"); neu();
+            });
+          } }));
+          if (a) knoepfe.appendChild(h("button", { type: "button", class: "mg-neben",
+            title: "Wieder den Namen von esrw.de anzeigen",
+            text: "Zurücksetzen", onclick: function () {
+              speichern(sb.from("namen_alias").delete().eq("slug", p.slug)).then(function (rr) {
+                if (rr && rr.error) { meldung(fehlerText(rr.error), "warn"); return; }
+                kurzMeldung("Wieder wie auf esrw.de ✓", "gut"); neu();
+              });
+            } }));
+          zeile.appendChild(knoepfe);
+          zeilen.appendChild(zeile);
+        });
+      }
+      suche.addEventListener("input", malen);
+      malen();
+    });
+  }
+
   function telefonlisteRendern(box) {
     function neu() { cache.geladen.telefon = 0; leeren(box); telefonlisteRendern(box); }
     function kopf() { box.appendChild(h("h4", {}, [ikone("i-users"), " Telefonliste"])); }
@@ -9443,5 +9686,8 @@ window.Mitglieder = (function () {
            einstellungenSpeichern: einstellungenSpeichern, radar: radar, angebotMachen: angebotMachen,
            kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl, kontoRendern: kontoRendern, kontaktVon: kontaktVon, istAdmin: istAdmin, adminRecht: adminRecht, tresorSchluessel: tresorSchluessel, kontoKurz: kontoKurz, rechnungSprung: rechnungSprung, rechnungOeffnen: rechnungOeffnen, korrekturSpeichern: korrekturSpeichern, spielManuellLoeschen: spielManuellLoeschen,
            mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, telefonVon: telefonVon, spielzeiten: spielzeiten, rechnungEinlesen: rechnungEinlesen, bilder: bilder, bildVon: bildVon, rufnameVon: rufnameVon, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb, wohnortEigen: wohnortEigen, notizenFuerSuche: notizenFuerSuche, zugang: zugang, darfKorrigieren: darfKorrigieren, antrittsstaerken: antrittsstaerken,
-           darfAlleSpiele: darfAlleSpiele, funktionSetzen: funktionSetzen };
+           darfAlleSpiele: darfAlleSpiele, funktionSetzen: funktionSetzen,
+           // Die Spielseite zeigt sie jetzt selbst - fuer alte Spiele ist
+           // die Abrechnungskarte kein Weg mehr.
+           ausfallZeile: ausfallZeile, dokumenteZeile: dokumenteZeile };
 })();

@@ -569,6 +569,55 @@ def test_rechnungsvorlage():
     pruefe(p.get("seite") and p.get("root") and p.get("maxObj"), "Objektnummern notiert")
 
 
+def test_anzeigenamen():
+    """v59: Der Betreiber aendert den angezeigten Namen - mehr nicht.
+
+    Gewuenscht war: "Namen von Kollegen sollen in der App aenderbar
+    sein (Admin), aber weiterhin von der esrw webseite unter dem alten
+    Namen geholt werden." Die letzten drei Pruefungen sind der Kern:
+    Slug, Schluessel und Schreibweisen bleiben, wie sie waren - sonst
+    findet der naechste Lauf die Person auf esrw.de nicht wieder, und
+    jeder Link auf ihr Profil bricht mit.
+    """
+    alt = "Mueller, Hans-Peter"
+    personen = [
+        {"slug": "mueller-hans", "name": alt,
+         "schluessel": E.personen_schluessel(alt),
+         "varianten": [alt, "Müller, Hans-Peter"],
+         "termine": [{"gespann": [{"name": "Schmidt, Anna", "slug": "schmidt-anna", "rolle": "2. SR"}]}]},
+        {"slug": "schmidt-anna", "name": "Schmidt, Anna",
+         "schluessel": E.personen_schluessel("Schmidt, Anna"),
+         "varianten": ["Schmidt, Anna"], "termine": []},
+    ]
+    uebersicht = [{"besetzung": [{"name": alt, "slug": "mueller-hans", "rolle": "SR"}]}]
+
+    n = E.namen_ersetzen(personen, uebersicht, {"mueller-hans": "Müller, Hans"})
+    pruefe(n == 1, "ein Anzeigename geaendert", repr(n))
+
+    hans = [p for p in personen if p["slug"] == "mueller-hans"][0]
+    anna = [p for p in personen if p["slug"] == "schmidt-anna"][0]
+    pruefe(hans["name"] == "Müller, Hans", "die Personenliste zeigt den neuen Namen", repr(hans["name"]))
+    pruefe(uebersicht[0]["besetzung"][0]["name"] == "Müller, Hans",
+           "die Gesamtuebersicht auch", repr(uebersicht[0]["besetzung"][0]["name"]))
+    pruefe(anna["name"] == "Schmidt, Anna", "andere Namen bleiben unberuehrt", repr(anna["name"]))
+
+    pruefe(hans["slug"] == "mueller-hans", "der Slug aendert sich nie", repr(hans["slug"]))
+    pruefe(hans["schluessel"] == E.personen_schluessel(alt),
+           "der Schluessel bleibt der alte Name", repr(hans["schluessel"]))
+    pruefe(hans["varianten"] == [alt, "Müller, Hans-Peter"],
+           "die Schreibweisen von esrw.de bleiben stehen", repr(hans["varianten"]))
+
+    # Im Gespann des Kollegen steht er ebenfalls - sonst hiesse dieselbe
+    # Person im Spielplan anders als im Gespann darunter.
+    personen2 = [{"slug": "a", "name": "A", "schluessel": "a", "varianten": [],
+                  "termine": [{"gespann": [{"name": "Alt", "slug": "b", "rolle": "SR"}]}]}]
+    E.namen_ersetzen(personen2, [], {"b": "Neu"})
+    g = personen2[0]["termine"][0]["gespann"][0]["name"]
+    pruefe(g == "Neu", "das Gespann traegt den neuen Namen des Kollegen", repr(g))
+
+    pruefe(E.namen_ersetzen(personen, uebersicht, {}) == 0, "ohne Alias passiert nichts")
+
+
 def test_tresor():
     """Verschluesselt geschrieben, verschluesselt gelesen - und ohne
     Schluessel bleibt es Klartext. Geprueft an einer Wegwerfdatei unter
@@ -1735,6 +1784,7 @@ def main():
                  test_funktionstexte, test_dunkles_thema, test_kennungen, test_verlegt,
                  test_archivkennung, test_statistik_zaehlt_einmal, test_spielschluessel, test_blattfokus, test_netzstand,
                  test_push_nachrichten, test_push_erinnerungen,
+                 test_anzeigenamen,
                  test_tresor):
         test()
     print("\n" + "-" * 58)

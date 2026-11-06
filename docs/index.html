@@ -3236,6 +3236,33 @@
   :root[data-design="neu"] .mg-ablauf .ton-fertig .zaehler { background:var(--gut); color:#fff; }
   /* Im aktiven Chip steht der Zaehler auf dunklem Grund. */
   :root[data-design="neu"] .mg-ablauf button.aktiv .zaehler { background:rgba(255,255,255,.28); color:inherit; }
+
+  /* ===== Nachtrag: Dokumente am Spiel ===============================
+     Eine Zeile je Datei: links das Dokument (ganze Breite, damit der
+     Daumen trifft), rechts das Entfernen - und nur dort, wo man es
+     darf. Darunter die Auswahl der Art und der Knopf zum Anhaengen. */
+  :root[data-design="neu"] .dok-zeile { display:flex; align-items:stretch; gap:var(--abstand-xs);
+    border-top:1px solid var(--linie); }
+  :root[data-design="neu"] .dok-zeile:first-child { border-top:0; }
+  :root[data-design="neu"] .dok-datei { flex:1 1 auto; min-width:0; min-height:44px;
+    display:flex; flex-direction:column; align-items:flex-start; justify-content:center;
+    gap:1px; padding:var(--abstand-s) 0; border:0; background:none; font:inherit;
+    text-align:left; cursor:pointer; color:inherit; }
+  :root[data-design="neu"] .dok-datei b { font-size:var(--s-l); font-weight:700;
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:100%; }
+  :root[data-design="neu"] .dok-datei small { color:var(--dim); font-size:var(--s-s); }
+  :root[data-design="neu"] .dok-weg { flex:0 0 auto; width:44px; min-height:44px;
+    border:0; background:none; color:var(--dim); font-size:1.3rem; line-height:1; cursor:pointer; }
+  :root[data-design="neu"] .dok-neu { display:flex; gap:var(--abstand-s); align-items:center;
+    flex-wrap:wrap; margin-top:var(--abstand-s); }
+  :root[data-design="neu"] .dok-neu .dok-art { flex:0 1 auto; min-width:140px; }
+
+  /* Steht ueber der Liste, wenn sie gefiltert ist: was man sieht, und
+     der Weg zurueck. Links der Satz, rechts der Knopf - zwei kurze
+     Teile, die bei 375 px nebeneinanderpassen. */
+  :root[data-design="neu"] .mg-auswahlhinweis { display:flex; align-items:center;
+    justify-content:space-between; gap:var(--abstand-s);
+    margin:var(--abstand-s) 0 0; }
 </style>
 </head>
 <body>
@@ -3699,6 +3726,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=242"></script>
+<script src="app.js?v=246"></script>
 </body>
 </html>

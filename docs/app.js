@@ -1488,9 +1488,87 @@
 
   // ------------------------------------------------------ Spiel-Detailseite
 
+  // Ein Spiel aus dem Archiv holen - fuer alles, was aelter ist als das
+  // Datenfenster. Dieselben Quellen wie zeigeArchiv(), nur fuer eine
+  // einzige Kennung und ohne Oberflaeche.
+  function archivSpielHolen(kennung) {
+    var da = (archivStand.spiele || []).filter(function (x) { return x.kennung === kennung; })[0];
+    if (da) return Promise.resolve(da);
+    var karte = {};
+    function merge(e) { archivMerge(karte, e); }
+    var laeufe = [];
+    laeufe.push((archivDaten ? Promise.resolve(archivDaten) : hole("archiv.json")).then(function (a) {
+      archivDaten = a;
+      var pers = a.personen || {};
+      Object.keys(pers).forEach(function (ps) {
+        pers[ps].forEach(function (e) {
+          if (kennungVon(e) !== kennung) return;
+          var vorhanden = karte[kennung];
+          var bes = (vorhanden && vorhanden.besetzung) ? vorhanden.besetzung.slice() : [];
+          var p = personMit(ps);
+          if (!bes.some(function (b) { return b.slug === ps; })) bes.push({ name: p ? p.name : ps, slug: ps, rolle: e.rolle });
+          merge({ kennung: kennung, beginn: e.beginn, liga: e.liga, paarung: e.paarung,
+                  halle: e.halle, system: e.system, besetzung: bes, saison: e.saison });
+        });
+      });
+      // Eingefrorene Saisons nur laden, solange nichts gefunden ist -
+      // das sind je Saison eigene Dateien, und sie alle zu holen waere
+      // fuer ein einzelnes Spiel vergebliche Last.
+      if (karte[kennung]) return null;
+      var dateien = a.dateien || {};
+      return Promise.all(Object.keys(dateien).map(function (sn) {
+        return hole(dateien[sn]).then(function (d) {
+          (d.spiele || []).forEach(function (z) {
+            var k = z[0] + "|" + z[2];
+            if (k !== kennung) return;
+            var bes = (z[4] || []).map(function (b) { return { name: b[0], slug: b[1], rolle: b[2] }; });
+            merge({ kennung: k, beginn: z[0], liga: z[1], paarung: z[2], halle: z[3],
+                    system: bes.length, besetzung: bes, saison: sn });
+          });
+        }).catch(function () {});
+      }));
+    }).catch(function () {}));
+    if (sitzungVorhanden()) laeufe.push(ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
+      .then(function (st) { return st.eingerichtet && st.session ? window.Mitglieder.archivAusDb(false) : null; })
+      .then(function (zeilen) {
+        (zeilen || []).forEach(function (z) {
+          if (z.kennung !== kennung) return;
+          merge({ kennung: z.kennung, beginn: z.beginn, liga: z.liga, paarung: z.paarung,
+                  halle: z.halle, system: z.system, besetzung: z.besetzung || [],
+                  saison: z.saison, manuell: z.manuell });
+        });
+      }).catch(function () {}));
+    return Promise.all(laeufe).then(function () {
+      if (!karte[kennung]) return null;
+      // Dieselben Korrekturen wie im Archiv: ausgeblendete Spiele und
+      // Gespannkorrekturen aus der Datenbank.
+      archivKorrigieren(karte, profil && profil.slug, true);
+      return karte[kennung] || null;
+    });
+  }
+
   function zeigeSpiel(kennung) {
     var s0 = (daten.spiele || []).filter(function (x) { return kennungVon(x) === kennung; })[0];
-    if (!s0) { toast("Spiel nicht (mehr) im Datenfenster.", "warn"); return ausHash(location.hash = ""); }
+    if (s0) return spielRendern(s0, kennung);
+    // Nicht im Fenster - also im Archiv nachsehen, statt aufzugeben.
+    ansicht("spiel"); aktuell = null; window.scrollTo(0, 0);
+    el("spiel-titel").textContent = "Spiel";
+    el("spiel-unter").textContent = "wird aus dem Archiv geholt …";
+    el("spiel-kopf").innerHTML = "";
+    var warte = el("spiel-inhalt"); warte.innerHTML = ""; warte.appendChild(skelettKarte(160));
+    var lauf = warte._archivlauf = {};
+    archivSpielHolen(kennung).then(function (gefunden) {
+      if (warte._archivlauf !== lauf) return;
+      if (!gefunden) { toast("Dieses Spiel steht nicht im Archiv.", "warn"); return ausHash(location.hash = ""); }
+      // Treffpunkt steht nur im Datenfenster; im Archiv gilt dieselbe
+      // Regel wie ueberall sonst - eine Stunde vorher.
+      if (!gefunden.treffpunkt) gefunden.treffpunkt = new Date(new Date(gefunden.beginn).getTime() - 60 * 60000).toISOString();
+      gefunden.vergangen = new Date(gefunden.beginn) < new Date();
+      spielRendern(gefunden, kennung);
+    }, function () { toast("Das Archiv liess sich nicht laden.", "warn"); ausHash(location.hash = ""); });
+  }
+
+  function spielRendern(s0, kennung) {
     var meins = !!(profil && profil.slug && s0.besetzung.some(function (b) { return b.slug === profil.slug; }));
     var ps = meins ? (personMit(profil.slug).spiele.filter(function (x) { return kennungVon(x) === kennung; })[0] || null) : null;
     var s = Object.assign({}, s0, ps || {});
@@ -1524,14 +1602,18 @@
     var ak = document.createElement("div"); ak.className = "aktionen";
     if (s.ort) { var r = document.createElement("a"); r.href = kartenLink(s.ort); r.target = "_blank"; r.rel = "noopener"; r.appendChild(ikone("i-route")); r.appendChild(document.createTextNode("Route")); ak.appendChild(r); }
     var tb = teilenKnopf(s); tb.className = "knopf-zeichen nur-zeichen"; ak.appendChild(tb);
-    var kb = document.createElement("button"); kb.type = "button"; kb.appendChild(ikone("i-cal")); kb.appendChild(document.createTextNode("In Kalender"));
-    kb.title = "Nur dieses Spiel als Kalenderdatei"; kb.addEventListener("click", function () { einzelIcs(s); }); ak.appendChild(kb);
+    // Ein Termin in der Vergangenheit ist kein Termin - der Knopf stand
+    // auch auf einem Spiel vom Februar.
+    if (!s.vergangen) {
+      var kb = document.createElement("button"); kb.type = "button"; kb.appendChild(ikone("i-cal")); kb.appendChild(document.createTextNode("In Kalender"));
+      kb.title = "Nur dieses Spiel als Kalenderdatei"; kb.addEventListener("click", function () { einzelIcs(s); }); ak.appendChild(kb);
+    }
     h.appendChild(ak);
     var kontaktZeile = document.createElement("div"); kontaktZeile.className = "kontakt-knoepfe versteckt"; h.appendChild(kontaktZeile);
     kopf.appendChild(h);
 
     var inhalt = el("spiel-inhalt"); inhalt.innerHTML = "";
-    var symbole = { "Anfahrt": "i-route", "Halle": "i-pin", "Gespann": "i-users", "Besetzung": "i-users", "Tauschoptionen": "i-swap", "Weiteres": "i-list", "Spieltag-Checkliste": "i-check", "Änderungsverlauf": "i-clock" };
+    var symbole = { "Anfahrt": "i-route", "Halle": "i-pin", "Gespann": "i-users", "Besetzung": "i-users", "Tauschoptionen": "i-swap", "Weiteres": "i-list", "Spieltag-Checkliste": "i-check", "Änderungsverlauf": "i-clock", "Dokumente": "i-note" };
     function karteAbschnitt(titel) { var k = document.createElement("div"); k.className = "karte abschnitt-karte"; if (titel) { var hh = document.createElement("h4"); if (symbole[titel]) hh.appendChild(ikone(symbole[titel])); hh.appendChild(document.createTextNode(titel)); k.appendChild(hh); } inhalt.appendChild(k); return k; }
 
     // Alles zum Hinkommen in einer Karte: wann los, wie weit, wohin, wie das
@@ -1649,6 +1731,19 @@
         rl.appendChild(document.createTextNode("Rechnung schreiben (PDF fürs Formular)"));
         ab.appendChild(rl);
       }
+      // Ausgefallen melden - frueher nur in der Abrechnungskarte, und
+      // die kennt nur die laufende Saison. Hier steht es bei jedem
+      // gespielten Spiel, auch bei einem von vor drei Jahren.
+      if (s.vergangen && funktion("abrechnung")) {
+        var afZeile = document.createElement("div");
+        ab.appendChild(afZeile);
+        ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
+          .then(function (st) {
+            if (!st.eingerichtet || !st.session || !window.Mitglieder.ausfallZeile) return;
+            var z = window.Mitglieder.ausfallZeile({ kennung: kennungVon(s), beginn: s.beginn, paarung: s.paarung });
+            if (z) afZeile.appendChild(z);
+          }).catch(function () {});
+      }
       if (!s.vergangen && funktion("obmann")) {
         var mailZeile = document.createElement("div");
         var mail = document.createElement("a"); mail.className = "zeile-link"; mail.href = "#"; mail.appendChild(ikone("i-bell")); mail.appendChild(document.createTextNode("Obmann anschreiben (Absage / Frage)"));
@@ -1664,6 +1759,25 @@
         mailZeile.appendChild(mail); ab.appendChild(mailZeile);
       }
     }
+    // Dokumente am Spiel - Spielberichte, Zusatzmeldungen. Sie haengen
+    // am Spiel und nicht am eigenen Einsatz, also sehen sie alle, die
+    // im Gespann standen. Auch bei alten Spielen, denn die Spielseite
+    // holt sie jetzt aus dem Archiv.
+    if (meins && sitzungVorhanden()) {
+      var dokKarte = karteAbschnitt("Dokumente");
+      var dokHinweis = document.createElement("p"); dokHinweis.className = "meta";
+      dokHinweis.textContent = "Spielbericht, Zusatzmeldung und \Ähnliches. Die Kollegen aus diesem Spiel sehen sie auch.";
+      dokKarte.appendChild(dokHinweis);
+      ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
+        .then(function (st) {
+          if (!st.eingerichtet || !st.session || !window.Mitglieder.dokumenteZeile) { dokKarte.classList.add("versteckt"); return; }
+          dokKarte.appendChild(window.Mitglieder.dokumenteZeile({
+            kennung: kennungVon(s), beginn: s.beginn, paarung: s.paarung,
+            gespann: (s.besetzung || []).map(function (b) { return b.slug; }).filter(Boolean)
+          }));
+        }).catch(function () { dokKarte.classList.add("versteckt"); });
+    }
+
     // Aenderungsverlauf aus dem Protokoll (14 Tage): was wurde wann geaendert
     if (sitzungVorhanden()) holeProtokoll().then(function (pl) {
       if (inhalt._lauf !== lauf) return;
@@ -4255,8 +4369,10 @@
         var anz = treffer.filter(function (x) { var dd = new Date(x.beginn); return dd.getFullYear() + "-" + dd.getMonth() === m; }).length; var r = document.createElement("span"); r.textContent = anz + (anz === 1 ? " Spiel" : " Spiele"); h.appendChild(r);
         liste.appendChild(h); box = document.createElement("div"); box.className = "karte archiv-liste"; liste.appendChild(box);
       }
-      var imFenster = (daten.spiele || []).some(function (x) { return kennungVon(x) === s.kennung; });
-      var zl = document.createElement(imFenster ? "a" : "div"); zl.className = "zeile"; if (imFenster) zl.href = "#spiel/" + encodeURIComponent(s.kennung);
+      // Frueher war nur ein Link, was im Datenfenster stand - alles
+      // Aeltere liess sich nicht oeffnen. Die Spielseite holt sich
+      // fehlende Spiele jetzt selbst aus dem Archiv.
+      var zl = document.createElement("a"); zl.className = "zeile"; zl.href = "#spiel/" + encodeURIComponent(s.kennung);
       var dt = document.createElement("span"); dt.className = "datum"; dt.textContent = wochentag[d.getDay()] + " " + ("0" + d.getDate()).slice(-2) + "."; var sm0 = document.createElement("small"); sm0.textContent = uhr(d); dt.appendChild(sm0); zl.appendChild(dt);
       var ich = wer ? s.besetzung.filter(function (b) { return b.slug === wer; })[0] : null;
       zl.appendChild(rolleBadge(ich ? ich.rolle : (s.system >= 3 ? s.system + "er" : "2er")));

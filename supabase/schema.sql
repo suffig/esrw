@@ -2898,3 +2898,122 @@ drop policy if exists "Zweifel pflegen" on public.spiel_zweifel;
 create policy "Zweifel pflegen" on public.spiel_zweifel for all to authenticated
   using (public.ist_admin()) with check (public.ist_admin());
 -- Die Pipeline schreibt mit dem Service-Schluessel und umgeht RLS.
+
+
+-- ======================================================================
+-- v58: Dokumente am Spiel (Spielberichte, Zusatzmeldungen)
+-- ======================================================================
+--
+-- Gewuenscht: "Ebenso soll man dokumente an die spiele heften koennen
+-- (Spielberichte, Zusatzmeldungen usw)."
+--
+-- Anders als ein Beleg in der Abrechnung ist ein Spielbericht nichts
+-- Privates: das Gespann hat ihn gemeinsam erlebt, und der Betreiber
+-- braucht ihn. Die Sichtbarkeit folgt deshalb spielkommentare (v4) -
+-- das Feld gespann haelt die Slugs fest, die dazugehoeren.
+--
+-- Der Verfasser bleibt, wer hochgeladen hat; nur er und der Betreiber
+-- duerfen loeschen. Niemand aendert ein fremdes Dokument.
+create table if not exists public.spiel_dokumente (
+  id        uuid primary key default gen_random_uuid(),
+  user_id   uuid not null references auth.users (id) on delete cascade,
+  slug      text not null,
+  name      text not null,                      -- wer es hochgeladen hat
+  kennung   text not null,
+  beginn    timestamptz not null,
+  paarung   text,
+  gespann   text[] not null default '{}',       -- Slugs, die lesen duerfen
+  pfad      text not null unique,               -- Pfad im Bucket "dokumente"
+  titel     text not null,                      -- Dateiname zum Anzeigen
+  art       text not null default 'sonstiges',  -- spielbericht | zusatzmeldung | sonstiges
+  groesse   bigint,
+  angelegt  timestamptz not null default now()
+);
+create index if not exists spiel_dokumente_kennung on public.spiel_dokumente (kennung);
+alter table public.spiel_dokumente enable row level security;
+
+drop policy if exists "Gespann liest Dokumente"   on public.spiel_dokumente;
+drop policy if exists "eigene Dokumente anlegen"  on public.spiel_dokumente;
+drop policy if exists "eigene Dokumente loeschen" on public.spiel_dokumente;
+-- Lesen: der Verfasser, wer im Gespann stand, und der Betreiber - und
+-- nur, wer ueberhaupt freigeschaltet ist.
+create policy "Gespann liest Dokumente" on public.spiel_dokumente for select to authenticated
+  using (public.ist_freigeschaltet()
+         and (user_id = auth.uid() or public.mein_slug() = any (gespann) or public.ist_admin()));
+create policy "eigene Dokumente anlegen" on public.spiel_dokumente for insert
+  with check (auth.uid() = user_id and public.ist_freigeschaltet());
+create policy "eigene Dokumente loeschen" on public.spiel_dokumente for delete to authenticated
+  using (auth.uid() = user_id or public.ist_admin());
+
+-- ---- Dokumente (Storage) ---------------------------------------------
+-- Privater Bucket. Hochgeladen wird in den eigenen Ordner (<user_id>/...)
+-- wie bei den Belegen; gelesen wird aber nach derselben Regel wie die
+-- Tabellenzeile, denn das Gespann soll an fremde Ordner heran. Deshalb
+-- fragt die Lese-Regel die Tabelle - der Ordnername allein wuerde das
+-- nicht hergeben.
+insert into storage.buckets (id, name, public) values ('dokumente', 'dokumente', false)
+  on conflict (id) do nothing;
+update storage.buckets
+   set file_size_limit = 20971520,
+       allowed_mime_types = array['application/pdf','image/jpeg','image/png','image/webp','image/heic','image/heif',
+                                  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                  'application/msword','text/plain']
+ where id = 'dokumente';
+
+drop policy if exists "Spieldokumente lesen"     on storage.objects;
+drop policy if exists "Spieldokumente hochladen" on storage.objects;
+drop policy if exists "Spieldokumente loeschen"  on storage.objects;
+create policy "Spieldokumente lesen" on storage.objects for select to authenticated
+  using (bucket_id = 'dokumente' and exists (
+    select 1 from public.spiel_dokumente d
+     where d.pfad = storage.objects.name
+       and public.ist_freigeschaltet()
+       and (d.user_id = auth.uid() or public.mein_slug() = any (d.gespann) or public.ist_admin())));
+create policy "Spieldokumente hochladen" on storage.objects for insert to authenticated
+  with check (bucket_id = 'dokumente'
+              and (storage.foldername(name))[1] = auth.uid()::text
+              and public.ist_freigeschaltet());
+create policy "Spieldokumente loeschen" on storage.objects for delete to authenticated
+  using (bucket_id = 'dokumente'
+         and ((storage.foldername(name))[1] = auth.uid()::text or public.ist_admin()));
+
+
+-- ======================================================================
+-- v59: Anzeigenamen der Kollegen
+-- ======================================================================
+--
+-- Gewuenscht: "Namen von Kollegen sollen in der App aenderbar sein
+-- (Admin), aber weiterhin von der esrw webseite unter dem alten Namen
+-- geholt werden."
+--
+-- esrw.de schreibt Namen so, wie sie dort eingetragen sind - mal mit
+-- Zweitnamen, mal in einer Schreibweise, die niemand benutzt. Geaendert
+-- wird deshalb nur, was angezeigt wird.
+--
+-- Der Slug bleibt, was er war. An ihm haengen Profile, Einsaetze,
+-- Kommentare, Kalender-Abos und jeder Link - wuerde er dem neuen Namen
+-- folgen, zerfiele all das. Aus demselben Grund ruehrt die Pipeline die
+-- Zuordnung nicht an: sie erkennt die Person weiterhin an schluessel
+-- und varianten, also an den Schreibweisen von esrw.de.
+create table if not exists public.namen_alias (
+  slug      text primary key,             -- die Person; aendert sich nie
+  name      text not null,                -- was die App anzeigt
+  von       text,                         -- wer es geaendert hat
+  grund     text,
+  geaendert timestamptz not null default now()
+);
+alter table public.namen_alias enable row level security;
+
+drop policy if exists "Anzeigenamen lesen"  on public.namen_alias;
+drop policy if exists "Anzeigenamen pflegen" on public.namen_alias;
+-- Lesen alle Angemeldeten: der Name steht ohnehin in jeder Einteilung.
+-- Die Pipeline liest mit dem Service-Schluessel und umgeht RLS.
+create policy "Anzeigenamen lesen" on public.namen_alias for select to authenticated using (true);
+-- Aendern nur der Betreiber - ein fremder Name ist nichts, was jeder
+-- umschreiben darf.
+create policy "Anzeigenamen pflegen" on public.namen_alias for all to authenticated
+  using (public.ist_admin()) with check (public.ist_admin());
+
+drop trigger if exists namen_alias_geaendert on public.namen_alias;
+create trigger namen_alias_geaendert before update on public.namen_alias
+  for each row execute function public.setze_geaendert();
