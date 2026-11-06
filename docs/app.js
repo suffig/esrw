@@ -3905,8 +3905,12 @@
   function mitgliederKontext() { return { gespannKorrektur: gespannKorrektur, gespannGehoert: gespannGehoert, istAusgeblendet: istAusgeblendet, daten: daten || LEER, slug: profil && profil.slug, personMit: personMit, hole: hole, ikone: ikone, funktion: funktion, funktionen: FUNKTIONEN, einstellungenSync: einstellungenSync, lesen: lesen, schreiben: schreiben, reiterInLeiste: reiterInLeiste, appAblegen: appAblegen,
     // Der Mitgliederbereich setzt geaenderte Anzeigenamen direkt in
     // daten ein (v59). Was gerade auf dem Schirm steht, weiss davon
-    // nichts - also einmal neu zeichnen.
-    datenGeaendert: function () { if (aktuell) aktuell(); } }; }
+    // nichts - also einmal neu zeichnen. "aktuell" ist dabei die
+    // angezeigte Person, keine Funktion: sie hier aufzurufen war der
+    // Fehler "aktuell is not a function" beim Start.
+    datenGeaendert: function () {
+      if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true);
+    } }; }
   function zeigeMitglieder(reiter) {
     aktuell = null; ansicht("mitglieder");
     ladeMitglieder().then(function (M) { M.oeffnen(el("mitglieder"), mitgliederKontext(), reiter); })

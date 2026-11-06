@@ -119,6 +119,15 @@ Fensterbreite.
   `node --check` und die Testläufe sahen davon nichts – gefunden hat es
   erst der Durchgang im Pane. Laden gehört dorthin, wo die Seite
   entsteht, nicht in einen Block, den es manchmal nicht gibt.
+* **Einen Rückruf, den man einbaut, muss man auch auslösen.** In
+  Fassung 259 kam `datenGeaendert` in den Kontext und rief `aktuell()`
+  – `aktuell` ist aber die angezeigte Person, keine Funktion. Beim
+  Start stand „aktuell is not a function" in der Konsole. Der
+  Durchgang sah davon nichts, weil der Rückruf nur feuert, wenn
+  wirklich ein Name geändert ist, und die Attrappe mit leerer
+  `namen_alias`-Tabelle lief. Wer einen Pfad einbaut, der an eine
+  Bedingung hängt, stellt die Bedingung in der Attrappe her – sonst
+  prüft der Durchgang alles ausser der neuen Zeile.
 * Tippflächen: alles, was man antippt, ist 44 px hoch. Gemessen wird
   mit `elementFromPoint` um die Elementmitte, **nicht** nur mit
   `getBoundingClientRect` – das sieht ein `::after` nicht und meldet
