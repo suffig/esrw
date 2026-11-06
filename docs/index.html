@@ -3279,6 +3279,28 @@
     font-weight:800; font-variant-numeric:tabular-nums; color:var(--warn); }
   :root[data-design="neu"] .mg-arbeitsknopf { flex:1 1 100%; min-height:44px;
     margin-top:var(--abstand-xs); }
+
+  /* Der JSON-Pfad steht klein unter dem Namen: er ist der Schluessel in
+     der Tabelle und taucht in jeder Meldung auf, also soll man ihn
+     nachschlagen koennen - nur eben nicht als Ueberschrift. */
+  :root[data-design="neu"] .gebuehr-pfad { display:block; font-size:var(--s-xs);
+    color:var(--dim); opacity:.75; font-variant-numeric:tabular-nums;
+    word-break:break-all; }
+
+  /* Gemessen bei 375 px: die Textspalte der Satzzeile war 29 px breit,
+     weil flex:1 (Basis 0) sie beliebig schrumpfen laesst - der Umbruch,
+     den flex-wrap erlauben wuerde, kam nie. Mit einer Mindestbreite
+     rutscht das Eingabefeld eine Zeile tiefer, und "Vorlauf" samt
+     Erklaerung steht wieder da. Am breiten Schirm passt beides
+     weiterhin nebeneinander. */
+  :root[data-design="neu"] .gebuehr-zeile > span:first-child { flex:1 1 55%; min-width:11em; }
+  :root[data-design="neu"] .gebuehr-zeile > span.zweit { flex:0 1 auto; }
+
+  /* Die Ablaufleiste bricht bei vier Stufen um. Ohne das hier bekam der
+     Chip, der allein in der zweiten Zeile stand, deren ganze Breite
+     (gemessen: "Erledigt 3" mit 337 von 343 px) - ein Knopf so breit
+     wie die Seite, neben drei schmalen darueber. */
+  :root[data-design="neu"] .mg-ablauf button { flex:0 1 auto; }
 </style>
 </head>
 <body>
@@ -3742,6 +3764,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=251"></script>
+<script src="app.js?v=255"></script>
 </body>
 </html>

@@ -2173,9 +2173,12 @@ window.Mitglieder = (function () {
     if (ganz <= 0) return null;
     var balken = h("div", { class: "balken-geld" });
     var legende = h("div", { class: "mg-wegliste" });
+    // Ein Balken aus einem einzigen Abschnitt ist immer voll und sagt
+    // damit nichts - dann bleibt nur der Posten selbst.
+    var mitBetrag = posten.filter(function (p) { return p[1] > 0; }).length;
     posten.forEach(function (p) {
       if (p[1] <= 0) return;
-      balken.appendChild(h("i", { class: p[2], style: "width:" + (p[1] / ganz * 100) + "%" }));
+      if (mitBetrag > 1) balken.appendChild(h("i", { class: p[2], style: "width:" + (p[1] / ganz * 100) + "%" }));
       var k = h("button", { type: "button", class: "mg-wegposten " + p[2], title: p[3] }, [
         h("b", { text: euro(p[1]) }),
         h("span", { text: p[0] })
@@ -2183,7 +2186,7 @@ window.Mitglieder = (function () {
       k.addEventListener("click", p[4]);
       legende.appendChild(k);
     });
-    return h("div", { class: "mg-fortschritt" }, [balken, legende]);
+    return h("div", { class: "mg-fortschritt" }, mitBetrag > 1 ? [balken, legende] : [legende]);
   }
   function summenDetails() {
     var spiele = saisonSpiele(gewaehlteSaison), alle = alleSpiele(), sS = summen(spiele);
@@ -4561,8 +4564,13 @@ window.Mitglieder = (function () {
       [nurErledigt, "Erledigt", erledigtN,
        "Bezahlt und abgehakt", function () { alleAus(); nurErledigt = true; }, true, "fertig"]
     ];
+    // Eine Stufe ohne Spiele ist nichts zum Anwaehlen - sie kostet nur
+    // eine zweite Zeile in der Leiste. "Alle" bleibt immer stehen, und
+    // die gerade gewaehlte auch: sonst verschwindet sie unter den
+    // Fingern, sobald man das letzte Spiel darin erledigt hat.
     chips = h("div", { class: "mg-filterzeile" }, [
-      h("div", { class: "mg-ansicht mg-ablauf" }, stufen.filter(function (st) { return st[5]; })
+      h("div", { class: "mg-ansicht mg-ablauf" }, stufen
+        .filter(function (st, i) { return st[5] && (i === 0 || st[2] > 0 || st[0]); })
         .map(function (st) { return filterKnopf(st[0], st[1], st[2], st[3], st[4], st[6], st[1]); })),
     ]);
     // Saison und Darstellung in eine Zeile: beide sind schmal, und der
@@ -7269,6 +7277,40 @@ window.Mitglieder = (function () {
       });
   }
 
+  // Die Schluessel aus gebuehren.json sind Pfade, keine Beschriftungen.
+  // Was hier fehlt, wird aus dem Pfad lesbar gemacht (Unterstriche zu
+  // Leerzeichen) - eine fehlende Zeile ist also kein Fehler, nur
+  // weniger schoen.
+  var GEBUEHR_NAMEN = {
+    "senioren": "Herren", "frauen": "Frauen", "nachwuchs": "Nachwuchs",
+    "kilometer": "Kilometer und Pauschalen",
+    "zuschlag_zeit": "Zuschlag für frühe und späte Spiele",
+    "zuschlag_uebergreifend": "Zuschlag für übergreifenden Einsatz",
+    "ausfall_vor_ort_prozent": "Ausfall vor Ort",
+    "RL": "Regionalliga", "LL": "Landesliga", "BL": "Bezirksliga",
+    "sonst": "außerhalb der RL",
+    "SR": "Schiedsrichter", "HSR": "Hauptschiedsrichter", "LSR": "Linienrichter",
+    "SR_allein": "Schiedsrichter allein (1-Mann-System)",
+    "prozent": "Aufschlag in Prozent",
+    "je_sr": "je Schiedsrichter", "je_sr_2mann": "je Schiedsrichter im 2-Mann-System",
+    "satz_einfach": "Entfernungspauschale je km (einfache Strecke)",
+    "satz_hinrueck": "Reisekosten je km (gefahrene Strecke)",
+    "strassenfaktor_luftlinie": "Faktor Luftlinie → Straße"
+  };
+  function gebuehrenName(teil) {
+    if (GEBUEHR_NAMEN[teil]) return GEBUEHR_NAMEN[teil];
+    // U17, U20 und Co. stehen nicht in der Tabelle - sie sind schon lesbar.
+    return teil.replace(/_/g, " ");
+  }
+  function gebuehrenZeilenName(pfad) {
+    var teile = pfad.split(".");
+    // Der erste Teil ist die Abschnittsueberschrift - er stuende sonst
+    // in jeder Zeile darunter noch einmal.
+    var rest = teile.slice(1);
+    if (!rest.length) return gebuehrenName(teile[0]);
+    return rest.map(gebuehrenName).join(" · ");
+  }
+
   function gebuehrenRendern(box) {
     function neu() { leeren(box); gebuehrenRendern(box); }
     leeren(box);
@@ -7318,7 +7360,7 @@ window.Mitglieder = (function () {
       reihe.forEach(function (g) {
         var geaendert = gruppen[g].filter(function (p) { return abw[p.pfad]; }).length;
         var det = h("details", { class: "tausch" },
-          [h("summary", {}, [h("b", { text: g }),
+          [h("summary", {}, [h("b", { text: gebuehrenName(g) }),
             h("small", { text: gruppen[g].length + (gruppen[g].length === 1 ? " Satz" : " Sätze")
               + (geaendert ? " · " + geaendert + " geändert" : "") })])]);
         // Ein Abschnitt mit einer Abweichung ist offen - da sieht man nach.
@@ -7374,7 +7416,8 @@ window.Mitglieder = (function () {
           if (a) knoepfe.push(h("button", { type: "button", class: "textknopf",
             text: "Zurück auf die Ordnung", onclick: zurueck }));
           det.appendChild(h("div", { class: "gebuehr-zeile" + (a ? " anders" : "") }, [
-            h("span", {}, [h("b", { text: p.pfad.split(".").slice(1).join(" · ") || p.pfad }), hinweis]),
+            h("span", {}, [h("b", { text: gebuehrenZeilenName(p.pfad) }),
+                           h("small", { class: "meta gebuehr-pfad", text: p.pfad }), hinweis]),
             h("span", { class: "zweit" }, knoepfe)]));
         });
         innen.appendChild(det);
