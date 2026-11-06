@@ -7329,9 +7329,19 @@
   if ("serviceWorker" in navigator && location.protocol !== "file:") {
     var hatteController = !!navigator.serviceWorker.controller;
     navigator.serviceWorker.addEventListener("controllerchange", function () {
-      // Neue Fassung ist da - beim naechsten Laden aktiv; kurz sagen, statt dass sich Dinge still aendern
-      if (hatteController) toast("Neue Fassung geladen, einmal neu öffnen, dann ist alles frisch.", "gut");
-      hatteController = true;
+      // Erster Worker ueberhaupt: nichts zu ersetzen.
+      if (!hatteController) { hatteController = true; return; }
+      var schon = false;
+      try { schon = sessionStorage.getItem("sw-neu") === "1"; } catch (e) {}
+      // Wer gerade tippt, verliert sonst die Eingabe.
+      var a = document.activeElement;
+      var tippt = a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName);
+      if (schon || tippt) {
+        toast("Neue Fassung geladen, einmal neu öffnen, dann ist alles frisch.", "gut");
+        return;
+      }
+      try { sessionStorage.setItem("sw-neu", "1"); } catch (e) {}
+      location.reload();
     });
     window.addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function () {}); });
   }

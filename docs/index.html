@@ -3307,6 +3307,26 @@
      verdeckte sie, was gerade darunter stand - im Durchgang eine
      Spielkarte, ein Monatsband, ein Gespannpartner. */
   body.toast-offen main { padding-bottom:calc(var(--toast-platz, 0px) + 12px); }
+
+  /* ===== Nachtrag: die Kontaktzeile bekommt ein Raster =============
+     Gemessen bei 375 px: Avatar 34 + Name 82 + Marke 141 = 257 von
+     309 px. 52 px blieben frei, und jeder Name stand trotzdem
+     zweizeilig - flex:0 1 auto laesst ihn schrumpfen, aber nicht
+     wachsen. */
+  :root[data-design="neu"] .kontakt-kopf { flex-wrap:wrap; gap:0 var(--abstand-s); }
+  :root[data-design="neu"] .kontakt-kopf > b { flex:1 1 auto; min-width:0; }
+  /* Die Marke darf schrumpfen und notfalls in die zweite Zeile - ein
+     vollstaendiger Name mit Datum darunter liest sich besser als ein
+     Name, der mitten im Wort umbricht. */
+  :root[data-design="neu"] .kontakt-kopf > .kontakt-marke { flex:0 1 auto; margin-left:auto; }
+
+  /* Dieselbe Verwechslung eine Zeile tiefer: die Knopfgruppe wuchs
+     (flex:1 1 auto, gemessen 51 px), der Text daneben nicht - zwei
+     Knoepfe a 36 px passten nicht nebeneinander und stapelten sich.
+     Der Text nimmt den Platz, die Knoepfe behalten ihre Reihe. */
+  :root[data-design="neu"] .kontakt-wert > span:first-child { flex:1 1 auto; min-width:0; }
+  :root[data-design="neu"] .kontakt-wert > .telefon-wege { flex:0 0 auto; display:flex;
+    gap:var(--abstand-xs); align-items:flex-start; }
 </style>
 </head>
 <body>
@@ -3770,6 +3790,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=260"></script>
+<script src="app.js?v=263"></script>
 </body>
 </html>
