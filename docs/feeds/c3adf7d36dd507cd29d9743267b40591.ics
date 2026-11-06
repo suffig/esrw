@@ -8,50 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:c527e6c5896c72712138ad09951cdc984f258fcf@esrw.de
-SEQUENCE:0
-DTSTAMP:20261023T143044Z
-LAST-MODIFIED:20261023T143044Z
-DTSTART:20261030T180000Z
-DTEND:20261030T213000Z
-SUMMARY:HSR · Senioren RLW: Grefrather EG – Neusser EV
-DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:00 Uhr\nTreff
- punkt: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
- portzentrum Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespan
- n: Hofer\, Carsten (LSR) / Störmann\, Manuel (LSR)\nVergütung lt. Ordnun
- g: 100 €\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Grefrath\, Stadionstraße 161\, 47929 Grefrath
-GEO:51.348547;6.341019
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath, 
- Stadionstraße 161, 47929 Grefrath";X-APPLE-RADIUS=100;X-TITLE="Eissportze
- ntrum Grefrath":geo:51.348547,6.341019
-END:VEVENT
-BEGIN:VEVENT
-UID:30ba1472b73a67875216b8f5a76b24e4b4510fc0@esrw.de
-SEQUENCE:0
-DTSTAMP:20261023T143044Z
-LAST-MODIFIED:20261023T143044Z
-DTSTART:20261030T180000Z
-DTEND:20261030T213000Z
-SUMMARY:LSR · OsWeNo Pokal: Eisadler Dortmund – Timmendorf Beach Devils
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
-  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: OsWeNo Pokal\nHalle: Eissportze
- ntrum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Müll
- er\, Lars (HSR) / Malik\, Orlando (LSR)\n\nQuelle: https://www.esrw.de/ein
- teilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
-GEO:51.49525;7.458288
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
-  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
- rum Westfalen":geo:51.49525,7.458288
-END:VEVENT
-BEGIN:VEVENT
 UID:e1b567048ba639b8297923723b072bc49d76d80e@esrw.de
 SEQUENCE:0
 DTSTAMP:20261023T143044Z
@@ -953,12 +909,6 @@ GEO:51.49525;7.458288
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
   Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
  rum Westfalen":geo:51.49525,7.458288
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Eisadler Do
- rtmund – Grefrather EG
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:8feb43bad98aae97f00284b711477d314856a10c@esrw.de
@@ -981,12 +931,6 @@ GEO:51.175806;6.680258
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
  -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
  uss":geo:51.175806,6.680258
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Neusser EV 
- – Lauterbach Luchse
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:c7ea71ef194635dd36548f9672f9596c55364f44@esrw.de
@@ -1009,12 +953,6 @@ GEO:51.295808;6.834624
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
   Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
  tingen":geo:51.295808,6.834624
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: Ratinger Ic
- e Aliens – EG Diez-Limburg
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:6b6ab0699f30c2691f10f75de6b3eadbf75d7887@esrw.de
