@@ -3185,6 +3185,57 @@
      allein. Ein Haken ist aber dasselbe Ziel wie ein Knopf. */
   label.mg-check, label.schalter { min-height:44px; }
   .mg-foto { min-height:44px; min-width:44px; }
+
+  /* ===== Nachtrag: der Geldweg im Kopf der Abrechnung ===============
+     Drei Abschnitte statt zwei, und die Legende traegt die Betraege -
+     vorher standen sie als eigene Zeilen darunter, zweimal dieselbe
+     Zahl. Die Posten sind Knoepfe (je 44 px), die auf ihre Stufe
+     filtern, also sitzt der Text nicht mehr nur rechts und links am
+     Rand, sondern in einer Reihe, die sich bei drei Posten umbricht. */
+  :root[data-design="neu"] .balken-geld .jetzt   { background:var(--warn); }
+  :root[data-design="neu"] .balken-geld .warte   { background:var(--dim); }
+  :root[data-design="neu"] .balken-geld .fertig  { background:var(--gut); }
+  :root[data-design="neu"] .mg-wegliste { display:flex; flex-wrap:wrap;
+    gap:var(--abstand-xs); margin-top:var(--abstand-xs); }
+  :root[data-design="neu"] .mg-wegposten { flex:1 1 30%; min-width:92px;
+    min-height:44px; display:flex; flex-direction:column; align-items:flex-start;
+    justify-content:center; gap:0; padding:3px var(--abstand-s);
+    border:0; border-left:3px solid var(--linie); border-radius:0;
+    background:none; font:inherit; text-align:left; cursor:pointer; }
+  :root[data-design="neu"] .mg-wegposten b { font-size:var(--s-l); font-weight:800;
+    font-variant-numeric:tabular-nums; line-height:1.15; }
+  :root[data-design="neu"] .mg-wegposten span { font-size:var(--s-s); color:var(--dim);
+    font-weight:600; line-height:1.2; }
+  :root[data-design="neu"] .mg-wegposten.jetzt  { border-left-color:var(--warn); }
+  :root[data-design="neu"] .mg-wegposten.warte  { border-left-color:var(--dim); }
+  :root[data-design="neu"] .mg-wegposten.fertig { border-left-color:var(--gut); }
+  :root[data-design="neu"] .mg-wegposten.jetzt b { color:var(--warn); }
+  :root[data-design="neu"] .mg-wegposten.fertig b { color:var(--gut); }
+
+  /* Der Einrichtungshinweis ueber der Liste stand zweizeilig und kostete
+     102 px bei jedem Oeffnen. Eine Zeile, der Weg zur Adresse daneben,
+     der Schliesser rechts - 44 px, damit ihn der Daumen trifft. */
+  :root[data-design="neu"] .hinweis-schmal { display:flex; align-items:center;
+    gap:var(--abstand-s); flex-wrap:wrap; }
+  /* Gemessen: der Satz braucht bei 375 px die volle Zeile (315 von
+     315 px), Knopf und Schliesser fallen darunter - zusammen 99 px.
+     Ein Versuch, den Text auf 60 % zu zwingen, damit der Schliesser
+     danebenpasst, machte daraus 122 px: der Satz brauchte dann drei
+     Zeilen. Also bleibt es bei der vollen Breite. */
+  :root[data-design="neu"] .hinweis-schmal > span { flex:1 1 auto; min-width:0; }
+  :root[data-design="neu"] .hinweis-zu { flex:0 0 auto; width:44px; min-height:44px;
+    border:0; background:none; color:inherit; font-size:1.3rem; line-height:1;
+    cursor:pointer; opacity:.7; }
+
+  /* Die Zaehler der Ablaufleiste sprechen dieselbe Farbsprache wie der
+     Geldweg darunter. Vorher trugen alle fuenf dasselbe Rot - auch
+     "Erledigt", waehrend "angekommen" zwei Zeilen tiefer gruen war.
+     Rot heisst sonst ueberall in der App: hier stimmt etwas nicht. */
+  :root[data-design="neu"] .mg-ablauf .ton-jetzt  .zaehler { background:var(--warn); color:#fff; }
+  :root[data-design="neu"] .mg-ablauf .ton-warte  .zaehler { background:var(--dim); color:#fff; }
+  :root[data-design="neu"] .mg-ablauf .ton-fertig .zaehler { background:var(--gut); color:#fff; }
+  /* Im aktiven Chip steht der Zaehler auf dunklem Grund. */
+  :root[data-design="neu"] .mg-ablauf button.aktiv .zaehler { background:rgba(255,255,255,.28); color:inherit; }
 </style>
 </head>
 <body>
@@ -3648,6 +3699,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=241"></script>
+<script src="app.js?v=242"></script>
 </body>
 </html>

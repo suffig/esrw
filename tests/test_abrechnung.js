@@ -459,6 +459,77 @@ P.setze({ einsaetze: {}, gebuehren: GEBUEHREN });
 P.gelerntBauen([]);
 
 
+// ---------------------------------------------------------------
+// Die Stufen der Ablaufleiste: Angaben fehlen, Abrechnen, Unterwegs,
+// Erledigt. Jedes vergangene Spiel gehoert in genau eine.
+//
+// Der Anlass: der Geldweg-Posten "unterwegs" fuehrte auf die Stufe
+// "Geld fehlt", und die zeigte alles Unbezahlte - zehn Spiele statt
+// der vier, die wirklich auf einer Rechnung stehen.
+(function () {
+  function sp(id, tage) {
+    var d = new Date(); d.setDate(d.getDate() + tage);
+    return { kennung: id, beginn: d.toISOString(), liga: "RL West", rolle: "SR",
+             system: 2, halle: "Halle A", paarung: "A - B" };
+  }
+  var luecke   = sp("x1", -10);   // nichts eingetragen
+  var offen    = sp("x2", -9);    // vollstaendig, keine Rechnung
+  var unterweg = sp("x3", -8);    // vollstaendig, Rechnung da
+  var fertig   = sp("x4", -7);    // bezahlt
+  var kommt    = sp("x5", +7);    // noch nicht gespielt
+  var alle = [luecke, offen, unterweg, fertig, kommt];
+
+  // Ohne Heimatadresse zaehlen fehlende Kilometer nicht als Luecke -
+  // sonst waere jedes Spiel unvollstaendig.
+  P.setze({ profil: { einstellungen: {}, heimat_lat: null, heimat_lon: null },
+            einsaetze: {
+              x2: { verguetung: 180 },
+              x3: { verguetung: 180 },
+              x4: { verguetung: 180, bezahlt: new Date().toISOString() }
+            },
+            aufRechnung: { x3: 1 } });
+
+  gleich(P.hatLuecke(luecke), true, "ohne Eintrag fehlen Angaben");
+  gleich(P.hatLuecke(offen), false, "mit Vergütung ist nichts offen");
+  gleich(P.hatLuecke(kommt), false, "ein kommendes Spiel hat keine Lücke");
+
+  gleich(P.zumAbrechnen(offen), true, "vollständig und ohne Rechnung: abrechnen");
+  gleich(P.zumAbrechnen(unterweg), false, "mit Rechnung nicht mehr abrechnen");
+  gleich(P.zumAbrechnen(luecke), false, "mit Lücke noch nicht abrechnen");
+  gleich(P.zumAbrechnen(fertig), false, "bezahlt wird nicht mehr abgerechnet");
+  gleich(P.zumAbrechnen(kommt), false, "ein kommendes Spiel wird nicht abgerechnet");
+
+  gleich(P.istUnterwegs(unterweg), true, "Rechnung geschrieben, Geld fehlt: unterwegs");
+  gleich(P.istUnterwegs(offen), false, "ohne Rechnung ist nichts unterwegs");
+  gleich(P.istUnterwegs(fertig), false, "bezahlt ist nicht mehr unterwegs");
+  gleich(P.istUnterwegs(kommt), false, "ein kommendes Spiel ist nicht unterwegs");
+
+  gleich(P.istErledigt(fertig), true, "abgehakt ist erledigt");
+  gleich(P.istErledigt(offen), false, "ohne Zahlung nicht erledigt");
+
+  // Und zusammen: keine Ueberschneidung, keiner faellt durch.
+  var stufen = { fehlt: P.hatLuecke, abrechnen: P.zumAbrechnen,
+                 unterwegs: P.istUnterwegs, erledigt: P.istErledigt };
+  var mehrfach = [], keine = [];
+  alle.forEach(function (x) {
+    if (new Date(x.beginn) > new Date()) return;
+    var treffer = Object.keys(stufen).filter(function (k) { return stufen[k](x); });
+    if (treffer.length > 1) mehrfach.push(x.kennung + ": " + treffer.join("+"));
+    if (!treffer.length) keine.push(x.kennung);
+  });
+  pruefe(!mehrfach.length, "keine Überschneidung der Stufen", mehrfach.join(", "));
+  pruefe(!keine.length, "kein vergangenes Spiel ohne Stufe", keine.join(", "));
+
+  // Ohne Rechnungsliste gilt alles Vollstaendige als abzurechnen - die
+  // App zeigt die Stufe dann gar nicht erst an, aber die Rechnung
+  // darf nicht behaupten, etwas sei unterwegs.
+  P.setze({ aufRechnung: null });
+  gleich(P.istUnterwegs(unterweg), false, "ohne Rechnungsliste ist nichts unterwegs");
+  gleich(P.zumAbrechnen(unterweg), true, "ohne Rechnungsliste zählt es als abzurechnen");
+  P.setze({ aufRechnung: null, einsaetze: {} });
+})();
+
+
 console.log("\n----------------------------------------------------------");
   if (fehler.length) {
     console.log(fehler.length + " Pruefung" + (fehler.length === 1 ? "" : "en") + " fehlgeschlagen:");

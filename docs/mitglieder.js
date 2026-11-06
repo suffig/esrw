@@ -2063,12 +2063,18 @@ window.Mitglieder = (function () {
     // dagegen weiter nur bei gespielten Spielen - das ist die Frage, die
     // man beim Blick in die Abrechnung hat.
     var jetzt = new Date(), offenBetrag = 0, offenN = 0, bezahltBetrag = 0;
+    // Was offen ist, teilt sich noch einmal: mit Rechnung ist es
+    // unterwegs, ohne Rechnung liegt es bei einem selbst. Solange die
+    // Rechnungsliste fehlt (aufRechnung ist null), bleibt es ungeteilt.
+    var abzurechnen = 0, unterwegs = 0;
     spiele.forEach(function (sp) {
       var e = einsaetze[sp.kennung];
       if (e && e.bezahlt) { bezahltBetrag += betragFuer(sp, e).betrag || 0; return; }
       if (new Date(sp.beginn) > jetzt) return;
       offenN++;
-      offenBetrag += e ? (betragFuer(sp, e).betrag || 0) : 0;
+      var b = e ? (betragFuer(sp, e).betrag || 0) : 0;
+      offenBetrag += b;
+      if (hatRechnung(sp)) unterwegs += b; else abzurechnen += b;
     });
     // Vier Kacheln, ein Balken, drei Knoepfe - erst dann das erste Spiel.
     // Im neuen Design steht oben nur, was man wissen will: was unterm
@@ -2076,7 +2082,10 @@ window.Mitglieder = (function () {
     // Aufschluesselung stehen einen Tipp weiter unter "Weitere".
     var kopf = h("div", { class: "karte mg-kopfsaldo tippbar" }, [
       h("b", { text: euro(sS.verg - kosten) }),
-      h("span", { text: "Saldo · Vergütung minus Kosten" })
+      // Der Geldweg darunter rechnet in Verguetungen, diese Karte
+      // nach Abzug der Kosten. Dass die Zahlen nicht aufgehen, hat
+      // einen Grund - er gehoert danebengeschrieben.
+      h("span", { text: "bleibt nach Fahrt, Verpflegung und Auslagen" })
     ]);
     kopf.title = "Antippen: Vergütung, Kosten und Steuerjahre";
     kopf.addEventListener("click", function () { panelOeffnen("detail", false); });
@@ -2085,18 +2094,16 @@ window.Mitglieder = (function () {
     // der Balken "0,00 EUR bezahlt - 1.320,00 EUR offen", und die Zeile
     // direkt darunter sagt dieselbe Zahl noch einmal. Wer noch nie
     // etwas abgehakt hat, saehe das bei jedem Oeffnen.
-    if (bezahltBetrag > 0) { var fb = fortschritt(bezahltBetrag, offenBetrag); if (fb) neu.appendChild(fb); }
-    // Die Zahl der offenen Spiele steht seit der Ablaufleiste schon
-    // oben am Chip "Geld fehlt", und dort kann man sie auch antippen.
-    // Hier bleibt nur, was die Leiste nicht sagt: der Betrag - und die
-    // Nachricht, wenn nichts mehr aussteht.
-    var zz = h("button", { type: "button", class: "mg-offenzeile" + (offenN ? "" : " fertig"),
-      title: offenN ? "Antippen: nur diese zeigen" : "Nichts steht mehr aus",
-      text: offenN ? "Offen: " + euro(offenBetrag) : "Alles abgehakt ✓" });
-    if (offenN) zz.addEventListener("click", function () {
-      nurUnbezahlt = true; nurOffene = false; nurOhneRechnung = false; nurErledigt = false; rendereAbrechnung();
-    });
-    neu.appendChild(zz);
+    var gw = geldweg(abzurechnen, unterwegs, bezahltBetrag, !!aufRechnung, offenBetrag);
+    if (gw) neu.appendChild(gw);
+    // "Offen: X" stand hier und sagte dieselbe Zahl wie der Balken
+    // direkt darueber. Der Betrag und sein Filter sitzen jetzt im
+    // Balken; uebrig bleibt die Nachricht, wenn gar nichts mehr
+    // aussteht - die sagt der Balken nicht, weil er dann nur noch
+    // einen Posten haette.
+    if (!offenN && bezahltBetrag > 0) {
+      neu.appendChild(h("div", { class: "mg-offenzeile fertig", text: "Alles abgehakt ✓" }));
+    }
     // "Pruefen" stand als Knopf in einer Reihe ueber der Liste, ohne zu
     // sagen, ob es etwas zu pruefen gibt. Es ist eine Fundstelle wie die
     // Zeile darueber - also steht es daneben, und nur wenn es etwas zu
@@ -2145,39 +2152,61 @@ window.Mitglieder = (function () {
         if (drin[sp.kennung] || rechnungWahl[sp.kennung]) return false;
         return (betragFuer(sp, einsaetze[sp.kennung] || {}).betrag || 0) > 0;
       });
-      // Die Zahl steht seit der Ablaufleiste am Chip "Abrechnen". Hier
-      // bleibt nur der Weg zur Rechnung selbst - und der lohnt erst,
-      // wenn wirklich etwas offen ist.
-      if (!ohne.length || neu.querySelector(".ohne-rechnung")) return;
-      var rz2 = h("button", { type: "button", class: "mg-offenzeile pruef ohne-rechnung",
-        title: "Antippen: Rechnung schreiben",
-        // Am Listenende steht schon ein Knopf "Rechnung schreiben".
-        // Zweimal derselbe Wortlaut auf einer Seite ist einer zu viel;
-        // hier steht, was noch aussteht.
-        text: "Noch abzurechnen: " + euro(ohne.reduce(function (n, sp) {
-          return n + (betragFuer(sp, einsaetze[sp.kennung] || {}).betrag || 0); }, 0)) });
-      rz2.addEventListener("click", function () { panelOeffnen("rechnung", true); });
-      neu.appendChild(rz2);
+      // Der Betrag stand hier als dritte Zeile mit einer Summe im
+      // selben Block. Er ist jetzt der erste Posten des Balkens, und
+      // der fuehrt auch ins Rechnungsblatt.
     });
     alt.parentNode.replaceChild(neu, alt);
     // Offenes Detail-Panel mitziehen
     var panel = wurzel.querySelector(".mg-panel");
     if (panel && abrechnungPanel === "detail") { leeren(panel); panel.appendChild(summenDetails()); }
   }
-  function fortschritt(bezahlt, offen) {
-    var ganz = bezahlt + offen;
+  // Der Weg, den das Geld nimmt. Drei Betraege, die sich nicht
+  // ueberschneiden: was noch abzurechnen ist, was auf einer Rechnung
+  // unterwegs ist, was angekommen ist. Zusammen ergeben sie alles, was
+  // die Saison bringt - anders als die frueheren "Offen" und "Noch
+  // abzurechnen", die sich ueberlappten und beide als Gesamtsumme
+  // auftraten.
+  //
+  // Jeder Posten fuehrt dorthin, wo man mit ihm weiterarbeitet: der
+  // erste ins Rechnungsblatt, weil ein Betrag ohne Rechnung genau das
+  // verlangt, die beiden anderen auf ihre Stufe der Ablaufleiste.
+  function geldweg(abzurechnen, unterwegs, angekommen, geteilt, offen) {
+    function nur(welche) {
+      return function () {
+        nurOffene = false; nurUnbezahlt = false; nurOhneRechnung = false; nurErledigt = false; nurUnterwegs = false;
+        if (welche === "unbezahlt") nurUnbezahlt = true;
+        else if (welche === "unterwegs") nurUnterwegs = true;
+        else if (welche === "erledigt") nurErledigt = true;
+        rendereAbrechnung();
+      };
+    }
+    var posten = geteilt
+      ? [["abzurechnen", abzurechnen, "jetzt", "Rechnung schreiben",
+          function () { panelOeffnen("rechnung", true); }],
+         ["unterwegs", unterwegs, "warte", "Rechnung ist geschrieben, das Geld fehlt noch", nur("unterwegs")],
+         ["angekommen", angekommen, "fertig", "Bezahlt und abgehakt", nur("erledigt")]]
+      // Ohne die Rechnungsliste laesst sich "abzurechnen" nicht von
+      // "unterwegs" trennen. Lieber ein Posten "offen" als eine
+      // Aufteilung, die gleich darauf anders aussieht.
+      : [["offen", offen, "jetzt", "Gespielt, Geld noch nicht da", nur("unbezahlt")],
+         ["angekommen", angekommen, "fertig", "Bezahlt und abgehakt", nur("erledigt")]];
+    var ganz = 0;
+    posten.forEach(function (p) { ganz += p[1]; });
     if (ganz <= 0) return null;
-    var anteil = Math.round(bezahlt / ganz * 100);
-    return h("div", { class: "mg-fortschritt" }, [
-      h("div", { class: "balken-geld" }, [
-        h("i", { class: "ist", style: "width:" + anteil + "%" }),
-        h("i", { class: "noch", style: "width:" + (100 - anteil) + "%" })
-      ]),
-      h("div", { class: "balken-text" }, [
-        h("span", { text: euro(bezahlt) + " bezahlt" }),
-        h("span", { text: euro(offen) + " offen" })
-      ])
-    ]);
+    var balken = h("div", { class: "balken-geld" });
+    var legende = h("div", { class: "mg-wegliste" });
+    posten.forEach(function (p) {
+      if (p[1] <= 0) return;
+      balken.appendChild(h("i", { class: p[2], style: "width:" + (p[1] / ganz * 100) + "%" }));
+      var k = h("button", { type: "button", class: "mg-wegposten " + p[2], title: p[3] }, [
+        h("b", { text: euro(p[1]) }),
+        h("span", { text: p[0] })
+      ]);
+      k.addEventListener("click", p[4]);
+      legende.appendChild(k);
+    });
+    return h("div", { class: "mg-fortschritt" }, [balken, legende]);
   }
   function summenDetails() {
     var spiele = saisonSpiele(gewaehlteSaison), alle = alleSpiele(), sS = summen(spiele);
@@ -4186,6 +4215,11 @@ window.Mitglieder = (function () {
     var e = einsaetze[sp.kennung];
     return !!(e && e.bezahlt);
   }
+  // Rechnung ist geschrieben, das Geld fehlt noch. Die Stufe zwischen
+  // "Abrechnen" und "Erledigt" - vorher sah man sie nirgends, weil
+  // "Geld fehlt" beide zusammenfasste.
+  var nurUnterwegs = false;
+  function istUnterwegs(sp) { return nichtAbgehakt(sp) && hatRechnung(sp); }
   // Wartet etwas auf das Netz, soll man das sehen - nicht nur eine
   // Kurzmeldung, die nach drei Sekunden wieder weg ist.
   function warteBanner() {
@@ -4251,8 +4285,14 @@ window.Mitglieder = (function () {
     // links, WAS man sieht, und rechts, WIE. Beides unabhaengig.
     // Die Zahl am Knopf kommt aus derselben Funktion wie die Liste
     // darunter; vorher zaehlten beide getrennt und widersprachen sich.
-    var filterKnopf = function (an, text, zahl, titel, fn) {
-      var k = h("button", { type: "button", class: an ? "aktiv" : "", title: titel,
+    // "ton" faerbt den Zaehler wie den Posten im Geldweg darueber:
+    // jetzt (zu tun), warte (laeuft), fertig (durch). Alle Zaehler
+    // waren rot, auch der an "Erledigt" - waehrend derselbe Posten
+    // zwei Zeilen tiefer gruen leuchtete. Ohne "ton" bleibt es beim
+    // roten Standard, den die Chips ausserhalb dieser Leiste tragen.
+    var filterKnopf = function (an, text, zahl, titel, fn, ton) {
+      var k = h("button", { type: "button", class: (an ? "aktiv" : "") + (ton ? " ton-" + ton : ""),
+        title: titel,
         onclick: function () { fn(); rendereAbrechnung(); } }, [h("span", { text: text })]);
       if (zahl) k.appendChild(h("span", { class: "zaehler", text: String(zahl) }));
       return k;
@@ -4261,25 +4301,30 @@ window.Mitglieder = (function () {
     // Angaben pruefen, Rechnung schreiben, Geld abhaken. Vorher hiess
     // das "Luecken" und "Nicht abgehakt" - Woerter, die nur kennt, wer
     // die App gebaut hat.
-    function alleAus() { nurOffene = false; nurUnbezahlt = false; nurOhneRechnung = false; nurErledigt = false; }
+    function alleAus() { nurOffene = false; nurUnbezahlt = false; nurOhneRechnung = false; nurErledigt = false; nurUnterwegs = false; }
     var abrechnenN = aufRechnung ? spiele.filter(zumAbrechnen).length : 0;
     var erledigtN = spiele.filter(istErledigt).length;
     var stufen = [
-      [!nurOffene && !nurUnbezahlt && !nurOhneRechnung && !nurErledigt, "Alle", 0,
+      [!nurOffene && !nurUnbezahlt && !nurOhneRechnung && !nurErledigt && !nurUnterwegs, "Alle", 0,
        "Alle Spiele der Saison", function () { alleAus(); }, true],
       [nurOffene, "Angaben fehlen", offenN,
-       "Gespielt, aber Kilometer oder Vergütung fehlen", function () { alleAus(); nurOffene = true; }, true],
+       "Gespielt, aber Kilometer oder Vergütung fehlen", function () { alleAus(); nurOffene = true; }, true, "jetzt"],
       [nurOhneRechnung, "Abrechnen", abrechnenN,
        "Gespielt, Angaben vollständig, noch keine Rechnung geschrieben",
-       function () { alleAus(); nurOhneRechnung = true; }, !!aufRechnung],
+       function () { alleAus(); nurOhneRechnung = true; }, !!aufRechnung, "jetzt"],
+      // Mit Rechnungsliste die zerlegte Stufe, ohne sie die alte - sonst
+      // stuende eine Zahl da, die sich beim Nachladen aendert.
+      [nurUnterwegs, "Unterwegs", spiele.filter(istUnterwegs).length,
+       "Rechnung ist geschrieben, das Geld fehlt noch",
+       function () { alleAus(); nurUnterwegs = true; }, !!aufRechnung, "warte"],
       [nurUnbezahlt, "Geld fehlt", unbezahltN,
-       "Gespielt und noch nicht als bezahlt vermerkt", function () { alleAus(); nurUnbezahlt = true; }, true],
+       "Gespielt und noch nicht als bezahlt vermerkt", function () { alleAus(); nurUnbezahlt = true; }, !aufRechnung, "jetzt"],
       [nurErledigt, "Erledigt", erledigtN,
-       "Bezahlt und abgehakt", function () { alleAus(); nurErledigt = true; }, true]
+       "Bezahlt und abgehakt", function () { alleAus(); nurErledigt = true; }, true, "fertig"]
     ];
     chips = h("div", { class: "mg-filterzeile" }, [
       h("div", { class: "mg-ansicht mg-ablauf" }, stufen.filter(function (st) { return st[5]; })
-        .map(function (st) { return filterKnopf(st[0], st[1], st[2], st[3], st[4]); })),
+        .map(function (st) { return filterKnopf(st[0], st[1], st[2], st[3], st[4], st[6]); })),
     ]);
     // Saison und Darstellung in eine Zeile: beide sind schmal, und der
     // Kopf hatte vier Zeilen uebereinander. Gemessen bei 375 px: 210 px
@@ -4297,14 +4342,19 @@ window.Mitglieder = (function () {
     if (wartet) inhalt.appendChild(wartet);
 
     // Ohne Adresse rechnet die App keine Strecke - das stand bisher nur in
-    // einer Meldung an einem Knopf, den man erst finden musste.
-    if (profil && profil.heimat_lat == null
+    // einer Meldung an einem Knopf, den man erst finden musste. Zwei
+    // Zeilen kosteten 102 px ueber der Liste, bei jedem Oeffnen; jetzt
+    // eine Zeile, und wer sie kennt, tut sie weg.
+    if (profil && profil.heimat_lat == null && !lokalLesen("km_hinweis_zu", false)
         && spiele.some(function (sp) { return sp.halle && new Date(sp.beginn) < new Date(); })) {
-      inhalt.appendChild(h("div", { class: "hinweis" }, [
-        h("span", {}, [h("b", { text: "Kilometer fehlen" }),
-          h("small", { style: "display:block", text: "Trag deine Heimatadresse ein, dann rechnet die App die Strecke zu jeder Halle selbst aus." })]),
-        h("button", { type: "button", class: "textknopf", text: "Zum Profil",
-          onclick: function () { zeigeEinrichtung(true); } })]));
+      var kmh = h("div", { class: "hinweis hinweis-schmal" }, [
+        h("span", { text: "Ohne Heimatadresse keine Kilometer." }),
+        h("button", { type: "button", class: "textknopf", text: "Adresse eintragen",
+          onclick: function () { zeigeEinrichtung(true); } }),
+        h("button", { type: "button", class: "hinweis-zu", title: "Hinweis ausblenden",
+          "aria-label": "Hinweis ausblenden", text: "×",
+          onclick: function () { lokalSchreiben("km_hinweis_zu", true); kmh.remove(); } })]);
+      inhalt.appendChild(kmh);
     }
 
     inhalt.appendChild(h("div", { class: "mg-summenblock" }));
@@ -4448,6 +4498,7 @@ window.Mitglieder = (function () {
     if (nurUnbezahlt) liste = spiele.filter(nichtAbgehakt);
     else if (nurOffene) liste = spiele.filter(hatLuecke);
     else if (nurOhneRechnung) liste = spiele.filter(zumAbrechnen);
+    else if (nurUnterwegs) liste = spiele.filter(istUnterwegs);
     else if (nurErledigt) liste = spiele.filter(istErledigt);
 
     if (schnellModus) {
@@ -4477,7 +4528,11 @@ window.Mitglieder = (function () {
         var imMonat = spiele.filter(function (x) { var y = new Date(x.beginn); return y.getFullYear() + "-" + y.getMonth() === m; });
         var summeMonat = 0, fehlt = 0; imMonat.forEach(function (x) { var e = einsaetze[x.kennung]; summeMonat += e ? (betragFuer(x, e).betrag || 0) : 0; if (new Date(x.beginn) < new Date() && (!e || e.verguetung == null)) fehlt++; });
         var kopf = h("div", { class: "mg-monat" }, [h("span", {}, [h("b", { text: MONATE[d.getMonth()] + " " + d.getFullYear() }),
-          h("small", { text: imMonat.length + (imMonat.length === 1 ? " Spiel" : " Spiele") + " · " + euro(summeMonat) + (fehlt ? " · " + fehlt + " ohne Betrag" : "") })])]);
+          // "0,00 EUR" klingt nach einem Monat ohne Geld - gemeint ist
+          // ein Monat ohne Eintrag. Dann sagt es nur, was fehlt.
+          h("small", { text: imMonat.length + (imMonat.length === 1 ? " Spiel" : " Spiele")
+            + (summeMonat > 0 ? " · " + euro(summeMonat) : "")
+            + (fehlt ? " · " + fehlt + " ohne Betrag" : "") })])]);
         var rechts = h("span", { class: "mg-monat-aktion" });
         kopf.appendChild(rechts);
         inhalt.appendChild(kopf);
@@ -9362,6 +9417,7 @@ window.Mitglieder = (function () {
       if (o.einsaetze !== undefined) einsaetze = o.einsaetze;
       if (o.rechnungListe !== undefined) rechnungListe = o.rechnungListe;
       if (o.rechnungWahl !== undefined) rechnungWahl = o.rechnungWahl;
+      if (o.aufRechnung !== undefined) aufRechnung = o.aufRechnung;
       if (o.ctx !== undefined) ctx = o.ctx;
     },
     gelerntBauen: gelerntBauen, gelerntBetrag: gelerntBetrag, gelerntKm: gelerntKm,
@@ -9374,7 +9430,11 @@ window.Mitglieder = (function () {
     fahrtkosten: fahrtkosten, summen: summen,
     rechnungSummeAus: rechnungSummeAus, rechnungDateiname: rechnungDateiname,
     nummerVorschlag: nummerVorschlag, laufNummern: laufNummern,
-    heimVereinVon: heimVereinVon
+    heimVereinVon: heimVereinVon,
+    // Die vier Stufen der Ablaufleiste. Sie muessen sich ausschliessen -
+    // jedes vergangene Spiel steht in genau einer.
+    hatLuecke: hatLuecke, zumAbrechnen: zumAbrechnen,
+    istUnterwegs: istUnterwegs, istErledigt: istErledigt
   };
 
   return { oeffnen: oeffnen, bereit: bereit, angemeldet: angemeldet, pruefstand: pruefstand,
