@@ -38,16 +38,16 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:3fd084d009c7a918366a61b2aff2f746e2a53840@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
+SEQUENCE:1
+DTSTAMP:20261106T090050Z
+LAST-MODIFIED:20261106T090050Z
 DTSTART:20261107T084500Z
 DTEND:20261107T121500Z
 SUMMARY:SR · U15 LL: TuS Wiehl – Herforder EV
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:45 Uhr\nTreffpunkt:
   09:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Wi
- ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Starke\, Matthias\
- n\nQuelle: https://www.esrw.de/einteilungen.html
+ ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Hauerwaas\, Gabrie
+ l\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -61,33 +61,6 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: TuS Wiehl – Herf
  order EV
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
-UID:51ddbe8b457012a095227d72716a98aa431eafb2@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261108T124500Z
-DTEND:20261108T161500Z
-SUMMARY:SR · U13 RLB: Kölner Junghaie 1b – Iserlohner EC 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:45 Uhr\nTreffpunkt:
-  13:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Kölnarena 2\nA
- dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Schlüter\, Thomas
- \n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
-GEO:50.937979;6.98935
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
- r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
- .937979,6.98935
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB: Kölner Junghaie 
- 1b – Iserlohner EC 1b
 END:VALARM
 END:VEVENT
 END:VCALENDAR

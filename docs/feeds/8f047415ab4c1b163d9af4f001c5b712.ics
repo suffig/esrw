@@ -29,6 +29,33 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
  e":geo:51.532602,7.254372
 END:VEVENT
 BEGIN:VEVENT
+UID:bdb1211aeaf96a9c1232a32468c57741ed6672e7@esrw.de
+SEQUENCE:0
+DTSTAMP:20261106T090050Z
+LAST-MODIFIED:20261106T090050Z
+DTSTART:20261108T160000Z
+DTEND:20261108T193000Z
+SUMMARY:SR · U17 RL: EHC Troisdorf – Herforder EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
+  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: ICEDOME Troisdor
+ f\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Schöche\,
+  Gian-Carlo\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
+GEO:50.811945;7.109233
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
+ rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
+ isdorf":geo:50.811945,7.109233
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: EHC Troisdorf – 
+ Herforder EV
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:3381a0657b5a6cbb8600554dadfdfd08cfcc42e9@esrw.de
 SEQUENCE:0
 DTSTAMP:20261031T224530Z
