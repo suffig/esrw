@@ -716,15 +716,24 @@
   function toast(text, art, aktion) {
     var t = el("toast");
     clearTimeout(toastTimer);
-    if (!text) { t.classList.remove("zeigt"); return; }
+    if (!text) { toastZu(t); return; }
     t.textContent = text; t.className = "toast " + (art || "") + (aktion ? " mit-aktion" : "");
     if (aktion && aktion.label) {
       var b = document.createElement("button"); b.type = "button"; b.textContent = aktion.label;
-      b.addEventListener("click", function () { clearTimeout(toastTimer); t.classList.remove("zeigt"); try { aktion.fn(); } catch (e) {} });
+      b.addEventListener("click", function () { clearTimeout(toastTimer); toastZu(t); try { aktion.fn(); } catch (e) {} });
       t.appendChild(b);
     }
+    // Platz unter dem Inhalt, solange die Meldung steht - sonst liegt
+    // sie auf der untersten Karte. Nicht in requestAnimationFrame: das
+    // laeuft nicht, wenn die Seite im Hintergrund ist.
+    document.body.style.setProperty("--toast-platz", Math.ceil(t.getBoundingClientRect().height) + "px");
+    document.body.classList.add("toast-offen");
     requestAnimationFrame(function () { t.classList.add("zeigt"); });
-    toastTimer = setTimeout(function () { t.classList.remove("zeigt"); }, aktion ? 10000 : art === "warn" ? 7000 : 2500);
+    toastTimer = setTimeout(function () { toastZu(t); }, aktion ? 10000 : art === "warn" ? 7000 : 2500);
+  }
+  function toastZu(t) {
+    t.classList.remove("zeigt");
+    document.body.classList.remove("toast-offen");
   }
   window.zeigeToast = toast;
 
@@ -3893,7 +3902,11 @@
   // Leeres Geruest statt null: der Mitgliederbereich soll auch dann seinen
   // Anmeldeschirm zeichnen koennen, wenn noch keine Daten geladen sind.
   var LEER = { personen: [], spiele: [], hallen: {}, adressen: {}, hallen_hinweise: {}, saison: "", titel: "Einteilungen" };
-  function mitgliederKontext() { return { gespannKorrektur: gespannKorrektur, gespannGehoert: gespannGehoert, istAusgeblendet: istAusgeblendet, daten: daten || LEER, slug: profil && profil.slug, personMit: personMit, hole: hole, ikone: ikone, funktion: funktion, funktionen: FUNKTIONEN, einstellungenSync: einstellungenSync, lesen: lesen, schreiben: schreiben, reiterInLeiste: reiterInLeiste, appAblegen: appAblegen }; }
+  function mitgliederKontext() { return { gespannKorrektur: gespannKorrektur, gespannGehoert: gespannGehoert, istAusgeblendet: istAusgeblendet, daten: daten || LEER, slug: profil && profil.slug, personMit: personMit, hole: hole, ikone: ikone, funktion: funktion, funktionen: FUNKTIONEN, einstellungenSync: einstellungenSync, lesen: lesen, schreiben: schreiben, reiterInLeiste: reiterInLeiste, appAblegen: appAblegen,
+    // Der Mitgliederbereich setzt geaenderte Anzeigenamen direkt in
+    // daten ein (v59). Was gerade auf dem Schirm steht, weiss davon
+    // nichts - also einmal neu zeichnen.
+    datenGeaendert: function () { if (aktuell) aktuell(); } }; }
   function zeigeMitglieder(reiter) {
     aktuell = null; ansicht("mitglieder");
     ladeMitglieder().then(function (M) { M.oeffnen(el("mitglieder"), mitgliederKontext(), reiter); })

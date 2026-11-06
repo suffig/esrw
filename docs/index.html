@@ -3301,6 +3301,12 @@
      (gemessen: "Erledigt 3" mit 337 von 343 px) - ein Knopf so breit
      wie die Seite, neben drei schmalen darueber. */
   :root[data-design="neu"] .mg-ablauf button { flex:0 1 auto; }
+
+  /* Solange eine Meldung unten steht, ruecken die letzten Zeilen so
+     weit nach, dass sie darueber liegt und nicht darauf. Ohne das
+     verdeckte sie, was gerade darunter stand - im Durchgang eine
+     Spielkarte, ein Monatsband, ein Gespannpartner. */
+  body.toast-offen main { padding-bottom:calc(var(--toast-platz, 0px) + 12px); }
 </style>
 </head>
 <body>
@@ -3764,6 +3770,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=255"></script>
+<script src="app.js?v=259"></script>
 </body>
 </html>

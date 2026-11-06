@@ -501,6 +501,46 @@ window.Mitglieder = (function () {
   // Wird auch von index.html gebraucht, um Funktionen hinter dem Login
   // freizugeben.
 
+  // ------------------------------------------------- Anzeigenamen
+  //
+  // Dieselbe Regel wie namen_ersetzen() in esrw_ical.py: der Name
+  // aendert sich, der Slug nie. An ihm haengen Profile, Einsaetze und
+  // jeder Link - und die Zuordnung zu esrw.de.
+  var namenAlias = null;
+  function namenAliasAnwenden() {
+    var d = ctx && ctx.daten;
+    if (!d || !namenAlias) return 0;
+    var n = 0;
+    function gespann(liste) {
+      (liste || []).forEach(function (b) {
+        var neu = b && b.slug && namenAlias[b.slug];
+        if (neu && b.name !== neu) { b.name = neu; n++; }
+      });
+    }
+    (d.personen || []).forEach(function (p) {
+      var neu = namenAlias[p.slug];
+      if (neu && p.name !== neu) { p.name = neu; n++; }
+      (p.spiele || []).forEach(function (sp) { gespann(sp.besetzung); gespann(sp.gespann); });
+    });
+    (d.spiele || []).forEach(function (sp) { gespann(sp.besetzung); gespann(sp.gespann); });
+    return n;
+  }
+  function namenAliasLaden(frisch) {
+    if (namenAlias && !frisch) { namenAliasAnwenden(); return Promise.resolve(namenAlias); }
+    if (!sb) return Promise.resolve(null);
+    return speichern(sb.from("namen_alias").select("slug,name")).then(function (r) {
+      // Fehlt die Tabelle (Schema nicht eingespielt), bleibt es bei den
+      // Namen aus daten.json - die App laeuft weiter.
+      if (!r || r.error) { namenAlias = {}; return namenAlias; }
+      namenAlias = {};
+      (r.data || []).forEach(function (z) {
+        if (z.slug && z.name) namenAlias[z.slug] = z.name;
+      });
+      if (namenAliasAnwenden() && ctx && typeof ctx.datenGeaendert === "function") ctx.datenGeaendert();
+      return namenAlias;
+    }, function () { namenAlias = {}; return namenAlias; });
+  }
+
   function bereit(kontext) {
     if (kontext) ctx = kontext;
     if (bereitVersprechen) return bereitVersprechen;
@@ -640,6 +680,10 @@ window.Mitglieder = (function () {
     if (!session) return Promise.resolve(null);
     if (profil && profil.id === session.user.id) return Promise.resolve(profil);
     if (profilVersprechen) return profilVersprechen;
+    // Anzeigenamen (v59): was der Betreiber geaendert hat, gilt sofort.
+    // Die Pipeline traegt es beim naechsten Lauf in daten.json nach -
+    // bis dahin stuende hier der alte Name.
+    namenAliasLaden();
     profilVersprechen = sb.from("profile").select("*").eq("id", session.user.id).maybeSingle()
       .then(function (r) {
         if (r.error) throw r.error;
@@ -8016,6 +8060,9 @@ window.Mitglieder = (function () {
               // Zurueck auf den Namen von esrw.de heisst: keine Zeile.
               speichern(sb.from("namen_alias").delete().eq("slug", p.slug)).then(function (rr) {
                 if (rr && rr.error) { meldung(fehlerText(rr.error), "warn"); return; }
+                // Die Liste in der App zeigt den Namen sofort - sonst
+                // stuende bis zum naechsten Lauf der alte da.
+                namenAliasLaden(true);
                 kurzMeldung("Wieder wie auf esrw.de ✓", "gut"); neu();
               });
               return;
@@ -8023,7 +8070,8 @@ window.Mitglieder = (function () {
             speichern(sb.from("namen_alias").upsert({ slug: p.slug, name: wert,
               von: profil.name || profil.slug })).then(function (rr) {
               if (rr && rr.error) { meldung(fehlerText(rr.error), "warn"); return; }
-              kurzMeldung("Gespeichert ✓ Sichtbar nach dem nächsten Lauf.", "gut"); neu();
+              namenAliasLaden(true);
+              kurzMeldung("Gespeichert ✓ Steht sofort in der Kollegenliste.", "gut"); neu();
             });
           } }));
           if (a) knoepfe.appendChild(h("button", { type: "button", class: "mg-neben",
@@ -8031,6 +8079,7 @@ window.Mitglieder = (function () {
             text: "Zurücksetzen", onclick: function () {
               speichern(sb.from("namen_alias").delete().eq("slug", p.slug)).then(function (rr) {
                 if (rr && rr.error) { meldung(fehlerText(rr.error), "warn"); return; }
+                namenAliasLaden(true);
                 kurzMeldung("Wieder wie auf esrw.de ✓", "gut"); neu();
               });
             } }));
