@@ -8,29 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:1a3e117be0d40e47c9e8800a3a1643652aa9b73f@esrw.de
-SEQUENCE:0
-DTSTAMP:20261023T143044Z
-LAST-MODIFIED:20261023T143044Z
-DTSTART:20261031T073000Z
-DTEND:20261031T110000Z
-SUMMARY:SR · Frauen BZL: EHC Gelsenkirchen – TSVE Bielefeld
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
-  08:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Emscher-Lipp
- e-Halle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\nG
- espann: Klemm\, Julian\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://
- www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Emscher-Lippe-Halle Gelsenkirchen\, Adenauerallee 118\, 45891 Gels
- enkirchen
-GEO:51.553483;7.073102
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Emscher-Lippe-Halle Gelsen
- kirchen, Adenauerallee 118, 45891 Gelsenkirchen";X-APPLE-RADIUS=100;X-TITL
- E="Emscher-Lippe-Halle Gelsenkirchen":geo:51.553483,7.073102
-END:VEVENT
-BEGIN:VEVENT
 UID:35cd67eb2b499e7b7ae5abb07e57cfb26398227e@esrw.de
 SEQUENCE:0
 DTSTAMP:20261023T143044Z
@@ -1018,12 +995,6 @@ GEO:51.553483;7.073102
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Emscher-Lippe-Halle Gelsen
  kirchen, Adenauerallee 118, 45891 Gelsenkirchen";X-APPLE-RADIUS=100;X-TITL
  E="Emscher-Lippe-Halle Gelsenkirchen":geo:51.553483,7.073102
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: SpG EHC Gelsenkirc
- hen / Herner EV 1b – EV Duisburg 1b
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:281a3566ccd18f4988e3b1e4aeb1d7c5ab3cb732@esrw.de
@@ -1045,12 +1016,6 @@ GEO:51.165932;7.086769
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
  ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
  le Solingen":geo:51.165932,7.086769
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: EC Bergisch Land 
- – TSVE Bielefeld
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:a0071879379f8f26419f94e5c8b11f5d0889dded@esrw.de
