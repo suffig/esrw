@@ -3,8 +3,64 @@ VERSION:2.0
 PRODID:-//esrw-ical//Schiedsrichter-Einteilungen//DE
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
-X-WR-CALNAME:Einteilungen – Kyei-Nimako\, Denis
+X-WR-CALNAME:Einteilungen – Nimako\, Denis
 X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:aafd957183c1d53dea8b0a3668477261cff9d7d1@esrw.de
+SEQUENCE:0
+DTSTAMP:20261107T130048Z
+LAST-MODIFIED:20261107T130048Z
+DTSTART:20261113T180000Z
+DTEND:20261113T213000Z
+SUMMARY:HSR · Senioren RLW: Neusser EV – Grefrather EG
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:00 Uhr\nTreff
+ punkt: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ porthalle Neuss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Hor
+ nig\, Marius (LSR) / Schöche\, Gian-Carlo (LSR)\nVergütung lt. Ordnung: 
+ 100 €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
+GEO:51.175806;6.680258
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
+ -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
+ uss":geo:51.175806,6.680258
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: Neusser EV 
+ – Grefrather EG
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:eec0d97b8b1eb1e4e7387841ae9e9536da9df9e7@esrw.de
+SEQUENCE:0
+DTSTAMP:20261107T130048Z
+LAST-MODIFIED:20261107T130048Z
+DTSTART:20261115T151500Z
+DTEND:20261115T184500Z
+SUMMARY:HSR · Senioren RLW: TuS Wiehl – ESV Grizzlys Bergkamen
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 17:15 Uhr\nTreff
+ punkt: 16:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ porthalle Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Fenke\
+ , Matthias (LSR) / Melchert\, Philip (LSR)\nVergütung lt. Ordnung: 100 
+ €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
+GEO:50.947034;7.5553
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
+ enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
+ ":geo:50.947034,7.5553
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: TuS Wiehl 
+ – ESV Grizzlys Bergkamen
+END:VALARM
+END:VEVENT
 END:VCALENDAR

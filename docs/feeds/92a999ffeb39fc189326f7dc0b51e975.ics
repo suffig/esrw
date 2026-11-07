@@ -75,4 +75,58 @@ TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Rot: Herner EV
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:5fbb51322133e49fc53ce96213313d0c805aa115@esrw.de
+SEQUENCE:0
+DTSTAMP:20261107T130048Z
+LAST-MODIFIED:20261107T130048Z
+DTSTART:20261114T073000Z
+DTEND:20261114T110000Z
+SUMMARY:SR · DFEL2 Nord: EC Bergisch Land – FASS Berlin
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
+  08:30 Uhr (60 Min vor Spielbeginn)\nLiga: DFEL2 Nord\nHalle: Eissporthall
+ e Solingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Fenke\
+ , Matthias\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
+GEO:51.165932;7.086769
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
+ ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
+ le Solingen":geo:51.165932,7.086769
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · DFEL2 Nord: EC Bergisch La
+ nd – FASS Berlin
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:bc15a252a040c82d393471d8d30c2d806b31cdb5@esrw.de
+SEQUENCE:0
+DTSTAMP:20261107T130048Z
+LAST-MODIFIED:20261107T130048Z
+DTSTART:20261115T070000Z
+DTEND:20261115T103000Z
+SUMMARY:SR · U13 LL: ESV Grizzlys Bergkamen – Lippe Hockey Hamm
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
+  08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Be
+ rgkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Steeg\, Cedric
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: ESV Grizzlys Bergk
+ amen – Lippe Hockey Hamm
+END:VALARM
+END:VEVENT
 END:VCALENDAR

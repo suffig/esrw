@@ -59,4 +59,31 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: SpG EHC Gelsenkirc
  hen / Herner EV 1b – EHC Essen Ruhr
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:feacd0fa90e7050b8a702d39c8e2f27c08abb77e@esrw.de
+SEQUENCE:0
+DTSTAMP:20261107T130048Z
+LAST-MODIFIED:20261107T130048Z
+DTSTART:20261115T120000Z
+DTEND:20261115T153000Z
+SUMMARY:SR · U17 I: Düsseldorfer EG – ESV Kaufbeuren
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:00 Uhr\nTreffpunkt:
+  13:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eishalle Brehmstr
+ aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Heffler\, Ph
+ ilipp\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Düsseldorfer EG 
+ – ESV Kaufbeuren
+END:VALARM
+END:VEVENT
 END:VCALENDAR

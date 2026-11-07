@@ -34,4 +34,86 @@ DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · U11 LL Grau: Aachener
  EC
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:8fcc95080c18b7e98167cd699df787990d510543@esrw.de
+SEQUENCE:0
+DTSTAMP:20261107T130048Z
+LAST-MODIFIED:20261107T130048Z
+DTSTART:20261114T113000Z
+DTEND:20261114T150000Z
+SUMMARY:SR · Frauen LL: Ratinger Ice Aliens – Tornado Women Luxembourg
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
+  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen LL\nHalle: Eissporthalle
+  Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Heffler\, Zs
+ olt\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/einteil
+ ungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
+GEO:51.295808;6.834624
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
+  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
+ tingen":geo:51.295808,6.834624
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: Ratinger Ice Al
+ iens – Tornado Women Luxembourg
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:d799e8fce54becc684fa0c90ff91079aa6fe1899@esrw.de
+SEQUENCE:0
+DTSTAMP:20261107T130048Z
+LAST-MODIFIED:20261107T130048Z
+DTSTART:20261114T144500Z
+DTEND:20261114T181500Z
+SUMMARY:SR · U9 LL Blau: Ratinger Ice Aliens
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:45 Uhr\nTreffpunkt:
+  15:45 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Blau\nHalle: Eissporthall
+ e Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Heffler\, Z
+ solt\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
+GEO:51.295808;6.834624
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
+  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
+ tingen":geo:51.295808,6.834624
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Blau: Ratinger Ice A
+ liens
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:3c8fecc1a009c0e286a07074c7f1d4fa29c1373a@esrw.de
+SEQUENCE:0
+DTSTAMP:20261107T130048Z
+LAST-MODIFIED:20261107T130048Z
+DTSTART:20261115T161500Z
+DTEND:20261115T194500Z
+SUMMARY:SR · U15 BZL: Aachener EC – TSVE Bielefeld
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:15 Uhr\nTreffpunkt:
+  17:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: 100'5 Arena Aac
+ hen\nAdresse: Hubert-Wienen-Straße 8\, 52070 Aachen\nGespann: Hindley\, D
+ avid\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:100'5 Arena Aachen\, Hubert-Wienen-Straße 8\, 52070 Aachen
+GEO:50.79546;6.100933
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="100'5 Arena Aachen, Hubert
+ -Wienen-Straße 8, 52070 Aachen";X-APPLE-RADIUS=100;X-TITLE="100'5 Arena A
+ achen":geo:50.79546,6.100933
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: Aachener EC – T
+ SVE Bielefeld
+END:VALARM
+END:VEVENT
 END:VCALENDAR

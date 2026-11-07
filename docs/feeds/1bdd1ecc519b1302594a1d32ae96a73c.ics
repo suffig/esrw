@@ -56,4 +56,86 @@ DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: Eisadler Dortmund
   – Dinslakener Kobras
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:6d7f8d31276b5c1dc03cdda4addf91dc85cdeb9e@esrw.de
+SEQUENCE:0
+DTSTAMP:20261107T130048Z
+LAST-MODIFIED:20261107T130048Z
+DTSTART:20261114T071500Z
+DTEND:20261114T104500Z
+SUMMARY:SR · U11 LL Blau: SpG Gelsenkirchen-Herne 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:15 Uhr\nTreffpunkt:
+  08:15 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Blau\n!! Halle nicht aut
+ omatisch erkannt - bitte selbst pruefen !!\nGespann: Baron\, Benny\n\nQuel
+ le: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Blau: SpG Gelsenkir
+ chen-Herne 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:c6a20f68c4f0daab14c8435ededf9bdbb28a765b@esrw.de
+SEQUENCE:0
+DTSTAMP:20261107T130048Z
+LAST-MODIFIED:20261107T130048Z
+DTSTART:20261115T081500Z
+DTEND:20261115T114500Z
+SUMMARY:SR · U15 LL: EHC Essen Ruhr – SpG EHC Gelsenkirchen / Herner EV 
+ 1b
+DESCRIPTION:!! Danach Eisadler Dortmund – EJ Kassel Huskies Ladies in Eis
+ sportzentrum Westfalen – nur 195 Min bis zum nächsten Anstoß !!\n\nRol
+ le: Schiedsrichter (SR)\nSpielbeginn: 10:15 Uhr\nTreffpunkt: 09:15 Uhr (60
+  Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Essen-West\nAdre
+ sse: Curtiusstr. 2\, 45144 Essen\nGespann: Schmidt\, Waldemar\n\nQuelle: h
+ ttps://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Essen-West\, Curtiusstr. 2\, 45144 Essen
+GEO:51.454179;6.976731
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
+ Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
+ n-West":geo:51.454179,6.976731
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: EHC Essen Ruhr –
+  SpG EHC Gelsenkirchen / Herner EV 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:98ba6c60e65fcd74b3d19f480d25a608199cdb68@esrw.de
+SEQUENCE:0
+DTSTAMP:20261107T130048Z
+LAST-MODIFIED:20261107T130048Z
+DTSTART:20261115T113000Z
+DTEND:20261115T150000Z
+SUMMARY:SR · Frauen LL: Eisadler Dortmund – EJ Kassel Huskies Ladies
+DESCRIPTION:!! Davor EHC Essen Ruhr – SpG EHC Gelsenkirchen / Herner EV 1
+ b in Eissporthalle Essen-West – nur 195 Min nach dem vorigen Anstoß !!\
+ n\nRolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt: 12:30 U
+ hr (60 Min vor Spielbeginn)\nLiga: Frauen LL\nHalle: Eissportzentrum Westf
+ alen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Leibfried\, Raph
+ ael\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/einteil
+ ungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: Eisadler Dortmu
+ nd – EJ Kassel Huskies Ladies
+END:VALARM
+END:VEVENT
 END:VCALENDAR

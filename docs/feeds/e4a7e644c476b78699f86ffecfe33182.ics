@@ -125,4 +125,33 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 ODM: Kölner Junghaie
  – Iserlohner EC
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:755c46c5802e29a07c98ca29d11656477bf99590@esrw.de
+SEQUENCE:0
+DTSTAMP:20261107T130048Z
+LAST-MODIFIED:20261107T130048Z
+DTSTART:20261113T180000Z
+DTEND:20261113T213000Z
+SUMMARY:SR · Frauen LL: ESV Bergisch Gladbach – DEC Düsseldorfer Devils
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen LL\nHalle: Eissporthalle
+  Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbach\n
+ Gespann: Baron\, Benny\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://
+ www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
+ ch Gladbach
+GEO:50.967548;7.135355
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
+ dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
+ TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: ESV Bergisch Gl
+ adbach – DEC Düsseldorfer Devils
+END:VALARM
+END:VEVENT
 END:VCALENDAR
