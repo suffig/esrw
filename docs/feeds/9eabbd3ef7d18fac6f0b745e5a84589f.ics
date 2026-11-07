@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:db2542b5456e7fa0743b68eeaa1d6be2bfbd22aa@esrw.de
-SEQUENCE:0
-DTSTAMP:20261023T143044Z
-LAST-MODIFIED:20261023T143044Z
-DTSTART:20261031T151500Z
-DTEND:20261031T184500Z
-SUMMARY:HSR · U20 RL: TuS Wiehl – EHC Troisdorf
-DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 17:15 Uhr\nTreff
- punkt: 16:15 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissportha
- lle Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Dietrich\, J
- onas (LSR) / Schöche\, Gian-Carlo (LSR)\n\nQuelle: https://www.esrw.de/ei
- nteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
-GEO:50.947034;7.5553
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
- enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
- ":geo:50.947034,7.5553
-END:VEVENT
-BEGIN:VEVENT
 UID:0ddb968eb3124e00773dce2ab78e0a2555e182e6@esrw.de
 SEQUENCE:0
 DTSTAMP:20261031T160048Z

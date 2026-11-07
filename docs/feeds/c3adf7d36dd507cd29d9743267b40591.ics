@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:6924f3daccc04e22a2edd3a28facf4ef1a2d4fa3@esrw.de
-SEQUENCE:0
-DTSTAMP:20261023T143044Z
-LAST-MODIFIED:20261023T143044Z
-DTSTART:20261031T151500Z
-DTEND:20261031T184500Z
-SUMMARY:LSR · U20 RL: TuS Wiehl – EHC Troisdorf
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
-  16:15 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissporthalle Wi
- ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Schlüter\, Thomas
-  (HSR) / Schöche\, Gian-Carlo (LSR)\n\nQuelle: https://www.esrw.de/eintei
- lungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
-GEO:50.947034;7.5553
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
- enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
- ":geo:50.947034,7.5553
-END:VEVENT
-BEGIN:VEVENT
 UID:dccc20611f1e8839811fcab9b83f56dcdd75c4c5@esrw.de
 SEQUENCE:0
 DTSTAMP:20261023T143044Z
@@ -1100,12 +1078,6 @@ GEO:50.947034;7.5553
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
  enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
  ":geo:50.947034,7.5553
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: TuS Wiehl – Eisa
- dler Dortmund
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:4f4855ed024b38f82083baf50fe055d2d944c99d@esrw.de
