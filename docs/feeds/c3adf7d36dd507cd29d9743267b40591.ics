@@ -8,70 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:a1e65d3f7a9cc84ff53444b6b9b38ee8749f30fd@esrw.de
-SEQUENCE:0
-DTSTAMP:20261023T143044Z
-LAST-MODIFIED:20261023T143044Z
-DTSTART:20261031T183000Z
-DTEND:20261031T220000Z
-SUMMARY:SR · U15 LL: SpG Neusser EV / GSC Moers – TuS Wiehl
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
-  19:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Ne
- uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Krawinkel\, Mar
- kus\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
-GEO:51.175806;6.680258
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
- -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
- uss":geo:51.175806,6.680258
-END:VEVENT
-BEGIN:VEVENT
-UID:bdaeb672b3816123aed292737aae4cccc6417cb5@esrw.de
-SEQUENCE:0
-DTSTAMP:20261023T143044Z
-LAST-MODIFIED:20261023T143044Z
-DTSTART:20261031T183000Z
-DTEND:20261031T220000Z
-SUMMARY:SR · Senioren BZL: Grefrather EG 1b – EHC Essen Ruhr
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
-  19:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eissportze
- ntrum Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespann: Hof
- er\, Carsten\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.
- de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Grefrath\, Stadionstraße 161\, 47929 Grefrath
-GEO:51.348547;6.341019
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath, 
- Stadionstraße 161, 47929 Grefrath";X-APPLE-RADIUS=100;X-TITLE="Eissportze
- ntrum Grefrath":geo:51.348547,6.341019
-END:VEVENT
-BEGIN:VEVENT
-UID:4924e0d55f36ae1432677c21f688d5ca73c773bb@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T160048Z
-LAST-MODIFIED:20261031T160048Z
-DTSTART:20261031T183000Z
-DTEND:20261031T220000Z
-SUMMARY:SR · DFEL2 Nord: Soester EG – EC Hannover Indians
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
-  19:30 Uhr (60 Min vor Spielbeginn)\nLiga: DFEL2 Nord\nHalle: Eissportzent
- rum Möhnesee\nAdresse: Teigelhof 4\, 59519 Möhnesee\nGespann: Zynda\, Ni
- ck\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Möhnesee\, Teigelhof 4\, 59519 Möhnesee
-GEO:51.515208;8.159069
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Möhnesee,
-  Teigelhof 4, 59519 Möhnesee";X-APPLE-RADIUS=100;X-TITLE="Eissportzentrum
-  Möhnesee":geo:51.515208,8.159069
-END:VEVENT
-BEGIN:VEVENT
 UID:b0dc3623c9fcfd4247850cf4f1bfc8ceff501673@esrw.de
 SEQUENCE:0
 DTSTAMP:20261028T120056Z
@@ -1183,12 +1119,6 @@ GEO:51.175806;6.680258
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
  -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
  uss":geo:51.175806,6.680258
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: SpG Neusser EV / G
- SC Moers – EHC Essen Ruhr
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:ce4db07fe2eb8a4a23e3c28f9167779409c931d0@esrw.de
@@ -1211,12 +1141,6 @@ GEO:51.348547;6.341019
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath, 
  Stadionstraße 161, 47929 Grefrath";X-APPLE-RADIUS=100;X-TITLE="Eissportze
  ntrum Grefrath":geo:51.348547,6.341019
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: Grefrather E
- G 1b – Herforder EV 1b
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:1aeea8c1c1da4421e05d1777aa61053225ddca2d@esrw.de
@@ -1238,12 +1162,6 @@ GEO:51.43973;6.6198
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
  rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
  ":geo:51.43973,6.6198
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U20 LL: GSC Moers – Hern
- er EV
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:3de32d524291aa0e5f1b21cafafae2c749c92f13@esrw.de

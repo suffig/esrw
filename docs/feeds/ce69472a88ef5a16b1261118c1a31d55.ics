@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:6279736b986d5000d6a0a85968e7bea77aaf5638@esrw.de
-SEQUENCE:0
-DTSTAMP:20261023T143044Z
-LAST-MODIFIED:20261023T143044Z
-DTSTART:20261031T183000Z
-DTEND:20261031T220000Z
-SUMMARY:SR · Senioren BZL: Grefrather EG 1b – EHC Essen Ruhr
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
-  19:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eissportze
- ntrum Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespann: Har
- tmann\, Marius\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esr
- w.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Grefrath\, Stadionstraße 161\, 47929 Grefrath
-GEO:51.348547;6.341019
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath, 
- Stadionstraße 161, 47929 Grefrath";X-APPLE-RADIUS=100;X-TITLE="Eissportze
- ntrum Grefrath":geo:51.348547,6.341019
-END:VEVENT
-BEGIN:VEVENT
 UID:c8f354245d23a7bb5338307c638760ab8e549759@esrw.de
 SEQUENCE:0
 DTSTAMP:20261023T143044Z
@@ -92,12 +70,6 @@ GEO:51.348547;6.341019
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath, 
  Stadionstraße 161, 47929 Grefrath";X-APPLE-RADIUS=100;X-TITLE="Eissportze
  ntrum Grefrath":geo:51.348547,6.341019
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: Grefrather E
- G 1b – Herforder EV 1b
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:5dfa232da34908bec832abc2a2f32a47f35c6cf6@esrw.de
