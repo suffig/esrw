@@ -45,12 +45,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: SpG Kristall
-  Lippstadt / Soester EG – Eisadler Dortmund 1b
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:59947aed267ece4809b3c39f71c0ef0ef27286af@esrw.de
