@@ -1037,12 +1037,6 @@ GEO:51.602578;7.626858
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
  äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
  ergkamen":geo:51.602578,7.626858
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: ESV Grizzlys Bergk
- amen – SpG Neusser EV / GSC Moers
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:8cf0d57bc917c407bebca8e2f26aee25b7d8f04c@esrw.de
