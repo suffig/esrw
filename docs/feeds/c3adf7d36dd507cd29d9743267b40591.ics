@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:ba967f5399d17bfe70f5bfb30f7397519e5b2033@esrw.de
-SEQUENCE:0
-DTSTAMP:20261023T143044Z
-LAST-MODIFIED:20261023T143044Z
-DTSTART:20261031T113000Z
-DTEND:20261031T150000Z
-SUMMARY:SR · DFEL2 Nord: Dinslakener Kobras – EC Bergisch Land
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
-  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: DFEL2 Nord\nHalle: Eissporthall
- e Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Pacalaj\, 
- Erik\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
-GEO:51.574578;6.735361
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
- m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
- inslaken":geo:51.574578,6.735361
-END:VEVENT
-BEGIN:VEVENT
 UID:c53b70115ddb42bff1bbbefd2bcf27d8e1e821a7@esrw.de
 SEQUENCE:0
 DTSTAMP:20261023T143044Z
@@ -1079,12 +1058,6 @@ GEO:51.242557;6.802144
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
  hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
  hmstraße":geo:51.242557,6.802144
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB: Düsseldorfer EG 
- 1b – Herner EV
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:b94bcfea3e4729010e121f6dc07d2600769fb115@esrw.de
@@ -1106,12 +1079,6 @@ GEO:51.49525;7.458288
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
   Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
  rum Westfalen":geo:51.49525,7.458288
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: Eisadler Dortmund
-  1b – Grefrather EG
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:cdc4acb3a2a5108a94887cbe2af054b4926c3caf@esrw.de
