@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:22afb711b0f6a7f39936515046cf553f3679d6f8@esrw.de
-SEQUENCE:0
-DTSTAMP:20261023T143044Z
-LAST-MODIFIED:20261023T143044Z
-DTSTART:20261101T163000Z
-DTEND:20261101T200000Z
-SUMMARY:HSR · Senioren RLW: ESV Grizzlys Bergkamen – Ratinger Ice Aliens
-DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 18:30 Uhr\nTreff
- punkt: 17:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
- porthalle Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Wa
- rnke\, Christoph (LSR) / Zynda\, Jayden (LSR)\nVergütung lt. Ordnung: 100
-  €\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
-GEO:51.602578;7.626858
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
- äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
- ergkamen":geo:51.602578,7.626858
-END:VEVENT
-BEGIN:VEVENT
 UID:8661875d1c13a7212120042d0e3ec479c3da41d1@esrw.de
 SEQUENCE:0
 DTSTAMP:20261023T143044Z
@@ -1311,12 +1289,6 @@ GEO:51.602578;7.626858
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
  äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
  ergkamen":geo:51.602578,7.626858
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: ESV Grizzly
- s Bergkamen – Eisadler Dortmund
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:1de0c2f90137a0feed744854ca0a3bcc7fb1e55c@esrw.de
@@ -1339,12 +1311,6 @@ GEO:51.686934;7.886138
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena 
  Hamm, Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="bet
  a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Lippe Hockey Hamm 
- – Herner EV
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:7e7a72bafea6ccf3828ebbc467e087363c3954da@esrw.de
