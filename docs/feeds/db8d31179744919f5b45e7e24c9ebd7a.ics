@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:8378c18d1a3213742c981ab7c4d2975e405bdbc2@esrw.de
-SEQUENCE:0
-DTSTAMP:20261023T143044Z
-LAST-MODIFIED:20261023T143044Z
-DTSTART:20261101T103000Z
-DTEND:20261101T140000Z
-SUMMARY:SR · U13 LL: Dinslakener Kobras – Mädchen W.I.N. 1
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
-  11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Di
- nslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Störmann\, Ma
- nuel\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
-GEO:51.574578;6.735361
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
- m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
- inslaken":geo:51.574578,6.735361
-END:VEVENT
-BEGIN:VEVENT
 UID:61e8c0b17be6308136806698fd0f89c7ec227901@esrw.de
 SEQUENCE:0
 DTSTAMP:20261031T224530Z
@@ -52,16 +31,16 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
 END:VEVENT
 BEGIN:VEVENT
 UID:13db19aa66a1734b016b30dea6df17f1fe0de423@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
+SEQUENCE:1
+DTSTAMP:20261108T113041Z
+LAST-MODIFIED:20261108T113041Z
 DTSTART:20261108T170000Z
 DTEND:20261108T203000Z
 SUMMARY:SR · U17 LL: EC Bergisch Land – Grefrather EG
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
   18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\nHalle: Eissporthalle So
- lingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Hornig\, M
- arius\n\nQuelle: https://www.esrw.de/einteilungen.html
+ lingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Hofer\, Ca
+ rsten\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

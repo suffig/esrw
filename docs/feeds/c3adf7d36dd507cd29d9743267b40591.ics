@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:3fde818b00cdace5f9361eb1a5f82fe3aa0836d6@esrw.de
-SEQUENCE:0
-DTSTAMP:20261023T143044Z
-LAST-MODIFIED:20261023T143044Z
-DTSTART:20261101T103000Z
-DTEND:20261101T140000Z
-SUMMARY:SR · U13 LL: Dinslakener Kobras – Mädchen W.I.N. 1
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
-  11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Di
- nslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Störmann\, Ma
- nuel\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
-GEO:51.574578;6.735361
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
- m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
- inslaken":geo:51.574578,6.735361
-END:VEVENT
-BEGIN:VEVENT
 UID:5dca25553fee91cb8a3196578caa188e143dad54@esrw.de
 SEQUENCE:0
 DTSTAMP:20261023T143044Z
@@ -1575,15 +1554,15 @@ END:VEVENT
 BEGIN:VEVENT
 UID:7e7a72bafea6ccf3828ebbc467e087363c3954da@esrw.de
 SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
+DTSTAMP:20261108T113041Z
+LAST-MODIFIED:20261108T113041Z
 DTSTART:20261108T170000Z
 DTEND:20261108T203000Z
 SUMMARY:SR · U17 LL: EC Bergisch Land – Grefrather EG
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
   18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\nHalle: Eissporthalle So
- lingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Hornig\, M
- arius\n\nQuelle: https://www.esrw.de/einteilungen.html
+ lingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Hofer\, Ca
+ rsten\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

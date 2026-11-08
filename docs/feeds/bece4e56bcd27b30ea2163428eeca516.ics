@@ -29,33 +29,6 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
  hmstraße":geo:51.242557,6.802144
 END:VEVENT
 BEGIN:VEVENT
-UID:98cd2ab2dcde034266ecdb8dd1cdd92085ef22e4@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261108T170000Z
-DTEND:20261108T203000Z
-SUMMARY:SR · U17 LL: EC Bergisch Land – Grefrather EG
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
-  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\nHalle: Eissporthalle So
- lingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Heffler\, 
- Zsolt\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
-GEO:51.165932;7.086769
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
- ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
- le Solingen":geo:51.165932,7.086769
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: EC Bergisch Land 
- – Grefrather EG
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:e06f1294dfff13acb1ac2f7663b326c37bee1ab5@esrw.de
 SEQUENCE:0
 DTSTAMP:20261107T130048Z
