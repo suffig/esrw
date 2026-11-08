@@ -8,71 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:d63852021d18d03b98546d655cff5a0c9d178616@esrw.de
-SEQUENCE:0
-DTSTAMP:20261023T143044Z
-LAST-MODIFIED:20261023T143044Z
-DTSTART:20261101T170000Z
-DTEND:20261101T203000Z
-SUMMARY:SR · Senioren LL: EC Bergisch Land – TSVE Bielefeld
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
-  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissporthal
- le Solingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Stock
- enschneider\, Lars\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www
- .esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
-GEO:51.165932;7.086769
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
- ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
- le Solingen":geo:51.165932,7.086769
-END:VEVENT
-BEGIN:VEVENT
-UID:2942314d058071bbd634140ff2f60b0db21f86b4@esrw.de
-SEQUENCE:0
-DTSTAMP:20261023T143044Z
-LAST-MODIFIED:20261023T143044Z
-DTSTART:20261101T170000Z
-DTEND:20261101T203000Z
-SUMMARY:SR · U17 RL: Eisadler Dortmund – Ratinger Ice Aliens
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
-  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eissportzentrum 
- Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Honselmann\
- , Tom (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
-GEO:51.49525;7.458288
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
-  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
- rum Westfalen":geo:51.49525,7.458288
-END:VEVENT
-BEGIN:VEVENT
-UID:1d0dbab42c0a865f22c5e1f97aa75cd4fefd1531@esrw.de
-SEQUENCE:0
-DTSTAMP:20261023T143044Z
-LAST-MODIFIED:20261023T143044Z
-DTSTART:20261101T170000Z
-DTEND:20261101T203000Z
-SUMMARY:LSR · Senioren RLW: Dinslakener Kobras – ESV Bergisch Gladbach
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
-  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
- lle Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Küper\,
-  Sascha (HSR) / Pluschkell\, Julian (LSR)\nVergütung lt. Ordnung: 100 €
- \n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
-GEO:51.574578;6.735361
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
- m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
- inslaken":geo:51.574578,6.735361
-END:VEVENT
-BEGIN:VEVENT
 UID:aabce10227796ce94adf523e6b4daead91256bb1@esrw.de
 SEQUENCE:0
 DTSTAMP:20261023T143044Z
@@ -1310,12 +1245,6 @@ GEO:51.165932;7.086769
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
  ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
  le Solingen":geo:51.165932,7.086769
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: EC Bergisch Land 
- – Grefrather EG
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:06589b6874f7038fefbc4df58aaf57b6f5cc11d6@esrw.de
@@ -1338,12 +1267,6 @@ GEO:51.49525;7.458288
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
   Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
  rum Westfalen":geo:51.49525,7.458288
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: Eisadler Dortmund
-  – Dinslakener Kobras
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:e076f1d36f800bb3d2827cc2b06413917dcabe07@esrw.de
