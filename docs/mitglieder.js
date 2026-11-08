@@ -7412,7 +7412,7 @@ window.Mitglieder = (function () {
         gruppen[g].forEach(function (p) {
           var a = abw[p.pfad];
           var feld = h("input", { type: "text", inputmode: "decimal",
-            value: String(a ? a.wert : p.datei), inputmode: "decimal" });
+            value: String(a ? a.wert : p.datei) });
           var hinweis = h("small", { class: a ? "achtung" : "meta" });
           hinweis.textContent = a
             ? "Ordnung: " + p.datei + (a.von ? " · geändert von " + a.von : "")
@@ -9886,7 +9886,7 @@ window.Mitglieder = (function () {
     rechnungSuchtext: rechnungSuchtext,
     ligaEinordnen: ligaEinordnen, grundgebuehr: grundgebuehr,
     sollBetrag: sollBetrag, regelBetrag: regelBetrag, regelKm: regelKm,
-    kmVorschlag: kmVorschlag, zeitzuschlag: zeitzuschlag,
+    zeitzuschlag: zeitzuschlag,
     uebergreifendMoeglich: uebergreifendMoeglich, betragFuer: betragFuer,
     fahrtkosten: fahrtkosten, summen: summen,
     rechnungSummeAus: rechnungSummeAus, rechnungDateiname: rechnungDateiname,

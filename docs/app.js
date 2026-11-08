@@ -660,7 +660,12 @@
   }
   function feedUrl(slug, protokoll) {
     var name = tresorMarken[slug] || slug;
-    return protokoll + "//" + basis.replace(/^https?:\/\//, "") + "feeds/" + name + ".ics";
+    // Ohne "www.": esrw.app leitet von www auf sich selbst um (301,
+    // gemessen), und diese Adresse gibt man an einen Kalenderdienst
+    // weiter, der sie monatelang behaelt. Eine Weiterleitung weniger
+    // ist eine Stelle weniger, an der es klemmt.
+    var ort = basis.replace(/^https?:\/\//, "").replace(/^www\./, "");
+    return protokoll + "//" + ort + "feeds/" + name + ".ics";
   }
   // Was auf diesem Geraet gilt. Die Saetze standen an fuenf Stellen
   // und sprachen ueberall vom iPhone - auf Android war die Haelfte
@@ -680,6 +685,23 @@
   // nimmt Google Kalender eine gewoehnliche Adresse entgegen und fragt
   // dasselbe. Wer einen anderen Kalender benutzt, nimmt den Knopf
   // daneben ("Einmalig laden") - der laedt die Datei und geht ueberall.
+  // Wie schnell eine Aenderung im Kalender ankommt - und warum das
+  // nicht an der App liegt. Wer ueber calendar.google.com abonniert,
+  // dessen Kalender liegt bei Google: Google holt fremde ICS-Feeds in
+  // eigenem Takt, bis zu zwoelf Stunden, oft einen ganzen Tag, und
+  // beachtet das REFRESH-INTERVAL in der Datei nicht. Die
+  // Android-Einstellung "Aktualisieren: stuendlich" regelt nur, wie
+  // oft das Handy mit Google spricht - nicht, wie oft Google hier
+  // nachsieht. Genau das stand hier frueher, und es half niemandem.
+  function aboTaktText() {
+    if (!istAndroid()) {
+      return "Beim iPhone meist stündlich bis alle paar Stunden.";
+    }
+    return "Über Google Kalender abonniert, holt Google den Feed in eigenem Takt – oft nur "
+      + "ein- bis zweimal am Tag. Daran ändert keine Einstellung am Handy etwas. Wer es "
+      + "schneller braucht: Push einschalten (kommt sofort) oder den Feed mit einer App wie "
+      + "ICSx⁵ abonnieren, dort lässt sich der Takt selbst setzen.";
+  }
   function aboAdresse(slug) {
     if (!istAndroid()) return feedUrl(slug, "webcal:");
     return "https://calendar.google.com/calendar/r?cid="
@@ -799,7 +821,7 @@
       feedGeprueft[p.slug] = (ok ? "Kalender-Link geprüft ✓ · " : "Achtung: Der Kalender-Link zeigt weniger Termine als die App · ")
         + n + (n === 1 ? " Termin" : " Termine") + " im Abo, " + kommend + " kommende in der App"
         + (wann ? " · Stand " + wann.toLocaleString("de-DE", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }) : "")
-        + ". Wann dein Handy zuletzt abgerufen hat, zeigt nur das Handy: Einstellungen → Apps → Kalender → Accounts → Abo (Aktualisieren: stündlich).";
+        + ". " + aboTaktText();
       ziel.textContent = feedGeprueft[p.slug];
       feedKnopf(p);
     }).catch(function () {
@@ -1568,13 +1590,13 @@
     var lauf = warte._archivlauf = {};
     archivSpielHolen(kennung).then(function (gefunden) {
       if (warte._archivlauf !== lauf) return;
-      if (!gefunden) { toast("Dieses Spiel steht nicht im Archiv.", "warn"); return ausHash(location.hash = ""); }
+      if (!gefunden) { toast("Dieses Spiel steht nicht im Archiv.", "warn"); location.hash = ""; return ausHash(); }
       // Treffpunkt steht nur im Datenfenster; im Archiv gilt dieselbe
       // Regel wie ueberall sonst - eine Stunde vorher.
       if (!gefunden.treffpunkt) gefunden.treffpunkt = new Date(new Date(gefunden.beginn).getTime() - 60 * 60000).toISOString();
       gefunden.vergangen = new Date(gefunden.beginn) < new Date();
       spielRendern(gefunden, kennung);
-    }, function () { toast("Das Archiv liess sich nicht laden.", "warn"); ausHash(location.hash = ""); });
+    }, function () { toast("Das Archiv liess sich nicht laden.", "warn"); location.hash = ""; ausHash(); });
   }
 
   function spielRendern(s0, kennung) {
@@ -6608,8 +6630,8 @@
     box.appendChild(reihe);
 
     var fuss = document.createElement("p"); fuss.className = "meta"; fuss.style.margin = "10px 0 0";
-    fuss.textContent = "Die Kalenderdatei baut der Server. Deine Änderung steht spätestens in einer Stunde drin, "
-      + "wenn dein Kalender das nächste Mal nachsieht.";
+    fuss.textContent = "Die Kalenderdatei baut der Server, deine Änderung steht spätestens in einer "
+      + "Stunde darin. Wann dein Kalender sie abholt, entscheidet er selbst. " + aboTaktText();
     box.appendChild(fuss);
   }
 
