@@ -14,11 +14,11 @@ DTSTAMP:20261031T230046Z
 LAST-MODIFIED:20261031T230046Z
 DTSTART:20261108T160000Z
 DTEND:20261108T193000Z
-SUMMARY:⚠ SR · U11 LL Grau: Aachener EC
-DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
- elbeginn: 18:00 Uhr\nTreffpunkt: 17:00 Uhr (60 Min vor Spielbeginn)\nLiga:
-  U11 LL Grau\nHalle: 100'5 Arena Aachen\nAdresse: Hubert-Wienen-Straße 8\
- , 52070 Aachen\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U11 LL Grau: Aachener EC
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
+  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Grau\nHalle: 100'5 Arena
+  Aachen\nAdresse: Hubert-Wienen-Straße 8\, 52070 Aachen\n\nQuelle: https:
+ //www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -30,8 +30,7 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="100'5 Arena Aachen, Hubert
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · U11 LL Grau: Aachener 
- EC
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Grau: Aachener EC
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
