@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:88a8f9b036f74d65f0508cb9b5493c221bab4c07@esrw.de
-SEQUENCE:0
-DTSTAMP:20261023T143044Z
-LAST-MODIFIED:20261023T143044Z
-DTSTART:20261101T161500Z
-DTEND:20261101T194500Z
-SUMMARY:SR · U15 RLA: Kölner Junghaie – Krefelder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:15 Uhr\nTreffpunkt:
-  17:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLA\nHalle: Kölnarena 2\nA
- dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Schöche\, Gian-Ca
- rlo\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
-GEO:50.937979;6.98935
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
- r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
- .937979,6.98935
-END:VEVENT
-BEGIN:VEVENT
 UID:22afb711b0f6a7f39936515046cf553f3679d6f8@esrw.de
 SEQUENCE:0
 DTSTAMP:20261023T143044Z
@@ -1310,12 +1289,6 @@ GEO:51.43973;6.6198
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
  rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
  ":geo:51.43973,6.6198
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: GSC Moers 
- – Neusser EV
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:786ad580bea5db60b37d17db20b57b5ca9fc7873@esrw.de
