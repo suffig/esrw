@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:b56a9299109b5809758a47178c9197d937327f9c@esrw.de
-SEQUENCE:0
-DTSTAMP:20261023T143044Z
-LAST-MODIFIED:20261023T143044Z
-DTSTART:20261101T180000Z
-DTEND:20261101T213000Z
-SUMMARY:SR · Frauen BZL: TSVE Bielefeld – ESV Grizzlys Bergkamen
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
-  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Oetker Eisba
- hn Bielefeld\nAdresse: Duisburger Str. 14\, 33647 Bielefeld\nGespann: Thie
- l\, Mark\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/ei
- nteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Oetker Eisbahn Bielefeld\, Duisburger Str. 14\, 33647 Bielefeld
-GEO:51.979731;8.496038
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
- Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
- sbahn Bielefeld":geo:51.979731,8.496038
-END:VEVENT
-BEGIN:VEVENT
 UID:7a8c3b68b9ed5f50ee48bf51699d5e5a4249d267@esrw.de
 SEQUENCE:0
 DTSTAMP:20261023T143044Z
@@ -1290,12 +1268,6 @@ GEO:51.295808;6.834624
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
   Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
  tingen":geo:51.295808,6.834624
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Ratinger Ice Alien
- s – SpG Neusser EV / GSC Moers
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:f6ce51316d971ec4c40cd517bb977a8f0f13591d@esrw.de
@@ -1318,12 +1290,6 @@ GEO:51.175806;6.680258
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
  -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
  uss":geo:51.175806,6.680258
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: Neusser EV 1
- b – EHC Gelsenkirchen
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:11958162b280d9e5deddf25714b474d6f4161d7a@esrw.de
@@ -1346,12 +1312,6 @@ GEO:51.979731;8.496038
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
  Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
  sbahn Bielefeld":geo:51.979731,8.496038
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: TSVE Bielefel
- d – ESC Rheine
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:e0be6fdac3fe91b7da74299b8bd6576c207af74b@esrw.de
