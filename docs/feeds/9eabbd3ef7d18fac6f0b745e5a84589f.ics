@@ -8,29 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:0ddb968eb3124e00773dce2ab78e0a2555e182e6@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T160048Z
-LAST-MODIFIED:20261031T160048Z
-DTSTART:20261101T144500Z
-DTEND:20261101T181500Z
-SUMMARY:SR · U15 LL: SpG EHC Gelsenkirchen / Herner EV 1b – Lippe Hockey
-  Hamm
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:45 Uhr\nTreffpunkt:
-  15:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Emscher-Lippe-Ha
- lle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\nGespa
- nn: Malik\, Orlando\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Emscher-Lippe-Halle Gelsenkirchen\, Adenauerallee 118\, 45891 Gels
- enkirchen
-GEO:51.553483;7.073102
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Emscher-Lippe-Halle Gelsen
- kirchen, Adenauerallee 118, 45891 Gelsenkirchen";X-APPLE-RADIUS=100;X-TITL
- E="Emscher-Lippe-Halle Gelsenkirchen":geo:51.553483,7.073102
-END:VEVENT
-BEGIN:VEVENT
 UID:7dfc3efafc8f64f3a5b2de1193d5e4e4484a7ce4@esrw.de
 SEQUENCE:0
 DTSTAMP:20261031T224530Z
