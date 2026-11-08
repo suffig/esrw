@@ -1290,12 +1290,6 @@ GEO:50.967548;7.135355
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
  dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
  TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL: ESV Bergisch G
- ladbach 1b – KEC "Die Haie" 1c
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:77c78584de13dc1d888479b422d1f5a8dcd19f40@esrw.de
