@@ -86,16 +86,16 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:e2f01b3546bd0330c6f12066db044f1137986477@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
+SEQUENCE:1
+DTSTAMP:20261110T110051Z
+LAST-MODIFIED:20261110T110051Z
 DTSTART:20261115T070000Z
 DTEND:20261115T103000Z
 SUMMARY:SR · U13 LL: ESV Grizzlys Bergkamen – Lippe Hockey Hamm
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
   08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Be
- rgkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Kalischke\, Ch
- ristian (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+ rgkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Heu\, Alexande
+ r\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

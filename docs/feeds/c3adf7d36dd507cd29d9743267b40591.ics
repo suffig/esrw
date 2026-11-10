@@ -2616,8 +2616,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:7d8fe9a487bf29a8c7f5a3756cb299fd40aa8c93@esrw.de
 SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
+DTSTAMP:20261110T110051Z
+LAST-MODIFIED:20261110T110051Z
 DTSTART:20261115T070000Z
 DTEND:20261115T103000Z
 SUMMARY:SR · U13 LL: ESV Grizzlys Bergkamen – Lippe Hockey Hamm
@@ -2643,18 +2643,16 @@ END:VEVENT
 BEGIN:VEVENT
 UID:f36feec0bb8da3040f7446c6393f82e5fdae1faf@esrw.de
 SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
+DTSTAMP:20261110T110051Z
+LAST-MODIFIED:20261110T110051Z
 DTSTART:20261115T081500Z
 DTEND:20261115T114500Z
 SUMMARY:SR · U15 LL: EHC Essen Ruhr – SpG EHC Gelsenkirchen / Herner EV 
  1b
-DESCRIPTION:!! Danach Eisadler Dortmund – EJ Kassel Huskies Ladies in Eis
- sportzentrum Westfalen – nur 195 Min bis zum nächsten Anstoß !!\n\nRol
- le: Schiedsrichter (SR)\nSpielbeginn: 10:15 Uhr\nTreffpunkt: 09:15 Uhr (60
-  Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Essen-West\nAdre
- sse: Curtiusstr. 2\, 45144 Essen\nGespann: Schmidt\, Waldemar\n\nQuelle: h
- ttps://www.esrw.de/einteilungen.html
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:15 Uhr\nTreffpunkt:
+  09:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Es
+ sen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Schmidt\, Waldema
+ r\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2759,13 +2757,11 @@ LAST-MODIFIED:20261107T130048Z
 DTSTART:20261115T113000Z
 DTEND:20261115T150000Z
 SUMMARY:SR · Frauen LL: Eisadler Dortmund – EJ Kassel Huskies Ladies
-DESCRIPTION:!! Davor EHC Essen Ruhr – SpG EHC Gelsenkirchen / Herner EV 1
- b in Eissporthalle Essen-West – nur 195 Min nach dem vorigen Anstoß !!\
- n\nRolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt: 12:30 U
- hr (60 Min vor Spielbeginn)\nLiga: Frauen LL\nHalle: Eissportzentrum Westf
- alen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Leibfried\, Raph
- ael\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/einteil
- ungen.html
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
+  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen LL\nHalle: Eissportzentr
+ um Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Leibfrie
+ d\, Raphael\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de
+ /einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

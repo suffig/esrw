@@ -77,30 +77,31 @@ DESCRIPTION:In einer Stunde an der Halle - SR · DFEL2 Nord: EC Bergisch La
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:bc15a252a040c82d393471d8d30c2d806b31cdb5@esrw.de
+UID:712dadf79bfb952e87191c12de76925ec045d355@esrw.de
 SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
-DTSTART:20261115T070000Z
-DTEND:20261115T103000Z
-SUMMARY:SR · U13 LL: ESV Grizzlys Bergkamen – Lippe Hockey Hamm
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
-  08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Be
- rgkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Steeg\, Cedric
- \n\nQuelle: https://www.esrw.de/einteilungen.html
+DTSTAMP:20261110T110051Z
+LAST-MODIFIED:20261110T110051Z
+DTSTART:20261115T081500Z
+DTEND:20261115T114500Z
+SUMMARY:SR · U15 LL: EHC Essen Ruhr – SpG EHC Gelsenkirchen / Herner EV 
+ 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:15 Uhr\nTreffpunkt:
+  09:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Es
+ sen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Schmidt\, Waldema
+ r\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
-GEO:51.602578;7.626858
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
- äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
- ergkamen":geo:51.602578,7.626858
+LOCATION:Eissporthalle Essen-West\, Curtiusstr. 2\, 45144 Essen
+GEO:51.454179;6.976731
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
+ Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
+ n-West":geo:51.454179,6.976731
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: ESV Grizzlys Bergk
- amen – Lippe Hockey Hamm
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: EHC Essen Ruhr –
+  SpG EHC Gelsenkirchen / Herner EV 1b
 END:VALARM
 END:VEVENT
 END:VCALENDAR

@@ -102,17 +102,17 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:523838bc045231686c899a550a8d22795412ea8a@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
+SEQUENCE:1
+DTSTAMP:20261110T110051Z
+LAST-MODIFIED:20261110T110051Z
 DTSTART:20261115T081500Z
 DTEND:20261115T114500Z
 SUMMARY:SR · U15 LL: EHC Essen Ruhr – SpG EHC Gelsenkirchen / Herner EV 
  1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:15 Uhr\nTreffpunkt:
   09:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Es
- sen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Heu\, Alexander\n
- \nQuelle: https://www.esrw.de/einteilungen.html
+ sen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Kalischke\, Chris
+ tian (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
