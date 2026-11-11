@@ -1393,13 +1393,13 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: EC Bergisch Land
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:5568f2246406b675abfa1917f9c7a74279fdad4f@esrw.de
+UID:8e74432340821d9db73e5c630df7adc95e0afedd@esrw.de
 SEQUENCE:0
-DTSTAMP:20261111T100054Z
-LAST-MODIFIED:20261111T100054Z
+DTSTAMP:20261111T101537Z
+LAST-MODIFIED:20261111T101537Z
 DTSTART:20261113T173000Z
 DTEND:20261113T210000Z
-SUMMARY:SR · U15 ODM: Iserlohner EC – Kölner Junghaie
+SUMMARY:SR · U15 ODM: Iserlohner EC – Krefelder EV
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
   18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 ODM\nHalle: Eissporthalle a
  m Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Scholz\
@@ -1416,7 +1416,7 @@ BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · U15 ODM: Iserlohner EC –
-  Kölner Junghaie
+  Krefelder EV
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2352,18 +2352,17 @@ DESCRIPTION:In einer Stunde an der Halle - HSR · U20 RL: TuS Wiehl – Neu
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:63d1396bfc166274337b92ecd86358ae56f0c7c4@esrw.de
+UID:68b83459eddd0ba4ae49eb5059f684355eb6ebbf@esrw.de
 SEQUENCE:0
-DTSTAMP:20261111T100054Z
-LAST-MODIFIED:20261111T100054Z
+DTSTAMP:20261111T101537Z
+LAST-MODIFIED:20261111T101537Z
 DTSTART:20261114T153000Z
 DTEND:20261114T190000Z
-SUMMARY:⚠ SR · U20 LL: ESV Grizzlys Bergkamen – GSC Moers
-DESCRIPTION:Geändert: Zeit (vorher 19:30 Uhr)\n\nRolle: Schiedsrichter (SR
- )\nSpielbeginn: 17:30 Uhr\nTreffpunkt: 16:30 Uhr (60 Min vor Spielbeginn)\
- nLiga: U20 LL\nHalle: Eissporthalle Bergkamen\nAdresse: Häupenweg 29\, 59
- 192 Bergkamen\nGespann: Honselmann\, Tom (N)\n\nQuelle: https://www.esrw.d
- e/einteilungen.html
+SUMMARY:SR · U20 LL: ESV Grizzlys Bergkamen – GSC Moers
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
+  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 LL\nHalle: Eissporthalle Be
+ rgkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Honselmann\, T
+ om (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2375,8 +2374,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · U20 LL: ESV Grizzlys B
- ergkamen – GSC Moers
+DESCRIPTION:In einer Stunde an der Halle - SR · U20 LL: ESV Grizzlys Bergk
+ amen – GSC Moers
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2590,61 +2589,6 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: ESV Bergisch Gladb
  ach – ESC Darmstadt
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
-UID:bc78da41751a8c704b8643dc6c90014959b3e77a@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
-DTSTART:20261115T060000Z
-DTEND:20261115T093000Z
-SUMMARY:SR · U15 RLB: Düsseldorfer EG 1b – Herner EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
-  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Eishalle Brehms
- traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Rieneck\, 
- Maximilian\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
-GEO:51.242557;6.802144
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
- hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
- hmstraße":geo:51.242557,6.802144
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB: Düsseldorfer EG 
- 1b – Herner EV
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
-UID:aebe43c6fc1ea442cb46fd5a5b21bd0dca64316a@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
-DTSTART:20261115T061500Z
-DTEND:20261115T094500Z
-SUMMARY:SR · U15 LL: TuS Wiehl – SpG ESV Grizzlys Bergkamen / ESC Rheine
-  Young Cats
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:15 Uhr\nTreffpunkt:
-  07:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Wi
- ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Starke\, Matthias\
- n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
-GEO:50.947034;7.5553
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
- enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
- ":geo:50.947034,7.5553
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: TuS Wiehl – SpG 
- ESV Grizzlys Bergkamen / ESC Rheine Young Cats
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

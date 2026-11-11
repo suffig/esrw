@@ -58,32 +58,4 @@ DESCRIPTION:In einer Stunde an der Halle - HSR · U20 RL: TuS Wiehl – Neu
  sser EV
 END:VALARM
 END:VEVENT
-BEGIN:VEVENT
-UID:01f422ad144caad313f13fc34fd81d1aaa052d1c@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
-DTSTART:20261115T061500Z
-DTEND:20261115T094500Z
-SUMMARY:SR · U15 LL: TuS Wiehl – SpG ESV Grizzlys Bergkamen / ESC Rheine
-  Young Cats
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:15 Uhr\nTreffpunkt:
-  07:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Wi
- ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Starke\, Matthias\
- n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
-GEO:50.947034;7.5553
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
- enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
- ":geo:50.947034,7.5553
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: TuS Wiehl – SpG 
- ESV Grizzlys Bergkamen / ESC Rheine Young Cats
-END:VALARM
-END:VEVENT
 END:VCALENDAR
