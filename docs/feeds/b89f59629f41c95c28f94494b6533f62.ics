@@ -103,4 +103,31 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Krefelder EV – St
  arbulls Rosenheim
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:a66550cc8280184b88a5ee43bfc5c2c6b8a3576b@esrw.de
+SEQUENCE:0
+DTSTAMP:20261111T100054Z
+LAST-MODIFIED:20261111T100054Z
+DTSTART:20261114T173000Z
+DTEND:20261114T210000Z
+SUMMARY:SR · U15 ODM: Krefelder EV – Kölner Junghaie
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 ODM\nHalle: Rheinlandhalle 
+ Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Reuter\, F
+ ynn\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
+GEO:51.339877;6.540168
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
+ stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
+ le Krefeld":geo:51.339877,6.540168
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 ODM: Krefelder EV – 
+ Kölner Junghaie
+END:VALARM
+END:VEVENT
 END:VCALENDAR
