@@ -138,4 +138,58 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 ODM: Iserlohner EC –
   Düsseldorfer EG
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:eff227ba60915c4560577e6de257c0201b255018@esrw.de
+SEQUENCE:0
+DTSTAMP:20261111T143043Z
+LAST-MODIFIED:20261111T143043Z
+DTSTART:20261121T173000Z
+DTEND:20261121T210000Z
+SUMMARY:SR · U17 I: Iserlohner EC – Starbulls Rosenheim
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eissporthalle am 
+ Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Naust\, M
+ arc André\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
+GEO:51.384598;7.713829
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
+ , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
+ alle am Seilersee":geo:51.384598,7.713829
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Iserlohner EC – S
+ tarbulls Rosenheim
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:a0957ef6cc3a998d0a08784e51757f33088c6582@esrw.de
+SEQUENCE:0
+DTSTAMP:20261111T143043Z
+LAST-MODIFIED:20261111T143043Z
+DTSTART:20261122T093000Z
+DTEND:20261122T130000Z
+SUMMARY:SR · U17 I: Iserlohner EC – Starbulls Rosenheim
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:30 Uhr\nTreffpunkt:
+  10:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eissporthalle am 
+ Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Garbsch\,
+  René\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
+GEO:51.384598;7.713829
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
+ , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
+ alle am Seilersee":geo:51.384598,7.713829
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Iserlohner EC – S
+ tarbulls Rosenheim
+END:VALARM
+END:VEVENT
 END:VCALENDAR

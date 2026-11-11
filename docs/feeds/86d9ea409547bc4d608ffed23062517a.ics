@@ -114,4 +114,59 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: Soester EG
  – EHC Troisdorf
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:e499ba6fababff1c9abd64f43c2145c58cd0edd3@esrw.de
+SEQUENCE:0
+DTSTAMP:20261111T143043Z
+LAST-MODIFIED:20261111T143043Z
+DTSTART:20261120T170000Z
+DTEND:20261120T203000Z
+SUMMARY:SR · U20 LL: Lippe Hockey Hamm – EC Bergisch Land
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
+  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 LL\nHalle: beta FINANZ Eiss
+ portarena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Zy
+ nda\, Nick\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:beta FINANZ Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 H
+ amm
+GEO:51.686934;7.886138
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena 
+ Hamm, Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="bet
+ a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U20 LL: Lippe Hockey Hamm 
+ – EC Bergisch Land
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:b895c9647af05bc9f2a473ae80f1535fc06b0f08@esrw.de
+SEQUENCE:0
+DTSTAMP:20261111T143043Z
+LAST-MODIFIED:20261111T143043Z
+DTSTART:20261122T113000Z
+DTEND:20261122T150000Z
+SUMMARY:SR · U13 BZL Gr.A: Eisadler Dortmund 1b – GSC Moers
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
+  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\nHalle: Eissportze
+ ntrum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Schmi
+ dt\, Waldemar\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: Eisadler Dor
+ tmund 1b – GSC Moers
+END:VALARM
+END:VEVENT
 END:VCALENDAR

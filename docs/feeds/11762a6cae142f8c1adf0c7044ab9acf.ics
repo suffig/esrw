@@ -104,4 +104,31 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Düsseldorfer EG
  – ESV Kaufbeuren
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:ad25e70c6ef71572b9247a91e9e7fbe3c5773059@esrw.de
+SEQUENCE:0
+DTSTAMP:20261111T143043Z
+LAST-MODIFIED:20261111T143043Z
+DTSTART:20261121T143000Z
+DTEND:20261121T180000Z
+SUMMARY:SR · U17 I: Düsseldorfer EG – Kölner Junghaie
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
+  15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eishalle Brehmstr
+ aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Kudal\, Lars
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Düsseldorfer EG 
+ – Kölner Junghaie
+END:VALARM
+END:VEVENT
 END:VCALENDAR

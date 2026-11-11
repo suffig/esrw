@@ -105,4 +105,87 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 ODM: Iserlohner EC –
   Düsseldorfer EG
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:0470466e75736ff89e26ecadafe404c358ceaff4@esrw.de
+SEQUENCE:0
+DTSTAMP:20261111T143043Z
+LAST-MODIFIED:20261111T143043Z
+DTSTART:20261120T180000Z
+DTEND:20261120T213000Z
+SUMMARY:LSR · OsWeNo Pokal: Eisadler Dortmund – Adendorfer EC
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: OsWeNo Pokal\nHalle: Eissportze
+ ntrum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Naust
+ \, Marc André (HSR) / Galeske\, Jonas (LSR)\n\nQuelle: https://www.esrw.d
+ e/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · OsWeNo Pokal: Eisadler Do
+ rtmund – Adendorfer EC
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:a63227ea2bc1230d46acddedceb1fe530cdf71c4@esrw.de
+SEQUENCE:0
+DTSTAMP:20261111T143043Z
+LAST-MODIFIED:20261111T143043Z
+DTSTART:20261121T090000Z
+DTEND:20261121T123000Z
+SUMMARY:LSR · U20 RL: EHC Troisdorf – Ratinger Ice Aliens
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 11:00 Uhr\nTreffpunkt:
+  10:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissporthalle Ra
+ tingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Schlüter\, Tho
+ mas (HSR) / Pluschkell\, Julian (LSR)\n\nQuelle: https://www.esrw.de/einte
+ ilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
+GEO:51.295808;6.834624
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
+  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
+ tingen":geo:51.295808,6.834624
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: EHC Troisdorf –
+  Ratinger Ice Aliens
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:3438f21d0d598a40c09d157311641c0918b10667@esrw.de
+SEQUENCE:0
+DTSTAMP:20261111T143043Z
+LAST-MODIFIED:20261111T143043Z
+DTSTART:20261122T093000Z
+DTEND:20261122T130000Z
+SUMMARY:SR · U17 I: Iserlohner EC – Starbulls Rosenheim
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:30 Uhr\nTreffpunkt:
+  10:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eissporthalle am 
+ Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Steeg\, C
+ edric\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
+GEO:51.384598;7.713829
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
+ , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
+ alle am Seilersee":geo:51.384598,7.713829
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Iserlohner EC – S
+ tarbulls Rosenheim
+END:VALARM
+END:VEVENT
 END:VCALENDAR

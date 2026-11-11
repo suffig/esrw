@@ -58,4 +58,32 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Blau: SpG Gelsenkir
  chen-Herne 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:3982a30300079974dfac9aa09a39e116f7bce2d6@esrw.de
+SEQUENCE:0
+DTSTAMP:20261111T143043Z
+LAST-MODIFIED:20261111T143043Z
+DTSTART:20261121T171500Z
+DTEND:20261121T204500Z
+SUMMARY:SR · Frauen LL: KEC "Die Haie" 1b – Tornado Women Luxembourg
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:15 Uhr\nTreffpunkt:
+  18:15 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen LL\nHalle: Kölnarena 2\
+ nAdresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Hartmann\, Mariu
+ s\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/einteilun
+ gen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: KEC "Die Haie" 
+ 1b – Tornado Women Luxembourg
+END:VALARM
+END:VEVENT
 END:VCALENDAR

@@ -55,4 +55,34 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: ESV Grizzlys Berg
  kamen 1b – Eisadler Dortmund 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:146a2a26e1c729bfbe93ff7f78effe402d1ed489@esrw.de
+SEQUENCE:0
+DTSTAMP:20261111T143043Z
+LAST-MODIFIED:20261111T143043Z
+DTSTART:20261121T073000Z
+DTEND:20261121T110000Z
+SUMMARY:SR · U13 BZL Gr.A: SpG EHC Gelsenkirchen / Herner EV 1b – SpG Kr
+ istall Lippstadt / Soester EG
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
+  08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\nHalle: Emscher-Li
+ ppe-Halle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\
+ nGespann: Fenke\, Matthias\n\nQuelle: https://www.esrw.de/einteilungen.htm
+ l
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Emscher-Lippe-Halle Gelsenkirchen\, Adenauerallee 118\, 45891 Gels
+ enkirchen
+GEO:51.553483;7.073102
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Emscher-Lippe-Halle Gelsen
+ kirchen, Adenauerallee 118, 45891 Gelsenkirchen";X-APPLE-RADIUS=100;X-TITL
+ E="Emscher-Lippe-Halle Gelsenkirchen":geo:51.553483,7.073102
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: SpG EHC Gels
+ enkirchen / Herner EV 1b – SpG Kristall Lippstadt / Soester EG
+END:VALARM
+END:VEVENT
 END:VCALENDAR

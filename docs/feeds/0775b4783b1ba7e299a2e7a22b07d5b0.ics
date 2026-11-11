@@ -89,4 +89,54 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: ESC Rheine
  – Dinslakener Kobras 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:656831e187a5cc7b198c45160e49f0bee862be98@esrw.de
+SEQUENCE:0
+DTSTAMP:20261111T143043Z
+LAST-MODIFIED:20261111T143043Z
+DTSTART:20261121T091500Z
+DTEND:20261121T124500Z
+SUMMARY:SR · U17 LL: SpG Soester EG / TSVE Bielefeld – Grefrather EG
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:15 Uhr\nTreffpunkt:
+  10:15 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\n!! Halle nicht automati
+ sch erkannt - bitte selbst pruefen !!\nGespann: Zynda\, Jayden\n\nQuelle: 
+ https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: SpG Soester EG / T
+ SVE Bielefeld – Grefrather EG
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:52cbca87abd030d216c67631277c280cf867b30a@esrw.de
+SEQUENCE:0
+DTSTAMP:20261111T143043Z
+LAST-MODIFIED:20261111T143043Z
+DTSTART:20261122T170000Z
+DTEND:20261122T203000Z
+SUMMARY:SR · Senioren LL: ESC Rheine – EC Bergisch Land
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
+  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Rheiner Eis
+ sporthalle\nAdresse: Kopernikusstraße 34\, 48429 Rheine\nGespann: Zynda\,
+  Nick\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/eint
+ eilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Rheiner Eissporthalle\, Kopernikusstraße 34\, 48429 Rheine
+GEO:52.281013;7.455599
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheiner Eissporthalle, Kop
+ ernikusstraße 34, 48429 Rheine";X-APPLE-RADIUS=100;X-TITLE="Rheiner Eissp
+ orthalle":geo:52.281013,7.455599
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: ESC Rheine 
+ – EC Bergisch Land
+END:VALARM
+END:VEVENT
 END:VCALENDAR

@@ -28,4 +28,87 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
  , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
  alle am Seilersee":geo:51.384598,7.713829
 END:VEVENT
+BEGIN:VEVENT
+UID:86f1e74477e346eb59a6dcaee67e12a72cbba1d8@esrw.de
+SEQUENCE:0
+DTSTAMP:20261111T143043Z
+LAST-MODIFIED:20261111T143043Z
+DTSTART:20261120T180000Z
+DTEND:20261120T213000Z
+SUMMARY:HSR · OsWeNo Pokal: Eisadler Dortmund – Adendorfer EC
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:00 Uhr\nTreff
+ punkt: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: OsWeNo Pokal\nHalle: Eiss
+ portzentrum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann:
+  Garbsch\, René (LSR) / Galeske\, Jonas (LSR)\n\nQuelle: https://www.esrw
+ .de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · OsWeNo Pokal: Eisadler Do
+ rtmund – Adendorfer EC
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:080d1f418bc7da9c0bcbbe4e2d29a1ff9ab0bca0@esrw.de
+SEQUENCE:0
+DTSTAMP:20261111T143043Z
+LAST-MODIFIED:20261111T143043Z
+DTSTART:20261121T173000Z
+DTEND:20261121T210000Z
+SUMMARY:SR · U17 I: Iserlohner EC – Starbulls Rosenheim
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eissporthalle am 
+ Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Steeg\, C
+ edric\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
+GEO:51.384598;7.713829
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
+ , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
+ alle am Seilersee":geo:51.384598,7.713829
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Iserlohner EC – S
+ tarbulls Rosenheim
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:9f26b9a02e5d3971fa3e4a998d93e571d0d2871b@esrw.de
+SEQUENCE:0
+DTSTAMP:20261111T143043Z
+LAST-MODIFIED:20261111T143043Z
+DTSTART:20261122T160000Z
+DTEND:20261122T193000Z
+SUMMARY:HSR · Senioren RLW: Ratinger Ice Aliens – Eisadler Dortmund
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 18:00 Uhr\nTreff
+ punkt: 17:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ porthalle Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Qui
+ nt\, Sascha (LSR) / Pluschkell\, Julian (LSR)\nVergütung lt. Ordnung: 100
+  €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
+GEO:51.295808;6.834624
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
+  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
+ tingen":geo:51.295808,6.834624
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: Ratinger Ic
+ e Aliens – Eisadler Dortmund
+END:VALARM
+END:VEVENT
 END:VCALENDAR

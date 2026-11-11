@@ -34,4 +34,87 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: TuS Wiehl – SpG
  EHC Gelsenkirchen / Herner EV 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:672d0d84ada62bbdc956e4f4c5d2987b64c3a5cd@esrw.de
+SEQUENCE:0
+DTSTAMP:20261111T143043Z
+LAST-MODIFIED:20261111T143043Z
+DTSTART:20261121T084500Z
+DTEND:20261121T121500Z
+SUMMARY:SR · U15 LL: TuS Wiehl – Dinslakener Kobras
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:45 Uhr\nTreffpunkt:
+  09:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Wi
+ ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Moritz\, Alexander
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
+GEO:50.947034;7.5553
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
+ enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
+ ":geo:50.947034,7.5553
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: TuS Wiehl – Dins
+ lakener Kobras
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:54e0653c692329440b18d310a0009381caa264a3@esrw.de
+SEQUENCE:0
+DTSTAMP:20261111T143043Z
+LAST-MODIFIED:20261111T143043Z
+DTSTART:20261121T151500Z
+DTEND:20261121T184500Z
+SUMMARY:SR · Senioren BZL: TuS Wiehl 1b – Grefrather EG 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
+  16:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eissportha
+ lle Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Hauerwaas\, 
+ Gabriel\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/ei
+ nteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
+GEO:50.947034;7.5553
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
+ enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
+ ":geo:50.947034,7.5553
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: TuS Wiehl 1b
+  – Grefrather EG 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:b47f8c085dab0c6b41f4487bd0738201dce45b31@esrw.de
+SEQUENCE:0
+DTSTAMP:20261111T143043Z
+LAST-MODIFIED:20261111T143043Z
+DTSTART:20261122T160000Z
+DTEND:20261122T193000Z
+SUMMARY:HSR · U20 RL: TuS Wiehl – Dinslakener Kobras
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 18:00 Uhr\nTreff
+ punkt: 17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissportha
+ lle Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Hauerwaas\, 
+ Gabriel (LSR) / Hoffmann\, Jan (LSR)\n\nQuelle: https://www.esrw.de/eintei
+ lungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
+GEO:50.947034;7.5553
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
+ enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
+ ":geo:50.947034,7.5553
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · U20 RL: TuS Wiehl – Din
+ slakener Kobras
+END:VALARM
+END:VEVENT
 END:VCALENDAR

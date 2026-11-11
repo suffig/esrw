@@ -130,4 +130,59 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 ODM: Krefelder EV –
  Kölner Junghaie
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:e6d3f963210f6f6dc86bceb9cff1677550e589b5@esrw.de
+SEQUENCE:0
+DTSTAMP:20261111T143043Z
+LAST-MODIFIED:20261111T143043Z
+DTSTART:20261121T101500Z
+DTEND:20261121T134500Z
+SUMMARY:SR · U9 LL Blau: Dinslakener Kobras
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:15 Uhr\nTreffpunkt:
+  11:15 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Blau\nHalle: Eissporthall
+ e Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\n\nQuelle: https://w
+ ww.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
+GEO:51.574578;6.735361
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
+ m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
+ inslaken":geo:51.574578,6.735361
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Blau: Dinslakener Ko
+ bras
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:f4630f38a059393627c44093c244bba3813c6ce1@esrw.de
+SEQUENCE:0
+DTSTAMP:20261111T143043Z
+LAST-MODIFIED:20261111T143043Z
+DTSTART:20261122T160000Z
+DTEND:20261122T193000Z
+SUMMARY:LSR · Senioren RLW: Ratinger Ice Aliens – Eisadler Dortmund
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
+  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
+ lle Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Naust\, M
+ arc André (HSR) / Pluschkell\, Julian (LSR)\nVergütung lt. Ordnung: 100 
+ €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
+GEO:51.295808;6.834624
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
+  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
+ tingen":geo:51.295808,6.834624
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Ratinger Ic
+ e Aliens – Eisadler Dortmund
+END:VALARM
+END:VEVENT
 END:VCALENDAR

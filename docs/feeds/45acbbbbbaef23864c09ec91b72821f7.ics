@@ -121,4 +121,60 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Dinslakener Kobras
   – Lippe Hockey Hamm
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:4f96c4d5acbb62fe59ec50c278b6389ae52bf77a@esrw.de
+SEQUENCE:0
+DTSTAMP:20261111T143043Z
+LAST-MODIFIED:20261111T143043Z
+DTSTART:20261120T173000Z
+DTEND:20261120T210000Z
+SUMMARY:SR · U15 LL: EV Duisburg 1b – Eisadler Dortmund
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: PreZero Rheinlan
+ dhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: 
+ Victor\, Tobias (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: EV Duisburg 1b –
+  Eisadler Dortmund
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:9f81254558e596df42e201738b0f911122091e88@esrw.de
+SEQUENCE:0
+DTSTAMP:20261111T143043Z
+LAST-MODIFIED:20261111T143043Z
+DTSTART:20261121T171500Z
+DTEND:20261121T204500Z
+SUMMARY:SR · Frauen LL: KEC "Die Haie" 1b – Tornado Women Luxembourg
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:15 Uhr\nTreffpunkt:
+  18:15 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen LL\nHalle: Kölnarena 2\
+ nAdresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Baron\, Benny\nV
+ ergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/einteilungen.
+ html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: KEC "Die Haie" 
+ 1b – Tornado Women Luxembourg
+END:VALARM
+END:VEVENT
 END:VCALENDAR
