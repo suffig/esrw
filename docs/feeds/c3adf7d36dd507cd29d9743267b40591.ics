@@ -1393,33 +1393,6 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: EC Bergisch Land
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:8e74432340821d9db73e5c630df7adc95e0afedd@esrw.de
-SEQUENCE:0
-DTSTAMP:20261111T101537Z
-LAST-MODIFIED:20261111T101537Z
-DTSTART:20261113T173000Z
-DTEND:20261113T210000Z
-SUMMARY:SR · U15 ODM: Iserlohner EC – Krefelder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
-  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 ODM\nHalle: Eissporthalle a
- m Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Scholz\
- , Arien\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
-GEO:51.384598;7.713829
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
- , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
- alle am Seilersee":geo:51.384598,7.713829
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 ODM: Iserlohner EC –
-  Krefelder EV
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:05f62f741fd0f116a1c8bc3be2e500f35159d23f@esrw.de
 SEQUENCE:0
 DTSTAMP:20261107T130048Z
