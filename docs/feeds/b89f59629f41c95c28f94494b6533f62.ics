@@ -131,6 +131,34 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 ODM: Krefelder EV –
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:63b585cadeda6736dd82c2465a08256eff2aaa3d@esrw.de
+SEQUENCE:0
+DTSTAMP:20261112T094510Z
+LAST-MODIFIED:20261112T094510Z
+DTSTART:20261115T164500Z
+DTEND:20261115T201500Z
+SUMMARY:SR · Senioren LL: Soester EG – EHC Troisdorf
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:45 Uhr\nTreffpunkt:
+  17:45 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissportzen
+ trum Möhnesee\nAdresse: Teigelhof 4\, 59519 Möhnesee\nGespann: Licau\, A
+ lexander\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/e
+ inteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Möhnesee\, Teigelhof 4\, 59519 Möhnesee
+GEO:51.515208;8.159069
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Möhnesee,
+  Teigelhof 4, 59519 Möhnesee";X-APPLE-RADIUS=100;X-TITLE="Eissportzentrum
+  Möhnesee":geo:51.515208,8.159069
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: Soester EG 
+ – EHC Troisdorf
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:e6d3f963210f6f6dc86bceb9cff1677550e589b5@esrw.de
 SEQUENCE:0
 DTSTAMP:20261111T143043Z
