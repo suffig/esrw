@@ -30,63 +30,6 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena
  a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
 END:VEVENT
 BEGIN:VEVENT
-UID:514724f4253442d2ce20eaecc7a88b53636a634b@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
-DTSTART:20261113T180000Z
-DTEND:20261113T213000Z
-SUMMARY:SR · Senioren BZL: Herner EV 1b – EHC Troisdorf 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
-  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Emscher-Li
- ppe-Halle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\
- nGespann: Scholz\, Udo\nVergütung lt. Ordnung: 100 €\n\nQuelle: https:/
- /www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Emscher-Lippe-Halle Gelsenkirchen\, Adenauerallee 118\, 45891 Gels
- enkirchen
-GEO:51.553483;7.073102
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Emscher-Lippe-Halle Gelsen
- kirchen, Adenauerallee 118, 45891 Gelsenkirchen";X-APPLE-RADIUS=100;X-TITL
- E="Emscher-Lippe-Halle Gelsenkirchen":geo:51.553483,7.073102
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: Herner EV 1b
-  – EHC Troisdorf 1b
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
-UID:8bd532b7461b5a5db8feaa550f014ec4ef34a31f@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
-DTSTART:20261114T091500Z
-DTEND:20261114T124500Z
-SUMMARY:SR · Frauen Pokal Gr.C: Soester EG – Düsseldorfer EG
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:15 Uhr\nTreffpunkt:
-  10:15 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen Pokal Gr.C\nHalle: Eissp
- ortzentrum Möhnesee\nAdresse: Teigelhof 4\, 59519 Möhnesee\nGespann: Ros
- ier\, Cedric (N)\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.es
- rw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Möhnesee\, Teigelhof 4\, 59519 Möhnesee
-GEO:51.515208;8.159069
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Möhnesee,
-  Teigelhof 4, 59519 Möhnesee";X-APPLE-RADIUS=100;X-TITLE="Eissportzentrum
-  Möhnesee":geo:51.515208,8.159069
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Frauen Pokal Gr.C: Soester
-  EG – Düsseldorfer EG
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:e499ba6fababff1c9abd64f43c2145c58cd0edd3@esrw.de
 SEQUENCE:0
 DTSTAMP:20261111T143043Z

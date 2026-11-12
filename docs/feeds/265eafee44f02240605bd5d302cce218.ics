@@ -62,6 +62,34 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Gelb: Kölner Jungha
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:ecc08fbecac2611bef348703093ebad15959088c@esrw.de
+SEQUENCE:0
+DTSTAMP:20261112T100048Z
+LAST-MODIFIED:20261112T100048Z
+DTSTART:20261121T140000Z
+DTEND:20261121T173000Z
+SUMMARY:SR · U17 II: EV Duisburg – ETC Crimmitschau
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:00 Uhr\nTreffpunkt:
+  15:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 II\nHalle: PreZero Rheinlan
+ dhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: 
+ Hornig\, Marius\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 II: EV Duisburg – ET
+ C Crimmitschau
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:e242975568d730ec898081bf4a002e445ba9acf3@esrw.de
 SEQUENCE:0
 DTSTAMP:20261111T143043Z

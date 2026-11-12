@@ -9,17 +9,17 @@ REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
 UID:762291221f4ba8699828ddf36fcc0fe11a3e92cc@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
+SEQUENCE:1
+DTSTAMP:20261112T100048Z
+LAST-MODIFIED:20261112T100048Z
 DTSTART:20261113T180000Z
 DTEND:20261113T213000Z
 SUMMARY:SR · Senioren BZL: Herner EV 1b – EHC Troisdorf 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
   19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Emscher-Li
  ppe-Halle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\
- nGespann: Warnke\, Christoph\nVergütung lt. Ordnung: 100 €\n\nQuelle: h
- ttps://www.esrw.de/einteilungen.html
+ nGespann: Hofer\, Carsten\nVergütung lt. Ordnung: 100 €\n\nQuelle: http
+ s://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

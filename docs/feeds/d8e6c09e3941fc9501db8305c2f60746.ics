@@ -57,6 +57,34 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: Eisadler Dort
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:3e8f7dd378dae48bb839aacd8c3143fb437dd535@esrw.de
+SEQUENCE:0
+DTSTAMP:20261112T100048Z
+LAST-MODIFIED:20261112T100048Z
+DTSTART:20261114T091500Z
+DTEND:20261114T124500Z
+SUMMARY:SR · Frauen Pokal Gr.C: Soester EG – Düsseldorfer EG
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:15 Uhr\nTreffpunkt:
+  10:15 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen Pokal Gr.C\nHalle: Eissp
+ ortzentrum Möhnesee\nAdresse: Teigelhof 4\, 59519 Möhnesee\nGespann: Ros
+ ier\, Cedric (N)\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.es
+ rw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Möhnesee\, Teigelhof 4\, 59519 Möhnesee
+GEO:51.515208;8.159069
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Möhnesee,
+  Teigelhof 4, 59519 Möhnesee";X-APPLE-RADIUS=100;X-TITLE="Eissportzentrum
+  Möhnesee":geo:51.515208,8.159069
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen Pokal Gr.C: Soester
+  EG – Düsseldorfer EG
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:34f10727ad02c0644bb08bbbb8e8a04c03e2791d@esrw.de
 SEQUENCE:0
 DTSTAMP:20261107T130048Z
