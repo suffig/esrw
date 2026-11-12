@@ -30,6 +30,34 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
  le Krefeld":geo:51.339877,6.540168
 END:VEVENT
 BEGIN:VEVENT
+UID:bdd10581cad32ad8709f47885f1c94c49f3e1398@esrw.de
+SEQUENCE:0
+DTSTAMP:20261112T093038Z
+LAST-MODIFIED:20261112T093038Z
+DTSTART:20261115T164500Z
+DTEND:20261115T201500Z
+SUMMARY:SR · Senioren LL: Soester EG – EHC Troisdorf
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:45 Uhr\nTreffpunkt:
+  17:45 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissportzen
+ trum Möhnesee\nAdresse: Teigelhof 4\, 59519 Möhnesee\nGespann: Warnke\, 
+ Christoph\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/
+ einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Möhnesee\, Teigelhof 4\, 59519 Möhnesee
+GEO:51.515208;8.159069
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Möhnesee,
+  Teigelhof 4, 59519 Möhnesee";X-APPLE-RADIUS=100;X-TITLE="Eissportzentrum
+  Möhnesee":geo:51.515208,8.159069
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: Soester EG 
+ – EHC Troisdorf
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:80e095e8509effec9a374e881bc319bbc58b9ada@esrw.de
 SEQUENCE:0
 DTSTAMP:20261107T130048Z

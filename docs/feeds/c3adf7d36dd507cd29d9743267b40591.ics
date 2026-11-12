@@ -1422,6 +1422,34 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: ESV Bergisch Gl
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:f4b968df01c925aca7507d9dbe62cba5e5b361dd@esrw.de
+SEQUENCE:0
+DTSTAMP:20261112T093038Z
+LAST-MODIFIED:20261112T093038Z
+DTSTART:20261113T180000Z
+DTEND:20261113T213000Z
+SUMMARY:SR · Senioren LL: Eisadler Dortmund 1b – EC Bergisch Land
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissportzen
+ trum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Steeg\
+ , Cedric\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/e
+ inteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: Eisadler Dort
+ mund 1b – EC Bergisch Land
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:e522813d23b56a4d12e6c4e27a912e6eabb107a1@esrw.de
 SEQUENCE:0
 DTSTAMP:20261107T130048Z
@@ -1504,34 +1532,6 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: Herner EV 1b
   – EHC Troisdorf 1b
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
-UID:f4b968df01c925aca7507d9dbe62cba5e5b361dd@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
-DTSTART:20261113T180000Z
-DTEND:20261113T213000Z
-SUMMARY:SR · Senioren LL: Eisadler Dortmund 1b – EC Bergisch Land
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
-  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissportzen
- trum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Steeg\
- , Cedric\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/e
- inteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
-GEO:51.49525;7.458288
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
-  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
- rum Westfalen":geo:51.49525,7.458288
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: Eisadler Dort
- mund 1b – EC Bergisch Land
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -3006,8 +3006,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:cd22254bf12bda88cc4bfc5afde40130c534407d@esrw.de
 SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
+DTSTAMP:20261112T093038Z
+LAST-MODIFIED:20261112T093038Z
 DTSTART:20261115T164500Z
 DTEND:20261115T201500Z
 SUMMARY:SR · Senioren LL: Soester EG – EHC Troisdorf

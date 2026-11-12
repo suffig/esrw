@@ -88,16 +88,16 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:79ffafcd9c4db43fd81d55674f92aff68e2897f6@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
+SEQUENCE:1
+DTSTAMP:20261112T093038Z
+LAST-MODIFIED:20261112T093038Z
 DTSTART:20261115T164500Z
 DTEND:20261115T201500Z
 SUMMARY:SR · Senioren LL: Soester EG – EHC Troisdorf
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:45 Uhr\nTreffpunkt:
   17:45 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissportzen
- trum Möhnesee\nAdresse: Teigelhof 4\, 59519 Möhnesee\nGespann: Skalecki\
- , Martin\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/e
+ trum Möhnesee\nAdresse: Teigelhof 4\, 59519 Möhnesee\nGespann: Licau\, A
+ lexander\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/e
  inteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter

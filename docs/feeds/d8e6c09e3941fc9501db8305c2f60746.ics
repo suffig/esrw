@@ -29,6 +29,34 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
  rum Westfalen":geo:51.49525,7.458288
 END:VEVENT
 BEGIN:VEVENT
+UID:70d3d710020b02d1861d70660622d8aec06aa53a@esrw.de
+SEQUENCE:0
+DTSTAMP:20261112T093038Z
+LAST-MODIFIED:20261112T093038Z
+DTSTART:20261113T180000Z
+DTEND:20261113T213000Z
+SUMMARY:SR · Senioren LL: Eisadler Dortmund 1b – EC Bergisch Land
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissportzen
+ trum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Steeg\
+ , Cedric\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/e
+ inteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: Eisadler Dort
+ mund 1b – EC Bergisch Land
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:34f10727ad02c0644bb08bbbb8e8a04c03e2791d@esrw.de
 SEQUENCE:0
 DTSTAMP:20261107T130048Z

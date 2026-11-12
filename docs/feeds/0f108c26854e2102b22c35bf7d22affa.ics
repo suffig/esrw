@@ -31,17 +31,17 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena
 END:VEVENT
 BEGIN:VEVENT
 UID:c4bccb89d2a21e7648544f4a68ee18d3911288b7@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
+SEQUENCE:1
+DTSTAMP:20261112T093038Z
+LAST-MODIFIED:20261112T093038Z
 DTSTART:20261113T180000Z
 DTEND:20261113T213000Z
 SUMMARY:SR · Senioren LL: Eisadler Dortmund 1b – EC Bergisch Land
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
   19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissportzen
- trum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Skalec
- ki\, Martin\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.d
- e/einteilungen.html
+ trum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Galesk
+ e\, Jonas\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/
+ einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
