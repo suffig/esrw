@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:6896de0fd1b4d776c7f7c0038beab8994ad541ba@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261106T174500Z
-DTEND:20261106T211500Z
-SUMMARY:SR · U13 RLB: Herner EV – Krefelder EV 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:45 Uhr\nTreffpunkt:
-  18:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Gysenberghalle 
- Herne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Rosier\, Cedric (
- N)\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Gysenberghalle Herne\, Am Revierpark 22\, 44627 Herne
-GEO:51.532602;7.254372
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
- evierpark 22, 44627 Herne";X-APPLE-RADIUS=100;X-TITLE="Gysenberghalle Hern
- e":geo:51.532602,7.254372
-END:VEVENT
-BEGIN:VEVENT
 UID:32a4901ab18376a2f17b9a2069ce121ebe156f11@esrw.de
 SEQUENCE:1
 DTSTAMP:20261031T230046Z
