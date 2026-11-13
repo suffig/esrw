@@ -3327,6 +3327,45 @@
   :root[data-design="neu"] .kontakt-wert > span:first-child { flex:1 1 auto; min-width:0; }
   :root[data-design="neu"] .kontakt-wert > .telefon-wege { flex:0 0 auto; display:flex;
     gap:var(--abstand-xs); align-items:flex-start; }
+
+  /* ===== Nachtrag: die letzten Tippflaechen unter 44 px =============
+     Gemessen auf #einstellungen mit elementFromPoint: 16 Knoepfe in
+     .stufen (38 px), 5 in .farben (34 px) und die beiden Links im
+     Fussbereich (36 px). Die Links sollten eine unsichtbare Flaeche
+     per ::after haben - die Regel greift aber nur fuer ".meta > a",
+     und dort steht das <a> in einem <p> ohne Klasse. */
+  :root[data-design="neu"] .stufen button { min-height:44px; }
+  :root[data-design="neu"] .farben button { width:44px; height:44px;
+    background-clip:content-box; padding:7px; }
+  /* Die beiden Fusslinks stehen in einem Fliesstext: ihre Zeilen
+     liegen 20 px auseinander, die Flaechen ueberlappen sich jetzt
+     schon um 16 px (seitlich versetzt, deshalb trifft man trotzdem
+     den richtigen). Von 24 auf 36 px ist der Gewinn - 44 ginge nur
+     auf Kosten der Nachbarzeile, dieselbe Grenze wie bei den
+     Kopfknoepfen. */
+  :root[data-design="neu"] footer p > a { position:relative; }
+  :root[data-design="neu"] footer p > a::after { content:""; position:absolute;
+    left:0; right:0; top:-6px; bottom:-6px; }
+  /* Das Auswahlfeld steht allein in seiner Zeile - hier geht es. */
+  :root[data-design="neu"] label > select { min-height:44px; }
+
+  /* Strafenmatrix: "5+SPD" braucht 37 px in einer 31-px-Spalte und
+     lief bei overflow:visible in die Nachbarspalte. Die Spalte ist
+     mit line-height 1.1 auf zwei Zeilen ausgelegt - nur bricht
+     "5+SPD" nirgends um, weil "+" kein Umbruchpunkt ist. Breitere
+     Spalten waeren der falsche Weg: ein Versuch damit nahm der
+     Namensspalte 48 px, und danach liefen elf Strafnamen ueber
+     statt einem Kuerzel. */
+  :root[data-design="neu"] .matrix-spalte { overflow-wrap:anywhere; }
+  :root[data-design="neu"] .matrix-zeile > *:first-child { overflow-wrap:anywhere; }
+
+  /* Vier Bedienelemente, die allein in ihrer Zeile stehen - dort
+     kostet die Hoehe keinen Nachbarn (gemessen 37 bis 41 px). */
+  :root[data-design="neu"] summary { min-height:44px; display:flex;
+    align-items:center; gap:var(--abstand-s); }
+  :root[data-design="neu"] a.anfrage,
+  :root[data-design="neu"] button.knopf-zeichen { min-height:44px;
+    display:inline-flex; align-items:center; justify-content:center; }
 </style>
 </head>
 <body>
@@ -3790,6 +3829,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=269"></script>
+<script src="app.js?v=274"></script>
 </body>
 </html>
