@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:d6dc238fb0934a29d9a347c4cd0aaaa967f7f498@esrw.de
-SEQUENCE:1
-DTSTAMP:20261104T184531Z
-LAST-MODIFIED:20261104T184531Z
-DTSTART:20261106T180000Z
-DTEND:20261106T213000Z
-SUMMARY:LSR · Senioren RLW: Neusser EV – Lauterbach Luchse
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
-  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
- lle Neuss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Steven\, 
- Patrick (HSR) / Kudal\, Lars (LSR)\nVergütung lt. Ordnung: 100 €\n\nQue
- lle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
-GEO:51.175806;6.680258
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
- -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
- uss":geo:51.175806,6.680258
-END:VEVENT
-BEGIN:VEVENT
 UID:b852e8876f611d618bb746efbfcc04f58bc678d0@esrw.de
 SEQUENCE:0
 DTSTAMP:20261107T130048Z

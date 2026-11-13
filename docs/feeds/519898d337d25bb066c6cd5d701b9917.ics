@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:437a0808f77ea3fff3249ce6744760c97a4ce36a@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261106T180000Z
-DTEND:20261106T213000Z
-SUMMARY:HSR · Senioren RLW: Ratinger Ice Aliens – EG Diez-Limburg
-DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:00 Uhr\nTreff
- punkt: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
- porthalle Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Lin
- demans\, Pepe (LSR) / Musga\, Maurice (LSR)\nVergütung lt. Ordnung: 100 
- €\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
-GEO:51.295808;6.834624
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
-  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
- tingen":geo:51.295808,6.834624
-END:VEVENT
-BEGIN:VEVENT
 UID:6d25a8c149ebf21b0cf91b71b95908b5d181e7ac@esrw.de
 SEQUENCE:0
 DTSTAMP:20261111T143043Z
