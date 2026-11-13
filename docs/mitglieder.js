@@ -2280,6 +2280,12 @@ window.Mitglieder = (function () {
   // geschriebenen Rechnungen liegen in "rechnungen" - damit die Nummern
   // fortlaufen und man spaeter nachsehen kann.
   var rechnungGeladen = null, rechnungWahl = {}, vereinAdressen = null, rechnungListe = null, rechnungFertig = null, rechnungForm = null;
+  // Beides zusammen vergessen: rechnungListe ist die Liste selbst,
+  // aufRechnung die Karte "welches Spiel steht schon auf einer
+  // Rechnung". Wer nur die Liste leert, laesst die Leiste mit alten
+  // Zahlen stehen - rechnungsstandLaden() kehrt zurueck, solange
+  // aufRechnung gesetzt ist.
+  function rechnungenVergessen() { rechnungListe = null; aufRechnung = null; }
   function rechnungenLaden() {
     if (rechnungListe) return Promise.resolve(rechnungListe);
     // 500 statt 40: wer eine alte Rechnung noch einmal braucht, soll
@@ -3056,7 +3062,24 @@ window.Mitglieder = (function () {
           return false;
         }
         rg.gezahlt_am = datum;
-        rechnungListe = null;      // damit die Übersicht neu rechnet
+        rechnungenVergessen();     // damit Übersicht und Leiste neu rechnen
+        // Die Spiele dieser Rechnung gehen mit: eingegangenes Geld
+        // heisst, dass sie durch sind. Nimmt jemand den Eingang
+        // zurueck, stehen sie wieder auf "Unterwegs". Ohne das wuerde
+        // dasselbe Spiel in der Abrechnung anders dastehen als in der
+        // Rechnungsliste - genau das war der Fehler, als das Abhaken
+        // noch beim Schreiben der Rechnung passierte.
+        var wann = datum ? new Date(datum).toISOString() : null;
+        (rg.kennungen || []).forEach(function (k) {
+          var sp = alleSpiele().filter(function (x) { return x.kennung === k; })[0];
+          if (sp) speichereEinsatz(sp, { bezahlt: wann }, true);
+        });
+        // Steht die Abrechnung offen, zeigt ihre Leiste sonst bis zum
+        // naechsten Laden den alten Stand. Neu laden statt nur
+        // nachrechnen: rechnungenVergessen() hat aufRechnung geleert,
+        // und ohne die Karte kommen "Abrechnen" und "Unterwegs" beide
+        // auf null.
+        rechnungsstandLaden();
         return true;
       });
   }
@@ -3096,7 +3119,7 @@ window.Mitglieder = (function () {
             return;
           }
           // Die Liste neu holen: daraus entsteht auch der naechste Vorschlag.
-          rechnungListe = null;
+          rechnungenVergessen();
           kurzMeldung("Rechnung heißt jetzt " + wert + " ✓", "gut");
           nochmalRechnung();
         });
@@ -3368,7 +3391,7 @@ window.Mitglieder = (function () {
   function laufAbschliessen(stamm) {
     laufLaeuft = false;
     laufListe = null;      // beim naechsten Oeffnen neu bilden
-    rechnungListe = null;  // die geschriebenen Nummern neu holen
+    rechnungenVergessen(); // die geschriebenen Nummern neu holen
     if (rechnungForm) rechnungForm = rechnungFormAusWahl();
     var letzte = laufFertig.fertig[laufFertig.fertig.length - 1];
     var weiter = Promise.resolve(true);
@@ -3591,13 +3614,12 @@ window.Mitglieder = (function () {
         neu.nummer = Math.max((parseInt(stamm.nummer, 10) || 1) + 1, (hinten ? parseInt(hinten[1], 10) : 0) + 1);
         var wann = new Date();
         if (f.kennungen && f.kennungen.length && rechnungWahl[f.kennungen[0]]) wann = new Date(rechnungWahl[f.kennungen[0]].beginn);
-        rechnungWahl = {}; rechnungListe = null; rechnungForm = rechnungFormLeer();
-        // Mit der Rechnung ist das Spiel durch - die Marke setzt die App
-        // selbst, zuruecknehmen kann man sie am Spiel.
-        (f.kennungen || []).forEach(function (k) {
-          var sp = alleSpiele().filter(function (x) { return x.kennung === k; })[0];
-          if (sp) speichereEinsatz(sp, { bezahlt: new Date().toISOString() }, true);
-        });
+        rechnungWahl = {}; rechnungenVergessen(); rechnungForm = rechnungFormLeer();
+        // Hier stand frueher: jedes Spiel sofort abhaken ("mit der
+        // Rechnung ist das Spiel durch"). Das war zu frueh - eine
+        // geschriebene Rechnung ist noch kein Geld. Die Spiele stehen
+        // jetzt auf "Unterwegs", bis der Eingang an der Rechnung
+        // vermerkt wird (zahlungSetzen).
         return speichern(sb.from("rechnungen").insert({
           user_id: session.user.id, nummer: nummer, datum: wann.toISOString().slice(0, 10),
           verein: f.verein || f.name, betrag: Math.round(betraege.gesamt * 100) / 100,
