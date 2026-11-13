@@ -31,17 +31,17 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
 END:VEVENT
 BEGIN:VEVENT
 UID:d8a587541527149faeb07cf07fd9bec024914594@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
+SEQUENCE:1
+DTSTAMP:20261113T140109Z
+LAST-MODIFIED:20261113T140109Z
 DTSTART:20261113T180000Z
 DTEND:20261113T213000Z
 SUMMARY:LSR · Senioren RLW: Ratinger Ice Aliens – Dinslakener Kobras
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
   19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
- lle Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Küper\, 
- Sascha (HSR) / Pluschkell\, Julian (LSR)\nVergütung lt. Ordnung: 100 €\
- n\nQuelle: https://www.esrw.de/einteilungen.html
+ lle Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Caelers\,
+  Fabian (HSR) / Pluschkell\, Julian (LSR)\nVergütung lt. Ordnung: 100 €
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

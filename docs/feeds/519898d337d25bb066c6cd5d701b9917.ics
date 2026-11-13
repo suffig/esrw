@@ -30,34 +30,6 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
  tingen":geo:51.295808,6.834624
 END:VEVENT
 BEGIN:VEVENT
-UID:2a29768bf1999e3070b5f1137516fc006d39bd71@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
-DTSTART:20261113T180000Z
-DTEND:20261113T213000Z
-SUMMARY:HSR · Senioren RLW: Ratinger Ice Aliens – Dinslakener Kobras
-DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:00 Uhr\nTreff
- punkt: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
- porthalle Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Kr
- üger\, Martin (LSR) / Pluschkell\, Julian (LSR)\nVergütung lt. Ordnung: 
- 100 €\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
-GEO:51.295808;6.834624
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
-  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
- tingen":geo:51.295808,6.834624
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: Ratinger Ic
- e Aliens – Dinslakener Kobras
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:6d25a8c149ebf21b0cf91b71b95908b5d181e7ac@esrw.de
 SEQUENCE:0
 DTSTAMP:20261111T143043Z
