@@ -1536,15 +1536,15 @@ END:VEVENT
 BEGIN:VEVENT
 UID:6adee15ec06ed4401e61a4240aaebcb6afebd239@esrw.de
 SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
+DTSTAMP:20261113T084531Z
+LAST-MODIFIED:20261113T084531Z
 DTSTART:20261113T181500Z
 DTEND:20261113T214500Z
 SUMMARY:SR · U17 RL: EHC Troisdorf – Herner EV
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
   19:15 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: ICEDOME Troisdor
- f\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Stöhr\, K
- evin\n\nQuelle: https://www.esrw.de/einteilungen.html
+ f\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Starke\, M
+ atthias\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2841,8 +2841,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:6732f3c2de49422841996d41186d9931d44c5d74@esrw.de
 SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
+DTSTAMP:20261113T084531Z
+LAST-MODIFIED:20261113T084531Z
 DTSTART:20261115T160000Z
 DTEND:20261115T193000Z
 SUMMARY:SR · U15 RLB: EHC Troisdorf – Kölner Junghaie 1b

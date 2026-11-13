@@ -79,16 +79,16 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:fffa4cc4c87ba2a973165cad431300b8b71e98f4@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
+SEQUENCE:1
+DTSTAMP:20261113T084531Z
+LAST-MODIFIED:20261113T084531Z
 DTSTART:20261115T160000Z
 DTEND:20261115T193000Z
 SUMMARY:SR · U15 RLB: EHC Troisdorf – Kölner Junghaie 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
   17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: ICEDOME Troisdo
- rf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Finke\, G
- udrun\n\nQuelle: https://www.esrw.de/einteilungen.html
+ rf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Bocklemü
+ nd\, Cid\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
