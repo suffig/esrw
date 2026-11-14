@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:4f4855ed024b38f82083baf50fe055d2d944c99d@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261107T153000Z
-DTEND:20261107T190000Z
-SUMMARY:SR · Frauen BZL: ESV Grizzlys Bergkamen – EHC Gelsenkirchen
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
-  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Eissporthall
- e Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Zynda\, Ni
- ck\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/einteilu
- ngen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
-GEO:51.602578;7.626858
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
- äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
- ergkamen":geo:51.602578,7.626858
-END:VEVENT
-BEGIN:VEVENT
 UID:438c6e91cd266108105adc0b4a9304027f72e79e@esrw.de
 SEQUENCE:0
 DTSTAMP:20261031T224530Z
@@ -1573,12 +1551,6 @@ GEO:51.602578;7.626858
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
  äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
  ergkamen":geo:51.602578,7.626858
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U20 LL: ESV Grizzlys Bergk
- amen – GSC Moers
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:a522c4e436852a7120795d7090dd6289980d9995@esrw.de
