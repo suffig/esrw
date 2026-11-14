@@ -1417,12 +1417,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:15 Uhr\nTreffpunkt:
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Blau: SpG Gelsenkir
- chen-Herne 1b
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:275045b5b8fc6ff972c80c5bf814961e2f213f38@esrw.de
