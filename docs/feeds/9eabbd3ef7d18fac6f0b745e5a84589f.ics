@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:95af3b9d37fd6423d4b8aee1740c48d4eced33f8@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261107T183000Z
-DTEND:20261107T220000Z
-SUMMARY:SR · U20 LL: GSC Moers – Herner EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
-  19:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 LL\nHalle: Eissporthalle Mo
- ers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Pacalaj\, Erik\n\n
- Quelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
-GEO:51.43973;6.6198
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
- rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
- ":geo:51.43973,6.6198
-END:VEVENT
-BEGIN:VEVENT
 UID:ec31cbccc96a6c48e4a3d615a13b498db66a80ba@esrw.de
 SEQUENCE:0
 DTSTAMP:20261107T130048Z
@@ -48,12 +27,6 @@ GEO:51.175806;6.680258
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
  -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
  uss":geo:51.175806,6.680258
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: SpG Neusser EV / G
- SC Moers – Herforder EV
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:ed403cde863db9711e6bbc05585fe54e5c48c2c4@esrw.de

@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:f4a38fab53fb5e866a5f493a4ac2111153c835b3@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261107T183000Z
-DTEND:20261107T220000Z
-SUMMARY:SR · Senioren BZL: Grefrather EG 1b – Herforder EV 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
-  19:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eissportze
- ntrum Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespann: Hof
- er\, Carsten\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.
- de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Grefrath\, Stadionstraße 161\, 47929 Grefrath
-GEO:51.348547;6.341019
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath, 
- Stadionstraße 161, 47929 Grefrath";X-APPLE-RADIUS=100;X-TITLE="Eissportze
- ntrum Grefrath":geo:51.348547,6.341019
-END:VEVENT
-BEGIN:VEVENT
 UID:fd7a4e541006eaea43a6747d24fbae0ac1bea20e@esrw.de
 SEQUENCE:0
 DTSTAMP:20261107T130048Z

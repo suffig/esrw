@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:f6562c5958a52fe17bd1b0da3b0042c611915dbc@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261107T183000Z
-DTEND:20261107T220000Z
-SUMMARY:SR · U15 LL: SpG Neusser EV / GSC Moers – EHC Essen Ruhr
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
-  19:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Ne
- uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Solbach\, Carst
- en\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
-GEO:51.175806;6.680258
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
- -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
- uss":geo:51.175806,6.680258
-END:VEVENT
-BEGIN:VEVENT
 UID:7b5ecd1dd79f5795d25c7e8a6ec07b78d1d45f92@esrw.de
 SEQUENCE:0
 DTSTAMP:20261031T224530Z
