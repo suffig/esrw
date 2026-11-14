@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:7ce6b220cbd18e1048032ab15d4cbd9307d5f9db@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T230046Z
-LAST-MODIFIED:20261031T230046Z
-DTSTART:20261107T081500Z
-DTEND:20261107T114500Z
-SUMMARY:SR · Frauen BZL: DSC Krefeld – TSVE Bielefeld
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:15 Uhr\nTreffpunkt:
-  09:15 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Rheinlandhal
- le Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Melcher
- t\, Philip\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/
- einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
-GEO:51.339877;6.540168
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
- stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
- le Krefeld":geo:51.339877,6.540168
-END:VEVENT
-BEGIN:VEVENT
 UID:736ce1555663aa76ebb79144b6a749684f69208a@esrw.de
 SEQUENCE:0
 DTSTAMP:20261031T224530Z
@@ -1416,12 +1394,6 @@ GEO:51.339877;6.540168
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
  stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
  le Krefeld":geo:51.339877,6.540168
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL: DSC Krefeld 
- – Herforder EV
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:e7f612ae7e4ac416fa8aab4b7c4a23c90fc5d4f0@esrw.de
