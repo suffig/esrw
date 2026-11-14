@@ -27,12 +27,6 @@ GEO:51.295808;6.834624
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
   Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
  tingen":geo:51.295808,6.834624
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: Ratinger Ice Alien
- s – Eisadler Dortmund
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:d718acbe0134bf8d0041d214ddfc6c888c948314@esrw.de
