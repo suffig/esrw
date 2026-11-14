@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:d87d11ebe5bcbaf9ac0ae0b39567bdf499047a27@esrw.de
-SEQUENCE:0
-DTSTAMP:20261106T090050Z
-LAST-MODIFIED:20261106T090050Z
-DTSTART:20261107T084500Z
-DTEND:20261107T121500Z
-SUMMARY:SR · U15 LL: TuS Wiehl – Herforder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:45 Uhr\nTreffpunkt:
-  09:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Wi
- ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Hoffmann\, Jan\n\n
- Quelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
-GEO:50.947034;7.5553
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
- enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
- ":geo:50.947034,7.5553
-END:VEVENT
-BEGIN:VEVENT
 UID:1b5c521685c8f9917f3096efc02c841db06bef72@esrw.de
 SEQUENCE:0
 DTSTAMP:20261031T224530Z
@@ -1436,12 +1415,6 @@ GEO:50.947034;7.5553
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
  enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
  ":geo:50.947034,7.5553
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: TuS Wiehl – SpG 
- EHC Gelsenkirchen / Herner EV 1b
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:a9629ff5db0ba0b05acfd71aa8f94e7bfc389c93@esrw.de
