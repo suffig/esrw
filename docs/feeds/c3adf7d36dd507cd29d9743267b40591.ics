@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:736ce1555663aa76ebb79144b6a749684f69208a@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261107T083000Z
-DTEND:20261107T120000Z
-SUMMARY:SR · U13 LL: Lippe Hockey Hamm – Neusser EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
-  09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: beta FINANZ Eiss
- portarena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Kl
- emm\, Julian\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:beta FINANZ Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 H
- amm
-GEO:51.686934;7.886138
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena 
- Hamm, Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="bet
- a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
-END:VEVENT
-BEGIN:VEVENT
 UID:d87d11ebe5bcbaf9ac0ae0b39567bdf499047a27@esrw.de
 SEQUENCE:0
 DTSTAMP:20261106T090050Z
@@ -1416,12 +1394,6 @@ GEO:51.686934;7.886138
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena 
  Hamm, Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="bet
  a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Lippe Hockey Hamm 
- – Dinslakener Kobras
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:76204663e0bfff7e107972cd5b8d4bb51cdc2473@esrw.de
@@ -1443,12 +1415,6 @@ GEO:51.602578;7.626858
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
  äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
  ergkamen":geo:51.602578,7.626858
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: ESV Grizzlys Berg
- kamen 1b – Eisadler Dortmund 1b
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:7770a19241432862843a9183658eb6023fb32b26@esrw.de

@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:7cb60f281786e0d1d8ab61bc9caadbec84021f0c@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261107T083000Z
-DTEND:20261107T120000Z
-SUMMARY:SR · U13 LL: Lippe Hockey Hamm – Neusser EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
-  09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: beta FINANZ Eiss
- portarena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Kl
- emm\, Julian\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:beta FINANZ Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 H
- amm
-GEO:51.686934;7.886138
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena 
- Hamm, Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="bet
- a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
-END:VEVENT
-BEGIN:VEVENT
 UID:779d0d5591ef7901ece70f74ae09f6719b725026@esrw.de
 SEQUENCE:0
 DTSTAMP:20261111T101537Z
