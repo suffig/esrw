@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:53b3a123fa49963eb538ddf767b7002b81a9d23f@esrw.de
-SEQUENCE:0
-DTSTAMP:20261105T113040Z
-LAST-MODIFIED:20261105T113040Z
-DTSTART:20261107T070000Z
-DTEND:20261107T103000Z
-SUMMARY:SR · U9 RL: Herforder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
-  08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: Eishalle Im Klein
- en Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Keller\, Ale
- xander\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eishalle Im Kleinen Felde\, Im Kleinen Felde\, 32051 Herford
-GEO:52.114893;8.652028
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
-  Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
- Kleinen Felde":geo:52.114893,8.652028
-END:VEVENT
-BEGIN:VEVENT
 UID:946eeaa93863c35a23cad10cf1d4ca156327f539@esrw.de
 SEQUENCE:0
 DTSTAMP:20261031T224530Z
@@ -52,16 +31,16 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld,
 END:VEVENT
 BEGIN:VEVENT
 UID:d4c550ed4d43c97b6ae414fe04a21ce3cab31ade@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
+SEQUENCE:1
+DTSTAMP:20261114T080046Z
+LAST-MODIFIED:20261114T080046Z
 DTSTART:20261114T160000Z
 DTEND:20261114T193000Z
 SUMMARY:SR · U13 LL: Neusser EV – EHC Troisdorf 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
   17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Ne
- uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Kissing\, Andre
- as\n\nQuelle: https://www.esrw.de/einteilungen.html
+ uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Schöche\, Gian
+  Carlo\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

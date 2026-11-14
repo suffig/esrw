@@ -80,32 +80,4 @@ DESCRIPTION:In einer Stunde an der Halle - LSR · DNL III: EV Duisburg –
  RT Bad Nauheim
 END:VALARM
 END:VEVENT
-BEGIN:VEVENT
-UID:a7c5bea06df35b506e84508fb69260c759d3f362@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
-DTSTART:20261115T163000Z
-DTEND:20261115T200000Z
-SUMMARY:SR · Senioren LL: ESV Grizzlys Bergkamen 1b – EC Bergisch Land
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
-  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissporthal
- le Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Honselman
- n\, Tom (N)\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.d
- e/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
-GEO:51.602578;7.626858
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
- äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
- ergkamen":geo:51.602578,7.626858
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: ESV Grizzlys 
- Bergkamen 1b – EC Bergisch Land
-END:VALARM
-END:VEVENT
 END:VCALENDAR

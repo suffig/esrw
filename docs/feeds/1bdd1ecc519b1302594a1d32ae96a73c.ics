@@ -107,6 +107,34 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: Eisadler Dortmu
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:28f8457d8f326f670e92b962f69ad993efe6df77@esrw.de
+SEQUENCE:0
+DTSTAMP:20261114T080046Z
+LAST-MODIFIED:20261114T080046Z
+DTSTART:20261115T163000Z
+DTEND:20261115T200000Z
+SUMMARY:SR · Senioren LL: ESV Grizzlys Bergkamen 1b – EC Bergisch Land
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
+  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissporthal
+ le Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Honselman
+ n\, Tom (N)\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.d
+ e/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: ESV Grizzlys 
+ Bergkamen 1b – EC Bergisch Land
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:4b01f594307445b69d4896ac203066d92f2a4401@esrw.de
 SEQUENCE:0
 DTSTAMP:20261111T143043Z

@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:201edf5b8510716a226c633f589437fbdc203f86@esrw.de
-SEQUENCE:0
-DTSTAMP:20261105T113040Z
-LAST-MODIFIED:20261105T113040Z
-DTSTART:20261107T070000Z
-DTEND:20261107T103000Z
-SUMMARY:SR · U9 RL: Herforder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
-  08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: Eishalle Im Klein
- en Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Thiel\, Mark
- \n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eishalle Im Kleinen Felde\, Im Kleinen Felde\, 32051 Herford
-GEO:52.114893;8.652028
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
-  Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
- Kleinen Felde":geo:52.114893,8.652028
-END:VEVENT
-BEGIN:VEVENT
 UID:af30bd1be5d87a6840f4e4e4523f79511b1328b7@esrw.de
 SEQUENCE:0
 DTSTAMP:20261031T224530Z
@@ -2051,8 +2030,8 @@ END:VEVENT
 BEGIN:VEVENT
 UID:a522c4e436852a7120795d7090dd6289980d9995@esrw.de
 SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
+DTSTAMP:20261114T080046Z
+LAST-MODIFIED:20261114T080046Z
 DTSTART:20261114T160000Z
 DTEND:20261114T193000Z
 SUMMARY:SR · U13 LL: Neusser EV – EHC Troisdorf 1b
@@ -2648,16 +2627,16 @@ END:VEVENT
 BEGIN:VEVENT
 UID:ff3437115b7fc75b8c311e0ec0fccba9b4f67364@esrw.de
 SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
+DTSTAMP:20261114T080046Z
+LAST-MODIFIED:20261114T080046Z
 DTSTART:20261115T163000Z
 DTEND:20261115T200000Z
 SUMMARY:SR · Senioren LL: ESV Grizzlys Bergkamen 1b – EC Bergisch Land
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
   17:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissporthal
- le Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Strube\, 
- Julia\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/eint
- eilungen.html
+ le Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Honselman
+ n\, Tom (N)\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.d
+ e/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

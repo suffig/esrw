@@ -36,17 +36,17 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:4c961f08cba779e2b32a4ff8d8f60d10e35e60c8@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
+SEQUENCE:1
+DTSTAMP:20261114T080046Z
+LAST-MODIFIED:20261114T080046Z
 DTSTART:20261115T163000Z
 DTEND:20261115T200000Z
 SUMMARY:SR · Senioren LL: ESV Grizzlys Bergkamen 1b – EC Bergisch Land
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
   17:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissporthal
- le Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Strube\, 
- Julia\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/eint
- eilungen.html
+ le Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Heu\, Ale
+ xander\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/ein
+ teilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
