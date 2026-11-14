@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:438c6e91cd266108105adc0b4a9304027f72e79e@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261107T154500Z
-DTEND:20261107T191500Z
-SUMMARY:SR · U13 BZL Gr.A: GSC Moers – ESC Rheine Young Cats
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:45 Uhr\nTreffpunkt:
-  16:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\nHalle: Eissportha
- lle Moers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Schlüter\, 
- Thomas\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
-GEO:51.43973;6.6198
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
- rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
- ":geo:51.43973,6.6198
-END:VEVENT
-BEGIN:VEVENT
 UID:94a185ad683a660b7e8e2147c601c9228d364cc4@esrw.de
 SEQUENCE:0
 DTSTAMP:20261031T224530Z
