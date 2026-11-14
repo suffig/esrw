@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:2e2205d6f5252882ac47f5ce9aa66a9e0e359eb2@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261107T113000Z
-DTEND:20261107T150000Z
-SUMMARY:SR · U15 BZL: Eisadler Dortmund 1b – Grefrather EG
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
-  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Eissportzentrum
-  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Rosier\, C
- edric (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
-GEO:51.49525;7.458288
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
-  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
- rum Westfalen":geo:51.49525,7.458288
-END:VEVENT
-BEGIN:VEVENT
 UID:d799cf7d1cf7ba3d917d43b3ddc78e7d6f977d38@esrw.de
 SEQUENCE:0
 DTSTAMP:20261031T224530Z

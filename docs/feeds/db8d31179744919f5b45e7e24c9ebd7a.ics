@@ -49,12 +49,6 @@ GEO:51.295808;6.834624
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
   Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
  tingen":geo:51.295808,6.834624
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: Ratinger Ice Al
- iens – Tornado Women Luxembourg
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:5f3ad1b3294d7da986060e4ea7d1d6544c3dd6e4@esrw.de

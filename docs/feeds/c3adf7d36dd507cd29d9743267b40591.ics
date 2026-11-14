@@ -8,48 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:de680a254665efdafef8a3f02dd85ee7dfc01b28@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261107T113000Z
-DTEND:20261107T150000Z
-SUMMARY:SR · U13 RLB: Düsseldorfer EG 1b – Herner EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
-  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Eishalle Brehms
- traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Wunsch\, P
- hilipp\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
-GEO:51.242557;6.802144
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
- hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
- hmstraße":geo:51.242557,6.802144
-END:VEVENT
-BEGIN:VEVENT
-UID:b94bcfea3e4729010e121f6dc07d2600769fb115@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261107T113000Z
-DTEND:20261107T150000Z
-SUMMARY:SR · U15 BZL: Eisadler Dortmund 1b – Grefrather EG
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
-  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Eissportzentrum
-  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Rosier\, C
- edric (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
-GEO:51.49525;7.458288
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
-  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
- rum Westfalen":geo:51.49525,7.458288
-END:VEVENT
-BEGIN:VEVENT
 UID:cdc4acb3a2a5108a94887cbe2af054b4926c3caf@esrw.de
 SEQUENCE:0
 DTSTAMP:20261104T190052Z
@@ -1486,12 +1444,6 @@ GEO:51.295808;6.834624
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
   Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
  tingen":geo:51.295808,6.834624
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: Ratinger Ice Al
- iens – Tornado Women Luxembourg
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:476b8fe5ce0ddd166e34b470d1b4e83aea403fde@esrw.de
@@ -1513,12 +1465,6 @@ GEO:51.339877;6.540168
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
  stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
  le Krefeld":geo:51.339877,6.540168
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U9 RL: Krefelder EV – YA
- YLA Krefeld
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:815d88cc7217622fa5f811496ee0335d9231a1e5@esrw.de
