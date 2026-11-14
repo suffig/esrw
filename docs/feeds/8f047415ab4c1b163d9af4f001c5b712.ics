@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:363b984c811ec08310d56890e1c180d8989fef49@esrw.de
-SEQUENCE:0
-DTSTAMP:20261106T091534Z
-LAST-MODIFIED:20261106T091534Z
-DTSTART:20261107T080000Z
-DTEND:20261107T113000Z
-SUMMARY:SR · U9 RL: EHC Troisdorf
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
-  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: ICEDOME Troisdorf
- \nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Schmidt\, W
- aldemar\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
-GEO:50.811945;7.109233
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
- rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
- isdorf":geo:50.811945,7.109233
-END:VEVENT
-BEGIN:VEVENT
 UID:bdb1211aeaf96a9c1232a32468c57741ed6672e7@esrw.de
 SEQUENCE:0
 DTSTAMP:20261106T090050Z
