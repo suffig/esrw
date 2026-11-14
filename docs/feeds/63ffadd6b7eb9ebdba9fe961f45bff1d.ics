@@ -67,12 +67,6 @@ GEO:52.281013;7.455599
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheiner Eissporthalle, Kop
  ernikusstraße 34, 48429 Rheine";X-APPLE-RADIUS=100;X-TITLE="Rheiner Eissp
  orthalle":geo:52.281013,7.455599
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: ESC Rheine Y
- oung Cats – SpG Kristall Lippstadt / Soester EG
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:e076a6699841c3e960f16f0f20de4f5d664607ee@esrw.de
