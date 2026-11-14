@@ -1903,18 +1903,17 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Gelb: Dinslakener K
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:86f3dccac29c2223b927cb1dbb7c901b7844a22c@esrw.de
+UID:60d79c7f70201f7602eb97c0e6f70c07cb8c6439@esrw.de
 SEQUENCE:0
-DTSTAMP:20261114T154528Z
-LAST-MODIFIED:20261114T154528Z
+DTSTAMP:20261114T160050Z
+LAST-MODIFIED:20261114T160050Z
 DTSTART:20261115T110000Z
 DTEND:20261115T143000Z
-SUMMARY:⚠ SR · U17 I: Düsseldorfer EG – ESV Kaufbeuren
-DESCRIPTION:Geändert: Zeit (vorher 13:00 Uhr)\n\nRolle: Schiedsrichter (SR
- )\nSpielbeginn: 13:00 Uhr\nTreffpunkt: 12:00 Uhr (60 Min vor Spielbeginn)\
- nLiga: U17 I\nHalle: Eishalle Brehmstraße\nAdresse: Brehmstraße 27a\, 40
- 239 Düsseldorf\nGespann: Scholz\, Arien\n\nQuelle: https://www.esrw.de/ei
- nteilungen.html
+SUMMARY:SR · U17 I: Düsseldorfer EG – ESV Kaufbeuren
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:00 Uhr\nTreffpunkt:
+  12:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eishalle Brehmstr
+ aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Scholz\, Ari
+ en\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1926,8 +1925,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · U17 I: Düsseldorfer E
- G – ESV Kaufbeuren
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Düsseldorfer EG 
+ – ESV Kaufbeuren
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
