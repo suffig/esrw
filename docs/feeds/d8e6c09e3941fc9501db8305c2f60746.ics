@@ -71,12 +71,6 @@ GEO:51.515208;8.159069
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Möhnesee,
   Teigelhof 4, 59519 Möhnesee";X-APPLE-RADIUS=100;X-TITLE="Eissportzentrum
   Möhnesee":geo:51.515208,8.159069
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Frauen Pokal Gr.C: Soester
-  EG – Düsseldorfer EG
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:34f10727ad02c0644bb08bbbb8e8a04c03e2791d@esrw.de
