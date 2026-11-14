@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:cdc4acb3a2a5108a94887cbe2af054b4926c3caf@esrw.de
-SEQUENCE:0
-DTSTAMP:20261104T190052Z
-LAST-MODIFIED:20261104T190052Z
-DTSTART:20261107T143000Z
-DTEND:20261107T180000Z
-SUMMARY:SR · U15 ODM: Düsseldorfer EG – Krefelder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
-  15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 ODM\nHalle: Eishalle Brehms
- traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Hornig\, M
- arius\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
-GEO:51.242557;6.802144
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
- hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
- hmstraße":geo:51.242557,6.802144
-END:VEVENT
-BEGIN:VEVENT
 UID:77fd90cf3c258e5fe9c6ffbff2d988c4710c6513@esrw.de
 SEQUENCE:0
 DTSTAMP:20261031T224530Z
@@ -1509,12 +1488,6 @@ GEO:51.242557;6.802144
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
  hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
  hmstraße":geo:51.242557,6.802144
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLA: Düsseldorfer EG 
- – Krefelder EV
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:bd107450e270973608a6ef5e45e16b775b752931@esrw.de
@@ -1536,12 +1509,6 @@ GEO:50.937979;6.98935
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
  r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
  .937979,6.98935
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Kölner Junghaie 
- – ERC Ingolstadt
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:c4650397e5ce9c0a3aebdcc3d7941af2bde85a65@esrw.de
@@ -1563,12 +1530,6 @@ GEO:51.339877;6.540168
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
  stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
  le Krefeld":geo:51.339877,6.540168
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Krefelder EV – St
- arbulls Rosenheim
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:7ea097ac9312da9ac8352eea4b6700f813e0f892@esrw.de
