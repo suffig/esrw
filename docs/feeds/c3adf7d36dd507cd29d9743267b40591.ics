@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:a82ad6d44a2f23ae27df2b7b45bbef2f7b9e7c30@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261107T171500Z
-DTEND:20261107T204500Z
-SUMMARY:SR · DFEL2 Nord: KEC "Die Haie" – EC Bergisch Land
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:15 Uhr\nTreffpunkt:
-  18:15 Uhr (60 Min vor Spielbeginn)\nLiga: DFEL2 Nord\nHalle: Kölnarena 2
- \nAdresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Quint\, Sascha\
- n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
-GEO:50.937979;6.98935
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
- r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
- .937979,6.98935
-END:VEVENT
-BEGIN:VEVENT
 UID:215c18b2bfdba2766701ca22e58c9d82756af6e7@esrw.de
 SEQUENCE:0
 DTSTAMP:20261104T190052Z
@@ -1531,12 +1510,6 @@ GEO:50.937979;6.98935
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
  r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
  .937979,6.98935
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL: KEC "Die Haie"
-  1c – TSVE Bielefeld
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:617453f2e1ccd093fb3138405cd5b7cc6a7c9f65@esrw.de
