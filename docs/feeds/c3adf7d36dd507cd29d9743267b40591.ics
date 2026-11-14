@@ -8,23 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:8cf0d57bc917c407bebca8e2f26aee25b7d8f04c@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261107T100000Z
-DTEND:20261107T133000Z
-SUMMARY:SR · U13 BZL Gr.A: SpG Kristall Lippstadt / Soester EG – Eisadle
- r Dortmund 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
-  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\n!! Halle nicht au
- tomatisch erkannt - bitte selbst pruefen !!\nGespann: Zynda\, Jayden\n\nQu
- elle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
 UID:1640739533d84f20a151805af615bcc44eb2531b@esrw.de
 SEQUENCE:0
 DTSTAMP:20261031T224530Z
@@ -1481,12 +1464,6 @@ GEO:50.967548;7.135355
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
  dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
  TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Grau: ESV Bergisch 
- Gladbach 1b
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:a73a2d548e90e733fb3d1143a8a1dd99c4298621@esrw.de
@@ -1508,11 +1485,6 @@ GEO:51.242557;6.802144
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
  hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
  hmstraße":geo:51.242557,6.802144
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U11 RL: Düsseldorfer EG
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:633c8ee0434ee2dee998d7bae953fe0570a444fa@esrw.de

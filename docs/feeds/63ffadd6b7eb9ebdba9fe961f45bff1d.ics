@@ -8,23 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:31f22d437b9d3a434820e34858a69f2e87ef50d5@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261107T100000Z
-DTEND:20261107T133000Z
-SUMMARY:SR · U13 BZL Gr.A: SpG Kristall Lippstadt / Soester EG – Eisadle
- r Dortmund 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
-  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\n!! Halle nicht au
- tomatisch erkannt - bitte selbst pruefen !!\nGespann: Brücker\, Tobias\n\
- nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
 UID:59947aed267ece4809b3c39f71c0ef0ef27286af@esrw.de
 SEQUENCE:0
 DTSTAMP:20261031T224530Z
