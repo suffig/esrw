@@ -66,12 +66,6 @@ GEO:51.49525;7.458288
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
   Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
  rum Westfalen":geo:51.49525,7.458288
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: Eisadler Dortmu
- nd – EJ Kassel Huskies Ladies
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:28f8457d8f326f670e92b962f69ad993efe6df77@esrw.de
