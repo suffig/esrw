@@ -1462,12 +1462,6 @@ GEO:51.49525;7.458288
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
   Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
  rum Westfalen":geo:51.49525,7.458288
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Eisadler Dortmund 
- – Ratinger Ice Aliens
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:cd22254bf12bda88cc4bfc5afde40130c534407d@esrw.de
@@ -1490,12 +1484,6 @@ GEO:51.515208;8.159069
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Möhnesee,
   Teigelhof 4, 59519 Möhnesee";X-APPLE-RADIUS=100;X-TITLE="Eissportzentrum
   Möhnesee":geo:51.515208,8.159069
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: Soester EG 
- – EHC Troisdorf
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:14a4f4e9e056195306e78a95cb9aa529f27b87ba@esrw.de
