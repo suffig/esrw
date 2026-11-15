@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:b6b74ca6432497afc7672ee0213f2231a4ec83bc@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261108T161500Z
-DTEND:20261108T194500Z
-SUMMARY:LSR · Senioren RLW: GSC Moers – Neusser EV
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:15 Uhr\nTreffpunkt:
-  17:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
- lle Moers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Stocker\, Qu
- irin (HSR) / Pluschkell\, Julian (LSR)\nVergütung lt. Ordnung: 100 €\n\
- nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
-GEO:51.43973;6.6198
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
- rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
- ":geo:51.43973,6.6198
-END:VEVENT
-BEGIN:VEVENT
 UID:786ad580bea5db60b37d17db20b57b5ca9fc7873@esrw.de
 SEQUENCE:0
 DTSTAMP:20261031T224530Z
@@ -1464,12 +1442,6 @@ GEO:51.43973;6.6198
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
  rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
  ":geo:51.43973,6.6198
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: GSC Moers 
- – EG Diez-Limburg
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:5cbc8ed4248bd8970572b671d6527c4ca416dad6@esrw.de
@@ -1491,12 +1463,6 @@ GEO:50.79546;6.100933
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="100'5 Arena Aachen, Hubert
  -Wienen-Straße 8, 52070 Aachen";X-APPLE-RADIUS=100;X-TITLE="100'5 Arena A
  achen":geo:50.79546,6.100933
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: Aachener EC – T
- SVE Bielefeld
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:ff3437115b7fc75b8c311e0ec0fccba9b4f67364@esrw.de

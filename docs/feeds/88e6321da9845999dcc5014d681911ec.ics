@@ -72,12 +72,6 @@ GEO:51.43973;6.6198
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
  rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
  ":geo:51.43973,6.6198
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: GSC Moers 
- – EG Diez-Limburg
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:0b1c263a89a5cd8b3faee7ecaae4c3e9d9d37b31@esrw.de
