@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:7475cd68ec436d26079e0623e2abc055dc54df4e@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261108T180000Z
-DTEND:20261108T213000Z
-SUMMARY:SR · Senioren BZL: Neusser EV 1b – EHC Gelsenkirchen
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
-  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eissportha
- lle Neuss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Reuter\, 
- Rick\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/einte
- ilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
-GEO:51.175806;6.680258
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
- -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
- uss":geo:51.175806,6.680258
-END:VEVENT
-BEGIN:VEVENT
 UID:d8a587541527149faeb07cf07fd9bec024914594@esrw.de
 SEQUENCE:1
 DTSTAMP:20261113T140109Z

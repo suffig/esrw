@@ -8,71 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:77c78584de13dc1d888479b422d1f5a8dcd19f40@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261108T180000Z
-DTEND:20261108T213000Z
-SUMMARY:SR · U15 LL: Ratinger Ice Aliens – SpG Neusser EV / GSC Moers
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
-  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Ra
- tingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Rieneck\, Maxim
- ilian\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
-GEO:51.295808;6.834624
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
-  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
- tingen":geo:51.295808,6.834624
-END:VEVENT
-BEGIN:VEVENT
-UID:f6ce51316d971ec4c40cd517bb977a8f0f13591d@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261108T180000Z
-DTEND:20261108T213000Z
-SUMMARY:SR · Senioren BZL: Neusser EV 1b – EHC Gelsenkirchen
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
-  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eissportha
- lle Neuss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Reuter\, 
- Rick\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/einte
- ilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
-GEO:51.175806;6.680258
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
- -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
- uss":geo:51.175806,6.680258
-END:VEVENT
-BEGIN:VEVENT
-UID:11958162b280d9e5deddf25714b474d6f4161d7a@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261108T180000Z
-DTEND:20261108T213000Z
-SUMMARY:SR · Senioren LL: TSVE Bielefeld – ESC Rheine
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
-  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Oetker Eisb
- ahn Bielefeld\nAdresse: Duisburger Str. 14\, 33647 Bielefeld\nGespann: Thi
- el\, Mark\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/
- einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Oetker Eisbahn Bielefeld\, Duisburger Str. 14\, 33647 Bielefeld
-GEO:51.979731;8.496038
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
- Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
- sbahn Bielefeld":geo:51.979731,8.496038
-END:VEVENT
-BEGIN:VEVENT
 UID:e0be6fdac3fe91b7da74299b8bd6576c207af74b@esrw.de
 SEQUENCE:0
 DTSTAMP:20261031T224530Z
@@ -1504,12 +1439,6 @@ GEO:51.979731;8.496038
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
  Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
  sbahn Bielefeld":geo:51.979731,8.496038
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: TSVE Bielefel
- d – Eisadler Dortmund 1b
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:0773a386ced694c301f5b7628224a02a37fca7a3@esrw.de
@@ -1532,12 +1461,6 @@ GEO:51.175806;6.680258
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
  -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
  uss":geo:51.175806,6.680258
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: Neusser EV 1
- b – ESC Kristall Lippstadt
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:0883e56f7bb1ce7bb30212c4803565885a0608f0@esrw.de
