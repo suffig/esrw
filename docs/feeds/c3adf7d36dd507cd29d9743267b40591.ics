@@ -8,49 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:7e7a72bafea6ccf3828ebbc467e087363c3954da@esrw.de
-SEQUENCE:0
-DTSTAMP:20261108T113041Z
-LAST-MODIFIED:20261108T113041Z
-DTSTART:20261108T170000Z
-DTEND:20261108T203000Z
-SUMMARY:SR · U17 LL: EC Bergisch Land – Grefrather EG
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
-  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\nHalle: Eissporthalle So
- lingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Hofer\, Ca
- rsten\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
-GEO:51.165932;7.086769
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
- ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
- le Solingen":geo:51.165932,7.086769
-END:VEVENT
-BEGIN:VEVENT
-UID:06589b6874f7038fefbc4df58aaf57b6f5cc11d6@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261108T170000Z
-DTEND:20261108T203000Z
-SUMMARY:LSR · U20 RL: Eisadler Dortmund – Dinslakener Kobras
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
-  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissportzentrum 
- Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Priebsch\, 
- Jan Philipp (HSR) / Kaminski-Balsam\, Marcel (LSR)\n\nQuelle: https://www.
- esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
-GEO:51.49525;7.458288
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
-  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
- rum Westfalen":geo:51.49525,7.458288
-END:VEVENT
-BEGIN:VEVENT
 UID:e076f1d36f800bb3d2827cc2b06413917dcabe07@esrw.de
 SEQUENCE:0
 DTSTAMP:20261103T191548Z
@@ -1505,12 +1462,6 @@ GEO:51.165932;7.086769
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
  ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
  le Solingen":geo:51.165932,7.086769
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U20 LL: EC Bergisch Land 
- – Herner EV
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:67ad4dc5c5a509b729098aa9e50ae0d092c2f613@esrw.de
@@ -1532,12 +1483,6 @@ GEO:51.574578;6.735361
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
  m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
  inslaken":geo:51.574578,6.735361
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Dinslakener Kobras
-  – Lippe Hockey Hamm
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:c0693c6970a6f4e07d5a4adcfcc829510c60af4f@esrw.de
@@ -1560,12 +1505,6 @@ GEO:52.281013;7.455599
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheiner Eissporthalle, Kop
  ernikusstraße 34, 48429 Rheine";X-APPLE-RADIUS=100;X-TITLE="Rheiner Eissp
  orthalle":geo:52.281013,7.455599
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: ESC Rheine 
- – Dinslakener Kobras 1b
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:18a379a4339045c171889cf20a2ab27ce3cd4207@esrw.de

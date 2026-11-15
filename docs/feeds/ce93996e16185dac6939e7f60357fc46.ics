@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:887ff7d8cc0b29e189da3052d2719fc37f7c61de@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261108T170000Z
-DTEND:20261108T203000Z
-SUMMARY:LSR · U20 RL: Eisadler Dortmund – Dinslakener Kobras
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
-  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissportzentrum 
- Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Priebsch\, 
- Jan Philipp (HSR) / Heu\, Alexander (LSR)\n\nQuelle: https://www.esrw.de/e
- inteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
-GEO:51.49525;7.458288
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
-  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
- rum Westfalen":geo:51.49525,7.458288
-END:VEVENT
-BEGIN:VEVENT
 UID:f1de79d720ef7af8d93d16cda72f2ab0681b7091@esrw.de
 SEQUENCE:0
 DTSTAMP:20261107T130048Z

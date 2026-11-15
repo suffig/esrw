@@ -27,12 +27,6 @@ GEO:51.574578;6.735361
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
  m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
  inslaken":geo:51.574578,6.735361
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Dinslakener Kobras
-  – Lippe Hockey Hamm
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:4f96c4d5acbb62fe59ec50c278b6389ae52bf77a@esrw.de
