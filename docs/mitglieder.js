@@ -4187,6 +4187,136 @@ window.Mitglieder = (function () {
         return 0;
       });
   }
+  // Traegt nach, was fehlt: erst die Strecken holen (der Routendienst
+  // braucht einen Moment je Halle), dann km und Verguetung je Spiel.
+  // Stand bis Fassung 274 im onclick des Knopfes "Fehlendes
+  // nachtragen"; jetzt rufen beide Wege hierher, damit nicht zwei
+  // Abschriften derselben Schleife auseinanderlaufen.
+  function fehlendesNachtragen(spiele) {
+    return streckenNachladen(spiele).then(function () {
+      var km = 0, verg = 0, offen = 0, jetzt = new Date();
+      spiele.forEach(function (sp) {
+        if (new Date(sp.beginn) > jetzt) return;
+        var e = einsaetze[sp.kennung], aend = {}, her = Object.assign({}, (e && e.herkunft) || {});
+        if (!e || e.km == null) { var v = kmVorschlag(sp); if (v) { aend.km = v.km; her.km = v.art; km++; } }
+        if (!e || e.verguetung == null) {
+          var g = sollBetrag(sp);
+          if (g == null) offen++;
+          // Nicht jeder gefundene Betrag kommt aus der Ordnung - er kann
+          // auch aus eigenen Eintraegen gelernt sein. Der Vermerk muss das
+          // sagen, sonst nimmt gelerntBauen() die Zeile vom Lernen aus.
+          else {
+            aend.verguetung = g;
+            her.verguetung = regelBetrag(sp) != null ? "regel"
+              : grundgebuehr(sp) != null ? "ordnung" : "gewohnt";
+            verg++;
+          }
+        }
+        if (Object.keys(aend).length) { aend.herkunft = her; speichereEinsatz(sp, aend); }
+      });
+      var teile = [];
+      if (km) teile.push(km + (km === 1 ? " Kilometerangabe" : " Kilometerangaben"));
+      if (verg) teile.push(verg + (verg === 1 ? " Vergütung" : " Vergütungen"));
+      meldung(teile.length
+        ? teile.join(" und ") + " nachgetragen" + (offen ? ", " + offen + " ohne Zuordnung (bitte von Hand)" : "") + "."
+        : "Es fehlte nichts.", teile.length ? "gut" : "");
+      return { km: km, verguetung: verg, offen: offen };
+    });
+  }
+
+  // Was in dieser Saison noch fehlt - danach richtet sich, ob die
+  // Karte oben erscheint und was sie ankuendigt. Gezaehlt wird nur,
+  // was die App selbst fuellen koennte.
+  function wasFehlt(spiele) {
+    var jetzt = new Date(), ohneBetrag = 0, ohneKm = 0, vergangen = 0;
+    (spiele || []).forEach(function (sp) {
+      if (new Date(sp.beginn) >= jetzt) return;
+      vergangen++;
+      var e = einsaetze[sp.kennung];
+      if ((!e || e.verguetung == null) && sollBetrag(sp) != null) ohneBetrag++;
+      if (sp.halle && (!e || e.km == null)) ohneKm++;
+    });
+    return { betrag: ohneBetrag, km: ohneKm, vergangen: vergangen,
+             startpunkt: !!(profil && profil.heimat_lat == null && ohneKm) };
+  }
+
+  // Startpunkt und Betraege in einem Zug. Ohne Heimatadresse rechnet
+  // die App keine Strecke - hallenOhneRoute() kehrt dann sofort
+  // zurueck -, und genau das war von aussen nicht zu sehen: Betraege
+  // kamen, Kilometer nicht.
+  function allesFuellenZeile(spiele) {
+    var fehlt = wasFehlt(spiele);
+    if (!fehlt.betrag && !fehlt.km) return null;
+
+    var box = h("div", { class: "karte mg-fuellen" });
+    var satz = h("b", { class: "mg-fuelltitel" });
+    var stand = h("p", { class: "meta mg-fuellstand" });
+    var knopf = h("button", { type: "button", class: "mg-haupt mg-fuellknopf" });
+    box.appendChild(satz); box.appendChild(stand); box.appendChild(knopf);
+
+    var teile = [];
+    if (fehlt.betrag) teile.push(fehlt.betrag + (fehlt.betrag === 1 ? " Vergütung" : " Vergütungen"));
+    if (fehlt.km) teile.push(fehlt.km + (fehlt.km === 1 ? " Strecke" : " Strecken"));
+    satz.textContent = "Es fehlen " + teile.join(" und ") + ".";
+    knopf.textContent = fehlt.startpunkt ? "Startpunkt setzen und ausfüllen" : "Alles ausfüllen";
+    stand.textContent = fehlt.startpunkt
+      ? "Ohne Startpunkt rechnet die App keine Kilometer. Trag ihn einmal ein, dann kommen Beträge und Strecken für alle Spiele."
+      : "Beträge aus der Gebührenordnung, Kilometer aus der Route. Vorschläge – bitte prüfen.";
+
+    function rechnen() {
+      knopf.disabled = true;
+      knopf.textContent = "rechnet …";
+      fehlendesNachtragen(spiele).then(function () { rendereAbrechnung(); }, function (e) {
+        meldung("Nachtragen fehlgeschlagen: " + fehlerText(e), "warn");
+        rendereAbrechnung();
+      });
+    }
+
+    function startpunktFragen() {
+      var adresse = adressFeld({ wert: (profil && profil.heimat) || "",
+        lat: profil && profil.heimat_lat, lon: profil && profil.heimat_lon });
+      var sichern = h("button", { type: "button", class: "mg-haupt", text: "Übernehmen und rechnen" });
+      var form = h("div", { class: "mg-startpunkt" }, [
+        h("p", { class: "meta", style: "margin:0 0 6px", text:
+          "Von hier aus rechnet die App die Strecke zu jeder Halle. "
+          + "Die Adresse steht danach auch in deinem Profil." }),
+        adresse.box, sichern]);
+      knopf.classList.add("versteckt");
+      box.appendChild(form);
+      adresse.feld.focus();
+      sichern.addEventListener("click", function () {
+        var text = (adresse.feld.value || "").trim();
+        // Ohne Koordinaten gaebe es keine Route - und ohne Hausnummer
+        // zeigt Nominatim auf die Strassenmitte.
+        if (!text || adresse.stand.lat == null || !adresse.stand.gewaehlt) {
+          meldung("Bitte die Adresse aus der Vorschlagsliste wählen, dann stimmen Hausnummer, PLZ und Ort.", "warn");
+          adresse.feld.focus(); return;
+        }
+        if (!hausnummerAus(text)) {
+          meldung("Bitte die Hausnummer mit angeben, daraus wird die Strecke zur Halle berechnet.", "warn");
+          adresse.feld.focus(); return;
+        }
+        sichern.disabled = true;
+        sb.from("profile").upsert({ id: session.user.id, heimat: text,
+          heimat_lat: adresse.stand.lat, heimat_lon: adresse.stand.lon,
+          // Neue Adresse -> alte Strecken sind wertlos
+          strecken: {} }).then(function (r) {
+          sichern.disabled = false;
+          if (r.error) { meldung("Speichern fehlgeschlagen: " + fehlerText(r.error), "warn"); return; }
+          profil = Object.assign({}, profil || {}, { heimat: text,
+            heimat_lat: adresse.stand.lat, heimat_lon: adresse.stand.lon, strecken: {} });
+          form.remove(); knopf.classList.remove("versteckt");
+          rechnen();
+        });
+      });
+    }
+
+    knopf.addEventListener("click", function () {
+      if (wasFehlt(spiele).startpunkt) startpunktFragen(); else rechnen();
+    });
+    return box;
+  }
+
   function hallenOhneRoute(spiele) {
     if (!profil || profil.heimat_lat == null) return [];
     var offen = [];
@@ -4654,21 +4784,13 @@ window.Mitglieder = (function () {
     var wartet = warteBanner();
     if (wartet) inhalt.appendChild(wartet);
 
-    // Ohne Adresse rechnet die App keine Strecke - das stand bisher nur in
-    // einer Meldung an einem Knopf, den man erst finden musste. Zwei
-    // Zeilen kosteten 102 px ueber der Liste, bei jedem Oeffnen; jetzt
-    // eine Zeile, und wer sie kennt, tut sie weg.
-    if (profil && profil.heimat_lat == null && !lokalLesen("km_hinweis_zu", false)
-        && spiele.some(function (sp) { return sp.halle && new Date(sp.beginn) < new Date(); })) {
-      var kmh = h("div", { class: "hinweis hinweis-schmal" }, [
-        h("span", { text: "Ohne Heimatadresse keine Kilometer." }),
-        h("button", { type: "button", class: "textknopf", text: "Adresse eintragen",
-          onclick: function () { zeigeEinrichtung(true); } }),
-        h("button", { type: "button", class: "hinweis-zu", title: "Hinweis ausblenden",
-          "aria-label": "Hinweis ausblenden", text: "×",
-          onclick: function () { lokalSchreiben("km_hinweis_zu", true); kmh.remove(); } })]);
-      inhalt.appendChild(kmh);
-    }
+    // Was fehlt, und ein Knopf, der es holt - oben, nicht drei Tipps
+    // tief in "Weitere". Fehlt der Startpunkt, fragt der Knopf zuerst
+    // danach: ohne ihn rechnet die App keine Kilometer, und das war an
+    // der Liste nicht zu sehen. Die Karte steht nur da, wenn wirklich
+    // etwas offen ist.
+    var fuellen = allesFuellenZeile(spiele);
+    if (fuellen) inhalt.appendChild(fuellen);
 
     // Saldo und Geldweg beantworten "wie steht es insgesamt" - eine
     // Frage zum Nachsehen. In den Arbeitsstufen standen sie bisher
@@ -4679,34 +4801,8 @@ window.Mitglieder = (function () {
     // noch der Nachzuegler fuer Spiele, die damals nichts abbekommen haben.
     var nachtragen = h("button", { type: "button", text: "Fehlendes nachtragen", onclick: function () {
       nachtragen.disabled = true; nachtragen.textContent = "trägt nach …";
-      streckenNachladen(spiele).then(function () {
-        var km = 0, verg = 0, offen = 0;
-        spiele.forEach(function (sp) {
-          var e = einsaetze[sp.kennung], aend = {}, her = {};
-          if (!e || e.km == null) { var v = kmVorschlag(sp); if (v) { aend.km = v.km; her.km = v.art; km++; } }
-          if (!e || e.verguetung == null) {
-            var g = sollBetrag(sp);
-            if (g == null) offen++;
-            // Nicht jeder gefundene Betrag kommt aus der Ordnung - er kann
-            // auch aus eigenen Eintraegen gelernt sein. Der Vermerk muss das
-            // sagen, sonst nimmt gelerntBauen() die Zeile vom Lernen aus.
-            else {
-              aend.verguetung = g;
-              her.verguetung = regelBetrag(sp) != null ? "regel"
-                : grundgebuehr(sp) != null ? "ordnung" : "gewohnt";
-              verg++;
-            }
-          }
-          if (Object.keys(aend).length) { aend.herkunft = her; speichereEinsatz(sp, aend); }
-        });
-        var teile = [];
-        if (km) teile.push(km + (km === 1 ? " Kilometerangabe" : " Kilometerangaben"));
-        if (verg) teile.push(verg + (verg === 1 ? " Vergütung" : " Vergütungen"));
-        meldung(teile.length
-          ? teile.join(" und ") + " nachgetragen" + (offen ? ", " + offen + " ohne Zuordnung (bitte von Hand)" : "") + "."
-          : "Es fehlte nichts.", teile.length ? "gut" : "");
-        rendereAbrechnung();
-      }, function (e) { meldung("Nachtragen fehlgeschlagen: " + fehlerText(e), "warn"); rendereAbrechnung(); });
+      fehlendesNachtragen(spiele).then(function () { rendereAbrechnung(); },
+        function (e) { meldung("Nachtragen fehlgeschlagen: " + fehlerText(e), "warn"); rendereAbrechnung(); });
     } });
     // Eine Leiste, ein Panel: Steuerjahre, Abrechnungsart, Werkzeuge, Spiel eintragen, Regeln
     var panelInhalt = {
