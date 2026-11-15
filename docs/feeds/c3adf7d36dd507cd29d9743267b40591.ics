@@ -8,48 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:cb3a52b994b1654a3a7d6f3475ede77bd7d006d2@esrw.de
-SEQUENCE:0
-DTSTAMP:20261103T124527Z
-LAST-MODIFIED:20261103T124527Z
-DTSTART:20261108T060000Z
-DTEND:20261108T093000Z
-SUMMARY:SR · U11 LL Rot: Düsseldorfer EG 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
-  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Rot\nHalle: Eishalle Bre
- hmstraße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Kudal\,
-  Lars\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
-GEO:51.242557;6.802144
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
- hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
- hmstraße":geo:51.242557,6.802144
-END:VEVENT
-BEGIN:VEVENT
-UID:c406201998dbdd3a2693e0227036481fcf08cbe6@esrw.de
-SEQUENCE:0
-DTSTAMP:20261031T224530Z
-LAST-MODIFIED:20261031T224530Z
-DTSTART:20261108T060000Z
-DTEND:20261108T093000Z
-SUMMARY:SR · U15 BZL: Eisadler Dortmund 1b – Aachener EC
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
-  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Eissportzentrum
-  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Schlüchte
- r\, Isabell (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
-GEO:51.49525;7.458288
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
-  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
- rum Westfalen":geo:51.49525,7.458288
-END:VEVENT
-BEGIN:VEVENT
 UID:bcd4f23deb49736732e8f7dd7d33c5fd00c7e15a@esrw.de
 SEQUENCE:0
 DTSTAMP:20261031T224530Z
@@ -1483,12 +1441,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Lila: SpG SV Brackw
- ede – Herforder EV 1b
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:30eb68216beff040e9157c9c2f9b9a7cea080d88@esrw.de
@@ -1511,12 +1463,6 @@ GEO:50.967548;7.135355
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
  dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
  TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: ESV Bergisch Gladb
- ach – ESC Darmstadt
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:f36feec0bb8da3040f7446c6393f82e5fdae1faf@esrw.de

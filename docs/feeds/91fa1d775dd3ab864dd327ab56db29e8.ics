@@ -64,12 +64,6 @@ DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Lila: SpG SV Brackw
- ede – Herforder EV 1b
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:be17731ab3a6c220795ed8c81ee8a3c56319cd1e@esrw.de
