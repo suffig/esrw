@@ -8,29 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:e076f1d36f800bb3d2827cc2b06413917dcabe07@esrw.de
-SEQUENCE:0
-DTSTAMP:20261103T191548Z
-LAST-MODIFIED:20261103T191548Z
-DTSTART:20261108T171500Z
-DTEND:20261108T204500Z
-SUMMARY:SR · Frauen BZL: ESV Bergisch Gladbach 1b – KEC "Die Haie" 1c
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:15 Uhr\nTreffpunkt:
-  18:15 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Eissporthall
- e Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbach\
- nGespann: Licau\, Sebastian\nVergütung lt. Ordnung: 95 €\n\nQuelle: htt
- ps://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
- ch Gladbach
-GEO:50.967548;7.135355
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
- dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
- TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-END:VEVENT
-BEGIN:VEVENT
 UID:77c78584de13dc1d888479b422d1f5a8dcd19f40@esrw.de
 SEQUENCE:0
 DTSTAMP:20261031T224530Z
