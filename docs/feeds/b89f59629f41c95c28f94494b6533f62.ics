@@ -121,16 +121,16 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:f4630f38a059393627c44093c244bba3813c6ce1@esrw.de
-SEQUENCE:0
-DTSTAMP:20261111T143043Z
-LAST-MODIFIED:20261111T143043Z
+SEQUENCE:1
+DTSTAMP:20261116T080049Z
+LAST-MODIFIED:20261116T080049Z
 DTSTART:20261122T160000Z
 DTEND:20261122T193000Z
 SUMMARY:LSR · Senioren RLW: Ratinger Ice Aliens – Eisadler Dortmund
 DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
   17:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
- lle Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Naust\, M
- arc André (HSR) / Pluschkell\, Julian (LSR)\nVergütung lt. Ordnung: 100 
+ lle Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Perlitz\,
+  Christian (HSR) / Pluschkell\, Julian (LSR)\nVergütung lt. Ordnung: 100 
  €\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
