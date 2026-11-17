@@ -1772,6 +1772,42 @@ def test_verlegt():
     pruefe("18:30" in text2, "andere Uhrzeit steht im Aenderungstext", text2)
 
 
+def test_abgesetzt():
+    """Von esrw.de abgesetzte Spiele fallen aus der Historie.
+
+    "Essen gegen Maedchen" am Sa. 14.11. stand nach Fassung 279 weiter in
+    Abrechnung und Archiv: die Historie behielt es, und archiv_in_db()
+    stempelte die Zeile stuendlich neu."""
+    print("\nAbgesetzte Spiele")
+    def e(beginn, zuletzt, paarung):
+        return {"beginn": beginn, "begegnung": "Liga: " + paarung, "liga": "Liga",
+                "paarung": paarung, "halle": "", "besetzung": {}, "zuletzt_gesehen": zuletzt}
+    h = {
+        "gespielt1": e("2026-11-14T11:00:00+01:00", "2026-11-17", "X - Y"),
+        "gespielt2": e("2026-11-14T18:00:00+01:00", "2026-11-17", "Z - W"),
+        "vorher": e("2026-11-14T13:00:00+01:00", "2026-11-12", "Essen - Maedchen"),
+        "amTag": e("2026-11-14T15:00:00+01:00", "2026-11-14", "Q - R"),
+        "kommt": e("2026-11-21T11:00:00+01:00", "2026-11-17", "K - L"),
+        # Workflow-Ausfall: alle Spiele vom 07.11. zuletzt am 06.11. gesehen
+        "ausfall1": e("2026-11-07T11:00:00+01:00", "2026-11-06", "M - N"),
+        "ausfall2": e("2026-11-07T18:00:00+01:00", "2026-11-06", "O - P"),
+        "einzeln": e("2026-11-10T19:00:00+01:00", "2026-11-09", "Einzel - Spiel"),
+        "ohneDatum": {"beginn": "2026-11-14T12:00:00+01:00", "paarung": "Alt - Eintrag"},
+    }
+    weg = dict(E.abgesetzte_entfernen(h))
+    pruefe("vorher" in weg, "vor dem Spieltag zuletzt gesehen, Geschwister spaeter: abgesetzt")
+    pruefe("amTag" in weg, "am Spieltag zuletzt gesehen, Geschwister spaeter: abgesetzt")
+    pruefe("gespielt1" in h and "gespielt2" in h, "gespielte Spiele bleiben")
+    pruefe("kommt" in h, "kommendes Spiel bleibt")
+    pruefe("ausfall1" in h and "ausfall2" in h,
+           "Workflow-Ausfall: alle Spiele des Tages gleich alt - nichts entfernt")
+    pruefe("einzeln" in h, "einziges Spiel des Tages: ohne Vergleich kein Urteil")
+    pruefe("ohneDatum" in h, "alter Eintrag ohne zuletzt_gesehen bleibt")
+    pruefe(len(weg) == 2, "genau die zwei abgesetzten", str(sorted(weg)))
+    # Ohne Filter schickt tabelle_loeschen nie ein DELETE
+    pruefe(E.tabelle_loeschen("spiele_archiv") is False, "ohne Filter kein DELETE")
+
+
 def main():
     print("Regressionstest esrw_ical")
     for test in (test_parsen, test_hallen, test_namen, test_rollen, test_aliase,
@@ -1784,7 +1820,7 @@ def main():
                  test_funktionstexte, test_dunkles_thema, test_kennungen, test_verlegt,
                  test_archivkennung, test_statistik_zaehlt_einmal, test_spielschluessel, test_blattfokus, test_netzstand,
                  test_push_nachrichten, test_push_erinnerungen,
-                 test_anzeigenamen,
+                 test_anzeigenamen, test_abgesetzt,
                  test_tresor):
         test()
     print("\n" + "-" * 58)

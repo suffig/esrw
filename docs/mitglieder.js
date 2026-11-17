@@ -1889,41 +1889,18 @@ window.Mitglieder = (function () {
   }
 
   var dbArchiv = null;
-  // spiele_archiv bekommt bei jedem Lauf das ganze Datenfenster - auch
-  // kommende Spiele - per Upsert und loescht nie. Setzt esrw.de ein Spiel
-  // vor dem Anstoss ab, blieb seine Zeile fuer immer: in der Abrechnung
-  // mit Gebuehr, im Archiv als gespielt. So stand "Essen gegen Maedchen"
-  // nach Fassung 278 noch in beiden.
-  //
-  // "stand" ist der letzte Lauf, der die Zeile gesehen hat. Ein gespieltes
-  // Spiel sieht der Workflow auch nach dem Anstoss noch (erst im Fenster,
-  // dann im Archiv); ein abgesetztes zuletzt davor. Geurteilt wird erst,
-  // wenn der Workflow seit dem Anstoss nachweislich gelaufen ist - die
-  // juengste Zeile liegt drei Stunden danach -, sonst waere jedes Spiel
-  // der letzten Stunde "abgesetzt". Von Hand angelegte Spiele und Zeilen
-  // ohne stand bleiben immer.
-  function ohneAbgesetzte(zeilen) {
-    var juengster = 0;
-    (zeilen || []).forEach(function (z) {
-      var t = z && z.stand ? new Date(z.stand).getTime() : 0;
-      if (t > juengster) juengster = t;
-    });
-    return (zeilen || []).filter(function (z) {
-      if (!z || z.manuell || !z.stand || !z.beginn) return true;
-      var b = new Date(z.beginn).getTime(), s = new Date(z.stand).getTime();
-      if (isNaN(b) || isNaN(s)) return true;
-      return !(s < b && juengster > b + 3 * 3600000);
-    });
-  }
-
   function ladeArchiv() {
     var web = archivDaten ? Promise.resolve(archivDaten)
       : ctx.hole("archiv.json").catch(function () { return { personen: {}, saisons: [] }; })
         .then(function (a) { archivDaten = a; return a; });
     // Dazu das Archiv aus der Datenbank (spiele_archiv, vom Workflow gefuellt)
     var db = dbArchiv || !profil || !profil.slug ? Promise.resolve(dbArchiv || []) :
-      sb.from("spiele_archiv").select("kennung,beginn,liga,paarung,halle,system,besetzung,saison,manuell,stand").contains("slugs", [profil.slug])
-        .then(function (r) { dbArchiv = ohneAbgesetzte(r.data || []); return dbArchiv; }).catch(function () { dbArchiv = []; return dbArchiv; });
+      // Von esrw.de abgesetzte Spiele nimmt der Workflow aus dieser Tabelle
+      // (abgesetzte_aus_db in esrw_ical.py). Der Versuch von Fassung 279,
+      // sie hier am Zeitstempel zu erkennen, griff nie: jede Zeile wird
+      // stuendlich neu gestempelt.
+      sb.from("spiele_archiv").select("kennung,beginn,liga,paarung,halle,system,besetzung,saison").contains("slugs", [profil.slug])
+        .then(function (r) { dbArchiv = r.data || []; return dbArchiv; }).catch(function () { dbArchiv = []; return dbArchiv; });
     return Promise.all([web, db, zusammenLaden()]).then(function (r) { return r[0]; });
   }
   // Eingefrorene Saison-Dateien (docs/archiv/<saison>.json), je Saison einmal
@@ -3980,9 +3957,8 @@ window.Mitglieder = (function () {
         } }));
       if (ist) box.appendChild(h("span", { class: "meta", style: "align-self:center",
         text: "abgehakt am " + new Date(e.bezahlt).toLocaleDateString("de-DE") }));
-      var rg = rechnungZu(sp.kennung);
-      if (rg) box.appendChild(h("button", { type: "button", text: "Rechnung " + rg.nummer + " laden",
-        title: "Dasselbe PDF noch einmal bauen", onclick: function () { rechnungNochmal(rg); } }));
+      // Den Knopf "Rechnung ... laden" bringt rechnungZeile() - hier stand
+      // er bis Fassung 279 ein zweites Mal.
     }
     neu();
     return box;
@@ -3997,7 +3973,7 @@ window.Mitglieder = (function () {
     // Ort, an dem eine schon geschriebene Rechnung wieder zu holen ist.
     var einTipp = !!(aufRechnung && zumAbrechnen(sp));
     var box = h("div", { class: "zweit" }, [
-      einTipp ? null : h("button", { type: "button", text: "Auf die Rechnung", onclick: function () {
+      einTipp ? null : h("button", { type: "button", "data-auf-rechnung": "1", text: "Auf die Rechnung", onclick: function () {
         rechnungWahl[sp.kennung] = sp; rechnungForm = rechnungFormAusWahl();
         abrechnungPanel = "rechnung"; panelUnten = false; rendereAbrechnung();
         // Seit Fassung 165 steht die Rechnung oben, nicht mehr "unten unter
@@ -4009,6 +3985,9 @@ window.Mitglieder = (function () {
       if (!box.isConnected) return;
       var rg = liste.filter(function (x) { return (x.kennungen || []).indexOf(sp.kennung) >= 0; })[0];
       if (!rg) return;
+      // Ist die Rechnung geschrieben, gibt es nichts mehr vorzumerken.
+      var auf = box.querySelector("[data-auf-rechnung]");
+      if (auf) auf.remove();
       box.insertBefore(h("button", { type: "button", class: "anfrage", text: "Rechnung " + rg.nummer + " laden",
         onclick: function () { rechnungNochmal(rg); } }), box.firstChild);
     });
@@ -4040,7 +4019,9 @@ window.Mitglieder = (function () {
     var el = wurzel.querySelector('[data-kennung="' + spiel.kennung.replace(/"/g, "") + '"] .mg-betrag');
     if (!el) return;
     var e = einsaetze[spiel.kennung], b = betragFuer(spiel, e);
-    el.textContent = betragText(spiel, e, b);
+    // Dieselbe Aufstellung wie beim Zeichnen - als Text gesetzt, stuende
+    // nach der ersten Eingabe wieder die alte Zeile da.
+    leeren(el); el.appendChild(aufstellung(spiel, e, b));
     var kurz = wurzel.querySelector('[data-kennung="' + spiel.kennung.replace(/"/g, "") + '"] .mg-betrag-kurz');
     if (kurz) kurz.textContent = b.betrag != null ? euro(b.betrag) + (e.km != null ? " · " + dezimal(e.km) + " km" : "") : "Betrag fehlt";
     var karte = wurzel.querySelector('[data-kennung="' + spiel.kennung.replace(/"/g, "") + '"]');
@@ -4070,14 +4051,31 @@ window.Mitglieder = (function () {
     if (gr && wie) gr.title = wie;
   }
 
-  function betragText(spiel, e, b) {
-    if (b.betrag == null) return "Betrag fehlt (Vergütung eintragen)";
-    var teile = ["Betrag " + euro(b.betrag)];
-    if (b.zeit) teile.push("+20 % Uhrzeit");
-    if (b.ueber) teile.push("+" + euro(b.ueber) + " übergreifend");
-    if (b.ausfall) teile.push("−50 % Ausfall");
-    if (e && e.km != null) teile.push("Fahrt " + euro(fahrtkosten(e)));
-    return teile.join(" · ");
+  // Was dieses Spiel bringt, Posten fuer Posten und zusammen. Gerechnet
+  // wie summen() - Verguetung mit Zuschlaegen, Fahrt, Verpflegung,
+  // Auslagen -, damit die Summe hier und im Jahresabschluss dieselbe ist.
+  // Ersetzt die Zeile "Betrag ... - Fahrt ...", in der die Verpflegung
+  // fehlte und keine Summe stand.
+  function aufstellung(spiel, e, b) {
+    e = e || {};
+    var dl = h("dl", { class: "mg-aufstellung" });
+    function zeile(was, betrag, klasse) {
+      dl.appendChild(h("dt", { class: klasse || "", text: was }));
+      dl.appendChild(h("dd", { class: klasse || "", text: betrag }));
+    }
+    if (b.betrag == null) zeile("Vergütung", "fehlt", "fehlt");
+    else {
+      zeile("Vergütung", euro(b.grund));
+      if (b.zeit) zeile("+20 % Uhrzeit", euro(b.zeit));
+      if (b.ueber) zeile("übergreifend", euro(b.ueber));
+      if (b.ausfall) zeile("Ausfall vor Ort, halbe Gebühr", "−" + euro(b.ausfall));
+    }
+    var fahrt = fahrtkosten(e), verpf = e.verpflegung || 0, ausl = e.auslagen || 0;
+    if (e.km != null) zeile("Fahrt · " + dezimal(e.km) + " km", euro(fahrt));
+    if (verpf) zeile("Verpflegung", euro(verpf));
+    if (ausl) zeile("Auslagen", euro(ausl));
+    zeile("Zusammen", euro((b.betrag || 0) + fahrt + verpf + ausl), "summe");
+    return dl;
   }
 
   // Jahresblatt fuers Finanzamt: alle Spiele eines Kalenderjahres ueber alle Saisons
@@ -5131,10 +5129,12 @@ window.Mitglieder = (function () {
     // aus wie eine, mit Rahmen und Pfeil, und kostet 44 px. Wer im
     // ersten Jahr pfeift, hat genau eine Saison.
     var saisonListe = saisonen();
-    var saisonWahl = saisonListe.length > 1
-      ? h("select", { class: "mg-select", onchange: function (ev) { gewaehlteSaison = ev.target.value; saisonLaden(gewaehlteSaison).then(rendereAbrechnung); } },
-          saisonListe.map(function (s) { var o = h("option", { value: s, text: "Saison " + s }); if (s === gewaehlteSaison) o.selected = true; return o; }))
-      : h("p", { class: "meta", style: "margin:0", text: "Saison " + (saisonListe[0] || gewaehlteSaison || "") });
+    // Immer ein Auswahlfeld, auch mit nur einer Saison: als Text sah es
+    // aus wie eine Ueberschrift, und niemand suchte dort die Saisonwahl.
+    if (!saisonListe.length && gewaehlteSaison) saisonListe = [gewaehlteSaison];
+    var saisonWahl = h("select", { class: "mg-select", "aria-label": "Saison",
+        onchange: function (ev) { gewaehlteSaison = ev.target.value; saisonLaden(gewaehlteSaison).then(rendereAbrechnung); } },
+      saisonListe.map(function (s) { var o = h("option", { value: s, text: "Saison " + s }); if (s === gewaehlteSaison) o.selected = true; return o; }));
     // Nicht nur Luecken: auch ein Betrag, der von der Ordnung abweicht,
     // haelt ein Spiel in dieser Stufe fest.
     var offenN = spiele.filter(zuPruefen).length;
@@ -5217,7 +5217,7 @@ window.Mitglieder = (function () {
     var zahnrad = h("button", { type: "button", class: "mg-zahnrad" + (abrechnungPanel === "art" ? " auf" : ""),
       title: "Einstellungen: Wohnort, Strecke, Verpflegung",
       "aria-label": "Einstellungen", "aria-expanded": abrechnungPanel === "art" ? "true" : "false",
-      text: "⚙", onclick: function () { panelOeffnen("art", false); } });
+      onclick: function () { panelOeffnen("art", false); } }, [ikone("i-regler")]);
     inhalt.appendChild(h("div", { class: "mg-abrechnung-kopf" }, [
       h("div", { class: "mg-kopfzeile" }, [saisonWahl, zahnrad]), chips]));
     // Das Archiv ist kein Schritt - Nachsehen ist kein Arbeiten.
@@ -6014,7 +6014,7 @@ window.Mitglieder = (function () {
       ]),
       h("div", { class: "mg-felder" }, [h("label", { class: "mg-notiz" }, ["Notiz", notiz]), (profil.verpflegung_modus || "aus") !== "aus" || e.verpflegung != null ? h("label", { title: "Verpflegungsmehraufwand, 14 € ab 8 Std. Abwesenheit" }, ["Verpflegung €", verpf]) : null]),
       h("div", { class: "mg-belege" }),
-      h("div", { class: "meta mg-betrag", text: betragText(sp, e, b) }),
+      h("div", { class: "mg-betrag" }, [aufstellung(sp, e, b)]),
       satzLueckeZeile(sp),
       // Direkt von hier auf die Gebuehrenabrechnung - und, wenn es schon
       // eine gibt, dieselbe Rechnung noch einmal als PDF.
@@ -10466,10 +10466,9 @@ window.Mitglieder = (function () {
   function archivAusDb(alle) {
     if (!session) return Promise.resolve(null);
     return ladeProfil().then(function () {
-      var q = sb.from("spiele_archiv").select("kennung,beginn,liga,paarung,halle,system,besetzung,saison,manuell,stand");
+      var q = sb.from("spiele_archiv").select("kennung,beginn,liga,paarung,halle,system,besetzung,saison,manuell");
       if (!(alle && darf("archiv"))) q = q.contains("slugs", [profil.slug]);
-      // Abgesetzte Spiele raus - Begruendung bei ohneAbgesetzte().
-      return q.then(function (r) { return ohneAbgesetzte(r.data || []); });
+      return q.then(function (r) { return r.data || []; });
     }).catch(function () { return null; });
   }
   function wohnortEigen() {
@@ -10649,7 +10648,7 @@ window.Mitglieder = (function () {
     istUnterwegs: istUnterwegs, istErledigt: istErledigt,
     abweichung: abweichung, zuPruefen: zuPruefen, wegZahlen: wegZahlen,
     gebuehrenFlach: gebuehrenFlach, gebuehrenAenderung: gebuehrenAenderung,
-    ohneAbgesetzte: ohneAbgesetzte, gebuehrenUebersicht: gebuehrenUebersicht
+    gebuehrenUebersicht: gebuehrenUebersicht
   };
 
   return { oeffnen: oeffnen, bereit: bereit, angemeldet: angemeldet, pruefstand: pruefstand,

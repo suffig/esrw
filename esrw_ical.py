@@ -504,6 +504,70 @@ def ergaenze_historie(historie, spiele, venues, stand, kennungen=None):
     return neu
 
 
+def abgesetzte_entfernen(historie):
+    """Nimmt Spiele aus der Historie, die esrw.de abgesetzt hat.
+
+    Die Historie behaelt jedes Spiel, das je gesehen wurde - auch eines,
+    das spaeter von der Seite verschwindet. archiv_in_db() schreibt sie
+    bei jedem Lauf in spiele_archiv, und die App zeigte das abgesetzte
+    Spiel in Abrechnung und Archiv ("Essen gegen Maedchen", 14.11.).
+
+    Abgesetzt heisst: zuletzt am Spieltag oder davor gesehen, und andere
+    Spiele desselben Tages wurden spaeter noch gesehen. esrw.de zeigt die
+    Spiele eines Tages noch einige Tage lang; die gespielten tragen dann
+    ein spaeteres zuletzt_gesehen. Faellt der Workflow aus, haben alle
+    Spiele des Tages dasselbe Datum - dann bleibt alles. Ein Tag mit nur
+    einem Spiel bleibt ebenfalls: ohne Vergleich kein Urteil.
+
+    Nebenbei faellt die alte Fassung eines verlegten Spiels heraus, das
+    nicht gepaart werden konnte - sie steht am alten Tag und wurde
+    zuletzt davor gesehen.
+    """
+    def spieltag(e):
+        try:
+            return datetime.fromisoformat(e["beginn"]).date().isoformat()
+        except (KeyError, ValueError, TypeError):
+            return None
+    spaetestens = {}
+    for e in historie.values():
+        t, z = spieltag(e), e.get("zuletzt_gesehen")
+        if t and z and z > spaetestens.get(t, ""):
+            spaetestens[t] = z
+    weg = []
+    for k, e in list(historie.items()):
+        t, z = spieltag(e), e.get("zuletzt_gesehen")
+        if not t or not z:
+            continue
+        if z <= t and z < spaetestens.get(t, ""):
+            weg.append((k, historie.pop(k)))
+    return weg
+
+
+def abgesetzte_aus_db(abgesetzt, kennungen=None):
+    """Loescht die Zeilen abgesetzter Spiele aus spiele_archiv.
+
+    Die Tabelle wird nur per Upsert beschrieben und loescht nie - ohne das
+    hier bliebe die Zeile stehen, auch wenn die Historie das Spiel nicht
+    mehr kennt. Von Hand angelegte Spiele (manuell) werden nie geloescht:
+    hat der Betreiber ein Spiel selbst eingetragen, gilt das.
+    """
+    import urllib.parse
+    def q(w):
+        return urllib.parse.quote(str(w), safe="")
+    n = 0
+    for _quelle, e in abgesetzt:
+        k = kennung_lesen(kennungen, e["beginn"], e.get("begegnung", ""),
+                          e["beginn"] + "|" + e.get("paarung", ""))
+        if tabelle_loeschen("spiele_archiv?manuell=eq.false&kennung=eq." + q(k)):
+            n += 1
+        # Dieselbe Begegnung zur selben Zeit, falls die Zeile einmal unter
+        # einer anderen Kennung geschrieben wurde - aus dem Datenfenster
+        # kommt sie mit der Kennung von dort.
+        tabelle_loeschen("spiele_archiv?manuell=eq.false&beginn=eq." + q(e["beginn"])
+                         + "&paarung=eq." + q(e.get("paarung", "")))
+    return n
+
+
 def saison_datei(saison):
     return os.path.join("docs", "archiv", saison.replace("/", "-") + ".json")
 
@@ -1097,6 +1161,26 @@ def _zeit(iso):
     """ISO-Zeit aus Supabase (UTC) als Berliner Zeit."""
     d = datetime.fromisoformat(iso.replace("Z", "+00:00"))
     return d.astimezone(BERLIN) if BERLIN else d
+
+
+def tabelle_loeschen(pfad):
+    """DELETE in einer Supabase-Tabelle - wie tabelle_schreiben() nur mit
+    dem Service-Schluessel aus dem Workflow. pfad traegt den Filter in
+    PostgREST-Form; ohne Filter wird nichts geschickt, sonst waere die
+    ganze Tabelle weg."""
+    url = os.environ.get("SUPABASE_URL", "").strip()
+    schluessel = os.environ.get("SUPABASE_SERVICE_KEY", "").strip()
+    if "?" not in pfad or "=" not in pfad.split("?", 1)[1]:
+        return False
+    if not url or not schluessel:
+        return False
+    anfrage = urllib.request.Request(
+        url.rstrip("/") + "/rest/v1/" + pfad, method="DELETE",
+        headers={"apikey": schluessel, "Authorization": "Bearer " + schluessel,
+                 "Prefer": "return=minimal"})
+    with urllib.request.urlopen(anfrage, timeout=60):
+        pass
+    return True
 
 
 def tabelle_schreiben(pfad, zeilen):
@@ -2203,6 +2287,13 @@ def main():
     # Archiv fortschreiben und daraus die Statistik rechnen
     # (historie ist oben geladen - die Registratur brauchte sie zuerst)
     frisch = ergaenze_historie(historie, spiele, venues, stand, kennungen)
+    # Von esrw.de abgesetzte Spiele raus, bevor Statistik, Archiv und
+    # Datenbank daraus entstehen (Begruendung bei abgesetzte_entfernen).
+    abgesetzt = abgesetzte_entfernen(historie)
+    if abgesetzt:
+        print("%d abgesetzte(s) Spiel(e) aus dem Archiv genommen: %s" % (
+            len(abgesetzt), "; ".join("%s %s" % (e.get("beginn", "")[:10], e.get("paarung", ""))
+                                      for _k, e in abgesetzt)))
     # Abgeschlossene Saisons einfrieren (docs/archiv/), Arbeitsdatei bleibt klein
     saison_index = saisonarchiv_einfrieren(historie, personen, stand)
     rueck = historie_umbesetzen(historie, korrekturen)
@@ -2222,6 +2313,11 @@ def main():
         archiv_in_db(historie_alle, uebersicht, personen, stand, kennungen)
     except Exception as e:
         print("  ! Archiv nicht in die Datenbank geschrieben: %s" % str(e)[:120], file=sys.stderr)
+    if abgesetzt:
+        try:
+            print("Abgesetzte Spiele in der Datenbank geloescht: %d." % abgesetzte_aus_db(abgesetzt, kennungen))
+        except Exception as e:
+            print("  ! Abgesetzte Spiele nicht aus der Datenbank geloescht: %s" % str(e)[:120], file=sys.stderr)
 
     try:
         zweifel_schreiben(kennungen, uebersicht, historie_alle)

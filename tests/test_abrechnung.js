@@ -715,34 +715,11 @@ P.gelerntBauen([]);
 
 
 // ---------------------------------------------------------------------
-// Von esrw.de abgesetzte Spiele in spiele_archiv
+// Gebuehrenordnung als Uebersicht hinter dem Zahnrad
 //
-// Der Workflow schreibt jedes Fenster per Upsert und loescht nie. Ein
-// vor dem Anstoss abgesetztes Spiel blieb so in Abrechnung und Archiv -
-// "Essen gegen Maedchen", nach Fassung 278 gemeldet. Erkennbar daran,
-// dass es zuletzt VOR dem Anstoss gesehen wurde.
+// (Hier stand bis Fassung 280 der Test fuer ohneAbgesetzte(). Abgesetzte
+// Spiele nimmt jetzt der Workflow heraus - Test in tests/test_esrw.py.)
 (function () {
-  function iso(stunden) { return new Date(Date.now() + stunden * 3600000).toISOString(); }
-  var jetzt = iso(0);
-  var zeilen = [
-    { kennung: "gespielt",  beginn: iso(-72), stand: jetzt },          // nach dem Anstoss gesehen
-    { kennung: "abgesetzt", beginn: iso(-72), stand: iso(-80) },       // zuletzt 8 Std. vorher
-    { kennung: "frisch",    beginn: iso(-1),  stand: iso(-1.5) },      // eben angepfiffen
-    { kennung: "kommt",     beginn: iso(48),  stand: jetzt },
-    { kennung: "manuell",   beginn: iso(-72), stand: iso(-80), manuell: true },
-    { kennung: "ohneStand", beginn: iso(-72) }
-  ];
-  var bleibt = P.ohneAbgesetzte(zeilen).map(function (z) { return z.kennung; });
-  gleich(bleibt.indexOf("gespielt") >= 0, true, "gespieltes Spiel bleibt");
-  gleich(bleibt.indexOf("abgesetzt") >= 0, false, "vor dem Anstoss zuletzt gesehen: abgesetzt, faellt raus");
-  gleich(bleibt.indexOf("frisch") >= 0, true, "eben angepfiffen: noch kein Urteil, bleibt");
-  gleich(bleibt.indexOf("kommt") >= 0, true, "kommendes Spiel bleibt");
-  gleich(bleibt.indexOf("manuell") >= 0, true, "von Hand angelegtes Spiel bleibt immer");
-  gleich(bleibt.indexOf("ohneStand") >= 0, true, "Zeile ohne stand bleibt");
-  // Ist der Workflow seit dem Anstoss nicht gelaufen, gibt es kein Urteil.
-  var still = P.ohneAbgesetzte([{ kennung: "x", beginn: iso(-72), stand: iso(-80) }]);
-  gleich(still.length, 1, "ohne Lauf nach dem Anstoss wird nichts entfernt");
-
   // Gebuehrenordnung als Uebersicht: gebaut aus gebuehren.json
   P.setze({ gebuehren: GEBUEHREN });
   var u = P.gebuehrenUebersicht();
