@@ -3419,7 +3419,7 @@
      der Streifen links trennt ihn von den anderen Karten. */
   :root[data-design="neu"] .spiel.abweicht { border-left:3px solid var(--warn); }
   :root[data-design="neu"] .mg-abweichung { background:var(--warn-bg); color:var(--warn);
-    border-radius:var(--radius-s); padding:10px 12px; margin:0 var(--abstand-m) var(--abstand-s); }
+    border-radius:var(--radius-s); padding:10px 12px; margin:var(--abstand-s) 0; }
   :root[data-design="neu"] .mg-abweichung b { display:block; font-size:var(--s-l); }
   :root[data-design="neu"] .mg-abweichung p { margin:2px 0 0; font-size:var(--s-m); }
   :root[data-design="neu"] .mg-abweich-knoepfe { display:flex; gap:8px; margin-top:9px;
@@ -3439,7 +3439,9 @@
   /* ===== Nachtrag: Rechnung an der Karte, neue Ordnung, Jahresabschluss
      Der Knopf "Rechnung schreiben" sitzt wie der Abweichungskasten unter
      dem Kopf der Karte - sichtbar auch bei zugeklappter Karte. */
-  :root[data-design="neu"] .mg-kartenrechnung { margin:0 var(--abstand-m) var(--abstand-s); }
+  /* Kein eigener Seitenrand: die Karte hat ihr Innenmass, und die Felder
+     darunter beginnen dort. Mit 12 px extra stand der Knopf eingerueckt. */
+  :root[data-design="neu"] .mg-kartenrechnung { margin:var(--abstand-s) 0; }
   :root[data-design="neu"] .mg-kartenrechnung .mg-haupt { width:100%; min-height:44px; margin:0; }
 
   :root[data-design="neu"] .mg-ordnungneu { border-left:3px solid var(--akzent);
@@ -3507,6 +3509,57 @@
     :root[data-design="neu"] .mg-inhalt:has(> .mg-abrechnung-kopf) { max-width:760px;
       margin-left:auto; margin-right:auto; }
   }
+
+  /* ===== Nachtrag: die Spielkarte aufgeraeumt ======================
+     Nebensachen einer Karte - Rechnung laden, bezahlt abhaken, Ausfall
+     melden - stehen als Textknoepfe in einer Zeile. Die Kaesten darin
+     loesen sich auf (display:contents), damit ihre Knoepfe nebeneinander
+     umbrechen statt jeder in eigener Zeile. */
+  :root[data-design="neu"] .mg-kartenaktionen { display:flex; flex-wrap:wrap; align-items:center;
+    gap:0 var(--abstand-l); margin-top:var(--abstand-s);
+    padding-top:var(--abstand-xs); border-top:1px solid var(--linie); }
+  :root[data-design="neu"] .mg-kartenaktionen .zweit { display:contents; }
+  :root[data-design="neu"] .mg-kartenaktionen .zweit button,
+  :root[data-design="neu"] .mg-kartenaktionen .zweit button.anfrage,
+  :root[data-design="neu"] .mg-kartenaktionen .zweit button.mg-neben { width:auto; flex:0 0 auto;
+    min-height:44px; padding:0 2px; margin:0; background:none; border:0; box-shadow:none;
+    color:var(--akzent); font-weight:700; font-size:var(--s-l); text-align:left; }
+  :root[data-design="neu"] .mg-kartenaktionen .zweit button[disabled] { color:var(--dim); }
+  :root[data-design="neu"] .mg-kartenaktionen .meta { font-size:var(--s-s); }
+  :root[data-design="neu"] .mg-kartenaktionen:empty { display:none; }
+
+  /* "Vorschlag" heisst: gerechnet, noch nicht bestaetigt. Das ist ein
+     Hinweis, kein Alarm - gestrichelt, in normaler Schreibweise. Die
+     Tippflaeche bleibt, wie sie war (Antippen bestaetigt). */
+  :root[data-design="neu"] .mg-status.gerechnet { text-transform:none; letter-spacing:0;
+    font-weight:600; background:transparent; color:var(--warn);
+    border:1px dashed var(--warn); }
+
+  /* ===== Nachtrag: Einstellungen als Wahlknoepfe ===================
+     Wie im Entwurf: jede Wahl mit Titel und einer Zeile, was sie
+     bedeutet. Die Auswahlfelder vorher schnitten genau diese Zeile ab. */
+  :root[data-design="neu"] .mg-einstellblatt .mg-einst-titel { margin:var(--abstand-m) 0 var(--abstand-xs);
+    font-size:var(--s-s); text-transform:uppercase; letter-spacing:.07em; color:var(--dim); font-weight:800; }
+  :root[data-design="neu"] .mg-einstellblatt .mg-einst-titel:first-of-type { margin-top:0; }
+  :root[data-design="neu"] .mg-wahlknoepfe { display:grid; gap:6px; }
+  :root[data-design="neu"] .mg-wahlknoepfe button { display:flex; align-items:center; gap:11px;
+    width:100%; text-align:left; min-height:52px; padding:9px 12px; margin:0;
+    border:1px solid var(--linie); background:var(--bg); color:var(--text);
+    border-radius:var(--radius-s); font-family:inherit; cursor:pointer; }
+  :root[data-design="neu"] .mg-wahlknoepfe button.an { border-color:var(--akzent); background:var(--akzent-hell); }
+  :root[data-design="neu"] .mg-wahlknoepfe .punkt { flex:0 0 auto; width:18px; height:18px;
+    border-radius:50%; border:2px solid var(--dim); display:grid; place-items:center; }
+  :root[data-design="neu"] .mg-wahlknoepfe button.an .punkt { border-color:var(--akzent); }
+  :root[data-design="neu"] .mg-wahlknoepfe button.an .punkt::after { content:""; width:9px; height:9px;
+    border-radius:50%; background:var(--akzent); }
+  :root[data-design="neu"] .mg-wahlknoepfe .txt { flex:1 1 auto; min-width:0; display:flex; flex-direction:column; }
+  :root[data-design="neu"] .mg-wahlknoepfe .txt b { font-size:var(--s-l); }
+  :root[data-design="neu"] .mg-wahlknoepfe .txt small { color:var(--dim); font-size:var(--s-s); }
+  /* Karten|Zeilen fuellt die Breite - vorher blieb rechts eine leere Flaeche. */
+  :root[data-design="neu"] .mg-einstellblatt .mg-darstellung { display:grid; grid-template-columns:1fr 1fr; }
+  /* Der Hauptknopf der Ansage sah grau aus, wie abgeschaltet. */
+  :root[data-design="neu"] .mg-arbeitsknopf { background:var(--akzent); color:var(--akzent-text);
+    border:0; border-radius:var(--radius-s); font-weight:800; font-size:var(--s-xl); }
 
 </style>
 </head>
@@ -3971,6 +4024,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=277"></script>
+<script src="app.js?v=278"></script>
 </body>
 </html>

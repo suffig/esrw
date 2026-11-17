@@ -94,6 +94,10 @@ window.Mitglieder = (function () {
   // de-DE. Damit faellt die Browser-Pruefung min="0" weg, und ein
   // Kilometerstand von minus zwanzig waere plausibel wie jeder
   // andere. Hier faellt er heraus, und das Feld gilt als leer.
+  // Zahlen fuer Augen und Felder mit Komma: "60,4 km", nicht "60.4 km".
+  // Zurueck liest zahl() beides - die Felder duerfen das Komma tragen.
+  function dezimal(n) { return n == null || n === "" ? "" : String(n).replace(".", ","); }
+
   function zahlAbNull(s) {
     var n = zahl(s);
     return n == null || n < 0 ? null : n;
@@ -3865,7 +3869,7 @@ window.Mitglieder = (function () {
         // der die Gebuehr halbiert. Dieser hier schickt eine Meldung an
         // den Betreiber.
         title: "Der Betreiber prüft es und blendet das Spiel dann für alle aus",
-        text: schon ? "Dem Betreiber gemeldet ✓" : "Ausfall dem Betreiber melden", onclick: function () {
+        text: schon ? "Ausfall gemeldet ✓" : "Ausfall melden", onclick: function () {
           if (!confirm("„" + sp.paarung + "“ dem Betreiber als ausgefallen melden?\n\n" +
                        "Er prüft es und blendet das Spiel dann für alle aus.")) return;
           var grund = prompt("Kurz warum (optional):", "") || null;
@@ -3960,15 +3964,20 @@ window.Mitglieder = (function () {
   // Die Zeile unter einem Spiel in der Abrechnung: vormerken oder die
   // dazugehoerige Rechnung noch einmal laden.
   function rechnungZeile(sp) {
+    // Wo die Karte "Rechnung schreiben" traegt, waere das hier ein
+    // zweiter Weg zur selben Rechnung. Es bleibt fuer die Faelle ohne
+    // Ein-Tipp-Knopf: kommende Spiele, Spiele mit Luecke - und als
+    // Ort, an dem eine schon geschriebene Rechnung wieder zu holen ist.
+    var einTipp = !!(aufRechnung && zumAbrechnen(sp));
     var box = h("div", { class: "zweit" }, [
-      h("button", { type: "button", text: "Auf die Rechnung", onclick: function () {
+      einTipp ? null : h("button", { type: "button", text: "Auf die Rechnung", onclick: function () {
         rechnungWahl[sp.kennung] = sp; rechnungForm = rechnungFormAusWahl();
         abrechnungPanel = "rechnung"; panelUnten = false; rendereAbrechnung();
         // Seit Fassung 165 steht die Rechnung oben, nicht mehr "unten unter
         // Rechnung" - der Satz haette ins Leere gezeigt.
         kurzMeldung("Vorgemerkt. Die Rechnung steht oben.", "gut");
       } })
-    ]);
+    ].filter(Boolean));
     rechnungenLaden().then(function (liste) {
       if (!box.isConnected) return;
       var rg = liste.filter(function (x) { return (x.kennungen || []).indexOf(sp.kennung) >= 0; })[0];
@@ -4006,7 +4015,7 @@ window.Mitglieder = (function () {
     var e = einsaetze[spiel.kennung], b = betragFuer(spiel, e);
     el.textContent = betragText(spiel, e, b);
     var kurz = wurzel.querySelector('[data-kennung="' + spiel.kennung.replace(/"/g, "") + '"] .mg-betrag-kurz');
-    if (kurz) kurz.textContent = b.betrag != null ? euro(b.betrag) + (e.km != null ? " · " + e.km + " km" : "") : "Betrag fehlt";
+    if (kurz) kurz.textContent = b.betrag != null ? euro(b.betrag) + (e.km != null ? " · " + dezimal(e.km) + " km" : "") : "Betrag fehlt";
     var karte = wurzel.querySelector('[data-kennung="' + spiel.kennung.replace(/"/g, "") + '"]');
     if (!karte) return;
     karte.classList.toggle("erfasst", b.betrag != null);
@@ -4534,12 +4543,39 @@ window.Mitglieder = (function () {
       h("button", { type: "button", class: schnellModus ? "aktiv" : "",
         title: "Eine Zeile je Spiel, km und Betrag gleich eintragen", text: "Zeilen",
         onclick: function () { darstellungGewaehlt = true; schnellModus = true; rendereAbrechnung(); } })]);
-    return h("div", { class: "mg-form" }, [
-      h("p", { class: "meta", style: "margin:0 0 4px", text: "Zurzeit: " + (einfach ? "einfache Strecke" : "hin und zurück") + (modus !== "aus" ? " · Verpflegung " + (modus === "immer" ? "immer 14 €" : "ab 8 Std.") : " · keine Verpflegung") }),
-      h("label", { text: "Wohnort" }), wohnBox,
-      h("label", { text: "Kilometer" }), kmWahl,
-      h("label", { text: "Verpflegungsmehraufwand (steuerlich: 14 € bei mehr als 8 Std. Abwesenheit, Fahrzeit zählt mit)" }), vWahl,
-      h("label", { text: "Darstellung der Liste" }), darst,
+    // Wahlknoepfe wie im Entwurf: Titel und eine Zeile, was es bedeutet.
+    // Die Auswahlfelder schnitten ihren Text ab ("Entfernungspaus...").
+    // Gespeichert wird weiter ueber das Feld und seinen change-Handler -
+    // eine Stelle, die speichert, nicht zwei.
+    function wahlKnoepfe(feld, eintraege, name) {
+      feld.style.display = "none";
+      var gruppe = h("div", { class: "mg-wahlknoepfe", role: "radiogroup", "aria-label": name });
+      eintraege.forEach(function (w) {
+        var an = feld.value === w[0];
+        gruppe.appendChild(h("button", { type: "button", role: "radio",
+          "aria-checked": an ? "true" : "false", class: an ? "an" : "",
+          onclick: function () {
+            if (feld.value === w[0]) return;
+            feld.value = w[0]; feld.dispatchEvent(new Event("change"));
+          } }, [h("span", { class: "punkt", "aria-hidden": "true" }),
+                h("span", { class: "txt" }, [h("b", { text: w[1] }), h("small", { text: w[2] })])]));
+      });
+      return h("div", {}, [gruppe, feld]);
+    }
+    var se = (profil.satz_einfach != null ? profil.satz_einfach : 0.38).toFixed(2).replace(".", ",");
+    var sh = (profil.satz_hinrueck != null ? profil.satz_hinrueck : 0.30).toFixed(2).replace(".", ",");
+    var kmKnoepfe = wahlKnoepfe(kmWahl, [
+      ["einfach", "Einfache Strecke", "Entfernungspauschale " + se + " €/km, volle Kilometer"],
+      ["hinrueck", "Hin und zurück", sh + " €/km tatsächlich gefahren, doppelte Strecke"]], "Kilometer");
+    var vKnoepfe = wahlKnoepfe(vWahl, [
+      ["aus", "Aus", "Keine Verpflegung eintragen"],
+      ["auto", "Automatisch", "14 € bei mehr als 8 Std. unterwegs, Fahrzeit zählt mit"],
+      ["immer", "Immer", "14 € bei jedem Spiel"]], "Verpflegung");
+    return h("div", { class: "mg-form mg-einstellblatt" }, [
+      h("h4", { class: "mg-einst-titel", text: "Wohnort" }), wohnBox,
+      h("h4", { class: "mg-einst-titel", text: "Kilometer" }), kmKnoepfe,
+      h("h4", { class: "mg-einst-titel", text: "Verpflegung" }), vKnoepfe,
+      h("h4", { class: "mg-einst-titel", text: "Darstellung der Liste" }), darst,
       h("p", { class: "meta", text: "In „Prüfen“ bleiben es Karten – der Hinweis zur Gebührenordnung steht nur dort." }),
       h("p", { class: "meta", text: "Sätze ändern: Einstellungen → Profil. Ob das für dich passt, sagt dir dein Steuerberater." })]);
   }
@@ -5452,7 +5488,7 @@ window.Mitglieder = (function () {
       halleK.forEach(function (k) {
         box.appendChild(h("div", { class: "sperre" }, [
           h("span", { text: k }),
-          h("span", {}, [h("b", { text: r.halle[k] + " km" }),
+          h("span", {}, [h("b", { text: dezimal(r.halle[k]) + " km" }),
             h("button", { type: "button", class: "rund", title: "Regel entfernen", text: "×", onclick: function () {
               var alt = r.halle[k];
               delete r.halle[k];
@@ -5529,12 +5565,12 @@ window.Mitglieder = (function () {
       var v = kmVorschlag(sp);
       if (e.km == null && profil.heimat_lat != null) {
         fund("fehlt", sp, "Keine Kilometer eingetragen.",
-          v ? { text: v.km + " km übernehmen", aend: { km: v.km } } : null);
+          v ? { text: dezimal(v.km) + " km übernehmen", aend: { km: v.km } } : null);
       } else if (e.km != null) {
         if (v && v.art !== "luftlinie" && Math.abs(e.km - v.km) > Math.max(15, v.km * 0.5))
-          fund("schief", sp, e.km + " km eingetragen, berechnet sind " + v.km + " km.",
-            { text: "Auf " + v.km + " km setzen", aend: { km: v.km } });
-        if (e.km > 400) fund("schief", sp, e.km + " km einfache Strecke - sicher?", null);
+          fund("schief", sp, dezimal(e.km) + " km eingetragen, berechnet sind " + dezimal(v.km) + " km.",
+            { text: "Auf " + dezimal(v.km) + " km setzen", aend: { km: v.km } });
+        if (e.km > 400) fund("schief", sp, dezimal(e.km) + " km einfache Strecke - sicher?", null);
       }
       if (e.auslagen != null && e.auslagen > 0 && !(e.belege || []).length)
         fund("beleg", sp, euro(e.auslagen) + " Auslagen ohne Beleg.");
@@ -5656,7 +5692,7 @@ window.Mitglieder = (function () {
       var soll = sollBetrag(sp), vor = kmVorschlag(sp);
       function feld(wert, platz, schritt, schluessel) {
         return h("input", { type: "text", inputmode: "decimal",
-          value: wert != null ? wert : "", placeholder: platz,
+          value: dezimal(wert), placeholder: platz,
           onchange: function (ev) {
             var aend = {}; aend[schluessel] = zahlAbNull(ev.target.value);
             speichereEinsatz(sp, aend);
@@ -5808,13 +5844,13 @@ window.Mitglieder = (function () {
     var vergangen = d < new Date();
 
     var km = h("input", { type: "text", inputmode: "decimal",
-      value: e.km != null ? e.km : "", placeholder: vorschlag ? "~" + vorschlag.km : "km",
+      value: dezimal(e.km), placeholder: vorschlag ? "~" + dezimal(vorschlag.km) : "km",
       onchange: function (ev) { speichereEinsatz(sp, { km: zahlAbNull(ev.target.value) }); stufenZahlenNachfuehren(); } });
     var verg = h("input", { type: "text", inputmode: "decimal",
-      value: e.verguetung != null ? e.verguetung : "", placeholder: gebuehr != null ? "~" + gebuehr : "€",
+      value: dezimal(e.verguetung), placeholder: gebuehr != null ? "~" + dezimal(gebuehr) : "€",
       onchange: function (ev) { speichereEinsatz(sp, { verguetung: zahlAbNull(ev.target.value) }); abweichungNachfuehren(zeile, sp); stufenZahlenNachfuehren(); } });
     var ausl = h("input", { type: "text", inputmode: "decimal",
-      value: e.auslagen != null ? e.auslagen : "", placeholder: "€",
+      value: dezimal(e.auslagen), placeholder: "€",
       onchange: function (ev) { speichereEinsatz(sp, { auslagen: zahlAbNull(ev.target.value) }); } });
     var ausf = h("input", { type: "checkbox", onchange: function (ev) { speichereEinsatz(sp, { ausgefallen: ev.target.checked }, true); } });
     ausf.checked = !!e.ausgefallen;
@@ -5822,7 +5858,7 @@ window.Mitglieder = (function () {
     ueb.checked = !!e.uebergreifend;
     var notiz = h("input", { type: "text", value: e.notiz || "", placeholder: "Notiz",
       onchange: function (ev) { speichereEinsatz(sp, { notiz: ev.target.value.trim() || null }); } });
-    var verpf = h("input", { type: "text", inputmode: "decimal", value: e.verpflegung != null ? e.verpflegung : "", placeholder: (profil.verpflegung_modus || "aus") === "aus" ? "" : "14",
+    var verpf = h("input", { type: "text", inputmode: "decimal", value: dezimal(e.verpflegung), placeholder: (profil.verpflegung_modus || "aus") === "aus" ? "" : "14",
       onchange: function (ev) { speichereEinsatz(sp, { verpflegung: zahlAbNull(ev.target.value) }); } });
 
     var b = betragFuer(sp, e);
@@ -5842,7 +5878,7 @@ window.Mitglieder = (function () {
         h("div", { class: "paarung", text: (sp.liga ? sp.liga + ": " : "") + sp.paarung }),
         h("div", { class: "mg-summe" }, [
           h("span", { class: "meta mg-betrag-kurz" + (b.betrag == null && vergangen ? " fehlt" : ""),
-            text: b.betrag != null ? euro(b.betrag) + (e.km != null ? " · " + e.km + " km" : "") : "Betrag fehlt" }),
+            text: b.betrag != null ? euro(b.betrag) + (e.km != null ? " · " + dezimal(e.km) + " km" : "") : "Betrag fehlt" }),
           gerechnetText(e) ? h("button", { type: "button", class: "mg-status gerechnet",
             title: gerechnetText(e), text: "Vorschlag",
             onclick: function () { speichereEinsatz(sp, { herkunft: null }); kurzMeldung("Als geprüft vermerkt ✓", "gut"); } }) : null,
@@ -5870,7 +5906,7 @@ window.Mitglieder = (function () {
       zeile.insertBefore(h("div", { class: "mg-kartenrechnung" }, [rk]), details);
     }
     details.appendChild(h("div", { class: "meta", text: (sp.halle || "Halle unbekannt") +
-        (vorschlag && vorschlag.art === "route" ? " · " + vorschlag.km + " km Straße" : "") }));
+        (vorschlag && vorschlag.art === "route" ? " · " + dezimal(vorschlag.km) + " km Straße" : "") }));
     [
       h("div", { class: "mg-felder" }, [
         h("label", {}, ["km einfach", km]), h("label", {}, ["Vergütung €", verg]), h("label", {}, ["Auslagen €", ausl])
@@ -5887,9 +5923,10 @@ window.Mitglieder = (function () {
       satzLueckeZeile(sp),
       // Direkt von hier auf die Gebuehrenabrechnung - und, wenn es schon
       // eine gibt, dieselbe Rechnung noch einmal als PDF.
-      rechnungZeile(sp),
-      bezahltZeile(sp),
-      ausfallZeile(sp),
+      // Die Nebensachen in einer Zeile, als Textknoepfe. Vorher drei
+      // volle Kaesten untereinander, 150 px, so laut wie der Hauptknopf.
+      h("div", { class: "mg-kartenaktionen" },
+        [rechnungZeile(sp), bezahltZeile(sp), ausfallZeile(sp)].filter(Boolean)),
       sp.privat ? h("div", { class: "zweit" }, [h("button", { type: "button", style: "color:var(--rot)", text: "Eintrag löschen", onclick: function () {
         if (!confirm("Dieses selbst eingetragene Spiel samt Abrechnung und Belegen löschen?")) return;
         var belege = (einsaetze[sp.kennung] || {}).belege || [];
