@@ -4240,6 +4240,54 @@ window.Mitglieder = (function () {
              startpunkt: !!(profil && profil.heimat_lat == null && ohneKm) };
   }
 
+  // Die Adresse, von der aus gerechnet wird. Sie gehoert dem Profil -
+  // dieselbe, die auf der Profilseite steht. Deshalb schreibt dieses
+  // Formular auch dorthin und nicht in ein zweites Feld.
+  //
+  // Steht in zwei Ansichten (Wohnort-Hinweis ueber der Liste und
+  // Einstellungen hinter dem Zahnrad). Abgeschrieben waere es zweimal
+  // dieselbe Pruefung auf Koordinaten und Hausnummer - und beim
+  // naechsten Mal nur noch an einer Stelle richtig.
+  function startpunktFormular(nachher) {
+    var adresse = adressFeld({ wert: (profil && profil.heimat) || "",
+      lat: profil && profil.heimat_lat, lon: profil && profil.heimat_lon });
+    var sichern = h("button", { type: "button", class: "mg-haupt", text: "Im Profil speichern" });
+    var form = h("div", { class: "mg-startpunkt" }, [
+      h("p", { class: "meta", style: "margin:0 0 6px", text:
+        "Von hier aus rechnet die App die Strecke zu jeder Halle. "
+        + "Die Adresse steht danach auch in deinem Profil." }),
+      adresse.box, sichern]);
+    // Erst einhaengen, dann fokussieren - vorher hat das Feld keinen
+    // Platz im Dokument und der Fokus verpufft.
+    setTimeout(function () { if (adresse.feld.isConnected) adresse.feld.focus(); }, 0);
+    sichern.addEventListener("click", function () {
+      var text = (adresse.feld.value || "").trim();
+      // Ohne Koordinaten gaebe es keine Route - und ohne Hausnummer
+      // zeigt Nominatim auf die Strassenmitte.
+      if (!text || adresse.stand.lat == null || !adresse.stand.gewaehlt) {
+        meldung("Bitte die Adresse aus der Vorschlagsliste wählen, dann stimmen Hausnummer, PLZ und Ort.", "warn");
+        adresse.feld.focus(); return;
+      }
+      if (!hausnummerAus(text)) {
+        meldung("Bitte die Hausnummer mit angeben, daraus wird die Strecke zur Halle berechnet.", "warn");
+        adresse.feld.focus(); return;
+      }
+      sichern.disabled = true;
+      sb.from("profile").upsert({ id: session.user.id, heimat: text,
+        heimat_lat: adresse.stand.lat, heimat_lon: adresse.stand.lon,
+        // Neue Adresse -> alte Strecken sind wertlos
+        strecken: {} }).then(function (r) {
+        sichern.disabled = false;
+        if (r.error) { meldung("Speichern fehlgeschlagen: " + fehlerText(r.error), "warn"); return; }
+        profil = Object.assign({}, profil || {}, { heimat: text,
+          heimat_lat: adresse.stand.lat, heimat_lon: adresse.stand.lon, strecken: {} });
+        kurzMeldung("Im Profil gespeichert ✓", "gut");
+        if (nachher) nachher();
+      });
+    });
+    return form;
+  }
+
   // Startpunkt und Betraege in einem Zug. Ohne Heimatadresse rechnet
   // die App keine Strecke - hallenOhneRoute() kehrt dann sofort
   // zurueck -, und genau das war von aussen nicht zu sehen: Betraege
@@ -4273,42 +4321,11 @@ window.Mitglieder = (function () {
     }
 
     function startpunktFragen() {
-      var adresse = adressFeld({ wert: (profil && profil.heimat) || "",
-        lat: profil && profil.heimat_lat, lon: profil && profil.heimat_lon });
-      var sichern = h("button", { type: "button", class: "mg-haupt", text: "Übernehmen und rechnen" });
-      var form = h("div", { class: "mg-startpunkt" }, [
-        h("p", { class: "meta", style: "margin:0 0 6px", text:
-          "Von hier aus rechnet die App die Strecke zu jeder Halle. "
-          + "Die Adresse steht danach auch in deinem Profil." }),
-        adresse.box, sichern]);
       knopf.classList.add("versteckt");
-      box.appendChild(form);
-      adresse.feld.focus();
-      sichern.addEventListener("click", function () {
-        var text = (adresse.feld.value || "").trim();
-        // Ohne Koordinaten gaebe es keine Route - und ohne Hausnummer
-        // zeigt Nominatim auf die Strassenmitte.
-        if (!text || adresse.stand.lat == null || !adresse.stand.gewaehlt) {
-          meldung("Bitte die Adresse aus der Vorschlagsliste wählen, dann stimmen Hausnummer, PLZ und Ort.", "warn");
-          adresse.feld.focus(); return;
-        }
-        if (!hausnummerAus(text)) {
-          meldung("Bitte die Hausnummer mit angeben, daraus wird die Strecke zur Halle berechnet.", "warn");
-          adresse.feld.focus(); return;
-        }
-        sichern.disabled = true;
-        sb.from("profile").upsert({ id: session.user.id, heimat: text,
-          heimat_lat: adresse.stand.lat, heimat_lon: adresse.stand.lon,
-          // Neue Adresse -> alte Strecken sind wertlos
-          strecken: {} }).then(function (r) {
-          sichern.disabled = false;
-          if (r.error) { meldung("Speichern fehlgeschlagen: " + fehlerText(r.error), "warn"); return; }
-          profil = Object.assign({}, profil || {}, { heimat: text,
-            heimat_lat: adresse.stand.lat, heimat_lon: adresse.stand.lon, strecken: {} });
-          form.remove(); knopf.classList.remove("versteckt");
-          rechnen();
-        });
+      var form = startpunktFormular(function () {
+        form.remove(); knopf.classList.remove("versteckt"); rechnen();
       });
+      box.appendChild(form);
     }
 
     knopf.addEventListener("click", function () {
@@ -4395,10 +4412,43 @@ window.Mitglieder = (function () {
         kurzMeldung(vWahl.value === "aus" ? "Verpflegung aus, Beträge entfernt." : n + " Spiele neu berechnet.", "gut");
       });
     });
+    // Der Wohnort gehoert dem Profil. Steht dort eine Adresse, zeigt
+    // die Abrechnung sie nur an - fragen muss sie niemand zweimal.
+    var wohnBox = h("div", { class: "mg-wohnblock" });
+    function wohnZeichnen() {
+      leeren(wohnBox);
+      if (profil && profil.heimat_lat != null) {
+        wohnBox.appendChild(h("p", { class: "meta", style: "margin:0 0 6px",
+          text: "Aus deinem Profil: " + (profil.heimat || "Adresse ohne Namen") }));
+        wohnBox.appendChild(h("button", { type: "button", class: "mg-neben",
+          text: "Im Profil ändern", onclick: function () {
+            leeren(wohnBox);
+            wohnBox.appendChild(startpunktFormular(function () { rendereAbrechnung(); }));
+          } }));
+      } else {
+        wohnBox.appendChild(h("p", { class: "achtung", style: "margin:0 0 6px",
+          text: "Noch nichts eingetragen – ohne Wohnort bleiben die Kilometer bei jedem Spiel leer." }));
+        wohnBox.appendChild(startpunktFormular(function () { rendereAbrechnung(); }));
+      }
+    }
+    wohnZeichnen();
+    // Der Umschalter stand bis Fassung 275 im Kopf der Seite, neben der
+    // Saison. Dort war er die dritte Navigation untereinander; hier ist
+    // er, was er ist - eine Einstellung.
+    var darst = h("div", { class: "modus mg-darstellung" }, [
+      h("button", { type: "button", class: schnellModus ? "" : "aktiv",
+        title: "Eine Karte je Spiel, zum Aufklappen", text: "Karten",
+        onclick: function () { darstellungGewaehlt = true; schnellModus = false; rendereAbrechnung(); } }),
+      h("button", { type: "button", class: schnellModus ? "aktiv" : "",
+        title: "Eine Zeile je Spiel, km und Betrag gleich eintragen", text: "Zeilen",
+        onclick: function () { darstellungGewaehlt = true; schnellModus = true; rendereAbrechnung(); } })]);
     return h("div", { class: "mg-form" }, [
       h("p", { class: "meta", style: "margin:0 0 4px", text: "Zurzeit: " + (einfach ? "einfache Strecke" : "hin und zurück") + (modus !== "aus" ? " · Verpflegung " + (modus === "immer" ? "immer 14 €" : "ab 8 Std.") : " · keine Verpflegung") }),
+      h("label", { text: "Wohnort" }), wohnBox,
       h("label", { text: "Kilometer" }), kmWahl,
       h("label", { text: "Verpflegungsmehraufwand (steuerlich: 14 € bei mehr als 8 Std. Abwesenheit, Fahrzeit zählt mit)" }), vWahl,
+      h("label", { text: "Darstellung der Liste" }), darst,
+      h("p", { class: "meta", text: "In „Prüfen“ bleiben es Karten – der Hinweis zur Gebührenordnung steht nur dort." }),
       h("p", { class: "meta", text: "Sätze ändern: Einstellungen → Profil. Ob das für dich passt, sagt dir dein Steuerberater." })]);
   }
 
@@ -4490,6 +4540,33 @@ window.Mitglieder = (function () {
     // km zaehlt nur als "fehlt", wenn eine Heimatadresse da ist - sonst waere jedes Spiel unvollstaendig
     return !e || e.verguetung == null || (e.km == null && profil.heimat_lat != null);
   }
+  // Weicht der eingetragene Betrag von der Gebuehrenordnung ab?
+  //
+  // Bis Fassung 275 fragte das niemand. grundgebuehr() fuellte nur
+  // leere Felder; was einmal falsch drinstand - etwa der SR-Satz bei
+  // einem HSR, wie ihn Fassungen vor 228 eintrugen -, blieb fuer immer
+  // stehen, ohne Hinweis.
+  //
+  // Verglichen wird die blanke Pauschale. Zeitzuschlag, uebergreifender
+  // Einsatz und die Halbierung bei Ausfall vor Ort kommen in
+  // betragFuer() oben drauf und stehen nie im Feld.
+  function abweichung(sp) {
+    if (new Date(sp.beginn) >= new Date()) return null;
+    var e = einsaetze[sp.kennung];
+    if (!e || e.verguetung == null) return null;
+    // Eine eigene Regel ist eine bewusste Entscheidung - sie steht
+    // ueber der Ordnung, genau wie in sollBetrag().
+    if (regelBetrag(sp) != null) return null;
+    var soll = grundgebuehr(sp);
+    if (soll == null) return null;
+    // Cent-Reste aus einer alten Rundung sind keine Abweichung.
+    if (Math.abs(e.verguetung - soll) < 0.005) return null;
+    return { ist: e.verguetung, soll: soll };
+  }
+  // Was in der Stufe "Pruefen" steht: fehlende Angaben und falsche
+  // Betraege. Beides haelt ein Spiel von der Rechnung ab.
+  function zuPruefen(sp) { return hatLuecke(sp) || !!abweichung(sp); }
+
   function nichtAbgehakt(sp) {
     var e = einsaetze[sp.kennung];
     return new Date(sp.beginn) < new Date() && !(e && e.bezahlt);
@@ -4514,7 +4591,9 @@ window.Mitglieder = (function () {
   // Gepfiffen, nichts fehlt, noch keine Rechnung - hier wird man taetig.
   function zumAbrechnen(sp) {
     if (new Date(sp.beginn) >= new Date()) return false;
-    if (hatLuecke(sp)) return false;
+    // Nicht nur Luecken halten auf: ein Betrag, der von der Ordnung
+    // abweicht, gehoert geklaert, bevor er das Haus verlaesst.
+    if (zuPruefen(sp)) return false;
     var e = einsaetze[sp.kennung];
     if (e && e.bezahlt) return false;
     return !hatRechnung(sp);
@@ -4556,7 +4635,7 @@ window.Mitglieder = (function () {
   // ihnen faengt niemand an.
   function anfangsStufeSetzen(spiele) {
     if (anfangGesetzt) return;
-    if (spiele.filter(hatLuecke).length) { anfangGesetzt = true; nurOffene = true; return; }
+    if (spiele.filter(zuPruefen).length) { anfangGesetzt = true; nurOffene = true; return; }
     // Ohne Rechnungsliste laesst sich "Abrechnen" nicht beurteilen.
     // Dann noch nichts festlegen: die Liste kommt gleich nach und ruft
     // rendereAbrechnung() erneut. Wuerde hier schon anfangGesetzt
@@ -4595,8 +4674,18 @@ window.Mitglieder = (function () {
     }
     var satz = "", betrag = null, tun = null;
     if (st === "fehlt") {
-      satz = n === 1 ? "Bei einem Spiel fehlen Kilometer oder Vergütung."
-                     : "Bei " + n + " Spielen fehlen Kilometer oder Vergütung.";
+      // Zwei Gruende halten ein Spiel hier fest: etwas fehlt, oder der
+      // Betrag passt nicht zur Ordnung. Der Satz nennt beides - sonst
+      // sucht man bei einer Abweichung nach einer Luecke, die es nicht gibt.
+      var ab = liste.filter(abweichung).length, luecken = n - ab;
+      satz = ab && luecken
+        ? luecken + (luecken === 1 ? " Spiel ohne Angaben, " : " Spiele ohne Angaben, ")
+          + ab + (ab === 1 ? " Betrag weicht von der Ordnung ab." : " Beträge weichen von der Ordnung ab.")
+        : ab
+        ? (ab === 1 ? "Ein Betrag weicht von der Gebührenordnung ab."
+                    : ab + " Beträge weichen von der Gebührenordnung ab.")
+        : n === 1 ? "Bei einem Spiel fehlen Kilometer oder Vergütung."
+                  : "Bei " + n + " Spielen fehlen Kilometer oder Vergütung.";
     } else if (st === "abrechnen") {
       satz = n === 1 ? "Ein Spiel wartet auf eine Rechnung." : n + " Spiele warten auf eine Rechnung.";
       betrag = summeVon(liste);
@@ -4680,7 +4769,13 @@ window.Mitglieder = (function () {
     anfangsStufeSetzen(spiele);
     // In der Eintrage-Stufe liegen die Felder offen; sonst die Karten,
     // die mehr zeigen als drei Zahlen.
-    if (!darstellungGewaehlt) schnellModus = (arbeitsStufe() === "fehlt");
+    // Frueher: in der Eintrage-Stufe die Zeilen, sonst die Karten. Seit
+    // der Abweichungskasten an eintrag() haengt und schnellListe() ihn
+    // nicht kennt, waeren gerade dort Zeilen blind - also Karten.
+    if (!darstellungGewaehlt) schnellModus = false;
+    // Auch gegen eine eigene Wahl: schnellListe() zeichnet den
+    // Abweichungskasten nicht, und genau um den geht es hier.
+    if (arbeitsStufe() === "fehlt") schnellModus = false;
     // Erst nachsehen, was schon dasteht, dann die Luecken fuellen -
     // sonst lernt die App aus dem, was sie selbst gerade eingetragen
     // hat. Ueber alle Saisons, nicht nur die gewaehlte: die Liga von
@@ -4713,7 +4808,9 @@ window.Mitglieder = (function () {
       ? h("select", { class: "mg-select", onchange: function (ev) { gewaehlteSaison = ev.target.value; saisonLaden(gewaehlteSaison).then(rendereAbrechnung); } },
           saisonListe.map(function (s) { var o = h("option", { value: s, text: "Saison " + s }); if (s === gewaehlteSaison) o.selected = true; return o; }))
       : h("p", { class: "meta", style: "margin:0", text: "Saison " + (saisonListe[0] || gewaehlteSaison || "") });
-    var offenN = spiele.filter(hatLuecke).length;
+    // Nicht nur Luecken: auch ein Betrag, der von der Ordnung abweicht,
+    // haelt ein Spiel in dieser Stufe fest.
+    var offenN = spiele.filter(zuPruefen).length;
     var unbezahltN = spiele.filter(nichtAbgehakt).length;
     var chips;
     // Drei der vier Knoepfe filterten, der vierte stellte um - und warf
@@ -4726,15 +4823,6 @@ window.Mitglieder = (function () {
     // waren rot, auch der an "Erledigt" - waehrend derselbe Posten
     // zwei Zeilen tiefer gruen leuchtete. Ohne "ton" bleibt es beim
     // roten Standard, den die Chips ausserhalb dieser Leiste tragen.
-    var filterKnopf = function (an, text, zahl, titel, fn, ton, stufe) {
-      var k = h("button", { type: "button", class: (an ? "aktiv" : "") + (ton ? " ton-" + ton : ""),
-        title: titel, "data-stufe": stufe || text,
-        // Eine eigene Wahl schlaegt den Anfangsvorschlag - auch den,
-        // der gleich mit der Rechnungsliste nachkommen wuerde.
-        onclick: function () { anfangGesetzt = true; fn(); rendereAbrechnung(); } }, [h("span", { text: text })]);
-      if (zahl) k.appendChild(h("span", { class: "zaehler", text: String(zahl) }));
-      return k;
-    };
     // Die Leiste folgt dem Weg, den ein Spiel nimmt: gepfiffen,
     // Angaben pruefen, Rechnung schreiben, Geld abhaken. Vorher hiess
     // das "Luecken" und "Nicht abgehakt" - Woerter, die nur kennt, wer
@@ -4745,8 +4833,9 @@ window.Mitglieder = (function () {
     var stufen = [
       [!nurOffene && !nurUnbezahlt && !nurOhneRechnung && !nurErledigt && !nurUnterwegs, "Alle", 0,
        "Alle Spiele der Saison", function () { alleAus(); }, true],
-      [nurOffene, "Angaben fehlen", offenN,
-       "Gespielt, aber Kilometer oder Vergütung fehlen", function () { alleAus(); nurOffene = true; }, true, "jetzt"],
+      [nurOffene, "Prüfen", offenN,
+       "Gespielt, aber Angaben fehlen oder der Betrag weicht von der Ordnung ab",
+       function () { alleAus(); nurOffene = true; }, true, "jetzt"],
       [nurOhneRechnung, "Abrechnen", abrechnenN,
        "Gespielt, Angaben vollständig, noch keine Rechnung geschrieben",
        function () { alleAus(); nurOhneRechnung = true; }, !!aufRechnung, "jetzt"],
@@ -4764,23 +4853,65 @@ window.Mitglieder = (function () {
     // eine zweite Zeile in der Leiste. "Alle" bleibt immer stehen, und
     // die gerade gewaehlte auch: sonst verschwindet sie unter den
     // Fingern, sobald man das letzte Spiel darin erledigt hat.
-    chips = h("div", { class: "mg-filterzeile" }, [
-      h("div", { class: "mg-ansicht mg-ablauf" }, stufen
-        .filter(function (st, i) { return st[5] && (i === 0 || st[2] > 0 || st[0]); })
-        .map(function (st) { return filterKnopf(st[0], st[1], st[2], st[3], st[4], st[6], st[1]); })),
+    // Ein Weg aus drei Schritten. Die Umschaltfunktionen sind dieselben
+    // wie vorher - nur die sechs Chips davor sind weg. "Alle" braucht
+    // keinen eigenen Knopf: die Zeile "Alle N zeigen" unter der Leiste
+    // fuehrt dorthin, und sie erscheint genau dann, wenn gefiltert ist.
+    // Der angezeigte Name ist nicht der Stufenname: die Stufe heisst
+    // intern "Unterwegs" bzw. "Geld fehlt", am Weg steht schlicht "Geld".
+    function schrittKnopf(st, name, unten) {
+      var k = h("button", { type: "button", class: "mg-schritt" + (st[0] ? " aktiv" : ""),
+        title: st[3], "data-stufe": st[1],
+        onclick: function () { anfangGesetzt = true; st[4](); rendereAbrechnung(); } }, [
+        h("span", { class: "was", text: name }),
+        h("span", { class: "zahl", text: unten })]);
+      if (st[0]) k.setAttribute("aria-current", "true");
+      if (!st[2]) k.classList.add("fertig");
+      return k;
+    }
+    // Summe statt Anzahl: beim Abrechnen ist die Frage "um wie viel
+    // geht es", nicht "wie viele Zeilen".
+    var abrechnenSumme = 0;
+    if (aufRechnung) spiele.filter(zumAbrechnen).forEach(function (sp) {
+      abrechnenSumme += betragFuer(sp, einsaetze[sp.kennung] || {}).betrag || 0;
+    });
+    var unterwegsN = spiele.filter(istUnterwegs).length;
+    // Ohne geladene Rechnungsliste laesst sich "unterwegs" nicht
+    // beurteilen - dann zeigt der dritte Schritt, was noch nicht
+    // abgehakt ist, so wie die alte Stufe "Geld fehlt".
+    var geldStufe = aufRechnung ? stufen[3] : stufen[4];
+    var geldZahl = aufRechnung ? unterwegsN : unbezahltN;
+    chips = h("div", { class: "mg-weg" }, [
+      schrittKnopf(stufen[1], "Prüfen", offenN
+        ? offenN + (offenN === 1 ? " Spiel" : " Spiele") : "stimmt"),
+      schrittKnopf(stufen[2], "Abrechnen",
+        abrechnenN ? euro(abrechnenSumme) : (aufRechnung ? "erledigt" : "…")),
+      schrittKnopf(geldStufe, "Geld", geldZahl ? geldZahl + " offen" : "erledigt")
     ]);
     // Saison und Darstellung in eine Zeile: beide sind schmal, und der
     // Kopf hatte vier Zeilen uebereinander. Gemessen bei 375 px: 210 px
     // vorher, 158 danach - die Saisonwahl behaelt 154 px, genug fuer
     // "Saison 2026/27".
-    var darstellung = h("div", { class: "modus mg-darstellung" }, [
-      h("button", { type: "button", class: schnellModus ? "" : "aktiv", title: "Eine Karte je Spiel, zum Aufklappen",
-        text: "Karten", onclick: function () { darstellungGewaehlt = true; schnellModus = false; rendereAbrechnung(); } }),
-      h("button", { type: "button", class: schnellModus ? "aktiv" : "", title: "Eine Zeile je Spiel, km und Betrag gleich eintragen",
-        text: "Zeilen", onclick: function () { darstellungGewaehlt = true; schnellModus = true; rendereAbrechnung(); } })
-    ]);
+    // Das Zahnrad traegt, was man selten braucht: Wohnort, Strecke,
+    // Verpflegung. Vorher lag das in einem Blatt namens
+    // "Abrechnungsart" hinter "Weitere Werkzeuge" - drei Tipps tief.
+    var zahnrad = h("button", { type: "button", class: "mg-zahnrad" + (abrechnungPanel === "art" ? " auf" : ""),
+      title: "Einstellungen: Wohnort, Strecke, Verpflegung",
+      "aria-label": "Einstellungen", "aria-expanded": abrechnungPanel === "art" ? "true" : "false",
+      text: "⚙", onclick: function () { panelOeffnen("art", false); } });
     inhalt.appendChild(h("div", { class: "mg-abrechnung-kopf" }, [
-      h("div", { class: "mg-kopfzeile" }, [saisonWahl, darstellung]), chips]));
+      h("div", { class: "mg-kopfzeile" }, [saisonWahl, zahnrad]), chips]));
+    // Das Archiv ist kein Schritt - Nachsehen ist kein Arbeiten.
+    // Deshalb liegt es als ruhige Zeile daneben, nicht in der Leiste.
+    var archivN = spiele.filter(istErledigt).length;
+    inhalt.appendChild(h("button", { type: "button",
+      class: "mg-archivzeile" + (nurErledigt ? " aktiv" : ""),
+      title: "Bezahlte Spiele dieser Saison",
+      onclick: function () { anfangGesetzt = true; alleAus(); nurErledigt = true; rendereAbrechnung(); } }, [
+      h("span", {}, ["Archiv ", h("small", { text: archivN
+        ? "· " + archivN + (archivN === 1 ? " bezahltes Spiel" : " bezahlte Spiele")
+        : "· noch nichts abgehakt" })]),
+      h("small", { "aria-hidden": "true", text: "›" })]));
     var wartet = warteBanner();
     if (wartet) inhalt.appendChild(wartet);
 
@@ -4908,7 +5039,7 @@ window.Mitglieder = (function () {
     // Schnellansicht vor den Filter und zeigte immer alles.
     var liste = spiele;
     if (nurUnbezahlt) liste = spiele.filter(nichtAbgehakt);
-    else if (nurOffene) liste = spiele.filter(hatLuecke);
+    else if (nurOffene) liste = spiele.filter(zuPruefen);
     else if (nurOhneRechnung) liste = spiele.filter(zumAbrechnen);
     else if (nurUnterwegs) liste = spiele.filter(istUnterwegs);
     else if (nurErledigt) liste = spiele.filter(istErledigt);
@@ -4947,7 +5078,7 @@ window.Mitglieder = (function () {
     // vollstaendig erfasst" stand auch unter "Erledigt", wo es
     // bedeutet haette: nichts ist bezahlt.
     else if (!liste.length) inhalt.appendChild(h("p", { class: "leer", text:
-      nurOffene ? "Bei allen Spielen sind Kilometer und Vergütung eingetragen ✓"
+      nurOffene ? "Alles geprüft: Angaben vollständig, Beträge wie in der Ordnung ✓"
       : nurOhneRechnung ? "Für alle gespielten Spiele ist eine Rechnung geschrieben ✓"
       : nurUnbezahlt ? "Alles abgehakt – das Geld ist da ✓"
       : nurErledigt ? "Noch nichts abgehakt. Sobald Geld ankommt, hakst du das Spiel ab."
@@ -5391,6 +5522,42 @@ window.Mitglieder = (function () {
   //   allen anderen Klassen pfeifen Schiedsrichter. Dann fehlt nicht
   //   der Satz, sondern die Einteilung passt nicht zur Klasse - und
   //   "trag den Betrag selbst ein" waere der falsche Rat.
+  // Der Kasten in der Spielkarte. Er steht ueber den Feldern und ist
+  // auch sichtbar, solange die Karte zu ist - sonst faende ihn nur,
+  // wer ohnehin schon nachsieht.
+  function abweichungZeile(sp) {
+    var ab = abweichung(sp);
+    if (!ab) return null;
+    var rolle = sp.rolle || "SR", liga = sp.liga || "dieser Liga";
+    var box = h("div", { class: "mg-abweichung" });
+    box.appendChild(h("b", { text: "Die Ordnung sagt " + euro(ab.soll) }));
+    box.appendChild(h("p", { text: "Eingetragen " + euro(ab.ist) + " – als " + rolle
+      + " in " + liga + " sind " + euro(ab.soll) + " vorgesehen." }));
+    var setzen = h("button", { type: "button", class: "mg-haupt",
+      text: "Auf " + euro(ab.soll) + " setzen", onclick: function () {
+        // herkunft "ordnung": der Wert kommt wieder aus der Ordnung,
+        // nicht aus einer Eingabe - so lernt gelerntBauen() ihn nicht.
+        speichereEinsatz(sp, { verguetung: ab.soll, herkunft: { verguetung: "ordnung" } });
+        kurzMeldung("Auf " + euro(ab.soll) + " gesetzt ✓", "gut");
+        rendereAbrechnung();
+      } });
+    var lassen = h("button", { type: "button", class: "mg-neben",
+      title: "Gilt ab sofort für " + rolle + " in " + liga + ", auch bei künftigen Spielen",
+      text: "So lassen", onclick: function () {
+        // Eine eigene Regel statt eines neuen Feldes: sie schweigt den
+        // Hinweis dauerhaft, steht sichtbar in den Einstellungen und
+        // laesst sich dort wieder loeschen.
+        var r = regeln(), liste = Object.assign({}, r.liga);
+        liste[ligaSchluessel(sp)] = ab.ist;
+        regelnSpeichern(liste, r.halle).then(function () {
+          kurzMeldung("Als eigener Satz für " + rolle + " in " + liga + " gemerkt ✓", "gut");
+          rendereAbrechnung();
+        });
+      } });
+    box.appendChild(h("div", { class: "mg-abweich-knoepfe" }, [setzen, lassen]));
+    return box;
+  }
+
   function satzLueckeZeile(sp) {
     if (new Date(sp.beginn) >= new Date()) return null;
     // sollBetrag() statt regelBetrag/grundgebuehr: gemessen im
@@ -5479,6 +5646,10 @@ window.Mitglieder = (function () {
       ]),
       details
     ]);
+    // Vor die Details, damit der Hinweis auch an der zugeklappten
+    // Karte steht - er ist der Grund, warum das Spiel in "Prüfen" liegt.
+    var abw = abweichungZeile(sp);
+    if (abw) { zeile.insertBefore(abw, details); zeile.classList.add("abweicht"); }
     details.appendChild(h("div", { class: "meta", text: (sp.halle || "Halle unbekannt") +
         (vorschlag && vorschlag.art === "route" ? " · " + vorschlag.km + " km Straße" : "") }));
     [
@@ -10013,7 +10184,8 @@ window.Mitglieder = (function () {
     // Die vier Stufen der Ablaufleiste. Sie muessen sich ausschliessen -
     // jedes vergangene Spiel steht in genau einer.
     hatLuecke: hatLuecke, zumAbrechnen: zumAbrechnen,
-    istUnterwegs: istUnterwegs, istErledigt: istErledigt
+    istUnterwegs: istUnterwegs, istErledigt: istErledigt,
+    abweichung: abweichung, zuPruefen: zuPruefen
   };
 
   return { oeffnen: oeffnen, bereit: bereit, angemeldet: angemeldet, pruefstand: pruefstand,

@@ -539,6 +539,78 @@ P.gelerntBauen([]);
 })();
 
 
+// ---------------------------------------------------------------------
+// Abweichung vom Satz der Ordnung
+//
+// Bis Fassung 275 verglich das niemand: grundgebuehr() fuellte nur
+// leere Felder. Ein HSR, dem eine alte Fassung den SR-Satz eintrug,
+// behielt ihn fuer immer. Genau diese Faelle stehen hier.
+(function () {
+  function sp(id, liga, rolle, system, tage) {
+    var d = new Date(); d.setDate(d.getDate() + (tage == null ? -5 : tage));
+    return { kennung: id, beginn: d.toISOString(), liga: liga, rolle: rolle,
+             system: system || 3, halle: "Halle A", paarung: "A - B" };
+  }
+  var hsrFalsch = sp("a1", "RL West", "HSR");          // bekam 180 statt 160
+  var lsrFalsch = sp("a2", "RL West", "LSR");          // bekam 180 statt 110
+  var hsrRecht  = sp("a3", "RL West", "HSR");          // 160, stimmt
+  var srRecht   = sp("a4", "RL West", "SR", 2);        // 180, stimmt
+  var llHsr     = sp("a5", "Landesliga Herren", "HSR");// 160, stimmt
+  var u20Lsr    = sp("a6", "U20 RL", "LSR");           // 80, stimmt
+  var unbekannt = sp("a7", "DNL Division 1", "SR", 2); // Ordnung kennt sie nicht
+  var leer      = sp("a8", "RL West", "HSR");          // nichts eingetragen
+  var kommt     = sp("a9", "RL West", "HSR", 3, +7);   // noch nicht gespielt
+  var cent      = sp("a10", "RL West", "HSR");         // 160,002 - Rundungsrest
+
+  P.setze({ profil: { einstellungen: {}, heimat_lat: null, heimat_lon: null },
+            aufRechnung: {},
+            einsaetze: {
+              a1: { verguetung: 180 }, a2: { verguetung: 180 },
+              a3: { verguetung: 160 }, a4: { verguetung: 180 },
+              a5: { verguetung: 160 }, a6: { verguetung: 80 },
+              a7: { verguetung: 250 }, a9: { verguetung: 180 },
+              a10: { verguetung: 160.002 }
+            } });
+
+  var ab = P.abweichung(hsrFalsch);
+  pruefe(!!ab, "HSR mit SR-Satz faellt auf");
+  if (ab) {
+    gleich(ab.soll, 160, "HSR in der RL West: die Ordnung sagt 160");
+    gleich(ab.ist, 180, "eingetragen waren 180");
+  }
+  var ab2 = P.abweichung(lsrFalsch);
+  pruefe(!!ab2, "LSR mit SR-Satz faellt auf");
+  if (ab2) gleich(ab2.soll, 110, "LSR in der RL West: die Ordnung sagt 110");
+
+  gleich(P.abweichung(hsrRecht), null, "HSR mit 160 weicht nicht ab");
+  gleich(P.abweichung(srRecht), null, "SR mit 180 weicht nicht ab");
+  gleich(P.abweichung(llHsr), null, "HSR in der Landesliga mit 160 weicht nicht ab");
+  gleich(P.abweichung(u20Lsr), null, "LSR in der U20 RL mit 80 weicht nicht ab");
+  gleich(P.abweichung(unbekannt), null, "wo die Ordnung nichts sagt, gibt es keine Abweichung");
+  gleich(P.abweichung(leer), null, "ein leeres Feld ist keine Abweichung, sondern eine Luecke");
+  gleich(P.abweichung(kommt), null, "ein kommendes Spiel wird nicht geprueft");
+  gleich(P.abweichung(cent), null, "Cent-Reste aus einer alten Rundung sind keine Abweichung");
+
+  // Eine eigene Regel ist eine bewusste Entscheidung - sie steht ueber
+  // der Ordnung. Genau das macht der Knopf "So lassen".
+  P.setze({ profil: { einstellungen: { regeln_liga: { "RL West|HSR": 180 } },
+                      heimat_lat: null, heimat_lon: null } });
+  gleich(P.abweichung(hsrFalsch), null, "eine eigene Regel schweigt den Hinweis");
+  gleich(P.abweichung(lsrFalsch) === null, false, "die Regel gilt nur fuer diese Rolle");
+
+  // Ein falscher Betrag darf nicht auf eine Rechnung wandern.
+  P.setze({ profil: { einstellungen: {}, heimat_lat: null, heimat_lon: null } });
+  gleich(P.zuPruefen(lsrFalsch), true, "falscher Betrag gehoert in die Stufe Pruefen");
+  gleich(P.zuPruefen(hsrRecht), false, "ein richtiger Betrag ist geprueft");
+  gleich(P.zuPruefen(leer), true, "ein leeres Feld gehoert ebenfalls in Pruefen");
+  gleich(P.zumAbrechnen(lsrFalsch), false, "mit falschem Betrag wird nicht abgerechnet");
+  gleich(P.zumAbrechnen(hsrRecht), true, "mit richtigem Betrag darf abgerechnet werden");
+
+  P.setze({ profil: { einstellungen: {}, heimat_lat: null, heimat_lon: null },
+            einsaetze: {}, aufRechnung: null });
+})();
+
+
 console.log("\n----------------------------------------------------------");
   if (fehler.length) {
     console.log(fehler.length + " Pruefung" + (fehler.length === 1 ? "" : "en") + " fehlgeschlagen:");

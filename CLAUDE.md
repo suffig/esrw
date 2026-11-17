@@ -128,6 +128,15 @@ Fensterbreite.
   `namen_alias`-Tabelle lief. Wer einen Pfad einbaut, der an eine
   Bedingung hängt, stellt die Bedingung in der Attrappe her – sonst
   prüft der Durchgang alles ausser der neuen Zeile.
+* **Zähler und Liste kommen aus derselben Funktion.** In Fassung 276
+  zählte die Leiste `zuPruefen` (Lücken *und* falsche Beträge), die
+  Liste darunter filterte weiter `hatLuecke`. Am Knopf stand „Prüfen –
+  10 Spiele", darunter lagen acht Karten, und die beiden Spiele mit
+  falschem Betrag – der Anlass des ganzen Umbaus – waren nirgends zu
+  sehen. `node --check` und die Testläufe sahen davon nichts: beide
+  Funktionen sind für sich richtig. Wer ein Prädikat erweitert, sucht
+  **alle** Stellen, die es benutzen – `grep -n` auf den alten Namen,
+  nicht nur die, die man gerade umbaut.
 * Tippflächen: alles, was man antippt, ist 44 px hoch. Gemessen wird
   mit `elementFromPoint` um die Elementmitte, **nicht** nur mit
   `getBoundingClientRect` – das sieht ein `::after` nicht und meldet

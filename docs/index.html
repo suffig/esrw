@@ -3370,6 +3370,72 @@
     border-top:1px solid var(--linie); padding-top:var(--abstand-s); }
   :root[data-design="neu"] .mg-startpunkt input { width:100%; box-sizing:border-box; min-height:44px; }
 
+  /* ===== Nachtrag: der Arbeitsweg der Abrechnung ===================
+     Drei Schritte statt sechs Chips, daneben das Archiv. Gleich breite
+     Spalten, damit die Leiste nicht wandert, wenn aus "3 Spiele"
+     "stimmt" wird. */
+  :root[data-design="neu"] .mg-weg { display:grid; grid-template-columns:repeat(3, 1fr);
+    gap:6px; margin-top:var(--abstand-s); }
+  :root[data-design="neu"] .mg-schritt { display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:1px; text-align:center;
+    min-height:58px; padding:9px 4px; border:1px solid var(--linie);
+    background:var(--karte); color:var(--dim); border-radius:var(--radius-m);
+    font-family:inherit; font-size:var(--s-s); cursor:pointer; }
+  :root[data-design="neu"] .mg-schritt .was { font-weight:800; font-size:var(--s-l);
+    color:var(--text); }
+  :root[data-design="neu"] .mg-schritt .zahl { font-size:var(--s-xs); white-space:nowrap; }
+  :root[data-design="neu"] .mg-schritt.aktiv { background:var(--akzent);
+    border-color:var(--akzent); }
+  :root[data-design="neu"] .mg-schritt.aktiv .was,
+  :root[data-design="neu"] .mg-schritt.aktiv .zahl { color:var(--akzent-text); }
+  /* Ein Schritt ohne Rest traegt den Haken - aber nicht, solange er
+     ausgewaehlt ist: auf blauem Grund waere gruen auf blau. */
+  :root[data-design="neu"] .mg-schritt.fertig .was { color:var(--gut); }
+  :root[data-design="neu"] .mg-schritt.fertig .was::after { content:" ✓"; }
+  :root[data-design="neu"] .mg-schritt.aktiv.fertig .was { color:var(--akzent-text); }
+
+  /* Nachsehen ist kein Arbeiten - das Archiv liegt neben dem Weg,
+     nicht darin. Eine ruhige Zeile, volle Breite, 44 px. */
+  :root[data-design="neu"] .mg-archivzeile { display:flex; align-items:center; gap:8px;
+    width:100%; margin-top:6px; min-height:44px; padding:0 14px;
+    border:1px solid var(--linie); background:var(--karte); color:var(--text);
+    border-radius:var(--radius-m); font-family:inherit; font-size:var(--s-l);
+    text-align:left; cursor:pointer; }
+  :root[data-design="neu"] .mg-archivzeile > span { flex:1 1 auto; min-width:0; }
+  :root[data-design="neu"] .mg-archivzeile small { color:var(--dim); font-size:var(--s-s); }
+  :root[data-design="neu"] .mg-archivzeile.aktiv { border-color:var(--akzent);
+    background:var(--akzent-hell); }
+
+  :root[data-design="neu"] .mg-zahnrad { flex:0 0 auto; width:44px; height:44px;
+    display:grid; place-items:center; border:1px solid var(--linie);
+    background:var(--karte); color:var(--text); border-radius:var(--radius-pille);
+    font-size:1.05rem; line-height:1; font-family:inherit; cursor:pointer; }
+  :root[data-design="neu"] .mg-zahnrad.auf { background:var(--akzent);
+    border-color:var(--akzent); color:var(--akzent-text); }
+
+  /* ===== Nachtrag: der Betrag weicht von der Ordnung ab =============
+     Steht an der Karte, auch wenn sie zu ist - er ist der Grund, warum
+     das Spiel in "Prüfen" liegt. Warnfarbe wie beim Wohnort-Hinweis;
+     der Streifen links trennt ihn von den anderen Karten. */
+  :root[data-design="neu"] .spiel.abweicht { border-left:3px solid var(--warn); }
+  :root[data-design="neu"] .mg-abweichung { background:var(--warn-bg); color:var(--warn);
+    border-radius:var(--radius-s); padding:10px 12px; margin:0 var(--abstand-m) var(--abstand-s); }
+  :root[data-design="neu"] .mg-abweichung b { display:block; font-size:var(--s-l); }
+  :root[data-design="neu"] .mg-abweichung p { margin:2px 0 0; font-size:var(--s-m); }
+  :root[data-design="neu"] .mg-abweich-knoepfe { display:flex; gap:8px; margin-top:9px;
+    flex-wrap:wrap; }
+  /* 132 px: bei 375 px Fensterbreite passen "Auf 160,00 € setzen" und
+     "So lassen" so nebeneinander; darunter bricht es sauber um. */
+  :root[data-design="neu"] .mg-abweich-knoepfe button { flex:1 1 132px; min-height:44px; }
+
+  /* Der Wohnort in den Einstellungen - die Adresse aus dem Profil, und
+     daneben der Weg, sie zu aendern. */
+  :root[data-design="neu"] .mg-wohnblock { display:flex; flex-direction:column;
+    gap:var(--abstand-xs); }
+  :root[data-design="neu"] .mg-wohnblock input { width:100%; box-sizing:border-box;
+    min-height:44px; }
+  :root[data-design="neu"] .mg-wohnblock .mg-neben { align-self:flex-start; }
+
 </style>
 </head>
 <body>
@@ -3833,6 +3899,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=275"></script>
+<script src="app.js?v=276"></script>
 </body>
 </html>
