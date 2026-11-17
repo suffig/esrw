@@ -2929,6 +2929,34 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL: ESV Grizzlys B
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:204eef545265916a5ada605d7d9ca623ea26d34e@esrw.de
+SEQUENCE:0
+DTSTAMP:20261117T091531Z
+LAST-MODIFIED:20261117T091531Z
+DTSTART:20261122T170000Z
+DTEND:20261122T203000Z
+SUMMARY:SR · Frauen LL: Eisadler Dortmund – ESV Bergisch Gladbach
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
+  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen LL\nHalle: Eissportzentr
+ um Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Fenke Ma
+ tthias\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/eint
+ eilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: Eisadler Dortmu
+ nd – ESV Bergisch Gladbach
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:47a7d7f50c31e05aa6d789def94b760d69a442b4@esrw.de
 SEQUENCE:0
 DTSTAMP:20261111T143043Z
