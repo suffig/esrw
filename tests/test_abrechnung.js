@@ -548,6 +548,10 @@ P.gelerntBauen([]);
 (function () {
   function sp(id, liga, rolle, system, tage) {
     var d = new Date(); d.setDate(d.getDate() + (tage == null ? -5 : tage));
+    // Fest auf 18 Uhr: mit der Uhrzeit des Testlaufs griff zwischen 21:46
+    // und 09:14 der Zeitzuschlag, und aus 160 wurden 192 Euro - der Test
+    // schlug abends fehl, morgens nicht.
+    d.setHours(18, 0, 0, 0);
     return { kennung: id, beginn: d.toISOString(), liga: liga, rolle: rolle,
              system: system || 3, halle: "Halle A", paarung: "A - B" };
   }
@@ -707,6 +711,47 @@ P.gelerntBauen([]);
     gleich(soll(f[0], f[1]), f[2], "Ligenname \"" + f[0] + "\" als " + f[1]);
   });
   P.setze({ einsaetze: {} });
+})();
+
+
+// ---------------------------------------------------------------------
+// Von esrw.de abgesetzte Spiele in spiele_archiv
+//
+// Der Workflow schreibt jedes Fenster per Upsert und loescht nie. Ein
+// vor dem Anstoss abgesetztes Spiel blieb so in Abrechnung und Archiv -
+// "Essen gegen Maedchen", nach Fassung 278 gemeldet. Erkennbar daran,
+// dass es zuletzt VOR dem Anstoss gesehen wurde.
+(function () {
+  function iso(stunden) { return new Date(Date.now() + stunden * 3600000).toISOString(); }
+  var jetzt = iso(0);
+  var zeilen = [
+    { kennung: "gespielt",  beginn: iso(-72), stand: jetzt },          // nach dem Anstoss gesehen
+    { kennung: "abgesetzt", beginn: iso(-72), stand: iso(-80) },       // zuletzt 8 Std. vorher
+    { kennung: "frisch",    beginn: iso(-1),  stand: iso(-1.5) },      // eben angepfiffen
+    { kennung: "kommt",     beginn: iso(48),  stand: jetzt },
+    { kennung: "manuell",   beginn: iso(-72), stand: iso(-80), manuell: true },
+    { kennung: "ohneStand", beginn: iso(-72) }
+  ];
+  var bleibt = P.ohneAbgesetzte(zeilen).map(function (z) { return z.kennung; });
+  gleich(bleibt.indexOf("gespielt") >= 0, true, "gespieltes Spiel bleibt");
+  gleich(bleibt.indexOf("abgesetzt") >= 0, false, "vor dem Anstoss zuletzt gesehen: abgesetzt, faellt raus");
+  gleich(bleibt.indexOf("frisch") >= 0, true, "eben angepfiffen: noch kein Urteil, bleibt");
+  gleich(bleibt.indexOf("kommt") >= 0, true, "kommendes Spiel bleibt");
+  gleich(bleibt.indexOf("manuell") >= 0, true, "von Hand angelegtes Spiel bleibt immer");
+  gleich(bleibt.indexOf("ohneStand") >= 0, true, "Zeile ohne stand bleibt");
+  // Ist der Workflow seit dem Anstoss nicht gelaufen, gibt es kein Urteil.
+  var still = P.ohneAbgesetzte([{ kennung: "x", beginn: iso(-72), stand: iso(-80) }]);
+  gleich(still.length, 1, "ohne Lauf nach dem Anstoss wird nichts entfernt");
+
+  // Gebuehrenordnung als Uebersicht: gebaut aus gebuehren.json
+  P.setze({ gebuehren: GEBUEHREN });
+  var u = P.gebuehrenUebersicht();
+  function zeileVon(name) { return u.filter(function (z) { return z.name === name; })[0] || {}; }
+  gleich(zeileVon("Herren · Regionalliga").hsr, 160, "Uebersicht: Herren RL HSR 160");
+  gleich(zeileVon("Herren · Regionalliga").lsr, 110, "Uebersicht: Herren RL LSR 110");
+  gleich(zeileVon("U20 · Regionalliga").lsr, 80, "Uebersicht: U20 RL LSR 80");
+  gleich(zeileVon("Frauen").hsr, undefined, "Uebersicht: Frauen ohne HSR");
+  gleich(zeileVon("U11").allein, 80, "Uebersicht: U11 allein 80");
 })();
 
 

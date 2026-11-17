@@ -1889,14 +1889,41 @@ window.Mitglieder = (function () {
   }
 
   var dbArchiv = null;
+  // spiele_archiv bekommt bei jedem Lauf das ganze Datenfenster - auch
+  // kommende Spiele - per Upsert und loescht nie. Setzt esrw.de ein Spiel
+  // vor dem Anstoss ab, blieb seine Zeile fuer immer: in der Abrechnung
+  // mit Gebuehr, im Archiv als gespielt. So stand "Essen gegen Maedchen"
+  // nach Fassung 278 noch in beiden.
+  //
+  // "stand" ist der letzte Lauf, der die Zeile gesehen hat. Ein gespieltes
+  // Spiel sieht der Workflow auch nach dem Anstoss noch (erst im Fenster,
+  // dann im Archiv); ein abgesetztes zuletzt davor. Geurteilt wird erst,
+  // wenn der Workflow seit dem Anstoss nachweislich gelaufen ist - die
+  // juengste Zeile liegt drei Stunden danach -, sonst waere jedes Spiel
+  // der letzten Stunde "abgesetzt". Von Hand angelegte Spiele und Zeilen
+  // ohne stand bleiben immer.
+  function ohneAbgesetzte(zeilen) {
+    var juengster = 0;
+    (zeilen || []).forEach(function (z) {
+      var t = z && z.stand ? new Date(z.stand).getTime() : 0;
+      if (t > juengster) juengster = t;
+    });
+    return (zeilen || []).filter(function (z) {
+      if (!z || z.manuell || !z.stand || !z.beginn) return true;
+      var b = new Date(z.beginn).getTime(), s = new Date(z.stand).getTime();
+      if (isNaN(b) || isNaN(s)) return true;
+      return !(s < b && juengster > b + 3 * 3600000);
+    });
+  }
+
   function ladeArchiv() {
     var web = archivDaten ? Promise.resolve(archivDaten)
       : ctx.hole("archiv.json").catch(function () { return { personen: {}, saisons: [] }; })
         .then(function (a) { archivDaten = a; return a; });
     // Dazu das Archiv aus der Datenbank (spiele_archiv, vom Workflow gefuellt)
     var db = dbArchiv || !profil || !profil.slug ? Promise.resolve(dbArchiv || []) :
-      sb.from("spiele_archiv").select("kennung,beginn,liga,paarung,halle,system,besetzung,saison").contains("slugs", [profil.slug])
-        .then(function (r) { dbArchiv = r.data || []; return dbArchiv; }).catch(function () { dbArchiv = []; return dbArchiv; });
+      sb.from("spiele_archiv").select("kennung,beginn,liga,paarung,halle,system,besetzung,saison,manuell,stand").contains("slugs", [profil.slug])
+        .then(function (r) { dbArchiv = ohneAbgesetzte(r.data || []); return dbArchiv; }).catch(function () { dbArchiv = []; return dbArchiv; });
     return Promise.all([web, db, zusammenLaden()]).then(function (r) { return r[0]; });
   }
   // Eingefrorene Saison-Dateien (docs/archiv/<saison>.json), je Saison einmal
@@ -4487,6 +4514,73 @@ window.Mitglieder = (function () {
   }
 
   // Kilometermodell und Verpflegung direkt in der Abrechnung umschalten
+  // Die Gebuehrenordnung auf einen Blick, gebaut aus gebuehren.json -
+  // nicht abgeschrieben: aendert der Betreiber die Datei, stimmt die
+  // Uebersicht von selbst. Zeilen sind Ligen, Spalten die Rollen; wo
+  // eine Rolle in einer Liga nicht vorkommt, steht ein Strich.
+  function gebuehrenUebersicht() {
+    var g = gebuehren;
+    if (!g) return null;
+    var zeilen = [];
+    // name: der volle Name (fuer Tests und Vorlesen), gruppe/kurz: wie es
+    // in der Tabelle steht - "Herren · Regionalliga" brach bei 375 px um.
+    function zeile(gruppe, kurz, satz) {
+      if (!satz) return;
+      zeilen.push({ name: gruppe && gruppe !== "Nachwuchs" ? gruppe + (kurz ? " · " + kurz : "") : kurz,
+                    gruppe: gruppe, kurz: kurz || gruppe,
+                    sr: satz.SR, hsr: satz.HSR, lsr: satz.LSR, allein: satz.SR_allein });
+    }
+    ["RL", "LL", "BL"].forEach(function (st) { zeile("Herren", gebuehrenName(st), (g.senioren || {})[st]); });
+    zeile("Frauen", "", g.frauen);
+    var n = g.nachwuchs || {};
+    if (n.U20) { zeile("U20", "Regionalliga", n.U20.RL); zeile("U20", "andere Ligen", n.U20.sonst); }
+    ["U17", "U15", "U13", "U11", "U9", "U7"].forEach(function (k) { zeile("Nachwuchs", k, n[k]); });
+    return zeilen;
+  }
+  function gebuehrenBlatt() {
+    var zeilen = gebuehrenUebersicht();
+    if (!zeilen) return null;
+    function zelle(w) { return h("td", { class: "zahl", text: w == null ? "–" : String(w).replace(".", ",") }); }
+    var koerper = [], gruppe = null;
+    zeilen.forEach(function (z) {
+      // Gruppenzeile, sobald die Gruppe wechselt - auch fuer Frauen mit
+      // nur einer Zeile: ohne eigene Ueberschrift stand sie unter
+      // Bezirksliga und las sich wie eine Herrenliga.
+      if (z.gruppe !== gruppe) {
+        koerper.push(h("tr", { class: "gruppe" }, [h("th", { colspan: "4", text: z.gruppe })]));
+      }
+      gruppe = z.gruppe;
+      koerper.push(h("tr", {}, [h("td", {}, [z.gruppe === "Frauen" ? "alle Ligen" : z.kurz,
+          z.allein != null ? h("small", { text: "allein " + z.allein }) : null].filter(Boolean)),
+        zelle(z.sr), zelle(z.hsr), zelle(z.lsr)]));
+    });
+    var tabelle = h("table", { class: "mg-gebuehrtabelle" }, [
+      h("thead", {}, [h("tr", {}, [h("th", { text: "Liga" }), h("th", { class: "zahl", text: "SR" }),
+        h("th", { class: "zahl", text: "HSR" }), h("th", { class: "zahl", text: "LSR" })])]),
+      h("tbody", {}, koerper)]);
+    var g = gebuehren, extra = ["Beträge in Euro je Schiedsrichter und Spiel"];
+    if (g.zuschlag_zeit) extra.push("+" + g.zuschlag_zeit.prozent + " % bei Spielbeginn bis "
+      + g.zuschlag_zeit.bis_einschliesslich + " oder ab " + g.zuschlag_zeit.ab_einschliesslich + " Uhr");
+    if (g.zuschlag_uebergreifend) extra.push("+" + g.zuschlag_uebergreifend.je_sr + " € je SR bei "
+      + "übergreifendem Einsatz (2er-System +" + g.zuschlag_uebergreifend.je_sr_2mann + " €), nur auf Anforderung");
+    if (g.ausfall_vor_ort_prozent) extra.push(g.ausfall_vor_ort_prozent + " % bei Ausfall vor Ort");
+    // Eigene Saetze stehen ueber der Ordnung - "So lassen" legt sie an.
+    // Wer sie hier nicht sieht, wundert sich, warum ein Betrag nicht
+    // mehr angemahnt wird.
+    var eigene = regeln().liga, eigenZeilen = Object.keys(eigene).sort().map(function (k) {
+      var t = k.split("|");
+      return h("li", { text: t[0] + (t[1] ? " · " + t[1] : " · alle Rollen") + ": " + euro(eigene[k]) });
+    });
+    return h("details", { class: "mg-gebuehren" }, [
+      h("summary", {}, [h("span", { text: "Gebührenordnung" }),
+        h("small", { text: g.stand || "" })]),
+      h("div", { style: "overflow-x:auto" }, [tabelle]),
+      h("ul", { class: "mg-gebuehr-extra" }, extra.map(function (t) { return h("li", { text: t }); })),
+      eigenZeilen.length ? h("p", { class: "mg-einst-titel", text: "Eigene Sätze (gehen vor)" }) : null,
+      eigenZeilen.length ? h("ul", { class: "mg-gebuehr-extra" }, eigenZeilen) : null
+    ].filter(Boolean));
+  }
+
   function abrechnungEinstellungen(spiele) {
     var einfach = (profil.km_modell || "einfach") === "einfach";
     var modus = profil.verpflegung_modus || "aus";
@@ -4576,6 +4670,7 @@ window.Mitglieder = (function () {
       h("h4", { class: "mg-einst-titel", text: "Kilometer" }), kmKnoepfe,
       h("h4", { class: "mg-einst-titel", text: "Verpflegung" }), vKnoepfe,
       h("h4", { class: "mg-einst-titel", text: "Darstellung der Liste" }), darst,
+      h("h4", { class: "mg-einst-titel", text: "Gebühren" }), gebuehrenBlatt(),
       h("p", { class: "meta", text: "In „Prüfen“ bleiben es Karten – der Hinweis zur Gebührenordnung steht nur dort." }),
       h("p", { class: "meta", text: "Sätze ändern: Einstellungen → Profil. Ob das für dich passt, sagt dir dein Steuerberater." })]);
   }
@@ -10371,9 +10466,10 @@ window.Mitglieder = (function () {
   function archivAusDb(alle) {
     if (!session) return Promise.resolve(null);
     return ladeProfil().then(function () {
-      var q = sb.from("spiele_archiv").select("kennung,beginn,liga,paarung,halle,system,besetzung,saison,manuell");
+      var q = sb.from("spiele_archiv").select("kennung,beginn,liga,paarung,halle,system,besetzung,saison,manuell,stand");
       if (!(alle && darf("archiv"))) q = q.contains("slugs", [profil.slug]);
-      return q.then(function (r) { return r.data || []; });
+      // Abgesetzte Spiele raus - Begruendung bei ohneAbgesetzte().
+      return q.then(function (r) { return ohneAbgesetzte(r.data || []); });
     }).catch(function () { return null; });
   }
   function wohnortEigen() {
@@ -10552,7 +10648,8 @@ window.Mitglieder = (function () {
     hatLuecke: hatLuecke, zumAbrechnen: zumAbrechnen,
     istUnterwegs: istUnterwegs, istErledigt: istErledigt,
     abweichung: abweichung, zuPruefen: zuPruefen, wegZahlen: wegZahlen,
-    gebuehrenFlach: gebuehrenFlach, gebuehrenAenderung: gebuehrenAenderung
+    gebuehrenFlach: gebuehrenFlach, gebuehrenAenderung: gebuehrenAenderung,
+    ohneAbgesetzte: ohneAbgesetzte, gebuehrenUebersicht: gebuehrenUebersicht
   };
 
   return { oeffnen: oeffnen, bereit: bereit, angemeldet: angemeldet, pruefstand: pruefstand,

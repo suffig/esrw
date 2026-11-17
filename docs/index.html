@@ -3561,6 +3561,42 @@
   :root[data-design="neu"] .mg-arbeitsknopf { background:var(--akzent); color:var(--akzent-text);
     border:0; border-radius:var(--radius-s); font-weight:800; font-size:var(--s-xl); }
 
+  /* ===== Nachtrag: Gebuehrenordnung hinter dem Zahnrad ==============
+     Zugeklappt eine Zeile, aufgeklappt eine Tabelle Liga x Rolle. */
+  :root[data-design="neu"] .mg-gebuehren { border:1px solid var(--linie); border-radius:var(--radius-s);
+    background:var(--bg); }
+  :root[data-design="neu"] .mg-gebuehren summary { display:flex; align-items:center; gap:8px;
+    min-height:48px; padding:0 12px; cursor:pointer; font-weight:700; font-size:var(--s-l); list-style:none; }
+  :root[data-design="neu"] .mg-gebuehren summary::-webkit-details-marker { display:none; }
+  :root[data-design="neu"] .mg-gebuehren summary span { flex:1 1 auto; }
+  :root[data-design="neu"] .mg-gebuehren summary small { color:var(--dim); font-weight:500; font-size:var(--s-s); }
+  :root[data-design="neu"] .mg-gebuehren summary::after { content:"›"; color:var(--dim);
+    font-size:1.2rem; transition:transform .15s ease; }
+  :root[data-design="neu"] .mg-gebuehren[open] summary::after { transform:rotate(90deg); }
+  :root[data-design="neu"] .mg-gebuehrtabelle { width:100%; border-collapse:collapse;
+    font-size:var(--s-m); font-variant-numeric:tabular-nums; }
+  :root[data-design="neu"] .mg-gebuehrtabelle th { text-align:left; font-size:var(--s-xs); color:var(--dim);
+    text-transform:uppercase; letter-spacing:.06em; padding:6px 12px; border-bottom:1px solid var(--linie); }
+  :root[data-design="neu"] .mg-gebuehrtabelle td { padding:7px 12px; border-bottom:1px solid var(--linie); }
+  :root[data-design="neu"] .mg-gebuehrtabelle .zahl { text-align:right; white-space:nowrap; }
+  :root[data-design="neu"] .mg-gebuehrtabelle td small { display:block; color:var(--dim); font-size:var(--s-xs); }
+  :root[data-design="neu"] .mg-gebuehr-extra { margin:8px 12px 12px; padding-left:16px;
+    font-size:var(--s-s); color:var(--dim); display:grid; gap:3px; }
+  :root[data-design="neu"] .mg-gebuehren .mg-einst-titel { margin:4px 12px 0; }
+
+  /* Gruppenzeilen der Gebuehrentabelle: klein, wie die Titel im Blatt. */
+  :root[data-design="neu"] .mg-gebuehrtabelle tr.gruppe th { padding:12px 12px 4px; border-bottom:0;
+    color:var(--akzent); }
+
+  /* ===== Nachtrag: gleichmaessige Abstaende =========================
+     Gemessen bei 375 px: in der Navigation 8 px (Saison -> Schritte),
+     aber 10 px Schritte -> Archivzeile (margin-bottom 10 am Kopf fiel
+     mit den 6 px der Archivzeile zusammen). In der Karte ueberall 8 px,
+     nur "+ Beleg" -> "Betrag ..." 4 px - die beiden Zeilen klebten. */
+  :root[data-design="neu"] .mg-abrechnung-kopf { margin-bottom:var(--abstand-s); }
+  :root[data-design="neu"] .mg-archivzeile { margin-top:0; }
+  :root[data-design="neu"] .mg-details > .mg-betrag { margin-top:var(--abstand-s); }
+
 </style>
 </head>
 <body>
@@ -4024,6 +4060,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=278"></script>
+<script src="app.js?v=279"></script>
 </body>
 </html>
