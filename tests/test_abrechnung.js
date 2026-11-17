@@ -732,6 +732,79 @@ P.gelerntBauen([]);
 })();
 
 
+// ---------------------------------------------------------------------
+// Netto fuer die Steuer (Fassung 281)
+//
+// Einnahmen sind die Pauschalen nach der Ordnung, Fahrt, Verpflegung und
+// Auslagen gehen ab. Bis Fassung 280 zaehlten Aufstellung und
+// Jahresabschluss sie dazu und nannten das "Zusammen".
+abschnitt("Netto");
+grundstellung();
+(function () {
+  var a = spiel({ kennung: "a", beginn: "2026-10-20T18:00:00" });
+  P.setze({ einsaetze: { a: { km: 42.7, verguetung: 85, auslagen: 5, verpflegung: 14 } } });
+  // 85 - 42 x 0,38 (15,96) - 14 - 5 = 50,04
+  etwa(P.nettoSpiel(a, { km: 42.7, verguetung: 85, auslagen: 5, verpflegung: 14 }), 50.04,
+    "Netto je Spiel: Pauschale minus Fahrt, Verpflegung, Auslagen");
+  var s = P.summen([a]);
+  etwa(P.netto(s), 50.04, "Netto der Summen ist dasselbe wie je Spiel");
+  etwa(P.nettoSpiel(a, { km: 10 }), -3.8, "ohne Pauschale bleibt nur die Fahrt als Minus");
+  etwa(P.nettoSpiel(a, null), 0, "ohne Eintrag null");
+
+  // Kommende Spiele haben jetzt vorab einen Eintrag - in die Summen
+  // gehoeren sie erst, wenn gespielt (oder schon bezahlt).
+  var morgen = new Date(Date.now() + 86400000); morgen.setHours(18, 0, 0, 0);
+  var k = spiel({ kennung: "kommt", beginn: morgen.toISOString() });
+  var kb = spiel({ kennung: "kommtBezahlt", beginn: morgen.toISOString() });
+  P.setze({ einsaetze: { a: { verguetung: 85 }, kommt: { verguetung: 85, km: 20 },
+                         kommtBezahlt: { verguetung: 70, bezahlt: "2026-11-01" } } });
+  var s2 = P.summen([a, k, kb]);
+  gleich(s2.spiele, 2, "kommendes Spiel zaehlt nicht, kommendes bezahltes schon");
+  etwa(s2.verg, 155, "Einnahmen ohne das kommende Spiel");
+  etwa(s2.km, 0, "Kilometer des kommenden Spiels zaehlen nicht");
+})();
+
+// Eigene Saetze in der Gebuehrenordnung: je Ligaklasse und Rolle, gehen
+// der Ordnung vor und gelten fuer jeden Ligatext dieser Klasse.
+abschnitt("Eigene Saetze");
+grundstellung();
+(function () {
+  var rlw = spiel({ liga: "Senioren RLW", rolle: "HSR", system: 3 });
+  var rlfs = spiel({ liga: "RL FS", rolle: "HSR", system: 3 });
+  var rlsr = spiel({ liga: "Senioren RLW", rolle: "SR", system: 2 });
+  gleich(P.grundgebuehr(rlw), 160, "ohne eigenen Satz: Ordnung, HSR RL 160");
+  grundstellung({ profil: { km_modell: "einfach", einstellungen: { gebuehren_eigen: { "senioren.RL": { HSR: 170 } } } } });
+  gleich(P.grundgebuehr(rlw), 170, "eigener Satz gilt fuer Senioren RLW");
+  gleich(P.grundgebuehr(rlfs), 170, "und fuer jeden anderen RL-Text");
+  gleich(P.grundgebuehr(rlsr), 180, "andere Rolle bleibt bei der Ordnung");
+  gleich(P.grundgebuehr(spiel({ liga: "Senioren LL", rolle: "HSR", system: 3 })), GEBUEHREN.senioren.LL.HSR,
+    "andere Liga bleibt bei der Ordnung");
+  var u = P.gebuehrenUebersicht();
+  var rl = u.filter(function (z) { return z.name === "Herren · Regionalliga"; })[0];
+  gleich(rl.hsr, 170, "Uebersicht zeigt den eigenen Satz");
+  gleich(rl.ordnung.HSR, 160, "und kennt den der Ordnung");
+  gleich(rl.pfad, "senioren.RL", "Pfad der Zeile");
+  // Wo die Ordnung keinen Satz hat, darf man einen setzen.
+  grundstellung({ profil: { km_modell: "einfach", einstellungen: { gebuehren_eigen: { "nachwuchs.U17": { HSR: 75 } } } } });
+  gleich(P.grundgebuehr(spiel({ liga: "U17", rolle: "HSR", system: 3 })), 75,
+    "Luecke der Ordnung mit eigenem Satz gefuellt");
+  gleich(P.sollBetrag(spiel({ liga: "U17", rolle: "HSR", system: 3 })), 75, "sollBetrag nimmt ihn auch");
+  // Ein Satz fuer einen einzelnen Ligatext geht weiter vor.
+  grundstellung({ profil: { km_modell: "einfach", einstellungen: {
+    gebuehren_eigen: { "senioren.RL": { HSR: 170 } }, regeln_liga: { "Senioren RLW|HSR": 150 } } } });
+  gleich(P.sollBetrag(rlw), 150, "fester Betrag je Liga geht dem eigenen Satz vor");
+  gleich(P.sollBetrag(rlfs), 170, "andere RL-Texte nehmen den eigenen Satz");
+})();
+
+abschnitt("Schalter uebergreifend");
+grundstellung();
+gleich(P.uebergreifendZeigen(), false, "aus, solange nicht eingeschaltet");
+grundstellung({ profil: { km_modell: "einfach", einstellungen: { uebergreifend_zeigen: true } } });
+gleich(P.uebergreifendZeigen(), true, "an, wenn in den Einstellungen gesetzt");
+grundstellung({ profil: null });
+gleich(P.uebergreifendZeigen(), false, "ohne Profil aus");
+
+
 console.log("\n----------------------------------------------------------");
   if (fehler.length) {
     console.log(fehler.length + " Pruefung" + (fehler.length === 1 ? "" : "en") + " fehlgeschlagen:");

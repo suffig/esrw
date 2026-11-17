@@ -1716,22 +1716,40 @@ window.Mitglieder = (function () {
     return null;
   }
 
+  // Eigene Saetze: was jemand in der Gebuehrenordnung in den
+  // Einstellungen ueberschreibt, je Ligaklasse und Rolle, z. B.
+  // { "senioren.RL": { HSR: 170 } }. Gilt nur fuer ihn und geht der
+  // Ordnung vor - ersetzt die "Eigenen Betraege je Liga", die an einem
+  // einzelnen Ligatext hingen und bei "Senioren RLW" und "RL FS"
+  // zweimal angelegt werden mussten.
+  function eigeneOrdnung() {
+    return ((profil && profil.einstellungen) || {}).gebuehren_eigen || {};
+  }
+  function satzMitEigenem(pfad, satz) {
+    var eigen = eigeneOrdnung()[pfad];
+    if (!eigen) return satz;
+    var neu = {};
+    Object.keys(satz || {}).forEach(function (k) { neu[k] = satz[k]; });
+    Object.keys(eigen).forEach(function (k) { if (eigen[k] != null) neu[k] = eigen[k]; });
+    return neu;
+  }
   function grundgebuehr(spiel) {
     if (!gebuehren) return null;
     var e = ligaEinordnen(spiel.liga);
     if (!e) return null;
-    var rolle = spiel.rolle || "SR", system = spiel.system || 2, satz = null;
+    var rolle = spiel.rolle || "SR", system = spiel.system || 2, satz = null, pfad = "";
     if (e.klasse === "senioren") {
-      satz = gebuehren.senioren[e.stufe] || null;
+      satz = gebuehren.senioren[e.stufe] || null; pfad = "senioren." + e.stufe;
     } else if (e.klasse === "frauen") {
-      satz = gebuehren.frauen;
+      satz = gebuehren.frauen; pfad = "frauen";
     } else {
       var n = gebuehren.nachwuchs[e.klasse];
       if (!n) return null;
-      if (e.klasse === "U20") satz = e.stufe === "RL" ? n.RL : n.sonst;
-      else satz = n;
+      if (e.klasse === "U20") { satz = e.stufe === "RL" ? n.RL : n.sonst; pfad = "nachwuchs.U20." + (e.stufe === "RL" ? "RL" : "sonst"); }
+      else { satz = n; pfad = "nachwuchs." + e.klasse; }
     }
     if (!satz) return null;
+    satz = satzMitEigenem(pfad, satz);
     if (satz.SR_allein != null && system <= 1) return satz.SR_allein;
     var betrag = satz[rolle];
     // Der Rueckfall auf den SR-Satz gilt nur fuer den SR selbst. Fuer
@@ -1755,6 +1773,12 @@ window.Mitglieder = (function () {
     return hm <= z.bis_einschliesslich || hm >= z.ab_einschliesslich;
   }
 
+  // Der Zuschlag kommt nur auf Anforderung, die wenigsten brauchen ihn.
+  // Der Schalter stand trotzdem an jedem RL-Spiel - jetzt nur, wer ihn
+  // in den Einstellungen anschaltet, oder wo er schon gesetzt ist.
+  function uebergreifendZeigen() {
+    return !!(((profil && profil.einstellungen) || {}).uebergreifend_zeigen);
+  }
   function uebergreifendMoeglich(spiel) {
     var e = ligaEinordnen(spiel.liga);
     return !!(e && ((e.klasse === "senioren" && e.stufe === "RL") || (e.klasse === "frauen" && e.stufe === "2LIGA")));
@@ -2079,6 +2103,10 @@ window.Mitglieder = (function () {
       if (filter && !filter(sp)) return;
       var e = einsaetze[sp.kennung];
       if (!e) return;
+      // Kommende Spiele haben seit Fassung 281 ihre Vorschlaege schon
+      // vorab. Gezaehlt wird trotzdem nur, was gespielt ist - oder schon
+      // bezahlt: sonst stuende im Netto Geld, das es noch nicht gibt.
+      if (!e.bezahlt && new Date(sp.beginn) > new Date()) return;
       s.spiele++;
       s.km += e.km || 0;
       s.fahrt += fahrtkosten(e);
@@ -2089,6 +2117,17 @@ window.Mitglieder = (function () {
     return s;
   }
 
+  // Netto fuer die Steuer: Einnahmen sind die Pauschalen nach der
+  // Gebuehrenordnung, alles, was man dafuer ausgibt, geht ab. Eine
+  // Funktion fuer die Summen und eine fuer das einzelne Spiel - an vier
+  // Stellen ausgerechnet, haette eine davon wieder addiert, wie es
+  // Aufstellung und Jahresabschluss bis Fassung 280 taten.
+  function netto(s) { return s.verg - s.fahrt - s.verpf - s.ausl; }
+  function nettoSpiel(sp, e) {
+    e = e || {};
+    return (betragFuer(sp, e).betrag || 0) - fahrtkosten(e) - (e.verpflegung || 0) - (e.auslagen || 0);
+  }
+
   // Summen als Zeilen: auf dem Handy passt "Fahrtkosten" neben den Betrag,
   // im Kachelraster brach die Beschriftung um und lief ineinander.
   function summenBox(titel, s, monate) {
@@ -2096,16 +2135,16 @@ window.Mitglieder = (function () {
     var einfach = (profil.km_modell || "einfach") === "einfach";
     var karte = h("div", { class: "karte summenliste" });
     karte.appendChild(h("div", { class: "kopfzahl" }, [
-      h("b", { text: euro(s.verg - s.fahrt - s.verpf - s.ausl) }),
-      h("span", { text: "Saldo · " + s.spiele + (s.spiele === 1 ? " Spiel" : " Spiele") })
+      h("b", { text: euro(netto(s)) }),
+      h("span", { text: "Netto · " + s.spiele + (s.spiele === 1 ? " Spiel" : " Spiele") })
     ]));
     // Die fuenf Zeilen darunter sind die Rechnung - der Satz sagt, welche.
-    karte.appendChild(h("p", { class: "woher-zeile", text: "Vergütung minus Fahrtkosten, Verpflegungsmehraufwand und Auslagen." }));
-    [["Vergütung", euro(s.verg)],
-     ["Fahrtkosten", euro(s.fahrt)],
+    karte.appendChild(h("p", { class: "woher-zeile", text: "Einnahmen nach Gebührenordnung minus Fahrtkosten, Verpflegungsmehraufwand und Auslagen." }));
+    [["Einnahmen (Pauschalen)", euro(s.verg)],
+     ["− Fahrtkosten", euro(s.fahrt)],
      [einfach ? "Strecke (einfach)" : "Strecke (hin und zurück)", Math.round(einfach ? s.km : s.km * 2) + " km"],
-     ["Verpflegungsmehraufwand", euro(s.verpf)],
-     ["Auslagen", euro(s.ausl)]
+     ["− Verpflegungsmehraufwand", euro(s.verpf)],
+     ["− Auslagen", euro(s.ausl)]
     ].forEach(function (p) {
       karte.appendChild(h("div", { class: "reihe-zahl" }, [h("span", { text: p[0] }), h("b", { text: String(p[1]) })]));
     });
@@ -2146,7 +2185,6 @@ window.Mitglieder = (function () {
     if (!jahre.length) jahre.push(new Date().getFullYear());
     // Oben nur das Wesentliche: Vergütung, Fahrtkosten, offen. Der Rest klappt auf.
     var sS = summen(spiele);
-    var kosten = sS.fahrt + sS.verpf + sS.ausl;
     // Was noch nicht abgehakt ist - die eigentliche Frage beim Blick in
     // die Abrechnung: was steht noch aus?
     // Abgehakt ist abgehakt - auch ein Spiel, das erst noch kommt. Vorher
@@ -2173,11 +2211,11 @@ window.Mitglieder = (function () {
     // Strich bleibt, und was noch aussteht. Verguetung, Kosten und die
     // Aufschluesselung stehen einen Tipp weiter unter "Weitere".
     var kopf = h("div", { class: "karte mg-kopfsaldo tippbar" }, [
-      h("b", { text: euro(sS.verg - kosten) }),
+      h("b", { text: euro(netto(sS)) }),
       // Der Geldweg darunter rechnet in Verguetungen, diese Karte
       // nach Abzug der Kosten. Dass die Zahlen nicht aufgehen, hat
       // einen Grund - er gehoert danebengeschrieben.
-      h("span", { text: "bleibt nach Fahrt, Verpflegung und Auslagen" })
+      h("span", { text: "netto · Einnahmen minus Fahrt, Verpflegung und Auslagen" })
     ]);
     kopf.title = "Antippen: Vergütung, Kosten und Steuerjahre";
     kopf.addEventListener("click", function () { panelOeffnen("detail", false); });
@@ -4051,11 +4089,11 @@ window.Mitglieder = (function () {
     if (gr && wie) gr.title = wie;
   }
 
-  // Was dieses Spiel bringt, Posten fuer Posten und zusammen. Gerechnet
-  // wie summen() - Verguetung mit Zuschlaegen, Fahrt, Verpflegung,
-  // Auslagen -, damit die Summe hier und im Jahresabschluss dieselbe ist.
-  // Ersetzt die Zeile "Betrag ... - Fahrt ...", in der die Verpflegung
-  // fehlte und keine Summe stand.
+  // Was dieses Spiel bringt, Posten fuer Posten: die Pauschale mit
+  // Zuschlaegen als Einnahme, Fahrt, Verpflegung und Auslagen gehen ab.
+  // Unten das Netto aus nettoSpiel() - dieselbe Zahl wie im
+  // Jahresabschluss. Bis Fassung 280 stand hier "Zusammen" und zaehlte
+  // die Kosten dazu.
   function aufstellung(spiel, e, b) {
     e = e || {};
     var dl = h("dl", { class: "mg-aufstellung" });
@@ -4071,10 +4109,12 @@ window.Mitglieder = (function () {
       if (b.ausfall) zeile("Ausfall vor Ort, halbe Gebühr", "−" + euro(b.ausfall));
     }
     var fahrt = fahrtkosten(e), verpf = e.verpflegung || 0, ausl = e.auslagen || 0;
-    if (e.km != null) zeile("Fahrt · " + dezimal(e.km) + " km", euro(fahrt));
-    if (verpf) zeile("Verpflegung", euro(verpf));
-    if (ausl) zeile("Auslagen", euro(ausl));
-    zeile("Zusammen", euro((b.betrag || 0) + fahrt + verpf + ausl), "summe");
+    if (e.km != null) zeile("Fahrt · " + dezimal(e.km) + " km", "−" + euro(fahrt));
+    if (verpf) zeile("Verpflegung", "−" + euro(verpf));
+    if (ausl) zeile("Auslagen", "−" + euro(ausl));
+    // Ohne Verguetung waere das Netto nur die Fahrt mit Minus - das las
+    // sich wie ein Ergebnis. Erst wenn der Betrag steht.
+    if (b.betrag != null) zeile("Netto", euro(nettoSpiel(spiel, e)), "summe");
     return dl;
   }
 
@@ -4096,7 +4136,7 @@ window.Mitglieder = (function () {
     tabelle.appendChild(tb);
     var box = h("div", { class: "fahrtenbuch jahresblatt" }, [
       h("h3", { class: "abschnitt", text: "Schiedsrichter-Einnahmen und -Kosten " + jahr + " · " + (profil.name || "") }),
-      h("p", { class: "meta", text: "Einnahmen: Vergütung nach ESRW-Gebührenordnung. Kosten: " + (einfach ? "Entfernungspauschale (einfache Strecke, " + euro(profil.satz_einfach != null ? profil.satz_einfach : 0.38) + "/km)" : "Reisekosten (gefahrene km, " + euro(profil.satz_hinrueck != null ? profil.satz_hinrueck : 0.30) + "/km)") + ", Verpflegungsmehraufwand (14 € ab 8 Std.), Auslagen laut Beleg. Saldo: " + euro(s.verg - s.fahrt - s.verpf - s.ausl) + ". Erstellt " + new Date().toLocaleDateString("de-DE") + ". Aufstellung, keine Steuerberatung." }),
+      h("p", { class: "meta", text: "Einnahmen: Vergütung nach ESRW-Gebührenordnung. Kosten: " + (einfach ? "Entfernungspauschale (einfache Strecke, " + euro(profil.satz_einfach != null ? profil.satz_einfach : 0.38) + "/km)" : "Reisekosten (gefahrene km, " + euro(profil.satz_hinrueck != null ? profil.satz_hinrueck : 0.30) + "/km)") + ", Verpflegungsmehraufwand (14 € ab 8 Std.), Auslagen laut Beleg. Netto: " + euro(netto(s)) + ". Erstellt " + new Date().toLocaleDateString("de-DE") + ". Aufstellung, keine Steuerberatung." }),
       liste.length ? h("div", { style: "overflow-x:auto" }, [tabelle]) : h("p", { class: "leer", text: "Keine erfassten Spiele in " + jahr + "." })
     ]);
     inhalt.appendChild(h("div", { class: "zweit fahrtenbuch" }, [
@@ -4117,7 +4157,7 @@ window.Mitglieder = (function () {
     var zeilen = [["Saison", "Datum", "Uhrzeit", "Liga", "Begegnung", "Halle", "Rolle", "System",
                    "km einfach", "km gefahren", "Kilometermodell", "Satz €/km", "Fahrtkosten",
                    "Grundgebühr", "Zuschlag Uhrzeit", "Zuschlag übergreifend", "Ausfall vor Ort", "Vergütung",
-                   "Auslagen", "Verpflegung", "Belege", "Notiz"]];
+                   "Auslagen", "Verpflegung", "Netto", "Belege", "Notiz"]];
     var dez = function (n) { return n == null ? "" : String(Math.round(n * 100) / 100).replace(".", ","); };
     spiele.forEach(function (sp) {
       var e = einsaetze[sp.kennung] || {};
@@ -4128,7 +4168,8 @@ window.Mitglieder = (function () {
         sp.system || "", dez(e.km), dez(e.km != null ? e.km * 2 : null), einfach ? "einfache Strecke" : "hin und zurück",
         dez(einfach ? profil.satz_einfach : profil.satz_hinrueck), dez(e.km != null ? fahrtkosten(e) : null),
         dez(b.grund), dez(b.zeit || null), dez(b.ueber || null), e.ausgefallen ? "ja" : "", dez(b.betrag),
-        dez(e.auslagen), dez(e.verpflegung), (e.belege || []).length || "", e.notiz || ""
+        dez(e.auslagen), dez(e.verpflegung), dez(b.betrag != null ? nettoSpiel(sp, e) : null),
+        (e.belege || []).length || "", e.notiz || ""
       ]);
     });
     var text = zeilen.map(function (z) {
@@ -4235,12 +4276,14 @@ window.Mitglieder = (function () {
     }).then(rendereAbrechnung);
   }
 
-  // Vergangene Spiele ohne Zeile bekommen von selbst eine: km aus der
-  // gemerkten Strecke, Verguetung nach Ordnung. Uebrig bleibt "bezahlt".
+  // Jedes Spiel bekommt von selbst km aus der gemerkten Strecke und
+  // die Verguetung nach Ordnung - seit Fassung 281 auch die kommenden,
+  // damit ein neues Spiel nicht leer dasteht, bis es gespielt ist. In
+  // Summen und Stufen zaehlen sie trotzdem erst danach (summen(),
+  // hatLuecke()). Uebrig bleibt "bezahlt".
   function automatischVorbelegen(spiele, ohneSchaetzung) {
-    var n = 0, jetzt = new Date();
+    var n = 0;
     spiele.forEach(function (sp) {
-      if (new Date(sp.beginn) > jetzt) return;
       var e = einsaetze[sp.kennung];
       // Je Feld entscheiden, nicht je Zeile. Frueher stand hier
       // "hat schon eine Zeile? dann gar nichts" - und eine Zeile
@@ -4320,9 +4363,8 @@ window.Mitglieder = (function () {
   // Abschriften derselben Schleife auseinanderlaufen.
   function fehlendesNachtragen(spiele) {
     return streckenNachladen(spiele).then(function () {
-      var km = 0, verg = 0, offen = 0, jetzt = new Date();
+      var km = 0, verg = 0, offen = 0;
       spiele.forEach(function (sp) {
-        if (new Date(sp.beginn) > jetzt) return;
         var e = einsaetze[sp.kennung], aend = {}, her = Object.assign({}, (e && e.herkunft) || {});
         if (!e || e.km == null) { var v = kmVorschlag(sp); if (v) { aend.km = v.km; her.km = v.art; km++; } }
         if (!e || e.verguetung == null) {
@@ -4355,9 +4397,9 @@ window.Mitglieder = (function () {
   // was die App selbst fuellen koennte.
   function wasFehlt(spiele) {
     var jetzt = new Date(), ohneBetrag = 0, ohneKm = 0, vergangen = 0;
+    // Kommende Spiele zaehlen mit - auch sie fuellt die App jetzt.
     (spiele || []).forEach(function (sp) {
-      if (new Date(sp.beginn) >= jetzt) return;
-      vergangen++;
+      if (new Date(sp.beginn) < jetzt) vergangen++;
       var e = einsaetze[sp.kennung];
       if ((!e || e.verguetung == null) && sollBetrag(sp) != null) ohneBetrag++;
       if (sp.halle && (!e || e.km == null)) ohneKm++;
@@ -4522,23 +4564,70 @@ window.Mitglieder = (function () {
     var zeilen = [];
     // name: der volle Name (fuer Tests und Vorlesen), gruppe/kurz: wie es
     // in der Tabelle steht - "Herren · Regionalliga" brach bei 375 px um.
-    function zeile(gruppe, kurz, satz) {
+    // sr/hsr/lsr: was gilt (mit eigenen Saetzen), ordnung: was in der
+    // Ordnung steht - daran sieht die Tabelle, was geaendert ist.
+    function zeile(gruppe, kurz, satz, pfad) {
       if (!satz) return;
+      var gilt = satzMitEigenem(pfad, satz);
       zeilen.push({ name: gruppe && gruppe !== "Nachwuchs" ? gruppe + (kurz ? " · " + kurz : "") : kurz,
-                    gruppe: gruppe, kurz: kurz || gruppe,
-                    sr: satz.SR, hsr: satz.HSR, lsr: satz.LSR, allein: satz.SR_allein });
+                    gruppe: gruppe, kurz: kurz || gruppe, pfad: pfad,
+                    sr: gilt.SR, hsr: gilt.HSR, lsr: gilt.LSR, allein: gilt.SR_allein,
+                    ordnung: { SR: satz.SR, HSR: satz.HSR, LSR: satz.LSR } });
     }
-    ["RL", "LL", "BL"].forEach(function (st) { zeile("Herren", gebuehrenName(st), (g.senioren || {})[st]); });
-    zeile("Frauen", "", g.frauen);
+    ["RL", "LL", "BL"].forEach(function (st) { zeile("Herren", gebuehrenName(st), (g.senioren || {})[st], "senioren." + st); });
+    zeile("Frauen", "", g.frauen, "frauen");
     var n = g.nachwuchs || {};
-    if (n.U20) { zeile("U20", "Regionalliga", n.U20.RL); zeile("U20", "andere Ligen", n.U20.sonst); }
-    ["U17", "U15", "U13", "U11", "U9", "U7"].forEach(function (k) { zeile("Nachwuchs", k, n[k]); });
+    if (n.U20) { zeile("U20", "Regionalliga", n.U20.RL, "nachwuchs.U20.RL"); zeile("U20", "andere Ligen", n.U20.sonst, "nachwuchs.U20.sonst"); }
+    ["U17", "U15", "U13", "U11", "U9", "U7"].forEach(function (k) { zeile("Nachwuchs", k, n[k], "nachwuchs." + k); });
     return zeilen;
+  }
+  // Ein eigener Satz wird gespeichert, ein leeres Feld oder der Wert der
+  // Ordnung nimmt ihn wieder weg. Danach ziehen die Spiele nach, deren
+  // Betrag die App selbst eingetragen hat - was jemand bestaetigt hat,
+  // meldet abweichung() und bleibt, bis er es selbst setzt.
+  var gebuehrenAuf = false;
+  function satzSetzen(pfad, rolle, text, ordnung) {
+    var leer = !String(text || "").trim(), v = leer ? null : zahlAbNull(text);
+    if (!leer && v == null) { meldung("Bitte einen Betrag in Euro eintragen, z. B. 160 oder 92,50.", "warn"); rendereAbrechnung(); return; }
+    var alt = eigeneOrdnung(), eig = {};
+    Object.keys(alt).forEach(function (p) { eig[p] = Object.assign({}, alt[p]); });
+    eig[pfad] = eig[pfad] || {};
+    if (v == null || v === ordnung) delete eig[pfad][rolle]; else eig[pfad][rolle] = v;
+    if (!Object.keys(eig[pfad]).length) delete eig[pfad];
+    einstellungenSpeichern({ gebuehren_eigen: eig }).then(function (ok) {
+      if (!ok) { meldung("Der Satz konnte nicht gespeichert werden.", "warn"); return; }
+      var n = vorschlaegeNachziehen();
+      kurzMeldung((v == null || v === ordnung ? "Wieder wie in der Ordnung ✓" : "Eigener Satz gespeichert ✓")
+        + (n ? " " + n + (n === 1 ? " Spiel" : " Spiele") + " angepasst." : ""), "gut");
+      rendereAbrechnung();
+    });
+  }
+  function vorschlaegeNachziehen() {
+    var n = 0;
+    alleSpiele().forEach(function (sp) {
+      var e = einsaetze[sp.kennung];
+      if (!e || e.verguetung == null || e.bezahlt) return;
+      if (!(e.herkunft && e.herkunft.verguetung === "ordnung")) return;
+      if (aufRechnung && aufRechnung[sp.kennung]) return;
+      var g = sollBetrag(sp);
+      if (g == null || g === e.verguetung) return;
+      speichereEinsatz(sp, { verguetung: g, herkunft: { verguetung: regelBetrag(sp) != null ? "regel" : "ordnung" } });
+      n++;
+    });
+    return n;
   }
   function gebuehrenBlatt() {
     var zeilen = gebuehrenUebersicht();
     if (!zeilen) return null;
-    function zelle(w) { return h("td", { class: "zahl", text: w == null ? "–" : String(w).replace(".", ",") }); }
+    function zelle(z, rolle) {
+      var w = z[rolle.toLowerCase()], ord = z.ordnung[rolle];
+      var feld = h("input", { type: "text", inputmode: "decimal", placeholder: "–",
+        class: "mg-satz" + (w !== ord ? " eigen" : ""),
+        "aria-label": z.name + ", " + rolle + (w !== ord ? ", eigener Satz" : "") });
+      feld.value = w == null ? "" : String(w).replace(".", ",");
+      feld.addEventListener("change", function () { satzSetzen(z.pfad, rolle, feld.value, ord); });
+      return h("td", { class: "zahl" }, [feld]);
+    }
     var koerper = [], gruppe = null;
     zeilen.forEach(function (z) {
       // Gruppenzeile, sobald die Gruppe wechselt - auch fuer Frauen mit
@@ -4550,7 +4639,7 @@ window.Mitglieder = (function () {
       gruppe = z.gruppe;
       koerper.push(h("tr", {}, [h("td", {}, [z.gruppe === "Frauen" ? "alle Ligen" : z.kurz,
           z.allein != null ? h("small", { text: "allein " + z.allein }) : null].filter(Boolean)),
-        zelle(z.sr), zelle(z.hsr), zelle(z.lsr)]));
+        zelle(z, "SR"), zelle(z, "HSR"), zelle(z, "LSR")]));
     });
     var tabelle = h("table", { class: "mg-gebuehrtabelle" }, [
       h("thead", {}, [h("tr", {}, [h("th", { text: "Liga" }), h("th", { class: "zahl", text: "SR" }),
@@ -4562,21 +4651,72 @@ window.Mitglieder = (function () {
     if (g.zuschlag_uebergreifend) extra.push("+" + g.zuschlag_uebergreifend.je_sr + " € je SR bei "
       + "übergreifendem Einsatz (2er-System +" + g.zuschlag_uebergreifend.je_sr_2mann + " €), nur auf Anforderung");
     if (g.ausfall_vor_ort_prozent) extra.push(g.ausfall_vor_ort_prozent + " % bei Ausfall vor Ort");
-    // Eigene Saetze stehen ueber der Ordnung - "So lassen" legt sie an.
-    // Wer sie hier nicht sieht, wundert sich, warum ein Betrag nicht
-    // mehr angemahnt wird.
-    var eigene = regeln().liga, eigenZeilen = Object.keys(eigene).sort().map(function (k) {
-      var t = k.split("|");
-      return h("li", { text: t[0] + (t[1] ? " · " + t[1] : " · alle Rollen") + ": " + euro(eigene[k]) });
-    });
-    return h("details", { class: "mg-gebuehren" }, [
+    var geaendert = Object.keys(eigeneOrdnung()).length > 0;
+    var zurueck = geaendert ? h("button", { type: "button", class: "mg-neben",
+      text: "Alle eigenen Sätze zurücksetzen", onclick: function () {
+        if (!confirm("Alle eigenen Sätze löschen? Danach gilt wieder die Gebührenordnung.")) return;
+        einstellungenSpeichern({ gebuehren_eigen: {} }).then(function (ok) {
+          if (!ok) { meldung("Zurücksetzen fehlgeschlagen.", "warn"); return; }
+          var n = vorschlaegeNachziehen();
+          kurzMeldung("Wieder wie in der Ordnung ✓" + (n ? " " + n + (n === 1 ? " Spiel" : " Spiele") + " angepasst." : ""), "gut");
+          rendereAbrechnung();
+        });
+      } }) : null;
+    var blatt = h("details", { class: "mg-gebuehren" }, [
       h("summary", {}, [h("span", { text: "Gebührenordnung" }),
-        h("small", { text: g.stand || "" })]),
-      h("div", { style: "overflow-x:auto" }, [tabelle]),
+        h("small", { text: geaendert ? "mit eigenen Sätzen" : (g.stand || "") })]),
+      h("p", { class: "meta mg-gebuehr-tipp", text: "Tipp einen Satz an, um ihn für dich zu ändern. "
+        + "Geänderte Sätze sind farbig und gehen der Ordnung vor; Feld leeren stellt sie wieder her." }),
+      h("div", { class: "mg-gebuehr-rahmen" }, [tabelle]),
       h("ul", { class: "mg-gebuehr-extra" }, extra.map(function (t) { return h("li", { text: t }); })),
-      eigenZeilen.length ? h("p", { class: "mg-einst-titel", text: "Eigene Sätze (gehen vor)" }) : null,
-      eigenZeilen.length ? h("ul", { class: "mg-gebuehr-extra" }, eigenZeilen) : null
+      zurueck,
+      ligaRegelnListe()
     ].filter(Boolean));
+    // Nach dem Speichern zeichnet die Seite neu - zugeklappt muesste man
+    // nach jedem Satz wieder aufklappen.
+    if (gebuehrenAuf) blatt.open = true;
+    blatt.addEventListener("toggle", function () { gebuehrenAuf = blatt.open; });
+    return blatt;
+  }
+
+  // Saetze fuer einzelne Ligatexte, angelegt mit "So lassen" an einem
+  // abweichenden Betrag oder frueher unter "Eigene Betraege je Liga".
+  // Sie gehen allem vor - wer sie nicht sieht, wundert sich, warum ein
+  // Betrag nicht mehr angemahnt wird. Hier nur noch ansehen und loeschen.
+  function ligaRegelnListe() {
+    var r = regeln(), k = Object.keys(r.liga).sort();
+    if (!k.length) return null;
+    return h("div", { class: "mg-eigenregeln" }, [
+      h("p", { class: "mg-einst-titel", text: "Feste Beträge für einzelne Ligen (gehen vor)" })
+    ].concat(k.map(function (sl) {
+      var t = sl.split("|");
+      return h("div", { class: "sperre" }, [
+        h("span", { text: t[0] + (t[1] ? " · " + t[1] : " · alle Rollen") }),
+        h("span", {}, [h("b", { text: euro(r.liga[sl]) }),
+          h("button", { type: "button", class: "rund", title: "Entfernen", "aria-label": "Betrag für " + t[0] + " entfernen",
+            text: "×", onclick: function () {
+              var alt = r.liga[sl];
+              delete r.liga[sl];
+              regelnSpeichern(r.liga, r.halle).then(function (ok) {
+                if (!ok) { r.liga[sl] = alt; meldung("Konnte nicht gelöscht werden.", "warn"); }
+                rendereAbrechnung();
+              });
+            } })])]);
+    })));
+  }
+
+  function uebergreifendSchalter() {
+    var haken = h("input", { type: "checkbox" });
+    haken.checked = uebergreifendZeigen();
+    haken.addEventListener("change", function () {
+      einstellungenSpeichern({ uebergreifend_zeigen: haken.checked }).then(function (ok) {
+        if (!ok) { haken.checked = !haken.checked; meldung("Konnte nicht gespeichert werden.", "warn"); return; }
+        rendereAbrechnung();
+      });
+    });
+    return h("label", { class: "mg-check mg-einst-check" }, [haken,
+      h("span", {}, [h("b", { text: "Schalter „übergreifend“ zeigen" }),
+        h("small", { text: "Zuschlag für landesverbandsübergreifende Einsätze in RL und 2. Frauenliga, nur auf Anforderung" })])]);
   }
 
   function abrechnungEinstellungen(spiele) {
@@ -4665,12 +4805,12 @@ window.Mitglieder = (function () {
       ["immer", "Immer", "14 € bei jedem Spiel"]], "Verpflegung");
     return h("div", { class: "mg-form mg-einstellblatt" }, [
       h("h4", { class: "mg-einst-titel", text: "Wohnort" }), wohnBox,
-      h("h4", { class: "mg-einst-titel", text: "Kilometer" }), kmKnoepfe,
+      h("h4", { class: "mg-einst-titel", text: "Kilometer" }), kmKnoepfe, hallenKm(spiele),
       h("h4", { class: "mg-einst-titel", text: "Verpflegung" }), vKnoepfe,
       h("h4", { class: "mg-einst-titel", text: "Darstellung der Liste" }), darst,
-      h("h4", { class: "mg-einst-titel", text: "Gebühren" }), gebuehrenBlatt(),
+      h("h4", { class: "mg-einst-titel", text: "Gebühren" }), gebuehrenBlatt(), uebergreifendSchalter(),
       h("p", { class: "meta", text: "In „Prüfen“ bleiben es Karten – der Hinweis zur Gebührenordnung steht nur dort." }),
-      h("p", { class: "meta", text: "Sätze ändern: Einstellungen → Profil. Ob das für dich passt, sagt dir dein Steuerberater." })]);
+      h("p", { class: "meta", text: "Kilometersätze ändern: Einstellungen → Profil. Ob das für dich passt, sagt dir dein Steuerberater." })]);
   }
 
   // Spiel selbst eintragen: nur fuer dich und die Abrechnung (privat)
@@ -5218,8 +5358,19 @@ window.Mitglieder = (function () {
       title: "Einstellungen: Wohnort, Strecke, Verpflegung",
       "aria-label": "Einstellungen", "aria-expanded": abrechnungPanel === "art" ? "true" : "false",
       onclick: function () { panelOeffnen("art", false); } }, [ikone("i-regler")]);
+    // Nachstossen von Hand: fuer neue Spiele, bei denen noch nichts
+    // steht. Eingetragen wird sonst beim Oeffnen von selbst - der Knopf
+    // ist fuer den Fall, dass die Strecke damals noch fehlte.
+    var neuLaden = h("button", { type: "button", class: "mg-zahnrad mg-neuladen",
+      title: "Kilometer und Vergütung für Spiele eintragen, bei denen noch nichts steht",
+      "aria-label": "Kilometer und Vergütung aktualisieren" }, [ikone("i-neuladen")]);
+    neuLaden.addEventListener("click", function () {
+      neuLaden.disabled = true; neuLaden.classList.add("laeuft");
+      fehlendesNachtragen(spiele).then(function () { rendereAbrechnung(); },
+        function (e) { meldung("Aktualisieren fehlgeschlagen: " + fehlerText(e), "warn"); rendereAbrechnung(); });
+    });
     inhalt.appendChild(h("div", { class: "mg-abrechnung-kopf" }, [
-      h("div", { class: "mg-kopfzeile" }, [saisonWahl, zahnrad]), chips]));
+      h("div", { class: "mg-kopfzeile" }, [saisonWahl, neuLaden, zahnrad]), chips]));
     // Das Archiv ist kein Schritt - Nachsehen ist kein Arbeiten.
     // Deshalb liegt es als ruhige Zeile daneben, nicht in der Leiste.
     var archivN = spiele.filter(istErledigt).length;
@@ -5251,13 +5402,8 @@ window.Mitglieder = (function () {
     // ebenfalls und kosteten dort 197 px vor dem ersten Spiel.
     if (stufeZumNachsehen()) inhalt.appendChild(h("div", { class: "mg-summenblock" }));
 
-    // Seit die Abrechnung beim Oeffnen selbst eintraegt, ist das hier nur
-    // noch der Nachzuegler fuer Spiele, die damals nichts abbekommen haben.
-    var nachtragen = h("button", { type: "button", text: "Fehlendes nachtragen", onclick: function () {
-      nachtragen.disabled = true; nachtragen.textContent = "trägt nach …";
-      fehlendesNachtragen(spiele).then(function () { rendereAbrechnung(); },
-        function (e) { meldung("Nachtragen fehlgeschlagen: " + fehlerText(e), "warn"); rendereAbrechnung(); });
-    } });
+    // "Fehlendes nachtragen" stand bis Fassung 280 hier unter den
+    // Werkzeugen - jetzt ist es der Knopf neben der Saison.
     // Eine Leiste, ein Panel: Steuerjahre, Abrechnungsart, Werkzeuge, Spiel eintragen, Regeln
     var panelInhalt = {
       detail: function () { return summenDetails(); },
@@ -5265,15 +5411,14 @@ window.Mitglieder = (function () {
       art: function () { return abrechnungEinstellungen(spiele); },
       werkzeuge: function () {
         return h("div", {}, [
-          h("p", { class: "meta", style: "margin:0 0 8px", text: "Vergangene Spiele bekommen km und Vergütung beim Öffnen von selbst. Hier steht, was man darüber hinaus braucht." }),
-          h("div", { class: "zweit" }, [nachtragen,
+          h("p", { class: "meta", style: "margin:0 0 8px", text: "Unterlagen für die Steuer und die Ausfuhr." }),
+          h("div", { class: "zweit" }, [
             h("button", { type: "button", text: "Jahresabschluss für die Steuer", title: "Alle Beträge eines Steuerjahres auf einem Blatt", onclick: function () { zeigeJahresabschluss(); } }),
             h("button", { type: "button", text: "Fahrtenbuch für die Steuer", title: "Jahresblatt und CSV je Steuerjahr", onclick: function () { zeigeFahrtenbuch(); } }),
             h("button", { type: "button", text: "CSV der Saison", onclick: function () { csvExport(spiele); } }),
             h("button", { type: "button", text: "Drucken", onclick: function () { window.print(); } })])]);
       },
       eintragen: function () { return spielEintragenFormular(function () { abrechnungPanel = null; rendereAbrechnung(); }); },
-      eigeneregeln: function () { return regelPanel(spiele); },
       pruefen: function () { return pruefPanel(spiele); },
       regeln: function () {
         return h("p", { class: "meta mg-fuss", style: "margin:0", text:
@@ -5297,10 +5442,12 @@ window.Mitglieder = (function () {
     // weiterhin - das ist der schnelle Weg, nicht der einzige.
     // "Abrechnungsart" sagt nicht, dass dort der Kilometersatz steht,
     // "Werkzeuge" nicht, dass es um Fahrtenbuch und CSV geht.
-    var WEITERE = [["rechnungen", "Geschriebene Rechnungen"], ["kalender", "Kalender"],
-      // "Kilometersatz und Pauschalen" liegt seit Fassung 276 hinter dem
-      // Zahnrad im Kopf - hier stuende es doppelt.
-      ["eigeneregeln", "Eigene Beträge je Liga"],
+    // Bis Fassung 280 standen hier auch "Geschriebene Rechnungen" (jede
+    // Karte laedt ihre Rechnung selbst, die Rechnung verweist auf die
+    // Liste), "Rechnungslauf" (steht im Arbeitskopf der Stufe
+    // "Abrechnen") und "Eigene Betraege je Liga" (jetzt die Gebuehren-
+    // ordnung in den Einstellungen). Die Blaetter gibt es weiter.
+    var WEITERE = [["kalender", "Kalender"],
       ["werkzeuge", "Jahresabschluss, Fahrtenbuch, Export"], ["eintragen", "+ Spiel nachtragen"],
       ["regeln", "Wie die App rechnet"]];
     // Im alten Design steht "Rechnung" in der Knopfreihe darueber - dort
@@ -5314,7 +5461,6 @@ window.Mitglieder = (function () {
     // "Rechnung schreiben" hat jetzt einen eigenen Knopf am Listenende -
     // hier waere sie doppelt. Der Lauf bleibt: alle auf einmal zu
     // schreiben ist wirklich seltener.
-    WEITERE.unshift(["lauf", "Rechnungslauf"]);
     if (!einfach()) WEITERE.unshift(["detail", "Steuerjahre"]);
     panelInhalt.weiteres = function () {
       return h("div", { class: "mg-form" }, [
@@ -5355,7 +5501,7 @@ window.Mitglieder = (function () {
         text: "Rechnung schreiben",
         onclick: function () { panelOeffnen("rechnung", true); } }));
       inhalt.appendChild(h("button", { type: "button", class: "mg-weitere-zeile" + (unten ? " auf" : ""),
-        title: "Kalender, eigene Regeln, Werkzeuge, Spiel eintragen",
+        title: "Kalender, Jahresabschluss, Spiel eintragen",
         text: "Weitere Werkzeuge",
         onclick: function () { panelOeffnen("weiteres", true); } }));
       if (unten) inhalt.appendChild(h("div", { class: "melde karte mg-panel" }, [panelInhalt[abrechnungPanel]()]));
@@ -5521,109 +5667,50 @@ window.Mitglieder = (function () {
     box.appendChild(h("label", { class: "mg-datei" }, ["+ Beleg (Foto/PDF)", datei]));
   }
 
-  // ---- Eigene Regeln verwalten
+  // ---- Kilometer je Halle
   //
-  // Die Gebuehrenordnung kennt nicht jede Liga (DEB-Ligen, Auswahlspiele),
-  // und die Luftlinie stimmt selten. Wer einmal sagt "diese Liga bringt X,
-  // diese Halle sind Y km", muss es nie wieder tippen.
-  function regelPanel(spiele) {
-    var box = h("div", {});
+  // Die Luftlinie stimmt selten, und manche Halle faehrt man anders an,
+  // als die Route meint. Was hier steht, schlaegt die Route. Stand bis
+  // Fassung 280 mit den Betraegen je Liga unter "Weitere Werkzeuge";
+  // jetzt in den Einstellungen unter "Kilometer".
+  function hallenKm(spiele) {
+    var box = h("div", { class: "mg-hallenkm" });
     function rendern() {
       leeren(box);
-      var r = regeln(), ligaK = Object.keys(r.liga).sort(), halleK = Object.keys(r.halle).sort();
-
-      box.appendChild(h("p", { class: "meta", style: "margin:0 0 10px", text:
-        "Eigene Regeln gehen der Gebührenordnung vor und füllen neue Spiele von selbst aus. "
-        + "Jedes einzelne Spiel lässt sich weiterhin von Hand ändern." }));
-
-      // --- Vergütung je Liga
-      box.appendChild(h("h4", { style: "margin:0 0 6px", text: "Vergütung je Liga" }));
-      if (!ligaK.length) box.appendChild(h("p", { class: "leer", style: "margin:0 0 8px", text: "Noch keine Regel." }));
-      ligaK.forEach(function (k) {
-        var teil = k.split("|");
-        box.appendChild(h("div", { class: "sperre" }, [
-          h("span", { text: teil[0] + (teil[1] ? " · " + teil[1] : " · alle Rollen") }),
-          h("span", {}, [
-            h("b", { text: euro(r.liga[k]) }),
-            h("button", { type: "button", class: "rund", title: "Regel entfernen", text: "×", onclick: function () {
-              // Scheitert das Speichern, muss der Wert zurueck in den Zwischenspeicher -
-              // sonst zeigt die Oberflaeche geloescht, was die Datenbank noch kennt
-              var alt = r.liga[k];
-              delete r.liga[k];
-              regelnSpeichern(r.liga, r.halle).then(function (ok) {
-                if (!ok) { r.liga[k] = alt; meldung("Regel konnte nicht gelöscht werden.", "warn"); }
-                rendern(); rendereAbrechnung();
-              });
-            } })])]));
-      });
-
-      var ligen = []; spiele.forEach(function (sp) { var l = sp.liga || "ohne Liga"; if (ligen.indexOf(l) < 0) ligen.push(l); });
-      ligen.sort();
-      var ligaWahl = h("select", { class: "mg-select" }, ligen.map(function (l) { return h("option", { value: l, text: l }); }));
-      var rolleWahl = h("select", { class: "mg-select" }, [
-        h("option", { value: "", text: "alle Rollen" }),
-        h("option", { value: "SR", text: "SR" }), h("option", { value: "LR", text: "LR" }),
-        h("option", { value: "SRA", text: "SRA" }), h("option", { value: "SRB", text: "SRB" })]);
-      var betrag = h("input", { type: "text", inputmode: "decimal", placeholder: "€" });
-      box.appendChild(h("div", { class: "mg-regel-neu" }, [ligaWahl, rolleWahl, betrag,
-        h("button", { type: "button", class: "anfrage", text: "Merken", onclick: function () {
-          var v = zahlAbNull(betrag.value);
-          if (v == null) { meldung("Bitte einen Betrag eintragen.", "warn"); return; }
-          r.liga[ligaWahl.value + "|" + rolleWahl.value] = v;
-          regelnSpeichern(r.liga, r.halle).then(function (ok) {
-            if (!ok) { meldung("Regel konnte nicht gespeichert werden.", "warn"); return; }
-            betrag.value = ""; rendern(); rendereAbrechnung();
-          });
-        } })]));
-
-      // --- Kilometer je Halle
-      box.appendChild(h("h4", { style: "margin:14px 0 6px", text: "Kilometer je Halle" }));
-      box.appendChild(h("p", { class: "meta", style: "margin:0 0 6px", text: "Einfache Strecke von zu Hause. Was du hier einträgst, schlägt die berechnete Route." }));
-      if (!halleK.length) box.appendChild(h("p", { class: "leer", style: "margin:0 0 8px", text: "Noch keine Regel." }));
+      var r = regeln(), halleK = Object.keys(r.halle).sort();
+      box.appendChild(h("p", { class: "meta", style: "margin:10px 0 6px", text:
+        "Eigene Kilometer je Halle (einfache Strecke) gehen der berechneten Route vor." }));
       halleK.forEach(function (k) {
         box.appendChild(h("div", { class: "sperre" }, [
           h("span", { text: k }),
           h("span", {}, [h("b", { text: dezimal(r.halle[k]) + " km" }),
-            h("button", { type: "button", class: "rund", title: "Regel entfernen", text: "×", onclick: function () {
-              var alt = r.halle[k];
-              delete r.halle[k];
-              regelnSpeichern(r.liga, r.halle).then(function (ok) {
-                if (!ok) { r.halle[k] = alt; meldung("Regel konnte nicht gelöscht werden.", "warn"); }
-                rendern(); rendereAbrechnung();
-              });
-            } })])]));
+            h("button", { type: "button", class: "rund", title: "Entfernen", "aria-label": "Kilometer für " + k + " entfernen",
+              text: "×", onclick: function () {
+                var alt = r.halle[k];
+                delete r.halle[k];
+                regelnSpeichern(r.liga, r.halle).then(function (ok) {
+                  if (!ok) { r.halle[k] = alt; meldung("Konnte nicht gelöscht werden.", "warn"); }
+                  rendern();
+                });
+              } })])]));
       });
-      var hallen = []; spiele.forEach(function (sp) { if (sp.halle && hallen.indexOf(sp.halle) < 0) hallen.push(sp.halle); });
+      var hallen = [];
+      (spiele || []).forEach(function (sp) { if (sp.halle && hallen.indexOf(sp.halle) < 0) hallen.push(sp.halle); });
       hallen.sort();
-      var halleWahl = h("select", { class: "mg-select" }, hallen.map(function (l) { return h("option", { value: l, text: l }); }));
-      var kmFeld = h("input", { type: "text", inputmode: "decimal", placeholder: "km" });
-      if (!hallen.length) box.appendChild(h("p", { class: "meta", style: "margin:0", text: "In dieser Saison steht zu keinem Spiel eine Halle." }));
-      else box.appendChild(h("div", { class: "mg-regel-neu" }, [halleWahl, kmFeld,
+      if (!hallen.length) return;
+      var halleWahl = h("select", { class: "mg-select", "aria-label": "Halle" },
+        hallen.map(function (l) { return h("option", { value: l, text: l }); }));
+      var kmFeld = h("input", { type: "text", inputmode: "decimal", placeholder: "km", "aria-label": "Kilometer" });
+      box.appendChild(h("div", { class: "mg-regel-neu" }, [halleWahl, kmFeld,
         h("button", { type: "button", class: "anfrage", text: "Merken", onclick: function () {
           var v = zahlAbNull(kmFeld.value);
           if (v == null) { meldung("Bitte eine Kilometerzahl eintragen.", "warn"); return; }
           r.halle[halleWahl.value] = v;
           regelnSpeichern(r.liga, r.halle).then(function (ok) {
-            if (!ok) { meldung("Regel konnte nicht gespeichert werden.", "warn"); return; }
-            kmFeld.value = ""; rendern(); rendereAbrechnung();
+            if (!ok) { meldung("Konnte nicht gespeichert werden.", "warn"); return; }
+            kmFeld.value = ""; rendern();
           });
         } })]));
-
-      if (ligaK.length || halleK.length) {
-        box.appendChild(h("button", { type: "button", class: "mg-neben", style: "margin-top:12px",
-          text: "Regeln auf alle leeren Felder anwenden", onclick: function () {
-            var n = 0, jetzt = new Date();
-            spiele.forEach(function (sp) {
-              if (new Date(sp.beginn) > jetzt) return;
-              var e = einsaetze[sp.kennung] || {}, aend = {};
-              if (e.verguetung == null && regelBetrag(sp) != null) aend.verguetung = regelBetrag(sp);
-              if (e.km == null && regelKm(sp) != null) aend.km = regelKm(sp);
-              if (Object.keys(aend).length) { speichereEinsatz(sp, aend); n++; }
-            });
-            meldung(n ? n + (n === 1 ? " Spiel ergänzt." : " Spiele ergänzt.") : "Es war nichts offen, wofür eine Regel gilt.", n ? "gut" : "");
-            rendereAbrechnung();
-          } }));
-      }
     }
     rendern();
     return box;
@@ -6010,7 +6097,8 @@ window.Mitglieder = (function () {
       h("div", { class: "mg-schalter" }, [
         h("label", { class: "mg-check", title: "Du warst da, gespielt wurde nicht - die Ordnung sieht dafür die halbe Gebühr vor" },
           [ausf, " vor Ort ausgefallen (halbe Gebühr)"]),
-        uebergreifendMoeglich(sp) ? h("label", { class: "mg-check" }, [ueb, " übergreifend"]) : null
+        uebergreifendMoeglich(sp) && (uebergreifendZeigen() || e.uebergreifend)
+          ? h("label", { class: "mg-check" }, [ueb, " übergreifend"]) : null
       ]),
       h("div", { class: "mg-felder" }, [h("label", { class: "mg-notiz" }, ["Notiz", notiz]), (profil.verpflegung_modus || "aus") !== "aus" || e.verpflegung != null ? h("label", { title: "Verpflegungsmehraufwand, 14 € ab 8 Std. Abwesenheit" }, ["Verpflegung €", verpf]) : null]),
       h("div", { class: "mg-belege" }),
@@ -10058,13 +10146,14 @@ window.Mitglieder = (function () {
       text("daten.json", JSON.stringify(aus, null, 2));
       // Abrechnung als CSV (alle Saisons)
       var alle = alleSpiele();
-      var zeilen = [["Datum", "Uhrzeit", "Saison", "Liga", "Begegnung", "Halle", "Rolle", "km", "Fahrtkosten", "Verpflegung", "Auslagen", "Vergütung", "Notiz"]];
+      var zeilen = [["Datum", "Uhrzeit", "Saison", "Liga", "Begegnung", "Halle", "Rolle", "km", "Fahrtkosten", "Verpflegung", "Auslagen", "Vergütung", "Netto", "Notiz"]];
       alle.slice().reverse().forEach(function (sp) {
         var e = einsaetze[sp.kennung]; if (!e) return;
         var d = new Date(sp.beginn), b = betragFuer(sp, e);
         var dez = function (n) { return n == null ? "" : String(Math.round(n * 100) / 100).replace(".", ","); };
         zeilen.push([d.toLocaleDateString("de-DE"), uhr(d), sp.saison || "", sp.liga || "", sp.paarung || "", sp.halle || "", sp.rolle || "",
-                     dez(e.km), dez(fahrtkosten(e)), dez(e.verpflegung), dez(e.auslagen), dez(b.betrag), e.notiz || ""]);
+                     dez(e.km), dez(fahrtkosten(e)), dez(e.verpflegung), dez(e.auslagen), dez(b.betrag),
+                     dez(b.betrag != null ? nettoSpiel(sp, e) : null), e.notiz || ""]);
       });
       text("abrechnung.csv", "\ufeff" + zeilen.map(function (z) { return z.map(function (f) { return '"' + String(f).replace(/"/g, '""') + '"'; }).join(";"); }).join("\r\n"));
       // Notizen als lesbare Textdatei
@@ -10339,17 +10428,17 @@ window.Mitglieder = (function () {
         .sort(function (a, b) { return a.beginn < b.beginn ? -1 : 1; });
       var s = summen(liste);
       var b = summen(liste, function (sp) { return !!(einsaetze[sp.kennung] || {}).bezahlt; });
-      var gesamt = s.verg + s.fahrt + s.verpf + s.ausl;
       box.appendChild(h("h3", { class: "abschnitt", text: "Jahresabschluss " + jahr + " · " + (profil.name || "") }));
       box.appendChild(h("p", { class: "meta", text: s.spiele + (s.spiele === 1 ? " Einsatz" : " Einsätze")
         + " als Schiedsrichter. Erstellt " + jetzt.toLocaleDateString("de-DE") + "." }));
       box.appendChild(h("table", { class: "jahres-summen" }, [h("tbody", {}, [
-        summenZeile("Vergütungen mit Zuschlägen", euro(s.verg)),
-        summenZeile("Fahrtkosten · " + Math.round(s.km) + " km", euro(s.fahrt)),
-        summenZeile("Verpflegungsmehraufwand", euro(s.verpf)),
-        summenZeile("Auslagen", euro(s.ausl)),
-        summenZeile("Zusammen", euro(gesamt), true),
-        summenZeile("davon schon bezahlt", euro(b.verg + b.fahrt + b.verpf + b.ausl))])]));
+        summenZeile("Einnahmen (Pauschalen nach Gebührenordnung)", euro(s.verg)),
+        summenZeile("− Fahrtkosten · " + Math.round(s.km) + " km", euro(s.fahrt)),
+        summenZeile("− Verpflegungsmehraufwand", euro(s.verpf)),
+        summenZeile("− Auslagen", euro(s.ausl)),
+        summenZeile("Netto", euro(netto(s)), true),
+        // Bezahlt wird die Pauschale - die Kosten traegt man selbst.
+        summenZeile("Einnahmen schon bezahlt", euro(b.verg))])]));
       if (!liste.length) { box.appendChild(h("p", { class: "leer", text: "Keine Einsätze in diesem Jahr." })); return; }
       // Eine Zeile je Einsatz, darunter klein die Posten. Eine Tabelle mit
       // sechs Spalten brach bei 375 px Wort fuer Wort um (166 px je Spiel)
@@ -10359,14 +10448,14 @@ window.Mitglieder = (function () {
         var e = einsaetze[sp.kennung] || {};
         var v = betragFuer(sp, e).betrag || 0, f = fahrtkosten(e), vp = e.verpflegung || 0, au = e.auslagen || 0;
         var teile = [];
-        if (v) teile.push("Vergütung " + euro(v));
-        if (f) teile.push("Fahrt " + euro(f));
-        if (vp) teile.push("Verpflegung " + euro(vp));
-        if (au) teile.push("Auslagen " + euro(au));
+        if (v) teile.push("Einnahme " + euro(v));
+        if (f) teile.push("Fahrt −" + euro(f));
+        if (vp) teile.push("Verpflegung −" + euro(vp));
+        if (au) teile.push("Auslagen −" + euro(au));
         l.appendChild(h("div", { class: "jahres-zeile" }, [
           h("span", { class: "was" }, [h("b", { text: new Date(sp.beginn).toLocaleDateString("de-DE") }),
             " " + (sp.liga ? sp.liga + ": " : "") + (sp.paarung || "") + " (" + (sp.rolle || "SR") + ")"]),
-          h("span", { class: "zahl", text: euro(v + f + vp + au) }),
+          h("span", { class: "zahl", text: euro(nettoSpiel(sp, e)) }),
           h("small", { text: teile.length ? teile.join(" · ") : "noch kein Betrag eingetragen" })]));
       });
       box.appendChild(l);
@@ -10648,7 +10737,8 @@ window.Mitglieder = (function () {
     istUnterwegs: istUnterwegs, istErledigt: istErledigt,
     abweichung: abweichung, zuPruefen: zuPruefen, wegZahlen: wegZahlen,
     gebuehrenFlach: gebuehrenFlach, gebuehrenAenderung: gebuehrenAenderung,
-    gebuehrenUebersicht: gebuehrenUebersicht
+    gebuehrenUebersicht: gebuehrenUebersicht,
+    netto: netto, nettoSpiel: nettoSpiel, uebergreifendZeigen: uebergreifendZeigen
   };
 
   return { oeffnen: oeffnen, bereit: bereit, angemeldet: angemeldet, pruefstand: pruefstand,

@@ -3640,6 +3640,44 @@
      Grossbuchstaben neben "Vorschlag" in normaler Schreibweise. */
   :root[data-design="neu"] .mg-status { text-transform:none; letter-spacing:0; font-weight:700; }
 
+  /* ===== Nachtrag: Fassung 281, Abrechnung ===========================
+     Aktualisieren neben dem Regler, gleiche Form. Dreht, solange er
+     rechnet - ausser wer weniger Bewegung will. */
+  :root[data-design="neu"] .mg-neuladen svg.i { width:20px; height:20px; display:block; }
+  :root[data-design="neu"] .mg-neuladen.laeuft svg.i { animation:mg-drehen 1s linear infinite; }
+  @keyframes mg-drehen { to { transform:rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) {
+    :root[data-design="neu"] .mg-neuladen.laeuft svg.i { animation:none; }
+  }
+  /* Die Gebuehrenordnung zum Aendern: jede Zelle ein Feld, 44 px hoch.
+     Eigene Saetze in der Akzentfarbe. Breite so, dass vier Spalten bei
+     375 px ohne Querscrollen passen. */
+  :root[data-design="neu"] .mg-gebuehr-rahmen { overflow-x:auto; }
+  :root[data-design="neu"] .mg-gebuehrtabelle td.zahl { padding:2px 0 2px 4px; }
+  :root[data-design="neu"] .mg-gebuehrtabelle input.mg-satz { width:58px; min-height:44px; margin:0;
+    padding:0 8px; text-align:right; font:inherit; font-variant-numeric:tabular-nums;
+    border:1px solid var(--linie); border-radius:var(--radius-s); background:var(--bg); color:var(--text); }
+  :root[data-design="neu"] .mg-gebuehrtabelle input.mg-satz.eigen { border-color:var(--akzent);
+    color:var(--akzent); font-weight:700; }
+  :root[data-design="neu"] .mg-gebuehr-tipp { margin:8px 0; }
+  :root[data-design="neu"] .mg-gebuehren .mg-neben { margin-top:8px; }
+  :root[data-design="neu"] .mg-eigenregeln { margin-top:12px; }
+  /* Der Schalter "uebergreifend" in den Einstellungen: Titel und eine
+     Zeile, wie die Wahlknoepfe darueber. */
+  :root[data-design="neu"] .mg-einst-check { display:flex; gap:12px; align-items:flex-start;
+    min-height:44px; padding:10px 0; margin-top:8px; }
+  :root[data-design="neu"] .mg-einst-check input { width:22px; height:22px; margin:1px 0 0; flex:0 0 auto; }
+  :root[data-design="neu"] .mg-einst-check span { display:flex; flex-direction:column; gap:2px; }
+  :root[data-design="neu"] .mg-einst-check small { color:var(--dim); font-weight:400; }
+
+  /* Eigene Saetze im dunklen Thema sichtbar: dort ist der Akzent weiss,
+     Rahmen und Schrift allein fielen nicht auf. */
+  :root[data-design="neu"] .mg-gebuehrtabelle input.mg-satz.eigen { border-width:2px;
+    background:var(--akzent-hell); }
+  :root[data-design="neu"] .mg-hallenkm .mg-regel-neu input,
+  :root[data-design="neu"] .mg-hallenkm .mg-regel-neu button,
+  :root[data-design="neu"] .mg-hallenkm .mg-regel-neu select { min-height:44px; }
+
 </style>
 </head>
 <body>
@@ -3669,6 +3707,7 @@
   <symbol id="i-empty" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2.5"/><path d="M4 10h16M9 14h6"/></symbol>
   <symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 8h13l-3-3M20 16H7l3 3"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-neuladen" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v5h-5"/></symbol>
   <symbol id="i-regler" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></symbol>
   <symbol id="i-kamera" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></symbol>
   <symbol id="i-note" viewBox="0 0 24 24"><path d="M4 20h4l10-10-4-4L4 16z"/><path d="M12.5 7.5l4 4"/></symbol>
@@ -4104,6 +4143,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=280"></script>
+<script src="app.js?v=281"></script>
 </body>
 </html>
