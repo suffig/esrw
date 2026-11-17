@@ -28,4 +28,31 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
  rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
  ":geo:51.43973,6.6198
 END:VEVENT
+BEGIN:VEVENT
+UID:13e79331097f15b062ed51270f0a15a18f3fffd3@esrw.de
+SEQUENCE:0
+DTSTAMP:20261117T093042Z
+LAST-MODIFIED:20261117T093042Z
+DTSTART:20261121T113000Z
+DTEND:20261121T150000Z
+SUMMARY:SR · U11 LL Rot: Krefelder EV 1b – YAYLA Krefeld
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
+  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Rot\nHalle: Rheinlandhal
+ le Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Hornig\
+ , Marius\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
+GEO:51.339877;6.540168
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
+ stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
+ le Krefeld":geo:51.339877,6.540168
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Rot: Krefelder EV 1
+ b – YAYLA Krefeld
+END:VALARM
+END:VEVENT
 END:VCALENDAR

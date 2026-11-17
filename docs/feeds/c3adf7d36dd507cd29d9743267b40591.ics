@@ -2136,15 +2136,15 @@ END:VEVENT
 BEGIN:VEVENT
 UID:e89343c3fd3be6924376394a39c3ba5e52b5cadc@esrw.de
 SEQUENCE:0
-DTSTAMP:20261111T143043Z
-LAST-MODIFIED:20261111T143043Z
+DTSTAMP:20261117T093042Z
+LAST-MODIFIED:20261117T093042Z
 DTSTART:20261121T101500Z
 DTEND:20261121T134500Z
 SUMMARY:SR · U9 LL Blau: Dinslakener Kobras
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:15 Uhr\nTreffpunkt:
   11:15 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Blau\nHalle: Eissporthall
- e Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\n\nQuelle: https://w
- ww.esrw.de/einteilungen.html
+ e Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Quint\, Sa
+ scha\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2158,6 +2158,33 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Blau: Dinslakener Ko
  bras
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:595ee5c9d40ada35060e890259b8d00a74ab0002@esrw.de
+SEQUENCE:0
+DTSTAMP:20261117T093042Z
+LAST-MODIFIED:20261117T093042Z
+DTSTART:20261121T113000Z
+DTEND:20261121T150000Z
+SUMMARY:SR · U11 LL Rot: Krefelder EV 1b – YAYLA Krefeld
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
+  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Rot\nHalle: Rheinlandhal
+ le Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Hornig\
+ , Marius\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
+GEO:51.339877;6.540168
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
+ stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
+ le Krefeld":geo:51.339877,6.540168
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Rot: Krefelder EV 1
+ b – YAYLA Krefeld
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2929,10 +2956,10 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL: ESV Grizzlys B
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:204eef545265916a5ada605d7d9ca623ea26d34e@esrw.de
+UID:61c6bd496b0a7af1e8bf7b1427ad9badc8343603@esrw.de
 SEQUENCE:0
-DTSTAMP:20261117T091531Z
-LAST-MODIFIED:20261117T091531Z
+DTSTAMP:20261117T093042Z
+LAST-MODIFIED:20261117T093042Z
 DTSTART:20261122T170000Z
 DTEND:20261122T203000Z
 SUMMARY:SR · Frauen LL: Eisadler Dortmund – ESV Bergisch Gladbach
