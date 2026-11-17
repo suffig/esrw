@@ -591,6 +591,20 @@ P.gelerntBauen([]);
   gleich(P.abweichung(kommt), null, "ein kommendes Spiel wird nicht geprueft");
   gleich(P.abweichung(cent), null, "Cent-Reste aus einer alten Rundung sind keine Abweichung");
 
+  // Die Ordnung gilt fuer eine Saison. Ein Spiel der Vorsaison wird
+  // nicht an den neuen Saetzen gemessen - sonst mahnte die App nach
+  // jeder Erhoehung die ganze alte Saison an.
+  var vorsaison = sp("a11", "RL West", "HSR", 3, -400);
+  // Dazulegen, nicht ersetzen - die Faelle darunter brauchen ihre Zeilen.
+  var mitVorsaison = {
+    a1: { verguetung: 180 }, a2: { verguetung: 180 }, a3: { verguetung: 160 },
+    a4: { verguetung: 180 }, a5: { verguetung: 160 }, a6: { verguetung: 80 },
+    a7: { verguetung: 250 }, a9: { verguetung: 180 }, a10: { verguetung: 160.002 },
+    a11: { verguetung: 180 } };
+  P.setze({ einsaetze: mitVorsaison });
+  gleich(P.abweichung(vorsaison), null, "ein Spiel der Vorsaison wird nicht an der neuen Ordnung gemessen");
+  pruefe(!!P.abweichung(hsrFalsch), "dieselbe Abweichung in der laufenden Saison faellt weiter auf");
+
   // Eine eigene Regel ist eine bewusste Entscheidung - sie steht ueber
   // der Ordnung. Genau das macht der Knopf "So lassen".
   P.setze({ profil: { einstellungen: { regeln_liga: { "RL West|HSR": 180 } },
@@ -606,8 +620,93 @@ P.gelerntBauen([]);
   gleich(P.zumAbrechnen(lsrFalsch), false, "mit falschem Betrag wird nicht abgerechnet");
   gleich(P.zumAbrechnen(hsrRecht), true, "mit richtigem Betrag darf abgerechnet werden");
 
+  // Die drei Zahlen am Weg. Bis Fassung 276 zaehlte die Nachfuehrung
+  // nach jeder Eingabe selbst - nach hatLuecke, und in einer Leiste,
+  // die es nicht mehr gab. Ein falscher Betrag muss mitzaehlen.
+  P.setze({ aufRechnung: {} });
+  var wz = P.wegZahlen([hsrFalsch, lsrFalsch, hsrRecht, leer, kommt]);
+  gleich(wz[0].t, "3 Spiele", "Pruefen zaehlt Luecke und beide falschen Betraege");
+  gleich(wz[0].f, false, "mit offenen Spielen ist Pruefen nicht fertig");
+  pruefe(/160,00/.test(wz[1].t), "Abrechnen nennt die Summe des einen richtigen Spiels", wz[1].t);
+  gleich(wz[2].t, "erledigt", "ohne geschriebene Rechnung ist nichts unterwegs");
+  P.setze({ aufRechnung: null });
+  gleich(P.wegZahlen([hsrRecht])[1].t, "…", "solange die Rechnungsliste laedt, keine Behauptung");
+  gleich(P.wegZahlen([hsrRecht])[1].f, false, "und auch kein Haken");
+
   P.setze({ profil: { einstellungen: {}, heimat_lat: null, heimat_lon: null },
             einsaetze: {}, aufRechnung: null });
+})();
+
+
+// ---------------------------------------------------------------------
+// Neue Gebuehrenordnung erkennen
+//
+// Verglichen wird mit einer Momentaufnahme der Saetze, nicht mit dem
+// Stand-Text - auch eine Korrektur innerhalb einer Saison soll auffallen.
+(function () {
+  P.setze({ gebuehren: GEBUEHREN });
+  var flach = P.gebuehrenFlach(GEBUEHREN);
+  gleich(flach["senioren.RL.HSR"], 160, "flach: HSR RL West steht mit 160 drin");
+  gleich(flach["nachwuchs.U20.RL.LSR"], 80, "flach: verschachtelte Saetze kommen mit");
+  pruefe(!Object.keys(flach).some(function (k) { return /(^|\.)_/.test(k); }),
+    "flach: Hinweistexte mit _ sind keine Saetze");
+
+  P.setze({ profil: { einstellungen: {} } });
+  gleich(P.gebuehrenAenderung().erstes, true, "ohne Momentaufnahme: nur still merken");
+
+  P.setze({ profil: { einstellungen: { gebuehren_saetze: flach } } });
+  gleich(P.gebuehrenAenderung().zeilen.length, 0, "unveraenderte Ordnung meldet nichts");
+
+  var alt = JSON.parse(JSON.stringify(flach));
+  alt["senioren.RL.HSR"] = 150;           // frueher 150, jetzt 160
+  alt["senioren.XX.SR"] = 99;             // gab es, gibt es nicht mehr
+  delete alt["frauen.SR"];                // gab es nicht, ist neu
+  P.setze({ profil: { einstellungen: { gebuehren_saetze: alt } } });
+  var z = P.gebuehrenAenderung().zeilen;
+  function zeile(p) { return z.filter(function (x) { return x.pfad === p; })[0]; }
+  gleich(z.length, 3, "genau die drei Aenderungen");
+  gleich(zeile("senioren.RL.HSR") && zeile("senioren.RL.HSR").alt, 150, "geaenderter Satz: alter Wert");
+  gleich(zeile("senioren.RL.HSR") && zeile("senioren.RL.HSR").neu, 160, "geaenderter Satz: neuer Wert");
+  gleich(zeile("senioren.XX.SR") && zeile("senioren.XX.SR").neu, undefined, "weggefallener Satz");
+  gleich(zeile("frauen.SR") && zeile("frauen.SR").alt, undefined, "neu hinzugekommener Satz");
+  P.setze({ profil: { einstellungen: {}, heimat_lat: null, heimat_lon: null } });
+})();
+
+
+// ---------------------------------------------------------------------
+// Ligennamen, wie esrw.de sie liefert
+//
+// Bis Fassung 277 landete "Senioren RLW" in der Bezirksliga: die
+// Herrenregel pruefte \bRL\b, das W direkt dahinter liess sie
+// durchfallen, und "...|SENIOREN" fing es auf. HSR bekam 100 statt 160,
+// LSR 100 statt 110 - die App zeigte richtige Betraege als falsch an.
+// Die Liste ist jeder Ligenname aus den Echtdaten vom 23.09.
+(function () {
+  P.setze({ gebuehren: GEBUEHREN, profil: { einstellungen: {} }, einsaetze: {} });
+  function soll(liga, rolle) {
+    return P.grundgebuehr({ liga: liga, rolle: rolle, system: rolle === "SR" ? 2 : 3 });
+  }
+  [
+    // [Liga, Rolle, Satz] - null heisst: die Ordnung kennt diese Liga nicht
+    ["Senioren RLW", "HSR", 160], ["Senioren RLW", "LSR", 110], ["Senioren RLW", "SR", 180],
+    ["RL FS", "HSR", 160], ["RL FS", "LSR", 110],
+    ["Senioren LL", "SR", 120], ["LL FS", "SR", 120],
+    ["Senioren BZL", "SR", 100], ["BL FS", "SR", 100], ["BZ FS", "SR", 100],
+    ["Frauen LL", "SR", 95], ["Frauen BZL", "SR", 95], ["Frauen Pokal Gr.A", "SR", 95],
+    ["DEFL 2 FS", "SR", 95], ["DFEL2 Nord", "SR", 95],
+    ["U20 RL", "HSR", 100], ["U20 RL", "LSR", 80], ["U20 RL", "SR", 90],
+    ["U20 LL", "SR", 90], ["U20 FS", "SR", 90],
+    ["U17 RL", "SR", 85], ["U17 LL", "SR", 85], ["U17 FS", "SR", 85],
+    ["U15 RLA", "SR", 80], ["U15 RLB", "SR", 80], ["U15 LL", "SR", 80], ["U15 BZL", "SR", 80],
+    ["U13 RLA", "SR", 80], ["U13 RLB", "SR", 80], ["U13 LL", "SR", 80],
+    ["U11 RL", "SR", 85], ["U11 LL Rot", "SR", 85], ["U9 RL", "SR", 85], ["U9 LL Grün", "SR", 85],
+    ["U7 Blau", "SR", 85],
+    // DEB-Ligen und Auswahl stehen nicht in der ESRW-Ordnung
+    ["U17 I", "SR", null], ["DNL III", "HSR", null], ["DNL III", "LSR", null], ["DA FS", "SR", null]
+  ].forEach(function (f) {
+    gleich(soll(f[0], f[1]), f[2], "Ligenname \"" + f[0] + "\" als " + f[1]);
+  });
+  P.setze({ einsaetze: {} });
 })();
 
 

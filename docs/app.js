@@ -187,6 +187,9 @@
   // Der Betreiber setzt die Marke, die Zeile in der Datenbank bleibt stehen -
   // in der App ist das Spiel weg, auch in Abrechnung und Archiv.
   function istAusgeblendet(kennung) { var k = korrekturen[kennung]; return !!(k && k.geloescht); }
+  // Abgesagt heisst: nicht gespielt. Die Abrechnung und das Archiv
+  // fragen danach - bis Fassung 277 wussten beide nichts davon.
+  function istAbgesagt(kennung) { var k = korrekturen[kennung]; return !!(k && k.abgesagt); }
   function istGeloescht(s) { return istAusgeblendet(kennungVon(s)); }
   function korrekturenAnwenden() {
     if (!daten) return;
@@ -2298,9 +2301,37 @@
       if (!st.eingerichtet || !st.session) return;
       return window.Mitglieder.offeneAbrechnungen(p.slug, 21);
     }).then(function (offen) {
-      if (!offen || !offen.length || ziel._lauf !== lauf) return;
-      ziel.appendChild(handlungszeile(offen));
+      if (ziel._lauf !== lauf) return;
+      if (offen && offen.length) ziel.appendChild(handlungszeile(offen));
+      // Danach: Rechnungen, auf die seit ueber 30 Tagen kein Geld kam.
+      return window.Mitglieder && window.Mitglieder.offeneRechnungen
+        ? window.Mitglieder.offeneRechnungen(p.slug, 30) : [];
+    }).then(function (rg) {
+      if (!rg || !rg.length || ziel._lauf !== lauf) return;
+      ziel.appendChild(geldzeile(rg));
     }).catch(function () {});
+  }
+
+  // Geschriebene Rechnungen ohne Geld seit ueber 30 Tagen. In der
+  // Abrechnung stehen sie unter "Geld" - aber nur, wenn man nachsieht.
+  // Ein Tipp fuehrt genau dorthin.
+  function geldzeile(rg) {
+    var a = document.createElement("a"); a.className = "tun"; a.href = "#mitglieder/abrechnung";
+    a.addEventListener("click", function () {
+      if (window.Mitglieder && window.Mitglieder.geldZeigen) window.Mitglieder.geldZeigen();
+    });
+    var punkt = document.createElement("span"); punkt.className = "punkt offen"; a.appendChild(punkt);
+    var mitte = document.createElement("span");
+    var b = document.createElement("b");
+    b.textContent = rg.length === 1 ? "Rechnung " + rg[0].nummer + " ist noch offen"
+                                    : rg.length + " Rechnungen sind noch offen";
+    mitte.appendChild(b);
+    var summe = 0; rg.forEach(function (x) { summe += x.betrag; });
+    var s = document.createElement("small");
+    s.textContent = (rg.length === 1 ? "" : "zusammen ") + euroText(summe) + " · seit über 30 Tagen kein Geld";
+    mitte.appendChild(s); a.appendChild(mitte);
+    var pf = document.createElement("span"); pf.className = "pfeil"; pf.textContent = "›"; a.appendChild(pf);
+    return a;
   }
 
   // Eine Zeile, die sagt, was ansteht, samt den Betraegen, um die es
@@ -3924,7 +3955,7 @@
   // Leeres Geruest statt null: der Mitgliederbereich soll auch dann seinen
   // Anmeldeschirm zeichnen koennen, wenn noch keine Daten geladen sind.
   var LEER = { personen: [], spiele: [], hallen: {}, adressen: {}, hallen_hinweise: {}, saison: "", titel: "Einteilungen" };
-  function mitgliederKontext() { return { gespannKorrektur: gespannKorrektur, gespannGehoert: gespannGehoert, istAusgeblendet: istAusgeblendet, daten: daten || LEER, slug: profil && profil.slug, personMit: personMit, hole: hole, ikone: ikone, funktion: funktion, funktionen: FUNKTIONEN, einstellungenSync: einstellungenSync, lesen: lesen, schreiben: schreiben, reiterInLeiste: reiterInLeiste, appAblegen: appAblegen,
+  function mitgliederKontext() { return { gespannKorrektur: gespannKorrektur, gespannGehoert: gespannGehoert, istAusgeblendet: istAusgeblendet, istAbgesagt: istAbgesagt, doppelteAuflosen: doppelteAuflosen, daten: daten || LEER, slug: profil && profil.slug, personMit: personMit, hole: hole, ikone: ikone, funktion: funktion, funktionen: FUNKTIONEN, einstellungenSync: einstellungenSync, lesen: lesen, schreiben: schreiben, reiterInLeiste: reiterInLeiste, appAblegen: appAblegen,
     // Der Mitgliederbereich setzt geaenderte Anzeigenamen direkt in
     // daten ein (v59). Was gerade auf dem Schirm steht, weiss davon
     // nichts - also einmal neu zeichnen. "aktuell" ist dabei die
@@ -4187,15 +4218,72 @@
     karte[k] = { kennung: k, beginn: e.beginn, liga: e.liga || alt.liga || "", paarung: e.paarung || alt.paarung || "", halle: e.halle || alt.halle || "", system: e.system || alt.system || 0,
                  besetzung: (e.besetzung && e.besetzung.length ? e.besetzung : alt.besetzung) || [], saison: e.saison || alt.saison || archivSaisonAus(e.beginn), manuell: e.manuell || alt.manuell || false };
   }
+  // Ein verlegtes Spiel bekommt eine neue Kennung - sie haengt am
+  // Anstoss. Paart der Workflow alt und neu nicht eindeutig, stehen
+  // beide in den Quellen; im Archiv vom 23.09. neunmal: dieselbe
+  // Begegnung am selben Tag, etwa 19:30 und 20:00. Gleiche Begegnung am
+  // selben Kalendertag ist EIN Spiel. An verschiedenen Tagen nicht - im
+  // Nachwuchs spielt man Samstag und Sonntag gegen denselben Gegner.
+  //
+  // vorzug(s) liefert { fest, rang }: der hoechste rang bleibt, und was
+  // fest ist, bleibt immer (schon abgerechnet - so etwas versteckt man
+  // nicht). Selbst eingetragene Spiele werden nie zusammengelegt.
+  //
+  // Steht hier und nicht in mitglieder.js, weil das Archiv auch ohne
+  // Anmeldung laeuft. Die Abrechnung bekommt dieselbe Funktion ueber den
+  // Kontext - zwei Abschriften derselben Regel laufen auseinander.
+  function doppelteAuflosen(liste, vorzug) {
+    function schluessel(s) {
+      if (!s || s.privat || !s.paarung || !s.beginn) return null;
+      var d = new Date(s.beginn);
+      if (isNaN(d.getTime())) return null;
+      return String(s.paarung).toLowerCase().replace(/[–—]/g, "-").replace(/\s+/g, " ").trim()
+        + "|" + d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate();
+    }
+    function vergleiche(a, b) {
+      for (var i = 0; i < Math.max(a.length, b.length); i++) {
+        if (a[i] === b[i]) continue;
+        return a[i] > b[i] ? -1 : 1;
+      }
+      return 0;
+    }
+    var gruppen = {}, raus = [];
+    (liste || []).forEach(function (s) {
+      var k = schluessel(s);
+      if (!k) { raus.push(s); return; }
+      (gruppen[k] = gruppen[k] || []).push(s);
+    });
+    Object.keys(gruppen).forEach(function (k) {
+      var g = gruppen[k];
+      if (g.length === 1) { raus.push(g[0]); return; }
+      var bew = g.map(function (s) { return { s: s, v: vorzug(s) || { rang: [] } }; });
+      bew.sort(function (a, b) { return vergleiche(a.v.rang || [], b.v.rang || []); });
+      bew.forEach(function (x, i) { if (i === 0 || x.v.fest) raus.push(x.s); });
+    });
+    return raus;
+  }
+
   function archivKorrigieren(karte, slug, alle) {
     Object.keys(karte).forEach(function (k) {
       // Die Marke steht an der Kennung, nicht an der Archivzeile - das
       // Archiv kommt aus Dateien, die davon nichts wissen.
       if (istAusgeblendet(k)) { delete karte[k]; return; }
+      // Im Archiv steht, was gespielt wurde. Ein abgesagtes Spiel nicht.
+      if (istAbgesagt(k)) { delete karte[k]; return; }
       var neu = gespannKorrektur(k);
       if (neu) { karte[k].besetzung = neu; karte[k].system = neu.length; }
       if (!alle && gespannGehoert(k, slug) === false) delete karte[k];
     });
+    // Verlegte Doppelte: was im aktuellen Datenfenster steht, ist der
+    // neuere Stand; sonst die Fassung mit Halle und vollerem Gespann.
+    var aktuell = {};
+    ((daten && daten.spiele) || []).forEach(function (s) { aktuell[kennungVon(s)] = 1; });
+    var bleibt = doppelteAuflosen(Object.keys(karte).map(function (k) { return karte[k]; }), function (s) {
+      return { fest: false, rang: [aktuell[s.kennung] ? 1 : 0, s.halle ? 1 : 0, (s.besetzung || []).length, s.beginn || ""] };
+    });
+    var behalten = {};
+    bleibt.forEach(function (s) { behalten[s.kennung] = 1; });
+    Object.keys(karte).forEach(function (k) { if (!behalten[k]) delete karte[k]; });
   }
   function zeigeArchiv(modus) {
     ansicht("archiv"); aktuell = null; window.scrollTo(0, 0);
@@ -7329,6 +7417,7 @@
         if (o.rechner !== undefined) rechner = o.rechner;
       },
       kennungVon: kennungVon, istAusgeblendet: istAusgeblendet, istGeloescht: istGeloescht,
+      istAbgesagt: istAbgesagt, doppelteAuflosen: doppelteAuflosen,
       archivMerge: archivMerge, archivKorrigieren: archivKorrigieren, saisonZeilen: saisonZeilen,
       gemeinsamArchiv: gemeinsamArchiv,
       archivSaisonAus: archivSaisonAus,

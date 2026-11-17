@@ -3436,6 +3436,78 @@
     min-height:44px; }
   :root[data-design="neu"] .mg-wohnblock .mg-neben { align-self:flex-start; }
 
+  /* ===== Nachtrag: Rechnung an der Karte, neue Ordnung, Jahresabschluss
+     Der Knopf "Rechnung schreiben" sitzt wie der Abweichungskasten unter
+     dem Kopf der Karte - sichtbar auch bei zugeklappter Karte. */
+  :root[data-design="neu"] .mg-kartenrechnung { margin:0 var(--abstand-m) var(--abstand-s); }
+  :root[data-design="neu"] .mg-kartenrechnung .mg-haupt { width:100%; min-height:44px; margin:0; }
+
+  :root[data-design="neu"] .mg-ordnungneu { border-left:3px solid var(--akzent);
+    display:flex; flex-direction:column; gap:var(--abstand-xs); }
+  :root[data-design="neu"] .mg-ordnungneu p { margin:0; }
+  :root[data-design="neu"] .mg-ordnungneu ul { margin:4px 0; padding-left:18px;
+    font-size:var(--s-m); font-variant-numeric:tabular-nums; }
+  :root[data-design="neu"] .mg-ordnungneu .mg-neben { align-self:flex-start; min-height:44px; }
+
+  :root[data-design="neu"] .jahres-summen { width:100%; border-collapse:collapse;
+    margin:var(--abstand-s) 0 var(--abstand-l); font-variant-numeric:tabular-nums; }
+  :root[data-design="neu"] .jahres-summen td { padding:6px 0; border-bottom:1px solid var(--linie); }
+  :root[data-design="neu"] .jahres-summen td.zahl { text-align:right; white-space:nowrap; padding-left:12px; }
+  :root[data-design="neu"] .jahres-summen tr.summe td { font-weight:800; border-bottom:2px solid var(--text); }
+  :root[data-design="neu"] .jahres-liste { display:flex; flex-direction:column; }
+  :root[data-design="neu"] .jahres-zeile { display:grid; grid-template-columns:1fr auto;
+    gap:2px 12px; padding:8px 0; border-bottom:1px solid var(--linie);
+    font-size:var(--s-m); font-variant-numeric:tabular-nums; }
+  :root[data-design="neu"] .jahres-zeile .was { min-width:0; overflow-wrap:anywhere; }
+  :root[data-design="neu"] .jahres-zeile .zahl { text-align:right; white-space:nowrap; font-weight:700; }
+  :root[data-design="neu"] .jahres-zeile small { grid-column:1 / -1; color:var(--dim); font-size:var(--s-s); }
+
+  /* ===== Nachtrag: Abrechnung an den Bildschirm angepasst ============
+     Die Leiste steht immer in einer eigenen Zeile. Vorher passte sie ab
+     etwa 600 px neben Saison und Zahnrad und schrumpfte dort zu drei
+     kleinen Kaestchen mit leerem Platz daneben. */
+  :root[data-design="neu"] .mg-abrechnung-kopf { flex-direction:column; align-items:stretch;
+    gap:var(--abstand-s); }
+  :root[data-design="neu"] .mg-abrechnung-kopf .mg-kopfzeile,
+  :root[data-design="neu"] .mg-abrechnung-kopf .mg-weg { width:100%; margin-top:0; }
+  /* Auf breitem Schirm duerfen die Schritte mehr Luft haben - die Zahl
+     steht dann neben dem Namen statt darunter. */
+  @media (min-width: 600px) {
+    :root[data-design="neu"] .mg-schritt { flex-direction:row; gap:8px; min-height:52px; }
+    :root[data-design="neu"] .mg-schritt .zahl { font-size:var(--s-s); }
+  }
+
+  /* Der Arbeitskopf ist die Ansage aus dem Entwurf: farbig hinterlegt,
+     ohne Rahmen - er sagt, was jetzt dran ist, und ist keine weitere
+     Karte zwischen den Spielen. */
+  :root[data-design="neu"] .mg-arbeitskopf { background:var(--akzent-hell);
+    border:0; box-shadow:none; border-radius:var(--radius-m); }
+  :root[data-design="neu"] .mg-arbeitskopf b { font-size:var(--s-xl); }
+  :root[data-design="neu"] .mg-arbeitsbetrag { color:var(--text); }
+  :root[data-design="neu"] .mg-arbeitsfuss { flex:1 1 100%; display:flex; align-items:center;
+    justify-content:space-between; gap:var(--abstand-s); font-size:var(--s-s); color:var(--dim);
+    border-top:1px solid var(--linie); padding-top:var(--abstand-xs); margin-top:var(--abstand-xs); }
+  :root[data-design="neu"] .mg-arbeitsfuss .textknopf { min-height:44px; padding:0 2px; }
+
+  /* Monatskopf in einer Zeile: links der Monat, rechts Anzahl und Summe -
+     wie die Gruppenueberschriften im Entwurf. */
+  :root[data-design="neu"] .mg-monat { margin:var(--abstand-l) 0 var(--abstand-s); }
+  :root[data-design="neu"] .mg-monat > span:first-child { display:flex; flex:1 1 auto;
+    align-items:baseline; justify-content:space-between; gap:var(--abstand-s); flex-wrap:wrap; }
+  :root[data-design="neu"] .mg-monat > span:first-child b { display:inline; font-size:var(--s-s);
+    text-transform:uppercase; letter-spacing:.07em; color:var(--dim); font-weight:800; }
+  :root[data-design="neu"] .mg-monat > span:first-child small { font-size:var(--s-s);
+    font-variant-numeric:tabular-nums; }
+  /* Breiter Bildschirm: bei 1024 px lagen "Betrag fehlt" und "Betraege
+     eintragen" einen ganzen Bildschirm auseinander. Eine Spalte von
+     760 px liest sich noch als eine Karte. Nur die Abrechnung - die
+     Verwaltung braucht die Breite fuer ihre Tabellen. Ohne :has()
+     (aeltere Browser) bleibt es wie vorher, volle Breite. */
+  @media (min-width: 900px) {
+    :root[data-design="neu"] .mg-inhalt:has(> .mg-abrechnung-kopf) { max-width:760px;
+      margin-left:auto; margin-right:auto; }
+  }
+
 </style>
 </head>
 <body>
@@ -3899,6 +3971,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=276"></script>
+<script src="app.js?v=277"></script>
 </body>
 </html>

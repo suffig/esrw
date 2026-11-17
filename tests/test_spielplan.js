@@ -207,6 +207,72 @@ pruefe(!!mitWeg.bleibt, "das andere bleibt");
 P.setze({ korrekturen: {} });
 
 
+// Abgesagte Spiele: im Archiv steht, was gespielt wurde. Bis Fassung
+// 277 fragte niemand danach.
+P.setze({ korrekturen: { "ab": { abgesagt: true } } });
+gleich(P.istAbgesagt("ab"), true, "Absage wird an der Kennung erkannt");
+gleich(P.istAbgesagt("anders"), false, "ohne Korrektur keine Absage");
+var mitAbsage = {};
+P.archivMerge(mitAbsage, { kennung: "ab", beginn: NEU, paarung: "Abgesagt - X",
+                           besetzung: [{ name: "Ich", slug: "ich", rolle: "SR" }] });
+P.archivMerge(mitAbsage, { kennung: "da", beginn: NEU, paarung: "Gespielt - X",
+                           besetzung: [{ name: "Ich", slug: "ich", rolle: "SR" }] });
+P.archivKorrigieren(mitAbsage, "ich", true);
+pruefe(!mitAbsage.ab, "abgesagtes Spiel faellt aus dem Archiv");
+pruefe(!!mitAbsage.da, "das gespielte bleibt");
+P.setze({ korrekturen: {} });
+
+// Verlegte Spiele: dieselbe Begegnung am selben Kalendertag ist ein
+// Spiel. Im Archiv vom 23.09. stand das neunmal doppelt, etwa
+// "RL FS" am 18.09. um 19:30 und um 20:00.
+console.log("\nVerlegte Spiele (doppelteAuflosen)");
+function spV(k, beginn, paarung, extra) {
+  var o = { kennung: k, beginn: beginn, paarung: paarung };
+  Object.keys(extra || {}).forEach(function (x) { o[x] = extra[x]; });
+  return o;
+}
+var nachRang = function (s) { return { fest: false, rang: [s.r || 0] }; };
+var raus = P.doppelteAuflosen([
+  spV("alt", "2026-09-18T19:30:00+02:00", "Moskitos - Kobras", { r: 1 }),
+  spV("neu", "2026-09-18T20:00:00+02:00", "Moskitos - Kobras", { r: 2 })
+], nachRang);
+gleich(raus.length, 1, "gleiche Begegnung, gleicher Tag: ein Spiel");
+gleich(raus[0] && raus[0].kennung, "neu", "der hoehere Rang bleibt");
+
+raus = P.doppelteAuflosen([
+  spV("sa", "2026-09-19T12:00:00+02:00", "EHC - KEV"),
+  spV("so", "2026-09-20T12:00:00+02:00", "EHC - KEV")
+], nachRang);
+gleich(raus.length, 2, "Samstag und Sonntag gegen denselben Gegner sind zwei Spiele");
+
+raus = P.doppelteAuflosen([
+  spV("a", "2026-09-18T19:30:00+02:00", "Moskitos  –  Kobras"),
+  spV("b", "2026-09-18T20:00:00+02:00", "moskitos - kobras")
+], nachRang);
+gleich(raus.length, 1, "Schreibweise von Strich und Leerzeichen trennt nicht");
+
+raus = P.doppelteAuflosen([
+  spV("x", "2026-09-18T19:30:00+02:00", "A - B", { r: 1 }),
+  spV("y", "2026-09-18T20:00:00+02:00", "A - B", { r: 2 })
+], function (s) { return { fest: s.kennung === "x", rang: [s.r] }; });
+gleich(raus.length, 2, "was fest ist (schon abgerechnet), bleibt immer");
+
+raus = P.doppelteAuflosen([
+  spV("p1", "2026-09-18T19:30:00+02:00", "A - B", { privat: true }),
+  spV("p2", "2026-09-18T20:00:00+02:00", "A - B", { privat: true })
+], nachRang);
+gleich(raus.length, 2, "selbst eingetragene Spiele werden nie zusammengelegt");
+
+// Im Archiv selbst: die Fassung mit Halle bleibt
+var verlegt = {};
+P.archivMerge(verlegt, { kennung: "ohne", beginn: "2026-09-13T09:15:00+02:00", paarung: "DA - X",
+                         halle: "", besetzung: [{ name: "Ich", slug: "ich", rolle: "SR" }] });
+P.archivMerge(verlegt, { kennung: "mit", beginn: "2026-09-13T09:15:00+02:00", paarung: "DA - X",
+                         halle: "Eissportzentrum", besetzung: [{ name: "Ich", slug: "ich", rolle: "SR" }] });
+P.archivKorrigieren(verlegt, "ich", true);
+gleich(Object.keys(verlegt).join(","), "mit", "im Archiv bleibt die Fassung mit Halle");
+
+
 // ------------------------------------------------- Eigene Saisonliste
 
 console.log("\nEigene Saisonliste (saisonZeilen)");

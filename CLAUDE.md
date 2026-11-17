@@ -137,6 +137,27 @@ Fensterbreite.
   Funktionen sind für sich richtig. Wer ein Prädikat erweitert, sucht
   **alle** Stellen, die es benutzen – `grep -n` auf den alten Namen,
   nicht nur die, die man gerade umbaut.
+* **Ein Ablauf an zwei Stellen wird an beiden korrigiert.** Eine
+  geschriebene Rechnung hakte das Spiel sofort als bezahlt ab. Bei der
+  Einzelrechnung (`rechnungErzeugen`) war das behoben – im
+  Rechnungslauf (`laufEine`) stand dieselbe Zeile weiter, und die
+  Spiele sprangen dort bis Fassung 277 an „Geld“ vorbei ins Archiv.
+  Wer eine Regel ändert, sucht jede Stelle, die denselben Schritt tut:
+  `grep -n` auf das Feld (`bezahlt:`), nicht auf den Funktionsnamen.
+* **Backticks nie in ein doppelt gequotetes `python -c "…"`.** Bash
+  führt sie als Befehle aus und setzt das (leere) Ergebnis ein – so
+  verlor genau dieser Eintrag beim ersten Schreiben alle Code-Namen,
+  ohne Fehlermeldung von Python. Texte mit Backticks gehören in ein
+  Patch-Skript, geschrieben mit dem Write-Tool.
+* **Einordnungen gegen echte Namen prüfen, nicht gegen erfundene.**
+  `ligaEinordnen()` lief bis Fassung 277 mit allen Tests durch – die
+  Tests kannten „RL West", esrw.de liefert „Senioren RLW". Die
+  Herrenregel prüfte `\bRL\b`, das W dahinter ließ sie durchfallen, und
+  die Regionalliga landete in der Bezirksliga: HSR 100 statt 160 €,
+  angezeigt als „falsch“. Die echten Ligennamen stehen im Klartext in
+  der Historie (`git show 9a2e5732:docs/daten.json`, ins Scratchpad,
+  danach löschen); jeder davon steht jetzt als Zeile im
+  Abrechnungstest.
 * Tippflächen: alles, was man antippt, ist 44 px hoch. Gemessen wird
   mit `elementFromPoint` um die Elementmitte, **nicht** nur mit
   `getBoundingClientRect` – das sieht ein `::after` nicht und meldet
