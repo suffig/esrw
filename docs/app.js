@@ -1798,10 +1798,8 @@
     // im Gespann standen. Auch bei alten Spielen, denn die Spielseite
     // holt sie jetzt aus dem Archiv.
     if (meins && sitzungVorhanden()) {
+      // Der Satz, wer die Dokumente sieht, steht jetzt unter dem Knopf.
       var dokKarte = karteAbschnitt("Dokumente");
-      var dokHinweis = document.createElement("p"); dokHinweis.className = "meta";
-      dokHinweis.textContent = "Spielbericht, Zusatzmeldung und \Ähnliches. Die Kollegen aus diesem Spiel sehen sie auch.";
-      dokKarte.appendChild(dokHinweis);
       ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
         .then(function (st) {
           if (!st.eingerichtet || !st.session || !window.Mitglieder.dokumenteZeile) { dokKarte.classList.add("versteckt"); return; }
@@ -4101,56 +4099,33 @@
         var meta = document.createElement("p"); meta.className = "meta"; meta.style.margin = "0 0 4px";
         meta.textContent = (s.liga ? s.liga + ": " : "") + s.paarung + (g.dort.length > 1 ? " · " + g.dort.length + " Spiele an dem Tag dort" : "");
         box.appendChild(meta);
-        // Alle Mitfahrten zu Spielen an diesem Tag in dieser Halle
-        var angebote = {}; g.dort.forEach(function (x) { (mitfahrten[kennungVon(x)] || []).forEach(function (m) { angebote[m.slug] = m; }); });
-        var meinEintrag = angebote[profil.slug] || null;
+        // Alle Mitfahrten zu Spielen an diesem Tag in dieser Halle. Sie
+        // stehen als Block aus mitglieder.js da - derselbe wie auf der
+        // Spielseite, mit "Ich fahre mit" und dem eigenen Eintrag.
+        var eintraege = [];
+        g.dort.forEach(function (x) { (mitfahrten[kennungVon(x)] || []).forEach(function (m) { eintraege.push(m); }); });
+        var mitEintrag = {}; eintraege.forEach(function (m) { mitEintrag[m.slug] = 1; });
+        box.appendChild(window.Mitglieder.mitfahrtBlock(s, eintraege, { eigenes: true, nachher: zeigeMitfahren }));
+        // Wer im Gespann steht, aber nichts eingetragen hat - mit Weg und
+        // Kontakt, damit man fragen kann.
         var vorschlaege = window.Mitglieder.vorschlaegeFuer(s, g.leute.map(function (k) { return k.slug; }));
-        if (!g.leute.length) { var l0 = document.createElement("p"); l0.className = "meta"; l0.textContent = "Sonst niemand im Gespann, und keiner hat für den Tag eine Mitfahrt eingetragen."; box.appendChild(l0); }
-        g.leute.sort(function (a, b) { return ((vorschlaege[b.slug] ? 2 : 0) + (b.gespann ? 1 : 0)) - ((vorschlaege[a.slug] ? 2 : 0) + (a.gespann ? 1 : 0)) || a.name.localeCompare(b.name, "de"); }).forEach(function (k) {
+        var ohne = g.leute.filter(function (k) { return !mitEintrag[k.slug]; });
+        if (ohne.length) {
+          var ot = document.createElement("p"); ot.className = "mf-titel"; ot.textContent = "Noch ohne Eintrag";
+          box.appendChild(ot);
+        }
+        ohne.sort(function (a, b) { return ((vorschlaege[b.slug] ? 2 : 0) + (b.gespann ? 1 : 0)) - ((vorschlaege[a.slug] ? 2 : 0) + (a.gespann ? 1 : 0)) || a.name.localeCompare(b.name, "de"); }).forEach(function (k) {
           var z = document.createElement("div"); z.className = "wer";
           var links = document.createElement("span"); var b = document.createElement("b"); b.textContent = k.name; links.appendChild(b);
           var sm = document.createElement("small"); var kd2 = new Date(k.spiel.beginn), v = vorschlaege[k.slug], wo = window.Mitglieder.wohnortVon(k.slug);
-          sm.textContent = (k.gespann ? "im Gespann" : "dort um " + uhr(kd2) + " Uhr") + (wo && wo.ort ? " · aus " + wo.ort : "") + (v ? (v.richtung === "ich" ? " · liegt auf deinem Weg" : " · du liegst auf seinem Weg") + (v.umweg > 0 ? ", Umweg ca. " + v.umweg + " km" : ", praktisch kein Umweg") : "") + (angebote[k.slug] ? " · " + angebote[k.slug].text : ""); links.appendChild(sm); z.appendChild(links);
+          sm.textContent = (k.gespann ? "im Gespann" : "dort um " + uhr(kd2) + " Uhr") + (wo && wo.ort ? " · aus " + wo.ort : "") + (v ? (v.richtung === "ich" ? " · liegt auf deinem Weg" : " · du liegst auf seinem Weg") + (v.umweg > 0 ? ", Umweg ca. " + v.umweg + " km" : ", praktisch kein Umweg") : "");
+          links.appendChild(sm); z.appendChild(links);
           var rechts = document.createElement("span"); rechts.className = "knoepfe";
           if (v) { var vb = document.createElement("span"); vb.className = "status"; vb.textContent = "auf dem Weg"; rechts.appendChild(vb); }
-          if (angebote[k.slug]) { var stt = document.createElement("span"); stt.className = "status " + (angebote[k.slug].art === "suche" ? "suche" : ""); stt.textContent = angebote[k.slug].art === "suche" ? "sucht Mitfahrt" : "bietet Mitfahrt"; rechts.appendChild(stt); }
           var nr = window.Mitglieder.telefonVon(k.slug);
-          if (nr) { var a1 = document.createElement("a"); a1.className = "anfrage"; a1.href = nr.tel; a1.textContent = "Anrufen"; rechts.appendChild(a1); var a2 = document.createElement("a"); a2.className = "anfrage"; a2.href = nr.wa + "?text=" + encodeURIComponent("Hallo " + (k.name.split(",")[1] || "").trim() + ", fahren wir am " + datumKurz(d) + " zusammen nach " + (s.halle || "zur Halle") + "?"); a2.target = "_blank"; a2.rel = "noopener"; a2.textContent = "WhatsApp"; rechts.appendChild(a2); }
-          else { var p1 = document.createElement("a"); p1.className = "textknopf"; p1.href = "#" + k.slug; p1.textContent = "Profil ›"; rechts.appendChild(p1); }
+          if (nr) { var a2 = document.createElement("a"); a2.className = "anfrage"; a2.href = nr.wa + "?text=" + encodeURIComponent("Hallo " + (k.name.split(",")[1] || "").trim() + ", fahren wir am " + datumKurz(d) + " zusammen nach " + (s.halle || "zur Halle") + "?"); a2.target = "_blank"; a2.rel = "noopener"; a2.textContent = "Fragen"; rechts.appendChild(a2); }
           z.appendChild(rechts); box.appendChild(z);
         });
-        // Mein Eintrag: zwei Knoepfe, darunter das Feld fuer den Zusatz -
-        // kein Systemdialog mehr, der auf dem Handy den Text verschluckt.
-        var mein = document.createElement("div"); mein.className = "meins";
-        var lbl = document.createElement("span"); lbl.className = "meta";
-        lbl.textContent = meinEintrag ? (meinEintrag.art === "suche" ? "Du suchst mit:" : "Du bietest an:") : "Ich:";
-        mein.appendChild(lbl);
-        var form = document.createElement("div"); form.className = "mitfahr-form versteckt";
-        function speichern(art, text) {
-          window.Mitglieder.mitfahrtSetzen(s, art, text || undefined).then(function (ok) {
-            if (ok) { toast(art ? "Gespeichert, Kollegen sehen es hier und auf ihrer Spielkarte." : "Zurückgezogen.", "gut"); zeigeMitfahren(); }
-          });
-        }
-        [["biete", "Plätze anbieten", "z. B. ab Essen, 2 Plätze frei"], ["suche", "Mitfahrt suchen", "z. B. ab Bochum Hbf"]].forEach(function (o) {
-          var an = meinEintrag && meinEintrag.art === o[0];
-          var bt = document.createElement("button"); bt.type = "button"; bt.className = "anfrage" + (an ? " aktiv" : "");
-          bt.textContent = an ? o[1].split(" ")[0] + " ✓" : o[1];
-          bt.addEventListener("click", function () {
-            if (an) { speichern(null); return; }
-            form.innerHTML = ""; form.classList.remove("versteckt");
-            var i = document.createElement("input"); i.type = "text"; i.maxLength = 80; i.placeholder = o[2];
-            i.value = meinEintrag ? meinEintrag.text || "" : "";
-            var sp = document.createElement("button"); sp.type = "button"; sp.className = "anfrage aktiv"; sp.textContent = "Speichern";
-            sp.addEventListener("click", function () { speichern(o[0], i.value.trim()); });
-            i.addEventListener("keydown", function (ev) { if (ev.key === "Enter") sp.click(); });
-            form.appendChild(i); form.appendChild(sp);
-            i.focus();
-          });
-          mein.appendChild(bt);
-        });
-        box.appendChild(mein);
-        if (meinEintrag && meinEintrag.text) { var mt = document.createElement("p"); mt.className = "meta"; mt.style.margin = "4px 0 0"; mt.textContent = "„" + meinEintrag.text + "“"; box.appendChild(mt); }
-        box.appendChild(form);
         var sl = document.createElement("a"); sl.className = "reihe-knopf"; sl.href = "#spiel/" + encodeURIComponent(kennungVon(s));
         sl.appendChild(ikone("i-list"));
         var slt = document.createElement("span"); var slb = document.createElement("b"); slb.textContent = "Zur Spielseite"; slt.appendChild(slb);

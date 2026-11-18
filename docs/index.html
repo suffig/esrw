@@ -3678,6 +3678,131 @@
   :root[data-design="neu"] .mg-hallenkm .mg-regel-neu button,
   :root[data-design="neu"] .mg-hallenkm .mg-regel-neu select { min-height:44px; }
 
+  /* ===== Nachtrag: Pflege, Fassung 282 ==============================
+     Das Zahlschild in "Was ansteht" war 152 px breit: ".reihe-knopf >
+     span:not(.pfeil)" gab ihm flex:1 wie dem Text daneben. */
+  :root .reihe-knopf > span.lage-zahl { flex:none; min-width:30px; padding:0 8px; }
+
+  /* Doppelte: je Fassung Text links, Knopf rechts; darunter "Kein
+     Doppel" und das zugeklappte Ausblenden. */
+  :root[data-design="neu"] .doppelt-titel { display:block; }
+  :root[data-design="neu"] .doppelt-paarung { margin:2px 0 8px; color:var(--dim); font-size:var(--s-m); }
+  :root[data-design="neu"] .doppelt-fassung { display:flex; align-items:center; gap:12px;
+    padding:10px 0; border-top:1px solid var(--linie); }
+  :root[data-design="neu"] .doppelt-text { flex:1; min-width:0; display:flex; flex-wrap:wrap;
+    align-items:center; column-gap:8px; row-gap:2px; }
+  :root[data-design="neu"] .doppelt-text small { flex-basis:100%; color:var(--dim); }
+  :root[data-design="neu"] .doppelt-fassung > button { flex:none; min-height:44px; }
+  :root[data-design="neu"] .doppelt-fassung.vorschlag .doppelt-text > b { color:var(--gut); }
+  :root[data-design="neu"] .doppelt-unten { padding-top:10px; border-top:1px solid var(--linie); }
+  :root[data-design="neu"] .doppelt-unten button { width:100%; min-height:44px; }
+  :root[data-design="neu"] .doppelt-aus { margin-top:8px; }
+  :root[data-design="neu"] .doppelt-aus summary,
+  :root[data-design="neu"] .admin-erklaerung summary { min-height:44px; display:flex; align-items:center;
+    cursor:pointer; color:var(--dim); font-size:var(--s-m); }
+  :root[data-design="neu"] .doppelt-aus button { width:100%; min-height:44px; margin-top:6px; }
+  :root[data-design="neu"] .admin-erklaerung { margin:0 0 8px; }
+  :root[data-design="neu"] .admin-erklaerung p { margin:0 0 6px; }
+
+  /* Tippflaechen in allen Pflegebereichen: 44 px fuer alles, was man
+     antippt. Schalter und Haken bekommen die Hoehe ueber ihr Label -
+     das Kaestchen selbst bleibt klein, getippt wird die ganze Zeile. */
+  :root[data-design="neu"] .admin-bereich button,
+  :root[data-design="neu"] .admin-bereich select,
+  :root[data-design="neu"] .admin-bereich summary,
+  :root[data-design="neu"] .admin-bereich input:not([type=checkbox]):not([type=radio]):not([type=file]):not([type=hidden]) {
+    min-height:44px; }
+  :root[data-design="neu"] .admin-bereich button.rund { min-width:44px; }
+  :root[data-design="neu"] .admin-bereich label:has(> input[type=checkbox]),
+  :root[data-design="neu"] .admin-bereich label:has(> input[type=radio]) { min-height:44px;
+    display:flex; align-items:center; gap:10px; }
+  /* Keine Groesse fuer die Kaestchen selbst: "Funktionen" zeichnet aus
+     ihnen Schiebeschalter, 22 x 22 stauchte die zu einem Punkt. */
+  :root[data-design="neu"] .admin-bereich label > input[type=checkbox],
+  :root[data-design="neu"] .admin-bereich label > input[type=radio] { flex:none; }
+  /* "Vorschlag" an einer Fassung ist eine Empfehlung, keine Warnung. */
+  :root[data-design="neu"] .doppelt-text .mg-status { background:var(--gut-bg); color:var(--gut); }
+
+  /* ===== Nachtrag: Zusammen fahren, Fassung 283 ======================
+     Ein Eintrag je Kollege: Bild, Name, was er will, Schild rechts;
+     darunter sein Text, wer dabei ist, und die Knoepfe. */
+  :root[data-design="neu"] .mf-block { display:flex; flex-direction:column; gap:10px; margin-top:6px; }
+  :root[data-design="neu"] .mf-eintrag { border:1px solid var(--linie); border-radius:var(--radius-m);
+    padding:12px; background:var(--bg); display:flex; flex-direction:column; gap:8px; }
+  :root[data-design="neu"] .mf-eintrag.meins { border-color:var(--akzent); }
+  :root[data-design="neu"] .mf-kopf { display:flex; align-items:center; gap:10px; }
+  :root[data-design="neu"] .mf-bild { width:36px; height:36px; flex:none; border-radius:50%;
+    display:inline-flex; align-items:center; justify-content:center; font-weight:800; font-size:var(--s-s);
+    background:var(--akzent-hell); color:var(--text); background-size:cover; background-position:center; }
+  :root[data-design="neu"] .mf-wer { flex:1; min-width:0; }
+  :root[data-design="neu"] .mf-wer b { display:block; }
+  :root[data-design="neu"] .mf-wer small { color:var(--dim); }
+  :root[data-design="neu"] .mf-art { flex:none; font-size:var(--s-xs); font-weight:800; text-transform:uppercase;
+    letter-spacing:.04em; padding:3px 8px; border-radius:var(--radius-pille);
+    background:var(--gut-bg); color:var(--gut); }
+  :root[data-design="neu"] .mf-eintrag.suche .mf-art { background:var(--akzent-hell); color:var(--warn); }
+  :root[data-design="neu"] .mf-text { margin:0; font-size:var(--s-m); }
+  :root[data-design="neu"] .mf-dabei { display:flex; flex-wrap:wrap; align-items:center; gap:6px; }
+  :root[data-design="neu"] .mf-dabei small { color:var(--dim); }
+  :root[data-design="neu"] .mf-person { display:inline-flex; align-items:center; gap:2px; padding:0 4px 0 10px;
+    min-height:32px; border-radius:var(--radius-pille); background:var(--akzent-hell); font-size:var(--s-m); font-weight:700; }
+  :root[data-design="neu"] .mf-person:not(:has(button)) { padding-right:10px; }
+  :root[data-design="neu"] .mf-raus { position:relative; width:28px; height:28px; border:0; background:none;
+    color:var(--dim); font-size:1.1rem; cursor:pointer; }
+  :root[data-design="neu"] .mf-raus::after { content:""; position:absolute; inset:-8px; }
+  :root[data-design="neu"] .mf-aktionen, :root[data-design="neu"] .mf-zeile,
+  :root[data-design="neu"] .mf-kontakt { display:flex; flex-wrap:wrap; gap:8px; align-items:stretch; }
+  :root[data-design="neu"] .mf-aktionen { align-items:center; }
+  :root[data-design="neu"] .mf-aktionen > button, :root[data-design="neu"] .mf-zeile > button { flex:1 1 auto; min-height:44px; }
+  :root[data-design="neu"] .mf-kontakt a { flex:1 1 0; min-height:44px; display:inline-flex;
+    align-items:center; justify-content:center; text-decoration:none; }
+  :root[data-design="neu"] .mf-zugesagt { flex:1 1 auto; font-weight:800; color:var(--gut); }
+  :root[data-design="neu"] .mf-voll { color:var(--dim); font-weight:700; }
+  :root[data-design="neu"] .mf-niemand { margin:0; }
+  :root[data-design="neu"] .mf-mein { display:flex; flex-direction:column; gap:8px; padding-top:10px;
+    border-top:1px solid var(--linie); }
+  :root[data-design="neu"] .mf-formular { display:flex; flex-direction:column; gap:10px; }
+  :root[data-design="neu"] .mf-label { display:flex; flex-direction:column; gap:4px; font-size:var(--s-s);
+    color:var(--dim); font-weight:700; }
+  :root[data-design="neu"] .mf-label input { min-height:44px; font:inherit; font-weight:400; color:var(--text);
+    padding:0 12px; border:1px solid var(--linie); border-radius:var(--radius-m); background:var(--bg); }
+  :root[data-design="neu"] .mf-plaetze { display:flex; gap:8px; }
+  :root[data-design="neu"] .mf-plaetze button { flex:1; min-height:44px; border:1px solid var(--linie);
+    border-radius:var(--radius-m); background:var(--karte); color:var(--text); font:inherit; font-weight:800; cursor:pointer; }
+  :root[data-design="neu"] .mf-plaetze button.an { background:var(--akzent); color:var(--akzent-text); border-color:var(--akzent); }
+  :root[data-design="neu"] .mf-titel { margin:4px 0 0; font-size:var(--s-s); font-weight:800; color:var(--dim);
+    text-transform:uppercase; letter-spacing:.04em; }
+
+  /* Dokumente am Spiel: Liste mit Dateityp, darunter die Art als
+     Wahlknoepfe und ein grosser Knopf. */
+  :root[data-design="neu"] .dok-liste { display:flex; flex-direction:column; gap:8px; margin-bottom:12px; }
+  :root[data-design="neu"] .dok-zeile { display:flex; align-items:stretch; gap:8px; border:0; padding:0; }
+  /* flex-direction und align-items ausdruecklich: eine aeltere Regel mit
+     demselben Selektor stellte beides auf Spalte und Mitte. */
+  :root[data-design="neu"] .dok-datei { flex:1; min-width:0; display:flex; flex-direction:row; align-items:center; gap:12px;
+    min-height:56px; padding:8px 12px; text-align:left; font:inherit; color:var(--text); cursor:pointer;
+    border:1px solid var(--linie); border-radius:var(--radius-m); background:var(--bg); }
+  :root[data-design="neu"] .dok-typ { flex:none; width:44px; height:40px; display:inline-flex; align-items:center;
+    justify-content:center; border-radius:var(--radius-s); background:var(--akzent-hell);
+    font-size:var(--s-xs); font-weight:800; letter-spacing:.03em; }
+  :root[data-design="neu"] .dok-text { min-width:0; display:flex; flex-direction:column; }
+  :root[data-design="neu"] .dok-text b { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  :root[data-design="neu"] .dok-text small { color:var(--dim); }
+  :root[data-design="neu"] .dok-weg { flex:none; width:44px; border:1px solid var(--linie); border-radius:var(--radius-m);
+    background:var(--bg); color:var(--dim); font-size:1.2rem; cursor:pointer; }
+  :root[data-design="neu"] .dok-neu { display:flex; flex-direction:column; align-items:stretch; gap:10px; }
+  /* "Zusatzmeldung" passt bei 375 px nicht in ein Drittel - die Knoepfe
+     nehmen ihre Breite und brechen um, statt den Text abzuschneiden. */
+  :root[data-design="neu"] .dok-arten { display:flex; flex-wrap:wrap; gap:6px; }
+  :root[data-design="neu"] .dok-arten button { flex:1 1 auto; min-width:0; min-height:44px; padding:0 12px;
+    border:1px solid var(--linie); border-radius:var(--radius-pille); background:var(--karte); color:var(--text);
+    font:inherit; font-size:var(--s-m); font-weight:700; cursor:pointer; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  :root[data-design="neu"] .dok-arten button.an { background:var(--akzent); color:var(--akzent-text); border-color:var(--akzent); }
+  :root[data-design="neu"] .dok-knopf { min-height:48px; display:flex; align-items:center; justify-content:center; gap:6px; }
+  :root[data-design="neu"] .dok-knopf svg.i { width:18px; height:18px; }
+  :root[data-design="neu"] .dok-tipp { color:var(--dim); text-align:center; }
+  :root[data-design="neu"] .dok-leer { margin:0 0 10px; }
+
 </style>
 </head>
 <body>
@@ -4143,6 +4268,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=281"></script>
+<script src="app.js?v=283"></script>
 </body>
 </html>

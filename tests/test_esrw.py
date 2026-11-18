@@ -1804,8 +1804,66 @@ def test_abgesetzt():
     pruefe("einzeln" in h, "einziges Spiel des Tages: ohne Vergleich kein Urteil")
     pruefe("ohneDatum" in h, "alter Eintrag ohne zuletzt_gesehen bleibt")
     pruefe(len(weg) == 2, "genau die zwei abgesetzten", str(sorted(weg)))
+
+    # Sofort: im Zeitraum der heutigen Liste, aber nicht dabei.
+    von = datetime(2026, 11, 1, tzinfo=timezone.utc)
+    bis = datetime(2026, 11, 30, tzinfo=timezone.utc)
+    h2 = {"da%d" % i: e("2026-11-%02dT18:00:00+01:00" % (10 + i), "2026-11-18", "A%d - B" % i) for i in range(8)}
+    h2["verlegt"] = e("2026-11-25T18:00:00+01:00", "2026-11-17", "Alt - Zeit")
+    h2["frueher"] = e("2026-10-01T18:00:00+02:00", "2026-10-03", "Vor - Zeitraum")
+    gesehen = {"da%d" % i for i in range(8)}
+    weg2 = dict(E.abgesetzte_entfernen(h2, gesehen, von, bis))
+    pruefe("verlegt" in weg2, "im Zeitraum, nicht auf der Liste: sofort weg")
+    pruefe("frueher" in h2, "vor dem Zeitraum: bleibt (esrw.de zeigt es nicht mehr)")
+    pruefe(all(("da%d" % i) in h2 for i in range(8)), "alles auf der Liste bleibt")
+    # Fehlt zu viel, stimmt eher die Seite nicht.
+    h3 = {"da%d" % i: e("2026-11-%02dT18:00:00+01:00" % (10 + i), "2026-11-18", "A%d - B" % i) for i in range(8)}
+    weg3 = dict(E.abgesetzte_entfernen(h3, {"da0", "da1"}, von, bis))
+    pruefe(not weg3 and len(h3) == 8, "6 von 8 fehlen: Seite verdaechtig, nichts entfernt")
+
+    # Waisen im Archiv: nur ohne Eigenes, nie von Hand angelegte.
+    pruefe(not E.eintrag_eigen({"km": 52.3, "verguetung": 85, "herkunft": {"km": "route", "verguetung": "ordnung"}}),
+           "nur von der App eingetragen: nichts Eigenes")
+    pruefe(E.eintrag_eigen({"km": 52.3, "verguetung": 85, "herkunft": {"km": "route"}}),
+           "Verguetung von Hand: Eigenes")
+    pruefe(E.eintrag_eigen({"bezahlt": "2026-11-01"}), "bezahlt: Eigenes")
+    pruefe(E.eintrag_eigen({"notiz": "Halle zu"}), "Notiz: Eigenes")
+    pruefe(not E.eintrag_eigen({"notiz": "  ", "belege": []}), "leere Notiz, keine Belege: nichts")
+    # "Alle Spiele im Archiv erhalten" (19.11.): was nach seinem Spieltag
+    # noch gesehen wurde, nimmt keine Regel weg - auch wenn es heute fehlt.
+    h4 = {"da%d" % i: e("2026-11-%02dT18:00:00+01:00" % (10 + i), "2026-11-18", "A%d - B" % i) for i in range(8)}
+    h4["gespielt"] = e("2026-11-12T18:00:00+01:00", "2026-11-14", "Wurde - Gespielt")
+    weg4 = dict(E.abgesetzte_entfernen(h4, {"da%d" % i for i in range(8)}, von, bis))
+    pruefe("gespielt" in h4 and not weg4, "gespielt und heute nicht in der Liste: bleibt")
+    pruefe(E.gespielt(e("2026-11-12T18:00:00+01:00", "2026-11-13", "X")), "am Tag danach gesehen: gespielt")
+    pruefe(not E.gespielt(e("2026-11-12T18:00:00+01:00", "2026-11-12", "X")), "nur am Spieltag gesehen: nicht bestaetigt")
+
+    jetzt = datetime(2026, 11, 19, 12, 0, tzinfo=timezone.utc)
+    geschrieben = {"neu": ("2026-11-14T18:00:00+01:00", "Essen – Iserlohn")}
+    zeilen = [{"kennung": "neu", "beginn": "2026-11-14T17:00:00+00:00", "paarung": "Essen – Iserlohn"},
+              # alte Kennung desselben Spiels: Nachfolger da, darf weg
+              {"kennung": "alt", "beginn": "2026-11-14T17:30:00+00:00", "paarung": "Essen - Iserlohn"},
+              {"kennung": "altMitGeld", "beginn": "2026-11-14T17:30:00+00:00", "paarung": "Essen - Iserlohn"},
+              # vergangen, ohne Nachfolger: koennte das einzige Zeugnis sein
+              {"kennung": "einzig", "beginn": "2026-10-03T16:00:00+00:00", "paarung": "Nur - Hier"},
+              # kommend und nicht mehr geschrieben: weg
+              {"kennung": "kommt", "beginn": "2026-11-28T17:00:00+00:00", "paarung": "Spaeter - Spiel"},
+              {"kennung": "hand", "manuell": True, "beginn": "2026-11-28T17:00:00+00:00", "paarung": "X - Y"}]
+    loe, beh = E.waisen_waehlen(zeilen, geschrieben, {"altMitGeld"}, jetzt)
+    pruefe(sorted(loe) == ["alt", "kommt"], "geloescht: alte Kennung mit Nachfolger, kommende Waise", str(loe))
+    pruefe(beh == ["altMitGeld"], "Waise mit Eigenem bleibt fuer die Pflege", str(beh))
+    pruefe("einzig" not in loe, "vergangene Waise ohne Nachfolger bleibt im Archiv")
+    pruefe("hand" not in loe, "von Hand angelegt: nie geloescht")
     # Ohne Filter schickt tabelle_loeschen nie ein DELETE
     pruefe(E.tabelle_loeschen("spiele_archiv") is False, "ohne Filter kein DELETE")
+    # Ohne Zugang zur Datenbank gilt eine neue Spalte als nicht da - der
+    # Upsert schickt sie dann nicht mit.
+    alt = (os.environ.pop("SUPABASE_URL", None), os.environ.pop("SUPABASE_SERVICE_KEY", None))
+    try:
+        pruefe(E.spalte_da("spiele_archiv", "gesehen_bis") is False, "ohne Zugang: Spalte gilt als fehlend")
+    finally:
+        if alt[0] is not None: os.environ["SUPABASE_URL"] = alt[0]
+        if alt[1] is not None: os.environ["SUPABASE_SERVICE_KEY"] = alt[1]
 
 
 def main():

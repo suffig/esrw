@@ -3017,3 +3017,87 @@ create policy "Anzeigenamen pflegen" on public.namen_alias for all to authentica
 drop trigger if exists namen_alias_geaendert on public.namen_alias;
 create trigger namen_alias_geaendert before update on public.namen_alias
   for each row execute function public.setze_geaendert();
+
+
+-- ======================================================================
+-- v60: Doppelte Spiele ohne Fehlalarm
+-- ======================================================================
+--
+-- Die Pflege meldete am 18.11. 36 doppelte Spiele - fast alle normale
+-- Doppelspieltage im Nachwuchs (Sa. abends, So. morgens gegen dieselbe
+-- Mannschaft). Die App sah nur Begegnung und Abstand und hielt jedes
+-- Paar fuer verdaechtig, sobald es aus dem Spielplan gefallen war.
+--
+-- gesehen_bis: bis wann esrw.de das Spiel zeigte. Wurde es NACH seinem
+-- Spieltag noch gezeigt, hat es stattgefunden und ist kein Doppel. Der
+-- Abgleich schreibt die Spalte, sobald es sie gibt (spalte_da() in
+-- esrw_ical.py).
+alter table public.spiele_archiv add column if not exists gesehen_bis date;
+
+-- Was der Betreiber als "kein Doppel" bestaetigt hat. Ein Schluessel je
+-- Gruppe (die Kennungen sortiert, mit | verbunden): kommt eine dritte
+-- Ansetzung dazu, ist es eine neue Gruppe und wird wieder gezeigt.
+create table if not exists public.doppelt_ok (
+  schluessel text primary key,
+  kennungen  text[] not null,
+  von        text,
+  geaendert  timestamptz not null default now()
+);
+alter table public.doppelt_ok enable row level security;
+
+drop policy if exists "Kein Doppel lesen"   on public.doppelt_ok;
+drop policy if exists "Kein Doppel pflegen" on public.doppelt_ok;
+-- Nur der Betreiber: die Liste steuert, was in der Pflege steht, und
+-- dort darf nur er zusammenfuehren.
+create policy "Kein Doppel lesen" on public.doppelt_ok for select to authenticated
+  using (public.ist_admin());
+create policy "Kein Doppel pflegen" on public.doppelt_ok for all to authenticated
+  using (public.ist_admin()) with check (public.ist_admin());
+
+
+-- ======================================================================
+-- v61: Mitfahrt zusagen
+-- ======================================================================
+--
+-- Gewuenscht: eine angebotene Mitfahrt annehmen koennen. Bisher sah man
+-- Angebote nur und musste anrufen; wer schon zugesagt hatte, wusste der
+-- Anbieter danach nur aus dem Kopf.
+--
+-- plaetze: wie viele mitkoennen (nur bei "biete"). Leer heisst: nicht
+-- angegeben - dann zaehlt die App nicht herunter.
+alter table public.mitfahrten add column if not exists plaetze int;
+alter table public.mitfahrten drop constraint if exists mitfahrten_plaetze_bereich;
+alter table public.mitfahrten add constraint mitfahrten_plaetze_bereich
+  check (plaetze is null or plaetze between 1 and 8);
+
+-- Eine Zusage je Person und Eintrag. Am Angebot heisst sie "ich fahre
+-- mit", am Gesuch "ich nehme dich mit". Faellt der Eintrag weg, fallen
+-- die Zusagen mit.
+create table if not exists public.mitfahrt_zusagen (
+  id        uuid primary key default gen_random_uuid(),
+  mitfahrt  uuid not null references public.mitfahrten (id) on delete cascade,
+  user_id   uuid not null references auth.users (id) on delete cascade,
+  slug      text not null,
+  name      text not null,
+  angelegt  timestamptz not null default now(),
+  unique (mitfahrt, user_id)
+);
+create index if not exists mitfahrt_zusagen_mitfahrt on public.mitfahrt_zusagen (mitfahrt);
+alter table public.mitfahrt_zusagen enable row level security;
+
+drop policy if exists "Zusagen lesen"     on public.mitfahrt_zusagen;
+drop policy if exists "Zusage geben"      on public.mitfahrt_zusagen;
+drop policy if exists "Zusage zuruecknehmen" on public.mitfahrt_zusagen;
+-- Lesen wie die Mitfahrten selbst: alle Freigeschalteten.
+create policy "Zusagen lesen" on public.mitfahrt_zusagen for select to authenticated
+  using (public.ist_freigeschaltet());
+-- Zusagen nur fuer sich selbst und nicht am eigenen Eintrag.
+create policy "Zusage geben" on public.mitfahrt_zusagen for insert to authenticated
+  with check (auth.uid() = user_id and public.ist_freigeschaltet()
+              and not exists (select 1 from public.mitfahrten m
+                               where m.id = mitfahrt and m.user_id = auth.uid()));
+-- Zuruecknehmen: wer zugesagt hat, oder wem der Eintrag gehoert (der
+-- Anbieter traegt aus, wer doch anders faehrt), oder der Betreiber.
+create policy "Zusage zuruecknehmen" on public.mitfahrt_zusagen for delete to authenticated
+  using (auth.uid() = user_id or public.ist_admin()
+         or exists (select 1 from public.mitfahrten m where m.id = mitfahrt and m.user_id = auth.uid()));

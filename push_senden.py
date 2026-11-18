@@ -495,6 +495,40 @@ def main():
     except Exception as e:
         print("Push: Gespann-Notizen nicht verarbeitet: %s" % str(e)[:120], file=sys.stderr)
 
+    # Zusage an einer Mitfahrt (v61): wer anbietet, erfaehrt, wer
+    # mitfaehrt - wer sucht, wer ihn mitnimmt. Gemerkt in push_gesendet
+    # als "zusage:<id>"; eine eigene Spalte braeuchte einen weiteren
+    # Schema-Abschnitt. Zwei Tage zurueck reichen: so lange haelt auch der
+    # Merker, und der Workflow laeuft stuendlich.
+    if an("mitfahren"):
+        try:
+            seit_z = (jetzt - timedelta(days=2)).astimezone(timezone.utc).isoformat()
+            zusagen = api(url, service, "mitfahrt_zusagen?select=id,mitfahrt,user_id,name&angelegt=gte."
+                          + urllib.parse.quote(seit_z)) or []
+            ids = sorted({z["mitfahrt"] for z in zusagen if re.fullmatch(r"[0-9a-f-]{36}", str(z.get("mitfahrt") or ""))})
+            eintraege = {m["id"]: m for m in (api(url, service, "mitfahrten?select=id,user_id,kennung,beginn,art&id=in.(%s)"
+                                                  % ",".join(ids)) if ids else []) or []}
+            paarung_von = {(s.get("id") or ""): s.get("paarung", "") for s in daten.get("spiele", [])}
+            for z in zusagen:
+                m = eintraege.get(z["mitfahrt"])
+                if not m or m["user_id"] == z["user_id"]:
+                    continue
+                schluessel = "zusage:" + z["id"]
+                if schluessel in schon.get(m["user_id"], set()):
+                    continue
+                wer = (z.get("name") or "Ein Kollege").split(",")[-1].strip() or "Ein Kollege"
+                try:
+                    tag = datetime.fromisoformat(m["beginn"]).astimezone(BERLIN).strftime("%d.%m.")
+                except (KeyError, ValueError, TypeError):
+                    tag = ""
+                nachrichten.setdefault(m["user_id"], []).append((schluessel, {
+                    "titel": ("%s nimmt dich mit" if m.get("art") == "suche" else "%s fährt mit dir") % wer,
+                    "text": ("Zum Spiel am %s %s" % (tag, paarung_von.get(m.get("kennung"), ""))).strip(),
+                    "url": "./#spiel/" + urllib.parse.quote(m.get("kennung") or "", safe=""),
+                    "tag": "mitfahrt"}))
+        except Exception as e:
+            print("Push: Zusagen zu Mitfahrten nicht verarbeitet: %s" % str(e)[:120], file=sys.stderr)
+
     # Test-Push an ein einzelnes Geraet
     try:
         tests = api(url, service, "push_test?select=id,user_id,abo_id") or []

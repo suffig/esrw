@@ -504,7 +504,7 @@ def ergaenze_historie(historie, spiele, venues, stand, kennungen=None):
     return neu
 
 
-def abgesetzte_entfernen(historie):
+def abgesetzte_entfernen(historie, gesehen=None, von=None, bis=None):
     """Nimmt Spiele aus der Historie, die esrw.de abgesetzt hat.
 
     Die Historie behaelt jedes Spiel, das je gesehen wurde - auch eines,
@@ -522,6 +522,18 @@ def abgesetzte_entfernen(historie):
     Nebenbei faellt die alte Fassung eines verlegten Spiels heraus, das
     nicht gepaart werden konnte - sie steht am alten Tag und wurde
     zuletzt davor gesehen.
+
+    Seit Fassung 283 zusaetzlich sofort: gesehen sind die Kennungen
+    dieses Laufs, von/bis der Zeitraum ab JETZT bis zum letzten Spiel der
+    Liste. Was darin liegt und nicht dabei war, steht nicht mehr auf der
+    Seite - abgesetzt oder verlegt. Bisher blieb es bis nach seinem
+    Spieltag stehen und tauchte in Abrechnung und Pflege doppelt auf.
+    Verschwaende dabei mehr als ein Viertel der Spiele des Zeitraums,
+    stimmt eher die Seite nicht - dann nur der alte Weg.
+
+    Was gespielt wurde, bleibt immer (Wunsch des Betreibers, 19.11.:
+    "alle Spiele im Archiv erhalten"): ein Spiel, das nach seinem
+    Spieltag noch auf esrw.de stand, nimmt keine der beiden Regeln weg.
     """
     def spieltag(e):
         try:
@@ -534,13 +546,142 @@ def abgesetzte_entfernen(historie):
         if t and z and z > spaetestens.get(t, ""):
             spaetestens[t] = z
     weg = []
+    if gesehen is not None and von and bis:
+        im_fenster, fehlt = 0, []
+        for k, e in historie.items():
+            try:
+                b = datetime.fromisoformat(e["beginn"])
+            except (KeyError, ValueError, TypeError):
+                continue
+            if von <= b <= bis:
+                im_fenster += 1
+                if k not in gesehen and not gespielt(e):
+                    fehlt.append(k)
+        if fehlt and len(fehlt) <= max(3, im_fenster // 4):
+            for k in fehlt:
+                weg.append((k, historie.pop(k)))
+        elif fehlt:
+            print("  ! %d von %d Spielen im Zeitraum fehlen auf esrw.de - zu viele, nichts entfernt."
+                  % (len(fehlt), im_fenster), file=sys.stderr)
     for k, e in list(historie.items()):
         t, z = spieltag(e), e.get("zuletzt_gesehen")
-        if not t or not z:
+        if not t or not z or gespielt(e):
             continue
         if z <= t and z < spaetestens.get(t, ""):
             weg.append((k, historie.pop(k)))
     return weg
+
+
+# Ein Spiel, das nach seinem Spieltag noch auf esrw.de stand, hat
+# stattgefunden. Es bleibt im Archiv, was auch immer sonst geschieht.
+def gespielt(e):
+    try:
+        tag = datetime.fromisoformat(e["beginn"]).date().isoformat()
+    except (KeyError, ValueError, TypeError):
+        return False
+    z = e.get("zuletzt_gesehen")
+    return bool(z and z > tag)
+
+
+# Was an einer Kennung Eigenes haengt. Von der App selbst eingetragene
+# Werte (herkunft) zaehlen nicht - die stehen seit Fassung 281 auch an
+# jedem kommenden Spiel und gingen nicht verloren, sondern kaemen am
+# richtigen Spiel neu.
+def eintrag_eigen(e):
+    her = e.get("herkunft") or {}
+    return bool(e.get("bezahlt") or (e.get("notiz") or "").strip() or e.get("belege")
+                or e.get("auslagen") is not None or e.get("ausgefallen") or e.get("uebergreifend")
+                or e.get("privat")
+                or (e.get("verguetung") is not None and not her.get("verguetung"))
+                or (e.get("km") is not None and not her.get("km")))
+
+
+def _tag_paarung(beginn, paarung):
+    """Tag (Berliner Zeit) und Paarung ohne Leerzeichen und Striche - so
+    erkennt man dasselbe Spiel unter zwei Kennungen."""
+    try:
+        tag = datetime.fromisoformat(str(beginn).replace("Z", "+00:00")).astimezone(BERLIN).date().isoformat()
+    except (ValueError, TypeError):
+        return None
+    return tag + "|" + re.sub(r"[\s\-\u2013\u2014]+", "", (paarung or "").lower())
+
+
+def waisen_waehlen(zeilen, geschrieben, eigen, jetzt=None):
+    """Archivzeilen, die weg duerfen. Gibt (loeschen, behalten) zurueck.
+
+    geschrieben: Kennung -> (beginn, paarung) dieses Laufs. Weg darf nur,
+    was nicht von Hand angelegt ist, in diesem Lauf nicht geschrieben
+    wurde, nichts Eigenes traegt (eigen) UND entweder noch kommt oder
+    unter neuer Kennung am selben Tag mit derselben Paarung steht. Eine
+    vergangene Zeile ohne Nachfolger kann das einzige Zeugnis eines
+    gepfiffenen Spiels sein - sie bleibt."""
+    nachfolger = set()
+    for b, p in (geschrieben.values() if isinstance(geschrieben, dict) else []):
+        tp = _tag_paarung(b, p)
+        if tp:
+            nachfolger.add(tp)
+    loeschen, behalten = [], []
+    for z in zeilen:
+        k = z.get("kennung")
+        if not k or z.get("manuell") or k in geschrieben:
+            continue
+        if k in eigen:
+            behalten.append(k)
+            continue
+        try:
+            kommt = jetzt is not None and datetime.fromisoformat(str(z.get("beginn")).replace("Z", "+00:00")) > jetzt
+        except (ValueError, TypeError):
+            kommt = False
+        if kommt or _tag_paarung(z.get("beginn"), z.get("paarung")) in nachfolger:
+            loeschen.append(k)
+    return loeschen, behalten
+
+
+def archiv_waisen(cfg, geschrieben, saison):
+    """Loescht Waisen der laufenden Saison aus spiele_archiv (siehe
+    waisen_waehlen). Fragt vorher jede Tabelle, in der Kollegen etwas zu
+    einem Spiel speichern - geloescht wird nur, wo nichts haengt."""
+    import urllib.parse
+    if not os.environ.get("SUPABASE_SERVICE_KEY", "").strip() or not geschrieben:
+        return 0, 0
+    q = urllib.parse.quote
+    zeilen, ab = [], 0
+    while True:
+        teil = tabelle_laden(cfg, "spiele_archiv?select=kennung,manuell,beginn,paarung&saison=eq.%s&order=kennung&limit=1000&offset=%d"
+                             % (q(saison, safe=""), ab))
+        zeilen += teil
+        if len(teil) < 1000:
+            break
+        ab += 1000
+    kandidaten = [z["kennung"] for z in zeilen
+                  if z.get("kennung") and not z.get("manuell") and z["kennung"] not in geschrieben]
+    if not kandidaten:
+        return 0, 0
+    # Zu viele Waisen auf einmal hiesse: der Lauf hat weniger geschrieben
+    # als sonst. Dann lieber nichts loeschen.
+    if len(kandidaten) > max(20, len(zeilen) // 3):
+        print("  ! %d Waisen im Archiv - zu viele, nichts geloescht." % len(kandidaten), file=sys.stderr)
+        return 0, 0
+    eigen = set()
+    for i in range(0, len(kandidaten), 40):
+        stueck = kandidaten[i:i + 40]
+        liste = q("(" + ",".join('"' + k.replace('"', '') + '"' for k in stueck) + ")", safe="")
+        for e in tabelle_laden(cfg, "einsaetze?select=kennung,km,verguetung,auslagen,belege,notiz,bezahlt,"
+                                    "herkunft,ausgefallen,uebergreifend,privat&kennung=in." + liste):
+            if eintrag_eigen(e):
+                eigen.add(e["kennung"])
+        for tab in ("spielnotizen", "mitfahrten", "gesuche", "spielkommentare", "spiel_dokumente"):
+            for z in tabelle_laden(cfg, tab + "?select=kennung&kennung=in." + liste):
+                eigen.add(z["kennung"])
+        for r in tabelle_laden(cfg, "rechnungen?select=kennungen&kennungen=ov." + q("{" + ",".join(
+                '"' + k.replace('"', '') + '"' for k in stueck) + "}", safe="")):
+            eigen.update(r.get("kennungen") or [])
+    loeschen, behalten = waisen_waehlen(zeilen, geschrieben, eigen, datetime.now(timezone.utc))
+    n = 0
+    for k in loeschen:
+        if tabelle_loeschen("spiele_archiv?manuell=eq.false&kennung=eq." + q(k, safe="")):
+            n += 1
+    return n, len(behalten)
 
 
 def abgesetzte_aus_db(abgesetzt, kennungen=None):
@@ -1183,6 +1324,26 @@ def tabelle_loeschen(pfad):
     return True
 
 
+def spalte_da(tabelle, spalte):
+    """Gibt es die Spalte schon? Nur mit dem Service-Schluessel gefragt.
+
+    Neue Spalten kommen mit schema.sql, das der Betreiber von Hand
+    einspielt. Bis dahin wuerde ein Upsert mit dem neuen Feld als Ganzes
+    abgelehnt - und mit ihm das ganze Archiv. Also vorher fragen."""
+    url = os.environ.get("SUPABASE_URL", "").strip()
+    schluessel = os.environ.get("SUPABASE_SERVICE_KEY", "").strip()
+    if not url or not schluessel:
+        return False
+    try:
+        anfrage = urllib.request.Request(
+            url.rstrip("/") + "/rest/v1/%s?select=%s&limit=1" % (tabelle, spalte),
+            headers={"apikey": schluessel, "Authorization": "Bearer " + schluessel})
+        with urllib.request.urlopen(anfrage, timeout=20):
+            return True
+    except urllib.error.HTTPError:
+        return False
+
+
 def tabelle_schreiben(pfad, zeilen):
     """Upsert in eine Supabase-Tabelle - nur mit dem Service-Schluessel aus
     dem Workflow (Secrets). Ohne ihn passiert nichts."""
@@ -1513,6 +1674,9 @@ def archiv_in_db(historie, uebersicht, personen, stand, kennungen=None):
     schluessel_slug = {p["schluessel"]: p["slug"] for p in personen}
     def slug_fuer(name):
         return schluessel_slug.get(personen_schluessel(name)) or slug_aus(name)
+    # Bis wann esrw.de das Spiel zeigte (v60). Daran sieht die Pflege, ob
+    # es gespielt wurde - siehe paarVerdaechtig() in mitglieder.js.
+    mit_gesehen = spalte_da("spiele_archiv", "gesehen_bis")
     zeilen = {}
     for e in historie.values():
         try:
@@ -1536,6 +1700,8 @@ def archiv_in_db(historie, uebersicht, personen, stand, kennungen=None):
             "halle": e.get("halle") or None, "system": len(besetzung), "besetzung": besetzung,
             "slugs": [b["slug"] for b in besetzung if b["slug"]], "saison": saison_von(beginn), "manuell": False,
             "stand": stand.isoformat()}
+        if mit_gesehen:
+            zeilen[kennung]["gesehen_bis"] = e.get("zuletzt_gesehen") or None
     for s in uebersicht:
         besetzung = [{"name": b["name"], "rolle": b["rolle"], "slug": b.get("slug") or slug_aus(b["name"])} for b in s["besetzung"]]
         zeilen[s["id"]] = {
@@ -1543,8 +1709,15 @@ def archiv_in_db(historie, uebersicht, personen, stand, kennungen=None):
             "halle": s["halle_name"] or None, "system": s["system"], "besetzung": besetzung,
             "slugs": [b["slug"] for b in besetzung if b["slug"]], "saison": saison_von(s["anstoss"]),
             "manuell": bool(s.get("manuell")), "stand": stand.isoformat()}
+        if mit_gesehen:
+            # Steht im Datenfenster, also heute auf esrw.de.
+            zeilen[s["id"]]["gesehen_bis"] = stand.date().isoformat()
     if tabelle_schreiben("spiele_archiv?on_conflict=kennung", list(zeilen.values())):
         print("Archiv in der Datenbank: %d Spiele." % len(zeilen))
+        # Kennung -> (beginn, paarung): archiv_waisen erkennt daran den
+        # Nachfolger einer alten Zeile.
+        return {k: (z["beginn"], z.get("paarung")) for k, z in zeilen.items()}
+    return {}
 
 
 def betreiber_daten(cfg, venues):
@@ -2289,7 +2462,16 @@ def main():
     frisch = ergaenze_historie(historie, spiele, venues, stand, kennungen)
     # Von esrw.de abgesetzte Spiele raus, bevor Statistik, Archiv und
     # Datenbank daraus entstehen (Begruendung bei abgesetzte_entfernen).
-    abgesetzt = abgesetzte_entfernen(historie)
+    # Der Zeitraum, den esrw.de heute vollstaendig zeigt: vom Anfang der
+    # Rueckschau (nur, wenn die Seite der vergangenen Einteilungen gelesen
+    # wurde) bis zum letzten Spiel der Liste. Von Hand angelegte Spiele
+    # zaehlen nicht mit - sie stehen nie auf esrw.de.
+    # Nur kommende Spiele: was schon war, nimmt diese Regel nie weg.
+    von_esrw = [s for s in spiele if not s.get("manuell")]
+    gesehen_lauf = {quelle_fuer(kennungen, s["start"].isoformat(), s["begegnung"]) for s in spiele}
+    fenster_von = stand
+    fenster_bis = max((s["start"] for s in von_esrw), default=None)
+    abgesetzt = abgesetzte_entfernen(historie, gesehen_lauf, fenster_von, fenster_bis)
     if abgesetzt:
         print("%d abgesetzte(s) Spiel(e) aus dem Archiv genommen: %s" % (
             len(abgesetzt), "; ".join("%s %s" % (e.get("beginn", "")[:10], e.get("paarung", ""))
@@ -2309,10 +2491,21 @@ def main():
     print("Archiv: %d Spiele insgesamt (%d neu, %d in Saison-Dateien), Saison %s."
           % (len(historie_alle), frisch, len(historie_alle) - len(historie), saison))
 
+    geschrieben = {}
     try:
-        archiv_in_db(historie_alle, uebersicht, personen, stand, kennungen)
+        geschrieben = archiv_in_db(historie_alle, uebersicht, personen, stand, kennungen) or {}
     except Exception as e:
         print("  ! Archiv nicht in die Datenbank geschrieben: %s" % str(e)[:120], file=sys.stderr)
+    # Waisen im Archiv: Zeilen, die dieser Lauf nicht mehr schreibt. Ein
+    # Fehler hier darf den Lauf nicht abbrechen - tabelle_laden bricht
+    # mit SystemExit ab, deshalb auch das.
+    try:
+        weg, bleiben = archiv_waisen(cfg, geschrieben, saison_von(stand))
+        if weg or bleiben:
+            print("Archiv aufgeraeumt: %d alte Zeile(n) geloescht, %d mit Eintraegen fuer die Pflege behalten."
+                  % (weg, bleiben))
+    except (Exception, SystemExit) as e:
+        print("  ! Archiv nicht aufgeraeumt: %s" % str(e)[:120], file=sys.stderr)
     if abgesetzt:
         try:
             print("Abgesetzte Spiele in der Datenbank geloescht: %d." % abgesetzte_aus_db(abgesetzt, kennungen))

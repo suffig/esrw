@@ -805,6 +805,62 @@ grundstellung({ profil: null });
 gleich(P.uebergreifendZeigen(), false, "ohne Profil aus");
 
 
+// ---------------------------------------------------------------------
+// Doppelte Spiele in der Pflege (Fassung 282)
+//
+// Am 18.11. standen 36 Faelle in der Pflege, fast alle Doppelspieltage:
+// Sa. abends und So. morgens gegen dieselbe Mannschaft. Die Faelle unten
+// sind nach den echten Daten vom 23.09. gebaut.
+abschnitt("Doppelte Spiele");
+grundstellung({ ctx: { daten: { saison: "2026/27" } } });
+(function () {
+  function z(k, beginn, o) {
+    return Object.assign({ kennung: k, beginn: beginn, liga: "U17 II",
+                           paarung: "EV Duisburg – SCC Adler Berlin", saison: "2026/27" }, o || {});
+  }
+  function faelle(zeilen, ok) { return P.doppelteGruppen(zeilen, ok).length; }
+
+  // Doppelspieltag, beide nach ihrem Tag noch auf esrw.de: gespielt.
+  gleich(faelle([z("a", "2026-09-12T20:00:00+02:00", { gesehen: "2026-09-15" }),
+                 z("b", "2026-09-13T10:00:00+02:00", { gesehen: "2026-09-15" })]), 0,
+    "Sa/So beide gespielt: kein Fall");
+  // Der erste Tag ist gespielt, der zweite steht noch im Spielplan.
+  gleich(faelle([z("a", "2026-09-12T20:00:00+02:00", { gesehen: "2026-09-14" }),
+                 z("b", "2026-09-13T10:00:00+02:00", { imPlan: true })]), 0,
+    "einer gespielt, einer im Spielplan: kein Fall");
+  // Verlegung als neues Spiel: die alte Zeit verschwand vor dem Tag.
+  gleich(faelle([z("alt", "2026-09-18T19:30:00+02:00", { liga: "RL FS", paarung: "Ratingen – Leuwen",
+                                                           gesehen: "2026-09-16" }),
+                 z("neu", "2026-09-18T20:00:00+02:00", { liga: "RL FS", paarung: "Ratingen – Leuwen",
+                                                           imPlan: true })]), 1,
+    "alte Zeit vor dem Spieltag verschwunden: ein Fall");
+  // Am Spieltag zuletzt gesehen zaehlt nicht als gespielt - genauso
+  // urteilt abgesetzte_entfernen() im Abgleich.
+  gleich(P.gespielt(z("x", "2026-09-18T19:30:00+02:00", { gesehen: "2026-09-18" })), false,
+    "am Spieltag zuletzt gesehen: nicht als gespielt bestaetigt");
+  gleich(P.gespielt(z("x", "2026-09-18T19:30:00+02:00", { gesehen: "2026-09-19" })), true,
+    "am Tag danach gesehen: gespielt");
+  // Ohne gesehen_bis (Spalte noch nicht da) urteilt der Finder wie bisher.
+  gleich(faelle([z("a", "2026-09-12T20:00:00+02:00"), z("b", "2026-09-13T10:00:00+02:00")]), 1,
+    "ohne gesehen_bis: Paar wie bisher gemeldet");
+  // Fruehere Saison: abgeschlossen, kein Urteil mehr noetig.
+  gleich(faelle([z("a", "2025-09-12T20:00:00+02:00", { saison: "2025/26" }),
+                 z("b", "2025-09-13T10:00:00+02:00", { saison: "2025/26" })]), 0,
+    "fruehere Saison: kein Fall");
+  // Drei Wochen auseinander bleibt ausserhalb des Fensters.
+  gleich(faelle([z("a", "2026-09-05T19:30:00+02:00"), z("b", "2026-09-27T19:30:00+02:00")]), 0,
+    "mehr als 21 Tage auseinander: kein Fall");
+  // "Kein Doppel" blendet genau diese Gruppe aus.
+  var paar = [z("a", "2026-09-12T20:00:00+02:00"), z("b", "2026-09-13T10:00:00+02:00")];
+  var g = P.doppelteGruppen(paar)[0];
+  gleich(P.gruppenSchluessel(g), "a|b", "Schluessel: Kennungen sortiert");
+  var ok = {}; ok[P.gruppenSchluessel(g)] = 1;
+  gleich(faelle(paar, ok), 0, "als kein Doppel bestaetigt: weg");
+  gleich(faelle(paar.concat([z("c", "2026-09-14T10:00:00+02:00")]), ok), 1,
+    "kommt eine dritte Ansetzung dazu, ist die Gruppe wieder da");
+})();
+
+
 console.log("\n----------------------------------------------------------");
   if (fehler.length) {
     console.log(fehler.length + " Pruefung" + (fehler.length === 1 ? "" : "en") + " fehlgeschlagen:");

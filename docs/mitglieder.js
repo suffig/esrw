@@ -3844,25 +3844,48 @@ window.Mitglieder = (function () {
       if (fertig) fertig();
     });
   }
+  // Was fuer eine Datei es ist, an der Endung - ein Schild vor dem Namen
+  // statt eines Symbols, das niemand deutet.
+  function dokTyp(titel) {
+    var n = String(titel || "").toLowerCase();
+    return /\.pdf$/.test(n) ? "PDF" : /\.(jpe?g|png|heic|heif|webp|gif)$/.test(n) ? "Bild"
+      : /\.docx?$/.test(n) ? "Word" : /\.txt$/.test(n) ? "Text" : "Datei";
+  }
   // sp braucht: kennung, beginn, paarung, gespann (Slugs im Spiel)
+  //
+  // Fassung 283: die Art als Wahlknoepfe statt eines Auswahlfelds, das
+  // neben einem kleinen Textknopf stand; ein grosser Knopf zum Anhaengen,
+  // der waehrend des Hochladens sagt, dass er arbeitet.
+  var dokArtGewaehlt = DOK_ARTEN[0][0];
   function dokumenteZeile(sp) {
     var box = h("div", { class: "dok-box" });
     function waehler() {
-      var art = h("select", { class: "mg-select dok-art" },
-        DOK_ARTEN.map(function (a) { return h("option", { value: a[0], text: a[1] }); }));
+      var knopf = h("button", { type: "button", class: "mg-haupt dok-knopf", text: "Datei anhängen" });
       var datei = h("input", { type: "file", style: "display:none",
         accept: ".pdf,.doc,.docx,.txt,image/*",
         onchange: function (ev) {
           var f = ev.target.files && ev.target.files[0];
           ev.target.value = "";
           if (!f) return;
-          if (f.size > 20 * 1024 * 1024) { meldung("H\öchstens 20 MB je Datei.", "warn"); return; }
-          dokumentHochladen(sp, f, art.value, neuLaden);
+          if (f.size > 20 * 1024 * 1024) { meldung("Höchstens 20 MB je Datei.", "warn"); return; }
+          knopf.disabled = true; knopf.textContent = "lädt hoch …";
+          Promise.resolve(dokumentHochladen(sp, f, dokArtGewaehlt, neuLaden)).then(function () {
+            if (knopf.isConnected) { knopf.disabled = false; knopf.textContent = "Datei anhängen"; }
+          });
         } });
-      return h("div", { class: "dok-neu" }, [art,
-        h("button", { type: "button", class: "textknopf",
-          title: "Spielbericht, Zusatzmeldung oder ein anderes Dokument anh\ängen",
-          text: "Datei anh\ängen", onclick: function () { datei.click(); } }), datei]);
+      knopf.addEventListener("click", function () { datei.click(); });
+      var arten = h("div", { class: "dok-arten", role: "radiogroup", "aria-label": "Art des Dokuments" });
+      DOK_ARTEN.forEach(function (a) {
+        var b = h("button", { type: "button", role: "radio", text: a[1],
+          class: a[0] === dokArtGewaehlt ? "an" : "", "aria-checked": a[0] === dokArtGewaehlt ? "true" : "false" });
+        b.addEventListener("click", function () {
+          dokArtGewaehlt = a[0];
+          [].forEach.call(arten.children, function (x) { var an = x === b; x.className = an ? "an" : ""; x.setAttribute("aria-checked", an ? "true" : "false"); });
+        });
+        arten.appendChild(b);
+      });
+      return h("div", { class: "dok-neu" }, [arten, knopf,
+        h("small", { class: "dok-tipp", text: "PDF, Word oder Foto, bis 20 MB. Sehen nur die Kollegen aus diesem Spiel." }), datei]);
     }
     function neuLaden() {
       dokumenteLaden(sp.kennung).then(function (r) {
@@ -3870,28 +3893,31 @@ window.Mitglieder = (function () {
         leeren(box);
         if (r && r.error) {
           box.appendChild(h("p", { class: "meta", text: /spiel_dokumente/.test(r.error.message || "")
-            ? "Noch nicht eingerichtet \– schema.sql (v58) ausf\ühren." : fehlerText(r.error) }));
+            ? "Noch nicht eingerichtet – schema.sql (v58) ausführen." : fehlerText(r.error) }));
           box.appendChild(waehler());
           return;
         }
         var zeilen = (r && r.data) || [];
-        if (!zeilen.length) box.appendChild(h("p", { class: "meta", text: "Noch nichts angeheftet." }));
+        if (!zeilen.length) box.appendChild(h("p", { class: "meta dok-leer", text: "Noch nichts angeheftet." }));
+        var liste = h("div", { class: "dok-liste" });
         zeilen.forEach(function (z) {
           var art = DOK_ARTEN.filter(function (a) { return a[0] === z.art; })[0];
           var oeffnen = h("button", { type: "button", class: "dok-datei",
-            title: "\Öffnen", onclick: function () { dokumentOeffnen(z.pfad); } }, [
-            h("b", { text: z.titel }),
-            h("small", { text: (art ? art[1] : z.art) + " \· " + z.name
-              + (z.groesse ? " \· " + dokumentGroesse(z.groesse) : "")
-              + " \· " + new Date(z.angelegt).toLocaleDateString("de-DE") })]);
+            title: "Öffnen", onclick: function () { dokumentOeffnen(z.pfad); } }, [
+            h("span", { class: "dok-typ", text: dokTyp(z.titel) }),
+            h("span", { class: "dok-text" }, [h("b", { text: z.titel }),
+              h("small", { text: (art ? art[1] : z.art) + " · " + anzeigeName(z.name)
+                + (z.groesse ? " · " + dokumentGroesse(z.groesse) : "")
+                + " · " + new Date(z.angelegt).toLocaleDateString("de-DE") })])]);
           var zeile = h("div", { class: "dok-zeile" }, [oeffnen]);
           if (z.user_id === session.user.id || istAdmin()) {
             zeile.appendChild(h("button", { type: "button", class: "dok-weg",
-              title: "Entfernen", "aria-label": "Entfernen", text: "\×",
+              title: "Entfernen", "aria-label": "„" + z.titel + "“ entfernen", text: "×",
               onclick: function () { dokumentLoeschen(z, neuLaden); } }));
           }
-          box.appendChild(zeile);
+          liste.appendChild(zeile);
         });
+        if (zeilen.length) box.appendChild(liste);
         box.appendChild(waehler());
       });
     }
@@ -7188,7 +7214,18 @@ window.Mitglieder = (function () {
           laeufe.push(sb.from("mitfahrten").select("*").in("kennung", kennungen).then(function (r) {
             if (r.error) return;
             kennungen.forEach(function (k) { cache.mitfahrten[k] = []; });
-            (r.data || []).forEach(function (z) { (cache.mitfahrten[z.kennung] = cache.mitfahrten[z.kennung] || []).push(z); });
+            (r.data || []).forEach(function (z) { z.zusagen = []; (cache.mitfahrten[z.kennung] = cache.mitfahrten[z.kennung] || []).push(z); });
+            // Wer mitfaehrt (v61). Fehlt die Tabelle, gibt es keine
+            // Zusagen und keinen Knopf - der Rest bleibt, wie er war.
+            var ids = (r.data || []).map(function (z) { return z.id; });
+            if (!ids.length) return;
+            return sb.from("mitfahrt_zusagen").select("*").in("mitfahrt", ids).order("angelegt").then(function (r2) {
+              if (r2.error) { cache.zusagenFehlen = true; return; }
+              cache.zusagenFehlen = false;
+              var nachId = {};
+              (r.data || []).forEach(function (z) { nachId[z.id] = z; });
+              (r2.data || []).forEach(function (z) { if (nachId[z.mitfahrt]) nachId[z.mitfahrt].zusagen.push(z); });
+            }, function () { cache.zusagenFehlen = true; });
           }));
           laeufe.push(sb.from("spielnotizen").select("*").eq("user_id", session.user.id).in("kennung", kennungen).then(function (r) {
             if (r.error) return;
@@ -7299,25 +7336,10 @@ window.Mitglieder = (function () {
           innen.appendChild(h("p", { class: "meta", style: "margin:0 0 6px" }, [h("span", { class: "offiziell-badge", text: "auf dem Weg" }),
             (v.richtung === "ich" ? g.name + " (" + (v.ort || "Wohnort geteilt") + ") liegt auf deinem Weg, Umweg ca. " + v.umweg + " km." : "Du liegst auf dem Weg von " + g.name + " (" + (v.ort || "Wohnort geteilt") + "), Umweg für ihn ca. " + v.umweg + " km.")]));
         });
-        mitfahrten.forEach(function (m) {
-          var nr = nummerVon(m.slug), l = nr ? telefonLink(nr.telefon) : null;
-          innen.appendChild(h("div", { class: "kandidat" }, [h("div", {}, [h("span", { class: "offiziell-badge", style: m.art === "suche" ? "background:var(--rot)" : "", text: m.art === "suche" ? "sucht" : "bietet" }), m.text]),
-            h("div", { class: "meta" }, [m.name, l ? h("a", { class: "textknopf", style: "margin-left:8px", href: l.tel, text: "anrufen" }) : null, l ? h("a", { class: "textknopf", style: "margin-left:6px", href: l.wa, target: "_blank", rel: "noopener", text: "WhatsApp" }) : null])]));
-        });
-        if (istIch) {
-          var mf = h("input", { type: "text", placeholder: "z. B. „Ich fahre ab Iserlohn, 2 Plätze frei“ oder „Suche Mitfahrt ab Essen“", value: meineMitfahrt ? meineMitfahrt.text : "", maxlength: "160" });
-          function mitfahrtSpeichern(art) {
-            var t = mf.value.trim() || (art === "suche" ? "Suche Mitfahrt" : "Biete Mitfahrt");
-            mitfahrtSetzen(spiel, art, t).then(function (ok) { if (!ok) return; kurzMeldung(art === "suche" ? "Gesucht ✓ Kollegen sehen es auf ihrer Karte und unter „Zusammen fahren“." : "Angeboten ✓ Kollegen sehen es auf ihrer Karte und unter „Zusammen fahren“.", "gut"); extrasLaden([spiel]).then(function () { spielExtras(spiel, ziel, istIch); }); });
-          }
-          innen.appendChild(h("div", { class: "mg-form" }, [mf, h("div", { class: "zweit" }, [
-            h("button", { type: "button", text: meineMitfahrt && meineMitfahrt.art !== "suche" ? "Angebot aktualisieren" : "Ich biete", onclick: function () { mitfahrtSpeichern("biete"); } }),
-            h("button", { type: "button", text: meineMitfahrt && meineMitfahrt.art === "suche" ? "Gesuch aktualisieren" : "Ich suche", onclick: function () { mitfahrtSpeichern("suche"); } }),
-            meineMitfahrt ? h("button", { type: "button", text: "Zurückziehen", onclick: function () {
-              sb.from("mitfahrten").delete().eq("id", meineMitfahrt.id).then(function () { delete cache.geladen["k|" + kennung]; extrasLaden([spiel]).then(function () { spielExtras(spiel, ziel, istIch); }); });
-            } }) : null
-          ])]));
-        } else if (!mitfahrten.length) innen.appendChild(h("p", { class: "meta", text: "Niemand bietet eine Mitfahrt an." }));
+        innen.appendChild(mitfahrtBlock(spiel, cache.mitfahrten[kennung] || [], { eigenes: istIch, nachher: function () {
+          delete cache.geladen["k|" + kennung];
+          extrasLaden([spiel]).then(function () { spielExtras(spiel, ziel, istIch); var d = ziel.querySelector("details"); if (d) d.open = true; });
+        } }));
       }
 
       // Gespann-Notizen: nur fuer die, die im Spiel stehen
@@ -7578,16 +7600,23 @@ window.Mitglieder = (function () {
   function doppelteSpieleLaden(nochmal) {
     if (doppelteListe && !nochmal) return Promise.resolve(doppelteListe);
     if (!sb || !session) return Promise.resolve([]);
-    return sb.from("spiele_archiv").select("kennung,beginn,liga,paarung,halle")
-      .order("beginn", { ascending: false }).limit(2000)
-      .then(function (r) { return (r && r.data) || []; })
+    // gesehen_bis kommt mit v60. Fehlt die Spalte, scheitert die ganze
+    // Abfrage - dann ohne sie, und der Finder urteilt wie vorher.
+    function holen(spalten) {
+      return sb.from("spiele_archiv").select(spalten)
+        .order("beginn", { ascending: false }).limit(2000)
+        .then(function (r) { if (r && r.error) throw r.error; return (r && r.data) || []; });
+    }
+    return holen("kennung,beginn,liga,paarung,halle,saison,gesehen_bis")
+      .catch(function () { return holen("kennung,beginn,liga,paarung,halle,saison"); })
       .catch(function () { return []; })
       .then(function (ausArchiv) {
         var karte = {};
         ausArchiv.forEach(function (z) {
           if (!z.kennung) return;
           var k = echteKennung(z.kennung);
-          karte[k] = { kennung: k, beginn: z.beginn, liga: z.liga, paarung: z.paarung, halle: z.halle };
+          karte[k] = { kennung: k, beginn: z.beginn, liga: z.liga, paarung: z.paarung, halle: z.halle,
+                       saison: z.saison || null, gesehen: z.gesehen_bis || null };
         });
         // archiv.json, ueber alle Personen. Diese Datei hat die
         // Abrechnung doppelt gezeigt, waehrend der Finder nichts meldete
@@ -7678,14 +7707,34 @@ window.Mitglieder = (function () {
   // Paaren innerhalb von drei Wochen. Ohne diese Pruefung waere das
   // weitere Fenster nur eine Fehlalarm-Quelle, in der die eine echte
   // Verlegung untergeht.
+  //
+  // Seit v60 zaehlt auch, ob ein Spiel stattgefunden hat: esrw.de zeigt
+  // die Spiele eines Tages noch einige Tage lang, ein gespieltes wurde
+  // also NACH seinem Spieltag noch gesehen. Zwei gespielte Spiele sind
+  // kein Doppel, ebenso eines im Spielplan neben einem gespielten - so
+  // standen am 18.11. 36 Doppelspieltage in der Pflege, weil der erste
+  // Tag aus dem Spielplan gefallen war. Verdaechtig bleibt, was
+  // verschwand, ohne gespielt zu sein.
+  function gespielt(z) {
+    if (z.gesehen) return String(z.gesehen) > String(z.beginn).slice(0, 10);
+    // Fruehere Saisons sind abgeschlossen - was dort steht, gilt.
+    var jetzt = ctx && ctx.daten && ctx.daten.saison;
+    return !!(z.saison && jetzt && z.saison !== jetzt);
+  }
   function paarVerdaechtig(a, b) {
     if (a.imPlan && b.imPlan) return false;
+    if ((a.imPlan || gespielt(a)) && (b.imPlan || gespielt(b))) return false;
     var ta = new Date(a.beginn).getTime(), tb = new Date(b.beginn).getTime();
     if (!ta || !tb) return false;
     return Math.abs(ta - tb) <= DOPPELT_FENSTER_TAGE * 86400000;
   }
 
-  function doppelteGruppen(zeilen) {
+  // Schluessel einer Gruppe fuer "Kein Doppel": die Kennungen sortiert.
+  // Kommt eine dritte Ansetzung dazu, ist es eine neue Gruppe.
+  function gruppenSchluessel(g) {
+    return g.spiele.map(function (s) { return s.kennung; }).sort().join("|");
+  }
+  function doppelteGruppen(zeilen, ok) {
     var nach = {};
     (zeilen || []).forEach(function (z) {
       if (!z.beginn || !z.paarung) return;
@@ -7727,7 +7776,30 @@ window.Mitglieder = (function () {
       });
     });
     raus.sort(function (a, b) { return a.tag < b.tag ? 1 : -1; });
-    return raus;
+    return ok ? raus.filter(function (g) { return !ok[gruppenSchluessel(g)]; }) : raus;
+  }
+
+  // Bestaetigte "Kein Doppel"-Gruppen (v60). Fehlt die Tabelle, ist die
+  // Liste leer und der Knopf sagt beim Tippen, was zu tun ist.
+  function doppeltOkLaden() {
+    if (!sb || !session) return Promise.resolve({});
+    return sb.from("doppelt_ok").select("schluessel")
+      .then(function (r) {
+        var m = {};
+        ((r && !r.error && r.data) || []).forEach(function (z) { m[z.schluessel] = 1; });
+        return m;
+      }, function () { return {}; });
+  }
+  function keinDoppel(g) {
+    return speichern(sb.from("doppelt_ok").upsert({ schluessel: gruppenSchluessel(g),
+      kennungen: g.spiele.map(function (s) { return s.kennung; }).sort(),
+      von: (profil && (profil.name || profil.slug)) || "Betreiber",
+      geaendert: new Date().toISOString() }, { onConflict: "schluessel" }));
+  }
+  // Fuer Lage und Seite dieselbe Zahl: Zweifel der Pipeline plus Gruppen.
+  function verdachtLaden(nochmal) {
+    return Promise.all([doppelteSpieleLaden(nochmal), doppeltOkLaden(), zweifelLaden(nochmal)])
+      .then(function (r) { return { gruppen: doppelteGruppen(r[0], r[1]), zweifel: r[2] || [] }; });
   }
 
   function zusammenfuehren(bleibt, weg) {
@@ -7799,113 +7871,129 @@ window.Mitglieder = (function () {
     leeren(box);
     box.appendChild(h("h4", {}, [ikone("i-cal"), " Doppelte Spiele"]));
     box.appendChild(h("p", { class: "meta", style: "margin:0 0 8px", text:
-      "Dieselbe Begegnung zweimal innerhalb von drei Wochen, und nicht beide stehen im Spielplan. Meist eine Verlegung, "
-      + "die als zweites Spiel angelegt wurde – dann hängen Kilometer und Vergütung an der "
-      + "falschen Zeit. Es kann auch eine echte Doppelansetzung sein; das entscheidest du." }));
-    box.appendChild(h("p", { class: "meta", style: "margin:0 0 8px", text:
-      "Zusammenführen nimmt mit, was dranhängt. Ausblenden nimmt die Ansetzung nur weg – "
-      + "das brauchst du, wenn esrw.de die falsche Zeit selbst weiterführt und jeder Lauf "
-      + "sie neu anlegt." }));
+      "Dieselbe Begegnung zweimal, und mindestens eine Ansetzung ist von esrw.de verschwunden, "
+      + "ohne gespielt worden zu sein – meist eine Verlegung, die als neues Spiel angelegt wurde." }));
+    box.appendChild(h("details", { class: "admin-erklaerung" }, [
+      h("summary", { text: "So funktioniert's" }),
+      h("p", { class: "meta", text: "„Diese behalten“ führt die übrigen Ansetzungen auf die gewählte zusammen: "
+        + "Kilometer, Vergütung, Notizen und Rechnungsbezüge aller Kollegen wandern mit. "
+        + "Zurücknehmen geht nur in der Datenbank." }),
+      h("p", { class: "meta", text: "„Kein Doppel“ merkt sich die Gruppe – sie taucht nicht wieder auf, "
+        + "es sei denn, eine weitere Ansetzung kommt dazu." }),
+      h("p", { class: "meta", text: "Ausblenden nimmt eine Ansetzung für alle aus der App, ohne mitzunehmen, "
+        + "was daran hängt. Das braucht es nur, wenn esrw.de die falsche Zeit selbst weiterführt." }),
+      h("p", { class: "meta", text: "Doppelspieltage (Samstag und Sonntag gegen dieselbe Mannschaft) erkennt die App "
+        + "daran, dass esrw.de beide Spiele nach ihrem Spieltag noch gezeigt hat – sie stehen hier nicht." })]));
 
     zweifelBlock(box, neu);
 
     var innen = h("div", {}, [skelett(1)]);
     box.appendChild(innen);
-    doppelteSpieleLaden(true).then(function (zeilen) {
+    Promise.all([doppelteSpieleLaden(true), doppeltOkLaden()]).then(function (r) {
       if (!innen.isConnected) return;
-      var gruppen = doppelteGruppen(zeilen);
+      var gruppen = doppelteGruppen(r[0], r[1]);
       leeren(innen);
       if (!gruppen.length) {
         innen.appendChild(h("p", { class: "meta gut-text", text:
-          "Keine Doppelungen gefunden – jede Begegnung steht an ihrem Tag nur einmal." }));
+          "Keine Doppelungen – jede Begegnung steht nur einmal, oder beide Spiele haben stattgefunden." }));
         return;
       }
       innen.appendChild(h("p", { class: "meta", style: "margin:0 0 8px",
-        text: gruppen.length + (gruppen.length === 1 ? " Fall gefunden." : " Fälle gefunden.") }));
-
-      gruppen.forEach(function (g, gi) {
-        var karte = h("div", { class: "karte doppelt-gruppe" });
-        var letzter = String(g.spiele[g.spiele.length - 1].beginn).slice(0, 10);
-        karte.appendChild(h("b", { text: datumLang(new Date(g.tag + "T12:00:00"))
-          + (g.ueberTage ? " bis " + datumLang(new Date(letzter + "T12:00:00")) : "")
-          + " · " + (g.liga ? g.liga + ": " : "") + g.paarung }));
-        // Vorschlag: das, was noch auf esrw.de steht.
-        var vorschlag = g.spiele.filter(function (s) { return s.imPlan; })[0]
-          || g.spiele[g.spiele.length - 1];
-        var wahl = vorschlag.kennung;
-        g.spiele.forEach(function (s) {
-          var r = h("input", { type: "radio", name: "doppelt-" + gi });
-          r.checked = s.kennung === wahl;
-          r.addEventListener("change", function () { if (r.checked) wahl = s.kennung; });
-          var zusatz = [];
-          if (s.halle) zusatz.push(s.halle);
-          zusatz.push(s.imPlan ? "steht im Spielplan"
-                      : s.ausDatei ? "nur in der Archivdatei" : "nur noch im Archiv");
-          var anhang = h("small", { class: "meta", text: "…" });
-          anhangLaden(s.kennung).then(function (a) {
-            if (anhang.isConnected) anhang.textContent = anhangText(a);
-          });
-          var ausblenden = h("button", { type: "button", class: "textknopf",
-            text: "ausblenden", title: "Diese Ansetzung ganz aus der App nehmen" });
-          ausblenden.addEventListener("click", function (ev) {
-            ev.preventDefault();
-            if (!confirm("Diese Ansetzung (" + String(s.beginn).slice(11, 16)
-                         + " Uhr) ganz ausblenden?\n\nSie verschwindet für alle aus App, "
-                         + "Abrechnung und Archiv. Was daran hängt, bleibt liegen – wenn du "
-                         + "das mitnehmen willst, führ stattdessen zusammen.")) return;
-            ausblenden.disabled = true;
-            ansetzungAusblenden(s.kennung).then(function (rr) {
-              if (rr && rr.error) {
-                ausblenden.disabled = false;
-                meldung(fehlerText(rr.error), "warn"); return;
-              }
-              kurzMeldung("Ausgeblendet ✓ Beim nächsten Laden ist es bei allen weg.", "gut");
-              document.dispatchEvent(new CustomEvent("mg-betreiber"));
-              doppelteListe = null; neu();
-            });
-          });
-          var wann = g.ueberTage
-            ? new Date(s.beginn).toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" })
-              + ", " + String(s.beginn).slice(11, 16) + " Uhr"
-            : String(s.beginn).slice(11, 16) + " Uhr";
-          karte.appendChild(h("label", { class: "doppelt-zeile" + (s.imPlan ? " lebt" : "") }, [
-            r, h("span", {}, [h("b", { text: wann }),
-                              h("small", { text: zusatz.join(" · ") }), anhang]),
-            ausblenden]));
-        });
-
-        var knopf = h("button", { type: "button", class: "anfrage",
-          text: "Auf das gewählte zusammenführen" });
-        knopf.addEventListener("click", function () {
-          var weg = g.spiele.map(function (s) { return s.kennung; })
-            .filter(function (k) { return k !== wahl; });
-          if (!weg.length) return;
-          var zeit = (g.spiele.filter(function (s) { return s.kennung === wahl; })[0] || {}).beginn;
-          if (!confirm("Die übrigen " + weg.length + (weg.length === 1 ? " Ansetzung" : " Ansetzungen")
-                       + " auf " + String(zeit).slice(11, 16) + " Uhr zusammenführen?\n\n"
-                       + "Kilometer, Vergütung, Notizen und Rechnungsbezüge aller Kollegen werden "
-                       + "mitgenommen. Zurücknehmen geht nur von Hand in der Datenbank.")) return;
-          knopf.disabled = true; knopf.textContent = "führt zusammen …";
-          zusammenfuehren(wahl, weg).then(function (summe) {
-            var teile = Object.keys(summe).filter(function (k) { return summe[k]; })
-              .map(function (k) { return summe[k] + " " + k; });
-            kurzMeldung("Zusammengeführt ✓" + (teile.length ? " (" + teile.join(", ") + " umgehängt)" : ""), "gut");
-            doppelteListe = null;
-            neu();
-          }, function (e) {
-            knopf.disabled = false; knopf.textContent = "Auf das gewählte zusammenführen";
-            meldung(fehlerText(e) + (/spiele_zusammenfuehren|does not exist/.test((e && e.message) || "")
-              ? " – schema.sql (v55) ausführen." : ""), "warn");
-          });
-        });
-        karte.appendChild(h("div", { class: "zweit" }, [knopf]));
-        innen.appendChild(karte);
-      });
-
-      innen.appendChild(h("p", { class: "meta mg-fuss", style: "margin-top:10px", text:
-        "Was zusammengeführt wurde, hält die App fest – der stündliche Lauf legt das Spiel "
-        + "dann nicht wieder doppelt an." }));
+        text: gruppen.length + (gruppen.length === 1 ? " Fall zum Entscheiden." : " Fälle zum Entscheiden.") }));
+      gruppen.forEach(function (g) { innen.appendChild(doppeltKarte(g, neu)); });
     });
+  }
+
+  // Eine Karte je Fall: jede Fassung mit ihrem Stand und einem Knopf, der
+  // sie behaelt. Vorschlag ist, was noch auf esrw.de steht.
+  function doppeltKarte(g, neu) {
+    var karte = h("div", { class: "karte doppelt-gruppe" });
+    var letzter = String(g.spiele[g.spiele.length - 1].beginn).slice(0, 10);
+    karte.appendChild(h("b", { class: "doppelt-titel", text: datumLang(new Date(g.tag + "T12:00:00"))
+      + (g.ueberTage ? " bis " + datumLang(new Date(letzter + "T12:00:00")) : "") }));
+    karte.appendChild(h("p", { class: "doppelt-paarung", text: (g.liga ? g.liga + ": " : "") + g.paarung }));
+    var vorschlag = (g.spiele.filter(function (s) { return s.imPlan; })[0]
+      || g.spiele.filter(gespielt)[0] || g.spiele[g.spiele.length - 1]).kennung;
+    var knoepfe = [];
+    function alleSperren(an) { knoepfe.forEach(function (k) { k.disabled = an; }); }
+
+    g.spiele.forEach(function (s) {
+      var wann = (g.ueberTage
+        ? new Date(s.beginn).toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" }) + ", "
+        : "") + String(s.beginn).slice(11, 16) + " Uhr";
+      var stand = s.imPlan ? "steht auf esrw.de"
+        : gespielt(s) ? "gespielt"
+        : s.gesehen ? "verschwunden, zuletzt " + new Date(s.gesehen + "T12:00:00").toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" })
+        : s.ausDatei ? "nur in der Archivdatei" : "nur noch im Archiv";
+      var anhang = h("small", { class: "meta", text: "…" });
+      anhangLaden(s.kennung).then(function (a) { if (anhang.isConnected) anhang.textContent = anhangText(a); });
+      var behalten = h("button", { type: "button", class: s.kennung === vorschlag ? "mg-haupt" : "mg-neben",
+        text: "Diese behalten" });
+      knoepfe.push(behalten);
+      behalten.addEventListener("click", function () {
+        var weg = g.spiele.map(function (x) { return x.kennung; }).filter(function (k) { return k !== s.kennung; });
+        if (!confirm(wann + " behalten und " + (weg.length === 1 ? "die andere Ansetzung" : "die " + weg.length + " anderen")
+                     + " darauf zusammenführen?\n\nKilometer, Vergütung, Notizen und Rechnungsbezüge aller Kollegen "
+                     + "wandern mit. Zurücknehmen geht nur in der Datenbank.")) return;
+        alleSperren(true); behalten.textContent = "führt zusammen …";
+        zusammenfuehren(s.kennung, weg).then(function (summe) {
+          var teile = Object.keys(summe).filter(function (k) { return summe[k]; })
+            .map(function (k) { return summe[k] + " " + k; });
+          kurzMeldung("Zusammengeführt ✓" + (teile.length ? " (" + teile.join(", ") + " umgehängt)" : ""), "gut");
+          doppelteListe = null; neu();
+        }, function (e) {
+          alleSperren(false); behalten.textContent = "Diese behalten";
+          meldung(fehlerText(e) + (/spiele_zusammenfuehren|does not exist/.test((e && e.message) || "")
+            ? " – schema.sql (v55) ausführen." : ""), "warn");
+        });
+      });
+      karte.appendChild(h("div", { class: "doppelt-fassung" + (s.kennung === vorschlag ? " vorschlag" : "") }, [
+        h("div", { class: "doppelt-text" }, [
+          h("b", { text: wann }),
+          s.kennung === vorschlag ? h("span", { class: "mg-status", text: "Vorschlag" }) : null,
+          h("small", { text: [s.halle, stand].filter(Boolean).join(" · ") }),
+          anhang].filter(Boolean)),
+        behalten]));
+    });
+
+    var kein = h("button", { type: "button", class: "mg-neben", text: "Kein Doppel – beide behalten" });
+    knoepfe.push(kein);
+    kein.addEventListener("click", function () {
+      alleSperren(true);
+      keinDoppel(g).then(function (r) {
+        if (r && r.error) {
+          alleSperren(false);
+          meldung(fehlerText(r.error) + (/doppelt_ok/.test(r.error.message || "") ? " – schema.sql (v60) ausführen." : ""), "warn");
+          return;
+        }
+        kurzMeldung("Gemerkt ✓ Der Fall taucht nicht wieder auf.", "gut");
+        neu();
+      });
+    });
+    karte.appendChild(h("div", { class: "doppelt-unten" }, [kein]));
+
+    // Selten richtig, deshalb zugeklappt.
+    var aus = h("details", { class: "doppelt-aus" }, [h("summary", { text: "Eine Ansetzung ausblenden …" })]);
+    g.spiele.forEach(function (s) {
+      var knopf = h("button", { type: "button", class: "mg-neben",
+        text: String(s.beginn).slice(11, 16) + " Uhr ausblenden" });
+      knoepfe.push(knopf);
+      knopf.addEventListener("click", function () {
+        if (!confirm("Diese Ansetzung (" + String(s.beginn).slice(11, 16) + " Uhr) ganz ausblenden?\n\n"
+                     + "Sie verschwindet für alle aus App, Abrechnung und Archiv. Was daran hängt, bleibt liegen – "
+                     + "wenn du das mitnehmen willst, nimm „Diese behalten“ bei der anderen.")) return;
+        alleSperren(true);
+        ansetzungAusblenden(s.kennung).then(function (rr) {
+          if (rr && rr.error) { alleSperren(false); meldung(fehlerText(rr.error), "warn"); return; }
+          kurzMeldung("Ausgeblendet ✓ Beim nächsten Laden ist es bei allen weg.", "gut");
+          document.dispatchEvent(new CustomEvent("mg-betreiber"));
+          doppelteListe = null; neu();
+        });
+      });
+      aus.appendChild(knopf);
+    });
+    karte.appendChild(aus);
+    return karte;
   }
 
   // --------------------------------------------- Betriebseinstellungen
@@ -8259,7 +8347,7 @@ window.Mitglieder = (function () {
        "Halle, Anstoß, Treffpunkt, Hinweis, Absage, Gespann"],
       // Haengt Eintraege aller Kollegen um - kein delegierbares Recht.
       ["doppelt", "Doppelte Spiele", "i-cal", doppelteRendern, null,
-       "Dieselbe Begegnung zweimal am selben Tag zusammenführen"],
+       "Doppelt angelegte Ansetzungen und mögliche Verlegungen"],
       // Zwei Bereiche hiessen "Hallen & Vereine" und "Vereine". Welcher
       // welcher ist, kann sich niemand merken - der zweite musste im Text
       // auf den ersten verweisen. Jetzt sagt der Name, was drin ist: der
@@ -8358,7 +8446,8 @@ window.Mitglieder = (function () {
       onclick: function () { adminBereich = null; zeigeReiter("admin"); } },
       [h("span", { class: "pfeil", text: "‹" }), " Pflege"]);
     inhalt.appendChild(zurueck);
-    var box = h("div", { class: "melde karte" }, [skelett(1)]);
+    // admin-bereich: daran haengen die Tippflaechen (index.html, Fassung 282).
+    var box = h("div", { class: "melde karte admin-bereich" }, [skelett(1)]);
     inhalt.appendChild(box);
     b[3](box);
     inhalt.appendChild(h("p", { class: "meta mg-fuss", text: ADMIN_FUSS }));
@@ -8435,17 +8524,19 @@ window.Mitglieder = (function () {
       frage("freischalten", sb.from("profile").select("id,freigeschaltet,admin")),
       frage("spiele", sb.from("spiel_meldungen").select("kennung")),
       frage("korrekturen", sb.from("spiel_korrekturen").select("kennung,geloescht")),
-      frage("spiele", sb.from("spiel_zweifel").select("kennung").eq("erledigt", false)),
       frage("stammdaten", sb.from("vereine_adressen").select("verein,name,strasse")),
-      adminStandHolen()
+      adminStandHolen(),
+      // Mit in die Zaehlung: bis Fassung 281 kam die Zeile nachgeladen
+      // und fehlte in "x von y".
+      istAdminAn() ? verdachtLaden() : Promise.resolve(null)
     ]).then(function (r) {
       if (!karte.isConnected) return;
       var profile = (r[0] && r[0].data) || null;
       var meldungen = (r[1] && r[1].data) || null;
       var korrekturen = (r[2] && r[2].data) || null;
-      var zweifel = (r[3] && r[3].data) || null;
-      var adressen = (r[4] && r[4].data) || null;
-      var stand = r[5];
+      var adressen = (r[3] && r[3].data) || null;
+      var stand = r[4];
+      var verdacht = r[5];
 
       var liste = h("div", { class: "lage-liste" });
       var offeneZeilen = 0, alleZeilen = 0;
@@ -8496,11 +8587,13 @@ window.Mitglieder = (function () {
           offeneM ? "noch nicht entschieden" : "keine offenen Meldungen", "spiel");
       }
 
-      // Was die Pipeline nicht entscheiden konnte. Bleibt es liegen,
-      // steht das Spiel irgendwann doppelt in der Abrechnung.
-      if (zweifel) {
-        zeile(zweifel.length, "Mögliche Verlegungen",
-          zweifel.length ? "die Einteilung war nicht eindeutig" : "nichts offen", "doppelt");
+      // Doppelte und was die Pipeline nicht entscheiden konnte - eine
+      // Seite, also eine Zeile. Bleibt es liegen, haengen Kilometer und
+      // Verguetung an der falschen Ansetzung.
+      if (verdacht) {
+        var vz = verdacht.gruppen.length + verdacht.zweifel.length;
+        zeile(vz, "Doppelte Spiele",
+          vz ? (vz === 1 ? "ein Fall zum Entscheiden" : vz + " Fälle zum Entscheiden") : "nichts doppelt", "doppelt");
       }
 
       if (offenFuer("stammdaten")) {
@@ -8522,19 +8615,6 @@ window.Mitglieder = (function () {
                 : "jeder Verein im Spielplan hat eine", "adressen");
       }
 
-      // Doppelt angelegte Spiele: eine Aufgabe, und eine mit Geld daran -
-      // die Kilometer haengen an der falschen Zeit.
-      if (istAdminAn()) doppelteSpieleLaden().then(function (zeilen) {
-        if (!karte.isConnected) return;
-        var dg = doppelteGruppen(zeilen);
-        if (!dg.length) return;
-        liste.appendChild(h("button", { type: "button", class: "reihe-knopf lage-zeile offen",
-          onclick: function () { adminHinein("doppelt"); } }, [
-          h("span", { class: "lage-zahl", text: String(dg.length) }),
-          h("span", {}, [h("b", { text: "Doppelte Spiele" }),
-            h("small", { text: "dieselbe Begegnung zweimal an einem Tag" })]),
-          h("span", { class: "pfeil", text: "›" })]));
-      });
 
       // Auskunft, keine Aufgabe - eine hinterlegte Korrektur soll ja so
       // bleiben, bis der Betreiber sie zuruecknimmt.
@@ -9053,7 +9133,7 @@ window.Mitglieder = (function () {
     var suche = h("input", { type: "search", class: "mg-suche", placeholder: "Verein suchen …" });
     box.appendChild(suche);
     var zaehlZeile = h("p", { class: "meta", style: "margin:8px 0 6px", text: "" });
-    var nurOffenAn = false;
+    var nurOffenAn = false, nurOhneAn = false;
     box.appendChild(zaehlZeile);
     var innen = h("div", { class: "verein-liste" }, [skelett(1)]);
     box.appendChild(innen);
@@ -9072,6 +9152,12 @@ window.Mitglieder = (function () {
         (function () { var c = h("input", { type: "checkbox" }); c.addEventListener("change", function () { nurOffenAn = c.checked; zeichne(); }); return c; })(),
         " nur ungeprüfte Vorschläge"]);
       if (offen) zaehlZeile.parentNode.insertBefore(nurOffen, zaehlZeile.nextSibling);
+      // Was fehlt, ist die Arbeit - es stand bisher verstreut zwischen
+      // allen Vereinen mit Anschrift.
+      var nurOhne = h("label", { class: "schalter", style: "margin:0 0 8px" }, [
+        (function () { var c = h("input", { type: "checkbox" }); c.addEventListener("change", function () { nurOhneAn = c.checked; zeichne(); }); return c; })(),
+        " nur Vereine ohne Anschrift (" + ohne + ")"]);
+      if (ohne) zaehlZeile.parentNode.insertBefore(nurOhne, zaehlZeile.nextSibling);
 
       function eintrag(v) {
         var a = map[v] || {};
@@ -9126,6 +9212,7 @@ window.Mitglieder = (function () {
         var treffer = liste.filter(function (v) {
           var a = map[v] || {};
           if (nurOffenAn && !(a.strasse && !a.verifiziert)) return false;
+          if (nurOhneAn && a.strasse) return false;
           if (!q) return true;
           return (v + " " + (a.name || "") + " " + (a.plz_ort || "")).toLowerCase().indexOf(q) >= 0;
         });
@@ -10630,12 +10717,202 @@ window.Mitglieder = (function () {
   function rufnameVon(slug) { return (bilderCache && bilderCache[slug] && bilderCache[slug].rufname) || null; }
 
   function telefonVon(slug) { var k = nummerVon(slug); if (!k) return null; var l = telefonLink(k.telefon); return { telefon: k.telefon, tel: l.tel, wa: l.wa }; }
-  function mitfahrtSetzen(spiel, art, text) {
+  // plaetze nur mitschicken, wenn gesetzt - die Spalte kommt mit v61, und
+  // ohne sie scheiterte sonst jedes Speichern.
+  function mitfahrtSetzen(spiel, art, text, plaetze) {
     if (!session || !profil) return Promise.resolve(false);
     var kennung = kennungVon(spiel);
-    var lauf = art ? sb.from("mitfahrten").upsert({ user_id: session.user.id, slug: profil.slug, name: profil.name || profil.slug, kennung: kennung, beginn: spiel.beginn, text: text || (art === "suche" ? "Suche Mitfahrt" : "Biete Mitfahrt"), art: art }, { onConflict: "user_id,kennung" })
+    var zeile = { user_id: session.user.id, slug: profil.slug, name: profil.name || profil.slug, kennung: kennung, beginn: spiel.beginn, text: text || (art === "suche" ? "Suche Mitfahrt" : "Biete Mitfahrt"), art: art };
+    if (art === "biete" && plaetze != null) zeile.plaetze = plaetze;
+    // Wird aus dem Angebot ein Gesuch (oder umgekehrt), passen die Zusagen
+    // nicht mehr: aus "faehrt mit" wuerde "nimmt mit". Sie fallen weg.
+    var vorher = (cache.mitfahrten[kennung] || []).filter(function (m) { return m.user_id === session.user.id; })[0];
+    var lauf = art ? sb.from("mitfahrten").upsert(zeile, { onConflict: "user_id,kennung" })
                    : sb.from("mitfahrten").delete().eq("user_id", session.user.id).eq("kennung", kennung);
-    return lauf.then(function (r) { if (r.error) { meldung(fehlerText(r.error) + (/art/.test(r.error.message || "") ? ", schema.sql (v14) ausführen." : ""), "warn"); return false; } delete cache.geladen["k|" + kennung]; return true; });
+    return lauf.then(function (r) {
+      if (r.error) { meldung(fehlerText(r.error) + (/plaetze/.test(r.error.message || "") ? ", schema.sql (v61) ausführen." : /art/.test(r.error.message || "") ? ", schema.sql (v14) ausführen." : ""), "warn"); return false; }
+      delete cache.geladen["k|" + kennung];
+      if (art && vorher && vorher.art !== art && (vorher.zusagen || []).length) {
+        return speichern(sb.from("mitfahrt_zusagen").delete().eq("mitfahrt", vorher.id)).then(function () { return true; });
+      }
+      return true;
+    });
+  }
+
+  // ---- Zusammen fahren: eine Darstellung fuer Spielseite und Uebersicht
+  //
+  // Bis Fassung 282 zwei: auf der Spielseite Text mit "sucht/bietet" und
+  // Anrufen, unter "Zusammen fahren" Zeilen mit Statusschildern. Annehmen
+  // ging nirgends - man musste anrufen, und der Anbieter wusste danach
+  // nicht mehr, wer schon zugesagt hatte.
+  function anzeigeName(name, slug) {
+    var r = slug && rufnameVon(slug);
+    if (r) return r;
+    var t = String(name || "").split(",");
+    return t[1] ? t[1].trim() + " " + t[0].trim() : String(name || "");
+  }
+  function plaetzeFrei(m) {
+    return m.plaetze == null ? null : Math.max(0, m.plaetze - (m.zusagen || []).length);
+  }
+  function mitfahrtAnnehmen(m) {
+    return speichern(sb.from("mitfahrt_zusagen").insert({ mitfahrt: m.id, user_id: session.user.id,
+      slug: profil.slug, name: profil.name || profil.slug })).then(function (r) {
+      if (r && r.error) {
+        meldung(fehlerText(r.error) + (/mitfahrt_zusagen/.test(r.error.message || "") ? ", schema.sql (v61) ausführen." : ""), "warn");
+        return false;
+      }
+      delete cache.geladen["k|" + m.kennung];
+      return true;
+    });
+  }
+  function zusageZurueck(z, m) {
+    return speichern(sb.from("mitfahrt_zusagen").delete().eq("id", z.id)).then(function (r) {
+      if (r && r.error) { meldung(fehlerText(r.error), "warn"); return false; }
+      delete cache.geladen["k|" + m.kennung];
+      return true;
+    });
+  }
+  // Ein Eintrag: wer, was, wer schon dabei ist, und was man tun kann.
+  function mitfahrtEintrag(m, spiel, opt) {
+    var meins = m.user_id === session.user.id, suche = m.art === "suche";
+    var zus = m.zusagen || [], ich = zus.filter(function (z) { return z.user_id === session.user.id; })[0];
+    var frei = plaetzeFrei(m);
+    function danach(ok) { if (ok && opt.nachher) opt.nachher(); }
+    var unter = suche ? "sucht eine Mitfahrt"
+      : "bietet Plätze an" + (m.plaetze != null ? " · " + (frei ? (frei === 1 ? "1 Platz frei" : frei + " Plätze frei") : "voll") : "");
+    var karte = h("div", { class: "mf-eintrag" + (suche ? " suche" : "") + (meins ? " meins" : "") }, [
+      h("div", { class: "mf-kopf" }, [
+        bildZeichen(m.name, m.slug, bildVon(m.slug), "mf-bild"),
+        h("div", { class: "mf-wer" }, [h("b", { text: meins ? "Du" : anzeigeName(m.name, m.slug) }), h("small", { text: unter })]),
+        h("span", { class: "mf-art", text: suche ? "sucht" : "bietet" })])]);
+    var eigen = m.text && m.text !== "Biete Mitfahrt" && m.text !== "Suche Mitfahrt";
+    if (eigen) karte.appendChild(h("p", { class: "mf-text", text: "„" + m.text + "“" }));
+    if (zus.length) {
+      var dabei = h("div", { class: "mf-dabei" }, [h("small", { text: suche ? "Nimmt mit:" : "Fährt mit:" })]);
+      zus.forEach(function (z) {
+        var zeile = h("span", { class: "mf-person" }, [h("span", { text: z.user_id === session.user.id ? "du" : anzeigeName(z.name, z.slug) })]);
+        // Der Anbieter darf austragen - etwa wenn jemand doch anders faehrt
+        // und es vergessen hat.
+        if (meins && z.user_id !== session.user.id) zeile.appendChild(h("button", { type: "button", class: "mf-raus",
+          "aria-label": anzeigeName(z.name, z.slug) + " austragen", title: "Austragen", text: "×",
+          onclick: function () { if (confirm(anzeigeName(z.name, z.slug) + " austragen?")) zusageZurueck(z, m).then(danach); } }));
+        dabei.appendChild(zeile);
+      });
+      karte.appendChild(dabei);
+    }
+    if (meins || !opt.eigenes) {
+      if (!meins) karte.appendChild(kontaktReihe(m, spiel));
+      return karte;
+    }
+    var tun = h("div", { class: "mf-aktionen" });
+    if (ich) {
+      tun.appendChild(h("span", { class: "mf-zugesagt", text: suche ? "Du nimmst mit ✓" : "Du fährst mit ✓" }));
+      tun.appendChild(h("button", { type: "button", class: "mg-neben", text: "Absagen",
+        onclick: function () { zusageZurueck(ich, m).then(danach); } }));
+    } else if (!suche && frei === 0) {
+      tun.appendChild(h("span", { class: "mf-voll", text: "Alle Plätze vergeben" }));
+    } else if (!cache.zusagenFehlen) {
+      var ja = h("button", { type: "button", class: "mg-haupt", text: suche ? "Ich nehme dich mit" : "Ich fahre mit" });
+      ja.addEventListener("click", function () {
+        ja.disabled = true;
+        mitfahrtAnnehmen(m).then(function (ok) {
+          if (ok) kurzMeldung(suche ? "Zugesagt ✓ " + anzeigeName(m.name, m.slug) + " sieht, dass du mitnimmst."
+                                     : "Zugesagt ✓ " + anzeigeName(m.name, m.slug) + " sieht, dass du mitfährst.", "gut");
+          else ja.disabled = false;
+          danach(ok);
+        });
+      });
+      tun.appendChild(ja);
+    }
+    karte.appendChild(tun);
+    karte.appendChild(kontaktReihe(m, spiel));
+    return karte;
+  }
+  function kontaktReihe(m, spiel) {
+    var nr = telefonVon(m.slug);
+    if (!nr) return h("span", { class: "mf-leer" });
+    var vor = anzeigeName(m.name, m.slug).split(" ")[0];
+    var tag = spiel && spiel.beginn ? new Date(spiel.beginn).toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }) : "";
+    return h("div", { class: "mf-kontakt" }, [
+      h("a", { class: "anfrage", href: nr.tel, text: "Anrufen" }),
+      h("a", { class: "anfrage", href: nr.wa + "?text=" + encodeURIComponent("Hallo " + vor + ", wegen der Fahrt am " + tag + " zu " + ((spiel && spiel.halle) || "der Halle") + ": "),
+        target: "_blank", rel: "noopener", text: "WhatsApp" })]);
+  }
+  // Der ganze Block: die Eintraege der anderen, darunter der eigene mit
+  // Aendern und Zurueckziehen, oder zwei Knoepfe, um einen anzulegen.
+  // opt.eigenes: ich pfeife dieses Spiel (sonst nur ansehen),
+  // opt.nachher: neu zeichnen nach einer Aenderung.
+  function mitfahrtBlock(spiel, eintraege, opt) {
+    opt = opt || {};
+    var box = h("div", { class: "mf-block" });
+    var andere = (eintraege || []).filter(function (m) { return m.user_id !== session.user.id; })
+      .sort(function (a, b) { return (a.art === "suche") - (b.art === "suche"); });
+    var mein = (eintraege || []).filter(function (m) { return m.user_id === session.user.id; })[0];
+    if (!andere.length) box.appendChild(h("p", { class: "meta mf-niemand", text: opt.eigenes
+      ? "Noch niemand bietet oder sucht eine Mitfahrt."
+      : "Niemand bietet oder sucht eine Mitfahrt." }));
+    andere.forEach(function (m) { box.appendChild(mitfahrtEintrag(m, spiel, opt)); });
+    if (!opt.eigenes) return box;
+
+    var meinBox = h("div", { class: "mf-mein" });
+    box.appendChild(meinBox);
+    function formular(art) {
+      leeren(meinBox);
+      var feld = h("input", { type: "text", maxlength: "120",
+        placeholder: art === "suche" ? "z. B. ab Bochum Hbf" : "z. B. ab Essen-Rüttenscheid" });
+      if (mein && mein.art === art && mein.text !== "Biete Mitfahrt" && mein.text !== "Suche Mitfahrt") feld.value = mein.text;
+      var plaetze = mein && mein.art === "biete" && mein.plaetze != null ? mein.plaetze : 2;
+      var platzWahl = null;
+      if (art === "biete") {
+        platzWahl = h("div", { class: "mf-plaetze", role: "radiogroup", "aria-label": "Freie Plätze" });
+        [1, 2, 3, 4].forEach(function (n) {
+          var b = h("button", { type: "button", role: "radio", "aria-checked": n === plaetze ? "true" : "false",
+            class: n === plaetze ? "an" : "", text: String(n) });
+          b.addEventListener("click", function () {
+            plaetze = n;
+            [].forEach.call(platzWahl.children, function (x) { var an = x === b; x.className = an ? "an" : ""; x.setAttribute("aria-checked", an ? "true" : "false"); });
+          });
+          platzWahl.appendChild(b);
+        });
+      }
+      var sichern = h("button", { type: "button", class: "mg-haupt", text: art === "suche" ? "Gesuch speichern" : "Angebot speichern" });
+      sichern.addEventListener("click", function () {
+        sichern.disabled = true;
+        mitfahrtSetzen(spiel, art, feld.value.trim(), art === "biete" && !cache.zusagenFehlen ? plaetze : null).then(function (ok) {
+          if (!ok) { sichern.disabled = false; return; }
+          kurzMeldung(art === "suche" ? "Gesucht ✓ Die Kollegen sehen es hier und auf ihrer Spielseite."
+                                      : "Angeboten ✓ Die Kollegen sehen es hier und auf ihrer Spielseite.", "gut");
+          if (opt.nachher) opt.nachher();
+        });
+      });
+      feld.addEventListener("keydown", function (ev) { if (ev.key === "Enter") sichern.click(); });
+      meinBox.appendChild(h("div", { class: "mf-formular" }, [
+        h("b", { text: art === "suche" ? "Mitfahrt suchen" : "Plätze anbieten" }),
+        h("label", { class: "mf-label" }, ["Von wo", feld]),
+        platzWahl ? h("div", { class: "mf-label" }, [h("span", { text: "Freie Plätze" }), platzWahl]) : null,
+        h("div", { class: "mf-zeile" }, [sichern,
+          h("button", { type: "button", class: "mg-neben", text: "Abbrechen", onclick: zeichnen })])].filter(Boolean)));
+      setTimeout(function () { if (feld.isConnected) feld.focus(); }, 0);
+    }
+    function zeichnen() {
+      leeren(meinBox);
+      if (mein) {
+        meinBox.appendChild(mitfahrtEintrag(mein, spiel, opt));
+        meinBox.appendChild(h("div", { class: "mf-zeile" }, [
+          h("button", { type: "button", class: "mg-neben", text: "Ändern", onclick: function () { formular(mein.art); } }),
+          h("button", { type: "button", class: "mg-neben", text: "Zurückziehen", onclick: function () {
+            if ((mein.zusagen || []).length && !confirm("Zurückziehen? " + mein.zusagen.length
+                + (mein.zusagen.length === 1 ? " Kollege hat" : " Kollegen haben") + " schon zugesagt.")) return;
+            mitfahrtSetzen(spiel, null).then(function (ok) { if (ok) { kurzMeldung("Zurückgezogen.", ""); if (opt.nachher) opt.nachher(); } });
+          } })]));
+        return;
+      }
+      meinBox.appendChild(h("div", { class: "mf-zeile" }, [
+        h("button", { type: "button", class: "mg-neben", text: "Plätze anbieten", onclick: function () { formular("biete"); } }),
+        h("button", { type: "button", class: "mg-neben", text: "Mitfahrt suchen", onclick: function () { formular("suche"); } })]));
+    }
+    zeichnen();
+    return box;
   }
   function termine() {
     return bereit().then(function (st) {
@@ -10738,7 +11015,8 @@ window.Mitglieder = (function () {
     abweichung: abweichung, zuPruefen: zuPruefen, wegZahlen: wegZahlen,
     gebuehrenFlach: gebuehrenFlach, gebuehrenAenderung: gebuehrenAenderung,
     gebuehrenUebersicht: gebuehrenUebersicht,
-    netto: netto, nettoSpiel: nettoSpiel, uebergreifendZeigen: uebergreifendZeigen
+    netto: netto, nettoSpiel: nettoSpiel, uebergreifendZeigen: uebergreifendZeigen,
+    doppelteGruppen: doppelteGruppen, gespielt: gespielt, gruppenSchluessel: gruppenSchluessel
   };
 
   return { oeffnen: oeffnen, bereit: bereit, angemeldet: angemeldet, pruefstand: pruefstand,
@@ -10747,7 +11025,7 @@ window.Mitglieder = (function () {
            extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat, obmann: obmann, termine: termine,
            einstellungenSpeichern: einstellungenSpeichern, radar: radar, angebotMachen: angebotMachen,
            kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl, kontoRendern: kontoRendern, kontaktVon: kontaktVon, istAdmin: istAdmin, adminRecht: adminRecht, tresorSchluessel: tresorSchluessel, kontoKurz: kontoKurz, rechnungSprung: rechnungSprung, rechnungOeffnen: rechnungOeffnen, korrekturSpeichern: korrekturSpeichern, spielManuellLoeschen: spielManuellLoeschen,
-           mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, telefonVon: telefonVon, spielzeiten: spielzeiten, rechnungEinlesen: rechnungEinlesen, bilder: bilder, bildVon: bildVon, rufnameVon: rufnameVon, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb, wohnortEigen: wohnortEigen, notizenFuerSuche: notizenFuerSuche, zugang: zugang, darfKorrigieren: darfKorrigieren, antrittsstaerken: antrittsstaerken,
+           mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, mitfahrtBlock: mitfahrtBlock, telefonVon: telefonVon, spielzeiten: spielzeiten, rechnungEinlesen: rechnungEinlesen, bilder: bilder, bildVon: bildVon, rufnameVon: rufnameVon, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb, wohnortEigen: wohnortEigen, notizenFuerSuche: notizenFuerSuche, zugang: zugang, darfKorrigieren: darfKorrigieren, antrittsstaerken: antrittsstaerken,
            darfAlleSpiele: darfAlleSpiele, funktionSetzen: funktionSetzen,
            // Die Spielseite zeigt sie jetzt selbst - fuer alte Spiele ist
            // die Abrechnungskarte kein Weg mehr.
