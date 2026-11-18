@@ -707,44 +707,46 @@ dann zwar bestätigt, aber niemand merkt es.
 
 Supabase verschickt englische Standardmails („Confirm your signup“). Unter
 **Authentication → Email Templates** lassen sich Betreff und Text je Mail
-ersetzen. Vorschläge – `{{ .ConfirmationURL }}` ist der Link und muss
-drinbleiben:
+ersetzen. Fertige Vorlagen im Stil der App liegen in `supabase/mails/` –
+den ganzen Inhalt einer Datei ab `<!DOCTYPE html>` in **Message body**
+kopieren, den Betreff in **Subject**:
 
-**Confirm signup** – Betreff: `Einteilungen: E-Mail bestätigen`
+| Vorlage in Supabase | Datei | Betreff |
+|---|---|---|
+| Confirm signup | `registrierung.html` | `ESRW App: Bitte E-Mail bestätigen` |
+| Invite user | `einladung.html` | `ESRW App: Du bist eingeladen` |
+| Magic link | `anmeldelink.html` | `ESRW App: Dein Anmeldelink` |
+| Change email address | `email-aendern.html` | `ESRW App: Neue E-Mail-Adresse bestätigen` |
+| Reset password | `passwort.html` | `ESRW App: Neues Passwort festlegen` |
+| Reauthentication | `bestaetigungscode.html` | `ESRW App: Dein Bestätigungscode` |
 
-```html
-<h2>Willkommen bei den Einteilungen</h2>
-<p>Du hast ein Konto für den Mitgliederbereich angelegt. Ein Tipp auf den
-Link bestätigt deine Adresse und bringt dich zurück in die App:</p>
-<p><a href="{{ .ConfirmationURL }}">E-Mail bestätigen</a></p>
-<p>Danach wählst du in der App deinen Namen. Für Tauschbörse, Verfügbarkeit
-und Hallen-Hinweise schaltet dich der Betreiber anschließend frei.</p>
-<p>Wenn du das nicht warst, ignoriere diese Mail.</p>
-```
+Die Platzhalter (`{{ .ConfirmationURL }}`, `{{ .Token }}`, `{{ .Email }}`,
+`{{ .NewEmail }}`) setzt Supabase ein – sie müssen drinbleiben. Alle sechs
+entstehen aus einem Gerüst; wer an Farben oder Kopf etwas ändert, ändert
+es in allen.
 
-**Reset password** – Betreff: `Einteilungen: Neues Passwort`
+Die Registrierungsmail erklärt in drei Schritten, was danach kommt:
+bestätigen, Profil ausfüllen (Anschrift, Wohnort, Handynummer), Kalender
+abonnieren.
 
-```html
-<h2>Neues Passwort</h2>
-<p>Jemand hat für dieses Konto ein neues Passwort angefordert. Der Link
-bringt dich in die App, dort gibst du das neue Passwort ein:</p>
-<p><a href="{{ .ConfirmationURL }}">Neues Passwort setzen</a></p>
-<p>Wenn du das nicht warst, ignoriere diese Mail – das Passwort bleibt, wie
-es ist.</p>
-```
+#### Eigener Absender
 
-**Change email address** – Betreff: `Einteilungen: Neue E-Mail-Adresse bestätigen`
+Mit dem Standardabsender von Supabase (`noreply@mail.app.supabase.io`)
+landen die Mails oft im Spam und es gehen nur wenige pro Stunde raus.
+Deshalb läuft der Versand über **Resend** mit eigener Domain:
 
-```html
-<h2>Neue E-Mail-Adresse</h2>
-<p>Bitte bestätige, dass dieses Konto künftig über {{ .NewEmail }} läuft:</p>
-<p><a href="{{ .ConfirmationURL }}">Adresse bestätigen</a></p>
-```
+* Project Settings → Auth → **SMTP Settings**: Enable custom SMTP an,
+  Absender `noreply@auth.esrw.app`, Name `ESRW App`, Host
+  `smtp.resend.com`, Port 465, Benutzer `resend`, Passwort = API-Schlüssel
+  aus Resend (steht nur dort und im Supabase-Dashboard, nirgends sonst).
+* Bei Resend ist die Domain `auth.esrw.app` mit ihren DNS-Einträgen (SPF,
+  DKIM) hinterlegt; ohne sie lehnt Resend den Versand ab.
+* Unter Authentication → **Rate Limits** lässt sich die Zahl der Mails pro
+  Stunde jetzt anheben.
 
-Die Absenderadresse bleibt `noreply@mail.app.supabase.io`, solange kein
-eigener SMTP-Server eingetragen ist (Project Settings → Auth → SMTP). Für
-einen Kollegenkreis reicht die Voreinstellung; sie ist auf wenige Mails pro
-Stunde begrenzt.
+Die App nennt den Absender im Hinweis nach der Registrierung
+(`zeigeMailHinweis()` in `docs/mitglieder.js`) – wer ihn ändert, ändert
+ihn dort mit.
 
 ### 10.4 Zugangsdaten eintragen
 

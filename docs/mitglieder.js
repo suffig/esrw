@@ -848,12 +848,12 @@ window.Mitglieder = (function () {
           if (modus === "anmelden" && /not confirmed|invalid login/i.test(r.error.message || "")) erneutSenden.classList.remove("versteckt");
           return;
         }
-        if (modus === "vergessen") { zeigeMailHinweis("Passwort zurücksetzen", p.email, "Darin ist ein Link „Neues Passwort setzen“. Er bringt dich hierher zurück, du gibst ein neues Passwort ein, fertig."); return; }
+        if (modus === "vergessen") { zeigeMailHinweis("Passwort zurücksetzen", p.email, "Darin ist ein Link „Neues Passwort setzen“. Er bringt dich hierher zurück, du gibst ein neues Passwort ein, fertig.", "passwort"); return; }
         if (modus === "registrieren" && !(r.data && r.data.session)) {
           var schonDa = r.data && r.data.user && r.data.user.identities && r.data.user.identities.length === 0;
           if (schonDa) { meldung("Für diese E-Mail gibt es schon ein Konto. Bitte anmelden oder „Passwort vergessen“.", "warn"); zeigeAnmeldung("anmelden"); return; }
           zeigeMailHinweis("Fast geschafft", p.email, "Darin ist ein Link „E-Mail bestätigen“. Nach dem Antippen bist du angemeldet"
-            + (wunschName ? " als " + wunschName : "") + ". Der Betreiber schaltet dich danach für die gemeinsamen Funktionen frei.");
+            + (wunschName ? " als " + wunschName : "") + ". Der Betreiber schaltet dich danach für die gemeinsamen Funktionen frei.", "bestaetigen");
           return;
         }
         session = r.data.session;
@@ -878,7 +878,7 @@ window.Mitglieder = (function () {
           if (!adresse) { meldung("Erst die E-Mail-Adresse oben eintragen.", "warn"); return; }
           sb.auth.resend({ type: "signup", email: adresse, options: { emailRedirectTo: rueckkehr() } }).then(function (r) {
             if (r.error) meldung(fehlerText(r.error), "warn");
-            else zeigeMailHinweis("Neue Bestätigungsmail", adresse, "Der alte Link gilt nicht mehr, bitte den neuen antippen.");
+            else zeigeMailHinweis("Neue Bestätigungsmail", adresse, "Der alte Link gilt nicht mehr, bitte den neuen antippen.", "bestaetigen");
           });
         } })])
     ]);
@@ -917,14 +917,52 @@ window.Mitglieder = (function () {
 
   // Nach Registrierung / Passwort vergessen / erneut senden: eine Karte, die
   // sagt, was jetzt passiert - statt einer Zeile, die gleich wieder weg ist.
-  function zeigeMailHinweis(titel, adresse, text) {
+  //
+  // art: "bestaetigen" (Registrierung, erneut senden) oder "passwort". Seit
+  // dem eigenen Absender (Resend, auth.esrw.app) landet kaum noch etwas im
+  // Spam - der Hinweis bleibt trotzdem: ein Postfach, das die Adresse noch
+  // nicht kennt, sortiert manchmal falsch. Bei der Bestaetigung gleich ein Knopf zum erneuten Senden;
+  // bis Fassung 285 lag der nur auf der Anmeldeseite, nach einem
+  // Fehlversuch beim Anmelden.
+  // Wie in supabase/mails/ und ANLEITUNG.md - wer dort einen Betreff
+  // aendert, aendert ihn hier mit.
+  var MAIL_BETREFF = { bestaetigen: "ESRW App: Bitte E-Mail bestätigen",
+                       passwort: "ESRW App: Neues Passwort festlegen" };
+  function zeigeMailHinweis(titel, adresse, text, art) {
     angezeigt = "anmeldung";
     leeren(wurzel);
-    wurzel.appendChild(h("div", { class: "melde karte" }, [
+    var betreff = MAIL_BETREFF[art];
+    var hilfe = h("ul", { class: "mg-mailhilfe" }, [
+      h("li", { text: "Ein, zwei Minuten warten – manchmal dauert es." }),
+      h("li", {}, ["Im ", h("b", { text: "Spam- oder Werbeordner" }), " nachsehen. Liegt sie dort, als „Kein Spam“ markieren – dann kommen die nächsten Mails richtig an."]),
+      h("li", {}, ["Absender ist ", h("b", { text: "ESRW App (noreply@auth.esrw.app)" }),
+        betreff ? ", Betreff „" + betreff + "“." : "."]),
+      h("li", { text: art === "passwort"
+        ? "Adresse vertippt? Dann zurück und den Link mit der richtigen Adresse noch einmal anfordern."
+        : "Adresse vertippt? Dann zurück und das Konto mit der richtigen Adresse neu anlegen." })
+    ]);
+    var knoepfe = h("div", { class: "zweit mg-mailknoepfe" });
+    if (art === "bestaetigen") {
+      var nochmal = h("button", { type: "button", class: "mg-neben", text: "Mail erneut senden" });
+      nochmal.addEventListener("click", function () {
+        nochmal.disabled = true; nochmal.textContent = "sendet …";
+        sb.auth.resend({ type: "signup", email: adresse, options: { emailRedirectTo: rueckkehr() } }).then(function (r) {
+          if (r && r.error) { nochmal.disabled = false; nochmal.textContent = "Mail erneut senden"; meldung(fehlerText(r.error), "warn"); return; }
+          // Supabase laesst nur wenige Mails je Stunde zu - nicht gleich
+          // wieder anbieten.
+          nochmal.textContent = "Neue Mail ist unterwegs ✓";
+          kurzMeldung("Neue Bestätigungsmail geschickt. Der Link aus der alten gilt nicht mehr.", "gut");
+        });
+      });
+      knoepfe.appendChild(nochmal);
+    }
+    knoepfe.appendChild(h("button", { type: "button", class: "haupt", text: "Zur Anmeldung", onclick: function () { zeigeAnmeldung("anmelden"); } }));
+    wurzel.appendChild(h("div", { class: "melde karte mg-mailkarte" }, [
       h("h4", {}, [ikone("i-bell"), " " + titel]),
       h("p", {}, ["Wir haben eine E-Mail an ", h("b", { text: adresse }), " geschickt. " + text]),
-      h("p", { class: "meta", text: "Nichts da? Ein, zwei Minuten warten und den Spam-Ordner prüfen. Absender ist Supabase (noreply@mail.app.supabase.io), Betreff je nach Einstellung „Confirm your signup“ oder „E-Mail bestätigen“." }),
-      h("button", { type: "button", class: "haupt", text: "Zur Anmeldung", onclick: function () { zeigeAnmeldung("anmelden"); } })
+      h("p", { class: "mg-einst-titel", text: "Keine Mail da?" }),
+      hilfe,
+      knoepfe
     ]));
   }
 

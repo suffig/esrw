@@ -1,0 +1,70 @@
+<!--
+  Vorlage fuer Supabase: Authentication -> Email Templates -> "Reauthentication".
+  Betreff (Subject): ESRW App: Dein Bestätigungscode
+  Den ganzen Inhalt ab <!DOCTYPE html> in das Feld "Message body" kopieren.
+  Die Platzhalter in doppelten geschweiften Klammern setzt Supabase ein -
+  sie muessen drinbleiben.
+
+  Gebaut aus einem Geruest fuer alle Mails (siehe ANLEITUNG.md, Abschnitt
+  "E-Mails auf Deutsch"). Tabellen und Inline-Stile, weil Gmail und
+  Outlook <style>-Bloecke und Flexbox wegwerfen.
+-->
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Dein Bestätigungscode</title>
+</head>
+<body style="margin:0; padding:0; background:#f2f3f5; font-family:-apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color:#14181f;">
+  <div style="display:none; max-height:0; overflow:hidden; mso-hide:all;">Dein Code für die ESRW App.</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f2f3f5;">
+    <tr>
+      <td align="center" style="padding:24px 12px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:520px; background:#ffffff; border-radius:16px; overflow:hidden;">
+          <tr>
+            <td style="background:#14181f; padding:22px 28px;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="vertical-align:middle; padding-right:14px;">
+                    <img src="https://www.esrw.app/logo-96.png" width="44" height="44" alt="ESRW" style="display:block; border:0; border-radius:10px;">
+                  </td>
+                  <td style="vertical-align:middle;">
+                    <div style="font-size:18px; font-weight:800; color:#ffffff; line-height:1.2;">ESRW App</div>
+                    <div style="font-size:13px; color:#a9b0bc; line-height:1.4;">www.esrw.app</div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:28px 28px 8px;">
+              <h1 style="margin:0 0 12px; font-size:22px; line-height:1.3; font-weight:800; color:#14181f;">Dein Bestätigungscode</h1>
+              <p style="margin:0 0 22px; font-size:16px; line-height:1.55; color:#3a414d;">
+                Für eine Änderung an deinem Konto (zum Beispiel ein neues Passwort) braucht die ESRW App eine Bestätigung. Gib diesen Code in der App ein:
+              </p>
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <td align="center" style="border-radius:12px; background:#f5f6f8; padding:18px 12px;">
+                    <div style="font-size:32px; font-weight:800; letter-spacing:.3em; color:#14181f; font-family:'SFMono-Regular', Consolas, 'Liberation Mono', monospace;">{{ .Token }}</div>
+                  </td>
+                </tr>
+              </table>
+              <p style="margin:14px 0 0; font-size:13px; line-height:1.5; color:#6b7280;">
+                Der Code gilt nur einmal und nur für kurze Zeit. Gib ihn niemandem weiter – auch nicht dem Betreiber.
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:18px 28px 24px; border-top:1px solid #e6e8ec; font-size:12px; line-height:1.5; color:#8a919c;">
+              Du hast nichts geändert? Dann ignoriere diese Mail und ändere zur Sicherheit dein Passwort.<br>
+              ESRW App · <a href="https://www.esrw.app" style="color:#8a919c;">www.esrw.app</a>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

@@ -3815,6 +3815,15 @@
   :root[data-design="neu"] .extras .mg-form > button { min-height:44px; }
   #einstellungen input#ziel { min-height:44px; }
 
+  /* Hinweis nach der Registrierung: kurze Liste, dann die Knoepfe. */
+  :root[data-design="neu"] .mg-mailkarte .mg-einst-titel { margin:14px 0 6px; }
+  :root[data-design="neu"] .mg-mailhilfe { margin:0 0 14px; padding-left:18px; color:var(--dim);
+    font-size:var(--s-m); line-height:1.5; }
+  :root[data-design="neu"] .mg-mailhilfe li { margin:0 0 4px; }
+  :root[data-design="neu"] .mg-mailhilfe b { color:var(--text); }
+  :root[data-design="neu"] .mg-mailknoepfe { display:flex; flex-wrap:wrap; gap:8px; }
+  :root[data-design="neu"] .mg-mailknoepfe button { flex:1 1 auto; min-height:44px; }
+
 </style>
 </head>
 <body>
@@ -4280,6 +4289,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=285"></script>
+<script src="app.js?v=286"></script>
 </body>
 </html>
