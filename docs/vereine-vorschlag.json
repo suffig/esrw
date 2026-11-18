@@ -1,181 +1,262 @@
 {
-  "_hinweis": "Anschriften der Vereine fuer die Gebuehrenabrechnung. Quelle: Vereinsverzeichnis des EHV NRW (ehv-nrw.de/club/clublist/), abgerufen am 23.09.2026; EHC Essen zusaetzlich gegen das eigene Impressum geprueft. Die App bietet sie unter Admin -> Vereinsadressen zum Einlesen an und schreibt sie nur dort hin, wo noch nichts steht. Bitte vor dem ersten Versand einmal pruefen - manche Vereine geben die Anschrift eines Vorstandsmitglieds an, die sich aendert. Ergaenzt am 09.10.2026: TuS Wiehl und Die Eisheiligen 93 (Vereinsverzeichnis des EHV NRW und eigene Impressen), dazu die Schreibweisen Grefrather EC, KEV 81 und Moerser SC - unter denen stehen dieselben Vereine im Spielplan. Alles hier sind Vorschlaege: bestaetigt werden sie im Mitgliederbereich unter Admin, erst dann gelten sie als geprueft.",
-  "stand": "2026-10-09",
-  "quelle": "https://ehv-nrw.de/club/clublist/",
-  "vereine": [
-    {
-      "verein": "Die Eisheiligen 93 Düsseldorf",
-      "name": "Eishockeyclub „Die Eisheiligen 93“ Düsseldorf e. V.",
-      "strasse": "Kappeler Straße 107",
-      "plz_ort": "40597 Düsseldorf"
-    },
-    {
-      "verein": "Dinslakener Kobras",
-      "name": "Dinslakener Kobras e. V.",
-      "strasse": "Postfach 100 231",
-      "plz_ort": "46522 Dinslaken"
-    },
-    {
-      "verein": "Düsseldorfer EG",
-      "name": "DEG Eishockey e. V.",
-      "strasse": "Brehmstraße 27a",
-      "plz_ort": "40239 Düsseldorf"
-    },
-    {
-      "verein": "EC Bergisch Land",
-      "name": "EC Bergisch Land e. V.",
-      "strasse": "Westersburg 31",
-      "plz_ort": "42719 Solingen"
-    },
-    {
-      "verein": "EHC Essen Ruhr",
-      "name": "EHC Essen (Ruhr) e. V.",
-      "strasse": "Weidkamp 178",
-      "plz_ort": "45356 Essen"
-    },
-    {
-      "verein": "EHC Gelsenkirchen",
-      "name": "EHC Gelsenkirchen",
-      "strasse": "Schaffrathstraße 48",
-      "plz_ort": "45897 Gelsenkirchen"
-    },
-    {
-      "verein": "EHC Troisdorf",
-      "name": "Eishockey Club Troisdorf e. V.",
-      "strasse": "Uckendorfer Straße 135",
-      "plz_ort": "53844 Troisdorf"
-    },
-    {
-      "verein": "Eisadler Dortmund",
-      "name": "Eisadler Dortmund e. V.",
-      "strasse": "Strobelallee 33",
-      "plz_ort": "44139 Dortmund"
-    },
-    {
-      "verein": "ESV Bergisch Gladbach",
-      "name": "Eissportverein Bergisch Gladbach e. V.",
-      "strasse": "Saaler Straße 100",
-      "plz_ort": "51429 Bergisch Gladbach"
-    },
-    {
-      "verein": "ESV Bergkamen",
-      "name": "ESV Grizzlys Bergkamen e. V.",
-      "strasse": "Am Schlautbach 71",
-      "plz_ort": "48329 Havixbeck"
-    },
-    {
-      "verein": "ESV Grizzlys Bergkamen",
-      "name": "ESV Grizzlys Bergkamen e. V.",
-      "strasse": "Am Schlautbach 71",
-      "plz_ort": "48329 Havixbeck"
-    },
-    {
-      "verein": "EV Duisburg",
-      "name": "EV Duisburg",
-      "strasse": "Margaretenstraße 17-19",
-      "plz_ort": "47055 Duisburg"
-    },
-    {
-      "verein": "Grefrather EC",
-      "name": "Grefrather EG e. V.",
-      "strasse": "Stadionstraße 161a",
-      "plz_ort": "47929 Grefrath"
-    },
-    {
-      "verein": "Grefrather EG",
-      "name": "Grefrather EG e. V.",
-      "strasse": "Stadionstraße 161a",
-      "plz_ort": "47929 Grefrath"
-    },
-    {
-      "verein": "GSC Moers",
-      "name": "Grafschafter Schlittschuh Club Moers e. V.",
-      "strasse": "Mergelskull 16",
-      "plz_ort": "47802 Krefeld"
-    },
-    {
-      "verein": "Herforder EV",
-      "name": "Herforder Eishockey Verein e. V.",
-      "strasse": "Leopoldstraße 2-8",
-      "plz_ort": "32051 Herford"
-    },
-    {
-      "verein": "Herner EV",
-      "name": "Herner Eissportverein 2007 e. V.",
-      "strasse": "Am Revierpark 22",
-      "plz_ort": "44627 Herne"
-    },
-    {
-      "verein": "Iserlohner EC",
-      "name": "Iserlohner EC e. V. Nachwuchs",
-      "strasse": "Seeuferstraße 25",
-      "plz_ort": "58636 Iserlohn"
-    },
-    {
-      "verein": "KEC \"Die Haie\"",
-      "name": "Kölner EC \"Die Haie\" e. V.",
-      "strasse": "Gummersbacher Straße 4",
-      "plz_ort": "50679 Köln"
-    },
-    {
-      "verein": "KEV 81",
-      "name": "Krefelder Eislauf-Verein 1981 e. V.",
-      "strasse": "Westparkstraße 128",
-      "plz_ort": "47803 Krefeld"
-    },
-    {
-      "verein": "Krefelder EV",
-      "name": "Krefelder Eislauf-Verein 1981 e. V.",
-      "strasse": "Westparkstraße 128",
-      "plz_ort": "47803 Krefeld"
-    },
-    {
-      "verein": "Kölner Junghaie",
-      "name": "Kölner EC \"Die Haie\" e. V.",
-      "strasse": "Gummersbacher Straße 4",
-      "plz_ort": "50679 Köln"
-    },
-    {
-      "verein": "Lippe Hockey Hamm",
-      "name": "Lippe-Hockey-Hamm Nachwuchsförderung e. V.",
-      "strasse": "Karl-Koßmann-Straße 1",
-      "plz_ort": "59071 Hamm"
-    },
-    {
-      "verein": "Moerser SC",
-      "name": "Grafschafter Schlittschuh Club Moers e. V.",
-      "strasse": "Mergelskull 16",
-      "plz_ort": "47802 Krefeld"
-    },
-    {
-      "verein": "Neusser EV",
-      "name": "Neusser Eishockey Verein e. V.",
-      "strasse": "Jakob-Koch-Straße 1",
-      "plz_ort": "41466 Neuss"
-    },
-    {
-      "verein": "Ratinger Ice Aliens",
-      "name": "Ratinger Ice Aliens '97 e. V.",
-      "strasse": "Am Sandbach 12",
-      "plz_ort": "40878 Ratingen"
-    },
-    {
-      "verein": "Soester EG",
-      "name": "Soester Eishockey-Gemeinschaft e. V.",
-      "strasse": "Kreisstraße 22 A",
-      "plz_ort": "59519 Möhnesee"
-    },
-    {
-      "verein": "SpG EHC Gelsenkirchen",
-      "name": "EHC Gelsenkirchen",
-      "strasse": "Schaffrathstraße 48",
-      "plz_ort": "45897 Gelsenkirchen"
-    },
-    {
-      "verein": "TuS Wiehl",
-      "name": "TuS Wiehl Eissportclub e. V.",
-      "strasse": "Mühlenstraße 23",
-      "plz_ort": "51674 Wiehl"
-    }
-  ]
+ "_hinweis": "Anschriften der Vereine fuer die Gebuehrenabrechnung. Quelle: Vereinsverzeichnis des EHV NRW (ehv-nrw.de/club/clublist/), abgerufen am 23.09.2026; EHC Essen zusaetzlich gegen das eigene Impressum geprueft. Die App bietet sie unter Admin -> Vereinsadressen zum Einlesen an und schreibt sie nur dort hin, wo noch nichts steht. Bitte vor dem ersten Versand einmal pruefen - manche Vereine geben die Anschrift eines Vorstandsmitglieds an, die sich aendert. Ergaenzt am 09.10.2026: TuS Wiehl und Die Eisheiligen 93 (Vereinsverzeichnis des EHV NRW und eigene Impressen), dazu die Schreibweisen Grefrather EC, KEV 81 und Moerser SC - unter denen stehen dieselben Vereine im Spielplan. Alles hier sind Vorschlaege: bestaetigt werden sie im Mitgliederbereich unter Admin, erst dann gelten sie als geprueft. Ergaenzt am 19.11.2026 aus dem EHV-Verzeichnis: Aachener EC, DSC Krefeld, ESC Rheine, ESC Rheine Young Cats, SV Brackwede, TSVE Bielefeld, ESC Kristall Lippstadt, EC Bergkamen. aliase: Teamname -> Verein, keine_vereine: Auswahlteams ohne Rechnung.",
+ "stand": "2026-11-19",
+ "quelle": "https://ehv-nrw.de/club/clublist/",
+ "vereine": [
+  {
+   "verein": "Aachener EC",
+   "name": "Aachener Eishockey Club 2013 e. V.",
+   "strasse": "Zeisigweg 5",
+   "plz_ort": "52146 Würselen"
+  },
+  {
+   "verein": "Die Eisheiligen 93 Düsseldorf",
+   "name": "Eishockeyclub „Die Eisheiligen 93“ Düsseldorf e. V.",
+   "strasse": "Kappeler Straße 107",
+   "plz_ort": "40597 Düsseldorf"
+  },
+  {
+   "verein": "Dinslakener Kobras",
+   "name": "Dinslakener Kobras e. V.",
+   "strasse": "Postfach 100 231",
+   "plz_ort": "46522 Dinslaken"
+  },
+  {
+   "verein": "DSC Krefeld",
+   "name": "DSC Krefeld 1997 e. V.",
+   "strasse": "c/o Alexander Zupanc, Hörenweg 72",
+   "plz_ort": "47877 Willich"
+  },
+  {
+   "verein": "Düsseldorfer EG",
+   "name": "DEG Eishockey e. V.",
+   "strasse": "Brehmstraße 27a",
+   "plz_ort": "40239 Düsseldorf"
+  },
+  {
+   "verein": "EC Bergisch Land",
+   "name": "EC Bergisch Land e. V.",
+   "strasse": "Westersburg 31",
+   "plz_ort": "42719 Solingen"
+  },
+  {
+   "verein": "EC Bergkamen",
+   "name": "EC Bergkamen e. V.",
+   "strasse": "Grenzstraße 29",
+   "plz_ort": "44534 Lünen"
+  },
+  {
+   "verein": "EHC Essen Ruhr",
+   "name": "EHC Essen (Ruhr) e. V.",
+   "strasse": "Weidkamp 178",
+   "plz_ort": "45356 Essen"
+  },
+  {
+   "verein": "EHC Gelsenkirchen",
+   "name": "EHC Gelsenkirchen",
+   "strasse": "Schaffrathstraße 48",
+   "plz_ort": "45897 Gelsenkirchen"
+  },
+  {
+   "verein": "EHC Troisdorf",
+   "name": "Eishockey Club Troisdorf e. V.",
+   "strasse": "Uckendorfer Straße 135",
+   "plz_ort": "53844 Troisdorf"
+  },
+  {
+   "verein": "Eisadler Dortmund",
+   "name": "Eisadler Dortmund e. V.",
+   "strasse": "Strobelallee 33",
+   "plz_ort": "44139 Dortmund"
+  },
+  {
+   "verein": "ESC Kristall Lippstadt",
+   "name": "ESC Kristall Lippstadt",
+   "strasse": "Grasweg 5",
+   "plz_ort": "59557 Lippstadt"
+  },
+  {
+   "verein": "ESC Rheine",
+   "name": "Eissportclub Rheine e. V.",
+   "strasse": "Kopernikusstraße 34",
+   "plz_ort": "48429 Rheine"
+  },
+  {
+   "verein": "ESC Rheine Young Cats",
+   "name": "Eissportclub Rheine Young Cats e. V.",
+   "strasse": "Kopernikusstraße 34",
+   "plz_ort": "48429 Rheine"
+  },
+  {
+   "verein": "ESV Bergisch Gladbach",
+   "name": "Eissportverein Bergisch Gladbach e. V.",
+   "strasse": "Saaler Straße 100",
+   "plz_ort": "51429 Bergisch Gladbach"
+  },
+  {
+   "verein": "ESV Bergkamen",
+   "name": "ESV Grizzlys Bergkamen e. V.",
+   "strasse": "Am Schlautbach 71",
+   "plz_ort": "48329 Havixbeck"
+  },
+  {
+   "verein": "ESV Grizzlys Bergkamen",
+   "name": "ESV Grizzlys Bergkamen e. V.",
+   "strasse": "Am Schlautbach 71",
+   "plz_ort": "48329 Havixbeck"
+  },
+  {
+   "verein": "EV Duisburg",
+   "name": "EV Duisburg",
+   "strasse": "Margaretenstraße 17-19",
+   "plz_ort": "47055 Duisburg"
+  },
+  {
+   "verein": "Grefrather EC",
+   "name": "Grefrather EG e. V.",
+   "strasse": "Stadionstraße 161a",
+   "plz_ort": "47929 Grefrath"
+  },
+  {
+   "verein": "Grefrather EG",
+   "name": "Grefrather EG e. V.",
+   "strasse": "Stadionstraße 161a",
+   "plz_ort": "47929 Grefrath"
+  },
+  {
+   "verein": "GSC Moers",
+   "name": "Grafschafter Schlittschuh Club Moers e. V.",
+   "strasse": "Mergelskull 16",
+   "plz_ort": "47802 Krefeld"
+  },
+  {
+   "verein": "Herforder EV",
+   "name": "Herforder Eishockey Verein e. V.",
+   "strasse": "Leopoldstraße 2-8",
+   "plz_ort": "32051 Herford"
+  },
+  {
+   "verein": "Herner EV",
+   "name": "Herner Eissportverein 2007 e. V.",
+   "strasse": "Am Revierpark 22",
+   "plz_ort": "44627 Herne"
+  },
+  {
+   "verein": "Iserlohner EC",
+   "name": "Iserlohner EC e. V. Nachwuchs",
+   "strasse": "Seeuferstraße 25",
+   "plz_ort": "58636 Iserlohn"
+  },
+  {
+   "verein": "KEC \"Die Haie\"",
+   "name": "Kölner EC \"Die Haie\" e. V.",
+   "strasse": "Gummersbacher Straße 4",
+   "plz_ort": "50679 Köln"
+  },
+  {
+   "verein": "KEV 81",
+   "name": "Krefelder Eislauf-Verein 1981 e. V.",
+   "strasse": "Westparkstraße 128",
+   "plz_ort": "47803 Krefeld"
+  },
+  {
+   "verein": "Krefelder EV",
+   "name": "Krefelder Eislauf-Verein 1981 e. V.",
+   "strasse": "Westparkstraße 128",
+   "plz_ort": "47803 Krefeld"
+  },
+  {
+   "verein": "Kölner Junghaie",
+   "name": "Kölner EC \"Die Haie\" e. V.",
+   "strasse": "Gummersbacher Straße 4",
+   "plz_ort": "50679 Köln"
+  },
+  {
+   "verein": "Lippe Hockey Hamm",
+   "name": "Lippe-Hockey-Hamm Nachwuchsförderung e. V.",
+   "strasse": "Karl-Koßmann-Straße 1",
+   "plz_ort": "59071 Hamm"
+  },
+  {
+   "verein": "Moerser SC",
+   "name": "Grafschafter Schlittschuh Club Moers e. V.",
+   "strasse": "Mergelskull 16",
+   "plz_ort": "47802 Krefeld"
+  },
+  {
+   "verein": "Neusser EV",
+   "name": "Neusser Eishockey Verein e. V.",
+   "strasse": "Jakob-Koch-Straße 1",
+   "plz_ort": "41466 Neuss"
+  },
+  {
+   "verein": "Ratinger Ice Aliens",
+   "name": "Ratinger Ice Aliens '97 e. V.",
+   "strasse": "Am Sandbach 12",
+   "plz_ort": "40878 Ratingen"
+  },
+  {
+   "verein": "Soester EG",
+   "name": "Soester Eishockey-Gemeinschaft e. V.",
+   "strasse": "Kreisstraße 22 A",
+   "plz_ort": "59519 Möhnesee"
+  },
+  {
+   "verein": "SpG EHC Gelsenkirchen",
+   "name": "EHC Gelsenkirchen",
+   "strasse": "Schaffrathstraße 48",
+   "plz_ort": "45897 Gelsenkirchen"
+  },
+  {
+   "verein": "SV Brackwede",
+   "name": "SV Brackwede e. V.",
+   "strasse": "Cheruskerstraße 1",
+   "plz_ort": "33647 Bielefeld"
+  },
+  {
+   "verein": "TSVE Bielefeld",
+   "name": "TSVE 1890 Bielefeld e. V.",
+   "strasse": "Siegfriedplatz 1",
+   "plz_ort": "33615 Bielefeld"
+  },
+  {
+   "verein": "TuS Wiehl",
+   "name": "TuS Wiehl Eissportclub e. V.",
+   "strasse": "Mühlenstraße 23",
+   "plz_ort": "51674 Wiehl"
+  }
+ ],
+ "aliase": {
+  "SpG Gelsenkirchen-Herne": "EHC Gelsenkirchen",
+  "Gelsenkirchen-Herne": "EHC Gelsenkirchen",
+  "EHC Essen": "EHC Essen Ruhr",
+  "ESV Bergkamen": "ESV Grizzlys Bergkamen",
+  "Grefrather EC": "Grefrather EG",
+  "Moerser SC": "GSC Moers",
+  "KEV 81": "Krefelder EV",
+  "Krefelder EV 81": "Krefelder EV",
+  "Kristall Lippstadt": "ESC Kristall Lippstadt",
+  "TSVE 1890 Bielefeld": "TSVE Bielefeld",
+  "Eissportclub Rheine": "ESC Rheine",
+  "DSC Krefeld 1997": "DSC Krefeld",
+  "Aachener Eishockey Club": "Aachener EC"
+ },
+ "keine_vereine": [
+  "NRW",
+  "NRW Schwarz",
+  "NRW Weiss",
+  "NRW Weiß",
+  "NRW U14",
+  "NRW U15",
+  "NRW U16",
+  "Hessen",
+  "Bremen",
+  "BW",
+  "Bayern",
+  "Niedersachsen",
+  "NEV",
+  "NEV/BW",
+  "BW/Hessen",
+  "BW/NRW"
+ ]
 }

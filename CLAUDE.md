@@ -158,6 +158,21 @@ Fensterbreite.
   der Historie (`git show 9a2e5732:docs/daten.json`, ins Scratchpad,
   danach löschen); jeder davon steht jetzt als Zeile im
   Abrechnungstest.
+* **Eine neue Spalte im `select` braucht einen Rückfall.** `rechnungenLaden()`
+  fragte `gezahlt_am` (v54) mit ab; fehlte die Spalte, scheiterte die
+  Abfrage, und `.catch` machte daraus still eine leere Liste. Die App sah
+  wochenlang keine einzige Rechnung – nach dem Einspielen des Schemas
+  standen alle auf einmal als offen da. Neue Spalten erst mit, bei Fehler
+  ohne sie fragen (`holen(mit).catch(function () { return holen(ohne); })`).
+* **Zwei Funktionen gleichen Namens: die zweite gewinnt überall.**
+  `offeneRechnungen` stand bis Fassung 284 zweimal in `mitglieder.js`
+  (Liste → Summe, Slug → Startseite); die Rechnungsübersicht bekam ein
+  Promise statt einer Summe. `node --check` meldet das nicht. Vor jedem
+  Freigeben:
+
+  ```bash
+  grep -oE "^  function [A-Za-z0-9_]+" docs/mitglieder.js | sort | uniq -d
+  ```
 * Tippflächen: alles, was man antippt, ist 44 px hoch. Gemessen wird
   mit `elementFromPoint` um die Elementmitte, **nicht** nur mit
   `getBoundingClientRect` – das sieht ein `::after` nicht und meldet

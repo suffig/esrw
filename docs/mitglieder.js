@@ -2378,9 +2378,42 @@ window.Mitglieder = (function () {
     // sie finden, und 40 reichten nicht einmal fuer zwei Saisons. Ganz
     // ohne Grenze nicht - ein Fehler in den Daten soll nicht die ganze
     // Seite laden.
-    return sb.from("rechnungen").select("id,nummer,datum,verein,betrag,kennungen,felder,gezahlt_am").order("datum", { ascending: false }).limit(500)
-      .then(function (r) { rechnungListe = r.data || []; return rechnungListe; })
+    //
+    // Fehlt gezahlt_am (v54 nicht eingespielt), scheiterte die Abfrage
+    // bis Fassung 284 still: keine einzige Rechnung, und nach dem
+    // Einspielen standen alle auf einmal als offen da. Jetzt ohne die
+    // Spalte noch einmal.
+    function holen(spalten) {
+      return sb.from("rechnungen").select(spalten).order("datum", { ascending: false }).limit(500)
+        .then(function (r) { if (r && r.error) throw r.error; return (r && r.data) || []; });
+    }
+    return holen("id,nummer,datum,verein,betrag,kennungen,felder,gezahlt_am")
+      .catch(function () { return holen("id,nummer,datum,verein,betrag,kennungen,felder"); })
+      .then(function (l) { rechnungListe = l; zahlungNachtragen(l); return rechnungListe; })
       .catch(function () { rechnungListe = []; return rechnungListe; });
+  }
+  // Bezahlt ist eine Rechnung, wenn der Eingang vermerkt ist - oder wenn
+  // jedes Spiel darauf abgehakt ist. Bis Fassung 277 hakte das Schreiben
+  // die Spiele ab, ohne gezahlt_am zu setzen; solche Rechnungen standen
+  // nach dem Einspielen von v54 alle als offen da.
+  function rechnungBezahlt(rg) {
+    if (rg.gezahlt_am) return true;
+    var k = rg.kennungen || [];
+    return k.length > 0 && k.every(function (kn) { var e = einsaetze[kn]; return !!(e && e.bezahlt); });
+  }
+  // ... und dann gleich in der Datenbank nachtragen, damit Liste,
+  // Startseite und Leiste dasselbe sagen. Datum: das letzte Abhaken.
+  // Nur, wenn die Einsaetze schon da sind - sonst wuesste man es nicht.
+  function zahlungNachtragen(liste) {
+    if (!Object.keys(einsaetze || {}).length) return;
+    (liste || []).forEach(function (rg) {
+      if (rg.gezahlt_am || !("gezahlt_am" in rg) || !rechnungBezahlt(rg)) return;
+      var spaet = "";
+      rg.kennungen.forEach(function (kn) { var b = String(einsaetze[kn].bezahlt || ""); if (b > spaet) spaet = b; });
+      var tag = (spaet || new Date().toISOString()).slice(0, 10);
+      rg.gezahlt_am = tag;
+      speichern(sb.from("rechnungen").update({ gezahlt_am: tag }).eq("id", rg.id));
+    });
   }
   function ladeRechnung() {
     if (!rechnungGeladen) {
@@ -2450,9 +2483,14 @@ window.Mitglieder = (function () {
   }
   function vereinAdressenLaden() {
     if (vereinAdressen) return Promise.resolve(vereinAdressen);
-    return sb.from("vereine_adressen").select("*").then(function (r) {
+    // Die Aliase stehen in der Vorschlagsliste - dieselbe Datei, aus der
+    // die Anschriften eingelesen werden.
+    var aliase = holeJson("vereine-vorschlag.json", null).then(function (v) {
+      vereinAliaseSetzen(v);
+    }, function () {});
+    return Promise.all([sb.from("vereine_adressen").select("*"), aliase]).then(function (r) {
       vereinAdressen = {};
-      (r.data || []).forEach(function (v) { vereinAdressen[v.verein] = v; });
+      ((r[0] && r[0].data) || []).forEach(function (v) { vereinAdressen[v.verein] = v; });
       return vereinAdressen;
     }).catch(function () { vereinAdressen = {}; return vereinAdressen; });
   }
@@ -2844,7 +2882,7 @@ window.Mitglieder = (function () {
       vereinAdressenLaden().then(function (map) {
         // "Iserlohner EC 1b" ist derselbe Verein wie "Iserlohner EC" - die
         // Anschrift steht nur einmal da.
-        var a = map[f.verein] || map[vereinHaupt(f.verein)];
+        var a = vereinAnschrift(map, f.verein);
         if (!a) return;
         if (a.name) f.name = a.name;
         f.strasse = a.strasse || ""; f.plz_ort = a.plz_ort || "";
@@ -2855,7 +2893,7 @@ window.Mitglieder = (function () {
     g2.appendChild(adressZeile);
     vereinAdressenLaden().then(function (map) {
       if (!adressZeile.isConnected) return;
-      var a = (map[f.verein] || map[vereinHaupt(f.verein)] || {});
+      var a = vereinAnschrift(map, f.verein) || {};
       leeren(adressZeile);
       if (a.verifiziert) {
         adressZeile.appendChild(h("span", { class: "merkzeichen gut", text: "geprüft" }));
@@ -2867,7 +2905,7 @@ window.Mitglieder = (function () {
         onclick: function () {
           if (!f.verein) { meldung("Erst ein Spiel übernehmen, daraus kommt der Verein.", "warn"); return; }
           if (!f.strasse && !f.plz_ort) { meldung("Erst die Anschrift ausfüllen.", "warn"); return; }
-          vereinSpeichern(vereinHaupt(f.verein), { name: f.name, strasse: f.strasse, plz_ort: f.plz_ort })
+          vereinSpeichern(vereinKanon(f.verein), { name: f.name, strasse: f.strasse, plz_ort: f.plz_ort })
             .then(function (ok) {
               if (!ok) return;
               vereinAdressen = null;
@@ -2995,7 +3033,7 @@ window.Mitglieder = (function () {
       // Spiele unter den Aufklapper wandern.
       if (!listeWarDa) { nochmal(); return; }
       // Was noch aussteht, gehoert vor die Liste - danach sucht man.
-      var o = offeneRechnungen(liste2);
+      var o = rechnungenOffenSumme(liste2);
       if (o.zeilen.length) {
         box.appendChild(h("p", { class: "meta achtung", style: "margin:8px 0 0", text:
           o.zeilen.length + (o.zeilen.length === 1 ? " Rechnung ohne Zahlungseingang, " : " Rechnungen ohne Zahlungseingang, ")
@@ -3010,8 +3048,9 @@ window.Mitglieder = (function () {
       // am laengsten, und hinterher zu telefonieren lohnt dort zuerst.
       // Bei den bezahlten umgekehrt, da ist die letzte die interessante.
       var sortiert = liste2.slice().sort(function (a, b) {
-        if (!a.gezahlt_am !== !b.gezahlt_am) return a.gezahlt_am ? 1 : -1;
-        if (!a.gezahlt_am) return a.datum < b.datum ? -1 : 1;
+        var ab = rechnungBezahlt(a), bb = rechnungBezahlt(b);
+        if (ab !== bb) return ab ? 1 : -1;
+        if (!ab) return a.datum < b.datum ? -1 : 1;
         return a.datum < b.datum ? 1 : -1;
       });
       var k2 = h("div", { class: "karte" });
@@ -3063,7 +3102,7 @@ window.Mitglieder = (function () {
         liste.appendChild(h("p", { class: "meta", text: "Nichts gefunden zu „" + suche.value + "“." }));
         return;
       }
-      var offen = treffer.filter(function (rg) { return !rg.gezahlt_am; });
+      var offen = treffer.filter(function (rg) { return !rechnungBezahlt(rg); });
       var summe = treffer.reduce(function (n, rg) { return n + (Number(rg.betrag) || 0); }, 0);
       liste.appendChild(h("p", { class: "meta", style: "margin:10px 0 6px", text:
         treffer.length + (treffer.length === 1 ? " Rechnung" : " Rechnungen") + " · " + euro(summe)
@@ -3094,17 +3133,19 @@ window.Mitglieder = (function () {
     var zeile = h("div", {});
     function neu() {
       leeren(zeile);
-      zeile.className = "telefon-zeile" + (rg.gezahlt_am ? "" : " offen-rechnung");
+      var bez = rechnungBezahlt(rg);
+      zeile.className = "telefon-zeile" + (bez ? "" : " offen-rechnung");
       var alter = Math.floor((new Date() - new Date(rg.datum)) / 86400000);
       var zweit = new Date(rg.datum).toLocaleDateString("de-DE") + " · " + euro(rg.betrag || 0);
       zweit += rg.gezahlt_am
         ? " · bezahlt am " + new Date(rg.gezahlt_am).toLocaleDateString("de-DE")
+        : bez ? " · bezahlt (alle Spiele abgehakt)"
         : " · offen" + (alter > 0 ? " seit " + alter + (alter === 1 ? " Tag" : " Tagen") : "");
-      var eingang = h("button", { type: "button", class: rg.gezahlt_am ? "" : "anfrage",
-        text: rg.gezahlt_am ? "Doch nicht bezahlt" : "Bezahlt",
-        title: rg.gezahlt_am ? "Zahlungseingang zurücknehmen" : "Das Geld ist da" });
+      var eingang = h("button", { type: "button", class: bez ? "" : "anfrage",
+        text: bez ? "Doch nicht bezahlt" : "Bezahlt",
+        title: bez ? "Zahlungseingang zurücknehmen" : "Das Geld ist da" });
       eingang.addEventListener("click", function () {
-        var warOffen = !rg.gezahlt_am;
+        var warOffen = !bez;
         eingang.disabled = true;
         zahlungSetzen(rg, warOffen ? isoTag(new Date()) : null).then(function (ok) {
           eingang.disabled = false;
@@ -3128,8 +3169,10 @@ window.Mitglieder = (function () {
 
   // Offene Rechnungen: geschrieben, aber kein Zahlungseingang vermerkt.
   // "gezahlt_am" ist null, solange nichts da ist.
-  function offeneRechnungen(liste) {
-    var offen = (liste || []).filter(function (rg) { return !rg.gezahlt_am; });
+  // Hiess bis Fassung 284 offeneRechnungen - genau wie die Funktion fuer
+  // die Startseite weiter unten, die sie ueberschrieb.
+  function rechnungenOffenSumme(liste) {
+    var offen = (liste || []).filter(function (rg) { return !rechnungBezahlt(rg); });
     var summe = 0, aeltester = null;
     offen.forEach(function (rg) {
       summe += Number(rg.betrag) || 0;
@@ -3390,8 +3433,7 @@ window.Mitglieder = (function () {
     return buendel;
   }
   function laufAdresse(verein) {
-    var m = vereinAdressen || {};
-    return m[verein] || m[vereinHaupt(verein)] || null;
+    return vereinAnschrift(vereinAdressen || {}, verein);
   }
   // Das Formular eines Buendels, wie rechnungFormAusWahl() es fuer die
   // Auswahl baut - nur ohne Oberflaeche und mit der Anschrift direkt aus
@@ -3583,8 +3625,8 @@ window.Mitglieder = (function () {
             onclick: function () { pdfHerunterladen(e.blob, e.name); } })]));
       });
       box.appendChild(h("p", { class: "meta", style: "margin:8px 0 0", text:
-        "Jede dieser Rechnungen lässt sich später unter „Geschriebene Rechnungen“ "
-        + "wieder laden und umnummerieren." }));
+        "Jede dieser Rechnungen lässt sich an ihrer Spielkarte wieder laden; alle stehen "
+        + "unter „Rechnung schreiben“ → „Geschriebene Rechnungen“, dort auch zum Umnummerieren." }));
       box.appendChild(h("div", { class: "zweit" }, [
         h("button", { type: "button", class: "mg-neben", text: "Weitere schreiben",
           onclick: function () { laufFertig = null; laufListe = null; nochmal(); } })]));
@@ -4797,10 +4839,10 @@ window.Mitglieder = (function () {
     var darst = h("div", { class: "modus mg-darstellung" }, [
       h("button", { type: "button", class: schnellModus ? "" : "aktiv",
         title: "Eine Karte je Spiel, zum Aufklappen", text: "Karten",
-        onclick: function () { darstellungGewaehlt = true; schnellModus = false; rendereAbrechnung(); } }),
+        onclick: function () { darstellungGewaehlt = true; schnellModus = false; lokalSchreiben("mg_darstellung", "karten"); rendereAbrechnung(); } }),
       h("button", { type: "button", class: schnellModus ? "aktiv" : "",
         title: "Eine Zeile je Spiel, km und Betrag gleich eintragen", text: "Zeilen",
-        onclick: function () { darstellungGewaehlt = true; schnellModus = true; rendereAbrechnung(); } })]);
+        onclick: function () { darstellungGewaehlt = true; schnellModus = true; lokalSchreiben("mg_darstellung", "zeilen"); rendereAbrechnung(); } })]);
     // Wahlknoepfe wie im Entwurf: Titel und eine Zeile, was es bedeutet.
     // Die Auswahlfelder schnitten ihren Text ab ("Entfernungspaus...").
     // Gespeichert wird weiter ueber das Feld und seinen change-Handler -
@@ -5041,7 +5083,10 @@ window.Mitglieder = (function () {
   // Dasselbe fuer die Darstellung: zum Eintragen sind die Zeilen
   // richtig, zum Nachsehen die Karten. Sobald jemand selbst umschaltet,
   // haelt die App still.
-  var darstellungGewaehlt = false;
+  // Die Wahl Karten/Zeilen bleibt auf dem Geraet - bis Fassung 284 war
+  // sie nach jedem Neuladen wieder weg.
+  var darstellungGewaehlt = !!lokalLesen("mg_darstellung", null);
+  schnellModus = lokalLesen("mg_darstellung", null) === "zeilen";
   // Die beiden Stufen, die bisher fehlten: "fertig zum Abrechnen"
   // (gepfiffen, Angaben vollstaendig, keine Rechnung) und "erledigt"
   // (Geld ist da).
@@ -5265,8 +5310,10 @@ window.Mitglieder = (function () {
     // nicht kennt, waeren gerade dort Zeilen blind - also Karten.
     if (!darstellungGewaehlt) schnellModus = false;
     // Auch gegen eine eigene Wahl: schnellListe() zeichnet den
-    // Abweichungskasten nicht, und genau um den geht es hier.
-    if (arbeitsStufe() === "fehlt") schnellModus = false;
+    // Abweichungskasten nicht, und genau um den geht es hier. Nur fuer
+    // diese Stufe - bis Fassung 284 wurde die Wahl hier ueberschrieben
+    // und war in jeder anderen Stufe danach weg.
+    var zeilenAnsicht = schnellModus && arbeitsStufe() !== "fehlt";
     // Erst nachsehen, was schon dasteht, dann die Luecken fuellen -
     // sonst lernt die App aus dem, was sie selbst gerade eingetragen
     // hat. Ueber alle Saisons, nicht nur die gewaehlte: die Liga von
@@ -5566,7 +5613,7 @@ window.Mitglieder = (function () {
     // der sonst der Saldo stuende.
     if (ak) inhalt.appendChild(ak);
 
-    if (schnellModus) {
+    if (zeilenAnsicht) {
       inhalt.appendChild(schnellListe(liste));
       weitereAnhaengen();
       aktualisiereSummen();
@@ -6179,11 +6226,10 @@ window.Mitglieder = (function () {
         var vorher = Object.keys(einsaetze || {}).length ? Promise.resolve() : ladeEinsaetze();
         return vorher.then(rechnungenLaden).then(function (liste) {
           var grenze = Date.now() - (tage || 30) * 86400000;
+          zahlungNachtragen(liste);
           return (liste || []).filter(function (rg) {
-            if (rg.gezahlt_am || !rg.datum) return false;
-            if (new Date(rg.datum).getTime() > grenze) return false;
-            var k = rg.kennungen || [];
-            return !k.length || k.some(function (kn) { var e = einsaetze[kn]; return !(e && e.bezahlt); });
+            if (!rg.datum || rechnungBezahlt(rg)) return false;
+            return new Date(rg.datum).getTime() <= grenze;
           }).map(function (rg) {
             return { nummer: rg.nummer, betrag: Number(rg.betrag) || 0, datum: rg.datum };
           });
@@ -8410,13 +8456,15 @@ window.Mitglieder = (function () {
   }
   // Heimvereine im Spielplan, zu denen keine Anschrift hinterlegt ist.
   // Ohne die laesst sich keine Rechnung an den Verein schreiben.
+  // Gezaehlt je Verein, nicht je Teamname - "Duesseldorfer EG U15" und
+  // "Duesseldorfer EG" sind eine Anschrift, nicht zwei Luecken.
   function vereineOhneAnschrift(map) {
     var fehlt = {};
     ((ctx && ctx.daten && ctx.daten.spiele) || []).forEach(function (s) {
       var heim = heimVereinVon(s);
-      if (!heim) return;
-      var a = (map || {})[heim] || (map || {})[vereinHaupt(heim)];
-      if (!a || !a.strasse) fehlt[heim] = (fehlt[heim] || 0) + 1;
+      if (!heim || keinVerein(heim, s.liga)) return;
+      var a = vereinAnschrift(map, heim);
+      if (!a || !a.strasse) { var k = vereinKanon(heim); fehlt[k] = (fehlt[k] || 0) + 1; }
     });
     return fehlt;
   }
@@ -9018,15 +9066,74 @@ window.Mitglieder = (function () {
 
   // Admin -> Vereinsadressen: sie stehen auf jeder Rechnung, und einmal
   // eingetragen sparen sie allen Kollegen die Sucherei.
+  // Der Verein hinter einem Teamnamen. Bis Fassung 284 fiel nur " 1b"
+  // weg; "Duesseldorfer EG U15", "SpG ESV Grizzlys Bergkamen / ESC Rheine
+  // Young Cats" oder "Krefelder EV 1b" standen als eigene Vereine ohne
+  // Anschrift da.
   function vereinHaupt(name) {
-    // "Krefelder EV 1b" und "Krefelder EV 1c" sind derselbe Verein
-    return String(name || "").replace(/\s+1[a-z]$/i, "").trim();
+    var n = String(name || "").replace(/\s+/g, " ").replace(/\s*!+\s*$/, "").trim();
+    // Spielgemeinschaft: die Rechnung geht an den ersten, gastgebenden
+    // Verein. Nur "SpG" - "SG" steht oft fest im Vereinsnamen, und aus
+    // "SG Alt" wurde sonst "Alt".
+    n = n.replace(/^(SpG|Spielgemeinschaft)\.?\s+/i, "");
+    if (n.indexOf("/") > 0) n = n.split(/\s*\/\s*/)[0];
+    var vorher;
+    do {
+      vorher = n;
+      n = n.replace(/\s+(1[a-e]|U\s?\d{1,2}|II|III|IV|Damen|Frauen)$/i, "").trim();
+    } while (n !== vorher);
+    return n;
+  }
+  // Fuer den Vergleich: ohne Gross/klein, Umlaute, Zeichen und Leerzeichen.
+  // "KEC „Die Haie“" und "KEC "Die Haie"" sind derselbe Verein.
+  function vereinSchluessel(name) {
+    return String(name || "").toLowerCase()
+      .replace(/ä/g, "ae").replace(/ö/g, "oe").replace(/ü/g, "ue").replace(/ß/g, "ss")
+      .replace(/e\.\s?v\.?$/, "").replace(/[^a-z0-9]/g, "");
+  }
+  // Was sich nicht ableiten laesst, steht als Alias in der Vorschlagsliste:
+  // { "EHC Essen": "EHC Essen Ruhr", ... } - Schluessel normalisiert.
+  var vereinAliase = {}, keineVereine = {};
+  function vereinAliaseSetzen(v) {
+    vereinAliase = {}; keineVereine = {};
+    var a = (v && v.aliase) || {};
+    Object.keys(a).forEach(function (k) { vereinAliase[vereinSchluessel(vereinHaupt(k))] = a[k]; });
+    ((v && v.keine_vereine) || []).forEach(function (k) { keineVereine[vereinSchluessel(k)] = 1; });
+  }
+  // Der Name, unter dem die Anschrift steht.
+  function vereinKanon(name) {
+    var h = vereinHaupt(name);
+    return vereinAliase[vereinSchluessel(h)] || h;
+  }
+  // Auswahl- und Turnierspiele haben keinen Verein, an den eine Rechnung
+  // ginge: Liga DA/Auswahl, "Finale", "Spiel um Platz 3", Landesauswahlen.
+  function keinVerein(name, liga) {
+    if (/\bDA\b|AUSWAHL/i.test(liga || "")) return true;
+    var n = String(name || "").trim();
+    if (/^(Finale|Halbfinale|Spiel um|Platz \d)/i.test(n)) return true;
+    return !!keineVereine[vereinSchluessel(n)] || !!keineVereine[vereinSchluessel(vereinHaupt(n))];
+  }
+  // Die Anschrift zu einem Team- oder Vereinsnamen: genau, dann der
+  // Verein dahinter, dann ueber den Alias, zuletzt ueber die Schreibweise.
+  function vereinAnschrift(map, name) {
+    map = map || {};
+    if (map[name]) return map[name];
+    var h = vereinHaupt(name), k = vereinKanon(name);
+    if (map[h]) return map[h];
+    if (map[k]) return map[k];
+    var sk = vereinSchluessel(k), treffer = null;
+    Object.keys(map).forEach(function (v) {
+      if (!treffer && map[v] && vereinSchluessel(vereinKanon(v)) === sk) treffer = map[v];
+    });
+    return treffer;
   }
   function vereineAusDaten() {
     var gesehen = {};
     // Nur Heimvereine: an die geht die Rechnung.
     (ctx.daten.spiele || []).forEach(function (s) {
-      var v = vereinHaupt(String(s.paarung || "").split(/\s+[-–]\s+/)[0]);
+      var heim = String(s.paarung || "").split(/\s+[-–]\s+/)[0];
+      if (keinVerein(heim, s.liga)) return;
+      var v = vereinKanon(heim);
       if (v && v.length > 2) gesehen[v] = (gesehen[v] || 0) + 1;
     });
     return Object.keys(gesehen).sort(function (a, b) { return a.localeCompare(b, "de"); });
@@ -9142,10 +9249,17 @@ window.Mitglieder = (function () {
       if (!box.isConnected) return;
       var ausSpielen = vereineAusDaten(), imPlan = {}, liste = [];
       ausSpielen.forEach(function (v) { imPlan[v] = true; liste.push(v); });
-      Object.keys(map).forEach(function (v) { if (!imPlan[v]) liste.push(v); });
+      // Gespeicherte Zeilen, die zu einem Verein im Plan gehoeren (alte
+      // Teamnamen wie "Duesseldorfer EG U15"), stehen nicht noch einmal da.
+      var imPlanSchl = {};
+      ausSpielen.forEach(function (v) { imPlanSchl[vereinSchluessel(v)] = 1; });
+      Object.keys(map).forEach(function (v) {
+        if (!imPlan[v] && !imPlanSchl[vereinSchluessel(vereinKanon(v))]) liste.push(v);
+      });
+      function adr(v) { return imPlan[v] ? (vereinAnschrift(map, v) || {}) : (map[v] || {}); }
       liste.sort(function (a, b) { return a.localeCompare(b, "de"); });
-      var ohne = liste.filter(function (v) { return !map[v]; }).length;
-      var offen = liste.filter(function (v) { return map[v] && map[v].strasse && !map[v].verifiziert; }).length;
+      var ohne = liste.filter(function (v) { return !adr(v).strasse; }).length;
+      var offen = liste.filter(function (v) { return adr(v).strasse && !adr(v).verifiziert; }).length;
       zaehlZeile.textContent = "Anschrift hinterlegt bei " + (liste.length - ohne) + " von " + liste.length + " Vereinen"
         + (ohne ? ", " + ohne + " ohne" : "") + (offen ? ", " + offen + " zu prüfen" : "") + ".";
       var nurOffen = h("label", { class: "schalter", style: "margin:0 0 8px" }, [
@@ -9160,7 +9274,7 @@ window.Mitglieder = (function () {
       if (ohne) zaehlZeile.parentNode.insertBefore(nurOhne, zaehlZeile.nextSibling);
 
       function eintrag(v) {
-        var a = map[v] || {};
+        var a = adr(v);
         var stand = a.verifiziert ? ["geprüft", "gut"] : a.strasse ? ["Vorschlag", "warn"] : null;
         var kopfText = h("span", {}, [
           h("b", { text: a.name || v }),
@@ -9210,7 +9324,7 @@ window.Mitglieder = (function () {
       function zeichne() {
         var q = suche.value.trim().toLowerCase();
         var treffer = liste.filter(function (v) {
-          var a = map[v] || {};
+          var a = adr(v);
           if (nurOffenAn && !(a.strasse && !a.verifiziert)) return false;
           if (nurOhneAn && a.strasse) return false;
           if (!q) return true;
@@ -11016,7 +11130,10 @@ window.Mitglieder = (function () {
     gebuehrenFlach: gebuehrenFlach, gebuehrenAenderung: gebuehrenAenderung,
     gebuehrenUebersicht: gebuehrenUebersicht,
     netto: netto, nettoSpiel: nettoSpiel, uebergreifendZeigen: uebergreifendZeigen,
-    doppelteGruppen: doppelteGruppen, gespielt: gespielt, gruppenSchluessel: gruppenSchluessel
+    doppelteGruppen: doppelteGruppen, gespielt: gespielt, gruppenSchluessel: gruppenSchluessel,
+    rechnungBezahlt: rechnungBezahlt, rechnungenOffenSumme: rechnungenOffenSumme,
+    vereinHaupt: vereinHaupt, vereinKanon: vereinKanon, vereinAnschrift: vereinAnschrift,
+    keinVerein: keinVerein, vereinAliaseSetzen: vereinAliaseSetzen
   };
 
   return { oeffnen: oeffnen, bereit: bereit, angemeldet: angemeldet, pruefstand: pruefstand,

@@ -6,13 +6,13 @@
   var basis = location.href.split("#")[0].split("?")[0].replace(/index\.html$/, "").replace(/\/?$/, "/");
 
   // Wird einmal je Fassung gezeigt, damit die Kollegen neue Funktionen finden.
-  var NEUIGKEITEN = { version: "2026-09-27", punkte: [
-    "Regeln: Strafenmatrix, Spielzeiten je Liga und die Bestimmungen des EHV NRW, alles auch offline",
-    "Strafrechner: Strafen antippen, die Stärke auf dem Eis steht sofort da",
-    "Einfacher Modus als Voreinstellung, die Leiste unten belegst du selbst",
-    "Kollegen mit Telefon und Anschrift, Profil einmal ausfüllen für Abrechnung und Rechnung",
-    "Suche über alles, Spieltag-Modus, Gespann-Chat und Push bei jeder Änderung von esrw.de",
-    "Ziehen zum Aktualisieren auf Start und Spielplan"
+  var NEUIGKEITEN = { version: "2026-11-19", punkte: [
+    "Abrechnung in drei Schritten: Prüfen, Abrechnen, Geld – jedes Spiel eine Rechnung mit eigener Nummer",
+    "Kilometer und Vergütung trägt die App von selbst ein, auch für kommende Spiele",
+    "Netto für die Steuer: Pauschalen minus Fahrt, Verpflegung und Auslagen, im Jahresabschluss",
+    "Gebührenordnung in den Einstellungen der Abrechnung – eigene Sätze antippen und ändern",
+    "Zusammen fahren: „Ich fahre mit“ an einem Angebot, freie Plätze, Push an den Anbieter",
+    "Dokumente am Spiel: Spielbericht oder Zusatzmeldung mit einem Tipp anhängen"
   ] };
   // Die Versionsnummer aus dem eigenen Script-Tag (app.js?v=NNN). Damit
   // laedt mitglieder.js unter derselben Adresse wie beim letzten Start -
@@ -799,7 +799,10 @@
     if (!box._gesetzt) { box.open = !abo && !einrichtungSichtbar(meins); box._gesetzt = true; }
     var lage = ("Notification" in window) ? Notification.permission : "";
     el("kalender-stand").textContent = (abo ? "abonniert ✓" : "noch nicht abonniert") + (lage === "granted" ? " · Mitteilungen an" : "");
-    if (aktuell && !box._pruefung) box.addEventListener("toggle", function () { if (box.open) feedPruefen(aktuell); });
+    // aktuell zur Zeit des Aufklappens, nicht beim Einhaengen: das
+    // toggle-Ereignis kommt verzoegert, und wer inzwischen nach "Zusammen
+    // fahren" gewechselt hat, hat keine Person mehr (Fassung 284).
+    if (aktuell && !box._pruefung) box.addEventListener("toggle", function () { if (box.open && aktuell) feedPruefen(aktuell); });
     box._pruefung = true;
     if (box.open && aktuell) feedPruefen(aktuell);
   }
@@ -807,6 +810,7 @@
   // die Seite nicht - das steht nur im Kalender-Konto des Geraets.
   var feedGeprueft = {}, feedFehler = {};
   function feedPruefen(p, erzwingen) {
+    if (!p || !p.slug) return;
     var ziel = el("feed-pruefung");
     if (feedGeprueft[p.slug] && !erzwingen) { ziel.textContent = feedGeprueft[p.slug]; feedKnopf(p); return; }
     // Auch ein Fehlschlag zaehlt - sonst laeuft die Pruefung ohne Netz bei
@@ -4875,7 +4879,7 @@
            ? " " + funktionsText([["tausch", "Tauschbörse"], ["frei", "Verfügbarkeit"], ["hallen", "Hallen-Hinweise"], ["gespann", "Kontakte"]], "und")
              + " schaltet der Betreiber nach der Freischaltung frei. Du bekommst das hier zu sehen." : "")],
       ["i-bell", "Push einschalten", "Unter Einstellungen → Push: Änderungen an deinen Spielen, Spieltag-Erinnerung mit Wetter, Abfahrt, Termine, Wochenvorschau. Wann die Erinnerung kommt, stellst du selbst ein. Die App muss dafür auf dem Home-Bildschirm liegen.", "#einstellungen", "Push einschalten", "push"],
-      ["i-euro", "Abrechnung", "Vergangene Spiele bekommen km und Vergütung von selbst. Am Jahresende gibt es unter „Steuerjahre“ das Jahresblatt und die CSV fürs Finanzamt. Melden musst du nichts. Belege, Fahrtenbuch und Werkzeuge unter „Weitere“.\nHeimatadresse dafür unter Einstellungen → Profil eintragen.", "#mitglieder/abrechnung", "Zur Abrechnung", "abrechnung"],
+      ["i-euro", "Abrechnung", "Jedes Spiel bekommt km und Vergütung von selbst. Am Jahresende gibt es unter „Weitere Werkzeuge“ den Jahresabschluss mit dem Netto, das Fahrtenbuch und die CSV fürs Finanzamt. Melden musst du nichts.\nHeimatadresse dafür unter Einstellungen → Profil eintragen.", "#mitglieder/abrechnung", "Zur Abrechnung", "abrechnung"],
       ["i-route", "Die Spielseite", "Ein Tipp auf ein Spiel: Route, Teilen, „In Kalender“" + (funktion("wetter") ? ", Wetter" : "") + ", Abfahrtszeit"
         + (funktion("checkliste") ? ", Checkliste" : "") + (funktion("chat") ? ", Gespann-Notizen" + (funktion("push") ? " (mit Push an die Kollegen)" : "") : "")
         + (funktion("mitfahren") ? ", Fahrgemeinschaft" : "") + (funktion("notizen") ? " und deine private Notiz" : "") + "."],
@@ -6715,6 +6719,10 @@
     if (!e) return;
     var geaendert = false, sichtbar = false;
     SYNC_SCHLUESSEL.forEach(function (k) {
+      // Was das Konto nicht kennt, bleibt auf dem Geraet. Bis Fassung 284
+      // galt "fehlt" wie "leer": eine neu eingefuehrte Einstellung wurde
+      // beim naechsten Start geloescht, und die Anleitung kam wieder.
+      if (!(k in e)) return;
       if ((lesen(k) || null) === (e[k] || null)) return;
       schreiben(k, e[k] || null); geaendert = true;
       // Dass die Anleitung schon lief, ist keine Meldung wert

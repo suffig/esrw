@@ -861,6 +861,64 @@ grundstellung({ ctx: { daten: { saison: "2026/27" } } });
 })();
 
 
+// ---------------------------------------------------------------------
+// Offene Rechnungen (Fassung 284)
+//
+// Nach dem Einspielen von v54 standen Rechnungen als offen da, deren
+// Spiele laengst abgehakt waren - bis Fassung 277 setzte das Schreiben
+// nur die Spiele auf bezahlt, nicht gezahlt_am.
+abschnitt("Offene Rechnungen");
+grundstellung({ einsaetze: { a: { bezahlt: "2026-10-01T10:00:00Z" }, b: { bezahlt: "2026-10-02T10:00:00Z" }, c: {} } });
+(function () {
+  gleich(P.rechnungBezahlt({ gezahlt_am: "2026-10-05", kennungen: ["c"] }), true, "Eingang vermerkt: bezahlt");
+  gleich(P.rechnungBezahlt({ gezahlt_am: null, kennungen: ["a", "b"] }), true, "alle Spiele abgehakt: bezahlt");
+  gleich(P.rechnungBezahlt({ gezahlt_am: null, kennungen: ["a", "c"] }), false, "ein Spiel offen: offen");
+  gleich(P.rechnungBezahlt({ gezahlt_am: null, kennungen: [] }), false, "ohne Spiele: nur ueber den Eingang");
+  var o = P.rechnungenOffenSumme([{ gezahlt_am: null, kennungen: ["a", "b"], betrag: 100, datum: "2026-10-01" },
+                                  { gezahlt_am: null, kennungen: ["c"], betrag: 85, datum: "2026-10-03" }]);
+  gleich(o.zeilen.length, 1, "Summe zaehlt nur die wirklich offene");
+  etwa(o.summe, 85, "offener Betrag");
+})();
+
+
+// ---------------------------------------------------------------------
+// Vereine hinter Teamnamen (Fassung 285)
+//
+// Gemeldet: "Duesseldorf U15 ist zugehoerig zu DEG ev usw., auch
+// Spielgemeinschaften von b und normalen Teams sind zusammen". Namen wie
+// auf esrw.de (historie vom 23.09.).
+abschnitt("Vereine");
+grundstellung();
+(function () {
+  P.vereinAliaseSetzen({ aliase: { "EHC Essen": "EHC Essen Ruhr", "KEV 81": "Krefelder EV" },
+                         keine_vereine: ["NRW", "Hessen", "NEV/BW"] });
+  gleich(P.vereinHaupt("Düsseldorfer EG U15"), "Düsseldorfer EG", "U15 gehoert zum Verein");
+  gleich(P.vereinHaupt("Krefelder EV 1b"), "Krefelder EV", "1b gehoert zum Verein");
+  gleich(P.vereinHaupt("EHC Troisdorf 1c"), "EHC Troisdorf", "1c gehoert zum Verein");
+  gleich(P.vereinHaupt("SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats"), "ESV Grizzlys Bergkamen",
+    "Spielgemeinschaft: der erste Verein");
+  gleich(P.vereinHaupt("SpG EHC Gelsenkirchen"), "EHC Gelsenkirchen", "SpG ohne Partner");
+  gleich(P.vereinHaupt("SG Alt"), "SG Alt", "SG gehoert zum Vereinsnamen, nicht wegschneiden");
+  gleich(P.vereinHaupt("Chiefs Leuwen Düsseldorf !!!"), "Chiefs Leuwen Düsseldorf", "Ausrufezeichen weg");
+  gleich(P.vereinHaupt("ESC Rheine Young Cats"), "ESC Rheine Young Cats", "Vereinsname bleibt ganz");
+  gleich(P.vereinKanon("EHC Essen"), "EHC Essen Ruhr", "Alias fuehrt zum Verein");
+  gleich(P.vereinKanon("KEV 81 1b"), "Krefelder EV", "Alias auch mit Teamzusatz");
+  var map = { "Düsseldorfer EG": { strasse: "Brehmstraße 27a" }, "KEC \"Die Haie\"": { strasse: "Gummersbacher Straße 4" },
+              "EHC Essen Ruhr": { strasse: "Weidkamp 178" } };
+  gleich((P.vereinAnschrift(map, "Düsseldorfer EG U15") || {}).strasse, "Brehmstraße 27a", "U15 findet die DEG-Anschrift");
+  gleich((P.vereinAnschrift(map, "KEC „Die Haie“ 1c") || {}).strasse, "Gummersbacher Straße 4",
+    "andere Anfuehrungszeichen, gleiche Anschrift");
+  gleich((P.vereinAnschrift(map, "EHC Essen") || {}).strasse, "Weidkamp 178", "ueber den Alias");
+  gleich(P.vereinAnschrift(map, "Neusser EV"), null, "unbekannter Verein: keine Anschrift");
+  gleich(P.keinVerein("Finale", "U13 RLA"), true, "Finale ist kein Verein");
+  gleich(P.keinVerein("Spiel um Platz 3", ""), true, "Spiel um Platz 3 ist kein Verein");
+  gleich(P.keinVerein("NRW", "DA FS"), true, "Auswahl-Liga: kein Verein");
+  gleich(P.keinVerein("Hessen", "U16"), true, "Landesauswahl aus der Liste");
+  gleich(P.keinVerein("Herner EV 1b", "U17"), false, "normaler Verein");
+  P.vereinAliaseSetzen(null);
+})();
+
+
 console.log("\n----------------------------------------------------------");
   if (fehler.length) {
     console.log(fehler.length + " Pruefung" + (fehler.length === 1 ? "" : "en") + " fehlgeschlagen:");

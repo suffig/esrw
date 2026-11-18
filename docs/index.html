@@ -3803,6 +3803,18 @@
   :root[data-design="neu"] .dok-tipp { color:var(--dim); text-align:center; }
   :root[data-design="neu"] .dok-leer { margin:0 0 10px; }
 
+  /* ===== Nachtrag: Durchgang Fassung 284 =============================
+     Anleitung: bei 12 Schritten waren die Punkte breiter als der Platz
+     und schoben "Weiter" aus dem Fenster. Sie brechen jetzt um. */
+  .tour-fuss .tour-punkte { flex:1 1 0; min-width:0; flex-wrap:wrap; justify-content:center; row-gap:6px; }
+  .tour-fuss > button { flex:none; min-height:44px; }
+  /* Tippflaechen, die der Durchgang unter 44 px fand. */
+  :root[data-design="neu"] .mg-blatt-zu { width:44px; height:44px; top:2px; right:2px; }
+  :root[data-design="neu"] .rechnung-zeile button { min-height:44px; min-width:56px; }
+  #statistik .knopf-zeichen, #statistik button { min-height:44px; }
+  :root[data-design="neu"] .extras .mg-form > button { min-height:44px; }
+  #einstellungen input#ziel { min-height:44px; }
+
 </style>
 </head>
 <body>
@@ -4268,6 +4280,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=283"></script>
+<script src="app.js?v=285"></script>
 </body>
 </html>
