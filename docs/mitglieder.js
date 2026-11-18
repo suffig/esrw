@@ -428,6 +428,7 @@ window.Mitglieder = (function () {
         },
         signOut: function () { localStorage.removeItem("mock_session"); melde(); return Promise.resolve({ error: null }); },
         resetPasswordForEmail: function () { return Promise.resolve({ error: null }); },
+        signInWithOtp: function () { return Promise.resolve({ data: {}, error: null }); },
         resend: function () { return Promise.resolve({ error: null }); },
         updateUser: function (p) {
           var s = sitzung(); if (!s) return Promise.resolve({ error: { message: "nicht angemeldet" } });
@@ -570,7 +571,9 @@ window.Mitglieder = (function () {
           }
           if (!s) { profil = null; profilVersprechen = null; einsaetze = {}; if (wurzel) zeigeAnmeldung(); }
           else if (!vorher && wurzel && angezeigt === "anmeldung" && !passwortNeu) nachLogin();
-          if (s && !vorher && ankunft && (ankunft.type === "signup" || ankunft.type === "email" || ankunft.code)) {
+          if (s && !vorher && ankunft && ankunft.type === "magiclink") {
+            kurzMeldung("Angemeldet ✓", "gut"); ankunft = null;
+          } else if (s && !vorher && ankunft && (ankunft.type === "signup" || ankunft.type === "email" || ankunft.code)) {
             kurzMeldung("E-Mail bestätigt, willkommen!", "gut"); ankunft = null;
           }
           document.dispatchEvent(new CustomEvent("mg-sitzung", { detail: { angemeldet: !!s } }));
@@ -777,7 +780,8 @@ window.Mitglieder = (function () {
     pwAuge.setAttribute("aria-label", "Passwort anzeigen");
     var pwFeld = h("div", { class: "pw-feld" }, [pw, pwAuge]);
     var knopf = h("button", { type: "submit", class: "mg-haupt",
-      text: modus === "registrieren" ? "Konto anlegen" : modus === "vergessen" ? "Link schicken" : "Anmelden" });
+      text: modus === "registrieren" ? "Konto anlegen" : modus === "vergessen" ? "Link schicken"
+        : modus === "link" ? "Anmeldelink schicken" : "Anmelden" });
     // Den Namen gleich hier waehlen: nach der Bestaetigungsmail steht er
     // schon im Profil, aendern laesst er sich spaeter jederzeit im Profil.
     var nameWahl = modus === "registrieren" ? h("select", { class: "mg-select" },
@@ -837,6 +841,11 @@ window.Mitglieder = (function () {
                        : (gewaehlt ? { slug: gewaehlt, name: wunschName } : undefined) } });
       } else if (modus === "vergessen") {
         lauf = sb.auth.resetPasswordForEmail(p.email, { redirectTo: rueckkehr() });
+      } else if (modus === "link") {
+        // Nur fuer bestehende Konten: ein neues braucht die Namenswahl
+        // aus der Registrierung.
+        lauf = sb.auth.signInWithOtp({ email: p.email,
+          options: { emailRedirectTo: rueckkehr(), shouldCreateUser: false } });
       } else {
         lauf = sb.auth.signInWithPassword(p);
       }
@@ -848,6 +857,7 @@ window.Mitglieder = (function () {
           if (modus === "anmelden" && /not confirmed|invalid login/i.test(r.error.message || "")) erneutSenden.classList.remove("versteckt");
           return;
         }
+        if (modus === "link") { zeigeMailHinweis("Anmeldelink unterwegs", p.email, "Darin ist ein Knopf „Jetzt anmelden“. Antippen genügt, danach bist du angemeldet – am besten auf dem Gerät, auf dem du die App benutzt.", "link"); return; }
         if (modus === "vergessen") { zeigeMailHinweis("Passwort zurücksetzen", p.email, "Darin ist ein Link „Neues Passwort setzen“. Er bringt dich hierher zurück, du gibst ein neues Passwort ein, fertig.", "passwort"); return; }
         if (modus === "registrieren" && !(r.data && r.data.session)) {
           var schonDa = r.data && r.data.user && r.data.user.identities && r.data.user.identities.length === 0;
@@ -860,11 +870,14 @@ window.Mitglieder = (function () {
         nachLogin();
       }).catch(function (e) { knopf.disabled = false; meldung(String(e.message || e), "warn"); });
     } }, [
-      h("h4", { text: modus === "registrieren" ? "Konto anlegen" : modus === "vergessen" ? "Passwort vergessen" : "Anmelden" }),
+      h("h4", { text: modus === "registrieren" ? "Konto anlegen" : modus === "vergessen" ? "Passwort vergessen"
+        : modus === "link" ? "Ohne Passwort anmelden" : "Anmelden" }),
+      modus === "link" ? h("p", { class: "meta", style: "margin:0 0 4px", text:
+        "Wir schicken dir einen Link an deine Adresse. Antippen genügt – ein Passwort brauchst du dafür nicht." }) : null,
       h("label", { class: "anmelde-label", text: "E-Mail-Adresse" }),
       email,
-      modus === "vergessen" ? null : h("label", { class: "anmelde-label", text: "Passwort" }),
-      modus === "vergessen" ? null : pwFeld,
+      modus === "vergessen" || modus === "link" ? null : h("label", { class: "anmelde-label", text: "Passwort" }),
+      modus === "vergessen" || modus === "link" ? null : pwFeld,
       nameLabel,
       nameWahl,
       nameHinweis,
@@ -884,6 +897,12 @@ window.Mitglieder = (function () {
     ]);
     if (ankunft && ankunftText(ankunft)) { meldung(ankunftText(ankunft), "warn"); erneutSenden.classList.remove("versteckt"); ankunft = null; }
 
+    // "Ohne Passwort" steht als eigener Knopf unter dem Formular - wer sein
+    // Passwort nicht mehr weiss, soll nicht erst eines neu vergeben muessen.
+    var ohnePasswort = modus === "anmelden" || modus === "vergessen"
+      ? h("button", { type: "button", class: "mg-neben mg-ohnepw", onclick: function () { zeigeAnmeldung("link"); } },
+          [h("span", { text: "Ohne Passwort anmelden" }), h("small", { text: "Link per Mail" })])
+      : null;
     var wechsel = h("p", { class: "meta mg-wechsel" }, modus === "anmelden" ? [
       h("button", { type: "button", class: "textknopf", text: "Konto anlegen", onclick: function () { zeigeAnmeldung("registrieren"); } }),
       " · ",
@@ -894,10 +913,11 @@ window.Mitglieder = (function () {
 
     wurzel.appendChild(h("div", { class: "anmelde-kopf" }, [
       h("div", { class: "avatar-gross" }, [ikone("i-lock")]),
-      h("h2", { text: modus === "registrieren" ? "Konto anlegen" : "Einteilungen ESRW" }),
+      // Der App-Name steht schon im Kopf darueber - hier nicht noch einmal.
+      h("h2", { text: modus === "registrieren" ? "Konto anlegen" : "Willkommen" }),
       h("p", { text: "Die Einteilungen, deine Abrechnung und Push, für Schiedsrichter des ESRW." })
     ]));
-    wurzel.appendChild(h("div", { class: "melde karte" }, [form, erneutSenden, wechsel]));
+    wurzel.appendChild(h("div", { class: "melde karte" }, [form, ohnePasswort, erneutSenden, wechsel].filter(Boolean)));
     // Drei Schritte, mehr muss hier nicht stehen.
     wurzel.appendChild(h("div", { class: "melde karte" }, [
       h("h4", { text: "In drei Schritten dabei" }),
@@ -927,7 +947,8 @@ window.Mitglieder = (function () {
   // Wie in supabase/mails/ und ANLEITUNG.md - wer dort einen Betreff
   // aendert, aendert ihn hier mit.
   var MAIL_BETREFF = { bestaetigen: "ESRW App: Bitte E-Mail bestätigen",
-                       passwort: "ESRW App: Neues Passwort festlegen" };
+                       passwort: "ESRW App: Neues Passwort festlegen",
+                       link: "ESRW App: Dein Anmeldelink" };
   function zeigeMailHinweis(titel, adresse, text, art) {
     angezeigt = "anmeldung";
     leeren(wurzel);
@@ -937,7 +958,7 @@ window.Mitglieder = (function () {
       h("li", {}, ["Im ", h("b", { text: "Spam- oder Werbeordner" }), " nachsehen. Liegt sie dort, als „Kein Spam“ markieren – dann kommen die nächsten Mails richtig an."]),
       h("li", {}, ["Absender ist ", h("b", { text: "ESRW App (noreply@auth.esrw.app)" }),
         betreff ? ", Betreff „" + betreff + "“." : "."]),
-      h("li", { text: art === "passwort"
+      h("li", { text: art === "passwort" || art === "link"
         ? "Adresse vertippt? Dann zurück und den Link mit der richtigen Adresse noch einmal anfordern."
         : "Adresse vertippt? Dann zurück und das Konto mit der richtigen Adresse neu anlegen." })
     ]);
@@ -971,6 +992,8 @@ window.Mitglieder = (function () {
     if (/invalid login/i.test(m)) return "E-Mail oder Passwort stimmt nicht. Falls du das Konto gerade erst angelegt hast: erst den Link in der Bestätigungsmail antippen.";
     if (/already registered|gibt es schon/i.test(m)) return "Für diese E-Mail gibt es schon ein Konto. Anmelden oder „Passwort vergessen“.";
     if (/email not confirmed/i.test(m)) return "Das Konto ist noch nicht bestätigt. Bitte den Link in der E-Mail antippen (unten kannst du sie erneut anfordern).";
+    // shouldCreateUser: false - die Adresse hat kein Konto
+    if (/not allowed for otp|user not found/i.test(m)) return "Zu dieser Adresse gibt es kein Konto. Bitte zuerst ein Konto anlegen oder die Adresse prüfen.";
     if (/signup.*disabled|signups not allowed/i.test(m)) return "Registrierung ist beim Betreiber abgeschaltet.";
     if (/over_email_send_rate_limit|rate limit exceeded/i.test(m)) return "Zu viele E-Mails in kurzer Zeit, bitte ein paar Minuten warten.";
     if (/same password|different from the old/i.test(m)) return "Das neue Passwort muss sich vom alten unterscheiden.";

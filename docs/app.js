@@ -432,7 +432,10 @@
   // Nicht aufgefuehrt sind die drei Seiten, deren Kopf etwas anderes
   // zeigt als einen festen Namen: Personenseite, Spielseite und
   // Statistik.
+  // statseite und spiel standen bis Fassung 287 nicht hier - der Kopf
+  // zeigte dort nur "ESRW App".
   var KOPFTITEL = { plan: "Spielplan", mehr: "Mehr", mitglieder: "Mitglieder",
+    statseite: "Statistik", spiel: "Spiel",
     archiv: "Archiv", einstellungen: "Einstellungen", karte: "Karte",
     regeln: "Regeln", rechner: "Strafrechner", status: "Diagnose",
     aenderungen: "Änderungen", mitfahren: "Mitfahren", halle: "Halle",
@@ -458,6 +461,11 @@
     var kurz = voll.split(/\s+/).slice(-1)[0] || voll;
     h.textContent = voll;
     h.title = voll;
+    // Erst kleiner setzen, dann kuerzen: "Einstellungen" und
+    // "Verfuegbarkeit" sind ein Wort, die Kurzform war dasselbe Wort, und
+    // es blieb abgeschnitten.
+    h.classList.remove("eng");
+    if (h.scrollWidth > h.clientWidth + 1) h.classList.add("eng");
     if (h.scrollWidth > h.clientWidth + 1) h.textContent = kurz;
     return voll;
   }

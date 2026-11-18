@@ -3824,6 +3824,28 @@
   :root[data-design="neu"] .mg-mailknoepfe { display:flex; flex-wrap:wrap; gap:8px; }
   :root[data-design="neu"] .mg-mailknoepfe button { flex:1 1 auto; min-height:44px; }
 
+  /* "Ohne Passwort anmelden" unter dem Anmeldeformular. */
+  :root[data-design="neu"] .mg-ohnepw { width:100%; min-height:44px; margin-top:10px;
+    display:flex; align-items:center; justify-content:center; gap:8px; }
+  :root[data-design="neu"] .mg-ohnepw { flex-direction:column; gap:0; padding:8px 12px; line-height:1.25; }
+  :root[data-design="neu"] .mg-ohnepw small { font-weight:500; color:var(--dim); font-size:var(--s-s); }
+
+  /* ===== Nachtrag: Durchgang Fassung 287, alle Funktionen an =========
+     Gemessen unter 44 px: "Route" im naechsten Spiel (39), die Tausch-
+     Knoepfe auf der Spielseite (36) - bisher nie gesehen, weil die
+     Tauschboerse in den Tests aus war -, und das Schild "Vorschlag" an
+     den Abrechnungskarten (34). Das Schild bleibt so gross, wie es ist;
+     getippt wird eine unsichtbare Flaeche darum, sonst wuerde jede Karte
+     hoeher. */
+  :root[data-design="neu"] .held .aktionen a { min-height:44px; }
+  :root[data-design="neu"] details.tausch > div > button.anfrage,
+  :root[data-design="neu"] .kandidat-kopf .anfrage { min-height:44px; }
+  :root[data-design="neu"] .mg-summe button.mg-status { position:relative; z-index:1; }
+  :root[data-design="neu"] .mg-summe button.mg-status::after { content:""; position:absolute; inset:-6px -2px; }
+  /* Titel im Kopf, der nicht passt: kleiner statt abgeschnitten
+     (titelAnpassen() setzt die Klasse). */
+  :root[data-design="neu"] .kopf h1.eng { font-size:var(--s-xl); letter-spacing:-.01em; }
+
 </style>
 </head>
 <body>
@@ -4289,6 +4311,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=286"></script>
+<script src="app.js?v=288"></script>
 </body>
 </html>
