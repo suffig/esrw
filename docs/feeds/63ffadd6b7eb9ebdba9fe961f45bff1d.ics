@@ -53,24 +53,30 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld,
 END:VEVENT
 BEGIN:VEVENT
 UID:c575b95ecc8ba294b86737740c3192d8f2cd9b8b@esrw.de
-SEQUENCE:0
-DTSTAMP:20261111T143043Z
-LAST-MODIFIED:20261111T143043Z
+SEQUENCE:1
+DTSTAMP:20261118T101529Z
+LAST-MODIFIED:20261118T101529Z
 DTSTART:20261121T091500Z
 DTEND:20261121T124500Z
-SUMMARY:SR · U17 LL: SpG Soester EG / TSVE Bielefeld – Grefrather EG
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:15 Uhr\nTreffpunkt:
-  10:15 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\n!! Halle nicht automati
- sch erkannt - bitte selbst pruefen !!\nGespann: Kissing\, Andreas\n\nQuell
- e: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ SR · U17 LL: SpG Soester EG / TSVE Bielefeld – Grefrather EG
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
+ elbeginn: 11:15 Uhr\nTreffpunkt: 10:15 Uhr (60 Min vor Spielbeginn)\nLiga:
+  U17 LL\nHalle: Eissportzentrum Möhnesee\nAdresse: Teigelhof 4\, 59519 M
+ öhnesee\nGespann: Kissing\, Andreas\n\nQuelle: https://www.esrw.de/eintei
+ lungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Eissportzentrum Möhnesee\, Teigelhof 4\, 59519 Möhnesee
+GEO:51.515208;8.159069
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Möhnesee,
+  Teigelhof 4, 59519 Möhnesee";X-APPLE-RADIUS=100;X-TITLE="Eissportzentrum
+  Möhnesee":geo:51.515208,8.159069
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: SpG Soester EG / T
- SVE Bielefeld – Grefrather EG
+DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · U17 LL: SpG Soester EG
+  / TSVE Bielefeld – Grefrather EG
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

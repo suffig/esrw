@@ -9,19 +9,26 @@ REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
 UID:6d7f8d31276b5c1dc03cdda4addf91dc85cdeb9e@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
+SEQUENCE:1
+DTSTAMP:20261118T101529Z
+LAST-MODIFIED:20261118T101529Z
 DTSTART:20261114T071500Z
 DTEND:20261114T104500Z
-SUMMARY:SR · U11 LL Blau: SpG Gelsenkirchen-Herne 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:15 Uhr\nTreffpunkt:
-  08:15 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Blau\n!! Halle nicht aut
- omatisch erkannt - bitte selbst pruefen !!\nGespann: Baron\, Benny\n\nQuel
- le: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ SR · U11 LL Blau: SpG Gelsenkirchen-Herne 1b
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
+ elbeginn: 09:15 Uhr\nTreffpunkt: 08:15 Uhr (60 Min vor Spielbeginn)\nLiga:
+  U11 LL Blau\nHalle: Emscher-Lippe-Halle Gelsenkirchen\nAdresse: Adenauera
+ llee 118\, 45891 Gelsenkirchen\nGespann: Baron\, Benny\n\nQuelle: https://
+ www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Emscher-Lippe-Halle Gelsenkirchen\, Adenauerallee 118\, 45891 Gels
+ enkirchen
+GEO:51.553483;7.073102
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Emscher-Lippe-Halle Gelsen
+ kirchen, Adenauerallee 118, 45891 Gelsenkirchen";X-APPLE-RADIUS=100;X-TITL
+ E="Emscher-Lippe-Halle Gelsenkirchen":geo:51.553483,7.073102
 END:VEVENT
 BEGIN:VEVENT
 UID:98ba6c60e65fcd74b3d19f480d25a608199cdb68@esrw.de

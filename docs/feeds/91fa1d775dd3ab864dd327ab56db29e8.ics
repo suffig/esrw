@@ -51,19 +51,25 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
 END:VEVENT
 BEGIN:VEVENT
 UID:e3646b3fcdcfb93198245b85a3c92bca9f34796b@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
+SEQUENCE:1
+DTSTAMP:20261118T101529Z
+LAST-MODIFIED:20261118T101529Z
 DTSTART:20261115T060000Z
 DTEND:20261115T093000Z
-SUMMARY:SR · U11 LL Lila: SpG SV Brackwede – Herforder EV 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
-  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Lila\n!! Halle nicht aut
- omatisch erkannt - bitte selbst pruefen !!\nGespann: Brücker\, Tobias\n\n
- Quelle: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ SR · U11 LL Lila: SpG SV Brackwede – Herforder EV 1b
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
+ elbeginn: 08:00 Uhr\nTreffpunkt: 07:00 Uhr (60 Min vor Spielbeginn)\nLiga:
+  U11 LL Lila\nHalle: Oetker Eisbahn Bielefeld\nAdresse: Duisburger Str. 14
+ \, 33647 Bielefeld\nGespann: Brücker\, Tobias\n\nQuelle: https://www.esrw
+ .de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Oetker Eisbahn Bielefeld\, Duisburger Str. 14\, 33647 Bielefeld
+GEO:51.979731;8.496038
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
+ Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
+ sbahn Bielefeld":geo:51.979731,8.496038
 END:VEVENT
 BEGIN:VEVENT
 UID:be17731ab3a6c220795ed8c81ee8a3c56319cd1e@esrw.de
