@@ -14,7 +14,8 @@ DTSTAMP:20261107T130048Z
 LAST-MODIFIED:20261107T130048Z
 DTSTART:20261114T183000Z
 DTEND:20261114T220000Z
-SUMMARY:SR · U15 LL: SpG Neusser EV / GSC Moers – Herforder EV
+SUMMARY:SR · U15 LL: SpG Neusser EV / GSC Moers – Herforder EV · Eisspo
+ rthalle Neuss
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
   19:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Ne
  uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Schöche\, Gian
@@ -35,7 +36,8 @@ DTSTAMP:20261107T130048Z
 LAST-MODIFIED:20261107T130048Z
 DTSTART:20261115T150000Z
 DTEND:20261115T183000Z
-SUMMARY:SR · U13 RLB: Krefelder EV 1b – EV Duisburg
+SUMMARY:SR · U13 RLB: Krefelder EV 1b – EV Duisburg · Rheinlandhalle Kr
+ efeld
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:00 Uhr\nTreffpunkt:
   16:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Rheinlandhalle 
  Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Heffler\, 
@@ -56,7 +58,8 @@ DTSTAMP:20261111T143043Z
 LAST-MODIFIED:20261111T143043Z
 DTSTART:20261121T090000Z
 DTEND:20261121T123000Z
-SUMMARY:HSR · U20 RL: EHC Troisdorf – Ratinger Ice Aliens
+SUMMARY:HSR · U20 RL: EHC Troisdorf – Ratinger Ice Aliens · Eissporthal
+ le Ratingen
 DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 11:00 Uhr\nTreff
  punkt: 10:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissportha
  lle Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Pluschkel
@@ -72,9 +75,15 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
  tingen":geo:51.295808,6.834624
 BEGIN:VALARM
 ACTION:DISPLAY
+TRIGGER:-PT2H
+DESCRIPTION:In zwei Stunden an der Halle - HSR · U20 RL: EHC Troisdorf –
+  Ratinger Ice Aliens · Eissporthalle Ratingen
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - HSR · U20 RL: EHC Troisdorf –
-  Ratinger Ice Aliens
+  Ratinger Ice Aliens · Eissporthalle Ratingen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -85,7 +94,7 @@ LAST-MODIFIED:20261111T143043Z
 DTSTART:20261122T180000Z
 DTEND:20261122T213000Z
 SUMMARY:SR · U15 LL: SpG Neusser EV / GSC Moers – SpG ESV Grizzlys Bergk
- amen / ESC Rheine Young Cats
+ amen / ESC Rheine Young Cats · Eissporthalle Neuss
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
   19:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Ne
  uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Heffler\, Zsolt
@@ -100,9 +109,17 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
  uss":geo:51.175806,6.680258
 BEGIN:VALARM
 ACTION:DISPLAY
+TRIGGER:-PT2H
+DESCRIPTION:In zwei Stunden an der Halle - SR · U15 LL: SpG Neusser EV / G
+ SC Moers – SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats · Eisspor
+ thalle Neuss
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: SpG Neusser EV / G
- SC Moers – SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats
+ SC Moers – SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats · Eisspor
+ thalle Neuss
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -112,7 +129,7 @@ DTSTAMP:20261111T143043Z
 LAST-MODIFIED:20261111T143043Z
 DTSTART:20261124T173000Z
 DTEND:20261124T210000Z
-SUMMARY:SR · NRW U13: NRW SCHWARZ – NRW WEIß
+SUMMARY:SR · NRW U13: NRW SCHWARZ – NRW WEIß · Eishalle Brehmstraße
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
   18:30 Uhr (60 Min vor Spielbeginn)\nLiga: NRW U13\nHalle: Eishalle Brehms
  traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Kudal\, La
@@ -127,9 +144,15 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
  hmstraße":geo:51.242557,6.802144
 BEGIN:VALARM
 ACTION:DISPLAY
+TRIGGER:-PT2H
+DESCRIPTION:In zwei Stunden an der Halle - SR · NRW U13: NRW SCHWARZ – N
+ RW WEIß · Eishalle Brehmstraße
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · NRW U13: NRW SCHWARZ – N
- RW WEIß
+ RW WEIß · Eishalle Brehmstraße
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -139,7 +162,7 @@ DTSTAMP:20261120T094530Z
 LAST-MODIFIED:20261120T094530Z
 DTSTART:20261128T151500Z
 DTEND:20261128T184500Z
-SUMMARY:HSR · Senioren RLW: TuS Wiehl – GSC Moers
+SUMMARY:HSR · Senioren RLW: TuS Wiehl – GSC Moers · Eissporthalle Wiehl
 DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 17:15 Uhr\nTreff
  punkt: 16:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
  porthalle Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Kudal\
@@ -155,9 +178,15 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
  ":geo:50.947034,7.5553
 BEGIN:VALARM
 ACTION:DISPLAY
+TRIGGER:-PT2H
+DESCRIPTION:In zwei Stunden an der Halle - HSR · Senioren RLW: TuS Wiehl 
+ – GSC Moers · Eissporthalle Wiehl
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: TuS Wiehl 
- – GSC Moers
+ – GSC Moers · Eissporthalle Wiehl
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -167,7 +196,7 @@ DTSTAMP:20261120T094530Z
 LAST-MODIFIED:20261120T094530Z
 DTSTART:20261129T160000Z
 DTEND:20261129T193000Z
-SUMMARY:HSR · U20 RL: EHC Troisdorf – TuS Wiehl
+SUMMARY:HSR · U20 RL: EHC Troisdorf – TuS Wiehl · ICEDOME Troisdorf
 DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 18:00 Uhr\nTreff
  punkt: 17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: ICEDOME Tr
  oisdorf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Kuda
@@ -183,9 +212,15 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
  isdorf":geo:50.811945,7.109233
 BEGIN:VALARM
 ACTION:DISPLAY
+TRIGGER:-PT2H
+DESCRIPTION:In zwei Stunden an der Halle - HSR · U20 RL: EHC Troisdorf –
+  TuS Wiehl · ICEDOME Troisdorf
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - HSR · U20 RL: EHC Troisdorf –
-  TuS Wiehl
+  TuS Wiehl · ICEDOME Troisdorf
 END:VALARM
 END:VEVENT
 END:VCALENDAR
