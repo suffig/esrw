@@ -156,4 +156,59 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLA: Kölner Junghaie
  – Düsseldorfer EG
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:91ef3dbd194c9194129df6b9ac92b4ee7dab011c@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261127T180000Z
+DTEND:20261127T213000Z
+SUMMARY:LSR · Senioren RLW: Grefrather EG – Dinslakener Kobras
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportze
+ ntrum Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespann: Sch
+ rörs\, Marvin (HSR) / Kudal\, Lars (LSR)\nVergütung lt. Ordnung: 100 €
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Grefrath\, Stadionstraße 161\, 47929 Grefrath
+GEO:51.348547;6.341019
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath, 
+ Stadionstraße 161, 47929 Grefrath";X-APPLE-RADIUS=100;X-TITLE="Eissportze
+ ntrum Grefrath":geo:51.348547,6.341019
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Grefrather 
+ EG – Dinslakener Kobras
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:831f3f743706d1c5e35ddf0453fbea5423aaf04a@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261128T143000Z
+DTEND:20261128T180000Z
+SUMMARY:SR · U15 ODM: Düsseldorfer EG – SG Adler Berlin/ FASS Berlin
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
+  15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 ODM\nHalle: Eishalle Brehms
+ traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Schöche\,
+  Gian-Carlo\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 ODM: Düsseldorfer EG 
+ – SG Adler Berlin/ FASS Berlin
+END:VALARM
+END:VEVENT
 END:VCALENDAR

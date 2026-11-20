@@ -28,4 +28,86 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
  m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
  inslaken":geo:51.574578,6.735361
 END:VEVENT
+BEGIN:VEVENT
+UID:49f16470c393e4de94a1afc8a871083c2504e188@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261127T180000Z
+DTEND:20261127T213000Z
+SUMMARY:LSR · Senioren RLW: Eisadler Dortmund – ESV Bergisch Gladbach
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportze
+ ntrum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Steeg
+ \, Cedric (HSR) / Bergmann\, Tobias (LSR)\nVergütung lt. Ordnung: 100 €
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Eisadler Do
+ rtmund – ESV Bergisch Gladbach
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:330ae963012c2e6a92e4fbd4c239014092c09320@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261128T080000Z
+DTEND:20261128T113000Z
+SUMMARY:SR · U11 LL Gelb: GSC Moers
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Gelb\nHalle: Eissporthal
+ le Moers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Honselmann\, 
+ Tom (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
+GEO:51.43973;6.6198
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
+ rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
+ ":geo:51.43973,6.6198
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Gelb: GSC Moers
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:608b914c8957f1b2e1e80dd68b54eba9e2f3f306@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T163000Z
+DTEND:20261129T200000Z
+SUMMARY:LSR · Senioren RLW: ESV Grizzlys Bergkamen – EG Diez-Limburg
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
+  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
+ lle Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Pernt\, 
+ Hendrik (HSR) / Kaminski-Balsam\, Marcel (LSR)\nVergütung lt. Ordnung: 10
+ 0 €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: ESV Grizzly
+ s Bergkamen – EG Diez-Limburg
+END:VALARM
+END:VEVENT
 END:VCALENDAR

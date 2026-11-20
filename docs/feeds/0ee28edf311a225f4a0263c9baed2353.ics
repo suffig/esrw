@@ -127,4 +127,86 @@ DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Ratinger Ic
  e Aliens – Eisadler Dortmund
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:9b67f2efd8a782dbe67ef74bfc2c254b3aeafa00@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261128T143000Z
+DTEND:20261128T180000Z
+SUMMARY:SR · U15 ODM: Krefelder EV – Eisbären Juniors Berlin Yayla Aren
+ a
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
+  15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 ODM\nHalle: Yayla Arena Kre
+ feld\nAdresse: Westparkstraße 111\, 47803 Krefeld\nGespann: Pacalaj\, Eri
+ k\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Yayla Arena Krefeld\, Westparkstraße 111\, 47803 Krefeld
+GEO:51.340907;6.540218
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Yayla Arena Krefeld, Westp
+ arkstraße 111, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Yayla Arena Kre
+ feld":geo:51.340907,6.540218
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 ODM: Krefelder EV – 
+ Eisbären Juniors Berlin Yayla Arena
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fdf3be39c43adcc1ca187d179f8dbe9faf58184d@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T060000Z
+DTEND:20261129T093000Z
+SUMMARY:SR · U13 RLB: Düsseldorfer EG 1b – EV Duisburg
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Eishalle Brehms
+ traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Caelers\, 
+ Fabian\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB: Düsseldorfer EG 
+ 1b – EV Duisburg
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:75fee3a824ae3323fd101ffd2f8a7c9acd8e03ab@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T090000Z
+DTEND:20261129T123000Z
+SUMMARY:SR · U15 ODM: Düsseldorfer EG – SG Adler Berlin/ FASS Berlin
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:00 Uhr\nTreffpunkt:
+  10:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 ODM\nHalle: Eishalle Brehms
+ traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Caelers\, 
+ Fabian\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 ODM: Düsseldorfer EG 
+ – SG Adler Berlin/ FASS Berlin
+END:VALARM
+END:VEVENT
 END:VCALENDAR

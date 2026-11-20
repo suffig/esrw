@@ -35,4 +35,32 @@ DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: Dinslakener
   Kobras – EG Diez-Limburg
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:22dd900084fa1a6a5bc289aed3b9709a4dc0a65d@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261127T180000Z
+DTEND:20261127T213000Z
+SUMMARY:SR · Senioren BZL: EHC Essen Ruhr – Neusser EV 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eissportha
+ lle Essen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Beckford\, 
+ Emanuel\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/ei
+ nteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Essen-West\, Curtiusstr. 2\, 45144 Essen
+GEO:51.454179;6.976731
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
+ Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
+ n-West":geo:51.454179,6.976731
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: EHC Essen Ru
+ hr – Neusser EV 1b
+END:VALARM
+END:VEVENT
 END:VCALENDAR

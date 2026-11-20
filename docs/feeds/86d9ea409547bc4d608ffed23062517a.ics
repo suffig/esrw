@@ -62,4 +62,87 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: Eisadler Dor
  tmund 1b – GSC Moers
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:30dfa0e07355cf0c923e4bbcd5e1a7b2554c5ddd@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261127T173000Z
+DTEND:20261127T210000Z
+SUMMARY:SR · U20 LL: Lippe Hockey Hamm – ESV Grizzlys Bergkamen
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 LL\nHalle: beta FINANZ Eiss
+ portarena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Zy
+ nda\, Jayden\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:beta FINANZ Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 H
+ amm
+GEO:51.686934;7.886138
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena 
+ Hamm, Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="bet
+ a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U20 LL: Lippe Hockey Hamm 
+ – ESV Grizzlys Bergkamen
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:09e91ad3684911183a20c699389bbbce9ffeac03@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261128T083000Z
+DTEND:20261128T120000Z
+SUMMARY:SR · U17 LL: ESV Grizzlys Bergkamen – EC Bergisch Land
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
+  09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\nHalle: Eissporthalle Be
+ rgkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Zynda\, Nick\n
+ \nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: ESV Grizzlys Bergk
+ amen – EC Bergisch Land
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:6a641cbb9ef29b5615c49a989917935bad971699@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T164500Z
+DTEND:20261129T201500Z
+SUMMARY:SR · Senioren LL: Soester EG – ESV Grizzlys Bergkamen 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:45 Uhr\nTreffpunkt:
+  17:45 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissportzen
+ trum Möhnesee\nAdresse: Teigelhof 4\, 59519 Möhnesee\nGespann: Steeg\, C
+ edric\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/eint
+ eilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Möhnesee\, Teigelhof 4\, 59519 Möhnesee
+GEO:51.515208;8.159069
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Möhnesee,
+  Teigelhof 4, 59519 Möhnesee";X-APPLE-RADIUS=100;X-TITLE="Eissportzentrum
+  Möhnesee":geo:51.515208,8.159069
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: Soester EG 
+ – ESV Grizzlys Bergkamen 1b
+END:VALARM
+END:VEVENT
 END:VCALENDAR

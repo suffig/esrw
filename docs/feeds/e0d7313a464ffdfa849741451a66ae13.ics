@@ -58,4 +58,59 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: SpG EHC Gels
  enkirchen / Herner EV 1b – SpG Kristall Lippstadt / Soester EG
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:7fdc6c307d83f81cb981c49ddb9a4af830bea7e5@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261128T113000Z
+DTEND:20261128T150000Z
+SUMMARY:SR · U15 LL: Eisadler Dortmund – EHC Die Bären Neuwied
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
+  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissportzentrum 
+ Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Klemm\, Jul
+ ian\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Eisadler Dortmund 
+ – EHC Die Bären Neuwied
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:8532de60af3003c21824233bdac800f3f66c190a@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T060000Z
+DTEND:20261129T093000Z
+SUMMARY:SR · Frauen Pokal Gr.A: Eisadler Dortmund – EHV NRW U15w
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen Pokal Gr.A\nHalle: Eissp
+ ortzentrum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: 
+ Schmidt\, Waldemar\nVergütung lt. Ordnung: 95 € + 20 % Uhrzeit = 114 
+ €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen Pokal Gr.A: Eisadle
+ r Dortmund – EHV NRW U15w
+END:VALARM
+END:VEVENT
 END:VCALENDAR

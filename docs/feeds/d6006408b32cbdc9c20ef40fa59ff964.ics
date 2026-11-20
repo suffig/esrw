@@ -1,0 +1,37 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//esrw-ical//Schiedsrichter-Einteilungen//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Einteilungen – Kurtz\, Florian (L)
+X-WR-TIMEZONE:Europe/Berlin
+REFRESH-INTERVAL;VALUE=DURATION:PT1H
+X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:6f89ff7d0c0d398d89679984a0dc3084569a3b72@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T161500Z
+DTEND:20261129T194500Z
+SUMMARY:SR · U15 BZL: Aachener EC – SpG Neusser EV 1b / GSC Moers 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:15 Uhr\nTreffpunkt:
+  17:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: 100'5 Arena Aac
+ hen\nAdresse: Hubert-Wienen-Straße 8\, 52070 Aachen\nGespann: Garcia Niet
+ o\, Dario\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:100'5 Arena Aachen\, Hubert-Wienen-Straße 8\, 52070 Aachen
+GEO:50.79546;6.100933
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="100'5 Arena Aachen, Hubert
+ -Wienen-Straße 8, 52070 Aachen";X-APPLE-RADIUS=100;X-TITLE="100'5 Arena A
+ achen":geo:50.79546,6.100933
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: Aachener EC – S
+ pG Neusser EV 1b / GSC Moers 1b
+END:VALARM
+END:VEVENT
+END:VCALENDAR

@@ -55,4 +55,31 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Rot: Krefelder EV 1
  b – YAYLA Krefeld
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:3b4375dd57423015e2c9ca900b9841b082c00f84@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T143000Z
+DTEND:20261129T180000Z
+SUMMARY:SR · U15 RLB: Herner EV – Kölner Junghaie 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
+  15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Gysenberghalle 
+ Herne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Pacalaj\, Erik\n\
+ nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Gysenberghalle Herne\, Am Revierpark 22\, 44627 Herne
+GEO:51.532602;7.254372
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
+ evierpark 22, 44627 Herne";X-APPLE-RADIUS=100;X-TITLE="Gysenberghalle Hern
+ e":geo:51.532602,7.254372
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB: Herner EV – Kö
+ lner Junghaie 1b
+END:VALARM
+END:VEVENT
 END:VCALENDAR

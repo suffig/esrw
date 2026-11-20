@@ -60,4 +60,57 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: EHC Troisdorf 1b
  – Dinslakener Kobras
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:7d9eb9317261b64cedf631ae2fb5c22c2f1ea671@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261128T080000Z
+DTEND:20261128T113000Z
+SUMMARY:SR · U11 RL: EHC Troisdorf
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 RL\nHalle: ICEDOME Troisdor
+ f\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\n\nQuelle: https://w
+ ww.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
+GEO:50.811945;7.109233
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
+ rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
+ isdorf":geo:50.811945,7.109233
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 RL: EHC Troisdorf
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:40582c10548dabdfe2ef07cb3918fe78499e4dbc@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T061500Z
+DTEND:20261129T094500Z
+SUMMARY:SR · U15 LL: TuS Wiehl – EHC Die Bären Neuwied
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:15 Uhr\nTreffpunkt:
+  07:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Wi
+ ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Bocklemünd\, Cid\
+ n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
+GEO:50.947034;7.5553
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
+ enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
+ ":geo:50.947034,7.5553
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: TuS Wiehl – EHC 
+ Die Bären Neuwied
+END:VALARM
+END:VEVENT
 END:VCALENDAR

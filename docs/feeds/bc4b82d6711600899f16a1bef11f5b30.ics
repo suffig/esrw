@@ -104,4 +104,58 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: TSVE Bielefe
  ld – ESC Rheine Young Cats
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:59b7aa1498bfaa28378bea959ed22e1ebbb714cc@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261128T054500Z
+DTEND:20261128T091500Z
+SUMMARY:SR · U15 BZL: TSVE Bielefeld – Grefrather EG
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 07:45 Uhr\nTreffpunkt:
+  06:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Oetker Eisbahn 
+ Bielefeld\nAdresse: Duisburger Str. 14\, 33647 Bielefeld\nGespann: Kissing
+ \, Andreas\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Oetker Eisbahn Bielefeld\, Duisburger Str. 14\, 33647 Bielefeld
+GEO:51.979731;8.496038
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
+ Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
+ sbahn Bielefeld":geo:51.979731,8.496038
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: TSVE Bielefeld 
+ – Grefrather EG
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:3495d44f6438ed88a29d4167b1b45f11b351cb17@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T063000Z
+DTEND:20261129T100000Z
+SUMMARY:SR · U9 LL Grün: TSVE Bielefeld
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:30 Uhr\nTreffpunkt:
+  07:30 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Grün\nHalle: Oetker Eisb
+ ahn Bielefeld\nAdresse: Duisburger Str. 14\, 33647 Bielefeld\nGespann: Kis
+ sing\, Andreas\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Oetker Eisbahn Bielefeld\, Duisburger Str. 14\, 33647 Bielefeld
+GEO:51.979731;8.496038
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
+ Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
+ sbahn Bielefeld":geo:51.979731,8.496038
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Grün: TSVE Bielefel
+ d
+END:VALARM
+END:VEVENT
 END:VCALENDAR

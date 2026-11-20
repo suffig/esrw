@@ -106,4 +106,58 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: SpG EHC Gelsenkirc
  hen / Herner EV 1b – EHC Die Bären Neuwied
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:41b4865b17455b663af6f98b4bfcb1b20216a35e@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261128T080000Z
+DTEND:20261128T113000Z
+SUMMARY:SR · U11 LL Gelb: GSC Moers
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Gelb\nHalle: Eissporthal
+ le Moers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Malik\, Orlan
+ do\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
+GEO:51.43973;6.6198
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
+ rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
+ ":geo:51.43973,6.6198
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Gelb: GSC Moers
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:c3f08a789c13d62fc732612985ed717ec93c9601@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261203T163000Z
+DTEND:20261203T200000Z
+SUMMARY:SR · U13 LL: EV Duisburg 1b – EHC Essen Ruhr
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
+  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: PreZero Rheinlan
+ dhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: 
+ Marks\, Marcel\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: EV Duisburg 1b –
+  EHC Essen Ruhr
+END:VALARM
+END:VEVENT
 END:VCALENDAR

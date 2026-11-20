@@ -77,4 +77,31 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Eisadler Dortmund
  – Lippe Hockey Hamm
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:a499304ee3a6474daf771c9a551ac34b5fa51414@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T073000Z
+DTEND:20261129T110000Z
+SUMMARY:SR · U13 RLB: Herner EV – EHC Troisdorf
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
+  08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Gysenberghalle 
+ Herne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Melchert\, Philip
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Gysenberghalle Herne\, Am Revierpark 22\, 44627 Herne
+GEO:51.532602;7.254372
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
+ evierpark 22, 44627 Herne";X-APPLE-RADIUS=100;X-TITLE="Gysenberghalle Hern
+ e":geo:51.532602,7.254372
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB: Herner EV – EHC
+  Troisdorf
+END:VALARM
+END:VEVENT
 END:VCALENDAR

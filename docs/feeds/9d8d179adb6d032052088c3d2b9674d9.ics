@@ -106,4 +106,58 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: Dinslakener K
  obras 1b – Eisadler Dortmund 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:144f6eeb0fb22349b0271aeb008f84c5895c9f0a@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T060000Z
+DTEND:20261129T093000Z
+SUMMARY:SR · U13 RLB: Düsseldorfer EG 1b – EV Duisburg
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Eishalle Brehms
+ traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Pluschkell
+ \, Julian\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB: Düsseldorfer EG 
+ 1b – EV Duisburg
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:71d7169dacefac4f2ab2767b356fa33deedcc811@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T090000Z
+DTEND:20261129T123000Z
+SUMMARY:SR · U15 ODM: Düsseldorfer EG – SG Adler Berlin/ FASS Berlin
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:00 Uhr\nTreffpunkt:
+  10:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 ODM\nHalle: Eishalle Brehms
+ traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Pluschkell
+ \, Julian\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 ODM: Düsseldorfer EG 
+ – SG Adler Berlin/ FASS Berlin
+END:VALARM
+END:VEVENT
 END:VCALENDAR

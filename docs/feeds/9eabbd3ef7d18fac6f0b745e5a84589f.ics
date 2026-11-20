@@ -132,4 +132,60 @@ DESCRIPTION:In einer Stunde an der Halle - SR · NRW U13: NRW SCHWARZ – N
  RW WEIß
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:1422d5149af4d8aa8897bc6417fd928c1fed410d@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261128T151500Z
+DTEND:20261128T184500Z
+SUMMARY:HSR · Senioren RLW: TuS Wiehl – GSC Moers
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 17:15 Uhr\nTreff
+ punkt: 16:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ porthalle Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Kudal\
+ , Lars (LSR) / Henkels\, André (LSR)\nVergütung lt. Ordnung: 100 €\n\n
+ Quelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
+GEO:50.947034;7.5553
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
+ enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
+ ":geo:50.947034,7.5553
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: TuS Wiehl 
+ – GSC Moers
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:1d5eaa0d3e24f8fd698d05fc691062bb94b10658@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T160000Z
+DTEND:20261129T193000Z
+SUMMARY:HSR · U20 RL: EHC Troisdorf – TuS Wiehl
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 18:00 Uhr\nTreff
+ punkt: 17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: ICEDOME Tr
+ oisdorf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Kuda
+ l\, Lars (LSR) / Henkels\, André (LSR)\n\nQuelle: https://www.esrw.de/ein
+ teilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
+GEO:50.811945;7.109233
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
+ rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
+ isdorf":geo:50.811945,7.109233
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · U20 RL: EHC Troisdorf –
+  TuS Wiehl
+END:VALARM
+END:VEVENT
 END:VCALENDAR

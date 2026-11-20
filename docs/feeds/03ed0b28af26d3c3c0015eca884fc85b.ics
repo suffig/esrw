@@ -7,4 +7,92 @@ X-WR-CALNAME:Einteilungen – Musga\, Maurice
 X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:ba9572231d27d31d243ce82d7d9d4e1015233e40@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261128T140000Z
+DTEND:20261128T173000Z
+SUMMARY:LSR · DNL III: EV Duisburg – ES Weißwasser
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 16:00 Uhr\nTreffpunkt:
+  15:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero Rheinla
+ ndhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann:
+  Schrörs\, Marvin (HSR) / Heffler\, Philipp (LSR)\n\nQuelle: https://www.
+ esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · DNL III: EV Duisburg – 
+ ES Weißwasser
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:741e97500d752545eebf6ec44cfb38fb38f8e45c@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T080000Z
+DTEND:20261129T113000Z
+SUMMARY:SR · DNL III: EV Duisburg – ES Weißwasser
+DESCRIPTION:!! Danach Dinslakener Kobras – Lippe Hockey Hamm in Eissporth
+ alle Dinslaken – nur 150 Min bis zum nächsten Anstoß !!\n\nRolle: Schi
+ edsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt: 09:00 Uhr (60 Min vor
+  Spielbeginn)\nLiga: DNL III\nHalle: PreZero Rheinlandhalle Duisburg\nAdre
+ sse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: Licau\, Alexander\n\n
+ Quelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · DNL III: EV Duisburg – E
+ S Weißwasser
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:7a73d58f662193f410b26dbbf6e9b7780574a2f1@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T103000Z
+DTEND:20261129T140000Z
+SUMMARY:SR · U13 LL: Dinslakener Kobras – Lippe Hockey Hamm
+DESCRIPTION:!! Davor EV Duisburg – ES Weißwasser in PreZero Rheinlandhal
+ le Duisburg – nur 150 Min nach dem vorigen Anstoß !!\n\nRolle: Schiedsr
+ ichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt: 11:30 Uhr (60 Min vor Spi
+ elbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Dinslaken\nAdresse: Am Stadt
+ bad 1\, 46537 Dinslaken\nGespann: Schulz\, Stephan (L)\n\nQuelle: https://
+ www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
+GEO:51.574578;6.735361
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
+ m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
+ inslaken":geo:51.574578,6.735361
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: Dinslakener Kobras
+  – Lippe Hockey Hamm
+END:VALARM
+END:VEVENT
 END:VCALENDAR

@@ -147,4 +147,59 @@ DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Ratinger Ic
  e Aliens – Eisadler Dortmund
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:6891f4529887c136df717d3f85ef5e8dbe79b1a4@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261128T103000Z
+DTEND:20261128T140000Z
+SUMMARY:SR · U15 LL: Dinslakener Kobras – SpG EHC Gelsenkirchen / Herner
+  EV 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
+  11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Di
+ nslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Damm\, Marvin 
+ (L)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
+GEO:51.574578;6.735361
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
+ m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
+ inslaken":geo:51.574578,6.735361
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Dinslakener Kobras
+  – SpG EHC Gelsenkirchen / Herner EV 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:b5ffdd8a4c064de38f083d034cc7fa73151dd149@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T113000Z
+DTEND:20261129T150000Z
+SUMMARY:SR · U17 RL: Eisadler Dortmund – Dinslakener Kobras
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
+  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eissportzentrum 
+ Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Schmidt\, W
+ aldemar\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Eisadler Dortmund 
+ – Dinslakener Kobras
+END:VALARM
+END:VEVENT
 END:VCALENDAR

@@ -134,4 +134,60 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL: ESV Grizzlys B
  ergkamen – DSC Krefeld
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:d46f684d4aca8ee5aa82c685b4b42bd30997a9da@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261127T173000Z
+DTEND:20261127T210000Z
+SUMMARY:SR · U20 LL: Lippe Hockey Hamm – ESV Grizzlys Bergkamen
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 LL\nHalle: beta FINANZ Eiss
+ portarena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Wa
+ rnke\, Christoph\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:beta FINANZ Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 H
+ amm
+GEO:51.686934;7.886138
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena 
+ Hamm, Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="bet
+ a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U20 LL: Lippe Hockey Hamm 
+ – ESV Grizzlys Bergkamen
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:87e467588f936a8e197b61c376e43e78c514b878@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T183000Z
+DTEND:20261129T220000Z
+SUMMARY:SR · Senioren BZL: Herforder EV 1b – EHC Troisdorf 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
+  19:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eishalle I
+ m Kleinen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Kelle
+ r\, Alexander\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw
+ .de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Im Kleinen Felde\, Im Kleinen Felde\, 32051 Herford
+GEO:52.114893;8.652028
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
+  Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
+ Kleinen Felde":geo:52.114893,8.652028
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: Herforder EV
+  1b – EHC Troisdorf 1b
+END:VALARM
+END:VEVENT
 END:VCALENDAR

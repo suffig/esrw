@@ -156,4 +156,115 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLA: Kölner Junghaie
  – Düsseldorfer EG
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:43bf8600b2c5010c0b964df3609629a8052f75b2@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261127T151500Z
+DTEND:20261127T184500Z
+SUMMARY:SR · U13 LL: EC Bergisch Land – Ratinger Ice Aliens
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
+  16:15 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle So
+ lingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Haschke\, 
+ Luca (L)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
+GEO:51.165932;7.086769
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
+ ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
+ le Solingen":geo:51.165932,7.086769
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: EC Bergisch Land 
+ – Ratinger Ice Aliens
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:99ceb482ec79384f25685ce006a1685d37b4bede@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261127T181500Z
+DTEND:20261127T214500Z
+SUMMARY:SR · Senioren LL: EC Bergisch Land – EHC Troisdorf
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
+  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissporthal
+ le Solingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Braun
+ \, Benjamin\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.d
+ e/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
+GEO:51.165932;7.086769
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
+ ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
+ le Solingen":geo:51.165932,7.086769
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: EC Bergisch L
+ and – EHC Troisdorf
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:7b97f5a5390d9d18a97cab54d40a64087b8fe972@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261128T173000Z
+DTEND:20261128T210000Z
+SUMMARY:SR · U15 RLB: Krefelder EV 1b – Herner EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Rheinlandhalle 
+ Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Berner\, P
+ atrick\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
+GEO:51.339877;6.540168
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
+ stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
+ le Krefeld":geo:51.339877,6.540168
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB: Krefelder EV 1b 
+ – Herner EV
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:ea5d921c82b3c5d5cc692ce6c0af1747b2550f76@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T060000Z
+DTEND:20261129T093000Z
+SUMMARY:SR · U17 LL: ESV Bergisch Gladbach – SpG Soester EG / TSVE Biele
+ feld
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\nHalle: Eissporthalle Be
+ rgisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbach\nGes
+ pann: Heffler\, Philipp\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
+ ch Gladbach
+GEO:50.967548;7.135355
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
+ dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
+ TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: ESV Bergisch Gladb
+ ach – SpG Soester EG / TSVE Bielefeld
+END:VALARM
+END:VEVENT
 END:VCALENDAR

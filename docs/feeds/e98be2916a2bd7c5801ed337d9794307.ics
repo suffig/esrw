@@ -36,4 +36,31 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: SpG EHC Gelsenkirc
  hen / Herner EV 1b – EHC Die Bären Neuwied
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:e87d1e295d8b046fe4826279882c9f2a034f7bd6@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261128T113000Z
+DTEND:20261128T150000Z
+SUMMARY:SR · U15 LL: Eisadler Dortmund – EHC Die Bären Neuwied
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
+  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissportzentrum 
+ Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Schlüchter
+ \, Isabell (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Eisadler Dortmund 
+ – EHC Die Bären Neuwied
+END:VALARM
+END:VEVENT
 END:VCALENDAR

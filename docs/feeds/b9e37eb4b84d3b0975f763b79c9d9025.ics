@@ -132,4 +132,59 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Iserlohner EC – S
  tarbulls Rosenheim
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:7ccf195d7510ba69cd0e7683e5112972bc2e35cd@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261128T094500Z
+DTEND:20261128T131500Z
+SUMMARY:SR · U17 I: Iserlohner EC – Düsseldorfer EG
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:45 Uhr\nTreffpunkt:
+  10:45 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eissporthalle am 
+ Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Scholz\, 
+ Arien\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
+GEO:51.384598;7.713829
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
+ , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
+ alle am Seilersee":geo:51.384598,7.713829
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Iserlohner EC – D
+ üsseldorfer EG
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:1dffa9a24676136f0bb16b2d0ca562c7abf54ad4@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T170000Z
+DTEND:20261129T203000Z
+SUMMARY:LSR · U20 RL: Eisadler Dortmund – Neusser EV
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
+  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissportzentrum 
+ Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Reuter\, Fy
+ nn (HSR) / Fenke\, Matthias (LSR)\n\nQuelle: https://www.esrw.de/einteilun
+ gen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: Eisadler Dortmund
+  – Neusser EV
+END:VALARM
+END:VEVENT
 END:VCALENDAR

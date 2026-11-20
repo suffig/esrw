@@ -56,4 +56,62 @@ DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Dinslakener
   Kobras – EG Diez-Limburg
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:4da481e336a9cae855ee4a5e25b679cb5db10e9c@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261128T140000Z
+DTEND:20261128T173000Z
+SUMMARY:LSR · DNL III: EV Duisburg – ES Weißwasser
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 16:00 Uhr\nTreffpunkt:
+  15:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero Rheinla
+ ndhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann:
+  Schrörs\, Marvin (HSR) / Musga\, Maurice (LSR)\n\nQuelle: https://www.es
+ rw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · DNL III: EV Duisburg – 
+ ES Weißwasser
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:de3455cbc82baa132c0352250e9cf979ac19f5ff@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T060000Z
+DTEND:20261129T093000Z
+SUMMARY:SR · U17 LL: ESV Bergisch Gladbach – SpG Soester EG / TSVE Biele
+ feld
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\nHalle: Eissporthalle Be
+ rgisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbach\nGes
+ pann: Scholz\, Udo\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
+ ch Gladbach
+GEO:50.967548;7.135355
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
+ dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
+ TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: ESV Bergisch Gladb
+ ach – SpG Soester EG / TSVE Bielefeld
+END:VALARM
+END:VEVENT
 END:VCALENDAR

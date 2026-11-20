@@ -106,4 +106,81 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: Eisadler Dor
  tmund 1b – GSC Moers
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:c641485ab8fcb5342df801be9580a74f4b4d18e4@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261128T153000Z
+DTEND:20261128T190000Z
+SUMMARY:LSR · OsWeNo Pokal: ESV Grizzlys Bvergkamen – Hamburg Crocodiles
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
+  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: OsWeNo Pokal\n!! Halle nicht au
+ tomatisch erkannt - bitte selbst pruefen !!\nGespann: Steeg\, Cedric (HSR)
+  / Scholz\, Arien (LSR)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · OsWeNo Pokal: ESV Grizzly
+ s Bvergkamen – Hamburg Crocodiles
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:8a90f3225b45df46a93643ba269805937a7b7efa@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T060000Z
+DTEND:20261129T093000Z
+SUMMARY:SR · Frauen Pokal Gr.A: Eisadler Dortmund – EHV NRW U15w
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen Pokal Gr.A\nHalle: Eissp
+ ortzentrum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: 
+ Schlüchter\, Isabell (N)\nVergütung lt. Ordnung: 95 € + 20 % Uhrzeit =
+  114 €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen Pokal Gr.A: Eisadle
+ r Dortmund – EHV NRW U15w
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:000776615e4d9ec80f84c38da965e7ee18ce17b0@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T113000Z
+DTEND:20261129T150000Z
+SUMMARY:SR · U17 RL: Eisadler Dortmund – Dinslakener Kobras
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
+  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eissportzentrum 
+ Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Quint\, Sas
+ cha\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Eisadler Dortmund 
+ – Dinslakener Kobras
+END:VALARM
+END:VEVENT
 END:VCALENDAR

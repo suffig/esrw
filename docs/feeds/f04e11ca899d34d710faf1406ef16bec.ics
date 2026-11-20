@@ -34,4 +34,31 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB: Herforder EV –
  EJ Kassel
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:54965b0ae6f1e28f3c581aeaaf6a899dfa3ede35@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261128T060000Z
+DTEND:20261128T093000Z
+SUMMARY:SR · U13 BZL Gr.A: ESC Rheine Young Cats – GSC Moers
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\nHalle: Rheiner Ei
+ ssporthalle\nAdresse: Kopernikusstraße 34\, 48429 Rheine\nGespann: Funk\,
+  Marvin\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Rheiner Eissporthalle\, Kopernikusstraße 34\, 48429 Rheine
+GEO:52.281013;7.455599
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheiner Eissporthalle, Kop
+ ernikusstraße 34, 48429 Rheine";X-APPLE-RADIUS=100;X-TITLE="Rheiner Eissp
+ orthalle":geo:52.281013,7.455599
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: ESC Rheine Y
+ oung Cats – GSC Moers
+END:VALARM
+END:VEVENT
 END:VCALENDAR

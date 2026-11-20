@@ -196,4 +196,58 @@ DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: Neusser EV – Ei
  sadler Dortmund
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:364686f87ec7263c6df87f8da6c0ab6d4854aacb@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261128T143000Z
+DTEND:20261128T180000Z
+SUMMARY:SR · U15 ODM: Düsseldorfer EG – SG Adler Berlin/ FASS Berlin
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
+  15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 ODM\nHalle: Eishalle Brehms
+ traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Hofer\, Ca
+ rsten\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 ODM: Düsseldorfer EG 
+ – SG Adler Berlin/ FASS Berlin
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:3b1d25ebd08c09801e0eac1b78350bf9f2b1f645@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T100000Z
+DTEND:20261129T133000Z
+SUMMARY:SR · U13 RLA: Kölner Junghaie – Krefelder EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
+  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLA\nHalle: Kölnarena 2\nA
+ dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Berner\, Patrick\n
+ \nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLA: Kölner Junghaie 
+ – Krefelder EV
+END:VALARM
+END:VEVENT
 END:VCALENDAR

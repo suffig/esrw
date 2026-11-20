@@ -83,4 +83,61 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: ESV Bergisch Gladb
  ach – ESV Grizzlys Bergkamen
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:fc89f3e0ac6d7cbf286b67110a898d48d90f44fd@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261127T173000Z
+DTEND:20261127T210000Z
+SUMMARY:SR · U17 RL: Ratinger Ice Aliens – Herner EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eissporthalle Ra
+ tingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Solbach\, Carst
+ en\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
+GEO:51.295808;6.834624
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
+  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
+ tingen":geo:51.295808,6.834624
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Ratinger Ice Alien
+ s – Herner EV
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:7fe6d387d403a220bfb3a7714db9c258a0145a8c@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261128T100000Z
+DTEND:20261128T133000Z
+SUMMARY:SR · U13 BZL Gr.B: ESV Bergisch Gladbach – EHC Die Bären Ne
+ uwied 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
+  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.B\nHalle: Eissportha
+ lle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbac
+ h\nGespann: Zimmermann\, Noah (L)\n\nQuelle: https://www.esrw.de/einteilun
+ gen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
+ ch Gladbach
+GEO:50.967548;7.135355
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
+ dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
+ TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.B: ESV Bergisch
+  Gladbach – EHC Die Bären Neuwied 1b
+END:VALARM
+END:VEVENT
 END:VCALENDAR

@@ -137,4 +137,57 @@ DESCRIPTION:In einer Stunde an der Halle - SR · DFEL2 Nord: EC Bergisch La
  nd – Düsseldorfer EG
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:4d35491555ada290e88219de3002a351efaad386@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T124500Z
+DTEND:20261129T161500Z
+SUMMARY:SR · U9 RL: Kölner Junghaie
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:45 Uhr\nTreffpunkt:
+  13:45 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: Kölnarena 2\nAdr
+ esse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Hindley\, David\n\nQ
+ uelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 RL: Kölner Junghaie
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:697e468dc245d391f7f2c63aa9af798e3ff76e41@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T153000Z
+DTEND:20261129T190000Z
+SUMMARY:SR · U13 RLB: Kölner Junghaie 1b – Krefelder EV 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
+  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Kölnarena 2\nA
+ dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Hindley\, David\n\
+ nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB: Kölner Junghaie 
+ 1b – Krefelder EV 1b
+END:VALARM
+END:VEVENT
 END:VCALENDAR

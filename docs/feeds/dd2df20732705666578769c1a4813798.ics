@@ -70,4 +70,59 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
  stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
  le Krefeld":geo:51.339877,6.540168
 END:VEVENT
+BEGIN:VEVENT
+UID:1e6dff6349671adb10927e400f57e0a56453cead@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261127T180000Z
+DTEND:20261127T213000Z
+SUMMARY:SR · U13 BZL Gr.B: Neusser EV 1b – Aachener EC
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.B\nHalle: Eissportha
+ lle Neuss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Renker\, 
+ Christoph (L)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
+GEO:51.175806;6.680258
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
+ -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
+ uss":geo:51.175806,6.680258
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.B: Neusser EV 1
+ b – Aachener EC
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:88846f19cf04cb1ce4cc72c8a6761431a8ab2bf5@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T170000Z
+DTEND:20261129T203000Z
+SUMMARY:HSR · U20 RL: Eisadler Dortmund – Neusser EV
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 19:00 Uhr\nTreff
+ punkt: 18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissportze
+ ntrum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Garbs
+ ch\, René (LSR) / Fenke\, Matthias (LSR)\n\nQuelle: https://www.esrw.de/e
+ inteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · U20 RL: Eisadler Dortmund
+  – Neusser EV
+END:VALARM
+END:VEVENT
 END:VCALENDAR

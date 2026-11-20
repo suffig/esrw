@@ -98,4 +98,59 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: TSVE Bielefe
  ld – ESC Rheine Young Cats
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:403a9829708155f6fdcee58cbf9186704e6830d8@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261128T060000Z
+DTEND:20261128T093000Z
+SUMMARY:SR · U13 BZL Gr.A: ESC Rheine Young Cats – GSC Moers
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\nHalle: Rheiner Ei
+ ssporthalle\nAdresse: Kopernikusstraße 34\, 48429 Rheine\nGespann: Schmid
+ t\, Eugen\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Rheiner Eissporthalle\, Kopernikusstraße 34\, 48429 Rheine
+GEO:52.281013;7.455599
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheiner Eissporthalle, Kop
+ ernikusstraße 34, 48429 Rheine";X-APPLE-RADIUS=100;X-TITLE="Rheiner Eissp
+ orthalle":geo:52.281013,7.455599
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: ESC Rheine Y
+ oung Cats – GSC Moers
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:12ac3d8c360da1b96b02c50cf86a6b2092466e8c@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T180000Z
+DTEND:20261129T213000Z
+SUMMARY:SR · Frauen BZL: TSVE Bielefeld – Herforder EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Oetker Eisba
+ hn Bielefeld\nAdresse: Duisburger Str. 14\, 33647 Bielefeld\nGespann: Kiss
+ ing\, Andreas\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.
+ de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Oetker Eisbahn Bielefeld\, Duisburger Str. 14\, 33647 Bielefeld
+GEO:51.979731;8.496038
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
+ Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
+ sbahn Bielefeld":geo:51.979731,8.496038
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL: TSVE Bielefeld
+  – Herforder EV
+END:VALARM
+END:VEVENT
 END:VCALENDAR

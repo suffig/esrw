@@ -106,4 +106,86 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: ESC Rheine
  – EC Bergisch Land
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:14a85199d0ede221b30700d1def2ebf0f5354072@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261128T054500Z
+DTEND:20261128T091500Z
+SUMMARY:SR · U15 BZL: TSVE Bielefeld – Grefrather EG
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 07:45 Uhr\nTreffpunkt:
+  06:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Oetker Eisbahn 
+ Bielefeld\nAdresse: Duisburger Str. 14\, 33647 Bielefeld\nGespann: Brücke
+ r\, Tobias\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Oetker Eisbahn Bielefeld\, Duisburger Str. 14\, 33647 Bielefeld
+GEO:51.979731;8.496038
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
+ Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
+ sbahn Bielefeld":geo:51.979731,8.496038
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: TSVE Bielefeld 
+ – Grefrather EG
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:d6ccf69f0abc1d095ae446fcd278750ffb8859f0@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T063000Z
+DTEND:20261129T100000Z
+SUMMARY:SR · U9 LL Grün: TSVE Bielefeld
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:30 Uhr\nTreffpunkt:
+  07:30 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Grün\nHalle: Oetker Eisb
+ ahn Bielefeld\nAdresse: Duisburger Str. 14\, 33647 Bielefeld\nGespann: Br
+ ücker\, Tobias\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Oetker Eisbahn Bielefeld\, Duisburger Str. 14\, 33647 Bielefeld
+GEO:51.979731;8.496038
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
+ Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
+ sbahn Bielefeld":geo:51.979731,8.496038
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Grün: TSVE Bielefel
+ d
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:12d38eeca93a937a17ce50678f55117b1d7f3d66@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T180000Z
+DTEND:20261129T213000Z
+SUMMARY:SR · Frauen BZL: TSVE Bielefeld – Herforder EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Oetker Eisba
+ hn Bielefeld\nAdresse: Duisburger Str. 14\, 33647 Bielefeld\nGespann: Funk
+ \, Marvin\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/e
+ inteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Oetker Eisbahn Bielefeld\, Duisburger Str. 14\, 33647 Bielefeld
+GEO:51.979731;8.496038
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
+ Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
+ sbahn Bielefeld":geo:51.979731,8.496038
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL: TSVE Bielefeld
+  – Herforder EV
+END:VALARM
+END:VEVENT
 END:VCALENDAR

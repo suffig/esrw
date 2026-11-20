@@ -141,4 +141,84 @@ DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: TuS Wiehl – Din
  slakener Kobras
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:56246d1c192ac2ec2771448a44b95eecdc5811c4@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261127T181500Z
+DTEND:20261127T214500Z
+SUMMARY:SR · U17 RL: EHC Troisdorf – TuS Wiehl
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
+  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: ICEDOME Troisdor
+ f\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Moritz\, A
+ lexander\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
+GEO:50.811945;7.109233
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
+ rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
+ isdorf":geo:50.811945,7.109233
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: EHC Troisdorf – 
+ TuS Wiehl
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:b12ea3694181df298c0ef6bdc39b170e56a32545@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261128T084500Z
+DTEND:20261128T121500Z
+SUMMARY:SR · U9 LL Gelb: TuS Wiehl
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:45 Uhr\nTreffpunkt:
+  09:45 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Gelb\nHalle: Eissporthall
+ e Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\n\nQuelle: https://www.e
+ srw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
+GEO:50.947034;7.5553
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
+ enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
+ ":geo:50.947034,7.5553
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Gelb: TuS Wiehl
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:95aabf4e441916d9c34df9214eb09dd8beb0842b@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261129T170000Z
+DTEND:20261129T203000Z
+SUMMARY:SR · DFEL2 Nord: EC Bergisch Land – Dinslakener Kobras
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
+  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: DFEL2 Nord\nHalle: Eissporthall
+ e Solingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Hartma
+ nn\, Marius\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
+GEO:51.165932;7.086769
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
+ ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
+ le Solingen":geo:51.165932,7.086769
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · DFEL2 Nord: EC Bergisch La
+ nd – Dinslakener Kobras
+END:VALARM
+END:VEVENT
 END:VCALENDAR

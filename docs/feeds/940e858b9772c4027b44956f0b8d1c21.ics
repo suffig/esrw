@@ -105,4 +105,31 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.B: Aachener EC
  – ESV Bergisch Gladbach
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:20bbde1d57f08a37b8b18b25c4ead429297c6228@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T094530Z
+LAST-MODIFIED:20261120T094530Z
+DTSTART:20261128T100000Z
+DTEND:20261128T133000Z
+SUMMARY:SR · U13 RLB: EJ Kassel – Düsseldorfer EG 1b In Düsseldorf !!!
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
+  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Eissporthalle K
+ assel\nAdresse: Am Auestadion 1\, 34121 Kassel\nGespann: Hindley\, David\n
+ \nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Kassel\, Am Auestadion 1\, 34121 Kassel
+GEO:51.298003;9.48235
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Kassel, Am A
+ uestadion 1, 34121 Kassel";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Kasse
+ l":geo:51.298003,9.48235
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB: EJ Kassel – Dü
+ sseldorfer EG 1b In Düsseldorf !!!
+END:VALARM
+END:VEVENT
 END:VCALENDAR
