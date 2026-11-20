@@ -50,12 +50,6 @@ GEO:51.686934;7.886138
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena 
  Hamm, Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="bet
  a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U20 LL: Lippe Hockey Hamm 
- – EC Bergisch Land
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:aa7eebe1bdc0199473b64fbbc0aedac5a02f91b2@esrw.de
