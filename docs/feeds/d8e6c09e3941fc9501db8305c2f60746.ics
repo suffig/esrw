@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:70d3d710020b02d1861d70660622d8aec06aa53a@esrw.de
-SEQUENCE:0
-DTSTAMP:20261112T093038Z
-LAST-MODIFIED:20261112T093038Z
-DTSTART:20261113T180000Z
-DTEND:20261113T213000Z
-SUMMARY:SR · Senioren LL: Eisadler Dortmund 1b – EC Bergisch Land
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
-  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissportzen
- trum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Steeg\
- , Cedric\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/e
- inteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
-GEO:51.49525;7.458288
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
-  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
- rum Westfalen":geo:51.49525,7.458288
-END:VEVENT
-BEGIN:VEVENT
 UID:3e8f7dd378dae48bb839aacd8c3143fb437dd535@esrw.de
 SEQUENCE:0
 DTSTAMP:20261112T100048Z
@@ -93,12 +71,6 @@ GEO:51.49525;7.458288
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
   Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
  rum Westfalen":geo:51.49525,7.458288
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · OsWeNo Pokal: Eisadler Do
- rtmund – Adendorfer EC
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:9da1e7fbc0b7c4f6db2b760f6896443ed51f7ce0@esrw.de
