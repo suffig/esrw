@@ -4573,15 +4573,15 @@ END:VEVENT
 BEGIN:VEVENT
 UID:e55ba8ab9836ff5cee1d857754b4933a60e8fb9a@esrw.de
 SEQUENCE:0
-DTSTAMP:20261120T094530Z
-LAST-MODIFIED:20261120T094530Z
+DTSTAMP:20261120T170054Z
+LAST-MODIFIED:20261120T170054Z
 DTSTART:20261129T080000Z
 DTEND:20261129T113000Z
 SUMMARY:SR · DNL III: EV Duisburg – ES Weißwasser
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
   09:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero Rheinla
  ndhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann:
-  Musga\, Maurice\n\nQuelle: https://www.esrw.de/einteilungen.html
+  Licau\, Alexander\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -4687,12 +4687,10 @@ LAST-MODIFIED:20261120T094530Z
 DTSTART:20261129T103000Z
 DTEND:20261129T140000Z
 SUMMARY:SR · U13 LL: Dinslakener Kobras – Lippe Hockey Hamm
-DESCRIPTION:!! Davor EV Duisburg – ES Weißwasser in PreZero Rheinlandhal
- le Duisburg – nur 150 Min nach dem vorigen Anstoß !!\n\nRolle: Schiedsr
- ichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt: 11:30 Uhr (60 Min vor Spi
- elbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Dinslaken\nAdresse: Am Stadt
- bad 1\, 46537 Dinslaken\nGespann: Schulz\, Stephan (L)\n\nQuelle: https://
- www.esrw.de/einteilungen.html
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
+  11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Di
+ nslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Schulz\, Steph
+ an (L)\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

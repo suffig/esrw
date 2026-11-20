@@ -53,16 +53,16 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
 END:VEVENT
 BEGIN:VEVENT
 UID:b68e07c427ee48c7048d545685bc194110422719@esrw.de
-SEQUENCE:0
-DTSTAMP:20261120T094530Z
-LAST-MODIFIED:20261120T094530Z
+SEQUENCE:1
+DTSTAMP:20261120T170054Z
+LAST-MODIFIED:20261120T170054Z
 DTSTART:20261129T080000Z
 DTEND:20261129T113000Z
 SUMMARY:SR · DNL III: EV Duisburg – ES Weißwasser
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
   09:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero Rheinla
  ndhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann:
-  Musga\, Maurice\n\nQuelle: https://www.esrw.de/einteilungen.html
+  Kudal\, Lars\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

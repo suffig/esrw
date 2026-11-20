@@ -267,6 +267,34 @@ DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: TuS Wiehl
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:ae40d2c253aeaacd6ec70e0627c5354c4ef5e469@esrw.de
+SEQUENCE:0
+DTSTAMP:20261120T170054Z
+LAST-MODIFIED:20261120T170054Z
+DTSTART:20261129T080000Z
+DTEND:20261129T113000Z
+SUMMARY:SR · DNL III: EV Duisburg – ES Weißwasser
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero Rheinla
+ ndhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann:
+  Licau\, Alexander\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · DNL III: EV Duisburg – E
+ S Weißwasser
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:f9d8f3c45ee9571fd916f17c8ad0b6ba69a23853@esrw.de
 SEQUENCE:0
 DTSTAMP:20261120T094530Z
