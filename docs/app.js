@@ -6157,17 +6157,45 @@
       toast("Kalenderdatei erzeugt, öffnen und in den Kalender übernehmen.", "gut");
     });
   }
+  // Wie viele Minuten vor dem Kalenderbeginn der Abfahrtswecker klingelt.
+  // Bis Fassung 288 stand der Termin hier immer zum Treffpunkt und mit
+  // festem Wecker "-PT1H" - wer im Kalender "zum Anpfiff" und andere
+  // Wecker eingestellt hatte, bekam in der Datei trotzdem das Alte.
+  var ABFAHRT_VORWARNUNG = 10;
+  function kalenderZeiten(s, sk, w) {
+    var treff = new Date(s.treffpunkt), anpfiff = new Date(s.beginn);
+    var start = w.beginn === "anstoss" ? anpfiff : treff;
+    var g = mitPuffer(sk);
+    var abfahrt = g && g.minuten ? new Date(treff.getTime() - g.minuten * 60000) : null;
+    return { treff: treff, anpfiff: anpfiff, start: start,
+      ende: new Date(anpfiff.getTime() + (daten.spieldauer_minuten || 150) * 60000),
+      abfahrt: abfahrt, gepuffert: g,
+      // Relativ zum Beginn des Termins - steht er zum Anpfiff, liegt die
+      // Abfahrt um den Vorlauf weiter davor.
+      weckerVor: abfahrt ? Math.round((start - abfahrt) / 60000) + ABFAHRT_VORWARNUNG : null };
+  }
+  // Dieselben Texte wie alarm_text() in esrw_ical.py
+  function alarmText(wann, anpfiff) {
+    var spanne = { "-PT30M": ["eine halbe Stunde", "einer halben Stunde"], "-PT1H": ["eine Stunde", "einer Stunde"],
+                   "-PT2H": ["zwei Stunden", "zwei Stunden"], "-PT3H": ["drei Stunden", "drei Stunden"] };
+    if (spanne[wann]) return anpfiff ? "Noch " + spanne[wann][0] + " bis Anpfiff" : "In " + spanne[wann][1] + " an der Halle";
+    if (wann === "-P1D") return "Morgen Spiel";
+    return "Erinnerung";
+  }
   function icsEvent(s, sk) {
-    var treff = new Date(s.treffpunkt), ende = new Date(new Date(s.beginn).getTime() + (daten.spieldauer_minuten || 150) * 60000);
-    var gepuffert = mitPuffer(sk);
-    var puffer = gepuffert && gepuffert.minuten ? gepuffert.minuten + 10 : null, zeilen = [];
-    zeilen.push("BEGIN:VEVENT", "UID:abfahrt-" + icsZeit(treff) + "-" + s.paarung.replace(/[^a-z0-9]/gi, "").slice(0, 30) + "@einteilungen",
-      "DTSTAMP:" + icsZeit(new Date()), "DTSTART:" + icsZeit(treff), "DTEND:" + icsZeit(ende),
-      "SUMMARY:" + icsText((s.rolle ? s.rolle + " · " : "") + (s.liga ? s.liga + ": " : "") + s.paarung),
+    var w = kalenderEinst(), z = kalenderZeiten(s, sk, w), zeilen = [];
+    var titel = (w.rolle && s.rolle ? s.rolle + " · " : "") + (w.liga && s.liga ? s.liga + ": " : "") + s.paarung + (w.halle && s.halle ? " · " + s.halle : "");
+    zeilen.push("BEGIN:VEVENT", "UID:abfahrt-" + icsZeit(z.treff) + "-" + s.paarung.replace(/[^a-z0-9]/gi, "").slice(0, 30) + "@einteilungen",
+      "DTSTAMP:" + icsZeit(new Date()), "DTSTART:" + icsZeit(z.start), "DTEND:" + icsZeit(z.ende),
+      "SUMMARY:" + icsText(titel),
       "LOCATION:" + icsText(s.ort || s.halle || ""),
-      "DESCRIPTION:" + icsText("Treffpunkt " + uhr(treff) + " Uhr, Spielbeginn " + uhr(new Date(s.beginn)) + " Uhr" + (puffer ? "\nAbfahrt ca. " + uhr(new Date(treff.getTime() - (puffer - 10) * 60000)) + " Uhr (" + sk.km + " km, " + gepuffert.minuten + " Min., " + verkehrText() + ")" : "")));
-    if (puffer) zeilen.push("BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsText("Losfahren: " + s.paarung + " (" + sk.km + " km)"), "TRIGGER:-PT" + puffer + "M", "END:VALARM");
-    zeilen.push("BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:In einer Stunde an der Halle", "TRIGGER:-PT1H", "END:VALARM", "END:VEVENT");
+      "DESCRIPTION:" + icsText("Treffpunkt " + uhr(z.treff) + " Uhr, Spielbeginn " + uhr(z.anpfiff) + " Uhr" + (z.abfahrt ? "\nAbfahrt ca. " + uhr(z.abfahrt) + " Uhr (" + sk.km + " km, " + z.gepuffert.minuten + " Min., " + verkehrText() + ")" : "")));
+    if (z.abfahrt) zeilen.push("BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsText("In " + ABFAHRT_VORWARNUNG + " Min. losfahren (" + uhr(z.abfahrt) + " Uhr): " + s.paarung), "TRIGGER:-PT" + z.weckerVor + "M", "END:VALARM");
+    w.alarme.forEach(function (a) {
+      if (!/^-P(?=[0-9T])(?:[0-9]+[WD])*(?:T(?:[0-9]+[HMS])+)?$/.test(a)) return;
+      zeilen.push("BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsText(alarmText(a, w.beginn === "anstoss") + " – " + titel), "TRIGGER:" + a, "END:VALARM");
+    });
+    zeilen.push("END:VEVENT");
     return zeilen;
   }
   function abfahrtIcs(p) {
@@ -6465,7 +6493,7 @@
   // Sicherung: alles, was nur hier liegt und nach einem verlorenen Konto
   // oder einem neuen Handy sonst neu getippt werden muesste.
   var SICHER_SCHLUESSEL = ["karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche",
-    "pushwoche", "pushabrechnung", "pushvorlauf", "pushgespann", "kalender", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4", "thema", "funktionen", "verkehr"];
+    "pushwoche", "pushabrechnung", "pushvorlauf", "pushgespann", "kalender", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4", "thema", "funktionen", "verkehr", "verkehrmin"];
   function sicherungBauen() {
     var app = {};
     SICHER_SCHLUESSEL.forEach(function (k) { var w = lesen(k); if (w !== null && w !== undefined) app[k] = w; });
@@ -6520,45 +6548,99 @@
   // Der Routendienst rechnet ohne Verkehr - eine Live-Auskunft gibt es
   // nur gegen Geld. Statt zu tun, als wuessten wir es, gibt es einen
   // Aufschlag, den jeder fuer seine Gegend selbst einstellt.
+  //
+  // Zwei Stellschrauben, weil Stau zwei Gestalten hat: auf langer Strecke
+  // waechst er mit (Prozent), vor der Halle ist er fest (Parkplatz,
+  // Baustelle am Ortseingang - Minuten). Mit nur 0/10/20/30 % kam man
+  // bei 15 Min. Fahrt nie auf eine sinnvolle Reserve.
+  var PUFFER_MAX = 100, RESERVE_MAX = 60;
   function verkehrPuffer() {
     var v = parseInt(lesen("verkehr") || "0", 10);
-    return isNaN(v) || v < 0 || v > 60 ? 0 : v;
+    return isNaN(v) || v < 0 || v > PUFFER_MAX ? 0 : v;
+  }
+  function verkehrReserve() {
+    var v = parseInt(lesen("verkehrmin") || "0", 10);
+    return isNaN(v) || v < 0 || v > RESERVE_MAX ? 0 : v;
+  }
+  // Rein rechnend, damit der Test sie ohne Einstellungen pruefen kann.
+  function pufferRechnen(minuten, prozent, reserve) {
+    return Math.round(minuten * (1 + (prozent || 0) / 100)) + (reserve || 0);
   }
   function mitPuffer(sk) {
     if (!sk || !sk.minuten) return sk;
-    var p = verkehrPuffer();
-    if (!p) return sk;
-    return { minuten: Math.round(sk.minuten * (1 + p / 100)), km: sk.km, art: sk.art };
+    var p = verkehrPuffer(), r = verkehrReserve();
+    if (!p && !r) return sk;
+    return { minuten: pufferRechnen(sk.minuten, p, r), km: sk.km, art: sk.art };
   }
   // "ohne Verkehr" las sich wie "gerade ist frei". Gemeint ist das
   // Gegenteil: Stau steckt nicht drin. Der Puffer steht in den
   // Einstellungen unter "Verkehr".
-  function verkehrText() {
-    var p = verkehrPuffer();
-    return p ? "inkl. " + p + " % Puffer" : "Stau nicht eingerechnet";
+  function pufferText(p, r) {
+    if (!p && !r) return "Stau nicht eingerechnet";
+    return "inkl. " + (p ? p + " %" : "") + (p && r ? " + " : "") + (r ? r + " Min." : "") + " Puffer";
   }
-  function verkehrLaden(nurAnwenden) {
+  function verkehrText() { return pufferText(verkehrPuffer(), verkehrReserve()); }
+
+  // Zwei Regler mit - und +, dazu ein Rechenbeispiel. Die Seite dahinter
+  // wird erst neu gezeichnet, wenn man aufhoert zu tippen - jeder Schritt
+  // einzeln liess die Startkarte flackern.
+  var verkehrNeuTimer = null;
+  function verkehrLaden() {
     var box = el("verkehr"); if (!box) return;
-    var jetzt = String(verkehrPuffer());
-    Array.prototype.forEach.call(box.querySelectorAll("button"), function (b) {
-      b.classList.toggle("aktiv", b.getAttribute("data-puffer") === jetzt);
-      if (nurAnwenden || b._an) return;
-      b._an = true;
-      b.addEventListener("click", function () {
-        var w = b.getAttribute("data-puffer");
-        schreiben("verkehr", w === "0" ? null : w);
-        verkehrLaden(true); einstellungenSync();
-        if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true);
-        toast(w === "0" ? "Ohne Puffer, reine Fahrzeit." : "Abfahrt " + w + " % früher.", "gut");
-      });
-    });
+    box.innerHTML = "";
+    var beispiel = document.createElement("p"); beispiel.className = "meta vr-beispiel";
+    function beispielSetzen() {
+      var p = verkehrPuffer(), r = verkehrReserve();
+      beispiel.textContent = !p && !r
+        ? "Abfahrt nach reiner Fahrzeit, ohne Reserve."
+        : "Beispiel: 40 Min. Fahrt → " + pufferRechnen(40, p, r) + " Min. eingeplant, 15 Min. Fahrt → " + pufferRechnen(15, p, r) + " Min.";
+    }
+    function regler(titel, erkl, schluessel, holen, max, schritt, einheit) {
+      var z = document.createElement("div"); z.className = "vr-zeile";
+      var t = document.createElement("span");
+      var b = document.createElement("b"); b.textContent = titel; t.appendChild(b);
+      var sm = document.createElement("small"); sm.textContent = erkl; t.appendChild(sm);
+      z.appendChild(t);
+      var rg = document.createElement("span"); rg.className = "vr-regler";
+      var minus = document.createElement("button"); minus.type = "button"; minus.className = "schrittknopf"; minus.textContent = "−";
+      minus.setAttribute("aria-label", titel + " verringern");
+      var wert = document.createElement("output"); wert.setAttribute("aria-live", "polite");
+      var plus = document.createElement("button"); plus.type = "button"; plus.className = "schrittknopf"; plus.textContent = "+";
+      plus.setAttribute("aria-label", titel + " erhöhen");
+      function zeigen() {
+        var v = holen();
+        wert.textContent = v + " " + einheit;
+        minus.disabled = v <= 0; plus.disabled = v >= max;
+      }
+      function setzen(d) {
+        // Auf das Raster einrasten: wer frueher 12 % hatte, landet nicht
+        // dauerhaft zwischen den Stufen.
+        var v = Math.max(0, Math.min(max, Math.round((holen() + d) / schritt) * schritt));
+        schreiben(schluessel, v ? String(v) : null);
+        zeigen(); beispielSetzen(); einstellungenSync();
+        clearTimeout(verkehrNeuTimer);
+        verkehrNeuTimer = setTimeout(function () {
+          if (aktuell && !el("detail").classList.contains("versteckt")) zeigePerson(aktuell, true);
+        }, 700);
+      }
+      minus.addEventListener("click", function () { setzen(-schritt); });
+      plus.addEventListener("click", function () { setzen(schritt); });
+      rg.appendChild(minus); rg.appendChild(wert); rg.appendChild(plus);
+      z.appendChild(rg);
+      zeigen();
+      return z;
+    }
+    box.appendChild(regler("Aufschlag", "wächst mit der Strecke", "verkehr", verkehrPuffer, PUFFER_MAX, 5, "%"));
+    box.appendChild(regler("Reserve", "feste Minuten, z. B. Parkplatz", "verkehrmin", verkehrReserve, RESERVE_MAX, 5, "Min."));
+    beispielSetzen();
+    box.appendChild(beispiel);
   }
 
   // Was mit dem Konto auf jedes Geraet wandert. Eine Liste, nicht drei:
   // frueher stand sie einmal hier und einmal beim Anwenden, und was man
   // nur an einer Stelle eintrug, wurde nie gespeichert (so ging es
   // "pushvorlauf", "pushgespann" und den Kalenderwuenschen).
-  var SYNC_SCHLUESSEL = ["verkehr", "karten", "schrift", "akzent", "kompakt",
+  var SYNC_SCHLUESSEL = ["verkehr", "verkehrmin", "karten", "schrift", "akzent", "kompakt",
     "ziel", "start", "bereiche", "pushwoche", "pushabrechnung", "pushvorlauf", "pushgespann",
     "kalender", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4",
     // Die Anleitung lief einmal, die Einrichtungsliste ist weggetippt - das
@@ -6669,7 +6751,7 @@
     var l2 = document.createElement("label");
     var s2 = document.createElement("span");
     var b2 = document.createElement("b"); b2.textContent = "Termin beginnt"; s2.appendChild(b2);
-    var sm2 = document.createElement("small"); sm2.textContent = "Treffpunkt ist 60 Min. vor Anpfiff"; s2.appendChild(sm2);
+    var sm2 = document.createElement("small"); sm2.textContent = "Treffpunkt ist " + (daten && daten.vorlauf_minuten || 60) + " Min. vor Anpfiff"; s2.appendChild(sm2);
     l2.appendChild(s2);
     var wahl = document.createElement("select"); wahl.className = "mg-select";
     [["treffpunkt", "zum Treffpunkt"], ["anstoss", "zum Anpfiff"]].forEach(function (o) {
@@ -6685,9 +6767,13 @@
     kopf2.textContent = "Erinnerungen";
     box.appendChild(kopf2);
     var hin = document.createElement("p"); hin.className = "meta"; hin.style.margin = "0 0 6px";
-    hin.textContent = w.alarme.length
-      ? "Dein Kalender weckt dich " + w.alarme.length + "× vor dem gewählten Beginn."
-      : "Kein Wecker - der Termin steht nur im Kalender.";
+    hin.textContent = (w.alarme.length
+      ? "Dein Kalender weckt dich " + w.alarme.length + "× vor " + (w.beginn === "anstoss" ? "dem Anpfiff." : "dem Treffpunkt.")
+      : "Kein Wecker – der Termin steht nur im Kalender.")
+      // Die Fahrzeit kommt von deiner Heimatadresse. Im abonnierten
+      // Kalender steht sie nicht: der liegt offen im Netz, und aus den
+      // Fahrzeiten zu drei Hallen liesse sich die Adresse zurueckrechnen.
+      + " Einen Wecker zur Abfahrt gibt es über „Kalenderdatei mit Abfahrtsalarm“ auf deiner Seite.";
     box.appendChild(hin);
     var reihe = document.createElement("div"); reihe.className = "stufen kal-alarme";
     KAL_ALARME.forEach(function (a) {
@@ -7420,7 +7506,8 @@
       rechnerErgebnis: rechnerErgebnis, restSekunden: restSekunden,
       restText: restText, rArt: rArt, R_ARTEN: R_ARTEN,
       ohneZeichen: ohneZeichen, ausgeschrieben: ausgeschrieben, suchtextVon: suchtextVon,
-      datumKurz: datumKurz, uhr: uhr, farbeFuer: farbeFuer, mitPuffer: mitPuffer, seitText: seitText, bildUrl: bildUrl,
+      datumKurz: datumKurz, uhr: uhr, farbeFuer: farbeFuer, mitPuffer: mitPuffer, pufferRechnen: pufferRechnen, pufferText: pufferText,
+      kalenderZeiten: kalenderZeiten, icsEvent: icsEvent, seitText: seitText, bildUrl: bildUrl,
       spieltagErlaubt: spieltagErlaubt, spieltagOffen: spieltagOffen, startEinstellung: startEinstellung,
       aendZerlegen: aendZerlegen, aendArt: aendArt, tourAngebote: tourAngebote,
       titelDoppelt: titelDoppelt, einrichtungSichtbar: einrichtungSichtbar,

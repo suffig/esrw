@@ -207,14 +207,36 @@ def vorlauf_zeit(profil, treff):
     return datetime.combine(treff.date(), time(ERINNERUNG_AB_STUNDE, 0), tzinfo=BERLIN)
 
 
-def verkehr_puffer(profil):
-    """Derselbe Aufschlag, den die App auf die Fahrzeit rechnet - der
-    Routendienst kennt keinen Stau (Einstellungen -> Puffer fuer Verkehr)."""
+def _ganzzahl(profil, schluessel, hoechstens):
     try:
-        p = int(((profil or {}).get("einstellungen") or {}).get("verkehr") or 0)
+        p = int(((profil or {}).get("einstellungen") or {}).get(schluessel) or 0)
     except (TypeError, ValueError):
         return 0
-    return p if 0 <= p <= 60 else 0
+    return p if 0 <= p <= hoechstens else 0
+
+
+def verkehr_puffer(profil):
+    """Derselbe Aufschlag in Prozent, den die App auf die Fahrzeit rechnet -
+    der Routendienst kennt keinen Stau (Einstellungen -> Puffer fuer
+    Verkehr). Grenzen wie PUFFER_MAX in app.js."""
+    return _ganzzahl(profil, "verkehr", 100)
+
+
+def verkehr_reserve(profil):
+    """Feste Minuten obendrauf (Parkplatz, Ortseingang) - RESERVE_MAX in app.js."""
+    return _ganzzahl(profil, "verkehrmin", 60)
+
+
+def mit_puffer(minuten, prozent, reserve):
+    """Wie pufferRechnen() in app.js - beide muessen dieselbe Abfahrt nennen."""
+    return round(minuten * (1 + prozent / 100.0)) + reserve
+
+
+def puffer_text(prozent, reserve):
+    if not prozent and not reserve:
+        return "Stau nicht eingerechnet"
+    teile = (["%d %%" % prozent] if prozent else []) + (["%d Min." % reserve] if reserve else [])
+    return "inkl. " + " + ".join(teile) + " Puffer"
 
 
 def erinnerungen(person, profil, jetzt, schon):
@@ -223,6 +245,7 @@ def erinnerungen(person, profil, jetzt, schon):
     heraus = []
     strecken = (profil or {}).get("strecken") or {}
     puffer = verkehr_puffer(profil)
+    reserve = verkehr_reserve(profil)
     for s in person.get("spiele", []):
         try:
             beginn = datetime.fromisoformat(s["beginn"]).astimezone(BERLIN)
@@ -239,8 +262,8 @@ def erinnerungen(person, profil, jetzt, schon):
         kennung = s["beginn"] + "|" + s["paarung"]
         strecke = strecken.get(s.get("halle") or "") or {}
         minuten = strecke.get("minuten")
-        if minuten and puffer:
-            minuten = round(minuten * (1 + puffer / 100.0))
+        if minuten:
+            minuten = mit_puffer(minuten, puffer, reserve)
         abfahrt = treff - timedelta(minutes=minuten) if minuten else None
 
         k = "spieltag|" + kennung
@@ -251,7 +274,7 @@ def erinnerungen(person, profil, jetzt, schon):
             if abfahrt:
                 text += "\nAbfahrt ca. %s Uhr (%s km, %s)" % (
                     abfahrt.strftime("%H:%M"), strecke.get("km", "?"),
-                    ("inkl. %d %% Puffer" % puffer) if puffer else "ohne Verkehr")
+                    puffer_text(puffer, reserve))
             w = wetter(s.get("koordinaten"), abfahrt or treff)
             if w:
                 text += "\nWetter: " + w

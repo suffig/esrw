@@ -3846,6 +3846,17 @@
      (titelAnpassen() setzt die Klasse). */
   :root[data-design="neu"] .kopf h1.eng { font-size:var(--s-xl); letter-spacing:-.01em; }
 
+  /* Verkehrspuffer: zwei Regler statt vier fester Stufen. */
+  .verkehr-block { padding:12px 0; border-top:1px solid var(--linie); font-weight:600; }
+  .verkehr-block > span > small { display:block; color:var(--dim); font-weight:500; }
+  .vr-zeile { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:10px; }
+  .vr-zeile > span > small { display:block; color:var(--dim); font-weight:500; }
+  .vr-regler { display:inline-flex; align-items:center; gap:6px; flex:none; }
+  .vr-regler .schrittknopf { width:44px; height:44px; min-width:44px; font-size:1.2rem; line-height:1; }
+  .vr-regler .schrittknopf:disabled { opacity:.35; cursor:default; }
+  .vr-regler output { min-width:4.4em; text-align:center; font-weight:800; font-variant-numeric:tabular-nums; }
+  .vr-beispiel { margin:8px 0 0; font-weight:500; }
+
 </style>
 </head>
 <body>
@@ -4104,7 +4115,7 @@
     <h3 class="abschnitt">Unterwegs<small>Route, Abfahrt und dein Ziel für die Saison</small></h3>
     <div class="karte einstellungen-liste">
       <label>Karten-App <select id="karten-app"><option value="auto">automatisch</option><option value="apple">Apple Karten</option><option value="google">Google Maps</option></select></label>
-      <label><span><b>Puffer für Verkehr</b><small>Der Routendienst rechnet ohne Stau. Der Aufschlag geht in die Abfahrtszeit ein.</small></span><span class="stufen" id="verkehr"><button type="button" data-puffer="0">0 %</button><button type="button" data-puffer="10">10 %</button><button type="button" data-puffer="20">20 %</button><button type="button" data-puffer="30">30 %</button></span></label>
+      <div class="verkehr-block"><span><b>Puffer für Verkehr</b><small>Der Routendienst rechnet ohne Stau. Beides zusammen zieht die Abfahrt vor – auf Start, Spielseite, Push und Kalenderdatei.</small></span><div id="verkehr"></div></div>
       <label>Saisonziel <input type="number" id="ziel" min="1" max="200" placeholder="z. B. 40" style="width:6em"> Spiele</label>
     </div>
     <button type="button" class="mg-neben fein-knopf" id="fein-knopf">Mehr einstellen …</button>
@@ -4311,6 +4322,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=288"></script>
+<script src="app.js?v=289"></script>
 </body>
 </html>

@@ -995,6 +995,13 @@ def test_erinnerungszeit():
     pruefe(P.verkehr_puffer({"einstellungen": {"verkehr": "20"}}) == 20, "Verkehrspuffer wird uebernommen")
     pruefe(P.verkehr_puffer({"einstellungen": {"verkehr": "999"}}) == 0, "unsinniger Puffer zaehlt nicht")
     pruefe(P.verkehr_puffer({}) == 0, "ohne Einstellung kein Puffer")
+    # Fassung 289: bis 100 % und feste Minuten - wie pufferRechnen() in app.js
+    pruefe(P.verkehr_puffer({"einstellungen": {"verkehr": "75"}}) == 75, "Puffer ueber 60 % gilt jetzt")
+    pruefe(P.verkehr_reserve({"einstellungen": {"verkehrmin": "15"}}) == 15, "Reserve wird uebernommen")
+    pruefe(P.verkehr_reserve({"einstellungen": {"verkehrmin": "500"}}) == 0, "unsinnige Reserve zaehlt nicht")
+    pruefe(P.mit_puffer(40, 20, 10) == 58, "40 Min. + 20 % + 10 Min. = 58 wie in der App")
+    pruefe(P.puffer_text(20, 10) == "inkl. 20 % + 10 Min. Puffer", "Puffertext wie in der App")
+    pruefe(P.puffer_text(0, 0) == "Stau nicht eingerechnet", "ohne Puffer wie in der App")
 
 
 def test_sicherung():

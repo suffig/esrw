@@ -1161,6 +1161,47 @@ pruefe(strecke && strecke.minuten >= 30, "mit Puffer dauert es nicht kuerzer",
        strecke && String(strecke.minuten));
 gleich(strecke.km, 25, "die Strecke bleibt dieselbe");
 
+// Puffer frei einstellbar (Fassung 289): Prozent und feste Minuten.
+gleich(P.pufferRechnen(40, 20, 10), 58, "40 Min. + 20 % + 10 Min. = 58");
+gleich(P.pufferRechnen(15, 0, 10), 25, "nur Reserve");
+gleich(P.pufferRechnen(30, 0, 0), 30, "ohne Puffer reine Fahrzeit");
+gleich(P.pufferText(0, 0), "Stau nicht eingerechnet", "Text ohne Puffer");
+gleich(P.pufferText(20, 10), "inkl. 20 % + 10 Min. Puffer", "Text mit beidem");
+gleich(P.pufferText(0, 15), "inkl. 15 Min. Puffer", "Text nur Reserve");
+localStorage.setItem("verkehr", "20"); localStorage.setItem("verkehrmin", "10");
+gleich(P.mitPuffer({ minuten: 40, km: 30 }).minuten, 58, "mitPuffer liest beide Einstellungen");
+localStorage.setItem("verkehr", "500");
+gleich(P.mitPuffer({ minuten: 40, km: 30 }).minuten, 50, "unsinniger Prozentwert zaehlt nicht, Reserve schon");
+localStorage.removeItem("verkehr"); localStorage.removeItem("verkehrmin");
+
+// Kalenderdatei aus der App: Beginn und Wecker folgen den
+// Kalendereinstellungen. Bis Fassung 288 immer Treffpunkt und -PT1H.
+P.setze({ daten: { vorlauf_minuten: 60, spieldauer_minuten: 150 } });
+var kSpiel = { beginn: "2026-12-05T18:00:00+01:00", treffpunkt: "2026-12-05T17:00:00+01:00",
+               paarung: "A – B", rolle: "SR", liga: "U13", halle: "Halle X", ort: "Halle X, Ort" };
+var kStrecke = { minuten: 40, km: 30 };
+var zT = P.kalenderZeiten(kSpiel, kStrecke, { beginn: "treffpunkt" });
+gleich(zT.start.toISOString(), "2026-12-05T16:00:00.000Z", "zum Treffpunkt beginnt der Termin um 17 Uhr");
+gleich(zT.abfahrt.toISOString(), "2026-12-05T15:20:00.000Z", "Abfahrt 40 Min. vor dem Treffpunkt");
+gleich(zT.weckerVor, 50, "Abfahrtswecker 10 Min. vor der Abfahrt, gerechnet ab Treffpunkt");
+var zA = P.kalenderZeiten(kSpiel, kStrecke, { beginn: "anstoss" });
+gleich(zA.start.toISOString(), "2026-12-05T17:00:00.000Z", "zum Anpfiff beginnt der Termin um 18 Uhr");
+gleich(zA.abfahrt.toISOString(), zT.abfahrt.toISOString(), "die Abfahrt haengt nicht am Kalenderbeginn");
+gleich(zA.weckerVor, 110, "zum Anpfiff liegt der Abfahrtswecker um den Vorlauf weiter davor");
+gleich(P.kalenderZeiten(kSpiel, null, { beginn: "treffpunkt" }).weckerVor, null, "ohne Strecke kein Abfahrtswecker");
+
+localStorage.setItem("kalender", JSON.stringify({ rolle: false, liga: true, halle: true, gespann: false,
+  beginn: "anstoss", alarme: ["-PT2H", "-P1D", "-P\r\nATTACH:x"] }));
+var ics = P.icsEvent(kSpiel, kStrecke).join("\n");
+pruefe(ics.indexOf("DTSTART:20261205T170000Z") >= 0, "Datei: Beginn zum Anpfiff", ics);
+pruefe(ics.indexOf("TRIGGER:-PT2H") >= 0 && ics.indexOf("TRIGGER:-P1D") >= 0, "Datei: eigene Wecker", ics);
+pruefe(ics.indexOf("TRIGGER:-PT1H") < 0, "Datei: kein fester Wecker mehr", ics);
+pruefe(ics.indexOf("TRIGGER:-PT110M") >= 0, "Datei: Abfahrtswecker passt zum Beginn", ics);
+pruefe(ics.indexOf("ATTACH") < 0, "Datei: kaputte Weckerangabe faellt weg", ics);
+pruefe(ics.indexOf("SUMMARY:U13: A – B · Halle X") >= 0, "Datei: Titel wie eingestellt", ics);
+pruefe(ics.indexOf("Noch zwei Stunden bis Anpfiff") >= 0, "Datei: Weckertext zum Anpfiff", ics);
+localStorage.removeItem("kalender");
+
 
 // ------------------------------------------------------------- Ergebnis
 
