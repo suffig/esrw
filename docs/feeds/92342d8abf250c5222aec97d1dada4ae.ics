@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:8fcc95080c18b7e98167cd699df787990d510543@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
-DTSTART:20261114T113000Z
-DTEND:20261114T150000Z
-SUMMARY:SR · Frauen LL: Ratinger Ice Aliens – Tornado Women Luxembourg
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
-  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen LL\nHalle: Eissporthalle
-  Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Heffler\, Zs
- olt\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/einteil
- ungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
-GEO:51.295808;6.834624
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
-  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
- tingen":geo:51.295808,6.834624
-END:VEVENT
-BEGIN:VEVENT
 UID:d799e8fce54becc684fa0c90ff91079aa6fe1899@esrw.de
 SEQUENCE:0
 DTSTAMP:20261107T130048Z

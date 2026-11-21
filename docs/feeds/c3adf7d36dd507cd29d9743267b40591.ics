@@ -8,49 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:76d4bf748fc0b7bcb85657c086cbd83b229d6c07@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
-DTSTART:20261114T113000Z
-DTEND:20261114T150000Z
-SUMMARY:SR · Frauen LL: Ratinger Ice Aliens – Tornado Women Luxembourg
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
-  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen LL\nHalle: Eissporthalle
-  Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Schwarz\, Kj
- ell (N)\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/ein
- teilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
-GEO:51.295808;6.834624
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
-  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
- tingen":geo:51.295808,6.834624
-END:VEVENT
-BEGIN:VEVENT
-UID:476b8fe5ce0ddd166e34b470d1b4e83aea403fde@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
-DTSTART:20261114T113000Z
-DTEND:20261114T150000Z
-SUMMARY:SR · U9 RL: Krefelder EV – YAYLA Krefeld
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
-  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: Rheinlandhalle Kr
- efeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Reuter\, Fyn
- n\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
-GEO:51.339877;6.540168
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
- stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
- le Krefeld":geo:51.339877,6.540168
-END:VEVENT
-BEGIN:VEVENT
 UID:815d88cc7217622fa5f811496ee0335d9231a1e5@esrw.de
 SEQUENCE:0
 DTSTAMP:20261107T130048Z
@@ -1432,12 +1389,6 @@ GEO:51.339877;6.540168
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
  stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
  le Krefeld":geo:51.339877,6.540168
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Rot: Krefelder EV 1
- b – YAYLA Krefeld
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:f8de536838c46a01ffe2bfd56b863869c84df53b@esrw.de
@@ -1459,12 +1410,6 @@ GEO:51.295808;6.834624
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
   Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
  tingen":geo:51.295808,6.834624
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Ratinger Ice Alien
- s – Herforder EV
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:bdc604f936bbc28963d948556582fe131a984526@esrw.de
@@ -3917,15 +3862,16 @@ END:VEVENT
 BEGIN:VEVENT
 UID:e55ba8ab9836ff5cee1d857754b4933a60e8fb9a@esrw.de
 SEQUENCE:0
-DTSTAMP:20261120T170054Z
-LAST-MODIFIED:20261120T170054Z
+DTSTAMP:20261121T123043Z
+LAST-MODIFIED:20261121T123043Z
 DTSTART:20261129T080000Z
 DTEND:20261129T113000Z
-SUMMARY:SR · DNL III: EV Duisburg – ES Weißwasser
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
-  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero Rheinla
- ndhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann:
-  Licau\, Alexander\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:HSR · DNL III: EV Duisburg – ES Weißwasser
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 10:00 Uhr\nTreff
+ punkt: 09:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero R
+ heinlandhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGe
+ spann: Licau\, Alexander (LSR) / Kudal\, Lars (LSR)\n\nQuelle: https://www
+ .esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -3938,8 +3884,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · DNL III: EV Duisburg – E
- S Weißwasser
+DESCRIPTION:In einer Stunde an der Halle - HSR · DNL III: EV Duisburg – 
+ ES Weißwasser
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

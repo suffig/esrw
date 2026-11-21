@@ -53,16 +53,18 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
 END:VEVENT
 BEGIN:VEVENT
 UID:b68e07c427ee48c7048d545685bc194110422719@esrw.de
-SEQUENCE:1
-DTSTAMP:20261120T170054Z
-LAST-MODIFIED:20261120T170054Z
+SEQUENCE:2
+DTSTAMP:20261121T123043Z
+LAST-MODIFIED:20261121T123043Z
 DTSTART:20261129T080000Z
 DTEND:20261129T113000Z
-SUMMARY:SR · DNL III: EV Duisburg – ES Weißwasser
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
-  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero Rheinla
- ndhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann:
-  Kudal\, Lars\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ LSR · DNL III: EV Duisburg – ES Weißwasser
+DESCRIPTION:Geändert: Rolle (vorher SR)\, Gespann (vorher Kudal\, Lars (SR
+ ))\n\nRolle: Linienrichter (LSR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt: 09:0
+ 0 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero Rheinlandhal
+ le Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: Kief
+ er\, Dennis (HSR) / Kudal\, Lars (LSR)\n\nQuelle: https://www.esrw.de/eint
+ eilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -75,8 +77,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · DNL III: EV Duisburg – E
- S Weißwasser
+DESCRIPTION:In einer Stunde an der Halle - ⚠ LSR · DNL III: EV Duisburg 
+ – ES Weißwasser
 END:VALARM
 END:VEVENT
 END:VCALENDAR
