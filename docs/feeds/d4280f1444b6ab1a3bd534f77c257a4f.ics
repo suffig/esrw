@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:74ff2547e194de4f9db65012e1e8f0878886af8a@esrw.de
-SEQUENCE:1
-DTSTAMP:20261112T100048Z
-LAST-MODIFIED:20261112T100048Z
-DTSTART:20261114T091500Z
-DTEND:20261114T124500Z
-SUMMARY:SR · Frauen Pokal Gr.C: Soester EG – Düsseldorfer EG
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:15 Uhr\nTreffpunkt:
-  10:15 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen Pokal Gr.C\nHalle: Eissp
- ortzentrum Möhnesee\nAdresse: Teigelhof 4\, 59519 Möhnesee\nGespann: Gal
- eske\, Jonas\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.d
- e/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Möhnesee\, Teigelhof 4\, 59519 Möhnesee
-GEO:51.515208;8.159069
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Möhnesee,
-  Teigelhof 4, 59519 Möhnesee";X-APPLE-RADIUS=100;X-TITLE="Eissportzentrum
-  Möhnesee":geo:51.515208,8.159069
-END:VEVENT
-BEGIN:VEVENT
 UID:901b3a0fe4cbac7d80706a2b4045c6eba578c097@esrw.de
 SEQUENCE:0
 DTSTAMP:20261111T143043Z
