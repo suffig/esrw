@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:7770a19241432862843a9183658eb6023fb32b26@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
-DTSTART:20261114T084500Z
-DTEND:20261114T121500Z
-SUMMARY:SR · U15 LL: TuS Wiehl – SpG EHC Gelsenkirchen / Herner EV 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:45 Uhr\nTreffpunkt:
-  09:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Wi
- ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Starke\, Matthias\
- n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
-GEO:50.947034;7.5553
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
- enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
- ":geo:50.947034,7.5553
-END:VEVENT
-BEGIN:VEVENT
 UID:a9629ff5db0ba0b05acfd71aa8f94e7bfc389c93@esrw.de
 SEQUENCE:0
 DTSTAMP:20261107T130048Z
@@ -1410,12 +1389,6 @@ GEO:50.947034;7.5553
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
  enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
  ":geo:50.947034,7.5553
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: TuS Wiehl – Dins
- lakener Kobras
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:af9f67c21cc855ed2623b30b7957adc655ee0d0d@esrw.de
