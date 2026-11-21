@@ -8,72 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:ec66cb7f7186956334f95bfbf38c70f6f37c018a@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
-DTSTART:20261114T060000Z
-DTEND:20261114T093000Z
-SUMMARY:SR · U9 LL Grün: Herforder EV 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
-  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Grün\nHalle: Eishalle Im
-  Kleinen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Funk\,
-  Marvin\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eishalle Im Kleinen Felde\, Im Kleinen Felde\, 32051 Herford
-GEO:52.114893;8.652028
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
-  Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
- Kleinen Felde":geo:52.114893,8.652028
-END:VEVENT
-BEGIN:VEVENT
-UID:77a7952709b08d55325c490726c091717073a4c6@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
-DTSTART:20261114T060000Z
-DTEND:20261114T093000Z
-SUMMARY:SR · U13 BZL Gr.B: ESV Bergisch Gladbach – Grefrather EG
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
-  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.B\nHalle: Eissportha
- lle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbac
- h\nGespann: Victor\, Tobias (N)\n\nQuelle: https://www.esrw.de/einteilunge
- n.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
- ch Gladbach
-GEO:50.967548;7.135355
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
- dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
- TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-END:VEVENT
-BEGIN:VEVENT
-UID:86bfd1140a97f736fa0c6a5e41a0486a3bffd773@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
-DTSTART:20261114T060000Z
-DTEND:20261114T093000Z
-SUMMARY:SR · U13 BZL Gr.A: ESC Rheine Young Cats – SpG Kristall Lippstad
- t / Soester EG
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
-  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\nHalle: Rheiner Ei
- ssporthalle\nAdresse: Kopernikusstraße 34\, 48429 Rheine\nGespann: Zynda\
- , Nick\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Rheiner Eissporthalle\, Kopernikusstraße 34\, 48429 Rheine
-GEO:52.281013;7.455599
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheiner Eissporthalle, Kop
- ernikusstraße 34, 48429 Rheine";X-APPLE-RADIUS=100;X-TITLE="Rheiner Eissp
- orthalle":geo:52.281013,7.455599
-END:VEVENT
-BEGIN:VEVENT
 UID:3d236ff20cc881c4509fa3d416f9caa610e6cfb2@esrw.de
 SEQUENCE:0
 DTSTAMP:20261118T101529Z
@@ -1476,12 +1410,6 @@ GEO:50.967548;7.135355
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
  dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
  TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.B: ESV Bergisch
-  Gladbach – TuS Wiehl
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:75d1e59dea5ebca493aec7726f8d089e82670c34@esrw.de
@@ -1503,12 +1431,6 @@ GEO:52.114893;8.652028
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
   Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
  Kleinen Felde":geo:52.114893,8.652028
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB: Herforder EV – 
- EJ Kassel
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:ca9ba6b3b637bc9dd320e20e6b5dbf4143fdf034@esrw.de
