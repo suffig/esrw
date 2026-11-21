@@ -51,29 +51,32 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
 END:VEVENT
 BEGIN:VEVENT
 UID:19bafae9f5a3b620df1f5b3e2d57579d4e8e2b73@esrw.de
-SEQUENCE:0
-DTSTAMP:20261120T094530Z
-LAST-MODIFIED:20261120T094530Z
+SEQUENCE:1
+DTSTAMP:20261121T171535Z
+LAST-MODIFIED:20261121T171535Z
 DTSTART:20261128T100000Z
 DTEND:20261128T133000Z
-SUMMARY:SR · U13 RLB: EJ Kassel – Düsseldorfer EG 1b In Düsseldorf !!!
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
-  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Eissporthalle K
- assel\nAdresse: Am Auestadion 1\, 34121 Kassel\nGespann: Krawinkel\, Marku
- s\n\nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:⚠ SR · U13 RLB: EJ Kassel – Düsseldorfer EG 1b In Düsseldorf
+  !!!
+DESCRIPTION:Geändert: Korrektur vom Betreiber: Halle (vorher Eissporthalle
+  Kassel)\n\nKorrektur vom Betreiber: Halle: Eishalle Brehmstraße\n\nRolle
+ : Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt: 11:00 Uhr (60 M
+ in vor Spielbeginn)\nLiga: U13 RLB\nHalle: Eishalle Brehmstraße\nAdresse:
+  Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Krawinkel\, Markus\n\nQuel
+ le: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-LOCATION:Eissporthalle Kassel\, Am Auestadion 1\, 34121 Kassel
-GEO:51.298003;9.48235
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Kassel, Am A
- uestadion 1, 34121 Kassel";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Kasse
- l":geo:51.298003,9.48235
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB: EJ Kassel – Dü
- sseldorfer EG 1b In Düsseldorf !!!
+DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · U13 RLB: EJ Kassel –
+  Düsseldorfer EG 1b In Düsseldorf !!!
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
