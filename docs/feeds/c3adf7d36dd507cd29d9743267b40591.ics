@@ -8,48 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:617453f2e1ccd093fb3138405cd5b7cc6a7c9f65@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
-DTSTART:20261114T173000Z
-DTEND:20261114T210000Z
-SUMMARY:SR · U17 I: Düsseldorfer EG – ESV Kaufbeuren
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
-  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eishalle Brehmstr
- aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Priebsch\, J
- an Philipp\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
-GEO:51.242557;6.802144
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
- hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
- hmstraße":geo:51.242557,6.802144
-END:VEVENT
-BEGIN:VEVENT
-UID:95717380b41de081c5edec2144e83cfc510ece5b@esrw.de
-SEQUENCE:0
-DTSTAMP:20261111T100054Z
-LAST-MODIFIED:20261111T100054Z
-DTSTART:20261114T173000Z
-DTEND:20261114T210000Z
-SUMMARY:SR · U15 ODM: Krefelder EV – Kölner Junghaie
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
-  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 ODM\nHalle: Rheinlandhalle 
- Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Reuter\, F
- ynn\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
-GEO:51.339877;6.540168
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
- stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
- le Krefeld":geo:51.339877,6.540168
-END:VEVENT
-BEGIN:VEVENT
 UID:f6f971899551296df3be510454f4ceee30d7cc56@esrw.de
 SEQUENCE:0
 DTSTAMP:20261107T130048Z
@@ -1410,12 +1368,6 @@ GEO:51.339877;6.540168
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
  stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
  le Krefeld":geo:51.339877,6.540168
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLA: Krefelder EV – 
- Iserlohner EC
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:640f075b751365a26598b8dcd9ae82da13563973@esrw.de
@@ -1437,12 +1389,6 @@ GEO:51.384598;7.713829
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
  , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
  alle am Seilersee":geo:51.384598,7.713829
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Iserlohner EC – S
- tarbulls Rosenheim
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:5a5c2c9fcf19e64c4ae54d5b6a5987f2683af14d@esrw.de
