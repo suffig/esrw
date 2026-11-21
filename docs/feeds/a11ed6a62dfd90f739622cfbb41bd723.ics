@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:8533c2c208da993a231cf22c623f7aeb391368e1@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
-DTSTART:20261114T080000Z
-DTEND:20261114T113000Z
-SUMMARY:SR · U15 LL: EV Duisburg 1b – EHC Die Bären Neuwied
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
-  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: PreZero Rheinlan
- dhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: 
- Baum\, Fabian (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
- sburg
-GEO:51.405718;6.780082
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
- sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
- reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
-END:VEVENT
-BEGIN:VEVENT
 UID:4e23e67300d0d568fabbfa7ade619b7a5954a180@esrw.de
 SEQUENCE:0
 DTSTAMP:20261116T130059Z

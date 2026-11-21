@@ -50,12 +50,6 @@ GEO:51.405718;6.780082
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
  sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
  reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: EV Duisburg 1b –
-  ESV Grizzlys Bergkamen
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:ea325d9e723cb0719194264faa2fe24d2b963054@esrw.de
