@@ -51,12 +51,6 @@ GEO:51.553483;7.073102
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Emscher-Lippe-Halle Gelsen
  kirchen, Adenauerallee 118, 45891 Gelsenkirchen";X-APPLE-RADIUS=100;X-TITL
  E="Emscher-Lippe-Halle Gelsenkirchen":geo:51.553483,7.073102
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: SpG EHC Gels
- enkirchen / Herner EV 1b – SpG Kristall Lippstadt / Soester EG
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:7fdc6c307d83f81cb981c49ddb9a4af830bea7e5@esrw.de

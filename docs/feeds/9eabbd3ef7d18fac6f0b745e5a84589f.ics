@@ -85,6 +85,12 @@ TRIGGER:-P1D
 DESCRIPTION:Morgen Spiel - HSR · U20 RL: EHC Troisdorf – Ratinger Ice Al
  iens · Eissporthalle Ratingen
 END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT2H
+DESCRIPTION:In zwei Stunden an der Halle - HSR · U20 RL: EHC Troisdorf –
+  Ratinger Ice Aliens · Eissporthalle Ratingen
+END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:ab27e54d7719fae3906a7a9f0a3158104e0d0ba3@esrw.de
@@ -120,6 +126,13 @@ TRIGGER:-P1D
 DESCRIPTION:Morgen Spiel - SR · U15 LL: SpG Neusser EV / GSC Moers – SpG
   ESV Grizzlys Bergkamen / ESC Rheine Young Cats · Eissporthalle Neuss
 END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT2H
+DESCRIPTION:In zwei Stunden an der Halle - SR · U15 LL: SpG Neusser EV / G
+ SC Moers – SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats · Eisspor
+ thalle Neuss
+END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:aecf7a3b3aa603332df535387624f25969c2379e@esrw.de
@@ -152,6 +165,12 @@ ACTION:DISPLAY
 TRIGGER:-P1D
 DESCRIPTION:Morgen Spiel - SR · NRW U13: NRW SCHWARZ – NRW WEIß · Eish
  alle Brehmstraße
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT2H
+DESCRIPTION:In zwei Stunden an der Halle - SR · NRW U13: NRW SCHWARZ – N
+ RW WEIß · Eishalle Brehmstraße
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -187,6 +206,12 @@ TRIGGER:-P1D
 DESCRIPTION:Morgen Spiel - HSR · Senioren RLW: TuS Wiehl – GSC Moers · 
  Eissporthalle Wiehl
 END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT2H
+DESCRIPTION:In zwei Stunden an der Halle - HSR · Senioren RLW: TuS Wiehl 
+ – GSC Moers · Eissporthalle Wiehl
+END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:1d5eaa0d3e24f8fd698d05fc691062bb94b10658@esrw.de
@@ -220,6 +245,12 @@ ACTION:DISPLAY
 TRIGGER:-P1D
 DESCRIPTION:Morgen Spiel - HSR · U20 RL: EHC Troisdorf – TuS Wiehl · IC
  EDOME Troisdorf
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT2H
+DESCRIPTION:In zwei Stunden an der Halle - HSR · U20 RL: EHC Troisdorf –
+  TuS Wiehl · ICEDOME Troisdorf
 END:VALARM
 END:VEVENT
 END:VCALENDAR
