@@ -1432,12 +1432,6 @@ GEO:51.602578;7.626858
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
  äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
  ergkamen":geo:51.602578,7.626858
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: ESV Grizzlys Berg
- kamen 1b – EC Bergisch Land
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:fd832cf0f0084c0b5fbbcb5b7ed116e85315dedc@esrw.de
