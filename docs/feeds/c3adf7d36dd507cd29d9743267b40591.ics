@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:ff3437115b7fc75b8c311e0ec0fccba9b4f67364@esrw.de
-SEQUENCE:0
-DTSTAMP:20261114T080046Z
-LAST-MODIFIED:20261114T080046Z
-DTSTART:20261115T163000Z
-DTEND:20261115T200000Z
-SUMMARY:SR · Senioren LL: ESV Grizzlys Bergkamen 1b – EC Bergisch Land
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
-  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissporthal
- le Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Honselman
- n\, Tom (N)\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.d
- e/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
-GEO:51.602578;7.626858
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
- äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
- ergkamen":geo:51.602578,7.626858
-END:VEVENT
-BEGIN:VEVENT
 UID:e30ec81cef626b036c4da5650bc8c970002e925a@esrw.de
 SEQUENCE:0
 DTSTAMP:20261107T130048Z
@@ -1433,12 +1411,6 @@ GEO:51.602578;7.626858
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
  äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
  ergkamen":geo:51.602578,7.626858
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL: ESV Grizzlys B
- ergkamen – DSC Krefeld
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:61c6bd496b0a7af1e8bf7b1427ad9badc8343603@esrw.de
