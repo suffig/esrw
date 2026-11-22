@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:712dadf79bfb952e87191c12de76925ec045d355@esrw.de
-SEQUENCE:0
-DTSTAMP:20261110T110051Z
-LAST-MODIFIED:20261110T110051Z
-DTSTART:20261115T081500Z
-DTEND:20261115T114500Z
-SUMMARY:SR · U15 LL: EHC Essen Ruhr – SpG EHC Gelsenkirchen / Herner EV 
- 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:15 Uhr\nTreffpunkt:
-  09:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Es
- sen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Schmidt\, Waldema
- r\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Essen-West\, Curtiusstr. 2\, 45144 Essen
-GEO:51.454179;6.976731
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
- Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
- n-West":geo:51.454179,6.976731
-END:VEVENT
-BEGIN:VEVENT
 UID:8474b4017e1f68fcb09acc89d065e9e4b5cf9523@esrw.de
 SEQUENCE:0
 DTSTAMP:20261111T143043Z
