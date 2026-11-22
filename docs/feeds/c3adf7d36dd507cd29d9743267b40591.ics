@@ -8,50 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:7187c44de6670f7d5fedb62e1b6b38e3f6b6c7b0@esrw.de
-SEQUENCE:0
-DTSTAMP:20261118T101529Z
-LAST-MODIFIED:20261118T101529Z
-DTSTART:20261115T060000Z
-DTEND:20261115T093000Z
-SUMMARY:⚠ SR · U11 LL Lila: SpG SV Brackwede – Herforder EV 1b
-DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
- elbeginn: 08:00 Uhr\nTreffpunkt: 07:00 Uhr (60 Min vor Spielbeginn)\nLiga:
-  U11 LL Lila\nHalle: Oetker Eisbahn Bielefeld\nAdresse: Duisburger Str. 14
- \, 33647 Bielefeld\nGespann: Funk\, Marvin\n\nQuelle: https://www.esrw.de/
- einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Oetker Eisbahn Bielefeld\, Duisburger Str. 14\, 33647 Bielefeld
-GEO:51.979731;8.496038
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
- Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
- sbahn Bielefeld":geo:51.979731,8.496038
-END:VEVENT
-BEGIN:VEVENT
-UID:30eb68216beff040e9157c9c2f9b9a7cea080d88@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
-DTSTART:20261115T060000Z
-DTEND:20261115T093000Z
-SUMMARY:SR · U17 LL: ESV Bergisch Gladbach – ESC Darmstadt
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
-  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\nHalle: Eissporthalle Be
- rgisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbach\nGes
- pann: Licau\, Sebastian\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
- ch Gladbach
-GEO:50.967548;7.135355
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
- dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
- TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-END:VEVENT
-BEGIN:VEVENT
 UID:f36feec0bb8da3040f7446c6393f82e5fdae1faf@esrw.de
 SEQUENCE:0
 DTSTAMP:20261110T110051Z
@@ -1432,12 +1388,6 @@ GEO:51.49525;7.458288
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
   Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
  rum Westfalen":geo:51.49525,7.458288
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Eisadler Dortmund 
- – Lippe Hockey Hamm
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:1e77832a8db9d3ddc9e4eee02f77d031842eb7f0@esrw.de
@@ -1461,12 +1411,6 @@ GEO:50.967548;7.135355
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
  dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
  TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: ESV Bergisch Gladb
- ach – ESV Grizzlys Bergkamen
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:f051d27bdd0e603747ef34b27af01f583f803a00@esrw.de
