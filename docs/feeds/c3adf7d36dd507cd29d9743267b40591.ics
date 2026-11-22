@@ -1414,12 +1414,6 @@ GEO:50.967548;7.135355
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
  dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
  TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: ESV Bergisc
- h Gladbach – EG Diez-Limburg
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:c563992c2317ad5a51ef2fcad49d5cb9da8c96a9@esrw.de
