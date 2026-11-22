@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:1cc4b7b871d131f23235e458f77148381d67e926@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
-DTSTART:20261115T170000Z
-DTEND:20261115T203000Z
-SUMMARY:SR · Senioren LL: ESC Rheine – Dinslakener Kobras 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
-  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Rheiner Eis
- sporthalle\nAdresse: Kopernikusstraße 34\, 48429 Rheine\nGespann: Müller
- \, Lars\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/ei
- nteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Rheiner Eissporthalle\, Kopernikusstraße 34\, 48429 Rheine
-GEO:52.281013;7.455599
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheiner Eissporthalle, Kop
- ernikusstraße 34, 48429 Rheine";X-APPLE-RADIUS=100;X-TITLE="Rheiner Eissp
- orthalle":geo:52.281013,7.455599
-END:VEVENT
-BEGIN:VEVENT
 UID:656831e187a5cc7b198c45160e49f0bee862be98@esrw.de
 SEQUENCE:1
 DTSTAMP:20261118T101529Z
@@ -72,12 +50,6 @@ GEO:52.281013;7.455599
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheiner Eissporthalle, Kop
  ernikusstraße 34, 48429 Rheine";X-APPLE-RADIUS=100;X-TITLE="Rheiner Eissp
  orthalle":geo:52.281013,7.455599
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: ESC Rheine 
- – EC Bergisch Land
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:14a85199d0ede221b30700d1def2ebf0f5354072@esrw.de
