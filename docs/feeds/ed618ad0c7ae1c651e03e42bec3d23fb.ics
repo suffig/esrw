@@ -8,27 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:72f00db6459a09461d2c72ba68cfdb1eba51bc39@esrw.de
-SEQUENCE:0
-DTSTAMP:20261114T160050Z
-LAST-MODIFIED:20261114T160050Z
-DTSTART:20261115T110000Z
-DTEND:20261115T143000Z
-SUMMARY:SR · U17 I: Düsseldorfer EG – ESV Kaufbeuren
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:00 Uhr\nTreffpunkt:
-  12:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eishalle Brehmstr
- aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Heffler\, Ph
- ilipp\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
-GEO:51.242557;6.802144
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
- hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
- hmstraße":geo:51.242557,6.802144
-END:VEVENT
-BEGIN:VEVENT
 UID:01c057b9e9a9ef8cafeb6b204a3a07b2f6aa0c34@esrw.de
 SEQUENCE:0
 DTSTAMP:20261120T094530Z
