@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:077947ab2686938dc8059f1ac1b0606cd46a0087@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
-DTSTART:20261115T113000Z
-DTEND:20261115T150000Z
-SUMMARY:SR · Frauen LL: Eisadler Dortmund – EJ Kassel Huskies Ladies
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
-  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen LL\nHalle: Eissportzentr
- um Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Leibfrie
- d\, Raphael\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de
- /einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
-GEO:51.49525;7.458288
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
-  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
- rum Westfalen":geo:51.49525,7.458288
-END:VEVENT
-BEGIN:VEVENT
 UID:7c3fc6109efa128753b95921222bafe14b87fa07@esrw.de
 SEQUENCE:0
 DTSTAMP:20261107T130048Z
@@ -1432,12 +1410,6 @@ GEO:51.49525;7.458288
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
   Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
  rum Westfalen":geo:51.49525,7.458288
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: Eisadler Dor
- tmund 1b – GSC Moers
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:aba4498863723d24e06c8b669e0b9230d67ec295@esrw.de
