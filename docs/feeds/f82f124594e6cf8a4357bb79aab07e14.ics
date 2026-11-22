@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:eec0d97b8b1eb1e4e7387841ae9e9536da9df9e7@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
-DTSTART:20261115T151500Z
-DTEND:20261115T184500Z
-SUMMARY:HSR · Senioren RLW: TuS Wiehl – ESV Grizzlys Bergkamen
-DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 17:15 Uhr\nTreff
- punkt: 16:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
- porthalle Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Fenke\
- , Matthias (LSR) / Melchert\, Philip (LSR)\nVergütung lt. Ordnung: 100 
- €\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
-GEO:50.947034;7.5553
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
- enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
- ":geo:50.947034,7.5553
-END:VEVENT
-BEGIN:VEVENT
 UID:8d2d07d27cba8cd13fbbccd54418bd947e9a7a90@esrw.de
 SEQUENCE:0
 DTSTAMP:20261111T143043Z

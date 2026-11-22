@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:34c9f08ee757ad6036bc0c76000812a8821f7c77@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
-DTSTART:20261115T151500Z
-DTEND:20261115T184500Z
-SUMMARY:LSR · Senioren RLW: TuS Wiehl – ESV Grizzlys Bergkamen
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
-  16:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
- lle Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Kyei-Nimako\
- , Denis (HSR) / Melchert\, Philip (LSR)\nVergütung lt. Ordnung: 100 €\n
- \nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
-GEO:50.947034;7.5553
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
- enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
- ":geo:50.947034,7.5553
-END:VEVENT
-BEGIN:VEVENT
 UID:6732f3c2de49422841996d41186d9931d44c5d74@esrw.de
 SEQUENCE:0
 DTSTAMP:20261113T084531Z
