@@ -8,49 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:4ec77a9e065cf49b926f18104fefed8aa1f17016@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
-DTSTART:20261115T161500Z
-DTEND:20261115T194500Z
-SUMMARY:HSR · Senioren RLW: GSC Moers – EG Diez-Limburg
-DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 18:15 Uhr\nTreff
- punkt: 17:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
- porthalle Moers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Reuter
- \, Rick (LSR) / Hofer\, Carsten (LSR)\nVergütung lt. Ordnung: 100 €\n\n
- Quelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
-GEO:51.43973;6.6198
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
- rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
- ":geo:51.43973,6.6198
-END:VEVENT
-BEGIN:VEVENT
-UID:5cbc8ed4248bd8970572b671d6527c4ca416dad6@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
-DTSTART:20261115T161500Z
-DTEND:20261115T194500Z
-SUMMARY:SR · U15 BZL: Aachener EC – TSVE Bielefeld
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:15 Uhr\nTreffpunkt:
-  17:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: 100'5 Arena Aac
- hen\nAdresse: Hubert-Wienen-Straße 8\, 52070 Aachen\nGespann: Schwarz\, K
- jell (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:100'5 Arena Aachen\, Hubert-Wienen-Straße 8\, 52070 Aachen
-GEO:50.79546;6.100933
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="100'5 Arena Aachen, Hubert
- -Wienen-Straße 8, 52070 Aachen";X-APPLE-RADIUS=100;X-TITLE="100'5 Arena A
- achen":geo:50.79546,6.100933
-END:VEVENT
-BEGIN:VEVENT
 UID:ff3437115b7fc75b8c311e0ec0fccba9b4f67364@esrw.de
 SEQUENCE:0
 DTSTAMP:20261114T080046Z
@@ -1411,12 +1368,6 @@ GEO:50.937979;6.98935
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
  r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
  .937979,6.98935
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLA: Kölner Junghaie 
- – Düsseldorfer EG
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:4dcebc8b0e8b4ded8263eade30121f99f80ae3b9@esrw.de
@@ -1439,12 +1390,6 @@ GEO:51.43973;6.6198
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
  rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
  ":geo:51.43973,6.6198
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: GSC Moers 
- – Lauterbach Luchse
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:ba3f9f66bfaef7f2ccff756b16acd6b83f35da28@esrw.de
@@ -1466,12 +1411,6 @@ GEO:50.79546;6.100933
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="100'5 Arena Aachen, Hubert
  -Wienen-Straße 8, 52070 Aachen";X-APPLE-RADIUS=100;X-TITLE="100'5 Arena A
  achen":geo:50.79546,6.100933
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.B: Aachener EC 
- – ESV Bergisch Gladbach
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:4023e42cd19fcef9e88f2a1606596bbcff477c0c@esrw.de
