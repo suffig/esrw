@@ -34,4 +34,59 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 ODM: Düsseldorfer EG
  – Iserlohner EC
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:c40a907d44b06ba992cd7470d61e1e16c2fc226b@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261204T180000Z
+DTEND:20261204T213000Z
+SUMMARY:LSR · Senioren RLW: Eisadler Dortmund – Dinslakener Kobras
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportze
+ ntrum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Müll
+ er\, Lars (HSR) / Garbsch\, René (LSR)\nVergütung lt. Ordnung: 100 €\n
+ \nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Eisadler Do
+ rtmund – Dinslakener Kobras
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:cd3e82e60d3fb4e4ec9b31b7de1a33884ea3dac8@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261209T170000Z
+DTEND:20261209T203000Z
+SUMMARY:SR · U15 RLB: Herner EV – Iserlohner EC 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
+  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Gysenberghalle 
+ Herne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Kaminski-Balsam\,
+  Marcel\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Gysenberghalle Herne\, Am Revierpark 22\, 44627 Herne
+GEO:51.532602;7.254372
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
+ evierpark 22, 44627 Herne";X-APPLE-RADIUS=100;X-TITLE="Gysenberghalle Hern
+ e":geo:51.532602,7.254372
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB: Herner EV – Ise
+ rlohner EC 1b
+END:VALARM
+END:VEVENT
 END:VCALENDAR

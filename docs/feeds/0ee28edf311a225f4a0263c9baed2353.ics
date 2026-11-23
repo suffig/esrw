@@ -133,4 +133,33 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 ODM: Düsseldorfer EG
  – SG Adler Berlin/ FASS Berlin
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:4d7fc9e4d4f96779990e427bdd7713e1b466d03e@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T080000Z
+DTEND:20261206T113000Z
+SUMMARY:LSR · DNL III: EV Duisburg – RT Bad Nauheim
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero Rheinla
+ ndhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann:
+  Kiefer\, Dennis (HSR) / Quint\, Sascha (LSR)\n\nQuelle: https://www.esrw.
+ de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · DNL III: EV Duisburg – 
+ RT Bad Nauheim
+END:VALARM
+END:VEVENT
 END:VCALENDAR

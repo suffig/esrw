@@ -35,4 +35,59 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: EHC Essen Ru
  hr – Neusser EV 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:39f2bb17595e07a525897cd84f57049438c3a6da@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T160000Z
+DTEND:20261205T193000Z
+SUMMARY:SR · U13 LL: Neusser EV – EV Duisburg 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
+  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Ne
+ uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Pacalaj\, Erik\
+ n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
+GEO:51.175806;6.680258
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
+ -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
+ uss":geo:51.175806,6.680258
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: Neusser EV – EV 
+ Duisburg 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:890f3802b8956b0c8c7efddeba3359f9e6f09a6d@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T183000Z
+DTEND:20261205T220000Z
+SUMMARY:LSR · U20 RL: Neusser EV – Dinslakener Kobras
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
+  19:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissporthalle Ne
+ uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Krawinkel\, Mar
+ kus (HSR) / Pacalaj\, Erik (LSR)\n\nQuelle: https://www.esrw.de/einteilung
+ en.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
+GEO:51.175806;6.680258
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
+ -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
+ uss":geo:51.175806,6.680258
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: Neusser EV – Di
+ nslakener Kobras
+END:VALARM
+END:VEVENT
 END:VCALENDAR

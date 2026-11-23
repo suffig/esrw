@@ -81,4 +81,61 @@ DESCRIPTION:In einer Stunde an der Halle - HSR · DNL III: EV Duisburg –
  ES Weißwasser
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:47db22acade69eabe9c8ab47105d115e755c668f@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261204T180000Z
+DTEND:20261204T213000Z
+SUMMARY:HSR · Senioren RLW: Ratinger Ice Aliens – Grefrather EG
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:00 Uhr\nTreff
+ punkt: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ porthalle Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Hef
+ fler\, Philipp (LSR) / Kudal\, Lars (LSR)\nVergütung lt. Ordnung: 100 €
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
+GEO:51.295808;6.834624
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
+  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
+ tingen":geo:51.295808,6.834624
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: Ratinger Ic
+ e Aliens – Grefrather EG
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:dd253ab7891a31e1a261d2f8a9b90c579432de4d@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T080000Z
+DTEND:20261206T113000Z
+SUMMARY:HSR · DNL III: EV Duisburg – RT Bad Nauheim
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 10:00 Uhr\nTreff
+ punkt: 09:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero R
+ heinlandhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGe
+ spann: Quint\, Sascha (LSR) / Pluschkell\, Julian (LSR)\n\nQuelle: https:/
+ /www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · DNL III: EV Duisburg – 
+ RT Bad Nauheim
+END:VALARM
+END:VEVENT
 END:VCALENDAR

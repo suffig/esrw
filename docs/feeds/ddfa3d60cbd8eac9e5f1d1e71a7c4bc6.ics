@@ -110,4 +110,60 @@ DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: Eisadler Dortmund
   – Neusser EV · Eissportzentrum Westfalen
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:fe116b0efb9f1f9a18c64daab2b13bf226393e6b@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T154500Z
+DTEND:20261205T191500Z
+SUMMARY:SR · U13 BZL Gr.A: GSC Moers – SpG EHC Gelsenkirchen / Herner EV
+  1b · Eissporthalle Moers
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:45 Uhr\nTreffpunkt:
+  16:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\nHalle: Eissportha
+ lle Moers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Victor\, Tob
+ ias (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
+GEO:51.43973;6.6198
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
+ rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
+ ":geo:51.43973,6.6198
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: GSC Moers 
+ – SpG EHC Gelsenkirchen / Herner EV 1b · Eissporthalle Moers
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:09ea47246c126e138cb90c14efc2dd9d2d340639@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T073000Z
+DTEND:20261206T110000Z
+SUMMARY:SR · U15 RLB: Herner EV – Krefelder EV 1b · Gysenberghalle Hern
+ e
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
+  08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Gysenberghalle 
+ Herne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Baum\, Fabian (N)
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Gysenberghalle Herne\, Am Revierpark 22\, 44627 Herne
+GEO:51.532602;7.254372
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
+ evierpark 22, 44627 Herne";X-APPLE-RADIUS=100;X-TITLE="Gysenberghalle Hern
+ e":geo:51.532602,7.254372
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB: Herner EV – Kre
+ felder EV 1b · Gysenberghalle Herne
+END:VALARM
+END:VEVENT
 END:VCALENDAR

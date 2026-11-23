@@ -146,4 +146,59 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Grau: EC Bergisch L
  and 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:cbc0f77ee495f79cb71d8ba2f88adbaef9aec248@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T120000Z
+DTEND:20261206T153000Z
+SUMMARY:SR · U15 RLB: Düsseldorfer EG 1b – EHC Troisdorf
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:00 Uhr\nTreffpunkt:
+  13:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Eishalle Brehms
+ traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Engler\, G
+ erhard\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB: Düsseldorfer EG 
+ 1b – EHC Troisdorf
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:11d05556418acfa02cb2ad7d39d616356e812dc7@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T160000Z
+DTEND:20261206T193000Z
+SUMMARY:LSR · U20 RL: EHC Troisdorf – Herforder EV
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
+  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: ICEDOME Troisdor
+ f\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Hellingrat
+ h\, Luca (HSR) / Hoffmann\, Jan (LSR)\n\nQuelle: https://www.esrw.de/einte
+ ilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
+GEO:50.811945;7.109233
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
+ rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
+ isdorf":geo:50.811945,7.109233
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: EHC Troisdorf –
+  Herforder EV
+END:VALARM
+END:VEVENT
 END:VCALENDAR

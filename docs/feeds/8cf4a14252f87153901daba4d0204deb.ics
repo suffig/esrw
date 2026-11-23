@@ -89,4 +89,59 @@ DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: ESV Grizzly
  s Bergkamen – EG Diez-Limburg
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:4ca400c16a51f44f1713d0cacfffb6df3dd2c314@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T070000Z
+DTEND:20261205T103000Z
+SUMMARY:SR · U13 LL: ESV Grizzlys Bergkamen – Mädchen W.I.N. 1
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
+  08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Be
+ rgkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Budzynski\, Mi
+ ka (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: ESV Grizzlys Bergk
+ amen – Mädchen W.I.N. 1
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:3198f7580e891107c0d89763e6cc518c2292058f@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T163000Z
+DTEND:20261206T200000Z
+SUMMARY:SR · U17 RL: Lippe Hockey Hamm – Dinslakener Kobras
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
+  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: beta FINANZ Eiss
+ portarena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Sc
+ hmidt\, Waldemar\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:beta FINANZ Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 H
+ amm
+GEO:51.686934;7.886138
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena 
+ Hamm, Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="bet
+ a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Lippe Hockey Hamm 
+ – Dinslakener Kobras
+END:VALARM
+END:VEVENT
 END:VCALENDAR

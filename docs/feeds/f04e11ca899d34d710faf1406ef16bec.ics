@@ -55,4 +55,58 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: ESC Rheine Y
  oung Cats – GSC Moers
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:573a4f7d92da5b42dfc95767a802ecb11bdc9264@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T060000Z
+DTEND:20261205T093000Z
+SUMMARY:SR · U13 RLB: Herforder EV – Herner EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Eishalle Im Kle
+ inen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Keller\, A
+ lexander\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Im Kleinen Felde\, Im Kleinen Felde\, 32051 Herford
+GEO:52.114893;8.652028
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
+  Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
+ Kleinen Felde":geo:52.114893,8.652028
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB: Herforder EV – 
+ Herner EV
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:590e789acc8d114c65055f4ba24ab42f74dba74e@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T093000Z
+DTEND:20261205T130000Z
+SUMMARY:SR · U17 RL: Herforder EV – EHC Troisdorf
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:30 Uhr\nTreffpunkt:
+  10:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eishalle Im Klei
+ nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Keller\, Al
+ exander\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Im Kleinen Felde\, Im Kleinen Felde\, 32051 Herford
+GEO:52.114893;8.652028
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
+  Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
+ Kleinen Felde":geo:52.114893,8.652028
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Herforder EV – E
+ HC Troisdorf
+END:VALARM
+END:VEVENT
 END:VCALENDAR

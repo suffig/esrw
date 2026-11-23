@@ -103,4 +103,54 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Grün: TSVE Bielefel
  d
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:e0ba81d50408870ff041d144f3f1dc746ff5c3ce@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T100000Z
+DTEND:20261205T133000Z
+SUMMARY:SR · U13 BZL Gr.A: SpG Kristall Lippstadt / Soester EG – ESC Rhe
+ ine Young Cats
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
+  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\n!! Halle nicht au
+ tomatisch erkannt - bitte selbst pruefen !!\nGespann: Müller\, Lars\n\nQu
+ elle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: SpG Kristall
+  Lippstadt / Soester EG – ESC Rheine Young Cats
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:44f361b9b2e337001315df21c752b364fbd583da@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T054500Z
+DTEND:20261206T091500Z
+SUMMARY:SR · U15 BZL: TSVE Bielefeld – Eisadler Dortmund 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 07:45 Uhr\nTreffpunkt:
+  06:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Oetker Eisbahn 
+ Bielefeld\nAdresse: Duisburger Str. 14\, 33647 Bielefeld\nGespann: Keller\
+ , Alexander\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Oetker Eisbahn Bielefeld\, Duisburger Str. 14\, 33647 Bielefeld
+GEO:51.979731;8.496038
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
+ Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
+ sbahn Bielefeld":geo:51.979731,8.496038
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: TSVE Bielefeld 
+ – Eisadler Dortmund 1b
+END:VALARM
+END:VEVENT
 END:VCALENDAR

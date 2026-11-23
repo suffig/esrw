@@ -89,4 +89,59 @@ DESCRIPTION:In einer Stunde an der Halle - HSR · U20 RL: Eisadler Dortmund
   – Neusser EV
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:c3a863aa628397b571cdb7c530f2afeed1c8d2b4@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T100000Z
+DTEND:20261206T133000Z
+SUMMARY:SR · U17 I: Kölner Junghaie – Augsburger EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
+  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Kölnarena 2\nAdr
+ esse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Kudal\, Lars\n\nQuel
+ le: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Kölner Junghaie 
+ – Augsburger EV
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:8bc5fa117eb7c961e4013462f664068120927fec@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T161500Z
+DTEND:20261206T194500Z
+SUMMARY:LSR · Senioren RLW: GSC Moers – Ratinger Ice Aliens
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:15 Uhr\nTreffpunkt:
+  17:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
+ lle Moers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Caelers\, Fa
+ bian (HSR) / Scholz\, Udo (LSR)\nVergütung lt. Ordnung: 100 €\n\nQuelle
+ : https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
+GEO:51.43973;6.6198
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
+ rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
+ ":geo:51.43973,6.6198
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: GSC Moers 
+ – Ratinger Ice Aliens
+END:VALARM
+END:VEVENT
 END:VCALENDAR

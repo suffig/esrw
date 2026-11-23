@@ -35,4 +35,88 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: Dinslakener K
  obras 1b – TSVE Bielefeld
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:ba08df6fb86d9daec53f4c6d0f09888377b7219d@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261204T151500Z
+DTEND:20261204T184500Z
+SUMMARY:SR · U13 LL: EC Bergisch Land – EHC Essen Ruhr
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
+  16:15 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle So
+ lingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Henkels\, 
+ André\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
+GEO:51.165932;7.086769
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
+ ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
+ le Solingen":geo:51.165932,7.086769
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: EC Bergisch Land 
+ – EHC Essen Ruhr
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:89c8d283a483f5b42ca99df1dd6b3312865a26c0@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261204T181500Z
+DTEND:20261204T214500Z
+SUMMARY:SR · Senioren LL: EC Bergisch Land – Eisadler Dortmund 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
+  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissporthal
+ le Solingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Henke
+ ls\, André\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.d
+ e/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
+GEO:51.165932;7.086769
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
+ ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
+ le Solingen":geo:51.165932,7.086769
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: EC Bergisch L
+ and – Eisadler Dortmund 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:aa4ad9fe5561f6709bda75fcad7b6143e2419aaf@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T173000Z
+DTEND:20261206T210000Z
+SUMMARY:LSR · Senioren RLW: ESV Bergisch Gladbach – Dinslakener Kobras
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
+ lle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbac
+ h\nGespann: Pernt\, Hendrik (HSR) / Solbach\, Carsten (LSR)\nVergütung lt
+ . Ordnung: 100 €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
+ ch Gladbach
+GEO:50.967548;7.135355
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
+ dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
+ TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: ESV Bergisc
+ h Gladbach – Dinslakener Kobras
+END:VALARM
+END:VEVENT
 END:VCALENDAR

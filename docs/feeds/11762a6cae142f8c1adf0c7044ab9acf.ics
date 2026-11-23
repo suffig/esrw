@@ -55,4 +55,61 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 ODM: Düsseldorfer EG
  – Iserlohner EC
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:86c346f42e0b4a49174f29f282a83780ab7f154f@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261204T180000Z
+DTEND:20261204T213000Z
+SUMMARY:SR · Senioren BZL: EHC Essen Ruhr – EHC Troisdorf 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eissportha
+ lle Essen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Hofer\, Car
+ sten\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/einte
+ ilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Essen-West\, Curtiusstr. 2\, 45144 Essen
+GEO:51.454179;6.976731
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
+ Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
+ n-West":geo:51.454179,6.976731
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: EHC Essen Ru
+ hr – EHC Troisdorf 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:89218a56cc31ebf2b464162b605c5aa2eb05b5b1@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261210T181500Z
+DTEND:20261210T214500Z
+SUMMARY:HSR · Senioren RLW: ESV Bergisch Gladbach – TuS Wiehl
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:15 Uhr\nTreff
+ punkt: 19:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ porthalle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch G
+ ladbach\nGespann: Kudal\, Lars (LSR) / Hauerwaas\, Gabriel (LSR)\nVergütu
+ ng lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
+ ch Gladbach
+GEO:50.967548;7.135355
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
+ dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
+ TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: ESV Bergisc
+ h Gladbach – TuS Wiehl
+END:VALARM
+END:VEVENT
 END:VCALENDAR

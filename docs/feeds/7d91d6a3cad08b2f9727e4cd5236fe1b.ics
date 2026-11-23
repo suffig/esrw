@@ -103,4 +103,78 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: EHC Gelsenki
  rchen – Herner EV 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:14f0a1a4f36700977d18cc52a076e5444852b7ce@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261204T180000Z
+DTEND:20261204T213000Z
+SUMMARY:HSR · Senioren RLW: Eisadler Dortmund – Dinslakener Kobras
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:00 Uhr\nTreff
+ punkt: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ portzentrum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann:
+  Garbsch\, René (LSR) / Licau\, Robert (LSR)\nVergütung lt. Ordnung: 100
+  €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: Eisadler Do
+ rtmund – Dinslakener Kobras
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:94d6735f9d51567dbf63e0a16bf13127929ffd7d@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T100000Z
+DTEND:20261205T133000Z
+SUMMARY:SR · U13 BZL Gr.A: SpG Kristall Lippstadt / Soester EG – ESC Rhe
+ ine Young Cats
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
+  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\n!! Halle nicht au
+ tomatisch erkannt - bitte selbst pruefen !!\nGespann: Brücker\, Tobias\n\
+ nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: SpG Kristall
+  Lippstadt / Soester EG – ESC Rheine Young Cats
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:c0c0b496627c42fd711580211a298ef0c38c9cc8@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T160000Z
+DTEND:20261206T193000Z
+SUMMARY:SR · Senioren BZL: ESC Kristall Lippstadt – Grefrather EG 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
+  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\n!! Halle nicht au
+ tomatisch erkannt - bitte selbst pruefen !!\nGespann: Warnke\, Christoph\n
+ Vergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/einteilunge
+ n.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: ESC Kristall
+  Lippstadt – Grefrather EG 1b
+END:VALARM
+END:VEVENT
 END:VCALENDAR

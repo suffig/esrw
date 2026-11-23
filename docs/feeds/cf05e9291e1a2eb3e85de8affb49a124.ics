@@ -34,4 +34,31 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 ODM: Düsseldorfer EG
  – Kölner Junghaie
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:0a2f6a404329df31b289060ef9f9412ca8318657@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T174500Z
+DTEND:20261205T211500Z
+SUMMARY:SR · U17 I: Kölner Junghaie – Augsburger EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:45 Uhr\nTreffpunkt:
+  18:45 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Kölnarena 2\nAdr
+ esse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Steven\, Patrick\n\n
+ Quelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Kölner Junghaie 
+ – Augsburger EV
+END:VALARM
+END:VEVENT
 END:VCALENDAR

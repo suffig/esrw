@@ -50,4 +50,53 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West,
  Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
  n-West":geo:51.454179,6.976731
 END:VEVENT
+BEGIN:VEVENT
+UID:097f5adb9b06dec022a6992091dac6d29619f488@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T160000Z
+DTEND:20261205T193000Z
+SUMMARY:SR · U9 LL Lila: SpG Grefrather EG – EV Duisburg 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
+  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Lila\n!! Halle nicht auto
+ matisch erkannt - bitte selbst pruefen !!\nGespann: Störmann\, Manuel\n\n
+ Quelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Lila: SpG Grefrather
+  EG – EV Duisburg 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:683541095422fe302e909a9d92ee9f5113844a57@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T073000Z
+DTEND:20261206T110000Z
+SUMMARY:SR · U15 RLB: Herner EV – Krefelder EV 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
+  08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Gysenberghalle 
+ Herne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Fenke\, Matthias\
+ n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Gysenberghalle Herne\, Am Revierpark 22\, 44627 Herne
+GEO:51.532602;7.254372
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
+ evierpark 22, 44627 Herne";X-APPLE-RADIUS=100;X-TITLE="Gysenberghalle Hern
+ e":geo:51.532602,7.254372
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB: Herner EV – Kre
+ felder EV 1b
+END:VALARM
+END:VEVENT
 END:VCALENDAR

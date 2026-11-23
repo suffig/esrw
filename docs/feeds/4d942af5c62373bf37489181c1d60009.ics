@@ -126,4 +126,58 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB: Kölner Junghaie
  1b – Krefelder EV 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:0bd27680c039ece72547cd8d9c024c14111ef8ad@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T154500Z
+DTEND:20261205T191500Z
+SUMMARY:SR · U13 BZL Gr.A: GSC Moers – SpG EHC Gelsenkirchen / Herner EV
+  1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:45 Uhr\nTreffpunkt:
+  16:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\nHalle: Eissportha
+ lle Moers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Fenke\, Matt
+ hias\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
+GEO:51.43973;6.6198
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
+ rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
+ ":geo:51.43973,6.6198
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: GSC Moers 
+ – SpG EHC Gelsenkirchen / Herner EV 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fee3e957e0db8d485ef6b8ee9874fd4ab8d29fba@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T060000Z
+DTEND:20261206T093000Z
+SUMMARY:SR · U9 RL: Düsseldorfer EG
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: Eishalle Brehmstr
+ aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Marks\, Marc
+ el\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 RL: Düsseldorfer EG
+END:VALARM
+END:VEVENT
 END:VCALENDAR

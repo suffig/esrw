@@ -35,4 +35,34 @@ DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: ESV Grizzly
  s Bergkamen – EG Diez-Limburg
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:b2361705a7e3ad207c2a12d02ad749a6ca4c9986@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T173000Z
+DTEND:20261206T210000Z
+SUMMARY:HSR · Senioren RLW: ESV Bergisch Gladbach – Dinslakener Kobras
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 19:30 Uhr\nTreff
+ punkt: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ porthalle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch G
+ ladbach\nGespann: Solbach\, Carsten (LSR) / Stockenschneider\, Lars (LSR)\
+ nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/einteilung
+ en.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
+ ch Gladbach
+GEO:50.967548;7.135355
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
+ dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
+ TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: ESV Bergisc
+ h Gladbach – Dinslakener Kobras
+END:VALARM
+END:VEVENT
 END:VCALENDAR

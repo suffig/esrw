@@ -3500,4 +3500,1811 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: EV Duisburg 1b –
   EHC Essen Ruhr
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:ed7ed9c949fe00e445d5754d5394fc62428c8f28@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261204T151500Z
+DTEND:20261204T184500Z
+SUMMARY:SR · U13 LL: EC Bergisch Land – EHC Essen Ruhr
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
+  16:15 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle So
+ lingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Stockensch
+ neider\, Lars\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
+GEO:51.165932;7.086769
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
+ ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
+ le Solingen":geo:51.165932,7.086769
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: EC Bergisch Land 
+ – EHC Essen Ruhr
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:48af00eb49989515a47aa79c73c68130a6340206@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261204T174500Z
+DTEND:20261204T211500Z
+SUMMARY:SR · U20 LL: Herner EV – ESV Grizzlys Bergkamen
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:45 Uhr\nTreffpunkt:
+  18:45 Uhr (60 Min vor Spielbeginn)\nLiga: U20 LL\nHalle: Gysenberghalle H
+ erne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Kaminski-Balsam\, 
+ Marcel\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Gysenberghalle Herne\, Am Revierpark 22\, 44627 Herne
+GEO:51.532602;7.254372
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
+ evierpark 22, 44627 Herne";X-APPLE-RADIUS=100;X-TITLE="Gysenberghalle Hern
+ e":geo:51.532602,7.254372
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U20 LL: Herner EV – ESV 
+ Grizzlys Bergkamen
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:2826576ab46f6d2baa9230ca560ccf07f8228430@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261204T180000Z
+DTEND:20261204T213000Z
+SUMMARY:LSR · Senioren RLW: Eisadler Dortmund – Dinslakener Kobras
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportze
+ ntrum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Müll
+ er\, Lars (HSR) / Licau\, Robert (LSR)\nVergütung lt. Ordnung: 100 €\n\
+ nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Eisadler Do
+ rtmund – Dinslakener Kobras
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:d0905c1d2d50f75b20c25ada311dc0e031bcdf1f@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261204T180000Z
+DTEND:20261204T213000Z
+SUMMARY:LSR · Senioren RLW: Ratinger Ice Aliens – Grefrather EG
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
+ lle Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Kiefer\, 
+ Dennis (HSR) / Kudal\, Lars (LSR)\nVergütung lt. Ordnung: 100 €\n\nQuel
+ le: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
+GEO:51.295808;6.834624
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
+  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
+ tingen":geo:51.295808,6.834624
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Ratinger Ic
+ e Aliens – Grefrather EG
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:08a59920c7239f249b44c09190ff2d95ff26083e@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261204T180000Z
+DTEND:20261204T213000Z
+SUMMARY:SR · Senioren BZL: EHC Essen Ruhr – EHC Troisdorf 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eissportha
+ lle Essen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Priebsch\, 
+ Jan Philipp\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.d
+ e/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Essen-West\, Curtiusstr. 2\, 45144 Essen
+GEO:51.454179;6.976731
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
+ Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
+ n-West":geo:51.454179,6.976731
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: EHC Essen Ru
+ hr – EHC Troisdorf 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:18f03ccac6ab2d71cfa9e6cbff71e4223470f43b@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261204T180000Z
+DTEND:20261204T213000Z
+SUMMARY:HSR · Senioren RLW: Neusser EV – ESV Bergisch Gladbach
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:00 Uhr\nTreff
+ punkt: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ porthalle Neuss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Sch
+ öche\, Gian-Carlo (LSR) / Störmann\, Manuel (LSR)\nVergütung lt. Ordnun
+ g: 100 €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
+GEO:51.175806;6.680258
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
+ -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
+ uss":geo:51.175806,6.680258
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: Neusser EV 
+ – ESV Bergisch Gladbach
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:c4f5cc10e32ee47100dad95e43ed46ab22c4eac9@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261204T181500Z
+DTEND:20261204T214500Z
+SUMMARY:SR · Senioren LL: EC Bergisch Land – Eisadler Dortmund 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
+  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissporthal
+ le Solingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Stock
+ enschneider\, Lars\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www
+ .esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
+GEO:51.165932;7.086769
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
+ ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
+ le Solingen":geo:51.165932,7.086769
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: EC Bergisch L
+ and – Eisadler Dortmund 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:57e9359792fb8c36759a17a4741d1ccbd744cc4e@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261204T181500Z
+DTEND:20261204T214500Z
+SUMMARY:SR · Senioren LL: EHC Troisdorf – Dinslakener Kobras 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
+  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: ICEDOME Tro
+ isdorf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Leibf
+ ried\, Raphael\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esr
+ w.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
+GEO:50.811945;7.109233
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
+ rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
+ isdorf":geo:50.811945,7.109233
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: EHC Troisdorf
+  – Dinslakener Kobras 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:461e86fc8621824921697a677d99b61897865efc@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T054500Z
+DTEND:20261205T091500Z
+SUMMARY:SR · U13 BZL Gr.A: TSVE Bielefeld – Eisadler Dortmund 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 07:45 Uhr\nTreffpunkt:
+  06:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\nHalle: Oetker Eis
+ bahn Bielefeld\nAdresse: Duisburger Str. 14\, 33647 Bielefeld\nGespann: Zy
+ nda\, Nick\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Oetker Eisbahn Bielefeld\, Duisburger Str. 14\, 33647 Bielefeld
+GEO:51.979731;8.496038
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
+ Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
+ sbahn Bielefeld":geo:51.979731,8.496038
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: TSVE Bielefe
+ ld – Eisadler Dortmund 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:55833f21d1f9f7c013f550c8f83e4b928244b1b4@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T060000Z
+DTEND:20261205T093000Z
+SUMMARY:SR · U13 RLB: Herforder EV – Herner EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 RLB\nHalle: Eishalle Im Kle
+ inen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Schmidt\, 
+ Eugen\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Im Kleinen Felde\, Im Kleinen Felde\, 32051 Herford
+GEO:52.114893;8.652028
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
+  Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
+ Kleinen Felde":geo:52.114893,8.652028
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB: Herforder EV – 
+ Herner EV
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:a18f3c9147634618e1f7f6fb0610e6dbc027cfb5@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T070000Z
+DTEND:20261205T103000Z
+SUMMARY:SR · U13 LL: ESV Grizzlys Bergkamen – Mädchen W.I.N. 1
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:00 Uhr\nTreffpunkt:
+  08:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Be
+ rgkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Malik\, Orland
+ o\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: ESV Grizzlys Bergk
+ amen – Mädchen W.I.N. 1
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:10dadeec02a79185b684b204b876e31df2b00f7f@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T073000Z
+DTEND:20261205T110000Z
+SUMMARY:SR · U15 BZL: EC Bergisch Land – Aachener EC
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
+  08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Eissporthalle S
+ olingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Heyer\, C
+ hristoph (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
+GEO:51.165932;7.086769
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
+ ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
+ le Solingen":geo:51.165932,7.086769
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: EC Bergisch Land 
+ – Aachener EC
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:0405d4bb59aed9c8978fbdb0a3f216bcd719c4a7@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T073000Z
+DTEND:20261205T110000Z
+SUMMARY:SR · U15 RLB: Iserlohner EC 1b – EJ Kassel
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
+  08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Emscher-Lippe-H
+ alle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\nGesp
+ ann: Schmidt\, Waldemar\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Emscher-Lippe-Halle Gelsenkirchen\, Adenauerallee 118\, 45891 Gels
+ enkirchen
+GEO:51.553483;7.073102
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Emscher-Lippe-Halle Gelsen
+ kirchen, Adenauerallee 118, 45891 Gelsenkirchen";X-APPLE-RADIUS=100;X-TITL
+ E="Emscher-Lippe-Halle Gelsenkirchen":geo:51.553483,7.073102
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB: Iserlohner EC 1b 
+ – EJ Kassel
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:64f91f63ca67e3a9b4dde70da041563b48c94ace@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T080000Z
+DTEND:20261205T113000Z
+SUMMARY:SR · U11 LL Rot: EHC Troisdorf 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Rot\nHalle: ICEDOME Troi
+ sdorf\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Leibfr
+ ied\, Raphael\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
+GEO:50.811945;7.109233
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
+ rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
+ isdorf":geo:50.811945,7.109233
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Rot: EHC Troisdorf 
+ 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:c0ee9cbe9f42cb50b944038b26dd301e1d91afe4@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T080000Z
+DTEND:20261205T113000Z
+SUMMARY:SR · U11 LL Blau: EV Duisburg 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
+  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Blau\nHalle: PreZero Rhe
+ inlandhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGesp
+ ann: Melchert\, Philip\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Blau: EV Duisburg 1
+ b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:0e858801be74360f59535993b28d46c4ee4c7cc6@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T083000Z
+DTEND:20261205T120000Z
+SUMMARY:SR · U15 LL: Lippe Hockey Hamm – SpG ESV Grizzlys Bergkamen / ES
+ C Rheine Young Cats
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:30 Uhr\nTreffpunkt:
+  09:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: beta FINANZ Eiss
+ portarena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Ro
+ sier\, Cedric (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:beta FINANZ Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 H
+ amm
+GEO:51.686934;7.886138
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena 
+ Hamm, Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="bet
+ a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Lippe Hockey Hamm 
+ – SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:d9f09dbea747199bd86592feaf2120219f330ce6@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T084500Z
+DTEND:20261205T121500Z
+SUMMARY:SR · U17 RL: TuS Wiehl – Herner EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:45 Uhr\nTreffpunkt:
+  09:45 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eissporthalle Wi
+ ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Schlüter\, Thomas
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
+GEO:50.947034;7.5553
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
+ enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
+ ":geo:50.947034,7.5553
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: TuS Wiehl – Hern
+ er EV
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:95cb4e47d13740387913c27a7235b1757393a397@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T090000Z
+DTEND:20261205T123000Z
+SUMMARY:SR · U9 LL Rot: Iserlohner EC 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:00 Uhr\nTreffpunkt:
+  10:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Rot\nHalle: Eissporthalle
+  am Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Warnk
+ e\, Christoph\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
+GEO:51.384598;7.713829
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
+ , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
+ alle am Seilersee":geo:51.384598,7.713829
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Rot: Iserlohner EC 1
+ b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:df94b92d78272592f4a9b7ebbe00699640086b80@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T093000Z
+DTEND:20261205T130000Z
+SUMMARY:SR · U17 RL: Herforder EV – EHC Troisdorf
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:30 Uhr\nTreffpunkt:
+  10:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eishalle Im Klei
+ nen Felde\nAdresse: Im Kleinen Felde\, 32051 Herford\nGespann: Schmidt\, E
+ ugen\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Im Kleinen Felde\, Im Kleinen Felde\, 32051 Herford
+GEO:52.114893;8.652028
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
+  Im Kleinen Felde, 32051 Herford";X-APPLE-RADIUS=100;X-TITLE="Eishalle Im 
+ Kleinen Felde":geo:52.114893,8.652028
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Herforder EV – E
+ HC Troisdorf
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:3ccfea72a6e8240a528a3fd7783ad97dd0000361@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T100000Z
+DTEND:20261205T133000Z
+SUMMARY:SR · U13 BZL Gr.A: SpG Kristall Lippstadt / Soester EG – ESC Rhe
+ ine Young Cats
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
+  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\n!! Halle nicht au
+ tomatisch erkannt - bitte selbst pruefen !!\nGespann: Müller\, Lars\n\nQu
+ elle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: SpG Kristall
+  Lippstadt / Soester EG – ESC Rheine Young Cats
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:135406bb18d16848d1ac4542d8f5ce560d5835a5@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T100000Z
+DTEND:20261205T133000Z
+SUMMARY:SR · U11 LL Grün: ESV Bergisch Gladbach
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
+  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Grün\nHalle: Eissportha
+ lle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbac
+ h\nGespann: Zimmermann\, Noah (L)\n\nQuelle: https://www.esrw.de/einteilun
+ gen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
+ ch Gladbach
+GEO:50.967548;7.135355
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
+ dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
+ TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Grün: ESV Bergisch
+  Gladbach
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:74c8d0d5fbbd7cd01d3b760b86f227020a196e43@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T103000Z
+DTEND:20261205T140000Z
+SUMMARY:SR · U13 LL: EHC Essen Ruhr – EHC Troisdorf 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
+  11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Es
+ sen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Damm\, Marvin (L)
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Essen-West\, Curtiusstr. 2\, 45144 Essen
+GEO:51.454179;6.976731
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
+ Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
+ n-West":geo:51.454179,6.976731
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: EHC Essen Ruhr –
+  EHC Troisdorf 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:38143a9977f1cc2bac2a00644cde12fe16c240f7@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T113000Z
+DTEND:20261205T150000Z
+SUMMARY:SR · U9 LL Blau: Eisadler Dortmund
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
+  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Blau\nHalle: Eissportzent
+ rum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Schlüc
+ hter\, Isabell (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Blau: Eisadler Dortm
+ und
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:0bd46f54881c798b14c7a65e0806f4eaf7cbe009@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T143000Z
+DTEND:20261205T180000Z
+SUMMARY:SR · Frauen LL: DEC Düsseldorfer Devils – EJ Kassel Huskies Lad
+ ies
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
+  15:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen LL\nHalle: Eissporthalle
+  Düsseldorf-Benrath\nAdresse: Kappeler Str. 107\, 40597 Düsseldorf\nGesp
+ ann: Kuriata\, Nina\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www
+ .esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Düsseldorf-Benrath\, Kappeler Str. 107\, 40597 Düs
+ seldorf
+GEO:51.168801;6.858999
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Düsseldorf-
+ Benrath, Kappeler Str. 107, 40597 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE=
+ "Eissporthalle Düsseldorf-Benrath":geo:51.168801,6.858999
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: DEC Düsseldorf
+ er Devils – EJ Kassel Huskies Ladies
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:c248f9a33c2eef00f8ea21f7bebecc40f8efebe4@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T143000Z
+DTEND:20261205T180000Z
+SUMMARY:SR · DFEL2 Nord: Düsseldorfer EG – FASS Berlin
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
+  15:30 Uhr (60 Min vor Spielbeginn)\nLiga: DFEL2 Nord\nHalle: Eishalle Bre
+ hmstraße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Quint\,
+  Sascha\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · DFEL2 Nord: Düsseldorfer 
+ EG – FASS Berlin
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:e0fff7fbd561b99ca477674b3607586527e99c0b@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T151500Z
+DTEND:20261205T184500Z
+SUMMARY:LSR · U20 RL: TuS Wiehl – Eisadler Dortmund
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
+  16:15 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissporthalle Wi
+ ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Moritz\, Alexander
+  (HSR) / Hoffmann\, Jan (LSR)\n\nQuelle: https://www.esrw.de/einteilungen.
+ html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
+GEO:50.947034;7.5553
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
+ enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
+ ":geo:50.947034,7.5553
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: TuS Wiehl – Eis
+ adler Dortmund
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:69ddff7e2c317feb4647f9dbf24e1254925269a6@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T153000Z
+DTEND:20261205T190000Z
+SUMMARY:SR · U20 LL: ESV Grizzlys Bergkamen – Lippe Hockey Hamm
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
+  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 LL\nHalle: Eissporthalle Be
+ rgkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Steeg\, Cedric
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U20 LL: ESV Grizzlys Bergk
+ amen – Lippe Hockey Hamm
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:b0784c9d6ce5f8c1e74e83696199a22e531a6fe5@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T154500Z
+DTEND:20261205T191500Z
+SUMMARY:SR · U13 BZL Gr.A: GSC Moers – SpG EHC Gelsenkirchen / Herner EV
+  1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:45 Uhr\nTreffpunkt:
+  16:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\nHalle: Eissportha
+ lle Moers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Victor\, Tob
+ ias (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
+GEO:51.43973;6.6198
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
+ rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
+ ":geo:51.43973,6.6198
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: GSC Moers 
+ – SpG EHC Gelsenkirchen / Herner EV 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:bc8fed9dab1a3e455105396a4dcd60f7106867da@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T160000Z
+DTEND:20261205T193000Z
+SUMMARY:SR · U9 LL Lila: SpG Grefrather EG – EV Duisburg 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
+  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Lila\n!! Halle nicht auto
+ matisch erkannt - bitte selbst pruefen !!\nGespann: Störmann\, Manuel\n\n
+ Quelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Lila: SpG Grefrather
+  EG – EV Duisburg 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:3c39886786044418047fb21a423d250e025b0b3f@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T160000Z
+DTEND:20261205T193000Z
+SUMMARY:SR · U13 LL: Neusser EV – EV Duisburg 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
+  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Ne
+ uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Pacalaj\, Erik\
+ n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
+GEO:51.175806;6.680258
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
+ -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
+ uss":geo:51.175806,6.680258
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: Neusser EV – EV 
+ Duisburg 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:857b50a91951f2155ebc48dcd26beb500d9cb7af@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T173000Z
+DTEND:20261205T210000Z
+SUMMARY:SR · U17 I: Iserlohner EC – ESC Dresden
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eissporthalle am 
+ Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Strube\, 
+ Julia\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
+GEO:51.384598;7.713829
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
+ , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
+ alle am Seilersee":geo:51.384598,7.713829
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Iserlohner EC – E
+ SC Dresden
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:74af1aa2fd5702a88d5daf1e990595135858323e@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T174500Z
+DTEND:20261205T211500Z
+SUMMARY:SR · U17 I: Kölner Junghaie – Augsburger EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:45 Uhr\nTreffpunkt:
+  18:45 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Kölnarena 2\nAdr
+ esse: Gummersbacher Straße 4\, 50679 Köln\nGespann: van Himbeeck\, Frede
+ ric\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Kölner Junghaie 
+ – Augsburger EV
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:9d2e04dea8311b65f8a9f068ecc2cb8c54dc1129@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T183000Z
+DTEND:20261205T220000Z
+SUMMARY:LSR · U20 RL: Neusser EV – Dinslakener Kobras
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
+  19:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissporthalle Ne
+ uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Krawinkel\, Mar
+ kus (HSR) / Pacalaj\, Erik (LSR)\n\nQuelle: https://www.esrw.de/einteilung
+ en.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
+GEO:51.175806;6.680258
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
+ -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
+ uss":geo:51.175806,6.680258
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: Neusser EV – Di
+ nslakener Kobras
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:ce2e12a7b9397481c8bd308d0e52b654c443c9ab@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T053000Z
+DTEND:20261206T090000Z
+SUMMARY:SR · U13 BZL Gr.B: Grefrather EG – TuS Wiehl
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 07:30 Uhr\nTreffpunkt:
+  06:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.B\nHalle: Eissportze
+ ntrum Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespann: Pru
+ dlo\, Martin\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Grefrath\, Stadionstraße 161\, 47929 Grefrath
+GEO:51.348547;6.341019
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath, 
+ Stadionstraße 161, 47929 Grefrath";X-APPLE-RADIUS=100;X-TITLE="Eissportze
+ ntrum Grefrath":geo:51.348547,6.341019
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.B: Grefrather E
+ G – TuS Wiehl
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:72988d8c89133dc3da2727c22ea1a8b4734844f0@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T054500Z
+DTEND:20261206T091500Z
+SUMMARY:SR · U15 BZL: TSVE Bielefeld – Eisadler Dortmund 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 07:45 Uhr\nTreffpunkt:
+  06:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Oetker Eisbahn 
+ Bielefeld\nAdresse: Duisburger Str. 14\, 33647 Bielefeld\nGespann: Keller\
+ , Alexander\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Oetker Eisbahn Bielefeld\, Duisburger Str. 14\, 33647 Bielefeld
+GEO:51.979731;8.496038
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
+ Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
+ sbahn Bielefeld":geo:51.979731,8.496038
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: TSVE Bielefeld 
+ – Eisadler Dortmund 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:d96ea21cf3581de3bd86cf5e65c9932dc9d02e69@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T060000Z
+DTEND:20261206T093000Z
+SUMMARY:SR · U13 LL: Lippe Hockey Hamm – Ratinger Ice Aliens
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: beta FINANZ Eiss
+ portarena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Kl
+ emm\, Julian\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:beta FINANZ Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 H
+ amm
+GEO:51.686934;7.886138
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena 
+ Hamm, Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="bet
+ a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: Lippe Hockey Hamm 
+ – Ratinger Ice Aliens
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:80aeb80481b6122631926ba490ab63cab0d54e35@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T060000Z
+DTEND:20261206T093000Z
+SUMMARY:SR · U13 BZL Gr.B: ESV Bergisch Gladbach – ESC Darmstadt 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.B\nHalle: Eissportha
+ lle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbac
+ h\nGespann: Licau\, Sebastian\n\nQuelle: https://www.esrw.de/einteilungen.
+ html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
+ ch Gladbach
+GEO:50.967548;7.135355
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
+ dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
+ TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.B: ESV Bergisch
+  Gladbach – ESC Darmstadt 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:731f8545442de36751854cdb6f01e2e52c4351da@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T060000Z
+DTEND:20261206T093000Z
+SUMMARY:SR · U9 RL: Düsseldorfer EG
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: Eishalle Brehmstr
+ aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Victor\, Tob
+ ias (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 RL: Düsseldorfer EG
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:d133e09f44d21063e44ccc0e4fff8e546a2799ef@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T061500Z
+DTEND:20261206T094500Z
+SUMMARY:SR · U15 LL: TuS Wiehl – SpG ESV Grizzlys Bergkamen / ESC Rheine
+  Young Cats
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:15 Uhr\nTreffpunkt:
+  07:15 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Wi
+ ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Moritz\, Alexander
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
+GEO:50.947034;7.5553
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
+ enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
+ ":geo:50.947034,7.5553
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: TuS Wiehl – SpG 
+ ESV Grizzlys Bergkamen / ESC Rheine Young Cats
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:63a014e96d5b72e520b317677109706d40139c25@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T073000Z
+DTEND:20261206T110000Z
+SUMMARY:SR · U15 RLB: Herner EV – Krefelder EV 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
+  08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Gysenberghalle 
+ Herne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Fenke\, Matthias\
+ n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Gysenberghalle Herne\, Am Revierpark 22\, 44627 Herne
+GEO:51.532602;7.254372
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
+ evierpark 22, 44627 Herne";X-APPLE-RADIUS=100;X-TITLE="Gysenberghalle Hern
+ e":geo:51.532602,7.254372
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB: Herner EV – Kre
+ felder EV 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:3d1f416d76e58e6f83e51161837a37971c17073c@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T080000Z
+DTEND:20261206T113000Z
+SUMMARY:HSR · DNL III: EV Duisburg – RT Bad Nauheim
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 10:00 Uhr\nTreff
+ punkt: 09:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero R
+ heinlandhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGe
+ spann: Quint\, Sascha (LSR) / Pluschkell\, Julian (LSR)\n\nQuelle: https:/
+ /www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · DNL III: EV Duisburg – 
+ RT Bad Nauheim
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:db8e0153678b2aa32057c862cac751378f1c7d8f@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T081500Z
+DTEND:20261206T114500Z
+SUMMARY:SR · U13 LL: EHC Essen Ruhr – Dinslakener Kobras
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:15 Uhr\nTreffpunkt:
+  09:15 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Es
+ sen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Kuriata\, Florian
+ -Nikita\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Essen-West\, Curtiusstr. 2\, 45144 Essen
+GEO:51.454179;6.976731
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
+ Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
+ n-West":geo:51.454179,6.976731
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: EHC Essen Ruhr –
+  Dinslakener Kobras
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:47bbd52620ebc6805af22e5c6a2d1e1964cae82d@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T100000Z
+DTEND:20261206T133000Z
+SUMMARY:SR · U17 I: Iserlohner EC – ESC Dresden
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
+  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eissporthalle am 
+ Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Steeg\, C
+ edric\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
+GEO:51.384598;7.713829
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
+ , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
+ alle am Seilersee":geo:51.384598,7.713829
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Iserlohner EC – E
+ SC Dresden
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:0f0c080f3a35195ffea4eee7f8ce2e232621dc45@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T100000Z
+DTEND:20261206T133000Z
+SUMMARY:SR · U17 I: Kölner Junghaie – Augsburger EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
+  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Kölnarena 2\nAdr
+ esse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Reuter\, Fynn\n\nQue
+ lle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Kölner Junghaie 
+ – Augsburger EV
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:98fabece72c162e58dfc32bd59b0e112a1b0f2a9@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T113000Z
+DTEND:20261206T150000Z
+SUMMARY:SR · U13 LL: Eisadler Dortmund – ESV Grizzlys Bergkamen
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
+  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissportzentrum 
+ Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Heu\, Alexa
+ nder\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: Eisadler Dortmund 
+ – ESV Grizzlys Bergkamen
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:e18f34c23ad33cb199dc69df94abd08752690b0a@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T120000Z
+DTEND:20261206T153000Z
+SUMMARY:SR · U15 RLB: Düsseldorfer EG 1b – EHC Troisdorf
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:00 Uhr\nTreffpunkt:
+  13:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Eishalle Brehms
+ traße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Engler\, G
+ erhard\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB: Düsseldorfer EG 
+ 1b – EHC Troisdorf
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:d8d5880f705d2c7453871141bfb2b100a2c1af51@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T150000Z
+DTEND:20261206T183000Z
+SUMMARY:SR · U15 LL: Ratinger Ice Aliens – Eisadler Dortmund
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:00 Uhr\nTreffpunkt:
+  16:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Ra
+ tingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Schlüter\, Tho
+ mas\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
+GEO:51.295808;6.834624
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
+  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
+ tingen":geo:51.295808,6.834624
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Ratinger Ice Alien
+ s – Eisadler Dortmund
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:5189d52eceebfb7e7bae75bb828b3e2334f8c590@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T151500Z
+DTEND:20261206T184500Z
+SUMMARY:SR · U11 RL: Kölner Junghaie
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
+  16:15 Uhr (60 Min vor Spielbeginn)\nLiga: U11 RL\nHalle: Kölnarena 2\nAd
+ resse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Kuriata\, Nina\n\nQ
+ uelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 RL: Kölner Junghaie
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:f18cb7331bdc9cfcc1dc7e9fbc5efa8f7b2f1873@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T151500Z
+DTEND:20261206T184500Z
+SUMMARY:HSR · Senioren RLW: TuS Wiehl – EG Diez-Limburg
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 17:15 Uhr\nTreff
+ punkt: 16:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ porthalle Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Kudal\
+ , Lars (LSR) / Pacalaj\, Erik (LSR)\nVergütung lt. Ordnung: 100 €\n\nQu
+ elle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
+GEO:50.947034;7.5553
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
+ enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
+ ":geo:50.947034,7.5553
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: TuS Wiehl 
+ – EG Diez-Limburg
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:9edab8a1a0a196693c033fdce3de53132672c9b8@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T160000Z
+DTEND:20261206T193000Z
+SUMMARY:LSR · U20 RL: EHC Troisdorf – Herforder EV
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
+  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: ICEDOME Troisdor
+ f\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Hellingrat
+ h\, Luca (HSR) / Hoffmann\, Jan (LSR)\n\nQuelle: https://www.esrw.de/einte
+ ilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
+GEO:50.811945;7.109233
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
+ rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
+ isdorf":geo:50.811945,7.109233
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: EHC Troisdorf –
+  Herforder EV
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:b5419788d90b44cd6ca12409cbba22c0d3e7e09f@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T160000Z
+DTEND:20261206T193000Z
+SUMMARY:SR · Senioren BZL: ESC Kristall Lippstadt – Grefrather EG 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
+  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\n!! Halle nicht au
+ tomatisch erkannt - bitte selbst pruefen !!\nGespann: Warnke\, Christoph\n
+ Vergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/einteilunge
+ n.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: ESC Kristall
+  Lippstadt – Grefrather EG 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:0222111d044949a365968569962994f3f37dc7c0@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T161500Z
+DTEND:20261206T194500Z
+SUMMARY:SR · U13 BZL Gr.B: Aachener EC – Neusser EV 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:15 Uhr\nTreffpunkt:
+  17:15 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.B\nHalle: 100'5 Aren
+ a Aachen\nAdresse: Hubert-Wienen-Straße 8\, 52070 Aachen\nGespann: Kurtz\
+ , Florian (L)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:100'5 Arena Aachen\, Hubert-Wienen-Straße 8\, 52070 Aachen
+GEO:50.79546;6.100933
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="100'5 Arena Aachen, Hubert
+ -Wienen-Straße 8, 52070 Aachen";X-APPLE-RADIUS=100;X-TITLE="100'5 Arena A
+ achen":geo:50.79546,6.100933
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.B: Aachener EC 
+ – Neusser EV 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:322d7d3db972331006550febfe0599a8cbd3fd6c@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T161500Z
+DTEND:20261206T194500Z
+SUMMARY:HSR · Senioren RLW: GSC Moers – Ratinger Ice Aliens
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 18:15 Uhr\nTreff
+ punkt: 17:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ porthalle Moers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Reuter
+ \, Fynn (LSR) / Scholz\, Udo (LSR)\nVergütung lt. Ordnung: 100 €\n\nQue
+ lle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
+GEO:51.43973;6.6198
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
+ rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
+ ":geo:51.43973,6.6198
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: GSC Moers 
+ – Ratinger Ice Aliens
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:36c943e3dbd4d20e4a2e2a120938c8e97925add8@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T163000Z
+DTEND:20261206T200000Z
+SUMMARY:SR · Senioren BZL: ESV Grizzlys Bergkamen 1c – Herner EV 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
+  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eissportha
+ lle Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Hartmann
+ \, Marius\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/
+ einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: ESV Grizzlys
+  Bergkamen 1c – Herner EV 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:b8274cb688f33dcfa6d857cfd063561504c16ba4@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T163000Z
+DTEND:20261206T200000Z
+SUMMARY:SR · U17 RL: Lippe Hockey Hamm – Dinslakener Kobras
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
+  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: beta FINANZ Eiss
+ portarena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Sc
+ hmidt\, Waldemar\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:beta FINANZ Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 H
+ amm
+GEO:51.686934;7.886138
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena 
+ Hamm, Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="bet
+ a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Lippe Hockey Hamm 
+ – Dinslakener Kobras
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:ce09baf8abcb01d00f0e3104777e42835b27981d@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T164500Z
+DTEND:20261206T201500Z
+SUMMARY:SR · Senioren LL: Soester EG – TSVE Bielefeld
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:45 Uhr\nTreffpunkt:
+  17:45 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissportzen
+ trum Möhnesee\nAdresse: Teigelhof 4\, 59519 Möhnesee\nGespann: Steeg\, C
+ edric\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/eint
+ eilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Möhnesee\, Teigelhof 4\, 59519 Möhnesee
+GEO:51.515208;8.159069
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Möhnesee,
+  Teigelhof 4, 59519 Möhnesee";X-APPLE-RADIUS=100;X-TITLE="Eissportzentrum
+  Möhnesee":geo:51.515208,8.159069
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: Soester EG 
+ – TSVE Bielefeld
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:a6fd540ba702779da358a2f15e91ab0020b706bc@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T170000Z
+DTEND:20261206T203000Z
+SUMMARY:SR · U20 LL: EC Bergisch Land – GSC Moers
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
+  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 LL\nHalle: Eissporthalle So
+ lingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Wunsch\, P
+ hilipp\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
+GEO:51.165932;7.086769
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
+ ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
+ le Solingen":geo:51.165932,7.086769
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U20 LL: EC Bergisch Land 
+ – GSC Moers
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:56359ebdd6085a8f5dfc563bb94b2c5ad15e9668@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T170000Z
+DTEND:20261206T203000Z
+SUMMARY:SR · Senioren LL: ESC Rheine – ESV Grizzlys Bergkamen 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
+  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Rheiner Eis
+ sporthalle\nAdresse: Kopernikusstraße 34\, 48429 Rheine\nGespann: Zynda\,
+  Nick\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/eint
+ eilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Rheiner Eissporthalle\, Kopernikusstraße 34\, 48429 Rheine
+GEO:52.281013;7.455599
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheiner Eissporthalle, Kop
+ ernikusstraße 34, 48429 Rheine";X-APPLE-RADIUS=100;X-TITLE="Rheiner Eissp
+ orthalle":geo:52.281013,7.455599
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: ESC Rheine 
+ – ESV Grizzlys Bergkamen 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:7d133de15497937f8015d77618dc94050ef1e132@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T173000Z
+DTEND:20261206T210000Z
+SUMMARY:LSR · Senioren RLW: Grefrather EG – ESV Grizzlys Bergkamen
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportze
+ ntrum Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespann: Sto
+ cker\, Quirin (HSR) / Reuter\, Rick (LSR)\nVergütung lt. Ordnung: 100 €
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Grefrath\, Stadionstraße 161\, 47929 Grefrath
+GEO:51.348547;6.341019
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath, 
+ Stadionstraße 161, 47929 Grefrath";X-APPLE-RADIUS=100;X-TITLE="Eissportze
+ ntrum Grefrath":geo:51.348547,6.341019
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Grefrather 
+ EG – ESV Grizzlys Bergkamen
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:985aae3f0c0db9cb0fc354f88436e883ed3e827f@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T173000Z
+DTEND:20261206T210000Z
+SUMMARY:HSR · Senioren RLW: ESV Bergisch Gladbach – Dinslakener Kobras
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 19:30 Uhr\nTreff
+ punkt: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ porthalle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch G
+ ladbach\nGespann: Solbach\, Carsten (LSR) / Stockenschneider\, Lars (LSR)\
+ nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/einteilung
+ en.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
+ ch Gladbach
+GEO:50.967548;7.135355
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
+ dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
+ TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: ESV Bergisc
+ h Gladbach – Dinslakener Kobras
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:6fbe1ffbdf742e592b095a9610338b71ec30de3a@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T180000Z
+DTEND:20261206T213000Z
+SUMMARY:SR · U17 RL: Ratinger Ice Aliens – TuS Wiehl
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eissporthalle Ra
+ tingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Schlüter\, Tho
+ mas\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
+GEO:51.295808;6.834624
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
+  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
+ tingen":geo:51.295808,6.834624
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Ratinger Ice Alien
+ s – TuS Wiehl
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:397ad3adb26f0b43794967b1fb50083585381d63@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T180000Z
+DTEND:20261206T213000Z
+SUMMARY:SR · Frauen BZL: TSVE Bielefeld – ESV Bergisch Gladbach 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Oetker Eisba
+ hn Bielefeld\nAdresse: Duisburger Str. 14\, 33647 Bielefeld\nGespann: Schl
+ üchter\, Isabell (N)\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://w
+ ww.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Oetker Eisbahn Bielefeld\, Duisburger Str. 14\, 33647 Bielefeld
+GEO:51.979731;8.496038
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
+ Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
+ sbahn Bielefeld":geo:51.979731,8.496038
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL: TSVE Bielefeld
+  – ESV Bergisch Gladbach 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:7d260ff81ae0f8f67f615015594dda3bc4bee523@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T180000Z
+DTEND:20261206T213000Z
+SUMMARY:HSR · Senioren RLW: Neusser EV – Eisadler Dortmund
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:00 Uhr\nTreff
+ punkt: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ porthalle Neuss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Rie
+ neck\, Maximilian (LSR) / Störmann\, Manuel (LSR)\nVergütung lt. Ordnung
+ : 100 €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
+GEO:51.175806;6.680258
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
+ -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
+ uss":geo:51.175806,6.680258
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: Neusser EV 
+ – Eisadler Dortmund
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:8571c32645be6ac5710d4bed6bcc9f55b5bf3dbf@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261209T170000Z
+DTEND:20261209T203000Z
+SUMMARY:SR · U15 RLB: Herner EV – Iserlohner EC 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
+  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Gysenberghalle 
+ Herne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Licau\, Robert\n\
+ nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Gysenberghalle Herne\, Am Revierpark 22\, 44627 Herne
+GEO:51.532602;7.254372
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
+ evierpark 22, 44627 Herne";X-APPLE-RADIUS=100;X-TITLE="Gysenberghalle Hern
+ e":geo:51.532602,7.254372
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB: Herner EV – Ise
+ rlohner EC 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:2ad54b8b004eb848059ca048f7f21662c665bd62@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261210T173000Z
+DTEND:20261210T210000Z
+SUMMARY:SR · U15 RLB: EV Duisburg – Iserlohner EC 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: PreZero Rheinla
+ ndhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann:
+  Musga\, Maurice\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB: EV Duisburg – I
+ serlohner EC 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:32fa35605530dd659095b12e8d702960e1022e99@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261210T181500Z
+DTEND:20261210T214500Z
+SUMMARY:LSR · Senioren RLW: ESV Bergisch Gladbach – TuS Wiehl
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
+  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
+ lle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbac
+ h\nGespann: Priebsch\, Jan Philipp (HSR) / Kudal\, Lars (LSR)\nVergütung 
+ lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
+ ch Gladbach
+GEO:50.967548;7.135355
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
+ dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
+ TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: ESV Bergisc
+ h Gladbach – TuS Wiehl
+END:VALARM
+END:VEVENT
 END:VCALENDAR

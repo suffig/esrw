@@ -28,4 +28,31 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
  hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
  hmstraße":geo:51.242557,6.802144
 END:VEVENT
+BEGIN:VEVENT
+UID:d567aa6f799e2a1fa5e5db53923dcaea84ede4c3@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T170000Z
+DTEND:20261206T203000Z
+SUMMARY:SR · U20 LL: EC Bergisch Land – GSC Moers
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
+  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 LL\nHalle: Eissporthalle So
+ lingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Heffler\, 
+ Zsolt\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
+GEO:51.165932;7.086769
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
+ ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
+ le Solingen":geo:51.165932,7.086769
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U20 LL: EC Bergisch Land 
+ – GSC Moers
+END:VALARM
+END:VEVENT
 END:VCALENDAR

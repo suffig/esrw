@@ -133,4 +133,59 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: SpG ESV Grizzlys B
  ergkamen / ESC Rheine Young Cats – Ratinger Ice Aliens
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:c8ea9fdcc226dfef43d277e7a96c52c6cfcbd923@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T054500Z
+DTEND:20261205T091500Z
+SUMMARY:SR · U13 BZL Gr.A: TSVE Bielefeld – Eisadler Dortmund 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 07:45 Uhr\nTreffpunkt:
+  06:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\nHalle: Oetker Eis
+ bahn Bielefeld\nAdresse: Duisburger Str. 14\, 33647 Bielefeld\nGespann: Zy
+ nda\, Jayden\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Oetker Eisbahn Bielefeld\, Duisburger Str. 14\, 33647 Bielefeld
+GEO:51.979731;8.496038
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
+ Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
+ sbahn Bielefeld":geo:51.979731,8.496038
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: TSVE Bielefe
+ ld – Eisadler Dortmund 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:2c230b73ee144577f66cf7184d16733224adf7b2@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T170000Z
+DTEND:20261206T203000Z
+SUMMARY:SR · Senioren LL: ESC Rheine – ESV Grizzlys Bergkamen 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
+  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Rheiner Eis
+ sporthalle\nAdresse: Kopernikusstraße 34\, 48429 Rheine\nGespann: Zynda\,
+  Jayden\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/ei
+ nteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Rheiner Eissporthalle\, Kopernikusstraße 34\, 48429 Rheine
+GEO:52.281013;7.455599
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheiner Eissporthalle, Kop
+ ernikusstraße 34, 48429 Rheine";X-APPLE-RADIUS=100;X-TITLE="Rheiner Eissp
+ orthalle":geo:52.281013,7.455599
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: ESC Rheine 
+ – ESV Grizzlys Bergkamen 1b
+END:VALARM
+END:VEVENT
 END:VCALENDAR

@@ -209,4 +209,86 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: Soester EG
  – ESV Grizzlys Bergkamen 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:12274dc0983fd279117e352452a48a2d1efbfd0e@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T153000Z
+DTEND:20261205T190000Z
+SUMMARY:SR · U20 LL: ESV Grizzlys Bergkamen – Lippe Hockey Hamm
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
+  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 LL\nHalle: Eissporthalle Be
+ rgkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Kaminski-Balsa
+ m\, Marcel\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U20 LL: ESV Grizzlys Bergk
+ amen – Lippe Hockey Hamm
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:2cdab43f82e26c2e80c1147c9a45b43e2c4217fa@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T100000Z
+DTEND:20261206T133000Z
+SUMMARY:SR · U17 I: Iserlohner EC – ESC Dresden
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
+  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eissporthalle am 
+ Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Garbsch\,
+  René\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
+GEO:51.384598;7.713829
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
+ , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
+ alle am Seilersee":geo:51.384598,7.713829
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Iserlohner EC – E
+ SC Dresden
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:5e54d794955180c2f1f3dc1065e8d0e5d2ff1d3f@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T164500Z
+DTEND:20261206T201500Z
+SUMMARY:SR · Senioren LL: Soester EG – TSVE Bielefeld
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:45 Uhr\nTreffpunkt:
+  17:45 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissportzen
+ trum Möhnesee\nAdresse: Teigelhof 4\, 59519 Möhnesee\nGespann: Garbsch\,
+  René\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/ein
+ teilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Möhnesee\, Teigelhof 4\, 59519 Möhnesee
+GEO:51.515208;8.159069
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Möhnesee,
+  Teigelhof 4, 59519 Möhnesee";X-APPLE-RADIUS=100;X-TITLE="Eissportzentrum
+  Möhnesee":geo:51.515208,8.159069
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: Soester EG 
+ – TSVE Bielefeld
+END:VALARM
+END:VEVENT
 END:VCALENDAR

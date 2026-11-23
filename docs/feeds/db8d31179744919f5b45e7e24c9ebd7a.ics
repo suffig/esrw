@@ -106,4 +106,58 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: Grefrather EG –
   Eisadler Dortmund 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:e6a737d473aa9304013081cceffdeba16f844a79@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T073000Z
+DTEND:20261205T110000Z
+SUMMARY:SR · U15 BZL: EC Bergisch Land – Aachener EC
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
+  08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Eissporthalle S
+ olingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Heyer\, C
+ hristoph (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
+GEO:51.165932;7.086769
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
+ ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
+ le Solingen":geo:51.165932,7.086769
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: EC Bergisch Land 
+ – Aachener EC
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:af42ee47f4ff04db35e3ebd8e7982a384f5c79fa@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T170000Z
+DTEND:20261206T203000Z
+SUMMARY:SR · U20 LL: EC Bergisch Land – GSC Moers
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
+  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 LL\nHalle: Eissporthalle So
+ lingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Wunsch\, P
+ hilipp\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
+GEO:51.165932;7.086769
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
+ ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
+ le Solingen":geo:51.165932,7.086769
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U20 LL: EC Bergisch Land 
+ – GSC Moers
+END:VALARM
+END:VEVENT
 END:VCALENDAR

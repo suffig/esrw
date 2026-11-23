@@ -126,4 +126,32 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLA: Kölner Junghaie
  – Krefelder EV
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:be65be515569dfa7be111a613e1c6c6accbcf352@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261204T180000Z
+DTEND:20261204T213000Z
+SUMMARY:LSR · Senioren RLW: Neusser EV – ESV Bergisch Gladbach
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
+ lle Neuss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Licau\, S
+ ebastian (HSR) / Störmann\, Manuel (LSR)\nVergütung lt. Ordnung: 100 €
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
+GEO:51.175806;6.680258
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
+ -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
+ uss":geo:51.175806,6.680258
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Neusser EV 
+ – ESV Bergisch Gladbach
+END:VALARM
+END:VEVENT
 END:VCALENDAR

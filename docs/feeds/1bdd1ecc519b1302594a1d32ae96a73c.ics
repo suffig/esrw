@@ -57,4 +57,85 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB: Iserlohner EC –
   EHC Troisdorf
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:a20787da4d3573892cb70fccbd8e4df7b13f2bf6@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261204T174500Z
+DTEND:20261204T211500Z
+SUMMARY:SR · U20 LL: Herner EV – ESV Grizzlys Bergkamen
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:45 Uhr\nTreffpunkt:
+  18:45 Uhr (60 Min vor Spielbeginn)\nLiga: U20 LL\nHalle: Gysenberghalle H
+ erne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Kaminski-Balsam\, 
+ Marcel\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Gysenberghalle Herne\, Am Revierpark 22\, 44627 Herne
+GEO:51.532602;7.254372
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
+ evierpark 22, 44627 Herne";X-APPLE-RADIUS=100;X-TITLE="Gysenberghalle Hern
+ e":geo:51.532602,7.254372
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U20 LL: Herner EV – ESV 
+ Grizzlys Bergkamen
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:68fd963d49e455ccc9a833a2546ddb36eb34f450@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T113000Z
+DTEND:20261205T150000Z
+SUMMARY:SR · U9 LL Blau: Eisadler Dortmund
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
+  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Blau\nHalle: Eissportzent
+ rum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Schlüc
+ hter\, Isabell (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Blau: Eisadler Dortm
+ und
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:d121bb89749ee51d48b74a80d2f81c5ccc3c9bce@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T113000Z
+DTEND:20261206T150000Z
+SUMMARY:SR · U13 LL: Eisadler Dortmund – ESV Grizzlys Bergkamen
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
+  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissportzentrum 
+ Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Arntz\, Flo
+ rian (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: Eisadler Dortmund 
+ – ESV Grizzlys Bergkamen
+END:VALARM
+END:VEVENT
 END:VCALENDAR

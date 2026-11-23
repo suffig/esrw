@@ -127,4 +127,60 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 ODM: Düsseldorfer EG
  – SG Adler Berlin/ FASS Berlin
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:e2130a3bdc4ccbaed94122c8c774582d589c0f2b@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261204T180000Z
+DTEND:20261204T213000Z
+SUMMARY:SR · Senioren BZL: EHC Essen Ruhr – EHC Troisdorf 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eissportha
+ lle Essen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Priebsch\, 
+ Jan Philipp\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.d
+ e/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Essen-West\, Curtiusstr. 2\, 45144 Essen
+GEO:51.454179;6.976731
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
+ Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
+ n-West":geo:51.454179,6.976731
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: EHC Essen Ru
+ hr – EHC Troisdorf 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:d8057e1a5d412187b05ba92e52c38380b374b11a@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T173000Z
+DTEND:20261206T210000Z
+SUMMARY:LSR · Senioren RLW: Grefrather EG – ESV Grizzlys Bergkamen
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportze
+ ntrum Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespann: Sto
+ cker\, Quirin (HSR) / Reuter\, Rick (LSR)\nVergütung lt. Ordnung: 100 €
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Grefrath\, Stadionstraße 161\, 47929 Grefrath
+GEO:51.348547;6.341019
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath, 
+ Stadionstraße 161, 47929 Grefrath";X-APPLE-RADIUS=100;X-TITLE="Eissportze
+ ntrum Grefrath":geo:51.348547,6.341019
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Grefrather 
+ EG – ESV Grizzlys Bergkamen
+END:VALARM
+END:VEVENT
 END:VCALENDAR

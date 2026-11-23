@@ -236,4 +236,144 @@ DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: EHC Troisdorf –
   TuS Wiehl
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:af21b1e70100b861d98325056d9a8ad678a07d40@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261204T180000Z
+DTEND:20261204T213000Z
+SUMMARY:LSR · Senioren RLW: Ratinger Ice Aliens – Grefrather EG
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
+ lle Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Kiefer\, 
+ Dennis (HSR) / Heffler\, Philipp (LSR)\nVergütung lt. Ordnung: 100 €\n\
+ nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
+GEO:51.295808;6.834624
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
+  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
+ tingen":geo:51.295808,6.834624
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Ratinger Ic
+ e Aliens – Grefrather EG
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:c09aea0413329119a18ebe889e203dbce838d60d@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T143000Z
+DTEND:20261205T180000Z
+SUMMARY:SR · DFEL2 Nord: Düsseldorfer EG – FASS Berlin
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
+  15:30 Uhr (60 Min vor Spielbeginn)\nLiga: DFEL2 Nord\nHalle: Eishalle Bre
+ hmstraße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Quint\,
+  Sascha\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · DFEL2 Nord: Düsseldorfer 
+ EG – FASS Berlin
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:c17025ea498bd88f4c3dec5ba5d3d1390e71d140@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T100000Z
+DTEND:20261206T133000Z
+SUMMARY:SR · U17 I: Kölner Junghaie – Augsburger EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
+  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Kölnarena 2\nAdr
+ esse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Reuter\, Fynn\n\nQue
+ lle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Kölner Junghaie 
+ – Augsburger EV
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:af76a0beea466b506afc3455169ce59c29f23e47@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T151500Z
+DTEND:20261206T184500Z
+SUMMARY:LSR · Senioren RLW: TuS Wiehl – EG Diez-Limburg
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
+  16:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
+ lle Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Krawinkel\, 
+ Markus (HSR) / Pacalaj\, Erik (LSR)\nVergütung lt. Ordnung: 100 €\n\nQu
+ elle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
+GEO:50.947034;7.5553
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
+ enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
+ ":geo:50.947034,7.5553
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: TuS Wiehl 
+ – EG Diez-Limburg
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:bd3b9971ebc50ddfc09826a45101344f84405a74@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261210T181500Z
+DTEND:20261210T214500Z
+SUMMARY:LSR · Senioren RLW: ESV Bergisch Gladbach – TuS Wiehl
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
+  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
+ lle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbac
+ h\nGespann: Priebsch\, Jan Philipp (HSR) / Hauerwaas\, Gabriel (LSR)\nVerg
+ ütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/einteilungen.ht
+ ml
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
+ ch Gladbach
+GEO:50.967548;7.135355
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
+ dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
+ TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: ESV Bergisc
+ h Gladbach – TuS Wiehl
+END:VALARM
+END:VEVENT
 END:VCALENDAR

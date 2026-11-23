@@ -182,4 +182,32 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: ESV Bergisch Gladb
  ach – SpG Soester EG / TSVE Bielefeld
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:ddb064112a1f663ae0bf13a9b48f5925f1ecb83e@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T161500Z
+DTEND:20261206T194500Z
+SUMMARY:LSR · Senioren RLW: GSC Moers – Ratinger Ice Aliens
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:15 Uhr\nTreffpunkt:
+  17:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
+ lle Moers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Caelers\, Fa
+ bian (HSR) / Reuter\, Fynn (LSR)\nVergütung lt. Ordnung: 100 €\n\nQuell
+ e: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
+GEO:51.43973;6.6198
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
+ rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
+ ":geo:51.43973,6.6198
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: GSC Moers 
+ – Ratinger Ice Aliens
+END:VALARM
+END:VEVENT
 END:VCALENDAR

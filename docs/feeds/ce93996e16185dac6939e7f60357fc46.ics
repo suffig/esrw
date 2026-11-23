@@ -35,4 +35,85 @@ DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: ESV Grizzly
  s Bergkamen – EG Diez-Limburg
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:8b2618c9211278e35d5fc7f8f86a76c45b714e35@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261204T174500Z
+DTEND:20261204T211500Z
+SUMMARY:SR · U20 LL: Herner EV – ESV Grizzlys Bergkamen
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:45 Uhr\nTreffpunkt:
+  18:45 Uhr (60 Min vor Spielbeginn)\nLiga: U20 LL\nHalle: Gysenberghalle H
+ erne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Heu\, Alexander\n\
+ nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Gysenberghalle Herne\, Am Revierpark 22\, 44627 Herne
+GEO:51.532602;7.254372
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
+ evierpark 22, 44627 Herne";X-APPLE-RADIUS=100;X-TITLE="Gysenberghalle Hern
+ e":geo:51.532602,7.254372
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U20 LL: Herner EV – ESV 
+ Grizzlys Bergkamen
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:c5397bb418da4adb664c9f74782b6b0075d4463e@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T153000Z
+DTEND:20261205T190000Z
+SUMMARY:SR · U20 LL: ESV Grizzlys Bergkamen – Lippe Hockey Hamm
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
+  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: U20 LL\nHalle: Eissporthalle Be
+ rgkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Steeg\, Cedric
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U20 LL: ESV Grizzlys Bergk
+ amen – Lippe Hockey Hamm
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:23f5e5905b27b69d194009b2037b323374877812@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261209T170000Z
+DTEND:20261209T203000Z
+SUMMARY:SR · U15 RLB: Herner EV – Iserlohner EC 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
+  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Gysenberghalle 
+ Herne\nAdresse: Am Revierpark 22\, 44627 Herne\nGespann: Licau\, Robert\n\
+ nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Gysenberghalle Herne\, Am Revierpark 22\, 44627 Herne
+GEO:51.532602;7.254372
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Gysenberghalle Herne, Am R
+ evierpark 22, 44627 Herne";X-APPLE-RADIUS=100;X-TITLE="Gysenberghalle Hern
+ e":geo:51.532602,7.254372
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 RLB: Herner EV – Ise
+ rlohner EC 1b
+END:VALARM
+END:VEVENT
 END:VCALENDAR

@@ -34,4 +34,31 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: Grefrather EG –
   Eisadler Dortmund 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:d8008fcd8c5a1b599888811b74a62b91cd9dd068@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T053000Z
+DTEND:20261206T090000Z
+SUMMARY:SR · U13 BZL Gr.B: Grefrather EG – TuS Wiehl
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 07:30 Uhr\nTreffpunkt:
+  06:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.B\nHalle: Eissportze
+ ntrum Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespann: Mel
+ chert\, Philip\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Grefrath\, Stadionstraße 161\, 47929 Grefrath
+GEO:51.348547;6.341019
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath, 
+ Stadionstraße 161, 47929 Grefrath";X-APPLE-RADIUS=100;X-TITLE="Eissportze
+ ntrum Grefrath":geo:51.348547,6.341019
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.B: Grefrather E
+ G – TuS Wiehl
+END:VALARM
+END:VEVENT
 END:VCALENDAR

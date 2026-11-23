@@ -78,4 +78,60 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: KEC "Die Haie"
  1b – Ratinger Ice Aliens
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:a0804e5813697906467402a07eddefa68cd7bff3@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T151500Z
+DTEND:20261205T184500Z
+SUMMARY:LSR · U20 RL: TuS Wiehl – Eisadler Dortmund
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
+  16:15 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissporthalle Wi
+ ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Moritz\, Alexander
+  (HSR) / Hauerwaas\, Gabriel (LSR)\n\nQuelle: https://www.esrw.de/einteilu
+ ngen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
+GEO:50.947034;7.5553
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
+ enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
+ ":geo:50.947034,7.5553
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: TuS Wiehl – Eis
+ adler Dortmund
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:c3073335562d5f6e7b131395a16198cb29ed0807@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T160000Z
+DTEND:20261206T193000Z
+SUMMARY:LSR · U20 RL: EHC Troisdorf – Herforder EV
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
+  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: ICEDOME Troisdor
+ f\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Hellingrat
+ h\, Luca (HSR) / Braun\, Benjamin (LSR)\n\nQuelle: https://www.esrw.de/ein
+ teilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
+GEO:50.811945;7.109233
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
+ rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
+ isdorf":geo:50.811945,7.109233
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: EHC Troisdorf –
+  Herforder EV
+END:VALARM
+END:VEVENT
 END:VCALENDAR

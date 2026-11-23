@@ -109,4 +109,32 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: ESV Bergisch Gladb
  ach – SpG Soester EG / TSVE Bielefeld
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:560e551762762e5651bdbc9c9301de24c8fed42f@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261204T180000Z
+DTEND:20261204T213000Z
+SUMMARY:LSR · Senioren RLW: Ratinger Ice Aliens – Grefrather EG
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportha
+ lle Ratingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Kiefer\, 
+ Dennis (HSR) / Kudal\, Lars (LSR)\nVergütung lt. Ordnung: 100 €\n\nQuel
+ le: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
+GEO:51.295808;6.834624
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
+  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
+ tingen":geo:51.295808,6.834624
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Ratinger Ic
+ e Aliens – Grefrather EG
+END:VALARM
+END:VEVENT
 END:VCALENDAR

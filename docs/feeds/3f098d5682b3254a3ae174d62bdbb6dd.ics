@@ -111,4 +111,57 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB: Kölner Junghaie
  1b – Krefelder EV 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:07e705d9d883e2d028b5765d24e5bec2bed0c540@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T084500Z
+DTEND:20261205T121500Z
+SUMMARY:SR · U17 RL: TuS Wiehl – Herner EV
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:45 Uhr\nTreffpunkt:
+  09:45 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eissporthalle Wi
+ ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Schlüter\, Thomas
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
+GEO:50.947034;7.5553
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
+ enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
+ ":geo:50.947034,7.5553
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: TuS Wiehl – Hern
+ er EV
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:7e0408a490d2901949b17ef0eae3d83574f25891@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T151500Z
+DTEND:20261206T184500Z
+SUMMARY:SR · U11 RL: Kölner Junghaie
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
+  16:15 Uhr (60 Min vor Spielbeginn)\nLiga: U11 RL\nHalle: Kölnarena 2\nAd
+ resse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Kuriata\, Nina\n\nQ
+ uelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 RL: Kölner Junghaie
+END:VALARM
+END:VEVENT
 END:VCALENDAR

@@ -37,4 +37,32 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.B: ESV Bergisch
   Gladbach – EHC Die Bären Neuwied 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:1b710f7d336f2596ba71d18a5e72befbb1719aba@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T100000Z
+DTEND:20261205T133000Z
+SUMMARY:SR · U11 LL Grün: ESV Bergisch Gladbach
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
+  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Grün\nHalle: Eissportha
+ lle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbac
+ h\nGespann: Kremer\, Igor\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
+ ch Gladbach
+GEO:50.967548;7.135355
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
+ dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
+ TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Grün: ESV Bergisch
+  Gladbach
+END:VALARM
+END:VEVENT
 END:VCALENDAR

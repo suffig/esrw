@@ -29,4 +29,32 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
  r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
  .937979,6.98935
 END:VEVENT
+BEGIN:VEVENT
+UID:330e3221a2d77ace569219cb71a3bccbff4da824@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T163000Z
+DTEND:20261206T200000Z
+SUMMARY:SR · Senioren BZL: ESV Grizzlys Bergkamen 1c – Herner EV 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:30 Uhr\nTreffpunkt:
+  17:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eissportha
+ lle Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Hartmann
+ \, Marius\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/
+ einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: ESV Grizzlys
+  Bergkamen 1c – Herner EV 1b
+END:VALARM
+END:VEVENT
 END:VCALENDAR

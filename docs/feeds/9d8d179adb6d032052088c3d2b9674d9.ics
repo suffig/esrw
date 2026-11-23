@@ -104,4 +104,59 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 ODM: Düsseldorfer EG
  – SG Adler Berlin/ FASS Berlin
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:8496c053fad3884f3138be4847b391aa669d1565@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T103000Z
+DTEND:20261205T140000Z
+SUMMARY:SR · U13 LL: EHC Essen Ruhr – EHC Troisdorf 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:30 Uhr\nTreffpunkt:
+  11:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle Es
+ sen-West\nAdresse: Curtiusstr. 2\, 45144 Essen\nGespann: Damm\, Marvin (L)
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Essen-West\, Curtiusstr. 2\, 45144 Essen
+GEO:51.454179;6.976731
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Essen-West, 
+ Curtiusstr. 2, 45144 Essen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Esse
+ n-West":geo:51.454179,6.976731
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: EHC Essen Ruhr –
+  EHC Troisdorf 1b
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fc9f7431be73717163a7890edd860bd34c9e8a1c@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T161500Z
+DTEND:20261206T194500Z
+SUMMARY:HSR · Senioren RLW: GSC Moers – Ratinger Ice Aliens
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 18:15 Uhr\nTreff
+ punkt: 17:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ porthalle Moers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Reuter
+ \, Fynn (LSR) / Scholz\, Udo (LSR)\nVergütung lt. Ordnung: 100 €\n\nQue
+ lle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Moers\, Filderstraße 140\, 47447 Moers
+GEO:51.43973;6.6198
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
+ rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
+ ":geo:51.43973,6.6198
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: GSC Moers 
+ – Ratinger Ice Aliens
+END:VALARM
+END:VEVENT
 END:VCALENDAR

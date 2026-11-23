@@ -171,4 +171,123 @@ DESCRIPTION:In zwei Stunden an der Halle - HSR · U20 RL: EHC Troisdorf –
   TuS Wiehl · ICEDOME Troisdorf
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:78b490b5ce9198b4c669c71bc02a1842e412eaec@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T084500Z
+DTEND:20261205T121500Z
+SUMMARY:SR · U17 RL: TuS Wiehl – Herner EV · Eissporthalle Wiehl
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:45 Uhr\nTreffpunkt:
+  09:45 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eissporthalle Wi
+ ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Hindley\, David\n\
+ nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
+GEO:50.947034;7.5553
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
+ enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
+ ":geo:50.947034,7.5553
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: TuS Wiehl – Hern
+ er EV · Eissporthalle Wiehl
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-P1D
+DESCRIPTION:Morgen Spiel - SR · U17 RL: TuS Wiehl – Herner EV · Eisspor
+ thalle Wiehl
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT2H
+DESCRIPTION:In zwei Stunden an der Halle - SR · U17 RL: TuS Wiehl – Hern
+ er EV · Eissporthalle Wiehl
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:a207a75341f0462a6a439453afb134303bf14b4c@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T150000Z
+DTEND:20261206T183000Z
+SUMMARY:SR · U15 LL: Ratinger Ice Aliens – Eisadler Dortmund · Eissport
+ halle Ratingen
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:00 Uhr\nTreffpunkt:
+  16:00 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Ra
+ tingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Heyer\, Christo
+ ph (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
+GEO:51.295808;6.834624
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
+  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
+ tingen":geo:51.295808,6.834624
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Ratinger Ice Alien
+ s – Eisadler Dortmund · Eissporthalle Ratingen
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-P1D
+DESCRIPTION:Morgen Spiel - SR · U15 LL: Ratinger Ice Aliens – Eisadler D
+ ortmund · Eissporthalle Ratingen
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT2H
+DESCRIPTION:In zwei Stunden an der Halle - SR · U15 LL: Ratinger Ice Alien
+ s – Eisadler Dortmund · Eissporthalle Ratingen
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:4bf8e26d430e78a6695e34e9a0530392d0acc276@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T180000Z
+DTEND:20261206T213000Z
+SUMMARY:SR · U17 RL: Ratinger Ice Aliens – TuS Wiehl · Eissporthalle Ra
+ tingen
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eissporthalle Ra
+ tingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Heyer\, Christo
+ ph (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
+GEO:51.295808;6.834624
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
+  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
+ tingen":geo:51.295808,6.834624
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 RL: Ratinger Ice Alien
+ s – TuS Wiehl · Eissporthalle Ratingen
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-P1D
+DESCRIPTION:Morgen Spiel - SR · U17 RL: Ratinger Ice Aliens – TuS Wiehl 
+ · Eissporthalle Ratingen
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT2H
+DESCRIPTION:In zwei Stunden an der Halle - SR · U17 RL: Ratinger Ice Alien
+ s – TuS Wiehl · Eissporthalle Ratingen
+END:VALARM
+END:VEVENT
 END:VCALENDAR

@@ -51,4 +51,32 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Moers, Filde
  rstraße 140, 47447 Moers";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Moers
  ":geo:51.43973,6.6198
 END:VEVENT
+BEGIN:VEVENT
+UID:51006cd7e3924c4b25c911b539f9ef7e993a9f54@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T173000Z
+DTEND:20261206T210000Z
+SUMMARY:HSR · Senioren RLW: Grefrather EG – ESV Grizzlys Bergkamen
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 19:30 Uhr\nTreff
+ punkt: 18:30 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ portzentrum Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespan
+ n: Hofer\, Carsten (LSR) / Reuter\, Rick (LSR)\nVergütung lt. Ordnung: 10
+ 0 €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Grefrath\, Stadionstraße 161\, 47929 Grefrath
+GEO:51.348547;6.341019
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath, 
+ Stadionstraße 161, 47929 Grefrath";X-APPLE-RADIUS=100;X-TITLE="Eissportze
+ ntrum Grefrath":geo:51.348547,6.341019
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: Grefrather 
+ EG – ESV Grizzlys Bergkamen
+END:VALARM
+END:VEVENT
 END:VCALENDAR

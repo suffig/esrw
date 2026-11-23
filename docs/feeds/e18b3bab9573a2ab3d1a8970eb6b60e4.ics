@@ -57,4 +57,61 @@ DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: Ratinger Ic
  e Aliens – ESV Bergisch Gladbach
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:cfde77fdd2a7646990ae295123175fb1884602c8@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261204T180000Z
+DTEND:20261204T213000Z
+SUMMARY:HSR · Senioren RLW: Neusser EV – ESV Bergisch Gladbach
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:00 Uhr\nTreff
+ punkt: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ porthalle Neuss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Sch
+ öche\, Gian-Carlo (LSR) / Störmann\, Manuel (LSR)\nVergütung lt. Ordnun
+ g: 100 €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
+GEO:51.175806;6.680258
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
+ -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
+ uss":geo:51.175806,6.680258
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: Neusser EV 
+ – ESV Bergisch Gladbach
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:1d21efd12a03bd56fd16a5c15c249830667e776a@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T060000Z
+DTEND:20261206T093000Z
+SUMMARY:SR · U13 BZL Gr.B: ESV Bergisch Gladbach – ESC Darmstadt 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.B\nHalle: Eissportha
+ lle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbac
+ h\nGespann: Licau\, Alexander\n\nQuelle: https://www.esrw.de/einteilungen.
+ html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
+ ch Gladbach
+GEO:50.967548;7.135355
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
+ dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
+ TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.B: ESV Bergisch
+  Gladbach – ESC Darmstadt 1b
+END:VALARM
+END:VEVENT
 END:VCALENDAR

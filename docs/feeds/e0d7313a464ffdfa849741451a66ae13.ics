@@ -86,4 +86,59 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Frauen Pokal Gr.A: Eisadle
  r Dortmund – EHV NRW U15w
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:b3f5d6ef2bcc2e594fa7b662724fd79a20f865cd@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T113000Z
+DTEND:20261205T150000Z
+SUMMARY:SR · U9 LL Blau: Eisadler Dortmund
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
+  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Blau\nHalle: Eissportzent
+ rum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Heu\, A
+ lexander\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Blau: Eisadler Dortm
+ und
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fb70d0a7b2095e573a32087449e9d7b310bfa497@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T180000Z
+DTEND:20261206T213000Z
+SUMMARY:SR · Frauen BZL: TSVE Bielefeld – ESV Bergisch Gladbach 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Oetker Eisba
+ hn Bielefeld\nAdresse: Duisburger Str. 14\, 33647 Bielefeld\nGespann: Kiss
+ ing\, Andreas\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.
+ de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Oetker Eisbahn Bielefeld\, Duisburger Str. 14\, 33647 Bielefeld
+GEO:51.979731;8.496038
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
+ Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
+ sbahn Bielefeld":geo:51.979731,8.496038
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL: TSVE Bielefeld
+  – ESV Bergisch Gladbach 1b
+END:VALARM
+END:VEVENT
 END:VCALENDAR

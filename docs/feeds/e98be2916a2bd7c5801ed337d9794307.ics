@@ -57,4 +57,32 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Eisadler Dortmund
  – EHC Die Bären Neuwied
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:89ac35b01005ed1f49a3c3ef65cf21ae0028482c@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T060000Z
+DTEND:20261206T093000Z
+SUMMARY:SR · U13 LL: Lippe Hockey Hamm – Ratinger Ice Aliens
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: beta FINANZ Eiss
+ portarena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Ka
+ lischke\, Christian (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:beta FINANZ Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 H
+ amm
+GEO:51.686934;7.886138
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena 
+ Hamm, Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="bet
+ a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: Lippe Hockey Hamm 
+ – Ratinger Ice Aliens
+END:VALARM
+END:VEVENT
 END:VCALENDAR

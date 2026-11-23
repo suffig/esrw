@@ -84,4 +84,59 @@ DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: EHC Troisdorf –
   TuS Wiehl
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:aab58c679735f861b90937cb99771914285d99dd@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261204T151500Z
+DTEND:20261204T184500Z
+SUMMARY:SR · U13 LL: EC Bergisch Land – EHC Essen Ruhr
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
+  16:15 Uhr (60 Min vor Spielbeginn)\nLiga: U13 LL\nHalle: Eissporthalle So
+ lingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Stockensch
+ neider\, Lars\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
+GEO:51.165932;7.086769
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
+ ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
+ le Solingen":geo:51.165932,7.086769
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: EC Bergisch Land 
+ – EHC Essen Ruhr
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:84ef42d666b8d8dae8378a2ef00dcdbd2efc70c5@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261204T181500Z
+DTEND:20261204T214500Z
+SUMMARY:SR · Senioren LL: EC Bergisch Land – Eisadler Dortmund 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
+  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissporthal
+ le Solingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Stock
+ enschneider\, Lars\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www
+ .esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
+GEO:51.165932;7.086769
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
+ ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
+ le Solingen":geo:51.165932,7.086769
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: EC Bergisch L
+ and – Eisadler Dortmund 1b
+END:VALARM
+END:VEVENT
 END:VCALENDAR

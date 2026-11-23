@@ -106,4 +106,61 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: TuS Wiehl – EHC
  Die Bären Neuwied
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:d897639f6dd8564249dd62e2614b9632292da0e3@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T143000Z
+DTEND:20261205T180000Z
+SUMMARY:SR · Frauen LL: DEC Düsseldorfer Devils – EJ Kassel Huskies Lad
+ ies
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
+  15:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen LL\nHalle: Eissporthalle
+  Düsseldorf-Benrath\nAdresse: Kappeler Str. 107\, 40597 Düsseldorf\nGesp
+ ann: Kuriata\, Nina\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www
+ .esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Düsseldorf-Benrath\, Kappeler Str. 107\, 40597 Düs
+ seldorf
+GEO:51.168801;6.858999
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Düsseldorf-
+ Benrath, Kappeler Str. 107, 40597 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE=
+ "Eissporthalle Düsseldorf-Benrath":geo:51.168801,6.858999
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: DEC Düsseldorf
+ er Devils – EJ Kassel Huskies Ladies
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:84a2a8b4bc2adbd012329099e16cbfb19cb7f278@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T161500Z
+DTEND:20261206T194500Z
+SUMMARY:SR · U13 BZL Gr.B: Aachener EC – Neusser EV 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:15 Uhr\nTreffpunkt:
+  17:15 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.B\nHalle: 100'5 Aren
+ a Aachen\nAdresse: Hubert-Wienen-Straße 8\, 52070 Aachen\nGespann: Kurtz\
+ , Florian (L)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:100'5 Arena Aachen\, Hubert-Wienen-Straße 8\, 52070 Aachen
+GEO:50.79546;6.100933
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="100'5 Arena Aachen, Hubert
+ -Wienen-Straße 8, 52070 Aachen";X-APPLE-RADIUS=100;X-TITLE="100'5 Arena A
+ achen":geo:50.79546,6.100933
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.B: Aachener EC 
+ – Neusser EV 1b
+END:VALARM
+END:VEVENT
 END:VCALENDAR

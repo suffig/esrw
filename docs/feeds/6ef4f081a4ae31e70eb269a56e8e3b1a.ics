@@ -1,0 +1,66 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//esrw-ical//Schiedsrichter-Einteilungen//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Einteilungen – Kuriata\, Nina
+X-WR-TIMEZONE:Europe/Berlin
+REFRESH-INTERVAL;VALUE=DURATION:PT1H
+X-PUBLISHED-TTL:PT1H
+BEGIN:VEVENT
+UID:ac9262724102f7144823b6a0b3aca7e114681c1b@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261205T143000Z
+DTEND:20261205T180000Z
+SUMMARY:SR · Frauen LL: DEC Düsseldorfer Devils – EJ Kassel Huskies Lad
+ ies
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
+  15:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen LL\nHalle: Eissporthalle
+  Düsseldorf-Benrath\nAdresse: Kappeler Str. 107\, 40597 Düsseldorf\nGesp
+ ann: Bocklemünd\, Cid\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://
+ www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Düsseldorf-Benrath\, Kappeler Str. 107\, 40597 Düs
+ seldorf
+GEO:51.168801;6.858999
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Düsseldorf-
+ Benrath, Kappeler Str. 107, 40597 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE=
+ "Eissporthalle Düsseldorf-Benrath":geo:51.168801,6.858999
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen LL: DEC Düsseldorf
+ er Devils – EJ Kassel Huskies Ladies
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:ccca46e1c541fecd57440a050c2d538926eca3e5@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T151500Z
+DTEND:20261206T184500Z
+SUMMARY:SR · U11 RL: Kölner Junghaie
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:15 Uhr\nTreffpunkt:
+  16:15 Uhr (60 Min vor Spielbeginn)\nLiga: U11 RL\nHalle: Kölnarena 2\nAd
+ resse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Hindley\, David\n\n
+ Quelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
+GEO:50.937979;6.98935
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
+ r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
+ .937979,6.98935
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 RL: Kölner Junghaie
+END:VALARM
+END:VEVENT
+END:VCALENDAR

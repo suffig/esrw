@@ -148,4 +148,87 @@ DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: Eisadler Dortmund
   – Neusser EV
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:c92b4b348de0e83bd2c5f11b6267aec602601dc5@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261204T180000Z
+DTEND:20261204T213000Z
+SUMMARY:LSR · Senioren RLW: Eisadler Dortmund – Dinslakener Kobras
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eissportze
+ ntrum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Müll
+ er\, Lars (HSR) / Licau\, Robert (LSR)\nVergütung lt. Ordnung: 100 €\n\
+ nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - LSR · Senioren RLW: Eisadler Do
+ rtmund – Dinslakener Kobras
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:1c512e3835a8e013ffa8e6faa6d77b6e6ca0a56a@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T100000Z
+DTEND:20261206T133000Z
+SUMMARY:SR · U17 I: Iserlohner EC – ESC Dresden
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
+  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eissporthalle am 
+ Seilersee\nAdresse: Seeuferstraße 25\, 58636 Iserlohn\nGespann: Steeg\, C
+ edric\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle am Seilersee\, Seeuferstraße 25\, 58636 Iserlohn
+GEO:51.384598;7.713829
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle am Seilersee
+ , Seeuferstraße 25, 58636 Iserlohn";X-APPLE-RADIUS=100;X-TITLE="Eissporth
+ alle am Seilersee":geo:51.384598,7.713829
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Iserlohner EC – E
+ SC Dresden
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:78f0564a7d23e0c85a9bcf1b5c05eda1edbcfa27@esrw.de
+SEQUENCE:0
+DTSTAMP:20261123T193045Z
+LAST-MODIFIED:20261123T193045Z
+DTSTART:20261206T164500Z
+DTEND:20261206T201500Z
+SUMMARY:SR · Senioren LL: Soester EG – TSVE Bielefeld
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:45 Uhr\nTreffpunkt:
+  17:45 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren LL\nHalle: Eissportzen
+ trum Möhnesee\nAdresse: Teigelhof 4\, 59519 Möhnesee\nGespann: Steeg\, C
+ edric\nVergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/eint
+ eilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Möhnesee\, Teigelhof 4\, 59519 Möhnesee
+GEO:51.515208;8.159069
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Möhnesee,
+  Teigelhof 4, 59519 Möhnesee";X-APPLE-RADIUS=100;X-TITLE="Eissportzentrum
+  Möhnesee":geo:51.515208,8.159069
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: Soester EG 
+ – TSVE Bielefeld
+END:VALARM
+END:VEVENT
 END:VCALENDAR
