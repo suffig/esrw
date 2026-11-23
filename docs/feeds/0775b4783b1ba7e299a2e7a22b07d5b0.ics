@@ -53,16 +53,16 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheiner Eissporthalle, Kop
 END:VEVENT
 BEGIN:VEVENT
 UID:14a85199d0ede221b30700d1def2ebf0f5354072@esrw.de
-SEQUENCE:0
-DTSTAMP:20261120T094530Z
-LAST-MODIFIED:20261120T094530Z
+SEQUENCE:1
+DTSTAMP:20261123T130057Z
+LAST-MODIFIED:20261123T130057Z
 DTSTART:20261128T054500Z
 DTEND:20261128T091500Z
 SUMMARY:SR · U15 BZL: TSVE Bielefeld – Grefrather EG
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 07:45 Uhr\nTreffpunkt:
   06:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Oetker Eisbahn 
- Bielefeld\nAdresse: Duisburger Str. 14\, 33647 Bielefeld\nGespann: Brücke
- r\, Tobias\n\nQuelle: https://www.esrw.de/einteilungen.html
+ Bielefeld\nAdresse: Duisburger Str. 14\, 33647 Bielefeld\nGespann: Funk\, 
+ Marvin\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

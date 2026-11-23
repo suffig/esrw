@@ -29,30 +29,30 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld,
  sbahn Bielefeld":geo:51.979731,8.496038
 END:VEVENT
 BEGIN:VEVENT
-UID:403a9829708155f6fdcee58cbf9186704e6830d8@esrw.de
+UID:5ac5b7622d56f4a26665566d3ec71f5f1281e69a@esrw.de
 SEQUENCE:0
-DTSTAMP:20261120T094530Z
-LAST-MODIFIED:20261120T094530Z
-DTSTART:20261128T060000Z
-DTEND:20261128T093000Z
-SUMMARY:SR · U13 BZL Gr.A: ESC Rheine Young Cats – GSC Moers
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
-  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\nHalle: Rheiner Ei
- ssporthalle\nAdresse: Kopernikusstraße 34\, 48429 Rheine\nGespann: Schmid
- t\, Eugen\n\nQuelle: https://www.esrw.de/einteilungen.html
+DTSTAMP:20261123T130057Z
+LAST-MODIFIED:20261123T130057Z
+DTSTART:20261128T054500Z
+DTEND:20261128T091500Z
+SUMMARY:SR · U15 BZL: TSVE Bielefeld – Grefrather EG
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 07:45 Uhr\nTreffpunkt:
+  06:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Oetker Eisbahn 
+ Bielefeld\nAdresse: Duisburger Str. 14\, 33647 Bielefeld\nGespann: Kissing
+ \, Andreas\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
-LOCATION:Rheiner Eissporthalle\, Kopernikusstraße 34\, 48429 Rheine
-GEO:52.281013;7.455599
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheiner Eissporthalle, Kop
- ernikusstraße 34, 48429 Rheine";X-APPLE-RADIUS=100;X-TITLE="Rheiner Eissp
- orthalle":geo:52.281013,7.455599
+LOCATION:Oetker Eisbahn Bielefeld\, Duisburger Str. 14\, 33647 Bielefeld
+GEO:51.979731;8.496038
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
+ Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
+ sbahn Bielefeld":geo:51.979731,8.496038
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: ESC Rheine Y
- oung Cats – GSC Moers
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: TSVE Bielefeld 
+ – Grefrather EG
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

@@ -30,16 +30,16 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Im Kleinen Felde,
 END:VEVENT
 BEGIN:VEVENT
 UID:54965b0ae6f1e28f3c581aeaaf6a899dfa3ede35@esrw.de
-SEQUENCE:0
-DTSTAMP:20261120T094530Z
-LAST-MODIFIED:20261120T094530Z
+SEQUENCE:1
+DTSTAMP:20261123T130057Z
+LAST-MODIFIED:20261123T130057Z
 DTSTART:20261128T060000Z
 DTEND:20261128T093000Z
 SUMMARY:SR · U13 BZL Gr.A: ESC Rheine Young Cats – GSC Moers
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
   07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\nHalle: Rheiner Ei
- ssporthalle\nAdresse: Kopernikusstraße 34\, 48429 Rheine\nGespann: Funk\,
-  Marvin\n\nQuelle: https://www.esrw.de/einteilungen.html
+ ssporthalle\nAdresse: Kopernikusstraße 34\, 48429 Rheine\nGespann: Brück
+ er\, Tobias\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
