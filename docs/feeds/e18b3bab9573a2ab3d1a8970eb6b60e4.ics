@@ -87,17 +87,17 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:1d21efd12a03bd56fd16a5c15c249830667e776a@esrw.de
-SEQUENCE:0
-DTSTAMP:20261123T193045Z
-LAST-MODIFIED:20261123T193045Z
+SEQUENCE:1
+DTSTAMP:20261124T090052Z
+LAST-MODIFIED:20261124T090052Z
 DTSTART:20261206T060000Z
 DTEND:20261206T093000Z
 SUMMARY:SR · U13 BZL Gr.B: ESV Bergisch Gladbach – ESC Darmstadt 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
   07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.B\nHalle: Eissportha
  lle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbac
- h\nGespann: Licau\, Alexander\n\nQuelle: https://www.esrw.de/einteilungen.
- html
+ h\nGespann: Victor\, Tobias (N)\n\nQuelle: https://www.esrw.de/einteilunge
+ n.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

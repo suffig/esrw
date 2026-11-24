@@ -155,16 +155,16 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:9d7f70b2bc1cce6d999e72e1052a14af89f83abd@esrw.de
-SEQUENCE:0
-DTSTAMP:20261123T193045Z
-LAST-MODIFIED:20261123T193045Z
+SEQUENCE:1
+DTSTAMP:20261124T090052Z
+LAST-MODIFIED:20261124T090052Z
 DTSTART:20261206T060000Z
 DTEND:20261206T093000Z
 SUMMARY:SR · U9 RL: Düsseldorfer EG
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
   07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: Eishalle Brehmstr
- aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Victor\, Tob
- ias (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+ aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Licau\, Alex
+ ander\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

@@ -4483,18 +4483,44 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: Lippe Hockey Hamm
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:731f8545442de36751854cdb6f01e2e52c4351da@esrw.de
+SEQUENCE:0
+DTSTAMP:20261124T090052Z
+LAST-MODIFIED:20261124T090052Z
+DTSTART:20261206T060000Z
+DTEND:20261206T093000Z
+SUMMARY:SR · U9 RL: Düsseldorfer EG
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
+  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: Eishalle Brehmstr
+ aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Marks\, Marc
+ el\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 RL: Düsseldorfer EG
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:80aeb80481b6122631926ba490ab63cab0d54e35@esrw.de
 SEQUENCE:0
-DTSTAMP:20261123T193045Z
-LAST-MODIFIED:20261123T193045Z
+DTSTAMP:20261124T090052Z
+LAST-MODIFIED:20261124T090052Z
 DTSTART:20261206T060000Z
 DTEND:20261206T093000Z
 SUMMARY:SR · U13 BZL Gr.B: ESV Bergisch Gladbach – ESC Darmstadt 1b
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
   07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.B\nHalle: Eissportha
  lle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbac
- h\nGespann: Licau\, Sebastian\n\nQuelle: https://www.esrw.de/einteilungen.
- html
+ h\nGespann: Victor\, Tobias (N)\n\nQuelle: https://www.esrw.de/einteilunge
+ n.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -4509,32 +4535,6 @@ ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.B: ESV Bergisch
   Gladbach – ESC Darmstadt 1b
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
-UID:731f8545442de36751854cdb6f01e2e52c4351da@esrw.de
-SEQUENCE:0
-DTSTAMP:20261123T193045Z
-LAST-MODIFIED:20261123T193045Z
-DTSTART:20261206T060000Z
-DTEND:20261206T093000Z
-SUMMARY:SR · U9 RL: Düsseldorfer EG
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
-  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 RL\nHalle: Eishalle Brehmstr
- aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Victor\, Tob
- ias (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
-GEO:51.242557;6.802144
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
- hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
- hmstraße":geo:51.242557,6.802144
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U9 RL: Düsseldorfer EG
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
