@@ -15,7 +15,7 @@ LAST-MODIFIED:20261116T080049Z
 DTSTART:20261121T073000Z
 DTEND:20261121T110000Z
 SUMMARY:SR · U13 BZL Gr.A: SpG EHC Gelsenkirchen / Herner EV 1b – SpG Kr
- istall Lippstadt / Soester EG
+ istall Lippstadt / Soester EG · Emscher-Lippe-Halle Gelsenkirchen
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
   08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\nHalle: Emscher-Li
  ppe-Halle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\
@@ -38,7 +38,8 @@ DTSTAMP:20261120T094530Z
 LAST-MODIFIED:20261120T094530Z
 DTSTART:20261128T113000Z
 DTEND:20261128T150000Z
-SUMMARY:SR · U15 LL: Eisadler Dortmund – EHC Die Bären Neuwied
+SUMMARY:SR · U15 LL: Eisadler Dortmund – EHC Die Bären Neuwied · E
+ issportzentrum Westfalen
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
   12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissportzentrum 
  Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Klemm\, Jul
@@ -55,7 +56,13 @@ BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Eisadler Dortmund 
- – EHC Die Bären Neuwied
+ – EHC Die Bären Neuwied · Eissportzentrum Westfalen
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-P1D
+DESCRIPTION:Morgen Spiel - SR · U15 LL: Eisadler Dortmund – EHC Die B
+ ären Neuwied · Eissportzentrum Westfalen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -65,7 +72,8 @@ DTSTAMP:20261120T094530Z
 LAST-MODIFIED:20261120T094530Z
 DTSTART:20261129T060000Z
 DTEND:20261129T093000Z
-SUMMARY:SR · Frauen Pokal Gr.A: Eisadler Dortmund – EHV NRW U15w
+SUMMARY:SR · Frauen Pokal Gr.A: Eisadler Dortmund – EHV NRW U15w · Eiss
+ portzentrum Westfalen
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
   07:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen Pokal Gr.A\nHalle: Eissp
  ortzentrum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: 
@@ -83,7 +91,13 @@ BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · Frauen Pokal Gr.A: Eisadle
- r Dortmund – EHV NRW U15w
+ r Dortmund – EHV NRW U15w · Eissportzentrum Westfalen
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-P1D
+DESCRIPTION:Morgen Spiel - SR · Frauen Pokal Gr.A: Eisadler Dortmund – E
+ HV NRW U15w · Eissportzentrum Westfalen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -93,7 +107,7 @@ DTSTAMP:20261123T193045Z
 LAST-MODIFIED:20261123T193045Z
 DTSTART:20261205T113000Z
 DTEND:20261205T150000Z
-SUMMARY:SR · U9 LL Blau: Eisadler Dortmund
+SUMMARY:SR · U9 LL Blau: Eisadler Dortmund · Eissportzentrum Westfalen
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
   12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Blau\nHalle: Eissportzent
  rum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Heu\, A
@@ -110,7 +124,13 @@ BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Blau: Eisadler Dortm
- und
+ und · Eissportzentrum Westfalen
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-P1D
+DESCRIPTION:Morgen Spiel - SR · U9 LL Blau: Eisadler Dortmund · Eissportz
+ entrum Westfalen
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -120,7 +140,8 @@ DTSTAMP:20261123T193045Z
 LAST-MODIFIED:20261123T193045Z
 DTSTART:20261206T180000Z
 DTEND:20261206T213000Z
-SUMMARY:SR · Frauen BZL: TSVE Bielefeld – ESV Bergisch Gladbach 1b
+SUMMARY:SR · Frauen BZL: TSVE Bielefeld – ESV Bergisch Gladbach 1b · Oe
+ tker Eisbahn Bielefeld
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
   19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Oetker Eisba
  hn Bielefeld\nAdresse: Duisburger Str. 14\, 33647 Bielefeld\nGespann: Kiss
@@ -138,7 +159,13 @@ BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL: TSVE Bielefeld
-  – ESV Bergisch Gladbach 1b
+  – ESV Bergisch Gladbach 1b · Oetker Eisbahn Bielefeld
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-P1D
+DESCRIPTION:Morgen Spiel - SR · Frauen BZL: TSVE Bielefeld – ESV Bergisc
+ h Gladbach 1b · Oetker Eisbahn Bielefeld
 END:VALARM
 END:VEVENT
 END:VCALENDAR
