@@ -56,4 +56,33 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Kölner Junghaie
  – Augsburger EV
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:91d535f92b10b96090f81b5efc3020fa81b39a22@esrw.de
+SEQUENCE:0
+DTSTAMP:20261124T193041Z
+LAST-MODIFIED:20261124T193041Z
+DTSTART:20261212T140000Z
+DTEND:20261212T173000Z
+SUMMARY:HSR · DNL III: EV Duisburg – Crocodiles Hamburg
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 16:00 Uhr\nTreff
+ punkt: 15:00 Uhr (60 Min vor Spielbeginn)\nLiga: DNL III\nHalle: PreZero R
+ heinlandhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGe
+ spann: Hofer\, Carsten (LSR) / Scholz\, Udo (LSR)\n\nQuelle: https://www.e
+ srw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
+ sburg
+GEO:51.405718;6.780082
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
+ sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
+ reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · DNL III: EV Duisburg – 
+ Crocodiles Hamburg
+END:VALARM
+END:VEVENT
 END:VCALENDAR

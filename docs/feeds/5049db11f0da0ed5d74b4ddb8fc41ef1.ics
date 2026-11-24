@@ -109,4 +109,57 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 LL: EHC Essen Ruhr –
   Dinslakener Kobras
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:c18bf3f1b3ccd15cb264c8418503abf13aead97f@esrw.de
+SEQUENCE:0
+DTSTAMP:20261124T193041Z
+LAST-MODIFIED:20261124T193041Z
+DTSTART:20261212T073000Z
+DTEND:20261212T110000Z
+SUMMARY:SR · DFEL2 Nord: EC Bergisch Land – Sharks Woman Mechelen
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
+  08:30 Uhr (60 Min vor Spielbeginn)\nLiga: DFEL2 Nord\nHalle: Eissporthall
+ e Solingen\nAdresse: Brühler Straße 20\, 42657 Solingen\nGespann: Krüge
+ r\, Martin\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Solingen\, Brühler Straße 20\, 42657 Solingen
+GEO:51.165932;7.086769
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Solingen, Br
+ ühler Straße 20, 42657 Solingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthal
+ le Solingen":geo:51.165932,7.086769
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · DFEL2 Nord: EC Bergisch La
+ nd – Sharks Woman Mechelen
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:1d3ff96343507724ccd649bfa0555dd768ffc721@esrw.de
+SEQUENCE:0
+DTSTAMP:20261124T193041Z
+LAST-MODIFIED:20261124T193041Z
+DTSTART:20261213T120000Z
+DTEND:20261213T153000Z
+SUMMARY:SR · U11 RL: Düsseldorfer EG
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 14:00 Uhr\nTreffpunkt:
+  13:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 RL\nHalle: Eishalle Brehmst
+ raße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Victor\, To
+ bias (N)\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 RL: Düsseldorfer EG
+END:VALARM
+END:VEVENT
 END:VCALENDAR

@@ -272,4 +272,126 @@ DESCRIPTION:In zwei Stunden an der Halle - SR · U17 RL: Ratinger Ice Alien
  s – TuS Wiehl · Eissporthalle Ratingen
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:7ad18e9649ab0224177ed0edb4dd7c55da600aba@esrw.de
+SEQUENCE:0
+DTSTAMP:20261124T193041Z
+LAST-MODIFIED:20261124T193041Z
+DTSTART:20261211T181500Z
+DTEND:20261211T214500Z
+SUMMARY:SR · Senioren BZL: ESV Bergisch Gladbach 1b – TuS Wiehl 1b · Ei
+ ssporthalle Bergisch Gladbach
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:15 Uhr\nTreffpunkt:
+  19:15 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\nHalle: Eissportha
+ lle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbac
+ h\nGespann: Schöche\, Gian-Carlo\nVergütung lt. Ordnung: 100 €\n\nQuel
+ le: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
+ ch Gladbach
+GEO:50.967548;7.135355
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
+ dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
+ TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: ESV Bergisch
+  Gladbach 1b – TuS Wiehl 1b · Eissporthalle Bergisch Gladbach
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-P1D
+DESCRIPTION:Morgen Spiel - SR · Senioren BZL: ESV Bergisch Gladbach 1b –
+  TuS Wiehl 1b · Eissporthalle Bergisch Gladbach
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT2H
+DESCRIPTION:In zwei Stunden an der Halle - SR · Senioren BZL: ESV Bergisch
+  Gladbach 1b – TuS Wiehl 1b · Eissporthalle Bergisch Gladbach
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:8523a3217e4e7ce78341ecdeb5fc2563942d6609@esrw.de
+SEQUENCE:0
+DTSTAMP:20261124T193041Z
+LAST-MODIFIED:20261124T193041Z
+DTSTART:20261212T113000Z
+DTEND:20261212T150000Z
+SUMMARY:SR · U11 RL: Krefelder EV – YAYLA Krefeld · Rheinlandhalle Kref
+ eld
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
+  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U11 RL\nHalle: Rheinlandhalle K
+ refeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Solbach\, C
+ arsten\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
+GEO:51.339877;6.540168
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
+ stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
+ le Krefeld":geo:51.339877,6.540168
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 RL: Krefelder EV – Y
+ AYLA Krefeld · Rheinlandhalle Krefeld
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-P1D
+DESCRIPTION:Morgen Spiel - SR · U11 RL: Krefelder EV – YAYLA Krefeld · 
+ Rheinlandhalle Krefeld
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT2H
+DESCRIPTION:In zwei Stunden an der Halle - SR · U11 RL: Krefelder EV – Y
+ AYLA Krefeld · Rheinlandhalle Krefeld
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:f03701b79935f758784eda65bd01fdaa512f6230@esrw.de
+SEQUENCE:0
+DTSTAMP:20261124T193041Z
+LAST-MODIFIED:20261124T193041Z
+DTSTART:20261213T180000Z
+DTEND:20261213T213000Z
+SUMMARY:SR · U17 LL: SpG Neusser EV / GSC Moers – ESV Grizzlys Bergkamen
+  · Eissporthalle Neuss
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 LL\nHalle: Eissporthalle Ne
+ uss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Braun\, Benjami
+ n\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
+GEO:51.175806;6.680258
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
+ -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
+ uss":geo:51.175806,6.680258
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U17 LL: SpG Neusser EV / G
+ SC Moers – ESV Grizzlys Bergkamen · Eissporthalle Neuss
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-P1D
+DESCRIPTION:Morgen Spiel - SR · U17 LL: SpG Neusser EV / GSC Moers – ESV
+  Grizzlys Bergkamen · Eissporthalle Neuss
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT2H
+DESCRIPTION:In zwei Stunden an der Halle - SR · U17 LL: SpG Neusser EV / G
+ SC Moers – ESV Grizzlys Bergkamen · Eissporthalle Neuss
+END:VALARM
+END:VEVENT
 END:VCALENDAR

@@ -57,4 +57,32 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: EHC Essen Ru
  hr – Neusser EV 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:286fb0dfa76f787ce3b6431b58c631e67e2ac97d@esrw.de
+SEQUENCE:0
+DTSTAMP:20261124T193041Z
+LAST-MODIFIED:20261124T193041Z
+DTSTART:20261211T180000Z
+DTEND:20261211T213000Z
+SUMMARY:HSR · Senioren RLW: Grefrather EG – GSC Moers
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:00 Uhr\nTreff
+ punkt: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ portzentrum Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespan
+ n: Hofer\, Carsten (LSR) / Scholz\, Udo (LSR)\nVergütung lt. Ordnung: 100
+  €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Grefrath\, Stadionstraße 161\, 47929 Grefrath
+GEO:51.348547;6.341019
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath, 
+ Stadionstraße 161, 47929 Grefrath";X-APPLE-RADIUS=100;X-TITLE="Eissportze
+ ntrum Grefrath":geo:51.348547,6.341019
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: Grefrather 
+ EG – GSC Moers
+END:VALARM
+END:VEVENT
 END:VCALENDAR

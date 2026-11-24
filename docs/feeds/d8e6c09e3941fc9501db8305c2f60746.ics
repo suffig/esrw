@@ -128,4 +128,27 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Lippe Hockey Hamm
  – SpG ESV Grizzlys Bergkamen / ESC Rheine Young Cats
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:6e0e9c473a6732e267bd9626f6f351dbc7eb1262@esrw.de
+SEQUENCE:0
+DTSTAMP:20261124T193041Z
+LAST-MODIFIED:20261124T193041Z
+DTSTART:20261212T091500Z
+DTEND:20261212T124500Z
+SUMMARY:SR · U13 BZL Gr.A: SpG Kristall Lippstadt / Soester EG – GSC Moe
+ rs
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:15 Uhr\nTreffpunkt:
+  10:15 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\n!! Halle nicht au
+ tomatisch erkannt - bitte selbst pruefen !!\nGespann: Warnke\, Christoph\n
+ \nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: SpG Kristall
+  Lippstadt / Soester EG – GSC Moers
+END:VALARM
+END:VEVENT
 END:VCALENDAR

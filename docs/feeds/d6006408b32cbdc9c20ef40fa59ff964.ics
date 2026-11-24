@@ -61,4 +61,57 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.B: Aachener EC
  – Neusser EV 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:17e1af00dd8b575bbd68d5d0f3bfddb2897b4164@esrw.de
+SEQUENCE:0
+DTSTAMP:20261124T193041Z
+LAST-MODIFIED:20261124T193041Z
+DTSTART:20261212T160000Z
+DTEND:20261212T193000Z
+SUMMARY:SR · U11 LL Grau: Grefrather EG
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
+  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Grau\nHalle: Eissportzen
+ trum Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespann: Hart
+ mann\, Marius\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Grefrath\, Stadionstraße 161\, 47929 Grefrath
+GEO:51.348547;6.341019
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath, 
+ Stadionstraße 161, 47929 Grefrath";X-APPLE-RADIUS=100;X-TITLE="Eissportze
+ ntrum Grefrath":geo:51.348547,6.341019
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Grau: Grefrather EG
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:cb074d9ce3a0aebfbe28b5c0cda291bedcbc5ff6@esrw.de
+SEQUENCE:0
+DTSTAMP:20261124T193041Z
+LAST-MODIFIED:20261124T193041Z
+DTSTART:20261212T183000Z
+DTEND:20261212T220000Z
+SUMMARY:SR · U15 BZL: Grefrather EG – ESV Grizzlys Bergkamen 1b
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:30 Uhr\nTreffpunkt:
+  19:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 BZL\nHalle: Eissportzentrum
+  Grefrath\nAdresse: Stadionstraße 161\, 47929 Grefrath\nGespann: Hartmann
+ \, Marius\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Grefrath\, Stadionstraße 161\, 47929 Grefrath
+GEO:51.348547;6.341019
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath, 
+ Stadionstraße 161, 47929 Grefrath";X-APPLE-RADIUS=100;X-TITLE="Eissportze
+ ntrum Grefrath":geo:51.348547,6.341019
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U15 BZL: Grefrather EG –
+  ESV Grizzlys Bergkamen 1b
+END:VALARM
+END:VEVENT
 END:VCALENDAR

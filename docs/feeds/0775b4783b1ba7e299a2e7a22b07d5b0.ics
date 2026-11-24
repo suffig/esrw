@@ -161,4 +161,53 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL: TSVE Bielefeld
   – ESV Bergisch Gladbach 1b
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:16fc327581affdf4253f1333574ac1513f853fa2@esrw.de
+SEQUENCE:0
+DTSTAMP:20261124T193041Z
+LAST-MODIFIED:20261124T193041Z
+DTSTART:20261213T053000Z
+DTEND:20261213T090000Z
+SUMMARY:SR · U9 LL Grün: SV Brackwede
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 07:30 Uhr\nTreffpunkt:
+  06:30 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Grün\n!! Halle nicht aut
+ omatisch erkannt - bitte selbst pruefen !!\nGespann: Brücker\, Tobias\n\n
+ Quelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Grün: SV Brackwede
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:f7d4ea1776c0405194cef9456ba4ec3073e4bcdf@esrw.de
+SEQUENCE:0
+DTSTAMP:20261124T193041Z
+LAST-MODIFIED:20261124T193041Z
+DTSTART:20261213T180000Z
+DTEND:20261213T213000Z
+SUMMARY:SR · Frauen Pokal Gr.B: TSVE Bielefeld – Dinslakener Kobras
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 20:00 Uhr\nTreffpunkt:
+  19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen Pokal Gr.B\nHalle: Oetke
+ r Eisbahn Bielefeld\nAdresse: Duisburger Str. 14\, 33647 Bielefeld\nGespan
+ n: Funk\, Marvin\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.es
+ rw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Oetker Eisbahn Bielefeld\, Duisburger Str. 14\, 33647 Bielefeld
+GEO:51.979731;8.496038
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
+ Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
+ sbahn Bielefeld":geo:51.979731,8.496038
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen Pokal Gr.B: TSVE Bi
+ elefeld – Dinslakener Kobras
+END:VALARM
+END:VEVENT
 END:VCALENDAR

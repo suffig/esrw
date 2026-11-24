@@ -168,4 +168,39 @@ DESCRIPTION:Morgen Spiel - SR · Frauen BZL: TSVE Bielefeld – ESV Bergisc
  h Gladbach 1b · Oetker Eisbahn Bielefeld
 END:VALARM
 END:VEVENT
+BEGIN:VEVENT
+UID:5cab434901ad8b260ffa6a0f7ed884359db00f97@esrw.de
+SEQUENCE:0
+DTSTAMP:20261124T193041Z
+LAST-MODIFIED:20261124T193041Z
+DTSTART:20261212T153000Z
+DTEND:20261212T190000Z
+SUMMARY:SR · Frauen BZL: ESV Grizzlys Bergkamen – TSVE Bielefeld · Eiss
+ porthalle Bergkamen
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
+  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Eissporthall
+ e Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Zynda\, Ja
+ yden\nVergütung lt. Ordnung: 95 €\n\nQuelle: https://www.esrw.de/eintei
+ lungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Bergkamen\, Häupenweg 29\, 59192 Bergkamen
+GEO:51.602578;7.626858
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
+ äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
+ ergkamen":geo:51.602578,7.626858
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · Frauen BZL: ESV Grizzlys B
+ ergkamen – TSVE Bielefeld · Eissporthalle Bergkamen
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-P1D
+DESCRIPTION:Morgen Spiel - SR · Frauen BZL: ESV Grizzlys Bergkamen – TSV
+ E Bielefeld · Eissporthalle Bergkamen
+END:VALARM
+END:VEVENT
 END:VCALENDAR
