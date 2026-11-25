@@ -271,6 +271,34 @@ DESCRIPTION:In einer Stunde an der Halle - SR · Senioren LL: Soester EG
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:b5fd46fe9f6f127e649d98f059a16cc9597fc550@esrw.de
+SEQUENCE:0
+DTSTAMP:20261125T094534Z
+LAST-MODIFIED:20261125T094534Z
+DTSTART:20261211T180000Z
+DTEND:20261211T213000Z
+SUMMARY:HSR · Senioren RLW: Eisadler Dortmund – EG Diez-Limburg Dortmund
+DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 20:00 Uhr\nTreff
+ punkt: 19:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren RLW\nHalle: Eiss
+ portzentrum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann:
+  Garbsch\, René (LSR) / Schmidt\, Waldemar (LSR)\nVergütung lt. Ordnung:
+  100 €\n\nQuelle: https://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
+GEO:51.49525;7.458288
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
+  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
+ rum Westfalen":geo:51.49525,7.458288
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: Eisadler Do
+ rtmund – EG Diez-Limburg Dortmund
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:c057d09d47cb53c90d9fbc244d03bcfb9744ef4d@esrw.de
 SEQUENCE:0
 DTSTAMP:20261124T193041Z
