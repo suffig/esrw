@@ -127,6 +127,60 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB: Kölner Junghaie
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
+UID:106df7ba9e07533cb6ee916e96034c6ed1292183@esrw.de
+SEQUENCE:0
+DTSTAMP:20261125T124531Z
+LAST-MODIFIED:20261125T124531Z
+DTSTART:20261130T173000Z
+DTEND:20261130T210000Z
+SUMMARY:SR · NRW U13: NRW U13
+DESCRIPTION:!! Gleichzeitig angesetzt: NRW U13 !!\n\nRolle: Schiedsrichter 
+ (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt: 18:30 Uhr (60 Min vor Spielbegin
+ n)\nLiga: NRW U13\nHalle: Eishalle Brehmstraße\nAdresse: Brehmstraße 27a
+ \, 40239 Düsseldorf\nGespann: Wunsch\, Philipp\n\nQuelle: https://www.esr
+ w.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · NRW U13: NRW U13
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:106df7ba9e07533cb6ee916e96034c6ed1292183@esrw.de
+SEQUENCE:0
+DTSTAMP:20261125T124531Z
+LAST-MODIFIED:20261125T124531Z
+DTSTART:20261130T173000Z
+DTEND:20261130T210000Z
+SUMMARY:SR · NRW U13: NRW U13
+DESCRIPTION:!! Gleichzeitig angesetzt: NRW U13 !!\n\nRolle: Schiedsrichter 
+ (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt: 18:30 Uhr (60 Min vor Spielbegin
+ n)\nLiga: NRW U13\nHalle: Eishalle Brehmstraße\nAdresse: Brehmstraße 27a
+ \, 40239 Düsseldorf\nGespann: Wunsch\, Philipp\n\nQuelle: https://www.esr
+ w.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · NRW U13: NRW U13
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:0bd27680c039ece72547cd8d9c024c14111ef8ad@esrw.de
 SEQUENCE:0
 DTSTAMP:20261123T193045Z
