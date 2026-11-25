@@ -108,33 +108,6 @@ DESCRIPTION:In einer Stunde an der Halle - HSR · U20 RL: Neusser EV – Ei
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:cd0bda0fb0926d0df35bbfd41d4a3cb6217e5611@esrw.de
-SEQUENCE:0
-DTSTAMP:20261124T193041Z
-LAST-MODIFIED:20261124T193041Z
-DTSTART:20261213T090000Z
-DTEND:20261213T123000Z
-SUMMARY:SR · U17 I: Krefelder EV – Eisbären Juniors Berlin
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:00 Uhr\nTreffpunkt:
-  10:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Rheinlandhalle Kr
- efeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Heffler\, Ph
- ilipp\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
-GEO:51.339877;6.540168
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
- stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
- le Krefeld":geo:51.339877,6.540168
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U17 I: Krefelder EV – Ei
- sbären Juniors Berlin
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:8e2f9e6cc7f74d2a9958a91f84a00ca3112338b5@esrw.de
 SEQUENCE:0
 DTSTAMP:20261124T193041Z

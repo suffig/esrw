@@ -6593,15 +6593,15 @@ END:VEVENT
 BEGIN:VEVENT
 UID:21121a13165e0168bb1e4de7eb67cdb38be51f58@esrw.de
 SEQUENCE:0
-DTSTAMP:20261124T193041Z
-LAST-MODIFIED:20261124T193041Z
+DTSTAMP:20261125T100050Z
+LAST-MODIFIED:20261125T100050Z
 DTSTART:20261213T090000Z
 DTEND:20261213T123000Z
 SUMMARY:SR · U17 I: Krefelder EV – Eisbären Juniors Berlin
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:00 Uhr\nTreffpunkt:
   10:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Rheinlandhalle Kr
- efeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Stocker\, Qu
- irin\n\nQuelle: https://www.esrw.de/einteilungen.html
+ efeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Scholz\, Udo
+ \n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
