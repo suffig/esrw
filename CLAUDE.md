@@ -13,6 +13,7 @@ GitHub Actions läuft.
 | Mitgliederbereich | `docs/mitglieder.js` | Konto, Abrechnung, Rechnung, Info, Notizen, Admin |
 | Rechnung | `docs/rechnung.js` | PDF der Gebührenabrechnung (eigener PDF-Schreiber) |
 | Offline | `docs/sw.js` | Service Worker, netz-zuerst |
+| Anleitung | `docs/tutorial/index.html` | www.esrw.app/tutorial – eigene Seite, Kapitel als `<section>`, Pflegehinweise im Kopf. Knopfnamen wie in der App: wer einen umbenennt, ändert ihn hier mit |
 | Einteilungen holen | `esrw_ical.py` | esrw.de auslesen, Feeds, `daten.json`, Protokoll |
 | Push | `push_senden.py` | Web Push über den Workflow |
 | Tresor | `tresor.py` | AES-256-GCM für die Daten in `docs/` |

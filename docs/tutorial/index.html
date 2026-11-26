@@ -1,0 +1,472 @@
+<!doctype html>
+<!--
+  ESRW App - Anleitung (www.esrw.app/tutorial/)
+
+  SO PFLEGST DU DIESE SEITE
+  * Jedes Kapitel ist ein <section class="kapitel"> weiter unten. Die
+    Uebersicht, die Kapitelleiste und "Zurueck/Weiter" baut das Skript
+    am Ende selbst daraus - ein neues Kapitel braucht nur eine neue
+    <section> an der richtigen Stelle.
+  * Pflicht an jeder <section>:
+      id="..."           kurzer Name fuer die Adresse (#kalender)
+      data-titel="..."   Ueberschrift in Uebersicht und Leiste
+      data-kurz="..."    ein Satz fuer die Kachel auf der Startseite
+      data-symbol="..."  ein Zeichen fuer die Kachel (Emoji oder Ziffer)
+  * Bausteine im Text:
+      <ol class="schritte"> ... </ol>   nummerierte Schritte
+      <span class="knopf">Name</span>     ein Knopf, wie er in der App heisst
+      <p class="tipp"> ... </p>          Hinweis-Kasten
+      <div class="tabelle"><table>...    Tabelle (scrollt auf dem Handy)
+  * Knopfnamen genau so schreiben, wie sie in der App stehen - wer die
+    App umbenennt, sucht hier mit nach dem alten Namen.
+  * Kein Bauschritt: Datei aendern, committen, fertig. Ohne JavaScript
+    stehen alle Kapitel untereinander, auch zum Drucken.
+-->
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ESRW App – Anleitung</title>
+<meta name="description" content="Die ESRW App Schritt für Schritt: Konto, Kalender, Push, Abrechnung und Kollegenliste.">
+<link rel="icon" href="../icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta name="theme-color" content="#f4f5f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e1116" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* Dieselben Farben wie die App (index.html, Design "neu") */
+  :root {
+    --bg:#f4f5f7; --karte:#fff; --linie:#e4e7ec; --text:#14181f; --dim:#687283;
+    --akzent:#111418; --akzent-text:#fff; --akzent-hell:#f0f1f3;
+    --rot:#e30613; --rot-hell:#fde7e9; --gut:#1d6b3f; --gut-bg:#e6f4ec;
+    --radius:20px; --radius-s:12px;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#0e1116; --karte:#171b22; --linie:#2a303a; --text:#eceff3; --dim:#98a1ad;
+      --akzent:#fff; --akzent-text:#14181f; --akzent-hell:#1f242d;
+      --rot:#ff3b47; --rot-hell:#3a1216; --gut:#7ed09c; --gut-bg:#17281d;
+      color-scheme: dark;
+    }
+  }
+  * { box-sizing:border-box; }
+  html { -webkit-text-size-adjust:100%; }
+  body { margin:0; background:var(--bg); color:var(--text);
+         font:500 16px/1.55 Manrope, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  a { color:inherit; }
+  .rahmen { max-width:760px; margin:0 auto; padding:0 16px calc(32px + env(safe-area-inset-bottom)); }
+
+  /* Kopf */
+  .kopf { display:flex; align-items:center; gap:12px; padding:calc(16px + env(safe-area-inset-top)) 0 12px; }
+  .kopf img { width:44px; height:44px; border-radius:12px; flex:none; }
+  .kopf .name { flex:1; min-width:0; }
+  .kopf b { display:block; font-size:1.15rem; font-weight:800; letter-spacing:-.01em; }
+  .kopf small { color:var(--dim); font-size:.8rem; }
+  .zur-app { display:inline-flex; align-items:center; min-height:44px; padding:0 16px; border-radius:99px;
+             background:var(--akzent); color:var(--akzent-text); text-decoration:none; font-weight:800; font-size:.9rem; flex:none; }
+
+  /* Startseite: Begruessung und Kacheln */
+  .held { background:linear-gradient(135deg, #111418, #20262f); color:#fff; border-radius:var(--radius);
+          padding:22px 20px; margin:4px 0 20px; position:relative; overflow:hidden; }
+  .held::after { content:""; position:absolute; right:-56px; top:-56px; width:130px; height:130px; border-radius:50%;
+                 background:var(--rot); }
+  .held h1 { margin:0 0 6px; font-size:1.5rem; line-height:1.2; font-weight:800; letter-spacing:-.02em; position:relative; z-index:1; max-width:78%; }
+  .held p { margin:0; color:#c9ced8; position:relative; z-index:1; max-width:90%; }
+  .held .los { margin-top:16px; position:relative; z-index:1; display:inline-flex; align-items:center; min-height:44px;
+               padding:0 18px; border-radius:99px; background:#fff; color:#111418; font-weight:800; text-decoration:none; }
+  .kacheln { display:grid; grid-template-columns:1fr; gap:10px; margin:0; padding:0; list-style:none; }
+  @media (min-width:560px) { .kacheln { grid-template-columns:1fr 1fr; } }
+  .kacheln a { display:flex; align-items:center; gap:14px; min-height:72px; padding:14px 16px; background:var(--karte);
+               border:1px solid var(--linie); border-radius:var(--radius); text-decoration:none; }
+  .kacheln a:active { transform:scale(.985); }
+  .kacheln .symbol { width:44px; height:44px; flex:none; display:grid; place-items:center; border-radius:14px;
+                     background:var(--akzent-hell); font-size:1.3rem; font-weight:800; }
+  .kacheln b { display:block; font-weight:800; }
+  .kacheln small { display:block; color:var(--dim); font-size:.85rem; line-height:1.35; }
+  .kacheln .nr { margin-left:auto; color:var(--dim); font-weight:800; font-size:.8rem; flex:none; }
+  .kacheln .gelesen .nr::before { content:"✓ "; color:var(--gut); }
+  .start-fuss { color:var(--dim); font-size:.85rem; margin:18px 4px 0; }
+
+  /* Kapitel */
+  .kapitel { background:var(--karte); border:1px solid var(--linie); border-radius:var(--radius);
+             padding:20px 18px 8px; margin:0 0 16px; }
+  .kapitel h2 { margin:0 0 4px; font-size:1.35rem; font-weight:800; letter-spacing:-.015em; line-height:1.25; }
+  .kapitel .einleitung { margin:0 0 16px; color:var(--dim); }
+  .kapitel h3 { font-size:1rem; font-weight:800; margin:20px 0 8px; }
+  .kapitel p, .kapitel li { margin:0 0 10px; }
+  .kapitel ul { padding-left:20px; margin:0 0 12px; }
+  .schritte { list-style:none; counter-reset:schritt; padding:0; margin:0 0 14px; }
+  .schritte > li { counter-increment:schritt; position:relative; padding:2px 0 14px 46px; margin:0; }
+  .schritte > li::before { content:counter(schritt); position:absolute; left:0; top:0; width:32px; height:32px;
+                           border-radius:50%; background:var(--akzent); color:var(--akzent-text);
+                           display:grid; place-items:center; font-weight:800; font-size:.9rem; }
+  .schritte > li:not(:last-child)::after { content:""; position:absolute; left:15px; top:36px; bottom:2px; width:2px; background:var(--linie); }
+  .schritte ul { margin:6px 0 0; }
+  .schritte li li { margin-bottom:6px; }
+  .knopf { display:inline-block; padding:1px 9px; border-radius:99px; background:var(--akzent-hell);
+           border:1px solid var(--linie); font-weight:700; font-size:.92em; }
+  .tipp { background:var(--akzent-hell); border-radius:var(--radius-s); padding:12px 14px 12px 42px; position:relative; }
+  .tipp::before { content:"💡"; position:absolute; left:14px; top:11px; }
+  .tabelle { overflow-x:auto; margin:0 0 14px; border:1px solid var(--linie); border-radius:var(--radius-s); }
+  table { border-collapse:collapse; width:100%; font-size:.9rem; }
+  th, td { text-align:left; vertical-align:top; padding:10px 12px; border-bottom:1px solid var(--linie); }
+  tr:last-child td { border-bottom:0; }
+  th { background:var(--akzent-hell); font-weight:800; white-space:nowrap; }
+  td:first-child { font-weight:700; }
+  /* Auf dem Handy: jede Zeile eine kleine Karte, statt seitlich zu
+     scrollen. Die Spaltennamen setzt das Skript als data-label ein. */
+  @media (max-width:520px) {
+    .tabelle { border:0; overflow:visible; }
+    .tabelle table, .tabelle tbody, .tabelle tr, .tabelle td { display:block; width:100%; }
+    .tabelle thead { display:none; }
+    .tabelle tr { border:1px solid var(--linie); border-radius:var(--radius-s); padding:10px 12px; margin:0 0 8px; }
+    .tabelle td { border:0; padding:2px 0; }
+    .tabelle td:first-child { font-size:1rem; padding-bottom:4px; }
+    .tabelle td[data-label]:not(:first-child)::before { content:attr(data-label) ": "; color:var(--dim); font-weight:700; }
+  }
+
+  /* Leiste mit Fortschritt und Zurueck/Weiter - nur mit Skript */
+  .fortschritt { display:none; }
+  .js .fortschritt { display:block; margin:0 0 12px; }
+  .fortschritt .zeile { display:flex; justify-content:space-between; align-items:center; gap:8px; min-height:44px; }
+  .fortschritt .uebersicht { display:inline-flex; align-items:center; min-height:44px; padding:0 4px; font-weight:800;
+                             text-decoration:none; color:var(--dim); }
+  .fortschritt .stand { color:var(--dim); font-size:.85rem; font-weight:700; }
+  .balken { height:6px; border-radius:99px; background:var(--linie); overflow:hidden; }
+  .balken i { display:block; height:100%; width:0; background:var(--rot); border-radius:99px; transition:width .25s; }
+  /* Eine Reihe, gleich breit verteilt - acht runde 44-px-Knoepfe brachen
+     bei 375 px in zwei Zeilen um. */
+  .punkte { display:flex; gap:4px; margin:12px 0 0; padding:0; list-style:none; }
+  .punkte li { flex:1; min-width:0; }
+  .punkte a { display:grid; place-items:center; width:100%; height:44px; border-radius:12px; border:1px solid var(--linie);
+              background:var(--karte); text-decoration:none; font-weight:800; font-size:.9rem; }
+  .punkte a.gelesen:not([aria-current]) { color:var(--gut); }
+  .punkte a[aria-current="step"] { background:var(--akzent); color:var(--akzent-text); border-color:var(--akzent); }
+  .blaettern { display:none; }
+  .js .blaettern { display:flex; gap:10px; margin:4px 0 16px; }
+  .blaettern a { flex:1; min-height:52px; display:flex; flex-direction:column; justify-content:center; padding:8px 16px;
+                 border-radius:var(--radius-s); text-decoration:none; border:1px solid var(--linie); background:var(--karte); min-width:0; }
+  .blaettern a small { color:var(--dim); font-size:.75rem; font-weight:700; }
+  .blaettern a b { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .blaettern .weiter { text-align:right; background:var(--akzent); color:var(--akzent-text); border-color:var(--akzent); }
+  .blaettern .weiter small { color:inherit; opacity:.7; }
+  .blaettern .leer { visibility:hidden; }
+
+  /* Mit Skript: eine Seite zur Zeit */
+  .js .kapitel, .js #start { display:none; }
+  .js .kapitel.offen, .js #start.offen { display:block; }
+  .js .kapitel.offen { animation:rein .2s ease-out; }
+  @keyframes rein { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce) { .js .kapitel.offen { animation:none; } }
+
+  a:focus-visible, button:focus-visible { outline:3px solid var(--rot); outline-offset:2px; }
+
+  @media print {
+    .zur-app, .fortschritt, .blaettern, #start { display:none !important; }
+    .js .kapitel { display:block !important; break-inside:avoid-page; }
+    body { background:#fff; }
+  }
+</style>
+</head>
+<body>
+<div class="rahmen">
+  <header class="kopf">
+    <img src="../logo-96.png" alt="">
+    <span class="name"><b>ESRW App</b><small>Anleitung · Schritt für Schritt</small></span>
+    <a class="zur-app" href="../">Zur App</a>
+  </header>
+
+  <main>
+    <!-- Startseite. Die Kacheln fuellt das Skript aus den Kapiteln. -->
+    <div id="start">
+      <section class="held">
+        <h1>Deine Einteilungen, immer dabei</h1>
+        <p>Die ESRW App zeigt deine Spiele von esrw.de, schickt sie in deinen Kalender und aufs Handy und rechnet sie ab. In acht kurzen Kapiteln kannst du alles.</p>
+        <a class="los" href="#loslegen">Los geht's →</a>
+      </section>
+      <ul class="kacheln" id="kacheln"></ul>
+      <p class="start-fuss">Fragen oder ein Fehler in dieser Anleitung? Sag dem Betreiber Bescheid.</p>
+    </div>
+
+    <nav class="fortschritt" id="fortschritt" aria-label="Kapitel">
+      <div class="zeile">
+        <a class="uebersicht" href="#">‹ Übersicht</a>
+        <span class="stand" id="stand"></span>
+      </div>
+      <div class="balken"><i id="balken"></i></div>
+      <ol class="punkte" id="punkte"></ol>
+    </nav>
+
+    <!-- =========================================================== -->
+    <section class="kapitel" id="loslegen" data-titel="Loslegen" data-symbol="📲"
+             data-kurz="App aufs Handy legen, Konto anlegen, freischalten lassen">
+      <h2>Loslegen</h2>
+      <p class="einleitung">In fünf Minuten startklar: App aufs Handy legen, Konto anlegen, E-Mail bestätigen, auf die Freischaltung warten.</p>
+      <ol class="schritte">
+        <li><b>App aufs Handy legen.</b> <a href="https://www.esrw.app">www.esrw.app</a> öffnen.
+          <ul>
+            <li>iPhone: in Safari unten auf <span class="knopf">Teilen</span> → <span class="knopf">Zum Home-Bildschirm</span>.</li>
+            <li>Android: in Chrome über das Menü (⋮) → <span class="knopf">App installieren</span>.</li>
+          </ul>
+          Ab jetzt die App immer über das neue Symbol öffnen – nur so gibt es Mitteilungen.</li>
+        <li><b>Konto anlegen.</b> Die App startet mit der Anmeldung. Dort <span class="knopf">Konto anlegen</span> antippen: E-Mail, Passwort und unter <span class="knopf">Dein Name auf esrw.de</span> dich selbst aus der Liste wählen.</li>
+        <li><b>E-Mail bestätigen.</b> Es kommt eine Mail von <b>ESRW App (noreply@auth.esrw.app)</b> – den Knopf darin antippen. Nichts da? Im Spam nachsehen.</li>
+        <li><b>Freischaltung abwarten.</b> Die Einteilungen sind geschützt. Sobald der Betreiber dich freischaltet, siehst du deine Spiele – mit Kalender, Push und Abrechnung.</li>
+      </ol>
+      <p class="tipp">Statt Passwort geht auch <span class="knopf">Ohne Passwort anmelden</span> – die App schickt dir einen Link per Mail.</p>
+    </section>
+
+    <!-- =========================================================== -->
+    <section class="kapitel" id="profil" data-titel="Profil und Kollegenliste" data-symbol="👤"
+             data-kurz="Eigene Daten pflegen – für Kollegen, Strecken und Rechnung">
+      <h2>Profil und Kollegenliste</h2>
+      <p class="einleitung">Dein Profil füllt die Kollegenliste und rechnet deine Fahrten. Einmal ausfüllen reicht.</p>
+      <ol class="schritte">
+        <li>Oben rechts auf dein <b>Bild</b> bzw. deinen Anfangsbuchstaben tippen → <span class="knopf">Konto</span>.</li>
+        <li>Die Felder ausfüllen – was wer sieht, steht in der Tabelle.</li>
+        <li>Unter <span class="knopf">Was die Kollegen sehen</span> zeigt die App eine Vorschau deiner Karte.</li>
+      </ol>
+      <div class="tabelle">
+        <table>
+          <thead><tr><th>Feld</th><th>Wofür</th><th>Wer sieht es</th></tr></thead>
+          <tbody>
+            <tr><td>Profilbild</td><td>erkennt man dich in der Kollegenliste</td><td>alle Freigeschalteten</td></tr>
+            <tr><td>Rufname</td><td>wie dich die Kollegen ansprechen</td><td>alle Freigeschalteten</td></tr>
+            <tr><td>Handynummer</td><td>Anruf und WhatsApp aus der Kollegenliste</td><td>nur mit Haken bei <span class="knopf">Handynummer zeigen</span></td></tr>
+            <tr><td>Heimatadresse</td><td>Startpunkt für Strecke, Kilometer und Abfahrtszeit</td><td>nur du</td></tr>
+            <tr><td>Anschrift, Rechnungsdaten</td><td>Absender auf deiner Rechnung</td><td>nur du</td></tr>
+            <tr><td>Kilometermodell</td><td>wie die Fahrtkosten für die Steuer gerechnet werden</td><td>nur du</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tipp">Die Handynummer lässt sich jederzeit wieder löschen. Die Kollegenliste selbst steht im Reiter <span class="knopf">Kollegen</span>.</p>
+    </section>
+
+    <!-- =========================================================== -->
+    <section class="kapitel" id="kalender" data-titel="Kalender" data-symbol="📅"
+             data-kurz="Alle Spiele automatisch im Handy-Kalender">
+      <h2>Kalender abonnieren</h2>
+      <p class="einleitung">Einmal abonnieren, dann stehen alle deine Spiele automatisch im Kalender – auch neue, verlegte und abgesagte.</p>
+      <ol class="schritte">
+        <li>Auf der Startseite deine Karte öffnen und den Kasten <span class="knopf">Kalender</span> aufklappen.</li>
+        <li><span class="knopf">Im Kalender abonnieren</span> antippen und im Kalender bestätigen.
+          <ul>
+            <li>Klappt das nicht: <span class="knopf">Link kopieren</span> und im Kalender als Abo hinzufügen (iPhone: Einstellungen → Apps → Kalender → Accounts → Account hinzufügen → Andere → Kalenderabo hinzufügen).</li>
+            <li><span class="knopf">Einmalig laden</span> holt die Spiele nur einmal – spätere Änderungen kommen dann nicht nach.</li>
+          </ul></li>
+        <li>Unter <span class="knopf">Kalender anpassen</span> einstellen:
+          <ul>
+            <li><b>Was im Titel steht:</b> Rolle, Liga, Halle, Gespann.</li>
+            <li><b>Termin beginnt</b> zum Treffpunkt oder zum Anpfiff.</li>
+            <li><b>Erinnerungen:</b> bis zu vier Wecker, z. B. 1 Std. oder einen Tag vorher.</li>
+          </ul></li>
+      </ol>
+      <p class="tipp">Änderungen stehen spätestens nach einer Stunde im Kalender. Wann er nachsieht, entscheidet der Kalender selbst – Google oft nur ein- bis zweimal am Tag. Wer es schneller braucht, schaltet Push ein.</p>
+      <h3>Wecker zum Losfahren</h3>
+      <p><span class="knopf">Kalenderdatei mit Abfahrtsalarm laden</span> erzeugt eine Datei, deren Termine dich 10 Minuten vor dem Losfahren wecken. Einmal importieren, am besten in einen eigenen Kalender – sonst stehen die Spiele doppelt drin.</p>
+    </section>
+
+    <!-- =========================================================== -->
+    <section class="kapitel" id="push" data-titel="Push" data-symbol="🔔"
+             data-kurz="Sofort Bescheid bei neuen und geänderten Spielen">
+      <h2>Push einschalten</h2>
+      <p class="einleitung">Push meldet sich sofort, wenn sich bei deinen Spielen etwas tut – schneller als jeder Kalender.</p>
+      <ol class="schritte">
+        <li>Die App muss als Symbol auf dem Home-Bildschirm liegen (Kapitel „Loslegen“) und von dort geöffnet sein.</li>
+        <li><span class="knopf">Einstellungen</span> → <span class="knopf">Push einschalten</span> und die Mitteilungen erlauben.</li>
+        <li>Auswählen, was kommen soll:
+          <ul>
+            <li><b>Erinnerung ans Spiel</b> mit Uhrzeit, Treffpunkt, Halle, Abfahrt und Wetter – am Spieltag ab 7 Uhr, einige Stunden vor dem Treffpunkt oder am Abend davor.</li>
+            <li><b>Wochenvorschau</b> sonntags ab 18 Uhr.</li>
+            <li><b>Gespannwechsel</b>, wenn sich die Kollegen in deinem Spiel ändern.</li>
+            <li><b>Abrechnung</b>, wenn Spiele zum Abrechnen bereitstehen.</li>
+          </ul></li>
+      </ol>
+      <p class="tipp">Push läuft je Gerät: auf einem zweiten Handy oder Tablet dort noch einmal einschalten.</p>
+    </section>
+
+    <!-- =========================================================== -->
+    <section class="kapitel" id="unterwegs" data-titel="Unterwegs" data-symbol="🚗"
+             data-kurz="Wann du losfahren musst – mit Puffer für Stau">
+      <h2>Unterwegs</h2>
+      <p class="einleitung">Mit Heimatadresse rechnet die App, wann du losfahren musst, und zeigt es auf Start und auf der Spielseite („Losfahren um 16:02“).</p>
+      <ul>
+        <li><b>Route:</b> auf der Spielseite oder der Startkarte <span class="knopf">Route</span> antippen. Welche Karten-App sich öffnet, stellst du unter <span class="knopf">Einstellungen</span> → <b>Unterwegs</b> → <span class="knopf">Karten-App</span> ein.</li>
+        <li><b>Puffer für Verkehr:</b> Der Routendienst kennt keinen Stau. Unter <span class="knopf">Einstellungen</span> → <b>Unterwegs</b> gibt es zwei Regler:
+          <ul>
+            <li><b>Aufschlag</b> in Prozent – wächst mit der Strecke, z. B. 20 %.</li>
+            <li><b>Reserve</b> in festen Minuten, z. B. für die Parkplatzsuche.</li>
+          </ul></li>
+      </ul>
+      <p class="tipp">Beides zusammen zieht die Abfahrt vor – auf Start, Spielseite, Push und in der Kalenderdatei mit Abfahrtsalarm.</p>
+    </section>
+
+    <!-- =========================================================== -->
+    <section class="kapitel" id="abrechnung" data-titel="Abrechnung" data-symbol="€"
+             data-kurz="Spiele prüfen, Rechnung schreiben, Geld abhaken">
+      <h2>Abrechnung</h2>
+      <p class="einleitung">Die App trägt Vergütung und Kilometer selbst ein. Du prüfst, schreibst die Rechnung und hakst ab, wenn das Geld da ist. Nur für Freigeschaltete, Reiter <span class="knopf">Abrechnung</span>.</p>
+      <h3>Einmal einrichten</h3>
+      <p>Über das Zahnrad oben in der Abrechnung:</p>
+      <ul>
+        <li><b>Wohnort</b> – ohne ihn gibt es keine Kilometer.</li>
+        <li><b>Kilometer</b> – einfache Strecke oder Hin- und Rückweg.</li>
+        <li><b>Verpflegung</b> – 14 € ab 8 Stunden Abwesenheit, immer oder nie.</li>
+        <li><b>Gebühren</b> – die Ordnung des ESRW, für DNL, U17 I/II, DFEL und Oberliga die des DEB. Wer einen Satz anders bekommt, ändert ihn hier für sich.</li>
+      </ul>
+      <h3>Der Weg eines Spiels</h3>
+      <p>Die Leiste oben zeigt, wo was steht:</p>
+      <div class="tabelle">
+        <table>
+          <thead><tr><th>Stufe</th><th>Was dort steht</th><th>Was du tust</th></tr></thead>
+          <tbody>
+            <tr><td>Prüfen</td><td>Kilometer oder Vergütung fehlen, oder ein Betrag passt nicht zur Ordnung</td><td>Wert antippen, korrigieren oder bestätigen</td></tr>
+            <tr><td>Abrechnen</td><td>gespielte Spiele mit allen Angaben</td><td><span class="knopf">Rechnung schreiben</span></td></tr>
+            <tr><td>Geld</td><td>Rechnungen, die noch offen sind</td><td><span class="knopf">Als bezahlt abhaken</span></td></tr>
+            <tr><td>Archiv</td><td>alles Erledigte</td><td>nachsehen</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>Rechnung schreiben</h3>
+      <ol class="schritte">
+        <li>In der Stufe <b>Abrechnen</b> auf <span class="knopf">Rechnung schreiben</span> tippen.</li>
+        <li>Verein wählen und die Spiele anhaken. Anschrift des Vereins, deine Rechnungsdaten und die Rechnungsnummer setzt die App ein.</li>
+        <li>PDF erzeugen und direkt aus der App teilen oder speichern.</li>
+        <li>Ist das Geld da: in der Stufe <b>Geld</b> <span class="knopf">Als bezahlt abhaken</span>.</li>
+      </ol>
+      <h3>Bearbeiten</h3>
+      <p>Jedes Spiel lässt sich antippen – Betrag, Kilometer, Verpflegung, Auslagen, Ausfall vor Ort. Was die App vorgeschlagen hat, ist markiert, bis du es bestätigst. Belege fotografierst du direkt am Spiel. Der Knopf mit den Pfeilen oben holt Kilometer und Vergütung neu.</p>
+      <p class="tipp"><b>Für die Steuer:</b> <span class="knopf">Weitere Werkzeuge</span> → <span class="knopf">Jahresabschluss für die Steuer</span> – alle Spiele eines Jahres mit Pauschalen, Fahrtkosten, Verpflegung, Auslagen und dem Netto, auch als ZIP mit Belegen.</p>
+    </section>
+
+    <!-- =========================================================== -->
+    <section class="kapitel" id="mehr" data-titel="Weitere Funktionen" data-symbol="✨"
+             data-kurz="Tausch, Mitfahren, Notizen, Hallen-Hinweise">
+      <h2>Weitere Funktionen</h2>
+      <p class="einleitung">Vieles läuft direkt auf der Spielseite – ein Spiel antippen, und alles dazu steht beisammen.</p>
+      <div class="tabelle">
+        <table>
+          <thead><tr><th>Funktion</th><th>Wo</th><th>Wozu</th></tr></thead>
+          <tbody>
+            <tr><td>Kollegen</td><td>Reiter <span class="knopf">Kollegen</span></td><td>Wer pfeift mit wem, Anruf und WhatsApp mit einem Tipp</td></tr>
+            <tr><td>Spielplan</td><td>Reiter <span class="knopf">Spielplan</span></td><td>Alle Spiele, filterbar nach Liga, Halle und Verein</td></tr>
+            <tr><td>Tauschbörse</td><td>Spielseite → Tausch</td><td>Ein Spiel abgeben oder ein Gesuch übernehmen</td></tr>
+            <tr><td>Mitfahren</td><td>Spielseite, <span class="knopf">Mehr</span> → <span class="knopf">Zusammen fahren</span></td><td>Plätze anbieten oder mitfahren; der Fahrer bekommt Push</td></tr>
+            <tr><td>Notizen, Dokumente</td><td>Spielseite</td><td>Eigene Notizen und Dateien zum Spiel</td></tr>
+            <tr><td>Checkliste</td><td>Spielseite</td><td>Was am Spieltag in die Tasche gehört</td></tr>
+            <tr><td>Hallen-Hinweise</td><td>Spielseite → Halle</td><td>Parken, Eingang, Kabine – von Kollegen für Kollegen</td></tr>
+            <tr><td>Startseite</td><td><span class="knopf">Einstellungen</span></td><td>Was auf Start steht und in welcher Reihenfolge</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- =========================================================== -->
+    <section class="kapitel" id="hilfe" data-titel="Wenn etwas hakt" data-symbol="🛟"
+             data-kurz="Häufige Fragen und schnelle Lösungen">
+      <h2>Wenn etwas hakt</h2>
+      <p class="einleitung">Die häufigsten Stolpersteine – und was hilft.</p>
+      <ul>
+        <li><b>Keine Mail bekommen:</b> im Spam nachsehen, Absender ist <b>ESRW App (noreply@auth.esrw.app)</b>. Danach in der App <span class="knopf">Mail erneut senden</span>.</li>
+        <li><b>Passwort vergessen:</b> <span class="knopf">Passwort vergessen</span> oder gleich <span class="knopf">Ohne Passwort anmelden</span>.</li>
+        <li><b>Kalender zeigt eine Änderung noch nicht:</b> Der Kalender holt das Abo in eigenem Takt, bei Google oft nur ein- bis zweimal am Tag. Push meldet sich sofort.</li>
+        <li><b>Keine Mitteilungen:</b> App vom Home-Bildschirm aus öffnen, in den Handy-Einstellungen Mitteilungen erlauben, dann <span class="knopf">Push einschalten</span> erneut antippen.</li>
+        <li><b>Keine Kilometer oder Abfahrtszeit:</b> Heimatadresse im Konto eintragen.</li>
+        <li><b>Nach der Anmeldung keine Spiele zu sehen:</b> Das Konto ist noch nicht freigeschaltet – kurz beim Betreiber melden.</li>
+        <li><b>Ein Spiel stimmt nicht:</b> Was auf esrw.de steht, gilt. Fehler dort bitte beim Obmann melden.</li>
+      </ul>
+      <p class="tipp">Geschafft! <a href="../">Zur App →</a></p>
+    </section>
+
+    <nav class="blaettern" id="blaettern" aria-label="Blättern">
+      <a id="zurueck" href="#"><small>Zurück</small><b></b></a>
+      <a id="weiter" class="weiter" href="#"><small>Weiter</small><b></b></a>
+    </nav>
+  </main>
+</div>
+
+<script>
+// Baut Uebersicht, Fortschritt und Blaettern aus den <section class="kapitel">.
+// Inhalte stehen nur im HTML oben - hier steht nichts, was man pflegen muss.
+(function () {
+  document.documentElement.classList.add("js");
+  var kapitel = [].slice.call(document.querySelectorAll(".kapitel"));
+  var start = document.getElementById("start");
+  var gelesen = {};
+  try { gelesen = JSON.parse(localStorage.getItem("tutorial-gelesen") || "{}") || {}; } catch (e) {}
+  function merken() { try { localStorage.setItem("tutorial-gelesen", JSON.stringify(gelesen)); } catch (e) {} }
+
+  var kacheln = document.getElementById("kacheln"), punkte = document.getElementById("punkte");
+  kapitel.forEach(function (k, i) {
+    var li = document.createElement("li"), a = document.createElement("a");
+    a.href = "#" + k.id;
+    var s = document.createElement("span"); s.className = "symbol"; s.textContent = k.dataset.symbol || (i + 1); s.setAttribute("aria-hidden", "true");
+    var t = document.createElement("span"), b = document.createElement("b"), sm = document.createElement("small");
+    b.textContent = k.dataset.titel; sm.textContent = k.dataset.kurz || ""; t.appendChild(b); t.appendChild(sm);
+    var nr = document.createElement("span"); nr.className = "nr"; nr.textContent = (i + 1) + "/" + kapitel.length;
+    a.appendChild(s); a.appendChild(t); a.appendChild(nr); li.appendChild(a); kacheln.appendChild(li);
+    k._kachel = a;
+    var pl = document.createElement("li"), pa = document.createElement("a");
+    pa.href = "#" + k.id; pa.textContent = i + 1; pa.setAttribute("aria-label", "Kapitel " + (i + 1) + ": " + k.dataset.titel);
+    pl.appendChild(pa); punkte.appendChild(pl); k._punkt = pa;
+  });
+
+  // Spaltennamen an jede Zelle - fuer die Kartenansicht auf dem Handy
+  [].forEach.call(document.querySelectorAll(".tabelle table"), function (t) {
+    var kopf = [].map.call(t.querySelectorAll("thead th"), function (th) { return th.textContent; });
+    [].forEach.call(t.querySelectorAll("tbody tr"), function (tr) {
+      [].forEach.call(tr.children, function (td, i) { if (kopf[i]) td.setAttribute("data-label", kopf[i]); });
+    });
+  });
+
+  var fortschritt = document.getElementById("fortschritt"), blaettern = document.getElementById("blaettern");
+  var zurueck = document.getElementById("zurueck"), weiter = document.getElementById("weiter");
+  function setzeLink(a, k, oben, text, ziel) {
+    if (!k && !ziel) { a.classList.add("leer"); a.removeAttribute("href"); return; }
+    a.classList.remove("leer");
+    a.href = ziel || "#" + k.id;
+    a.querySelector("small").textContent = oben;
+    a.querySelector("b").textContent = text || k.dataset.titel;
+  }
+  function zeigen() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    var i = kapitel.map(function (k) { return k.id; }).indexOf(id);
+    kapitel.forEach(function (k, j) {
+      k.classList.toggle("offen", j === i);
+      if (j === i) k._punkt.setAttribute("aria-current", "step"); else k._punkt.removeAttribute("aria-current");
+    });
+    start.classList.toggle("offen", i < 0);
+    fortschritt.style.display = i < 0 ? "none" : "";
+    blaettern.style.display = i < 0 ? "none" : "";
+    if (i >= 0) {
+      gelesen[kapitel[i].id] = 1; merken();
+      document.getElementById("stand").textContent = "Kapitel " + (i + 1) + " von " + kapitel.length;
+      document.getElementById("balken").style.width = ((i + 1) / kapitel.length * 100) + "%";
+      setzeLink(zurueck, kapitel[i - 1], "Zurück");
+      if (kapitel[i + 1]) setzeLink(weiter, kapitel[i + 1], "Weiter");
+      else setzeLink(weiter, null, "Fertig", "Zur App", "../");
+      document.title = kapitel[i].dataset.titel + " – ESRW App Anleitung";
+    } else {
+      document.title = "ESRW App – Anleitung";
+    }
+    kapitel.forEach(function (k) {
+      k._kachel.classList.toggle("gelesen", !!gelesen[k.id]);
+      k._punkt.classList.toggle("gelesen", !!gelesen[k.id]);
+    });
+    window.scrollTo(0, 0);
+  }
+  window.addEventListener("hashchange", zeigen);
+  // Pfeiltasten am Rechner
+  document.addEventListener("keydown", function (e) {
+    if (blaettern.style.display === "none") return;
+    var ziel = e.key === "ArrowRight" ? weiter : e.key === "ArrowLeft" ? zurueck : null;
+    if (ziel && ziel.getAttribute("href")) location.href = ziel.href;
+  });
+  zeigen();
+})();
+</script>
+</body>
+</html>

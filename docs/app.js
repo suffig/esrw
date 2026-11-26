@@ -1211,7 +1211,10 @@
       if (!mehrEintraege.length && el("mehr")) { var offen = !el("mehr").classList.contains("versteckt"); zeigeMehr(); if (!offen) el("mehr").classList.add("versteckt"); }
       var seiten = suchSeiten(f, mehrEintraege);
       if (seiten.length) { suchGruppe(liste, "Seiten"); treffer += seiten.length; }
-      seiten.forEach(function (e) { suchEintrag(liste, e[2], e[3] || "", function () { location.hash = e[0].replace(/^#/, ""); }); });
+      seiten.forEach(function (e) { suchEintrag(liste, e[2], e[3] || "", function () {
+        if (e[0].charAt(0) !== "#") { location.href = e[0]; return; }
+        location.hash = e[0].replace(/^#/, "");
+      }); });
 
       // Eigene Notizen (Login)
       if (sitzungVorhanden() && funktion("notizen")) ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
@@ -4874,7 +4877,7 @@
        "Unten findest du Start, Spielplan, Kollegen und Mehr.\nAusführlicher steht alles unter Mehr → Anleitung."]
     ];
     var ausfuehrlich = [
-      ["i-home", "Willkommen bei den Einteilungen", "Diese App zeigt dir deine Schiedsrichter-Einteilungen von esrw.de, immer aktuell, mit Halle, Treffpunkt, Route und Gespann. Ein paar kurze Schritte, dann bist du startklar."],
+      ["i-home", "Willkommen bei der ESRW App", "Diese App zeigt dir deine Schiedsrichter-Einteilungen von esrw.de, immer aktuell, mit Halle, Treffpunkt, Route und Gespann. Ein paar kurze Schritte, dann bist du startklar."],
       ["i-users", "Deinen Namen wählen", "Tippe unten in der Liste auf deinen Namen. Das ist dein Profil auf diesem Gerät, „Start“ zeigt dann deine Spiele.\nKollegen ansehen geht jederzeit über die Lupe oben."],
       ["i-cal", "Kalender abonnieren", "Auf „Start“ findest du die Kalender-Karte: „Im Kalender abonnieren“ legt ein Abo im " + kalenderName() + " an. Neue oder geänderte Spiele kommen von allein aufs Handy, mit Wecker zum Treffpunkt.\nWas im Termin steht und wann der Wecker klingelt, stellst du dort unter „Anpassen“ selbst ein.", "#", "Zur Startseite"],
       ["i-bell", "Als App und Push", appAblegen().charAt(0).toUpperCase() + appAblegen().slice(1) + ". Danach unter Einstellungen „Push einschalten“: dann meldet sich die App bei neuen und geänderten Einteilungen, am Spieltag und zur Abfahrt.", "#einstellungen", "Zu den Einstellungen", "push"],
@@ -4887,7 +4890,7 @@
            ? " " + funktionsText([["tausch", "Tauschbörse"], ["frei", "Verfügbarkeit"], ["hallen", "Hallen-Hinweise"], ["gespann", "Kontakte"]], "und")
              + " schaltet der Betreiber nach der Freischaltung frei. Du bekommst das hier zu sehen." : "")],
       ["i-bell", "Push einschalten", "Unter Einstellungen → Push: Änderungen an deinen Spielen, Spieltag-Erinnerung mit Wetter, Abfahrt, Termine, Wochenvorschau. Wann die Erinnerung kommt, stellst du selbst ein. Die App muss dafür auf dem Home-Bildschirm liegen.", "#einstellungen", "Push einschalten", "push"],
-      ["i-euro", "Abrechnung", "Jedes Spiel bekommt km und Vergütung von selbst. Am Jahresende gibt es unter „Weitere Werkzeuge“ den Jahresabschluss mit dem Netto, das Fahrtenbuch und die CSV fürs Finanzamt. Melden musst du nichts.\nHeimatadresse dafür unter Einstellungen → Profil eintragen.", "#mitglieder/abrechnung", "Zur Abrechnung", "abrechnung"],
+      ["i-euro", "Abrechnung", "Jedes Spiel bekommt km und Vergütung von selbst. Am Jahresende gibt es unter „Weitere Werkzeuge“ den Jahresabschluss mit dem Netto, das Fahrtenbuch und die CSV fürs Finanzamt. Melden musst du nichts.\nDie Heimatadresse dafür trägst du im Konto ein (oben rechts auf dein Bild tippen).", "#mitglieder/abrechnung", "Zur Abrechnung", "abrechnung"],
       ["i-route", "Die Spielseite", "Ein Tipp auf ein Spiel: Route, Teilen, „In Kalender“" + (funktion("wetter") ? ", Wetter" : "") + ", Abfahrtszeit"
         + (funktion("checkliste") ? ", Checkliste" : "") + (funktion("chat") ? ", Gespann-Notizen" + (funktion("push") ? " (mit Push an die Kollegen)" : "") : "")
         + (funktion("mitfahren") ? ", Fahrgemeinschaft" : "") + (funktion("notizen") ? " und deine private Notiz" : "") + "."],
@@ -4898,7 +4901,10 @@
     ];
     // Der erste Besuch bekommt die kurze Fassung, "Mehr -> Anleitung"
     // die vollstaendige - dort schlaegt man nach, hier faengt man an.
-    var roh = name === "alles" ? ausfuehrlich.concat(konto)
+    var nachlesen = [["i-buch", "Alles zum Nachlesen",
+      "Die ausführliche Anleitung gibt es auch als eigene Seite – Kapitel für Kapitel, zum Nachlesen und zum Weiterschicken an Kollegen: www.esrw.app/tutorial",
+      "tutorial/", "Anleitung öffnen"]];
+    var roh = name === "alles" ? ausfuehrlich.concat(konto, nachlesen)
             : name === "konto" ? konto
             : kurz;
     return roh.filter(function (sch) { return !sch[5] || funktion(sch[5]); });
@@ -5122,6 +5128,9 @@
       ["#einstellungen", "i-key", "Einstellungen", "Konto, Push, Startseite, Schrift, Farbe"],
       ["#mitglieder/admin", "i-shield", "Admin", "Freischaltung, Ank\u00fcndigungen", "wartend", true],
       ["#anleitung", "i-mehr", "Anleitung", "Kalender, Push, Konto \u2013 Schritt f\u00fcr Schritt"],
+      // Eine eigene Seite, keine Ansicht der App: zum Nachlesen und zum
+      // Weiterschicken an jemanden, der die App noch nicht hat.
+      ["tutorial/", "i-buch", "Anleitung zum Nachlesen", "Alles Schritt f\u00fcr Schritt \u2013 auch zum Weiterschicken"],
       ["#status", "i-check", "Diagnose", "F\u00fcr die Fehlersuche"]
     ];
     var links = {}, selten = [];
@@ -7473,7 +7482,27 @@
     var an = !!(e.detail && e.detail.angemeldet);
     if (an === angemeldetStand) return;
     angemeldetStand = an;
-    if (!an) { try { localStorage.removeItem("tresor"); } catch (x) {} schreiben("konto-slug", null); }
+    if (!an) {
+      try { localStorage.removeItem("tresor"); } catch (x) {}
+      schreiben("konto-slug", null);
+      // Ein Anmeldeschluessel, zu dem es keine Sitzung (mehr) gibt, muss
+      // vor dem Neuladen weg: sitzungVorhanden() sieht nur den Schluessel,
+      // haelt die App beim naechsten Start wieder fuer angemeldet, die
+      // Anmeldung meldet "aus" - und die Seite lud sich endlos neu
+      // (gefunden im Pane mit einer liegengebliebenen mock_session).
+      try {
+        for (var i = localStorage.length - 1; i >= 0; i--) {
+          var k = localStorage.key(i);
+          if (/^sb-.*-auth-token$/.test(k) || k === "mock_session") localStorage.removeItem(k);
+        }
+      } catch (x) {}
+    }
+    // Notbremse: hoechstens zweimal in zehn Sekunden neu laden.
+    var neu = [];
+    try { neu = JSON.parse(sessionStorage.getItem("sitzung-neu") || "[]").filter(function (t) { return Date.now() - t < 10000; }); } catch (x) {}
+    if (neu.length >= 2) return;
+    neu.push(Date.now());
+    try { sessionStorage.setItem("sitzung-neu", JSON.stringify(neu)); } catch (x) {}
     location.reload();
   });
 

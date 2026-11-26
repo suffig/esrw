@@ -4844,11 +4844,17 @@ window.Mitglieder = (function () {
       rendereAbrechnung();
     });
   }
+  var nachgezogenAm = 0;
   function vorschlaegeNachziehen() {
     var n = 0;
+    // Nur die Saison, fuer die die Ordnung gilt - wie in abweichung().
+    // Ohne das schrieb ein geaenderter Satz seinen Wert auch in die
+    // App-Vorschlaege der Vorsaison.
+    var gilt = gebuehren && /(\d{4}\/\d{2})/.exec(gebuehren.stand || "");
     alleSpiele().forEach(function (sp) {
       var e = einsaetze[sp.kennung];
       if (!e || e.verguetung == null || e.bezahlt) return;
+      if (gilt && saisonAus(sp.beginn) !== gilt[1]) return;
       if (!(e.herkunft && e.herkunft.verguetung === "ordnung")) return;
       if (aufRechnung && aufRechnung[sp.kennung]) return;
       var g = sollBetrag(sp);
@@ -5502,6 +5508,16 @@ window.Mitglieder = (function () {
     // hat. Ueber alle Saisons, nicht nur die gewaehlte: die Liga von
     // vorletztem Jahr gilt weiter.
     gelerntBauen(alleSpiele());
+    // Aendert der Betreiber einen Satz (Pflege -> Gebuehrensaetze) oder
+    // kommt eine neue Ordnung, zogen bis Fassung 290 nur die eigenen
+    // Saetze nach. Was die App selbst vorgeschlagen und niemand
+    // bestaetigt hat, folgt jetzt auch dem Betreiber - einmal je Minute,
+    // nicht bei jedem Neuzeichnen.
+    if (Date.now() - nachgezogenAm > 60000) {
+      nachgezogenAm = Date.now();
+      var nz = vorschlaegeNachziehen();
+      if (nz) kurzMeldung(nz + (nz === 1 ? " Betrag" : " Beträge") + " an die Gebührenordnung angepasst.", "gut");
+    }
     automatischVorbelegen(spiele, hallenOhneRoute(spiele).length > 0);
     // Die Strecken kommen nach - die Seite steht schon, waehrend der
     // Routendienst antwortet (350 ms Pause je Halle).
@@ -8241,9 +8257,9 @@ window.Mitglieder = (function () {
   // docs/ und ist fuer den Browser nicht erreichbar.
   var BETRIEB = [
     ["vorlauf_minuten", "Vorlauf", "Minuten",
-     "So lange vor dem Anstoß beginnt der Termin im Kalender – die Zeit für Anfahrt und Umziehen."],
+     "So lange vor dem Anstoß ist Treffpunkt. Dort beginnt der Kalendertermin, außer ein Kollege hat ihn auf den Anpfiff gelegt."],
     ["spieldauer_minuten", "Termindauer", "Minuten",
-     "So lange ist der Termin lang. Nicht die Spielzeit, sondern was im Kalender blockiert wird."],
+     "So lange nach dem Anstoß endet der Kalendertermin – Spiel samt Nachbereitung. Gilt auch für Tausch und Überschneidungen."],
     ["vergangene_tage", "Rückblick", "Tage",
      "So weit zurück liest der Lauf die Seite der vergangenen Einteilungen – dort kommen Spiele nach, die vorher niemand gesehen hat."]
   ];
@@ -8466,9 +8482,9 @@ window.Mitglieder = (function () {
     // Aufzeichnung des Kollegen), aber ohne diesen Satz haelt man die
     // Aenderung fuer wirkungslos.
     box.appendChild(h("p", { class: "meta achtung", style: "margin:0 0 8px", text:
-      "Wirkt nur auf Spiele, die noch nicht erfasst sind. Wo ein Kollege den Betrag schon "
-      + "stehen hat – die Abrechnung legt ihn beim Öffnen eines vergangenen Spiels selbst an –, "
-      + "bleibt der alte; ändern kann ihn dort nur er selbst." }));
+      "Was die App einem Kollegen selbst eingetragen hat, zieht beim nächsten Öffnen seiner Abrechnung "
+      + "nach (nur laufende Saison, nicht bezahlt, nicht auf einer Rechnung). Was er selbst bestätigt "
+      + "oder eingetippt hat, bleibt stehen – die App zeigt es ihm unter „Prüfen“ als abweichend." }));
 
     var innen = h("div", {}, [skelett(1)]);
     box.appendChild(innen);
@@ -9746,6 +9762,21 @@ window.Mitglieder = (function () {
   // Admin -> Korrekturen: alles, was du an Spielen von Hand geaendert hast.
   // Auf der Spielseite sieht man immer nur eines - hier steht, was insgesamt
   // von esrw.de abweicht, damit nichts vergessen liegen bleibt.
+  // Korrekturen haengen an kennungVon() - heute die Spiel-Id (ein Hash),
+  // frueher "Beginn|Paarung". Bis Fassung 290 zerlegte die Liste nur die
+  // alte Form: echte Eintraege hiessen "3f9a…", ohne Datum, und rutschten
+  // nie unter "Aelter als 30 Tage".
+  function spielZurKennung(kennung) {
+    var t = String(kennung || "").split("|"), treffer = null;
+    function pruefe(s) {
+      if (treffer || !s) return;
+      if (s.id === kennung || s.kennung === kennung || (t.length > 1 && s.beginn === t[0] && s.paarung === t[1])) treffer = s;
+    }
+    ((ctx && ctx.daten && ctx.daten.spiele) || []).forEach(pruefe);
+    (dbArchiv || []).forEach(pruefe);
+    if (!treffer && t.length > 1) treffer = { beginn: t[0], paarung: t[1], alt: true };
+    return treffer;
+  }
   function korrekturenRendern(box) {
     function neu() { leeren(box); korrekturenRendern(box); }
     leeren(box);
@@ -9765,8 +9796,8 @@ window.Mitglieder = (function () {
       // gehoeren zum Archiv. Sie stehen nur nicht mehr im Weg.
       var grenze = Date.now() - 30 * 86400000;
       function frisch(k) {
-        var t = String(k.kennung || "").split("|")[0];
-        var d = t ? new Date(t).getTime() : NaN;
+        var s = spielZurKennung(k.kennung);
+        var d = s && s.beginn ? new Date(s.beginn).getTime() : NaN;
         return isNaN(d) || d >= grenze;
       }
       var aktuell = liste.filter(frisch), aelter = liste.filter(function (k) { return !frisch(k); });
@@ -9789,17 +9820,19 @@ window.Mitglieder = (function () {
           teile.push("Gespann: " + k.besetzung.map(function (b) { return (b.name || "").split(",")[0]; }).join(", "));
         }
         if (k.geloescht) teile.push("gelöscht");
-        var t = String(k.kennung || "").split("|");
-        var wann = t[0] ? new Date(t[0]) : null;
+        var sp = spielZurKennung(k.kennung);
+        var titel = sp ? (sp.liga ? sp.liga + ": " : "") + sp.paarung : "Spiel nicht mehr im Spielplan";
+        var t = [null, titel];
+        var wann = sp && sp.beginn ? new Date(sp.beginn) : null;
         var z = h("div", { class: "konto-zeile" }, [
           h("div", { class: "konto-kopf" }, [
-            h("b", { text: t[1] || k.kennung }),
+            h("b", { text: titel }),
             teile.length ? h("span", { class: "merkzeichen gut", text: teile.length + (teile.length === 1 ? " Änderung" : " Änderungen") }) : null
           ]),
           h("small", { text: (wann && !isNaN(wann) ? datumLang(wann).replace(/(\d{2}\.\d{2})\.\d{4}/, "$1.") + " · " : "") + (teile.join(" · ") || "ohne Inhalt") }),
           k.von ? h("small", { text: "von " + k.von }) : null,
           h("span", { class: "zweit-klein" }, [
-            h("a", { class: "textknopf", href: "#spiel/" + encodeURIComponent(k.kennung), text: "Zum Spiel" }),
+            sp ? h("a", { class: "textknopf", href: "#spiel/" + encodeURIComponent(k.kennung), text: "Zum Spiel" }) : null,
             k.besetzung && k.besetzung.length ? h("button", { type: "button", class: "textknopf", text: "Gespann freigeben", onclick: function () {
               speichern(sb.from("spiel_korrekturen").update({ besetzung: null }).eq("kennung", k.kennung)).then(function (r2) {
                 if (r2 && r2.error) { meldung(fehlerText(r2.error), "warn"); return; }
