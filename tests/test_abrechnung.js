@@ -80,9 +80,23 @@ grundstellung();
   gleich(k("Frauen Landesliga"), "frauen/", "Frauen Landesliga");
   // Die DEB-Ligen stehen nicht in der ESRW-Ordnung. Sie muessen null
   // geben, damit die App den Betrag leer laesst statt zu raten.
-  gleich(k("U17 I"), null, "U17 I ist DEB - kein Satz");
-  gleich(k("U17 II"), null, "U17 II ist DEB - kein Satz");
-  gleich(k("DNL"), null, "DNL ist DEB - kein Satz");
+  // DEB-Ligen nach der DEB-Ordnung (seit Fassung 290)
+  gleich(k("U17 I"), "deb/u17", "U17 I ist DEB");
+  gleich(k("U17 II"), "deb/u17", "U17 II ist DEB");
+  gleich(k("DNL"), null, "DNL ohne Division - kein Satz");
+  gleich(k("DNL III"), "deb/dnl3", "DNL III");
+  gleich(k("U20 DNL Division 1"), "deb/dnl1", "U20 DNL Division 1");
+  gleich(k("DNL Div. 2"), "deb/dnl2", "DNL Div. 2");
+  gleich(k("U17 Meisterrunde"), "deb/u17_meisterrunde", "U17 Meisterrunde");
+  gleich(k("U15 Endturnier"), "deb/u15_endturnier", "U15 Endturnier");
+  gleich(k("Oberliga Nord"), "deb/oberliga", "Oberliga Nord");
+  gleich(k("Oberliga Nord Playoffs"), "deb/oberliga_playoffs", "Oberliga Playoffs");
+  gleich(k("DFEL"), "deb/dfel", "DFEL (1. Liga)");
+  gleich(k("DFEL2 Nord"), "frauen/2LIGA", "DFEL2 bleibt beim ESRW");
+  gleich(k("DEFL 2 FS"), "frauen/2LIGA", "DEFL 2 bleibt beim ESRW");
+  gleich(k("U17 RL"), "U17/RL", "U17 RL bleibt beim ESRW");
+  gleich(k("U17 FS"), "U17/", "U17 FS bleibt beim ESRW");
+  gleich(k("U15 RLA"), "U15/RL", "U15 RLA bleibt beim ESRW");
   gleich(k("Auswahlspiel"), null, "Auswahlspiel - kein Satz");
   gleich(k(""), null, "ohne Liga - kein Satz");
   gleich(k("Kreisliga Nordwest"), null, "unbekannte Liga - kein Satz");
@@ -127,7 +141,7 @@ gleich(P.grundgebuehr(spiel({ liga: "U20 RL West", rolle: "LSR", system: 3 })), 
 // Und ausserhalb der RL kennt auch die U20 keine Linienrichter.
 gleich(P.grundgebuehr(spiel({ liga: "U20 Landesliga", rolle: "LSR", system: 3 })), null, "U20 Landesliga ohne LSR");
 gleich(P.grundgebuehr(spiel({ liga: "U20 Landesliga", rolle: "SR", system: 2 })), 90, "U20 Landesliga SR");
-gleich(P.grundgebuehr(spiel({ liga: "U17 I" })), null, "DEB-Liga bleibt leer");
+gleich(P.grundgebuehr(spiel({ liga: "U17 I" })), 125, "U17 I im 2er-System 125 (DEB)");
 P.setze({ gebuehren: null });
 gleich(P.grundgebuehr(spiel()), null, "ohne Ordnung kein Betrag");
 
@@ -135,8 +149,8 @@ gleich(P.grundgebuehr(spiel()), null, "ohne Ordnung kein Betrag");
 // ------------------------------------------------- Eigene Regeln
 abschnitt("Eigene Regeln schlagen die Ordnung");
 grundstellung({ profil: { km_modell: "einfach", einstellungen: {
-  regeln_liga: { "U17 I|SR": 70, "DNL|": 120 }, regeln_halle: { "Arena": 12 } } } });
-gleich(P.sollBetrag(spiel({ liga: "U17 I" })), 70, "Regel fuellt, was die Ordnung nicht kennt");
+  regeln_liga: { "DA FS|SR": 70, "DNL|": 120 }, regeln_halle: { "Arena": 12 } } } });
+gleich(P.sollBetrag(spiel({ liga: "DA FS" })), 70, "Regel fuellt, was die Ordnung nicht kennt");
 gleich(P.sollBetrag(spiel({ liga: "DNL", rolle: "HSR" })), 120, "Regel ohne Rolle gilt fuer alle Rollen");
 gleich(P.sollBetrag(spiel({ liga: "U17" })), 85, "ohne Regel zaehlt die Ordnung");
 gleich(P.regelBetrag(spiel({ liga: "U15" })), null, "keine Regel fuer U15");
@@ -383,12 +397,12 @@ console.log("\nGelernte Betraege und Kilometer");
 // leer, und man trug jedes Mal dasselbe von Hand ein.
 P.setze({ gebuehren: GEBUEHREN, profil: { einstellungen: {} } });
 
-var dnlAlt = spiel({ kennung: "g1", liga: "DNL Division 1", rolle: "SR",
+var dnlAlt = spiel({ kennung: "g1", liga: "DA FS", rolle: "SR",
                      halle: "Halle Ost", beginn: "2026-09-10T18:00:00" });
-var dnlNeu = spiel({ kennung: "g2", liga: "DNL Division 1", rolle: "SR",
+var dnlNeu = spiel({ kennung: "g2", liga: "DA FS", rolle: "SR",
                      halle: "Halle Ost", beginn: "2026-11-01T18:00:00" });
 
-pruefe(P.grundgebuehr(dnlNeu) == null, "die Ordnung kennt die DNL nicht");
+pruefe(P.grundgebuehr(dnlNeu) == null, "die Ordnung kennt Auswahlspiele nicht");
 
 // Nichts gelernt: nichts vorzuschlagen.
 P.setze({ einsaetze: {} });
@@ -443,14 +457,14 @@ P.gelerntBauen(vier);
 gleich(P.gelerntBetrag(vier[0]), 70, "ein Tippfehler gewinnt nicht gegen drei Eintraege");
 
 // Eine andere Rolle erbt nicht einfach mit.
-var zweiter = spiel({ kennung: "g5", liga: "DNL Division 1", rolle: "2. SR",
+var zweiter = spiel({ kennung: "g5", liga: "DA FS", rolle: "2. SR",
                       halle: "Halle Ost", beginn: "2026-11-02T18:00:00" });
 P.setze({ einsaetze: { g1: { verguetung: 95 } } });
 P.gelerntBauen([dnlAlt, zweiter]);
 pruefe(P.gelerntBetrag(zweiter) == null, "eine andere Rolle erbt nicht einfach");
 
 // Die Kilometer haengen an der Halle, nicht an der Liga.
-var andereHalle = spiel({ kennung: "g6", liga: "DNL Division 1", rolle: "SR",
+var andereHalle = spiel({ kennung: "g6", liga: "DA FS", rolle: "SR",
                           halle: "Sporthalle Nord", beginn: "2026-11-03T18:00:00" });
 P.setze({ einsaetze: { g1: { verguetung: 95, km: 42 } } });
 P.gelerntBauen([dnlAlt, andereHalle]);
@@ -561,7 +575,7 @@ P.gelerntBauen([]);
   var srRecht   = sp("a4", "RL West", "SR", 2);        // 180, stimmt
   var llHsr     = sp("a5", "Landesliga Herren", "HSR");// 160, stimmt
   var u20Lsr    = sp("a6", "U20 RL", "LSR");           // 80, stimmt
-  var unbekannt = sp("a7", "DNL Division 1", "SR", 2); // Ordnung kennt sie nicht
+  var unbekannt = sp("a7", "DA FS", "SR", 2); // Ordnung kennt sie nicht
   var leer      = sp("a8", "RL West", "HSR");          // nichts eingetragen
   var kommt     = sp("a9", "RL West", "HSR", 3, +7);   // noch nicht gespielt
   var cent      = sp("a10", "RL West", "HSR");         // 160,002 - Rundungsrest
@@ -705,8 +719,9 @@ P.gelerntBauen([]);
     ["U13 RLA", "SR", 80], ["U13 RLB", "SR", 80], ["U13 LL", "SR", 80],
     ["U11 RL", "SR", 85], ["U11 LL Rot", "SR", 85], ["U9 RL", "SR", 85], ["U9 LL Grün", "SR", 85],
     ["U7 Blau", "SR", 85],
-    // DEB-Ligen und Auswahl stehen nicht in der ESRW-Ordnung
-    ["U17 I", "SR", null], ["DNL III", "HSR", null], ["DNL III", "LSR", null], ["DA FS", "SR", null]
+    // DEB-Ligen nach der DEB-Ordnung, Auswahl kennt keine Ordnung
+    ["U17 I", "SR", 125], ["U17 I", "HSR", 110], ["U17 I", "LSR", 80],
+    ["DNL III", "HSR", 160], ["DNL III", "LSR", 85], ["DNL III", "SR", 170], ["DA FS", "SR", null]
   ].forEach(function (f) {
     gleich(soll(f[0], f[1]), f[2], "Ligenname \"" + f[0] + "\" als " + f[1]);
   });
@@ -731,6 +746,69 @@ P.gelerntBauen([]);
   gleich(zeileVon("U11").allein, 80, "Uebersicht: U11 allein 80");
 })();
 
+
+// ---------------------------------------------------------------------
+// DEB-Gebuehrenordnung (Fassung 290)
+abschnitt("DEB-Ordnung");
+grundstellung();
+(function () {
+  function g(liga, rolle, system) { return P.grundgebuehr(spiel({ liga: liga, rolle: rolle, system: system })); }
+  gleich(g("U20 DNL Division 1", "HSR", 4), 185, "DNL 1 4er HSR");
+  gleich(g("U20 DNL Division 1", "LSR", 4), 155, "DNL 1 4er LSR");
+  gleich(g("U20 DNL Division 1", "HSR", 3), 260, "DNL 1 3er HSR");
+  gleich(g("U20 DNL Division 1", "SR", 2), 270, "DNL 1 2er");
+  gleich(g("DNL II", "HSR", 3), 240, "DNL 2 3er HSR");
+  gleich(g("DNL III", "SR", 1), 255, "DNL 3 allein: 1,5 x 170");
+  gleich(g("U17 Meisterrunde", "HSR", 4), 145, "U17 Meisterrunde 4er");
+  gleich(g("U17 I", "HSR", 4), null, "U17 Gruppen 4er nennt die Ordnung nicht");
+  gleich(g("U15 Endturnier", "LSR", 3), 110, "U15 Endturnier LSR");
+  gleich(g("DFEL", "LSR", 3), 120, "DFEL LSR");
+  gleich(g("Oberliga Nord", "HSR", 4), 315, "Oberliga HSR");
+  gleich(g("Oberliga Playoffs", "LSR", 4), 250, "Oberliga Playoffs LSR");
+  gleich(P.debGesamt("dnl1", 3), 570, "Gespann DNL 1 3er wie im Beispiel der Ordnung");
+  gleich(P.debGesamt("oberliga", 4), 1090, "Gespann Oberliga 1.090");
+
+  // Kein Uhrzeit-Zuschlag, Ausfall nach DEB-Regel
+  var spaet = spiel({ liga: "DNL I", rolle: "HSR", system: 3, beginn: "2026-10-20T22:00:00" });
+  gleich(P.zeitzuschlagAn(spaet), false, "DEB kennt keinen Uhrzeit-Zuschlag");
+  etwa(P.betragFuer(spaet, { verguetung: 260 }).betrag, 260, "DEB-Betrag ohne Zuschlag");
+  etwa(P.betragFuer(spaet, { verguetung: 260, ausgefallen: true }).betrag, 133, "Ausfall: (260+2x155) x 70 % / 3 = 133");
+  var ol = spiel({ liga: "Oberliga Sued", rolle: "LSR", system: 4 });
+  etwa(P.betragFuer(ol, { verguetung: 230, ausgefallen: true }).betrag, 136.25, "Oberliga-Ausfall: 1.090 x 50 % / 4");
+  etwa(P.betragFuer(ol, { verguetung: 230, uebergreifend: true }).betrag, 230, "kein uebergreifender Zuschlag beim DEB");
+
+  // Mehrere Spiele am selben Tag: 100 / 50 / 25 %
+  var t1 = spiel({ kennung: "t1", liga: "U17 I", beginn: "2026-12-05T10:00:00", paarung: "A - B" });
+  var t2 = spiel({ kennung: "t2", liga: "U17 I", beginn: "2026-12-05T13:00:00", paarung: "C - D" });
+  var t3 = spiel({ kennung: "t3", liga: "U17 I", beginn: "2026-12-05T16:00:00", paarung: "E - F" });
+  var esrw = spiel({ kennung: "t0", liga: "U17 RL", beginn: "2026-12-05T08:00:00", paarung: "X - Y" });
+  var tag = [t3, esrw, t1, t2];
+  gleich(P.debTagesFaktor(t1, tag), 1, "erstes DEB-Spiel des Tages voll");
+  gleich(P.debTagesFaktor(t2, tag), 0.5, "zweites 50 %");
+  gleich(P.debTagesFaktor(t3, tag), 0.25, "drittes 25 %");
+  gleich(P.debTagesFaktor(t1, [t1]), 1, "allein am Tag voll");
+
+  // Eigene Saetze auch fuer DEB-Zeilen
+  grundstellung({ profil: { km_modell: "einfach", einstellungen: { gebuehren_eigen: { "deb.dnl3.3er": { HSR: 165 } } } } });
+  gleich(g("DNL III", "HSR", 3), 165, "eigener DEB-Satz gilt");
+  var zeile = P.gebuehrenUebersicht().filter(function (z) { return z.pfad === "deb.dnl3.3er"; })[0] || {};
+  gleich(zeile.hsr, 165, "Uebersicht zeigt eigenen DEB-Satz");
+  gleich(zeile.ordnung && zeile.ordnung.HSR, 160, "und den der DEB-Ordnung");
+})();
+
+// Vereine mit Tippfehler finden ihren Verein (Fassung 290)
+abschnitt("Vereine mit Tippfehler");
+(function () {
+  P.vereinAliaseSetzen({ vereine: [{ verein: "Krefelder EV" }, { verein: "Neusser EV" }, { verein: "Düsseldorfer EG" },
+                                   { verein: "Herner EV" }], aliase: {} });
+  gleich(P.vereinKanon("Krefelderr EV"), "Krefelder EV", "ein Zeichen zu viel");
+  gleich(P.vereinKanon("Neuser EV 1b"), "Neusser EV", "ein Zeichen zu wenig, mit Mannschaftszusatz");
+  gleich(P.vereinKanon("Dusseldorfer EG U15"), "Düsseldorfer EG", "Umlaut vergessen");
+  gleich(P.vereinKanon("Krefelder EC"), "Krefelder EC", "anderes Kuerzel ist ein anderer Verein");
+  gleich(P.vereinKanon("Hamburger SV"), "Hamburger SV", "Unbekanntes bleibt, wie es ist");
+  gleich(P.vereinAnschrift({ "Krefelder EV": { strasse: "X" } }, "Krefelderr EV").strasse, "X", "Anschrift trotz Tippfehler");
+  P.vereinAliaseSetzen({});
+})();
 
 // ---------------------------------------------------------------------
 // Netto fuer die Steuer (Fassung 281)

@@ -1754,8 +1754,31 @@ window.Mitglieder = (function () {
   // Offizieller. Was sich nicht eindeutig zuordnen laesst (DNL, Auswahl-
   // spiele, DEB-Ligen), bleibt leer und wird von Hand eingetragen.
 
+  // DEB-Ligen (gebuehren.json "deb"). esrw.de zeigt davon "DNL III",
+  // "U17 I", selten Oberliga, DFEL und das U15-Endturnier. null: keine
+  // DEB-Liga, "": DEB, aber die Stufe ist nicht zu erkennen ("DNL" ohne
+  // Division) - dann lieber kein Betrag als ein geratener.
+  // "DFEL2 Nord" ist die 2. Liga, die rechnet der ESRW ab. Dieselbe
+  // Erkennung steht als deb_stufe() in esrw_ical.py.
+  function debStufe(L) {
+    if (/\bU\s?17\b/.test(L)) {
+      var ausserhalb = /\bRL|\bLL\b|\bBZ?L\b|LANDES|REGIONAL|BEZIRK/.test(L);
+      if (/\bU\s?17\s+(I|II|III)\b|DNL|JUGEND|\bDEB\b/.test(L) || (!ausserhalb && /MEISTER/.test(L)))
+        return /MEISTER|PLAYOFF|HALBFINAL|\bHF\b|FINALE/.test(L) ? "u17_meisterrunde" : "u17";
+      return null;
+    }
+    var dnl = L.match(/\bDNL\s*(?:DIV(?:ISION)?\.?\s*)?(III|II|I|[123])?\b/);
+    if (dnl) return { "I": "dnl1", "II": "dnl2", "III": "dnl3", "1": "dnl1", "2": "dnl2", "3": "dnl3" }[dnl[1] || ""] || "";
+    if (/\bU\s?15\b/.test(L) && /ENDTURNIER|ENDRUNDE|\bDM\b|DEUTSCHE MEISTER/.test(L)) return "u15_endturnier";
+    if (/OBERLIGA|\bOL[NS]?\b/.test(L)) return /PLAYOFF|\bPO\b/.test(L) ? "oberliga_playoffs" : "oberliga";
+    if (/\bDFEL\b|\bDEFL\b|FRAUEN.?BUNDESLIGA/.test(L) && !/(DFEL|DEFL)\s*2|\b2\.?\s*(LIGA|BL)/.test(L)) return "dfel";
+    return null;
+  }
+
   function ligaEinordnen(liga) {
     var L = (liga || "").toUpperCase();
+    var deb = debStufe(L);
+    if (deb !== null) return deb ? { klasse: "deb", stufe: deb } : null;
     var alter = L.match(/\bU(7|9|11|13|15|17|20)\b/);
     if (alter) {
       var stufe = /\bRL[A-Z]?\b|REGIONAL/.test(L) ? "RL" : /\bLL\b|LANDES/.test(L) ? "LL" : /\bBL\b|\bBZL\b|BEZIRK/.test(L) ? "BL" : "";
@@ -1794,10 +1817,75 @@ window.Mitglieder = (function () {
     Object.keys(eigen).forEach(function (k) { if (eigen[k] != null) neu[k] = eigen[k]; });
     return neu;
   }
+  function rund(x) { return Math.round(x * 100) / 100; }
+  // Satz nach der DEB-Ordnung fuer Stufe, Zahl der Schiedsrichter und
+  // Rolle. Im 2er-System gibt es keinen LSR - beide bekommen den HSR-Satz,
+  // allein das 1,5-fache davon. Eigene Saetze unter "deb.dnl3.3er".
+  function debSatz(stufe, system, rolle) {
+    var d = gebuehren && gebuehren.deb, tab = d && d[stufe];
+    if (!tab) return null;
+    var n = Math.min(system || 2, 4);
+    if (n <= 1) {
+      var zwei = tab["2er"] && satzMitEigenem("deb." + stufe + ".2er", tab["2er"]);
+      return zwei && zwei.HSR != null ? rund(zwei.HSR * (d.allein_faktor || 1.5)) : null;
+    }
+    if (!tab[n + "er"]) return null;
+    var satz = satzMitEigenem("deb." + stufe + "." + n + "er", tab[n + "er"]);
+    var r = rolle === "LSR" ? "LSR" : (rolle === "HSR" || n <= 2) ? "HSR" : null;
+    return r && satz[r] != null ? satz[r] : null;
+  }
+  // Was das ganze Gespann zusammen bekommt - die Grundlage fuer die
+  // Ausfallregel. 4er: 2 HSR + 2 LSR, 3er: 1 HSR + 2 LSR (so rechnet das
+  // Beispiel der Ordnung), 2er: zweimal der Satz.
+  function debGesamt(stufe, system) {
+    var n = Math.min(system || 2, 4);
+    if (n <= 1) return debSatz(stufe, 1, "HSR");
+    var hsr = debSatz(stufe, n, "HSR"), lsr = n >= 3 ? debSatz(stufe, n, "LSR") : 0;
+    if (hsr == null || lsr == null) return null;
+    return n === 4 ? 2 * hsr + 2 * lsr : n === 3 ? hsr + 2 * lsr : 2 * hsr;
+  }
+  // Mehrere DEB-Spiele am selben Tag: das zweite 50 %, ab dem dritten 25 %.
+  // Die eigenen Spiele kommen aus alleSpiele(); die Liste wird kurz
+  // gemerkt, sonst liefe sie fuer jede Zeile der Abrechnung neu.
+  var debTag = { zeit: 0, karte: null };
+  function tagVon(beginn) {
+    var d = new Date(beginn);
+    return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+  }
+  function debTagesFaktor(spiel, liste) {
+    var m = gebuehren && gebuehren.deb && gebuehren.deb.mehrere_spiele_prozent;
+    if (!m || !spiel || !spiel.beginn) return 1;
+    var karte;
+    if (liste) karte = null;
+    else if (debTag.karte && Date.now() - debTag.zeit < 3000) karte = debTag.karte;
+    if (!karte) {
+      karte = {};
+      var quelle = liste;
+      if (!quelle) { try { quelle = alleSpiele(); } catch (x) { quelle = []; } }
+      (quelle || []).forEach(function (sp) {
+        var e = ligaEinordnen(sp.liga);
+        if (!e || e.klasse !== "deb" || !sp.beginn) return;
+        var t = tagVon(sp.beginn); karte[t] = karte[t] || {};
+        // Je Kennung einmal: dasselbe Spiel aus zwei Quellen zaehlt nicht doppelt
+        karte[t][sp.kennung] = sp.beginn;
+      });
+      if (!liste) debTag = { zeit: Date.now(), karte: karte };
+    }
+    var tag = karte[tagVon(spiel.beginn)] || {};
+    var am = Object.keys(tag).sort(function (a, b) { return new Date(tag[a]) - new Date(tag[b]); });
+    var i = am.indexOf(spiel.kennung);
+    if (i <= 0) return 1;
+    var p = i === 1 ? m.zweites : m.ab_drittem;
+    return p == null ? 1 : p / 100;
+  }
   function grundgebuehr(spiel) {
     if (!gebuehren) return null;
     var e = ligaEinordnen(spiel.liga);
     if (!e) return null;
+    if (e.klasse === "deb") {
+      var db = debSatz(e.stufe, spiel.system || 2, spiel.rolle || "SR");
+      return db == null ? null : rund(db * debTagesFaktor(spiel));
+    }
     var rolle = spiel.rolle || "SR", system = spiel.system || 2, satz = null, pfad = "";
     if (e.klasse === "senioren") {
       satz = gebuehren.senioren[e.stufe] || null; pfad = "senioren." + e.stufe;
@@ -1826,9 +1914,12 @@ window.Mitglieder = (function () {
     return betrag == null ? null : betrag;
   }
 
+  function istDeb(spiel) { var e = ligaEinordnen(spiel && spiel.liga); return !!(e && e.klasse === "deb"); }
   function zeitzuschlag(spiel) {
     var z = gebuehren && gebuehren.zuschlag_zeit;
     if (!z) return false;
+    // Die DEB-Ordnung kennt keinen Uhrzeit-Zuschlag.
+    if (istDeb(spiel)) return false;
     var d = new Date(spiel.beginn);
     var hm = ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
     return hm <= z.bis_einschliesslich || hm >= z.ab_einschliesslich;
@@ -1869,13 +1960,25 @@ window.Mitglieder = (function () {
     var grund = e && e.verguetung != null ? e.verguetung : null;
     if (grund == null) return { grund: null, betrag: null };
     var zeit = zeitzuschlag(spiel) ? grund * ((gebuehren.zuschlag_zeit.prozent || 0) / 100) : 0;
+    var ein = ligaEinordnen(spiel.liga), deb = !!(ein && ein.klasse === "deb");
     var ueber = 0;
-    if (e.uebergreifend && gebuehren.zuschlag_uebergreifend) {
+    if (!deb && e.uebergreifend && gebuehren.zuschlag_uebergreifend) {
       ueber = (spiel.system || 2) === 2 ? gebuehren.zuschlag_uebergreifend.je_sr_2mann : gebuehren.zuschlag_uebergreifend.je_sr;
     }
     var summe = grund + zeit + ueber;
     var ausfall = e.ausgefallen ? summe * ((gebuehren.ausfall_vor_ort_prozent || 50) / 100) : 0;
-    return { grund: grund, zeit: zeit, ueber: ueber, ausfall: ausfall, betrag: summe - ausfall };
+    if (e.ausgefallen && deb) {
+      // DEB: die Gesamtkosten des Gespanns sinken (Oberliga 50 %, sonst
+      // 30 %) und werden gleich verteilt - der LSR bekommt also dasselbe
+      // wie der HSR, nicht seinen halben Satz.
+      var abz = ((gebuehren.deb || {}).ausfall_abzug_prozent || {});
+      var p = /^oberliga/.test(ein.stufe) ? abz.oberliga : abz.sonst;
+      p = p != null ? p : 30;
+      var n = Math.max(1, Math.min(spiel.system || 2, 4)), ges = debGesamt(ein.stufe, n);
+      var je = ges != null ? rund(ges * (1 - p / 100) / n) : rund(summe * (1 - p / 100));
+      ausfall = rund(summe - je);
+    }
+    return { grund: grund, zeit: zeit, ueber: ueber, ausfall: ausfall, betrag: summe - ausfall, deb: deb };
   }
 
   // Verpflegungsmehraufwand: 14 EUR ab 8 Stunden Abwesenheit (Abfahrt bis
@@ -2552,6 +2655,7 @@ window.Mitglieder = (function () {
     return Promise.all([sb.from("vereine_adressen").select("*"), aliase]).then(function (r) {
       vereinAdressen = {};
       ((r[0] && r[0].data) || []).forEach(function (v) { vereinAdressen[v.verein] = v; });
+      vereinBekanntDazu(Object.keys(vereinAdressen));
       return vereinAdressen;
     }).catch(function () { vereinAdressen = {}; return vereinAdressen; });
   }
@@ -4235,7 +4339,7 @@ window.Mitglieder = (function () {
       zeile("Vergütung", euro(b.grund));
       if (b.zeit) zeile("+20 % Uhrzeit", euro(b.zeit));
       if (b.ueber) zeile("übergreifend", euro(b.ueber));
-      if (b.ausfall) zeile("Ausfall vor Ort, halbe Gebühr", "−" + euro(b.ausfall));
+      if (b.ausfall) zeile(b.deb ? "Ausfall vor Ort (DEB-Regel)" : "Ausfall vor Ort, halbe Gebühr", "−" + euro(b.ausfall));
     }
     var fahrt = fahrtkosten(e), verpf = e.verpflegung || 0, ausl = e.auslagen || 0;
     if (e.km != null) zeile("Fahrt · " + dezimal(e.km) + " km", "−" + euro(fahrt));
@@ -4687,6 +4791,9 @@ window.Mitglieder = (function () {
   // nicht abgeschrieben: aendert der Betreiber die Datei, stimmt die
   // Uebersicht von selbst. Zeilen sind Ligen, Spalten die Rollen; wo
   // eine Rolle in einer Liga nicht vorkommt, steht ein Strich.
+  var DEB_STUFEN = [["dnl1", "DNL Div. 1"], ["dnl2", "DNL Div. 2"], ["dnl3", "DNL Div. 3"],
+    ["u17_meisterrunde", "U17 Meisterr."], ["u17", "U17 I/II"], ["u15_endturnier", "U15 Endturnier"],
+    ["dfel", "DFEL"], ["oberliga", "Oberliga"], ["oberliga_playoffs", "OL Playoffs"]];
   function gebuehrenUebersicht() {
     var g = gebuehren;
     if (!g) return null;
@@ -4708,6 +4815,12 @@ window.Mitglieder = (function () {
     var n = g.nachwuchs || {};
     if (n.U20) { zeile("U20", "Regionalliga", n.U20.RL, "nachwuchs.U20.RL"); zeile("U20", "andere Ligen", n.U20.sonst, "nachwuchs.U20.sonst"); }
     ["U17", "U15", "U13", "U11", "U9", "U7"].forEach(function (k) { zeile("Nachwuchs", k, n[k], "nachwuchs." + k); });
+    var deb = g.deb || {};
+    DEB_STUFEN.forEach(function (s) {
+      ["4er", "3er", "2er"].forEach(function (sys) {
+        if (deb[s[0]] && deb[s[0]][sys]) zeile("DEB", s[1] + " · " + sys, deb[s[0]][sys], "deb." + s[0] + "." + sys);
+      });
+    });
     return zeilen;
   }
   // Ein eigener Satz wird gespeichert, ein leeres Feld oder der Wert der
@@ -4749,6 +4862,8 @@ window.Mitglieder = (function () {
     var zeilen = gebuehrenUebersicht();
     if (!zeilen) return null;
     function zelle(z, rolle) {
+      // DEB kennt keinen "SR" - dort pfeifen im 2er-System zwei HSR.
+      if (z.gruppe === "DEB" && rolle === "SR") return h("td", { class: "zahl", text: "–" });
       var w = z[rolle.toLowerCase()], ord = z.ordnung[rolle];
       var feld = h("input", { type: "text", inputmode: "decimal", placeholder: "–",
         class: "mg-satz" + (w !== ord ? " eigen" : ""),
@@ -4780,6 +4895,13 @@ window.Mitglieder = (function () {
     if (g.zuschlag_uebergreifend) extra.push("+" + g.zuschlag_uebergreifend.je_sr + " € je SR bei "
       + "übergreifendem Einsatz (2er-System +" + g.zuschlag_uebergreifend.je_sr_2mann + " €), nur auf Anforderung");
     if (g.ausfall_vor_ort_prozent) extra.push(g.ausfall_vor_ort_prozent + " % bei Ausfall vor Ort");
+    if (g.deb) {
+      var md = g.deb.mehrere_spiele_prozent || {}, ad = g.deb.ausfall_abzug_prozent || {};
+      extra.push("DEB-Ligen nach der DEB-Ordnung: ohne Uhrzeit-Zuschlag, 2. Spiel am selben Tag "
+        + md.zweites + " %, ab dem 3. " + md.ab_drittem + " %, allein das " + String(g.deb.allein_faktor).replace(".", ",")
+        + "-fache des 2er-Satzes, bei Ausfall vor Ort −" + ad.sonst + " % (Oberliga −" + ad.oberliga
+        + " %) der Gesamtkosten, gleich verteilt");
+    }
     var geaendert = Object.keys(eigeneOrdnung()).length > 0;
     var zurueck = geaendert ? h("button", { type: "button", class: "mg-neben",
       text: "Alle eigenen Sätze zurücksetzen", onclick: function () {
@@ -6128,6 +6250,12 @@ window.Mitglieder = (function () {
     // ist nichts zu erklaeren.
     if (sollBetrag(sp) != null) return null;
     var rolle = sp.rolle || "SR", liga = sp.liga || "diese Liga";
+    var einD = ligaEinordnen(sp.liga);
+    if (einD && einD.klasse === "deb") {
+      return h("div", { class: "meta mg-satzluecke" }, [
+        "Für " + liga + " mit " + (sp.system || 2) + " Schiedsrichtern nennt die DEB-Ordnung keinen Satz als " + rolle
+        + ". Trag den Betrag von Hand ein."]);
+    }
     // Klasse bekannt, Rolle dort nicht vorgesehen
     if (rolle !== "SR" && ligaEinordnen(sp.liga)) {
       return h("div", { class: "meta mg-satzluecke" }, [
@@ -8293,6 +8421,13 @@ window.Mitglieder = (function () {
     "SR_allein": "Schiedsrichter allein (1-Mann-System)",
     "prozent": "Aufschlag in Prozent",
     "je_sr": "je Schiedsrichter", "je_sr_2mann": "je Schiedsrichter im 2-Mann-System",
+    "deb": "DEB-Ligen", "dnl1": "U20 DNL Division 1", "dnl2": "U20 DNL Division 2", "dnl3": "U20 DNL Division 3",
+    "u17_meisterrunde": "U17 Meisterrunde", "u17": "U17 alle Gruppen", "u15_endturnier": "U15 Endturnier",
+    "dfel": "DFEL (Frauen-Bundesliga)", "oberliga": "Oberliga Hauptrunde", "oberliga_playoffs": "Oberliga Playoffs",
+    "4er": "4-Mann-System", "3er": "3-Mann-System", "2er": "2-Mann-System",
+    "allein_faktor": "Faktor allein (auf den 2er-Satz)",
+    "mehrere_spiele_prozent": "Mehrere Spiele am Tag (%)", "zweites": "2. Spiel", "ab_drittem": "ab dem 3. Spiel",
+    "ausfall_abzug_prozent": "Abzug bei Ausfall vor Ort (%)",
     "satz_einfach": "Entfernungspauschale je km (einfache Strecke)",
     "satz_hinrueck": "Reisekosten je km (gefahrene Strecke)",
     "strassenfaktor_luftlinie": "Faktor Luftlinie → Straße"
@@ -9154,17 +9289,62 @@ window.Mitglieder = (function () {
   }
   // Was sich nicht ableiten laesst, steht als Alias in der Vorschlagsliste:
   // { "EHC Essen": "EHC Essen Ruhr", ... } - Schluessel normalisiert.
-  var vereinAliase = {}, keineVereine = {};
+  var vereinAliase = {}, keineVereine = {}, vereinBekannt = {};
+  function vereinBekanntDazu(namen) {
+    (namen || []).forEach(function (n) {
+      var h0 = vereinHaupt(n), k = vereinSchluessel(h0);
+      if (k && !vereinBekannt[k]) vereinBekannt[k] = h0;
+    });
+  }
+  function abstand(a, b) {
+    var vor = [], i, j;
+    for (j = 0; j <= b.length; j++) vor[j] = j;
+    for (i = 1; i <= a.length; i++) {
+      var jetzt = [i];
+      for (j = 1; j <= b.length; j++)
+        jetzt[j] = Math.min(vor[j] + 1, jetzt[j - 1] + 1, vor[j - 1] + (a.charAt(i - 1) === b.charAt(j - 1) ? 0 : 1));
+      vor = jetzt;
+    }
+    return vor[b.length];
+  }
+  // "EV", "EC", "EHC", "ESC" ... - zwei Vereine derselben Stadt
+  // unterscheiden sich oft nur darin. Ist das Kuerzel ein anderes, ist es
+  // ein anderer Verein, kein Tippfehler.
+  function vereinKuerzel(name) {
+    return (String(name || "").toUpperCase().match(/\b(E[A-Z]{0,3}|SC|SG|SPG|TUS|TSV)\b/g) || []).join(" ");
+  }
+  // Ein offensichtlicher Tippfehler ("Krefelderr EV", "Neuser EV") landet
+  // beim bekannten Verein: hoechstens ein Zeichen daneben, ab zwoelf
+  // Zeichen zwei, und nur wenn genau ein Verein so nah liegt.
+  function vereinNaechster(name) {
+    var k = vereinSchluessel(name);
+    if (vereinBekannt[k]) return vereinBekannt[k];
+    if (k.length < 6) return null;
+    var grenze = k.length >= 12 ? 2 : 1, best = null, bestD = 99, zweitD = 99;
+    Object.keys(vereinBekannt).forEach(function (b) {
+      if (Math.abs(b.length - k.length) > grenze) return;
+      var d = abstand(k, b);
+      if (d < bestD) { zweitD = bestD; bestD = d; best = b; } else if (d < zweitD) zweitD = d;
+    });
+    if (best === null || bestD > grenze || zweitD === bestD) return null;
+    var a = vereinKuerzel(name), b2 = vereinKuerzel(vereinBekannt[best]);
+    if (a && b2 && a !== b2) return null;
+    return vereinBekannt[best];
+  }
   function vereinAliaseSetzen(v) {
-    vereinAliase = {}; keineVereine = {};
+    vereinAliase = {}; keineVereine = {}; vereinBekannt = {};
+    vereinBekanntDazu(((v && v.vereine) || []).map(function (x) { return x.verein; }));
+    vereinBekanntDazu(Object.keys((v && v.aliase) || {}).map(function (x) { return v.aliase[x]; }));
     var a = (v && v.aliase) || {};
     Object.keys(a).forEach(function (k) { vereinAliase[vereinSchluessel(vereinHaupt(k))] = a[k]; });
     ((v && v.keine_vereine) || []).forEach(function (k) { keineVereine[vereinSchluessel(k)] = 1; });
   }
   // Der Name, unter dem die Anschrift steht.
   function vereinKanon(name) {
-    var h = vereinHaupt(name);
-    return vereinAliase[vereinSchluessel(h)] || h;
+    var h = vereinHaupt(name), a = vereinAliase[vereinSchluessel(h)];
+    if (a) return a;
+    var nah = vereinNaechster(h);
+    return nah ? (vereinAliase[vereinSchluessel(nah)] || nah) : h;
   }
   // Auswahl- und Turnierspiele haben keinen Verein, an den eine Rechnung
   // ginge: Liga DA/Auswahl, "Finale", "Spiel um Platz 3", Landesauswahlen.
@@ -11194,7 +11374,8 @@ window.Mitglieder = (function () {
     doppelteGruppen: doppelteGruppen, gespielt: gespielt, gruppenSchluessel: gruppenSchluessel,
     rechnungBezahlt: rechnungBezahlt, rechnungenOffenSumme: rechnungenOffenSumme,
     vereinHaupt: vereinHaupt, vereinKanon: vereinKanon, vereinAnschrift: vereinAnschrift,
-    keinVerein: keinVerein, vereinAliaseSetzen: vereinAliaseSetzen
+    keinVerein: keinVerein, vereinAliaseSetzen: vereinAliaseSetzen, vereinNaechster: vereinNaechster,
+    debSatz: debSatz, debGesamt: debGesamt, debTagesFaktor: debTagesFaktor, zeitzuschlagAn: zeitzuschlag
   };
 
   return { oeffnen: oeffnen, bereit: bereit, angemeldet: angemeldet, pruefstand: pruefstand,

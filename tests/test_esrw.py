@@ -90,11 +90,48 @@ def test_hallen():
          "Eissporthalle Neuss", "unbekannter Gast mit Ortsnamen, ohne '!': Heimverein"),
         ("RL FS: Dinslakener Kobras - ESV Grizzlys Bergkamen",
          "Eissporthalle Dinslaken", "Ortsname im Gastverein ist kein Spielort"),
+        # 22.11.: "in Duesseldorf" nahm die Halle des Heimvereins
+        ("U17 FS: Herner EV - Krefelder EV in Düsseldorf-Brehmstraße",
+         "Eishalle Brehmstraße", "'in Ort-Teil' mit Bindestrich"),
+        ("U17 FS: Herner EV - Krefelder EV in Dusseldorf",
+         "Eishalle Brehmstraße", "'in Ort' mit Tippfehler"),
+        ("U17 FS: Herner EV - Krefelder EV in Düsseldorf Brehmstr",
+         "Eishalle Brehmstraße", "'in Ort Zusatz'"),
     ]
     for begegnung, halle_soll, warum in erwartet:
         halle, heim, gast, erkannt = E.finde_halle(begegnung, venues)
         ist = halle["name"] if halle else "(keine)"
         pruefe(ist == halle_soll, "%s: %s" % (warum, halle_soll), "-> %s" % ist)
+
+    # Tippfehler im Heimverein: der naechste bekannte Verein
+    halle, _, _, _ = E.finde_halle("U17 FS: Ratingerr Ice Aliens - Herner EV", venues)
+    pruefe(halle and halle["name"] == "Eissporthalle Ratingen", "Heimverein mit Tippfehler",
+           halle["name"] if halle else "(keine)")
+
+    # DEB-Saetze auf der Spielseite (wie in der App)
+    geb = E.lade(os.path.join("docs", "gebuehren.json"))
+    pruefe(E.grundgebuehr(geb, "DNL III", "HSR", 3) == 160, "DNL III HSR 3er 160")
+    pruefe(E.grundgebuehr(geb, "U17 I", "SR", 2) == 125, "U17 I 2er 125")
+    pruefe(E.grundgebuehr(geb, "DFEL2 Nord", "SR", 2) == 95, "DFEL2 bleibt beim ESRW")
+    pruefe(E.grundgebuehr(geb, "U17 RL", "SR", 2) == 85, "U17 RL bleibt beim ESRW")
+    pruefe(E.grundgebuehr(geb, "DNL", "SR", 2) is None, "DNL ohne Division: kein Satz")
+    # Jeder Ligenname aus den Echtdaten - wie im Abrechnungstest. Bis
+    # Fassung 290 standen in liga_einordnen() Backspace-Zeichen statt \b,
+    # und fast alle diese Zeilen kamen als None heraus.
+    for liga, rolle, system, soll in (
+            ("Senioren RLW", "HSR", 3, 160), ("Senioren RLW", "SR", 2, 180), ("RL FS", "LSR", 3, 110),
+            ("Senioren LL", "SR", 2, 120), ("LL FS", "SR", 2, 120), ("Senioren BZL", "SR", 2, 100),
+            ("BZ FS", "SR", 2, 100), ("BL FS", "SR", 2, 100), ("Frauen LL", "SR", 2, 95),
+            ("Frauen Pokal Gr.A", "SR", 2, 95), ("DEFL 2 FS", "SR", 2, 95),
+            ("U20 RL", "HSR", 3, 100), ("U20 LL", "SR", 2, 90), ("U17 LL", "SR", 2, 85),
+            ("U15 RLA", "SR", 2, 80), ("U13 RLB", "SR", 2, 80), ("U11 LL Rot", "SR", 2, 85),
+            ("U9 RL", "SR", 2, 85), ("U7 Blau", "SR", 2, 85), ("DA FS", "SR", 2, None)):
+        ist = E.grundgebuehr(geb, liga, rolle, system)
+        pruefe(ist == soll, "Spielseite: %s als %s" % (liga, rolle), "-> %r" % (ist,))
+
+    # Unbekannter ausdruecklicher Ort: keine Halle statt der des Heimvereins
+    halle, _, _, erkannt = E.finde_halle("U17 FS: Herner EV - Krefelder EV in Timbuktu", venues)
+    pruefe(halle is None and not erkannt, "'in <unbekannt>' raet nicht die Heimhalle")
 
     # Ohne Ortsangabe darf nichts erfunden werden
     halle, _, _, erkannt = E.finde_halle("DA FS: NEV/BW - Sachsen/Berlin", venues)

@@ -24,6 +24,7 @@ import tresor
 import html
 import json
 import os
+import difflib
 import re
 import sys
 import time
@@ -273,6 +274,31 @@ def _rest_nach_verein(gast, vereine):
     return gast
 
 
+def _ort_ausdruecklich(hinweis, orte, hallen):
+    """Ort aus einem ausdruecklichen Hinweis ("in Duesseldorf-Benrath",
+    "in Dusseldorf"): erst genau, dann jedes Teilstueck (laengstes zuerst),
+    zuletzt mit Tippfehlern. Nur fuer ausdrueckliche Hinweise - beim
+    Gastnamen waere "ESV Bergisch Gladbach" sonst ein Spielort."""
+    namen = dict(orte)
+    for slug, h in hallen.items():
+        namen.setdefault(nkey(h.get("name", "")), slug)
+    worte = nkey(hinweis).split()
+    for n in range(len(worte), 0, -1):
+        for i in range(len(worte) - n + 1):
+            s = namen.get(" ".join(worte[i:i + n]))
+            if s:
+                return s
+    for n in range(len(worte), 0, -1):
+        for i in range(len(worte) - n + 1):
+            stueck = " ".join(worte[i:i + n])
+            if len(stueck) < 5:
+                continue
+            nah = difflib.get_close_matches(stueck, list(namen), n=1, cutoff=0.85)
+            if nah:
+                return namen[nah[0]]
+    return None
+
+
 def finde_halle(begegnung, venues):
     """Ermittelt Halle und Adresse. Reihenfolge: ausdrueckliches 'in <Ort>',
     dann Ortshinweis hinter dem Gastnamen, sonst der Heimverein."""
@@ -286,7 +312,10 @@ def finde_halle(begegnung, venues):
 
     # "... in Essen !!!"
     ort_hinweis = ""
-    m = re.search(r"\bin\s+([^\-]+?)\s*!*\s*$", rest)
+    # Bindestriche im Ort ("Duesseldorf-Benrath") gehoeren dazu, nur
+    # " - " trennt Heim und Gast.
+    m = re.search(r"\bin\s+((?:(?!\s[-\u2013]\s).)+?)\s*!*\s*$", rest)
+    ausdruecklich = bool(m)
     if m:
         ort_hinweis = m.group(1).strip()
         rest = rest[:m.start()].strip()
@@ -313,10 +342,24 @@ def finde_halle(begegnung, venues):
                 schluessel = orte.get(nkey(" ".join(worte_h[-n:])))
                 if schluessel:
                     break
+        if not schluessel and ausdruecklich:
+            schluessel = _ort_ausdruecklich(ort_hinweis, orte, hallen)
         if schluessel and schluessel in hallen:
             return hallen[schluessel], heim, gast, True
+        if ausdruecklich:
+            # Steht "in X" da, spielt man in X. Die Halle des Heimvereins
+            # gilt nur, wenn X dort auch vorkommt - sonst lieber keine
+            # Halle als die falsche (Kassel statt Duesseldorf).
+            heim_halle = _heim_halle(heim, vereine, hallen)
+            if heim_halle and all(w in nkey(heim_halle.get("name", "") + " " + heim_halle.get("adresse", ""))
+                                  for w in nkey(ort_hinweis).split()):
+                return heim_halle, heim, gast, True
+            return None, heim, gast, False
 
-    # 2) Heimverein, notfalls ohne Mannschafts-Zusatz
+    # 2) Heimverein, notfalls ohne Mannschafts-Zusatz, zuletzt mit Tippfehler
+    nah = _heim_halle_nah(heim, vereine, hallen)
+    if nah and not _heim_halle(heim, vereine, hallen):
+        return nah, heim, gast, True
     worte = heim.split()
     while worte:
         schluessel = vereine.get(nkey(" ".join(worte)))
@@ -326,6 +369,40 @@ def finde_halle(begegnung, venues):
         worte = neu[:-1] if neu == worte else neu
 
     return None, heim, gast, False
+
+
+def _kuerzel(text):
+    return " ".join(re.findall(r"\b(E[A-Z]{0,3}|SC|SG|SPG|TUS|TSV)\b", (text or "").upper()))
+
+
+def _heim_halle_nah(heim, vereine, hallen):
+    """Offensichtlicher Tippfehler im Heimverein ("Krefelderr EV"): der
+    naechste bekannte Verein, wenn er eindeutig ist und das Kuerzel (EV,
+    EC, EHC ...) stimmt - "Krefelder EC" ist ein anderer Verein."""
+    worte = _ohne_suffixe(heim.split())
+    k = nkey(" ".join(worte))
+    if len(k) < 6:
+        return None
+    nah = difflib.get_close_matches(k, list(vereine), n=2, cutoff=0.88)
+    if not nah:
+        return None
+    if len(nah) > 1 and vereine[nah[0]] != vereine[nah[1]] and \
+            difflib.SequenceMatcher(None, k, nah[0]).ratio() == difflib.SequenceMatcher(None, k, nah[1]).ratio():
+        return None
+    if _kuerzel(" ".join(worte)) and _kuerzel(nah[0]) and _kuerzel(" ".join(worte)) != _kuerzel(nah[0]):
+        return None
+    return hallen.get(vereine[nah[0]])
+
+
+def _heim_halle(heim, vereine, hallen):
+    worte = heim.split()
+    while worte:
+        schluessel = vereine.get(nkey(" ".join(worte)))
+        if schluessel and schluessel in hallen:
+            return hallen[schluessel]
+        neu = _ohne_suffixe(worte)
+        worte = neu[:-1] if neu == worte else neu
+    return None
 
 
 # ----------------------------------------------------------------- iCalendar
@@ -978,25 +1055,66 @@ def statistik_aus_historie(historie, stand, kennungen=None):
 # Gleiche Zuordnung wie in docs/mitglieder.js, damit Kalender und
 # Abrechnung dieselben Zahlen zeigen. Quelle: docs/gebuehren.json.
 
+def deb_stufe(L):
+    """Wie debStufe() in mitglieder.js: None = keine DEB-Liga, "" = DEB,
+    aber die Stufe ist nicht zu erkennen."""
+    if re.search(r"\bU\s?17\b", L):
+        ausserhalb = re.search(r"\bRL|\bLL\b|\bBZ?L\b|LANDES|REGIONAL|BEZIRK", L)
+        if re.search(r"\bU\s?17\s+(I|II|III)\b|DNL|JUGEND|\bDEB\b", L) or (not ausserhalb and "MEISTER" in L):
+            return "u17_meisterrunde" if re.search(r"MEISTER|PLAYOFF|HALBFINAL|\bHF\b|FINALE", L) else "u17"
+        return None
+    m = re.search(r"\bDNL\s*(?:DIV(?:ISION)?\.?\s*)?(III|II|I|[123])?\b", L)
+    if m:
+        return {"I": "dnl1", "II": "dnl2", "III": "dnl3", "1": "dnl1", "2": "dnl2", "3": "dnl3"}.get(m.group(1) or "", "")
+    if re.search(r"\bU\s?15\b", L) and re.search(r"ENDTURNIER|ENDRUNDE|\bDM\b|DEUTSCHE MEISTER", L):
+        return "u15_endturnier"
+    if re.search(r"OBERLIGA|\bOL[NS]?\b", L):
+        return "oberliga_playoffs" if re.search(r"PLAYOFF|\bPO\b", L) else "oberliga"
+    if re.search(r"\bDFEL\b|\bDEFL\b|FRAUEN.?BUNDESLIGA", L) and not re.search(r"(DFEL|DEFL)\s*2|\b2\.?\s*(LIGA|BL)", L):
+        return "dfel"
+    return None
+
+
+def deb_satz(gebuehren, stufe, system, rolle):
+    """Wie debSatz() in mitglieder.js (ohne die Regel fuer mehrere Spiele
+    am Tag - die kennt nur die Abrechnung, sie sieht alle eigenen Spiele)."""
+    d = (gebuehren or {}).get("deb") or {}
+    tab = d.get(stufe)
+    if not tab:
+        return None
+    n = min(system or 2, 4)
+    if n <= 1:
+        zwei = tab.get("2er") or {}
+        return round(zwei["HSR"] * d.get("allein_faktor", 1.5), 2) if zwei.get("HSR") is not None else None
+    satz = tab.get("%der" % n)
+    if not satz:
+        return None
+    r = "LSR" if rolle == "LSR" else "HSR" if (rolle == "HSR" or n <= 2) else None
+    return satz.get(r) if r else None
+
+
 def liga_einordnen(liga):
     L = (liga or "").upper()
-    alter = re.search(r"U(7|9|11|13|15|17|20)", L)
+    deb = deb_stufe(L)
+    if deb is not None:
+        return ("deb", deb) if deb else None
+    alter = re.search(r"\bU(7|9|11|13|15|17|20)\b", L)
     if alter:
-        if re.search(r"DNL|U17 (I|II)", L):
-            return None
-        stufe = ("RL" if re.search(r"RL[A-Z]?|REGIONAL", L) else
-                 "LL" if re.search(r"LL|LANDES", L) else
-                 "BL" if re.search(r"BL|BZL|BEZIRK", L) else "")
+        stufe = ("RL" if re.search(r"\bRL[A-Z]?\b|REGIONAL", L) else
+                 "LL" if re.search(r"\bLL\b|LANDES", L) else
+                 "BL" if re.search(r"\bBL\b|\bBZL?\b|BEZIRK", L) else "")
         return ("U" + alter.group(1), stufe)
-    if re.search(r"DNL|DA|AUSWAHL", L):
+    if re.search(r"\bDA\b|AUSWAHL", L):
         return None
-    if re.search(r"FRAUEN|DAMEN|DEFL|DFEL", L):
-        return ("frauen", "2LIGA" if re.search(r"2|DEFL|DFEL", L) else "")
-    if re.search(r"RL|REGIONAL", L):
+    # "DFEL2 Nord": die 2 klebt am Kuerzel, deshalb ohne \b am Ende
+    if re.search(r"FRAUEN|DAMEN|DEFL|DFEL", L):
+        return ("frauen", "2LIGA" if re.search(r"\b2\b|DEFL|DFEL", L) else "")
+    # "Senioren RLW" ist die Regionalliga, nicht ueber SENIOREN die Bezirksliga
+    if re.search(r"\bRL[A-Z]?\b|REGIONAL", L):
         return ("senioren", "RL")
-    if re.search(r"LL|LANDES", L):
+    if re.search(r"\bLL\b|LANDES", L):
         return ("senioren", "LL")
-    if re.search(r"BL|BZL|BEZIRK|SENIOREN", L):
+    if re.search(r"\bBL\b|\bBZL?\b|BEZIRK|SENIOREN", L):
         return ("senioren", "BL")
     return None
 
@@ -1106,6 +1224,8 @@ def grundgebuehr(gebuehren, liga, rolle, system):
     if not e:
         return None
     klasse, stufe = e
+    if klasse == "deb":
+        return deb_satz(gebuehren, stufe, system, rolle)
     if klasse == "senioren":
         satz = gebuehren.get("senioren", {}).get(stufe)
     elif klasse == "frauen":
@@ -1955,12 +2075,14 @@ def sammle_personen(spiele, cfg, venues, jetzt, bevorzugt=frozenset(), gebuehren
                     for n, r, _ in kollegen))
             gebuehr = grundgebuehr(gebuehren, liga, rolle, len(besetzung))
             if gebuehr is not None:
-                prozent = zeitzuschlag(gebuehren, anstoss)
+                deb = (liga_einordnen(liga) or ("",))[0] == "deb"
+                prozent = 0 if deb else zeitzuschlag(gebuehren, anstoss)
                 if prozent:
                     zeilen.append("Vergütung lt. Ordnung: %d € + %d %% Uhrzeit = %d €"
                                   % (gebuehr, prozent, round(gebuehr * (1 + prozent / 100.0))))
                 else:
-                    zeilen.append("Vergütung lt. Ordnung: %d €" % gebuehr)
+                    zeilen.append("Vergütung lt. %s: %s €" % ("DEB-Ordnung" if deb else "Ordnung",
+                                                              ("%.2f" % gebuehr).replace(".", ",").replace(",00", "")))
             zeilen += ["", "Quelle: %s" % cfg["quelle"]]
 
             titel = "%s · %s · %s" % (rolle, liga, paarung) if liga \

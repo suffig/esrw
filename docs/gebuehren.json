@@ -19,6 +19,22 @@
     "U7":  { "SR": 85, "SR_allein": 80 }
   },
 
+  "deb": {
+    "_": "Schiedsrichter-Gebuehrenordnung des DEB 2026/27 (Stand Juli 2026) fuer DEB-Spiele. Nettobetraege je Schiedsrichter, Fahrtkosten und Spesen sind enthalten. Schluessel 4er/3er/2er = Zahl der Schiedsrichter. Im 2er-System gilt der HSR-Satz fuer beide.",
+    "dnl1": { "4er": { "HSR": 185, "LSR": 155 }, "3er": { "HSR": 260, "LSR": 155 }, "2er": { "HSR": 270 } },
+    "dnl2": { "4er": { "HSR": 160, "LSR": 135 }, "3er": { "HSR": 240, "LSR": 135 }, "2er": { "HSR": 250 } },
+    "dnl3": { "4er": { "HSR": 120, "LSR": 85 }, "3er": { "HSR": 160, "LSR": 85 }, "2er": { "HSR": 170 } },
+    "u17_meisterrunde": { "4er": { "HSR": 145, "LSR": 100 }, "3er": { "HSR": 160, "LSR": 100 }, "_": "U17 Meisterrunde, Playoff ab Halbfinale" },
+    "u17": { "3er": { "HSR": 110, "LSR": 80 }, "2er": { "HSR": 125 }, "_": "U17 alle Gruppen und Runden (U17 I, U17 II)" },
+    "u15_endturnier": { "3er": { "HSR": 150, "LSR": 110 } },
+    "dfel": { "4er": { "HSR": 165, "LSR": 120 }, "3er": { "HSR": 165, "LSR": 120 }, "2er": { "HSR": 165 }, "_": "1. Frauen-Bundesliga. DFEL2 Nord rechnet der ESRW ab (frauen)." },
+    "oberliga": { "4er": { "HSR": 315, "LSR": 230 } },
+    "oberliga_playoffs": { "4er": { "HSR": 340, "LSR": 250 }, "_": "einschliesslich Pre-Playoffs" },
+    "allein_faktor": 1.5,
+    "mehrere_spiele_prozent": { "zweites": 50, "ab_drittem": 25, "_": "Mehrere Spiele am selben Tag: das 2. Spiel 50 %, ab dem 3. Spiel 25 % der Pauschale" },
+    "ausfall_abzug_prozent": { "oberliga": 50, "sonst": 30, "_": "Spielausfall mit Schiedsrichtern vor Ort oder auf der Anreise: die Gesamtkosten sinken um diesen Anteil und werden gleich verteilt" }
+  },
+
   "zuschlag_zeit": {
     "prozent": 20,
     "bis_einschliesslich": "09:14",
