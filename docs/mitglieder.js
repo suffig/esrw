@@ -5759,6 +5759,127 @@ window.Mitglieder = (function () {
     return box;
   }
 
+  // ---- Saison-Rueckblick: die Saison in Zahlen, als Bild zum Teilen
+  function rueckblickDaten() {
+    var jetzt = new Date();
+    var spiele = saisonSpiele(gewaehlteSaison).filter(function (sp) { return new Date(sp.beginn) < jetzt; });
+    var gespann = {};
+    (dbArchiv || []).forEach(function (s) { gespann[echteKennung(s.kennung)] = s.besetzung || []; });
+    var ich = ctx && ctx.personMit && profil ? ctx.personMit(profil.slug) : null;
+    ((ich && ich.spiele) || []).forEach(function (s) { gespann[s.id || s.kennung] = s.gespann || s.besetzung || gespann[s.id]; });
+    var z = { spiele: spiele.length, km: 0, geld: 0, netto: 0, kollegen: {}, hallen: {}, ligen: {} };
+    spiele.forEach(function (sp) {
+      var e = einsaetze[sp.kennung] || {};
+      z.km += (e.km || 0) * 2;
+      z.geld += betragFuer(sp, e).betrag || 0;
+      z.netto += nettoSpiel(sp, e);
+      if (sp.halle) z.hallen[sp.halle] = (z.hallen[sp.halle] || 0) + 1;
+      if (sp.liga) z.ligen[sp.liga] = (z.ligen[sp.liga] || 0) + 1;
+      (gespann[sp.kennung] || []).forEach(function (b) {
+        var n = String((b && (b.name || b)) || "").split(",")[0].trim();
+        if (n && (!profil || (b.slug || "") !== profil.slug) && n !== String(profil && profil.name || "").split(",")[0].trim())
+          z.kollegen[n] = (z.kollegen[n] || 0) + 1;
+      });
+    });
+    function oben(o, n) { return Object.keys(o).sort(function (a, b) { return o[b] - o[a]; }).slice(0, n).map(function (k) { return [k, o[k]]; }); }
+    z.topKollegen = oben(z.kollegen, 3); z.topHallen = oben(z.hallen, 3); z.topLiga = oben(z.ligen, 1)[0];
+    return z;
+  }
+  function saisonRueckblick() {
+    var z = rueckblickDaten(), box = h("div", { class: "mg-rueckblick" });
+    box.appendChild(h("h4", {}, [ikone("i-balken"), " Saison " + (gewaehlteSaison || saisonAus(new Date())) + " im Rückblick"]));
+    if (!z.spiele) { box.appendChild(h("p", { class: "meta", text: "In dieser Saison ist noch kein Spiel gepfiffen." })); return box; }
+    box.appendChild(h("div", { class: "mg-ueberblick-zahlen" }, [
+      h("div", {}, [h("small", { text: "Spiele" }), h("b", { text: String(z.spiele) })]),
+      h("div", {}, [h("small", { text: "Kilometer" }), h("b", { text: Math.round(z.km).toLocaleString("de-DE") + " km" })]),
+      h("div", {}, [h("small", { text: "Vergütung" }), h("b", { text: euro(z.geld) })]),
+      h("div", {}, [h("small", { text: "Netto" }), h("b", { text: euro(z.netto) })])]));
+    function liste(titel, eintraege, einheit) {
+      if (!eintraege.length) return null;
+      return h("div", { class: "mg-rb-liste" }, [h("b", { text: titel }),
+        h("ol", {}, eintraege.map(function (e) { return h("li", { text: e[0] + " · " + e[1] + " " + einheit }); }))]);
+    }
+    [liste("Am häufigsten mit", z.topKollegen, "×"), liste("Am häufigsten in", z.topHallen, "×")].forEach(function (x) { if (x) box.appendChild(x); });
+    if (z.topLiga) box.appendChild(h("p", { class: "meta", text: "Meiste Spiele: " + z.topLiga[0] + " (" + z.topLiga[1] + ")" }));
+    var teilen = h("button", { type: "button", class: "anfrage mg-rb-teilen" }, [ikone("i-teilen"), " Als Bild teilen"]);
+    teilen.addEventListener("click", function () { rueckblickBild(z).then(function (b) { pdfHerunterladen(b, "Saison_" + String(gewaehlteSaison || "").replace("/", "-") + ".png"); }); });
+    box.appendChild(teilen);
+    return box;
+  }
+  function rueckblickBild(z) {
+    return new Promise(function (ok) {
+      var c = document.createElement("canvas"); c.width = 1080; c.height = 1350;
+      var g = c.getContext("2d"), schrift = "Manrope, system-ui, sans-serif";
+      var v = g.createLinearGradient(0, 0, 1080, 1350); v.addColorStop(0, "#111418"); v.addColorStop(1, "#272e38");
+      g.fillStyle = v; g.fillRect(0, 0, 1080, 1350);
+      g.fillStyle = "#e30613"; g.beginPath(); g.arc(1000, 80, 190, 0, Math.PI * 2); g.fill();
+      g.fillStyle = "#fff"; g.font = "800 64px " + schrift; g.fillText("Meine Saison", 80, 170);
+      g.font = "700 44px " + schrift; g.fillStyle = "#c9ced8"; g.fillText(String(gewaehlteSaison || saisonAus(new Date())) + " · " + ((profil && profil.name) || ""), 80, 235);
+      var kacheln = [["Spiele", String(z.spiele)], ["Kilometer", Math.round(z.km).toLocaleString("de-DE")], ["Vergütung", euro(z.geld)], ["Netto", euro(z.netto)]];
+      kacheln.forEach(function (k, i) {
+        var x = 80 + (i % 2) * 470, y = 320 + Math.floor(i / 2) * 230;
+        g.fillStyle = "rgba(255,255,255,.08)"; g.fillRect(x, y, 440, 200);
+        g.fillStyle = "#98a1ad"; g.font = "700 34px " + schrift; g.fillText(k[0], x + 32, y + 62);
+        g.fillStyle = "#fff"; g.font = "800 68px " + schrift; g.fillText(k[1], x + 32, y + 152);
+      });
+      var y = 840;
+      [["Am häufigsten mit", z.topKollegen], ["Am häufigsten in", z.topHallen]].forEach(function (b) {
+        if (!b[1].length) return;
+        g.fillStyle = "#98a1ad"; g.font = "700 34px " + schrift; g.fillText(b[0], 80, y); y += 56;
+        g.fillStyle = "#fff"; g.font = "700 40px " + schrift;
+        b[1].forEach(function (e) { g.fillText(e[0] + "  ·  " + e[1] + "×", 80, y); y += 54; });
+        y += 30;
+      });
+      g.fillStyle = "#98a1ad"; g.font = "700 30px " + schrift; g.fillText("ESRW App · www.esrw.app", 80, 1290);
+      c.toBlob(function (b) { ok(b); }, "image/png");
+    });
+  }
+
+  // ---- Beleg zuordnen: ein Foto, die App sucht das Spiel dazu. Datum aus
+  // dem Foto (EXIF), sonst das Dateidatum - die naechsten Spiele um diesen
+  // Tag stehen zur Wahl, das passendste zuerst.
+  function belegDatum(datei) {
+    return datei.slice(0, 131072).arrayBuffer().then(function (buf) {
+      var t = "", b = new Uint8Array(buf);
+      for (var i = 0; i < b.length; i++) t += String.fromCharCode(b[i]);
+      var m = t.match(/(20\d\d):(\d\d):(\d\d) (\d\d):(\d\d)/);
+      return m ? new Date(+m[1], +m[2] - 1, +m[3], +m[4], +m[5]) : new Date(datei.lastModified || Date.now());
+    }, function () { return new Date(datei.lastModified || Date.now()); });
+  }
+  function belegKandidaten(wann, spiele) {
+    return spiele.map(function (sp) { return [sp, Math.abs(new Date(sp.beginn) - wann)]; })
+      .filter(function (x) { return x[1] < 2 * 86400000; })
+      .sort(function (a, b) { return a[1] - b[1]; }).slice(0, 4).map(function (x) { return x[0]; });
+  }
+  function belegZuordnen() {
+    var box = h("div", { class: "mg-belegzuordnen" });
+    box.appendChild(h("h4", {}, [ikone("i-kamera"), " Beleg zuordnen"]));
+    box.appendChild(h("p", { class: "meta", text: "Foto oder PDF wählen – Tankquittung, Parkticket. Die App schlägt das Spiel vom selben Tag vor." }));
+    var wahl = h("div", { class: "mg-belegwahl" });
+    var feld = h("input", { type: "file", accept: "image/*,application/pdf", class: "mg-feld" });
+    feld.addEventListener("change", function () {
+      var f = feld.files && feld.files[0]; if (!f) return;
+      leeren(wahl); wahl.appendChild(skelett(1));
+      belegDatum(f).then(function (wann) {
+        leeren(wahl);
+        var kand = belegKandidaten(wann, alleSpiele());
+        wahl.appendChild(h("p", { class: "meta", text: "Aufgenommen am " + wann.toLocaleDateString("de-DE") + (kand.length ? " – passt zu:" : " – kein Spiel in der Nähe dieses Tages.") }));
+        kand.forEach(function (sp, i) {
+          var d = new Date(sp.beginn);
+          var k = h("button", { type: "button", class: "rg-knopf" + (i === 0 ? " rg-haupt" : ""),
+            text: d.toLocaleDateString("de-DE", { weekday: "short", day: "2-digit", month: "2-digit" }) + " · " + sp.paarung });
+          k.addEventListener("click", function () {
+            k.disabled = true;
+            belegHochladen(sp, f, null).then(function () { leeren(wahl); wahl.appendChild(h("p", { class: "meta gut-text", text: "Am Spiel " + sp.paarung + " abgelegt ✓" })); feld.value = ""; });
+          });
+          wahl.appendChild(k);
+        });
+      });
+    });
+    box.appendChild(feld); box.appendChild(wahl);
+    return box;
+  }
+
   function arbeitsKopf(liste) {
     var st = arbeitsStufe(), n = liste.length;
     if (!n) return null;
@@ -6125,6 +6246,8 @@ window.Mitglieder = (function () {
       detail: function () { return summenDetails(); },
       rechnungen: function () { return rechnungArchivRendern(h("div", {})); },
       ueberblick: function () { return jahresUeberblick(); },
+      rueckblick: function () { return saisonRueckblick(); },
+      beleg: function () { return belegZuordnen(); },
       art: function () { return abrechnungEinstellungen(spiele); },
       werkzeuge: function () {
         return h("div", {}, [
@@ -6164,7 +6287,7 @@ window.Mitglieder = (function () {
     // Liste), "Rechnungslauf" (steht im Arbeitskopf der Stufe
     // "Abrechnen") und "Eigene Betraege je Liga" (jetzt die Gebuehren-
     // ordnung in den Einstellungen). Die Blaetter gibt es weiter.
-    var WEITERE = [["ueberblick", "Jahresüberblick"], ["kalender", "Kalender"],
+    var WEITERE = [["ueberblick", "Jahresüberblick"], ["rueckblick", "Saison-Rückblick"], ["beleg", "Beleg zuordnen"], ["kalender", "Kalender"],
       ["werkzeuge", "Jahresabschluss, Fahrtenbuch, Export"], ["eintragen", "+ Spiel nachtragen"],
       ["regeln", "Wie die App rechnet"]];
     // Im alten Design steht "Rechnung" in der Knopfreihe darueber - dort
@@ -6344,8 +6467,11 @@ window.Mitglieder = (function () {
       if (r.error) { meldung("Beleg konnte nicht gespeichert werden: " + fehlerText(r.error), "warn"); return; }
       var alt = (einsaetze[sp.kennung] && einsaetze[sp.kennung].belege) || [];
       speichereEinsatz(sp, { belege: alt.concat([pfad]) });
-      belegeRendern(sp, zeile);
-      var n = alt.length + 1, kz = zeile.querySelector(".mg-beleg-zahl"); if (kz) { kz.textContent = String(n); kz.classList.remove("versteckt"); }
+      // Ohne Kartenzeile (Beleg zuordnen) gibt es nichts nachzuzeichnen
+      if (zeile) {
+        belegeRendern(sp, zeile);
+        var n = alt.length + 1, kz = zeile.querySelector(".mg-beleg-zahl"); if (kz) { kz.textContent = String(n); kz.classList.remove("versteckt"); }
+      }
       kurzMeldung("Beleg gespeichert ✓", "gut");
     });
     });
@@ -11923,7 +12049,7 @@ window.Mitglieder = (function () {
     rechnungBezahlt: rechnungBezahlt, rechnungenOffenSumme: rechnungenOffenSumme,
     vereinHaupt: vereinHaupt, vereinKanon: vereinKanon, vereinAnschrift: vereinAnschrift,
     keinVerein: keinVerein, vereinAliaseSetzen: vereinAliaseSetzen, vereinNaechster: vereinNaechster,
-    absenderAus: absenderAus, rechnungStamm: rechnungStamm, rechnungSichern: rechnungSichern, rechnungenNachreichen: rechnungenNachreichen, erinnerungText: erinnerungText, rechnungenOhneSpiele: rechnungenOhneSpiele,
+    absenderAus: absenderAus, rechnungStamm: rechnungStamm, belegKandidaten: belegKandidaten, rechnungSichern: rechnungSichern, rechnungenNachreichen: rechnungenNachreichen, erinnerungText: erinnerungText, rechnungenOhneSpiele: rechnungenOhneSpiele,
     debSatz: debSatz, debGesamt: debGesamt, debTagesFaktor: debTagesFaktor, zeitzuschlagAn: zeitzuschlag
   };
 

@@ -540,7 +540,7 @@
   // Tipp auf die Stand-Anzeige holt frische Daten
   el("stand").addEventListener("click", function () {
     if (fassungWartet) { location.reload(); return; }
-    if (!navigator.onLine) { toast("Offline, es gibt gerade nichts Neues zu holen.", "warn"); return; }
+    if (!netzDa()) { toast(el("offline-text").textContent || "Ohne Verbindung – es gibt gerade nichts Neues zu holen.", "warn"); return; }
     el("stand").classList.add("laedt");
     neuLaden().then(function () { el("stand").classList.remove("laedt"); toast("Aktualisiert.", "gut"); })
       .catch(function () { el("stand").classList.remove("laedt"); toast("Aktualisieren hat nicht geklappt.", "warn"); });
@@ -917,9 +917,12 @@
   function netzDa() { return navigator.onLine && netzErreichbar; }
   function netzAnzeigen() {
     var s = el("stand");
-    el("offline").classList.toggle("versteckt", netzDa());
+    // Kein eigener Kasten mehr - er schob die Seite nach unten. Die Pille
+    // sagt es grau, ein Tipp darauf erklaert, was geht.
+    el("offline").classList.add("versteckt");
     if (!netzDa()) {
-      s.className = "stand alt"; s.textContent = "Ohne Verbindung, gespeicherter Stand" + (letzterStand ? " von " + letzterStand : "");
+      s.className = "stand alt offline"; s.textContent = "Offline · Stand " + (letzterStand || "?");
+      s.title = "Antippen: was ohne Verbindung geht";
       var q = 0; try { q = Object.keys(JSON.parse(localStorage.getItem("mg_queue") || "{}")).length; } catch (e) {}
       var geht = funktionsText([[null, "Spielplan"], [null, "Spielseiten"], [null, "Kalender"],
         ["abrechnung", "Abrechnung"], ["notizen", "Notizen"], ["regeln", "Regeln"]], "und");
@@ -1450,12 +1453,62 @@
     return r;
   }
 
+  // Auf dem Profil eines Kollegen: was ihr gemeinsam habt, und wie man ihn
+  // erreicht - gemeinsame Spiele, das naechste, Anrufen, WhatsApp, Mitfahren.
+  function mitDirZeigen(p, meins) {
+    var alt = el("mit-dir"); if (alt) alt.remove();
+    if (meins || !profil || !profil.slug || !daten) return;
+    var ich = (daten.personen || []).filter(function (x) { return x.slug === profil.slug; })[0];
+    if (!ich) return;
+    var meine = {}; (ich.spiele || []).forEach(function (s) { meine[kennungVon(s)] = 1; });
+    var gemeinsam = (p.spiele || []).filter(function (s) { return meine[kennungVon(s)]; });
+    var naechstes = gemeinsam.filter(function (s) { return !s.vergangen; }).sort(function (a, b) { return a.beginn < b.beginn ? -1 : 1; })[0];
+    var box = document.createElement("div"); box.className = "karte mit-dir"; box.id = "mit-dir";
+    var h4 = document.createElement("h4"); h4.appendChild(ikone("i-users")); h4.appendChild(document.createTextNode(" Mit dir"));
+    box.appendChild(h4);
+    var z = document.createElement("p"); z.className = "meta";
+    z.textContent = gemeinsam.length
+      ? gemeinsam.length + (gemeinsam.length === 1 ? " gemeinsames Spiel" : " gemeinsame Spiele") + " in dieser Saison"
+      : "Diese Saison noch kein gemeinsames Spiel.";
+    box.appendChild(z);
+    if (naechstes) {
+      var a = document.createElement("a"); a.className = "mit-dir-naechstes"; a.href = "#spiel/" + encodeURIComponent(kennungVon(naechstes));
+      var d = new Date(naechstes.beginn);
+      a.textContent = "Nächstes: " + datumKurz(d) + " " + uhr(d) + " · " + naechstes.paarung + " ›";
+      box.appendChild(a);
+    }
+    var wege = document.createElement("div"); wege.className = "mit-dir-wege"; box.appendChild(wege);
+    if (naechstes && funktion("mitfahren")) {
+      var mf = document.createElement("a"); mf.className = "mit-dir-weg"; mf.href = "#mitfahren"; mf.appendChild(ikone("i-route")); mf.appendChild(document.createTextNode(" Mitfahren"));
+      wege.appendChild(mf);
+    }
+    if (sitzungVorhanden() && window.Mitglieder && window.Mitglieder.kontaktVon) {
+      window.Mitglieder.kontaktVon(p.slug).then(function (k) {
+        if (!k || !k.telefon || !box.isConnected) return;
+        var nr = String(k.telefon).replace(/[^\d+]/g, "");
+        var wa = nr.replace(/^\+/, "").replace(/^00/, "").replace(/^0/, "49");
+        // Rueckwaerts eingefuegt, damit "Anrufen" vorne steht
+        [["https://wa.me/" + wa, "i-chat", " WhatsApp"], ["tel:" + nr, "i-telefon", " Anrufen"]].forEach(function (w, i) {
+          var l = document.createElement("a"); l.className = "mit-dir-weg"; l.href = w[0]; l.appendChild(ikone(w[1])); l.appendChild(document.createTextNode(w[2]));
+          if (!i) { l.target = "_blank"; l.rel = "noopener"; }
+          wege.insertBefore(l, wege.firstChild);
+        });
+      }).catch(function () {});
+    }
+    var det = el("detail"), held = det.querySelector(".held");
+    if (held && held.parentNode) held.parentNode.insertBefore(box, held); else det.insertBefore(box, det.firstChild);
+  }
+
   function karte(s, fuer) {
     var beginn = new Date(s.beginn), treff = new Date(s.treffpunkt);
     var karteEl = document.createElement("div");
     karteEl.className = "spiel karte zeit-links" + (s.vergangen ? " war" : "") + (s.aenderung ? " neu" : "");
     var wann = document.createElement("div"); wann.className = "wann";
-    if (s.liga) { var lf = ligaFarbe(s.liga); wann.style.setProperty("--liga-bg", lf.bg); wann.style.setProperty("--liga-fg", lf.fg); }
+    if (s.liga) {
+      var lf = ligaFarbe(s.liga); wann.style.setProperty("--liga-bg", lf.bg); wann.style.setProperty("--liga-fg", lf.fg);
+      // Eine Linie in der Ligafarbe: beim Scrollen sieht man die Liga, ohne zu lesen
+      karteEl.style.setProperty("--liga-linie", lf.punkt); karteEl.classList.add("mit-liga");
+    }
     var wt = document.createElement("b"); wt.textContent = wochentag[beginn.getDay()];
     var tg = document.createElement("span"); tg.textContent = beginn.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" });
     var zt = document.createElement("em"); zt.textContent = uhr(beginn);
@@ -3357,6 +3410,7 @@
     // Woran man sieht, wo man ist: eine Kante an der Seite, nicht nur
     // eine graue Zeile ganz oben.
     el("detail").classList.toggle("fremdes-profil", !meins);
+    mitDirZeigen(p, meins);
     el("start-anpassen").classList.toggle("versteckt", !meins);
     el("abfahrt-ics").classList.add("versteckt");
     if (profil && profil.slug === p.slug && sitzungVorhanden()) ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })

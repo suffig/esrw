@@ -279,8 +279,15 @@ def erinnerungen(person, profil, jetzt, schon):
             if w:
                 text += "\nWetter: " + w
             wann = "Heute" if beginn.date() == jetzt.date() else "Morgen" if beginn.date() == jetzt.date() + timedelta(days=1) else beginn.strftime("%d.%m.")
-            heraus.append((k, {"titel": "%s: %s als %s" % (wann, s.get("paarung", "Spiel"), s.get("rolle", "SR")),
-                               "text": text[:900], "url": "./#" + person["slug"],
+            # Am Spieltag zaehlt die Uhrzeit: "Heute 18:00 · Losfahren 16:20"
+            # steht schon auf dem Sperrbildschirm, ohne die App zu oeffnen.
+            if wann == "Heute" and abfahrt:
+                titel = "Heute %s Uhr · Losfahren %s" % (beginn.strftime("%H:%M"), abfahrt.strftime("%H:%M"))
+            else:
+                titel = "%s: %s als %s" % (wann, s.get("paarung", "Spiel"), s.get("rolle", "SR"))
+            heraus.append((k, {"titel": titel,
+                               "text": text[:900],
+                               "url": ("./#spiel/" + urllib.parse.quote(s["id"], safe="")) if s.get("id") else "./#" + person["slug"],
                                "ort": s.get("ort") or None, "tag": "spieltag"}))
 
         k = "abfahrt|" + kennung

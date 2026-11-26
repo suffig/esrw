@@ -4049,6 +4049,25 @@
   /* Wochenstreifen: eigene Spieltage rot statt schwarz */
   :root[data-design="neu"] .woche i.ich { background:var(--rot); }
 
+  /* ===== Ideen 3, 6, 2, 5 (Fassung 310) ============================= */
+  :root[data-design="neu"] .spiel.mit-liga { box-shadow:inset 4px 0 0 var(--liga-linie); }
+  .mit-dir { margin:0 0 12px; padding:14px 16px; border-left:4px solid var(--blau); }
+  .mit-dir h4 { margin:0 0 4px; display:flex; align-items:center; gap:6px; }
+  .mit-dir h4 svg.i { color:var(--blau); }
+  .mit-dir .meta { margin:0 0 6px; }
+  .mit-dir-naechstes { display:block; font-weight:700; text-decoration:none; padding:10px 0; }
+  .mit-dir-wege { display:flex; flex-wrap:wrap; gap:8px; }
+  .mit-dir-weg { display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:0 14px; border-radius:var(--radius-pille);
+    background:var(--blau-hell); color:var(--blau); font-weight:800; text-decoration:none; }
+  .mit-dir-weg svg.i { width:18px; height:18px; }
+  :root[data-design="neu"] .stand.offline { background:var(--akzent-hell); color:var(--dim); }
+  .mg-rb-liste { margin:12px 0 0; }
+  .mg-rb-liste ol { margin:6px 0 0; padding-left:20px; }
+  .mg-rb-teilen { margin-top:12px; width:100%; min-height:44px; display:inline-flex; align-items:center; justify-content:center; gap:6px; }
+  .mg-belegzuordnen .mg-feld { width:100%; min-height:44px; }
+  .mg-belegwahl { display:grid; gap:8px; margin-top:10px; }
+  .mg-belegwahl .rg-knopf { justify-content:flex-start; }
+
 </style>
 </head>
 <body>
@@ -4515,6 +4534,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=309"></script>
+<script src="app.js?v=310"></script>
 </body>
 </html>

@@ -1252,9 +1252,12 @@ def test_netzstand():
 
     pruefe('ev.data.art !== "netz"' in code,
            "das Fenster hoert auf die Meldung")
-    # Der Balken darf nicht wieder allein an navigator.onLine haengen
-    pruefe('el("offline").classList.toggle("versteckt", netzDa())' in code,
-           "der Balken fragt netzDa(), nicht navigator.onLine")
+    # Die Anzeige darf nicht wieder allein an navigator.onLine haengen.
+    # Seit Fassung 310 ist es die Stand-Pille statt eines Balkens.
+    pruefe('s.className = "stand alt offline"' in code and "if (!netzDa()) {" in code,
+           "die Offline-Pille fragt netzDa(), nicht navigator.onLine")
+    pruefe('if (!netzDa()) { toast(el("offline-text")' in code,
+           "und der Tipp darauf auch")
     pruefe("return navigator.onLine && netzErreichbar" in code,
            "netzDa() fuehrt beide Quellen zusammen")
 
@@ -1413,6 +1416,11 @@ def test_push_erinnerungen():
     if abf4:
         pruefe("30 Min" not in abf4[0]["titel"],
                "mit Puffer faellt die Abfahrt frueher", abf4[0]["titel"])
+    # Fassung 310: am Spieltag steht die Abfahrt im Titel, der Link fuehrt zum Spiel
+    tag4 = [n for k, n in raus4 if k.startswith("spieltag")]
+    if tag4:
+        pruefe(tag4[0]["titel"].startswith("Heute ") and "Losfahren" in tag4[0]["titel"],
+               "Spieltag-Titel nennt die Abfahrt", tag4[0]["titel"])
 
     # Die Spieltag-Meldung sagt, wann: heute, morgen oder mit Datum.
     #
