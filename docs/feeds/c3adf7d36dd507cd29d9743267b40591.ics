@@ -8,29 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:02ca1d9f3700cfe3734a3a4b26643977c7617326@esrw.de
-SEQUENCE:0
-DTSTAMP:20261107T130048Z
-LAST-MODIFIED:20261107T130048Z
-DTSTART:20261119T173000Z
-DTEND:20261119T210000Z
-SUMMARY:SR · U15 LL: EV Duisburg 1b – EHC Essen Ruhr
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
-  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: PreZero Rheinlan
- dhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: 
- Marks\, Marcel\nVergütung lt. Ordnung: 80 €\n\nQuelle: https://www.esrw
- .de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
- sburg
-GEO:51.405718;6.780082
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
- sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
- reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
-END:VEVENT
-BEGIN:VEVENT
 UID:ae23e71395be5296bf00cd9e34013db7bce18de3@esrw.de
 SEQUENCE:0
 DTSTAMP:20261111T143043Z
