@@ -2195,6 +2195,10 @@ window.Mitglieder = (function () {
   // darf sie nicht verlieren. Zahlenfelder behalten ihre 600 ms, sonst
   // schickt jede Ziffer eine eigene Zeile.
   function speichereEinsatz(spiel, aenderung, sofort) {
+    // Was die App selbst eintraegt (Vorschlag mit Herkunftsvermerk), meldet
+    // sich nicht: beim Oeffnen der Abrechnung stand sonst jedes Mal
+    // "Gespeichert ✓" ueber der Liste, ohne dass man etwas getan hatte.
+    var leise = !!(aenderung && aenderung.herkunft && Object.keys(aenderung.herkunft).some(function (f) { return aenderung.herkunft[f]; }));
     var alt = einsaetze[spiel.kennung] || {};
     var zeile = Object.assign({
       user_id: session.user.id, kennung: spiel.kennung, beginn: spiel.beginn,
@@ -2243,7 +2247,7 @@ window.Mitglieder = (function () {
         }
         vormerkenWeg(spiel.kennung);
         if (r.data && r.data[0] && r.data[0].id) einsaetze[spiel.kennung].id = r.data[0].id;
-        kurzMeldung("Gespeichert ✓", "gut");
+        if (!leise) kurzMeldung("Gespeichert ✓", "gut");
       }).catch(function (e) {
         vormerkenWeg(spiel.kennung);
         inWarteschlange(zeile, netzFehler(e) ? "netz" : "fehler");
@@ -4459,7 +4463,7 @@ window.Mitglieder = (function () {
     // das Abzeichen weg - ohne dass die Liste neu gebaut werden muss.
     var wie = gerechnetText(e), gr = karte.querySelector(".mg-status.gerechnet");
     if (wie && !gr) {
-      gr = h("button", { type: "button", class: "mg-status gerechnet", text: "Vorschlag",
+      gr = h("button", { type: "button", class: "mg-status gerechnet", text: "Bestätigen", title: wie,
         onclick: function () { speichereEinsatz(spiel, { herkunft: null }); kurzMeldung("Als geprüft vermerkt ✓", "gut"); } });
       if (kurz && kurz.parentNode) kurz.parentNode.insertBefore(gr, kurz.nextSibling);
     } else if (gr && !wie) {
@@ -6527,13 +6531,16 @@ window.Mitglieder = (function () {
           h("span", { class: "meta mg-betrag-kurz" + (b.betrag == null && vergangen ? " fehlt" : ""),
             text: b.betrag != null ? euro(b.betrag) + (e.km != null ? " · " + dezimal(e.km) + " km" : "") : "Betrag fehlt" }),
           gerechnetText(e) ? h("button", { type: "button", class: "mg-status gerechnet",
-            title: gerechnetText(e), text: "Vorschlag",
+            // "Vorschlag" sagte, was es ist, nicht was der Tipp tut
+            title: gerechnetText(e), text: "Bestätigen",
             onclick: function () { speichereEinsatz(sp, { herkunft: null }); kurzMeldung("Als geprüft vermerkt ✓", "gut"); } }) : null,
           e.bezahlt ? h("span", { class: "mg-status bezahlt", title: "Abgehakt am " + new Date(e.bezahlt).toLocaleDateString("de-DE"), text: "bezahlt" }) : null,
           vergangen ? fotoKnopf : null, foto,
           // "Details" klang nach Nachschlagen. Dahinter liegen die
           // Felder fuer Kilometer, Verguetung und Auslagen.
-          h("span", { class: "meta mg-auf", text: "Beträge eintragen ›" })
+          // Kurz, damit die Zeile auch mit "Bestaetigen" und Kamera passt -
+          // vorher brach sie bei 375 px um und jede Karte wurde hoeher.
+          h("span", { class: "meta mg-auf", text: b.betrag != null ? "Ändern ›" : "Eintragen ›" })
         ])
       ]),
       details

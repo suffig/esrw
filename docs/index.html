@@ -2767,7 +2767,8 @@
   :root[data-design="neu"] p > a,
   :root[data-design="neu"] li > a,
   :root[data-design="neu"] .spiel .inhalt a:not(.chip):not(.reihe-knopf) {
-    padding-top:9px; padding-bottom:9px; }
+    /* 13 statt 9: gemessen 36 px hoch (Fassung 300), 44 sind gefordert */
+    padding-top:13px; padding-bottom:13px; }
 
   /* Knoepfe, die als Marke aussehen, sind trotzdem Knoepfe. */
   :root[data-design="neu"] .mg-status.gerechnet { padding-top:7px; padding-bottom:7px;
@@ -3359,7 +3360,7 @@
      bei 375 px passt neben "Startpunkt setzen und ausfüllen" nichts
      mehr. */
   :root[data-design="neu"] .mg-fuellen { border-left:3px solid var(--warn);
-    display:flex; flex-direction:column; gap:4px; }
+    display:flex; flex-direction:column; gap:4px; padding:14px 16px; }
   :root[data-design="neu"] .mg-fuelltitel { font-size:1rem; }
   :root[data-design="neu"] .mg-fuellstand { margin:0; }
   :root[data-design="neu"] .mg-fuellknopf { width:100%; margin-top:4px; }
@@ -4381,6 +4382,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=299"></script>
+<script src="app.js?v=304"></script>
 </body>
 </html>

@@ -6,14 +6,14 @@
   var basis = location.href.split("#")[0].split("?")[0].replace(/index\.html$/, "").replace(/\/?$/, "/");
 
   // Wird einmal je Fassung gezeigt, damit die Kollegen neue Funktionen finden.
-  var NEUIGKEITEN = { version: "2026-11-19", punkte: [
-    "Abrechnung in drei Schritten: Prüfen, Abrechnen, Geld – jedes Spiel eine Rechnung mit eigener Nummer",
-    "Kilometer und Vergütung trägt die App von selbst ein, auch für kommende Spiele",
-    "Netto für die Steuer: Pauschalen minus Fahrt, Verpflegung und Auslagen, im Jahresabschluss",
-    "Gebührenordnung in den Einstellungen der Abrechnung – eigene Sätze antippen und ändern",
-    "Zusammen fahren: „Ich fahre mit“ an einem Angebot, freie Plätze, Push an den Anbieter",
-    "Dokumente am Spiel: Spielbericht oder Zusatzmeldung mit einem Tipp anhängen"
-  ] };
+  // Hoechstens vier Punkte: mit sechs schob die Karte das naechste Spiel
+  // unter den Bildschirmrand (gemessen bei 375 px).
+  var NEUIGKEITEN = { version: "2026-11-26", punkte: [
+    "Rechnungen: alle an einem Ort, nach Jahr und Stand filtern, einzeln als PDF oder alle als ZIP laden",
+    "DEB-Spiele (DNL, U17 I/II, DFEL, Oberliga) rechnet die App nach der DEB-Gebührenordnung",
+    "Puffer für die Abfahrt frei einstellbar: Aufschlag in Prozent und feste Reserve in Minuten",
+    "Kalenderdatei mit Abfahrtsalarm folgt jetzt deinen Kalendereinstellungen"
+  ], mehr: "tutorial/" };
   // Die Versionsnummer aus dem eigenen Script-Tag (app.js?v=NNN). Damit
   // laedt mitglieder.js unter derselben Adresse wie beim letzten Start -
   // und beim naechsten Freigeben unter einer neuen.
@@ -890,6 +890,12 @@
     if (lesen("neu-gesehen") === NEUIGKEITEN.version) { box.classList.add("versteckt"); return; }
     var ul = el("neu-liste"); ul.innerHTML = "";
     NEUIGKEITEN.punkte.forEach(function (t) { var li = document.createElement("li"); li.textContent = t; ul.appendChild(li); });
+    var alt = box.querySelector(".neu-mehr"); if (alt) alt.remove();
+    if (NEUIGKEITEN.mehr) {
+      var p = document.createElement("p"); p.className = "meta neu-mehr";
+      var a = document.createElement("a"); a.href = NEUIGKEITEN.mehr; a.textContent = "Alles Schritt für Schritt in der Anleitung ›";
+      p.appendChild(a); box.appendChild(p);
+    }
     box._offen = true; if (!el("detail").classList.contains("versteckt")) box.classList.remove("versteckt");
     el("neu-weg").onclick = function () { schreiben("neu-gesehen", NEUIGKEITEN.version); box._offen = false; box.classList.add("versteckt"); };
   }
@@ -1628,7 +1634,10 @@
     // Karte direkt darunter noch einmal dasselbe, nur groesser. Auf dem
     // Handy waren das zwei lange Zeilen vor dem eigentlichen Inhalt.
     // Jetzt steht hier wie auf den anderen Unterseiten nur, wo man ist.
-    el("spiel-titel").textContent = "Spiel";
+    // "Spiel" stand seit dem Seitenkopf (KOPFTITEL) zweimal untereinander.
+    // Hier steht jetzt, wann - das sagt der Kopf nicht.
+    var tageBis = Math.round((new Date(d.getFullYear(), d.getMonth(), d.getDate()) - new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())) / 86400000);
+    el("spiel-titel").textContent = s.vergangen || tageBis < 0 ? "Gespielt" : tageBis === 0 ? "Heute" : tageBis === 1 ? "Morgen" : "In " + tageBis + " Tagen";
     el("spiel-unter").textContent = meins ? "Dein Einsatz" : "Einteilung";
 
     var kopf = el("spiel-kopf"); kopf.innerHTML = "";
