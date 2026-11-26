@@ -2984,6 +2984,12 @@ window.Mitglieder = (function () {
       // beim ersten Zeichnen zaehlt nur die Marke.
       (e.bezahlt || rechnungZu(sp.kennung) ? erledigt : offeneSp).push(sp);
     });
+    // Kommende Spiele standen ganz oben (Liste nach Datum absteigend) -
+    // vor denen, die man gerade abrechnen will. Jetzt erst die gespielten,
+    // die kommenden in einem eigenen Aufklapper darunter.
+    var jetztWahl = Date.now();
+    var kommendSp = offeneSp.filter(function (sp) { return new Date(sp.beginn).getTime() > jetztWahl; });
+    offeneSp = offeneSp.filter(function (sp) { return new Date(sp.beginn).getTime() <= jetztWahl; });
     // Frueher endete die Liste stumm nach 25. Sortiert ist sie nach Datum
     // absteigend - versteckt waren also die aeltesten, und das sind die,
     // die am dringendsten auf eine Rechnung gehoeren.
@@ -2998,7 +3004,17 @@ window.Mitglieder = (function () {
       wahlBox.appendChild(mehrKnopf);
     }
     if (liste.length && !offeneSp.length) {
-      wahlBox.appendChild(h("p", { class: "meta", text: "Alles abgehakt - was noch einmal auf eine Rechnung soll, steht unten." }));
+      wahlBox.appendChild(h("p", { class: "meta", text: kommendSp.length
+        ? "Für alle gespielten Spiele ist eine Rechnung geschrieben. Kommende Spiele stehen darunter."
+        : "Alles abgehakt - was noch einmal auf eine Rechnung soll, steht unten." }));
+    }
+    if (kommendSp.length) {
+      var kd = h("details", { class: "tausch rechnung-kommend" },
+        [h("summary", { text: kommendSp.length + (kommendSp.length === 1 ? " kommendes Spiel" : " kommende Spiele") + " – Rechnung schon vorbereiten" })]);
+      // Das naechste zuerst, nicht das in drei Monaten
+      kommendSp.slice().reverse().slice(0, 25).forEach(function (sp) { kd.appendChild(wahlZeile(sp)); });
+      if (kommendSp.some(function (sp) { return rechnungWahl[sp.kennung]; })) kd.open = true;
+      wahlBox.appendChild(kd);
     }
     if (erledigt.length) {
       var det = h("details", { class: "tausch rechnung-erledigt" },
@@ -3207,30 +3223,14 @@ window.Mitglieder = (function () {
         box.appendChild(h("p", { class: "meta gut-text", style: "margin:8px 0 0",
           text: "Alle geschriebenen Rechnungen sind bezahlt." }));
       }
-      var vb = h("details", { class: "tausch rechnung-verlauf" }, [h("summary", { text: "Geschriebene Rechnungen (" + liste2.length + ")" })]);
-      // Offene zuerst - wer hier nachsieht, sucht das Fehlende, nicht das
-      // Erledigte. Innerhalb der offenen die aelteste oben: der schuldet
-      // am laengsten, und hinterher zu telefonieren lohnt dort zuerst.
-      // Bei den bezahlten umgekehrt, da ist die letzte die interessante.
-      var sortiert = liste2.slice().sort(function (a, b) {
-        var ab = rechnungBezahlt(a), bb = rechnungBezahlt(b);
-        if (ab !== bb) return ab ? 1 : -1;
-        if (!ab) return a.datum < b.datum ? -1 : 1;
-        return a.datum < b.datum ? 1 : -1;
-      });
-      var k2 = h("div", { class: "karte" });
-      // Die beiden Marken heissen fast gleich und bedeuten Verschiedenes.
-      // Ohne diesen Satz haelt man "abgehakt" weiter fuer "bezahlt".
-      k2.appendChild(h("p", { class: "meta", style: "margin:0 0 8px", text:
-        "„Abgehakt“ am Spiel heißt: abgerechnet. Ob das Geld da ist, steht hier." }));
-      // Die letzten zwoelf hier; alles Weitere steht unter "Meine
-      // Rechnungen", wo auch gesucht werden kann.
-      sortiert.slice(0, 12).forEach(function (rg) { k2.appendChild(rechnungVerlaufZeile(rg)); });
-      if (sortiert.length > 12) k2.appendChild(h("p", { class: "meta", style: "margin:8px 0 0" }, [
-        h("button", { type: "button", class: "textknopf",
-          text: "Alle " + sortiert.length + " unter „Meine Rechnungen“ ansehen",
-          onclick: function () { abrechnungPanel = "rechnungen"; rendereAbrechnung(); } })]));
-      vb.appendChild(k2); box.appendChild(vb);
+      // Bis Fassung 293 stand hier eine zweite, kuerzere Liste der
+      // geschriebenen Rechnungen. Jetzt gibt es eine Uebersicht fuer alle
+      // (rechnungArchivRendern) - hier nur der Weg dorthin.
+      box.appendChild(h("button", { type: "button", class: "rg-weiter rechnung-verlauf",
+        onclick: function () { abrechnungPanel = "rechnungen"; panelUnten = false; rendereAbrechnung(); } }, [
+        ikone("i-euro"), h("span", {}, [h("b", { text: "Deine Rechnungen" }),
+          h("small", { text: liste2.length + " geschrieben · laden, abhaken, als ZIP" })]),
+        h("span", { class: "pfeil", text: "›" })]));
     });
     return box;
   }
@@ -3243,93 +3243,238 @@ window.Mitglieder = (function () {
     return [rg.nummer, rg.verein, rg.datum, (rg.felder && rg.felder.name) || ""]
       .filter(Boolean).join(" ").toLowerCase();
   }
+  // Alle geschriebenen Rechnungen: filtern (Status, Jahr, Suche), einzeln
+  // als PDF laden, alle oder eine Auswahl als ZIP. Filter und Auswahl
+  // ueberleben das Neuzeichnen (Bezahlt antippen zeichnet die Seite neu).
+  var rgFilter = { status: "alle", jahr: "alle", wort: "" }, rgWahl = null;
   function rechnungArchivRendern(box) {
     leeren(box);
-    box.appendChild(h("p", { class: "meta", style: "margin:0 0 10px",
-      text: "Jede geschriebene Rechnung bleibt hier stehen. „PDF laden“ baut dasselbe Dokument wieder auf, mit denselben Zahlen." }));
-    var suche = h("input", { type: "search", class: "mg-feld", placeholder: "Nummer, Verein oder Datum suchen …",
-      style: "width:100%", oninput: function () { zeichnen(); } });
-    box.appendChild(suche);
-    var liste = h("div", {});
+    box.appendChild(h("h4", {}, [ikone("i-euro"), " Deine Rechnungen"]));
+    var info = h("p", { class: "meta rg-info" });
+    box.appendChild(info);
+
+    var statusLeiste = h("div", { class: "stufen rg-stufen", role: "group", "aria-label": "Status" });
+    [["alle", "Alle"], ["offen", "Offen"], ["bezahlt", "Bezahlt"]].forEach(function (o) {
+      var k = h("button", { type: "button", text: o[1] });
+      k.addEventListener("click", function () { rgFilter.status = o[0]; zeichnen(); });
+      k._wert = o[0];
+      statusLeiste.appendChild(k);
+    });
+    var jahrWahl = h("select", { class: "mg-select rg-jahr", "aria-label": "Jahr" });
+    jahrWahl.addEventListener("change", function () { rgFilter.jahr = jahrWahl.value; zeichnen(); });
+    var suche = h("input", { type: "search", class: "mg-feld rg-suche", placeholder: "Nummer oder Verein …" });
+    suche.value = rgFilter.wort;
+    suche.addEventListener("input", function () { rgFilter.wort = suche.value; zeichnen(); });
+    box.appendChild(h("div", { class: "rg-filter" }, [statusLeiste, h("div", { class: "rg-filter-zeile" }, [jahrWahl, suche])]));
+    var aktion = h("div", { class: "rg-aktion" });
+    box.appendChild(aktion);
+    var liste = h("div", { class: "rg-liste" });
     box.appendChild(liste);
     var alle = null;
+
+    function gefiltert() {
+      var wort = (rgFilter.wort || "").trim().toLowerCase();
+      return alle.filter(function (rg) {
+        var bez = rechnungBezahlt(rg);
+        if (rgFilter.status === "offen" && bez) return false;
+        if (rgFilter.status === "bezahlt" && !bez) return false;
+        if (rgFilter.jahr !== "alle" && String(rg.datum || "").slice(0, 4) !== rgFilter.jahr) return false;
+        return !wort || rechnungSuchtext(rg).indexOf(wort) >= 0;
+      });
+    }
     function zeichnen() {
-      leeren(liste);
+      leeren(liste); leeren(aktion);
+      Array.prototype.forEach.call(statusLeiste.children, function (k) { k.classList.toggle("aktiv", k._wert === rgFilter.status); });
       if (alle === null) { liste.appendChild(skelett(2)); return; }
       if (!alle.length) {
+        info.textContent = "";
         liste.appendChild(h("p", { class: "meta", style: "margin:12px 0",
-          text: "Noch keine Rechnung geschrieben. Sobald du eine als PDF baust, steht sie hier - und lässt sich jederzeit noch einmal laden." }));
+          text: "Noch keine Rechnung geschrieben. Jede Rechnung, die du baust, steht danach hier und lässt sich jederzeit wieder laden." }));
         return;
       }
-      var wort = (suche.value || "").trim().toLowerCase();
-      var treffer = wort ? alle.filter(function (rg) { return rechnungSuchtext(rg).indexOf(wort) >= 0; }) : alle;
-      if (!treffer.length) {
-        liste.appendChild(h("p", { class: "meta", text: "Nichts gefunden zu „" + suche.value + "“." }));
+      var offen = rechnungenOffenSumme(alle);
+      info.textContent = alle.length + (alle.length === 1 ? " Rechnung" : " Rechnungen")
+        + (offen.zeilen.length ? " · " + offen.zeilen.length + " offen über " + euro(offen.summe) : " · alle bezahlt");
+      var t = gefiltert();
+      var ziel = rgWahl ? t.filter(function (rg) { return rgWahl[rg.id]; }) : t;
+      var zip = h("button", { type: "button", class: "anfrage rg-zip" }, [ikone("i-laden"),
+        " " + (rgWahl ? ziel.length + " ausgewählte als ZIP"
+               : t.length === alle.length ? "Alle " + t.length + " als ZIP"
+               : t.length + (t.length === 1 ? " Rechnung" : " Rechnungen") + " als ZIP")]);
+      if (!ziel.length) zip.disabled = true;
+      zip.addEventListener("click", function () {
+        var name = "Rechnungen" + (rgFilter.jahr !== "alle" ? "_" + rgFilter.jahr : "")
+          + (rgFilter.status !== "alle" ? "_" + rgFilter.status : "") + "_" + isoTag(new Date()) + ".zip";
+        rechnungenAlsZip(ziel, name, zip);
+      });
+      var wahlKnopf = h("button", { type: "button", class: "rg-knopf", text: rgWahl ? "Fertig" : "Auswählen",
+        title: rgWahl ? "Auswahl beenden" : "Einzelne Rechnungen für das ZIP ankreuzen" });
+      wahlKnopf.addEventListener("click", function () { rgWahl = rgWahl ? null : {}; zeichnen(); });
+      aktion.appendChild(zip); aktion.appendChild(wahlKnopf);
+      if (rgWahl) {
+        var alleAn = t.length && t.every(function (rg) { return rgWahl[rg.id]; });
+        aktion.appendChild(h("button", { type: "button", class: "textknopf rg-allewahl",
+          text: alleAn ? "Keine" : "Alle " + t.length + " wählen",
+          onclick: function () { t.forEach(function (rg) { if (alleAn) delete rgWahl[rg.id]; else rgWahl[rg.id] = true; }); zeichnen(); } }));
+      }
+      if (!t.length) {
+        liste.appendChild(h("p", { class: "meta", style: "margin:12px 0", text: "Keine Rechnung passt zu diesem Filter." }));
         return;
       }
-      var offen = treffer.filter(function (rg) { return !rechnungBezahlt(rg); });
-      var summe = treffer.reduce(function (n, rg) { return n + (Number(rg.betrag) || 0); }, 0);
-      liste.appendChild(h("p", { class: "meta", style: "margin:10px 0 6px", text:
-        treffer.length + (treffer.length === 1 ? " Rechnung" : " Rechnungen") + " · " + euro(summe)
-        + (offen.length ? " · " + offen.length + " ohne Zahlungseingang" : "") }));
-      // Nach Jahr gruppiert - so findet man "die vom letzten Winter".
+      var wahl = rgWahl ? { an: function (rg) { return !!rgWahl[rg.id]; },
+                            setzen: function (rg, an) { if (an) rgWahl[rg.id] = true; else delete rgWahl[rg.id]; zeichnen(); } } : null;
+      // Nach Jahr gruppiert, innerhalb offen vor bezahlt, dann neueste zuerst
       var jahr = null, karte = null;
-      treffer.forEach(function (rg) {
-        var j = (rg.datum || "").slice(0, 4) || "ohne Datum";
+      t.slice().sort(function (x, y) {
+        var jx = String(x.datum || "").slice(0, 4), jy = String(y.datum || "").slice(0, 4);
+        if (jx !== jy) return jx < jy ? 1 : -1;
+        var bx = rechnungBezahlt(x), by = rechnungBezahlt(y);
+        if (bx !== by) return bx ? 1 : -1;
+        return (x.datum || "") < (y.datum || "") ? 1 : -1;
+      }).forEach(function (rg) {
+        var j = String(rg.datum || "").slice(0, 4) || "ohne Datum";
         if (j !== jahr) {
           jahr = j;
-          liste.appendChild(h("div", { class: "tag", text: j }));
-          karte = h("div", { class: "karte" }); liste.appendChild(karte);
+          var jl = t.filter(function (x) { return String(x.datum || "").slice(0, 4) === j; });
+          var js = jl.reduce(function (n, x) { return n + (Number(x.betrag) || 0); }, 0);
+          liste.appendChild(h("div", { class: "tag rg-jahrkopf" }, [h("span", { text: j }),
+            h("small", { text: jl.length + (jl.length === 1 ? " Rechnung · " : " Rechnungen · ") + euro(js) })]));
+          karte = h("div", { class: "karte rg-karte" }); liste.appendChild(karte);
         }
-        karte.appendChild(rechnungVerlaufZeile(rg));
+        karte.appendChild(rechnungVerlaufZeile(rg, wahl));
       });
     }
     zeichnen();
     rechnungenLaden().then(function (l) {
       if (!box.isConnected) return;
-      alle = l.slice().sort(function (a, b) { return (a.datum || "") < (b.datum || "") ? 1 : -1; });
+      alle = l.slice();
+      var jahre = {};
+      alle.forEach(function (rg) { var j = String(rg.datum || "").slice(0, 4); if (j) jahre[j] = 1; });
+      leeren(jahrWahl);
+      jahrWahl.appendChild(h("option", { value: "alle", text: "Alle Jahre" }));
+      Object.keys(jahre).sort().reverse().forEach(function (j) { jahrWahl.appendChild(h("option", { value: j, text: j })); });
+      if (rgFilter.jahr !== "alle" && !jahre[rgFilter.jahr]) rgFilter.jahr = "alle";
+      jahrWahl.value = rgFilter.jahr;
       zeichnen();
     });
     return box;
   }
 
-  // Eine Zeile unter "Geschriebene Rechnungen": PDF, Nummer, Eingang.
-  function rechnungVerlaufZeile(rg) {
+  // Eine Rechnung als Karte: Verein, Nummer, Datum, Betrag, Stand - und
+  // die drei Dinge, die man damit tut. "wahl" (optional) setzt ein
+  // Kaestchen davor, fuer die Auswahl zum ZIP.
+  function rechnungVerlaufZeile(rg, wahl) {
     var zeile = h("div", {});
     function neu() {
       leeren(zeile);
       var bez = rechnungBezahlt(rg);
-      zeile.className = "telefon-zeile" + (bez ? "" : " offen-rechnung");
+      zeile.className = "rg-zeile " + (bez ? "bezahlt" : "offen") + (wahl && wahl.an(rg) ? " gewaehlt" : "");
       var alter = Math.floor((new Date() - new Date(rg.datum)) / 86400000);
-      var zweit = new Date(rg.datum).toLocaleDateString("de-DE") + " · " + euro(rg.betrag || 0);
-      zweit += rg.gezahlt_am
-        ? " · bezahlt am " + new Date(rg.gezahlt_am).toLocaleDateString("de-DE")
-        : bez ? " · bezahlt (alle Spiele abgehakt)"
-        : " · offen" + (alter > 0 ? " seit " + alter + (alter === 1 ? " Tag" : " Tagen") : "");
-      var eingang = h("button", { type: "button", class: bez ? "" : "anfrage",
-        text: bez ? "Doch nicht bezahlt" : "Bezahlt",
-        title: bez ? "Zahlungseingang zurücknehmen" : "Das Geld ist da" });
+      var stand = rg.gezahlt_am ? "bezahlt " + new Date(rg.gezahlt_am).toLocaleDateString("de-DE")
+        : bez ? "bezahlt"
+        : "offen" + (alter > 0 ? " · " + alter + (alter === 1 ? " Tag" : " Tage") : "");
+      var kopf = [];
+      if (wahl) {
+        var c = h("input", { type: "checkbox", "aria-label": "Rechnung " + rg.nummer + " auswählen" });
+        c.checked = wahl.an(rg);
+        c.addEventListener("change", function () { wahl.setzen(rg, c.checked); });
+        kopf.push(h("label", { class: "rg-wahl" }, [c]));
+      }
+      kopf.push(h("span", { class: "rg-text" }, [h("b", { text: rg.verein || (rg.felder && rg.felder.name) || "Verein" }),
+        h("small", { text: "Nr. " + rg.nummer + " · " + new Date(rg.datum).toLocaleDateString("de-DE") })]));
+      kopf.push(h("span", { class: "rg-betrag" }, [h("b", { text: euro(rg.betrag || 0) }),
+        h("small", { class: "rg-stand " + (bez ? "gut" : "warte"), text: stand })]));
+      zeile.appendChild(h("div", { class: "rg-kopf" }, kopf));
+      var pdf = h("button", { type: "button", class: "rg-knopf", title: "Diese Rechnung noch einmal als PDF laden" },
+        [ikone("i-laden"), " PDF"]);
+      pdf.addEventListener("click", function () { rechnungNochmal(rg); });
+      var eingang = h("button", { type: "button", class: "rg-knopf" + (bez ? "" : " rg-haupt"),
+        title: bez ? "Zahlungseingang zurücknehmen" : "Das Geld ist da" },
+        bez ? ["Doch offen"] : [ikone("i-check"), " Bezahlt"]);
       eingang.addEventListener("click", function () {
         var warOffen = !bez;
         eingang.disabled = true;
         zahlungSetzen(rg, warOffen ? isoTag(new Date()) : null).then(function (ok) {
           eingang.disabled = false;
           if (!ok) return;
-          kurzMeldung(warOffen ? "Rechnung " + rg.nummer + " ist bezahlt ✓" : "Eingang zurückgenommen.",
-                      warOffen ? "gut" : "");
+          kurzMeldung(warOffen ? "Rechnung " + rg.nummer + " ist bezahlt ✓" : "Eingang zurückgenommen.", warOffen ? "gut" : "");
           neu();
         });
       });
-      zeile.appendChild(h("span", {}, [h("b", { text: rg.nummer + " · " + (rg.verein || "") }),
-        h("small", { text: zweit })]));
-      zeile.appendChild(h("span", { class: "telefon-wege" }, [
-        eingang,
-        h("button", { type: "button", text: "PDF laden", onclick: function () { rechnungNochmal(rg); } }),
-        h("button", { type: "button", text: "Nummer", title: "Rechnungsnummer nachträglich ändern",
-          onclick: function () { nummerAendern(rg, zeile); } })]));
+      var nummer = h("button", { type: "button", class: "textknopf rg-nummer", text: "Nr. ändern", title: "Rechnungsnummer nachträglich ändern",
+        onclick: function () { nummerAendern(rg, zeile); } });
+      zeile.appendChild(h("div", { class: "rg-aktionen" }, [pdf, eingang, nummer]));
     }
     neu();
     return zeile;
+  }
+
+  // Der Absender einer Rechnung, wie er beim Schreiben galt. Ohne ihn baute
+  // "PDF laden" eine alte Rechnung mit der heutigen Anschrift und
+  // Steuernummer - nach einem Umzug war die Kopie nicht mehr dieselbe.
+  function absenderAus(stamm) {
+    var a = {};
+    ["name", "sr_nummer", "strasse", "plz_ort", "verein", "steuernummer"].forEach(function (k) { if (stamm && stamm[k] != null) a[k] = stamm[k]; });
+    return a;
+  }
+  function rechnungStamm(rg) {
+    var heute = rechnungDaten(), a = (rg.felder && rg.felder.absender) || {};
+    Object.keys(a).forEach(function (k) { heute[k] = a[k]; });
+    return heute;
+  }
+  function rechnungBlob(rg, R) {
+    var f = rg.felder;
+    var b = rechnungSummeAus(f.pauschale, f.zuschlag, f.klein);
+    return R.bauen(rechnungWerte(rechnungStamm(rg), f, b, rg.nummer));
+  }
+  // Viele Rechnungen auf einmal: jede wird neu gebaut (wie "PDF laden"),
+  // dazu eine Liste als CSV. Rechnungen aus Fassungen vor den gespeicherten
+  // Feldern lassen sich nicht neu bauen - sie stehen nur in der Liste.
+  function rechnungenAlsZip(liste, dateiname, knopf) {
+    if (!liste || !liste.length) return Promise.resolve();
+    var mit = liste.filter(function (rg) { return !!rg.felder; });
+    var ohne = liste.filter(function (rg) { return !rg.felder; });
+    var vorher = knopf ? Array.prototype.slice.call(knopf.childNodes) : null;
+    if (knopf) knopf.disabled = true;
+    var dateien = [], namen = {}, dateiVon = {};
+    function eindeutig(n) {
+      var basis = n, i = 2;
+      while (namen[n]) n = basis.replace(/\.pdf$/i, "") + "-" + (i++) + ".pdf";
+      namen[n] = 1; return n;
+    }
+    return ladeRechnung().then(function (R) {
+      return mit.reduce(function (p, rg, i) {
+        return p.then(function () {
+          if (knopf) knopf.textContent = "Baue " + (i + 1) + " von " + mit.length + " …";
+          return rechnungBlob(rg, R).then(function (blob) { return blob.arrayBuffer(); }).then(function (buf) {
+            var n = eindeutig(rechnungDateiname(rg.nummer, rg.felder.verein || rg.felder.name || rg.verein));
+            dateiVon[rg.id] = n;
+            dateien.push({ name: n, bytes: new Uint8Array(buf) });
+          });
+        });
+      }, Promise.resolve());
+    }).then(function () {
+      var zeilen = [["Nummer", "Datum", "Verein", "Betrag", "Stand", "bezahlt am", "Datei"]];
+      liste.slice().sort(function (x, y) { return (x.datum || "") < (y.datum || "") ? -1 : 1; }).forEach(function (rg) {
+        zeilen.push([rg.nummer, rg.datum ? new Date(rg.datum).toLocaleDateString("de-DE") : "", rg.verein || "",
+          String(Math.round((Number(rg.betrag) || 0) * 100) / 100).replace(".", ","),
+          rechnungBezahlt(rg) ? "bezahlt" : "offen",
+          rg.gezahlt_am ? new Date(rg.gezahlt_am).toLocaleDateString("de-DE") : "",
+          dateiVon[rg.id] || "(alte Fassung, kein PDF)"]);
+      });
+      dateien.push({ name: "Rechnungen.csv", bytes: new TextEncoder().encode("﻿" + zeilen.map(function (z) {
+        return z.map(function (f) { return '"' + String(f).replace(/"/g, '""') + '"'; }).join(";"); }).join("\r\n")) });
+      pdfHerunterladen(zipBauen(dateien), dateiname);
+      kurzMeldung(mit.length + (mit.length === 1 ? " Rechnung" : " Rechnungen") + " als ZIP geladen ✓", "gut");
+      if (ohne.length) meldung(ohne.length + (ohne.length === 1 ? " Rechnung stammt" : " Rechnungen stammen")
+        + " aus einer alten Fassung ohne gespeicherte Angaben – sie stehen nur in der Liste Rechnungen.csv.", "warn");
+    }).catch(function (e) {
+      meldung("Das ZIP ließ sich nicht bauen: " + (e && e.message ? e.message : e), "warn");
+    }).then(function () {
+      if (!knopf) return;
+      knopf.disabled = false;
+      if (vorher) { leeren(knopf); vorher.forEach(function (n) { knopf.appendChild(n); }); }
+    });
   }
 
   // Offene Rechnungen: geschrieben, aber kein Zahlungseingang vermerkt.
@@ -3415,7 +3560,7 @@ window.Mitglieder = (function () {
           // Die Liste neu holen: daraus entsteht auch der naechste Vorschlag.
           rechnungenVergessen();
           kurzMeldung("Rechnung heißt jetzt " + wert + " ✓", "gut");
-          nochmalRechnung();
+          rendereAbrechnung();
         });
     });
     var box = h("div", { class: "nummer-aendern" }, [
@@ -3650,7 +3795,8 @@ window.Mitglieder = (function () {
         kennungen: f.kennungen,
         felder: { name: f.name, strasse: f.strasse, plz_ort: f.plz_ort, verein: f.verein,
                   zeilen: f.zeilen, datum: f.datum, ort: f.ort, klasse: f.klasse,
-                  pauschale: s.pauschale, zuschlag: s.zuschlag, klein: s.klein }
+                  pauschale: s.pauschale, zuschlag: s.zuschlag, klein: s.klein,
+                  absender: absenderAus(stamm) }
       })).then(function (r) {
         if (r && r.error) throw new Error(fehlerText(r.error));
         // Geschrieben heisst nicht bezahlt. Bis Fassung 277 hakte der Lauf
@@ -3971,7 +4117,8 @@ window.Mitglieder = (function () {
           // jederzeit neu bauen, ohne es irgendwo abzulegen.
           felder: { name: f.name, strasse: f.strasse, plz_ort: f.plz_ort, verein: f.verein,
                     zeilen: f.zeilen, datum: f.datum, ort: f.ort, klasse: f.klasse,
-                    pauschale: betraege.pauschale, zuschlag: betraege.zuschlag, klein: betraege.klein }
+                    pauschale: betraege.pauschale, zuschlag: betraege.zuschlag, klein: betraege.klein,
+                    absender: absenderAus(stamm) }
         })).then(function () { return rechnungDatenSpeichern(neu); })
           .then(function () {
             rechnungFertig = { blob: blob, name: name, nummer: nummer };
@@ -4191,7 +4338,8 @@ window.Mitglieder = (function () {
           h("b", { text: offen.length === 1 ? "Ein vergangenes Spiel hat noch keine Rechnung."
                                             : offen.length + " vergangene Spiele haben noch keine Rechnung." }),
           h("small", { style: "display:block", text: "Am längsten offen: " + datumLang(new Date(aelt.beginn)) + ", " + aelt.paarung })]),
-        h("button", { type: "button", class: "anfrage", text: "Übernehmen", onclick: function () {
+        h("button", { type: "button", class: "anfrage", text: "Älteste wählen",
+          title: "Das am längsten offene Spiel ins Formular übernehmen", onclick: function () {
           rechnungWahl = {}; rechnungWahl[aelt.kennung] = aelt;
           rechnungForm = rechnungFormAusWahl();
           abrechnungPanel = "rechnung"; rendereAbrechnung();
@@ -4269,11 +4417,9 @@ window.Mitglieder = (function () {
   function rechnungNochmal(rg) {
     var f = rg.felder;
     if (!f) { meldung("Diese Rechnung stammt aus einer alten Fassung, bitte neu ausfüllen.", "warn"); return; }
-    var stamm = rechnungDaten();
-    var b = rechnungSummeAus(f.pauschale, f.zuschlag, f.klein);
     kurzMeldung("Rechnung " + rg.nummer + " wird gebaut …", "");
     ladeRechnung().then(function (R) {
-      return R.bauen(rechnungWerte(stamm, f, b, rg.nummer)).then(function (blob) {
+      return rechnungBlob(rg, R).then(function (blob) {
         pdfHerunterladen(blob, rechnungDateiname(rg.nummer, f.verein || f.name));
         kurzMeldung("Rechnung " + rg.nummer + " noch einmal geladen ✓", "gut");
       });
@@ -5431,6 +5577,16 @@ window.Mitglieder = (function () {
   // Fassung 276 zaehlte stufenZahlenNachfuehren() selbst, mit eigener
   // Liste und eigenem Selektor, und lief nach dem Umbau ins Leere: die
   // Zahlen blieben nach jeder Eingabe stehen.
+  function rechnungenOhneSpiele(spiele) {
+    if (!aufRechnung || !rechnungListe) return [];
+    var drin = {};
+    (spiele || []).forEach(function (sp) { drin[sp.kennung] = 1; });
+    return rechnungListe.filter(function (rg) {
+      if (rechnungBezahlt(rg)) return false;
+      if ((rg.kennungen || []).some(function (k) { return drin[k]; })) return false;
+      return !gewaehlteSaison || saisonAus(rg.datum) === gewaehlteSaison;
+    });
+  }
   function wegZahlen(spiele) {
     var p = spiele.filter(zuPruefen).length;
     var ab = aufRechnung ? spiele.filter(zumAbrechnen) : [];
@@ -5439,11 +5595,14 @@ window.Mitglieder = (function () {
     // Ohne Rechnungsliste laesst sich "unterwegs" nicht beurteilen -
     // dann zaehlt, was noch nicht abgehakt ist.
     var g = aufRechnung ? spiele.filter(istUnterwegs).length : spiele.filter(nichtAbgehakt).length;
+    // Rechnungen, deren Spiele hier nicht auftauchen (von Hand ausgefuellt,
+    // alte Fassung): "Geld erledigt" stand da, waehrend sie offen waren.
+    var extra = rechnungenOhneSpiele(spiele).length;
     return [
       { t: p ? p + (p === 1 ? " Spiel" : " Spiele") : "stimmt", f: !p },
       // Solange die Liste laedt, waere "erledigt" eine Behauptung.
       { t: ab.length ? euro(summe) : (aufRechnung ? "erledigt" : "…"), f: !!aufRechnung && !ab.length },
-      { t: g ? g + " offen" : "erledigt", f: !g }
+      { t: g ? g + " offen" : extra ? extra + (extra === 1 ? " Rechnung" : " Rechnungen") : "erledigt", f: !g && !extra }
     ];
   }
 
@@ -5646,16 +5805,41 @@ window.Mitglieder = (function () {
     // Das Archiv ist kein Schritt - Nachsehen ist kein Arbeiten.
     // Deshalb liegt es als ruhige Zeile daneben, nicht in der Leiste.
     var archivN = spiele.filter(istErledigt).length;
-    inhalt.appendChild(h("button", { type: "button",
-      class: "mg-archivzeile" + (nurErledigt ? " aktiv" : ""),
-      title: "Bezahlte Spiele dieser Saison",
-      onclick: function () { anfangGesetzt = true; alleAus(); nurErledigt = true; rendereAbrechnung(); } }, [
-      h("span", {}, ["Archiv ", h("small", { text: archivN
-        ? "· " + archivN + (archivN === 1 ? " bezahltes Spiel" : " bezahlte Spiele")
-        : "· noch nichts abgehakt" })]),
-      h("small", { "aria-hidden": "true", text: "›" })]));
+    // Daneben die Rechnungen: bis Fassung 293 lagen sie in "Rechnung
+    // schreiben" unter einem Aufklapper - wer eine alte suchte, fand sie
+    // nicht, und an "Geld" stand "erledigt", waehrend welche offen waren.
+    var rgAlle = rechnungListe || [], rgOffen = rechnungenOffenSumme(rgAlle);
+    inhalt.appendChild(h("div", { class: "mg-ablage" }, [
+      h("button", { type: "button", class: "mg-archivzeile" + (nurErledigt ? " aktiv" : ""),
+        title: "Bezahlte Spiele dieser Saison",
+        onclick: function () { anfangGesetzt = true; alleAus(); nurErledigt = true; rendereAbrechnung(); } }, [
+        h("span", {}, [h("b", { text: "Archiv" }), h("small", { text: archivN
+          ? archivN + (archivN === 1 ? " bezahltes Spiel" : " bezahlte Spiele") : "noch nichts abgehakt" })]),
+        h("small", { "aria-hidden": "true", text: "›" })]),
+      h("button", { type: "button", class: "mg-archivzeile mg-rgkachel" + (abrechnungPanel === "rechnungen" ? " aktiv" : "")
+          + (rgOffen.zeilen.length ? " hat-offene" : ""),
+        title: "Alle geschriebenen Rechnungen: laden, abhaken, als ZIP",
+        onclick: function () { panelOeffnen("rechnungen", false); } }, [
+        h("span", {}, [h("b", { text: "Rechnungen" }), h("small", { text: rechnungListe === null ? "…"
+          : !rgAlle.length ? "noch keine"
+          : rgOffen.zeilen.length ? rgOffen.zeilen.length + " offen · " + euro(rgOffen.summe)
+          : rgAlle.length + " · alle bezahlt" })]),
+        h("small", { "aria-hidden": "true", text: "›" })])]));
     var wartet = warteBanner();
     if (wartet) inhalt.appendChild(wartet);
+    // In der Stufe "Geld" geht es um Rechnungen, nicht um Spiele: hier
+    // stehen sie mit "Bezahlt" daneben. Die Spiele darauf folgen darunter.
+    if ((nurUnterwegs || nurUnbezahlt) && rechnungListe && !abrechnungPanel) {
+      var offeneRg = rechnungListe.filter(function (rg) { return !rechnungBezahlt(rg); })
+        .sort(function (x, y) { return (x.datum || "") < (y.datum || "") ? -1 : 1; });
+      if (offeneRg.length) {
+        var rgk = h("div", { class: "karte rg-karte rg-offenblock" }, [
+          h("p", { class: "listen-kopf", text: "Offene Rechnungen" }),
+          h("p", { class: "meta", style: "margin:0 0 4px", text: "Ist das Geld da, tippe „Bezahlt“ – die Spiele darauf wandern ins Archiv." })]);
+        offeneRg.forEach(function (rg) { rgk.appendChild(rechnungVerlaufZeile(rg)); });
+        inhalt.appendChild(rgk);
+      }
+    }
 
     // Was fehlt, und ein Knopf, der es holt - oben, nicht drei Tipps
     // tief in "Weitere". Fehlt der Startpunkt, fragt der Knopf zuerst
@@ -5823,7 +6007,10 @@ window.Mitglieder = (function () {
     // Die Meldung gehoert zur gewaehlten Stufe. "Alle Spiele
     // vollstaendig erfasst" stand auch unter "Erledigt", wo es
     // bedeutet haette: nichts ist bezahlt.
-    else if (!liste.length) inhalt.appendChild(h("p", { class: "leer", text:
+    // Stehen in "Geld" offene Rechnungen ohne Spiele, ist "keine Spiele"
+    // nur verwirrend - die Arbeit steht ja schon darueber.
+    else if (!liste.length && !((nurUnterwegs || nurUnbezahlt) && inhalt.querySelector(".rg-offenblock")))
+      inhalt.appendChild(h("p", { class: "leer", text:
       nurOffene ? "Alles geprüft: Angaben vollständig, Beträge wie in der Ordnung ✓"
       : nurOhneRechnung ? "Für alle gespielten Spiele ist eine Rechnung geschrieben ✓"
       : nurUnbezahlt ? "Alles abgehakt – das Geld ist da ✓"
@@ -11408,6 +11595,7 @@ window.Mitglieder = (function () {
     rechnungBezahlt: rechnungBezahlt, rechnungenOffenSumme: rechnungenOffenSumme,
     vereinHaupt: vereinHaupt, vereinKanon: vereinKanon, vereinAnschrift: vereinAnschrift,
     keinVerein: keinVerein, vereinAliaseSetzen: vereinAliaseSetzen, vereinNaechster: vereinNaechster,
+    absenderAus: absenderAus, rechnungStamm: rechnungStamm, rechnungenOhneSpiele: rechnungenOhneSpiele,
     debSatz: debSatz, debGesamt: debGesamt, debTagesFaktor: debTagesFaktor, zeitzuschlagAn: zeitzuschlag
   };
 

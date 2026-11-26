@@ -811,6 +811,34 @@ abschnitt("Vereine mit Tippfehler");
 })();
 
 // ---------------------------------------------------------------------
+// Rechnungen (Fassung 294): eine alte Rechnung entsteht mit dem Absender
+// von damals neu; offene Rechnungen ohne Spiele zaehlen in "Geld".
+abschnitt("Rechnungen");
+grundstellung({ profil: { km_modell: "einfach", einstellungen: {},
+  rechnung: { name: "Neu Name", strasse: "Neue Str. 1", plz_ort: "11111 Neustadt", steuernummer: "999" } } });
+(function () {
+  var a = P.absenderAus({ name: "Alt", strasse: "Alte Str. 2", plz_ort: "22222 Altstadt", steuernummer: "123", nummer: 7, iban: "x" });
+  gleich(JSON.stringify(Object.keys(a).sort()), JSON.stringify(["name", "plz_ort", "steuernummer", "strasse"]), "nur die Absenderfelder");
+  var alt = P.rechnungStamm({ nummer: "1", felder: { absender: a } });
+  gleich(alt.strasse, "Alte Str. 2", "alte Rechnung behaelt die alte Anschrift");
+  gleich(alt.steuernummer, "123", "und die alte Steuernummer");
+  var ohne = P.rechnungStamm({ nummer: "2", felder: {} });
+  gleich(ohne.strasse, "Neue Str. 1", "ohne gespeicherten Absender gilt der heutige");
+
+  var sp = spiel({ kennung: "k9", beginn: "2026-10-20T19:30:00" });
+  P.setze({ aufRechnung: {}, einsaetze: {}, rechnungListe: [
+    { id: 1, nummer: "a", datum: "2026-10-01", betrag: 85, kennungen: [], gezahlt_am: null },
+    { id: 2, nummer: "b", datum: "2026-10-02", betrag: 90, kennungen: ["k9"], gezahlt_am: null },
+    { id: 3, nummer: "c", datum: "2026-10-03", betrag: 95, kennungen: [], gezahlt_am: "2026-10-10" }] });
+  var o = P.rechnungenOhneSpiele([sp]);
+  gleich(o.length, 1, "offen und ohne Spiel in der Liste: eine");
+  gleich(o[0].nummer, "a", "die von Hand ausgefuellte");
+  gleich(P.wegZahlen([])[2].t, "2 Rechnungen", "Geld nennt offene Rechnungen statt 'erledigt'");
+  gleich(P.wegZahlen([])[2].f, false, "und hakt die Stufe nicht ab");
+  P.setze({ aufRechnung: null, rechnungListe: [] });
+})();
+
+// ---------------------------------------------------------------------
 // Netto fuer die Steuer (Fassung 281)
 //
 // Einnahmen sind die Pauschalen nach der Ordnung, Fahrt, Verpflegung und
