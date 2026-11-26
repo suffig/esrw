@@ -4031,6 +4031,24 @@
   .rg-nachtragen-form label.mg-check { display:flex; align-items:center; gap:8px; min-height:44px; }
   .rg-nachtragen-form input:not([type=checkbox]), .rg-nachtragen-form select { min-height:44px; width:100%; box-sizing:border-box; }
 
+  /* ===== Farbe Runde 2 (Fassung 308) ===============================
+     Rollen: SR blau, LSR tuerkis, HSR bleibt rot. Bis hierhin waren SR
+     und LSR schwarz bzw. grau und unterschieden sich auf einen Blick
+     nicht. Auf der Kopfkarte (held) bleibt die rote Marke. */
+  :root[data-design="neu"] .rolle.SR, :root[data-design="neu"] .chip b { background:var(--blau-hell); color:var(--blau); }
+  :root[data-design="neu"] .rolle.LSR, :root[data-design="neu"] .chip b.LSR { background:#dff3f3; color:#0b7f7f; }
+  :root[data-design="neu"] .chip b.HSR { background:var(--rot-hell); color:var(--rot); }
+  @media (prefers-color-scheme: dark) {
+    :root[data-design="neu"]:not([data-theme="light"]) .rolle.SR, :root[data-design="neu"]:not([data-theme="light"]) .chip b { background:var(--blau-hell); color:var(--blau); }
+    :root[data-design="neu"]:not([data-theme="light"]) .rolle.LSR, :root[data-design="neu"]:not([data-theme="light"]) .chip b.LSR { background:#11302f; color:#5fd0d0; }
+  }
+  :root[data-design="neu"][data-theme="dark"] .rolle.SR, :root[data-design="neu"][data-theme="dark"] .chip b { background:var(--blau-hell); color:var(--blau); }
+  :root[data-design="neu"][data-theme="dark"] .rolle.LSR, :root[data-design="neu"][data-theme="dark"] .chip b.LSR { background:#11302f; color:#5fd0d0; }
+  :root[data-design="neu"] .held .rolle, :root[data-design="neu"]:not([data-theme="light"]) .held .rolle,
+  :root[data-design="neu"][data-theme="dark"] .held .rolle { background:var(--rot); color:#fff; }
+  /* Wochenstreifen: eigene Spieltage rot statt schwarz */
+  :root[data-design="neu"] .woche i.ich { background:var(--rot); }
+
 </style>
 </head>
 <body>
@@ -4497,6 +4515,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=307"></script>
+<script src="app.js?v=309"></script>
 </body>
 </html>

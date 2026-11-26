@@ -2762,7 +2762,7 @@
         if (!liste.length) punkt.className = "keins";
         else if (profil && liste.some(function (sp) { return sp.besetzung.some(function (x) { return x.slug === profil.slug; }); })) punkt.className = "ich";
         b.appendChild(wt); b.appendChild(nr); b.appendChild(punkt);
-        b.title = liste.length ? liste.length + " Spiele" : "keine Spiele";
+        b.title = liste.length ? liste.length + (liste.length === 1 ? " Spiel" : " Spiele") : "keine Spiele";
         b.addEventListener("click", function () {
           var h = el("plan-liste").querySelector('[data-tag="' + key + '"]');
           if (h) window.scrollTo({ top: h.getBoundingClientRect().top + window.scrollY - (parseInt(getComputedStyle(document.documentElement).getPropertyValue("--filter-hoehe")) || 110) - 4, behavior: "smooth" });
@@ -5125,7 +5125,10 @@
     "#rechnung": "gruen", "#regeln": "tuerkis", "#rechner": "lila", "#mitfahren": "tuerkis", "#mitglieder/kollegen": "blau",
     "#mitglieder/info": "orange", "#mitglieder/frei": "pink", "#karte": "rot", "#einstellungen": "grau",
     "#mitglieder/admin": "grau", "#anleitung": "gelb", "tutorial/": "gelb", "#status": "grau", "#mitglieder": "blau" };
-  var MEHR_SELTEN = { "#statistik": 1, "#mitglieder/frei": 1, "#anleitung": 1, "#status": 1 };
+  // Leer seit Fassung 308 (Nutzer): "Selten gebraucht" klappte Statistik,
+  // Verfuegbarkeit, Anleitung und Diagnose weg - man suchte sie und fand
+  // sie nicht. Der Mechanismus bleibt, falls einmal etwas dorthin soll.
+  var MEHR_SELTEN = {};
   // Was unter "Mehr" steht, haengt an Funktionen und Anmeldung. Die Liste
   // entsteht dort; die Suche greift darauf zu, statt sie nachzubauen.
   var mehrEintraege = [];
