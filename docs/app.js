@@ -5121,6 +5121,10 @@
   }
 
   // Selten gebraucht: steht in der einfachen Ansicht zugeklappt am Ende.
+  var MEHR_FARBEN = { "#archiv": "blau", "#statistik": "lila", "#aenderungen": "orange", "#mitglieder/notizen": "gelb",
+    "#rechnung": "gruen", "#regeln": "tuerkis", "#rechner": "lila", "#mitfahren": "tuerkis", "#mitglieder/kollegen": "blau",
+    "#mitglieder/info": "orange", "#mitglieder/frei": "pink", "#karte": "rot", "#einstellungen": "grau",
+    "#mitglieder/admin": "grau", "#anleitung": "gelb", "tutorial/": "gelb", "#status": "grau", "#mitglieder": "blau" };
   var MEHR_SELTEN = { "#statistik": 1, "#mitglieder/frei": 1, "#anleitung": 1, "#status": 1 };
   // Was unter "Mehr" steht, haengt an Funktionen und Anmeldung. Die Liste
   // entsteht dort; die Suche greift darauf zu, statt sie nachzubauen.
@@ -5167,6 +5171,9 @@
 
     function kachel(e) {
       var a = document.createElement("a"); a.href = e[0]; a.appendChild(ikone(e[1]));
+      // Jeder Bereich seine Farbe, wie in den Einstellungen eines Handys:
+      // man findet ihn wieder, ohne zu lesen.
+      a.setAttribute("data-farbe", MEHR_FARBEN[e[0]] || "grau");
       var sp = document.createElement("span"); sp.textContent = e[2]; var sm = document.createElement("small"); sm.textContent = e[3]; sp.appendChild(sm); a.appendChild(sp);
       if (e[4]) { var z = document.createElement("span"); z.className = "zaehler versteckt"; a.appendChild(z); links[e[4]] = z; }
       if (e[5]) { a.classList.add("versteckt"); a._nurAdmin = true; }

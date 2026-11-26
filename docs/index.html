@@ -3950,6 +3950,87 @@
   .mg-ueberblick-zahlen b { font-size:1.05rem; font-variant-numeric:tabular-nums; }
   .mg-ueberblick-zahlen .warn b { color:var(--warn); }
 
+  /* ===== Farbe mit Bedeutung (Fassung 306) ==========================
+     Eine Palette, hell und dunkel. data-farbe setzt --f (Farbe) und
+     --fh (helle Flaeche); was daran haengt, nimmt nur diese beiden. */
+  :root { --blau:#1a5fd0; --blau-hell:#e4ecfb; }
+  [data-farbe="blau"]    { --f:#1a5fd0; --fh:#e4ecfb; }
+  [data-farbe="gruen"]   { --f:#1d8a4a; --fh:#e3f4ea; }
+  [data-farbe="orange"]  { --f:#c2620f; --fh:#fdeedd; }
+  [data-farbe="rot"]     { --f:#d11a2a; --fh:#fde7e9; }
+  [data-farbe="lila"]    { --f:#7b3fd0; --fh:#efe6fb; }
+  [data-farbe="tuerkis"] { --f:#0b7f7f; --fh:#dff3f3; }
+  [data-farbe="gelb"]    { --f:#a87900; --fh:#fdf3d6; }
+  [data-farbe="pink"]    { --f:#c2336f; --fh:#fbe4ee; }
+  [data-farbe="grau"]    { --f:var(--dim); --fh:var(--akzent-hell); }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --blau:#6ea3ff; --blau-hell:#15264a; }
+    :root:not([data-theme="light"]) [data-farbe="blau"]    { --f:#6ea3ff; --fh:#15264a; }
+    :root:not([data-theme="light"]) [data-farbe="gruen"]   { --f:#6fd39a; --fh:#17301f; }
+    :root:not([data-theme="light"]) [data-farbe="orange"]  { --f:#f2b06a; --fh:#3a2410; }
+    :root:not([data-theme="light"]) [data-farbe="rot"]     { --f:#ff6b74; --fh:#3a1216; }
+    :root:not([data-theme="light"]) [data-farbe="lila"]    { --f:#b794f6; --fh:#2a1d44; }
+    :root:not([data-theme="light"]) [data-farbe="tuerkis"] { --f:#5fd0d0; --fh:#11302f; }
+    :root:not([data-theme="light"]) [data-farbe="gelb"]    { --f:#f0c75e; --fh:#3a2f10; }
+    :root:not([data-theme="light"]) [data-farbe="pink"]    { --f:#f48fb8; --fh:#3a1626; }
+  }
+  :root[data-theme="dark"] { --blau:#6ea3ff; --blau-hell:#15264a; }
+  :root[data-theme="dark"] [data-farbe="blau"]    { --f:#6ea3ff; --fh:#15264a; }
+  :root[data-theme="dark"] [data-farbe="gruen"]   { --f:#6fd39a; --fh:#17301f; }
+  :root[data-theme="dark"] [data-farbe="orange"]  { --f:#f2b06a; --fh:#3a2410; }
+  :root[data-theme="dark"] [data-farbe="rot"]     { --f:#ff6b74; --fh:#3a1216; }
+  :root[data-theme="dark"] [data-farbe="lila"]    { --f:#b794f6; --fh:#2a1d44; }
+  :root[data-theme="dark"] [data-farbe="tuerkis"] { --f:#5fd0d0; --fh:#11302f; }
+  :root[data-theme="dark"] [data-farbe="gelb"]    { --f:#f0c75e; --fh:#3a2f10; }
+  :root[data-theme="dark"] [data-farbe="pink"]    { --f:#f48fb8; --fh:#3a1626; }
+
+  /* Mehr und Pflege: farbige Symbolkacheln */
+  .menue a[data-farbe] svg.i { color:var(--f); background:var(--fh); }
+  .admin-gruppe[data-farbe] .reihe-knopf svg.i { color:var(--f); background:var(--fh);
+    width:1.25rem; height:1.25rem; padding:7px; box-sizing:content-box; border-radius:var(--radius-m); }
+  .admin-gruppe[data-farbe] > h4 svg.i { color:var(--f); }
+
+  /* Abrechnung: die drei Stufen tragen ihre Farbe als Linie oben -
+     Pruefen orange (zu tun), Abrechnen blau (bereit), Geld gelb (wartet). */
+  :root[data-design="neu"] .mg-schritt { position:relative; overflow:hidden; }
+  :root[data-design="neu"] .mg-schritt:not(.fertig)::before { content:""; position:absolute; left:0; right:0; top:0; height:3px; }
+  :root[data-design="neu"] .mg-schritt[data-stufe="Prüfen"]:not(.fertig)::before { background:var(--warn); }
+  :root[data-design="neu"] .mg-schritt[data-stufe="Abrechnen"]:not(.fertig)::before { background:var(--blau); }
+  :root[data-design="neu"] .mg-schritt[data-stufe="Unterwegs"]:not(.fertig)::before,
+  :root[data-design="neu"] .mg-schritt[data-stufe="Geld fehlt"]:not(.fertig)::before { background:#d4a017; }
+  :root[data-design="neu"] .mg-schritt[data-stufe="Prüfen"]:not(.fertig):not(.aktiv) .zahl { color:var(--warn); font-weight:800; }
+  :root[data-design="neu"] .mg-schritt[data-stufe="Abrechnen"]:not(.fertig):not(.aktiv) .zahl { color:var(--blau); font-weight:800; }
+  /* Punkt vor dem Datum: fehlt (orange), erfasst (blau), bezahlt (gruen),
+     kommend (grau) */
+  :root[data-design="neu"] .mg-eintrag:not(.war):not(.erfasst):not(.bezahlt) .kopfzeile .datum::before { background:var(--warn); opacity:1; }
+  :root[data-design="neu"] .mg-eintrag.erfasst:not(.bezahlt) .kopfzeile .datum::before { background:var(--blau); opacity:1; }
+  /* Rechnungen: Punkt vor dem Verein, offen orange, bezahlt gruen */
+  .rg-text b::before { content:""; display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px;
+    vertical-align:1px; background:var(--warn); }
+  .rg-zeile.bezahlt .rg-text b::before { background:var(--gut); }
+
+  /* Wischen: was beim Loslassen passiert, waechst von der Seite herein */
+  :root[data-design="neu"] .mg-eintrag { position:relative; }
+  .mg-wischhinweis { position:absolute; top:0; bottom:0; z-index:3; display:flex; align-items:center; overflow:hidden;
+    white-space:nowrap; padding:0 14px; font-weight:800; font-size:var(--s-l); color:#fff; pointer-events:none;
+    transition:background .12s; }
+  .mg-wischhinweis.links-rein { left:0; justify-content:flex-start; border-radius:var(--radius) 0 0 var(--radius); }
+  .mg-wischhinweis.rechts-rein { right:0; justify-content:flex-end; border-radius:0 var(--radius) var(--radius) 0; }
+  .mg-wischhinweis.gut { background:color-mix(in srgb, var(--gut) 70%, transparent); }
+  .mg-wischhinweis.gut.weit { background:var(--gut); }
+  .mg-wischhinweis.auf { background:color-mix(in srgb, var(--blau) 70%, transparent); }
+  .mg-wischhinweis.auf.weit { background:var(--blau); }
+  .mg-wischhinweis.nichts { background:var(--dim); }
+  :root[data-design="neu"] .mg-eintrag.wisch-rechts, :root[data-design="neu"] .mg-eintrag.wisch-links { box-shadow:none; }
+
+  /* Rechnung nachtragen */
+  .rg-nachtragen { margin:14px 0 4px; display:grid; gap:6px; }
+  .rg-nachtragen-auf { justify-self:start; }
+  .rg-nachtragen-form { display:grid; gap:8px; padding:12px 14px; border:1px dashed var(--linie); border-radius:var(--radius-m); }
+  .rg-nachtragen-form label { display:grid; gap:4px; font-weight:700; font-size:var(--s-m); }
+  .rg-nachtragen-form label.mg-check { display:flex; align-items:center; gap:8px; min-height:44px; }
+  .rg-nachtragen-form input:not([type=checkbox]), .rg-nachtragen-form select { min-height:44px; width:100%; box-sizing:border-box; }
+
 </style>
 </head>
 <body>
@@ -4416,6 +4497,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=305"></script>
+<script src="app.js?v=307"></script>
 </body>
 </html>

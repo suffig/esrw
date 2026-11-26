@@ -2541,6 +2541,42 @@ window.Mitglieder = (function () {
   // Zahlen stehen - rechnungsstandLaden() kehrt zurueck, solange
   // aufRechnung gesetzt ist.
   function rechnungenVergessen() { rechnungListe = null; aufRechnung = null; }
+  // Eine geschriebene Rechnung muss in die Liste - sonst fehlt sie in
+  // "Deine Rechnungen", im ZIP und in "Geld". Bis Fassung 305 verschluckte
+  // rechnungErzeugen() einen Fehler beim Einfuegen (abgelaufene Anmeldung,
+  // kurz kein Netz): PDF da, Nummer weitergezaehlt, Zeile weg - ohne ein
+  // Wort. Jetzt bleibt sie auf dem Geraet und wird nachgereicht.
+  function rechnungSichern(zeile) {
+    return speichern(sb.from("rechnungen").insert(zeile)).then(function (r) {
+      if (r && r.error) {
+        var w = lokalLesen("mg_rechnungen_warten", []) || [];
+        w.push(zeile); lokalSchreiben("mg_rechnungen_warten", w);
+        meldung("Rechnung " + zeile.nummer + " ist als PDF fertig, konnte aber nicht gespeichert werden ("
+          + fehlerText(r.error) + "). Sie liegt auf diesem Gerät und wird beim nächsten Öffnen nachgetragen.", "warn");
+      }
+      return r;
+    });
+  }
+  function rechnungenNachreichen() {
+    var w = lokalLesen("mg_rechnungen_warten", []) || [];
+    if (!w.length || !sb || !session) return Promise.resolve(0);
+    var n = 0;
+    return w.reduce(function (p, zeile) {
+      return p.then(function () {
+        return sb.from("rechnungen").insert(zeile).then(function (r) {
+          if (r && r.error) return;
+          n++;
+          var rest = (lokalLesen("mg_rechnungen_warten", []) || []).filter(function (x) {
+            return !(x.nummer === zeile.nummer && x.datum === zeile.datum && x.user_id === zeile.user_id);
+          });
+          lokalSchreiben("mg_rechnungen_warten", rest);
+        });
+      });
+    }, Promise.resolve()).then(function () {
+      if (n) kurzMeldung(n + (n === 1 ? " Rechnung nachgetragen ✓" : " Rechnungen nachgetragen ✓"), "gut");
+      return n;
+    }, function () { return n; });
+  }
   function rechnungenLaden() {
     if (rechnungListe) return Promise.resolve(rechnungListe);
     // 500 statt 40: wer eine alte Rechnung noch einmal braucht, soll
@@ -2556,7 +2592,7 @@ window.Mitglieder = (function () {
       return sb.from("rechnungen").select(spalten).order("datum", { ascending: false }).limit(500)
         .then(function (r) { if (r && r.error) throw r.error; return (r && r.data) || []; });
     }
-    return holen("id,nummer,datum,verein,betrag,kennungen,felder,gezahlt_am")
+    return rechnungenNachreichen().then(function () { return holen("id,nummer,datum,verein,betrag,kennungen,felder,gezahlt_am"); })
       .catch(function () { return holen("id,nummer,datum,verein,betrag,kennungen,felder"); })
       .then(function (l) { rechnungListe = l; zahlungNachtragen(l); return rechnungListe; })
       .catch(function () { rechnungListe = []; return rechnungListe; });
@@ -3349,6 +3385,13 @@ window.Mitglieder = (function () {
         karte.appendChild(rechnungVerlaufZeile(rg, wahl));
       });
     }
+    // Eine Rechnung, die die App nicht kennt (bis Fassung 305 ging eine
+    // fehlgeschlagene Speicherung still verloren), laesst sich nachtragen.
+    var nachtragenBox = h("div", { class: "rg-nachtragen" });
+    nachtragenBox.appendChild(h("button", { type: "button", class: "rg-knopf rg-nachtragen-auf",
+      onclick: function () { rechnungNachtragenForm(nachtragenBox); } }, ["+ Rechnung nachtragen"]));
+    nachtragenBox.appendChild(h("small", { class: "meta", text: "Eine geschriebene Rechnung fehlt hier? Spiel wählen, Nummer und Datum wie auf deinem PDF." }));
+    box.appendChild(nachtragenBox);
     zeichnen();
     rechnungenLaden().then(function (l) {
       if (!box.isConnected) return;
@@ -3363,6 +3406,73 @@ window.Mitglieder = (function () {
       zeichnen();
     });
     return box;
+  }
+
+  // Nachtragen: das Spiel waehlen, Nummer und Datum vom eigenen PDF. Die
+  // Felder baut die App wie im Rechnungslauf (laufForm) - so laesst sich
+  // die Rechnung danach wieder als PDF laden und steht im ZIP.
+  function rechnungNachtragenForm(box) {
+    leeren(box);
+    box.appendChild(skelett(1));
+    Promise.all([ladeArchiv(), rechnungenLaden(), vereinAdressenLaden()]).then(function () {
+      if (!box.isConnected) return;
+      leeren(box);
+      var jetzt = new Date();
+      var spiele = rechnungSpiele().filter(function (sp) { return new Date(sp.beginn) < jetzt && !rechnungZu(sp.kennung); });
+      var wahl = h("select", { class: "mg-select", "aria-label": "Spiel" });
+      wahl.appendChild(h("option", { value: "", text: spiele.length ? "Spiel wählen …" : "Kein gespieltes Spiel ohne Rechnung" }));
+      spiele.forEach(function (sp, i) {
+        wahl.appendChild(h("option", { value: String(i),
+          text: new Date(sp.beginn).toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "2-digit" }) + " · " + sp.paarung }));
+      });
+      var nummer = h("input", { type: "text", class: "mg-feld", placeholder: "Rechnungsnummer wie auf dem PDF" });
+      var datum = h("input", { type: "date", class: "mg-feld", value: isoTag(jetzt) });
+      var bezahlt = h("input", { type: "checkbox" });
+      var info = h("p", { class: "meta", style: "margin:6px 0 0" });
+      wahl.addEventListener("change", function () {
+        var sp = spiele[Number(wahl.value)];
+        if (!sp) { info.textContent = ""; return; }
+        datum.value = isoTag(new Date(sp.beginn));
+        var b = rechnungBetrag(sp);
+        info.textContent = heimVereinVon(sp) + " · " + (b && b.betrag != null ? euro(b.betrag) : "Betrag fehlt");
+      });
+      var los = h("button", { type: "button", class: "anfrage", text: "Nachtragen" });
+      los.addEventListener("click", function () {
+        var sp = spiele[Number(wahl.value)];
+        var nr = nummer.value.trim();
+        if (!sp) { kurzMeldung("Bitte das Spiel wählen.", "warn"); return; }
+        if (!nr) { kurzMeldung("Bitte die Nummer eintragen, die auf deinem PDF steht.", "warn"); return; }
+        if ((rechnungListe || []).some(function (x) { return String(x.nummer) === nr; })) { kurzMeldung("Diese Nummer gibt es schon.", "warn"); return; }
+        var stamm = rechnungDaten();
+        var bd = buendelAus([sp]); bd.nummer = nr;
+        var f = laufForm(bd, stamm);
+        var s = rechnungSummeAus(f.pauschale, f.zuschlag, f.klein);
+        var zeile = { user_id: session.user.id, nummer: nr, datum: datum.value || isoTag(new Date(sp.beginn)),
+          verein: f.verein || f.name, betrag: Math.round(s.gesamt * 100) / 100, kennungen: f.kennungen,
+          felder: { name: f.name, strasse: f.strasse, plz_ort: f.plz_ort, verein: f.verein,
+                    zeilen: f.zeilen, datum: f.datum, ort: f.ort, klasse: f.klasse,
+                    pauschale: s.pauschale, zuschlag: s.zuschlag, klein: s.klein, absender: absenderAus(stamm) } };
+        if (bezahlt.checked) zeile.gezahlt_am = zeile.datum;
+        los.disabled = true; los.textContent = "speichert …";
+        speichern(sb.from("rechnungen").insert(zeile)).then(function (r) {
+          if (r && r.error) {
+            los.disabled = false; los.textContent = "Nachtragen";
+            meldung("Nicht gespeichert: " + fehlerText(r.error), "warn"); return;
+          }
+          if (bezahlt.checked) speichereEinsatz(sp, { bezahlt: new Date(zeile.datum).toISOString() }, true);
+          kurzMeldung("Rechnung " + nr + " nachgetragen ✓", "gut");
+          rechnungenVergessen(); rechnungsstandLaden(); rendereAbrechnung();
+        });
+      });
+      box.appendChild(h("div", { class: "rg-nachtragen-form" }, [
+        h("b", { text: "Rechnung nachtragen" }),
+        h("label", {}, ["Spiel", wahl]), info,
+        h("label", {}, ["Nummer", nummer]),
+        h("label", {}, ["Rechnungsdatum", datum]),
+        h("label", { class: "mg-check" }, [bezahlt, " Geld ist schon da"]),
+        h("div", { class: "rg-aktionen" }, [los, h("button", { type: "button", class: "textknopf", text: "Abbrechen",
+          onclick: function () { rendereAbrechnung(); } })])]));
+    }, function (e) { leeren(box); meldung("Ging nicht: " + fehlerText(e), "warn"); });
   }
 
   // Eine Rechnung als Karte: Verein, Nummer, Datum, Betrag, Stand - und
@@ -4137,8 +4247,10 @@ window.Mitglieder = (function () {
         // geschriebene Rechnung ist noch kein Geld. Die Spiele stehen
         // jetzt auf "Unterwegs", bis der Eingang an der Rechnung
         // vermerkt wird (zahlungSetzen).
-        return speichern(sb.from("rechnungen").insert({
-          user_id: session.user.id, nummer: nummer, datum: wann.toISOString().slice(0, 10),
+        // isoTag statt toISOString: das rechnete in UTC, ein Spiel kurz
+        // nach Mitternacht stand mit dem Vortag in der Liste.
+        var rgZeile = {
+          user_id: session.user.id, nummer: nummer, datum: isoTag(wann),
           verein: f.verein || f.name, betrag: Math.round(betraege.gesamt * 100) / 100,
           kennungen: f.kennungen || [],
           // Nur die ausgefuellten Felder - daraus laesst sich dasselbe PDF
@@ -4147,7 +4259,8 @@ window.Mitglieder = (function () {
                     zeilen: f.zeilen, datum: f.datum, ort: f.ort, klasse: f.klasse,
                     pauschale: betraege.pauschale, zuschlag: betraege.zuschlag, klein: betraege.klein,
                     absender: absenderAus(stamm) }
-        })).then(function () { return rechnungDatenSpeichern(neu); })
+        };
+        return rechnungSichern(rgZeile).then(function () { return rechnungDatenSpeichern(neu); })
           .then(function () {
             rechnungFertig = { blob: blob, name: name, nummer: nummer };
             kurzMeldung("Rechnung " + nummer + " fertig ✓", "gut");
@@ -6760,6 +6873,26 @@ window.Mitglieder = (function () {
       if (auswahlModus || ev.touches.length !== 1 || ev.target.closest("input, textarea, select")) return;
       wx = ev.touches[0].clientX; wy = ev.touches[0].clientY; wDx = 0; wAn = false;
     }, { passive: true });
+    // Waehrend des Wischens waechst von der Seite eine Flaeche herein, die
+    // sagt, was beim Loslassen passiert - erst als Ankuendigung, ab der
+    // Schwelle als "Loslassen: ...". Bis Fassung 305 verschob sich nur die
+    // Karte, und man musste raten.
+    var hinweis = null;
+    function hinweisSetzen(dx) {
+      if (!hinweis) { hinweis = h("div", { class: "mg-wischhinweis", "aria-hidden": "true" }); zeile.appendChild(hinweis); }
+      var rechts = dx > 0, weit = Math.abs(dx) > 70;
+      var geht = rechts ? !!gerechnetText(einsaetze[sp.kennung]) : true;
+      var offenJetzt = !details.classList.contains("versteckt");
+      hinweis.className = "mg-wischhinweis " + (rechts ? "links-rein" : "rechts-rein")
+        + (geht ? (rechts ? " gut" : " auf") : " nichts") + (weit ? " weit" : "");
+      // Ab der Schwelle springt die Flaeche auf, damit der ganze Satz
+      // lesbar ist - mitwachsend schnitt sie "Loslassen: bes…" ab.
+      hinweis.style.width = (weit ? zeile.clientWidth * 0.74 : Math.min(Math.abs(dx) * 1.4, zeile.clientWidth * 0.6)) + "px";
+      hinweis.textContent = rechts
+        ? (geht ? (weit ? "Loslassen: bestätigen ✓" : "✓ Bestätigen") : "Nichts zu bestätigen")
+        : (weit ? (offenJetzt ? "Loslassen: zuklappen" : "Loslassen: aufklappen") : (offenJetzt ? "Zuklappen" : "Aufklappen ›"));
+    }
+    function hinweisWeg() { if (hinweis) { hinweis.remove(); hinweis = null; } }
     zeile.addEventListener("touchmove", function (ev) {
       if (wx === null) return;
       var dx = ev.touches[0].clientX - wx, dy = ev.touches[0].clientY - wy;
@@ -6768,17 +6901,15 @@ window.Mitglieder = (function () {
         if (Math.abs(dy) > Math.abs(dx)) { wx = null; return; }
         wAn = true; zeile.classList.add("wischt");
       }
-      wDx = Math.max(-110, Math.min(110, dx));
-      zeile.style.transform = "translateX(" + Math.round(wDx * 0.7) + "px)";
-      zeile.classList.toggle("wisch-rechts", wDx > 70);
-      zeile.classList.toggle("wisch-links", wDx < -70);
+      wDx = Math.max(-130, Math.min(130, dx));
+      hinweisSetzen(wDx);
     }, { passive: true });
     function wischEnde() {
       if (wx === null) return;
       wx = null;
       if (!wAn) return;
-      zeile.classList.remove("wischt", "wisch-rechts", "wisch-links");
-      zeile.style.transform = "";
+      zeile.classList.remove("wischt");
+      hinweisWeg();
       zeile._gewischt = true; setTimeout(function () { zeile._gewischt = false; }, 400);
       if (wDx > 70) {
         if (gerechnetText(einsaetze[sp.kennung])) {
@@ -6793,7 +6924,7 @@ window.Mitglieder = (function () {
       }
     }
     zeile.addEventListener("touchend", wischEnde, { passive: true });
-    zeile.addEventListener("touchcancel", function () { wx = null; zeile.classList.remove("wischt", "wisch-rechts", "wisch-links"); zeile.style.transform = ""; }, { passive: true });
+    zeile.addEventListener("touchcancel", function () { wx = null; zeile.classList.remove("wischt"); hinweisWeg(); }, { passive: true });
     return zeile;
   }
 
@@ -9122,7 +9253,8 @@ window.Mitglieder = (function () {
         return abschnitte.filter(function (x) { return x[0] === k; })[0];
       }).filter(Boolean);
       if (!drin.length) return;
-      var karte = h("div", { class: "karte admin-gruppe" }, [h("h4", {}, [ikone(g[1]), " " + g[0]])]);
+      var karte = h("div", { class: "karte admin-gruppe", "data-farbe": ({ "Konten und Rechte": "blau", "Spiele": "orange",
+        "Stammdaten": "gruen", "System": "grau" })[g[0]] || "grau" }, [h("h4", {}, [ikone(g[1]), " " + g[0]])]);
       drin.forEach(function (b) {
         karte.appendChild(h("button", { type: "button", class: "reihe-knopf",
           onclick: function () { adminHinein(b[0]); } }, [
@@ -11791,7 +11923,7 @@ window.Mitglieder = (function () {
     rechnungBezahlt: rechnungBezahlt, rechnungenOffenSumme: rechnungenOffenSumme,
     vereinHaupt: vereinHaupt, vereinKanon: vereinKanon, vereinAnschrift: vereinAnschrift,
     keinVerein: keinVerein, vereinAliaseSetzen: vereinAliaseSetzen, vereinNaechster: vereinNaechster,
-    absenderAus: absenderAus, rechnungStamm: rechnungStamm, erinnerungText: erinnerungText, rechnungenOhneSpiele: rechnungenOhneSpiele,
+    absenderAus: absenderAus, rechnungStamm: rechnungStamm, rechnungSichern: rechnungSichern, rechnungenNachreichen: rechnungenNachreichen, erinnerungText: erinnerungText, rechnungenOhneSpiele: rechnungenOhneSpiele,
     debSatz: debSatz, debGesamt: debGesamt, debTagesFaktor: debTagesFaktor, zeitzuschlagAn: zeitzuschlag
   };
 
