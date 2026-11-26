@@ -62,34 +62,6 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB: Krefelder EV 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:88846f19cf04cb1ce4cc72c8a6761431a8ab2bf5@esrw.de
-SEQUENCE:0
-DTSTAMP:20261120T094530Z
-LAST-MODIFIED:20261120T094530Z
-DTSTART:20261129T170000Z
-DTEND:20261129T203000Z
-SUMMARY:HSR · U20 RL: Eisadler Dortmund – Neusser EV
-DESCRIPTION:Rolle: Hauptschiedsrichter (HSR)\nSpielbeginn: 19:00 Uhr\nTreff
- punkt: 18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissportze
- ntrum Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Garbs
- ch\, René (LSR) / Fenke\, Matthias (LSR)\n\nQuelle: https://www.esrw.de/e
- inteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
-GEO:51.49525;7.458288
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
-  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
- rum Westfalen":geo:51.49525,7.458288
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - HSR · U20 RL: Eisadler Dortmund
-  – Neusser EV
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:c3a863aa628397b571cdb7c530f2afeed1c8d2b4@esrw.de
 SEQUENCE:0
 DTSTAMP:20261123T193045Z

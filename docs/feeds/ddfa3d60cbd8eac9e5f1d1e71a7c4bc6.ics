@@ -82,35 +82,6 @@ DESCRIPTION:In einer Stunde an der Halle - SR · U20 LL: GSC Moers – EHC
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
-UID:d688ef33b1cecff1a35f95008e7cae31d73c1c1c@esrw.de
-SEQUENCE:0
-DTSTAMP:20261120T094530Z
-LAST-MODIFIED:20261120T094530Z
-DTSTART:20261129T170000Z
-DTEND:20261129T203000Z
-SUMMARY:LSR · U20 RL: Eisadler Dortmund – Neusser EV · Eissportzentrum 
- Westfalen
-DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
-  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 RL\nHalle: Eissportzentrum 
- Westfalen\nAdresse: Strobelallee 33\, 44139 Dortmund\nGespann: Reuter\, Fy
- nn (HSR) / Garbsch\, René (LSR)\n\nQuelle: https://www.esrw.de/einteilung
- en.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissportzentrum Westfalen\, Strobelallee 33\, 44139 Dortmund
-GEO:51.49525;7.458288
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
-  Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
- rum Westfalen":geo:51.49525,7.458288
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - LSR · U20 RL: Eisadler Dortmund
-  – Neusser EV · Eissportzentrum Westfalen
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:fe116b0efb9f1f9a18c64daab2b13bf226393e6b@esrw.de
 SEQUENCE:0
 DTSTAMP:20261123T193045Z
