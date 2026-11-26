@@ -3916,6 +3916,40 @@
   .rechnung-offen .anfrage { min-height:44px; }
   .rechnung-paarung input { min-height:44px; }
 
+  /* Vorschlaege 1-9 (Fassung 305) */
+  :root[data-design="neu"] .mg-eintrag { transition:transform .18s ease, box-shadow .18s ease; touch-action:pan-y; }
+  :root[data-design="neu"] .mg-eintrag.wischt { transition:none; }
+  :root[data-design="neu"] .mg-eintrag.wisch-rechts { box-shadow:inset 5px 0 0 var(--gut); }
+  :root[data-design="neu"] .mg-eintrag.wisch-links { box-shadow:inset -5px 0 0 var(--akzent); }
+  .mg-allebestaetigen { width:100%; min-height:44px; margin-top:8px; }
+  .mg-wischtipp { display:block; margin-top:6px; }
+  .mg-rueckgaengig { position:fixed; left:12px; right:12px; bottom:calc(86px + env(safe-area-inset-bottom)); z-index:70;
+    display:flex; align-items:center; justify-content:space-between; gap:12px; padding:6px 6px 6px 16px; border-radius:16px;
+    background:var(--akzent); color:var(--akzent-text); font-weight:700; box-shadow:0 10px 28px rgba(0,0,0,.28); max-width:520px; margin:0 auto; }
+  .mg-rueckgaengig button { min-height:44px; padding:0 14px; border:0; border-radius:12px; background:transparent;
+    color:inherit; font:inherit; font-weight:800; text-decoration:underline; cursor:pointer; }
+  :root[data-design="neu"] .stand.neu-fassung { background:var(--rot); color:#fff; border-color:var(--rot); font-weight:800; }
+  .neu-mehr { margin:8px 0 0; }
+  .mg-ueberblick h4 { margin:0 0 10px; }
+  .mg-jahrwahl { margin:0 0 10px; }
+  .mg-jahrwahl button { min-height:44px; }
+  .mg-diagramm { display:block; width:100%; height:auto; }
+  .mg-diagramm .achse { stroke:var(--linie); stroke-width:1; }
+  .mg-diagramm .ein { fill:var(--akzent); }
+  .mg-diagramm .kost { fill:var(--dim); opacity:.45; }
+  .mg-diagramm .offen { fill:var(--warn); }
+  .mg-diagramm .monat { fill:var(--dim); font-size:10px; font-weight:700; }
+  .mg-legende { display:flex; flex-wrap:wrap; gap:12px; margin:6px 0 10px; font-size:var(--s-s); color:var(--dim); font-weight:600; }
+  .mg-legende span::before { content:""; display:inline-block; width:10px; height:10px; border-radius:3px; margin-right:5px; vertical-align:-1px; }
+  .mg-legende .ein::before { background:var(--akzent); }
+  .mg-legende .kost::before { background:var(--dim); opacity:.45; }
+  .mg-legende .offen::before { background:var(--warn); border-radius:50%; }
+  .mg-ueberblick-zahlen { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .mg-ueberblick-zahlen > div { padding:10px 12px; border:1px solid var(--linie); border-radius:var(--radius-m); }
+  .mg-ueberblick-zahlen small { display:block; color:var(--dim); font-size:var(--s-s); font-weight:600; }
+  .mg-ueberblick-zahlen b { font-size:1.05rem; font-variant-numeric:tabular-nums; }
+  .mg-ueberblick-zahlen .warn b { color:var(--warn); }
+
 </style>
 </head>
 <body>
@@ -4167,7 +4201,7 @@
     <div class="karte einstellungen-liste">
       <label>Schrift <span class="stufen" id="schrift"><button type="button" data-stufe="klein">A−</button><button type="button" data-stufe="normal">A</button><button type="button" data-stufe="gross">A+</button></span></label>
       <label>Farbe <span class="farben" id="akzent"><button type="button" data-akzent="logo" style="background:linear-gradient(135deg,#15161a 55%,#e30613 55%)" aria-label="Schwarz-Rot (Logo)"></button><button type="button" data-akzent="blau" style="background:#0f3d6e" aria-label="Blau"></button><button type="button" data-akzent="gruen" style="background:#1d6b3f" aria-label="Grün"></button><button type="button" data-akzent="rot" style="background:#a12a2a" aria-label="Rot"></button><button type="button" data-akzent="orange" style="background:#b55a12" aria-label="Orange"></button></span></label>
-      <label>Aussehen <span class="stufen" id="thema-wahl"><button type="button" data-thema="">System</button><button type="button" data-thema="light">Hell</button><button type="button" data-thema="dark">Dunkel</button><button type="button" data-thema="abend">Abends</button></span></label>
+      <label><span><b>Aussehen</b><small>„Abends“: von 19 bis 7 Uhr dunkel</small></span> <span class="stufen" id="thema-wahl"><button type="button" data-thema="">System</button><button type="button" data-thema="light">Hell</button><button type="button" data-thema="dark">Dunkel</button><button type="button" data-thema="abend">Abends</button></span></label>
       <label>Kompakte Ansicht <input type="checkbox" id="kompakt"></label>
     </div>
     <h3 class="abschnitt">Kalender<small>Was in deinen Terminen steht und wann der Wecker klingelt</small></h3>
@@ -4382,6 +4416,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=304"></script>
+<script src="app.js?v=305"></script>
 </body>
 </html>

@@ -824,6 +824,9 @@ grundstellung({ profil: { km_modell: "einfach", einstellungen: {},
   gleich(alt.steuernummer, "123", "und die alte Steuernummer");
   var ohne = P.rechnungStamm({ nummer: "2", felder: {} });
   gleich(ohne.strasse, "Neue Str. 1", "ohne gespeicherten Absender gilt der heutige");
+  var txt = P.erinnerungText({ nummer: "2026-7", datum: "2026-10-01", betrag: 85, felder: { datum: "28.09.2026", absender: a } });
+  pruefe(txt.indexOf("Nr. 2026-7") > 0 && txt.indexOf("85,00") > 0 && txt.indexOf("28.09.2026") > 0, "Erinnerung nennt Nummer, Betrag und Spieltag", txt);
+  pruefe(/Alt$/.test(txt), "und endet mit dem Absender von damals", txt.slice(-20));
 
   var sp = spiel({ kennung: "k9", beginn: "2026-10-20T19:30:00" });
   P.setze({ aufRechnung: {}, einsaetze: {}, rechnungListe: [

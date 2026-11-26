@@ -530,8 +530,16 @@
     b.classList.toggle("mit-bild", !!eigen);
     b.style.backgroundImage = bildUrl(eigen);
   }
+  var fassungWartet = false;
+  function fassungWartetZeigen() {
+    fassungWartet = true;
+    var s = el("stand"); if (!s) return;
+    s.className = "stand neu-fassung"; s.textContent = "Neue Fassung · antippen";
+    s.title = "Antippen lädt die neue Fassung der App";
+  }
   // Tipp auf die Stand-Anzeige holt frische Daten
   el("stand").addEventListener("click", function () {
+    if (fassungWartet) { location.reload(); return; }
     if (!navigator.onLine) { toast("Offline, es gibt gerade nichts Neues zu holen.", "warn"); return; }
     el("stand").classList.add("laedt");
     neuLaden().then(function () { el("stand").classList.remove("laedt"); toast("Aktualisiert.", "gut"); })
@@ -879,7 +887,6 @@
     startBausteineRendern();
     if (nurAnwenden) return;
     el("stand").style.cursor = "pointer"; el("stand").title = "Antippen: neu laden";
-    el("stand").addEventListener("click", function () { neuLaden().then(function () { toast("Aktualisiert", "gut"); }); });
     el("abo").addEventListener("click", function () { schreiben("abo-geklickt", "1"); setTimeout(function () { kalenderBoxStand(!!(profil && aktuell && profil.slug === aktuell.slug)); onboardingStand(); }, 500); });
   }
 
@@ -2181,7 +2188,11 @@
 
     var h = document.createElement("div"); h.className = "held";
     var heuteModus = diff === 0 && new Date(s.beginn).getTime() + 3 * 3600000 > Date.now();
-    if (heuteModus) h.classList.add("heute");
+    if (heuteModus) {
+      h.classList.add("heute");
+      // Am Spieltag zaehlt das Spiel - "Neu in der App" kommt morgen wieder
+      el("neu").classList.add("versteckt"); el("neu")._offen = false;
+    }
     // Spieltag-Modus: nur das Spiel, sonst nichts. Er haengt allein am
     // Schalter unter Einstellungen -> Startseite und ist von Haus aus
     // aus - ohne ihn gibt es weder den Modus noch den Knopf dazu.
@@ -7339,6 +7350,7 @@
   function standAnzeigen(d, lauf) {
     letzterLauf = lauf;
     if (lauf && lauf.stand) letzterStand = new Date(lauf.stand).toLocaleString("de-DE", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+    if (fassungWartet) { fassungWartetZeigen(); return; }
     var s = el("stand"); s.className = "stand"; s.innerHTML = "";
     var zahlen = d.spiele_gesamt + " Spiele · " + d.personen.length + " SR";
     if (lauf && lauf.stand) {
@@ -7515,6 +7527,47 @@
     location.reload();
   });
 
+  // Wischen zwischen den Reitern unten, wie in einer App. Nur auf den
+  // Hauptseiten, nur bei klar waagrechter, zuegiger Bewegung, nicht vom
+  // Bildschirmrand (dort liegt die Zurueck-Geste des Systems) und nie in
+  // Bereichen, die selbst waagrecht wischen: Karten der Abrechnung
+  // (data-eigenes-wischen), Wochenstreifen, Tabellen, Karte, Eingaben.
+  (function () {
+    if (!("ontouchstart" in window)) return;
+    var x0 = null, y0 = 0, t0 = 0;
+    function eigeneBewegung(n) {
+      for (; n && n !== document.body; n = n.parentElement) {
+        if (n.hasAttribute && n.hasAttribute("data-eigenes-wischen")) return true;
+        if (/^(INPUT|TEXTAREA|SELECT)$/.test(n.tagName) || (n.classList && n.classList.contains("leaflet-container"))) return true;
+        if (n.scrollWidth > n.clientWidth + 4) {
+          var ox = getComputedStyle(n).overflowX;
+          if (ox === "auto" || ox === "scroll") return true;
+        }
+      }
+      return false;
+    }
+    document.addEventListener("touchstart", function (e) {
+      x0 = null;
+      if (e.touches.length !== 1 || document.documentElement.classList.contains("spieltag")) return;
+      if (!el("spiel").classList.contains("versteckt") || !el("tour").classList.contains("versteckt")) return;
+      var x = e.touches[0].clientX;
+      if (x < 24 || x > window.innerWidth - 24 || eigeneBewegung(e.target)) return;
+      x0 = x; y0 = e.touches[0].clientY; t0 = Date.now();
+    }, { passive: true });
+    document.addEventListener("touchend", function (e) {
+      if (x0 === null) return;
+      var t = e.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0;
+      x0 = null;
+      if (Date.now() - t0 > 600 || Math.abs(dx) < 90 || Math.abs(dy) > 45) return;
+      var reiter = [].filter.call(document.querySelectorAll("#tabs button"), function (b) { return !b.classList.contains("versteckt"); });
+      var i = -1;
+      reiter.forEach(function (b, k) { if (b.classList.contains("aktiv")) i = k; });
+      if (i < 0) return;
+      var ziel = reiter[i + (dx < 0 ? 1 : -1)];
+      if (ziel) ziel.click();
+    }, { passive: true });
+  })();
+
   // Luke fuer die Tests - dieselbe wie window.Mitglieder.pruefstand in
   // mitglieder.js. Die Datei ist eine geschlossene IIFE; ohne das hier
   // laesst sich keine ihrer Rechenfunktionen pruefen, ausser von Hand
@@ -7564,7 +7617,9 @@
       var a = document.activeElement;
       var tippt = a && /^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName);
       if (schon || tippt) {
-        toast("Neue Fassung geladen, einmal neu öffnen, dann ist alles frisch.", "gut");
+        // Die Meldung lag ueber der Liste und verdeckte die naechste
+        // Karte. Jetzt sagt es die Stand-Pille oben - antippen laedt neu.
+        fassungWartetZeigen();
         return;
       }
       try { sessionStorage.setItem("sw-neu", "1"); } catch (e) {}

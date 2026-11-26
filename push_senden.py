@@ -295,6 +295,42 @@ def erinnerungen(person, profil, jetzt, schon):
     return heraus
 
 
+def euro_text(betrag):
+    return ("%.2f" % float(betrag or 0)).replace(".", ",") + " €"
+
+
+def rechnung_erinnerungen(rechnungen, bezahlt, jetzt, schon, ab_tagen=30):
+    """Offene Rechnungen ohne Zahlungseingang seit ab_tagen Tagen: je Rechnung
+    eine Nachricht, hoechstens einmal je ab_tagen (der Schluessel enthaelt
+    die Stufe: 30, 60, 90 Tage). bezahlt ist eine Menge (user_id, kennung)
+    der abgehakten Spiele - sind alle Spiele einer Rechnung abgehakt, ist
+    sie bezahlt, auch wenn gezahlt_am noch fehlt (das traegt erst die App
+    beim naechsten Oeffnen nach). Liefert {user_id: [(schluessel, nutzlast)]}."""
+    raus = {}
+    for r in rechnungen or []:
+        if r.get("gezahlt_am") or not r.get("user_id"):
+            continue
+        try:
+            datum = datetime.fromisoformat(str(r.get("datum"))[:10]).date()
+        except ValueError:
+            continue
+        alter = (jetzt.date() - datum).days
+        if alter < ab_tagen:
+            continue
+        k = r.get("kennungen") or []
+        if k and all((r["user_id"], x) in bezahlt for x in k):
+            continue
+        schluessel = "rechnung|%s|%d" % (r.get("id"), alter // ab_tagen)
+        if schluessel in schon.get(r["user_id"], set()):
+            continue
+        raus.setdefault(r["user_id"], []).append((schluessel, {
+            "titel": "Rechnung %s seit %d Tagen offen" % (r.get("nummer") or "", alter),
+            "text": "%s · %s – noch kein Zahlungseingang vermerkt. In der App kannst du eine Erinnerung teilen." % (
+                r.get("verein") or "Verein", euro_text(r.get("betrag"))),
+            "url": "./#mitglieder/abrechnung", "tag": "rechnung-%s" % r.get("id")}))
+    return raus
+
+
 def gesuche_pflegen(url, service, daten, jetzt, nachrichten, nachtragen):
     """Offene Gesuche schliessen, sobald esrw.de den Suchenden nicht mehr im
     Spiel fuehrt; Helfer erledigter Gesuche benachrichtigen."""
@@ -605,6 +641,30 @@ def main():
                             "url": "./#abrechnen/" + urllib.parse.quote(k[10:], safe=""), "tag": "abrechnen"}))
         except Exception as e:
             print("Push: Schnellabrechnung nicht verarbeitet: %s" % str(e)[:120], file=sys.stderr)
+
+    # Offene Rechnungen: nach 30 Tagen ohne Eingang eine Erinnerung, danach
+    # alle 30 Tage wieder. Tagsueber, und nur wer Abrechnungs-Push will.
+    # Die Schluessel kommen ohne die Zwei-Tage-Grenze von "schon" - sonst
+    # kaeme dieselbe Erinnerung jeden dritten Tag.
+    if an("abrechnung") and 9 <= jetzt.hour < 20:
+        try:
+            grenze = (jetzt - timedelta(days=30)).date().isoformat()
+            offen = api(url, service, "rechnungen?select=id,user_id,nummer,verein,betrag,datum,kennungen,gezahlt_am"
+                        "&gezahlt_am=is.null&datum=lte." + grenze) or []
+            offen = [r for r in offen if r.get("user_id") in profil_von and
+                     ((profil_von[r["user_id"]].get("einstellungen") or {}).get("pushabrechnung")) != "0"]
+            if offen:
+                uids = sorted({r["user_id"] for r in offen})
+                abgehakt = api(url, service, "einsaetze?select=user_id,kennung&bezahlt=not.is.null&user_id=in.(%s)" % ",".join(uids)) or []
+                bezahlt = {(e["user_id"], e["kennung"]) for e in abgehakt}
+                frueher = api(url, service, "push_gesendet?select=user_id,schluessel&schluessel=like.rechnung*&user_id=in.(%s)" % ",".join(uids)) or []
+                schon_r = {}
+                for g in frueher:
+                    schon_r.setdefault(g["user_id"], set()).add(g["schluessel"])
+                for uid, liste in rechnung_erinnerungen(offen, bezahlt, jetzt, schon_r).items():
+                    nachrichten.setdefault(uid, []).extend(liste)
+        except Exception as e:
+            print("Push: Rechnungserinnerung nicht verarbeitet: %s" % str(e)[:120], file=sys.stderr)
 
     # Mitfahrt gesucht/geboten: Kollegen im selben Spiel oder am selben Tag in
     # derselben Halle, die laut geteiltem Wohnort auf dem Weg liegen

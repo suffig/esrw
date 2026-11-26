@@ -1307,6 +1307,34 @@ def test_push_nachrichten():
            str(len(viele["text"])))
 
 
+def test_push_rechnungen():
+    """Erinnerung an offene Rechnungen (Fassung 305)."""
+    print("\nPush: offene Rechnungen")
+    try:
+        import push_senden as P
+    except Exception as e:
+        print("  --   push_senden nicht ladbar (%s), Test uebersprungen" % e)
+        return
+    from datetime import datetime
+    jetzt = datetime(2026, 11, 26, 12, 0, tzinfo=P.BERLIN)
+    r = [
+        {"id": 1, "user_id": "u", "nummer": "A", "verein": "EV", "betrag": 85, "datum": "2026-10-01", "kennungen": ["k1"]},
+        {"id": 2, "user_id": "u", "nummer": "B", "verein": "EC", "betrag": 90, "datum": "2026-11-20", "kennungen": []},
+        {"id": 3, "user_id": "u", "nummer": "C", "verein": "SC", "betrag": 95, "datum": "2026-09-01", "kennungen": ["k3"]},
+        {"id": 4, "user_id": "u", "nummer": "D", "verein": "HC", "betrag": 99, "datum": "2026-08-01", "kennungen": [], "gezahlt_am": "2026-09-01"},
+    ]
+    raus = P.rechnung_erinnerungen(r, {("u", "k3")}, jetzt, {})
+    schl = [k for k, _ in raus.get("u", [])]
+    pruefe(schl == ["rechnung|1|1"], "nur die seit 30 Tagen offene, nicht abgehakte", str(schl))
+    pruefe("56 Tagen" in raus["u"][0][1]["titel"], "Titel nennt das Alter", raus["u"][0][1]["titel"])
+    pruefe("85,00 €" in raus["u"][0][1]["text"], "Betrag im Text", raus["u"][0][1]["text"])
+    pruefe(not P.rechnung_erinnerungen(r, {("u", "k3")}, jetzt, {"u": {"rechnung|1|1"}}),
+           "schon erinnert: nicht noch einmal in derselben Stufe")
+    spaeter = datetime(2026, 12, 5, 12, 0, tzinfo=P.BERLIN)
+    pruefe([k for k, _ in P.rechnung_erinnerungen(r, {("u", "k3")}, spaeter, {"u": {"rechnung|1|1"}}).get("u", [])] == ["rechnung|1|2"],
+           "nach 60 Tagen die naechste Stufe")
+
+
 def test_push_erinnerungen():
     """Wann eine Erinnerung faellig ist.
 
@@ -1921,7 +1949,7 @@ def main():
                  test_kalenderwuensche, test_vereinsnamen, test_seitenumbau,
                  test_funktionstexte, test_dunkles_thema, test_kennungen, test_verlegt,
                  test_archivkennung, test_statistik_zaehlt_einmal, test_spielschluessel, test_blattfokus, test_netzstand,
-                 test_push_nachrichten, test_push_erinnerungen,
+                 test_push_nachrichten, test_push_erinnerungen, test_push_rechnungen,
                  test_anzeigenamen, test_abgesetzt,
                  test_tresor):
         test()

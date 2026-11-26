@@ -2194,11 +2194,12 @@ window.Mitglieder = (function () {
   // sind Entscheidungen, kein Getippe - wer danach die App wegschiebt,
   // darf sie nicht verlieren. Zahlenfelder behalten ihre 600 ms, sonst
   // schickt jede Ziffer eine eigene Zeile.
+  var stillSpeichern = false;
   function speichereEinsatz(spiel, aenderung, sofort) {
     // Was die App selbst eintraegt (Vorschlag mit Herkunftsvermerk), meldet
     // sich nicht: beim Oeffnen der Abrechnung stand sonst jedes Mal
     // "Gespeichert ✓" ueber der Liste, ohne dass man etwas getan hatte.
-    var leise = !!(aenderung && aenderung.herkunft && Object.keys(aenderung.herkunft).some(function (f) { return aenderung.herkunft[f]; }));
+    var leise = stillSpeichern || !!(aenderung && aenderung.herkunft && Object.keys(aenderung.herkunft).some(function (f) { return aenderung.herkunft[f]; }));
     var alt = einsaetze[spiel.kennung] || {};
     var zeile = Object.assign({
       user_id: session.user.id, kennung: spiel.kennung, beginn: spiel.beginn,
@@ -2837,7 +2838,7 @@ window.Mitglieder = (function () {
       box.appendChild(h("div", { class: "hinweis gut" }, [
         h("span", {}, [h("b", { text: "Rechnung " + fertig.nummer + " ist fertig." }),
           h("small", { style: "display:block", text: fertig.name })]),
-        h("button", { type: "button", class: "anfrage", text: "Nochmal laden", onclick: function () { pdfHerunterladen(fertig.blob, fertig.name); } })
+        h("button", { type: "button", class: "anfrage", text: "Teilen / sichern", onclick: function () { pdfHerunterladen(fertig.blob, fertig.name); } })
       ]));
     }
 
@@ -3407,10 +3408,33 @@ window.Mitglieder = (function () {
       });
       var nummer = h("button", { type: "button", class: "textknopf rg-nummer", text: "Nr. ändern", title: "Rechnungsnummer nachträglich ändern",
         onclick: function () { nummerAendern(rg, zeile); } });
-      zeile.appendChild(h("div", { class: "rg-aktionen" }, [pdf, eingang, nummer]));
+      // Nach 30 Tagen ohne Eingang: ein kurzer Text zum Weiterschicken
+      var erinnern = !bez && alter >= 30 ? h("button", { type: "button", class: "rg-knopf",
+        title: "Kurze Zahlungserinnerung zum Weiterschicken", onclick: function () { erinnerungTeilen(rg); } },
+        [ikone("i-teilen"), " Erinnern"]) : null;
+      zeile.appendChild(h("div", { class: "rg-aktionen" }, [pdf, eingang, erinnern, nummer].filter(Boolean)));
     }
     neu();
     return zeile;
+  }
+
+  function erinnerungText(rg) {
+    var st = rechnungStamm(rg), f = rg.felder || {};
+    return "Hallo,\n\nzu meiner Rechnung Nr. " + rg.nummer + " vom "
+      + new Date(rg.datum).toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" })
+      + " über " + euro(Number(rg.betrag) || 0) + (f.datum ? " (Spiel am " + f.datum + ")" : "")
+      + " ist bei mir bisher keine Zahlung eingegangen. Ich bitte um Überweisung."
+      + "\n\nVielen Dank und viele Grüße\n" + (st.name || "");
+  }
+  function erinnerungTeilen(rg) {
+    var text = erinnerungText(rg);
+    if (navigator.share) {
+      navigator.share({ title: "Zahlungserinnerung " + rg.nummer, text: text }).catch(function () {});
+      return;
+    }
+    var kopie = navigator.clipboard && navigator.clipboard.writeText ? navigator.clipboard.writeText(text) : Promise.reject();
+    kopie.then(function () { kurzMeldung("Erinnerung kopiert – einfügen und senden.", "gut"); },
+               function () { meldung(text, ""); });
   }
 
   // Der Absender einer Rechnung, wie er beim Schreiben galt. Ohne ihn baute
@@ -4430,10 +4454,32 @@ window.Mitglieder = (function () {
     }).catch(function (e) { meldung("Ging nicht: " + (e && e.message ? e.message : e), "warn"); });
   }
 
+  // Am Handy das Teilen-Menue (Drucken, In Dateien sichern, Mail,
+  // WhatsApp), am Rechner der Download. Ein Download landet in einer
+  // App vom Home-Bildschirm irgendwo - geteilt wird eine Rechnung ohnehin.
+  // Kommt das Teilen nicht zustande (der Tipp liegt zu lange zurueck,
+  // weil das PDF erst gebaut wurde), wird es doch ein Download.
   function pdfHerunterladen(blob, name) {
-    var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name;
-    document.body.appendChild(a); a.click(); document.body.removeChild(a);
-    setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+    function laden() {
+      var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+    }
+    var datei = null;
+    try { datei = new File([blob], name, { type: blob.type || "application/pdf" }); } catch (e) {}
+    var handy = !!(window.matchMedia && window.matchMedia("(pointer: coarse)").matches);
+    if (handy && datei && navigator.canShare && navigator.share) {
+      var geht = false;
+      try { geht = navigator.canShare({ files: [datei] }); } catch (e) {}
+      if (geht) {
+        navigator.share({ files: [datei], title: name }).catch(function (e) {
+          if (e && e.name === "AbortError") return;   // selbst abgebrochen
+          laden();
+        });
+        return;
+      }
+    }
+    laden();
   }
 
   function aktualisiereZeile(spiel) {
@@ -5510,6 +5556,96 @@ window.Mitglieder = (function () {
   // Ein Satz, der sagt, was in dieser Stufe ansteht, und die Summe, um
   // die es dabei geht. Nicht die der Saison - die beantwortet eine
   // andere Frage und stand bisher in jeder Stufe dieselbe.
+  function alleBestaetigen(liste) {
+    var vorher = liste.map(function (sp) { return [sp, Object.assign({}, (einsaetze[sp.kennung] || {}).herkunft || {})]; });
+    stillSpeichern = true;
+    try { liste.forEach(function (sp) { speichereEinsatz(sp, { herkunft: null }); }); } finally { stillSpeichern = false; }
+    rendereAbrechnung();
+    rueckgaengigAnbieten(liste.length + " Vorschläge bestätigt", function () {
+      vorher.forEach(function (v) { if (Object.keys(v[1]).length) speichereEinsatz(v[0], { herkunft: v[1] }); });
+      rendereAbrechnung();
+    });
+  }
+  // Eine Leiste ueber der Navigation, acht Sekunden lang
+  function rueckgaengigAnbieten(text, zurueck) {
+    var alt = document.querySelector(".mg-rueckgaengig"); if (alt) alt.remove();
+    var leiste = h("div", { class: "mg-rueckgaengig", role: "status" }, [h("span", { text: text + " ✓" })]);
+    leiste.appendChild(h("button", { type: "button", text: "Rückgängig", onclick: function () { leiste.remove(); zurueck(); } }));
+    document.body.appendChild(leiste);
+    setTimeout(function () { if (leiste.isConnected) leiste.remove(); }, 8000);
+  }
+
+  // Einnahmen und Kosten je Monat eines Kalenderjahres, offene Rechnungen
+  // als Punkt darueber. Ein Bild statt der Tabelle im Jahresabschluss:
+  // man sieht auf einen Blick, wann gepfiffen wurde und wo Geld fehlt.
+  var ueberblickJahr = null;
+  function jahresUeberblick() {
+    var box = h("div", { class: "mg-ueberblick" });
+    var jetzt = new Date();
+    var spiele = alleSpiele().filter(function (sp) { return einsaetze[sp.kennung] && new Date(sp.beginn) < jetzt; });
+    var jahre = {};
+    spiele.forEach(function (sp) { jahre[String(new Date(sp.beginn).getFullYear())] = 1; });
+    var liste = Object.keys(jahre).sort().reverse();
+    box.appendChild(h("h4", {}, [ikone("i-balken"), " Jahresüberblick"]));
+    if (!liste.length) { box.appendChild(h("p", { class: "meta", text: "Noch keine gespielten Spiele mit Beträgen." })); return box; }
+    if (!ueberblickJahr || !jahre[ueberblickJahr]) ueberblickJahr = liste[0];
+    var wahl = h("div", { class: "stufen mg-jahrwahl", role: "group", "aria-label": "Jahr" });
+    liste.slice(0, 4).forEach(function (j) {
+      wahl.appendChild(h("button", { type: "button", class: j === ueberblickJahr ? "aktiv" : "", text: j,
+        onclick: function () { ueberblickJahr = j; box.replaceWith(jahresUeberblick()); } }));
+    });
+    box.appendChild(wahl);
+    var ein = [], kost = [], offen = [], m;
+    for (m = 0; m < 12; m++) { ein.push(0); kost.push(0); offen.push(0); }
+    spiele.forEach(function (sp) {
+      var d = new Date(sp.beginn);
+      if (String(d.getFullYear()) !== ueberblickJahr) return;
+      var e = einsaetze[sp.kennung];
+      ein[d.getMonth()] += betragFuer(sp, e).betrag || 0;
+      kost[d.getMonth()] += fahrtkosten(e) + (e.verpflegung || 0) + (e.auslagen || 0);
+    });
+    (rechnungListe || []).forEach(function (rg) {
+      if (rechnungBezahlt(rg) || String(rg.datum || "").slice(0, 4) !== ueberblickJahr) return;
+      offen[new Date(rg.datum).getMonth()] += Number(rg.betrag) || 0;
+    });
+    var groesst = Math.max.apply(null, ein.concat(kost, [1]));
+    var NS = "http://www.w3.org/2000/svg", B = 340, H = 156, unten = 132, oben = 16, sp = B / 12;
+    var svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("viewBox", "0 0 " + B + " " + H); svg.setAttribute("class", "mg-diagramm"); svg.setAttribute("role", "img");
+    svg.setAttribute("aria-label", "Einnahmen und Kosten je Monat " + ueberblickJahr);
+    function teil(tag, a, titel) {
+      var x = document.createElementNS(NS, tag);
+      Object.keys(a).forEach(function (k) { x.setAttribute(k, a[k]); });
+      if (titel) { var t = document.createElementNS(NS, "title"); t.textContent = titel; x.appendChild(t); }
+      svg.appendChild(x); return x;
+    }
+    teil("line", { x1: 0, x2: B, y1: unten, y2: unten, "class": "achse" });
+    var MON = ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"];
+    "JFMAMJJASOND".split("").forEach(function (b, i) {
+      var x = i * sp, w = sp * 0.32;
+      var he = Math.round(ein[i] / groesst * (unten - oben)), hk = Math.round(kost[i] / groesst * (unten - oben));
+      if (ein[i]) teil("rect", { x: (x + sp * 0.16).toFixed(1), y: unten - he, width: w.toFixed(1), height: he, rx: 2, "class": "ein" }, MON[i] + ": " + euro(ein[i]) + " Einnahmen");
+      if (kost[i]) teil("rect", { x: (x + sp * 0.52).toFixed(1), y: unten - hk, width: w.toFixed(1), height: hk, rx: 2, "class": "kost" }, MON[i] + ": " + euro(kost[i]) + " Kosten");
+      if (offen[i]) teil("circle", { cx: (x + sp / 2).toFixed(1), cy: 7, r: 4, "class": "offen" }, MON[i] + ": " + euro(offen[i]) + " offen");
+      var t = teil("text", { x: (x + sp / 2).toFixed(1), y: H - 6, "text-anchor": "middle", "class": "monat" });
+      t.textContent = b;
+    });
+    box.appendChild(svg);
+    box.appendChild(h("div", { class: "mg-legende" }, [h("span", { class: "ein", text: "Einnahmen" }),
+      h("span", { class: "kost", text: "Kosten" }), h("span", { class: "offen", text: "offene Rechnung" })]));
+    var E = ein.reduce(function (a, b) { return a + b; }, 0), K = kost.reduce(function (a, b) { return a + b; }, 0),
+        O = offen.reduce(function (a, b) { return a + b; }, 0);
+    // Der beste Monat in Worten - ein Balken sagt nicht, wie viel es war
+    var best = ein.indexOf(Math.max.apply(null, ein));
+    box.appendChild(h("div", { class: "mg-ueberblick-zahlen" }, [
+      h("div", {}, [h("small", { text: "Einnahmen" }), h("b", { text: euro(E) })]),
+      h("div", {}, [h("small", { text: "Kosten" }), h("b", { text: euro(K) })]),
+      h("div", {}, [h("small", { text: "Netto" }), h("b", { text: euro(E - K) })]),
+      h("div", { class: O ? "warn" : "" }, [h("small", { text: "Offen" }), h("b", { text: euro(O) })])]));
+    if (E) box.appendChild(h("p", { class: "meta", style: "margin:8px 0 0", text: "Stärkster Monat: " + MON[best] + " mit " + euro(ein[best]) + "." }));
+    return box;
+  }
+
   function arbeitsKopf(liste) {
     var st = arbeitsStufe(), n = liste.length;
     if (!n) return null;
@@ -5555,6 +5691,13 @@ window.Mitglieder = (function () {
     ].filter(Boolean));
     if (tun) box.appendChild(h("button", { type: "button", class: "mg-arbeitsknopf",
       text: tun[0], onclick: tun[1] }));
+    // Was die App selbst eingetragen hat, mit einem Tipp bestaetigen -
+    // statt Karte fuer Karte. Mit Rueckgaengig, falls es zu schnell ging.
+    var vorschlaege = liste.filter(function (sp) { return new Date(sp.beginn) < new Date() && gerechnetText(einsaetze[sp.kennung]); });
+    if (vorschlaege.length > 1) box.appendChild(h("button", { type: "button", class: "mg-neben mg-allebestaetigen",
+      text: "Alle " + vorschlaege.length + " Vorschläge bestätigen", onclick: function () { alleBestaetigen(vorschlaege); } }));
+    if (st === "fehlt" && ("ontouchstart" in window)) box.appendChild(h("small", { class: "meta mg-wischtipp",
+      text: "Tipp: Karte nach rechts wischen bestätigt sie, nach links klappt sie auf." }));
     // Der Weg zurueck zur ganzen Saison. Stand bis Fassung 277 als
     // eigene Zeile ueber diesem Kasten und wiederholte nur die Zahl, die
     // schon am Schritt steht. Hier drin, weil stufenZahlenNachfuehren()
@@ -5868,6 +6011,7 @@ window.Mitglieder = (function () {
     var panelInhalt = {
       detail: function () { return summenDetails(); },
       rechnungen: function () { return rechnungArchivRendern(h("div", {})); },
+      ueberblick: function () { return jahresUeberblick(); },
       art: function () { return abrechnungEinstellungen(spiele); },
       werkzeuge: function () {
         return h("div", {}, [
@@ -5907,7 +6051,7 @@ window.Mitglieder = (function () {
     // Liste), "Rechnungslauf" (steht im Arbeitskopf der Stufe
     // "Abrechnen") und "Eigene Betraege je Liga" (jetzt die Gebuehren-
     // ordnung in den Einstellungen). Die Blaetter gibt es weiter.
-    var WEITERE = [["kalender", "Kalender"],
+    var WEITERE = [["ueberblick", "Jahresüberblick"], ["kalender", "Kalender"],
       ["werkzeuge", "Jahresabschluss, Fahrtenbuch, Export"], ["eintragen", "+ Spiel nachtragen"],
       ["regeln", "Wie die App rechnet"]];
     // Im alten Design steht "Rechnung" in der Knopfreihe darueber - dort
@@ -6520,7 +6664,7 @@ window.Mitglieder = (function () {
     var wahl = h("input", { type: "checkbox", class: "check mg-wahl" }); wahl.checked = !!auswahl[sp.kennung];
     wahl.addEventListener("change", function () { if (wahl.checked) auswahl[sp.kennung] = sp; else delete auswahl[sp.kennung]; zeile.classList.toggle("gewaehlt", wahl.checked); auswahlLeiste(); });
     var zeile = h("div", { class: "spiel karte mg-eintrag" + (vergangen ? "" : " war") + (b.betrag != null ? " erfasst" : "") + (e.bezahlt ? " bezahlt" : "") + (auswahl[sp.kennung] ? " gewaehlt" : ""), "data-kennung": sp.kennung.replace(/"/g, "") }, [
-      h("div", { class: "mg-kopf", onclick: function (ev) { if (ev.target.closest("input, button, a, label")) return; if (auswahlModus) { wahl.checked = !wahl.checked; wahl.dispatchEvent(new Event("change")); return; } details.classList.toggle("versteckt"); zeile.classList.toggle("offen", !details.classList.contains("versteckt")); } }, [
+      h("div", { class: "mg-kopf", onclick: function (ev) { if (ev.target.closest("input, button, a, label")) return; if (zeile._gewischt) return; if (auswahlModus) { wahl.checked = !wahl.checked; wahl.dispatchEvent(new Event("change")); return; } details.classList.toggle("versteckt"); zeile.classList.toggle("offen", !details.classList.contains("versteckt")); } }, [
         h("div", { class: "mg-wahlfeld" + (auswahlModus ? "" : " versteckt") }, [wahl]),
         h("div", { class: "kopfzeile" }, [
           h("span", { class: "datum", text: datum(d) + " · " + uhr(d) + " Uhr" + (zeitzuschlag(sp) ? " · +20 %" : "") + (sp.privat ? " · selbst eingetragen" : "") }),
@@ -6605,6 +6749,51 @@ window.Mitglieder = (function () {
     zeile.addEventListener("touchstart", function () { timer = setTimeout(function () { auswahlStarten(sp); }, 550); }, { passive: true });
     ["touchend", "touchmove", "touchcancel"].forEach(function (ev) { zeile.addEventListener(ev, function () { clearTimeout(timer); }, { passive: true }); });
     zeile.addEventListener("contextmenu", function (ev) { ev.preventDefault(); auswahlStarten(sp); });
+    // Wischen: nach rechts bestaetigt die Vorschlaege der App, nach links
+    // klappt die Karte auf. Nur bei klar waagrechter Bewegung - senkrecht
+    // bleibt Scrollen. Das Wischen zwischen den Reitern laesst die Karte
+    // dafuer in Ruhe (data-eigenes-wischen).
+    zeile.setAttribute("data-eigenes-wischen", "1");
+    var wx = null, wy = 0, wDx = 0, wAn = false;
+    zeile.addEventListener("touchstart", function (ev) {
+      wx = null;
+      if (auswahlModus || ev.touches.length !== 1 || ev.target.closest("input, textarea, select")) return;
+      wx = ev.touches[0].clientX; wy = ev.touches[0].clientY; wDx = 0; wAn = false;
+    }, { passive: true });
+    zeile.addEventListener("touchmove", function (ev) {
+      if (wx === null) return;
+      var dx = ev.touches[0].clientX - wx, dy = ev.touches[0].clientY - wy;
+      if (!wAn) {
+        if (Math.abs(dx) < 14) return;
+        if (Math.abs(dy) > Math.abs(dx)) { wx = null; return; }
+        wAn = true; zeile.classList.add("wischt");
+      }
+      wDx = Math.max(-110, Math.min(110, dx));
+      zeile.style.transform = "translateX(" + Math.round(wDx * 0.7) + "px)";
+      zeile.classList.toggle("wisch-rechts", wDx > 70);
+      zeile.classList.toggle("wisch-links", wDx < -70);
+    }, { passive: true });
+    function wischEnde() {
+      if (wx === null) return;
+      wx = null;
+      if (!wAn) return;
+      zeile.classList.remove("wischt", "wisch-rechts", "wisch-links");
+      zeile.style.transform = "";
+      zeile._gewischt = true; setTimeout(function () { zeile._gewischt = false; }, 400);
+      if (wDx > 70) {
+        if (gerechnetText(einsaetze[sp.kennung])) {
+          speichereEinsatz(sp, { herkunft: null });
+          var gr = zeile.querySelector(".mg-status.gerechnet"); if (gr) gr.remove();
+          kurzMeldung("Bestätigt ✓", "gut");
+          stufenZahlenNachfuehren();
+        } else kurzMeldung("Hier ist nichts zu bestätigen.", "");
+      } else if (wDx < -70) {
+        details.classList.toggle("versteckt");
+        zeile.classList.toggle("offen", !details.classList.contains("versteckt"));
+      }
+    }
+    zeile.addEventListener("touchend", wischEnde, { passive: true });
+    zeile.addEventListener("touchcancel", function () { wx = null; zeile.classList.remove("wischt", "wisch-rechts", "wisch-links"); zeile.style.transform = ""; }, { passive: true });
     return zeile;
   }
 
@@ -11602,7 +11791,7 @@ window.Mitglieder = (function () {
     rechnungBezahlt: rechnungBezahlt, rechnungenOffenSumme: rechnungenOffenSumme,
     vereinHaupt: vereinHaupt, vereinKanon: vereinKanon, vereinAnschrift: vereinAnschrift,
     keinVerein: keinVerein, vereinAliaseSetzen: vereinAliaseSetzen, vereinNaechster: vereinNaechster,
-    absenderAus: absenderAus, rechnungStamm: rechnungStamm, rechnungenOhneSpiele: rechnungenOhneSpiele,
+    absenderAus: absenderAus, rechnungStamm: rechnungStamm, erinnerungText: erinnerungText, rechnungenOhneSpiele: rechnungenOhneSpiele,
     debSatz: debSatz, debGesamt: debGesamt, debTagesFaktor: debTagesFaktor, zeitzuschlagAn: zeitzuschlag
   };
 
