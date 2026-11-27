@@ -1368,6 +1368,26 @@ def test_push_rechnungen():
            "nach 60 Tagen die naechste Stufe")
 
 
+def test_push_freischaltung():
+    """Erinnerung an die Freischaltung im ESRW-Portal (Fassung 314)."""
+    print("\nPush: Freischaltung bei esrw.de")
+    try:
+        import push_senden as P
+    except Exception as e:
+        print("  --   push_senden nicht ladbar (%s), Test uebersprungen" % e)
+        return
+    from datetime import datetime
+    mi = datetime(2026, 12, 2, 18, 30, tzinfo=P.BERLIN)          # Mittwoch
+    n = P.freischaltung_erinnerung({}, mi, set())
+    pruefe(n and n[0] == "freischaltung|2026-12-02", "mittwochs ab 18 Uhr", n and n[0])
+    pruefe(n and "KW 50" in n[1]["text"], "nennt die Woche danach", n and n[1]["text"])
+    pruefe(n and n[1]["url"].startswith("https://www.esrw.de/portal/"), "fuehrt ins Portal")
+    pruefe(P.freischaltung_erinnerung({}, datetime(2026, 12, 2, 17, 0, tzinfo=P.BERLIN), set()) is None, "nicht vor 18 Uhr")
+    pruefe(P.freischaltung_erinnerung({}, datetime(2026, 12, 3, 19, 0, tzinfo=P.BERLIN), set()) is None, "nicht donnerstags")
+    pruefe(P.freischaltung_erinnerung({}, mi, {"freischaltung|2026-12-02"}) is None, "einmal je Mittwoch")
+    pruefe(P.freischaltung_erinnerung({"einstellungen": {"pushfreischaltung": "0"}}, mi, set()) is None, "abschaltbar")
+
+
 def test_push_erinnerungen():
     """Wann eine Erinnerung faellig ist.
 
@@ -1989,7 +2009,7 @@ def main():
                  test_archivkennung, test_statistik_zaehlt_einmal, test_spielschluessel, test_blattfokus, test_netzstand,
                  test_push_nachrichten, test_push_erinnerungen, test_push_rechnungen,
                  test_anzeigenamen, test_abgesetzt,
-                 test_tresor):
+                 test_tresor, test_push_freischaltung):
         test()
     print("\n" + "-" * 58)
     if FEHLER:

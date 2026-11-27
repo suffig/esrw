@@ -1277,6 +1277,7 @@
       var seiten = suchSeiten(f, mehrEintraege);
       if (seiten.length) { suchGruppe(liste, "Seiten"); treffer += seiten.length; }
       seiten.forEach(function (e) { suchEintrag(liste, e[2], e[3] || "", function () {
+        if (/^https?:/.test(e[0])) { window.open(e[0], "_blank", "noopener"); return; }
         if (e[0].charAt(0) !== "#") { location.href = e[0]; return; }
         location.hash = e[0].replace(/^#/, "");
       }); });
@@ -2239,6 +2240,10 @@
       }
     }
     var fuss = document.createElement("div"); fuss.className = "wk-fuss";
+    // Wer die Woche ansieht, denkt an die naechsten: Freischaltung im Portal
+    var fr = document.createElement("a"); fr.href = FREISCHALTUNG_URL; fr.target = "_blank"; fr.rel = "noopener";
+    fr.className = "textknopf wk-frei"; fr.textContent = "Freischaltung ↗"; fr.title = "Zeiten im ESRW-Portal eintragen";
+    fuss.appendChild(fr);
     var zum = document.createElement("a"); zum.href = "#plan"; zum.className = "textknopf"; zum.textContent = "Woche im Spielplan ›";
     zum.addEventListener("click", function () { planModusEinmal = "woche"; planWocheStart = mo; });
     fuss.appendChild(zum); box.appendChild(fuss);
@@ -5478,10 +5483,16 @@
   }
 
   // Selten gebraucht: steht in der einfachen Ansicht zugeklappt am Ende.
+  // Der Terminkalender im ESRW-Portal: dort traegt man ein, wann man
+  // eingeteilt werden kann. Eine Schnittstelle gibt es nicht (geprueft
+  // Fassung 314: reines PHP-Formular hinter dem Portal-Login) - die App
+  // fuehrt nur hin und erinnert daran.
+  var FREISCHALTUNG_URL = "https://www.esrw.de/portal/index.php?path=content&ccid=12";
   var MEHR_FARBEN = { "#archiv": "blau", "#statistik": "lila", "#aenderungen": "orange", "#mitglieder/notizen": "gelb",
     "#rechnung": "gruen", "#regeln": "tuerkis", "#rechner": "lila", "#mitfahren": "tuerkis", "#mitglieder/kollegen": "blau",
     "#mitglieder/info": "orange", "#mitglieder/frei": "pink", "#karte": "rot", "#einstellungen": "grau",
     "#mitglieder/admin": "grau", "#anleitung": "gelb", "tutorial/": "gelb", "#status": "grau", "#mitglieder": "blau" };
+  MEHR_FARBEN[FREISCHALTUNG_URL] = "orange";
   // Leer seit Fassung 308 (Nutzer): "Selten gebraucht" klappte Statistik,
   // Verfuegbarkeit, Anleitung und Diagnose weg - man suchte sie und fand
   // sie nicht. Der Mechanismus bleibt, falls einmal etwas dorthin soll.
@@ -5507,6 +5518,7 @@
       funktion("telefon") ? ["#mitglieder/kollegen", "i-users", "Kollegen", "Telefonliste \u2013 anrufen, WhatsApp, kopieren"] : null,
       funktion("info") ? ["#mitglieder/info", "i-info", "Info", "Ank\u00fcndigungen und Termine", "info"] : null,
       funktion("frei") ? ["#mitglieder/frei", "i-cal", "Verf\u00fcgbarkeit", "Wann du nicht kannst oder gern pfeifst"] : null,
+      [FREISCHALTUNG_URL, "i-cal", "Freischaltung bei esrw.de", "Zeiten im ESRW-Portal eintragen \u2013 mit deinem esrw.de-Login"],
       funktion("hallen") ? ["#karte", "i-pin", "Hallenkarte", "Alle Hallen auf der Karte"] : null,
       ["Konto und App"],
       ["#einstellungen", "i-key", "Einstellungen", "Konto, Push, Startseite, Schrift, Farbe"],
@@ -5531,6 +5543,8 @@
 
     function kachel(e) {
       var a = document.createElement("a"); a.href = e[0]; a.appendChild(ikone(e[1]));
+      // Fremde Seiten in einem eigenen Fenster - sonst ist die App weg
+      if (/^https?:/.test(e[0])) { a.target = "_blank"; a.rel = "noopener"; }
       // Jeder Bereich seine Farbe, wie in den Einstellungen eines Handys:
       // man findet ihn wieder, ohne zu lesen.
       a.setAttribute("data-farbe", MEHR_FARBEN[e[0]] || "grau");
@@ -6895,7 +6909,7 @@
   // Sicherung: alles, was nur hier liegt und nach einem verlorenen Konto
   // oder einem neuen Handy sonst neu getippt werden muesste.
   var SICHER_SCHLUESSEL = ["karten", "schrift", "akzent", "kompakt", "ziel", "start", "bereiche",
-    "pushwoche", "pushabrechnung", "pushvorlauf", "pushgespann", "kalender", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4", "thema", "funktionen", "verkehr", "verkehrmin"];
+    "pushwoche", "pushabrechnung", "pushvorlauf", "pushgespann", "pushfreischaltung", "kalender", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4", "thema", "funktionen", "verkehr", "verkehrmin"];
   function sicherungBauen() {
     var app = {};
     SICHER_SCHLUESSEL.forEach(function (k) { var w = lesen(k); if (w !== null && w !== undefined) app[k] = w; });
@@ -7043,7 +7057,7 @@
   // nur an einer Stelle eintrug, wurde nie gespeichert (so ging es
   // "pushvorlauf", "pushgespann" und den Kalenderwuenschen).
   var SYNC_SCHLUESSEL = ["verkehr", "verkehrmin", "karten", "schrift", "akzent", "kompakt",
-    "ziel", "start", "bereiche", "pushwoche", "pushabrechnung", "pushvorlauf", "pushgespann",
+    "ziel", "start", "bereiche", "pushwoche", "pushabrechnung", "pushvorlauf", "pushgespann", "pushfreischaltung",
     "kalender", "schnell-aus", "start-ordnung", "tab2", "tab3", "tab4",
     // Die Anleitung lief einmal, die Einrichtungsliste ist weggetippt - das
     // gilt fuer alle Geraete desselben Kontos, sonst steht beides nach jedem

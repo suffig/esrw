@@ -7718,6 +7718,9 @@ window.Mitglieder = (function () {
         var w = h("input", { type: "checkbox" }); w.checked = !(ctx && ctx.lesen && ctx.lesen("pushwoche") === "0");
         w.addEventListener("change", function () { if (ctx && ctx.schreiben) ctx.schreiben("pushwoche", w.checked ? null : "0"); if (ctx && ctx.einstellungenSync) ctx.einstellungenSync(); kurzMeldung(w.checked ? "Wochenvorschau an, sie kommt sonntags ab 18 Uhr." : "Wochenvorschau aus.", ""); });
         box.appendChild(h("label", { class: "mg-check mg-woche", style: "display:flex;gap:8px;align-items:center;margin-top:10px" }, [w, " Sonntags die Vorschau auf deine Woche"]));
+        var fr = h("input", { type: "checkbox" }); fr.checked = !(ctx && ctx.lesen && ctx.lesen("pushfreischaltung") === "0");
+        fr.addEventListener("change", function () { if (ctx && ctx.schreiben) ctx.schreiben("pushfreischaltung", fr.checked ? null : "0"); if (ctx && ctx.einstellungenSync) ctx.einstellungenSync(); kurzMeldung(fr.checked ? "Erinnerung an, sie kommt mittwochs ab 18 Uhr." : "Erinnerung an die Freischaltung aus.", ""); });
+        box.appendChild(h("label", { class: "mg-check mg-woche", style: "display:flex;gap:8px;align-items:center;margin-top:6px" }, [fr, " Mittwochs an die Freischaltung bei esrw.de erinnern"]));
         var ab = h("input", { type: "checkbox" }); ab.checked = !(ctx && ctx.lesen && ctx.lesen("pushabrechnung") === "0");
         ab.addEventListener("change", function () { if (ctx && ctx.schreiben) ctx.schreiben("pushabrechnung", ab.checked ? null : "0"); if (ctx && ctx.einstellungenSync) ctx.einstellungenSync(); });
         box.appendChild(h("label", { class: "mg-check mg-woche", style: "display:flex;gap:8px;align-items:center;margin-top:6px" }, [ab, " Nach dem Spiel „Spiel abrechnen?“ (abends, mit Vorbelegung)"]));

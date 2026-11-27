@@ -191,6 +191,29 @@ def wetter(koordinaten, zeitpunkt):
 
 
 WOCHENTAGE = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
+
+# Terminkalender im ESRW-Portal. Dort traegt jeder ein, wann er
+# eingeteilt werden kann; eine Schnittstelle gibt es nicht, die App
+# erinnert nur und fuehrt mit einem Tipp hin.
+FREISCHALTUNG_URL = "https://www.esrw.de/portal/index.php?path=content&ccid=12"
+
+
+def freischaltung_erinnerung(profil, jetzt, schon):
+    """Mittwochs ab 18 Uhr: Freischaltung fuer die kommenden Wochen
+    eintragen. Mitte der Woche, damit vor dem Wochenende noch Zeit ist;
+    abschaltbar ("pushfreischaltung" = "0"). Gibt (schluessel, nutzlast)
+    oder None."""
+    if jetzt.weekday() != 2 or jetzt.hour < 18:
+        return None
+    if str(((profil or {}).get("einstellungen") or {}).get("pushfreischaltung") or "") == "0":
+        return None
+    k = "freischaltung|" + jetzt.date().isoformat()
+    if k in schon:
+        return None
+    kw = (jetzt + timedelta(days=7)).isocalendar()[1]
+    return (k, {"titel": "Freischaltung bei esrw.de",
+                "text": "Sind deine Zeiten ab KW %d eingetragen? Ein Tipp öffnet den Terminkalender im ESRW-Portal." % kw,
+                "url": FREISCHALTUNG_URL, "tag": "freischaltung"})
 MONATE = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"]
 
 
@@ -476,6 +499,14 @@ def main():
             nachrichten.setdefault(uid, []).append((k, {
                 "titel": "Deine Woche: %d %s" % (len(zeilen), "Spiel" if len(zeilen) == 1 else "Spiele"),
                 "text": "\n".join(zeilen)[:900], "url": "./#plan", "tag": "woche"}))
+
+    # Mittwochs: an die Freischaltung im ESRW-Portal erinnern
+    for uid, profil in profil_von.items():
+        if not profil.get("slug"):
+            continue
+        n = freischaltung_erinnerung(profil, jetzt, schon.get(uid, set()))
+        if n:
+            nachrichten.setdefault(uid, []).append(n)
 
     # Anfang Januar: Jahresblatt fuers Finanzamt erinnern (einmal je Jahr)
     if an("abrechnung") and jetzt.month == 1 and 2 <= jetzt.day <= 14 and jetzt.hour >= 17:
