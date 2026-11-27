@@ -2456,7 +2456,7 @@ def verarbeite_aenderungen(personen, alt, stand, eigene_slugs):
     voll = os.path.join(BASIS, protokoll_pfad)
     # Auch schreiben, wenn nur die Klartextfassung dasteht: so wandert sie
     # beim ersten Lauf mit Schluessel in den Tresor, auch ohne Aenderungen.
-    umzug = bool(SCHLUESSEL) and os.path.exists(voll)
+    umzug = bool(SCHLUESSEL) and (os.path.exists(voll) or tresor.ist_alt(voll))
     if push or umzug or not (os.path.exists(voll) or os.path.exists(voll + ".bin")):
         schreibe(protokoll_pfad, protokoll)
 

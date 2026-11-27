@@ -209,6 +209,8 @@ window.Mitglieder = (function () {
   function wegGleiten(k, fertig) {
     if (!k || k._geht) return;
     k._geht = true;
+    // Ein kurzes Ruckeln in der Hand: erledigt (nur Android kann das)
+    try { if (navigator.vibrate) navigator.vibrate(8); } catch (e) {}
     if (bewegungAus()) { k.remove(); if (fertig) fertig(); return; }
     k.style.height = k.offsetHeight + "px";
     k.classList.add("mg-raus");

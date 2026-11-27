@@ -708,9 +708,12 @@ def test_tresor():
         open(probe + ".bin", "wb").write(b"ESRW1" + n + AESGCM(k).encrypt(n, text, None))
         pruefe(E2.lade(os.path.join("docs", "archiv", "0000-00.json"), None) == inhalt,
                "alte ESRW1-Datei bleibt lesbar")
+        pruefe(tresor.ist_alt(probe), "ist_alt erkennt ESRW1")
         E2.schreibe(os.path.join("docs", "archiv", "0000-00.json"), inhalt)
         pruefe(open(probe + ".bin", "rb").read().startswith(b"ESRW2"),
                "eine alte Datei wird gepackt neu geschrieben")
+        pruefe(not tresor.ist_alt(probe), "danach nicht mehr alt")
+        pruefe(not tresor.ist_alt(os.path.join(wurzel, "docs", "gibtesnicht.json")), "ohne Datei nicht alt")
         gross = [{"liga": "U17 Oberliga", "paarung": "EV A - EV B", "halle": "Halle %d" % i} for i in range(3000)]
         roh_gross = json.dumps(gross).encode("utf-8")
         pruefe(len(tresor.verschluesseln(roh_gross, k)) < len(roh_gross) / 8,

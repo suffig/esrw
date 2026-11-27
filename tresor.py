@@ -168,6 +168,17 @@ def text_schreiben(pfad, text, k):
             f.write(text)
 
 
+def ist_alt(pfad):
+    """Liegt <pfad>.bin noch im ungepackten Format ESRW1? Dateien, die nur
+    bei Aenderungen geschrieben werden (protokoll.json), blieben sonst
+    gross, bis sich zufaellig etwas tut."""
+    try:
+        with open(pfad + ".bin", "rb") as f:
+            return f.read(len(KENNUNG_ALT)) == KENNUNG_ALT
+    except OSError:
+        return False
+
+
 def datei_marke(pfad):
     """Kurzer Fingerabdruck der Datei, die die App laden wird - der .bin,
     sonst des Klartexts. Steht in stand.json; die App haengt ihn an die

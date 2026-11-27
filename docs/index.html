@@ -1215,7 +1215,7 @@
   .termin-heute .titel { font-size:var(--s-2xl); font-weight:800; display:flex; align-items:center; gap:8px; margin:4px 0 2px; }
   .termin-heute .meta { font-size:var(--s-m); }
   /* Ruhige Startseite: nur Kopfkarte und Spiele */
-  #detail.start-ruhig #uebersicht, #detail.start-ruhig #radar, #detail.start-ruhig #nachtrag, #detail.start-ruhig #pins, #detail.start-ruhig #kalender-box, #detail.start-ruhig #start-woche, #detail.start-ruhig #onboarding-kurz, #detail.start-ruhig .kollege { display:none !important; }   /* Zustandsklasse, s.o. */
+  #detail.start-ruhig #wochenkarte, #detail.start-ruhig #uebersicht, #detail.start-ruhig #radar, #detail.start-ruhig #nachtrag, #detail.start-ruhig #pins, #detail.start-ruhig #kalender-box, #detail.start-ruhig #start-woche, #detail.start-ruhig #onboarding-kurz, #detail.start-ruhig .kollege { display:none !important; }   /* Zustandsklasse, s.o. */
   #detail.start-ruhig .held .danach, #detail.start-ruhig .held .woche { display:none; }
   /* Archiv */
   .archiv-filter { padding:12px 14px; display:flex; flex-direction:column; gap:8px; }
@@ -4051,15 +4051,6 @@
 
   /* ===== Ideen 3, 6, 2, 5 (Fassung 310) ============================= */
   :root[data-design="neu"] .spiel.mit-liga { box-shadow:inset 4px 0 0 var(--liga-linie); }
-  .mit-dir { margin:0 0 12px; padding:14px 16px; border-left:4px solid var(--blau); }
-  .mit-dir h4 { margin:0 0 4px; display:flex; align-items:center; gap:6px; }
-  .mit-dir h4 svg.i { color:var(--blau); }
-  .mit-dir .meta { margin:0 0 6px; }
-  .mit-dir-naechstes { display:block; font-weight:700; text-decoration:none; padding:10px 0; }
-  .mit-dir-wege { display:flex; flex-wrap:wrap; gap:8px; }
-  .mit-dir-weg { display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:0 14px; border-radius:var(--radius-pille);
-    background:var(--blau-hell); color:var(--blau); font-weight:800; text-decoration:none; }
-  .mit-dir-weg svg.i { width:18px; height:18px; }
   :root[data-design="neu"] .stand.offline { background:var(--akzent-hell); color:var(--dim); }
   .mg-rb-liste { margin:12px 0 0; }
   .mg-rb-liste ol { margin:6px 0 0; padding-left:20px; }
@@ -4136,6 +4127,43 @@
   :root[data-design="neu"][data-theme="dark"] {
     --bg:#100f0e; --karte:#1b1a18; --linie:#2f2c29; --text:#ece8e2; --dim:#a39e96;
     --akzent:#e9e5de; --akzent-hell:#2a2724; --akzent-text:#171513; --held-1:#1e1c1a; --held-2:#2e2b27; }
+
+  /* ===== Fassung 312: Wochenkarte ==================================== */
+  .wochenkarte { padding:12px 12px 6px; }
+  .wk-kopf { display:flex; align-items:center; gap:6px; }
+  .wk-kopf h4 { margin:0; flex:1; min-width:0; display:flex; flex-direction:column; font-size:1.05rem; }
+  .wk-kopf h4 small { color:var(--dim); font-weight:600; font-size:var(--s-s); }
+  .wk-nav { width:44px; height:44px; font-size:1.3rem; line-height:1; flex:none; }
+  .wk-nav:disabled { opacity:.3; }
+  .wk-satz { margin:2px 0 10px; color:var(--dim); font-size:var(--s-l); }
+  .wk-tage { display:grid; grid-template-columns:repeat(7, minmax(0, 1fr)); gap:4px; }
+  .wk-tag { display:flex; flex-direction:column; align-items:center; gap:3px; min-width:0; min-height:88px;
+    padding:6px 2px 8px; border:0; border-radius:12px; background:var(--bg); color:var(--text); font:inherit; }
+  button.wk-tag { cursor:pointer; }
+  .wk-tag > span { font-size:var(--s-xs); font-weight:700; color:var(--dim); text-transform:uppercase; letter-spacing:.02em; }
+  .wk-tag > b { font-size:1rem; line-height:1.2; }
+  .wk-tag.heute { background:var(--blau-hell); box-shadow:inset 0 0 0 1.5px var(--blau); }
+  .wk-tag.heute > span, .wk-tag.heute > b { color:var(--blau); }
+  .wk-tag.war { opacity:.5; }
+  .wk-spiel { display:block; width:100%; padding:3px 0; border-radius:7px; font-style:normal; font-size:.7rem; font-weight:800;
+    text-align:center; background:var(--akzent-hell); font-variant-numeric:tabular-nums; overflow:hidden; white-space:nowrap; }
+  .wk-spiel.abgesagt { text-decoration:line-through; opacity:.6; }
+  .wk-mehr { background:none !important; color:var(--dim) !important; padding:0; }
+  .wk-fuss { display:flex; justify-content:flex-end; }
+  .wk-fahrten { margin-top:10px; border-top:1px solid var(--linie); }
+  .wk-fahrt { display:flex; align-items:center; gap:8px; min-height:52px; padding:8px 2px; text-decoration:none; color:var(--text);
+    border-bottom:1px solid var(--linie); }
+  .wk-fahrt > span:first-child { flex:1; min-width:0; display:flex; flex-direction:column; }
+  .wk-fahrt b { font-size:var(--s-l); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .wk-fahrt small { color:var(--dim); font-size:var(--s-s); }
+  .wk-fahrt small.wk-auto { color:var(--blau); font-weight:700; }
+  .wk-fahrt .pfeil { color:var(--dim); }
+  /* Begruessung ueber der Kopfkarte */
+  .gruss { display:flex; flex-direction:column; margin:2px 2px 12px; }
+  .gruss b { font-size:1.35rem; letter-spacing:-.01em; }
+  .gruss small { color:var(--dim); font-size:var(--s-l); margin-top:2px; }
+  #detail.start-ruhig #gruss { display:none; }
+  .wk-fuss .textknopf { min-height:44px; display:inline-flex; align-items:center; padding:0 4px; text-decoration:none; font-size:var(--s-l); }
 
 </style>
 </head>
@@ -4300,6 +4328,7 @@
 
     <div class="pins versteckt" id="pins"></div>
     <div class="woche start-woche" id="start-woche"></div>
+    <div id="gruss" class="gruss versteckt"></div>
     <div id="held"></div>
     <div id="heute"></div>
     <div id="schnellzugriff" class="schnellzugriff versteckt"></div>
@@ -4307,6 +4336,7 @@
     <div id="uebersicht" class="uebersicht"></div>
     <div id="radar"></div>
     <div id="nachtrag"></div>
+    <div id="wochenkarte" class="versteckt"></div>
 
     <details class="karte kalender-box" id="kalender-box" open>
       <summary><span><svg class="i"><use href="#i-cal"/></svg> Kalender</span><small id="kalender-stand">noch nicht abonniert</small></summary>
@@ -4603,6 +4633,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=311"></script>
+<script src="app.js?v=312"></script>
 </body>
 </html>

@@ -1230,6 +1230,64 @@ var kaputt = zlib.gzipSync(Buffer.from(jsonProbe)); kaputt = kaputt.subarray(0, 
 var warf = false; try { P.gunzip(new Uint8Array(kaputt)); } catch (e) { warf = true; }
 pruefe(warf, "abgeschnittene Datei wirft, statt halbe Daten zu liefern");
 
+console.log("\nWochenkarte");
+var wMo = new Date(2026, 10, 30);   // Montag, 30.11.2026
+var wP = { slug: "ich", spiele: [
+  { beginn: "2026-12-05T19:00:00+01:00", paarung: "A - B", gespann: [{ slug: "ich", name: "Ich, Selbst" }, { slug: "k1", name: "Muster, Max" }] },
+  { beginn: "2026-12-05T14:00:00+01:00", paarung: "C - D", gespann: [{ slug: "k2", name: "Beispiel, Eva" }] },
+  { beginn: "2026-12-06T10:00:00+01:00", paarung: "E - F", gespann: [{ slug: "k1", name: "Muster, Max" }] },
+  { beginn: "2026-11-29T18:00:00+01:00", paarung: "vorher", gespann: [] },
+  { beginn: "2026-12-07T00:30:00+01:00", paarung: "danach", gespann: [] }
+] };
+var wD = P.wocheDaten(wP, wMo);
+gleich(wD.tage.length, 7, "sieben Tage");
+gleich(wD.anzahl, 3, "nur Spiele von Montag bis Sonntag");
+gleich(wD.tage[5].spiele.length, 2, "zwei Spiele am Samstag");
+gleich(wD.tage[5].spiele[0].paarung, "C - D", "am Tag nach Uhrzeit sortiert");
+gleich(wD.tage[6].spiele[0].paarung, "E - F", "Sonntag ist der siebte Tag");
+gleich(wD.mit.join("|"), "Muster, Max|Beispiel, Eva", "Kollegen einmal, ohne mich");
+gleich(P.mitText(["Muster, Max"]), "Max", "ein Name");
+gleich(P.mitText(["Muster, Max", "Beispiel, Eva"]), "Max und Eva", "zwei Namen");
+gleich(P.mitText(["A, Anna", "B, Ben", "C, Carl", "D, Dora"]), "Anna, Ben und 2 weitere", "viele Namen");
+gleich(P.mitText([]), "", "niemand");
+gleich(P.mitText(["Muster, Max", "Kunz, Max"]), "Max M. und Max K.", "gleiche Vornamen mit Anfangsbuchstaben");
+
+console.log("\nGemeinsam gepfiffen (Fassung 312)");
+// Der Fall aus dem Screenshot: das Archiv fuehrt die laufende Saison
+// samt kommender Einteilung. Das Spiel am 28.11. stand oben als
+// "demnaechst" und darunter noch einmal als "schon gepfiffen".
+var gJetzt = new Date("2026-11-28T00:48:00+01:00").getTime();
+var gKommend = [{ beginn: "2026-11-28T10:00:00+01:00", paarung: "EV Duisburg 1b – SpG ESV Grizzlys" }];
+var gFenster = [{ beginn: "2026-11-14T18:00:00+01:00", paarung: "EV A - EV B" }];
+var gArchiv = [
+  { beginn: "2026-11-28T10:00:00+01:00", paarung: "EV Duisburg 1b - SpG ESV Grizzlys" },
+  { beginn: "2026-11-14T17:00:00Z", paarung: "EV A – EV B" },
+  { beginn: "2026-10-03T19:00:00+02:00", paarung: "EV C - EV D" },
+  { beginn: "2026-12-12T19:00:00+01:00", paarung: "EV E - EV F" }
+];
+var gAlle = P.gemeinsamGepfiffen(gFenster, gArchiv, gKommend, gJetzt);
+gleich(gAlle.length, 2, "kommendes Spiel nicht unter gepfiffen, Doppel einmal");
+gleich(gAlle.map(function (x) { return x.paarung; }).join("|"), "EV A - EV B|EV C - EV D", "neueste zuerst, Datenfenster gewinnt");
+gleich(P.gemeinsamGepfiffen([], [], [], gJetzt).length, 0, "nichts bleibt nichts");
+
+console.log("\nBegruessung");
+var gSpiele = [{ beginn: "2026-11-29T14:00:00+01:00", vergangen: false }, { beginn: "2026-12-02T19:00:00+01:00", vergangen: false }];
+var gr = P.grussText(new Date(2026, 10, 27, 20, 0), "Max", gSpiele);
+gleich(gr.gruss, "Guten Abend, Max", "abends");
+gleich(gr.lage, "Nächstes Spiel in 2 Tagen. 2 Spiele in den nächsten 7 Tagen.", "Lage in einem Satz");
+gleich(P.grussText(new Date(2026, 10, 29, 8, 0), "", gSpiele).lage.indexOf("Heute ist Spieltag"), 0, "Spieltag am Morgen");
+gleich(P.grussText(new Date(2026, 10, 29, 8, 0), "", gSpiele).gruss, "Guten Morgen", "ohne Namen kein Komma");
+gleich(P.grussText(new Date(2026, 10, 28, 13, 0), "Max", gSpiele).lage, "Morgen ist Spieltag. 2 Spiele in den nächsten 7 Tagen.", "morgen");
+gleich(P.grussText(new Date(2026, 11, 10, 13, 0), "Max", gSpiele).lage, "Gerade keine Einteilung – genieß die Pause.", "nichts mehr");
+
+console.log("\nIm Auto");
+P.setze({ profil: { slug: "ich" } });
+gleich(P.autoText([{ slug: "ich", art: "biete", zusagen: [{ slug: "k1", name: "Muster, Max" }] }]), "Im Auto: nimmst Max mit", "ich fahre");
+gleich(P.autoText([{ slug: "k2", name: "Beispiel, Eva", art: "biete", zusagen: [{ slug: "ich", name: "Ich, Selbst" }] }]), "Im Auto: fährst bei Eva mit", "ich fahre mit");
+gleich(P.autoText([{ slug: "ich", art: "suche" }]), "Suchst eine Mitfahrt", "Gesuch");
+gleich(P.autoText([{ slug: "k2", name: "Beispiel, Eva", art: "biete", zusagen: [] }]), "", "fremdes Angebot ohne mich");
+P.setze({ profil: null });
+
 console.log("\nMarken aus stand.json");
 gleich(P.markeAus({ marken: { "daten.json": "abc123" } }, "daten.json"), "abc123", "Marke wird gelesen");
 gleich(P.markeAus({ stand: "x" }, "daten.json"), null, "ohne Marken: null");

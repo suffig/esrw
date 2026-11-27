@@ -8,9 +8,11 @@
   // Wird einmal je Fassung gezeigt, damit die Kollegen neue Funktionen finden.
   // Hoechstens vier Punkte: mit sechs schob die Karte das naechste Spiel
   // unter den Bildschirmrand (gemessen bei 375 px).
-  var NEUIGKEITEN = { version: "2026-11-27", punkte: [
-    "Schneller: die Einteilungen kommen gepackt (rund ein Zwanzigstel) und werden nur noch geladen, wenn sich etwas geändert hat",
-    "Spielplan baut sich in Etappen auf – die ersten Karten stehen sofort da",
+  var NEUIGKEITEN = { version: "2026-11-27b", punkte: [
+    "Neu auf Start: „Diese Woche“ – Montag bis Sonntag mit deinen Spielen, Abfahrtszeit und wer mit dir im Auto sitzt",
+    "Kollegenprofil: gemeinsame Spiele stehen jetzt jeweils einmal da – kommende oben, gepfiffene darunter",
+    "Sofortstart: die App zeigt beim Öffnen gleich den letzten Stand und holt danach nur, was neu ist",
+    "Schneller: die Einteilungen kommen gepackt (rund ein Zwanzigstel), der Spielplan baut sich in Etappen auf",
     "Startseite ruhiger: oben dein nächstes Spiel und eine Aufgabe, darunter die nächsten fünf Spiele",
     "Dunkel jetzt warm statt blauschwarz, Ligafarben kräftiger; leere Seiten zeigen, wie es weitergeht"
   ], mehr: "tutorial/" };
@@ -1467,52 +1469,6 @@
     return r;
   }
 
-  // Auf dem Profil eines Kollegen: was ihr gemeinsam habt, und wie man ihn
-  // erreicht - gemeinsame Spiele, das naechste, Anrufen, WhatsApp, Mitfahren.
-  function mitDirZeigen(p, meins) {
-    var alt = el("mit-dir"); if (alt) alt.remove();
-    if (meins || !profil || !profil.slug || !daten) return;
-    var ich = (daten.personen || []).filter(function (x) { return x.slug === profil.slug; })[0];
-    if (!ich) return;
-    var meine = {}; (ich.spiele || []).forEach(function (s) { meine[kennungVon(s)] = 1; });
-    var gemeinsam = (p.spiele || []).filter(function (s) { return meine[kennungVon(s)]; });
-    var naechstes = gemeinsam.filter(function (s) { return !s.vergangen; }).sort(function (a, b) { return a.beginn < b.beginn ? -1 : 1; })[0];
-    var box = document.createElement("div"); box.className = "karte mit-dir"; box.id = "mit-dir";
-    var h4 = document.createElement("h4"); h4.appendChild(ikone("i-users")); h4.appendChild(document.createTextNode(" Mit dir"));
-    box.appendChild(h4);
-    var z = document.createElement("p"); z.className = "meta";
-    z.textContent = gemeinsam.length
-      ? gemeinsam.length + (gemeinsam.length === 1 ? " gemeinsames Spiel" : " gemeinsame Spiele") + " in dieser Saison"
-      : "Diese Saison noch kein gemeinsames Spiel.";
-    box.appendChild(z);
-    if (naechstes) {
-      var a = document.createElement("a"); a.className = "mit-dir-naechstes"; a.href = "#spiel/" + encodeURIComponent(kennungVon(naechstes));
-      var d = new Date(naechstes.beginn);
-      a.textContent = "Nächstes: " + datumKurz(d) + " " + uhr(d) + " · " + naechstes.paarung + " ›";
-      box.appendChild(a);
-    }
-    var wege = document.createElement("div"); wege.className = "mit-dir-wege"; box.appendChild(wege);
-    if (naechstes && funktion("mitfahren")) {
-      var mf = document.createElement("a"); mf.className = "mit-dir-weg"; mf.href = "#mitfahren"; mf.appendChild(ikone("i-route")); mf.appendChild(document.createTextNode(" Mitfahren"));
-      wege.appendChild(mf);
-    }
-    if (sitzungVorhanden() && window.Mitglieder && window.Mitglieder.kontaktVon) {
-      window.Mitglieder.kontaktVon(p.slug).then(function (k) {
-        if (!k || !k.telefon || !box.isConnected) return;
-        var nr = String(k.telefon).replace(/[^\d+]/g, "");
-        var wa = nr.replace(/^\+/, "").replace(/^00/, "").replace(/^0/, "49");
-        // Rueckwaerts eingefuegt, damit "Anrufen" vorne steht
-        [["https://wa.me/" + wa, "i-chat", " WhatsApp"], ["tel:" + nr, "i-telefon", " Anrufen"]].forEach(function (w, i) {
-          var l = document.createElement("a"); l.className = "mit-dir-weg"; l.href = w[0]; l.appendChild(ikone(w[1])); l.appendChild(document.createTextNode(w[2]));
-          if (!i) { l.target = "_blank"; l.rel = "noopener"; }
-          wege.insertBefore(l, wege.firstChild);
-        });
-      }).catch(function () {});
-    }
-    var det = el("detail"), held = det.querySelector(".held");
-    if (held && held.parentNode) held.parentNode.insertBefore(box, held); else det.insertBefore(box, det.firstChild);
-  }
-
   function karte(s, fuer) {
     var beginn = new Date(s.beginn), treff = new Date(s.treffpunkt);
     var karteEl = document.createElement("div");
@@ -2076,6 +2032,184 @@
   }
 
   // -------------------------------------------------------- Dashboard-Kacheln
+
+  // Die Woche ab Montag mo, aufbereitet ohne DOM: sieben Tage mit den
+  // eigenen Spielen und wer dabei ist. Steht so in der Luke, damit der
+  // Test die Woche nachrechnen kann.
+  function wocheDaten(p, mo) {
+    var ende = tagePlus(mo, 7), tage = [], mit = {}, reihe = [], anzahl = 0;
+    for (var i = 0; i < 7; i++) tage.push({ datum: tagePlus(mo, i), spiele: [] });
+    (p.spiele || []).forEach(function (s) {
+      var d = new Date(s.beginn);
+      if (d < mo || d >= ende || istGeloescht(s)) return;
+      tage[(d.getDay() + 6) % 7].spiele.push(s); anzahl++;
+      (s.gespann || []).forEach(function (b) {
+        if (!b.slug || b.slug === p.slug || mit[b.slug]) return;
+        mit[b.slug] = 1; reihe.push(b.name);
+      });
+    });
+    tage.forEach(function (t) { t.spiele.sort(function (a, b) { return new Date(a.beginn) - new Date(b.beginn); }); });
+    return { tage: tage, anzahl: anzahl, mit: reihe };
+  }
+  function mitText(namen) {
+    if (!namen.length) return "";
+    var v = namen.map(vorname), oft = {};
+    v.forEach(function (x) { oft[x] = (oft[x] || 0) + 1; });
+    // Zwei Max in einer Woche: "Max M. und Max K." statt "Max und Max"
+    v = v.map(function (x, i) { return oft[x] > 1 ? x + " " + String(namen[i]).trim().charAt(0) + "." : x; });
+    return v.length <= 3 ? v.slice(0, -1).join(", ") + (v.length > 1 ? " und " : "") + v[v.length - 1]
+                         : v.slice(0, 2).join(", ") + " und " + (v.length - 2) + " weitere";
+  }
+  // Die Woche auf einen Blick: Mo bis So, je Tag die eigenen Spiele als
+  // farbige Marke mit Uhrzeit, darueber ein Satz, wie voll die Woche ist
+  // und mit wem. Pfeile blaettern eine Woche zurueck und vier vor; der
+  // Spielplan hat die ganze Woche fuer alle.
+  // Eine Zeile Persoenliches ueber der Kopfkarte: Gruss zur Tageszeit und
+  // in einem Satz, wie die Lage ist. Nur auf der eigenen Startseite.
+  function grussText(jetzt, name, spiele) {
+    var h = jetzt.getHours();
+    var gruss = h >= 5 && h < 11 ? "Guten Morgen" : h >= 17 && h < 23 ? "Guten Abend" : "Hallo";
+    var heute = new Date(jetzt); heute.setHours(0, 0, 0, 0);
+    var kommend = (spiele || []).filter(function (s) { return !s.vergangen && new Date(s.beginn) >= jetzt; })
+      .sort(function (a, b) { return new Date(a.beginn) - new Date(b.beginn); });
+    var lage;
+    if (!kommend.length) lage = "Gerade keine Einteilung – genieß die Pause.";
+    else {
+      var tage = Math.round((new Date(kommend[0].beginn).setHours(0, 0, 0, 0) - heute) / 86400000);
+      lage = tage <= 0 ? "Heute ist Spieltag – gute Fahrt!" : tage === 1 ? "Morgen ist Spieltag."
+        : "Nächstes Spiel in " + tage + " Tagen.";
+      var woche = kommend.filter(function (s) { return new Date(s.beginn) < tagePlus(heute, 7); }).length;
+      if (woche > 1) lage += " " + woche + " Spiele in den nächsten 7 Tagen.";
+    }
+    return { gruss: gruss + (name ? ", " + name : ""), lage: lage };
+  }
+  function zeigeGruss(p, meins) {
+    var box = el("gruss"); if (!box) return;
+    box.classList.toggle("versteckt", !meins || startEinstellung("ruhig"));
+    if (!meins) return;
+    var g = grussText(new Date(), vorname(p.name), p.spiele);
+    box.innerHTML = "";
+    var b = document.createElement("b"); b.textContent = g.gruss; box.appendChild(b);
+    var sm = document.createElement("small"); sm.textContent = g.lage; box.appendChild(sm);
+  }
+  // Wer mit wem im Auto sitzt, aus den Eintraegen von "Zusammen fahren"
+  function autoText(eintraege) {
+    var ich = profil && profil.slug;
+    if (!ich) return "";
+    var mein = eintraege.filter(function (m) { return m.slug === ich; })[0];
+    if (mein && mein.art === "biete" && (mein.zusagen || []).length) return "Im Auto: nimmst " + mitText(mein.zusagen.map(function (z) { return z.name; })) + " mit";
+    var bei = eintraege.filter(function (m) { return m.art === "biete" && (m.zusagen || []).some(function (z) { return z.slug === ich; }); })[0];
+    if (bei) return "Im Auto: fährst bei " + vorname(bei.name) + " mit";
+    if (mein && mein.art === "biete") return "Bietest Plätze an";
+    if (mein && mein.art === "suche") return "Suchst eine Mitfahrt";
+    return "";
+  }
+  var wochenVersatz = 0;
+  function zeigeWochenkarte(p, meins) {
+    var box = el("wochenkarte"); if (!box) return;
+    box.innerHTML = ""; box.className = "versteckt";
+    if (!meins || !startEinstellung("wochenkarte")) return;
+    box.className = "karte wochenkarte";
+    var heute = new Date(); heute.setHours(0, 0, 0, 0);
+    var mo = tagePlus(heute, -((heute.getDay() + 6) % 7) + 7 * wochenVersatz);
+    var w = wocheDaten(p, mo);
+    var kopf = document.createElement("div"); kopf.className = "wk-kopf";
+    var h4 = document.createElement("h4");
+    var titel = wochenVersatz === 0 ? "Diese Woche" : wochenVersatz === 1 ? "Nächste Woche" : wochenVersatz === -1 ? "Letzte Woche" : "In " + wochenVersatz + " Wochen";
+    h4.appendChild(document.createTextNode(titel));
+    var sm = document.createElement("small");
+    sm.textContent = "KW " + kalenderwoche(mo) + " · " + mo.getDate() + "." + (mo.getMonth() + 1) + ". – " + tagePlus(mo, 6).getDate() + "." + (tagePlus(mo, 6).getMonth() + 1) + ".";
+    h4.appendChild(sm); kopf.appendChild(h4);
+    [["‹", -1, "Woche zurück"], ["›", 1, "Woche vor"]].forEach(function (n) {
+      var b = document.createElement("button"); b.type = "button"; b.className = "rund wk-nav"; b.textContent = n[0];
+      b.setAttribute("aria-label", n[2]);
+      b.disabled = (n[1] < 0 && wochenVersatz <= -1) || (n[1] > 0 && wochenVersatz >= 4);
+      b.addEventListener("click", function () { wochenVersatz += n[1]; zeigeWochenkarte(p, meins); });
+      kopf.appendChild(b);
+    });
+    box.appendChild(kopf);
+    var satz = document.createElement("p"); satz.className = "wk-satz";
+    if (w.anzahl) {
+      satz.textContent = w.anzahl + (w.anzahl === 1 ? " Spiel" : " Spiele") + (w.mit.length ? " · mit " + mitText(w.mit) : "");
+    } else {
+      var naechstes = (p.spiele || []).filter(function (s) { return new Date(s.beginn) >= tagePlus(mo, 7) && !istGeloescht(s); })[0];
+      satz.textContent = "Frei" + (naechstes ? " · nächstes Spiel am " + datumKurz(new Date(naechstes.beginn)) : "");
+    }
+    box.appendChild(satz);
+    var raster = document.createElement("div"); raster.className = "wk-tage";
+    w.tage.forEach(function (t) {
+      var hat = t.spiele.length;
+      var z = document.createElement(hat ? "button" : "div");
+      z.className = "wk-tag" + (t.datum.getTime() === heute.getTime() ? " heute" : "") + (t.datum < heute ? " war" : "") + (hat ? " hat" : "");
+      if (hat) {
+        z.type = "button";
+        z.setAttribute("aria-label", datumKurz(t.datum) + ": " + t.spiele.map(function (s) { return uhr(new Date(s.beginn)) + " Uhr " + s.paarung; }).join(", "));
+        z.addEventListener("click", function () {
+          if (hat === 1) { location.hash = "spiel/" + encodeURIComponent(kennungVon(t.spiele[0])); return; }
+          planModusEinmal = "woche"; planWocheStart = mo; location.hash = "plan";
+        });
+      }
+      var wt = document.createElement("span"); wt.textContent = wochentag[t.datum.getDay()]; z.appendChild(wt);
+      var nr = document.createElement("b"); nr.textContent = t.datum.getDate(); z.appendChild(nr);
+      t.spiele.slice(0, 2).forEach(function (s) {
+        var m = document.createElement("i"); m.className = "wk-spiel" + (istAbgesagt(kennungVon(s)) ? " abgesagt" : "");
+        if (s.liga) { var f = ligaFarbe(s.liga); m.style.background = f.bg; m.style.color = f.fg; }
+        m.textContent = uhr(new Date(s.beginn)); z.appendChild(m);
+      });
+      if (hat > 2) { var mehr = document.createElement("i"); mehr.className = "wk-spiel wk-mehr"; mehr.textContent = "+" + (hat - 2); z.appendChild(mehr); }
+      raster.appendChild(z);
+    });
+    box.appendChild(raster);
+    // Darunter je kommendes Spiel eine Zeile: wann losfahren und mit wem
+    // im Auto. Die Abfahrt kommt aus der gemerkten Strecke (Konto), die
+    // Mitfahrten aus "Zusammen fahren" - beides nachgereicht.
+    var kommende = [];
+    w.tage.forEach(function (t) { t.spiele.forEach(function (s) { if (new Date(s.beginn) >= new Date() && !istAbgesagt(kennungVon(s))) kommende.push(s); }); });
+    if (kommende.length) {
+      var fahrten = document.createElement("div"); fahrten.className = "wk-fahrten";
+      kommende.slice(0, 4).forEach(function (s) {
+        var d = new Date(s.beginn);
+        var a = document.createElement("a"); a.className = "wk-fahrt"; a.href = "#spiel/" + encodeURIComponent(kennungVon(s));
+        var links = document.createElement("span");
+        var oben = document.createElement("b"); oben.textContent = wochentag[d.getDay()] + " " + uhr(d) + " · " + (s.halle || s.paarung);
+        var unten = document.createElement("small");
+        var mitWem = (s.gespann || []).filter(function (g) { return g.slug !== p.slug; }).map(function (g) { return vorname(g.name); });
+        unten.textContent = "Treffpunkt " + uhr(new Date(s.treffpunkt)) + (mitWem.length ? " · mit " + mitWem.join(", ") : "");
+        links.appendChild(oben); links.appendChild(unten); a.appendChild(links);
+        var pf = document.createElement("span"); pf.className = "pfeil"; pf.textContent = "›"; a.appendChild(pf);
+        fahrten.appendChild(a);
+        a._unten = unten; a._spiel = s;
+      });
+      box.appendChild(fahrten);
+      if (sitzungVorhanden()) {
+        var zeilen = [].slice.call(fahrten.children);
+        ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) {
+          if (!st.eingerichtet || !st.session) return;
+          zeilen.forEach(function (z) {
+            window.Mitglieder.abfahrt(z._spiel.halle).then(function (roh) {
+              if (!roh || !roh.minuten || !z.isConnected) return;
+              var ab = new Date(new Date(z._spiel.treffpunkt).getTime() - mitPuffer(roh).minuten * 60000);
+              z._unten.textContent = "Losfahren " + uhr(ab) + " · " + z._unten.textContent;
+            }).catch(function () {});
+          });
+          if (!funktion("mitfahren") || !window.Mitglieder.mitfahrtenFuer) return;
+          return window.Mitglieder.mitfahrtenFuer(kommende).then(function (mf) {
+            if (!mf) return;
+            zeilen.forEach(function (z) {
+              var t = autoText(mf[kennungVon(z._spiel)] || []);
+              if (!t || !z.isConnected) return;
+              var auto = document.createElement("small"); auto.className = "wk-auto"; auto.textContent = t;
+              z.firstChild.appendChild(auto);
+            });
+          });
+        }).catch(function () {});
+      }
+    }
+    var fuss = document.createElement("div"); fuss.className = "wk-fuss";
+    var zum = document.createElement("a"); zum.href = "#plan"; zum.className = "textknopf"; zum.textContent = "Woche im Spielplan ›";
+    zum.addEventListener("click", function () { planModusEinmal = "woche"; planWocheStart = mo; });
+    fuss.appendChild(zum); box.appendChild(fuss);
+  }
 
   function zeigeStartWoche(p) {
     // Ohne kommendes Spiel gibt es keine Karte oben - dann steht der Streifen frei
@@ -2663,7 +2797,10 @@
             tag.toLocaleDateString("de-DE", { month: "long", year: "numeric" })];
   }
   function istMeins(s) { return !!(profil && profil.slug && s.besetzung && s.besetzung.some(function (b) { return b.slug === profil.slug; })); }
-  function planModus() { var m = lesen("plan-modus"); return m === "liste" || m === "monat" || m === "woche" ? m : (lesen("plan-kompakt") === "1" ? "liste" : "karten"); }
+  // Von der Wochenkarte aus: Woche nur fuer diesen Besuch, die gemerkte
+  // Darstellung bleibt, wie man sie gewaehlt hat.
+  var planModusEinmal = null;
+  function planModus() { if (planModusEinmal) return planModusEinmal; var m = lesen("plan-modus"); return m === "liste" || m === "monat" || m === "woche" ? m : (lesen("plan-kompakt") === "1" ? "liste" : "karten"); }
   var schnellWahl = null, planWocheStart = null;
   function schnellAnzeigen() {
     Array.prototype.forEach.call(el("plan-schnell").querySelectorAll(".chip"), function (c) { c.classList.toggle("aktiv", c.getAttribute("data-schnell") === schnellWahl); });
@@ -3405,6 +3542,8 @@
     zeigeEinrichtung(p, meins);
     zeigeUebersicht(p);
     zeigeNachtrag(p);
+    zeigeWochenkarte(p, meins);
+    zeigeGruss(p, meins);
     var ziel = el("spiele"); ziel.innerHTML = "";
     var kommend = p.spiele.filter(function (s) { return !s.vergangen; });
     var gewesen = p.spiele.filter(function (s) { return s.vergangen; }).reverse();
@@ -3473,7 +3612,6 @@
     // Woran man sieht, wo man ist: eine Kante an der Seite, nicht nur
     // eine graue Zeile ganz oben.
     el("detail").classList.toggle("fremdes-profil", !meins);
-    mitDirZeigen(p, meins);
     el("start-anpassen").classList.toggle("versteckt", !meins);
     el("abfahrt-ics").classList.add("versteckt");
     if (profil && profil.slug === p.slug && sitzungVorhanden()) ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
@@ -3902,6 +4040,22 @@
     var r = document.createElement("span"); r.className = "pfeil"; r.textContent = "›"; a.appendChild(r);
     return a;
   }
+  // Was zwei Leute schon zusammen gepfiffen haben: Datenfenster und
+  // Archiv zusammengefuehrt, jedes Spiel einmal, nichts Kommendes.
+  // Ein Spiel ist dasselbe, wenn Anpfiff und Paarung (ohne Satzzeichen)
+  // gleich sind - die Quellen schreiben Bindestrich und Zeitzone nicht
+  // immer gleich. Siehe zeigeKollege().
+  function gemeinsamGepfiffen(fenster, archiv, kommend, jetztMs) {
+    function schl(s) { return new Date(s.beginn).getTime() + "|" + ohneZeichen(s.paarung || ""); }
+    var weg = {}, aus = [];
+    (kommend || []).forEach(function (s) { weg[schl(s)] = 1; });
+    (fenster || []).concat(archiv || []).forEach(function (x) {
+      var k = schl(x);
+      if (weg[k] || new Date(x.beginn).getTime() > jetztMs) return;
+      weg[k] = 1; aus.push(x);
+    });
+    return aus.sort(function (x, y) { return new Date(y.beginn) - new Date(x.beginn); });
+  }
   // Fremdes Profil: gemeinsame Spiele, Kontakt, Mitfahrt anfragen
   function zeigeKollege(p, meins) {
     var alt = el("detail").querySelector(".kollege"); if (alt) alt.remove();
@@ -3909,17 +4063,29 @@
     var box = document.createElement("div"); box.className = "karte kollege";
     var hh = document.createElement("h4"); hh.appendChild(ikone("i-users")); hh.appendChild(document.createTextNode("Du und " + (p.name.split(",")[1] || p.name).trim())); box.appendChild(hh);
     var gemeinsam = p.spiele.filter(function (s) { return (s.gespann || []).some(function (g) { return g.slug === profil.slug; }); });
-    var kommend = gemeinsam.filter(function (s) { return !s.vergangen; }), gewesen = gemeinsam.length - kommend.length;
+    // Kommend nach der Uhr, nicht nur nach dem Vermerk des letzten Laufs:
+    // der setzt "vergangen" erst beim naechsten Durchgang.
+    var jetztMs = Date.now();
+    function istKommend(s) { return !s.vergangen && new Date(s.beginn).getTime() > jetztMs - 2 * 3600000; }
+    var kommend = gemeinsam.filter(istKommend);
+    // Ein Spiel, egal aus welcher Quelle: Datenfenster und Archiv
+    // schreiben Paarung und Zeit nicht immer gleich (Bindestrich, Zone).
     var meta = document.createElement("p"); meta.className = "meta"; meta.style.margin = "0 0 4px";
-    meta.textContent = gemeinsam.length ? (kommend.length ? kommend.length + (kommend.length === 1 ? " gemeinsames Spiel" : " gemeinsame Spiele") + " demnächst" : "Zurzeit kein gemeinsames Spiel") + (gewesen ? " · " + gewesen + " im Datenfenster gepfiffen" : "") : "Noch kein gemeinsames Spiel im Datenfenster.";
+    function metaSetzen(gewesen) {
+      meta.textContent = kommend.length || gewesen
+        ? (kommend.length ? kommend.length + (kommend.length === 1 ? " gemeinsames Spiel" : " gemeinsame Spiele") + " demnächst" : "Zurzeit kein gemeinsames Spiel")
+          + (gewesen ? " · " + gewesen + " schon gepfiffen" : "")
+        : "Noch kein gemeinsames Spiel.";
+    }
     box.appendChild(meta);
     // Das Datumsraster der ".zeile" passt hier nicht - der Titel landete in
     // der schmalen Datumsspalte und brach mitten im Namen um.
     kommend.slice(0, 4).forEach(function (s) { box.appendChild(gemeinsamZeile(s)); });
     // Was man zusammen schon gepfiffen hat, stand hier nur als Zahl -
     // vier gemeinsame Spiele ohne ein Wort dazu, welche.
-    var vergangene = gemeinsam.filter(function (s) { return s.vergangen; })
-      .sort(function (x, y) { return x.beginn < y.beginn ? 1 : -1; });
+    var vergangene = gemeinsam.filter(function (s) { return !istKommend(s); })
+      .sort(function (x, y) { return new Date(y.beginn) - new Date(x.beginn); });
+    metaSetzen(vergangene.length);
     // Erst die aus dem Datenfenster, damit sofort etwas dasteht; das
     // Archiv kommt nach und ersetzt die Liste, sobald es da ist.
     var det = document.createElement("details"); det.className = "tausch";
@@ -3945,11 +4111,16 @@
           .catch(function () { return { saison: sn, daten: null }; });
       })).then(function (eingefroren) {
         if (!box.isConnected) return;
-        var alle = gemeinsamArchiv(a, eingefroren, profil.slug, p.slug);
-        // Nur ersetzen, wenn das Archiv mehr weiss - sonst flackert die
-        // Liste und wird womoeglich kuerzer.
-        if (alle.length <= vergangene.length) return;
-        listeFuellen(alle);
+        // Bis Fassung 311 ersetzte das Archiv die Liste, sobald es mehr
+        // Zeilen hatte - und es fuehrt die laufende Saison samt kommender
+        // Einteilungen. Das naechste gemeinsame Spiel stand so oben als
+        // "demnaechst" und darunter noch einmal als "schon gepfiffen",
+        // waehrend die Zahl in der Kopfzeile beim Datenfenster blieb.
+        // Jetzt: nur Vergangenes, mit dem Datenfenster zusammengefuehrt,
+        // jedes Spiel einmal, und die Kopfzeile zieht mit.
+        var alle = gemeinsamGepfiffen(vergangene, gemeinsamArchiv(a, eingefroren, profil.slug, p.slug), kommend, jetztMs);
+        if (alle.length === vergangene.length) return;
+        listeFuellen(alle); metaSetzen(alle.length);
       });
     }).catch(function () {});
     // Erst anlegen, wenn wirklich Knoepfe kommen - sonst klaffte hier eine Luecke
@@ -4005,7 +4176,7 @@
     // Die Spielplanliste haengt sonst mit Tausenden Knoten versteckt im
     // Dokument, und jede Stilberechnung (Thema, Schrift) laeuft mit.
     // zeigePlan() baut sie beim naechsten Besuch ohnehin neu.
-    if (vorher === "plan" && name !== "plan") { planLauf++; planRest = null; el("plan-liste").innerHTML = ""; }
+    if (vorher === "plan" && name !== "plan") { planLauf++; planRest = null; planModusEinmal = null; el("plan-liste").innerHTML = ""; }
     ["auswahl", "detail", "plan", "mitglieder", "halle", "status", "spiel", "mehr", "einstellungen", "karte", "statseite", "aenderungen", "mitfahren", "archiv", "regeln", "rechner", "gesperrt"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
     if (name !== "plan" && typeof filterBlatt === "function" && !el("plan-filter-blatt").classList.contains("versteckt")) filterBlatt(false);
     var reiter = (location.hash.split("/")[1] || "");
@@ -6562,6 +6733,7 @@
     ["danach", "„Danach“ auf der Karte oben", "das übernächste Spiel in einer Zeile", false],
     ["wetter", "Wetter auf der Karte oben", "zum Treffpunkt, mit Glättehinweis", true, "wetter"],
     ["abfahrt", "Abfahrtszeit auf der Karte oben", "braucht die Heimatadresse im Konto", true],
+    ["wochenkarte", "Diese Woche", "Montag bis Sonntag mit deinen Spielen und wer dabei ist, zum Blättern", true],
     ["woche", "Wochenstreifen", "die nächsten sieben Tage mit Punkten", false],
     ["termine", "Nächste Termine", "Ankündigungen mit Datum", true, "info"],
     ["radar", "Vertretungs-Radar", "offene Spiele und Gesuche in der Nähe (Login)", false, "tausch"],
@@ -6588,13 +6760,13 @@
     var std = START_BAUSTEINE.filter(function (b) { return b[0] === k; })[0]; return std ? std[3] : true;
   }
   // Reihenfolge der Bloecke auf Start (die uebrigen sitzen fest in der Kopfkarte)
-  var START_ORDNUNG = ["schnellzugriff", "einrichtung", "pins", "uebersicht", "radar", "nachtrag", "spiele", "kalender-box"];
-  var START_NAMEN = { schnellzugriff: "Schnellzugriff", einrichtung: "„Alles eingerichtet?“", pins: "Angepinnte Kollegen", uebersicht: "Kacheln und Termine", radar: "Vertretungs-Radar", nachtrag: "Hinweis zur Abrechnung", spiele: "Deine Spiele", "kalender-box": "Kalender-Karte" };
+  var START_ORDNUNG = ["schnellzugriff", "einrichtung", "pins", "uebersicht", "radar", "nachtrag", "wochenkarte", "spiele", "kalender-box"];
+  var START_NAMEN = { schnellzugriff: "Schnellzugriff", einrichtung: "„Alles eingerichtet?“", pins: "Angepinnte Kollegen", uebersicht: "Kacheln und Termine", radar: "Vertretungs-Radar", nachtrag: "Hinweis zur Abrechnung", wochenkarte: "Diese Woche", spiele: "Deine Spiele", "kalender-box": "Kalender-Karte" };
   // Oben das naechste Spiel und genau eine Aufgabe, dann die Spiele.
   // Einrichtung und Kalenderkarte stehen darunter - wichtig beim ersten
   // Mal, danach nur noch im Weg. Wer selbst sortiert hat, behaelt seins.
   function startVorgabe() {
-    return ["nachtrag", "schnellzugriff", "pins", "uebersicht", "radar", "spiele", "einrichtung", "kalender-box"];
+    return ["nachtrag", "wochenkarte", "schnellzugriff", "pins", "uebersicht", "radar", "spiele", "einrichtung", "kalender-box"];
   }
   function startOrdnung() {
     var o = []; try { o = JSON.parse(lesen("start-ordnung") || "[]") || []; } catch (e) {}
@@ -7261,7 +7433,7 @@
     window.print();
   });
   Array.prototype.forEach.call(el("plan-modus").querySelectorAll("button"), function (b) {
-    b.addEventListener("click", function () { schreiben("plan-modus", b.getAttribute("data-modus")); schreiben("plan-kompakt", null); zeigePlan(); });
+    b.addEventListener("click", function () { planModusEinmal = null; schreiben("plan-modus", b.getAttribute("data-modus")); schreiben("plan-kompakt", null); zeigePlan(); });
   });
   el("plan-heute").addEventListener("click", function () {
     planFertig();
@@ -7626,6 +7798,8 @@
   var letzterLauf = null;
   function standAnzeigen(d, lauf) {
     letzterLauf = lauf;
+    // Fuer den Sofortstart: welcher Stand zu den gemerkten Daten gehoert
+    if (lauf) schreiben("stand-zuletzt", JSON.stringify(lauf));
     if (lauf && lauf.stand) letzterStand = new Date(lauf.stand).toLocaleString("de-DE", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
     if (fassungWartet) { fassungWartetZeigen(); return; }
     var s = el("stand"); s.className = "stand"; s.innerHTML = "";
@@ -7737,14 +7911,66 @@
       .catch(function (e) { el("mitglieder").textContent = "Anmeldung konnte nicht geladen werden: " + e.message; });
     el("stand").textContent = "nur für Mitglieder";
   }
+  // Sofortstart: der zuletzt geladene Stand liegt (verschluesselt) im
+  // Zwischenspeicher des Service Workers. Mit ihm steht die App da,
+  // bevor das Netz geantwortet hat - in der Halle mit einem Strich
+  // Empfang waren das bis hierhin mehrere Sekunden Ladebalken.
+  // Danach fragt neuLaden() die winzige stand.json und zieht nur nach,
+  // wenn sich die Marke geaendert hat. Hoechstens 1,2 s warten, dann
+  // geht es den gewohnten Weg.
+  function zwischenstand() {
+    if (!("caches" in window)) return Promise.resolve(null);
+    var marke = null;
+    var lauf = Promise.all([tresorAufschliessen(), caches.keys()]).then(function (r) {
+      var k = r[0], name = k ? "daten.json.bin" : "daten.json";
+      // Nur der neueste Speicher des Service Workers: caches.match()
+      // durchsucht alle, und ein alter, noch nicht geloeschter haelt
+      // einen alten Stand.
+      var neuster = r[1].filter(function (n) { return /^einteilungen-v\d+$/.test(n); })
+        .sort(function (a, b) { return parseInt(b.slice(14), 10) - parseInt(a.slice(14), 10); })[0];
+      if (!neuster) return null;
+      return caches.open(neuster).then(function (c) { return c.match(new URL(name, location.href).href, { ignoreSearch: true }); })
+        .then(function (antwort) {
+          if (!antwort) return null;
+          return antwort.arrayBuffer().then(function (buf) {
+            // Die Marke aus den Bytes selbst, wie tresor.datei_marke():
+            // so gilt der gespeicherte Stand nie als neuer, als er ist.
+            return crypto.subtle.digest("SHA-256", buf).then(function (h) {
+              marke = Array.prototype.map.call(new Uint8Array(h), function (x) { return ("0" + x.toString(16)).slice(-2); }).join("").slice(0, 12);
+              return k ? tresorOeffnen(buf) : new TextDecoder().decode(buf);
+            });
+          }).then(function (t) { return JSON.parse(t); });
+        });
+    }).then(function (d) {
+      if (!d || !d.spiele || !d.personen) return null;
+      var st = null; try { st = JSON.parse(lesen("stand-zuletzt") || "null"); } catch (e) {}
+      st = Object.assign({}, st || {}, { marken: Object.assign({}, (st && st.marken) || {}, { "daten.json": marke }) });
+      return [d, st];
+    }).catch(function () { return null; });
+    return Promise.race([lauf, new Promise(function (ok) { setTimeout(function () { ok(null); }, 1200); })]);
+  }
+  var sofortGestartet = false;
   function startLaden() {
     document.documentElement.classList.remove("abgemeldet");
     // Nicht erst nach daten.json: sonst gilt keine Korrektur, wenn die
     // Datei einmal nicht kommt - und am wenigsten dort, wo es weh tut
     // (Archiv und Abrechnung bauen ihre Liste aus eigenen Dateien).
     korrekturenLaden(false);
-    return Promise.all([hole("daten.json"), hole("stand.json").catch(function () { return null; })])
-    .then(function (b) {
+    return zwischenstand().then(function (z) {
+      if (z) {
+        sofortGestartet = true;
+        datenStarten(z);
+        return neuLaden();
+      }
+      return Promise.all([hole("daten.json"), hole("stand.json").catch(function () { return null; })])
+        .then(datenStarten, startFehler);
+    });
+  }
+  function startFehler(e) {
+    anmeldeschirm((e && e.message) || "Daten konnten nicht geladen werden.");
+    el("stand").className = "stand alt";
+  }
+  function datenStarten(b) {
       startStufe(5);
       daten = b[0]; profil = profilLesen();
       datenMarke = markeAus(b[1], "daten.json"); letzteFrage = Date.now();
@@ -7779,11 +8005,6 @@
           obmannHinweis();
           if (!el("auswahl").classList.contains("versteckt")) location.hash = "plan";
         }).catch(function () {});
-    })
-    .catch(function (e) {
-      anmeldeschirm((e && e.message) || "Daten konnten nicht geladen werden.");
-      el("stand").className = "stand alt";
-    });
   }
   // Fusszeile: der Gesamtkalender heisst mit Schluessel anders
   feedBereit("alle").then(function (m) { if (m && el("alle")) { el("alle").href = "feeds/" + m + ".ics"; el("alle").textContent = "Kalender aller Spiele"; } });
@@ -7896,7 +8117,7 @@
       spieltagErlaubt: spieltagErlaubt, spieltagOffen: spieltagOffen, startEinstellung: startEinstellung,
       aendZerlegen: aendZerlegen, aendArt: aendArt, tourAngebote: tourAngebote,
       titelDoppelt: titelDoppelt, einrichtungSichtbar: einrichtungSichtbar,
-      naechstesEigenes: naechstesEigenes, gunzip: gunzip, markeAus: markeAus, adresseMit: adresseMit
+      naechstesEigenes: naechstesEigenes, wocheDaten: wocheDaten, grussText: grussText, gemeinsamGepfiffen: gemeinsamGepfiffen, autoText: autoText, kalenderwoche: kalenderwoche, mitText: mitText, gunzip: gunzip, markeAus: markeAus, adresseMit: adresseMit
     }
   };
 
