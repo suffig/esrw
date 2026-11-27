@@ -43,11 +43,12 @@ LAST-MODIFIED:20261120T094530Z
 DTSTART:20261128T080000Z
 DTEND:20261128T113000Z
 SUMMARY:SR · U11 LL Gelb: GSC Moers
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
-  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Gelb\nHalle: Eissporthal
- le Moers\nAdresse: Filderstraße 140\, 47447 Moers\nGespann: Honselmann\, 
- Tom (N)\nVergütung lt. Ordnung: 85 €\n\nQuelle: https://www.esrw.de/ein
- teilungen.html
+DESCRIPTION:!! Danach SpG Soester EG – ESC Kristall Lippstadt in Eissport
+ zentrum Möhnesee – nur 90 Min bis zum nächsten Anstoß !!\n\nRolle: Sc
+ hiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt: 09:00 Uhr (60 Min v
+ or Spielbeginn)\nLiga: U11 LL Gelb\nHalle: Eissporthalle Moers\nAdresse: F
+ ilderstraße 140\, 47447 Moers\nGespann: Honselmann\, Tom (N)\nVergütung 
+ lt. Ordnung: 85 €\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -60,6 +61,35 @@ BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Gelb: GSC Moers
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:ca88a250492b0af64f0d2cb310f70a006ffe4329@esrw.de
+SEQUENCE:0
+DTSTAMP:20261127T104230Z
+LAST-MODIFIED:20261127T104230Z
+DTSTART:20261128T093000Z
+DTEND:20261128T130000Z
+SUMMARY:SR · U11 LL Lila: SpG Soester EG – ESC Kristall Lippstadt
+DESCRIPTION:!! Davor GSC Moers in Eissporthalle Moers – nur 90 Min nach d
+ em vorigen Anstoß !!\n\nRolle: Schiedsrichter (SR)\nSpielbeginn: 11:30 Uh
+ r\nTreffpunkt: 10:30 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Lila\nHall
+ e: Eissportzentrum Möhnesee\nAdresse: Teigelhof 4\, 59519 Möhnesee\nGesp
+ ann: Arntz\, Florian (N)\nVergütung lt. Ordnung: 85 €\n\nQuelle: https:
+ //www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Möhnesee\, Teigelhof 4\, 59519 Möhnesee
+GEO:51.515208;8.159069
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Möhnesee,
+  Teigelhof 4, 59519 Möhnesee";X-APPLE-RADIUS=100;X-TITLE="Eissportzentrum
+  Möhnesee":geo:51.515208,8.159069
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Lila: SpG Soester E
+ G – ESC Kristall Lippstadt
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

@@ -126,16 +126,17 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:b12ea3694181df298c0ef6bdc39b170e56a32545@esrw.de
-SEQUENCE:0
-DTSTAMP:20261120T094530Z
-LAST-MODIFIED:20261120T094530Z
+SEQUENCE:1
+DTSTAMP:20261127T104230Z
+LAST-MODIFIED:20261127T104230Z
 DTSTART:20261128T084500Z
 DTEND:20261128T121500Z
 SUMMARY:SR · U9 LL Gelb: TuS Wiehl
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:45 Uhr\nTreffpunkt:
   09:45 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Gelb\nHalle: Eissporthall
- e Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nVergütung lt. Ordnung:
-  80 €\n\nQuelle: https://www.esrw.de/einteilungen.html
+ e Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Kalischke Chri
+ stian\nVergütung lt. Ordnung: 85 €\n\nQuelle: https://www.esrw.de/einte
+ ilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE

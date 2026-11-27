@@ -2034,15 +2034,16 @@ END:VEVENT
 BEGIN:VEVENT
 UID:d53ba4657e982bc7841bdabe0de6c0442812b9f3@esrw.de
 SEQUENCE:0
-DTSTAMP:20261120T094530Z
-LAST-MODIFIED:20261120T094530Z
+DTSTAMP:20261127T104230Z
+LAST-MODIFIED:20261127T104230Z
 DTSTART:20261128T084500Z
 DTEND:20261128T121500Z
 SUMMARY:SR · U9 LL Gelb: TuS Wiehl
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:45 Uhr\nTreffpunkt:
   09:45 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Gelb\nHalle: Eissporthall
- e Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nVergütung lt. Ordnung:
-  80 €\n\nQuelle: https://www.esrw.de/einteilungen.html
+ e Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Kalischke Chri
+ stian\nVergütung lt. Ordnung: 85 €\n\nQuelle: https://www.esrw.de/einte
+ ilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2060,15 +2061,15 @@ END:VEVENT
 BEGIN:VEVENT
 UID:7000542297990bac8e6fd02a3e9ed3583e6db93c@esrw.de
 SEQUENCE:0
-DTSTAMP:20261120T131534Z
-LAST-MODIFIED:20261120T131534Z
+DTSTAMP:20261127T104230Z
+LAST-MODIFIED:20261127T104230Z
 DTSTART:20261128T093000Z
 DTEND:20261128T130000Z
 SUMMARY:⚠ SR · U11 LL Lila: SpG Soester EG – ESC Kristall Lippstadt
 DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
  elbeginn: 11:30 Uhr\nTreffpunkt: 10:30 Uhr (60 Min vor Spielbeginn)\nLiga:
   U11 LL Lila\nHalle: Eissportzentrum Möhnesee\nAdresse: Teigelhof 4\, 595
- 19 Möhnesee\nGespann: Galeske\, Jonas\nVergütung lt. Ordnung: 85 €\n\n
+ 19 Möhnesee\nGespann: Orlando\, Malik\nVergütung lt. Ordnung: 85 €\n\n
  Quelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
@@ -3466,6 +3467,32 @@ BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
 DESCRIPTION:In einer Stunde an der Halle - SR · NRW U13: NRW U13
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:e33ce9f7e95f1bb49bf5488f189ab08e00da7979@esrw.de
+SEQUENCE:0
+DTSTAMP:20261127T104230Z
+LAST-MODIFIED:20261127T104230Z
+DTSTART:20261201T173000Z
+DTEND:20261201T210000Z
+SUMMARY:SR · U13 EHV NRW – U14 DEG
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
+  18:30 Uhr (60 Min vor Spielbeginn)\nHalle: Eishalle Brehmstraße\nAdresse
+ : Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Licau Robert\n\nQuelle: h
+ ttps://www.esrw.de/einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
+GEO:51.242557;6.802144
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
+ hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
+ hmstraße":geo:51.242557,6.802144
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U13 EHV NRW – U14 DEG
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

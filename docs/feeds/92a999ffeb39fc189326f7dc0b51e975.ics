@@ -3,7 +3,7 @@ VERSION:2.0
 PRODID:-//esrw-ical//Schiedsrichter-Einteilungen//DE
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
-X-WR-CALNAME:Einteilungen – Kalischke\, Christian (N)
+X-WR-CALNAME:Einteilungen – Kalischke Christian
 X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
@@ -50,6 +50,33 @@ GEO:51.602578;7.626858
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
  äupenweg 29, 59192 Bergkamen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle B
  ergkamen":geo:51.602578,7.626858
+END:VEVENT
+BEGIN:VEVENT
+UID:1a30aa0cf7f4389158d4987b0c7fe7980db5cfb1@esrw.de
+SEQUENCE:0
+DTSTAMP:20261127T104230Z
+LAST-MODIFIED:20261127T104230Z
+DTSTART:20261128T084500Z
+DTEND:20261128T121500Z
+SUMMARY:SR · U9 LL Gelb: TuS Wiehl
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:45 Uhr\nTreffpunkt:
+  09:45 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Gelb\nHalle: Eissporthall
+ e Wiehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Hauerwaas\, Ga
+ briel\nVergütung lt. Ordnung: 85 €\n\nQuelle: https://www.esrw.de/einte
+ ilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
+GEO:50.947034;7.5553
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
+ enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
+ ":geo:50.947034,7.5553
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Gelb: TuS Wiehl
+END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:a499304ee3a6474daf771c9a551ac34b5fa51414@esrw.de
