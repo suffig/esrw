@@ -8,13 +8,13 @@
   // Wird einmal je Fassung gezeigt, damit die Kollegen neue Funktionen finden.
   // Hoechstens vier Punkte: mit sechs schob die Karte das naechste Spiel
   // unter den Bildschirmrand (gemessen bei 375 px).
-  var NEUIGKEITEN = { version: "2026-11-27b", punkte: [
+  var NEUIGKEITEN = { version: "2026-11-27c", punkte: [
+    "Ligen in deutlich unterscheidbaren Farben – Landesliga, Oberliga, Bezirksliga und die Junioren sehen nicht mehr gleich aus",
+    "Spieltagskarte aufgeräumt: Liga als farbige Marke, wer mit dir pfeift, Route und Teilen nebeneinander",
+    "Suche: die Tastatur geht sofort auf, das ✕ im Feld leert den Suchbegriff",
     "Neu auf Start: „Diese Woche“ – Montag bis Sonntag mit deinen Spielen, Abfahrtszeit und wer mit dir im Auto sitzt",
-    "Kollegenprofil: gemeinsame Spiele stehen jetzt jeweils einmal da – kommende oben, gepfiffene darunter",
-    "Sofortstart: die App zeigt beim Öffnen gleich den letzten Stand und holt danach nur, was neu ist",
-    "Schneller: die Einteilungen kommen gepackt (rund ein Zwanzigstel), der Spielplan baut sich in Etappen auf",
-    "Startseite ruhiger: oben dein nächstes Spiel und eine Aufgabe, darunter die nächsten fünf Spiele",
-    "Dunkel jetzt warm statt blauschwarz, Ligafarben kräftiger; leere Seiten zeigen, wie es weitergeht"
+    "Mehr Farbe in Statistik und Archiv; Knöpfe und Felder über die ganze Breite",
+    "Sofortstart: die App zeigt beim Öffnen gleich den letzten Stand und holt danach nur, was neu ist"
   ], mehr: "tutorial/" };
   // Die Versionsnummer aus dem eigenen Script-Tag (app.js?v=NNN). Damit
   // laedt mitglieder.js unter derselben Adresse wie beim letzten Start -
@@ -548,10 +548,27 @@
     neuLaden().then(function () { el("stand").classList.remove("laedt"); toast("Aktualisiert.", "gut"); })
       .catch(function () { el("stand").classList.remove("laedt"); toast("Aktualisieren hat nicht geklappt.", "warn"); });
   });
-  el("suche-knopf").addEventListener("click", function () {
+  // iOS oeffnet die Tastatur nur, wenn ein Feld noch im selben Tipp den
+  // Fokus bekommt - ein focus() aus setTimeout bleibt ohne Tastatur.
+  // Das Suchfeld ist in dem Moment aber noch versteckt. Also bekommt ein
+  // unsichtbarer Platzhalter den Fokus, und wenn die Seite steht, gibt
+  // er ihn an das echte Feld weiter; die Tastatur bleibt dabei offen.
+  function tastaturVorbereiten() {
+    var t = el("tastatur-platz");
+    if (!t) {
+      t = document.createElement("input"); t.id = "tastatur-platz"; t.type = "text";
+      t.setAttribute("aria-hidden", "true"); t.tabIndex = -1; t.autocomplete = "off";
+      t.style.cssText = "position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;border:0;padding:0;font-size:16px;pointer-events:none";
+      document.body.appendChild(t);
+    }
+    try { t.focus({ preventScroll: true }); } catch (e) { t.focus(); }
+  }
+  function sucheOeffnen() {
+    tastaturVorbereiten();
     location.hash = "suche";
-    setTimeout(function () { var f = el("suche"); f.focus(); f.select(); window.scrollTo({ top: 0 }); }, 150);
-  });
+    setTimeout(function () { var f = el("suche"); f.focus(); f.select(); window.scrollTo({ top: 0 }); }, 80);
+  }
+  el("suche-knopf").addEventListener("click", sucheOeffnen);
   // Oben rechts: das eigene Profil - dort stehen Name, Anschrift, Nummer
   // und die Rechnungsdaten an einer Stelle.
   // Zoomen aus: die Angabe im <meta> ignoriert iOS seit Jahren, also hier
@@ -1032,16 +1049,32 @@
   }
 
   // Feste Farbe je Ligagruppe, damit U13 / RL / Frauen auf einen Blick unterscheidbar sind
-  var LIGA_FARBEN = { U7: 195, U9: 175, U11: 150, U13: 120, U15: 90, U17: 60, U20: 35, RL: 260, LL: 290, BL: 320, DNL: 10, DA: 0, Frauen: 340 };
+  // Vierzehn Toene, so verteilt, dass Nachbarn im Plan sich klar
+  // unterscheiden. Bis Fassung 312 hingen die Toene an Kuerzeln (LL, BL,
+  // RL) - die echten Namen beginnen aber mit "Landesliga", "Oberliga",
+  // "Senioren". Die fielen auf einen errechneten Ton, und Landesliga und
+  // Oberliga waren beide rosa. Die Junioren liegen bewusst nicht der
+  // Reihe nach auf dem Farbkreis: U15 und U17 stehen oft nebeneinander.
+  var LIGA_FARBEN = { DNL: 0, U17: 25, U13: 48, DEB: 95, U11: 130, U9: 160, U7: 185, BL: 200, U15: 220,
+                      RL: 248, U20: 272, OL: 295, Frauen: 320, LL: 343 };
+  var LIGA_WORTE = { SENIOREN: "RL", REGIONALLIGA: "RL", RLW: "RL", LANDESLIGA: "LL", BEZIRKSLIGA: "BL", BZL: "BL",
+                     OBERLIGA: "OL", DA: "Frauen", DAMEN: "Frauen" };
+  var LIGA_REIHE = [0, 25, 48, 95, 130, 160, 185, 200, 220, 248, 272, 295, 320, 343];
+  function ligaTon(liga) {
+    var g = ligaGruppe(liga), k = LIGA_WORTE[g] || g;
+    if (LIGA_FARBEN[k] !== undefined) return LIGA_FARBEN[k];
+    // Unbekannt: einer der vierzehn Toene, nicht irgendein Grad dazwischen
+    var x = 0; for (var i = 0; i < g.length; i++) x = (x * 31 + g.charCodeAt(i)) % 9973;
+    return LIGA_REIHE[x % LIGA_REIHE.length];
+  }
   function ligaFarbe(liga) {
-    var g = ligaGruppe(liga), hue = LIGA_FARBEN[g];
-    if (hue === undefined) { hue = 0; for (var i = 0; i < g.length; i++) hue = (hue * 31 + g.charCodeAt(i)) % 360; }
+    var hue = ligaTon(liga);
     var dunkel = document.documentElement.getAttribute("data-theme") === "dark" ||
       (!document.documentElement.getAttribute("data-theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
     // Dunkel kraeftiger als bis Fassung 310 - die Pillen wirkten dort
     // ausgewaschen. Kontrast fg/bg bleibt ueber 7:1.
-    return dunkel ? { bg: "hsl(" + hue + ", 48%, 19%)", fg: "hsl(" + hue + ", 85%, 74%)", punkt: "hsl(" + hue + ", 72%, 58%)" }
-                  : { bg: "hsl(" + hue + ", 60%, 93%)", fg: "hsl(" + hue + ", 55%, 30%)", punkt: "hsl(" + hue + ", 55%, 45%)" };
+    return dunkel ? { bg: "hsl(" + hue + ", 55%, 20%)", fg: "hsl(" + hue + ", 90%, 76%)", punkt: "hsl(" + hue + ", 80%, 58%)" }
+                  : { bg: "hsl(" + hue + ", 85%, 91%)", fg: "hsl(" + hue + ", 75%, 27%)", punkt: "hsl(" + hue + ", 72%, 46%)" };
   }
   function ligaPille(liga) {
     var l = document.createElement("span"); l.className = "liga"; l.textContent = liga;
@@ -2211,35 +2244,40 @@
     fuss.appendChild(zum); box.appendChild(fuss);
   }
 
-  function zeigeStartWoche(p) {
-    // Ohne kommendes Spiel gibt es keine Karte oben - dann steht der Streifen frei
-    var ziel = el("start-woche"); ziel.innerHTML = "";
-    if (!startEinstellung("woche") || p.spiele.some(function (s) { return !s.vergangen; })) { ziel.classList.add("versteckt"); return; }
-    ziel.classList.remove("versteckt");
-    startWocheFuellen(ziel, p);
+  // Den Wochenstreifen gibt es nicht mehr - die Wochenkarte darunter
+  // zeigt dieselben sieben Tage mit mehr Inhalt (Fassung 313).
+  function zeigeStartWoche() { el("start-woche").classList.add("versteckt"); }
+
+  // Jedes Suchfeld bekommt ein X zum Leeren - auch die, die mitglieder.js
+  // spaeter baut. Das eingebaute von iOS/Chrome erscheint nicht ueberall
+  // und ist kaum zu treffen; es wird per CSS ausgeblendet.
+  function suchX(f) {
+    if (!f || f._mitX || !f.parentNode) return;
+    f._mitX = true;
+    var huelle = document.createElement("span"); huelle.className = "such-feld";
+    f.parentNode.insertBefore(huelle, f); huelle.appendChild(f);
+    var x = document.createElement("button"); x.type = "button"; x.className = "such-x"; x.setAttribute("aria-label", "Suche leeren");
+    x.textContent = "✕";
+    function stand() { huelle.classList.toggle("hat-text", !!f.value); }
+    x.addEventListener("mousedown", function (ev) { ev.preventDefault(); });   // Fokus bleibt im Feld
+    x.addEventListener("click", function () {
+      f.value = ""; stand();
+      f.dispatchEvent(new Event("input", { bubbles: true }));
+      f.dispatchEvent(new Event("change", { bubbles: true }));
+      f.focus();
+    });
+    ["input", "change", "focus", "search"].forEach(function (n) { f.addEventListener(n, stand); });
+    huelle.appendChild(x); stand();
   }
-  function startWocheFuellen(ziel, p) {
-    var heute = new Date(); heute.setHours(0, 0, 0, 0);
-    var jeTag = {};
-    p.spiele.forEach(function (s) { var k = new Date(s.beginn).toDateString(); (jeTag[k] = jeTag[k] || []).push(s); });
-    for (var i = 0; i < 7; i++) {
-      (function (i) {
-        var d = tagePlus(heute, i), key = d.toDateString(), liste = jeTag[key] || [];
-        var b = document.createElement("button"); b.type = "button"; b.className = i === 0 ? "heute" : "";
-        var wt = document.createElement("span"); wt.textContent = wochentag[d.getDay()];
-        var nr = document.createElement("b"); nr.textContent = d.getDate();
-        var punkt = document.createElement("i"); punkt.className = liste.length ? "ich" : "keins";
-        b.appendChild(wt); b.appendChild(nr); b.appendChild(punkt);
-        b.title = liste.length ? liste.map(function (s) { return uhr(new Date(s.beginn)) + " " + s.paarung; }).join(", ") : "frei";
-        b.addEventListener("click", function () {
-          if (liste.length === 1) location.hash = "spiel/" + encodeURIComponent(kennungVon(liste[0]));
-          else if (liste.length) { location.hash = "plan"; }
-          else toast(datumKurz(d) + ": kein Spiel", "");
-        });
-        ziel.appendChild(b);
-      })(i);
-    }
+  function suchfelderMitX(wurzel) {
+    if (!wurzel || !wurzel.querySelectorAll) return;
+    if (wurzel.matches && wurzel.matches('input[type="search"]')) suchX(wurzel);
+    Array.prototype.forEach.call(wurzel.querySelectorAll('input[type="search"]'), suchX);
   }
+  suchfelderMitX(document.body);
+  if (window.MutationObserver) new MutationObserver(function (liste) {
+    liste.forEach(function (m) { Array.prototype.forEach.call(m.addedNodes, function (n) { if (n.nodeType === 1) suchfelderMitX(n); }); });
+  }).observe(document.body, { childList: true, subtree: true });
 
   // Vertretungs-Radar: fremde Gesuche und unbesetzte Spiele, die zu dir passen
   function zeigeRadar(p) {
@@ -2405,19 +2443,39 @@
     var w = document.createElement("div"); w.className = "wann"; w.textContent = wann + " · " + datumKurz(d); h.appendChild(w);
     h.appendChild(rolleBadge(s.rolle, "rolle"));
     var z = document.createElement("div"); z.className = "zeit"; z.textContent = uhr(d) + " Uhr"; h.appendChild(z);
-    var pa = document.createElement("p"); pa.className = "paarung"; pa.textContent = (s.liga ? s.liga + ": " : "") + s.paarung; h.appendChild(pa);
+    // Die Liga als Marke in ihrer Farbe, darunter nur die Paarung - so
+    // liest man zuerst, wer spielt, und die Farbe ist dieselbe wie in
+    // Wochenkarte und Spielplan.
+    if (s.liga) {
+      var lg = document.createElement("span"); lg.className = "held-liga";
+      var lp = document.createElement("i"); lp.style.background = ligaFarbe(s.liga).punkt; lg.appendChild(lp);
+      lg.appendChild(document.createTextNode(s.liga)); h.appendChild(lg);
+    }
+    var pa = document.createElement("p"); pa.className = "paarung"; pa.textContent = s.paarung; h.appendChild(pa);
     var ha = document.createElement("div"); ha.className = "halle"; ha.appendChild(ikone("i-pin"));
     ha.appendChild(document.createTextNode((s.halle || "Halle unbekannt") + " · Treffpunkt " + uhr(new Date(s.treffpunkt)) + " Uhr")); h.appendChild(ha);
+    // Wer dabei ist, mit Vornamen und ohne einen selbst - vorher standen
+    // die Nachnamen aller, den eigenen eingeschlossen.
+    var andere = (s.gespann || []).filter(function (x) { return x.slug !== p.slug; });
+    if (andere.length) {
+      var ge = document.createElement("div"); ge.className = "halle held-mit"; ge.appendChild(ikone("i-users"));
+      ge.appendChild(document.createTextNode("Mit " + mitText(andere.map(function (x) { return x.name || x.slug; }))));
+      h.appendChild(ge);
+    }
     var ak = document.createElement("div"); ak.className = "aktionen";
     if (s.ort) {
       var r = document.createElement("a"); r.href = kartenLink(s.ort);
       r.target = "_blank"; r.rel = "noopener"; r.appendChild(ikone("i-route")); r.appendChild(document.createTextNode("Route")); ak.appendChild(r);
     }
-    if (s.gespann && s.gespann.length) {
-      var ge = document.createElement("span");
-      ge.appendChild(ikone("i-users")); ge.appendChild(document.createTextNode(s.gespann.map(function (x) { return (x.name || x.slug || "").split(",")[0]; }).filter(Boolean).join(", ")));
-      ak.appendChild(ge);
-    }
+    var tl = document.createElement("a"); tl.href = "#"; tl.appendChild(ikone("i-teilen"));
+    tl.appendChild(document.createTextNode(navigator.share ? "Teilen" : "Kopieren"));
+    tl.addEventListener("click", function (ev) {
+      ev.preventDefault(); ev.stopPropagation();
+      var text = spielText(s);
+      if (navigator.share) navigator.share({ text: text }).catch(function () {});
+      else if (navigator.clipboard) navigator.clipboard.writeText(text).then(function () { toast("Spiel kopiert ✓", "gut"); });
+    });
+    ak.appendChild(tl);
     h.appendChild(ak);
     if (spieltagErlaubt(heuteModus, meinSpiel)) {
       // Ein Knopf, zwei Richtungen: rein in den Spieltag-Modus und wieder
@@ -2490,7 +2548,6 @@
       if (ev.target.closest("a, button")) return;
       location.hash = "spiel/" + encodeURIComponent(kennungVon(s));
     });
-    if (startEinstellung("woche")) { var wochenStreifen = document.createElement("div"); wochenStreifen.className = "woche start-woche"; h.appendChild(wochenStreifen); startWocheFuellen(wochenStreifen, p); }
     ziel.appendChild(h);
     if (profil && profil.slug === p.slug && s.halle && startEinstellung("abfahrt")) {
       ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) {
@@ -3266,15 +3323,19 @@
   function woher(text) {
     var w = document.createElement("small"); w.className = "woher"; w.textContent = text; return w;
   }
-  function balken(titel, eintraege) {
+  // farbe: ein Ton fuer den ganzen Block; jeFarbe(name) faerbt jede
+  // Zeile einzeln (Ligen in ihrer Ligafarbe).
+  function balken(titel, eintraege, farbe, jeFarbe) {
     if (!eintraege || !eintraege.length) return null;
     var hoechste = eintraege[0][1] || 1;
     var box = document.createElement("div"); box.className = "balken karte";
+    if (farbe) box.setAttribute("data-farbe", farbe);
     var h = document.createElement("h4"); h.textContent = titel; box.appendChild(h);
     eintraege.forEach(function (paar) {
       var reihe = document.createElement("div"); reihe.className = "reihe";
       var links = document.createElement("div"); links.textContent = paar[0];
       var strich = document.createElement("i"); strich.style.width = Math.max(6, Math.round(paar[1] / hoechste * 100)) + "%"; links.appendChild(strich);
+      if (jeFarbe) strich.style.background = jeFarbe(paar[0]);
       var rechts = document.createElement("em"); rechts.textContent = paar[1] + "×";
       reihe.appendChild(links); reihe.appendChild(rechts); box.appendChild(reihe);
     });
@@ -3289,7 +3350,7 @@
     var paare = zahlen.map(function (n, i) { return [NAMEN[i], n]; })
       .filter(function (p2) { return p2[1]; })
       .sort(function (a, b) { return b[1] - a[1]; });
-    return balken("Wochentage", paare);
+    return balken("Wochentage", paare, "orange");
   }
 
   function zeigeStatistik(p) {
@@ -3309,8 +3370,9 @@
      ["Saison " + (daten.saison || ""), s.saison, "aus dem Archiv"],
      ["Insgesamt", s.gesamt, seitText(s.erste)],
      ["als HSR", hsrK, hsrK + lsrK ? "von " + (hsrK + lsrK) + " im 3er/4er" : "im 3er/4er-System"]
-    ].forEach(function (paar) {
+    ].forEach(function (paar, i) {
       var k = document.createElement("div"); k.className = "zahl karte";
+      k.setAttribute("data-farbe", ["blau", "gruen", "lila", "rot"][i]);
       var b = document.createElement("b"); b.textContent = paar[1]; var t = document.createElement("span"); t.textContent = paar[0];
       k.appendChild(b); k.appendChild(t);
       // "4 als HSR" laedt zum Falschlesen ein - von wievielen? Im neuen
@@ -3320,8 +3382,9 @@
       zahlen.appendChild(k);
     });
     ziel.appendChild(zahlen);
-    [balken("Meiste Ligen", s.ligen), balken("Meiste Hallen", s.hallen), balken("Meiste Gespannpartner", s.partner),
-     s.je_saison && s.je_saison.length > 1 ? balken("Spiele je Saison", s.je_saison.slice().reverse()) : null,
+    [balken("Meiste Ligen", s.ligen, "lila", function (n) { return ligaFarbe(n).punkt; }), balken("Meiste Hallen", s.hallen, "tuerkis"),
+     balken("Meiste Gespannpartner", s.partner, "blau"),
+     s.je_saison && s.je_saison.length > 1 ? balken("Spiele je Saison", s.je_saison.slice().reverse(), "gruen") : null,
      wochentagBalken(s.wochentage)
     ].forEach(function (b) { if (b) ziel.appendChild(b); });
     var hsr = (s.rollen && s.rollen.HSR) || 0, lsr = (s.rollen && s.rollen.LSR) || 0;
@@ -4763,8 +4826,9 @@
     [[treffer.length, treffer.length === 1 ? "Spiel" : "Spiele", "liga", gefiltert ? "nach deinen Filtern" : "im ganzen Archiv"],
      [hallenN, hallenN === 1 ? "Halle" : "Hallen", "halle", "verschiedene Orte"],
      [wer ? ((rollen.HSR || 0) + " / " + (rollen.LSR || 0)) : Object.keys(treffer.reduce(function (o, s) { s.besetzung.forEach(function (b) { if (b.slug) o[b.slug] = 1; }); return o; }, {})).length, wer ? "HSR / LSR" : "Kollegen", "partner", wer ? "in diesen Spielen" : "verschiedene Namen"]
-    ].forEach(function (p) {
+    ].forEach(function (p, i) {
       var k = document.createElement("div"); k.className = "zahl karte tippbar" + (archivAufschluesselung === p[2] ? " neu-markiert" : ""); k.title = "Antippen: Aufschlüsselung"; k.style.cursor = "pointer";
+      k.setAttribute("data-farbe", ["blau", "tuerkis", "lila"][i]);
       var b = document.createElement("b"); b.textContent = p[0]; var sp = document.createElement("span"); sp.textContent = p[1] + " ›"; k.appendChild(b); k.appendChild(sp);
       k.appendChild(woher(p[3]));
       k.addEventListener("click", function () { archivAufschluesselung = archivAufschluesselung === p[2] ? null : p[2]; archivRendern(); });
@@ -4802,6 +4866,7 @@
       // Aeltere liess sich nicht oeffnen. Die Spielseite holt sich
       // fehlende Spiele jetzt selbst aus dem Archiv.
       var zl = document.createElement("a"); zl.className = "zeile"; zl.href = "#spiel/" + encodeURIComponent(s.kennung);
+      if (s.liga) { zl.style.setProperty("--liga-linie", ligaFarbe(s.liga).punkt); zl.classList.add("mit-liga"); }
       var dt = document.createElement("span"); dt.className = "datum"; dt.textContent = wochentag[d.getDay()] + " " + ("0" + d.getDate()).slice(-2) + "."; var sm0 = document.createElement("small"); sm0.textContent = uhr(d); dt.appendChild(sm0); zl.appendChild(dt);
       var ich = wer ? s.besetzung.filter(function (b) { return b.slug === wer; })[0] : null;
       zl.appendChild(rolleBadge(ich ? ich.rolle : (s.system >= 3 ? s.system + "er" : "2er")));
@@ -6734,7 +6799,6 @@
     ["wetter", "Wetter auf der Karte oben", "zum Treffpunkt, mit Glättehinweis", true, "wetter"],
     ["abfahrt", "Abfahrtszeit auf der Karte oben", "braucht die Heimatadresse im Konto", true],
     ["wochenkarte", "Diese Woche", "Montag bis Sonntag mit deinen Spielen und wer dabei ist, zum Blättern", true],
-    ["woche", "Wochenstreifen", "die nächsten sieben Tage mit Punkten", false],
     ["termine", "Nächste Termine", "Ankündigungen mit Datum", true, "info"],
     ["radar", "Vertretungs-Radar", "offene Spiele und Gesuche in der Nähe (Login)", false, "tausch"],
     ["pins", "Angepinnte Kollegen", "Avatare unter dem Profil", true],
@@ -7369,7 +7433,8 @@
   function planSucheZeigen(an) {
     var z = el("plan-suchzeile"); z.classList.toggle("versteckt", !an);
     el("plan-suche-knopf").classList.toggle("aktiv", !!an);
-    if (an) setTimeout(function () { el("plan-filter").focus(); }, 30);
+    // Sofort, nicht per Zeitgeber: nur so oeffnet iOS die Tastatur
+    if (an) el("plan-filter").focus();
     filterHoehe();
   }
   el("plan-suche-knopf").addEventListener("click", function () { planSucheZeigen(el("plan-suchzeile").classList.contains("versteckt")); });
@@ -7499,7 +7564,7 @@
       return;
     }
     if (tippt) return;
-    if (ev.key === "/") { ev.preventDefault(); location.hash = "suche"; setTimeout(function () { el("suche").focus(); }, 60); return; }
+    if (ev.key === "/") { ev.preventDefault(); sucheOeffnen(); return; }
     if (ev.key === "?") { ev.preventDefault(); location.hash = "anleitung"; return; }
     var reiter = { "1": "tab-meine", "2": "tab-plan", "3": "tab-tausch", "4": "tab-abrechnung", "5": "tab-mitglieder" }[ev.key];
     if (reiter) { var k = el(reiter); if (k && getComputedStyle(k).display !== "none") { ev.preventDefault(); k.click(); } return; }

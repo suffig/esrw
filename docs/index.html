@@ -4150,6 +4150,56 @@
   .wk-spiel.abgesagt { text-decoration:line-through; opacity:.6; }
   .wk-mehr { background:none !important; color:var(--dim) !important; padding:0; }
   .wk-fuss { display:flex; justify-content:flex-end; }
+
+  /* ===== Fassung 313 ================================================== */
+  /* Spieltagskarte: Liga als Marke, Mitspieler mit Vornamen, zwei gleich
+     breite Knoepfe */
+  .held-liga { display:inline-flex; align-items:center; gap:7px; margin-top:8px; padding:4px 10px 4px 8px; border-radius:var(--radius-pille);
+    background:rgba(255,255,255,.12); font-size:var(--s-s); font-weight:800; letter-spacing:.02em; }
+  .held-liga i { width:9px; height:9px; border-radius:50%; flex:none; box-shadow:0 0 0 2px rgba(255,255,255,.25); }
+  :root[data-design="neu"] .held .paarung { margin-top:6px; }
+  .held .held-mit { margin-top:4px; }
+  :root[data-design="neu"] .held .aktionen { display:grid; grid-template-columns:repeat(auto-fit, minmax(0, 1fr)); gap:8px; }
+  :root[data-design="neu"] .held .aktionen a { justify-content:center; min-height:48px; border-radius:var(--knopf-r); font-weight:700; }
+  :root[data-design="neu"] .held .aktionen a.kontakt { grid-column:1 / -1; }
+
+  /* Suchfelder mit eigenem X */
+  .such-feld { position:relative; display:block; flex:1 1 auto; min-width:0; width:100%; }
+  .such-feld > input[type="search"] { width:100%; box-sizing:border-box; padding-right:46px; }
+  .such-feld .such-x { position:absolute; right:2px; top:50%; transform:translateY(-50%); width:44px; height:44px; border:0; border-radius:50%;
+    background:none; color:var(--dim); font-size:1rem; cursor:pointer; display:none; align-items:center; justify-content:center; }
+  .such-feld.hat-text .such-x { display:flex; }
+  .such-feld .such-x:active { background:var(--akzent-hell); }
+  input[type="search"]::-webkit-search-cancel-button { -webkit-appearance:none; appearance:none; display:none; }
+
+  /* Knoepfe und Felder auf dem Handy ueber die ganze Breite: halbe
+     Breiten, die irgendwo im Block enden, wirken unruhig. Knopfreihen
+     teilen sich die Breite gleichmaessig. */
+  @media (max-width: 700px) {
+    :root[data-design="neu"] .mg-haupt, :root[data-design="neu"] .mg-neben, :root[data-design="neu"] button.haupt,
+    :root[data-design="neu"] .rg-knopf, :root[data-design="neu"] .leer .leer-aktion, :root[data-design="neu"] .mg-rb-teilen {
+      width:100%; justify-content:center; text-align:center; box-sizing:border-box; }
+    :root[data-design="neu"] main input:not([type=checkbox]):not([type=radio]):not([type=range]):not([type=file]):not([type=color]),
+    :root[data-design="neu"] main select, :root[data-design="neu"] main textarea { width:100%; max-width:none; box-sizing:border-box; }
+    :root[data-design="neu"] .zweit { display:flex; flex-wrap:wrap; gap:8px; }
+    :root[data-design="neu"] .zweit > a, :root[data-design="neu"] .zweit > button { flex:1 1 0; justify-content:center; text-align:center; min-width:0; }
+    :root[data-design="neu"] .kollege .zweit > .anfrage.zweit { flex-basis:100%; }
+    /* Umschalter in den Einstellungen: eigene Zeile, gleich breite Teile.
+       Neben dem Text war "Abends" bei 375 px abgeschnitten. */
+    :root[data-design="neu"] #einstellungen label:has(> .stufen) { flex-wrap:wrap; }
+    :root[data-design="neu"] #einstellungen label > .stufen { display:flex; width:100%; margin-top:6px; }
+    :root[data-design="neu"] #einstellungen .stufen > button { flex:1 1 0; min-width:0; padding:4px 6px; }
+  }
+
+  /* Farbe in Statistik und Archiv */
+  .zahl.karte[data-farbe] { background:linear-gradient(155deg, var(--fh) 0%, var(--karte) 78%); }
+  .zahl.karte[data-farbe] > b { color:var(--f); }
+  .balken[data-farbe] h4 { color:var(--f); }
+  .balken[data-farbe] .reihe i { background:var(--f); }
+  .balken[data-farbe] { border-top:3px solid var(--f); }
+  .archiv-monat { color:var(--blau); }
+  .archiv-liste .zeile.mit-liga { box-shadow:inset 4px 0 0 var(--liga-linie); }
+  .archiv-liste .zeile .datum { color:var(--blau); }
   .wk-fahrten { margin-top:10px; border-top:1px solid var(--linie); }
   .wk-fahrt { display:flex; align-items:center; gap:8px; min-height:52px; padding:8px 2px; text-decoration:none; color:var(--text);
     border-bottom:1px solid var(--linie); }
@@ -4633,6 +4683,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=312"></script>
+<script src="app.js?v=313"></script>
 </body>
 </html>
