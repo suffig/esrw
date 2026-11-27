@@ -8,29 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:af91f4c8c6ab4f91db842dd0bfe76f10ac1e08c6@esrw.de
-SEQUENCE:0
-DTSTAMP:20261111T143043Z
-LAST-MODIFIED:20261111T143043Z
-DTSTART:20261120T173000Z
-DTEND:20261120T210000Z
-SUMMARY:SR · U15 LL: EV Duisburg 1b – Eisadler Dortmund
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:30 Uhr\nTreffpunkt:
-  18:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: PreZero Rheinlan
- dhalle Duisburg\nAdresse: Margaretenstr. 17-19\, 47055 Duisburg\nGespann: 
- Hartmann\, Marius\nVergütung lt. Ordnung: 80 €\n\nQuelle: https://www.e
- srw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:PreZero Rheinlandhalle Duisburg\, Margaretenstr. 17-19\, 47055 Dui
- sburg
-GEO:51.405718;6.780082
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="PreZero Rheinlandhalle Dui
- sburg, Margaretenstr. 17-19, 47055 Duisburg";X-APPLE-RADIUS=100;X-TITLE="P
- reZero Rheinlandhalle Duisburg":geo:51.405718,6.780082
-END:VEVENT
-BEGIN:VEVENT
 UID:fb3608224fc5e849ec1360d0ed048b3617c4836c@esrw.de
 SEQUENCE:0
 DTSTAMP:20261111T143043Z
