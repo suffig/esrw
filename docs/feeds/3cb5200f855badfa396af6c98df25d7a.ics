@@ -137,25 +137,30 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:7f918f0a4a50975d23fa02e38e7b2f3ee664a1fe@esrw.de
-SEQUENCE:0
-DTSTAMP:20261123T193045Z
-LAST-MODIFIED:20261123T193045Z
+SEQUENCE:1
+DTSTAMP:20261127T000057Z
+LAST-MODIFIED:20261127T000057Z
 DTSTART:20261205T160000Z
 DTEND:20261205T193000Z
-SUMMARY:SR · U9 LL Lila: SpG Grefrather EG – EV Duisburg 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
-  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Lila\n!! Halle nicht auto
- matisch erkannt - bitte selbst pruefen !!\nGespann: Baum\, Fabian (N)\nVer
- gütung lt. Ordnung: 85 €\n\nQuelle: https://www.esrw.de/einteilungen.ht
- ml
+SUMMARY:⚠ SR · U9 LL Lila: SpG Grefrather EG – EV Duisburg 1b
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
+ elbeginn: 18:00 Uhr\nTreffpunkt: 17:00 Uhr (60 Min vor Spielbeginn)\nLiga:
+  U9 LL Lila\nHalle: Eissportzentrum Grefrath\nAdresse: Stadionstraße 161\
+ , 47929 Grefrath\nGespann: Baum\, Fabian (N)\nVergütung lt. Ordnung: 85 
+ €\n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Eissportzentrum Grefrath\, Stadionstraße 161\, 47929 Grefrath
+GEO:51.348547;6.341019
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Grefrath, 
+ Stadionstraße 161, 47929 Grefrath";X-APPLE-RADIUS=100;X-TITLE="Eissportze
+ ntrum Grefrath":geo:51.348547,6.341019
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Lila: SpG Grefrather
-  EG – EV Duisburg 1b
+DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · U9 LL Lila: SpG Grefra
+ ther EG – EV Duisburg 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

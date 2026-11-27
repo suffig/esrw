@@ -167,25 +167,30 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:57c4f90401abf45fd9397f322273f4c6760d5ce7@esrw.de
-SEQUENCE:0
-DTSTAMP:20261123T193045Z
-LAST-MODIFIED:20261123T193045Z
+SEQUENCE:1
+DTSTAMP:20261127T000057Z
+LAST-MODIFIED:20261127T000057Z
 DTSTART:20261206T160000Z
 DTEND:20261206T193000Z
-SUMMARY:SR · Senioren BZL: ESC Kristall Lippstadt – Grefrather EG 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
-  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\n!! Halle nicht au
- tomatisch erkannt - bitte selbst pruefen !!\nGespann: Müller\, Lars\nVerg
- ütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/einteilungen.ht
- ml
+SUMMARY:⚠ SR · Senioren BZL: ESC Kristall Lippstadt – Grefrather EG 1b
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
+ elbeginn: 18:00 Uhr\nTreffpunkt: 17:00 Uhr (60 Min vor Spielbeginn)\nLiga:
+  Senioren BZL\nHalle: Der Eisschuppen Lippstadt\nAdresse: Grasweg 5\, 5955
+ 7 Lippstadt\nGespann: Müller\, Lars\nVergütung lt. Ordnung: 100 €\n\nQ
+ uelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Der Eisschuppen Lippstadt\, Grasweg 5\, 59557 Lippstadt
+GEO:51.656859;8.354724
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Der Eisschuppen Lippstadt,
+  Grasweg 5, 59557 Lippstadt";X-APPLE-RADIUS=100;X-TITLE="Der Eisschuppen L
+ ippstadt":geo:51.656859,8.354724
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: ESC Kristall
-  Lippstadt – Grefrather EG 1b
+DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · Senioren BZL: ESC Kris
+ tall Lippstadt – Grefrather EG 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

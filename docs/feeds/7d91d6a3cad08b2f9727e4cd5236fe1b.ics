@@ -134,49 +134,59 @@ END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:94d6735f9d51567dbf63e0a16bf13127929ffd7d@esrw.de
-SEQUENCE:0
-DTSTAMP:20261123T193045Z
-LAST-MODIFIED:20261123T193045Z
+SEQUENCE:1
+DTSTAMP:20261127T000057Z
+LAST-MODIFIED:20261127T000057Z
 DTSTART:20261205T100000Z
 DTEND:20261205T133000Z
-SUMMARY:SR · U13 BZL Gr.A: SpG Kristall Lippstadt / Soester EG – ESC Rhe
- ine Young Cats
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
-  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\n!! Halle nicht au
- tomatisch erkannt - bitte selbst pruefen !!\nGespann: Brücker\, Tobias\nV
- ergütung lt. Ordnung: 80 €\n\nQuelle: https://www.esrw.de/einteilungen.
- html
+SUMMARY:⚠ SR · U13 BZL Gr.A: SpG Kristall Lippstadt / Soester EG – ESC
+  Rheine Young Cats
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
+ elbeginn: 12:00 Uhr\nTreffpunkt: 11:00 Uhr (60 Min vor Spielbeginn)\nLiga:
+  U13 BZL Gr.A\nHalle: Der Eisschuppen Lippstadt\nAdresse: Grasweg 5\, 5955
+ 7 Lippstadt\nGespann: Brücker\, Tobias\nVergütung lt. Ordnung: 80 €\n\
+ nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Der Eisschuppen Lippstadt\, Grasweg 5\, 59557 Lippstadt
+GEO:51.656859;8.354724
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Der Eisschuppen Lippstadt,
+  Grasweg 5, 59557 Lippstadt";X-APPLE-RADIUS=100;X-TITLE="Der Eisschuppen L
+ ippstadt":geo:51.656859,8.354724
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.A: SpG Kristall
-  Lippstadt / Soester EG – ESC Rheine Young Cats
+DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · U13 BZL Gr.A: SpG Kris
+ tall Lippstadt / Soester EG – ESC Rheine Young Cats
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:c0c0b496627c42fd711580211a298ef0c38c9cc8@esrw.de
-SEQUENCE:0
-DTSTAMP:20261123T193045Z
-LAST-MODIFIED:20261123T193045Z
+SEQUENCE:1
+DTSTAMP:20261127T000057Z
+LAST-MODIFIED:20261127T000057Z
 DTSTART:20261206T160000Z
 DTEND:20261206T193000Z
-SUMMARY:SR · Senioren BZL: ESC Kristall Lippstadt – Grefrather EG 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
-  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: Senioren BZL\n!! Halle nicht au
- tomatisch erkannt - bitte selbst pruefen !!\nGespann: Warnke\, Christoph\n
- Vergütung lt. Ordnung: 100 €\n\nQuelle: https://www.esrw.de/einteilunge
- n.html
+SUMMARY:⚠ SR · Senioren BZL: ESC Kristall Lippstadt – Grefrather EG 1b
+DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
+ elbeginn: 18:00 Uhr\nTreffpunkt: 17:00 Uhr (60 Min vor Spielbeginn)\nLiga:
+  Senioren BZL\nHalle: Der Eisschuppen Lippstadt\nAdresse: Grasweg 5\, 5955
+ 7 Lippstadt\nGespann: Warnke\, Christoph\nVergütung lt. Ordnung: 100 €\
+ n\nQuelle: https://www.esrw.de/einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
+LOCATION:Der Eisschuppen Lippstadt\, Grasweg 5\, 59557 Lippstadt
+GEO:51.656859;8.354724
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Der Eisschuppen Lippstadt,
+  Grasweg 5, 59557 Lippstadt";X-APPLE-RADIUS=100;X-TITLE="Der Eisschuppen L
+ ippstadt":geo:51.656859,8.354724
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · Senioren BZL: ESC Kristall
-  Lippstadt – Grefrather EG 1b
+DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · Senioren BZL: ESC Kris
+ tall Lippstadt – Grefrather EG 1b
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
