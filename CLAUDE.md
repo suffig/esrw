@@ -145,6 +145,12 @@ Fensterbreite.
   Spiele sprangen dort bis Fassung 277 an „Geld“ vorbei ins Archiv.
   Wer eine Regel ändert, sucht jede Stelle, die denselben Schritt tut:
   `grep -n` auf das Feld (`bezahlt:`), nicht auf den Funktionsnamen.
+* **Vor einem neuen Klassennamen `grep` auf den Namen.** In Fassung 311
+  bekamen Leerzustände die Klasse `mit-bild` – die gab es schon für
+  Avatarfotos, mit `color:transparent` und `text-indent:-999px`. Bild
+  und Knopf standen da, der Satz dazwischen war unsichtbar.
+  `node --check` und die Tests sahen nichts; gefunden hat es der
+  Screenshot.
 * **Backticks nie in ein doppelt gequotetes `python -c "…"`.** Bash
   führt sie als Befehle aus und setzt das (leere) Ergebnis ein – so
   verlor genau dieser Eintrag beim ersten Schreiben alle Code-Namen,
@@ -216,6 +222,10 @@ Bei Rebase-Konflikten in erzeugten Dateien gilt die Fassung vom Server.
 
 * Die Daten in `docs/` liegen verschlüsselt (`.bin`), Schlüssel in der
   Supabase-Tabelle `tresor`, nur für Freigeschaltete lesbar.
+* Seit Fassung 311 ist der Klartext vor dem Verschlüsseln gzip-gepackt
+  (Kennung `ESRW2`, `ESRW1` bleibt lesbar). `stand.json` trägt unter
+  `marken` einen Abdruck jeder großen Datei; die App lädt sie nur neu,
+  wenn er sich ändert (`daten.json.bin?m=<marke>`).
 * Der Schlüssel liegt als GitHub-Secret `DATEN_SCHLUESSEL`; er gehört
   **nirgendwo sonst hin** – nicht ins Repository, nicht in einen Chat.
 * `docs/supabase.json` enthält die öffentliche anon-Kennung. Das ist

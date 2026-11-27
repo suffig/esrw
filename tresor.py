@@ -8,9 +8,16 @@ aus Supabase, und den gibt es nur fuer freigeschaltete Mitglieder.
 
 Format einer Tresordatei (.bin):
 
-    "ESRW1"  5 Bytes Kennung
+    "ESRW2"  5 Bytes Kennung
     Nonce   12 Bytes Zufall
-    Rest         AES-256-GCM (Geheimtext samt Pruefsumme)
+    Rest         AES-256-GCM (Geheimtext samt Pruefsumme) ueber den
+                 gzip-gepackten Klartext
+
+"ESRW1" ist dasselbe ohne gzip. Gelesen wird beides; geschrieben wird
+nur noch ESRW2. Warum packen: Geheimtext ist Zufall und laesst sich
+nicht mehr komprimieren - GitHub Pages lieferte daten.json.bin mit
+792 kB aus, bei jedem Start der App. Gepackt vor dem Verschluesseln
+sind es rund ein Zwanzigstel.
 
 Der Schluessel sind 32 zufaellige Bytes, in base64 in der Umgebungsvariablen
 DATEN_SCHLUESSEL (im Workflow: Repository -> Settings -> Secrets). Fehlt er,
@@ -25,6 +32,7 @@ Selbsttest (verschluesseln, entschluesseln, vergleichen):
     python tresor.py --test
 """
 import base64
+import gzip
 import hashlib
 import hmac
 import io
@@ -32,7 +40,8 @@ import json
 import os
 import sys
 
-KENNUNG = b"ESRW1"
+KENNUNG = b"ESRW2"
+KENNUNG_ALT = b"ESRW1"
 NONCE_LAENGE = 12
 
 
@@ -55,15 +64,19 @@ def verschluesseln(klartext, k):
     """bytes -> bytes. Braucht das Paket 'cryptography'."""
     from cryptography.hazmat.primitives.ciphers.aead import AESGCM
     nonce = os.urandom(NONCE_LAENGE)
-    return KENNUNG + nonce + AESGCM(k).encrypt(nonce, klartext, None)
+    # mtime=0: sonst steckt die Uhrzeit im gzip-Kopf, und derselbe Text
+    # ergaebe jedes Mal andere Bytes
+    gepackt = gzip.compress(klartext, compresslevel=9, mtime=0)
+    return KENNUNG + nonce + AESGCM(k).encrypt(nonce, gepackt, None)
 
 
 def entschluesseln(daten, k):
     from cryptography.hazmat.primitives.ciphers.aead import AESGCM
-    if not daten.startswith(KENNUNG):
+    if not (daten.startswith(KENNUNG) or daten.startswith(KENNUNG_ALT)):
         raise ValueError("keine Tresordatei")
     nonce = daten[len(KENNUNG):len(KENNUNG) + NONCE_LAENGE]
-    return AESGCM(k).decrypt(nonce, daten[len(KENNUNG) + NONCE_LAENGE:], None)
+    roh = AESGCM(k).decrypt(nonce, daten[len(KENNUNG) + NONCE_LAENGE:], None)
+    return gzip.decompress(roh) if daten.startswith(KENNUNG) else roh
 
 
 def _ohne_schluessel(pfad):
@@ -93,7 +106,13 @@ def _steht_schon_da(pfad, roh, k):
     """
     try:
         with open(pfad + ".bin", "rb") as f:
-            return entschluesseln(f.read(), k) == roh
+            alt = f.read()
+        # Eine alte, ungepackte Fassung gilt als veraltet: sonst bliebe
+        # jede Datei, deren Inhalt sich nie mehr aendert (die Saisons im
+        # Archiv), fuer immer gross.
+        if not alt.startswith(KENNUNG):
+            return False
+        return entschluesseln(alt, k) == roh
     except Exception:
         return False
 
@@ -149,6 +168,19 @@ def text_schreiben(pfad, text, k):
             f.write(text)
 
 
+def datei_marke(pfad):
+    """Kurzer Fingerabdruck der Datei, die die App laden wird - der .bin,
+    sonst des Klartexts. Steht in stand.json; die App haengt ihn an die
+    Adresse und muss nur noch laden, wenn er sich aendert. Ohne ihn hing
+    an jeder Anfrage die Uhrzeit, und jede Rueckkehr in die App holte
+    alles neu."""
+    for p in (pfad + ".bin", pfad):
+        if os.path.exists(p):
+            with open(p, "rb") as f:
+                return hashlib.sha256(f.read()).hexdigest()[:12]
+    return None
+
+
 def marke(k, zweck):
     """Unratbarer Name fuer eine Datei, die nicht verschluesselt werden kann -
     die Kalenderdateien. Gleiche Rechnung in der App (HMAC-SHA256, 32 Zeichen),
@@ -175,6 +207,13 @@ def _test():
                   os.urandom(200000)]:
         zurueck = entschluesseln(verschluesseln(probe, k), k)
         assert zurueck == probe, "Rueckweg stimmt nicht"
+    gross = json.dumps([{"liga": "U17", "paarung": "A - B"}] * 2000).encode("utf-8")
+    assert len(verschluesseln(gross, k)) < len(gross) / 10, "gepackt muss es kleiner werden"
+    assert verschluesseln(b"x", k).startswith(b"ESRW2"), "geschrieben wird ESRW2"
+    from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+    n = os.urandom(NONCE_LAENGE)
+    alt = KENNUNG_ALT + n + AESGCM(k).encrypt(n, b"alte Datei", None)
+    assert entschluesseln(alt, k) == b"alte Datei", "ESRW1 bleibt lesbar"
     a = verschluesseln(b"gleich", k)
     b = verschluesseln(b"gleich", k)
     assert a != b, "gleicher Text darf nicht gleichen Geheimtext ergeben"
@@ -189,7 +228,7 @@ def _test():
         pass
     assert len(marke(k, "feed:muster-max")) == 32
     assert marke(k, "feed:a") != marke(k, "feed:b")
-    print("Tresor ok: Ver- und Entschluesseln, Zufallsnonce, Pruefsumme, Marken.")
+    print("Tresor ok: Ver- und Entschluesseln, gzip, ESRW1 lesbar, Zufallsnonce, Pruefsumme, Marken.")
 
 
 if __name__ == "__main__":

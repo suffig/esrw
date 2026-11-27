@@ -683,7 +683,7 @@ def test_tresor():
         pruefe(os.path.exists(probe + ".bin"), "verschluesselte Datei entsteht")
         pruefe(not os.path.exists(probe), "Klartext bleibt nicht liegen")
         roh = open(probe + ".bin", "rb").read()
-        pruefe(roh.startswith(b"ESRW1"), "Kennung stimmt")
+        pruefe(roh.startswith(b"ESRW2"), "Kennung stimmt (gepackt)")
         pruefe(b"A - B" not in roh, "die Paarung steht nicht lesbar drin")
         zurueck = E2.lade(os.path.join("docs", "archiv", "0000-00.json"), None)
         pruefe(zurueck == inhalt, "gelesen wie geschrieben")
@@ -696,6 +696,33 @@ def test_tresor():
                "gleicher Inhalt wird nicht neu verschluesselt")
         E2.schreibe(os.path.join("docs", "archiv", "0000-00.json"), dict(inhalt, saison="0000/01"))
         pruefe(open(probe + ".bin", "rb").read() != vorher, "neuer Inhalt wird geschrieben")
+        E2.schreibe(os.path.join("docs", "archiv", "0000-00.json"), inhalt)
+
+        # Fassung 311: gepackt vor dem Verschluesseln. Eine alte,
+        # ungepackte Datei bleibt lesbar und wird beim naechsten
+        # Schreiben ersetzt, auch wenn sich der Inhalt nicht aendert.
+        from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+        k = base64.b64decode(os.environ["DATEN_SCHLUESSEL"])
+        n = os.urandom(12)
+        text = json.dumps(inhalt, ensure_ascii=False).encode("utf-8")
+        open(probe + ".bin", "wb").write(b"ESRW1" + n + AESGCM(k).encrypt(n, text, None))
+        pruefe(E2.lade(os.path.join("docs", "archiv", "0000-00.json"), None) == inhalt,
+               "alte ESRW1-Datei bleibt lesbar")
+        E2.schreibe(os.path.join("docs", "archiv", "0000-00.json"), inhalt)
+        pruefe(open(probe + ".bin", "rb").read().startswith(b"ESRW2"),
+               "eine alte Datei wird gepackt neu geschrieben")
+        gross = [{"liga": "U17 Oberliga", "paarung": "EV A - EV B", "halle": "Halle %d" % i} for i in range(3000)]
+        roh_gross = json.dumps(gross).encode("utf-8")
+        pruefe(len(tresor.verschluesseln(roh_gross, k)) < len(roh_gross) / 8,
+               "gepackt ist die Datei deutlich kleiner", len(tresor.verschluesseln(roh_gross, k)))
+        m1 = tresor.datei_marke(probe)
+        pruefe(m1 and len(m1) == 12, "datei_marke liefert einen kurzen Abdruck", m1)
+        E2.schreibe(os.path.join("docs", "archiv", "0000-00.json"), inhalt)
+        pruefe(tresor.datei_marke(probe) == m1, "gleicher Inhalt, gleiche Marke")
+        E2.schreibe(os.path.join("docs", "archiv", "0000-00.json"), dict(inhalt, saison="0000/02"))
+        pruefe(tresor.datei_marke(probe) != m1, "neuer Inhalt, neue Marke")
+        pruefe(tresor.datei_marke(os.path.join(wurzel, "docs", "gibtesnicht.json")) is None,
+               "ohne Datei keine Marke")
         E2.schreibe(os.path.join("docs", "archiv", "0000-00.json"), inhalt)
 
         # Ohne Schluessel, aber mit vorhandener .bin: abbrechen. Sonst liest

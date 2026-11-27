@@ -8,11 +8,11 @@
   // Wird einmal je Fassung gezeigt, damit die Kollegen neue Funktionen finden.
   // Hoechstens vier Punkte: mit sechs schob die Karte das naechste Spiel
   // unter den Bildschirmrand (gemessen bei 375 px).
-  var NEUIGKEITEN = { version: "2026-11-26", punkte: [
-    "Rechnungen: alle an einem Ort, nach Jahr und Stand filtern, einzeln als PDF oder alle als ZIP laden",
-    "DEB-Spiele (DNL, U17 I/II, DFEL, Oberliga) rechnet die App nach der DEB-Gebührenordnung",
-    "Puffer für die Abfahrt frei einstellbar: Aufschlag in Prozent und feste Reserve in Minuten",
-    "Kalenderdatei mit Abfahrtsalarm folgt jetzt deinen Kalendereinstellungen"
+  var NEUIGKEITEN = { version: "2026-11-27", punkte: [
+    "Schneller: die Einteilungen kommen gepackt (rund ein Zwanzigstel) und werden nur noch geladen, wenn sich etwas geändert hat",
+    "Spielplan baut sich in Etappen auf – die ersten Karten stehen sofort da",
+    "Startseite ruhiger: oben dein nächstes Spiel und eine Aufgabe, darunter die nächsten fünf Spiele",
+    "Dunkel jetzt warm statt blauschwarz, Ligafarben kräftiger; leere Seiten zeigen, wie es weitergeht"
   ], mehr: "tutorial/" };
   // Die Versionsnummer aus dem eigenen Script-Tag (app.js?v=NNN). Damit
   // laedt mitglieder.js unter derselben Adresse wie beim letzten Start -
@@ -25,6 +25,7 @@
     } catch (e) { return "0"; }
   })();
   var daten = null, aktuell = null, profil = null;
+  var START_SPIELE = 5;
   var el = function (id) { return document.getElementById(id); };
   var wochentag = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
 
@@ -738,10 +739,13 @@
     d.appendChild(s);
     return d;
   }
-  function leerZustand(text, aktion) {
+  // Mit Bild: ein Symbol in einer farbigen Scheibe, damit eine leere
+  // Seite nicht wie eine kaputte aussieht.
+  function leerZustand(text, aktion, symbol) {
     var p = document.createElement("p");
-    p.className = "leer";
-    p.appendChild(ikone("i-empty"));
+    p.className = "leer leer-mit-bild";
+    var bild = document.createElement("span"); bild.className = "leer-bild"; bild.setAttribute("aria-hidden", "true");
+    bild.appendChild(ikone(symbol || "i-empty")); p.appendChild(bild);
     p.appendChild(document.createTextNode(text));
     if (aktion && aktion.label) {
       var a = document.createElement(aktion.href ? "a" : "button"); a.className = "anfrage leer-aktion"; a.textContent = aktion.label;
@@ -890,6 +894,8 @@
     el("abo").addEventListener("click", function () { schreiben("abo-geklickt", "1"); setTimeout(function () { kalenderBoxStand(!!(profil && aktuell && profil.slug === aktuell.slug)); onboardingStand(); }, 500); });
   }
 
+  // Eingeklappt: eine Zeile "Neu in der App - 4 Neuerungen". Aufgeklappt
+  // stand die Liste ueber dem naechsten Spiel, bis man "Verstanden" fand.
   function zeigeNeu() {
     var box = el("neu");
     // Neulinge bekommen das Onboarding, nicht die Aenderungsliste
@@ -897,6 +903,12 @@
     if (lesen("neu-gesehen") === NEUIGKEITEN.version) { box.classList.add("versteckt"); return; }
     var ul = el("neu-liste"); ul.innerHTML = "";
     NEUIGKEITEN.punkte.forEach(function (t) { var li = document.createElement("li"); li.textContent = t; ul.appendChild(li); });
+    var auf = el("neu-auf"), zahlN = NEUIGKEITEN.punkte.length;
+    if (auf) {
+      el("neu-zahl").textContent = zahlN + (zahlN === 1 ? " Neuerung" : " Neuerungen");
+      box.classList.remove("offen"); auf.setAttribute("aria-expanded", "false");
+      auf.onclick = function () { var o = box.classList.toggle("offen"); auf.setAttribute("aria-expanded", o ? "true" : "false"); };
+    }
     var alt = box.querySelector(".neu-mehr"); if (alt) alt.remove();
     if (NEUIGKEITEN.mehr) {
       var p = document.createElement("p"); p.className = "meta neu-mehr";
@@ -1024,7 +1036,9 @@
     if (hue === undefined) { hue = 0; for (var i = 0; i < g.length; i++) hue = (hue * 31 + g.charCodeAt(i)) % 360; }
     var dunkel = document.documentElement.getAttribute("data-theme") === "dark" ||
       (!document.documentElement.getAttribute("data-theme") && window.matchMedia("(prefers-color-scheme: dark)").matches);
-    return dunkel ? { bg: "hsl(" + hue + ", 35%, 22%)", fg: "hsl(" + hue + ", 70%, 78%)", punkt: "hsl(" + hue + ", 60%, 60%)" }
+    // Dunkel kraeftiger als bis Fassung 310 - die Pillen wirkten dort
+    // ausgewaschen. Kontrast fg/bg bleibt ueber 7:1.
+    return dunkel ? { bg: "hsl(" + hue + ", 48%, 19%)", fg: "hsl(" + hue + ", 85%, 74%)", punkt: "hsl(" + hue + ", 72%, 58%)" }
                   : { bg: "hsl(" + hue + ", 60%, 93%)", fg: "hsl(" + hue + ", 55%, 30%)", punkt: "hsl(" + hue + ", 55%, 45%)" };
   }
   function ligaPille(liga) {
@@ -1612,7 +1626,7 @@
     var karte = {};
     function merge(e) { archivMerge(karte, e); }
     var laeufe = [];
-    laeufe.push((archivDaten ? Promise.resolve(archivDaten) : hole("archiv.json")).then(function (a) {
+    laeufe.push((archivDaten ? Promise.resolve(archivDaten) : hole("archiv.json", markeAus(letzterLauf, "archiv.json"))).then(function (a) {
       archivDaten = a;
       var pers = a.personen || {};
       Object.keys(pers).forEach(function (ps) {
@@ -2817,6 +2831,7 @@
         b.appendChild(wt); b.appendChild(nr); b.appendChild(punkt);
         b.title = liste.length ? liste.length + (liste.length === 1 ? " Spiel" : " Spiele") : "keine Spiele";
         b.addEventListener("click", function () {
+          planFertig();
           var h = el("plan-liste").querySelector('[data-tag="' + key + '"]');
           if (h) window.scrollTo({ top: h.getBoundingClientRect().top + window.scrollY - (parseInt(getComputedStyle(document.documentElement).getPropertyValue("--filter-hoehe")) || 110) - 4, behavior: "smooth" });
           else toast("An dem Tag steht nichts im Plan.", "");
@@ -2928,7 +2943,13 @@
     }).catch(function () {});
   }
 
+  // Laufnummer der Etappen in zeigePlan(): ein neuer Aufruf beendet den
+  // alten, sonst haengen sich Karten zweier Filterstaende aneinander.
+  var planLauf = 0, planRest = null;
+  function planFertig() { if (planRest) planRest(); }
+  var PLAN_SOFORT = 24, PLAN_STUECK = 60;
   function zeigePlan() {
+    planLauf++; planRest = null;
     filterAktiv();
     aenderungenKnopf();
     var modus = planModus();
@@ -2950,7 +2971,8 @@
     var kompakt = modus === "liste";
     ziel.classList.toggle("raster", !kompakt);
     var f = ohneZeichen(el("plan-filter").value);
-    var letzteGruppe = null, treffer = 0, heuteGesetzt = false;
+    var letzteGruppe = null, treffer = 0, heuteGesetzt = false, tagGesetzt = {};
+    var heuteNull = new Date(new Date().setHours(0, 0, 0, 0));
     var spiele = planGefiltert(false), gesamt = (daten.spiele || []).filter(function (s) { return !s.vergangen || el("plan-vergangene").checked; }).length;
     // Der Zeitraum-Kopf nennt die Anzahl, also vorab zaehlen.
     var jeGruppe = {};
@@ -2958,11 +2980,17 @@
       var k = zeitraum(new Date(s.beginn))[0]; jeGruppe[k] = (jeGruppe[k] || 0) + 1;
     });
 
-    spiele.forEach(function (s) {
-      treffer++;
+    // In Etappen: die ersten Karten sofort, der Rest in Stuecken danach.
+    // Gemessen mit 500 Spielen bei 375 px: 80 bis 210 ms Skript am Stueck
+    // auf dem Desktop - am Handy rund eine Sekunde, in der kein Tipp
+    // ankam. Wer zurueckkommt und an seine alte Stelle springen soll
+    // (sprungZiel), bekommt alles auf einmal.
+    var lauf = planLauf, idx = 0;
+    treffer = spiele.length;
+    function eins(s) {
       var beginn = new Date(s.beginn), tagKey = beginn.toDateString();
-      var abHeute = beginn >= new Date(new Date().setHours(0, 0, 0, 0));
-      var zr = zeitraum(beginn);
+      var abHeute = beginn >= heuteNull;
+      var zr = zeitraum(beginn), frag = document.createDocumentFragment();
       if (zr[0] !== letzteGruppe) {
         letzteGruppe = zr[0];
         var h = document.createElement("div");
@@ -2972,15 +3000,32 @@
         var gr = document.createElement("span"); gr.textContent = n + (n === 1 ? " Spiel" : " Spiele");
         h.appendChild(gl); h.appendChild(gr);
         if (!heuteGesetzt && abHeute) { h.id = "plan-ab-heute"; heuteGesetzt = true; }
-        ziel.appendChild(h);
+        frag.appendChild(h);
       }
       var karte = kompakt ? planZeile(s, beginn) : planKarte(s, beginn, true);
       // Der Wochenstreifen springt ueber [data-tag] an den Tag. Die Koepfe
       // sind nach Zeitraum gruppiert, nicht nach Tag - also traegt die
-      // erste Karte des Tages die Marke.
-      if (!ziel.querySelector('[data-tag="' + tagKey + '"]')) karte.setAttribute("data-tag", tagKey);
-      ziel.appendChild(karte);
-    });
+      // erste Karte des Tages die Marke. Gemerkt statt gesucht: die
+      // Suche lief ueber die wachsende Liste, je Karte einmal.
+      if (!tagGesetzt[tagKey]) { tagGesetzt[tagKey] = 1; karte.setAttribute("data-tag", tagKey); }
+      frag.appendChild(karte);
+      return frag;
+    }
+    function stueck(bis) {
+      if (lauf !== planLauf) return;
+      var frag = document.createDocumentFragment();
+      for (; idx < bis && idx < spiele.length; idx++) frag.appendChild(eins(spiele[idx]));
+      ziel.appendChild(frag);
+      if (idx >= spiele.length) planRest = null;
+    }
+    planRest = function () { stueck(spiele.length); };
+    // Fuer die alte Stelle reichen so viele Karten, wie bis dorthin
+    // passen (eine Karte ist gut 110 px hoch) - nicht gleich alle.
+    stueck(sprungZiel ? Math.max(PLAN_SOFORT, Math.ceil((sprungZiel + window.innerHeight) / 100) + 6) : PLAN_SOFORT);
+    (function weiter() {
+      if (lauf !== planLauf || idx >= spiele.length) return;
+      setTimeout(function () { stueck(idx + PLAN_STUECK); weiter(); }, 16);
+    })();
     el("plan-zaehler").textContent = treffer !== gesamt ? treffer + " von " + gesamt : gesamt + (gesamt === 1 ? " Spiel" : " Spiele");
     var fk = el("plan-filter-fertig");
     if (fk) fk.textContent = "Fertig \u00b7 " + treffer + (treffer === 1 ? " Spiel" : " Spiele") + " zeigen";
@@ -3006,10 +3051,10 @@
       (gesamt === 1
         ? "Kein Treffer. Im Plan steht ein Spiel, die Auswahl oben lässt es nicht durch."
         : "Kein Treffer. Von " + gesamt + " Spielen lässt die Auswahl oben gerade keines durch.") + dann,
-      { label: "Filter zurücksetzen", fn: planFilterLeeren });
-    if (n) return leerZustand("Hier steht gerade nichts." + dann, hin);
+      { label: "Filter zurücksetzen", fn: planFilterLeeren }, "i-suche");
+    if (n) return leerZustand("Hier steht gerade nichts." + dann, hin, "i-cal");
     return leerZustand("Im Datenfenster steht kein kommendes Spiel. Was war, zeigt das Archiv.",
-      { label: "Zum Archiv", href: "#archiv" });
+      { label: "Zum Archiv", href: "#archiv" }, "i-cal");
   }
   // Das naechste eigene Spiel, unabhaengig von Suche und Filtern.
   // daten.spiele ist nach Beginn sortiert, der erste Treffer genuegt.
@@ -3073,10 +3118,12 @@
   // entschluesselt: Spielseite, Spielplan, "Mehr" und die Aenderungsliste
   // fragen es jeweils einzeln. Zwei Minuten reichen fuer ein Durchklicken,
   // und der Workflow schreibt ohnehin nur stuendlich.
-  var protokollDaten = null, protokollZeit = 0;
+  // Mit Marke aus stand.json gilt das gemerkte, solange sie gleich bleibt.
+  var protokollDaten = null, protokollZeit = 0, protokollMarke = null;
   function holeProtokoll() {
-    if (protokollDaten && Date.now() - protokollZeit < 120000) return Promise.resolve(protokollDaten);
-    return hole("protokoll.json").then(function (p) { protokollDaten = p; protokollZeit = Date.now(); return p; });
+    var m = markeAus(letzterLauf, "protokoll.json");
+    if (protokollDaten && (m ? m === protokollMarke : Date.now() - protokollZeit < 120000)) return Promise.resolve(protokollDaten);
+    return hole("protokoll.json", m).then(function (p) { protokollDaten = p; protokollZeit = Date.now(); protokollMarke = m; return p; });
   }
   // Die kleine Zeile unter einer Zahl, die sagt, woraus sie entstand.
   function woher(text) {
@@ -3285,7 +3332,7 @@
     box._laden = function laden() {
       if (!box.open) return;
       box.removeEventListener("toggle", laden); box._laden = null;
-      (archivDaten ? Promise.resolve(archivDaten) : hole("archiv.json"))
+      (archivDaten ? Promise.resolve(archivDaten) : hole("archiv.json", markeAus(letzterLauf, "archiv.json")))
         .then(function (a) {
           archivDaten = a;
           var dateien = a.dateien || {};
@@ -3376,9 +3423,25 @@
       ziel.appendChild(leerZustand(p.spiele.length || !zuletzt
         ? "Zurzeit keine Einteilung. Der Kalender füllt sich von allein."
         : "Zurzeit keine Einteilung, zuletzt im Einsatz am " + zuletzt.split("-").reverse().join(".") + ".",
-        { label: "Spielplan ansehen", href: "#plan" }));
+        { label: "Spielplan ansehen", href: "#plan" }, "i-cal"));
     }
-    else kommend.forEach(function (s, i) { var k = karte(s, p); k.style.setProperty("--i", Math.min(i, 8)); ziel.appendChild(k); });
+    else {
+      // Fuenf reichen fuer den Blick aufs Wochenende. Mit 40 Einteilungen
+      // war die Startseite 6900 px lang, und der Rest stand weiter unten
+      // als jeder scrollt. Der Knopf holt alle an Ort und Stelle.
+      var sofort = kommend.length > START_SPIELE + 2 ? START_SPIELE : kommend.length;
+      kommend.slice(0, sofort).forEach(function (s, i) { var k = karte(s, p); k.style.setProperty("--i", Math.min(i, 8)); ziel.appendChild(k); });
+      if (sofort < kommend.length) {
+        var alleK = document.createElement("button"); alleK.type = "button"; alleK.className = "mg-neben start-alle";
+        alleK.textContent = "Alle " + kommend.length + " kommenden Spiele zeigen";
+        alleK.addEventListener("click", function () {
+          var frag = document.createDocumentFragment();
+          kommend.slice(sofort).forEach(function (s) { frag.appendChild(karte(s, p)); });
+          ziel.insertBefore(frag, alleK); alleK.remove();
+        });
+        ziel.appendChild(alleK);
+      }
+    }
     // Die naechsten sieben Tage weiterschicken - steht bei den Spielen,
     // damit man es findet, wenn man gerade danach schaut.
     if (istIch && wocheText()) {
@@ -3874,7 +3937,7 @@
     // bleibt versteckt.
     listeFuellen(vergangene);
     box.appendChild(det);
-    (archivDaten ? Promise.resolve(archivDaten) : hole("archiv.json")).then(function (a) {
+    (archivDaten ? Promise.resolve(archivDaten) : hole("archiv.json", markeAus(letzterLauf, "archiv.json"))).then(function (a) {
       archivDaten = a;
       var dateien = a.dateien || {};
       return Promise.all(Object.keys(dateien).map(function (sn) {
@@ -3939,6 +4002,10 @@
       if (sagt) sagt.textContent = titel;
     }
     el("detail").classList.remove("start-laedt");
+    // Die Spielplanliste haengt sonst mit Tausenden Knoten versteckt im
+    // Dokument, und jede Stilberechnung (Thema, Schrift) laeuft mit.
+    // zeigePlan() baut sie beim naechsten Besuch ohnehin neu.
+    if (vorher === "plan" && name !== "plan") { planLauf++; planRest = null; el("plan-liste").innerHTML = ""; }
     ["auswahl", "detail", "plan", "mitglieder", "halle", "status", "spiel", "mehr", "einstellungen", "karte", "statseite", "aenderungen", "mitfahren", "archiv", "regeln", "rechner", "gesperrt"].forEach(function (id) { el(id).classList.toggle("versteckt", name !== id); });
     if (name !== "plan" && typeof filterBlatt === "function" && !el("plan-filter-blatt").classList.contains("versteckt")) filterBlatt(false);
     var reiter = (location.hash.split("/")[1] || "");
@@ -4366,7 +4433,7 @@
     });
     var laeufe = [];
     // 2) archiv.json (laufende Saison je Person)
-    laeufe.push((archivDaten ? Promise.resolve(archivDaten) : hole("archiv.json")).then(function (a) {
+    laeufe.push((archivDaten ? Promise.resolve(archivDaten) : hole("archiv.json", markeAus(letzterLauf, "archiv.json"))).then(function (a) {
       archivDaten = a; var pers = a.personen || {};
       Object.keys(pers).forEach(function (ps) {
         if (!alle && ps !== slug) return;
@@ -6523,8 +6590,11 @@
   // Reihenfolge der Bloecke auf Start (die uebrigen sitzen fest in der Kopfkarte)
   var START_ORDNUNG = ["schnellzugriff", "einrichtung", "pins", "uebersicht", "radar", "nachtrag", "spiele", "kalender-box"];
   var START_NAMEN = { schnellzugriff: "Schnellzugriff", einrichtung: "„Alles eingerichtet?“", pins: "Angepinnte Kollegen", uebersicht: "Kacheln und Termine", radar: "Vertretungs-Radar", nachtrag: "Hinweis zur Abrechnung", spiele: "Deine Spiele", "kalender-box": "Kalender-Karte" };
+  // Oben das naechste Spiel und genau eine Aufgabe, dann die Spiele.
+  // Einrichtung und Kalenderkarte stehen darunter - wichtig beim ersten
+  // Mal, danach nur noch im Weg. Wer selbst sortiert hat, behaelt seins.
   function startVorgabe() {
-    return ["nachtrag"].concat(START_ORDNUNG.filter(function (x) { return x !== "nachtrag"; }));
+    return ["nachtrag", "schnellzugriff", "pins", "uebersicht", "radar", "spiele", "einrichtung", "kalender-box"];
   }
   function startOrdnung() {
     var o = []; try { o = JSON.parse(lesen("start-ordnung") || "[]") || []; } catch (e) {}
@@ -6542,6 +6612,9 @@
     // Profilzeile bleibt ganz unten
     var pz = haupt.querySelector(":scope > .profilzeile");
     if (pz && profil && aktuell && profil.slug === aktuell.slug) haupt.insertBefore(pz, anker);
+    // Die Neuigkeiten unter die Spiele - eingeklappt, siehe zeigeNeu()
+    var nb = el("neu"), sp = el("spiele");
+    if (nb && sp && sp.parentNode === haupt) haupt.insertBefore(nb, sp.nextSibling);
   }
   function startOrdnungRendern() {
     var box = el("start-ordnung"); if (!box) return; box.innerHTML = "";
@@ -7191,13 +7264,15 @@
     b.addEventListener("click", function () { schreiben("plan-modus", b.getAttribute("data-modus")); schreiben("plan-kompakt", null); zeigePlan(); });
   });
   el("plan-heute").addEventListener("click", function () {
+    planFertig();
     var h = el("plan-ab-heute"); if (h) window.scrollTo({ top: h.getBoundingClientRect().top + window.scrollY - 120, behavior: "smooth" });
   });
   if (navigator.share) {
     el("teilen").classList.remove("versteckt");
     el("teilen").addEventListener("click", function () { if (aktuell) navigator.share({ title: "Einteilungen " + aktuell.name, url: basis + "#" + aktuell.slug }).catch(function () {}); });
   }
-  document.addEventListener("visibilitychange", function () { if (document.visibilityState === "visible" && daten) neuLaden(); });
+  // Kurz zu WhatsApp und zurueck ist kein Grund, nachzufragen.
+  document.addEventListener("visibilitychange", function () { if (document.visibilityState === "visible" && daten && Date.now() - letzteFrage > 30000) neuLaden(); });
 
   // Der Kern einer Punktwolke: alles im Umkreis von 150 km um die Mitte.
   // Einzelne weit entfernte Hallen bleiben sichtbar, bestimmen aber nicht,
@@ -7220,9 +7295,23 @@
     var k = el("karte-div");
     if (k && k.parentNode) k.parentNode.insertBefore(box, k.nextSibling); else el("karte").appendChild(box);
   }
+  // Ueber einen ResizeObserver statt offsetHeight beim Zeichnen: das Lesen
+  // erzwang mitten in zeigePlan() ein Layout ueber die alte Liste mit
+  // tausenden Knoten - gemessen bis 90 ms.
+  var filterBeobachter = null;
   function filterHoehe() {
     var f = document.querySelector("#plan .filterleiste");
-    if (f) document.documentElement.style.setProperty("--filter-hoehe", f.offsetHeight + "px");
+    if (!f) return;
+    if (window.ResizeObserver) {
+      if (filterBeobachter) return;
+      filterBeobachter = new ResizeObserver(function () {
+        var hh = f.offsetHeight;
+        if (hh) document.documentElement.style.setProperty("--filter-hoehe", hh + "px");
+      });
+      filterBeobachter.observe(f);
+      return;
+    }
+    document.documentElement.style.setProperty("--filter-hoehe", f.offsetHeight + "px");
   }
   window.addEventListener("resize", filterHoehe);
 
@@ -7310,19 +7399,24 @@
     b.classList.toggle("laeuft", ladeZaehler > 0);
   }
   window.ladeAnzeige = ladeAnzeige;
-  function holeKlartext(name) {
-    return fetch(name + "?" + Date.now()).then(function (r) { if (!r.ok) throw 0; return r.json(); });
+  // Mit Marke aus stand.json bleibt die Adresse gleich, solange sich die
+  // Datei nicht aendert - Browser und Pages-Zwischenspeicher duerfen sie
+  // dann behalten. Ohne Marke wie frueher mit der Uhrzeit.
+  function adresseMit(name, marke) { return name + "?" + (marke ? "m=" + marke : Date.now()); }
+  function markeAus(lauf, name) { return (lauf && lauf.marken && lauf.marken[name]) || null; }
+  function holeKlartext(name, marke) {
+    return fetch(adresseMit(name, marke)).then(function (r) { if (!r.ok) throw 0; return r.json(); });
   }
-  function hole(name) {
+  function hole(name, marke) {
     ladeAnzeige(true);
-    var lauf = imTresor(name) ? holeTresor(name) : holeKlartext(name);
+    var lauf = imTresor(name) ? holeTresor(name, marke) : holeKlartext(name, marke);
     return lauf.then(function (d) { ladeAnzeige(false); return d; }, function (e) { ladeAnzeige(false); throw e; });
   }
   // Erst den Tresor versuchen, dann - falls die Umstellung noch nicht gelaufen
   // ist - die alte Klartextdatei.
-  function holeTresor(name) {
+  function holeTresor(name, marke) {
     return tresorAufschliessen().then(function (k) {
-      if (!k) return holeKlartext(name).catch(function () {
+      if (!k) return holeKlartext(name, marke).catch(function () {
         // Kein Schluessel und kein Klartext: das Konto ist noch nicht
         // freigeschaltet - das soll die App auch so sagen.
         throw new Error(sitzungVorhanden()
@@ -7330,12 +7424,14 @@
           : "Bitte anmelden.");
       });
       startStufe(3);
-      return fetch(name + ".bin?" + Date.now()).then(function (r) {
-        if (!r.ok) return holeKlartext(name);
+      return fetch(adresseMit(name + ".bin", marke)).then(function (r) {
+        if (!r.ok) return holeKlartext(name, marke);
         return r.arrayBuffer()
           .then(function (buf) { startStufe(4); return tresorOeffnen(buf); })
           .then(function (t) { return JSON.parse(t); })
-          .catch(function () {
+          .catch(function (e) {
+            // Kann der Browser nicht entpacken, hilft ein neuer Schluessel nicht
+            if (e && e.altBrowser) throw e;
             // Schluessel gewechselt? Einmal frisch holen, dann aufgeben.
             schreiben("tresor", null); tresorKey = null; tresorHmac = null; tresorMarken = {};
             return tresorAufschliessen(true).then(function (k2) {
@@ -7390,12 +7486,129 @@
       })
       .catch(function () { return null; });
   }
+  // ESRW2 ist vor dem Verschluesseln gepackt (tresor.py): Geheimtext laesst
+  // sich nicht komprimieren, daten.json.bin kam mit 792 kB an.
   function tresorOeffnen(buf) {
     var b = new Uint8Array(buf);
     var kopf = String.fromCharCode(b[0], b[1], b[2], b[3], b[4]);
-    if (b.length < 18 || kopf !== "ESRW1") return Promise.reject(new Error("keine Tresordatei"));
+    if (b.length < 18 || (kopf !== "ESRW1" && kopf !== "ESRW2")) return Promise.reject(new Error("keine Tresordatei"));
     return crypto.subtle.decrypt({ name: "AES-GCM", iv: b.slice(5, 17) }, tresorKey, b.slice(17))
-      .then(function (p) { return new TextDecoder().decode(p); });
+      .then(function (p) { return kopf === "ESRW2" ? entpacken(p) : new TextDecoder().decode(p); });
+  }
+  function entpacken(p) {
+    if (typeof DecompressionStream === "function") {
+      return new Response(new Blob([p]).stream().pipeThrough(new DecompressionStream("gzip"))).text();
+    }
+    return Promise.resolve().then(function () { return new TextDecoder().decode(gunzip(new Uint8Array(p))); })
+      .catch(function () {
+        var e = new Error("Dieser Browser kann die Daten nicht entpacken. Bitte das Handy aktualisieren.");
+        e.altBrowser = true; throw e;
+      });
+  }
+  // Fuer Browser ohne DecompressionStream (iOS vor 16.4): Inflate nach
+  // RFC 1951, Zeile fuer Zeile wie puff.c. Langsamer als der Browser,
+  // aber es laeuft nur dort, wo der es nicht selbst kann.
+  function gunzip(b) {
+    if (b[0] !== 0x1f || b[1] !== 0x8b || b[2] !== 8) throw new Error("kein gzip");
+    var flg = b[3], p = 10;
+    if (flg & 4) p += 2 + (b[p] | (b[p + 1] << 8));
+    if (flg & 8) while (b[p++]) { /* Dateiname */ }
+    if (flg & 16) while (b[p++]) { /* Kommentar */ }
+    if (flg & 2) p += 2;
+    return inflate(b.subarray(p));
+  }
+  var INF_LBASE = [3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31, 35, 43, 51, 59, 67, 83, 99, 115, 131, 163, 195, 227, 258];
+  var INF_LEXT = [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0];
+  var INF_DBASE = [1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193, 257, 385, 513, 769, 1025, 1537, 2049, 3073, 4097, 6145, 8193, 12289, 16385, 24577];
+  var INF_DEXT = [0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13];
+  var INF_REIHE = [16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15];
+  function inflate(q) {
+    var aus = new Uint8Array(Math.max(q.length * 6, 1024)), n = 0, pos = 0, bit = 0, puffer = 0;
+    function bits(k) {
+      while (bit < k) { if (pos >= q.length) throw new Error("zu kurz"); puffer |= q[pos++] << bit; bit += 8; }
+      var v = puffer & ((1 << k) - 1); puffer >>>= k; bit -= k; return v;
+    }
+    function platz(k) {
+      if (n + k <= aus.length) return;
+      var neu = new Uint8Array(Math.max(aus.length * 2, n + k)); neu.set(aus); aus = neu;
+    }
+    function baum(laengen, anzahl) {
+      var zahl = new Uint16Array(16), off = new Uint16Array(16), sym = new Uint16Array(anzahl), i;
+      for (i = 0; i < anzahl; i++) zahl[laengen[i]]++;
+      zahl[0] = 0;
+      for (i = 1; i < 16; i++) off[i] = off[i - 1] + zahl[i - 1];
+      for (i = 0; i < anzahl; i++) if (laengen[i]) sym[off[laengen[i]]++] = i;
+      return { zahl: zahl, sym: sym };
+    }
+    function lies(t) {
+      var code = 0, erst = 0, index = 0;
+      for (var len = 1; len < 16; len++) {
+        code |= bits(1);
+        var c = t.zahl[len];
+        if (code - c < erst) return t.sym[index + (code - erst)];
+        index += c; erst += c; erst <<= 1; code <<= 1;
+      }
+      throw new Error("kaputter Code");
+    }
+    function bloecke(lt, dt) {
+      for (;;) {
+        var sy = lies(lt);
+        if (sy < 256) { platz(1); aus[n++] = sy; continue; }
+        if (sy === 256) return;
+        sy -= 257;
+        if (sy >= 29) throw new Error("kaputte Laenge");
+        var len = INF_LBASE[sy] + bits(INF_LEXT[sy]);
+        var d = lies(dt);
+        if (d >= 30) throw new Error("kaputter Abstand");
+        var ab = INF_DBASE[d] + bits(INF_DEXT[d]);
+        if (ab > n) throw new Error("Abstand zu gross");
+        platz(len);
+        for (var j = 0; j < len; j++) { aus[n] = aus[n - ab]; n++; }
+      }
+    }
+    var fest = null;
+    function festeBaeume() {
+      if (fest) return fest;
+      var l = new Uint8Array(288), dl = new Uint8Array(30), i;
+      for (i = 0; i < 144; i++) l[i] = 8;
+      for (; i < 256; i++) l[i] = 9;
+      for (; i < 280; i++) l[i] = 7;
+      for (; i < 288; i++) l[i] = 8;
+      for (i = 0; i < 30; i++) dl[i] = 5;
+      fest = [baum(l, 288), baum(dl, 30)];
+      return fest;
+    }
+    function dynamisch() {
+      var nl = bits(5) + 257, nd = bits(5) + 1, nc = bits(4) + 4, i;
+      var cl = new Uint8Array(19);
+      for (i = 0; i < nc; i++) cl[INF_REIHE[i]] = bits(3);
+      var ct = baum(cl, 19), l = new Uint8Array(nl + nd);
+      for (i = 0; i < nl + nd;) {
+        var sy = lies(ct);
+        if (sy < 16) { l[i++] = sy; continue; }
+        var wert = 0, k;
+        if (sy === 16) { if (!i) throw new Error("Wiederholung ohne Vorgaenger"); wert = l[i - 1]; k = 3 + bits(2); }
+        else if (sy === 17) k = 3 + bits(3);
+        else k = 11 + bits(7);
+        if (i + k > nl + nd) throw new Error("zu viele Laengen");
+        while (k--) l[i++] = wert;
+      }
+      return [baum(l.subarray(0, nl), nl), baum(l.subarray(nl), nd)];
+    }
+    var letzter;
+    do {
+      letzter = bits(1);
+      var typ = bits(2);
+      if (typ === 0) {
+        puffer = 0; bit = 0;
+        var roh = q[pos] | (q[pos + 1] << 8); pos += 4;
+        if (pos + roh > q.length) throw new Error("zu kurz");
+        platz(roh); aus.set(q.subarray(pos, pos + roh), n); n += roh; pos += roh;
+      } else if (typ === 1) { var f = festeBaeume(); bloecke(f[0], f[1]); }
+      else if (typ === 2) { var dy = dynamisch(); bloecke(dy[0], dy[1]); }
+      else throw new Error("kaputter Block");
+    } while (!letzter);
+    return aus.subarray(0, n);
   }
   // Name der Kalenderdatei: derselbe HMAC wie in tresor.py
   function feedMarke(zweck) {
@@ -7477,10 +7690,26 @@
   }
   ziehenEinrichten();
 
+  // Erst die winzige stand.json, dann nur, was sich geaendert hat.
+  // Gemessen bis Fassung 310: jede Rueckkehr in die App (WhatsApp, Karte,
+  // zurueck) holte daten.json und protokoll.json neu - zusammen ueber
+  // ein Megabyte - und zeichnete die offene Seite komplett neu.
+  var datenMarke = null, letzteFrage = 0;
   function neuLaden() {
-    protokollDaten = null;
-    return Promise.all([hole("daten.json"), hole("stand.json").catch(function () { return null; })])
+    letzteFrage = Date.now();
+    return hole("stand.json").catch(function () { return null; }).then(function (lauf) {
+      var m = markeAus(lauf, "daten.json");
+      if (m && m === datenMarke && daten) {
+        if (lauf) standAnzeigen(daten, lauf);
+        betreiberLaden(false).then(function () { korrekturenLaden(false); });
+        funktionenLaden();
+        return null;
+      }
+      return hole("daten.json", m).then(function (d) { return [d, lauf]; });
+    })
       .then(function (b) {
+        if (!b) return;
+        protokollDaten = null; datenMarke = markeAus(b[1], "daten.json");
         daten = b[0]; standAnzeigen(daten, b[1]); betreiberAnwenden(); korrekturenAnwenden(); betreiberLaden(false).then(function () { korrekturenLaden(false); });
         funktionenLaden();
         // Nur die gerade sichtbare Ansicht neu zeichnen - nie die Seite wechseln
@@ -7518,6 +7747,7 @@
     .then(function (b) {
       startStufe(5);
       daten = b[0]; profil = profilLesen();
+      datenMarke = markeAus(b[1], "daten.json"); letzteFrage = Date.now();
       document.title = daten.titel || "ESRW App"; titelAnpassen(); setTimeout(titelAnpassen, 800); el("quelle").href = daten.quelle;
       standAnzeigen(daten, b[1]);
       el("fuss").textContent = "Termine beginnen " + daten.vorlauf_minuten + " Minuten vor Spielbeginn, damit du rechtzeitig an der Halle bist.";
@@ -7666,7 +7896,7 @@
       spieltagErlaubt: spieltagErlaubt, spieltagOffen: spieltagOffen, startEinstellung: startEinstellung,
       aendZerlegen: aendZerlegen, aendArt: aendArt, tourAngebote: tourAngebote,
       titelDoppelt: titelDoppelt, einrichtungSichtbar: einrichtungSichtbar,
-      naechstesEigenes: naechstesEigenes
+      naechstesEigenes: naechstesEigenes, gunzip: gunzip, markeAus: markeAus, adresseMit: adresseMit
     }
   };
 

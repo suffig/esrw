@@ -1203,6 +1203,41 @@ pruefe(ics.indexOf("Noch zwei Stunden bis Anpfiff") >= 0, "Datei: Weckertext zum
 localStorage.removeItem("kalender");
 
 
+// ------------------------------------------------------------- Entpacken
+
+// Fassung 311: der Tresor packt vor dem Verschluesseln. Browser ohne
+// DecompressionStream (iOS vor 16.4) entpacken mit gunzip() aus app.js -
+// das muss Byte fuer Byte dasselbe liefern wie zlib.
+console.log("\nEntpacken ohne DecompressionStream");
+var zlib = require("zlib");
+function entpacktGleich(roh, name, opt) {
+  var gz = zlib.gzipSync(Buffer.from(roh), opt || {});
+  var aus = Buffer.from(P.gunzip(new Uint8Array(gz)));
+  pruefe(aus.equals(Buffer.from(roh)), name, aus.length + " statt " + Buffer.from(roh).length);
+}
+var jsonProbe = JSON.stringify({ personen: Array.apply(null, Array(800)).map(function (_, i) {
+  return { name: "Person " + i + ", Test", liga: ["U17 Oberliga", "Senioren RLW", "DNL Division 1"][i % 3], halle: "Eishalle Süd " + (i % 17) };
+}) });
+entpacktGleich(jsonProbe, "JSON mit Umlauten (dynamische Baeume)");
+entpacktGleich("", "leere Datei");
+entpacktGleich("a", "ein Zeichen (feste Baeume)");
+entpacktGleich(jsonProbe, "ungepackt gespeichert (Stufe 0)", { level: 0 });
+entpacktGleich(jsonProbe, "schnellste Stufe", { level: 1 });
+var zufall = Buffer.alloc(70000); for (var zi = 0; zi < zufall.length; zi++) zufall[zi] = (zi * 7919 + (zi >> 3) * 31) & 255;
+entpacktGleich(zufall, "Zufall ueber 64 kB (gespeicherte Bloecke)");
+entpacktGleich(new Array(5000).join("ESRW"), "lange Wiederholung (weite Abstaende)");
+var kaputt = zlib.gzipSync(Buffer.from(jsonProbe)); kaputt = kaputt.subarray(0, kaputt.length >> 1);
+var warf = false; try { P.gunzip(new Uint8Array(kaputt)); } catch (e) { warf = true; }
+pruefe(warf, "abgeschnittene Datei wirft, statt halbe Daten zu liefern");
+
+console.log("\nMarken aus stand.json");
+gleich(P.markeAus({ marken: { "daten.json": "abc123" } }, "daten.json"), "abc123", "Marke wird gelesen");
+gleich(P.markeAus({ stand: "x" }, "daten.json"), null, "ohne Marken: null");
+gleich(P.markeAus(null, "daten.json"), null, "ohne stand.json: null");
+gleich(P.adresseMit("daten.json.bin", "abc123"), "daten.json.bin?m=abc123", "mit Marke feste Adresse");
+pruefe(/^daten\.json\.bin\?\d+$/.test(P.adresseMit("daten.json.bin", null)), "ohne Marke mit Uhrzeit", P.adresseMit("daten.json.bin", null));
+
+
 // ------------------------------------------------------------- Ergebnis
 
 console.log("\n----------------------------------------------------------");

@@ -2804,9 +2804,17 @@ def main():
     # Der Zeitpunkt des Laufs steht bewusst in einer eigenen, winzigen Datei.
     # Sonst gaebe es allein deswegen bei jedem Lauf eine Aenderung an der
     # grossen daten.json - und damit alle 30 Minuten einen Commit.
+    # "marken": Fingerabdruecke der grossen Dateien. Die App laedt sie nur
+    # neu, wenn sich der Abdruck aendert - stand.json selbst ist winzig.
+    marken = {}
+    for name in ("daten.json", "archiv.json", "protokoll.json"):
+        m = tresor.datei_marke(os.path.join(ziel, name))
+        if m:
+            marken[name] = m
     with open(os.path.join(ziel, "stand.json"), "w", encoding="utf-8") as f:
         json.dump({"stand": stand.isoformat(), "personen": len(personen),
-                   "spiele": len(gesehen), "archiv": len(historie)},
+                   "spiele": len(gesehen), "archiv": len(historie),
+                   "marken": marken},
                   f, ensure_ascii=False)
 
     schreibe("historie.json", historie)

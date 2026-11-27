@@ -19,7 +19,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" href="icon-192.png" type="image/png">
 <meta name="theme-color" content="#f1f1f3" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#08080a" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#100f0e" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="ESRW App">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -4068,6 +4068,75 @@
   .mg-belegwahl { display:grid; gap:8px; margin-top:10px; }
   .mg-belegwahl .rg-knopf { justify-content:flex-start; }
 
+  /* ===== Fassung 311: Raster, Knoepfe, Leere, Bewegung, Dunkel ======= */
+  /* Drei Knopfarten statt sieben. Haupt: eine je Bereich, dunkle Flaeche,
+     48 px. Neben: Karte mit Rand, 44 px. Text: ohne Flaeche, 44 px
+     Tippflaeche. Ein Radius fuer alle - bis 310 standen 10, 12, 14, 20
+     und 99 px nebeneinander, oft im selben Block. */
+  :root { --knopf-r:14px; --abstand:12px; }
+  :root[data-design="neu"] button.haupt, :root[data-design="neu"] .mg-haupt,
+  :root[data-design="neu"] .leer .leer-aktion {
+    min-height:48px; padding:12px 18px; border-radius:var(--knopf-r); border:0;
+    font-size:1rem; font-weight:700; background:var(--akzent); color:var(--akzent-text);
+    display:inline-flex; align-items:center; justify-content:center; gap:6px; text-decoration:none; }
+  :root[data-design="neu"] .mg-neben, :root[data-design="neu"] .rg-knopf, :root[data-design="neu"] .start-alle {
+    min-height:44px; border-radius:var(--knopf-r); font-weight:600; }
+  :root[data-design="neu"] .textknopf { border-radius:10px; }
+  /* Ein Tipp fuehlt sich wie ein Tipp an */
+  @media (prefers-reduced-motion: no-preference) {
+    :root[data-design="neu"] button:not(:disabled), :root[data-design="neu"] a.anfrage { transition:transform .12s ease, background-color .15s, color .15s; }
+    :root[data-design="neu"] button:not(:disabled):active, :root[data-design="neu"] a.anfrage:active { transform:scale(.97); }
+  }
+  /* Ein Abstand zwischen den Bloecken der Startseite statt 8, 12, 14, 16 */
+  :root[data-design="neu"] #detail .spalte-haupt > .karte,
+  :root[data-design="neu"] #detail .spalte-haupt > #nachtrag > *,
+  :root[data-design="neu"] #detail .spalte-haupt > #held > * { margin-bottom:var(--abstand); }
+  :root[data-design="neu"] #spiele > .spiel { margin-bottom:var(--abstand); }
+
+  /* Startseite: der Rest hinter einem Knopf, Neuigkeiten als eine Zeile */
+  .start-alle { width:100%; margin:0 0 var(--abstand); }
+  .neu .kopfzeile { align-items:center; gap:8px; }
+  .neu-auf { flex:1; min-width:0; display:flex; align-items:center; gap:10px; min-height:44px; padding:0;
+    background:none; border:0; color:inherit; font:inherit; text-align:left; cursor:pointer; }
+  .neu-auf > svg.i:first-child { width:20px; height:20px; padding:8px; box-sizing:content-box; border-radius:12px;
+    background:var(--blau-hell); color:var(--blau); flex:none; }
+  .neu-auf > span { display:flex; flex-direction:column; min-width:0; }
+  .neu-auf small { color:var(--dim); font-size:var(--s-s); font-weight:600; }
+  .neu-pfeil { width:16px; height:16px; margin-left:auto; color:var(--dim); flex:none; transform:rotate(-90deg); transition:transform .18s ease; }
+  .neu.offen .neu-pfeil { transform:rotate(90deg); }
+  #neu:not(.offen) #neu-liste, #neu:not(.offen) .neu-mehr { display:none; }
+  #neu.offen #neu-liste, #neu.offen .neu-mehr { display:block; }
+  .neu.offen #neu-liste { margin-top:8px; }
+
+  /* Leer heisst nicht kaputt: Symbol in einer Scheibe, zwei Punkte drum */
+  .leer.leer-mit-bild { padding:28px 16px 24px; gap:10px; color:var(--dim); }
+  .leer-bild { position:relative; width:72px; height:72px; border-radius:50%; display:grid; place-items:center; margin-bottom:4px;
+    background:radial-gradient(circle at 32% 28%, var(--karte) 0%, var(--blau-hell) 70%); color:var(--blau);
+    box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--blau) 18%, transparent); }
+  .leer-bild::before, .leer-bild::after { content:""; position:absolute; border-radius:50%; background:var(--blau); }
+  .leer-bild::before { width:10px; height:10px; top:2px; right:0; opacity:.3; }
+  .leer-bild::after { width:6px; height:6px; bottom:8px; left:-2px; opacity:.2; }
+  .leer.leer-mit-bild .leer-bild svg.i { width:30px; height:30px; margin:0; opacity:1; display:block; }
+  .leer.leer-mit-bild .leer-aktion { margin-top:8px; }
+
+  /* Bestaetigt und nicht mehr zu pruefen: zur Seite, dann zu */
+  .mg-raus { overflow:hidden; transition:transform .18s ease-in, opacity .18s ease-in,
+    height .2s ease .14s, margin .2s ease .14s, padding .2s ease .14s; }
+  .mg-raus.weg { transform:translateX(56px); opacity:0; height:0 !important; margin-top:0 !important;
+    margin-bottom:0 !important; padding-top:0 !important; padding-bottom:0 !important; }
+  .mg-schritt .zahl { font-variant-numeric:tabular-nums; }
+
+  /* Dunkel: warmes Schwarz statt Blauschwarz, gebrochenes Weiss statt
+     reinem - die grossen Knoepfe blendeten abends wie eine Lampe. */
+  @media (prefers-color-scheme: dark) {
+    :root[data-design="neu"]:not([data-theme="light"]) {
+      --bg:#100f0e; --karte:#1b1a18; --linie:#2f2c29; --text:#ece8e2; --dim:#a39e96;
+      --akzent:#e9e5de; --akzent-hell:#2a2724; --akzent-text:#171513; --held-1:#1e1c1a; --held-2:#2e2b27; }
+  }
+  :root[data-design="neu"][data-theme="dark"] {
+    --bg:#100f0e; --karte:#1b1a18; --linie:#2f2c29; --text:#ece8e2; --dim:#a39e96;
+    --akzent:#e9e5de; --akzent-hell:#2a2724; --akzent-text:#171513; --held-1:#1e1c1a; --held-2:#2e2b27; }
+
 </style>
 </head>
 <body>
@@ -4131,7 +4200,7 @@
   <div class="ziehen" id="ziehen" aria-hidden="true">Zum Aktualisieren ziehen</div>
   <div class="offline versteckt" id="offline"><svg class="i"><use href="#i-bell"/></svg><span id="offline-text">Offline, gespeicherter Stand</span></div>
   <div class="neu karte versteckt" id="neu">
-    <div class="kopfzeile"><b>Neu in der App</b><button type="button" class="textknopf" id="neu-weg">Verstanden</button></div>
+    <div class="kopfzeile"><button type="button" class="neu-auf" id="neu-auf" aria-expanded="false" aria-controls="neu-liste"><svg class="i"><use href="#i-bell"/></svg><span><b>Neu in der App</b><small id="neu-zahl"></small></span><svg class="i neu-pfeil"><use href="#i-back"/></svg></button><button type="button" class="textknopf" id="neu-weg">Verstanden</button></div>
     <ul id="neu-liste"></ul>
   </div>
   <div class="onboarding karte versteckt" id="onboarding">
@@ -4534,6 +4603,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=310"></script>
+<script src="app.js?v=311"></script>
 </body>
 </html>

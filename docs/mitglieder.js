@@ -173,6 +173,62 @@ window.Mitglieder = (function () {
   }
   function kurzMeldung(text, art) { meldung(text, art); }
 
+  // Bewegung nur dort, wo sie etwas sagt, und nie fuer wen sie stoert
+  function bewegungAus() {
+    try { return window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) { return false; }
+  }
+  // Betraege zaehlen kurz hoch, statt zu springen: so sieht man, dass
+  // und wie sich die Summe nach einem Tipp bewegt hat. Beim ersten
+  // Zeigen von null an, danach vom alten Wert aus.
+  var gezeigteZahl = {};
+  function euroWert(t) {
+    var m = /^(-?[\d.]+,\d\d) €$/.exec(String(t || ""));
+    return m ? parseFloat(m[1].replace(/\./g, "").replace(",", ".")) : null;
+  }
+  function zahlZeigen(z, text, schluessel) {
+    var alt = gezeigteZahl[schluessel];
+    gezeigteZahl[schluessel] = text;
+    var lauf = z._zahlLauf = {};
+    z.textContent = text;
+    var ziel = euroWert(text), von = alt === undefined ? (ziel != null ? 0 : null) : euroWert(alt);
+    if (ziel == null || von == null || von === ziel || bewegungAus() || !window.requestAnimationFrame) return;
+    var t0 = null, dauer = 420;
+    function schritt(t) {
+      if (z._zahlLauf !== lauf || !z.isConnected) return;
+      if (t0 === null) t0 = t;
+      var q = Math.min(1, (t - t0) / dauer), e = 1 - Math.pow(1 - q, 3);
+      z.textContent = q < 1 ? euro(von + (ziel - von) * e) : text;
+      if (q < 1) requestAnimationFrame(schritt);
+    }
+    z.textContent = euro(von);
+    requestAnimationFrame(schritt);
+  }
+  // Eine Karte, die nach dem Bestaetigen nicht mehr in "Pruefen" gehoert,
+  // gleitet zur Seite und macht Platz - statt stehen zu bleiben, bis die
+  // Liste zufaellig neu gezeichnet wird.
+  function wegGleiten(k, fertig) {
+    if (!k || k._geht) return;
+    k._geht = true;
+    if (bewegungAus()) { k.remove(); if (fertig) fertig(); return; }
+    k.style.height = k.offsetHeight + "px";
+    k.classList.add("mg-raus");
+    void k.offsetHeight;
+    k.classList.add("weg");
+    setTimeout(function () { k.remove(); if (fertig) fertig(); }, 360);
+  }
+  function ausPruefenGleiten(sp) {
+    if (!nurOffene || zuPruefen(sp) || !wurzel) return;
+    var k = wurzel.querySelector('[data-kennung="' + sp.kennung.replace(/"/g, "") + '"]');
+    wegGleiten(k, function () {
+      if (!wurzel.querySelector(".mg-eintrag")) rendereAbrechnung();
+    });
+  }
+  // Leer heisst nicht kaputt: ein Symbol in einer Scheibe, der Satz,
+  // und wenn es einen gibt, der Weg weiter.
+  function leerBild(symbol, inhalt) {
+    return h("p", { class: "leer leer-mit-bild" }, [h("span", { class: "leer-bild", "aria-hidden": "true" }, [ikone(symbol)])].concat(inhalt));
+  }
+
   function skriptLaden(url) {
     return new Promise(function (ok, nein) {
       if (window.supabase && window.supabase.createClient) return ok();
@@ -3329,8 +3385,7 @@ window.Mitglieder = (function () {
       if (alle === null) { liste.appendChild(skelett(2)); return; }
       if (!alle.length) {
         info.textContent = "";
-        liste.appendChild(h("p", { class: "meta", style: "margin:12px 0",
-          text: "Noch keine Rechnung geschrieben. Jede Rechnung, die du baust, steht danach hier und lässt sich jederzeit wieder laden." }));
+        liste.appendChild(leerBild("i-euro", ["Noch keine Rechnung geschrieben. Jede Rechnung, die du baust, steht danach hier und lässt sich jederzeit wieder laden."]));
         return;
       }
       var offen = rechnungenOffenSumme(alle);
@@ -4623,7 +4678,7 @@ window.Mitglieder = (function () {
     var wie = gerechnetText(e), gr = karte.querySelector(".mg-status.gerechnet");
     if (wie && !gr) {
       gr = h("button", { type: "button", class: "mg-status gerechnet", text: "Bestätigen", title: wie,
-        onclick: function () { speichereEinsatz(spiel, { herkunft: null }); kurzMeldung("Als geprüft vermerkt ✓", "gut"); } });
+        onclick: function () { speichereEinsatz(spiel, { herkunft: null }); kurzMeldung("Als geprüft vermerkt ✓", "gut"); ausPruefenGleiten(spiel); } });
       if (kurz && kurz.parentNode) kurz.parentNode.insertBefore(gr, kurz.nextSibling);
     } else if (gr && !wie) {
       gr.remove();
@@ -5993,8 +6048,8 @@ window.Mitglieder = (function () {
     var wz = wegZahlen(spiele);
     Array.prototype.forEach.call(inhalt.querySelectorAll(".mg-weg .mg-schritt"), function (b, i) {
       if (!wz[i]) return;
-      var z = b.querySelector(".zahl");
-      if (z) z.textContent = wz[i].t;
+      var z = b.querySelector(".zahl"), was = b.querySelector(".was");
+      if (z) zahlZeigen(z, wz[i].t, "schritt-" + (was ? was.textContent : i));
       b.classList.toggle("fertig", wz[i].f);
     });
     // Der Arbeitskopf nennt dieselbe Zahl noch einmal als Satz.
@@ -6138,12 +6193,13 @@ window.Mitglieder = (function () {
     // fuehrt dorthin, und sie erscheint genau dann, wenn gefiltert ist.
     // Der angezeigte Name ist nicht der Stufenname: die Stufe heisst
     // intern "Unterwegs" bzw. "Geld fehlt", am Weg steht schlicht "Geld".
+    function zahlSpan(t, schluessel) { var sp = h("span", { class: "zahl" }); zahlZeigen(sp, t, schluessel); return sp; }
     function schrittKnopf(st, name, z) {
       var k = h("button", { type: "button", class: "mg-schritt" + (st[0] ? " aktiv" : ""),
         title: st[3], "data-stufe": st[1],
         onclick: function () { anfangGesetzt = true; st[4](); rendereAbrechnung(); } }, [
         h("span", { class: "was", text: name }),
-        h("span", { class: "zahl", text: z.t })]);
+        zahlSpan(z.t, "schritt-" + name)]);
       if (st[0]) k.setAttribute("aria-current", "true");
       if (z.f) k.classList.add("fertig");
       return k;
@@ -6387,7 +6443,7 @@ window.Mitglieder = (function () {
       return;
     }
     // Nach dem Speichern eines privaten Spiels die Liste neu laden
-    if (!spiele.length) inhalt.appendChild(h("p", { class: "leer" }, ["Keine Spiele in dieser Saison. ", h("button", { type: "button", class: "anfrage", style: "margin-top:10px", text: "+ Spiel selbst eintragen", onclick: function () { abrechnungPanel = "eintragen"; rendereAbrechnung(); } })]));
+    if (!spiele.length) inhalt.appendChild(leerBild("i-euro", ["Keine Spiele in dieser Saison. ", h("button", { type: "button", class: "anfrage leer-aktion", text: "+ Spiel selbst eintragen", onclick: function () { abrechnungPanel = "eintragen"; rendereAbrechnung(); } })]));
     // Die Meldung gehoert zur gewaehlten Stufe. "Alle Spiele
     // vollstaendig erfasst" stand auch unter "Erledigt", wo es
     // bedeutet haette: nichts ist bezahlt.
@@ -6708,7 +6764,7 @@ window.Mitglieder = (function () {
     var box = h("div", { class: "mg-schnellliste" });
     var jetzt = new Date();
     var liste = spiele.filter(function (sp) { return new Date(sp.beginn) <= jetzt; });
-    if (!liste.length) return h("p", { class: "leer", text: "Noch keine vergangenen Spiele in dieser Saison." });
+    if (!liste.length) return leerBild("i-cal", ["Noch keine vergangenen Spiele in dieser Saison."]);
 
     box.appendChild(h("div", { class: "mg-schnellkopf" }, [
       h("span", { text: "Spiel" }), h("span", { text: "km" }), h("span", { text: "Betrag" }),
@@ -6916,7 +6972,7 @@ window.Mitglieder = (function () {
           gerechnetText(e) ? h("button", { type: "button", class: "mg-status gerechnet",
             // "Vorschlag" sagte, was es ist, nicht was der Tipp tut
             title: gerechnetText(e), text: "Bestätigen",
-            onclick: function () { speichereEinsatz(sp, { herkunft: null }); kurzMeldung("Als geprüft vermerkt ✓", "gut"); } }) : null,
+            onclick: function () { speichereEinsatz(sp, { herkunft: null }); kurzMeldung("Als geprüft vermerkt ✓", "gut"); ausPruefenGleiten(sp); } }) : null,
           e.bezahlt ? h("span", { class: "mg-status bezahlt", title: "Abgehakt am " + new Date(e.bezahlt).toLocaleDateString("de-DE"), text: "bezahlt" }) : null,
           vergangen ? fotoKnopf : null, foto,
           // "Details" klang nach Nachschlagen. Dahinter liegen die
@@ -7179,7 +7235,7 @@ window.Mitglieder = (function () {
       var erledigt = d.gesuche.filter(function (g) { return g.status === "erledigt"; });
 
       inhalt.appendChild(h("h3", { class: "abschnitt", text: "Offene und vereinbarte Gesuche" }));
-      if (!offen.length) inhalt.appendChild(h("p", { class: "leer", text: "Gerade sucht niemand Ersatz." }));
+      if (!offen.length) inhalt.appendChild(leerBild("i-swap", ["Gerade sucht niemand Ersatz."]));
       offen.forEach(function (g) { inhalt.appendChild(gesuchKarte(g, d.angebote[g.id] || [])); });
 
       inhalt.appendChild(h("h3", { class: "abschnitt", text: "Eigenes Gesuch einstellen" }));
@@ -8347,7 +8403,7 @@ window.Mitglieder = (function () {
         leeren(liste);
         var f = suche.value.trim().toLowerCase();
         var treffer = alle.filter(function (n) { return !f || (n.text + " " + n.paarung + " " + (n.liga || "") + " " + (n.halle || "")).toLowerCase().indexOf(f) >= 0; });
-        if (!treffer.length) liste.appendChild(h("p", { class: "leer" }, [alle.length ? "Nichts gefunden." : "Noch keine Notizen. Auf jeder Spielseite gibt es „Meine Notiz“.", alle.length ? null : h("a", { class: "anfrage leer-aktion", href: "#plan", text: "Zum Spielplan" })]));
+        if (!treffer.length) liste.appendChild(leerBild(alle.length ? "i-suche" : "i-note", [alle.length ? "Nichts gefunden." : "Noch keine Notizen. Auf jeder Spielseite gibt es „Meine Notiz“.", alle.length ? null : h("a", { class: "anfrage leer-aktion", href: "#plan", text: "Zum Spielplan" })]));
         treffer.forEach(function (n) {
           var d = new Date(n.beginn);
           var ta = h("textarea", { rows: "3", maxlength: "4000" }); ta.value = n.text;
@@ -11359,7 +11415,7 @@ window.Mitglieder = (function () {
       var gelesen = gelesenLesen();
       leeren(inhalt);
       if (darf("ankuendigungen")) inhalt.appendChild(ankuendigungFormular());
-      if (!alle.length) inhalt.appendChild(h("p", { class: "leer", text: "Keine Ankündigungen." }));
+      if (!alle.length) inhalt.appendChild(leerBild("i-info", ["Keine Ankündigungen."]));
       var terminIds = alle.filter(function (a) { return a.termin && a.termin >= heute; }).map(function (a) { return a.id; });
       var antwortenVersprechen = terminIds.length && frei() ? sb.from("termin_antworten").select("ankuendigung_id,user_id,name,antwort").in("ankuendigung_id", terminIds).then(function (r2) { return r2.data || []; }).catch(function () { return []; }) : Promise.resolve([]);
       function antwortZeile(a, antworten) {
