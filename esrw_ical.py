@@ -806,17 +806,27 @@ def saisonarchiv_laden():
         except (OSError, ValueError):
             continue
         for z in inhalt.get("spiele", []):
-            # [beginn, liga, paarung, halle, [[name, slug, rolle], ...]]
+            # [beginn, liga, paarung, halle, [[name, slug, rolle], ...], kennung]
+            # Die Kennung (sechste Spalte, ab Fassung 316) ist die aus der
+            # Registratur. Bei einem verlegten Spiel ist sie NICHT
+            # beginn|paarung - dort steht die erste Zeit, unter der
+            # Abrechnung, Notizen und Mitfahrten liegen.
             besetzung = {"HSR": [], "(L)SR": []}
             for b in z[4]:
                 (besetzung["HSR"] if b[2] == "HSR" else besetzung["(L)SR"]).append(b[0])
-            alt[z[0] + "|" + z[2]] = {"beginn": z[0], "liga": z[1], "paarung": z[2], "halle": z[3],
-                                     "besetzung": besetzung, "begegnung": (z[1] + ": " if z[1] else "") + z[2],
-                                     "eingefroren": True}
+            kennung = saison_zeile_kennung(z)
+            alt[kennung] = {"beginn": z[0], "liga": z[1], "paarung": z[2], "halle": z[3],
+                            "besetzung": besetzung, "begegnung": (z[1] + ": " if z[1] else "") + z[2],
+                            "eingefroren": True, "kennung": kennung}
     return alt
 
 
-def saisonarchiv_einfrieren(historie, personen, stand):
+def saison_zeile_kennung(z):
+    """Die Kennung einer Zeile aus docs/archiv/<saison>.json."""
+    return (z[5] if len(z) > 5 and z[5] else None) or (z[0] + "|" + z[2])
+
+
+def saisonarchiv_einfrieren(historie, personen, stand, kennungen=None):
     """Abgeschlossene Saisons aus historie.json in kompakte Dateien
     docs/archiv/<saison>.json schreiben und aus der Arbeitsdatei nehmen.
     Datensparend: je Spiel eine Zeile, Namen mit Slug, kein Ballast."""
@@ -843,12 +853,25 @@ def saisonarchiv_einfrieren(historie, personen, stand):
             # Lieber ein roter Lauf, dann holt man die Datei aus der
             # Git-Historie.
             inhalt = tresor.json_lesen(pfad, SCHLUESSEL, None) or {}
-            vorhanden = {z[0] + "|" + z[2]: z for z in inhalt.get("spiele", [])}
-        for kennung, e in eintraege:
+            # Was der Betreiber seither zusammengefuehrt hat, gilt auch fuer
+            # schon eingefrorene Zeilen - sonst bliebe die alte daneben stehen.
+            vorhanden = {}
+            for z in inhalt.get("spiele", []):
+                k = zusammen_fuer(kennungen, saison_zeile_kennung(z))
+                vorhanden[k] = list(z[:5]) + [k]
+        for quelle, e in eintraege:
             bes = [[n, schluessel_slug.get(personen_schluessel(n)) or slug_aus(n), r]
                    for n, r in rollen_fuer(e.get("besetzung") or {})]
-            vorhanden[e["beginn"] + "|" + e.get("paarung", "")] = [e["beginn"], e.get("liga", ""), e.get("paarung", ""), e.get("halle", ""), bes]
-            del historie[kennung]
+            # Die Kennung aus der Registratur mitschreiben. Ohne sie baute
+            # jeder Leser sie aus beginn|paarung nach - bei einem verlegten
+            # Spiel die neue Zeit, waehrend Abrechnung, Notizen und
+            # Mitfahrten unter der alten liegen. Die Folge: im Archiv eine
+            # zweite Zeile, und die Eintraege der Kollegen haengen an
+            # keinem Spiel mehr.
+            vorschlag = e["beginn"] + "|" + e.get("paarung", "")
+            kennung = zusammen_fuer(kennungen, (kennungen or {}).get("bekannt", {}).get(quelle) or vorschlag)
+            vorhanden[kennung] = [e["beginn"], e.get("liga", ""), e.get("paarung", ""), e.get("halle", ""), bes, kennung]
+            del historie[quelle]
         zeilen = sorted(vorhanden.values(), key=lambda z: z[0])
         tresor.json_schreiben(pfad, {"saison": saison, "stand": stand.isoformat(), "spiele": zeilen},
                               SCHLUESSEL, separators=(",", ":"))
@@ -1811,7 +1834,7 @@ def archiv_in_db(historie, uebersicht, personen, stand, kennungen=None):
         # liess die alten als Waisen stehen - samt allem, was die Kollegen
         # daran haengen haben. Eingefrorene Saisons tragen ihre Paarung
         # auf der Platte und brauchen das nicht.
-        kennung = zusammen_fuer(kennungen, e["beginn"] + "|" + e.get("paarung", "")) \
+        kennung = zusammen_fuer(kennungen, e.get("kennung") or (e["beginn"] + "|" + e.get("paarung", ""))) \
             if e.get("eingefroren") \
             else kennung_fuer(kennungen, e["beginn"], e.get("begegnung", ""),
                               e["beginn"] + "|" + e.get("paarung", ""))
@@ -2599,7 +2622,7 @@ def main():
             len(abgesetzt), "; ".join("%s %s" % (e.get("beginn", "")[:10], e.get("paarung", ""))
                                       for _k, e in abgesetzt)))
     # Abgeschlossene Saisons einfrieren (docs/archiv/), Arbeitsdatei bleibt klein
-    saison_index = saisonarchiv_einfrieren(historie, personen, stand)
+    saison_index = saisonarchiv_einfrieren(historie, personen, stand, kennungen)
     rueck = historie_umbesetzen(historie, korrekturen)
     historie_alle = dict(saisonarchiv_laden())
     historie_alle.update(historie)
@@ -2811,6 +2834,16 @@ def main():
         m = tresor.datei_marke(os.path.join(ziel, name))
         if m:
             marken[name] = m
+    # Die eingefrorenen Saisons aendern sich fast nie - mit Marke holt die
+    # App sie einmal und dann aus dem Zwischenspeicher, statt bei jedem
+    # Blick ins Archiv alle Jahre neu zu laden. Name wie in archiv.json
+    # ("dateien"): archiv/2025-26.json.
+    for i in (saison_index or []):
+        name = i.get("datei")
+        if name:
+            m = tresor.datei_marke(os.path.join(ziel, *name.split("/")))
+            if m:
+                marken[name] = m
     with open(os.path.join(ziel, "stand.json"), "w", encoding="utf-8") as f:
         json.dump({"stand": stand.isoformat(), "personen": len(personen),
                    "spiele": len(gesehen), "archiv": len(historie),

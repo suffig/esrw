@@ -5211,6 +5211,25 @@ window.Mitglieder = (function () {
     });
   }
   var nachgezogenAm = 0;
+  // Ein verlegtes Spiel behaelt seine Kennung (Registratur im Workflow),
+  // aber der Eintrag in der Abrechnung trug weiter die alte Anstosszeit -
+  // und damit das alte Jahr fuer Jahresblatt und Steuer, den alten Tag in
+  // der Rechnung. Hier zieht er der Zeit des Spiels nach, still.
+  function beginnNachziehen() {
+    var n = 0;
+    stillSpeichern = true;
+    try {
+      alleSpiele().forEach(function (sp) {
+        var e = einsaetze[sp.kennung];
+        if (!e || !e.id || !e.beginn || !sp.beginn || e.bezahlt) return;
+        if (new Date(e.beginn).getTime() === new Date(sp.beginn).getTime()) return;
+        if (aufRechnung && aufRechnung[sp.kennung]) return;   // die Rechnung steht schon
+        speichereEinsatz(sp, { beginn: sp.beginn });
+        n++;
+      });
+    } finally { stillSpeichern = false; }
+    return n;
+  }
   function vorschlaegeNachziehen() {
     var n = 0;
     // Nur die Saison, fuer die die Ordnung gilt - wie in abweichung().
@@ -6114,6 +6133,7 @@ window.Mitglieder = (function () {
       nachgezogenAm = Date.now();
       var nz = vorschlaegeNachziehen();
       if (nz) kurzMeldung(nz + (nz === 1 ? " Betrag" : " Beträge") + " an die Gebührenordnung angepasst.", "gut");
+      beginnNachziehen();
     }
     automatischVorbelegen(spiele, hallenOhneRoute(spiele).length > 0);
     // Die Strecken kommen nach - die Seite steht schon, waehrend der

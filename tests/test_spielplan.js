@@ -1288,6 +1288,11 @@ gleich(P.autoText([{ slug: "ich", art: "suche" }]), "Suchst eine Mitfahrt", "Ges
 gleich(P.autoText([{ slug: "k2", name: "Beispiel, Eva", art: "biete", zusagen: [] }]), "", "fremdes Angebot ohne mich");
 P.setze({ profil: null });
 
+console.log("\nKennung in Saisondateien (Fassung 316)");
+gleich(P.saisonKennung(["2025-10-04T19:30:00+02:00", "U15", "A – B", "H", [], "2025-10-04T18:00:00+02:00|A – B"]),
+  "2025-10-04T18:00:00+02:00|A – B", "sechste Spalte gewinnt (verlegtes Spiel)");
+gleich(P.saisonKennung(["2025-10-04T18:00:00+02:00", "U15", "A – B", "H", []]), "2025-10-04T18:00:00+02:00|A – B", "alte Datei ohne Spalte: beginn|paarung");
+
 console.log("\nRegeln je Spiel (Fassung 315)");
 var rZeiten = [
   { gruppe: "Herren", liga: "Regionalliga West", spielzeit: "3 x 20 Minuten", pause: "15 Minuten", hinweis: "" },
@@ -1330,6 +1335,8 @@ console.log("\nMarken aus stand.json");
 gleich(P.markeAus({ marken: { "daten.json": "abc123" } }, "daten.json"), "abc123", "Marke wird gelesen");
 gleich(P.markeAus({ stand: "x" }, "daten.json"), null, "ohne Marken: null");
 gleich(P.markeAus(null, "daten.json"), null, "ohne stand.json: null");
+gleich(P.markeAus({ marken: { "archiv/2025-26.json": "s1" } }, "archiv/2025-26.json"), "s1", "Saisondatei mit Marke");
+gleich(P.adresseMit("archiv/2025-26.json.bin", "s1"), "archiv/2025-26.json.bin?m=s1", "Saisondatei: feste Adresse");
 gleich(P.adresseMit("daten.json.bin", "abc123"), "daten.json.bin?m=abc123", "mit Marke feste Adresse");
 pruefe(/^daten\.json\.bin\?\d+$/.test(P.adresseMit("daten.json.bin", null)), "ohne Marke mit Uhrzeit", P.adresseMit("daten.json.bin", null));
 

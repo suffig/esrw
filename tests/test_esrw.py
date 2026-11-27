@@ -394,6 +394,39 @@ def test_ausgaben():
     pruefe(not kaputt, "keine Konfliktmarker, alle JSON-Dateien gueltig",
            str(kaputt[:3]))
 
+def test_saisonarchiv_kennung():
+    """Fassung 316: ein verlegtes Spiel behaelt beim Einfrieren seine
+    Kennung aus der Registratur - sonst stuende es im Archiv unter der
+    neuen Zeit, und Abrechnung, Notizen und Mitfahrten hingen an nichts."""
+    print("\nSaison-Archiv: Kennung verlegter Spiele")
+    import tempfile
+    alt_basis = E.BASIS
+    with tempfile.TemporaryDirectory() as tmp:
+        E.BASIS = tmp
+        try:
+            def neu():
+                # Quelle "q1" wurde am 04.10. um 18:00 erstmals gesehen, dann auf 19:30 verlegt
+                return {"q1": {"beginn": "2025-10-04T19:30:00+02:00", "begegnung": "U15: A - B", "liga": "U15", "paarung": "A – B",
+                               "halle": "Halle X", "besetzung": {"HSR": [], "(L)SR": ["Muster, Max"]}}}
+            alt_k = "2025-10-04T18:00:00+02:00|A – B"
+            reg = {"bekannt": {"q1": alt_k}, "neu": [], "zusammen": {}, "fortsetzung": {}}
+            personen = [{"schluessel": E.personen_schluessel("Muster, Max"), "slug": "muster-max"}]
+            stand = datetime(2026, 9, 19, 12, 0, tzinfo=timezone.utc)
+            E.saisonarchiv_einfrieren(neu(), personen, stand, reg)
+            zurueck = E.saisonarchiv_laden()
+            pruefe(list(zurueck.keys()) == [alt_k], "Schluessel ist die alte Kennung", str(list(zurueck.keys())))
+            e = list(zurueck.values())[0]
+            pruefe(e["beginn"] == "2025-10-04T19:30:00+02:00", "Anstoss ist die neue Zeit", e["beginn"])
+            pruefe(e["kennung"] == alt_k, "Kennung kommt mit zurueck", e["kennung"])
+            E.saisonarchiv_einfrieren(neu(), personen, stand, reg)
+            pruefe(len(E.saisonarchiv_laden()) == 1, "zweiter Lauf: weiter eine Zeile")
+            reg2 = dict(reg, zusammen={alt_k: "ziel"})
+            E.saisonarchiv_einfrieren(neu(), personen, stand, reg2)
+            pruefe(list(E.saisonarchiv_laden().keys()) == ["ziel"], "Zusammenfuehrung gilt im Archiv, alte Zeile verschwindet", str(list(E.saisonarchiv_laden().keys())))
+        finally:
+            E.BASIS = alt_basis
+
+
 def test_saisonarchiv():
     """Abgeschlossene Saisons wandern in docs/archiv/<saison>.json und
     kommen fuer die Statistik unveraendert zurueck."""
@@ -420,6 +453,7 @@ def test_saisonarchiv():
             # Zweiter Lauf: nichts geht verloren, nichts doppelt
             E.saisonarchiv_einfrieren(historie, personen, stand)
             pruefe(len(E.saisonarchiv_laden()) == 1, "zweiter Lauf aendert nichts")
+            pruefe(e.get("kennung") == "2025-10-04T18:00:00+02:00|A – B", "ohne Registratur: Kennung wie bisher", e.get("kennung"))
             stats, _ = E.statistik_aus_historie(dict(E.saisonarchiv_laden(), **historie), stand)
             st = stats[E.personen_schluessel("Muster, Max")]
             pruefe(st["gesamt"] == 2 and st["saison"] == 1 and len(st["spiele_saison"]) == 1, "Statistik zaehlt alle Saisons, Liste nur die laufende", str((st["gesamt"], st["saison"], len(st["spiele_saison"]))))
@@ -2009,7 +2043,7 @@ def main():
                  test_archivkennung, test_statistik_zaehlt_einmal, test_spielschluessel, test_blattfokus, test_netzstand,
                  test_push_nachrichten, test_push_erinnerungen, test_push_rechnungen,
                  test_anzeigenamen, test_abgesetzt,
-                 test_tresor, test_push_freischaltung):
+                 test_tresor, test_push_freischaltung, test_saisonarchiv_kennung):
         test()
     print("\n" + "-" * 58)
     if FEHLER:

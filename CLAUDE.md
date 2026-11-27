@@ -226,6 +226,14 @@ Bei Rebase-Konflikten in erzeugten Dateien gilt die Fassung vom Server.
   (Kennung `ESRW2`, `ESRW1` bleibt lesbar). `stand.json` trägt unter
   `marken` einen Abdruck jeder großen Datei; die App lädt sie nur neu,
   wenn er sich ändert (`daten.json.bin?m=<marke>`).
+* Ein Spiel heißt überall nach seiner **Kennung aus der Registratur**
+  (`spiel_kennungen`, v51): die von der ersten Sichtung, auch nach
+  einer Verlegung. Sie sieht aus wie `beginn|paarung`, ist aber kein
+  Rechenergebnis – nie aus Anstoß und Paarung nachbauen. Die
+  Saisondateien `docs/archiv/<saison>.json` tragen sie seit Fassung 316
+  als sechste Spalte (`saison_zeile_kennung()` / `saisonKennung()`);
+  bis dahin hätte ein verlegtes Spiel beim Einfrieren eine zweite Zeile
+  bekommen, und Abrechnung, Notizen und Mitfahrten hingen an nichts.
 * Der Schlüssel liegt als GitHub-Secret `DATEN_SCHLUESSEL`; er gehört
   **nirgendwo sonst hin** – nicht ins Repository, nicht in einen Chat.
 * `docs/supabase.json` enthält die öffentliche anon-Kennung. Das ist

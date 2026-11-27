@@ -8,7 +8,9 @@
   // Wird einmal je Fassung gezeigt, damit die Kollegen neue Funktionen finden.
   // Hoechstens vier Punkte: mit sechs schob die Karte das naechste Spiel
   // unter den Bildschirmrand (gemessen bei 375 px).
-  var NEUIGKEITEN = { version: "2026-11-28", punkte: [
+  var NEUIGKEITEN = { version: "2026-11-28b", punkte: [
+    "Spieltagskarte: Route und Teilen wieder nebeneinander, dazu wer mit dir im Auto sitzt – wer abholt, fährt um den Umweg früher los",
+    "Verlegte Spiele behalten ihre Abrechnung, Notizen und Mitfahrten, auch im Archiv; das Datum in der Abrechnung zieht mit",
     "Zusammen fahren: Umweg jetzt auf der Straße gerechnet, in km und Minuten, mit Losfahr- und Abholzeit – und „Strecke“ zeigt die Fahrt auf der Karte",
     "Beim Anbieten schlägt die App Ort und Abfahrtszeit vor",
     "Spielseite: „Regeln für dieses Spiel“ – Spielzeit, Besonderheiten der Altersklasse und genau die passenden Dokumente",
@@ -687,6 +689,9 @@
   }
   function suchtextVon(s) { return ohneZeichen(s) + " " + ausgeschrieben(s); }
   function uhr(d) { return d.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" }); }
+  // Kilometer wie man sie schreibt: "22,9 km". OSRM liefert 22.9, und so
+  // stand es bis Fassung 315 auf Spieltagskarte, Spielseite und im Kalender.
+  function kmDeutsch(x) { return x == null ? "" : String(x).replace(".", ","); }
   function datumKurz(d) { return wochentag[d.getDay()] + ". " + d.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit" }); }
   // Woher die Kachel "Insgesamt" ihre Zahl hat. Ohne erstes Spiel
   // bleibt es bei "aus dem Archiv" - ein "seit ?" sagt niemandem was.
@@ -1567,6 +1572,12 @@
   }
 
   function kennungVon(s) { return s.id || (s.beginn + "|" + s.paarung); }
+  // Eine Zeile aus docs/archiv/<saison>.json: [beginn, liga, paarung,
+  // halle, besetzung, kennung]. Die sechste Spalte schreibt der Workflow
+  // ab Fassung 316 - bei einem verlegten Spiel ist sie die alte Zeit,
+  // unter der Abrechnung und Notizen liegen. Aeltere Dateien haben sie
+  // nicht, dort bleibt beginn|paarung.
+  function saisonKennung(z) { return (z && z[5]) || (z[0] + "|" + z[2]); }
 
   // ---------------------------------------------------- Wetter (Open-Meteo)
 
@@ -1635,9 +1646,9 @@
       if (karte[kennung]) return null;
       var dateien = a.dateien || {};
       return Promise.all(Object.keys(dateien).map(function (sn) {
-        return hole(dateien[sn]).then(function (d) {
+        return hole(dateien[sn], markeAus(letzterLauf, dateien[sn])).then(function (d) {
           (d.spiele || []).forEach(function (z) {
-            var k = z[0] + "|" + z[2];
+            var k = saisonKennung(z);
             if (k !== kennung) return;
             var bes = (z[4] || []).map(function (b) { return { name: b[0], slug: b[1], rolle: b[2] }; });
             merge({ kennung: k, beginn: z[0], liga: z[1], paarung: z[2], halle: z[3],
@@ -1784,7 +1795,7 @@
           // jeden Vorbehalt, als waere sie gemessen. Sie ist gerechnet, und
           // zwar ohne Stau. Das gehoert dazu, sonst steht da eine
           // Genauigkeit, die es nicht gibt.
-          s1.textContent = sk.minuten + " Min., " + sk.km + " km · " + verkehrText();
+          s1.textContent = sk.minuten + " Min., " + kmDeutsch(sk.km) + " km · " + verkehrText();
           t1.appendChild(s1); abfahrtZeile.appendChild(t1);
           abfahrtZeile.classList.remove("versteckt");
         }).catch(function () {});
@@ -2604,13 +2615,67 @@
         // Die Zeit ist gerechnet, nicht gemessen, und zwar ohne Stau. Das
         // gehoert dazu, sonst steht da eine Genauigkeit, die es nicht gibt.
         var zs = document.createElement("small");
-        zs.textContent = st.minuten + " Min., " + st.km + " km · " + verkehrText();
+        zs.textContent = st.minuten + " Min., " + kmDeutsch(st.km) + " km · " + verkehrText();
         zt.appendChild(zs);
         z.appendChild(zt);
+        // Fuer heldFahrt(): wer jemanden abholt, muss um den Umweg frueher los
+        h._ab = ab; h._abFett = zb; h._abKlein = zs; h._abKleinText = zs.textContent;
+        if (h._abgleich) h._abgleich();
         if (ak && ak.parentNode === h) { h.insertBefore(z, ak); return; }
         h.appendChild(z);
       }).catch(function () {});
     }
+    if (meinSpiel && sitzungVorhanden() && funktion("mitfahren")) heldFahrt(h, ak, s);
+  }
+
+  // Auf der Spieltagskarte eine Zeile zur Fahrt: wer mit wem im Auto
+  // sitzt und wann abgeholt wird - oder, solange nichts verabredet ist,
+  // wer aus dem Gespann auf dem Weg liegt. Bis Fassung 315 stand das nur
+  // unter "Zusammen fahren", also dort, wo man am Spieltag nicht nachsieht.
+  function heldFahrt(h, ak, s) {
+    var andere = (s.gespann || []).filter(function (g) { return g.slug && g.slug !== profil.slug; });
+    ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); }).then(function (st) {
+      if (!st.eingerichtet || !st.session || !window.Mitglieder.mitfahrtenFuer) return null;
+      return window.Mitglieder.mitfahrtenFuer([s]);
+    }).then(function (mf) {
+      if (!mf || !h.isConnected) return;
+      var eintraege = mf[kennungVon(s)] || [];
+      var zeile = document.createElement("a"); zeile.className = "halle held-fahrt"; zeile.href = "#mitfahren";
+      zeile.appendChild(ikone("i-route"));
+      var txt = document.createElement("span"); zeile.appendChild(txt);
+      var t = autoText(eintraege);
+      var mein = eintraege.filter(function (m) { return m.slug === profil.slug; })[0];
+      if (t) {
+        txt.textContent = t;
+        // Wer abholt, will die Uhrzeit dazu
+        var z = mein && mein.art === "biete" && (mein.zusagen || [])[0];
+        if (z && z.slug) window.Mitglieder.umwegRoute(s, z.slug, "ich").then(function (r) {
+          if (!r || !txt.isConnected) return;
+          // Ohne gemerkte Abfahrt: die Zeiten aus der Route allein
+          txt.textContent = t + " · " + window.Mitglieder.fahrZeiten(s, r).replace(/^Losfahren ca\. [^,]+, /, "");
+          // Mit Abfahrt (inkl. eigenem Puffer): um den Umweg frueher los,
+          // abgeholt wird nach dem ersten Stueck. Sonst stand oben
+          // "Losfahren 03:27" und darunter "Abholen 03:30" - vom eigenen
+          // Startpunkt aus in drei Minuten.
+          h._abgleich = function () {
+            if (!h._ab || !txt.isConnected) return;
+            var los = new Date(Math.floor((h._ab.getTime() - r.min * 60000) / 300000) * 300000);
+            var abholen = new Date(Math.round((los.getTime() + ((r.ueber.beine[0] || {}).min || 0) * 60000) / 300000) * 300000);
+            if (h._abFett) h._abFett.textContent = uhr(los);
+            if (h._abKlein) h._abKlein.textContent = h._abKleinText + " · inkl. " + Math.max(1, Math.round(r.min)) + " Min. Umweg zum Abholen";
+            txt.textContent = t + " · abholen ca. " + uhr(abholen);
+            if (h._abfahrtSetzen) h._abfahrtSetzen(los);
+          };
+          h._abgleich();
+        });
+      } else {
+        var v = window.Mitglieder.vorschlaegeFuer(s, andere.map(function (g) { return g.slug; }));
+        var wer = andere.filter(function (g) { return v[g.slug]; })[0];
+        if (!wer) return;
+        txt.textContent = vorname(wer.name) + (v[wer.slug].richtung === "ich" ? " liegt auf deinem Weg" : ": du liegst auf dem Weg") + " – zusammen fahren? ›";
+      }
+      if (ak && ak.parentNode === h) h.insertBefore(zeile, ak); else h.appendChild(zeile);
+    }).catch(function () {});
   }
 
   // ----------------------------------------------------- Nachtrag-Hinweis
@@ -3514,8 +3579,8 @@
       ((f.daten && f.daten.spiele) || []).forEach(function (z) {
         var ich = (z[4] || []).filter(function (b) { return b[1] === slug; })[0];
         if (!ich) return;
-        // Dieselbe Kennung wie in zeigeArchiv(): beginn|paarung
-        dazu(z[0] + "|" + z[2], { saison: f.saison, beginn: z[0], liga: z[1], paarung: z[2],
+        // Dieselbe Kennung wie in zeigeArchiv()
+        dazu(saisonKennung(z), { saison: f.saison, beginn: z[0], liga: z[1], paarung: z[2],
                                   halle: z[3], rolle: ich[2], system: (z[4] || []).length });
       });
     });
@@ -3573,7 +3638,7 @@
           // ungefiltert - ein abgegebenes Spiel kam mit dem
           // Saisonwechsel zurueck.
           return Promise.all(Object.keys(dateien).map(function (sn) {
-            return hole(dateien[sn]).then(function (d) { return { saison: sn, daten: d }; })
+            return hole(dateien[sn], markeAus(letzterLauf, dateien[sn])).then(function (d) { return { saison: sn, daten: d }; })
               .catch(function () { return { saison: sn, daten: null }; });
           })).then(function (eingefroren) {
             var eigene = saisonZeilen(a, eingefroren, p.slug);
@@ -4111,7 +4176,7 @@
         var bes = z[4] || [];
         if (!bes.some(function (b) { return b[1] === slugA; })) return;
         if (!bes.some(function (b) { return b[1] === slugB; })) return;
-        var k = z[0] + "|" + z[2];
+        var k = saisonKennung(z);
         if (gesehen[k]) return;
         gesehen[k] = 1;
         aus.push({ kennung: k, beginn: z[0], liga: z[1] || "", paarung: z[2] || "",
@@ -4202,7 +4267,7 @@
       archivDaten = a;
       var dateien = a.dateien || {};
       return Promise.all(Object.keys(dateien).map(function (sn) {
-        return hole(dateien[sn]).then(function (d) { return { saison: sn, daten: d }; })
+        return hole(dateien[sn], markeAus(letzterLauf, dateien[sn])).then(function (d) { return { saison: sn, daten: d }; })
           .catch(function () { return { saison: sn, daten: null }; });
       })).then(function (eingefroren) {
         if (!box.isConnected) return;
@@ -4435,7 +4500,7 @@
       window.Mitglieder.abfahrt(name).then(function (sk) {
         if (!sk || !sk.minuten) return;
         var h = document.createElement("div"); h.className = "hinweis gut"; h.appendChild(ikone("i-route"));
-        var sp2 = document.createElement("span"); sp2.textContent = "Von zu Hause: " + sk.km + " km, ca. " + mitPuffer(sk).minuten + " Min. (" + verkehrText() + ")."; h.appendChild(sp2); st.appendChild(h);
+        var sp2 = document.createElement("span"); sp2.textContent = "Von zu Hause: " + kmDeutsch(sk.km) + " km, ca. " + mitPuffer(sk).minuten + " Min. (" + verkehrText() + ")."; h.appendChild(sp2); st.appendChild(h);
       });
       if (funktion("hallen")) window.Mitglieder.hallenHinweise(name, hw);
     }).catch(function () {});
@@ -4763,11 +4828,11 @@
       // 3) eingefrorene Saisons
       var dateien = a.dateien || {};
       return Promise.all(Object.keys(dateien).map(function (sn) {
-        return hole(dateien[sn]).then(function (d) {
+        return hole(dateien[sn], markeAus(letzterLauf, dateien[sn])).then(function (d) {
           (d.spiele || []).forEach(function (z) {
             var bes = (z[4] || []).map(function (b) { return { name: b[0], slug: b[1], rolle: b[2] }; });
             if (!alle && !bes.some(function (b) { return b.slug === slug; })) return;
-            merge({ kennung: z[0] + "|" + z[2], beginn: z[0], liga: z[1], paarung: z[2], halle: z[3], system: bes.length, besetzung: bes, saison: sn });
+            merge({ kennung: saisonKennung(z), beginn: z[0], liga: z[1], paarung: z[2], halle: z[3], system: bes.length, besetzung: bes, saison: sn });
           });
         }).catch(function () {});
       }));
@@ -6815,7 +6880,7 @@
       "DTSTAMP:" + icsZeit(new Date()), "DTSTART:" + icsZeit(z.start), "DTEND:" + icsZeit(z.ende),
       "SUMMARY:" + icsText(titel),
       "LOCATION:" + icsText(s.ort || s.halle || ""),
-      "DESCRIPTION:" + icsText("Treffpunkt " + uhr(z.treff) + " Uhr, Spielbeginn " + uhr(z.anpfiff) + " Uhr" + (z.abfahrt ? "\nAbfahrt ca. " + uhr(z.abfahrt) + " Uhr (" + sk.km + " km, " + z.gepuffert.minuten + " Min., " + verkehrText() + ")" : "")));
+      "DESCRIPTION:" + icsText("Treffpunkt " + uhr(z.treff) + " Uhr, Spielbeginn " + uhr(z.anpfiff) + " Uhr" + (z.abfahrt ? "\nAbfahrt ca. " + uhr(z.abfahrt) + " Uhr (" + kmDeutsch(sk.km) + " km, " + z.gepuffert.minuten + " Min., " + verkehrText() + ")" : "")));
     if (z.abfahrt) zeilen.push("BEGIN:VALARM", "ACTION:DISPLAY", "DESCRIPTION:" + icsText("In " + ABFAHRT_VORWARNUNG + " Min. losfahren (" + uhr(z.abfahrt) + " Uhr): " + s.paarung), "TRIGGER:-PT" + z.weckerVor + "M", "END:VALARM");
     w.alarme.forEach(function (a) {
       if (!/^-P(?=[0-9T])(?:[0-9]+[WD])*(?:T(?:[0-9]+[HMS])+)?$/.test(a)) return;
@@ -7876,6 +7941,7 @@
   // Datei nicht aendert - Browser und Pages-Zwischenspeicher duerfen sie
   // dann behalten. Ohne Marke wie frueher mit der Uhrzeit.
   function adresseMit(name, marke) { return name + "?" + (marke ? "m=" + marke : Date.now()); }
+  // Auch fuer die Saisondateien ("archiv/2025-26.json", Fassung 316)
   function markeAus(lauf, name) { return (lauf && lauf.marken && lauf.marken[name]) || null; }
   function holeKlartext(name, marke) {
     return fetch(adresseMit(name, marke)).then(function (r) { if (!r.ok) throw 0; return r.json(); });
@@ -8418,7 +8484,7 @@
       spieltagErlaubt: spieltagErlaubt, spieltagOffen: spieltagOffen, startEinstellung: startEinstellung,
       aendZerlegen: aendZerlegen, aendArt: aendArt, tourAngebote: tourAngebote,
       titelDoppelt: titelDoppelt, einrichtungSichtbar: einrichtungSichtbar,
-      naechstesEigenes: naechstesEigenes, regelnFuerSpiel: regelnFuerSpiel, wocheDaten: wocheDaten, grussText: grussText, gemeinsamGepfiffen: gemeinsamGepfiffen, autoText: autoText, kalenderwoche: kalenderwoche, mitText: mitText, gunzip: gunzip, markeAus: markeAus, adresseMit: adresseMit
+      naechstesEigenes: naechstesEigenes, saisonKennung: saisonKennung, regelnFuerSpiel: regelnFuerSpiel, wocheDaten: wocheDaten, grussText: grussText, gemeinsamGepfiffen: gemeinsamGepfiffen, autoText: autoText, kalenderwoche: kalenderwoche, mitText: mitText, gunzip: gunzip, markeAus: markeAus, adresseMit: adresseMit
     }
   };
 
