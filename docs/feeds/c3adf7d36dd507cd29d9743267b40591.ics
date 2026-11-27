@@ -8,51 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:ae23e71395be5296bf00cd9e34013db7bce18de3@esrw.de
-SEQUENCE:0
-DTSTAMP:20261111T143043Z
-LAST-MODIFIED:20261111T143043Z
-DTSTART:20261120T170000Z
-DTEND:20261120T203000Z
-SUMMARY:SR · U17 RL: Ratinger Ice Aliens – EHC Troisdorf
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
-  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U17 RL\nHalle: Eissporthalle Ra
- tingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Caelers\, Fabia
- n\nVergütung lt. Ordnung: 85 €\n\nQuelle: https://www.esrw.de/einteilun
- gen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
-GEO:51.295808;6.834624
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
-  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
- tingen":geo:51.295808,6.834624
-END:VEVENT
-BEGIN:VEVENT
-UID:0601c3f36f80327d38d584d485a005f89bb98a8f@esrw.de
-SEQUENCE:0
-DTSTAMP:20261111T143043Z
-LAST-MODIFIED:20261111T143043Z
-DTSTART:20261120T170000Z
-DTEND:20261120T203000Z
-SUMMARY:SR · U20 LL: Lippe Hockey Hamm – EC Bergisch Land
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 19:00 Uhr\nTreffpunkt:
-  18:00 Uhr (60 Min vor Spielbeginn)\nLiga: U20 LL\nHalle: beta FINANZ Eiss
- portarena Hamm\nAdresse: Karl-Koßmann-Straße 1\, 59071 Hamm\nGespann: Zy
- nda\, Nick\nVergütung lt. Ordnung: 90 €\n\nQuelle: https://www.esrw.de/
- einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:beta FINANZ Eissportarena Hamm\, Karl-Koßmann-Straße 1\, 59071 H
- amm
-GEO:51.686934;7.886138
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="beta FINANZ Eissportarena 
- Hamm, Karl-Koßmann-Straße 1, 59071 Hamm";X-APPLE-RADIUS=100;X-TITLE="bet
- a FINANZ Eissportarena Hamm":geo:51.686934,7.886138
-END:VEVENT
-BEGIN:VEVENT
 UID:3e22e679b7a162afcc1fc231ea29569c4f003cb4@esrw.de
 SEQUENCE:0
 DTSTAMP:20261111T143043Z
