@@ -8,13 +8,12 @@
   // Wird einmal je Fassung gezeigt, damit die Kollegen neue Funktionen finden.
   // Hoechstens vier Punkte: mit sechs schob die Karte das naechste Spiel
   // unter den Bildschirmrand (gemessen bei 375 px).
-  var NEUIGKEITEN = { version: "2026-11-27c", punkte: [
-    "Ligen in deutlich unterscheidbaren Farben – Landesliga, Oberliga, Bezirksliga und die Junioren sehen nicht mehr gleich aus",
-    "Spieltagskarte aufgeräumt: Liga als farbige Marke, wer mit dir pfeift, Route und Teilen nebeneinander",
-    "Suche: die Tastatur geht sofort auf, das ✕ im Feld leert den Suchbegriff",
-    "Neu auf Start: „Diese Woche“ – Montag bis Sonntag mit deinen Spielen, Abfahrtszeit und wer mit dir im Auto sitzt",
-    "Mehr Farbe in Statistik und Archiv; Knöpfe und Felder über die ganze Breite",
-    "Sofortstart: die App zeigt beim Öffnen gleich den letzten Stand und holt danach nur, was neu ist"
+  var NEUIGKEITEN = { version: "2026-11-28", punkte: [
+    "Zusammen fahren: Umweg jetzt auf der Straße gerechnet, in km und Minuten, mit Losfahr- und Abholzeit – und „Strecke“ zeigt die Fahrt auf der Karte",
+    "Beim Anbieten schlägt die App Ort und Abfahrtszeit vor",
+    "Spielseite: „Regeln für dieses Spiel“ – Spielzeit, Besonderheiten der Altersklasse und genau die passenden Dokumente",
+    "„Diese Woche“ lässt sich wischen; das ⓘ dort und im Spielplan erklärt alle Farben",
+    "Freischaltung bei esrw.de unter „Mehr“, mittwochs auf Wunsch mit Erinnerung"
   ], mehr: "tutorial/" };
   // Die Versionsnummer aus dem eigenen Script-Tag (app.js?v=NNN). Damit
   // laedt mitglieder.js unter derselben Adresse wie beim letzten Start -
@@ -1735,7 +1734,7 @@
     kopf.appendChild(h);
 
     var inhalt = el("spiel-inhalt"); inhalt.innerHTML = "";
-    var symbole = { "Anfahrt": "i-route", "Halle": "i-pin", "Gespann": "i-users", "Besetzung": "i-users", "Tauschoptionen": "i-swap", "Weiteres": "i-list", "Spieltag-Checkliste": "i-check", "Änderungsverlauf": "i-clock", "Dokumente": "i-note" };
+    var symbole = { "Regeln für dieses Spiel": "i-buch", "Anfahrt": "i-route", "Halle": "i-pin", "Gespann": "i-users", "Besetzung": "i-users", "Tauschoptionen": "i-swap", "Weiteres": "i-list", "Spieltag-Checkliste": "i-check", "Änderungsverlauf": "i-clock", "Dokumente": "i-note" };
     function karteAbschnitt(titel) { var k = document.createElement("div"); k.className = "karte abschnitt-karte"; if (titel) { var hh = document.createElement("h4"); if (symbole[titel]) hh.appendChild(ikone(symbole[titel])); hh.appendChild(document.createTextNode(titel)); k.appendChild(hh); } inhalt.appendChild(k); return k; }
 
     // Alles zum Hinkommen in einer Karte: wann los, wie weit, wohin, wie das
@@ -1804,6 +1803,7 @@
     wer.appendChild(chips);
 
     if (meins && !s.vergangen && funktion("checkliste")) checkliste(karteAbschnitt("Spieltag-Checkliste"), s);
+    if (s.liga && funktion("regeln")) regelnKarte(karteAbschnitt("Regeln für dieses Spiel"), s);
 
     // Angemeldet: Hallen-Hinweise, Kontakte, Fahrgemeinschaft, Notiz
     var ex = karteAbschnitt(null);
@@ -2144,6 +2144,29 @@
     box.innerHTML = ""; box.className = "versteckt";
     if (!meins || !startEinstellung("wochenkarte")) return;
     box.className = "karte wochenkarte";
+    // Waagrecht wischen blaettert die Woche - und nicht die Reiter unten
+    box.setAttribute("data-eigenes-wischen", "1");
+    box._blaettern = function (r) {
+      var n = wochenVersatz + r;
+      if (n < -1 || n > 4) return;
+      wochenVersatz = n; box._richtung = r;
+      zeigeWochenkarte(p, meins);
+    };
+    if (!box._wisch && "ontouchstart" in window) {
+      box._wisch = true;
+      var wx = 0, wy = 0, wan = false;
+      box.addEventListener("touchstart", function (e) {
+        wan = e.touches.length === 1; if (!wan) return;
+        wx = e.touches[0].clientX; wy = e.touches[0].clientY;
+      }, { passive: true });
+      box.addEventListener("touchend", function (e) {
+        if (!wan) return; wan = false;
+        var t = e.changedTouches[0], dx = t.clientX - wx, dy = t.clientY - wy;
+        if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+        box._gewischt = Date.now();
+        if (box._blaettern) box._blaettern(dx < 0 ? 1 : -1);
+      }, { passive: true });
+    }
     var heute = new Date(); heute.setHours(0, 0, 0, 0);
     var mo = tagePlus(heute, -((heute.getDay() + 6) % 7) + 7 * wochenVersatz);
     var w = wocheDaten(p, mo);
@@ -2154,11 +2177,13 @@
     var sm = document.createElement("small");
     sm.textContent = "KW " + kalenderwoche(mo) + " · " + mo.getDate() + "." + (mo.getMonth() + 1) + ". – " + tagePlus(mo, 6).getDate() + "." + (tagePlus(mo, 6).getMonth() + 1) + ".";
     h4.appendChild(sm); kopf.appendChild(h4);
+    var lg = document.createElement("button"); lg.type = "button"; lg.className = "rund wk-nav wk-legende"; lg.setAttribute("aria-label", "Farben erklärt");
+    lg.appendChild(ikone("i-info")); lg.addEventListener("click", farbLegende); kopf.appendChild(lg);
     [["‹", -1, "Woche zurück"], ["›", 1, "Woche vor"]].forEach(function (n) {
       var b = document.createElement("button"); b.type = "button"; b.className = "rund wk-nav"; b.textContent = n[0];
       b.setAttribute("aria-label", n[2]);
       b.disabled = (n[1] < 0 && wochenVersatz <= -1) || (n[1] > 0 && wochenVersatz >= 4);
-      b.addEventListener("click", function () { wochenVersatz += n[1]; zeigeWochenkarte(p, meins); });
+      b.addEventListener("click", function () { box._blaettern(n[1]); });
       kopf.appendChild(b);
     });
     box.appendChild(kopf);
@@ -2170,7 +2195,8 @@
       satz.textContent = "Frei" + (naechstes ? " · nächstes Spiel am " + datumKurz(new Date(naechstes.beginn)) : "");
     }
     box.appendChild(satz);
-    var raster = document.createElement("div"); raster.className = "wk-tage";
+    var raster = document.createElement("div"); raster.className = "wk-tage" + (box._richtung ? (box._richtung > 0 ? " rein-rechts" : " rein-links") : "");
+    box._richtung = 0;
     w.tage.forEach(function (t) {
       var hat = t.spiele.length;
       var z = document.createElement(hat ? "button" : "div");
@@ -2179,6 +2205,7 @@
         z.type = "button";
         z.setAttribute("aria-label", datumKurz(t.datum) + ": " + t.spiele.map(function (s) { return uhr(new Date(s.beginn)) + " Uhr " + s.paarung; }).join(", "));
         z.addEventListener("click", function () {
+          if (Date.now() - (box._gewischt || 0) < 500) return;   // Ende eines Wischers, kein Tipp
           if (hat === 1) { location.hash = "spiel/" + encodeURIComponent(kennungVon(t.spiele[0])); return; }
           planModusEinmal = "woche"; planWocheStart = mo; location.hash = "plan";
         });
@@ -4425,7 +4452,37 @@
   // Je eigenem Spiel der naechsten 14 Tage: wer ist am selben Tag in derselben
   // Halle (Gespann und andere Spiele), wer bietet oder sucht eine Mitfahrt,
   // Anruf-Knoepfe, eigener Status. Dazu eine Karte mit Hallen und Zuhause.
-  var mitfahrKarte = null;
+  var mitfahrKarte = null, mitfahrEbene = null;
+  // Die Fahrt mit Abholen auf der Karte: orange mit Zwischenhalt, grau
+  // gestrichelt der direkte Weg - und darunter in einem Satz, was der
+  // Umweg kostet und wann man los muss.
+  function streckeZeigen(s, k, v, knopf) {
+    if (!mitfahrKarte || !window.L) { toast("Die Karte lädt noch – gleich noch einmal tippen.", ""); return; }
+    if (knopf) { knopf.disabled = true; knopf.textContent = "rechnet …"; }
+    window.Mitglieder.umwegRoute(s, k.slug, v.richtung).then(function (r) {
+      if (knopf) { knopf.disabled = false; knopf.textContent = "Strecke"; }
+      if (!r) { toast("Die Strecke ließ sich gerade nicht berechnen.", "warn"); return; }
+      var L = window.L, m = mitfahrKarte;
+      if (mitfahrEbene) mitfahrEbene.remove();
+      mitfahrEbene = L.layerGroup().addTo(m);
+      if (r.direkt.weg.length) L.polyline(r.direkt.weg, { color: "#6b7280", weight: 3, dashArray: "6 8", opacity: .85 }).addTo(mitfahrEbene);
+      if (r.ueber.weg.length) L.polyline(r.ueber.weg, { color: "#d97706", weight: 5, opacity: .9 }).addTo(mitfahrEbene);
+      var name = vorname(k.name);
+      L.circleMarker(r.start, { radius: 7, color: "#fff", fillColor: "#1d5a99", fillOpacity: 1, weight: 3 }).addTo(mitfahrEbene)
+        .bindTooltip(v.richtung === "ich" ? "Du (Start)" : name + " (Start)", { permanent: true, direction: "top" });
+      L.circleMarker(r.halt, { radius: 7, color: "#fff", fillColor: "#d97706", fillOpacity: 1, weight: 3 }).addTo(mitfahrEbene)
+        .bindTooltip(v.richtung === "ich" ? "Abholen: " + name : "Du wirst abgeholt", { permanent: true, direction: "top" });
+      m.fitBounds(L.latLngBounds(r.ueber.weg.length ? r.ueber.weg : [r.start, r.halt, r.halle]), { padding: [28, 28] });
+      var info = el("mitfahren-strecke");
+      if (!info) { info = document.createElement("p"); info.id = "mitfahren-strecke"; info.className = "meta mitfahren-strecke"; el("mitfahren-karte").parentNode.insertBefore(info, el("mitfahren-karte").nextSibling); }
+      function km(x) { return (x < 10 ? (Math.round(x * 10) / 10) : Math.round(x)).toString().replace(".", ","); }
+      info.textContent = (v.richtung === "ich" ? "Du holst " + name + " ab" : name + " holt dich ab") + ": " + km(r.ueber.km) + " km, "
+        + Math.round(r.ueber.min) + " Min. statt " + km(r.direkt.km) + " km, " + Math.round(r.direkt.min) + " Min. – "
+        + window.Mitglieder.umwegText(r).replace(/\.?$/, ".") + (v.richtung === "ich" ? " " + window.Mitglieder.fahrZeiten(s, r) + "." : "")
+        + " Orange: mit Abholen, grau gestrichelt: direkt.";
+      el("mitfahren-karte").scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  }
   function zeigeMitfahren() {
     ansicht("mitfahren"); aktuell = null; window.scrollTo(0, 0);
     var liste = el("mitfahren-liste"); liste.innerHTML = "";
@@ -4513,10 +4570,22 @@
           var z = document.createElement("div"); z.className = "wer";
           var links = document.createElement("span"); var b = document.createElement("b"); b.textContent = k.name; links.appendChild(b);
           var sm = document.createElement("small"); var kd2 = new Date(k.spiel.beginn), v = vorschlaege[k.slug], wo = window.Mitglieder.wohnortVon(k.slug);
-          sm.textContent = (k.gespann ? "im Gespann" : "dort um " + uhr(kd2) + " Uhr") + (wo && wo.ort ? " · aus " + wo.ort : "") + (v ? (v.richtung === "ich" ? " · liegt auf deinem Weg" : " · du liegst auf seinem Weg") + (v.umweg > 0 ? ", Umweg ca. " + v.umweg + " km" : ", praktisch kein Umweg") : "");
+          var vorne = (k.gespann ? "im Gespann" : "dort um " + uhr(kd2) + " Uhr") + (wo && wo.ort ? " · aus " + wo.ort : "")
+            + (v ? (v.richtung === "ich" ? " · liegt auf deinem Weg" : " · du liegst auf dem Weg") : "");
+          sm.textContent = vorne + (v ? ", " + window.Mitglieder.umwegText(v) + " (geschätzt)" : "");
+          if (v) (function (sm, vorne, k, v) {
+            window.Mitglieder.umwegRoute(s, k.slug, v.richtung).then(function (r) {
+              if (r && sm.isConnected) sm.textContent = vorne + ", " + window.Mitglieder.umwegText(r);
+            });
+          })(sm, vorne, k, v);
           links.appendChild(sm); z.appendChild(links);
           var rechts = document.createElement("span"); rechts.className = "knoepfe";
-          if (v) { var vb = document.createElement("span"); vb.className = "status"; vb.textContent = "auf dem Weg"; rechts.appendChild(vb); }
+          if (v) {
+            var vb = document.createElement("span"); vb.className = "status"; vb.textContent = "auf dem Weg"; rechts.appendChild(vb);
+            var sk = document.createElement("button"); sk.type = "button"; sk.className = "anfrage zweit"; sk.textContent = "Strecke";
+            (function (sk, k, v) { sk.addEventListener("click", function () { streckeZeigen(s, k, v, sk); }); })(sk, k, v);
+            rechts.appendChild(sk);
+          }
           var nr = window.Mitglieder.telefonVon(k.slug);
           if (nr) { var a2 = document.createElement("a"); a2.className = "anfrage"; a2.href = nr.wa + "?text=" + encodeURIComponent("Hallo " + (k.name.split(",")[1] || "").trim() + ", fahren wir am " + datumKurz(d) + " zusammen nach " + (s.halle || "zur Halle") + "?"); a2.target = "_blank"; a2.rel = "noopener"; a2.textContent = "Fragen"; rechts.appendChild(a2); }
           z.appendChild(rechts); box.appendChild(z);
@@ -4538,6 +4607,7 @@
       kd.classList.remove("versteckt");
       ladeLeaflet().then(function (L) {
         if (mitfahrKarte) { mitfahrKarte.remove(); mitfahrKarte = null; }
+        mitfahrEbene = null;
         kd.innerHTML = "";
         var m = L.map(kd, { scrollWheelZoom: false }); mitfahrKarte = m;
         L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 18, attribution: "© OpenStreetMap" }).addTo(m);
@@ -5639,6 +5709,152 @@
     return ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
       .then(function (st) { return st.eingerichtet && st.session && window.Mitglieder.antrittsstaerken ? window.Mitglieder.antrittsstaerken() : leer; })
       .catch(function () { return leer; });
+  }
+
+  // Was fuer genau dieses Spiel gilt: Spielzeit, Pause, Verlaengerung und
+  // Besonderheiten der Altersklasse aus den Spielzeiten, dazu die
+  // Dokumente, die man wirklich braucht. Bis Fassung 314 lag das alles
+  // unter "Regeln" - und man musste wissen, dass U15 in Anhang 4 steht.
+  // Ohne DOM, damit der Test die Zuordnung pruefen kann.
+  // deb: was die Abrechnung entscheidet (istDeb in mitglieder.js) - eine
+  // Regel an einer Stelle. Ohne sie (abgemeldet) eine grobe Naeherung;
+  // "U17 Oberliga" ist dort kein DEB-Spiel, also hier auch nicht.
+  function regelnFuerSpiel(liga, zeiten, dokumente, debVorgabe) {
+    var L = String(liga || "").toUpperCase(), u = L.match(/\bU\s?(\d+)\b/), alter = u ? parseInt(u[1], 10) : null;
+    var deb = typeof debVorgabe === "boolean" ? debVorgabe
+      : /\bDNL\b|\bDFEL\b|\bDEB\b/.test(L) || (!alter && /OBERLIGA/.test(L));
+    var gruppe = alter ? "Nachwuchs" : /FRAUEN|DAMEN|DFEL/.test(L) ? "Frauen" : "Herren";
+    var stufe = /REGIONAL|\bRL[A-Z]?\b|SENIOREN/.test(L) ? "REGIONALLIGA" : /LANDES|\bLL\b/.test(L) ? "LANDESLIGA"
+      : /BEZIRK|\bBL\b|\bBZL\b/.test(L) ? "BEZIRKSLIGA" : "";
+    var kandidaten = deb ? [] : (zeiten || []).filter(function (z) {
+      var ZL = String(z.liga || "").toUpperCase();
+      return alter ? new RegExp("\\bU\\s?" + alter + "\\b").test(ZL) : String(z.gruppe || "") === gruppe;
+    });
+    var eintrag = kandidaten.filter(function (z) { return stufe && String(z.liga || "").toUpperCase().indexOf(stufe) >= 0; })[0] || kandidaten[0] || null;
+    // Besonderheiten: der Hinweis ohne Pflegevermerke ("bitte dort
+    // nachsehen und hier eintragen" gilt dem Betreiber, nicht dem Spiel),
+    // und was fuer eine Gruppe von Altersklassen gilt, nur fuer die passende.
+    var besonders = [];
+    if (eintrag && eintrag.hinweis) {
+      String(eintrag.hinweis).split(/\.\s+|\.$/).forEach(function (satz) {
+        satz = satz.trim(); if (!satz || /bitte.*eintragen/i.test(satz)) return;
+        if (/body-?check|zahnschutz/i.test(satz) && alter) {
+          if (/body-?check/i.test(satz) && alter <= 13) besonders.push("Kein Body-Check (bis U13)");
+          if (/zahnschutz/i.test(satz) && alter >= 15) besonders.push("Zahnschutz ist Pflicht (ab U15)");
+          return;
+        }
+        besonders.push(satz);
+      });
+    }
+    var anhang = deb ? [] : alter ? (alter >= 13 ? ["4"] : alter === 11 ? ["7"] : alter <= 9 ? ["8", "10"] : []) : gruppe === "Frauen" ? ["2"] : ["3"];
+    var docs = deb ? [] : (dokumente || []).filter(function (d) {
+      var t = String(d.titel || "");
+      return /Anhang 5\b/.test(t) || /Allgemein/.test(t) || anhang.some(function (n) { return new RegExp("Anhang " + n + "\\b").test(t); });
+    }).sort(function (a, b) {
+      function rang(t) { return /Anhang 5\b/.test(t) ? 2 : /Allgemein/.test(t) ? 1 : 0; }
+      return rang(a.titel) - rang(b.titel);
+    });
+    return { gruppe: alter ? "U" + alter : gruppe, deb: deb, eintrag: eintrag, besonders: besonders, dokumente: docs };
+  }
+  function regelnKarte(karte, s) {
+    karte.classList.add("regeln-spiel");
+    var platz = document.createElement("div"); platz.className = "skelett-karte"; platz.style.height = "60px"; platz.style.margin = "0"; karte.appendChild(platz);
+    var best = bestimmungenDaten ? Promise.resolve(bestimmungenDaten) : hole("bestimmungen.json").then(function (d) { bestimmungenDaten = d; return d; });
+    Promise.all([zeitenLaden().catch(function () { return null; }), best.catch(function () { return null; })]).then(function (r) {
+      platz.remove();
+      var deb = window.Mitglieder && window.Mitglieder.istDeb ? window.Mitglieder.istDeb(s) : undefined;
+      var g = regelnFuerSpiel(s.liga, r[0] && r[0].ligen, r[1] && r[1].dokumente, deb);
+      var kopf = document.createElement("div"); kopf.className = "regeln-kopf";
+      kopf.appendChild(ligaPille(s.liga));
+      var gr = document.createElement("span"); gr.className = "meta"; gr.textContent = g.deb ? "DEB-Spiel" : g.gruppe; kopf.appendChild(gr);
+      karte.appendChild(kopf);
+      if (g.deb) {
+        var dh = document.createElement("p"); dh.className = "meta";
+        dh.textContent = "Ein Spiel im DEB-Spielbetrieb: es gelten die Spielordnung und die Durchführungsbestimmungen des DEB, nicht die des EHV NRW. Die Gebühren rechnet die App nach der DEB-Ordnung.";
+        karte.appendChild(dh);
+      }
+      var e = g.eintrag;
+      if (e) {
+        var dl = document.createElement("dl"); dl.className = "regeln-liste";
+        [["Spielzeit", e.spielzeit || "steht im Anhang unten"], ["Pause", e.pause], ["Verlängerung", e.verlaengerung], ["Penalty", e.penalty]].forEach(function (z) {
+          if (!z[1]) return;
+          var dt = document.createElement("dt"); dt.textContent = z[0]; var dd = document.createElement("dd"); dd.textContent = z[1];
+          dl.appendChild(dt); dl.appendChild(dd);
+        });
+        karte.appendChild(dl);
+      }
+      if (g.besonders.length) {
+        var ul = document.createElement("ul"); ul.className = "regeln-besonders";
+        g.besonders.forEach(function (t) { var li = document.createElement("li"); li.textContent = t; ul.appendChild(li); });
+        karte.appendChild(ul);
+      }
+      if (g.dokumente.length) {
+        var dk = document.createElement("div"); dk.className = "regeln-dokumente";
+        g.dokumente.forEach(function (d) {
+          var a = document.createElement("a"); a.className = "reihe-knopf"; a.href = d.url; a.target = "_blank"; a.rel = "noopener";
+          a.appendChild(ikone("i-note"));
+          var sp = document.createElement("span"); var b = document.createElement("b"); b.textContent = d.titel; sp.appendChild(b);
+          if (d.stand) { var sm = document.createElement("small"); sm.textContent = "Stand " + d.stand + " · PDF"; sp.appendChild(sm); }
+          a.appendChild(sp); var pf = document.createElement("span"); pf.className = "pfeil"; pf.textContent = "↗"; a.appendChild(pf);
+          dk.appendChild(a);
+        });
+        karte.appendChild(dk);
+      }
+      var fuss = document.createElement("p"); fuss.className = "meta regeln-fuss";
+      if (g.dokumente.length) fuss.appendChild(document.createTextNode("Kurzfassung ohne Gewähr – verbindlich sind die Dokumente. "));
+      var alle = document.createElement("a"); alle.href = "#regeln"; alle.textContent = "Alle Regeln ›"; fuss.appendChild(alle);
+      karte.appendChild(fuss);
+      if (!e && !g.deb && !g.dokumente.length) karte.classList.add("versteckt");
+    }).catch(function () { karte.classList.add("versteckt"); });
+  }
+
+  // Was die Farben bedeuten - hinter dem i an der Wochenkarte und im
+  // Spielplan. Die Ligen stehen so da, wie sie gerade im Plan vorkommen.
+  function farbLegende() {
+    var d = el("farb-legende");
+    if (!d) {
+      d = document.createElement("dialog"); d.id = "farb-legende"; d.className = "legende-blatt";
+      d.addEventListener("click", function (ev) { if (ev.target === d) d.close(); });
+      document.body.appendChild(d);
+    }
+    d.innerHTML = "";
+    var kopf = document.createElement("div"); kopf.className = "blatt-kopf";
+    var b = document.createElement("b"); b.textContent = "Farben erklärt"; kopf.appendChild(b);
+    var zu = document.createElement("button"); zu.type = "button"; zu.className = "rund"; zu.setAttribute("aria-label", "Schließen"); zu.textContent = "✕";
+    zu.addEventListener("click", function () { d.close(); }); kopf.appendChild(zu);
+    d.appendChild(kopf);
+    function abschnitt(titel) { var h5 = document.createElement("h5"); h5.textContent = titel; d.appendChild(h5); var l = document.createElement("div"); l.className = "legende-liste"; d.appendChild(l); return l; }
+    function zeile(l, zeichen, text) { var z = document.createElement("div"); z.className = "legende-zeile"; z.appendChild(zeichen); var t = document.createElement("span"); t.textContent = text; z.appendChild(t); l.appendChild(z); }
+    // Ligen: je Farbton eine Zeile, darin alle Namen, die ihn tragen
+    var jeTon = {}, reihe = [];
+    ((daten && daten.spiele) || []).forEach(function (sp) {
+      if (!sp.liga) return; var t = ligaTon(sp.liga);
+      if (!jeTon[t]) { jeTon[t] = []; reihe.push(t); }
+      if (jeTon[t].indexOf(sp.liga) < 0) jeTon[t].push(sp.liga);
+    });
+    var ll = abschnitt("Ligen – Pille und Linie links an der Karte");
+    reihe.sort(function (a, b) { return a - b; }).forEach(function (t) {
+      var namen = jeTon[t].sort(), p = ligaPille(namen[0]);
+      zeile(ll, p, namen.length > 1 ? "auch: " + namen.slice(1).join(", ") : "");
+    });
+    if (!reihe.length) zeile(ll, document.createElement("span"), "Im Datenfenster steht gerade kein Spiel.");
+    var rl = abschnitt("Rollen");
+    [["SR", "Schiedsrichter"], ["HSR", "Hauptschiedsrichter im 3er/4er-System"], ["LSR", "Linienrichter"]].forEach(function (r) {
+      zeile(rl, rolleBadge(r[0]), r[1]);
+    });
+    var ml = abschnitt("Markierungen");
+    function probe(klasse, text) { var x = document.createElement("span"); x.className = "legende-probe " + klasse; if (text) x.textContent = text; return x; }
+    zeile(ml, probe("heute", String(new Date().getDate())), "Heute – blau umrandet in Wochenkarte und Kalender");
+    zeile(ml, probe("punkt-rot"), "Roter Punkt: an dem Tag pfeifst du selbst");
+    zeile(ml, probe("geaendert"), "Oranger Rand: Einteilung hat sich geändert");
+    zeile(ml, probe("abgesagt", "14:00"), "Durchgestrichen mit rotem Rand: abgesagt");
+    if (funktion("abrechnung") && sitzungVorhanden()) {
+      var al = abschnitt("Abrechnung");
+      zeile(al, probe("ton-jetzt"), "Orange: jetzt zu tun – prüfen oder Rechnung schreiben");
+      zeile(al, probe("ton-warte"), "Grau: wartet – die Rechnung ist unterwegs");
+      zeile(al, probe("ton-fertig"), "Grün: erledigt – das Geld ist da");
+    }
+    if (d.showModal) d.showModal(); else d.setAttribute("open", "");
   }
 
   // Spielzeiten: der Betreiber pflegt sie in der Datenbank, die Datei in
@@ -7514,6 +7730,12 @@
   Array.prototype.forEach.call(el("plan-modus").querySelectorAll("button"), function (b) {
     b.addEventListener("click", function () { planModusEinmal = null; schreiben("plan-modus", b.getAttribute("data-modus")); schreiben("plan-kompakt", null); zeigePlan(); });
   });
+  (function () {
+    var lb = document.createElement("button"); lb.type = "button"; lb.className = "filterknopf legende-knopf";
+    lb.setAttribute("aria-label", "Farben erklärt"); lb.title = "Farben erklärt"; lb.appendChild(ikone("i-info"));
+    lb.addEventListener("click", farbLegende);
+    var ph = el("plan-heute"); if (ph && ph.parentNode) ph.parentNode.insertBefore(lb, ph);
+  })();
   el("plan-heute").addEventListener("click", function () {
     planFertig();
     var h = el("plan-ab-heute"); if (h) window.scrollTo({ top: h.getBoundingClientRect().top + window.scrollY - 120, behavior: "smooth" });
@@ -8196,7 +8418,7 @@
       spieltagErlaubt: spieltagErlaubt, spieltagOffen: spieltagOffen, startEinstellung: startEinstellung,
       aendZerlegen: aendZerlegen, aendArt: aendArt, tourAngebote: tourAngebote,
       titelDoppelt: titelDoppelt, einrichtungSichtbar: einrichtungSichtbar,
-      naechstesEigenes: naechstesEigenes, wocheDaten: wocheDaten, grussText: grussText, gemeinsamGepfiffen: gemeinsamGepfiffen, autoText: autoText, kalenderwoche: kalenderwoche, mitText: mitText, gunzip: gunzip, markeAus: markeAus, adresseMit: adresseMit
+      naechstesEigenes: naechstesEigenes, regelnFuerSpiel: regelnFuerSpiel, wocheDaten: wocheDaten, grussText: grussText, gemeinsamGepfiffen: gemeinsamGepfiffen, autoText: autoText, kalenderwoche: kalenderwoche, mitText: mitText, gunzip: gunzip, markeAus: markeAus, adresseMit: adresseMit
     }
   };
 

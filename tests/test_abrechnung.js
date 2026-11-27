@@ -1028,6 +1028,21 @@ grundstellung();
 })();
 
 
+// Fassung 315: der Umweg stand als "ca. 0 km" da, sobald jemand fast auf
+// der Strecke wohnte - auf ganze km gerundet, ohne Minuten.
+console.log("\nMitfahren: Umweg");
+gleich(P.umwegText({ km: 0.4, min: 1 }), "kaum Umweg (unter 1 km)", "unter einem km kein '0 km'");
+gleich(P.umwegText({ umweg: 0 }), "kaum Umweg (unter 1 km)", "Schaetzung 0 ebenso");
+gleich(P.umwegText({ km: 3.44, min: 4.6 }), "Umweg ca. 3,4 km · 5 Min.", "km mit Komma und Minuten");
+gleich(P.umwegText({ km: 12.6, min: 11 }), "Umweg ca. 13 km · 11 Min.", "ab 10 km ganze Zahl");
+gleich(P.umwegText({ km: 2, min: 0.2 }), "Umweg ca. 2 km · 1 Min.", "mindestens eine Minute");
+var uw = P.umwegFuer([51.5, 7.4], [51.5, 7.401], [51.4, 7.0]);
+pruefe(uw.umweg < 1 && uw.min >= 0, "fast auf der Strecke: Umweg unter 1 km", JSON.stringify(uw));
+var uw2 = P.umwegFuer([51.5, 7.4], [51.6, 7.6], [51.4, 7.0]);
+pruefe(uw2.umweg > 5 && uw2.min > 5, "abseits: Umweg und Minuten", JSON.stringify(uw2));
+var fz = P.fahrZeiten({ treffpunkt: "2026-12-05T17:00:00+01:00" }, { ueber: { min: 47, beine: [{ min: 12 }, { min: 35 }] } });
+pruefe(/^Losfahren ca\. \d\d:\d\d, Abholen ca\. \d\d:\d\d \(ohne Stau\)$/.test(fz), "Abfahrt und Abholen als Satz", fz);
+
 console.log("\n----------------------------------------------------------");
   if (fehler.length) {
     console.log(fehler.length + " Pruefung" + (fehler.length === 1 ? "" : "en") + " fehlgeschlagen:");

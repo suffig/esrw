@@ -1288,6 +1288,44 @@ gleich(P.autoText([{ slug: "ich", art: "suche" }]), "Suchst eine Mitfahrt", "Ges
 gleich(P.autoText([{ slug: "k2", name: "Beispiel, Eva", art: "biete", zusagen: [] }]), "", "fremdes Angebot ohne mich");
 P.setze({ profil: null });
 
+console.log("\nRegeln je Spiel (Fassung 315)");
+var rZeiten = [
+  { gruppe: "Herren", liga: "Regionalliga West", spielzeit: "3 x 20 Minuten", pause: "15 Minuten", hinweis: "" },
+  { gruppe: "Herren", liga: "Landesliga NRW", spielzeit: "3 x 20 Minuten", pause: "15 Minuten", hinweis: "" },
+  { gruppe: "Frauen", liga: "Frauen 2. Liga Nord, Landesliga, Bezirksliga", spielzeit: "", hinweis: "Spielzeit und Verlängerung stehen in Anhang 2; bitte dort nachsehen und hier eintragen." },
+  { gruppe: "Nachwuchs", liga: "U20, U17, U15, U13", spielzeit: "", pause: "15 Minuten, in U15 und U13 auf 5 Minuten verkürzbar",
+    hinweis: "Spielzeiten je Altersklasse stehen in Anhang 4; bitte dort nachsehen und hier eintragen. Kein Body-Check bis U13, Zahnschutzpflicht ab U15." },
+  { gruppe: "Nachwuchs", liga: "U11 (Kleinfeld quer, Turnier)", spielzeit: "1 x 18 Minuten" },
+  { gruppe: "Nachwuchs", liga: "U9 Regionalliga", spielzeit: "18 + 21" },
+  { gruppe: "Nachwuchs", liga: "U9 Landesliga", spielzeit: "18 + 18" }
+];
+var rDocs = [{ titel: "Anhang 5: Schiedsrichter" }, { titel: "Durchführungsbestimmungen Allgemein" }, { titel: "Anhang 2: Frauen" },
+  { titel: "Anhang 3: Herren" }, { titel: "Anhang 4: Nachwuchs" }, { titel: "Anhang 7: U11" }, { titel: "Anhang 8: U7 und U9" }, { titel: "Anhang 10: U9 Kleinfeldspielformen" }];
+function rTitel(g) { return g.dokumente.map(function (d) { return d.titel.split(":")[0]; }).join("|"); }
+var r15 = P.regelnFuerSpiel("U15 LL", rZeiten, rDocs);
+gleich(r15.gruppe, "U15", "U15 erkannt");
+gleich(r15.eintrag && r15.eintrag.liga, "U20, U17, U15, U13", "U15 findet die Nachwuchszeile");
+pruefe(r15.besonders.indexOf("Zahnschutz ist Pflicht (ab U15)") >= 0 && r15.besonders.join().indexOf("Body") < 0, "U15: Zahnschutz ja, Body-Check-Satz nein", r15.besonders.join(" / "));
+pruefe(r15.besonders.join().indexOf("bitte") < 0, "Pflegevermerk fuer den Betreiber faellt weg", r15.besonders.join(" / "));
+gleich(rTitel(r15), "Anhang 4|Durchführungsbestimmungen Allgemein|Anhang 5", "U15: Anhang 4 zuerst, dann Allgemein und Anhang 5");
+var r13 = P.regelnFuerSpiel("U13 BL", rZeiten, rDocs);
+pruefe(r13.besonders.indexOf("Kein Body-Check (bis U13)") >= 0 && r13.besonders.join().indexOf("Zahnschutz") < 0, "U13: kein Body-Check, kein Zahnschutz-Satz", r13.besonders.join(" / "));
+gleich(P.regelnFuerSpiel("U9 Landesliga", rZeiten, rDocs).eintrag.spielzeit, "18 + 18", "U9 Landesliga nimmt die passende Stufe");
+gleich(rTitel(P.regelnFuerSpiel("U9 Regionalliga", rZeiten, rDocs)), "Anhang 8|Anhang 10|Durchführungsbestimmungen Allgemein|Anhang 5", "U9: Anhang 8 und 10");
+gleich(rTitel(P.regelnFuerSpiel("U11", rZeiten, rDocs)).split("|")[0], "Anhang 7", "U11: Anhang 7");
+var rRL = P.regelnFuerSpiel("Senioren RLW", rZeiten, rDocs);
+gleich(rRL.eintrag && rRL.eintrag.liga, "Regionalliga West", "Senioren RLW ist die Regionalliga");
+gleich(rTitel(rRL).split("|")[0], "Anhang 3", "Herren: Anhang 3");
+gleich(P.regelnFuerSpiel("Landesliga Herren", rZeiten, rDocs).eintrag.liga, "Landesliga NRW", "Landesliga Herren");
+var rFr = P.regelnFuerSpiel("Frauen Landesliga", rZeiten, rDocs);
+gleich(rTitel(rFr).split("|")[0], "Anhang 2", "Frauen: Anhang 2");
+gleich(rFr.besonders.length, 0, "Frauen: nur der Pflegevermerk - also nichts");
+var rDnl = P.regelnFuerSpiel("DNL Division 1", rZeiten, rDocs);
+pruefe(rDnl.deb && !rDnl.eintrag && !rDnl.dokumente.length, "DNL: DEB-Spiel, keine EHV-Zeilen und -Anhaenge");
+pruefe(P.regelnFuerSpiel("Oberliga Nord", rZeiten, rDocs).deb, "Oberliga: DEB");
+pruefe(!P.regelnFuerSpiel("U17 Oberliga", rZeiten, rDocs).deb, "U17 Oberliga ohne Vorgabe: kein DEB (wie die Abrechnung)");
+pruefe(P.regelnFuerSpiel("U17 Oberliga", rZeiten, rDocs, true).deb, "Vorgabe aus der Abrechnung gewinnt");
+
 console.log("\nMarken aus stand.json");
 gleich(P.markeAus({ marken: { "daten.json": "abc123" } }, "daten.json"), "abc123", "Marke wird gelesen");
 gleich(P.markeAus({ stand: "x" }, "daten.json"), null, "ohne Marken: null");

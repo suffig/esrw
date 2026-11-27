@@ -8107,10 +8107,66 @@ window.Mitglieder = (function () {
   // sich etwas aendert.
 
   var cache = { hallen: {}, kontakte: {}, telefon: {}, wohnorte: {}, mitfahrten: {}, notizen: {}, kommentare: {}, geladen: {} };
-  // Umweg, wenn ich den Kollegen mitnehme (oder er mich): Luftlinie x 1,3
+  // Umweg, wenn ich den Kollegen mitnehme (oder er mich): Luftlinie x 1,3.
+  // Nur die erste Schaetzung - umwegRoute() rechnet danach auf der Strasse.
+  // Bis Fassung 314 auf ganze km gerundet: wer fast auf der Strecke wohnt,
+  // stand mit "Umweg ca. 0 km" da.
   function umwegFuer(vonA, ueberB, nachHalle) {
     var direkt = kmZwischen(vonA, nachHalle), via = kmZwischen(vonA, ueberB) + kmZwischen(ueberB, nachHalle);
-    return { direkt: Math.round(direkt * 1.3), umweg: Math.round((via - direkt) * 1.3) };
+    var umweg = Math.max(0, (via - direkt) * 1.3);
+    return { direkt: Math.round(direkt * 1.3), umweg: Math.round(umweg * 10) / 10, min: Math.round(umweg * 1.2) };
+  }
+  // Ein Satz fuer jeden Umweg, geschaetzt oder gerechnet. Unter einem
+  // Kilometer gibt es nichts Genaueres zu sagen: geteilte Wohnorte sind
+  // auf rund einen Kilometer gerundet.
+  function umwegText(v) {
+    if (!v) return "";
+    var km = v.km != null ? v.km : v.umweg, min = v.min != null ? v.min : Math.round(km * 1.2);
+    if (km == null) return "";
+    if (km < 1) return "kaum Umweg (unter 1 km)";
+    return "Umweg ca. " + (km < 10 ? dezimal(Math.round(km * 10) / 10) : String(Math.round(km))) + " km · " + Math.max(1, Math.round(min)) + " Min.";
+  }
+  // Auf der Strasse: die Route mit Zwischenhalt beim Kollegen gegen die
+  // direkte, beides beim OSRM-Demoserver. Der ist ein Gemeingut - also
+  // nacheinander, mit Pause, und jedes Ergebnis wird gemerkt.
+  var umwegCache = {}, routenKette = Promise.resolve();
+  function osrmRoute(punkte) {
+    var url = OSRM + punkte.map(function (p) { return p[1] + "," + p[0]; }).join(";") + "?overview=full&geometries=geojson";
+    var lauf = routenKette.then(function () { return new Promise(function (ok) { setTimeout(ok, 300); }); })
+      .then(function () { return fetch(url); })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (d.code !== "Ok" || !d.routes || !d.routes[0]) throw new Error(d.code || "keine Route");
+        var r0 = d.routes[0];
+        return { km: r0.distance / 1000, min: r0.duration / 60,
+                 beine: (r0.legs || []).map(function (l) { return { km: l.distance / 1000, min: l.duration / 60 }; }),
+                 weg: r0.geometry && r0.geometry.coordinates ? r0.geometry.coordinates.map(function (c) { return [c[1], c[0]]; }) : [] };
+      });
+    routenKette = lauf.catch(function () {});
+    return lauf;
+  }
+  // richtung "ich": ich fahre und hole den Kollegen ab; "er": er holt mich.
+  function umwegRoute(spiel, slug, richtung) {
+    var halle = ctx.daten.hallen && ctx.daten.hallen[spiel.halle], w = cache.wohnorte[slug];
+    if (!halle || !w || !profil || profil.heimat_lat == null) return Promise.resolve(null);
+    var ich = [profil.heimat_lat, profil.heimat_lon], er = [w.lat, w.lon];
+    var start = richtung === "er" ? er : ich, halt = richtung === "er" ? ich : er;
+    var k = [slug, spiel.halle, richtung].join("|");
+    if (umwegCache[k]) return umwegCache[k];
+    umwegCache[k] = Promise.all([osrmRoute([start, halle]), osrmRoute([start, halt, halle])]).then(function (r) {
+      var direkt = r[0], ueber = r[1];
+      return { richtung: richtung, km: Math.max(0, ueber.km - direkt.km), min: Math.max(0, ueber.min - direkt.min),
+               direkt: direkt, ueber: ueber, start: start, halt: halt, halle: halle, genau: true };
+    }).catch(function () { delete umwegCache[k]; return null; });
+    return umwegCache[k];
+  }
+  // Wann los, wann abholen - aus der Route und dem Treffpunkt, ohne Stau
+  function fahrZeiten(spiel, r) {
+    if (!r || !spiel.treffpunkt) return "";
+    var treff = new Date(spiel.treffpunkt).getTime();
+    var los = new Date(treff - r.ueber.min * 60000), abholen = new Date(los.getTime() + ((r.ueber.beine[0] || {}).min || 0) * 60000);
+    function fuenf(d) { return new Date(Math.floor(d.getTime() / 300000) * 300000); }
+    return "Losfahren ca. " + uhr(fuenf(los)) + ", Abholen ca. " + uhr(fuenf(abholen)) + " (ohne Stau)";
   }
   // Wer liegt auf dem Weg? Liefert je Kollege (slug) den Umweg in km oder null
   function wegVorschlaege(spiel, slugs) {
@@ -8285,8 +8341,16 @@ window.Mitglieder = (function () {
         var vorschlaege = wegVorschlaege(spiel, (spiel.gespann || []).map(function (g) { return g.slug; }));
         Object.keys(vorschlaege).forEach(function (s) {
           var g = (spiel.gespann || []).filter(function (x) { return x.slug === s; })[0], v = vorschlaege[s]; if (!g) return;
-          innen.appendChild(h("p", { class: "meta", style: "margin:0 0 6px" }, [h("span", { class: "offiziell-badge", text: "auf dem Weg" }),
-            (v.richtung === "ich" ? g.name + " (" + (v.ort || "Wohnort geteilt") + ") liegt auf deinem Weg, Umweg ca. " + v.umweg + " km." : "Du liegst auf dem Weg von " + g.name + " (" + (v.ort || "Wohnort geteilt") + "), Umweg für ihn ca. " + v.umweg + " km.")]));
+          var vorn = v.richtung === "ich" ? anzeigeName(g.name, g.slug) + " (" + (v.ort || "Wohnort geteilt") + ") liegt auf deinem Weg"
+                                          : "Du liegst auf dem Weg von " + anzeigeName(g.name, g.slug) + " (" + (v.ort || "Wohnort geteilt") + ")";
+          var satz = h("span", { text: vorn + " – " + umwegText(v) + " (geschätzt)" });
+          innen.appendChild(h("p", { class: "meta mf-wegsatz", style: "margin:0 0 6px" }, [h("span", { class: "offiziell-badge", text: "auf dem Weg" }), satz]));
+          (function (satz, vorn, v, s) {
+            umwegRoute(spiel, s, v.richtung).then(function (r) {
+              if (!r || !satz.isConnected) return;
+              satz.textContent = (vorn + " – " + umwegText(r)).replace(/\.?$/, ".") + (v.richtung === "ich" ? " " + fahrZeiten(spiel, r) + "." : "");
+            });
+          })(satz, vorn, v, s);
         });
         innen.appendChild(mitfahrtBlock(spiel, cache.mitfahrten[kennung] || [], { eigenes: istIch, nachher: function () {
           delete cache.geladen["k|" + kennung];
@@ -11877,6 +11941,17 @@ window.Mitglieder = (function () {
         h("span", { class: "mf-art", text: suche ? "sucht" : "bietet" })])]);
     var eigen = m.text && m.text !== "Biete Mitfahrt" && m.text !== "Suche Mitfahrt";
     if (eigen) karte.appendChild(h("p", { class: "mf-text", text: "„" + m.text + "“" }));
+    // Was mich das kostet - oder ihn: wer anbietet, holt mich ab ("er"),
+    // wer sucht, den hole ich ab ("ich"). Erst geschaetzt, dann gerechnet.
+    var halleK = spiel && ctx.daten.hallen && ctx.daten.hallen[spiel.halle], wo = cache.wohnorte[m.slug];
+    if (!meins && halleK && wo && profil && profil.heimat_lat != null) {
+      var ri = suche ? "ich" : "er", ichK = [profil.heimat_lat, profil.heimat_lon], erK = [wo.lat, wo.lon];
+      var grob = ri === "ich" ? umwegFuer(ichK, erK, halleK) : umwegFuer(erK, ichK, halleK);
+      var wer = ri === "ich" ? "Für dich" : "Für " + anzeigeName(m.name, m.slug).split(" ")[0];
+      var weg = h("small", { class: "mf-weg", text: wer + ": " + umwegText(grob) + " (geschätzt)" });
+      karte.appendChild(weg);
+      umwegRoute(spiel, m.slug, ri).then(function (r) { if (r && weg.isConnected) weg.textContent = wer + ": " + umwegText(r); });
+    }
     if (zus.length) {
       var dabei = h("div", { class: "mf-dabei" }, [h("small", { text: suche ? "Nimmt mit:" : "Fährt mit:" })]);
       zus.forEach(function (z) {
@@ -11948,9 +12023,32 @@ window.Mitglieder = (function () {
     box.appendChild(meinBox);
     function formular(art) {
       leeren(meinBox);
-      var feld = h("input", { type: "text", maxlength: "120",
+      var feld = h("input", { type: "text", maxlength: "100",
         placeholder: art === "suche" ? "z. B. ab Bochum Hbf" : "z. B. ab Essen-Rüttenscheid" });
-      if (mein && mein.art === art && mein.text !== "Biete Mitfahrt" && mein.text !== "Suche Mitfahrt") feld.value = mein.text;
+      // Die Abfahrtszeit haengt hinten am Text (" · Abfahrt 17:30") - so
+      // braucht es keine neue Spalte, und aeltere Fassungen zeigen sie mit.
+      var zeitFeld = art === "biete" ? h("input", { type: "time", step: "300", "aria-label": "Abfahrt" }) : null;
+      var alterText = mein && mein.art === art && mein.text !== "Biete Mitfahrt" && mein.text !== "Suche Mitfahrt" ? mein.text : "";
+      var zt = /\s*·?\s*Abfahrt (\d\d:\d\d)$/.exec(alterText);
+      if (zt) alterText = alterText.slice(0, zt.index);
+      var eigenerOrt = cache.wohnorte[profil.slug] && cache.wohnorte[profil.slug].ort;
+      feld.value = alterText || (eigenerOrt ? "ab " + eigenerOrt : "");
+      if (zeitFeld) {
+        if (zt) zeitFeld.value = zt[1];
+        else {
+          // Vorschlag: Treffpunkt minus Fahrzeit und zehn Minuten, auf
+          // fuenf Minuten abgerundet
+          var vorschlagen = function (st) {
+            if (!st || !st.minuten || !spiel.treffpunkt || zeitFeld.value || !zeitFeld.isConnected) return;
+            var los = new Date(Math.floor((new Date(spiel.treffpunkt).getTime() - (st.minuten + 10) * 60000) / 300000) * 300000);
+            zeitFeld.value = uhr(los);
+          };
+          var st = streckeGespeichert(spiel.halle);
+          // Noch keine Strecke gemerkt (Abrechnung nie geoeffnet): eben rechnen
+          if (st && st.minuten) setTimeout(function () { vorschlagen(st); }, 0);
+          else streckeBerechnen(spiel.halle).then(vorschlagen).catch(function () {});
+        }
+      }
       var plaetze = mein && mein.art === "biete" && mein.plaetze != null ? mein.plaetze : 2;
       var platzWahl = null;
       if (art === "biete") {
@@ -11968,7 +12066,8 @@ window.Mitglieder = (function () {
       var sichern = h("button", { type: "button", class: "mg-haupt", text: art === "suche" ? "Gesuch speichern" : "Angebot speichern" });
       sichern.addEventListener("click", function () {
         sichern.disabled = true;
-        mitfahrtSetzen(spiel, art, feld.value.trim(), art === "biete" && !cache.zusagenFehlen ? plaetze : null).then(function (ok) {
+        var text = feld.value.trim() + (zeitFeld && zeitFeld.value ? (feld.value.trim() ? " · " : "") + "Abfahrt " + zeitFeld.value : "");
+        mitfahrtSetzen(spiel, art, text, art === "biete" && !cache.zusagenFehlen ? plaetze : null).then(function (ok) {
           if (!ok) { sichern.disabled = false; return; }
           kurzMeldung(art === "suche" ? "Gesucht ✓ Die Kollegen sehen es hier und auf ihrer Spielseite."
                                       : "Angeboten ✓ Die Kollegen sehen es hier und auf ihrer Spielseite.", "gut");
@@ -11979,6 +12078,7 @@ window.Mitglieder = (function () {
       meinBox.appendChild(h("div", { class: "mf-formular" }, [
         h("b", { text: art === "suche" ? "Mitfahrt suchen" : "Plätze anbieten" }),
         h("label", { class: "mf-label" }, ["Von wo", feld]),
+        zeitFeld ? h("label", { class: "mf-label" }, ["Abfahrt (Vorschlag aus deiner Strecke)", zeitFeld]) : null,
         platzWahl ? h("div", { class: "mf-label" }, [h("span", { text: "Freie Plätze" }), platzWahl]) : null,
         h("div", { class: "mf-zeile" }, [sichern,
           h("button", { type: "button", class: "mg-neben", text: "Abbrechen", onclick: zeichnen })])].filter(Boolean)));
@@ -12110,6 +12210,7 @@ window.Mitglieder = (function () {
     rechnungBezahlt: rechnungBezahlt, rechnungenOffenSumme: rechnungenOffenSumme,
     vereinHaupt: vereinHaupt, vereinKanon: vereinKanon, vereinAnschrift: vereinAnschrift,
     keinVerein: keinVerein, vereinAliaseSetzen: vereinAliaseSetzen, vereinNaechster: vereinNaechster,
+    umwegFuer: umwegFuer, umwegText: umwegText, fahrZeiten: fahrZeiten,
     absenderAus: absenderAus, rechnungStamm: rechnungStamm, belegKandidaten: belegKandidaten, rechnungSichern: rechnungSichern, rechnungenNachreichen: rechnungenNachreichen, erinnerungText: erinnerungText, rechnungenOhneSpiele: rechnungenOhneSpiele,
     debSatz: debSatz, debGesamt: debGesamt, debTagesFaktor: debTagesFaktor, zeitzuschlagAn: zeitzuschlag
   };
@@ -12120,7 +12221,7 @@ window.Mitglieder = (function () {
            extrasLaden: extrasLaden, spielExtras: spielExtras, abfahrt: abfahrt, zaehler: zaehler, hallenHinweise: hallenHinweise, heimat: heimat, obmann: obmann, termine: termine,
            einstellungenSpeichern: einstellungenSpeichern, radar: radar, angebotMachen: angebotMachen,
            kontakteFuer: kontakteFuer, hinweisAnzahl: hinweisAnzahl, kontoRendern: kontoRendern, kontaktVon: kontaktVon, istAdmin: istAdmin, adminRecht: adminRecht, tresorSchluessel: tresorSchluessel, kontoKurz: kontoKurz, rechnungSprung: rechnungSprung, rechnungOeffnen: rechnungOeffnen, korrekturSpeichern: korrekturSpeichern, spielManuellLoeschen: spielManuellLoeschen,
-           mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, mitfahrtBlock: mitfahrtBlock, telefonVon: telefonVon, spielzeiten: spielzeiten, rechnungEinlesen: rechnungEinlesen, bilder: bilder, bildVon: bildVon, rufnameVon: rufnameVon, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb, wohnortEigen: wohnortEigen, notizenFuerSuche: notizenFuerSuche, zugang: zugang, darfKorrigieren: darfKorrigieren, antrittsstaerken: antrittsstaerken,
+           mitfahrtenFuer: mitfahrtenFuer, mitfahrtSetzen: mitfahrtSetzen, istDeb: istDeb, umwegText: umwegText, umwegRoute: umwegRoute, fahrZeiten: fahrZeiten, mitfahrtBlock: mitfahrtBlock, telefonVon: telefonVon, spielzeiten: spielzeiten, rechnungEinlesen: rechnungEinlesen, bilder: bilder, bildVon: bildVon, rufnameVon: rufnameVon, wohnortVon: wohnortVon, vorschlaegeFuer: vorschlaegeFuer, abrechnungSprung: abrechnungSprung, archivAusDb: archivAusDb, wohnortEigen: wohnortEigen, notizenFuerSuche: notizenFuerSuche, zugang: zugang, darfKorrigieren: darfKorrigieren, antrittsstaerken: antrittsstaerken,
            darfAlleSpiele: darfAlleSpiele, funktionSetzen: funktionSetzen,
            // Die Spielseite zeigt sie jetzt selbst - fuer alte Spiele ist
            // die Abrechnungskarte kein Weg mehr.
