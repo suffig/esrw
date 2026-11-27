@@ -50,12 +50,6 @@ GEO:51.574578;6.735361
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
  m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
  inslaken":geo:51.574578,6.735361
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - HSR · U20 RL: Dinslakener Kobra
- s – Herforder EV
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:e50bf7dd3d20c6a03d9a42afc37df119298b1dcc@esrw.de
