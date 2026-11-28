@@ -8,29 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:08c526c9ef04d403b9113c5f972e3230aed69655@esrw.de
-SEQUENCE:0
-DTSTAMP:20261111T143043Z
-LAST-MODIFIED:20261111T143043Z
-DTSTART:20261121T060000Z
-DTEND:20261121T093000Z
-SUMMARY:SR · U13 BZL Gr.B: ESV Bergisch Gladbach – TuS Wiehl
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 08:00 Uhr\nTreffpunkt:
-  07:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.B\nHalle: Eissportha
- lle Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbac
- h\nGespann: Bocklemünd\, Cid\nVergütung lt. Ordnung: 80 € + 20 % Uhrze
- it = 96 €\n\nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
- ch Gladbach
-GEO:50.967548;7.135355
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
- dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
- TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-END:VEVENT
-BEGIN:VEVENT
 UID:6eb59318882ceef4f17061f48cb7777164841e0b@esrw.de
 SEQUENCE:0
 DTSTAMP:20261111T143043Z
