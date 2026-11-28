@@ -409,6 +409,14 @@ P.setze({ einsaetze: {} });
 P.gelerntBauen([dnlAlt, dnlNeu]);
 pruefe(P.sollBetrag(dnlNeu) == null, "ohne Vorbild bleibt es leer");
 
+// Ohne Rechnung abgehakt (Fassung 319): bis dahin hielt ein Spiel ohne
+// Betrag "Pruefen" fuer immer fest, auch wenn es laengst erledigt war.
+P.setze({ einsaetze: { g1: { bezahlt: "2026-09-11T10:00:00Z" } } });
+pruefe(P.hatLuecke(dnlAlt), "ohne Betrag fehlt weiter etwas");
+pruefe(!P.zuPruefen(dnlAlt), "abgehakt ohne Rechnung: nicht mehr in Prüfen");
+P.setze({ einsaetze: {} });
+pruefe(P.zuPruefen(dnlAlt), "nicht abgehakt: bleibt in Prüfen");
+
 // Ein von Hand eingetragener Betrag (kein Herkunftsvermerk) zaehlt.
 P.setze({ einsaetze: { g1: { verguetung: 95, km: 42 } } });
 P.gelerntBauen([dnlAlt, dnlNeu]);

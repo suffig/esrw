@@ -1280,12 +1280,34 @@ def zeitzuschlag(gebuehren, anstoss):
 
 def waehle_schreibweise(kandidaten, bevorzugt=frozenset()):
     """Aus mehreren Schreibweisen derselben Person die beste aussuchen:
-    eine in der Konfiguration als richtig markierte, sonst ohne
-    Klammerzusatz, mit Komma, sonst die haeufigste."""
+    eine in der Konfiguration als richtig markierte, sonst mit Komma,
+    sonst ohne Klammerzusatz, sonst die haeufigste.
+
+    Bis Fassung 318 kam "ohne Klammer" vor "mit Komma": neben
+    "Kalischke, Christian (N)" gewann "Kalischke Christian", und die App
+    hielt den Nachnamen fuer den Vornamen. Fehlt das Komma in jeder
+    Schreibweise, setzt komma_ergaenzen() es ein - der Slug bleibt
+    derselbe, nkey() wirft Satzzeichen ohnehin weg."""
     def rang(paar):
         name, anzahl = paar
-        return (name not in bevorzugt, "(" in name, "," not in name, -anzahl, name)
-    return sorted(kandidaten.items(), key=rang)[0][0]
+        return (name not in bevorzugt, "," not in name, "(" in name, -anzahl, name)
+    name = sorted(kandidaten.items(), key=rang)[0][0]
+    return name if name in bevorzugt else komma_ergaenzen(name)
+
+
+def komma_ergaenzen(name):
+    """'Kalischke Christian' -> 'Kalischke, Christian'.
+
+    esrw.de schreibt "Nachname, Vorname" und laesst das Komma ab und zu
+    weg. Ein Zusatz in Klammern bleibt hinten stehen; ein einzelnes Wort
+    bleibt, wie es ist."""
+    if "," in name:
+        return name
+    m = re.match(r"^(.*?)(\s*\([^)]*\))?\s*$", name)
+    kern, zusatz = m.group(1).split(), m.group(2) or ""
+    if len(kern) < 2:
+        return name
+    return kern[0] + ", " + " ".join(kern[1:]) + zusatz
 
 
 def pruefe_konflikte(termine, cfg):

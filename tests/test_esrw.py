@@ -177,6 +177,18 @@ def test_namen():
            "(%s)" % E.slug_aus("Schöche, Gian-Carlo"))
     pruefe(E.waehle_schreibweise({"Keller Alexander": 1, "Keller, Alexander": 1})
            == "Keller, Alexander", "Schreibweise mit Komma wird bevorzugt")
+    # Bis Fassung 318 gewann hier die Schreibweise ohne Klammer und ohne Komma
+    pruefe(E.waehle_schreibweise({"Kalischke Christian": 3, "Kalischke, Christian (N)": 1})
+           == "Kalischke, Christian (N)", "Komma schlägt fehlende Klammer")
+    pruefe(E.waehle_schreibweise({"Kalischke Christian": 2}) == "Kalischke, Christian",
+           "fehlendes Komma wird ergänzt")
+    pruefe(E.komma_ergaenzen("Kalischke Christian (N)") == "Kalischke, Christian (N)",
+           "Klammerzusatz bleibt hinten")
+    pruefe(E.komma_ergaenzen("Müller-Lüdenscheidt Hans Peter") == "Müller-Lüdenscheidt, Hans Peter",
+           "zwei Vornamen bleiben zusammen")
+    pruefe(E.komma_ergaenzen("Schmidt") == "Schmidt", "ein Wort bleibt unverändert")
+    pruefe(E.slug_aus("Kalischke, Christian") == E.slug_aus("Kalischke Christian"),
+           "Slug ändert sich durch das Komma nicht")
 
 
 # ----------------------------------------------------------------- iCalendar

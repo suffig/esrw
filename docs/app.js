@@ -7547,7 +7547,9 @@
     var p = personMit(kontoName);
     if (!p) return false;
     if (profil && profil.slug === p.slug) {
-      if (!profil.name) { profil.name = p.name; profilSchreiben(); }
+      // Auch eine korrigierte Schreibweise uebernehmen ("Kalischke
+      // Christian" -> "Kalischke, Christian"), nicht nur einen leeren Namen
+      if (profil.name !== p.name) { profil.name = p.name; profilSchreiben(); }
       return true;
     }
     profil = { slug: p.slug, name: p.name, gesehen: {}, begonnen: false };

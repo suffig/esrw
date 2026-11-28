@@ -278,10 +278,23 @@ window.Mitglieder = (function () {
   function namenAbgleichen() {
     var personen = (ctx.daten && ctx.daten.personen) || [];
     if (!personen.length || !istAdminAn()) return;
-    speichern(sb.from("profile").select("slug")).then(function (r) {
-      var belegt = {};
-      if (r && !r.error) (r.data || []).forEach(function (x) { if (x.slug) belegt[x.slug] = true; });
-      var marke = personen.length + ":" + personen[personen.length - 1].slug + ":" + Object.keys(belegt).length;
+    speichern(sb.from("profile").select("id,slug,name")).then(function (r) {
+      var belegt = {}, nameVon = {};
+      personen.forEach(function (p) { nameVon[p.slug] = p.name; });
+      if (r && !r.error) (r.data || []).forEach(function (x) {
+        if (!x.slug) return;
+        belegt[x.slug] = true;
+        // Der Name im Konto stammt aus der Registrierung. Schrieb esrw.de
+        // ihn damals ohne Komma ("Kalischke Christian"), blieb er so -
+        // aendern darf ihn nur der Betreiber (profil_schutz), also hier.
+        if (nameVon[x.slug] && x.name !== nameVon[x.slug])
+          speichern(sb.from("profile").update({ name: nameVon[x.slug] }).eq("id", x.id));
+      });
+      // Mit den Namen in der Marke: bis Fassung 318 zaehlte sie nur
+      // Personen und Konten, eine korrigierte Schreibweise kam nie an.
+      var alleNamen = personen.map(function (p) { return p.name; }).join("|"), hsh = 0;
+      for (var i = 0; i < alleNamen.length; i++) hsh = (hsh * 31 + alleNamen.charCodeAt(i)) | 0;
+      var marke = personen.length + ":" + hsh + ":" + Object.keys(belegt).length;
       if (ctx.lesen && ctx.lesen("namen-stand") === marke) return;
       return speichern(sb.from("personen_liste").upsert(personen.map(function (p) {
         return { slug: p.slug, name: p.name, vergeben: !!belegt[p.slug], geaendert: new Date().toISOString() };
@@ -4697,13 +4710,14 @@ window.Mitglieder = (function () {
   function bezahltZeile(sp) {
     var e = einsaetze[sp.kennung] || {};
     var box = h("div", { class: "zweit" });
-    // Abhaken ohne Betrag hiesse: erledigt, aber mit 0 Euro in der Summe
-    if (e.verguetung == null && !e.bezahlt) return box;
+    // Ohne Betrag heisst der Haken "erledigt": es kommt nichts, und die
+    // Summe zaehlt das Spiel mit null Euro - so, wie es auch war.
     function neu() {
       leeren(box);
       var ist = !!e.bezahlt;
       box.appendChild(h("button", { type: "button", class: ist ? "mg-neben" : "",
-        text: ist ? "Doch nicht bezahlt" : "Als bezahlt abhaken",
+        text: ist ? (e.verguetung == null ? "Doch nicht erledigt" : "Doch nicht bezahlt")
+                  : (e.verguetung == null ? "Ohne Betrag abhaken" : "Als bezahlt abhaken"),
         title: ist ? "Marke wieder entfernen" : "Für dich erledigt - taucht dann nicht mehr unter „Offen“ auf",
         onclick: function () {
           var wert = ist ? null : new Date().toISOString();
@@ -5803,7 +5817,29 @@ window.Mitglieder = (function () {
   }
   // Was in der Stufe "Pruefen" steht: fehlende Angaben und falsche
   // Betraege. Beides haelt ein Spiel von der Rechnung ab.
-  function zuPruefen(sp) { return hatLuecke(sp) || !!abweichung(sp); }
+  function zuPruefen(sp) {
+    var e = einsaetze[sp.kennung];
+    if (e && e.bezahlt) return false;
+    return hatLuecke(sp) || !!abweichung(sp);
+  }
+  // Nicht jedes Spiel bekommt eine Rechnung: bar in der Halle bezahlt,
+  // vom Verband ueberwiesen, gar kein Geld. Bis Fassung 318 hielt so ein
+  // Spiel "Pruefen" oder "Abrechnen" fuer immer fest - abhaken ging nur
+  // in den aufgeklappten Feldern, und ohne Betrag gar nicht.
+  function ohneRechnungMoeglich(sp) {
+    var e = einsaetze[sp.kennung];
+    return new Date(sp.beginn) < new Date() && !(e && e.bezahlt) && !hatRechnung(sp);
+  }
+  function ohneRechnungAbhaken(sp) {
+    var e = einsaetze[sp.kennung] || {};
+    var wo = window.scrollY;
+    // Was die App vorgeschlagen hat, gilt mit dem Haken als geprueft -
+    // wie beim Schreiben einer Rechnung.
+    speichereEinsatz(sp, { bezahlt: new Date().toISOString(), herkunft: null }, true);
+    kurzMeldung(e.verguetung == null ? "Abgehakt – ohne Rechnung und ohne Betrag ✓" : "Abgehakt – ohne Rechnung ✓", "gut");
+    rendereAbrechnung();
+    window.scrollTo(0, wo);
+  }
 
   function nichtAbgehakt(sp) {
     var e = einsaetze[sp.kennung];
@@ -6204,7 +6240,10 @@ window.Mitglieder = (function () {
     if (vorschlaege.length > 1) box.appendChild(h("button", { type: "button", class: "mg-neben mg-allebestaetigen",
       text: "Alle " + vorschlaege.length + " Vorschläge bestätigen", onclick: function () { alleBestaetigen(vorschlaege); } }));
     if (st === "fehlt") box.appendChild(h("small", { class: "meta mg-wischtipp",
-      text: "Oder eine Karte unten antippen – gespeichert wird sofort." }));
+      text: "Oder eine Karte unten antippen – gespeichert wird sofort. Gibt es für ein Spiel "
+        + "kein Geld oder keine Rechnung: „Ohne Rechnung abhaken“ an der Karte." }));
+    if (st === "abrechnen") box.appendChild(h("small", { class: "meta mg-wischtipp",
+      text: "Bar bezahlt oder ohne Papier? „Ohne Rechnung abhaken“ an der Karte." }));
     // Der Weg zurueck zur ganzen Saison. Stand bis Fassung 277 als
     // eigene Zeile ueber diesem Kasten und wiederholte nur die Zahl, die
     // schon am Schritt steht. Hier drin, weil stufenZahlenNachfuehren()
@@ -7251,7 +7290,15 @@ window.Mitglieder = (function () {
       var rk = h("button", { type: "button", class: "mg-haupt", text: "Rechnung schreiben",
         title: "Rechnung für dieses Spiel mit eigener Nummer, Anschrift aus der Vereinsliste" });
       rk.addEventListener("click", function () { einzelRechnung(sp, rk); });
-      zeile.insertBefore(h("div", { class: "mg-kartenrechnung" }, [rk]), details);
+      zeile.insertBefore(h("div", { class: "mg-kartenrechnung" }, [rk,
+        h("button", { type: "button", class: "mg-neben", text: "Ohne Rechnung abhaken",
+          title: "Kein Papier nötig (bar bezahlt, vom Verband überwiesen) – das Spiel ist erledigt",
+          onclick: function () { ohneRechnungAbhaken(sp); } })]), details);
+    } else if (aufRechnung && zuPruefen(sp) && ohneRechnungMoeglich(sp)) {
+      zeile.insertBefore(h("div", { class: "mg-kartenrechnung" }, [
+        h("button", { type: "button", class: "mg-neben", text: "Ohne Rechnung abhaken",
+          title: "Für dieses Spiel kommt keine Rechnung – es verschwindet aus „Prüfen“",
+          onclick: function () { ohneRechnungAbhaken(sp); } })]), details);
     }
     details.appendChild(h("div", { class: "meta", text: (sp.halle || "Halle unbekannt") +
         (vorschlag && vorschlag.art === "route" ? " · " + dezimal(vorschlag.km) + " km Straße" : "") }));
@@ -7412,6 +7459,9 @@ window.Mitglieder = (function () {
           return person.spiele.filter(function (s) {
             if (!s.vergangen || new Date(s.beginn).getTime() < grenze) return false;
             var e = einsaetze[kennungVon(s)];
+            // Abgehakt heisst erledigt, auch ohne Betrag - bis Fassung 318
+            // blieb der Hinweis bei solchen Spielen drei Wochen stehen.
+            if (e && e.bezahlt) return false;
             return !e || e.verguetung == null;
           }).map(function (s) {
             var b = sollBetrag(s);

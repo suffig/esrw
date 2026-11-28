@@ -3460,6 +3460,8 @@
      darunter beginnen dort. Mit 12 px extra stand der Knopf eingerueckt. */
   :root[data-design="neu"] .mg-kartenrechnung { margin:var(--abstand-s) 0; }
   :root[data-design="neu"] .mg-kartenrechnung .mg-haupt { width:100%; min-height:44px; margin:0; }
+  /* Fassung 319: "Ohne Rechnung abhaken" darunter, leiser als der Hauptknopf */
+  :root[data-design="neu"] .mg-kartenrechnung .mg-neben { width:100%; min-height:44px; margin:6px 0 0; }
 
   :root[data-design="neu"] .mg-ordnungneu { border-left:3px solid var(--akzent);
     display:flex; flex-direction:column; gap:var(--abstand-xs); }
@@ -4752,6 +4754,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=318"></script>
+<script src="app.js?v=319"></script>
 </body>
 </html>
