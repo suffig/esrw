@@ -234,6 +234,13 @@ Bei Rebase-Konflikten in erzeugten Dateien gilt die Fassung vom Server.
   als sechste Spalte (`saison_zeile_kennung()` / `saisonKennung()`);
   bis dahin hätte ein verlegtes Spiel beim Einfrieren eine zweite Zeile
   bekommen, und Abrechnung, Notizen und Mitfahrten hingen an nichts.
+* Die **Spiel-ID** (`ZTB9W-X6YFN`, seit Fassung 320) ist die kurze
+  Schreibweise dieser Kennung: `spiel_nr()` in Python, `spielNr()` in
+  `app.js`, cyrb53 → 50 Bit → Crockford-Base32. Sie wird gerechnet, nie
+  gespeichert – deshalb hat sie jedes Spiel, auch jedes archivierte.
+  Beide Seiten müssen Zeichen für Zeichen gleich rechnen; dieselben
+  Prüfwerte stehen in `test_esrw.py` und `test_spielplan.js`. Wer die
+  Rechnung ändert, ändert jede ID, die schon weitergegeben wurde.
 * Der Schlüssel liegt als GitHub-Secret `DATEN_SCHLUESSEL`; er gehört
   **nirgendwo sonst hin** – nicht ins Repository, nicht in einen Chat.
 * `docs/supabase.json` enthält die öffentliche anon-Kennung. Das ist

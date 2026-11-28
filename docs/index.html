@@ -4216,6 +4216,32 @@
   .legende-knopf svg.i { width:18px; height:18px; }
   .wk-fuss .wk-frei { color:var(--warn); }
 
+  /* ===== Fassung 320: Statistikseite ================================== */
+  .stat-streifen { display:flex; gap:3px; height:14px; border-radius:7px; overflow:hidden; margin:4px 0 12px; }
+  .stat-streifen i { display:block; min-width:6px; background:var(--f); }
+  .stat-legende { display:grid; grid-template-columns:repeat(auto-fit, minmax(92px, 1fr)); gap:8px; }
+  .stat-legende > div { display:grid; grid-template-columns:auto 1fr; align-items:baseline; column-gap:6px;
+    padding:8px 10px; border-radius:12px; background:var(--fh); }
+  .stat-legende i { width:10px; height:10px; border-radius:50%; background:var(--f); align-self:center; }
+  .stat-legende b { font-size:var(--s-3xl); font-weight:800; color:var(--f); line-height:1.1; }
+  .stat-legende span { grid-column:1 / -1; font-weight:700; font-size:var(--s-s); }
+  .stat-legende small { grid-column:1 / -1; color:var(--dim); font-size:var(--s-xs); margin-top:2px; }
+  .stat-fuss { margin:10px 0 0; }
+  .stat-fakten { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px 12px; margin:0; align-items:baseline; }
+  .stat-fakten dt { color:var(--dim); font-size:var(--s-s); }
+  .stat-fakten dd { margin:0; font-weight:700; text-align:right; white-space:nowrap; }
+  .stat-saeulen { display:flex; align-items:flex-end; gap:4px; height:130px; padding-top:4px; }
+  .stat-saeule { flex:1 1 0; min-width:0; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; gap:3px; }
+  .stat-saeule i { display:block; width:100%; max-width:26px; border-radius:6px 6px 2px 2px; background:var(--f); opacity:.55; }
+  .stat-saeule.stat-max i { opacity:1; }
+  .stat-saeule small { font-size:var(--s-xs); color:var(--dim); font-variant-numeric:tabular-nums; min-height:1em; }
+  .stat-saeule span { font-size:var(--s-xs); color:var(--dim); }
+  .stat-karte + .balken, .balken + .stat-karte, .stat-karte + .stat-karte { margin-top:8px; }
+  a.reihe-link { color:inherit; text-decoration:none; min-height:44px; align-content:center; border-radius:8px; }
+  a.reihe-link > div::after { content:" ›"; color:var(--dim); }
+  .spiel-id { text-align:center; margin:14px 0 4px; }
+  .spiel-id .textknopf { font-variant-numeric:tabular-nums; letter-spacing:.04em; color:var(--dim); }
+
   /* ===== Fassung 313 ================================================== */
   /* Spieltagskarte: Liga als Marke, Mitspieler mit Vornamen, zwei gleich
      breite Knoepfe */
@@ -4754,6 +4780,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=319"></script>
+<script src="app.js?v=320"></script>
 </body>
 </html>

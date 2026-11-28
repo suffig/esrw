@@ -1247,7 +1247,7 @@
   }
   function suchSpiele(f) {
     return (daten.spiele || []).filter(function (s) {
-      return !s.vergangen && suchtextVon((s.liga || "") + " " + s.paarung + " " + (s.halle || "")).indexOf(f) >= 0;
+      return !s.vergangen && suchtextVon((s.liga || "") + " " + s.paarung + " " + (s.halle || "") + " " + spielNr(kennungVon(s))).indexOf(f) >= 0;
     }).slice(0, 8);
   }
   function suchSeiten(f, eintraege) {
@@ -1572,6 +1572,31 @@
   }
 
   function kennungVon(s) { return s.id || (s.beginn + "|" + s.paarung); }
+  // Die Spiel-ID: kurze Schreibweise der eingefrorenen Kennung, "XXXXX-XXXXX".
+  // Gleiche Rechnung wie spiel_nr() in esrw_ical.py (cyrb53, untere 50 Bit,
+  // Crockford-Base32) - tests/test_spielplan.js prueft beide gegeneinander.
+  var NR_ZEICHEN = "0123456789ABCDEFGHJKMNPQRSTVWXYZ", nrCache = {};
+  function spielNr(kennung) {
+    kennung = String(kennung || "");
+    if (nrCache[kennung]) return nrCache[kennung];
+    var h1 = 0xdeadbeef, h2 = 0x41c6ce57;
+    for (var i = 0; i < kennung.length; i++) {
+      var c = kennung.charCodeAt(i);
+      h1 = Math.imul(h1 ^ c, 2654435761); h2 = Math.imul(h2 ^ c, 1597334677);
+    }
+    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507); h1 ^= Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507); h2 ^= Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+    // 50 Bit: 18 aus h2, 32 aus h1 - als zwei Haelften, weil JavaScript
+    // mit Bitoperatoren nur 32 Bit rechnet.
+    var oben = (h2 & 0x3ffff) >>> 0, unten = h1 >>> 0, z = "";
+    for (var j = 0; j < 10; j++) {
+      z = NR_ZEICHEN[unten & 31] + z;
+      unten = (unten >>> 5) | ((oben & 31) << 27); unten >>>= 0;
+      oben >>>= 5;
+    }
+    return (nrCache[kennung] = z.slice(0, 5) + "-" + z.slice(5));
+  }
+  function istSpielNr(t) { return /^[0-9A-HJKMNP-TV-Z]{5}-?[0-9A-HJKMNP-TV-Z]{5}$/i.test(String(t || "").trim()); }
   // Eine Zeile aus docs/archiv/<saison>.json: [beginn, liga, paarung,
   // halle, besetzung, kennung]. Die sechste Spalte schreibt der Workflow
   // ab Fassung 316 - bei einem verlegten Spiel ist sie die alte Zeit,
@@ -1677,6 +1702,12 @@
   }
 
   function zeigeSpiel(kennung) {
+    // Auch die Spiel-ID fuehrt hin - wer sie weitergibt, schickt den Link
+    if (istSpielNr(kennung)) {
+      var nr = kennung.toUpperCase().replace(/^(.{5})-?(.{5})$/, "$1-$2");
+      var treffer = (daten.spiele || []).filter(function (x) { return spielNr(kennungVon(x)) === nr; })[0];
+      if (treffer) kennung = kennungVon(treffer);
+    }
     var s0 = (daten.spiele || []).filter(function (x) { return kennungVon(x) === kennung; })[0];
     if (s0) return spielRendern(s0, kennung);
     // Nicht im Fenster - also im Archiv nachsehen, statt aufzugeben.
@@ -1926,6 +1957,18 @@
       });
       vb.appendChild(vl);
     }).catch(function () {});
+    // Die Spiel-ID ganz unten: zum Nennen gegenueber Obmann oder
+    // Betreiber und zum Weitergeben. Ein Tipp kopiert den Link.
+    var idZeile = document.createElement("p"); idZeile.className = "meta spiel-id";
+    var idKnopf = document.createElement("button"); idKnopf.type = "button"; idKnopf.className = "textknopf";
+    idKnopf.textContent = "Spiel-ID " + spielNr(kennungVon(s));
+    idKnopf.title = "Antippen kopiert den Link zu diesem Spiel";
+    idKnopf.addEventListener("click", function () {
+      var link = basis.replace(/\/$/, "") + "/#spiel/" + spielNr(kennungVon(s));
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(link).then(function () { toast("Link kopiert ✓", "gut"); }, function () { toast(link, ""); });
+      else toast(link, "");
+    });
+    idZeile.appendChild(idKnopf); inhalt.appendChild(idZeile);
     // Betreiber und Obmaenner mit dem Recht: Spiel korrigieren
     var lauf = inhalt._lauf = {};
     if (sitzungVorhanden()) ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
@@ -3086,7 +3129,7 @@
       if (wahl.nurOffen && s.besetzung.length) return false;
       if (wahl.ligen && !wahl.ligen[ligaGruppe(s.liga)]) return false;
       if (wahl.suche) {
-        var text = suchtextVon([s.paarung, s.liga, s.halle].concat(s.besetzung.map(function (b) { return b.name; })).join(" "));
+        var text = suchtextVon([s.paarung, s.liga, s.halle, spielNr(kennungVon(s))].concat(s.besetzung.map(function (b) { return b.name; })).join(" "));
         if (text.indexOf(wahl.suche) === -1) return false;
       }
       return true;
@@ -3450,6 +3493,136 @@
     return balken("Wochentage", paare, "orange");
   }
 
+  // ---- Bausteine der Statistikseite (Fassung 320)
+  function statKarte(titel, farbe) {
+    var box = document.createElement("div"); box.className = "balken karte stat-karte";
+    if (farbe) box.setAttribute("data-farbe", farbe);
+    var h = document.createElement("h4"); h.textContent = titel; box.appendChild(h);
+    return box;
+  }
+  // HSR, LSR und SR in einer Karte: ein Streifen in den Farben der
+  // Rollenabzeichen, darunter die Zahlen. Bis Fassung 319 stand der
+  // HSR-Anteil als Kachel oben und noch einmal als Satz ganz unten.
+  function rollenKarte(s) {
+    var r = s.rollen || {}, teile = [["HSR", "im 3er/4er", "rot"], ["LSR", "im 3er/4er", "tuerkis"],
+                                     ["SR", "im 2er", "blau"]]
+      .map(function (t) { return { k: t[0], name: t[1], farbe: t[2], n: r[t[0]] || 0 }; })
+      .filter(function (t) { return t.n; });
+    var summe = teile.reduce(function (a, t) { return a + t.n; }, 0);
+    if (!summe) return null;
+    var box = statKarte("Rollen");
+    var streifen = document.createElement("div"); streifen.className = "stat-streifen";
+    teile.forEach(function (t) {
+      var i = document.createElement("i"); i.setAttribute("data-farbe", t.farbe);
+      i.style.flexGrow = t.n; i.title = t.k + ": " + t.n; streifen.appendChild(i);
+    });
+    box.appendChild(streifen);
+    var leg = document.createElement("div"); leg.className = "stat-legende";
+    teile.forEach(function (t) {
+      var z = document.createElement("div"); z.setAttribute("data-farbe", t.farbe);
+      var punkt = document.createElement("i");
+      var b = document.createElement("b"); b.textContent = t.n;
+      var span = document.createElement("span"); span.textContent = t.k;
+      var small = document.createElement("small"); small.textContent = Math.round(t.n / summe * 100) + " % · " + t.name;
+      z.appendChild(punkt); z.appendChild(b); z.appendChild(span); z.appendChild(small); leg.appendChild(z);
+    });
+    box.appendChild(leg);
+    var hsr = r.HSR || 0, lsr = r.LSR || 0, satz = [];
+    if (hsr + lsr) satz.push("Im 3er/4er-System " + Math.round(hsr / (hsr + lsr) * 100) + " % als HSR");
+    var sys = s.systeme || {};
+    var sysText = ["2", "3", "4"].filter(function (k) { return sys[k]; })
+      .map(function (k) { return sys[k] + "× im " + k + "er"; });
+    if (sysText.length) satz.push(sysText.join(" · "));
+    if (satz.length) { var m = document.createElement("p"); m.className = "meta stat-fuss"; m.textContent = satz.join(". ") + "."; box.appendChild(m); }
+    return box;
+  }
+  // Kleine Tatsachen, die keine eigene Grafik brauchen
+  function faktenKarte(s) {
+    var a = s.anzahl || {}, zeilen = [];
+    if (a.ligen) zeilen.push(["Ligen", a.ligen + " verschiedene"]);
+    if (a.hallen) zeilen.push(["Hallen", a.hallen + " verschiedene"]);
+    if (s.doppel) zeilen.push(["Doppeleinsätze", s.doppel + (s.doppel === 1 ? " Tag" : " Tage") + " mit zwei Spielen"]);
+    if (s.wochentage && s.wochentage.some(function (n) { return n; })) {
+      var NAMEN = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"], best = 0;
+      s.wochentage.forEach(function (n, i) { if (n > s.wochentage[best]) best = i; });
+      zeilen.push(["Lieblingstag", NAMEN[best]]);
+    }
+    if (s.je_saison && s.je_saison.length > 1) {
+      var top = s.je_saison.slice().sort(function (x, y) { return y[1] - x[1]; })[0];
+      zeilen.push(["Stärkste Saison", top[0] + " · " + top[1] + " Spiele"]);
+    }
+    if (s.erste) zeilen.push(["Erstes Spiel im Archiv", new Date(s.erste).toLocaleDateString("de-DE", { day: "numeric", month: "long", year: "numeric" })]);
+    if (zeilen.length < 2) return null;
+    var box = statKarte("Auf einen Blick", "orange");
+    var dl = document.createElement("dl"); dl.className = "stat-fakten";
+    zeilen.forEach(function (z) {
+      var dt = document.createElement("dt"); dt.textContent = z[0];
+      var dd = document.createElement("dd"); dd.textContent = z[1];
+      dl.appendChild(dt); dl.appendChild(dd);
+    });
+    box.appendChild(dl);
+    return box;
+  }
+  // Saisonverlauf als Saeulen, August bis Mai (Juni und Juli nur, wenn
+  // dort wirklich gepfiffen wurde). Ueber alle Saisons gezaehlt.
+  function monatsKarte(monate) {
+    if (!monate || !monate.some(function (n) { return n; })) return null;
+    var folge = [8, 9, 10, 11, 12, 1, 2, 3, 4, 5];
+    if (monate[5]) folge.push(6);
+    if (monate[6]) folge.unshift(7);
+    var KURZ = ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"];
+    var hoch = Math.max.apply(null, folge.map(function (m) { return monate[m - 1]; })) || 1;
+    var box = statKarte("Saisonverlauf", "gruen");
+    var saeulen = document.createElement("div"); saeulen.className = "stat-saeulen";
+    folge.forEach(function (m) {
+      var n = monate[m - 1];
+      var sp = document.createElement("div"); sp.className = "stat-saeule" + (n === hoch ? " stat-max" : "");
+      var zahl = document.createElement("small"); zahl.textContent = n || "";
+      // Pixel statt Prozent: eine Prozenthoehe im Flex-Stapel rechnete
+      // gegen die ganze Seite, die hoechste Saeule wurde 771 px hoch.
+      var i = document.createElement("i"); i.style.height = Math.max(n ? 6 : 2, Math.round(n / hoch * 92)) + "px";
+      var name = document.createElement("span"); name.textContent = KURZ[m - 1];
+      sp.title = KURZ[m - 1] + ": " + n;
+      sp.appendChild(zahl); sp.appendChild(i); sp.appendChild(name); saeulen.appendChild(sp);
+    });
+    box.appendChild(saeulen);
+    var w = document.createElement("p"); w.className = "meta stat-fuss"; w.textContent = "Spiele je Monat, über alle Saisons.";
+    box.appendChild(w);
+    return box;
+  }
+  // Die Gespannpartner fuehren zu ihrer Statistik. Der Slug kommt seit
+  // Fassung 320 aus der Pipeline; aeltere Daten haben nur den Namen.
+  function partnerKarte(partner) {
+    if (!partner || !partner.length) return null;
+    var box = balken("Meiste Gespannpartner", partner.map(function (x) {
+      return [String(x[0]).split(",").reverse().join(" ").trim(), x[1]]; }), "blau");
+    if (!box) return null;
+    var reihen = box.querySelectorAll(".reihe");
+    partner.forEach(function (x, i) {
+      var slug = x[2] || ((daten.personen || []).filter(function (q) { return q.name === x[0]; })[0] || {}).slug;
+      if (!slug || !personMit(slug) || !reihen[i]) return;
+      var a = document.createElement("a"); a.className = "reihe reihe-link"; a.href = "#statistik/" + encodeURIComponent(slug);
+      while (reihen[i].firstChild) a.appendChild(reihen[i].firstChild);
+      reihen[i].parentNode.replaceChild(a, reihen[i]);
+    });
+    if (box.querySelector(".reihe-link")) {
+      var t = document.createElement("p"); t.className = "meta stat-fuss"; t.textContent = "Antippen zeigt die Statistik des Kollegen.";
+      box.appendChild(t);
+    }
+    return box;
+  }
+  function anstossKarte(stunden) {
+    if (!stunden || !stunden.some(function (n) { return n; })) return null;
+    var NAMEN = ["vor 12 Uhr", "12 bis 16 Uhr", "16 bis 19 Uhr", "ab 19 Uhr"];
+    var paare = stunden.map(function (n, i) { return [NAMEN[i], n]; }).filter(function (x) { return x[1]; });
+    // Reihenfolge der Uhr, nicht der Groesse - balken() misst am ersten
+    // Eintrag, also eine Messzeile vorn, die danach wieder weg ist.
+    var hoechste = Math.max.apply(null, paare.map(function (x) { return x[1]; }));
+    var box = balken("Anstoßzeiten", [["", hoechste]].concat(paare), "rot");
+    if (box) { var erste = box.querySelector(".reihe"); if (erste) erste.remove(); }
+    return box;
+  }
+
   function zeigeStatistik(p) {
     var ziel = el("statistik"); ziel.innerHTML = "";
     var s = p.statistik; if (!s) return;
@@ -3462,11 +3635,22 @@
     var zahlen = document.createElement("div"); zahlen.className = "zahlen";
     var heute = new Date(); heute.setHours(0, 0, 0, 0);
     var inSieben = p.spiele.filter(function (x) { var d = new Date(x.beginn); return d >= heute && d < tagePlus(heute, 7); }).length;
-    var hsrK = (s.rollen && s.rollen.HSR) || 0, lsrK = (s.rollen && s.rollen.LSR) || 0;
+    // Fassung 320: die vierte Kachel war "als HSR" - die Rollen stehen
+    // jetzt zusammen in einer eigenen Karte. Dafuer der Vergleich mit der
+    // Vorsaison am selben Saisontag und die Zahl der Gespannpartner.
+    var vor = s.vorsaison_bis_heute, saisonWoher = "aus dem Archiv";
+    if (vor != null && (vor || s.saison)) {
+      var diff = s.saison - vor;
+      saisonWoher = diff > 0 ? "▲ " + diff + " mehr als Vorsaison" : diff < 0 ? "▼ " + (-diff) + " weniger als Vorsaison"
+        : "so viele wie Vorsaison";
+    }
+    var anzahl = s.anzahl || {};
     [["in 7 Tagen", inSieben, "aus deinem Plan"],
-     ["Saison " + (daten.saison || ""), s.saison, "aus dem Archiv"],
+     ["Saison " + (daten.saison || ""), s.saison, saisonWoher],
      ["Insgesamt", s.gesamt, seitText(s.erste)],
-     ["als HSR", hsrK, hsrK + lsrK ? "von " + (hsrK + lsrK) + " im 3er/4er" : "im 3er/4er-System"]
+     anzahl.partner != null
+       ? ["Kollegen", anzahl.partner, "im Gespann gehabt"]
+       : ["Ligen", (s.ligen || []).length, "im Archiv"]
     ].forEach(function (paar, i) {
       var k = document.createElement("div"); k.className = "zahl karte";
       k.setAttribute("data-farbe", ["blau", "gruen", "lila", "rot"][i]);
@@ -3479,17 +3663,15 @@
       zahlen.appendChild(k);
     });
     ziel.appendChild(zahlen);
-    [balken("Meiste Ligen", s.ligen, "lila", function (n) { return ligaFarbe(n).punkt; }), balken("Meiste Hallen", s.hallen, "tuerkis"),
-     balken("Meiste Gespannpartner", s.partner, "blau"),
+    [rollenKarte(s), faktenKarte(s),
+     monatsKarte(s.monate),
+     balken("Meiste Ligen", s.ligen, "lila", function (n) { return ligaFarbe(n).punkt; }),
+     balken("Meiste Hallen", s.hallen, "tuerkis"),
+     partnerKarte(s.partner),
+     anstossKarte(s.stunden),
      s.je_saison && s.je_saison.length > 1 ? balken("Spiele je Saison", s.je_saison.slice().reverse(), "gruen") : null,
      wochentagBalken(s.wochentage)
     ].forEach(function (b) { if (b) ziel.appendChild(b); });
-    var hsr = (s.rollen && s.rollen.HSR) || 0, lsr = (s.rollen && s.rollen.LSR) || 0;
-    if (hsr + lsr) {
-      var q = document.createElement("p"); q.className = "meta"; q.style.marginTop = "10px";
-      q.textContent = "Im 3er/4er-System: " + Math.round(hsr / (hsr + lsr) * 100) + " % als HSR (" + hsr + " von " + (hsr + lsr) + ").";
-      ziel.appendChild(q);
-    }
     var fuss = document.createElement("p"); fuss.className = "meta"; fuss.style.marginTop = "10px";
     fuss.textContent = "Das Archiv wächst mit jedem Lauf, esrw.de selbst zeigt nur wenige Tage.";
     ziel.appendChild(fuss);
@@ -4440,7 +4622,7 @@
   // Leeres Geruest statt null: der Mitgliederbereich soll auch dann seinen
   // Anmeldeschirm zeichnen koennen, wenn noch keine Daten geladen sind.
   var LEER = { personen: [], spiele: [], hallen: {}, adressen: {}, hallen_hinweise: {}, saison: "", titel: "Einteilungen" };
-  function mitgliederKontext() { return { gespannKorrektur: gespannKorrektur, gespannGehoert: gespannGehoert, istAusgeblendet: istAusgeblendet, istAbgesagt: istAbgesagt, doppelteAuflosen: doppelteAuflosen, daten: daten || LEER, slug: profil && profil.slug, personMit: personMit, hole: hole, ikone: ikone, funktion: funktion, funktionen: FUNKTIONEN, einstellungenSync: einstellungenSync, lesen: lesen, schreiben: schreiben, reiterInLeiste: reiterInLeiste, appAblegen: appAblegen,
+  function mitgliederKontext() { return { spielNr: spielNr, gespannKorrektur: gespannKorrektur, gespannGehoert: gespannGehoert, istAusgeblendet: istAusgeblendet, istAbgesagt: istAbgesagt, doppelteAuflosen: doppelteAuflosen, daten: daten || LEER, slug: profil && profil.slug, personMit: personMit, hole: hole, ikone: ikone, funktion: funktion, funktionen: FUNKTIONEN, einstellungenSync: einstellungenSync, lesen: lesen, schreiben: schreiben, reiterInLeiste: reiterInLeiste, appAblegen: appAblegen,
     // Der Mitgliederbereich setzt geaenderte Anzeigenamen direkt in
     // daten ein (v59). Was gerade auf dem Schirm steht, weiss davon
     // nichts - also einmal neu zeichnen. "aktuell" ist dabei die
@@ -8468,7 +8650,7 @@
         if (o.korrekturen !== undefined) korrekturen = o.korrekturen;
         if (o.rechner !== undefined) rechner = o.rechner;
       },
-      kennungVon: kennungVon, istAusgeblendet: istAusgeblendet, istGeloescht: istGeloescht,
+      kennungVon: kennungVon, spielNr: spielNr, istSpielNr: istSpielNr, istAusgeblendet: istAusgeblendet, istGeloescht: istGeloescht,
       istAbgesagt: istAbgesagt, doppelteAuflosen: doppelteAuflosen,
       archivMerge: archivMerge, archivKorrigieren: archivKorrigieren, saisonZeilen: saisonZeilen,
       gemeinsamArchiv: gemeinsamArchiv,

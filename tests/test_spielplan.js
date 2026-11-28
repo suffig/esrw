@@ -1341,6 +1341,18 @@ gleich(P.adresseMit("daten.json.bin", "abc123"), "daten.json.bin?m=abc123", "mit
 pruefe(/^daten\.json\.bin\?\d+$/.test(P.adresseMit("daten.json.bin", null)), "ohne Marke mit Uhrzeit", P.adresseMit("daten.json.bin", null));
 
 
+// ------------------------------------------------------------- Spiel-ID
+// Fassung 320. Dieselben Werte stehen in tests/test_esrw.py fuer
+// spiel_nr() - weicht eine Seite ab, finden Link und Suche nichts.
+console.log("\nSpiel-ID");
+gleich(P.spielNr("2026-10-03T19:00:00+02:00|Düsseldorfer EG - ESC Dresden"), "ZTB9W-X6YFN", "Kennung mit Umlaut");
+gleich(P.spielNr("2025-09-14T17:00:00+02:00|Herner EV 1b - Kölner EC"), "X9F7V-2J95S", "zweite Kennung");
+gleich(P.spielNr("x"), "C9NWC-21HQN", "kurze Kennung");
+pruefe(P.istSpielNr("ztb9w-x6yfn") && P.istSpielNr("ZTB9WX6YFN"), "ID klein und ohne Strich erkannt");
+pruefe(!P.istSpielNr("2026-10-03T19:00:00+02:00|A - B"), "eine Kennung ist keine ID");
+pruefe(P.spielNr(P.kennungVon({ id: "k1" })) === P.spielNr("k1"), "die ID haengt an der Kennung, nicht an Anstoss und Paarung");
+
+
 // ------------------------------------------------------------- Ergebnis
 
 console.log("\n----------------------------------------------------------");

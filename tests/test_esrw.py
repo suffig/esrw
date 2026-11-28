@@ -193,6 +193,45 @@ def test_namen():
 
 # ----------------------------------------------------------------- iCalendar
 
+def test_statistik_neu():
+    print("\nStatistik: Saisontag und Vorsaison")
+    from datetime import datetime, date
+    pruefe(E.saison_tag(date(2026, 7, 1)) == 0, "1. Juli ist Tag 0")
+    pruefe(E.saison_tag(datetime(2027, 1, 1, 12)) == E.saison_tag(date(2026, 12, 31)) + 1,
+           "ueber den Jahreswechsel weitergezaehlt")
+    pruefe(E.vorsaison("2026/27") == "2025/26", "Vorsaison")
+    hist = {
+        "a": {"beginn": "2025-10-04T19:00:00", "paarung": "A - B", "liga": "LL",
+              "besetzung": {"HSR": ["Muster, Max"], "(L)SR": ["Probe, Paul", "Test, Tim"]}},
+        "b": {"beginn": "2025-10-04T15:00:00", "paarung": "C - D", "liga": "LL",
+              "besetzung": {"(L)SR": ["Muster, Max", "Probe, Paul"]}},
+        "c": {"beginn": "2026-02-01T11:00:00", "paarung": "E - F", "liga": "BL",
+              "besetzung": {"(L)SR": ["Muster, Max", "Test, Tim"]}},
+    }
+    werte, _ = E.statistik_aus_historie(hist, datetime(2026, 11, 1, 12))
+    s = werte[E.personen_schluessel("Muster, Max")]
+    pruefe(sum(1 for n in s["tage"].values() if n >= 2) == 1, "ein Tag mit zwei Spielen")
+    pruefe(s["vorsaison_bis_heute"] == 2, "Vorsaison bis zum selben Saisontag: 2 (Februar zaehlt nicht)",
+           "(%s)" % s["vorsaison_bis_heute"])
+    pruefe(s["systeme"][3] == 1 and s["systeme"][2] == 2, "Spielsysteme 3er und 2er gezaehlt")
+    pruefe(s["monate"][10] == 2 and s["monate"][2] == 1, "Monate gezaehlt")
+
+
+def test_spiel_nr():
+    print("\nSpiel-ID")
+    # Dieselben Werte in tests/test_spielplan.js fuer spielNr()
+    pruefe(E.spiel_nr("2026-10-03T19:00:00+02:00|Düsseldorfer EG - ESC Dresden") == "ZTB9W-X6YFN",
+           "Kennung mit Umlaut wie in JavaScript")
+    pruefe(E.spiel_nr("2025-09-14T17:00:00+02:00|Herner EV 1b - Kölner EC") == "X9F7V-2J95S", "zweite Kennung")
+    pruefe(E.spiel_nr("x") == "C9NWC-21HQN", "kurze Kennung")
+    pruefe(E.spiel_nr_doppelt(["a|b", "a|b", "c|d"]) == [], "gleiche Kennung zaehlt nicht als doppelt")
+    import random
+    r = random.Random(7)
+    viele = ["2026-%02d-%02dT%02d:00:00+02:00|Verein %d - Verein %d" % (r.randint(1, 12), r.randint(1, 28),
+             r.randint(8, 21), r.randint(1, 400), r.randint(1, 400)) for _ in range(20000)]
+    pruefe(E.spiel_nr_doppelt(viele) == [], "20000 Kennungen, keine ID doppelt")
+
+
 def test_faltung():
     print("\nZeilen falten (RFC 5545)")
     schlecht = 0
@@ -2055,7 +2094,7 @@ def main():
                  test_archivkennung, test_statistik_zaehlt_einmal, test_spielschluessel, test_blattfokus, test_netzstand,
                  test_push_nachrichten, test_push_erinnerungen, test_push_rechnungen,
                  test_anzeigenamen, test_abgesetzt,
-                 test_tresor, test_push_freischaltung, test_saisonarchiv_kennung):
+                 test_tresor, test_push_freischaltung, test_saisonarchiv_kennung, test_statistik_neu, test_spiel_nr):
         test()
     print("\n" + "-" * 58)
     if FEHLER:

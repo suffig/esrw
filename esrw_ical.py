@@ -980,6 +980,23 @@ def ergaenze_ehemalige(personen, stats, bevorzugt=frozenset()):
     return len(dazu)
 
 
+def saison_tag(zeitpunkt):
+    """Der wievielte Tag der Saison (ab 1. Juli). Damit laesst sich die
+    laufende Saison mit der vorigen "bis zum selben Tag" vergleichen."""
+    d = zeitpunkt.date() if hasattr(zeitpunkt, "date") else zeitpunkt
+    j = d.year if d.month >= 7 else d.year - 1
+    return (d - d.replace(year=j, month=7, day=1)).days
+
+
+def vorsaison(saison):
+    """'2026/27' -> '2025/26'."""
+    try:
+        j = int(saison[:4]) - 1
+    except (TypeError, ValueError):
+        return ""
+    return "%d/%s" % (j, str(j + 1)[2:])
+
+
 def statistik_aus_historie(historie, stand, kennungen=None):
     """Zaehlt je Person die Einsaetze im gesamten Archiv.
 
@@ -991,6 +1008,7 @@ def statistik_aus_historie(historie, stand, kennungen=None):
     davon nichts weiss. Genau das ist passiert.
     """
     jetzt_saison = saison_von(stand)
+    vor_saison, heute_tag = vorsaison(jetzt_saison), saison_tag(stand)
     werte = {}
     # .items(), nicht .values(): der Schluessel IST die Quelle, und ohne
     # die laesst sich die gueltige Kennung nicht nachschlagen.
@@ -1020,6 +1038,8 @@ def statistik_aus_historie(historie, stand, kennungen=None):
                 "partner": Counter(), "partner_namen": {}, "je_saison": Counter(),
                 "erste": None, "letzte": None, "spiele_saison": [],
                 "schreibweisen": Counter(), "wochentage": Counter(),
+                "monate": Counter(), "stunden": Counter(), "tage": Counter(),
+                "systeme": Counter(), "vorsaison_bis_heute": 0,
                 "_gesehen": set()})
             # Dasselbe Spiel aus zwei Quellen zaehlt einmal. Die Liste
             # unten bekommt trotzdem beide Zeilen: welche davon gilt,
@@ -1036,6 +1056,15 @@ def statistik_aus_historie(historie, stand, kennungen=None):
                 s["je_saison"][saison] += 1
                 if saison == jetzt_saison:
                     s["saison"] += 1
+                # Fuer die Statistikseite (Fassung 320): Saisonverlauf,
+                # Anstosszeiten, Tage mit zwei Spielen, Spielsystem und
+                # der Vergleich mit der Vorsaison am selben Saisontag.
+                s["monate"][beginn.month] += 1
+                s["stunden"][beginn.hour] += 1
+                s["tage"][beginn.date().isoformat()] += 1
+                s["systeme"][len(paare)] += 1
+                if saison == vor_saison and saison_tag(beginn) <= heute_tag:
+                    s["vorsaison_bis_heute"] += 1
                 # Mit wem man am haeufigsten im Gespann stand
                 for anderer, _ in paare:
                     k2 = personen_schluessel(anderer)
@@ -1764,6 +1793,53 @@ def zweifel_schreiben(reg, uebersicht, historie):
                        "geaendert": datetime.now(timezone.utc).isoformat()})
     if zeilen and tabelle_schreiben("spiel_zweifel?on_conflict=kennung", zeilen):
         print("%d Zweifelsfall/-faelle an den Pflege-Bereich gemeldet." % len(zeilen))
+
+
+_NR_ZEICHEN = "0123456789ABCDEFGHJKMNPQRSTVWXYZ"   # Crockford: ohne I, L, O, U
+
+
+def spiel_nr(kennung):
+    """Die Spiel-ID: zehn Zeichen, 'XXXXX-XXXXX', fest an die Kennung gebunden.
+
+    Die Kennung ist seit der Registratur (v51) eingefroren und eindeutig,
+    sieht aber aus wie "Anstoss|Paarung" - zum Nennen, Suchen und
+    Weitergeben taugt sie nicht. Die ID ist eine kurze Schreibweise
+    derselben Sache: cyrb53 ueber die Kennung, die unteren 50 Bit in
+    Crockford-Base32. Gerechnet statt gespeichert - so hat jedes Spiel
+    sie sofort, auch jedes archivierte, und docs/app.js (spielNr) kommt
+    Zeichen fuer Zeichen auf dasselbe Ergebnis. Doppelte meldet main().
+
+    Ueber UTF-16-Einheiten wie charCodeAt() in JavaScript, sonst wichen
+    Kennungen mit Umlauten ab."""
+    m = 0xFFFFFFFF
+    h1, h2 = 0xDEADBEEF, 0x41C6CE57
+    roh = (kennung or "").encode("utf-16-le")
+    for i in range(0, len(roh), 2):
+        c = roh[i] | (roh[i + 1] << 8)
+        h1 = ((h1 ^ c) * 2654435761) & m
+        h2 = ((h2 ^ c) * 1597334677) & m
+    h1 = ((h1 ^ (h1 >> 16)) * 2246822507) & m
+    h1 ^= ((h2 ^ (h2 >> 13)) * 3266489909) & m
+    h2 = ((h2 ^ (h2 >> 16)) * 2246822507) & m
+    h2 ^= ((h1 ^ (h1 >> 13)) * 3266489909) & m
+    wert = ((h2 & 0x1FFFFF) << 32 | h1) & ((1 << 50) - 1)
+    z = ""
+    for _ in range(10):
+        z = _NR_ZEICHEN[wert & 31] + z
+        wert >>= 5
+    return z[:5] + "-" + z[5:]
+
+
+def spiel_nr_doppelt(kennungen):
+    """Kennungen, deren ID schon eine andere Kennung traegt. Bei 50 Bit
+    ist das auf Jahrzehnte nicht zu erwarten - aber pruefen kostet nichts."""
+    gesehen, doppelt = {}, []
+    for k in sorted(set(kennungen)):
+        nr = spiel_nr(k)
+        if nr in gesehen and gesehen[nr] != k:
+            doppelt.append((nr, gesehen[nr], k))
+        gesehen.setdefault(nr, k)
+    return doppelt
 
 
 def zusammen_fuer(reg, kennung):
@@ -2593,6 +2669,9 @@ def main():
     # und vor ergaenze_historie(), denn die Kandidaten kommen aus dem
     # Stand des LETZTEN Laufs ("zuletzt_gesehen").
     kennungen_paaren(kennungen, spiele, venues, historie, stand)
+    if kennungen:
+        for nr, a, b in spiel_nr_doppelt(kennungen["bekannt"].values()):
+            print("  ! Spiel-ID %s doppelt: %s / %s" % (nr, a, b), file=sys.stderr)
     umbesetzt = besetzung_korrigieren(spiele, korrekturen, venues, kennungen)
     if umbesetzt:
         print("%d Spiel(e) mit Gespann vom Betreiber." % umbesetzt)
@@ -2752,6 +2831,7 @@ def main():
         f.write(baue_ics(gesamt, "Alle Spiele (ESRW)", cfg, stand))
 
     name_von = {p["schluessel"]: p["name"] for p in personen}
+    slug_von_schl = {p["schluessel"]: p["slug"] for p in personen}
 
     def stat_fuer(p):
         s = stats.get(p["schluessel"])
@@ -2760,9 +2840,20 @@ def main():
         return {
             "gesamt": s["gesamt"], "saison": s["saison"],
             "rollen": dict(s["rollen"]),
-            "ligen": s["ligen"].most_common(4),
-            "hallen": s["hallen"].most_common(4),
-            "partner": [(name_von.get(k, s["partner_namen"].get(k, k)), n)
+            "ligen": s["ligen"].most_common(6),
+            "hallen": s["hallen"].most_common(6),
+            # Fassung 320: mehr fuer die Statistikseite
+            "anzahl": {"ligen": len(s["ligen"]), "hallen": len(s["hallen"]),
+                       "partner": len(s["partner"])},
+            "monate": [s["monate"].get(m, 0) for m in range(1, 13)],
+            # Anstoss: vor 12, 12-16, 16-19, ab 19 Uhr
+            "stunden": [sum(n for h, n in s["stunden"].items() if a <= h < b)
+                        for a, b in ((0, 12), (12, 16), (16, 19), (19, 24))],
+            "doppel": sum(1 for n in s["tage"].values() if n >= 2),
+            "systeme": {str(k): v for k, v in s["systeme"].items()},
+            "vorsaison_bis_heute": s["vorsaison_bis_heute"],
+            # Mit Slug (Fassung 320): die Zeile fuehrt zur Seite des Kollegen
+            "partner": [(name_von.get(k, s["partner_namen"].get(k, k)), n, slug_von_schl.get(k))
                         for k, n in s["partner"].most_common(5)],
             "je_saison": sorted(s["je_saison"].items()),
             "wochentage": [s["wochentage"].get(i, 0) for i in range(7)],

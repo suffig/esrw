@@ -7301,7 +7301,8 @@ window.Mitglieder = (function () {
           onclick: function () { ohneRechnungAbhaken(sp); } })]), details);
     }
     details.appendChild(h("div", { class: "meta", text: (sp.halle || "Halle unbekannt") +
-        (vorschlag && vorschlag.art === "route" ? " · " + dezimal(vorschlag.km) + " km Straße" : "") }));
+        (vorschlag && vorschlag.art === "route" ? " · " + dezimal(vorschlag.km) + " km Straße" : "")
+        + (ctx.spielNr ? " · Spiel-ID " + ctx.spielNr(sp.kennung) : "") }));
     [
       h("div", { class: "mg-felder" }, [
         h("label", {}, ["km einfach", km]), h("label", {}, ["Vergütung €", verg]), h("label", {}, ["Auslagen €", ausl])
@@ -11997,7 +11998,8 @@ window.Mitglieder = (function () {
       z.push({ links: new Date(sp.beginn).toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" })
           + "   " + (sp.liga ? sp.liga + ": " : "")
           + (sp.paarung || "") + " (" + (sp.rolle || "SR") + ")", rechts: euro(nettoSpiel(sp, e)) });
-      z.push({ links: (sp.halle ? sp.halle + " · " : "") + (teile.length ? teile.join(" · ") : "noch kein Betrag eingetragen"),
+      z.push({ links: (sp.halle ? sp.halle + " · " : "") + (teile.length ? teile.join(" · ") : "noch kein Betrag eingetragen")
+          + (ctx.spielNr ? " · ID " + ctx.spielNr(sp.kennung) : ""),
                groesse: 8.5, grau: true });
       z.push({ art: "abstand", hoehe: 3 });
     });
