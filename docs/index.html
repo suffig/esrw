@@ -1996,6 +1996,11 @@
      und wer prueft, warum eine nicht mitlaeuft, muss sie lesen koennen. */
   .lauf-zeile .lauf-spiele { color:var(--dim); font-size:var(--s-xs); }
   .lauf-zeile.erledigt { opacity:.62; }
+  .lauf-anschrift { margin:-2px 0 10px; padding:10px 12px; border-radius:12px;
+    background:var(--karte); display:flex; flex-direction:column; gap:6px; }
+  .lauf-zeile small { display:block; }
+  :root[data-design="neu"] .lauf-zeile.erledigt small { color:var(--dim); }
+  .lauf-anschrift input, .lauf-anschrift button { width:100%; min-height:44px; box-sizing:border-box; }
   .rechnungslauf .rechnung-zeile { margin-top:6px; }
   .rechner-tore { display:flex; align-items:center; flex-wrap:wrap; gap:8px; margin-top:10px; }
   .rechner-tore > span { color:var(--dim); font-size:var(--s-m); font-weight:700; }
@@ -4736,6 +4741,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=316"></script>
+<script src="app.js?v=317"></script>
 </body>
 </html>

@@ -646,7 +646,10 @@ P.gelerntBauen([]);
   gleich(wz[0].t, "3 Spiele", "Pruefen zaehlt Luecke und beide falschen Betraege");
   gleich(wz[0].f, false, "mit offenen Spielen ist Pruefen nicht fertig");
   pruefe(/160,00/.test(wz[1].t), "Abrechnen nennt die Summe des einen richtigen Spiels", wz[1].t);
-  gleich(wz[2].t, "erledigt", "ohne geschriebene Rechnung ist nichts unterwegs");
+  // Fassung 317: "Geld ✓ erledigt" stand neben "Abrechnen 160 €", bevor
+  // eine Rechnung geschrieben war. Erledigt ist erst, was abgehakt ist.
+  gleich(wz[2].t, "noch nichts", "ohne Rechnung und ohne Geld: noch nichts, nicht erledigt");
+  gleich(wz[2].f, false, "und kein Haken an Geld");
   P.setze({ aufRechnung: null });
   gleich(P.wegZahlen([hsrRecht])[1].t, "…", "solange die Rechnungsliste laedt, keine Behauptung");
   gleich(P.wegZahlen([hsrRecht])[1].f, false, "und auch kein Haken");

@@ -2750,6 +2750,7 @@ window.Mitglieder = (function () {
     // die Anschriften eingelesen werden.
     var aliase = holeJson("vereine-vorschlag.json", null).then(function (v) {
       vereinAliaseSetzen(v);
+      vereinVorschlaege = (v && v.vereine) || [];
     }, function () {});
     return Promise.all([sb.from("vereine_adressen").select("*"), aliase]).then(function (r) {
       vereinAdressen = {};
@@ -2953,17 +2954,13 @@ window.Mitglieder = (function () {
         return !!((b && b.geschaetzt) || gerechnetText(einsaetze[sp.kennung]));
       });
     if (ungeprueft.length) {
-      box.appendChild(h("div", { class: "hinweis warn" }, [
-        h("span", {}, [
-          h("b", { text: ungeprueft.length === 1
-            ? "Ein Betrag ist gerechnet, nicht geprüft"
-            : ungeprueft.length + " Beträge sind gerechnet, nicht geprüft" }),
-          h("small", { style: "display:block", text:
-            ungeprueft.map(function (sp) { return sp.paarung; }).join(" · ")
-            + " – die App hat die Werte selbst eingetragen. In der Liste steht dazu "
-            + "„Vorschlag“; ein Tipp auf den Wert bestätigt ihn." })
-        ])
-      ]));
+      // Ein Satz statt einer Warnung: der Betrag steht unten im Schritt
+      // "Betraege" zum Ansehen, und das Schreiben bestaetigt ihn
+      // (rechnungBestaetigt). "Ein Tipp auf den Wert" zeigte auf nichts.
+      box.appendChild(h("p", { class: "meta mg-vorschlag-hinweis", text:
+        (ungeprueft.length === 1
+          ? "Der Betrag ist von der App vorgeschlagen – bitte unten unter „Beträge“ ansehen. Mit der Rechnung gilt er als geprüft."
+          : ungeprueft.length + " Beträge sind von der App vorgeschlagen – bitte unten unter „Beträge“ ansehen. Mit der Rechnung gelten sie als geprüft.") }));
     }
 
     // ---- Was fehlt noch? ------------------------------------------------
@@ -3265,6 +3262,7 @@ window.Mitglieder = (function () {
     var mangel = [];
     if (!stammOk) mangel.push("deine eigenen Daten");
     if (!f.name) mangel.push("den Empfänger");
+    else if (!f.strasse || !f.plz_ort) mangel.push("die Anschrift von " + f.name);
     if (!f.nummer) mangel.push("die Rechnungsnummer");
     if (!hatBetrag) mangel.push("den Betrag");
     if (mangel.length) karte.appendChild(h("div", { class: "hinweis warn", style: "margin-top:12px" }, [
@@ -3272,6 +3270,9 @@ window.Mitglieder = (function () {
     var pdfKnopf = h("button", { type: "button", class: "haupt", text: "Rechnung " + (f.nummer || "?") + " als PDF", onclick: function () {
       if (!stamm.name || !stamm.strasse || !stamm.plz_ort) { meldung("Bitte oben erst deine eigenen Daten eintragen.", "warn"); stammZeile.open = true; stammZeile.scrollIntoView({ block: "center", behavior: "smooth" }); return; }
       if (!f.name) { meldung("Der Rechnungsempfänger fehlt.", "warn"); g2.open = true; g2.scrollIntoView({ block: "center", behavior: "smooth" }); return; }
+      // Nur der Name reichte bis Fassung 316 - die Rechnung ging dann ohne
+      // Anschrift des Vereins hinaus, und der Schritt stand weiter auf "2".
+      if (!f.strasse || !f.plz_ort) { meldung("Die Anschrift von " + f.name + " fehlt – oben unter „Empfänger“ eintragen.", "warn"); g2.open = true; g2.scrollIntoView({ block: "center", behavior: "smooth" }); return; }
       if (!f.nummer) { meldung("Die Rechnungsnummer fehlt.", "warn"); g3.open = true; return; }
       // Die Steuernummer gehoert nicht auf die Rechnung - frueher stand
       // hier eine Warnung, die nur im Weg war. Ohne die
@@ -3787,12 +3788,20 @@ window.Mitglieder = (function () {
     var fKlein = h("input", { type: "checkbox" }); fKlein.checked = d.klein !== false;
     var fPraefix = h("input", { type: "text", value: d.praefix || (new Date().getFullYear() + "-"), style: "width:7em" });
     var fNummer = h("input", { type: "number", min: "1", value: String(d.nummer || 1), style: "width:6em" });
-    var fehlt = !d.name || !d.strasse || !d.plz_ort;
+    // Name und Anschrift hier, nicht im Profil: der Knopf "Im Profil
+    // aendern" fuehrte aus der halbfertigen Rechnung heraus, und zurueck
+    // kam man nur ueber die Abrechnung. Gespeichert wird beides im
+    // Rechnungskopf (profile.rechnung), das Profil bleibt, wie es ist.
+    // Der Profilname steht wie auf esrw.de ("Nachname, Vorname") - auf
+    // einen Briefkopf gehoert die gewohnte Reihenfolge.
+    var nameVor = /,/.test(d.name || "") ? d.name.split(",").slice(1).join(",").trim() + " " + d.name.split(",")[0].trim() : (d.name || "");
+    var fName = h("input", { type: "text", value: nameVor, placeholder: "Vorname Nachname", autocomplete: "name" });
+    var fStr = h("input", { type: "text", value: d.strasse || "", placeholder: "Straße und Nr.", autocomplete: "street-address" });
+    var fOrt = h("input", { type: "text", value: d.plz_ort || "", placeholder: "PLZ und Ort", autocomplete: "postal-code" });
     return h("div", { class: "mg-form" }, [
-      h("p", { class: fehlt ? "achtung" : "meta", style: "margin:0" },
-        [fehlt ? "Name und Anschrift fehlen, sie stehen im Profil." : "Rechnungssteller: " + d.name + (d.strasse ? ", " + d.strasse + ", " + d.plz_ort : ""), " ",
-         h("button", { type: "button", class: "textknopf", text: "Im Profil ändern",
-           onclick: function () { zeigeReiter("profil"); } })]),
+      h("label", { text: "Dein Name (Absender)" }), fName,
+      h("label", { text: "Straße und Nr." }), fStr,
+      h("label", { text: "PLZ und Ort" }), fOrt,
       h("label", { text: "Verein" }), fVer,
       h("label", { text: "Schiedsrichternummer" }), fNr,
       h("small", { class: "feld-hinweis", text: "Steht auf esrw.de in Klammern hinter deinem Namen." }),
@@ -3801,8 +3810,10 @@ window.Mitglieder = (function () {
       h("label", { text: "Nächste Rechnungsnummer" }),
       h("div", { class: "zweit" }, [fPraefix, fNummer]),
       h("button", { type: "button", class: "haupt", text: "Daten merken", onclick: function () {
-        var alt = rechnungDaten();
-        rechnungDatenSpeichern({ name: alt.name, strasse: alt.strasse, plz_ort: alt.plz_ort,
+        if (!fName.value.trim() || !fStr.value.trim() || !fOrt.value.trim()) {
+          kurzMeldung("Bitte Name, Straße und Ort eintragen – sie stehen als Absender auf der Rechnung.", "warn"); return;
+        }
+        rechnungDatenSpeichern({ name: fName.value.trim(), strasse: fStr.value.trim(), plz_ort: fOrt.value.trim(),
                                  verein: fVer.value.trim(), sr_nummer: fNr.value.trim(), steuernummer: fSt.value.trim(),
                                  klein: fKlein.checked, praefix: fPraefix.value.trim(), nummer: parseInt(fNummer.value, 10) || 1 })
           .then(function (ok) {
@@ -3851,6 +3862,9 @@ window.Mitglieder = (function () {
   // Je Spiel eine Rechnung ist der Normalfall. Wer mehrere Spiele eines
   // Vereins am selben Tag auf ein Blatt will, schaltet es im Lauf um.
   var laufListe = null, laufLaeuft = false, laufFertig = null, laufJeSpiel = true;
+  // Die Eintraege aus dem EHV-Verzeichnis: daraus fuellt der Lauf eine
+  // fehlende Anschrift vor, ohne dass man erst in die Vereinsliste muss.
+  var vereinVorschlaege = [];
 
   function laufPraefix(jahr) {
     var stamm = rechnungDaten();
@@ -3940,6 +3954,34 @@ window.Mitglieder = (function () {
   function laufAdresse(verein) {
     return vereinAnschrift(vereinAdressen || {}, verein);
   }
+  function laufAnschriftForm(schl, buendel, nochmal) {
+    var v = null;
+    vereinVorschlaege.forEach(function (x) { if (!v && x.verein === schl) v = x; });
+    var fName = h("input", { type: "text", value: (v && v.name) || schl, placeholder: "Name des Vereins" });
+    var fStr = h("input", { type: "text", value: (v && v.strasse) || "", placeholder: "Straße und Nr.", autocomplete: "off" });
+    var fOrt = h("input", { type: "text", value: (v && v.plz_ort) || "", placeholder: "PLZ und Ort", autocomplete: "off" });
+    var knopf = h("button", { type: "button", class: "anfrage", text: "Anschrift speichern" });
+    knopf.addEventListener("click", function () {
+      var werte = { name: fName.value.trim() || schl, strasse: fStr.value.trim(), plz_ort: fOrt.value.trim() };
+      if (!werte.strasse || !werte.plz_ort) { meldung("Straße und PLZ/Ort eintragen.", "warn"); return; }
+      knopf.disabled = true;
+      vereinSpeichern(schl, werte).then(function (ok) {
+        knopf.disabled = false;
+        if (!ok) return;
+        if (!vereinAdressen) vereinAdressen = {};
+        vereinAdressen[schl] = { verein: schl, name: werte.name, strasse: werte.strasse, plz_ort: werte.plz_ort };
+        buendel.forEach(function (b) { if (vereinKanon(b.verein) === schl) b.gewaehlt = true; });
+        laufNummern(buendel);
+        kurzMeldung("Anschrift von " + schl + " gespeichert ✓", "gut");
+        nochmal();
+      });
+    });
+    return h("div", { class: "mg-form lauf-anschrift" }, [
+      h("p", { class: "meta", style: "margin:0 0 4px", text: v
+        ? "Anschrift von " + schl + " aus dem EHV-Verzeichnis – bitte kurz prüfen:"
+        : "Anschrift von " + schl + " eintragen:" }),
+      fName, fStr, fOrt, knopf]);
+  }
   // Das Formular eines Buendels, wie rechnungFormAusWahl() es fuer die
   // Auswahl baut - nur ohne Oberflaeche und mit der Anschrift direkt aus
   // der Vereinsliste.
@@ -3999,6 +4041,7 @@ window.Mitglieder = (function () {
         // und niemand sah mehr, welche Rechnung noch offen ist. Abgehakt
         // wird, wenn das Geld da ist (zahlungSetzen).
         b.spiele.forEach(function (sp) { delete rechnungWahl[sp.kennung]; });
+        rechnungBestaetigt(f.kennungen);
         return { nummer: b.nummer, verein: f.verein, blob: blob, name: name, betrag: s.gesamt };
       });
     });
@@ -4037,6 +4080,20 @@ window.Mitglieder = (function () {
   // Nummer, PDF auf dem Geraet. Fehlt, was der Lauf nicht ergaenzen
   // kann - Absender oder Anschrift des Vereins -, oeffnet sich das
   // Formular mit dem Spiel; dort laesst es sich nachtragen.
+  // Wer eine Rechnung schreibt, hat die Betraege darauf gesehen - die
+  // Vorschlaege daran gelten damit als geprueft. Vorher blieb an jedem
+  // abgerechneten Spiel "Bestaetigen" stehen. Steht an zwei Stellen
+  // (Einzelrechnung, Lauf) - beide rufen diese Funktion.
+  function rechnungBestaetigt(kennungen) {
+    stillSpeichern = true;
+    try {
+      (kennungen || []).forEach(function (k) {
+        var e = einsaetze[k]; if (!e || !gerechnetText(e)) return;
+        var sp = alleSpiele().filter(function (x) { return x.kennung === k; })[0];
+        if (sp) speichereEinsatz(sp, { herkunft: null });
+      });
+    } finally { stillSpeichern = false; }
+  }
   function einzelRechnung(sp, knopf) {
     function formular(grund) {
       rechnungWahl[sp.kennung] = sp; rechnungForm = rechnungFormAusWahl();
@@ -4045,7 +4102,7 @@ window.Mitglieder = (function () {
     }
     var stamm = rechnungDaten();
     if (!stamm.name || (!stamm.strasse && !stamm.plz_ort)) {
-      formular("Im Profil fehlen Name oder Anschrift."); return;
+      formular("Für die Rechnung fehlen noch dein Name und deine Anschrift – oben unter „Deine Daten“ eintragen."); return;
     }
     if (laufLaeuft) return;
     knopf.disabled = true; knopf.textContent = "schreibt …";
@@ -4132,7 +4189,7 @@ window.Mitglieder = (function () {
       });
       box.appendChild(h("p", { class: "meta", style: "margin:8px 0 0", text:
         "Jede dieser Rechnungen lässt sich an ihrer Spielkarte wieder laden; alle stehen "
-        + "unter „Rechnung schreiben“ → „Geschriebene Rechnungen“, dort auch zum Umnummerieren." }));
+        + "oben unter „Rechnungen“ – dort hakst du auch ab, wenn das Geld da ist." }));
       box.appendChild(h("div", { class: "zweit" }, [
         h("button", { type: "button", class: "mg-neben", text: "Weitere schreiben",
           onclick: function () { laufFertig = null; laufListe = null; nochmal(); } })]));
@@ -4186,6 +4243,7 @@ window.Mitglieder = (function () {
       return box;
     }
 
+    var formDa = {};
     buendel.forEach(function (b) {
       var s = rechnungSummeAus(b.pauschale, b.zuschlag, stamm.klein !== false);
       var a = laufAdresse(b.verein);
@@ -4208,13 +4266,25 @@ window.Mitglieder = (function () {
           h("small", { class: "lauf-spiele", text: b.spiele.map(function (sp) {
             return (sp.liga ? sp.liga + ": " : "") + sp.paarung; }).join(" · ") })]),
         c]));
+      // Bis Fassung 316 hiess es hier nur "abgewaehlt, trag es unter
+      // Vereinsadressen nach" - der Lauf war fuer neue Nutzer eine
+      // Sackgasse. Die Felder stehen jetzt unter der Zeile, einmal je
+      // Verein, vorgefuellt aus dem EHV-Verzeichnis, wenn es ihn kennt.
+      // Nicht im <label>: ein Tippen ins Feld wuerde sonst den Haken umlegen.
+      var schl = vereinKanon(b.verein);
+      if ((!a || !a.strasse) && !formDa[schl]) {
+        formDa[schl] = true;
+        box.appendChild(laufAnschriftForm(schl, buendel, nochmal));
+      }
     });
 
-    var ohne = buendel.filter(function (b) { var a = laufAdresse(b.verein); return !a || !a.strasse; });
-    if (ohne.length) box.appendChild(h("p", { class: "achtung", style: "margin:8px 0 0",
-      text: ohne.length + (ohne.length === 1 ? " Verein hat" : " Vereine haben") + " keine Anschrift "
-        + "– abgewählt. Die trägst du unter „Vereinsadressen“ nach "
-        + "(oder schreibst die Rechnung einzeln, dort sind die Felder ausfüllbar)." }));
+    var ohne = {};
+    buendel.forEach(function (b) { var a = laufAdresse(b.verein); if (!a || !a.strasse) ohne[vereinKanon(b.verein)] = 1; });
+    var ohneZahl = Object.keys(ohne).length;
+    if (ohneZahl) box.appendChild(h("p", { class: "achtung", style: "margin:8px 0 0",
+      text: ohneZahl + (ohneZahl === 1 ? " Verein hat" : " Vereine haben") + " noch keine Anschrift "
+        + "und " + (ohneZahl === 1 ? "ist" : "sind") + " deshalb abgewählt. Unter der Zeile eintragen "
+        + "und speichern – dann kommt die Rechnung mit in den Lauf." }));
 
     var gewaehlt = buendel.filter(function (b) { return b.gewaehlt; });
     var summe = 0, spiele = 0;
@@ -4234,8 +4304,9 @@ window.Mitglieder = (function () {
       if (!confirm(gewaehlt.length + (gewaehlt.length === 1 ? " Rechnung" : " Rechnungen")
                    + " über zusammen " + euro(summe) + " schreiben?\n\n"
                    + "Die Nummern " + gewaehlt[0].nummer + " bis "
-                   + gewaehlt[gewaehlt.length - 1].nummer + " werden vergeben und die "
-                   + spiele + " Spiele als bezahlt abgehakt. Die PDFs lädst du danach.")) return;
+                   + gewaehlt[gewaehlt.length - 1].nummer + " werden vergeben, die "
+                   + spiele + (spiele === 1 ? " Spiel steht" : " Spiele stehen") + " danach unter „Geld“, "
+                   + "bis die Zahlung da ist. Die PDFs lädst du danach.")) return;
       laufStarten(buendel, stamm);
     });
     box.appendChild(h("div", { class: "zweit" }, [start,
@@ -4319,6 +4390,7 @@ window.Mitglieder = (function () {
         };
         return rechnungSichern(rgZeile).then(function () { return rechnungDatenSpeichern(neu); })
           .then(function () {
+            rechnungBestaetigt(rgZeile.kennungen);
             rechnungFertig = { blob: blob, name: name, nummer: nummer };
             kurzMeldung("Rechnung " + nummer + " fertig ✓", "gut");
             abrechnungPanel = "rechnung"; rendereAbrechnung();
@@ -4361,7 +4433,10 @@ window.Mitglieder = (function () {
       window.open(r.data.signedUrl, "_blank", "noopener");
     });
   }
-  function dokumentHochladen(sp, datei, art, fertig) {
+  function dokumentHochladen(sp, dateiRoh, art, fertig) {
+    // Bis Fassung 316 ging ein Handyfoto mit 3 bis 6 MB unveraendert in
+    // den Speicher - jedes Mal, fuer jeden im Gespann zum Herunterladen.
+    return belegVerkleinern(dateiRoh, 2400).then(function (datei) {
     var pfad = session.user.id + "/" + sicher(sp.kennung) + "/" + Date.now() + "_" + sicher(datei.name);
     kurzMeldung("Lade " + datei.name + " hoch …", "");
     return sb.storage.from("dokumente").upload(pfad, datei, { upsert: false }).then(function (r) {
@@ -4379,9 +4454,10 @@ window.Mitglieder = (function () {
           meldung(fehlerText(r2.error) + (/spiel_dokumente/.test(r2.error.message || "") ? ", schema.sql (v58) ausführen." : ""), "warn");
           return;
         }
-        kurzMeldung("Dokument angeheftet \✓", "gut");
+        kurzMeldung("Dokument angeheftet \✓" + (dateiRoh.size > datei.size * 1.5 ? " (" + dokumentGroesse(dateiRoh.size) + " → " + dokumentGroesse(datei.size) + ")" : ""), "gut");
         if (fertig) fertig();
       });
+    });
     });
   }
   function dokumentLoeschen(z, fertig) {
@@ -4521,6 +4597,12 @@ window.Mitglieder = (function () {
       if (box !== rechnungOffenBox || !box.isConnected) return;
       var alt = box.querySelector(".rechnung-offen");
       if (alt && alt.parentNode) alt.parentNode.removeChild(alt);
+      // Wer mit einem Spiel hierher kommt, will dessen Rechnung - der rote
+      // Kasten "8 Spiele haben noch keine Rechnung, Aelteste waehlen"
+      // stand dann obenauf und lenkte ab.
+      // Und gerade fertig geschrieben: dann steht oben die Erfolgsmeldung,
+      // nicht schon die naechste Mahnung.
+      if (Object.keys(rechnungWahl).length || rechnungFertig) return;
       var drin = {};
       geschrieben.forEach(function (rg) { (rg.kennungen || []).forEach(function (k) { drin[k] = 1; }); });
       var jetzt = Date.now();
@@ -4560,6 +4642,8 @@ window.Mitglieder = (function () {
   function bezahltZeile(sp) {
     var e = einsaetze[sp.kennung] || {};
     var box = h("div", { class: "zweit" });
+    // Abhaken ohne Betrag hiesse: erledigt, aber mit 0 Euro in der Summe
+    if (e.verguetung == null && !e.bezahlt) return box;
     function neu() {
       leeren(box);
       var ist = !!e.bezahlt;
@@ -4589,8 +4673,11 @@ window.Mitglieder = (function () {
     // Ein-Tipp-Knopf: kommende Spiele, Spiele mit Luecke - und als
     // Ort, an dem eine schon geschriebene Rechnung wieder zu holen ist.
     var einTipp = !!(aufRechnung && zumAbrechnen(sp));
+    // Ohne Betrag gibt es nichts zu berechnen - der Knopf fuehrte in ein
+    // Formular mit leerer Summe.
+    var ohneBetrag = new Date(sp.beginn) < new Date() && hatLuecke(sp);
     var box = h("div", { class: "zweit" }, [
-      einTipp ? null : h("button", { type: "button", "data-auf-rechnung": "1", text: "Auf die Rechnung", onclick: function () {
+      einTipp || ohneBetrag ? null : h("button", { type: "button", "data-auf-rechnung": "1", text: "Auf die Rechnung", onclick: function () {
         rechnungWahl[sp.kennung] = sp; rechnungForm = rechnungFormAusWahl();
         abrechnungPanel = "rechnung"; panelUnten = false; rendereAbrechnung();
         // Seit Fassung 165 steht die Rechnung oben, nicht mehr "unten unter
@@ -4677,7 +4764,7 @@ window.Mitglieder = (function () {
     // Ebenso der Vermerk, dass hier noch Gerechnetes steht: ein Tipp ins
     // Feld bestaetigt den Wert, und sobald nichts mehr offen ist, faellt
     // das Abzeichen weg - ohne dass die Liste neu gebaut werden muss.
-    var wie = gerechnetText(e), gr = karte.querySelector(".mg-status.gerechnet");
+    var wie = hatLuecke(spiel) ? "" : gerechnetText(e), gr = karte.querySelector(".mg-status.gerechnet");
     if (wie && !gr) {
       gr = h("button", { type: "button", class: "mg-status gerechnet", text: "Bestätigen", title: wie,
         onclick: function () { speichereEinsatz(spiel, { herkunft: null }); kurzMeldung("Als geprüft vermerkt ✓", "gut"); ausPruefenGleiten(spiel); } });
@@ -5956,6 +6043,17 @@ window.Mitglieder = (function () {
     return box;
   }
 
+  // Was in "Pruefen" fehlt, genau benannt - "Kilometer oder Verguetung"
+  // liess raten, welches von beiden.
+  function luckenSatz(liste) {
+    var ohneB = liste.filter(function (sp) { var e = einsaetze[sp.kennung]; return !e || e.verguetung == null; }).length;
+    var ohneKm = liste.filter(function (sp) { var e = einsaetze[sp.kennung]; return profil.heimat_lat != null && (!e || e.km == null); }).length;
+    function spiele(n) { return n === 1 ? "einem Spiel" : n + " Spielen"; }
+    if (ohneB && ohneKm) return "Bei " + spiele(ohneB) + " fehlt die Vergütung, bei " + spiele(ohneKm) + " die Kilometer.";
+    if (ohneB) return "Bei " + spiele(ohneB) + " fehlt die Vergütung.";
+    if (ohneKm) return "Bei " + spiele(ohneKm) + " fehlen die Kilometer.";
+    return liste.length === 1 ? "Ein Spiel ist noch zu prüfen." : liste.length + " Spiele sind noch zu prüfen.";
+  }
   function arbeitsKopf(liste) {
     var st = arbeitsStufe(), n = liste.length;
     if (!n) return null;
@@ -5964,7 +6062,7 @@ window.Mitglieder = (function () {
       xs.forEach(function (sp) { g += betragFuer(sp, einsaetze[sp.kennung] || {}).betrag || 0; });
       return g;
     }
-    var satz = "", betrag = null, tun = null;
+    var satz = "", betrag = null, tun = null, nachTun = null;
     if (st === "fehlt") {
       // Zwei Gruende halten ein Spiel hier fest: etwas fehlt, oder der
       // Betrag passt nicht zur Ordnung. Der Satz nennt beides - sonst
@@ -5976,8 +6074,7 @@ window.Mitglieder = (function () {
         : ab
         ? (ab === 1 ? "Ein Betrag weicht von der Gebührenordnung ab."
                     : ab + " Beträge weichen von der Gebührenordnung ab.")
-        : n === 1 ? "Bei einem Spiel fehlen Kilometer oder Vergütung."
-                  : "Bei " + n + " Spielen fehlen Kilometer oder Vergütung.";
+        : luckenSatz(liste);
     } else if (st === "abrechnen") {
       satz = n === 1 ? "Ein Spiel wartet auf seine Rechnung." : n + " Spiele warten auf ihre Rechnung.";
       betrag = summeVon(liste);
@@ -5985,10 +6082,19 @@ window.Mitglieder = (function () {
       // 277 oeffnete der Knopf das Einzelformular fuer bis zu drei Spiele.
       tun = [n === 1 ? "Rechnung schreiben" : n + " Rechnungen schreiben",
              function () { laufListe = null; panelOeffnen("lauf", false); }];
+      var vorgeschlagen = liste.filter(function (sp) { return gerechnetText(einsaetze[sp.kennung]); }).length;
+      if (vorgeschlagen) nachTun = vorgeschlagen === 1
+        ? "Ein Betrag ist von der App vorgeschlagen – mit der Rechnung gilt er als geprüft."
+        : vorgeschlagen + " Beträge sind von der App vorgeschlagen – mit der Rechnung gelten sie als geprüft.";
     } else if (st === "unterwegs") {
       satz = n === 1 ? "Eine Rechnung ist geschrieben, das Geld fehlt noch."
                      : n + " Spiele stehen auf einer Rechnung, das Geld fehlt noch.";
       betrag = summeVon(liste);
+      // Bis Fassung 316 hatte dieser Schritt keinen Knopf - wo man den
+      // Eingang abhakt, stand nirgends. Abgehakt wird je Rechnung, nicht
+      // je Spiel: eine Zahlung deckt alle Spiele darauf.
+      tun = ["Zahlungseingang abhaken", function () { panelOeffnen("rechnungen", false); }];
+      nachTun = "Je Rechnung „Bezahlt“ antippen, sobald das Geld auf dem Konto ist.";
     } else if (st === "unbezahlt") {
       satz = n === 1 ? "Ein Spiel ist noch nicht abgehakt." : n + " Spiele sind noch nicht abgehakt.";
       betrag = summeVon(liste);
@@ -6001,13 +6107,19 @@ window.Mitglieder = (function () {
     ].filter(Boolean));
     if (tun) box.appendChild(h("button", { type: "button", class: "mg-arbeitsknopf",
       text: tun[0], onclick: tun[1] }));
-    // Was die App selbst eingetragen hat, mit einem Tipp bestaetigen -
-    // statt Karte fuer Karte. Mit Rueckgaengig, falls es zu schnell ging.
-    var vorschlaege = liste.filter(function (sp) { return new Date(sp.beginn) < new Date() && gerechnetText(einsaetze[sp.kennung]); });
+    if (nachTun) box.appendChild(h("small", { class: "meta mg-wischtipp", text: nachTun }));
+    // Sammel-Bestaetigen nur, wo es etwas erledigt. In "Pruefen" fehlt
+    // bei jeder Karte etwas - bestaetigen liess sie liegen. In
+    // "Abrechnen" stand es als zweiter Hauptknopf unter "Rechnungen
+    // schreiben", und man wusste nicht, was zuerst kommt; das Schreiben
+    // bestaetigt dort jetzt selbst.
+    var vorschlaege = st === "fehlt" || st === "abrechnen" ? [] : liste.filter(function (sp) {
+      return new Date(sp.beginn) < new Date() && gerechnetText(einsaetze[sp.kennung]) && !hatLuecke(sp);
+    });
     if (vorschlaege.length > 1) box.appendChild(h("button", { type: "button", class: "mg-neben mg-allebestaetigen",
       text: "Alle " + vorschlaege.length + " Vorschläge bestätigen", onclick: function () { alleBestaetigen(vorschlaege); } }));
-    if (st === "fehlt" && ("ontouchstart" in window)) box.appendChild(h("small", { class: "meta mg-wischtipp",
-      text: "Tipp: Karte nach rechts wischen bestätigt sie, nach links klappt sie auf." }));
+    if (st === "fehlt") box.appendChild(h("small", { class: "meta mg-wischtipp",
+      text: "Karte antippen und eintragen, was fehlt – gespeichert wird sofort." }));
     // Der Weg zurueck zur ganzen Saison. Stand bis Fassung 277 als
     // eigene Zeile ueber diesem Kasten und wiederholte nur die Zahl, die
     // schon am Schritt steht. Hier drin, weil stufenZahlenNachfuehren()
@@ -6059,7 +6171,13 @@ window.Mitglieder = (function () {
       { t: p ? p + (p === 1 ? " Spiel" : " Spiele") : "stimmt", f: !p },
       // Solange die Liste laedt, waere "erledigt" eine Behauptung.
       { t: ab.length ? euro(summe) : (aufRechnung ? "erledigt" : "…"), f: !!aufRechnung && !ab.length },
-      { t: g ? g + " offen" : extra ? extra + (extra === 1 ? " Rechnung" : " Rechnungen") : "erledigt", f: !g && !extra }
+      // "Geld ✓ erledigt" stand da, bevor ueberhaupt eine Rechnung
+      // geschrieben war - neben "Abrechnen 1.665 €". Erledigt ist erst,
+      // was abgehakt ist.
+      g ? { t: g + " offen", f: false }
+        : extra ? { t: extra + (extra === 1 ? " Rechnung" : " Rechnungen"), f: false }
+        : spiele.some(function (sp) { return (einsaetze[sp.kennung] || {}).bezahlt; }) ? { t: "erledigt", f: true }
+        : { t: "noch nichts", f: false }
     ];
   }
 
@@ -6522,12 +6640,19 @@ window.Mitglieder = (function () {
   // Der Dateiname wurde "undefined", und ein PDF lehnte sie mit "Das ist
   // kein Bild" ganz ab. Derselbe Fehler wie bei inLeiste() in Fassung 151 -
   // deshalb traegt sie jetzt einen eigenen Namen.
-  function belegVerkleinern(datei) {
-    if (!/^image\//.test(datei.type) || datei.size < 400000) return Promise.resolve(datei);
+  // max: laengste Kante. Belege 1600 px (Quittung lesbar, ~250 KB),
+  // Dokumente 2400 px (Spielbericht mit Kleingedrucktem). HEIC vom iPhone
+  // wird immer umgewandelt, auch wenn es klein ist - Android und
+  // Windows zeigen es sonst nicht an.
+  function belegVerkleinern(datei, max) {
+    max = max || 1600;
+    var heic = /heic|heif/i.test(datei.type) || /\.(heic|heif)$/i.test(datei.name || "");
+    if (!/^image\//.test(datei.type) && !heic) return Promise.resolve(datei);
+    if (!heic && datei.size < 400000) return Promise.resolve(datei);
     return new Promise(function (ok) {
       var url = URL.createObjectURL(datei), img = new Image();
       img.onload = function () {
-        var max = 1600, f = Math.min(1, max / Math.max(img.width, img.height));
+        var f = Math.min(1, max / Math.max(img.width, img.height));
         var c = document.createElement("canvas"); c.width = Math.round(img.width * f); c.height = Math.round(img.height * f);
         c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
         URL.revokeObjectURL(url);
@@ -6926,9 +7051,17 @@ window.Mitglieder = (function () {
     }
     // Klasse bekannt, Rolle dort nicht vorgesehen
     if (rolle !== "SR" && ligaEinordnen(sp.liga)) {
+      var alsSr = sollBetrag(Object.assign({}, sp, { rolle: "SR" }));
+      var uebernehmen = alsSr == null ? null : h("button", { type: "button", class: "mg-neben mg-satz-uebernehmen",
+        text: "SR-Satz übernehmen: " + euro(alsSr),
+        onclick: function () {
+          speichereEinsatz(sp, { verguetung: alsSr });
+          kurzMeldung(euro(alsSr) + " eingetragen ✓", "gut");
+          rendereAbrechnung();
+        } });
       return h("div", { class: "meta mg-satzluecke" }, [
         "In " + liga + " sieht die Gebührenordnung nur Schiedsrichter vor, kein " + rolle
-        + ". Stimmt die Rolle? Sonst trag den Betrag von Hand ein."]);
+        + ". Stimmt die Rolle? Sonst trag den Betrag von Hand ein – oder nimm den Satz für SR.", uebernehmen]);
     }
     var merken = h("button", { type: "button", class: "textknopf",
       title: "Gilt ab dem nächsten Spiel als " + rolle + " in " + liga,
@@ -6991,7 +7124,11 @@ window.Mitglieder = (function () {
         h("div", { class: "mg-summe" }, [
           h("span", { class: "meta mg-betrag-kurz" + (b.betrag == null && vergangen ? " fehlt" : ""),
             text: b.betrag != null ? euro(b.betrag) + (e.km != null ? " · " + dezimal(e.km) + " km" : "") : "Betrag fehlt" }),
-          gerechnetText(e) ? h("button", { type: "button", class: "mg-status gerechnet",
+          // Nur, wo nach dem Bestaetigen nichts mehr fehlt: an einer Karte
+          // mit "Betrag fehlt" bestaetigte der Knopf allein die Kilometer,
+          // und die Karte blieb in "Pruefen" liegen - als haette der Tipp
+          // nicht gewirkt.
+          gerechnetText(e) && !hatLuecke(sp) ? h("button", { type: "button", class: "mg-status gerechnet",
             // "Vorschlag" sagte, was es ist, nicht was der Tipp tut
             title: gerechnetText(e), text: "Bestätigen",
             onclick: function () { speichereEinsatz(sp, { herkunft: null }); kurzMeldung("Als geprüft vermerkt ✓", "gut"); ausPruefenGleiten(sp); } }) : null,
@@ -12231,6 +12368,7 @@ window.Mitglieder = (function () {
     vereinHaupt: vereinHaupt, vereinKanon: vereinKanon, vereinAnschrift: vereinAnschrift,
     keinVerein: keinVerein, vereinAliaseSetzen: vereinAliaseSetzen, vereinNaechster: vereinNaechster,
     umwegFuer: umwegFuer, umwegText: umwegText, fahrZeiten: fahrZeiten,
+    luckenSatz: luckenSatz,
     absenderAus: absenderAus, rechnungStamm: rechnungStamm, belegKandidaten: belegKandidaten, rechnungSichern: rechnungSichern, rechnungenNachreichen: rechnungenNachreichen, erinnerungText: erinnerungText, rechnungenOhneSpiele: rechnungenOhneSpiele,
     debSatz: debSatz, debGesamt: debGesamt, debTagesFaktor: debTagesFaktor, zeitzuschlagAn: zeitzuschlag
   };
