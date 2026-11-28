@@ -8,50 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:595ee5c9d40ada35060e890259b8d00a74ab0002@esrw.de
-SEQUENCE:0
-DTSTAMP:20261117T093042Z
-LAST-MODIFIED:20261117T093042Z
-DTSTART:20261121T113000Z
-DTEND:20261121T150000Z
-SUMMARY:SR · U11 LL Rot: Krefelder EV 1b – YAYLA Krefeld
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
-  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Rot\nHalle: Rheinlandhal
- le Krefeld\nAdresse: Westparkstraße 126\, 47803 Krefeld\nGespann: Hornig\
- , Marius\nVergütung lt. Ordnung: 85 €\n\nQuelle: https://www.esrw.de/ei
- nteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Rheinlandhalle Krefeld\, Westparkstraße 126\, 47803 Krefeld
-GEO:51.339877;6.540168
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
- stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
- le Krefeld":geo:51.339877,6.540168
-END:VEVENT
-BEGIN:VEVENT
-UID:f8de536838c46a01ffe2bfd56b863869c84df53b@esrw.de
-SEQUENCE:0
-DTSTAMP:20261111T143043Z
-LAST-MODIFIED:20261111T143043Z
-DTSTART:20261121T113000Z
-DTEND:20261121T150000Z
-SUMMARY:SR · U15 LL: Ratinger Ice Aliens – Herforder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 13:30 Uhr\nTreffpunkt:
-  12:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Ra
- tingen\nAdresse: Am Sandbach 12\, 40878 Ratingen\nGespann: Rosier\, Cedric
-  (N)\nVergütung lt. Ordnung: 80 €\n\nQuelle: https://www.esrw.de/eintei
- lungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Ratingen\, Am Sandbach 12\, 40878 Ratingen
-GEO:51.295808;6.834624
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Ratingen, Am
-  Sandbach 12, 40878 Ratingen";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ra
- tingen":geo:51.295808,6.834624
-END:VEVENT
-BEGIN:VEVENT
 UID:bdc604f936bbc28963d948556582fe131a984526@esrw.de
 SEQUENCE:0
 DTSTAMP:20261121T103043Z
@@ -1539,12 +1495,6 @@ GEO:51.49525;7.458288
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Westfalen,
   Strobelallee 33, 44139 Dortmund";X-APPLE-RADIUS=100;X-TITLE="Eissportzent
  rum Westfalen":geo:51.49525,7.458288
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 LL: Eisadler Dortmund 
- – EHC Die Bären Neuwied
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:ab0cfd31a5fd3575db857f80e68f3be596653336@esrw.de
@@ -1567,12 +1517,6 @@ GEO:51.339877;6.540168
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Rheinlandhalle Krefeld, We
  stparkstraße 126, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Rheinlandhal
  le Krefeld":geo:51.339877,6.540168
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 RLB: Krefelder EV 1b 
- – Herforder EV YAYLA Krefeld
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:2a4436a4299fa708ddc85d14567b515de5b3a0f3@esrw.de
