@@ -30,6 +30,34 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
  inslaken":geo:51.574578,6.735361
 END:VEVENT
 BEGIN:VEVENT
+UID:3b0fdda87d5e3439e9b853276ae805b529407ce2@esrw.de
+SEQUENCE:0
+DTSTAMP:20261128T080052Z
+LAST-MODIFIED:20261128T080052Z
+DTSTART:20261128T093000Z
+DTEND:20261128T130000Z
+SUMMARY:SR · U11 LL Lila: SpG Soester EG – ESC Kristall Lippstadt
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:30 Uhr\nTreffpunkt:
+  10:30 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Lila\nHalle: Eissportzen
+ trum Möhnesee\nAdresse: Teigelhof 4\, 59519 Möhnesee\nGespann: Arntz\, F
+ lorian (N)\nVergütung lt. Ordnung: 85 €\n\nQuelle: https://www.esrw.de/
+ einteilungen.html
+URL:https://www.esrw.de/einteilungen.html
+CATEGORIES:Eishockey,Schiedsrichter
+TRANSP:OPAQUE
+LOCATION:Eissportzentrum Möhnesee\, Teigelhof 4\, 59519 Möhnesee
+GEO:51.515208;8.159069
+X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Möhnesee,
+  Teigelhof 4, 59519 Möhnesee";X-APPLE-RADIUS=100;X-TITLE="Eissportzentrum
+  Möhnesee":geo:51.515208,8.159069
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Lila: SpG Soester E
+ G – ESC Kristall Lippstadt
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
 UID:c3ed96d430ce22511af4501abc17727ad1441fc4@esrw.de
 SEQUENCE:0
 DTSTAMP:20261120T094530Z

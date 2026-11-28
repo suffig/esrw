@@ -1714,16 +1714,16 @@ END:VEVENT
 BEGIN:VEVENT
 UID:7000542297990bac8e6fd02a3e9ed3583e6db93c@esrw.de
 SEQUENCE:0
-DTSTAMP:20261127T104230Z
-LAST-MODIFIED:20261127T104230Z
+DTSTAMP:20261128T080052Z
+LAST-MODIFIED:20261128T080052Z
 DTSTART:20261128T093000Z
 DTEND:20261128T130000Z
 SUMMARY:SR · U11 LL Lila: SpG Soester EG – ESC Kristall Lippstadt
 DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:30 Uhr\nTreffpunkt:
   10:30 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Lila\nHalle: Eissportzen
- trum Möhnesee\nAdresse: Teigelhof 4\, 59519 Möhnesee\nGespann: Orlando\,
-  Malik\nVergütung lt. Ordnung: 85 €\n\nQuelle: https://www.esrw.de/eint
- eilungen.html
+ trum Möhnesee\nAdresse: Teigelhof 4\, 59519 Möhnesee\nGespann: Budzynski
+ \, Mika (N)\nVergütung lt. Ordnung: 85 €\n\nQuelle: https://www.esrw.de
+ /einteilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
