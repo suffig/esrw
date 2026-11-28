@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:1f82ef43f6c62620805f1ad1bb5918e141545c1d@esrw.de
-SEQUENCE:0
-DTSTAMP:20261111T143043Z
-LAST-MODIFIED:20261111T143043Z
-DTSTART:20261121T080000Z
-DTEND:20261121T113000Z
-SUMMARY:SR · U11 RL: EHC Troisdorf
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:00 Uhr\nTreffpunkt:
-  09:00 Uhr (60 Min vor Spielbeginn)\nLiga: U11 RL\nHalle: ICEDOME Troisdor
- f\nAdresse: Uckendorfer Straße 135\, 53844 Troisdorf\nGespann: Finke\, Gu
- drun\nVergütung lt. Ordnung: 85 €\n\nQuelle: https://www.esrw.de/eintei
- lungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:ICEDOME Troisdorf\, Uckendorfer Straße 135\, 53844 Troisdorf
-GEO:50.811945;7.109233
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="ICEDOME Troisdorf, Uckendo
- rfer Straße 135, 53844 Troisdorf";X-APPLE-RADIUS=100;X-TITLE="ICEDOME Tro
- isdorf":geo:50.811945,7.109233
-END:VEVENT
-BEGIN:VEVENT
 UID:fed9066793a5c3593afd97f40aa189031e0e3fd2@esrw.de
 SEQUENCE:0
 DTSTAMP:20261111T143043Z
