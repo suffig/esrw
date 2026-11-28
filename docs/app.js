@@ -654,9 +654,12 @@
     schreiben("adminaus", neu ? null : "1");
     adminKnopfStand();
     toast(neu ? "Admin-Modus an, die Betreiber-Funktionen sind sichtbar." : "Admin-Modus aus, die App sieht aus wie für alle anderen.", "gut");
-    zaehlerHolen(); ausHash();
+    zaehlerHolen(); fremdeRechtPruefen().then(ausHash);
   });
-  document.addEventListener("mg-sitzung", function () { adminKnopfZeigen(); tabDritterAnwenden(); if (daten) ausHash(); });
+  document.addEventListener("mg-sitzung", function () {
+    adminKnopfZeigen(); tabDritterAnwenden();
+    fremdeRechtPruefen().then(function () { if (daten) ausHash(); });
+  });
   // Tipp auf den Reiter, auf dem man schon steht: nach oben scrollen
   Array.prototype.forEach.call(document.querySelectorAll(".leiste button"), function (b) {
     b.addEventListener("click", function () { if (b.classList.contains("aktiv")) window.scrollTo({ top: 0, behavior: "smooth" }); });
@@ -3600,7 +3603,7 @@
     var reihen = box.querySelectorAll(".reihe");
     partner.forEach(function (x, i) {
       var slug = x[2] || ((daten.personen || []).filter(function (q) { return q.name === x[0]; })[0] || {}).slug;
-      if (!slug || !personMit(slug) || !reihen[i]) return;
+      if (!fremdeErlaubt || !slug || !personMit(slug) || !reihen[i]) return;
       var a = document.createElement("a"); a.className = "reihe reihe-link"; a.href = "#statistik/" + encodeURIComponent(slug);
       while (reihen[i].firstChild) a.appendChild(reihen[i].firstChild);
       reihen[i].parentNode.replaceChild(a, reihen[i]);
@@ -4974,7 +4977,8 @@
   }
   function zeigeArchiv(modus) {
     ansicht("archiv"); aktuell = null; window.scrollTo(0, 0);
-    var slug = profil && profil.slug, alle = modus === "alle";
+    // Doppelt gesichert: auch der Schalter darf "alle" nur mit dem Recht
+    var slug = profil && profil.slug, alle = modus === "alle" && fremdeErlaubt;
     var liste = el("archiv-liste"); liste.innerHTML = ""; liste.appendChild(skelettKarte(120)); el("archiv-zahlen").innerHTML = "";
     el("archiv-alle").checked = alle; el("archiv-person").classList.toggle("versteckt", !alle);
     el("archiv-unter").textContent = alle ? "alle Spiele aller Kollegen" : slug ? "alle deine Spiele, alle Saisons" : "erst deinen Namen wählen";
@@ -7149,7 +7153,42 @@
     }
   }
 
+  // Statistik und Archiv anderer Schiedsrichter: nur mit dem Recht
+  // "Alle Spiele sehen" (archiv). Der Betreiber hat es immer, sonst nur,
+  // wem er es gibt. Bis Fassung 320 versteckte die App nur den Schalter -
+  // #statistik/<kollege> und #archiv/alle oeffnete jeder ueber den Link.
+  var fremdeErlaubt = false, statLauf = null;
+  function fremdeRechtPruefen() {
+    if (!sitzungVorhanden()) { fremdeErlaubt = false; return Promise.resolve(false); }
+    return ladeMitglieder().then(function (M) { return M.bereit(mitgliederKontext()); })
+      .then(function (st) { return st.eingerichtet && st.session && window.Mitglieder.darfAlleSpiele ? window.Mitglieder.darfAlleSpiele() : false; })
+      .then(function (ja) { fremdeErlaubt = !!ja; return fremdeErlaubt; }, function () { fremdeErlaubt = false; return false; });
+  }
+  function istEigen(slug) { return !!(profil && profil.slug && slug === profil.slug); }
   function zeigeStatSeite(slug) {
+    // Fremde Seite: erst fragen, dann zeigen. Gezeigt wird nichts, bevor
+    // die Antwort da ist - auch nicht aus einem alten Zwischenstand.
+    if (slug && !istEigen(slug) && personMit(slug)) {
+      var lauf = statLauf = {};
+      fremdeRechtPruefen().then(function (ja) {
+        if (statLauf !== lauf) return;
+        if (ja) statSeiteZeichnen(slug);
+        else { toast("Die Statistik anderer Schiedsrichter sieht nur der Betreiber.", "warn"); location.hash = "statistik"; }
+      });
+      return;
+    }
+    statLauf = null;
+    statSeiteZeichnen(slug);
+    // Beim Start ist das Recht noch nicht geprueft: die eigene Seite steht
+    // dann ohne Links zu den Gespannpartnern. Kommt das Ja, einmal neu.
+    if (!fremdeErlaubt && sitzungVorhanden()) {
+      var gezeigt = aktuell;
+      fremdeRechtPruefen().then(function (ja) {
+        if (ja && aktuell === gezeigt && !el("statseite").classList.contains("versteckt")) statSeiteZeichnen(slug);
+      });
+    }
+  }
+  function statSeiteZeichnen(slug) {
     var p = personMit(slug) || (profil && personMit(profil.slug));
     if (!p) return zeigeAuswahl(false);
     ansicht("statseite"); aktuell = p;
@@ -7218,7 +7257,18 @@
     if (slug === "einstellungen" || slug.indexOf("einstellungen/") === 0) { zeigeEinstellungen(slug.split("/")[1] || null); return; }
     if (slug === "mitglieder/konto") { location.hash = "einstellungen"; return; }
     if (slug === "aenderungen") { if (!funktion("aenderungen")) { location.hash = "mehr"; return; } zeigeAenderungen(); return; }
-    if (slug === "archiv" || slug.indexOf("archiv/") === 0) { if (!funktion("archiv")) { location.hash = "mehr"; return; } zeigeArchiv(slug.split("/")[1] || ""); return; }
+    if (slug === "archiv" || slug.indexOf("archiv/") === 0) {
+      if (!funktion("archiv")) { location.hash = "mehr"; return; }
+      var aModus = slug.split("/")[1] || "";
+      if (aModus === "alle") {
+        fremdeRechtPruefen().then(function (ja) {
+          if (ja) zeigeArchiv("alle");
+          else { toast("Das Archiv aller Kollegen sieht nur der Betreiber.", "warn"); location.hash = "archiv"; }
+        });
+        return;
+      }
+      zeigeArchiv(aModus); return;
+    }
     // Ohne Kennung: das leere Formular. Der Weg dahin fuehrte sonst nur
     // ueber das Menue am Ende der Abrechnungsliste - bei vierzig Spielen
     // eine lange Rolle, bevor man ihn sieht.

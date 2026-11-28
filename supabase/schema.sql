@@ -3136,3 +3136,24 @@ create policy "Bestaetigung aendern" on public.vereine_bestaetigungen for update
   using (auth.uid() = person) with check (auth.uid() = person and public.ist_freigeschaltet());
 create policy "Bestaetigung zuruecknehmen" on public.vereine_bestaetigungen for delete to authenticated
   using (auth.uid() = person or public.ist_admin());
+
+
+-- ======================================================================
+-- v63: Fremde Spiele im Archiv nur mit dem Recht "archiv"
+-- ======================================================================
+--
+-- Gewuenscht: Statistik und Archiv anderer Schiedsrichter sieht nur der
+-- Betreiber (und wem er "Alle Spiele sehen" gibt), alle anderen nur die
+-- eigenen. Bis hierher war spiele_archiv fuer jeden Freigeschalteten
+-- ganz lesbar (v23) - die App filterte nur, und wer die Abfrage selbst
+-- stellte, bekam alles. Siehe auch den Hinweis bei v40 ("archiv braucht
+-- keine eigene Regel") - der gilt damit nicht mehr.
+--
+-- Wer liest: die eigene Abrechnung (nur eigene Zeilen, nach slugs
+-- gefiltert), "Archiv aller Kollegen" (nur mit dem Recht) und die
+-- Pflege "Doppelte Spiele" (nur der Betreiber, darf_recht ist fuer ihn
+-- immer wahr). Der Workflow schreibt und liest mit dem Service-
+-- Schluessel und ist von RLS nicht betroffen.
+drop policy if exists "Archiv lesen" on public.spiele_archiv;
+create policy "Archiv lesen" on public.spiele_archiv for select to authenticated
+  using (public.mein_slug() = any (slugs) or public.darf_recht('archiv'));
