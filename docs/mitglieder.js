@@ -2682,7 +2682,7 @@ window.Mitglieder = (function () {
     if (!rechnungGeladen) {
       rechnungGeladen = new Promise(function (ok, nein) {
         if (window.Rechnung) return ok(window.Rechnung);
-        var s = document.createElement("script"); s.src = "rechnung.js?v=1";
+        var s = document.createElement("script"); s.src = "rechnung.js?v=2";
         s.onload = function () { ok(window.Rechnung); };
         s.onerror = function () { rechnungGeladen = null; nein(new Error("rechnung.js nicht ladbar")); };
         document.head.appendChild(s);
@@ -2752,8 +2752,14 @@ window.Mitglieder = (function () {
       vereinAliaseSetzen(v);
       vereinVorschlaege = (v && v.vereine) || [];
     }, function () {});
-    return Promise.all([sb.from("vereine_adressen").select("*"), aliase]).then(function (r) {
+    // Fehlt die Tabelle (v62 nicht eingespielt), bleibt es bei null
+    // Bestaetigungen - die Anschriften selbst muessen trotzdem kommen.
+    var stimmen = Promise.resolve(sb.from("vereine_bestaetigungen").select("*"))
+      .then(function (r) { return (r && r.data) || []; }, function () { return []; });
+    return Promise.all([sb.from("vereine_adressen").select("*"), aliase, stimmen]).then(function (r) {
       vereinAdressen = {};
+      vereinStimmen = {};
+      (r[2] || []).forEach(function (b) { (vereinStimmen[b.verein] = vereinStimmen[b.verein] || []).push(b); });
       ((r[0] && r[0].data) || []).forEach(function (v) { vereinAdressen[v.verein] = v; });
       vereinBekanntDazu(Object.keys(vereinAdressen));
       return vereinAdressen;
@@ -3190,7 +3196,8 @@ window.Mitglieder = (function () {
                                        : "Vorschlag gespeichert ✓ Der Betreiber prüft ihn.", "gut");
             });
         } }));
-      if (a.strasse && a.von) adressZeile.appendChild(h("small", { style: "display:block", text: "Vorschlag von " + a.von + ", noch nicht geprüft." }));
+      var stimmt = anschriftStimmt(a, function () { if (box.isConnected) nochmal(); });
+      if (stimmt) adressZeile.appendChild(stimmt);
     });
 
     // ---- Schritt 3: Angaben ---------------------------------------------
@@ -3865,6 +3872,49 @@ window.Mitglieder = (function () {
   // Die Eintraege aus dem EHV-Verzeichnis: daraus fuellt der Lauf eine
   // fehlende Anschrift vor, ohne dass man erst in die Vereinsliste muss.
   var vereinVorschlaege = [];
+  // Wer eine ungepruefte Anschrift fuer richtig haelt, sagt "Stimmt".
+  // Gezaehlt wird nur, was zur jetzigen Anschrift passt: aendert sie
+  // jemand, zaehlen die alten Stimmen nicht mehr mit.
+  var vereinStimmen = {};
+  function stimmenFuer(a) {
+    if (!a || !a.verein) return [];
+    return (vereinStimmen[a.verein] || []).filter(function (b) {
+      return (b.strasse || "") === (a.strasse || "") && (b.plz_ort || "") === (a.plz_ort || "");
+    });
+  }
+  function anschriftStimmt(a, fertig) {
+    if (!a || !a.strasse || a.verifiziert || !session) return null;
+    var st = stimmenFuer(a), ich = session.user.id;
+    var meine = st.some(function (b) { return b.person === ich; });
+    var eigen = a.angelegt_von === ich;
+    var andere = st.filter(function (b) { return b.person !== ich; }).length;
+    var satz = a.strasse + ", " + (a.plz_ort || "") + " – ungeprüft"
+      + (a.von && !eigen ? ", eingetragen von " + anzeigeName(a.von, "") : "")
+      + (andere ? " · " + andere + (andere === 1 ? " Kollege sagt" : " Kollegen sagen") + ": stimmt" : "");
+    var box = h("div", { class: "anschrift-stimmt" }, [h("small", { text: satz })]);
+    if (meine || eigen) {
+      box.appendChild(h("small", { class: "gut", text: meine ? "Du hast sie bestätigt ✓" : "Von dir eingetragen." }));
+      return box;
+    }
+    var knopf = h("button", { type: "button", class: "mg-neben", text: "Stimmt" });
+    knopf.addEventListener("click", function () {
+      knopf.disabled = true;
+      var zeile = { verein: a.verein, person: ich, name: (profil && (profil.name || profil.slug)) || "",
+                    strasse: a.strasse || "", plz_ort: a.plz_ort || "", am: new Date().toISOString() };
+      speichern(sb.from("vereine_bestaetigungen").upsert(zeile, { onConflict: "verein,person" })).then(function (r) {
+        knopf.disabled = false;
+        if (r && r.error) {
+          meldung(fehlerText(r.error) + (/vereine_bestaetigungen/.test(r.error.message || "") ? ", schema.sql (v62) ausführen." : ""), "warn");
+          return;
+        }
+        (vereinStimmen[a.verein] = (vereinStimmen[a.verein] || []).filter(function (b) { return b.person !== ich; })).push(zeile);
+        kurzMeldung("Danke ✓ Der Betreiber sieht, dass die Anschrift stimmt.", "gut");
+        if (fertig) fertig();
+      });
+    });
+    box.appendChild(knopf);
+    return box;
+  }
 
   function laufPraefix(jahr) {
     var stamm = rechnungDaten();
@@ -4275,6 +4325,11 @@ window.Mitglieder = (function () {
       if ((!a || !a.strasse) && !formDa[schl]) {
         formDa[schl] = true;
         box.appendChild(laufAnschriftForm(schl, buendel, nochmal));
+      } else if (a && a.strasse && !a.verifiziert && !formDa[schl]) {
+        // Vor dem Verschicken ist der Moment, eine Anschrift anzusehen
+        formDa[schl] = true;
+        var st = anschriftStimmt(a, nochmal);
+        if (st) box.appendChild(st);
       }
     });
 
@@ -5317,6 +5372,24 @@ window.Mitglieder = (function () {
     } finally { stillSpeichern = false; }
     return n;
   }
+  // Eine Luftlinie steht nur, bis die Route da ist. Bis Fassung 317 blieb
+  // sie stehen, wenn sie einmal eingetragen war - auch Wochen spaeter,
+  // obwohl die genaue Strecke laengst bekannt war. Angefasst wird nur,
+  // was die App selbst geschaetzt hat, nichts Bestaetigtes, nichts auf
+  // einer Rechnung und nichts Bezahltes.
+  function kmNachziehen(spiele) {
+    var n = 0;
+    (spiele || []).forEach(function (sp) {
+      var e = einsaetze[sp.kennung];
+      if (!e || e.km == null || e.bezahlt || !(e.herkunft && e.herkunft.km === "luftlinie")) return;
+      if (aufRechnung && aufRechnung[sp.kennung]) return;
+      var v = kmVorschlag(sp);
+      if (!v || v.art === "luftlinie" || v.km === e.km) return;
+      speichereEinsatz(sp, { km: v.km, herkunft: { km: v.art } });
+      n++;
+    });
+    return n;
+  }
   function vorschlaegeNachziehen() {
     var n = 0;
     // Nur die Saison, fuer die die Ordnung gilt - wie in abweichung().
@@ -6075,6 +6148,18 @@ window.Mitglieder = (function () {
         ? (ab === 1 ? "Ein Betrag weicht von der Gebührenordnung ab."
                     : ab + " Beträge weichen von der Gebührenordnung ab.")
         : luckenSatz(liste);
+      // Der Kasten nannte die Arbeit, aber nicht den ersten Schritt. Der
+      // Knopf klappt die oberste Karte auf und setzt den Cursor ins erste
+      // leere Feld - weiter geht es dann von Karte zu Karte.
+      tun = ["Erstes Spiel eintragen", function () {
+        var karte = wurzel.querySelector(".mg-eintrag[data-kennung]");
+        if (!karte) return;
+        if (!karte.classList.contains("offen")) { var kopf = karte.querySelector(".mg-kopf"); if (kopf) kopf.click(); }
+        karte.scrollIntoView({ block: "start", behavior: "smooth" });
+        var leer = [].filter.call(karte.querySelectorAll("input[type=text], input[inputmode], input[type=number]"),
+          function (i) { return !i.value && i.offsetParent; })[0];
+        if (leer) setTimeout(function () { leer.focus({ preventScroll: true }); }, 350);
+      }];
     } else if (st === "abrechnen") {
       satz = n === 1 ? "Ein Spiel wartet auf seine Rechnung." : n + " Spiele warten auf ihre Rechnung.";
       betrag = summeVon(liste);
@@ -6101,7 +6186,7 @@ window.Mitglieder = (function () {
     } else {
       return null;
     }
-    var box = h("div", { class: "karte mg-arbeitskopf" }, [
+    var box = h("div", { class: "karte mg-arbeitskopf stufe-" + st }, [
       h("b", { text: satz }),
       betrag != null ? h("span", { class: "mg-arbeitsbetrag", text: euro(betrag) }) : null
     ].filter(Boolean));
@@ -6119,7 +6204,7 @@ window.Mitglieder = (function () {
     if (vorschlaege.length > 1) box.appendChild(h("button", { type: "button", class: "mg-neben mg-allebestaetigen",
       text: "Alle " + vorschlaege.length + " Vorschläge bestätigen", onclick: function () { alleBestaetigen(vorschlaege); } }));
     if (st === "fehlt") box.appendChild(h("small", { class: "meta mg-wischtipp",
-      text: "Karte antippen und eintragen, was fehlt – gespeichert wird sofort." }));
+      text: "Oder eine Karte unten antippen – gespeichert wird sofort." }));
     // Der Weg zurueck zur ganzen Saison. Stand bis Fassung 277 als
     // eigene Zeile ueber diesem Kasten und wiederholte nur die Zahl, die
     // schon am Schritt steht. Hier drin, weil stufenZahlenNachfuehren()
@@ -6252,6 +6337,10 @@ window.Mitglieder = (function () {
       var nz = vorschlaegeNachziehen();
       if (nz) kurzMeldung(nz + (nz === 1 ? " Betrag" : " Beträge") + " an die Gebührenordnung angepasst.", "gut");
       beginnNachziehen();
+      // Auch wenn keine neue Route kommt: eine alte Luftlinie neben einer
+      // laengst bekannten Strecke
+      var kz = kmNachziehen(spiele);
+      if (kz) kurzMeldung(kz + (kz === 1 ? " Strecke" : " Strecken") + " von der Luftlinie auf die Route umgestellt.", "gut");
     }
     automatischVorbelegen(spiele, hallenOhneRoute(spiele).length > 0);
     // Die Strecken kommen nach - die Seite steht schon, waehrend der
@@ -6268,6 +6357,7 @@ window.Mitglieder = (function () {
           var v = kmVorschlag(sp);
           if (v) { speichereEinsatz(sp, { km: v.km, herkunft: { km: v.art } }); nachgetragen++; }
         });
+        nachgetragen += kmNachziehen(spiele);
         if (automatischVorbelegen(spiele) || nachgetragen) rendereAbrechnung();
       });
     }
@@ -6664,6 +6754,12 @@ window.Mitglieder = (function () {
   }
   function belegHochladen(sp, dateiRoh, zeile) {
     return belegVerkleinern(dateiRoh).then(function (datei) {
+    // Fotos werden verkleinert, ein PDF nicht. Der Speicher lehnt mehr als
+    // 10 MB ab (schema.sql) - mit einer Meldung, die niemand versteht.
+    if (datei.size > 10 * 1024 * 1024) {
+      meldung("„" + datei.name + "“ ist " + dokumentGroesse(datei.size) + " groß – Belege höchstens 10 MB.", "warn");
+      return;
+    }
     var pfad = session.user.id + "/" + sicher(sp.kennung) + "/" + Date.now() + "_" + sicher(datei.name);
     kurzMeldung("Lade " + datei.name + " hoch …", "");
     return sb.storage.from("belege").upload(pfad, datei, { upsert: false }).then(function (r) {
@@ -10461,6 +10557,9 @@ window.Mitglieder = (function () {
           h("small", { style: "display:block;color:" + (a.strasse ? "var(--dim)" : "var(--warn)"),
                        text: (a.strasse ? a.strasse + ", " + (a.plz_ort || "") : "keine Adresse")
                              + (a.von && !a.verifiziert ? " · von " + a.von : "") })]);
+        var st = a.verifiziert ? [] : stimmenFuer(a);
+        if (st.length) kopfText.appendChild(h("small", { class: "gut", style: "display:block",
+          text: st.length + "× bestätigt: " + st.map(function (b) { return anzeigeName(b.name || "", ""); }).join(", ") }));
         if (stand) kopfText.insertBefore(h("span", { class: "merkzeichen " + stand[1], text: stand[0] }), kopfText.firstChild);
         var det = h("details", { class: "tausch" }, [h("summary", {}, [kopfText])]);
         var fSchl = h("input", { type: "text", value: v, placeholder: "Verein im Spielplan" });
@@ -11802,6 +11901,66 @@ window.Mitglieder = (function () {
   // summen() - derselben Funktion wie der Saldo der Abrechnung; zwei
   // Rechnungen fuer dieselbe Zahl liefen sonst auseinander.
   // Kalenderjahr, nicht Saison: die Steuer fragt nach dem Jahr.
+  // Dieselben Zahlen wie die Ansicht, als Datei fuers Finanzamt oder den
+  // Steuerberater. Gebaut mit dem eigenen PDF-Schreiber aus rechnung.js.
+  function jahresabschlussPdf(alle, jahr) {
+    var liste = alle.filter(function (sp) { return new Date(sp.beginn).getFullYear() === jahr; })
+      .sort(function (a, b) { return a.beginn < b.beginn ? -1 : 1; });
+    if (!liste.length) { meldung("Keine Einsätze in " + jahr + ".", "warn"); return; }
+    var s = summen(liste);
+    var b = summen(liste, function (sp) { return !!(einsaetze[sp.kennung] || {}).bezahlt; });
+    var d = (profil && profil.rechnung) || {};
+    var name = d.name || (profil && profil.name) || "";
+    if (/,/.test(name)) name = name.split(",").slice(1).join(",").trim() + " " + name.split(",")[0].trim();
+    var modell = (profil && profil.km_modell) || "einfach";
+    var satz = modell === "einfach" ? (profil.satz_einfach != null ? profil.satz_einfach : 0.38)
+                                    : (profil.satz_hinrueck != null ? profil.satz_hinrueck : 0.30);
+    var z = [
+      { links: "Jahresabschluss " + jahr, groesse: 18, fett: true },
+      { links: "Einnahmen und Kosten als Schiedsrichter", grau: true },
+      { art: "abstand", hoehe: 6 },
+      { links: name + (d.sr_nummer ? " (SR-Nr. " + d.sr_nummer + ")" : "") },
+      d.strasse ? { links: d.strasse + ", " + (d.plz_ort || "") } : null,
+      d.steuernummer ? { links: "Steuernummer " + d.steuernummer } : null,
+      { art: "linie" },
+      { links: "Einnahmen (Pauschalen nach Gebührenordnung)", rechts: euro(s.verg) },
+      { links: "Fahrtkosten: " + Math.round(s.km) + " km × " + euroZahl(satz) + " € ("
+          + (modell === "einfach" ? "einfache Strecke" : "Hin- und Rückweg") + ")", rechts: "− " + euro(s.fahrt) },
+      s.verpf ? { links: "Verpflegungsmehraufwand", rechts: "− " + euro(s.verpf) } : null,
+      s.ausl ? { links: "Auslagen", rechts: "− " + euro(s.ausl) } : null,
+      { art: "linie" },
+      { links: "Netto", rechts: euro(netto(s)), fett: true, groesse: 12 },
+      { links: "Davon schon bezahlt (Einnahmen)", rechts: euro(b.verg), grau: true },
+      { art: "abstand", hoehe: 14 },
+      { links: s.spiele + (s.spiele === 1 ? " Einsatz" : " Einsätze"), fett: true, groesse: 12 },
+      { art: "linie" }
+    ];
+    liste.forEach(function (sp) {
+      var e = einsaetze[sp.kennung] || {};
+      var v = betragFuer(sp, e).betrag || 0, f = fahrtkosten(e);
+      var teile = [];
+      if (v) teile.push("Einnahme " + euro(v));
+      if (e.km != null) teile.push(String(e.km).replace(".", ",") + " km, Fahrt − " + euro(f));
+      if (e.verpflegung) teile.push("Verpflegung − " + euro(e.verpflegung));
+      if (e.auslagen) teile.push("Auslagen − " + euro(e.auslagen));
+      if (e.bezahlt) teile.push("bezahlt");
+      z.push({ links: new Date(sp.beginn).toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" })
+          + "   " + (sp.liga ? sp.liga + ": " : "")
+          + (sp.paarung || "") + " (" + (sp.rolle || "SR") + ")", rechts: euro(nettoSpiel(sp, e)) });
+      z.push({ links: (sp.halle ? sp.halle + " · " : "") + (teile.length ? teile.join(" · ") : "noch kein Betrag eingetragen"),
+               groesse: 8.5, grau: true });
+      z.push({ art: "abstand", hoehe: 3 });
+    });
+    z.push({ art: "abstand", hoehe: 10 });
+    z.push({ links: "Eine Aufstellung aus der ESRW App für dich oder deinen Steuerberater – keine Steuerberatung. "
+      + "Was davon steuerlich zählt, klärst du dort.", groesse: 8.5, grau: true });
+    ladeRechnung().then(function (R) {
+      if (!R || !R.blatt) throw new Error("PDF-Schreiber fehlt");
+      var blob = R.blatt(z.filter(Boolean), "Jahresabschluss " + jahr + " · " + name + " · erstellt "
+        + new Date().toLocaleDateString("de-DE"));
+      pdfHerunterladen(blob, "Jahresabschluss-" + jahr + ".pdf");
+    }).catch(function (e) { meldung("PDF nicht erstellt: " + (e && e.message || e), "warn"); });
+  }
   function zeigeJahresabschluss() {
     leeren(inhalt);
     var jetzt = new Date();
@@ -11871,6 +12030,16 @@ window.Mitglieder = (function () {
       } }),
       h("button", { type: "button", text: "Zurück zur Abrechnung", onclick: function () { zeigeReiter("abrechnung"); } })
     ]));
+    // Die Datei zuerst: aus der Web-App auf dem iPhone kommt der Druck
+    // oft nicht an, und ans Finanzamt geht ohnehin ein PDF.
+    var leiste = inhalt.querySelector(".zweit.fahrtenbuch");
+    if (leiste) {
+      [].forEach.call(leiste.querySelectorAll("button"), function (b) {
+        if (b.textContent === "Drucken / PDF") b.textContent = "Drucken";
+      });
+      leiste.insertBefore(h("button", { type: "button", class: "haupt", text: "Als PDF laden",
+        onclick: function () { jahresabschlussPdf(alle, jahr); } }), leiste.firstChild);
+    }
     inhalt.appendChild(h("div", { class: "karte fahrtenbuch", style: "padding:4px 14px 12px" }, [box]));
   }
 

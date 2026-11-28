@@ -3101,3 +3101,38 @@ create policy "Zusage geben" on public.mitfahrt_zusagen for insert to authentica
 create policy "Zusage zuruecknehmen" on public.mitfahrt_zusagen for delete to authenticated
   using (auth.uid() = user_id or public.ist_admin()
          or exists (select 1 from public.mitfahrten m where m.id = mitfahrt and m.user_id = auth.uid()));
+
+
+-- ======================================================================
+-- v62: Vereinsanschriften gemeinsam pruefen
+-- ======================================================================
+--
+-- Eine Anschrift, die ein Kollege vorgeschlagen hat, prueft bisher nur
+-- der Betreiber. Wer sie aus eigener Erfahrung kennt (Rechnung kam an),
+-- sagt jetzt "Stimmt". Die Zeile haelt die Anschrift fest, der sie
+-- galt: aendert sie jemand, zaehlt die App die alte Stimme nicht mehr.
+create table if not exists public.vereine_bestaetigungen (
+  verein   text not null references public.vereine_adressen (verein) on delete cascade on update cascade,
+  person   uuid not null default auth.uid() references auth.users (id) on delete cascade,
+  name     text,
+  strasse  text,
+  plz_ort  text,
+  am       timestamptz not null default now(),
+  primary key (verein, person)
+);
+alter table public.vereine_bestaetigungen enable row level security;
+
+drop policy if exists "Bestaetigungen lesen"        on public.vereine_bestaetigungen;
+drop policy if exists "Bestaetigung geben"          on public.vereine_bestaetigungen;
+drop policy if exists "Bestaetigung aendern"        on public.vereine_bestaetigungen;
+drop policy if exists "Bestaetigung zuruecknehmen"  on public.vereine_bestaetigungen;
+-- Lesen wie die Anschriften selbst: alle Freigeschalteten.
+create policy "Bestaetigungen lesen" on public.vereine_bestaetigungen for select to authenticated
+  using (public.ist_freigeschaltet());
+-- Stimmen nur fuer sich selbst.
+create policy "Bestaetigung geben" on public.vereine_bestaetigungen for insert to authenticated
+  with check (auth.uid() = person and public.ist_freigeschaltet());
+create policy "Bestaetigung aendern" on public.vereine_bestaetigungen for update to authenticated
+  using (auth.uid() = person) with check (auth.uid() = person and public.ist_freigeschaltet());
+create policy "Bestaetigung zuruecknehmen" on public.vereine_bestaetigungen for delete to authenticated
+  using (auth.uid() = person or public.ist_admin());

@@ -1999,6 +1999,17 @@
   .lauf-anschrift { margin:-2px 0 10px; padding:10px 12px; border-radius:12px;
     background:var(--karte); display:flex; flex-direction:column; gap:6px; }
   .lauf-zeile small { display:block; }
+  .anschrift-stimmt { display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; margin:-2px 0 10px;
+    padding:8px 12px; border-radius:12px; background:var(--karte); border-left:3px solid var(--warn); }
+  .zweit.fahrtenbuch .haupt { flex-basis:100%; }
+  /* Fassung 318: der Arbeitskasten traegt die Farbe seines Schritts -
+     dieselbe wie die Kante der Kachel oben. */
+  :root[data-design="neu"] .mg-arbeitskopf.stufe-fehlt { box-shadow:inset 4px 0 0 var(--warn); background:var(--warn-bg); }
+  :root[data-design="neu"] .mg-arbeitskopf.stufe-abrechnen { box-shadow:inset 4px 0 0 var(--akzent); }
+  :root[data-design="neu"] .mg-arbeitskopf.stufe-unterwegs { box-shadow:inset 4px 0 0 var(--gut); background:var(--gut-bg); }
+  .anschrift-stimmt small { flex:1 1 200px; color:var(--dim); }
+  .anschrift-stimmt small.gut { color:var(--gut); flex-basis:100%; }
+  .anschrift-stimmt button { min-height:44px; flex:0 0 auto; }
   :root[data-design="neu"] .lauf-zeile.erledigt small { color:var(--dim); }
   .lauf-anschrift input, .lauf-anschrift button { width:100%; min-height:44px; box-sizing:border-box; }
   .rechnungslauf .rechnung-zeile { margin-top:6px; }
@@ -4741,6 +4752,6 @@
   </div>
 </nav>
 
-<script src="app.js?v=317"></script>
+<script src="app.js?v=318"></script>
 </body>
 </html>

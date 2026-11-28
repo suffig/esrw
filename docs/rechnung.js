@@ -36,6 +36,9 @@
       else if (c === 0x201e || c === 0x201c || c === 0x201d) c = 34; // Anfuehrungszeichen
       else if (c === 0x2019 || c === 0x2018) c = 39;
       else if (c === 0x20ac) c = 128;                   // Euro liegt in WinAnsi auf 128
+      else if (c === 0x2026) c = 133;                   // Auslassungspunkte
+      else if (c === 0x2212) c = 45;                    // Rechenminus
+      else if (c === 0x2009 || c === 0x202f) c = 32;    // schmale Leerzeichen
       else if (c > 255) c = 63;                         // sonst Fragezeichen
       aus.push(c);
     }
@@ -165,7 +168,89 @@
     });
   }
 
+  // --- ein eigenes Blatt ohne Vorlage -----------------------------------
+  // Fuer Aufstellungen wie den Jahresabschluss. Bis Fassung 317 gab es den
+  // nur als Druckansicht; aus einer Web-App auf dem iPhone heraus kommt
+  // window.print() oft nicht an, und ans Finanzamt geht ohnehin eine Datei.
+  //
+  // zeilen: [{ links, rechts, groesse, fett, grau, art: "linie"|"abstand" }]
+  // Zu lange Texte links brechen um; rechts steht in der ersten Zeile.
+  function blatt(zeilen, fuss) {
+    var B = 595.28, H = 841.89, R = 50, UNTEN = 64;
+    var seiten = [], ops = null, y = 0;
+    function neueSeite() { ops = []; seiten.push(ops); y = H - 60; }
+    function schreib(x, yy, s, g, fett, grau) {
+      ops.push((grau ? "0.42 g" : "0 g") + " BT /" + (fett ? "F2" : "F1") + " " + g + " Tf 1 0 0 1 "
+        + x.toFixed(2) + " " + yy.toFixed(2) + " Tm (" + String.fromCharCode.apply(null, pdfText(s)) + ") Tj ET");
+    }
+    function br(s, g, fett) { return breite(s, g) * (fett ? 1.07 : 1); }
+    function umbrechen(s, g, fett, platz) {
+      var woerter = String(s).split(/\s+/), aus = [], z = "";
+      woerter.forEach(function (w) {
+        var probe = z ? z + " " + w : w;
+        if (!z || br(probe, g, fett) <= platz) z = probe;
+        else { aus.push(z); z = w; }
+      });
+      if (z) aus.push(z);
+      return aus.length ? aus : [""];
+    }
+    neueSeite();
+    zeilen.forEach(function (z) {
+      if (z.art === "abstand") { y -= z.hoehe || 8; return; }
+      if (z.art === "linie") {
+        if (y - 10 < UNTEN) neueSeite();
+        y -= 6;
+        ops.push("0.75 G 0.6 w " + R + " " + y.toFixed(2) + " m " + (B - R) + " " + y.toFixed(2) + " l S");
+        y -= 6;
+        return;
+      }
+      var g = z.groesse || 10, fett = !!z.fett, zeile = g * 1.42;
+      var rechts = z.rechts == null ? "" : String(z.rechts);
+      var platz = B - 2 * R - (rechts ? br(rechts, g, fett) + 18 : 0);
+      var teile = umbrechen(z.links || "", g, fett, platz);
+      // Eine Zeile samt Umbruch bleibt auf einer Seite zusammen
+      if (y - zeile * teile.length < UNTEN) neueSeite();
+      teile.forEach(function (t, i) {
+        y -= zeile;
+        if (t) schreib(R, y, t, g, fett, z.grau);
+        if (i === 0 && rechts) schreib(B - R - br(rechts, g, fett), y, rechts, g, fett, z.grau);
+      });
+    });
+    seiten.forEach(function (o, i) {
+      var nr = "Seite " + (i + 1) + " von " + seiten.length;
+      ops = o;
+      if (fuss) schreib(R, 36, fuss, 8, false, true);
+      schreib(B - R - breite(nr, 8), 36, nr, 8, false, true);
+    });
+
+    var objekte = [];
+    objekte[0] = "<< /Type /Catalog /Pages 2 0 R >>";
+    objekte[2] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>";
+    objekte[3] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>";
+    var kinder = [];
+    seiten.forEach(function (o, i) {
+      var seite = 5 + 2 * i, inhalt = 6 + 2 * i, strom = o.join("\n");
+      kinder.push(seite + " 0 R");
+      objekte[seite - 1] = "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 " + B + " " + H + "] "
+        + "/Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents " + inhalt + " 0 R >>";
+      objekte[inhalt - 1] = "<< /Length " + strom.length + " >>\nstream\n" + strom + "\nendstream";
+    });
+    objekte[1] = "<< /Type /Pages /Kids [" + kinder.join(" ") + "] /Count " + kinder.length + " >>";
+    // Alles ist hier schon ein Byte je Zeichen (pdfText liefert WinAnsi),
+    // also sind Stringlaengen zugleich die Byte-Positionen fuer die xref.
+    var aus = "%PDF-1.4\n", pos = [];
+    objekte.forEach(function (o, i) { pos.push(aus.length); aus += (i + 1) + " 0 obj\n" + o + "\nendobj\n"; });
+    var xref = aus.length;
+    aus += "xref\n0 " + (objekte.length + 1) + "\n0000000000 65535 f \n";
+    pos.forEach(function (p) { var s = String(p); while (s.length < 10) s = "0" + s; aus += s + " 00000 n \n"; });
+    aus += "trailer\n<< /Size " + (objekte.length + 1) + " /Root 1 0 R >>\nstartxref\n" + xref + "\n%%EOF\n";
+    var bytes = new Uint8Array(aus.length);
+    for (var i = 0; i < aus.length; i++) bytes[i] = aus.charCodeAt(i) & 255;
+    return new Blob([bytes], { type: "application/pdf" });
+  }
+
   window.Rechnung = {
+    blatt: blatt,
     bauen: bauen,
     felder: function () { return laden().then(function (v) { return v.plan.felder; }); }
   };
