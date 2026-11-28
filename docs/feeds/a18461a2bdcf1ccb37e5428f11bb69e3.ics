@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:fc64b459b46a0bb033eac8cd90ef2ae930c7d56b@esrw.de
-SEQUENCE:0
-DTSTAMP:20261111T143043Z
-LAST-MODIFIED:20261111T143043Z
-DTSTART:20261121T160000Z
-DTEND:20261121T193000Z
-SUMMARY:SR · U13 BZL Gr.B: Neusser EV 1b – ESC Darmstadt 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 18:00 Uhr\nTreffpunkt:
-  17:00 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.B\nHalle: Eissportha
- lle Neuss\nAdresse: Jakob-Koch-Straße 1\, 41466 Neuss\nGespann: Schöche\
- , Gian-Carlo\nVergütung lt. Ordnung: 80 €\n\nQuelle: https://www.esrw.d
- e/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Neuss\, Jakob-Koch-Straße 1\, 41466 Neuss
-GEO:51.175806;6.680258
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Neuss, Jakob
- -Koch-Straße 1, 41466 Neuss";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Ne
- uss":geo:51.175806,6.680258
-END:VEVENT
-BEGIN:VEVENT
 UID:b76aa2c203a55e78496acfadfc35e6337adff1f2@esrw.de
 SEQUENCE:0
 DTSTAMP:20261111T143043Z
