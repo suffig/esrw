@@ -73,24 +73,6 @@ GEO:50.947034;7.5553
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
  enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
  ":geo:50.947034,7.5553
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - HSR · Senioren RLW: TuS Wiehl 
- – GSC Moers · Eissporthalle Wiehl
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-P1D
-DESCRIPTION:Morgen Spiel - HSR · Senioren RLW: TuS Wiehl – GSC Moers · 
- Eissporthalle Wiehl
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT2H
-DESCRIPTION:In zwei Stunden an der Halle - HSR · Senioren RLW: TuS Wiehl 
- – GSC Moers · Eissporthalle Wiehl
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:1d5eaa0d3e24f8fd698d05fc691062bb94b10658@esrw.de
