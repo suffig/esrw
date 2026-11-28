@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:e6d3f963210f6f6dc86bceb9cff1677550e589b5@esrw.de
-SEQUENCE:1
-DTSTAMP:20261117T093042Z
-LAST-MODIFIED:20261117T093042Z
-DTSTART:20261121T101500Z
-DTEND:20261121T134500Z
-SUMMARY:SR · U9 LL Blau: Dinslakener Kobras
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:15 Uhr\nTreffpunkt:
-  11:15 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Blau\nHalle: Eissporthall
- e Dinslaken\nAdresse: Am Stadtbad 1\, 46537 Dinslaken\nGespann: Budzynski\
- , Mika (N)\nVergütung lt. Ordnung: 85 €\n\nQuelle: https://www.esrw.de/
- einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Dinslaken\, Am Stadtbad 1\, 46537 Dinslaken
-GEO:51.574578;6.735361
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Dinslaken, A
- m Stadtbad 1, 46537 Dinslaken";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle D
- inslaken":geo:51.574578,6.735361
-END:VEVENT
-BEGIN:VEVENT
 UID:f4630f38a059393627c44093c244bba3813c6ce1@esrw.de
 SEQUENCE:1
 DTSTAMP:20261116T080049Z
