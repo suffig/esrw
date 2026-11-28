@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:72085041029bcdcfc6fc4c6a4b52a50b97056b16@esrw.de
-SEQUENCE:0
-DTSTAMP:20261111T143043Z
-LAST-MODIFIED:20261111T143043Z
-DTSTART:20261121T084500Z
-DTEND:20261121T121500Z
-SUMMARY:SR · U15 LL: TuS Wiehl – Dinslakener Kobras
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 10:45 Uhr\nTreffpunkt:
-  09:45 Uhr (60 Min vor Spielbeginn)\nLiga: U15 LL\nHalle: Eissporthalle Wi
- ehl\nAdresse: Mühlenstraße 23\, 51674 Wiehl\nGespann: Starke\, Matthias\
- nVergütung lt. Ordnung: 80 €\n\nQuelle: https://www.esrw.de/einteilunge
- n.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Wiehl\, Mühlenstraße 23\, 51674 Wiehl
-GEO:50.947034;7.5553
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
- enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
- ":geo:50.947034,7.5553
-END:VEVENT
-BEGIN:VEVENT
 UID:af9f67c21cc855ed2623b30b7957adc655ee0d0d@esrw.de
 SEQUENCE:0
 DTSTAMP:20261111T143043Z
@@ -1557,11 +1535,6 @@ GEO:50.947034;7.5553
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Wiehl, Mühl
  enstraße 23, 51674 Wiehl";X-APPLE-RADIUS=100;X-TITLE="Eissporthalle Wiehl
  ":geo:50.947034,7.5553
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U9 LL Gelb: TuS Wiehl
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:7000542297990bac8e6fd02a3e9ed3583e6db93c@esrw.de
