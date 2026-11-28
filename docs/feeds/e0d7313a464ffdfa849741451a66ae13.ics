@@ -8,30 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:146a2a26e1c729bfbe93ff7f78effe402d1ed489@esrw.de
-SEQUENCE:1
-DTSTAMP:20261116T080049Z
-LAST-MODIFIED:20261116T080049Z
-DTSTART:20261121T073000Z
-DTEND:20261121T110000Z
-SUMMARY:SR · U13 BZL Gr.A: SpG EHC Gelsenkirchen / Herner EV 1b – SpG Kr
- istall Lippstadt / Soester EG · Emscher-Lippe-Halle Gelsenkirchen
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 09:30 Uhr\nTreffpunkt:
-  08:30 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\nHalle: Emscher-Li
- ppe-Halle Gelsenkirchen\nAdresse: Adenauerallee 118\, 45891 Gelsenkirchen\
- nGespann: Melchert\, Philip\nVergütung lt. Ordnung: 80 €\n\nQuelle: htt
- ps://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Emscher-Lippe-Halle Gelsenkirchen\, Adenauerallee 118\, 45891 Gels
- enkirchen
-GEO:51.553483;7.073102
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Emscher-Lippe-Halle Gelsen
- kirchen, Adenauerallee 118, 45891 Gelsenkirchen";X-APPLE-RADIUS=100;X-TITL
- E="Emscher-Lippe-Halle Gelsenkirchen":geo:51.553483,7.073102
-END:VEVENT
-BEGIN:VEVENT
 UID:7fdc6c307d83f81cb981c49ddb9a4af830bea7e5@esrw.de
 SEQUENCE:0
 DTSTAMP:20261120T094530Z
