@@ -42,13 +42,12 @@ DTSTAMP:20261120T131534Z
 LAST-MODIFIED:20261120T131534Z
 DTSTART:20261128T153000Z
 DTEND:20261128T190000Z
-SUMMARY:⚠ LSR · OsWeNo Pokal: ESV Grizzlys Bvergkamen – Hamburg Crocod
- iles
-DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Linienrichter (LSR)\nSpi
- elbeginn: 17:30 Uhr\nTreffpunkt: 16:30 Uhr (60 Min vor Spielbeginn)\nLiga:
-  OsWeNo Pokal\nHalle: Eissporthalle Bergkamen\nAdresse: Häupenweg 29\, 59
- 192 Bergkamen\nGespann: Steeg\, Cedric (HSR) / Schmidt\, Waldemar (LSR)\n\
- nQuelle: https://www.esrw.de/einteilungen.html
+SUMMARY:LSR · OsWeNo Pokal: ESV Grizzlys Bvergkamen – Hamburg Crocodiles
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
+  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: OsWeNo Pokal\nHalle: Eissportha
+ lle Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Steeg\, 
+ Cedric (HSR) / Schmidt\, Waldemar (LSR)\n\nQuelle: https://www.esrw.de/ein
+ teilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -60,8 +59,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - ⚠ LSR · OsWeNo Pokal: ESV Gri
- zzlys Bvergkamen – Hamburg Crocodiles
+DESCRIPTION:In einer Stunde an der Halle - LSR · OsWeNo Pokal: ESV Grizzly
+ s Bvergkamen – Hamburg Crocodiles
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT

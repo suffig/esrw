@@ -1803,12 +1803,12 @@ DTSTAMP:20261127T104230Z
 LAST-MODIFIED:20261127T104230Z
 DTSTART:20261128T093000Z
 DTEND:20261128T130000Z
-SUMMARY:⚠ SR · U11 LL Lila: SpG Soester EG – ESC Kristall Lippstadt
-DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Schiedsrichter (SR)\nSpi
- elbeginn: 11:30 Uhr\nTreffpunkt: 10:30 Uhr (60 Min vor Spielbeginn)\nLiga:
-  U11 LL Lila\nHalle: Eissportzentrum Möhnesee\nAdresse: Teigelhof 4\, 595
- 19 Möhnesee\nGespann: Orlando\, Malik\nVergütung lt. Ordnung: 85 €\n\n
- Quelle: https://www.esrw.de/einteilungen.html
+SUMMARY:SR · U11 LL Lila: SpG Soester EG – ESC Kristall Lippstadt
+DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 11:30 Uhr\nTreffpunkt:
+  10:30 Uhr (60 Min vor Spielbeginn)\nLiga: U11 LL Lila\nHalle: Eissportzen
+ trum Möhnesee\nAdresse: Teigelhof 4\, 59519 Möhnesee\nGespann: Orlando\,
+  Malik\nVergütung lt. Ordnung: 85 €\n\nQuelle: https://www.esrw.de/eint
+ eilungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -1820,8 +1820,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissportzentrum Möhnesee,
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · U11 LL Lila: SpG Soest
- er EG – ESC Kristall Lippstadt
+DESCRIPTION:In einer Stunde an der Halle - SR · U11 LL Lila: SpG Soester E
+ G – ESC Kristall Lippstadt
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
@@ -2174,13 +2174,12 @@ DTSTAMP:20261120T131534Z
 LAST-MODIFIED:20261120T131534Z
 DTSTART:20261128T153000Z
 DTEND:20261128T190000Z
-SUMMARY:⚠ LSR · OsWeNo Pokal: ESV Grizzlys Bvergkamen – Hamburg Crocod
- iles
-DESCRIPTION:Geändert: Angaben angepasst\n\nRolle: Linienrichter (LSR)\nSpi
- elbeginn: 17:30 Uhr\nTreffpunkt: 16:30 Uhr (60 Min vor Spielbeginn)\nLiga:
-  OsWeNo Pokal\nHalle: Eissporthalle Bergkamen\nAdresse: Häupenweg 29\, 59
- 192 Bergkamen\nGespann: Steeg\, Cedric (HSR) / Scholz\, Arien (LSR)\n\nQue
- lle: https://www.esrw.de/einteilungen.html
+SUMMARY:LSR · OsWeNo Pokal: ESV Grizzlys Bvergkamen – Hamburg Crocodiles
+DESCRIPTION:Rolle: Linienrichter (LSR)\nSpielbeginn: 17:30 Uhr\nTreffpunkt:
+  16:30 Uhr (60 Min vor Spielbeginn)\nLiga: OsWeNo Pokal\nHalle: Eissportha
+ lle Bergkamen\nAdresse: Häupenweg 29\, 59192 Bergkamen\nGespann: Steeg\, 
+ Cedric (HSR) / Scholz\, Arien (LSR)\n\nQuelle: https://www.esrw.de/einteil
+ ungen.html
 URL:https://www.esrw.de/einteilungen.html
 CATEGORIES:Eishockey,Schiedsrichter
 TRANSP:OPAQUE
@@ -2192,8 +2191,8 @@ X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergkamen, H
 BEGIN:VALARM
 ACTION:DISPLAY
 TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - ⚠ LSR · OsWeNo Pokal: ESV Gri
- zzlys Bvergkamen – Hamburg Crocodiles
+DESCRIPTION:In einer Stunde an der Halle - LSR · OsWeNo Pokal: ESV Grizzly
+ s Bvergkamen – Hamburg Crocodiles
 END:VALARM
 END:VEVENT
 BEGIN:VEVENT
