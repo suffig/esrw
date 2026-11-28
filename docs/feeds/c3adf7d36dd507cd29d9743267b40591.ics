@@ -8,51 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:70f01eb95f5c059c8783ddfffb2d4ecf680af6ef@esrw.de
-SEQUENCE:0
-DTSTAMP:20261111T143043Z
-LAST-MODIFIED:20261111T143043Z
-DTSTART:20261121T100000Z
-DTEND:20261121T133000Z
-SUMMARY:SR · U9 LL Lila: Düsseldorfer EG 1c
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
-  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Lila\nHalle: Eishalle Bre
- hmstraße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Kudal\,
-  Lars\nVergütung lt. Ordnung: 85 €\n\nQuelle: https://www.esrw.de/einte
- ilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
-GEO:51.242557;6.802144
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
- hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
- hmstraße":geo:51.242557,6.802144
-END:VEVENT
-BEGIN:VEVENT
-UID:c437c2508a129d66024076b681ab6481d9dd504a@esrw.de
-SEQUENCE:0
-DTSTAMP:20261111T143043Z
-LAST-MODIFIED:20261111T143043Z
-DTSTART:20261121T100000Z
-DTEND:20261121T133000Z
-SUMMARY:SR · Frauen BZL: ESV Bergisch Gladbach 1b – Herforder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
-  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Eissporthall
- e Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbach\
- nGespann: Victor\, Tobias (N)\nVergütung lt. Ordnung: 95 €\n\nQuelle: h
- ttps://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
- ch Gladbach
-GEO:50.967548;7.135355
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
- dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
- TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-END:VEVENT
-BEGIN:VEVENT
 UID:e89343c3fd3be6924376394a39c3ba5e52b5cadc@esrw.de
 SEQUENCE:0
 DTSTAMP:20261117T093042Z
@@ -1537,12 +1492,6 @@ GEO:51.242557;6.802144
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
  hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
  hmstraße":geo:51.242557,6.802144
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - ⚠ SR · U13 RLB: EJ Kassel –
-  Düsseldorfer EG 1b In Düsseldorf !!!
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:ccb7d6d93bab838a160c505de19cf2de8cfd7dc7@esrw.de
@@ -1567,12 +1516,6 @@ GEO:50.967548;7.135355
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
  dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
  TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.B: ESV Bergisch
-  Gladbach – EHC Die Bären Neuwied 1b
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:12814af82a886b692b31447e29e8cbe5dae5f9b7@esrw.de

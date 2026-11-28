@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:c128bf7edb3728d9380dab2ca769bfff0b492f9e@esrw.de
-SEQUENCE:0
-DTSTAMP:20261111T143043Z
-LAST-MODIFIED:20261111T143043Z
-DTSTART:20261121T100000Z
-DTEND:20261121T133000Z
-SUMMARY:SR · U9 LL Lila: Düsseldorfer EG 1c
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
-  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: U9 LL Lila\nHalle: Eishalle Bre
- hmstraße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Kudal\,
-  Lars\nVergütung lt. Ordnung: 85 €\n\nQuelle: https://www.esrw.de/einte
- ilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
-GEO:51.242557;6.802144
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
- hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
- hmstraße":geo:51.242557,6.802144
-END:VEVENT
-BEGIN:VEVENT
 UID:c3af2c2819e1f8146fff43071384a48407d1d607@esrw.de
 SEQUENCE:0
 DTSTAMP:20261111T143043Z

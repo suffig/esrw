@@ -30,12 +30,6 @@ GEO:50.967548;7.135355
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
  dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
  TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U13 BZL Gr.B: ESV Bergisch
-  Gladbach – EHC Die Bären Neuwied 1b
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:1b710f7d336f2596ba71d18a5e72befbb1719aba@esrw.de

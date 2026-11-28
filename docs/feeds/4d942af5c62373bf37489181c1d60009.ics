@@ -8,29 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:fb3608224fc5e849ec1360d0ed048b3617c4836c@esrw.de
-SEQUENCE:0
-DTSTAMP:20261111T143043Z
-LAST-MODIFIED:20261111T143043Z
-DTSTART:20261121T100000Z
-DTEND:20261121T133000Z
-SUMMARY:SR · Frauen BZL: ESV Bergisch Gladbach 1b – Herforder EV
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 12:00 Uhr\nTreffpunkt:
-  11:00 Uhr (60 Min vor Spielbeginn)\nLiga: Frauen BZL\nHalle: Eissporthall
- e Bergisch Gladbach\nAdresse: Saaler Mühle 100\, 51429 Bergisch Gladbach\
- nGespann: Kremer\, Igor\nVergütung lt. Ordnung: 95 €\n\nQuelle: https:/
- /www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eissporthalle Bergisch Gladbach\, Saaler Mühle 100\, 51429 Bergis
- ch Gladbach
-GEO:50.967548;7.135355
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eissporthalle Bergisch Gla
- dbach, Saaler Mühle 100, 51429 Bergisch Gladbach";X-APPLE-RADIUS=100;X-TI
- TLE="Eissporthalle Bergisch Gladbach":geo:50.967548,7.135355
-END:VEVENT
-BEGIN:VEVENT
 UID:a011e4570a5c669020bac079040fa76031eef369@esrw.de
 SEQUENCE:0
 DTSTAMP:20261111T143043Z
