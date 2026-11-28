@@ -7,26 +7,4 @@ X-WR-CALNAME:Einteilungen – Thiel\, Mark
 X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
-BEGIN:VEVENT
-UID:a97e1009b59743a11d3730288a694300b76afcb9@esrw.de
-SEQUENCE:0
-DTSTAMP:20261111T143043Z
-LAST-MODIFIED:20261111T143043Z
-DTSTART:20261121T054500Z
-DTEND:20261121T091500Z
-SUMMARY:SR · U13 BZL Gr.A: TSVE Bielefeld – Mädchen W.I.N. 2
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 07:45 Uhr\nTreffpunkt:
-  06:45 Uhr (60 Min vor Spielbeginn)\nLiga: U13 BZL Gr.A\nHalle: Oetker Eis
- bahn Bielefeld\nAdresse: Duisburger Str. 14\, 33647 Bielefeld\nGespann: Br
- ücker\, Tobias\nVergütung lt. Ordnung: 80 € + 20 % Uhrzeit = 96 €\n\
- nQuelle: https://www.esrw.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Oetker Eisbahn Bielefeld\, Duisburger Str. 14\, 33647 Bielefeld
-GEO:51.979731;8.496038
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Oetker Eisbahn Bielefeld, 
- Duisburger Str. 14, 33647 Bielefeld";X-APPLE-RADIUS=100;X-TITLE="Oetker Ei
- sbahn Bielefeld":geo:51.979731,8.496038
-END:VEVENT
 END:VCALENDAR
