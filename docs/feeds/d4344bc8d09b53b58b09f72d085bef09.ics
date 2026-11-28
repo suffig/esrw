@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:7e6fb145626497926bd6c0f2e683b582a5c4ba52@esrw.de
-SEQUENCE:0
-DTSTAMP:20261111T143043Z
-LAST-MODIFIED:20261111T143043Z
-DTSTART:20261121T143000Z
-DTEND:20261121T180000Z
-SUMMARY:SR · U15 RLB: Kölner Junghaie 1b – Düsseldorfer EG 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
-  15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Kölnarena 2\nA
- dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Solbach\, Carsten\
- nVergütung lt. Ordnung: 80 €\n\nQuelle: https://www.esrw.de/einteilunge
- n.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
-GEO:50.937979;6.98935
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
- r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
- .937979,6.98935
-END:VEVENT
-BEGIN:VEVENT
 UID:34a6771ddfa876532c0f13a542d477f9063cd5fe@esrw.de
 SEQUENCE:0
 DTSTAMP:20261111T143043Z

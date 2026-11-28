@@ -8,28 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:334baf7d07e91918f05571b34ec072534c19d15a@esrw.de
-SEQUENCE:0
-DTSTAMP:20261111T143043Z
-LAST-MODIFIED:20261111T143043Z
-DTSTART:20261121T143000Z
-DTEND:20261121T180000Z
-SUMMARY:SR · U17 I: Düsseldorfer EG – Kölner Junghaie
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
-  15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eishalle Brehmstr
- aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Priebsch\, J
- an Philipp\nVergütung lt. DEB-Ordnung: 125 €\n\nQuelle: https://www.esr
- w.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
-GEO:51.242557;6.802144
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
- hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
- hmstraße":geo:51.242557,6.802144
-END:VEVENT
-BEGIN:VEVENT
 UID:3c70f80a36baaf5489ae07444b0e7b0cf1b4c4a7@esrw.de
 SEQUENCE:0
 DTSTAMP:20261111T143043Z

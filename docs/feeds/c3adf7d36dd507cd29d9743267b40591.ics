@@ -8,50 +8,6 @@ X-WR-TIMEZONE:Europe/Berlin
 REFRESH-INTERVAL;VALUE=DURATION:PT1H
 X-PUBLISHED-TTL:PT1H
 BEGIN:VEVENT
-UID:5544ed256f9bcce0bf76512111d27a4e46ffc265@esrw.de
-SEQUENCE:0
-DTSTAMP:20261111T143043Z
-LAST-MODIFIED:20261111T143043Z
-DTSTART:20261121T143000Z
-DTEND:20261121T180000Z
-SUMMARY:SR · U15 RLB: Kölner Junghaie 1b – Düsseldorfer EG 1b
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
-  15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U15 RLB\nHalle: Kölnarena 2\nA
- dresse: Gummersbacher Straße 4\, 50679 Köln\nGespann: Solbach\, Carsten\
- nVergütung lt. Ordnung: 80 €\n\nQuelle: https://www.esrw.de/einteilunge
- n.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Kölnarena 2\, Gummersbacher Straße 4\, 50679 Köln
-GEO:50.937979;6.98935
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Kölnarena 2, Gummersbache
- r Straße 4, 50679 Köln";X-APPLE-RADIUS=100;X-TITLE="Kölnarena 2":geo:50
- .937979,6.98935
-END:VEVENT
-BEGIN:VEVENT
-UID:1a0e91e0bec99b14304f1555babe28802bdfe398@esrw.de
-SEQUENCE:0
-DTSTAMP:20261111T143043Z
-LAST-MODIFIED:20261111T143043Z
-DTSTART:20261121T143000Z
-DTEND:20261121T180000Z
-SUMMARY:SR · U17 I: Düsseldorfer EG – Kölner Junghaie
-DESCRIPTION:Rolle: Schiedsrichter (SR)\nSpielbeginn: 16:30 Uhr\nTreffpunkt:
-  15:30 Uhr (60 Min vor Spielbeginn)\nLiga: U17 I\nHalle: Eishalle Brehmstr
- aße\nAdresse: Brehmstraße 27a\, 40239 Düsseldorf\nGespann: Priebsch\, J
- an Philipp\nVergütung lt. DEB-Ordnung: 125 €\n\nQuelle: https://www.esr
- w.de/einteilungen.html
-URL:https://www.esrw.de/einteilungen.html
-CATEGORIES:Eishockey,Schiedsrichter
-TRANSP:OPAQUE
-LOCATION:Eishalle Brehmstraße\, Brehmstraße 27a\, 40239 Düsseldorf
-GEO:51.242557;6.802144
-X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
- hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
- hmstraße":geo:51.242557,6.802144
-END:VEVENT
-BEGIN:VEVENT
 UID:09df79740751f878f6429b7f336ed163812d2030@esrw.de
 SEQUENCE:0
 DTSTAMP:20261111T143043Z
@@ -1539,12 +1495,6 @@ GEO:51.242557;6.802144
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Eishalle Brehmstraße, Bre
  hmstraße 27a, 40239 Düsseldorf";X-APPLE-RADIUS=100;X-TITLE="Eishalle Bre
  hmstraße":geo:51.242557,6.802144
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 ODM: Düsseldorfer EG 
- – SG Adler Berlin/ FASS Berlin
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:75ea6f2afc4ca4494528e937855b8e3b7e88995c@esrw.de
@@ -1568,12 +1518,6 @@ GEO:51.340907;6.540218
 X-APPLE-STRUCTURED-LOCATION;VALUE=URI;X-ADDRESS="Yayla Arena Krefeld, Westp
  arkstraße 111, 47803 Krefeld";X-APPLE-RADIUS=100;X-TITLE="Yayla Arena Kre
  feld":geo:51.340907,6.540218
-BEGIN:VALARM
-ACTION:DISPLAY
-TRIGGER:-PT1H
-DESCRIPTION:In einer Stunde an der Halle - SR · U15 ODM: Krefelder EV – 
- Eisbären Juniors Berlin Yayla Arena
-END:VALARM
 END:VEVENT
 BEGIN:VEVENT
 UID:edcba8873dd7731b3cb48629ae963e9e18dd7918@esrw.de
